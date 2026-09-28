@@ -1,24 +1,17 @@
-#!/usr/bin/env python3
-"""Генератор разворота персонажа: вид спереди, сбоку и сзади.
+"""Элли: красная майка без рукавов, каштановые волосы с пробором, прядями
+у лица и хвостом, чёрно-серый рюкзак, веснушки. Холст вида 600×1000, земля y=952.
 
-Рисует персонажа в стиле «большая голова + руки и ноги палками»:
-красная майка без рукавов, каштановые волосы с боковым пробором,
-прядями у лица и хвостом, чёрно-серый рюкзак.
-
-Запуск из корня репозитория:
-    python3 tools/build_character.py
-Результат: character/front.svg, side.svg, back.svg, turnaround.svg
-
-Каждая часть тела лежит в своей группе <g id="..."> — удобно для анимации.
-«left/right» в id — это левая/правая сторона самого персонажа, а не зрителя.
+Группы <g id="вид-часть">; «left/right» — сторона самого персонажа, а не зрителя.
 """
-import os
+from charlib import DET, LIMB, OUT, P, clip, fill_only, grouper, pill, shade, shape
 
-ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-OUT_DIR = os.path.join(ROOT, 'character')
+NAME = 'ellie'
+TITLE = 'Элли'
+W, H = 600, 1000
+GROUND = 952
+GUIDES = (96, 394, 570, 790, 952)   # макушка, глаза, подбородок, подол, земля
 
 # ------------------------------------------------------------------ палитра
-OUT = '#1c1a1a'       # контур
 SKIN = '#f8ccb1'
 SKIN_SH = '#e8ab8e'
 FRECKLE = '#d4917a'
@@ -31,54 +24,9 @@ BAG_SH = '#3b3e43'    # карманы / тень рюкзака
 BAG_DK = '#2a2c30'    # ремни, молнии, резинка для волос
 BAG_LT = '#8e949b'    # пряжки, бегунки молний
 
-SW = 8      # основной контур
-LIMB = 11   # руки и ноги
-DET = 5     # внутренние линии
-
-W, H = 600, 1000   # холст одного вида; земля на y=952
-
-
-# ------------------------------------------------------------------ helpers
-def P(d, fill='none', sw=SW, stroke=OUT, extra=''):
-    s = f'stroke="{stroke}" stroke-width="{sw}"' if stroke else 'stroke="none"'
-    return (f'<path d="{d}" fill="{fill}" {s} stroke-linecap="round" '
-            f'stroke-linejoin="round"{" " + extra if extra else ""}/>')
-
-
-def shape(d, fill, sw=SW):
-    return P(d, fill=fill, sw=sw)
-
-
-def fill_only(d, fill, extra=''):
-    return P(d, fill=fill, stroke=None, extra=extra)
-
-
-def shade(cid, *items):
-    """Тени, обрезанные по форме clipPath с id=cid."""
-    return f'<g clip-path="url(#{cid})">' + ''.join(items) + '</g>'
-
-
-def clip(cid, d):
-    return f'<clipPath id="{cid}"><path d="{d}"/></clipPath>'
-
-
-def grouper(pfx):
-    def G(name, *items):
-        return f'<g id="{pfx}-{name}">\n  ' + '\n  '.join(items) + '\n</g>'
-    return G
-
-
-def svg(w, h, body, defs='', title=''):
-    t = f'<title>{title}</title>\n' if title else ''
-    return (f'<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 {w} {h}" '
-            f'width="{w}" height="{h}">\n{t}<defs>\n{defs}\n</defs>\n{body}\n</svg>\n')
-
-
-def rect_tie(cx, cy, w, h, angle=0):
-    rot = f' rotate({angle})' if angle else ''
-    return (f'<rect x="{-w / 2:g}" y="{-h / 2:g}" width="{w}" height="{h}" rx="{h / 2 - 1:g}" '
-            f'fill="{BAG_DK}" stroke="{OUT}" stroke-width="6" '
-            f'transform="translate({cx} {cy}){rot}"/>')
+PALETTE = (('Кожа', SKIN), ('Тень кожи', SKIN_SH), ('Волосы', HAIR), ('Тень волос', HAIR_SH),
+           ('Майка', TOP), ('Тень майки', TOP_SH), ('Рюкзак', BAG), ('Карман', BAG_SH),
+           ('Ремни', BAG_DK), ('Пряжки', BAG_LT), ('Контур', OUT))
 
 
 # Голова спереди и сзади — одна и та же форма (симметричная)
@@ -336,7 +284,7 @@ def side(pfx='side'):
                   P(CAP),
                   P('M168 170 C262 136 404 196 484 326', sw=DET),
                   P('M246 280 C314 256 410 292 486 360', sw=DET)))
-    body.append(G('hair-tie', rect_tie(512, 360, 44, 18, -30)))
+    body.append(G('hair-tie', pill(512, 360, 44, 18, BAG_DK, -30)))
 
     return '\n'.join(defs), '\n'.join(body)
 
@@ -428,69 +376,9 @@ def back(pfx='back'):
                         fill_only('M304 350 C316 420 318 500 304 610 L340 610 L340 350 Z', HAIR_SH)),
                   P(PONY),
                   P('M286 390 C270 430 266 480 276 530', sw=DET)))
-    body.append(G('hair-tie', rect_tie(300, 360, 60, 22)))
+    body.append(G('hair-tie', pill(300, 360, 60, 22, BAG_DK)))
 
     return '\n'.join(defs), '\n'.join(body)
 
 
-# ================================================================== ЛИСТ
-VIEWS = (('front', front, 'СПЕРЕДИ'), ('side', side, 'СБОКУ'), ('back', back, 'СЗАДИ'))
-FONT = "'DejaVu Sans', 'Segoe UI', Arial, sans-serif"
-PALETTE = (('Кожа', SKIN), ('Тень кожи', SKIN_SH), ('Волосы', HAIR), ('Тень волос', HAIR_SH),
-           ('Майка', TOP), ('Тень майки', TOP_SH), ('Рюкзак', BAG), ('Карман', BAG_SH),
-           ('Ремни', BAG_DK), ('Пряжки', BAG_LT), ('Контур', OUT))
-
-
-def sheet():
-    SW_, SH_ = 1800, 1230
-    top = 30
-    parts = [f'<rect width="{SW_}" height="{SH_}" fill="#fbf8f4"/>']
-    # направляющие: макушка, глаза, подбородок, подол, земля
-    for y in (96, 394, 570, 790, 952):
-        parts.append(f'<line x1="30" y1="{y + top}" x2="{SW_ - 30}" y2="{y + top}" '
-                     f'stroke="#d9d2c8" stroke-width="2" stroke-dasharray="10 10"/>')
-    defs_all = []
-    for i, (name, fn, label) in enumerate(VIEWS):
-        defs, body = fn()
-        defs_all.append(defs)
-        x = i * W
-        parts.append(f'<ellipse cx="{x + 300}" cy="{952 + top}" rx="120" ry="14" '
-                     f'fill="#000" opacity="0.08"/>')
-        parts.append(f'<g id="view-{name}" transform="translate({x} {top})">\n{body}\n</g>')
-        parts.append(f'<text x="{x + 300}" y="{top + 1030}" text-anchor="middle" '
-                     f'font-family="{FONT}" font-size="34" font-weight="700" '
-                     f'letter-spacing="4" fill="#5b524a">{label}</text>')
-    # палитра
-    parts.append(f'<line x1="30" y1="{SH_ - 150}" x2="{SW_ - 30}" y2="{SH_ - 150}" '
-                 f'stroke="#e6dfd5" stroke-width="2"/>')
-    step = (SW_ - 120) / len(PALETTE)
-    for i, (label, color) in enumerate(PALETTE):
-        cx = 60 + step * i + step / 2
-        parts.append(f'<rect x="{cx - 34:.0f}" y="{SH_ - 120}" width="68" height="44" rx="10" '
-                     f'fill="{color}" stroke="{OUT}" stroke-width="3"/>')
-        parts.append(f'<text x="{cx:.0f}" y="{SH_ - 50}" text-anchor="middle" font-family="{FONT}" '
-                     f'font-size="17" font-weight="700" fill="#5b524a">{label}</text>')
-        parts.append(f'<text x="{cx:.0f}" y="{SH_ - 26}" text-anchor="middle" font-family="{FONT}" '
-                     f'font-size="15" fill="#8a8178">{color}</text>')
-    return svg(SW_, SH_, '\n'.join(parts), '\n'.join(defs_all),
-               title='Персонаж — разворот: спереди, сбоку, сзади')
-
-
-TITLES = {'front': 'Персонаж — вид спереди',
-          'side': 'Персонаж — вид сбоку',
-          'back': 'Персонаж — вид сзади'}
-
-
-def main():
-    os.makedirs(OUT_DIR, exist_ok=True)
-    for name, fn, _ in VIEWS:
-        defs, body = fn()
-        with open(os.path.join(OUT_DIR, f'{name}.svg'), 'w', encoding='utf-8') as f:
-            f.write(svg(W, H, body, defs, title=TITLES[name]))
-    with open(os.path.join(OUT_DIR, 'turnaround.svg'), 'w', encoding='utf-8') as f:
-        f.write(sheet())
-    print(f'SVG записаны в {os.path.relpath(OUT_DIR, ROOT)}/')
-
-
-if __name__ == '__main__':
-    main()
+VIEWS = (('front', front), ('side', side), ('back', back))

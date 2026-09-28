@@ -1,5 +1,5 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 1000" width="600" height="1000">
-<title>Персонаж — вид сзади</title>
+<title>Элли — вид сзади</title>
 <defs>
 <clipPath id="back-top-clip"><path d="M216 552 L384 552 C380 575 386 598 400 610 C403 670 406 730 408 790 C340 800 260 800 192 790 C194 730 197 670 200 610 C214 598 220 575 216 552 Z"/></clipPath>
 <clipPath id="back-bag-clip"><path d="M222 612 C222 578 256 560 300 560 C344 560 378 578 378 612 L382 748 C382 766 370 776 352 776 L248 776 C230 776 218 766 218 748 Z"/></clipPath>
