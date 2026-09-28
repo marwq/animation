@@ -9,8 +9,9 @@ import sys
 import charlib
 import ellie
 import joel
+import sarah
 
-CHARACTERS = {m.NAME: m for m in (ellie, joel)}
+CHARACTERS = {m.NAME: m for m in (ellie, joel, sarah)}
 
 
 def main(names):
