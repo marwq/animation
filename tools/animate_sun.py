@@ -1,7 +1,8 @@
-"""Лёгкое движение солнечных лучей: 1 секунда, бесшовный цикл.
+"""Солнце светится: лучи поблескивают и чуть увеличиваются / уменьшаются.
+1 секунда, бесшовный цикл.
 
 Центральный круг (чёрный диск и жёлтое кольцо вокруг него) не меняется ни на пиксель:
-смещение равно нулю внутри радиуса PROTECT и плавно нарастает к кончикам лучей.
+всё, что ближе PROTECT к центру, копируется из оригинала.
 """
 import subprocess
 import sys
@@ -28,34 +29,45 @@ ys, xs = np.nonzero(disc)
 cx, cy = xs.mean(), ys.mean()
 r_disc = np.sqrt(len(xs) / np.pi)
 
-PROTECT = r_disc + 16      # кольцо целиком внутри — здесь смещение строго 0
-RAMP = 90                  # на этом отрезке движение плавно набирает силу
+PROTECT = r_disc + 16      # кольцо целиком внутри — здесь всё как в оригинале
 
 yy, xx = np.mgrid[:H, :W].astype(np.float32)
-dx, dy = xx - cx, yy - cy
-rho = np.hypot(dx, dy)
-theta = np.arctan2(dy, dx)
+rho = np.hypot(xx - cx, yy - cy)
+theta = np.arctan2(yy - cy, xx - cx)
+inside = rho < PROTECT
+outside = np.clip((rho - PROTECT) / 6, 0, 1)[..., None]  # мягкий шов у кольца
 
-u = np.clip((rho - PROTECT) / RAMP, 0, 1)
-weight = u * u * (3 - 2 * u)  # smoothstep
+YELLOW = src[int(cy), int(cx + r_disc + 5)]              # цвет лучей
+GLINT = np.array([255, 250, 215], np.float32)            # цвет блика
+
+
+def sample(img, sy, sx):
+    return np.stack([ndimage.map_coordinates(img[..., c], [sy, sx], order=1,
+                                             mode="constant", cval=0)
+                     for c in range(img.shape[2])], axis=-1)
 
 
 def frame(t):
     p = 2 * np.pi * t  # фаза цикла, t ∈ [0, 1)
-    # Волна изгиба бежит от основания к кончику — лучи мягко «колышутся».
-    sway = (0.030 * np.sin(p - rho / 38 + 3 * theta)
-            + 0.014 * np.sin(2 * p + 5 * theta + 1.3))
-    # Лёгкое «дыхание»: лучи чуть вытягиваются и втягиваются.
-    breathe = 5.0 * np.sin(p + 2 * theta + 0.7)
-    th = theta - weight * sway
-    r = rho - weight * breathe
-    sx = cx + r * np.cos(th)
-    sy = cy + r * np.sin(th)
-    out = np.empty_like(src)
-    for c in range(3):
-        out[..., c] = ndimage.map_coordinates(src[..., c], [sy, sx], order=1,
-                                              mode="constant", cval=0)
-    inside = rho < PROTECT
+    # Лучи чуть вытягиваются и втягиваются, соседние — с небольшим сдвигом по фазе.
+    scale = 1 + 0.055 * np.sin(p) + 0.02 * np.sin(p + 3 * theta)
+    r = PROTECT + (rho - PROTECT) / scale
+    sx = cx + r * np.cos(theta)
+    sy = cy + r * np.sin(theta)
+    out = np.where(inside[..., None], src, sample(src, sy, sx))
+
+    ray = out[..., :1] / 255  # маска лучей (жёлтое = 1)
+
+    # Блеск: светлые переливы пробегают по лучам по кругу.
+    glint = (0.5 + 0.5 * np.sin(4 * theta - p)) ** 6
+    glint *= 0.55 * np.clip((rho - PROTECT) / 60, 0, 1) * (0.75 + 0.25 * np.sin(p))
+    out = out + ray * glint[..., None] * (GLINT - out)
+
+    # Сияние вокруг лучей — дышит в такт.
+    halo = ndimage.gaussian_filter(ray[..., 0], 14)[..., None]
+    halo_a = (0.55 + 0.25 * np.sin(p)) * halo * (1 - ray) * outside
+    out = out + halo_a * (YELLOW - out)
+
     out[inside] = src[inside]  # круг — точная копия оригинала
     return np.clip(out + 0.5, 0, 255).astype(np.uint8)
 
