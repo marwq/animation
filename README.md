@@ -93,3 +93,17 @@ python3 tools/build_characters.py        # SVG всех персонажей (и
 npm i --no-save playwright && npx playwright install chromium
 node tools/render.js                     # PNG ×2 (или: node tools/render.js 2 sarah)
 ```
+
+## Анимация: солнце
+
+![Солнце](animations/sun/sun.gif)
+
+Лёгкое движение лучей, 1 секунда, 30 кадров, бесшовный цикл. Лучи мягко колышутся
+(волна изгиба бежит от основания к кончику) и чуть «дышат» по длине. Чёрный диск и
+жёлтое кольцо вокруг него совпадают с оригиналом попиксельно во всех кадрах.
+
+| Путь | Что это |
+|---|---|
+| `animations/sun/sun.png` | исходная картинка |
+| `animations/sun/sun.gif`, `sun.mp4` | готовая анимация |
+| `tools/animate_sun.py` | сборка (`python3 tools/animate_sun.py`, нужны numpy, pillow, scipy, ffmpeg) |
