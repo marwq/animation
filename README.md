@@ -107,3 +107,18 @@ node tools/render.js                     # PNG ×2 (или: node tools/render.js
 | `animations/sun/sun.png` | исходная картинка |
 | `animations/sun/sun.gif`, `sun.mp4` | готовая анимация |
 | `tools/animate_sun.py` | сборка (`python3 tools/animate_sun.py`, нужны numpy, pillow, scipy, ffmpeg) |
+
+## Красный робот — закрытые глаза
+
+![Варианты закрытых глаз](characters/red-robot/eyes-closed-sheet.png)
+
+| Файл | Вариант |
+|---|---|
+| `characters/red-robot/eyes-closed-1-sleep.png` | спокойно спит: дуги уголками вверх, реснички |
+| `characters/red-robot/eyes-closed-2-happy.png` | счастливый: дуги домиком ^^ |
+| `characters/red-robot/eyes-closed-3-lids.png` | веки опущены: форма глаз сохранена, красное веко с бликом и ресницами |
+| `characters/red-robot/eyes-closed-4-squeeze.png` | зажмурился: > < |
+| `characters/red-robot/no-eyes.png` | голова без глаз — основа для своих вариантов |
+| `characters/red-robot/original.png` | исходник |
+
+Сборка: `python3 tools/robot_closed_eyes.py` (numpy, pillow, scipy).
