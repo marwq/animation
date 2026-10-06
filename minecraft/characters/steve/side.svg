@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 1080" width="640" height="1080">
+<title>Стив — базовый персонаж — сбоку</title>
+<defs><filter id="rough" x="-2%" y="-2%" width="104%" height="104%"><feTurbulence type="fractalNoise" baseFrequency="0.03" numOctaves="2" seed="11"/><feDisplacementMap in="SourceGraphic" scale="3" xChannelSelector="R" yChannelSelector="G"/></filter></defs>
+<g filter="url(#rough)">
+<g id="side-arm-right">
+  <g class="face-left"><path d="M260 310 L380 310 L380 670 L260 670 Z" fill="#edb178"/><g transform="matrix(30 0 0 30 260 310)"><rect x="0" y="0" width="4" height="4.2" fill="#45cee8" stroke="none"/><path d="M0 4.2 L4 4.2" fill="none" stroke="#151515" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round" vector-effect="non-scaling-stroke"/></g><path d="M260 310 L380 310 L380 670 L260 670 Z" fill="none" stroke="#151515" stroke-width="3.4" stroke-linejoin="round"/></g>
+  <path d="M260 310 L380 310 L380 670 L260 670 Z" fill="none" stroke="#151515" stroke-width="4.5" stroke-linejoin="round"/>
+</g>
+<g id="side-leg-right">
+  <g class="face-left"><path d="M260 670 L380 670 L380 1030 L260 1030 Z" fill="#4f2f7d"/><g transform="matrix(30 0 0 30 260 670)"><path d="M0 10.5 Q0.8 10.2 1.4 10.6 Q2.2 11.0 2.8 10.5 Q3.4 10.1 4 10.4 V12 H0 Z" fill="#929292" stroke="#151515" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round" vector-effect="non-scaling-stroke"/></g><path d="M260 670 L380 670 L380 1030 L260 1030 Z" fill="none" stroke="#151515" stroke-width="3.4" stroke-linejoin="round"/></g>
+  <path d="M260 670 L380 670 L380 1030 L260 1030 Z" fill="none" stroke="#151515" stroke-width="4.5" stroke-linejoin="round"/>
+</g>
+<g id="side-body">
+  <g class="face-left"><path d="M260 310 L380 310 L380 670 L260 670 Z" fill="#45cee8"/><path d="M260 310 L380 310 L380 670 L260 670 Z" fill="none" stroke="#151515" stroke-width="3.4" stroke-linejoin="round"/></g>
+  <path d="M260 310 L380 310 L380 670 L260 670 Z" fill="none" stroke="#151515" stroke-width="4.5" stroke-linejoin="round"/>
+</g>
+<g id="side-head">
+  <g class="face-left"><path d="M200 70 L440 70 L440 310 L200 310 Z" fill="#edb178"/><g transform="matrix(30 0 0 30 200 70)"><path d="M0 0 H8 V4.8 Q7.4 5.05 7.0 4.45 Q6.6 3.8 6.0 3.9 Q5.35 4.0 5.2 3.3 Q5.0 2.4 4.2 2.3 Q3.0 2.1 1.8 2.0 Q1.0 1.95 0.75 2.4 L0.6 2.7 L0 2.7 Z" fill="#784100" stroke="#151515" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round" vector-effect="non-scaling-stroke"/></g><path d="M200 70 L440 70 L440 310 L200 310 Z" fill="none" stroke="#151515" stroke-width="3.4" stroke-linejoin="round"/></g>
+  <path d="M200 70 L440 70 L440 310 L200 310 Z" fill="none" stroke="#151515" stroke-width="4.5" stroke-linejoin="round"/>
+</g>
+<g id="side-leg-left">
+  <g class="face-left"><path d="M260 670 L380 670 L380 1030 L260 1030 Z" fill="#4f2f7d"/><g transform="matrix(30 0 0 30 260 670)"><path d="M0 10.5 Q0.8 10.2 1.4 10.6 Q2.2 11.0 2.8 10.5 Q3.4 10.1 4 10.4 V12 H0 Z" fill="#929292" stroke="#151515" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round" vector-effect="non-scaling-stroke"/></g><path d="M260 670 L380 670 L380 1030 L260 1030 Z" fill="none" stroke="#151515" stroke-width="3.4" stroke-linejoin="round"/></g>
+  <path d="M260 670 L380 670 L380 1030 L260 1030 Z" fill="none" stroke="#151515" stroke-width="4.5" stroke-linejoin="round"/>
+</g>
+<g id="side-arm-left">
+  <g class="face-left"><path d="M260 310 L380 310 L380 670 L260 670 Z" fill="#edb178"/><g transform="matrix(30 0 0 30 260 310)"><rect x="0" y="0" width="4" height="4.2" fill="#45cee8" stroke="none"/><path d="M0 4.2 L4 4.2" fill="none" stroke="#151515" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round" vector-effect="non-scaling-stroke"/></g><path d="M260 310 L380 310 L380 670 L260 670 Z" fill="none" stroke="#151515" stroke-width="3.4" stroke-linejoin="round"/></g>
+  <path d="M260 310 L380 310 L380 670 L260 670 Z" fill="none" stroke="#151515" stroke-width="4.5" stroke-linejoin="round"/>
+</g>
+</g>
+</svg>

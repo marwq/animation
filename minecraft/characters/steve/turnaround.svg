@@ -1,0 +1,152 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 2560 1360" width="2560" height="1360">
+<title>Стив — базовый персонаж — разворот</title>
+<defs><filter id="rough" x="-2%" y="-2%" width="104%" height="104%"><feTurbulence type="fractalNoise" baseFrequency="0.03" numOctaves="2" seed="11"/><feDisplacementMap in="SourceGraphic" scale="3" xChannelSelector="R" yChannelSelector="G"/></filter></defs>
+<rect width="2560" height="1360" fill="#fbf8f4"/>
+<text x="40" y="50" text-anchor="start" font-family="'DejaVu Sans', 'Segoe UI', Arial, sans-serif" font-size="34" font-weight="700" fill="#2e2823">Стив — базовый персонаж</text>
+<text x="40" y="82" text-anchor="start" font-family="'DejaVu Sans', 'Segoe UI', Arial, sans-serif" font-size="19" font-weight="400" fill="#8a8178">рост 32 ед. · 1 ед. = 1 пиксель скина · голова 8×8×8, тело 8×12×4, руки и ноги 4×12×4</text>
+<line x1="30" y1="1100" x2="2530" y2="1100" stroke="#ddd5ca" stroke-width="2" stroke-dasharray="10 10"/>
+<line x1="30" y1="740" x2="2530" y2="740" stroke="#ddd5ca" stroke-width="2" stroke-dasharray="10 10"/>
+<line x1="30" y1="380" x2="2530" y2="380" stroke="#ddd5ca" stroke-width="2" stroke-dasharray="10 10"/>
+<line x1="30" y1="251" x2="2530" y2="251" stroke="#ddd5ca" stroke-width="2" stroke-dasharray="10 10"/>
+<line x1="30" y1="140" x2="2530" y2="140" stroke="#ddd5ca" stroke-width="2" stroke-dasharray="10 10"/>
+<ellipse cx="320" cy="1100" rx="260" ry="13" fill="#000" opacity="0.08"/>
+<g id="view-front" transform="translate(0 70)" filter="url(#rough)">
+<g id="front-leg-right">
+  <g class="face-front"><path d="M200 670 L320 670 L320 1030 L200 1030 Z" fill="#4f2f7d"/><g transform="matrix(30 0 0 30 200 670)"><path d="M0 10.5 Q0.8 10.2 1.4 10.6 Q2.2 11.0 2.8 10.5 Q3.4 10.1 4 10.4 V12 H0 Z" fill="#929292" stroke="#151515" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round" vector-effect="non-scaling-stroke"/></g><path d="M200 670 L320 670 L320 1030 L200 1030 Z" fill="none" stroke="#151515" stroke-width="3.4" stroke-linejoin="round"/></g>
+  <path d="M200 670 L320 670 L320 1030 L200 1030 Z" fill="none" stroke="#151515" stroke-width="4.5" stroke-linejoin="round"/>
+</g>
+<g id="front-leg-left">
+  <g class="face-front"><path d="M320 670 L440 670 L440 1030 L320 1030 Z" fill="#4f2f7d"/><g transform="matrix(30 0 0 30 320 670)"><path d="M0 10.5 Q0.8 10.2 1.4 10.6 Q2.2 11.0 2.8 10.5 Q3.4 10.1 4 10.4 V12 H0 Z" fill="#929292" stroke="#151515" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round" vector-effect="non-scaling-stroke"/></g><path d="M320 670 L440 670 L440 1030 L320 1030 Z" fill="none" stroke="#151515" stroke-width="3.4" stroke-linejoin="round"/></g>
+  <path d="M320 670 L440 670 L440 1030 L320 1030 Z" fill="none" stroke="#151515" stroke-width="4.5" stroke-linejoin="round"/>
+</g>
+<g id="front-body">
+  <g class="face-front"><path d="M200 310 L440 310 L440 670 L200 670 Z" fill="#45cee8"/><g transform="matrix(30 0 0 30 200 310)"><path d="M1.6 0 H6.4 L6.3 0.7 L5.6 0.75 L5.5 1.3 L4.6 1.35 L4.45 1.9 L3.55 1.88 L3.45 1.3 L2.5 1.3 L2.4 0.72 L1.7 0.7 Z" fill="#edb178" stroke="#151515" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round" vector-effect="non-scaling-stroke"/></g><path d="M200 310 L440 310 L440 670 L200 670 Z" fill="none" stroke="#151515" stroke-width="3.4" stroke-linejoin="round"/></g>
+  <path d="M200 310 L440 310 L440 670 L200 670 Z" fill="none" stroke="#151515" stroke-width="4.5" stroke-linejoin="round"/>
+</g>
+<g id="front-arm-right">
+  <g class="face-front"><path d="M80 310 L200 310 L200 670 L80 670 Z" fill="#edb178"/><g transform="matrix(30 0 0 30 80 310)"><rect x="0" y="0" width="4" height="4.2" fill="#45cee8" stroke="none"/><path d="M0 4.2 L4 4.2" fill="none" stroke="#151515" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round" vector-effect="non-scaling-stroke"/></g><path d="M80 310 L200 310 L200 670 L80 670 Z" fill="none" stroke="#151515" stroke-width="3.4" stroke-linejoin="round"/></g>
+  <path d="M80 310 L200 310 L200 670 L80 670 Z" fill="none" stroke="#151515" stroke-width="4.5" stroke-linejoin="round"/>
+</g>
+<g id="front-arm-left">
+  <g class="face-front"><path d="M440 310 L560 310 L560 670 L440 670 Z" fill="#edb178"/><g transform="matrix(30 0 0 30 440 310)"><rect x="0" y="0" width="4" height="4.2" fill="#45cee8" stroke="none"/><path d="M0 4.2 L4 4.2" fill="none" stroke="#151515" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round" vector-effect="non-scaling-stroke"/></g><path d="M440 310 L560 310 L560 670 L440 670 Z" fill="none" stroke="#151515" stroke-width="3.4" stroke-linejoin="round"/></g>
+  <path d="M440 310 L560 310 L560 670 L440 670 Z" fill="none" stroke="#151515" stroke-width="4.5" stroke-linejoin="round"/>
+</g>
+<g id="front-head">
+  <g class="face-front"><path d="M200 70 L440 70 L440 310 L200 310 Z" fill="#edb178"/><g transform="matrix(30 0 0 30 200 70)"><path d="M0 0 H8 V2.0 Q7.65 2.15 7.35 1.75 Q6.3 1.45 5.0 1.6 Q3.6 1.75 2.4 1.55 Q1.5 1.42 1.2 1.95 Q1.0 2.6 0.5 2.7 L0 2.7 Z" fill="#784100" stroke="#151515" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round" vector-effect="non-scaling-stroke"/><rect x="1.05" y="3.1" width="1.9" height="1.12" fill="#fdfdfd" stroke="none"/><rect x="2.05" y="3.1" width="0.9" height="1.12" fill="#151515" stroke="none"/><rect x="2.57" y="3.24" width="0.22" height="0.22" fill="#fdfdfd" stroke="none"/><rect x="1.05" y="3.1" width="1.9" height="1.12" fill="none" stroke="#151515" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round" vector-effect="non-scaling-stroke"/><rect x="5.05" y="3.1" width="1.9" height="1.12" fill="#fdfdfd" stroke="none"/><rect x="5.05" y="3.1" width="0.9" height="1.12" fill="#151515" stroke="none"/><rect x="5.57" y="3.24" width="0.22" height="0.22" fill="#fdfdfd" stroke="none"/><rect x="5.05" y="3.1" width="1.9" height="1.12" fill="none" stroke="#151515" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round" vector-effect="non-scaling-stroke"/><path d="M1.0 2.68 Q2.0 2.5 2.98 2.6" fill="none" stroke="#151515" stroke-width="5.6" stroke-linecap="round" stroke-linejoin="round" vector-effect="non-scaling-stroke"/><path d="M5.02 2.6 Q6.0 2.5 7.0 2.68" fill="none" stroke="#151515" stroke-width="5.6" stroke-linecap="round" stroke-linejoin="round" vector-effect="non-scaling-stroke"/><path d="M3.35 5.75 Q4.0 5.85 4.65 5.7" fill="none" stroke="#151515" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round" vector-effect="non-scaling-stroke"/></g><path d="M200 70 L440 70 L440 310 L200 310 Z" fill="none" stroke="#151515" stroke-width="3.4" stroke-linejoin="round"/></g>
+  <path d="M200 70 L440 70 L440 310 L200 310 Z" fill="none" stroke="#151515" stroke-width="4.5" stroke-linejoin="round"/>
+</g>
+</g>
+<text x="320" y="1180" text-anchor="middle" font-family="'DejaVu Sans', 'Segoe UI', Arial, sans-serif" font-size="32" font-weight="700" fill="#5b524a" letter-spacing="4">СПЕРЕДИ</text>
+<ellipse cx="960" cy="1100" rx="251.01" ry="13" fill="#000" opacity="0.08"/>
+<g id="view-three-quarter" transform="translate(640 70)" filter="url(#rough)">
+<g id="three-quarter-arm-right">
+  <g class="face-front"><path d="M88.99 310 L187.29 310 L187.29 670 L88.99 670 Z" fill="#edb178"/><g transform="matrix(24.57 0 0 30 88.99 310)"><rect x="0" y="0" width="4" height="4.2" fill="#45cee8" stroke="none"/><path d="M0 4.2 L4 4.2" fill="none" stroke="#151515" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round" vector-effect="non-scaling-stroke"/></g><path d="M88.99 310 L187.29 310 L187.29 670 L88.99 670 Z" fill="none" stroke="#151515" stroke-width="3.4" stroke-linejoin="round"/></g>
+  <g class="face-left"><path d="M187.29 310 L256.12 310 L256.12 670 L187.29 670 Z" fill="#edb178"/><g transform="matrix(17.21 0 0 30 187.29 310)"><rect x="0" y="0" width="4" height="4.2" fill="#45cee8" stroke="none"/><path d="M0 4.2 L4 4.2" fill="none" stroke="#151515" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round" vector-effect="non-scaling-stroke"/></g><path d="M187.29 310 L256.12 310 L256.12 670 L187.29 670 Z" fill="#000000" opacity="0.23"/><path d="M187.29 310 L256.12 310 L256.12 670 L187.29 670 Z" fill="none" stroke="#151515" stroke-width="3.4" stroke-linejoin="round"/></g>
+  <path d="M88.99 310 L256.12 310 L256.12 670 L88.99 670 Z" fill="none" stroke="#151515" stroke-width="4.5" stroke-linejoin="round"/>
+</g>
+<g id="three-quarter-leg-right">
+  <g class="face-front"><path d="M187.29 670 L285.59 670 L285.59 1030 L187.29 1030 Z" fill="#4f2f7d"/><g transform="matrix(24.57 0 0 30 187.29 670)"><path d="M0 10.5 Q0.8 10.2 1.4 10.6 Q2.2 11.0 2.8 10.5 Q3.4 10.1 4 10.4 V12 H0 Z" fill="#929292" stroke="#151515" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round" vector-effect="non-scaling-stroke"/></g><path d="M187.29 670 L285.59 670 L285.59 1030 L187.29 1030 Z" fill="none" stroke="#151515" stroke-width="3.4" stroke-linejoin="round"/></g>
+  <g class="face-left"><path d="M285.59 670 L354.41 670 L354.41 1030 L285.59 1030 Z" fill="#4f2f7d"/><g transform="matrix(17.21 0 0 30 285.59 670)"><path d="M0 10.5 Q0.8 10.2 1.4 10.6 Q2.2 11.0 2.8 10.5 Q3.4 10.1 4 10.4 V12 H0 Z" fill="#929292" stroke="#151515" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round" vector-effect="non-scaling-stroke"/></g><path d="M285.59 670 L354.41 670 L354.41 1030 L285.59 1030 Z" fill="#000000" opacity="0.38"/><path d="M285.59 670 L354.41 670 L354.41 1030 L285.59 1030 Z" fill="none" stroke="#151515" stroke-width="3.4" stroke-linejoin="round"/></g>
+  <path d="M187.29 670 L354.42 670 L354.42 1030 L187.29 1030 Z" fill="none" stroke="#151515" stroke-width="4.5" stroke-linejoin="round"/>
+</g>
+<g id="three-quarter-body">
+  <g class="face-front"><path d="M187.29 310 L383.88 310 L383.88 670 L187.29 670 Z" fill="#45cee8"/><g transform="matrix(24.57 0 0 30 187.29 310)"><path d="M1.6 0 H6.4 L6.3 0.7 L5.6 0.75 L5.5 1.3 L4.6 1.35 L4.45 1.9 L3.55 1.88 L3.45 1.3 L2.5 1.3 L2.4 0.72 L1.7 0.7 Z" fill="#edb178" stroke="#151515" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round" vector-effect="non-scaling-stroke"/></g><path d="M187.29 310 L383.88 310 L383.88 670 L187.29 670 Z" fill="none" stroke="#151515" stroke-width="3.4" stroke-linejoin="round"/></g>
+  <g class="face-left"><path d="M383.88 310 L452.71 310 L452.71 670 L383.88 670 Z" fill="#45cee8"/><path d="M383.88 310 L452.71 310 L452.71 670 L383.88 670 Z" fill="#000000" opacity="0.23"/><path d="M383.88 310 L452.71 310 L452.71 670 L383.88 670 Z" fill="none" stroke="#151515" stroke-width="3.4" stroke-linejoin="round"/></g>
+  <path d="M187.29 310 L452.71 310 L452.71 670 L187.29 670 Z" fill="none" stroke="#151515" stroke-width="4.5" stroke-linejoin="round"/>
+</g>
+<g id="three-quarter-head">
+  <g class="face-front"><path d="M152.87 70 L349.47 70 L349.47 310 L152.87 310 Z" fill="#edb178"/><g transform="matrix(24.57 0 0 30 152.87 70)"><path d="M0 0 H8 V2.0 Q7.65 2.15 7.35 1.75 Q6.3 1.45 5.0 1.6 Q3.6 1.75 2.4 1.55 Q1.5 1.42 1.2 1.95 Q1.0 2.6 0.5 2.7 L0 2.7 Z" fill="#784100" stroke="#151515" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round" vector-effect="non-scaling-stroke"/><rect x="1.05" y="3.1" width="1.9" height="1.12" fill="#fdfdfd" stroke="none"/><rect x="2.05" y="3.1" width="0.9" height="1.12" fill="#151515" stroke="none"/><rect x="2.57" y="3.24" width="0.22" height="0.22" fill="#fdfdfd" stroke="none"/><rect x="1.05" y="3.1" width="1.9" height="1.12" fill="none" stroke="#151515" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round" vector-effect="non-scaling-stroke"/><rect x="5.05" y="3.1" width="1.9" height="1.12" fill="#fdfdfd" stroke="none"/><rect x="5.05" y="3.1" width="0.9" height="1.12" fill="#151515" stroke="none"/><rect x="5.57" y="3.24" width="0.22" height="0.22" fill="#fdfdfd" stroke="none"/><rect x="5.05" y="3.1" width="1.9" height="1.12" fill="none" stroke="#151515" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round" vector-effect="non-scaling-stroke"/><path d="M1.0 2.68 Q2.0 2.5 2.98 2.6" fill="none" stroke="#151515" stroke-width="5.6" stroke-linecap="round" stroke-linejoin="round" vector-effect="non-scaling-stroke"/><path d="M5.02 2.6 Q6.0 2.5 7.0 2.68" fill="none" stroke="#151515" stroke-width="5.6" stroke-linecap="round" stroke-linejoin="round" vector-effect="non-scaling-stroke"/><path d="M3.35 5.75 Q4.0 5.85 4.65 5.7" fill="none" stroke="#151515" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round" vector-effect="non-scaling-stroke"/></g><path d="M152.87 70 L349.47 70 L349.47 310 L152.87 310 Z" fill="none" stroke="#151515" stroke-width="3.4" stroke-linejoin="round"/></g>
+  <g class="face-left"><path d="M349.47 70 L487.13 70 L487.13 310 L349.47 310 Z" fill="#edb178"/><g transform="matrix(17.21 0 0 30 349.47 70)"><path d="M0 0 H8 V4.8 Q7.4 5.05 7.0 4.45 Q6.6 3.8 6.0 3.9 Q5.35 4.0 5.2 3.3 Q5.0 2.4 4.2 2.3 Q3.0 2.1 1.8 2.0 Q1.0 1.95 0.75 2.4 L0.6 2.7 L0 2.7 Z" fill="#784100" stroke="#151515" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round" vector-effect="non-scaling-stroke"/></g><path d="M349.47 70 L487.13 70 L487.13 310 L349.47 310 Z" fill="#000000" opacity="0.23"/><path d="M349.47 70 L487.13 70 L487.13 310 L349.47 310 Z" fill="none" stroke="#151515" stroke-width="3.4" stroke-linejoin="round"/></g>
+  <path d="M152.87 70 L487.13 70 L487.13 310 L152.87 310 Z" fill="none" stroke="#151515" stroke-width="4.5" stroke-linejoin="round"/>
+</g>
+<g id="three-quarter-leg-left">
+  <g class="face-front"><path d="M285.59 670 L383.88 670 L383.88 1030 L285.59 1030 Z" fill="#4f2f7d"/><g transform="matrix(24.57 0 0 30 285.59 670)"><path d="M0 10.5 Q0.8 10.2 1.4 10.6 Q2.2 11.0 2.8 10.5 Q3.4 10.1 4 10.4 V12 H0 Z" fill="#929292" stroke="#151515" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round" vector-effect="non-scaling-stroke"/></g><path d="M285.59 670 L383.88 670 L383.88 1030 L285.59 1030 Z" fill="none" stroke="#151515" stroke-width="3.4" stroke-linejoin="round"/></g>
+  <g class="face-left"><path d="M383.88 670 L452.71 670 L452.71 1030 L383.88 1030 Z" fill="#4f2f7d"/><g transform="matrix(17.21 0 0 30 383.88 670)"><path d="M0 10.5 Q0.8 10.2 1.4 10.6 Q2.2 11.0 2.8 10.5 Q3.4 10.1 4 10.4 V12 H0 Z" fill="#929292" stroke="#151515" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round" vector-effect="non-scaling-stroke"/></g><path d="M383.88 670 L452.71 670 L452.71 1030 L383.88 1030 Z" fill="#000000" opacity="0.38"/><path d="M383.88 670 L452.71 670 L452.71 1030 L383.88 1030 Z" fill="none" stroke="#151515" stroke-width="3.4" stroke-linejoin="round"/></g>
+  <path d="M285.58 670 L452.71 670 L452.71 1030 L285.58 1030 Z" fill="none" stroke="#151515" stroke-width="4.5" stroke-linejoin="round"/>
+</g>
+<g id="three-quarter-arm-left">
+  <g class="face-front"><path d="M383.88 310 L482.18 310 L482.18 670 L383.88 670 Z" fill="#edb178"/><g transform="matrix(24.57 0 0 30 383.88 310)"><rect x="0" y="0" width="4" height="4.2" fill="#45cee8" stroke="none"/><path d="M0 4.2 L4 4.2" fill="none" stroke="#151515" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round" vector-effect="non-scaling-stroke"/></g><path d="M383.88 310 L482.18 310 L482.18 670 L383.88 670 Z" fill="none" stroke="#151515" stroke-width="3.4" stroke-linejoin="round"/></g>
+  <g class="face-left"><path d="M482.18 310 L551.01 310 L551.01 670 L482.18 670 Z" fill="#edb178"/><g transform="matrix(17.21 0 0 30 482.18 310)"><rect x="0" y="0" width="4" height="4.2" fill="#45cee8" stroke="none"/><path d="M0 4.2 L4 4.2" fill="none" stroke="#151515" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round" vector-effect="non-scaling-stroke"/></g><path d="M482.18 310 L551.01 310 L551.01 670 L482.18 670 Z" fill="#000000" opacity="0.23"/><path d="M482.18 310 L551.01 310 L551.01 670 L482.18 670 Z" fill="none" stroke="#151515" stroke-width="3.4" stroke-linejoin="round"/></g>
+  <path d="M383.88 310 L551.01 310 L551.01 670 L383.88 670 Z" fill="none" stroke="#151515" stroke-width="4.5" stroke-linejoin="round"/>
+</g>
+</g>
+<text x="960" y="1180" text-anchor="middle" font-family="'DejaVu Sans', 'Segoe UI', Arial, sans-serif" font-size="32" font-weight="700" fill="#5b524a" letter-spacing="4">3/4</text>
+<ellipse cx="1600" cy="1100" rx="140" ry="13" fill="#000" opacity="0.08"/>
+<g id="view-side" transform="translate(1280 70)" filter="url(#rough)">
+<g id="side-arm-right">
+  <g class="face-left"><path d="M260 310 L380 310 L380 670 L260 670 Z" fill="#edb178"/><g transform="matrix(30 0 0 30 260 310)"><rect x="0" y="0" width="4" height="4.2" fill="#45cee8" stroke="none"/><path d="M0 4.2 L4 4.2" fill="none" stroke="#151515" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round" vector-effect="non-scaling-stroke"/></g><path d="M260 310 L380 310 L380 670 L260 670 Z" fill="none" stroke="#151515" stroke-width="3.4" stroke-linejoin="round"/></g>
+  <path d="M260 310 L380 310 L380 670 L260 670 Z" fill="none" stroke="#151515" stroke-width="4.5" stroke-linejoin="round"/>
+</g>
+<g id="side-leg-right">
+  <g class="face-left"><path d="M260 670 L380 670 L380 1030 L260 1030 Z" fill="#4f2f7d"/><g transform="matrix(30 0 0 30 260 670)"><path d="M0 10.5 Q0.8 10.2 1.4 10.6 Q2.2 11.0 2.8 10.5 Q3.4 10.1 4 10.4 V12 H0 Z" fill="#929292" stroke="#151515" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round" vector-effect="non-scaling-stroke"/></g><path d="M260 670 L380 670 L380 1030 L260 1030 Z" fill="none" stroke="#151515" stroke-width="3.4" stroke-linejoin="round"/></g>
+  <path d="M260 670 L380 670 L380 1030 L260 1030 Z" fill="none" stroke="#151515" stroke-width="4.5" stroke-linejoin="round"/>
+</g>
+<g id="side-body">
+  <g class="face-left"><path d="M260 310 L380 310 L380 670 L260 670 Z" fill="#45cee8"/><path d="M260 310 L380 310 L380 670 L260 670 Z" fill="none" stroke="#151515" stroke-width="3.4" stroke-linejoin="round"/></g>
+  <path d="M260 310 L380 310 L380 670 L260 670 Z" fill="none" stroke="#151515" stroke-width="4.5" stroke-linejoin="round"/>
+</g>
+<g id="side-head">
+  <g class="face-left"><path d="M200 70 L440 70 L440 310 L200 310 Z" fill="#edb178"/><g transform="matrix(30 0 0 30 200 70)"><path d="M0 0 H8 V4.8 Q7.4 5.05 7.0 4.45 Q6.6 3.8 6.0 3.9 Q5.35 4.0 5.2 3.3 Q5.0 2.4 4.2 2.3 Q3.0 2.1 1.8 2.0 Q1.0 1.95 0.75 2.4 L0.6 2.7 L0 2.7 Z" fill="#784100" stroke="#151515" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round" vector-effect="non-scaling-stroke"/></g><path d="M200 70 L440 70 L440 310 L200 310 Z" fill="none" stroke="#151515" stroke-width="3.4" stroke-linejoin="round"/></g>
+  <path d="M200 70 L440 70 L440 310 L200 310 Z" fill="none" stroke="#151515" stroke-width="4.5" stroke-linejoin="round"/>
+</g>
+<g id="side-leg-left">
+  <g class="face-left"><path d="M260 670 L380 670 L380 1030 L260 1030 Z" fill="#4f2f7d"/><g transform="matrix(30 0 0 30 260 670)"><path d="M0 10.5 Q0.8 10.2 1.4 10.6 Q2.2 11.0 2.8 10.5 Q3.4 10.1 4 10.4 V12 H0 Z" fill="#929292" stroke="#151515" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round" vector-effect="non-scaling-stroke"/></g><path d="M260 670 L380 670 L380 1030 L260 1030 Z" fill="none" stroke="#151515" stroke-width="3.4" stroke-linejoin="round"/></g>
+  <path d="M260 670 L380 670 L380 1030 L260 1030 Z" fill="none" stroke="#151515" stroke-width="4.5" stroke-linejoin="round"/>
+</g>
+<g id="side-arm-left">
+  <g class="face-left"><path d="M260 310 L380 310 L380 670 L260 670 Z" fill="#edb178"/><g transform="matrix(30 0 0 30 260 310)"><rect x="0" y="0" width="4" height="4.2" fill="#45cee8" stroke="none"/><path d="M0 4.2 L4 4.2" fill="none" stroke="#151515" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round" vector-effect="non-scaling-stroke"/></g><path d="M260 310 L380 310 L380 670 L260 670 Z" fill="none" stroke="#151515" stroke-width="3.4" stroke-linejoin="round"/></g>
+  <path d="M260 310 L380 310 L380 670 L260 670 Z" fill="none" stroke="#151515" stroke-width="4.5" stroke-linejoin="round"/>
+</g>
+</g>
+<text x="1600" y="1180" text-anchor="middle" font-family="'DejaVu Sans', 'Segoe UI', Arial, sans-serif" font-size="32" font-weight="700" fill="#5b524a" letter-spacing="4">СБОКУ</text>
+<ellipse cx="2240" cy="1100" rx="260" ry="13" fill="#000" opacity="0.08"/>
+<g id="view-back" transform="translate(1920 70)" filter="url(#rough)">
+<g id="back-arm-left">
+  <g class="face-back"><path d="M80 310 L200 310 L200 670 L80 670 Z" fill="#edb178"/><g transform="matrix(30 0 0 30 80 310)"><rect x="0" y="0" width="4" height="4.2" fill="#45cee8" stroke="none"/><path d="M0 4.2 L4 4.2" fill="none" stroke="#151515" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round" vector-effect="non-scaling-stroke"/></g><path d="M80 310 L200 310 L200 670 L80 670 Z" fill="none" stroke="#151515" stroke-width="3.4" stroke-linejoin="round"/></g>
+  <path d="M80 310 L200 310 L200 670 L80 670 Z" fill="none" stroke="#151515" stroke-width="4.5" stroke-linejoin="round"/>
+</g>
+<g id="back-leg-left">
+  <g class="face-back"><path d="M200 670 L320 670 L320 1030 L200 1030 Z" fill="#4f2f7d"/><g transform="matrix(30 0 0 30 200 670)"><path d="M0 10.5 Q0.8 10.2 1.4 10.6 Q2.2 11.0 2.8 10.5 Q3.4 10.1 4 10.4 V12 H0 Z" fill="#929292" stroke="#151515" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round" vector-effect="non-scaling-stroke"/></g><path d="M200 670 L320 670 L320 1030 L200 1030 Z" fill="none" stroke="#151515" stroke-width="3.4" stroke-linejoin="round"/></g>
+  <path d="M200 670 L320 670 L320 1030 L200 1030 Z" fill="none" stroke="#151515" stroke-width="4.5" stroke-linejoin="round"/>
+</g>
+<g id="back-body">
+  <g class="face-back"><path d="M200 310 L440 310 L440 670 L200 670 Z" fill="#45cee8"/><path d="M200 310 L440 310 L440 670 L200 670 Z" fill="none" stroke="#151515" stroke-width="3.4" stroke-linejoin="round"/></g>
+  <path d="M200 310 L440 310 L440 670 L200 670 Z" fill="none" stroke="#151515" stroke-width="4.5" stroke-linejoin="round"/>
+</g>
+<g id="back-head">
+  <g class="face-back"><path d="M200 70 L440 70 L440 310 L200 310 Z" fill="#edb178"/><g transform="matrix(30 0 0 30 200 70)"><path d="M0 0 H8 V4.8 Q7.2 5.3 6.4 4.9 Q5.4 4.45 4.6 5.0 Q3.8 5.45 3.0 4.9 Q2.0 4.45 1.4 5.0 Q0.7 5.4 0 4.8 Z" fill="#784100" stroke="#151515" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round" vector-effect="non-scaling-stroke"/></g><path d="M200 70 L440 70 L440 310 L200 310 Z" fill="none" stroke="#151515" stroke-width="3.4" stroke-linejoin="round"/></g>
+  <path d="M200 70 L440 70 L440 310 L200 310 Z" fill="none" stroke="#151515" stroke-width="4.5" stroke-linejoin="round"/>
+</g>
+<g id="back-leg-right">
+  <g class="face-back"><path d="M320 670 L440 670 L440 1030 L320 1030 Z" fill="#4f2f7d"/><g transform="matrix(30 0 0 30 320 670)"><path d="M0 10.5 Q0.8 10.2 1.4 10.6 Q2.2 11.0 2.8 10.5 Q3.4 10.1 4 10.4 V12 H0 Z" fill="#929292" stroke="#151515" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round" vector-effect="non-scaling-stroke"/></g><path d="M320 670 L440 670 L440 1030 L320 1030 Z" fill="none" stroke="#151515" stroke-width="3.4" stroke-linejoin="round"/></g>
+  <path d="M320 670 L440 670 L440 1030 L320 1030 Z" fill="none" stroke="#151515" stroke-width="4.5" stroke-linejoin="round"/>
+</g>
+<g id="back-arm-right">
+  <g class="face-back"><path d="M440 310 L560 310 L560 670 L440 670 Z" fill="#edb178"/><g transform="matrix(30 0 0 30 440 310)"><rect x="0" y="0" width="4" height="4.2" fill="#45cee8" stroke="none"/><path d="M0 4.2 L4 4.2" fill="none" stroke="#151515" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round" vector-effect="non-scaling-stroke"/></g><path d="M440 310 L560 310 L560 670 L440 670 Z" fill="none" stroke="#151515" stroke-width="3.4" stroke-linejoin="round"/></g>
+  <path d="M440 310 L560 310 L560 670 L440 670 Z" fill="none" stroke="#151515" stroke-width="4.5" stroke-linejoin="round"/>
+</g>
+</g>
+<text x="2240" y="1180" text-anchor="middle" font-family="'DejaVu Sans', 'Segoe UI', Arial, sans-serif" font-size="32" font-weight="700" fill="#5b524a" letter-spacing="4">СЗАДИ</text>
+<line x1="30" y1="1210" x2="2530" y2="1210" stroke="#e6dfd5" stroke-width="2"/>
+<rect x="200.29" y="1236" width="68" height="44" rx="10" fill="#edb178" stroke="#151515" stroke-width="3"/>
+<text x="234.29" y="1306" text-anchor="middle" font-family="'DejaVu Sans', 'Segoe UI', Arial, sans-serif" font-size="17" font-weight="700" fill="#5b524a">Кожа</text>
+<text x="234.29" y="1330" text-anchor="middle" font-family="'DejaVu Sans', 'Segoe UI', Arial, sans-serif" font-size="15" font-weight="400" fill="#8a8178">#edb178</text>
+<rect x="548.86" y="1236" width="68" height="44" rx="10" fill="#784100" stroke="#151515" stroke-width="3"/>
+<text x="582.86" y="1306" text-anchor="middle" font-family="'DejaVu Sans', 'Segoe UI', Arial, sans-serif" font-size="17" font-weight="700" fill="#5b524a">Волосы</text>
+<text x="582.86" y="1330" text-anchor="middle" font-family="'DejaVu Sans', 'Segoe UI', Arial, sans-serif" font-size="15" font-weight="400" fill="#8a8178">#784100</text>
+<rect x="897.43" y="1236" width="68" height="44" rx="10" fill="#45cee8" stroke="#151515" stroke-width="3"/>
+<text x="931.43" y="1306" text-anchor="middle" font-family="'DejaVu Sans', 'Segoe UI', Arial, sans-serif" font-size="17" font-weight="700" fill="#5b524a">Футболка</text>
+<text x="931.43" y="1330" text-anchor="middle" font-family="'DejaVu Sans', 'Segoe UI', Arial, sans-serif" font-size="15" font-weight="400" fill="#8a8178">#45cee8</text>
+<rect x="1246" y="1236" width="68" height="44" rx="10" fill="#4f2f7d" stroke="#151515" stroke-width="3"/>
+<text x="1280" y="1306" text-anchor="middle" font-family="'DejaVu Sans', 'Segoe UI', Arial, sans-serif" font-size="17" font-weight="700" fill="#5b524a">Штаны</text>
+<text x="1280" y="1330" text-anchor="middle" font-family="'DejaVu Sans', 'Segoe UI', Arial, sans-serif" font-size="15" font-weight="400" fill="#8a8178">#4f2f7d</text>
+<rect x="1594.57" y="1236" width="68" height="44" rx="10" fill="#929292" stroke="#151515" stroke-width="3"/>
+<text x="1628.57" y="1306" text-anchor="middle" font-family="'DejaVu Sans', 'Segoe UI', Arial, sans-serif" font-size="17" font-weight="700" fill="#5b524a">Обувь</text>
+<text x="1628.57" y="1330" text-anchor="middle" font-family="'DejaVu Sans', 'Segoe UI', Arial, sans-serif" font-size="15" font-weight="400" fill="#8a8178">#929292</text>
+<rect x="1943.14" y="1236" width="68" height="44" rx="10" fill="#fdfdfd" stroke="#151515" stroke-width="3"/>
+<text x="1977.14" y="1306" text-anchor="middle" font-family="'DejaVu Sans', 'Segoe UI', Arial, sans-serif" font-size="17" font-weight="700" fill="#5b524a">Белки глаз</text>
+<text x="1977.14" y="1330" text-anchor="middle" font-family="'DejaVu Sans', 'Segoe UI', Arial, sans-serif" font-size="15" font-weight="400" fill="#8a8178">#fdfdfd</text>
+<rect x="2291.71" y="1236" width="68" height="44" rx="10" fill="#151515" stroke="#151515" stroke-width="3"/>
+<text x="2325.71" y="1306" text-anchor="middle" font-family="'DejaVu Sans', 'Segoe UI', Arial, sans-serif" font-size="17" font-weight="700" fill="#5b524a">Контур</text>
+<text x="2325.71" y="1330" text-anchor="middle" font-family="'DejaVu Sans', 'Segoe UI', Arial, sans-serif" font-size="15" font-weight="400" fill="#8a8178">#151515</text>
+</svg>

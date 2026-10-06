@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 1080" width="640" height="1080">
+<title>Стив — базовый персонаж — сзади</title>
+<defs><filter id="rough" x="-2%" y="-2%" width="104%" height="104%"><feTurbulence type="fractalNoise" baseFrequency="0.03" numOctaves="2" seed="11"/><feDisplacementMap in="SourceGraphic" scale="3" xChannelSelector="R" yChannelSelector="G"/></filter></defs>
+<g filter="url(#rough)">
+<g id="back-arm-left">
+  <g class="face-back"><path d="M80 310 L200 310 L200 670 L80 670 Z" fill="#edb178"/><g transform="matrix(30 0 0 30 80 310)"><rect x="0" y="0" width="4" height="4.2" fill="#45cee8" stroke="none"/><path d="M0 4.2 L4 4.2" fill="none" stroke="#151515" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round" vector-effect="non-scaling-stroke"/></g><path d="M80 310 L200 310 L200 670 L80 670 Z" fill="none" stroke="#151515" stroke-width="3.4" stroke-linejoin="round"/></g>
+  <path d="M80 310 L200 310 L200 670 L80 670 Z" fill="none" stroke="#151515" stroke-width="4.5" stroke-linejoin="round"/>
+</g>
+<g id="back-leg-left">
+  <g class="face-back"><path d="M200 670 L320 670 L320 1030 L200 1030 Z" fill="#4f2f7d"/><g transform="matrix(30 0 0 30 200 670)"><path d="M0 10.5 Q0.8 10.2 1.4 10.6 Q2.2 11.0 2.8 10.5 Q3.4 10.1 4 10.4 V12 H0 Z" fill="#929292" stroke="#151515" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round" vector-effect="non-scaling-stroke"/></g><path d="M200 670 L320 670 L320 1030 L200 1030 Z" fill="none" stroke="#151515" stroke-width="3.4" stroke-linejoin="round"/></g>
+  <path d="M200 670 L320 670 L320 1030 L200 1030 Z" fill="none" stroke="#151515" stroke-width="4.5" stroke-linejoin="round"/>
+</g>
+<g id="back-body">
+  <g class="face-back"><path d="M200 310 L440 310 L440 670 L200 670 Z" fill="#45cee8"/><path d="M200 310 L440 310 L440 670 L200 670 Z" fill="none" stroke="#151515" stroke-width="3.4" stroke-linejoin="round"/></g>
+  <path d="M200 310 L440 310 L440 670 L200 670 Z" fill="none" stroke="#151515" stroke-width="4.5" stroke-linejoin="round"/>
+</g>
+<g id="back-head">
+  <g class="face-back"><path d="M200 70 L440 70 L440 310 L200 310 Z" fill="#edb178"/><g transform="matrix(30 0 0 30 200 70)"><path d="M0 0 H8 V4.8 Q7.2 5.3 6.4 4.9 Q5.4 4.45 4.6 5.0 Q3.8 5.45 3.0 4.9 Q2.0 4.45 1.4 5.0 Q0.7 5.4 0 4.8 Z" fill="#784100" stroke="#151515" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round" vector-effect="non-scaling-stroke"/></g><path d="M200 70 L440 70 L440 310 L200 310 Z" fill="none" stroke="#151515" stroke-width="3.4" stroke-linejoin="round"/></g>
+  <path d="M200 70 L440 70 L440 310 L200 310 Z" fill="none" stroke="#151515" stroke-width="4.5" stroke-linejoin="round"/>
+</g>
+<g id="back-leg-right">
+  <g class="face-back"><path d="M320 670 L440 670 L440 1030 L320 1030 Z" fill="#4f2f7d"/><g transform="matrix(30 0 0 30 320 670)"><path d="M0 10.5 Q0.8 10.2 1.4 10.6 Q2.2 11.0 2.8 10.5 Q3.4 10.1 4 10.4 V12 H0 Z" fill="#929292" stroke="#151515" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round" vector-effect="non-scaling-stroke"/></g><path d="M320 670 L440 670 L440 1030 L320 1030 Z" fill="none" stroke="#151515" stroke-width="3.4" stroke-linejoin="round"/></g>
+  <path d="M320 670 L440 670 L440 1030 L320 1030 Z" fill="none" stroke="#151515" stroke-width="4.5" stroke-linejoin="round"/>
+</g>
+<g id="back-arm-right">
+  <g class="face-back"><path d="M440 310 L560 310 L560 670 L440 670 Z" fill="#edb178"/><g transform="matrix(30 0 0 30 440 310)"><rect x="0" y="0" width="4" height="4.2" fill="#45cee8" stroke="none"/><path d="M0 4.2 L4 4.2" fill="none" stroke="#151515" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round" vector-effect="non-scaling-stroke"/></g><path d="M440 310 L560 310 L560 670 L440 670 Z" fill="none" stroke="#151515" stroke-width="3.4" stroke-linejoin="round"/></g>
+  <path d="M440 310 L560 310 L560 670 L440 670 Z" fill="none" stroke="#151515" stroke-width="4.5" stroke-linejoin="round"/>
+</g>
+</g>
+</svg>

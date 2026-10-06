@@ -6,19 +6,25 @@
 и переносятся на экран аффинным преобразованием. Проекция ортогональная, поэтому
 перенос точный при любом повороте.
 
-Стиль: плоская заливка, одна тень на гранях, которые смотрят вбок, светлая верхняя
-грань, толстый контур вокруг каждой коробки и тонкие внутренние рёбра.
+Стиль — как у рисованных Minecraft-анимаций: плоская заливка, грани, которые смотрят вбок,
+темнее, тонкий чёрный контур одной толщины по силуэту и по рёбрам, лёгкая «рукописная»
+неровность линий (фильтр ROUGH).
 
 Система координат модели: x — к левому боку персонажа (вправо от зрителя на виде
 спереди), y — вверх, z — к зрителю. Земля — y = 0.
 """
 import math
 
-OUT = '#1c1a1a'       # контур
-SW = 7                # контур каждой коробки, px на экране
-DET = 3.6             # внутренние рёбра и линии рисунка, px
-SHADE = ('#2b2140', 0.28)   # тень: цвет и прозрачность поверх грани
-LIGHT = ('#ffffff', 0.16)   # подсветка верхних граней
+OUT = '#151515'       # контур
+SW = 4.5              # контур каждой коробки, px на экране
+DET = 3.4             # внутренние рёбра и линии рисунка, px
+SHADE = ('#000000', 0.23)   # тень боковых граней: цвет и прозрачность поверх заливки
+LIGHT = ('#ffffff', 0.10)   # подсветка верхних граней
+# «рукописная» неровность линий: шум смещает пиксели на ±1,5 px
+ROUGH = ('<filter id="rough" x="-2%" y="-2%" width="104%" height="104%">'
+         '<feTurbulence type="fractalNoise" baseFrequency="0.03" numOctaves="2" seed="11"/>'
+         '<feDisplacementMap in="SourceGraphic" scale="3" xChannelSelector="R" yChannelSelector="G"/>'
+         '</filter>')
 FONT = "'DejaVu Sans', 'Segoe UI', Arial, sans-serif"
 
 NSS = 'vector-effect="non-scaling-stroke"'
@@ -52,9 +58,6 @@ def line(points, sw=DET, stroke=OUT):
     return poly(points, 'none', stroke, sw, closed=False)
 
 
-def ell(cx, cy, rx, ry, fill, stroke=OUT, sw=DET, extra=''):
-    return (f'<ellipse cx="{n(cx)}" cy="{n(cy)}" rx="{n(rx)}" ry="{n(ry)}" fill="{fill}" '
-            f'{stroke_attrs(stroke, sw)}{" " + extra if extra else ""}/>')
 
 
 def rect(x, y, w, h, fill, stroke=None, sw=DET, r=0, extra=''):
@@ -63,16 +66,8 @@ def rect(x, y, w, h, fill, stroke=None, sw=DET, r=0, extra=''):
             f'{stroke_attrs(stroke, sw)}{" " + extra if extra else ""}/>')
 
 
-def mix(c1, c2, t):
-    """Смешать два цвета #rrggbb: t=0 → c1, t=1 → c2."""
-    a = [int(c1[i:i + 2], 16) for i in (1, 3, 5)]
-    b = [int(c2[i:i + 2], 16) for i in (1, 3, 5)]
-    return '#' + ''.join(f'{round(x + (y - x) * t):02x}' for x, y in zip(a, b))
 
 
-def shaded(color):
-    """Цвет грани в тени — как он выглядит на рендере."""
-    return mix(color, SHADE[0], SHADE[1])
 
 
 # ------------------------------------------------------------------ геометрия
@@ -152,10 +147,11 @@ class Box:
              'side' рисуется на обоих боках, на правом — зеркально, так что u=0 всегда
              у переднего ребра. 'around' — на всех четырёх вертикальных гранях.
     pivot, rot — точка поворота и углы (x, y, z) в градусах — для поз;
-    after — имена коробок, поверх которых эта рисуется всегда.
+    after — имена коробок, поверх которых эта рисуется всегда;
+    shade — своя густота тени боковых граней (по умолчанию SHADE).
     """
 
-    def __init__(self, name, size, at, color, decals=None, pivot=None, rot=(0, 0, 0), after=()):
+    def __init__(self, name, size, at, color, decals=None, pivot=None, rot=(0, 0, 0), after=(), shade=None):
         self.name, self.size, self.at = name, size, at
         self.color = color if isinstance(color, dict) else {'default': color}
         self.decals = decals or {}
@@ -163,10 +159,11 @@ class Box:
         self.pivot = pivot or add(at, (w / 2, h / 2, d / 2))
         self.rot = rot
         self.after = tuple(after)
+        self.shade = shade
 
     def posed(self, rot=None, pivot=None):
         b = Box(self.name, self.size, self.at, self.color, self.decals, pivot or self.pivot,
-                rot if rot is not None else self.rot, self.after)
+                rot if rot is not None else self.rot, self.after, self.shade)
         return b
 
     def face_color(self, face):
@@ -272,7 +269,7 @@ def render(boxes, cam, pfx='v'):
             if nv[1] > 0.55:
                 g.append(f'<path d="{poly_d}" fill="{LIGHT[0]}" opacity="{LIGHT[1]}"/>')
             elif lit is None or face != lit[0]:
-                g.append(f'<path d="{poly_d}" fill="{SHADE[0]}" opacity="{SHADE[1]}"/>')
+                g.append(f'<path d="{poly_d}" fill="{SHADE[0]}" opacity="{b.shade or SHADE[1]}"/>')
             g.append(f'<path d="{poly_d}" fill="none" stroke="{OUT}" stroke-width="{DET}" '
                      f'stroke-linejoin="round"/>')
             parts.append(f'<g class="face-{face}">' + ''.join(g) + '</g>')
@@ -297,11 +294,12 @@ def bounds(boxes, cam):
     return min(xs), min(ys), max(xs), max(ys)
 
 
-def svg(w, h, body, title='', bg=None):
+def svg(w, h, body, title='', bg=None, defs=''):
     t = f'<title>{title}</title>\n' if title else ''
     b = f'<rect width="{w}" height="{h}" fill="{bg}"/>\n' if bg else ''
+    d = f'<defs>{defs}</defs>\n' if defs else ''
     return (f'<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 {n(w)} {n(h)}" '
-            f'width="{n(w)}" height="{n(h)}">\n{t}{b}{body}\n</svg>\n')
+            f'width="{n(w)}" height="{n(h)}">\n{t}{d}{b}{body}\n</svg>\n')
 
 
 def text(x, y, s, size=30, weight=700, fill='#5b524a', anchor='middle', spacing=0, family=FONT):
