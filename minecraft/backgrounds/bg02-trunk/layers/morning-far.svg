@@ -1,0 +1,38 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1080 1920" width="1080" height="1920">
+<title>bg02-trunk — morning: дальний план</title>
+<defs>
+<linearGradient id="bg02-morning-sky" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#4e9ce8"/><stop offset="0.6" stop-color="#8ccaf6"/><stop offset="1" stop-color="#d8f2ff"/></linearGradient>
+<radialGradient id="bg02-morning-vig" cx="0.5" cy="0.46" r="0.78">
+  <stop offset="0.55" stop-color="#10202a" stop-opacity="0"/>
+  <stop offset="1" stop-color="#10202a" stop-opacity="0.22"/>
+</radialGradient>
+<filter id="bg02-morning-ink" x="-5%" y="-5%" width="110%" height="110%" color-interpolation-filters="sRGB">
+  <feMorphology in="SourceAlpha" operator="dilate" radius="3.3" result="d"/>
+  <feFlood flood-color="#1c1b1f" result="c"/>
+  <feComposite in="c" in2="d" operator="in" result="o"/>
+  <feMerge result="m"><feMergeNode in="o"/><feMergeNode in="SourceGraphic"/></feMerge>
+  <feTurbulence type="fractalNoise" baseFrequency="0.022" numOctaves="2" seed="5" result="t"/>
+  <feDisplacementMap in="m" in2="t" scale="4" xChannelSelector="R" yChannelSelector="G"/>
+</filter>
+<filter id="bg02-morning-ink-soft" x="-5%" y="-5%" width="110%" height="110%" color-interpolation-filters="sRGB">
+  <feMorphology in="SourceAlpha" operator="dilate" radius="1.6" result="d"/>
+  <feFlood flood-color="#1c1b1f" flood-opacity="0.55" result="c"/>
+  <feComposite in="c" in2="d" operator="in" result="o"/>
+  <feMerge><feMergeNode in="o"/><feMergeNode in="SourceGraphic"/></feMerge>
+</filter>
+<filter id="bg02-morning-blur-far" x="-5%" y="-5%" width="110%" height="110%"><feGaussianBlur stdDeviation="4.5"/></filter>
+<filter id="bg02-morning-blur-mid" x="-5%" y="-5%" width="110%" height="110%"><feGaussianBlur stdDeviation="1.8"/></filter>
+<filter id="bg02-morning-blur-dof" x="-5%" y="-5%" width="110%" height="110%"><feGaussianBlur stdDeviation="11"/></filter>
+<filter id="bg02-morning-glow" x="-60%" y="-60%" width="220%" height="220%"><feGaussianBlur stdDeviation="28"/></filter>
+<filter id="bg02-morning-soft" x="-30%" y="-30%" width="160%" height="160%"><feGaussianBlur stdDeviation="8"/></filter>
+<filter id="bg02-morning-blur-soft" x="-30%" y="-30%" width="160%" height="160%"><feGaussianBlur stdDeviation="14"/></filter>
+</defs>
+<g id="far">
+<rect x="0" y="0" width="1080" height="1280" fill="url(#bg02-morning-sky)"/>
+<rect x="40" y="560" width="210" height="35" fill="#ffffff"/>
+<rect x="110" y="595" width="280" height="35" fill="#ffffff"/>
+<rect x="-30" y="595" width="140" height="35" fill="#ffffff"/>
+<rect x="40" y="560" width="210" height="8.4" fill="#ffffff"/>
+<g filter="url(#bg02-morning-blur-dof)"><path d="M-40 1920 L-40 1240 L-40 1206.1 L4 1206.1 L4 1184.1 L92 1184.1 L92 1206.1 L136 1206.1 L136 1206.1 L180 1206.1 L180 1206.1 L312 1206.1 L312 1228.1 L356 1228.1 L356 1240 L400 1240 L400 1240 L444 1240 L444 1240 L576 1240 L576 1240 L620 1240 L620 1240 L708 1240 L708 1240 L796 1240 L796 1240 L840 1240 L840 1218 L972 1218 L972 1240 L1060 1240 L1060 1240 L1080 1240 L1080 1218 L1080 1920 Z" fill="#9cc0e0"/><path d="M-40 1920 L-40 1250 L-40 1220.1 L-4 1220.1 L-4 1210 L68 1210 L68 1228 L176 1228 L176 1210 L212 1210 L212 1228 L248 1228 L248 1246 L356 1246 L356 1228 L428 1228 L428 1210 L500 1210 L500 1210 L536 1210 L536 1210 L572 1210 L572 1210 L608 1210 L608 1228 L680 1228 L680 1246 L752 1246 L752 1228 L860 1228 L860 1210 L896 1210 L896 1210 L1004 1210 L1004 1228 L1040 1228 L1040 1246 L1076 1246 L1076 1228 L1080 1228 L1080 1246 L1080 1920 Z" fill="#7ab07a"/><rect x="51" y="1182" width="18" height="66" fill="#5e9a5e"/><rect x="15" y="1134" width="90" height="36" fill="#5e9a5e"/><rect x="30" y="1110" width="60" height="27" fill="#5e9a5e"/><rect x="243.1" y="1197.4" width="13.8" height="50.6" fill="#5e9a5e"/><rect x="215.5" y="1160.6" width="69" height="27.6" fill="#5e9a5e"/><rect x="227" y="1142.2" width="46" height="20.7" fill="#5e9a5e"/><rect x="0" y="1248" width="1080" height="680" fill="#6cc04a"/></g>
+</g>
+</svg>

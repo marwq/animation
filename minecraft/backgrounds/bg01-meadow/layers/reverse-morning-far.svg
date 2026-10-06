@@ -1,0 +1,46 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1080 1920" width="1080" height="1920">
+<title>bg01-meadow — reverse-morning: дальний план</title>
+<defs>
+<linearGradient id="bg01r-morning-sky" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#4e9ce8"/><stop offset="0.6" stop-color="#8ccaf6"/><stop offset="1" stop-color="#d8f2ff"/></linearGradient>
+<radialGradient id="bg01r-morning-vig" cx="0.5" cy="0.46" r="0.78">
+  <stop offset="0.55" stop-color="#10202a" stop-opacity="0"/>
+  <stop offset="1" stop-color="#10202a" stop-opacity="0.22"/>
+</radialGradient>
+<filter id="bg01r-morning-ink" x="-5%" y="-5%" width="110%" height="110%" color-interpolation-filters="sRGB">
+  <feMorphology in="SourceAlpha" operator="dilate" radius="3.3" result="d"/>
+  <feFlood flood-color="#1c1b1f" result="c"/>
+  <feComposite in="c" in2="d" operator="in" result="o"/>
+  <feMerge result="m"><feMergeNode in="o"/><feMergeNode in="SourceGraphic"/></feMerge>
+  <feTurbulence type="fractalNoise" baseFrequency="0.022" numOctaves="2" seed="5" result="t"/>
+  <feDisplacementMap in="m" in2="t" scale="4" xChannelSelector="R" yChannelSelector="G"/>
+</filter>
+<filter id="bg01r-morning-ink-soft" x="-5%" y="-5%" width="110%" height="110%" color-interpolation-filters="sRGB">
+  <feMorphology in="SourceAlpha" operator="dilate" radius="1.6" result="d"/>
+  <feFlood flood-color="#1c1b1f" flood-opacity="0.55" result="c"/>
+  <feComposite in="c" in2="d" operator="in" result="o"/>
+  <feMerge><feMergeNode in="o"/><feMergeNode in="SourceGraphic"/></feMerge>
+</filter>
+<filter id="bg01r-morning-blur-far" x="-5%" y="-5%" width="110%" height="110%"><feGaussianBlur stdDeviation="4.5"/></filter>
+<filter id="bg01r-morning-blur-mid" x="-5%" y="-5%" width="110%" height="110%"><feGaussianBlur stdDeviation="1.8"/></filter>
+<filter id="bg01r-morning-blur-dof" x="-5%" y="-5%" width="110%" height="110%"><feGaussianBlur stdDeviation="11"/></filter>
+<filter id="bg01r-morning-glow" x="-60%" y="-60%" width="220%" height="220%"><feGaussianBlur stdDeviation="28"/></filter>
+<filter id="bg01r-morning-soft" x="-30%" y="-30%" width="160%" height="160%"><feGaussianBlur stdDeviation="8"/></filter>
+<filter id="bg01r-morning-blur-soft" x="-30%" y="-30%" width="160%" height="160%"><feGaussianBlur stdDeviation="14"/></filter>
+<linearGradient id="bg01r-morning-ground" x1="0" y1="1060" x2="0" y2="1920" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#a8d890"/><stop offset="0.18" stop-color="#6cc04a"/><stop offset="1" stop-color="#56a43a"/></linearGradient><linearGradient id="bg01r-morning-water" x1="0" y1="1314" x2="0" y2="1920" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#9cd0ff"/><stop offset="0.35" stop-color="#3a78d8"/><stop offset="1" stop-color="#2858b0"/></linearGradient></defs>
+<g id="far">
+<rect x="0" y="0" width="1080" height="1100" fill="url(#bg01r-morning-sky)"/>
+<rect x="140" y="260" width="148" height="37" fill="#ffffff"/>
+<rect x="66" y="297" width="370" height="37" fill="#ffffff"/>
+<rect x="362" y="297" width="148" height="37" fill="#ffffff"/>
+<rect x="140" y="260" width="148" height="8.9" fill="#ffffff"/>
+<rect x="700" y="420" width="186" height="31" fill="#ffffff"/>
+<rect x="762" y="451" width="248" height="31" fill="#ffffff"/>
+<rect x="638" y="451" width="124" height="31" fill="#ffffff"/>
+<rect x="700" y="420" width="186" height="7.4" fill="#ffffff"/>
+<rect x="420" y="760" width="184" height="23" fill="#ffffff"/>
+<rect x="466" y="783" width="92" height="23" fill="#ffffff"/>
+<rect x="420" y="760" width="184" height="5.5" fill="#ffffff"/>
+<g filter="url(#bg01r-morning-blur-far)"><path d="M-60 1065 L-60 1040 L-20 1040 L-20 1000 L20 1000 L20 980 L60 980 L60 920 L100 920 L100 860 L140 860 L140 840 L180 840 L180 840 L220 840 L220 880 L260 880 L260 920 L300 920 L300 980 L340 980 L340 1000 L380 1000 L380 1060 L420 1060 L420 1065 Z" fill="#9cc0e0"/><path d="M-40 1920 L-40 1065 L-40 963.3 L48 963.3 L48 955 L92 955 L92 977 L180 977 L180 999 L268 999 L268 1021 L356 1021 L356 999 L400 999 L400 999 L488 999 L488 977 L532 977 L532 999 L620 999 L620 977 L664 977 L664 955 L752 955 L752 977 L796 977 L796 999 L884 999 L884 999 L928 999 L928 977 L972 977 L972 999 L1060 999 L1060 977 L1120 977 L1120 955 L1120 1920 Z" fill="#9cc0e0"/></g>
+<g filter="url(#bg01r-morning-blur-mid)"><path d="M-40 1920 L-40 1070 L-40 1037.2 L68 1037.2 L68 1024 L104 1024 L104 1024 L140 1024 L140 1024 L176 1024 L176 1024 L248 1024 L248 1024 L320 1024 L320 1042 L356 1042 L356 1024 L464 1024 L464 1024 L536 1024 L536 1042 L608 1042 L608 1060 L644 1060 L644 1060 L752 1060 L752 1042 L824 1042 L824 1042 L860 1042 L860 1060 L932 1060 L932 1042 L968 1042 L968 1042 L1040 1042 L1040 1024 L1112 1024 L1112 1024 L1120 1024 L1120 1042 L1120 1920 Z" fill="#7ab07a"/><rect x="65.5" y="1031" width="9" height="33" fill="#5e9a5e"/><rect x="47.5" y="1007" width="45" height="18" fill="#5e9a5e"/><rect x="55" y="995" width="30" height="13.5" fill="#5e9a5e"/><rect x="184.3" y="1022.2" width="11.4" height="41.8" fill="#5e9a5e"/><rect x="161.5" y="991.8" width="57" height="22.8" fill="#5e9a5e"/><rect x="171" y="976.6" width="38" height="17.1" fill="#5e9a5e"/><rect x="325.8" y="1033.2" width="8.4" height="30.8" fill="#5e9a5e"/><rect x="309" y="1010.8" width="42" height="16.8" fill="#5e9a5e"/><rect x="316" y="999.6" width="28" height="12.6" fill="#5e9a5e"/><rect x="464.9" y="1026.6" width="10.2" height="37.4" fill="#5e9a5e"/><rect x="444.5" y="999.4" width="51" height="20.4" fill="#5e9a5e"/><rect x="453" y="985.8" width="34" height="15.3" fill="#5e9a5e"/><rect x="606.1" y="1035.4" width="7.8" height="28.6" fill="#5e9a5e"/><rect x="590.5" y="1014.6" width="39" height="15.6" fill="#5e9a5e"/><rect x="597" y="1004.2" width="26" height="11.7" fill="#5e9a5e"/><rect x="925.2" y="1028.8" width="9.6" height="35.2" fill="#5e9a5e"/><rect x="906" y="1003.2" width="48" height="19.2" fill="#5e9a5e"/><rect x="914" y="990.4" width="32" height="14.4" fill="#5e9a5e"/><rect x="1024.6" y="1024.4" width="10.8" height="39.6" fill="#5e9a5e"/><rect x="1003" y="995.6" width="54" height="21.6" fill="#5e9a5e"/><rect x="1012" y="981.2" width="36" height="16.2" fill="#5e9a5e"/></g>
+</g>
+</svg>

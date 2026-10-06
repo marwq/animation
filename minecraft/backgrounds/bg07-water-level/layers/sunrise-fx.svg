@@ -1,0 +1,34 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1080 1920" width="1080" height="1920">
+<title>bg07-water-level — sunrise: виньетка и свет</title>
+<defs>
+<linearGradient id="bg07-sunrise-sky" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#3a5aa8"/><stop offset="0.45" stop-color="#f08a7a"/><stop offset="0.8" stop-color="#ffb46a"/><stop offset="1" stop-color="#ffe2a0"/></linearGradient>
+<radialGradient id="bg07-sunrise-vig" cx="0.5" cy="0.46" r="0.78">
+  <stop offset="0.55" stop-color="#3a1408" stop-opacity="0"/>
+  <stop offset="1" stop-color="#3a1408" stop-opacity="0.28"/>
+</radialGradient>
+<filter id="bg07-sunrise-ink" x="-5%" y="-5%" width="110%" height="110%" color-interpolation-filters="sRGB">
+  <feMorphology in="SourceAlpha" operator="dilate" radius="3.3" result="d"/>
+  <feFlood flood-color="#2a1810" result="c"/>
+  <feComposite in="c" in2="d" operator="in" result="o"/>
+  <feMerge result="m"><feMergeNode in="o"/><feMergeNode in="SourceGraphic"/></feMerge>
+  <feTurbulence type="fractalNoise" baseFrequency="0.022" numOctaves="2" seed="5" result="t"/>
+  <feDisplacementMap in="m" in2="t" scale="4" xChannelSelector="R" yChannelSelector="G"/>
+</filter>
+<filter id="bg07-sunrise-ink-soft" x="-5%" y="-5%" width="110%" height="110%" color-interpolation-filters="sRGB">
+  <feMorphology in="SourceAlpha" operator="dilate" radius="1.6" result="d"/>
+  <feFlood flood-color="#2a1810" flood-opacity="0.55" result="c"/>
+  <feComposite in="c" in2="d" operator="in" result="o"/>
+  <feMerge><feMergeNode in="o"/><feMergeNode in="SourceGraphic"/></feMerge>
+</filter>
+<filter id="bg07-sunrise-blur-far" x="-5%" y="-5%" width="110%" height="110%"><feGaussianBlur stdDeviation="4.5"/></filter>
+<filter id="bg07-sunrise-blur-mid" x="-5%" y="-5%" width="110%" height="110%"><feGaussianBlur stdDeviation="1.8"/></filter>
+<filter id="bg07-sunrise-blur-dof" x="-5%" y="-5%" width="110%" height="110%"><feGaussianBlur stdDeviation="11"/></filter>
+<filter id="bg07-sunrise-glow" x="-60%" y="-60%" width="220%" height="220%"><feGaussianBlur stdDeviation="28"/></filter>
+<filter id="bg07-sunrise-soft" x="-30%" y="-30%" width="160%" height="160%"><feGaussianBlur stdDeviation="8"/></filter>
+<filter id="bg07-sunrise-blur-soft" x="-30%" y="-30%" width="160%" height="160%"><feGaussianBlur stdDeviation="14"/></filter>
+<linearGradient id="bg07-sunrise-ground" x1="0" y1="1180" x2="0" y2="1920" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#b8b88a"/><stop offset="0.18" stop-color="#7ab84a"/><stop offset="1" stop-color="#5e9a3a"/></linearGradient><linearGradient id="bg07-sunrise-water" x1="0" y1="1326" x2="0" y2="1920" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#ffc890"/><stop offset="0.35" stop-color="#4a7ac8"/><stop offset="1" stop-color="#3058a0"/></linearGradient></defs>
+<g id="fx">
+<rect x="0" y="0" width="1080" height="1920" fill="#ff9a50" opacity="0.06"/>
+<rect x="0" y="0" width="1080" height="1920" fill="url(#bg07-sunrise-vig)"/>
+</g>
+</svg>

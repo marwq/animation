@@ -1,0 +1,48 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1080 1920" width="1080" height="1920">
+<title>bg04-sky — sunrise: дальний план</title>
+<defs>
+<linearGradient id="bg04-sunrise-sky" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#3a5aa8"/><stop offset="0.45" stop-color="#f08a7a"/><stop offset="0.8" stop-color="#ffb46a"/><stop offset="1" stop-color="#ffe2a0"/></linearGradient>
+<radialGradient id="bg04-sunrise-vig" cx="0.5" cy="0.46" r="0.78">
+  <stop offset="0.55" stop-color="#3a1408" stop-opacity="0"/>
+  <stop offset="1" stop-color="#3a1408" stop-opacity="0.28"/>
+</radialGradient>
+<filter id="bg04-sunrise-ink" x="-5%" y="-5%" width="110%" height="110%" color-interpolation-filters="sRGB">
+  <feMorphology in="SourceAlpha" operator="dilate" radius="3.3" result="d"/>
+  <feFlood flood-color="#2a1810" result="c"/>
+  <feComposite in="c" in2="d" operator="in" result="o"/>
+  <feMerge result="m"><feMergeNode in="o"/><feMergeNode in="SourceGraphic"/></feMerge>
+  <feTurbulence type="fractalNoise" baseFrequency="0.022" numOctaves="2" seed="5" result="t"/>
+  <feDisplacementMap in="m" in2="t" scale="4" xChannelSelector="R" yChannelSelector="G"/>
+</filter>
+<filter id="bg04-sunrise-ink-soft" x="-5%" y="-5%" width="110%" height="110%" color-interpolation-filters="sRGB">
+  <feMorphology in="SourceAlpha" operator="dilate" radius="1.6" result="d"/>
+  <feFlood flood-color="#2a1810" flood-opacity="0.55" result="c"/>
+  <feComposite in="c" in2="d" operator="in" result="o"/>
+  <feMerge><feMergeNode in="o"/><feMergeNode in="SourceGraphic"/></feMerge>
+</filter>
+<filter id="bg04-sunrise-blur-far" x="-5%" y="-5%" width="110%" height="110%"><feGaussianBlur stdDeviation="4.5"/></filter>
+<filter id="bg04-sunrise-blur-mid" x="-5%" y="-5%" width="110%" height="110%"><feGaussianBlur stdDeviation="1.8"/></filter>
+<filter id="bg04-sunrise-blur-dof" x="-5%" y="-5%" width="110%" height="110%"><feGaussianBlur stdDeviation="11"/></filter>
+<filter id="bg04-sunrise-glow" x="-60%" y="-60%" width="220%" height="220%"><feGaussianBlur stdDeviation="28"/></filter>
+<filter id="bg04-sunrise-soft" x="-30%" y="-30%" width="160%" height="160%"><feGaussianBlur stdDeviation="8"/></filter>
+<filter id="bg04-sunrise-blur-soft" x="-30%" y="-30%" width="160%" height="160%"><feGaussianBlur stdDeviation="14"/></filter>
+</defs>
+<g id="far">
+<rect x="0" y="0" width="1080" height="1470" fill="url(#bg04-sunrise-sky)"/>
+<ellipse cx="540" cy="1430" rx="560" ry="300" fill="#ffe2a0" opacity="0.9" filter="url(#bg04-sunrise-glow)"/>
+<ellipse cx="540" cy="1430" rx="220" ry="150" fill="#fff4c8" opacity="0.75" filter="url(#bg04-sunrise-glow)"/>
+<rect x="80" y="420" width="270" height="45" fill="#ffd0a8"/>
+<rect x="170" y="465" width="360" height="45" fill="#ffd0a8"/>
+<rect x="-10" y="465" width="180" height="45" fill="#ffd0a8"/>
+<rect x="80" y="420" width="270" height="10.8" fill="#fff0d8"/>
+<rect x="640" y="760" width="152" height="38" fill="#ffd0a8"/>
+<rect x="564" y="798" width="380" height="38" fill="#ffd0a8"/>
+<rect x="868" y="798" width="152" height="38" fill="#ffd0a8"/>
+<rect x="640" y="760" width="152" height="9.1" fill="#fff0d8"/>
+<rect x="240" y="1060" width="240" height="30" fill="#ffd0a8"/>
+<rect x="300" y="1090" width="120" height="30" fill="#ffd0a8"/>
+<rect x="240" y="1060" width="240" height="7.2" fill="#fff0d8"/>
+<g filter="url(#bg04-sunrise-blur-mid)"><path d="M-80 1440 L-80 1426 L-34 1426 L-34 1357 L12 1357 L12 1288 L58 1288 L58 1265 L104 1265 L104 1173 L150 1173 L150 1127 L196 1127 L196 1173 L242 1173 L242 1219 L288 1219 L288 1311 L334 1311 L334 1357 L380 1357 L380 1440 L426 1440 L466 1440 Z" fill="#c08a8a"/></g>
+<g filter="url(#bg04-sunrise-blur-mid)"><path d="M-40 1920 L-40 1440 L-40 1363.3 L10 1363.3 L10 1363.3 L60 1363.3 L60 1338.3 L110 1338.3 L110 1320 L260 1320 L260 1320 L410 1320 L410 1345 L460 1345 L460 1320 L510 1320 L510 1320 L560 1320 L560 1345 L710 1345 L710 1320 L860 1320 L860 1320 L1010 1320 L1010 1345 L1060 1345 L1060 1370 L1120 1370 L1120 1370 L1120 1920 Z" fill="#c08a8a"/></g>
+</g>
+</svg>

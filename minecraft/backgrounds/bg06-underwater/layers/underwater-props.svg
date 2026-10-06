@@ -1,0 +1,33 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1080 1920" width="1080" height="1920">
+<title>bg06-underwater — underwater: реквизит</title>
+<defs>
+<linearGradient id="bg06-underwater-sky" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#7fe0e8"/><stop offset="0.22" stop-color="#3aa0b0"/><stop offset="0.55" stop-color="#1d6a7a"/><stop offset="1" stop-color="#0b3240"/></linearGradient>
+<radialGradient id="bg06-underwater-vig" cx="0.5" cy="0.46" r="0.78">
+  <stop offset="0.55" stop-color="#021820" stop-opacity="0"/>
+  <stop offset="1" stop-color="#021820" stop-opacity="0.7"/>
+</radialGradient>
+<filter id="bg06-underwater-ink" x="-5%" y="-5%" width="110%" height="110%" color-interpolation-filters="sRGB">
+  <feMorphology in="SourceAlpha" operator="dilate" radius="3.3" result="d"/>
+  <feFlood flood-color="#06222a" result="c"/>
+  <feComposite in="c" in2="d" operator="in" result="o"/>
+  <feMerge result="m"><feMergeNode in="o"/><feMergeNode in="SourceGraphic"/></feMerge>
+  <feTurbulence type="fractalNoise" baseFrequency="0.022" numOctaves="2" seed="5" result="t"/>
+  <feDisplacementMap in="m" in2="t" scale="4" xChannelSelector="R" yChannelSelector="G"/>
+</filter>
+<filter id="bg06-underwater-ink-soft" x="-5%" y="-5%" width="110%" height="110%" color-interpolation-filters="sRGB">
+  <feMorphology in="SourceAlpha" operator="dilate" radius="1.6" result="d"/>
+  <feFlood flood-color="#06222a" flood-opacity="0.55" result="c"/>
+  <feComposite in="c" in2="d" operator="in" result="o"/>
+  <feMerge><feMergeNode in="o"/><feMergeNode in="SourceGraphic"/></feMerge>
+</filter>
+<filter id="bg06-underwater-blur-far" x="-5%" y="-5%" width="110%" height="110%"><feGaussianBlur stdDeviation="4.5"/></filter>
+<filter id="bg06-underwater-blur-mid" x="-5%" y="-5%" width="110%" height="110%"><feGaussianBlur stdDeviation="1.8"/></filter>
+<filter id="bg06-underwater-blur-dof" x="-5%" y="-5%" width="110%" height="110%"><feGaussianBlur stdDeviation="11"/></filter>
+<filter id="bg06-underwater-glow" x="-60%" y="-60%" width="220%" height="220%"><feGaussianBlur stdDeviation="28"/></filter>
+<filter id="bg06-underwater-soft" x="-30%" y="-30%" width="160%" height="160%"><feGaussianBlur stdDeviation="8"/></filter>
+<filter id="bg06-underwater-blur-soft" x="-30%" y="-30%" width="160%" height="160%"><feGaussianBlur stdDeviation="14"/></filter>
+</defs>
+<g id="props">
+<g id="trident"><ellipse cx="700" cy="1690" rx="200" ry="40" fill="#bff8ff" opacity="0.35" filter="url(#bg06-underwater-soft)"/><g transform="translate(700 1688) rotate(-8)"><rect x="-190" y="-12.7" width="278.7" height="25.3" fill="#5f9a92"/><rect x="-190" y="-12.7" width="278.7" height="8.9" fill="#9fd6cc"/><rect x="88.7" y="-31.7" width="25.3" height="63.3" fill="#4f7f78"/><rect x="114" y="-12.7" width="76" height="25.3" fill="#8fd0c6"/><rect x="114" y="-38" width="50.7" height="17.7" fill="#8fd0c6"/><rect x="114" y="20.3" width="50.7" height="17.7" fill="#8fd0c6"/><rect x="164.7" y="-43.1" width="17.7" height="17.7" fill="#cffff6"/><rect x="164.7" y="25.3" width="17.7" height="17.7" fill="#cffff6"/><rect x="190" y="-7.6" width="17.7" height="15.2" fill="#cffff6"/></g></g>
+</g>
+</svg>

@@ -1,0 +1,62 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1080 1920" width="1080" height="1920">
+<title>bg04-sky — sunrise</title>
+<defs>
+<linearGradient id="bg04-sunrise-sky" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#3a5aa8"/><stop offset="0.45" stop-color="#f08a7a"/><stop offset="0.8" stop-color="#ffb46a"/><stop offset="1" stop-color="#ffe2a0"/></linearGradient>
+<radialGradient id="bg04-sunrise-vig" cx="0.5" cy="0.46" r="0.78">
+  <stop offset="0.55" stop-color="#3a1408" stop-opacity="0"/>
+  <stop offset="1" stop-color="#3a1408" stop-opacity="0.28"/>
+</radialGradient>
+<filter id="bg04-sunrise-ink" x="-5%" y="-5%" width="110%" height="110%" color-interpolation-filters="sRGB">
+  <feMorphology in="SourceAlpha" operator="dilate" radius="3.3" result="d"/>
+  <feFlood flood-color="#2a1810" result="c"/>
+  <feComposite in="c" in2="d" operator="in" result="o"/>
+  <feMerge result="m"><feMergeNode in="o"/><feMergeNode in="SourceGraphic"/></feMerge>
+  <feTurbulence type="fractalNoise" baseFrequency="0.022" numOctaves="2" seed="5" result="t"/>
+  <feDisplacementMap in="m" in2="t" scale="4" xChannelSelector="R" yChannelSelector="G"/>
+</filter>
+<filter id="bg04-sunrise-ink-soft" x="-5%" y="-5%" width="110%" height="110%" color-interpolation-filters="sRGB">
+  <feMorphology in="SourceAlpha" operator="dilate" radius="1.6" result="d"/>
+  <feFlood flood-color="#2a1810" flood-opacity="0.55" result="c"/>
+  <feComposite in="c" in2="d" operator="in" result="o"/>
+  <feMerge><feMergeNode in="o"/><feMergeNode in="SourceGraphic"/></feMerge>
+</filter>
+<filter id="bg04-sunrise-blur-far" x="-5%" y="-5%" width="110%" height="110%"><feGaussianBlur stdDeviation="4.5"/></filter>
+<filter id="bg04-sunrise-blur-mid" x="-5%" y="-5%" width="110%" height="110%"><feGaussianBlur stdDeviation="1.8"/></filter>
+<filter id="bg04-sunrise-blur-dof" x="-5%" y="-5%" width="110%" height="110%"><feGaussianBlur stdDeviation="11"/></filter>
+<filter id="bg04-sunrise-glow" x="-60%" y="-60%" width="220%" height="220%"><feGaussianBlur stdDeviation="28"/></filter>
+<filter id="bg04-sunrise-soft" x="-30%" y="-30%" width="160%" height="160%"><feGaussianBlur stdDeviation="8"/></filter>
+<filter id="bg04-sunrise-blur-soft" x="-30%" y="-30%" width="160%" height="160%"><feGaussianBlur stdDeviation="14"/></filter>
+</defs>
+<g id="far">
+<rect x="0" y="0" width="1080" height="1470" fill="url(#bg04-sunrise-sky)"/>
+<ellipse cx="540" cy="1430" rx="560" ry="300" fill="#ffe2a0" opacity="0.9" filter="url(#bg04-sunrise-glow)"/>
+<ellipse cx="540" cy="1430" rx="220" ry="150" fill="#fff4c8" opacity="0.75" filter="url(#bg04-sunrise-glow)"/>
+<rect x="80" y="420" width="270" height="45" fill="#ffd0a8"/>
+<rect x="170" y="465" width="360" height="45" fill="#ffd0a8"/>
+<rect x="-10" y="465" width="180" height="45" fill="#ffd0a8"/>
+<rect x="80" y="420" width="270" height="10.8" fill="#fff0d8"/>
+<rect x="640" y="760" width="152" height="38" fill="#ffd0a8"/>
+<rect x="564" y="798" width="380" height="38" fill="#ffd0a8"/>
+<rect x="868" y="798" width="152" height="38" fill="#ffd0a8"/>
+<rect x="640" y="760" width="152" height="9.1" fill="#fff0d8"/>
+<rect x="240" y="1060" width="240" height="30" fill="#ffd0a8"/>
+<rect x="300" y="1090" width="120" height="30" fill="#ffd0a8"/>
+<rect x="240" y="1060" width="240" height="7.2" fill="#fff0d8"/>
+<g filter="url(#bg04-sunrise-blur-mid)"><path d="M-80 1440 L-80 1426 L-34 1426 L-34 1357 L12 1357 L12 1288 L58 1288 L58 1265 L104 1265 L104 1173 L150 1173 L150 1127 L196 1127 L196 1173 L242 1173 L242 1219 L288 1219 L288 1311 L334 1311 L334 1357 L380 1357 L380 1440 L426 1440 L466 1440 Z" fill="#c08a8a"/></g>
+<g filter="url(#bg04-sunrise-blur-mid)"><path d="M-40 1920 L-40 1440 L-40 1363.3 L10 1363.3 L10 1363.3 L60 1363.3 L60 1338.3 L110 1338.3 L110 1320 L260 1320 L260 1320 L410 1320 L410 1345 L460 1345 L460 1320 L510 1320 L510 1320 L560 1320 L560 1345 L710 1345 L710 1320 L860 1320 L860 1320 L1010 1320 L1010 1345 L1060 1345 L1060 1370 L1120 1370 L1120 1370 L1120 1920 Z" fill="#c08a8a"/></g>
+</g>
+<g id="mid">
+<g filter="url(#bg04-sunrise-ink-soft)"><path d="M-40 1920 L-40 1470 L-40 1467.3 L20 1467.3 L20 1470 L140 1470 L140 1440 L260 1440 L260 1470 L380 1470 L380 1470 L440 1470 L440 1470 L560 1470 L560 1470 L680 1470 L680 1470 L860 1470 L860 1470 L980 1470 L980 1440 L1040 1440 L1040 1410 L1100 1410 L1100 1440 L1120 1440 L1120 1410 L1120 1920 Z" fill="#7a7a6e"/><rect x="849.5" y="1343" width="21" height="77" fill="#6a6a5a"/><rect x="807.5" y="1287" width="105" height="42" fill="#6a6a5a"/><rect x="825" y="1259" width="70" height="31.5" fill="#6a6a5a"/><rect x="131.6" y="1378.4" width="16.8" height="61.6" fill="#6a6a5a"/><rect x="98" y="1333.6" width="84" height="33.6" fill="#6a6a5a"/><rect x="112" y="1311.2" width="56" height="25.2" fill="#6a6a5a"/></g>
+<rect x="0" y="1460" width="1080" height="490" fill="#5e9a3a"/>
+</g>
+<g id="props">
+
+</g>
+<g id="near">
+<g filter="url(#bg04-sunrise-blur-mid)"><rect x="199.5" y="1525.5" width="30" height="444.5" fill="#7ab84a"/><rect x="229.5" y="1687.3" width="30" height="282.7" fill="#7ab84a"/><rect x="333" y="1426.3" width="30" height="543.7" fill="#7ab84a"/><rect x="363" y="1627.8" width="30" height="342.2" fill="#7ab84a"/><rect x="487.3" y="1478.6" width="30" height="491.4" fill="#5e9a3a"/><rect x="517.3" y="1659.2" width="30" height="310.8" fill="#5e9a3a"/><rect x="620.4" y="1505.6" width="30" height="464.4" fill="#9ccc5a"/><rect x="650.4" y="1675.4" width="30" height="294.6" fill="#9ccc5a"/><rect x="914.3" y="1548.9" width="30" height="421.1" fill="#9ccc5a"/><rect x="944.3" y="1701.3" width="30" height="268.7" fill="#9ccc5a"/><rect x="624.6" y="1538.6" width="30" height="431.4" fill="#9ccc5a"/><rect x="654.6" y="1695.2" width="30" height="274.8" fill="#9ccc5a"/><rect x="453.8" y="1708.4" width="30" height="261.6" fill="#9ccc5a"/><rect x="483.8" y="1797" width="30" height="173" fill="#9ccc5a"/><rect x="59.5" y="1569.3" width="30" height="400.7" fill="#9ccc5a"/><rect x="89.5" y="1713.6" width="30" height="256.4" fill="#9ccc5a"/><rect x="477.7" y="1433" width="30" height="537" fill="#9ccc5a"/><rect x="507.7" y="1631.8" width="30" height="338.2" fill="#9ccc5a"/><rect x="229.1" y="1449.6" width="30" height="520.4" fill="#7ab84a"/><rect x="259.1" y="1641.7" width="30" height="328.3" fill="#7ab84a"/><rect x="438.1" y="1426.2" width="30" height="543.8" fill="#5e9a3a"/><rect x="468.1" y="1627.7" width="30" height="342.3" fill="#5e9a3a"/><rect x="1021" y="1706.6" width="30" height="263.4" fill="#9ccc5a"/><rect x="1051" y="1796" width="30" height="174" fill="#9ccc5a"/><rect x="138.3" y="1461.5" width="30" height="508.5" fill="#9ccc5a"/><rect x="168.3" y="1648.9" width="30" height="321.1" fill="#9ccc5a"/><rect x="584.4" y="1697.7" width="30" height="272.3" fill="#5e9a3a"/><rect x="614.4" y="1790.6" width="30" height="179.4" fill="#5e9a3a"/><rect x="764.5" y="1423.5" width="30" height="546.5" fill="#7ab84a"/><rect x="794.5" y="1626.1" width="30" height="343.9" fill="#7ab84a"/><rect x="43.3" y="1678.8" width="30" height="291.2" fill="#7ab84a"/><rect x="73.3" y="1779.3" width="30" height="190.7" fill="#7ab84a"/><rect x="930.4" y="1601.3" width="30" height="368.7" fill="#9ccc5a"/><rect x="960.4" y="1732.8" width="30" height="237.2" fill="#9ccc5a"/><rect x="821.4" y="1422.4" width="30" height="547.6" fill="#7ab84a"/><rect x="851.4" y="1625.5" width="30" height="344.5" fill="#7ab84a"/><rect x="377.6" y="1495.3" width="30" height="474.7" fill="#7ab84a"/><rect x="407.6" y="1669.2" width="30" height="300.8" fill="#7ab84a"/><rect x="835.5" y="1666" width="30" height="304" fill="#5e9a3a"/><rect x="865.5" y="1771.6" width="30" height="198.4" fill="#5e9a3a"/><rect x="92.2" y="1692.9" width="30" height="277.1" fill="#5e9a3a"/><rect x="122.2" y="1787.7" width="30" height="182.3" fill="#5e9a3a"/><rect x="326.6" y="1418.8" width="30" height="551.2" fill="#9ccc5a"/><rect x="356.6" y="1623.3" width="30" height="346.7" fill="#9ccc5a"/><rect x="951" y="1606.3" width="30" height="363.7" fill="#9ccc5a"/><rect x="981" y="1735.8" width="30" height="234.2" fill="#9ccc5a"/><rect x="831.5" y="1668.8" width="30" height="301.2" fill="#7ab84a"/><rect x="861.5" y="1773.3" width="30" height="196.7" fill="#7ab84a"/><rect x="121.8" y="1412.5" width="30" height="557.5" fill="#5e9a3a"/><rect x="151.8" y="1619.5" width="30" height="350.5" fill="#5e9a3a"/><rect x="386.1" y="1656" width="30" height="314" fill="#5e9a3a"/><rect x="416.1" y="1765.6" width="30" height="204.4" fill="#5e9a3a"/></g>
+<g filter="url(#bg04-sunrise-blur-mid)"><rect x="142" y="1672" width="22" height="88" fill="#5e9a3a"/><rect x="120" y="1628" width="66" height="44" fill="#e0322f"/><rect x="142" y="1606" width="22" height="22" fill="#e0322f"/><rect x="142" y="1639" width="22" height="22" fill="#2a1a1a"/><rect x="880" y="1720" width="20" height="80" fill="#5e9a3a"/><rect x="860" y="1680" width="60" height="40" fill="#f6d335"/><rect x="880" y="1660" width="20" height="20" fill="#f6d335"/></g>
+</g>
+<g id="fx">
+<rect x="0" y="0" width="1080" height="1920" fill="url(#bg04-sunrise-vig)"/>
+</g>
+</svg>

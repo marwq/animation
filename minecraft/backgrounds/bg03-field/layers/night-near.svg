@@ -1,0 +1,33 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1080 1920" width="1080" height="1920">
+<title>bg03-field — night: ближний план</title>
+<defs>
+<linearGradient id="bg03-night-sky" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#0a1030"/><stop offset="0.5" stop-color="#16245a"/><stop offset="1" stop-color="#2f4b8c"/></linearGradient>
+<radialGradient id="bg03-night-vig" cx="0.5" cy="0.46" r="0.78">
+  <stop offset="0.55" stop-color="#02040f" stop-opacity="0"/>
+  <stop offset="1" stop-color="#02040f" stop-opacity="0.62"/>
+</radialGradient>
+<filter id="bg03-night-ink" x="-5%" y="-5%" width="110%" height="110%" color-interpolation-filters="sRGB">
+  <feMorphology in="SourceAlpha" operator="dilate" radius="3.3" result="d"/>
+  <feFlood flood-color="#080b1c" result="c"/>
+  <feComposite in="c" in2="d" operator="in" result="o"/>
+  <feMerge result="m"><feMergeNode in="o"/><feMergeNode in="SourceGraphic"/></feMerge>
+  <feTurbulence type="fractalNoise" baseFrequency="0.022" numOctaves="2" seed="5" result="t"/>
+  <feDisplacementMap in="m" in2="t" scale="4" xChannelSelector="R" yChannelSelector="G"/>
+</filter>
+<filter id="bg03-night-ink-soft" x="-5%" y="-5%" width="110%" height="110%" color-interpolation-filters="sRGB">
+  <feMorphology in="SourceAlpha" operator="dilate" radius="1.6" result="d"/>
+  <feFlood flood-color="#080b1c" flood-opacity="0.55" result="c"/>
+  <feComposite in="c" in2="d" operator="in" result="o"/>
+  <feMerge><feMergeNode in="o"/><feMergeNode in="SourceGraphic"/></feMerge>
+</filter>
+<filter id="bg03-night-blur-far" x="-5%" y="-5%" width="110%" height="110%"><feGaussianBlur stdDeviation="4.5"/></filter>
+<filter id="bg03-night-blur-mid" x="-5%" y="-5%" width="110%" height="110%"><feGaussianBlur stdDeviation="1.8"/></filter>
+<filter id="bg03-night-blur-dof" x="-5%" y="-5%" width="110%" height="110%"><feGaussianBlur stdDeviation="11"/></filter>
+<filter id="bg03-night-glow" x="-60%" y="-60%" width="220%" height="220%"><feGaussianBlur stdDeviation="28"/></filter>
+<filter id="bg03-night-soft" x="-30%" y="-30%" width="160%" height="160%"><feGaussianBlur stdDeviation="8"/></filter>
+<filter id="bg03-night-blur-soft" x="-30%" y="-30%" width="160%" height="160%"><feGaussianBlur stdDeviation="14"/></filter>
+<linearGradient id="bg03-night-ground" x1="0" y1="960" x2="0" y2="1920" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#2c5868"/><stop offset="0.18" stop-color="#2e6650"/><stop offset="1" stop-color="#22503f"/></linearGradient><radialGradient id="bg03-night-moonlight"><stop offset="0" stop-color="#9fb6ff" stop-opacity="0.35"/><stop offset="1" stop-color="#9fb6ff" stop-opacity="0"/></radialGradient></defs>
+<g id="near">
+<g filter="url(#bg03-night-blur-dof)"><rect x="784.7" y="1683.8" width="22" height="286.2" fill="#2e6650"/><rect x="806.7" y="1782.3" width="22" height="187.7" fill="#2e6650"/><rect x="518" y="1746.5" width="22" height="223.5" fill="#3c7a60"/><rect x="540" y="1819.9" width="22" height="150.1" fill="#3c7a60"/><rect x="330.4" y="1798.5" width="22" height="171.5" fill="#22503f"/><rect x="352.4" y="1851.1" width="22" height="118.9" fill="#22503f"/><rect x="919.6" y="1709.3" width="22" height="260.7" fill="#22503f"/><rect x="941.6" y="1797.6" width="22" height="172.4" fill="#22503f"/><rect x="649.5" y="1742.8" width="22" height="227.2" fill="#3c7a60"/><rect x="671.5" y="1817.7" width="22" height="152.3" fill="#3c7a60"/><rect x="267.5" y="1755.2" width="22" height="214.8" fill="#3c7a60"/><rect x="289.5" y="1825.1" width="22" height="144.9" fill="#3c7a60"/><rect x="343.2" y="1794.9" width="22" height="175.1" fill="#3c7a60"/><rect x="365.2" y="1848.9" width="22" height="121.1" fill="#3c7a60"/><rect x="1012.4" y="1823" width="22" height="147" fill="#2e6650"/><rect x="1034.4" y="1865.8" width="22" height="104.2" fill="#2e6650"/><rect x="144.3" y="1750" width="22" height="220" fill="#3c7a60"/><rect x="166.3" y="1822" width="22" height="148" fill="#3c7a60"/><rect x="300.9" y="1812.8" width="22" height="157.2" fill="#2e6650"/><rect x="322.9" y="1859.7" width="22" height="110.3" fill="#2e6650"/></g>
+</g>
+</svg>

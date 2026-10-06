@@ -1,0 +1,34 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1080 1920" width="1080" height="1920">
+<title>bg07-water-level — morning: виньетка и свет</title>
+<defs>
+<linearGradient id="bg07-morning-sky" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#4e9ce8"/><stop offset="0.6" stop-color="#8ccaf6"/><stop offset="1" stop-color="#d8f2ff"/></linearGradient>
+<radialGradient id="bg07-morning-vig" cx="0.5" cy="0.46" r="0.78">
+  <stop offset="0.55" stop-color="#10202a" stop-opacity="0"/>
+  <stop offset="1" stop-color="#10202a" stop-opacity="0.22"/>
+</radialGradient>
+<filter id="bg07-morning-ink" x="-5%" y="-5%" width="110%" height="110%" color-interpolation-filters="sRGB">
+  <feMorphology in="SourceAlpha" operator="dilate" radius="3.3" result="d"/>
+  <feFlood flood-color="#1c1b1f" result="c"/>
+  <feComposite in="c" in2="d" operator="in" result="o"/>
+  <feMerge result="m"><feMergeNode in="o"/><feMergeNode in="SourceGraphic"/></feMerge>
+  <feTurbulence type="fractalNoise" baseFrequency="0.022" numOctaves="2" seed="5" result="t"/>
+  <feDisplacementMap in="m" in2="t" scale="4" xChannelSelector="R" yChannelSelector="G"/>
+</filter>
+<filter id="bg07-morning-ink-soft" x="-5%" y="-5%" width="110%" height="110%" color-interpolation-filters="sRGB">
+  <feMorphology in="SourceAlpha" operator="dilate" radius="1.6" result="d"/>
+  <feFlood flood-color="#1c1b1f" flood-opacity="0.55" result="c"/>
+  <feComposite in="c" in2="d" operator="in" result="o"/>
+  <feMerge><feMergeNode in="o"/><feMergeNode in="SourceGraphic"/></feMerge>
+</filter>
+<filter id="bg07-morning-blur-far" x="-5%" y="-5%" width="110%" height="110%"><feGaussianBlur stdDeviation="4.5"/></filter>
+<filter id="bg07-morning-blur-mid" x="-5%" y="-5%" width="110%" height="110%"><feGaussianBlur stdDeviation="1.8"/></filter>
+<filter id="bg07-morning-blur-dof" x="-5%" y="-5%" width="110%" height="110%"><feGaussianBlur stdDeviation="11"/></filter>
+<filter id="bg07-morning-glow" x="-60%" y="-60%" width="220%" height="220%"><feGaussianBlur stdDeviation="28"/></filter>
+<filter id="bg07-morning-soft" x="-30%" y="-30%" width="160%" height="160%"><feGaussianBlur stdDeviation="8"/></filter>
+<filter id="bg07-morning-blur-soft" x="-30%" y="-30%" width="160%" height="160%"><feGaussianBlur stdDeviation="14"/></filter>
+<linearGradient id="bg07-morning-ground" x1="0" y1="1180" x2="0" y2="1920" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#a8d890"/><stop offset="0.18" stop-color="#6cc04a"/><stop offset="1" stop-color="#56a43a"/></linearGradient><linearGradient id="bg07-morning-water" x1="0" y1="1326" x2="0" y2="1920" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#9cd0ff"/><stop offset="0.35" stop-color="#3a78d8"/><stop offset="1" stop-color="#2858b0"/></linearGradient></defs>
+<g id="fx">
+<rect x="0" y="0" width="1080" height="1920" fill="#ff9a50" opacity="0.06"/>
+<rect x="0" y="0" width="1080" height="1920" fill="url(#bg07-morning-vig)"/>
+</g>
+</svg>

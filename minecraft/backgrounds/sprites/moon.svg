@@ -1,0 +1,31 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 420 420" width="420" height="420">
+<title>moon</title>
+<defs>
+<linearGradient id="sprite-moon-sky" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#0a1030"/><stop offset="0.5" stop-color="#16245a"/><stop offset="1" stop-color="#2f4b8c"/></linearGradient>
+<radialGradient id="sprite-moon-vig" cx="0.5" cy="0.46" r="0.78">
+  <stop offset="0.55" stop-color="#02040f" stop-opacity="0"/>
+  <stop offset="1" stop-color="#02040f" stop-opacity="0.62"/>
+</radialGradient>
+<filter id="sprite-moon-ink" x="-5%" y="-5%" width="110%" height="110%" color-interpolation-filters="sRGB">
+  <feMorphology in="SourceAlpha" operator="dilate" radius="3.3" result="d"/>
+  <feFlood flood-color="#080b1c" result="c"/>
+  <feComposite in="c" in2="d" operator="in" result="o"/>
+  <feMerge result="m"><feMergeNode in="o"/><feMergeNode in="SourceGraphic"/></feMerge>
+  <feTurbulence type="fractalNoise" baseFrequency="0.022" numOctaves="2" seed="5" result="t"/>
+  <feDisplacementMap in="m" in2="t" scale="4" xChannelSelector="R" yChannelSelector="G"/>
+</filter>
+<filter id="sprite-moon-ink-soft" x="-5%" y="-5%" width="110%" height="110%" color-interpolation-filters="sRGB">
+  <feMorphology in="SourceAlpha" operator="dilate" radius="1.6" result="d"/>
+  <feFlood flood-color="#080b1c" flood-opacity="0.55" result="c"/>
+  <feComposite in="c" in2="d" operator="in" result="o"/>
+  <feMerge><feMergeNode in="o"/><feMergeNode in="SourceGraphic"/></feMerge>
+</filter>
+<filter id="sprite-moon-blur-far" x="-5%" y="-5%" width="110%" height="110%"><feGaussianBlur stdDeviation="4.5"/></filter>
+<filter id="sprite-moon-blur-mid" x="-5%" y="-5%" width="110%" height="110%"><feGaussianBlur stdDeviation="1.8"/></filter>
+<filter id="sprite-moon-blur-dof" x="-5%" y="-5%" width="110%" height="110%"><feGaussianBlur stdDeviation="11"/></filter>
+<filter id="sprite-moon-glow" x="-60%" y="-60%" width="220%" height="220%"><feGaussianBlur stdDeviation="28"/></filter>
+<filter id="sprite-moon-soft" x="-30%" y="-30%" width="160%" height="160%"><feGaussianBlur stdDeviation="8"/></filter>
+<filter id="sprite-moon-blur-soft" x="-30%" y="-30%" width="160%" height="160%"><feGaussianBlur stdDeviation="14"/></filter>
+</defs>
+<circle cx="210" cy="210" r="157.5" fill="#9fb6ff" opacity="0.45" filter="url(#sprite-moon-glow)"/><rect x="135" y="135" width="150" height="150" fill="#e9eefc"/><rect x="153.8" y="153.8" width="37.5" height="18.8" fill="#c2cbe6"/><rect x="210" y="172.5" width="37.5" height="37.5" fill="#c2cbe6"/><rect x="172.5" y="228.8" width="18.8" height="18.8" fill="#c2cbe6"/><rect x="228.8" y="228.8" width="37.5" height="18.8" fill="#c2cbe6"/><rect x="153.8" y="191.2" width="18.8" height="18.8" fill="#c2cbe6"/><rect x="135" y="135" width="150" height="150" fill="none" stroke="#c2cbe6" stroke-width="3"/>
+</svg>
