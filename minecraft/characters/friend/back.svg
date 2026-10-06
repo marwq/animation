@@ -1,0 +1,32 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 1000" width="640" height="1000">
+<title>Подруга — сзади</title>
+<g id="back-arm-left">
+  <g class="face-back"><path d="M129.2 532.4 L201.2 532.4 L201.2 755.6 L129.2 755.6 Z" fill="#f7caa6"/><g transform="matrix(36 0 0 36 129.2 532.4)"><rect x="0" y="0" width="2" height="1.8" fill="#5fba49" stroke="none"/><path d="M0 1.8 L2 1.8" fill="none" stroke="#1c1a1a" stroke-width="3.6" stroke-linecap="round" stroke-linejoin="round" vector-effect="non-scaling-stroke"/></g><path d="M129.2 532.4 L201.2 532.4 L201.2 755.6 L129.2 755.6 Z" fill="none" stroke="#1c1a1a" stroke-width="3.6" stroke-linejoin="round"/></g>
+  <path d="M129.2 532.4 L201.2 532.4 L201.2 755.6 L129.2 755.6 Z" fill="none" stroke="#1c1a1a" stroke-width="7" stroke-linejoin="round"/>
+</g>
+<g id="back-leg-left">
+  <g class="face-back"><path d="M201.2 770 L320 770 L320 950 L201.2 950 Z" fill="#7b5536"/><g transform="matrix(36 0 0 36 201.2 770)"><rect x="0" y="3.2" width="3.3" height="1.8" fill="#3f3029" stroke="none"/><path d="M0 3.2 L3.3 3.2" fill="none" stroke="#1c1a1a" stroke-width="3.6" stroke-linecap="round" stroke-linejoin="round" vector-effect="non-scaling-stroke"/><rect x="0" y="3.2" width="3.3" height="0.35" fill="#5a473b" stroke="none"/><path d="M0 3.55 L3.3 3.55" fill="none" stroke="#1c1a1a" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" vector-effect="non-scaling-stroke"/></g><path d="M201.2 770 L320 770 L320 950 L201.2 950 Z" fill="none" stroke="#1c1a1a" stroke-width="3.6" stroke-linejoin="round"/></g>
+  <path d="M201.2 770 L320 770 L320 950 L201.2 950 Z" fill="none" stroke="#1c1a1a" stroke-width="7" stroke-linejoin="round"/>
+</g>
+<g id="back-body">
+  <g class="face-back"><path d="M201.2 532.4 L438.8 532.4 L438.8 770 L201.2 770 Z" fill="#5fba49"/><g transform="matrix(36 0 0 36 201.2 532.4)"><rect x="0" y="5" width="6.6" height="0.75" fill="#6f4426" stroke="none"/><path d="M0 5 L6.6 5" fill="none" stroke="#1c1a1a" stroke-width="3.6" stroke-linecap="round" stroke-linejoin="round" vector-effect="non-scaling-stroke"/><path d="M0 5.75 L6.6 5.75" fill="none" stroke="#1c1a1a" stroke-width="3.6" stroke-linecap="round" stroke-linejoin="round" vector-effect="non-scaling-stroke"/></g><path d="M201.2 532.4 L438.8 532.4 L438.8 770 L201.2 770 Z" fill="none" stroke="#1c1a1a" stroke-width="3.6" stroke-linejoin="round"/></g>
+  <path d="M201.2 532.4 L438.8 532.4 L438.8 770 L201.2 770 Z" fill="none" stroke="#1c1a1a" stroke-width="7" stroke-linejoin="round"/>
+</g>
+<g id="back-head">
+  <g class="face-back"><path d="M140 172.4 L500 172.4 L500 532.4 L140 532.4 Z" fill="#ec7a2c"/><g transform="matrix(36 0 0 36 140 172.4)"><path d="M0 0 L10 0 L10 9 L8.9 9.3 L7.8 8.6 L6.4 9.4 L5 8.7 L3.6 9.4 L2.2 8.6 L1.1 9.3 L0 9 Z" fill="#ec7a2c" stroke="#1c1a1a" stroke-width="3.6" stroke-linecap="round" stroke-linejoin="round" vector-effect="non-scaling-stroke"/><path d="M3.2 2.6 L3 6.4" fill="none" stroke="#b4501a" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" vector-effect="non-scaling-stroke"/><path d="M7 2.4 L7.2 6" fill="none" stroke="#b4501a" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" vector-effect="non-scaling-stroke"/></g><path d="M140 172.4 L500 172.4 L500 532.4 L140 532.4 Z" fill="none" stroke="#1c1a1a" stroke-width="3.6" stroke-linejoin="round"/></g>
+  <path d="M140 172.4 L500 172.4 L500 532.4 L140 532.4 Z" fill="none" stroke="#1c1a1a" stroke-width="7" stroke-linejoin="round"/>
+</g>
+<g id="back-leg-right">
+  <g class="face-back"><path d="M320 770 L438.8 770 L438.8 950 L320 950 Z" fill="#7b5536"/><g transform="matrix(36 0 0 36 320 770)"><rect x="0" y="3.2" width="3.3" height="1.8" fill="#3f3029" stroke="none"/><path d="M0 3.2 L3.3 3.2" fill="none" stroke="#1c1a1a" stroke-width="3.6" stroke-linecap="round" stroke-linejoin="round" vector-effect="non-scaling-stroke"/><rect x="0" y="3.2" width="3.3" height="0.35" fill="#5a473b" stroke="none"/><path d="M0 3.55 L3.3 3.55" fill="none" stroke="#1c1a1a" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" vector-effect="non-scaling-stroke"/></g><path d="M320 770 L438.8 770 L438.8 950 L320 950 Z" fill="none" stroke="#1c1a1a" stroke-width="3.6" stroke-linejoin="round"/></g>
+  <path d="M320 770 L438.8 770 L438.8 950 L320 950 Z" fill="none" stroke="#1c1a1a" stroke-width="7" stroke-linejoin="round"/>
+</g>
+<g id="back-arm-right">
+  <g class="face-back"><path d="M438.8 532.4 L510.8 532.4 L510.8 755.6 L438.8 755.6 Z" fill="#f7caa6"/><g transform="matrix(36 0 0 36 438.8 532.4)"><rect x="0" y="0" width="2" height="1.8" fill="#5fba49" stroke="none"/><path d="M0 1.8 L2 1.8" fill="none" stroke="#1c1a1a" stroke-width="3.6" stroke-linecap="round" stroke-linejoin="round" vector-effect="non-scaling-stroke"/></g><path d="M438.8 532.4 L510.8 532.4 L510.8 755.6 L438.8 755.6 Z" fill="none" stroke="#1c1a1a" stroke-width="3.6" stroke-linejoin="round"/></g>
+  <path d="M438.8 532.4 L510.8 532.4 L510.8 755.6 L438.8 755.6 Z" fill="none" stroke="#1c1a1a" stroke-width="7" stroke-linejoin="round"/>
+</g>
+<g id="back-ponytail">
+  <g class="face-back"><path d="M266 214.56 L374 214.56 L374 410.17 L266 410.17 Z" fill="#ec7a2c"/><g transform="matrix(36 0 0 34.93 266 214.56)"><rect x="0" y="0.35" width="3" height="0.75" fill="#5fd3bd" stroke="#1c1a1a" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" vector-effect="non-scaling-stroke"/><path d="M1 2 L1.2 4.8" fill="none" stroke="#b4501a" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" vector-effect="non-scaling-stroke"/></g><path d="M266 214.56 L374 214.56 L374 410.17 L266 410.17 Z" fill="none" stroke="#1c1a1a" stroke-width="3.6" stroke-linejoin="round"/></g>
+  <g class="face-bottom"><path d="M374 432.81 L266 432.81 L266 410.17 L374 410.17 Z" fill="#ec7a2c"/><path d="M374 432.81 L266 432.81 L266 410.17 L374 410.17 Z" fill="#2b2140" opacity="0.28"/><path d="M374 432.81 L266 432.81 L266 410.17 L374 410.17 Z" fill="none" stroke="#1c1a1a" stroke-width="3.6" stroke-linejoin="round"/></g>
+  <path d="M266 214.56 L374 214.56 L374 432.81 L266 432.81 Z" fill="none" stroke="#1c1a1a" stroke-width="7" stroke-linejoin="round"/>
+</g>
+</svg>

@@ -1,0 +1,35 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 1000" width="640" height="1000">
+<title>Герой — сзади</title>
+<g id="back-arm-left">
+  <g class="face-back"><path d="M114.8 518 L201.2 518 L201.2 748.4 L114.8 748.4 Z" fill="#eeb58f"/><g transform="matrix(36 0 0 36 114.8 518)"><rect x="0" y="0" width="2.4" height="2.3" fill="#35b5c4" stroke="none"/><path d="M0 2.3 L2.4 2.3" fill="none" stroke="#1c1a1a" stroke-width="3.6" stroke-linecap="round" stroke-linejoin="round" vector-effect="non-scaling-stroke"/></g><path d="M114.8 518 L201.2 518 L201.2 748.4 L114.8 748.4 Z" fill="none" stroke="#1c1a1a" stroke-width="3.6" stroke-linejoin="round"/></g>
+  <path d="M114.8 518 L201.2 518 L201.2 748.4 L114.8 748.4 Z" fill="none" stroke="#1c1a1a" stroke-width="7" stroke-linejoin="round"/>
+</g>
+<g id="back-leg-left">
+  <g class="face-back"><path d="M201.2 755.6 L320 755.6 L320 950 L201.2 950 Z" fill="#4a46a6"/><g transform="matrix(36 0 0 36 201.2 755.6)"><rect x="0" y="4.3" width="3.3" height="1.1" fill="#4b3a30" stroke="none"/><path d="M0 4.3 L3.3 4.3" fill="none" stroke="#1c1a1a" stroke-width="3.6" stroke-linecap="round" stroke-linejoin="round" vector-effect="non-scaling-stroke"/></g><path d="M201.2 755.6 L320 755.6 L320 950 L201.2 950 Z" fill="none" stroke="#1c1a1a" stroke-width="3.6" stroke-linejoin="round"/></g>
+  <path d="M201.2 755.6 L320 755.6 L320 950 L201.2 950 Z" fill="none" stroke="#1c1a1a" stroke-width="7" stroke-linejoin="round"/>
+</g>
+<g id="back-body">
+  <g class="face-back"><path d="M201.2 518 L438.8 518 L438.8 755.6 L201.2 755.6 Z" fill="#35b5c4"/><g transform="matrix(36 0 0 36 201.2 518)"><path d="M5.3 0 L6.6 0 L0 5.8 L0 4.5 Z" fill="#7b4a2a" stroke="#1c1a1a" stroke-width="3.6" stroke-linecap="round" stroke-linejoin="round" vector-effect="non-scaling-stroke"/></g><path d="M201.2 518 L438.8 518 L438.8 755.6 L201.2 755.6 Z" fill="none" stroke="#1c1a1a" stroke-width="3.6" stroke-linejoin="round"/></g>
+  <path d="M201.2 518 L438.8 518 L438.8 755.6 L201.2 755.6 Z" fill="none" stroke="#1c1a1a" stroke-width="7" stroke-linejoin="round"/>
+</g>
+<g id="back-head">
+  <g class="face-back"><path d="M140 158 L500 158 L500 518 L140 518 Z" fill="#5b3a24"/><g transform="matrix(36 0 0 36 140 158)"><path d="M0 0 L10 0 L10 7.6 L9 7.6 L8.4 8.1 L7.4 7.2 L6 7.8 L4.6 7.1 L3.4 7.9 L2.4 7.3 L1 7.7 L0 7.6 Z" fill="#5b3a24" stroke="#1c1a1a" stroke-width="3.6" stroke-linecap="round" stroke-linejoin="round" vector-effect="non-scaling-stroke"/><path d="M3 2 L3.6 5" fill="none" stroke="#3a2416" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" vector-effect="non-scaling-stroke"/><path d="M6.6 1.6 L6.2 4.6" fill="none" stroke="#3a2416" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" vector-effect="non-scaling-stroke"/></g><path d="M140 158 L500 158 L500 518 L140 518 Z" fill="none" stroke="#1c1a1a" stroke-width="3.6" stroke-linejoin="round"/></g>
+  <path d="M140 158 L500 158 L500 518 L140 518 Z" fill="none" stroke="#1c1a1a" stroke-width="7" stroke-linejoin="round"/>
+</g>
+<g id="back-leg-right">
+  <g class="face-back"><path d="M320 755.6 L438.8 755.6 L438.8 950 L320 950 Z" fill="#4a46a6"/><g transform="matrix(36 0 0 36 320 755.6)"><rect x="0" y="4.3" width="3.3" height="1.1" fill="#4b3a30" stroke="none"/><path d="M0 4.3 L3.3 4.3" fill="none" stroke="#1c1a1a" stroke-width="3.6" stroke-linecap="round" stroke-linejoin="round" vector-effect="non-scaling-stroke"/></g><path d="M320 755.6 L438.8 755.6 L438.8 950 L320 950 Z" fill="none" stroke="#1c1a1a" stroke-width="3.6" stroke-linejoin="round"/></g>
+  <path d="M320 755.6 L438.8 755.6 L438.8 950 L320 950 Z" fill="none" stroke="#1c1a1a" stroke-width="7" stroke-linejoin="round"/>
+</g>
+<g id="back-arm-right">
+  <g class="face-back"><path d="M438.8 518 L525.2 518 L525.2 748.4 L438.8 748.4 Z" fill="#eeb58f"/><g transform="matrix(36 0 0 36 438.8 518)"><rect x="0" y="0" width="2.4" height="2.3" fill="#35b5c4" stroke="none"/><path d="M0 2.3 L2.4 2.3" fill="none" stroke="#1c1a1a" stroke-width="3.6" stroke-linecap="round" stroke-linejoin="round" vector-effect="non-scaling-stroke"/></g><path d="M438.8 518 L525.2 518 L525.2 748.4 L438.8 748.4 Z" fill="none" stroke="#1c1a1a" stroke-width="3.6" stroke-linejoin="round"/></g>
+  <path d="M438.8 518 L525.2 518 L525.2 748.4 L438.8 748.4 Z" fill="none" stroke="#1c1a1a" stroke-width="7" stroke-linejoin="round"/>
+</g>
+<g id="back-tuft">
+  <g class="face-back"><path d="M218.82 101.47 L265.55 82.59 L296.57 159.36 L249.83 178.24 Z" fill="#5b3a24"/><path d="M218.82 101.47 L265.55 82.59 L296.57 159.36 L249.83 178.24 Z" fill="none" stroke="#1c1a1a" stroke-width="3.6" stroke-linejoin="round"/></g>
+  <path d="M218.82 101.47 L265.55 82.59 L296.56 159.36 L249.84 178.24 Z" fill="none" stroke="#1c1a1a" stroke-width="7" stroke-linejoin="round"/>
+</g>
+<g id="back-pouch">
+  <g class="face-back"><path d="M208.4 662 L302 662 L302 744.8 L208.4 744.8 Z" fill="#9a6235"/><g transform="matrix(36 0 0 36 208.4 662)"><rect x="0" y="0" width="2.6" height="0.95" fill="#7d4c27" stroke="none"/><path d="M0 0.95 L2.6 0.95" fill="none" stroke="#1c1a1a" stroke-width="3.6" stroke-linecap="round" stroke-linejoin="round" vector-effect="non-scaling-stroke"/><rect x="1.05" y="0.7" width="0.5" height="0.5" rx="0.1" fill="#d9d3c4" stroke="#1c1a1a" stroke-width="3.6" stroke-linecap="round" stroke-linejoin="round" vector-effect="non-scaling-stroke"/></g><path d="M208.4 662 L302 662 L302 744.8 L208.4 744.8 Z" fill="none" stroke="#1c1a1a" stroke-width="3.6" stroke-linejoin="round"/></g>
+  <path d="M208.4 662 L302 662 L302 744.8 L208.4 744.8 Z" fill="none" stroke="#1c1a1a" stroke-width="7" stroke-linejoin="round"/>
+</g>
+</svg>

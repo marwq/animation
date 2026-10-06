@@ -1,0 +1,35 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 660 1000" width="660" height="1000">
+<title>Зомби-хулиган — сзади</title>
+<g id="back-arm-left">
+  <g class="face-back"><path d="M114 482 L204 482 L204 726.8 L114 726.8 Z" fill="#86b25e"/><path d="M114 482 L204 482 L204 726.8 L114 726.8 Z" fill="none" stroke="#1c1a1a" stroke-width="3.6" stroke-linejoin="round"/></g>
+  <path d="M114 482 L204 482 L204 726.8 L114 726.8 Z" fill="none" stroke="#1c1a1a" stroke-width="7" stroke-linejoin="round"/>
+</g>
+<g id="back-leg-left">
+  <g class="face-back"><path d="M204 734 L330 734 L330 950 L204 950 Z" fill="#4f6a95"/><g transform="matrix(36 0 0 36 204 734)"><rect x="0" y="4.9" width="3.5" height="1.1" fill="#ece6da" stroke="none"/><path d="M0 4.9 L3.5 4.9" fill="none" stroke="#1c1a1a" stroke-width="3.6" stroke-linecap="round" stroke-linejoin="round" vector-effect="non-scaling-stroke"/><rect x="0" y="5.35" width="3.5" height="0.25" fill="#d6453c" stroke="none"/></g><path d="M204 734 L330 734 L330 950 L204 950 Z" fill="none" stroke="#1c1a1a" stroke-width="3.6" stroke-linejoin="round"/></g>
+  <path d="M204 734 L330 734 L330 950 L204 950 Z" fill="none" stroke="#1c1a1a" stroke-width="7" stroke-linejoin="round"/>
+</g>
+<g id="back-body">
+  <g class="face-back"><path d="M204 482 L456 482 L456 734 L204 734 Z" fill="#dcd6c6"/><g transform="matrix(36 0 0 36 204 482)"><path d="M0 0 L1.6 0 L1.1 1.7 L0 1.9 Z" fill="#86b25e" stroke="#1c1a1a" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" vector-effect="non-scaling-stroke"/><path d="M7 0 L5.4 0 L5.9 1.7 L7 1.9 Z" fill="#86b25e" stroke="#1c1a1a" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" vector-effect="non-scaling-stroke"/><path d="M0 7 L0 6.2 L0.88 6.8 L1.75 6.2 L2.62 6.8 L3.5 6.2 L4.38 6.8 L5.25 6.2 L6.12 6.8 L7 6.2 L7 7 Z" fill="#86b25e" stroke="#1c1a1a" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" vector-effect="non-scaling-stroke"/></g><path d="M204 482 L456 482 L456 734 L204 734 Z" fill="none" stroke="#1c1a1a" stroke-width="3.6" stroke-linejoin="round"/></g>
+  <path d="M204 482 L456 482 L456 734 L204 734 Z" fill="none" stroke="#1c1a1a" stroke-width="7" stroke-linejoin="round"/>
+</g>
+<g id="back-head">
+  <g class="face-back"><path d="M150 122 L510 122 L510 482 L150 482 Z" fill="#86b25e"/><g transform="matrix(36 0 0 36 150 122)"><path d="M0 1.3 L10 1.3 L10 4.2 L8.6 4.8 L7.2 4 L5.6 5 L4.2 4.1 L2.8 4.9 L1.2 4 L0 4.2 Z" fill="#3a3a26" stroke="#1c1a1a" stroke-width="3.6" stroke-linecap="round" stroke-linejoin="round" vector-effect="non-scaling-stroke"/><rect x="6.5" y="7" width="0.9" height="0.7" fill="#6a9646" stroke="none"/></g><path d="M150 122 L510 122 L510 482 L150 482 Z" fill="none" stroke="#1c1a1a" stroke-width="3.6" stroke-linejoin="round"/></g>
+  <path d="M150 122 L510 122 L510 482 L150 482 Z" fill="none" stroke="#1c1a1a" stroke-width="7" stroke-linejoin="round"/>
+</g>
+<g id="back-cap">
+  <g class="face-back"><path d="M142.8 71.6 L517.2 71.6 L517.2 172.4 L142.8 172.4 Z" fill="#3a3e48"/><path d="M142.8 71.6 L517.2 71.6 L517.2 172.4 L142.8 172.4 Z" fill="none" stroke="#1c1a1a" stroke-width="3.6" stroke-linejoin="round"/></g>
+  <path d="M142.8 71.6 L517.2 71.6 L517.2 172.4 L142.8 172.4 Z" fill="none" stroke="#1c1a1a" stroke-width="7" stroke-linejoin="round"/>
+</g>
+<g id="back-leg-right">
+  <g class="face-back"><path d="M330 734 L456 734 L456 950 L330 950 Z" fill="#4f6a95"/><g transform="matrix(36 0 0 36 330 734)"><rect x="0" y="4.9" width="3.5" height="1.1" fill="#ece6da" stroke="none"/><path d="M0 4.9 L3.5 4.9" fill="none" stroke="#1c1a1a" stroke-width="3.6" stroke-linecap="round" stroke-linejoin="round" vector-effect="non-scaling-stroke"/><rect x="0" y="5.35" width="3.5" height="0.25" fill="#d6453c" stroke="none"/></g><path d="M330 734 L456 734 L456 950 L330 950 Z" fill="none" stroke="#1c1a1a" stroke-width="3.6" stroke-linejoin="round"/></g>
+  <path d="M330 734 L456 734 L456 950 L330 950 Z" fill="none" stroke="#1c1a1a" stroke-width="7" stroke-linejoin="round"/>
+</g>
+<g id="back-arm-right">
+  <g class="face-back"><path d="M456 482 L546 482 L546 726.8 L456 726.8 Z" fill="#86b25e"/><g transform="matrix(36 0 0 36 456 482)"><rect x="0" y="3.4" width="2.5" height="1.4" fill="#efe4c8" stroke="none"/><path d="M0 3.4 L2.5 3.4" fill="none" stroke="#1c1a1a" stroke-width="3.6" stroke-linecap="round" stroke-linejoin="round" vector-effect="non-scaling-stroke"/><path d="M0 4.8 L2.5 4.8" fill="none" stroke="#1c1a1a" stroke-width="3.6" stroke-linecap="round" stroke-linejoin="round" vector-effect="non-scaling-stroke"/><path d="M0 3.9 L2.5 4.25" fill="none" stroke="#1c1a1a" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" vector-effect="non-scaling-stroke"/><path d="M0 4.4 L2.5 4.7" fill="none" stroke="#1c1a1a" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" vector-effect="non-scaling-stroke"/></g><path d="M456 482 L546 482 L546 726.8 L456 726.8 Z" fill="none" stroke="#1c1a1a" stroke-width="3.6" stroke-linejoin="round"/></g>
+  <path d="M456 482 L546 482 L546 726.8 L456 726.8 Z" fill="none" stroke="#1c1a1a" stroke-width="7" stroke-linejoin="round"/>
+</g>
+<g id="back-brim">
+  <g class="face-back"><path d="M243.6 154.4 L416.4 154.4 L416.4 172.4 L243.6 172.4 Z" fill="#d6453c"/><path d="M243.6 154.4 L416.4 154.4 L416.4 172.4 L243.6 172.4 Z" fill="none" stroke="#1c1a1a" stroke-width="3.6" stroke-linejoin="round"/></g>
+  <path d="M243.6 154.4 L416.4 154.4 L416.4 172.4 L243.6 172.4 Z" fill="none" stroke="#1c1a1a" stroke-width="7" stroke-linejoin="round"/>
+</g>
+</svg>
