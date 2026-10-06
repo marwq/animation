@@ -7,8 +7,8 @@
 |---|---|---|
 | Анализ ниши и канала Kopee | готово | [research-kopee.md](research-kopee.md) |
 | Концепт персонажа | готово | этот файл, [`characters/steve/`](characters/steve) |
-| Первый сценарий | следующий шаг | — |
-| Фоны под сценарий | после сценария | — |
+| Первый сценарий «Рано радовался» | готово | [scenarios/01-laughed-too-early.md](scenarios/01-laughed-too-early.md) |
+| Фоны под сценарий (BG-01…BG-07) | следующий шаг | — |
 
 ## Персонаж
 
