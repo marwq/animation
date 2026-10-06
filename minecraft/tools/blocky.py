@@ -6,25 +6,28 @@
 и переносятся на экран аффинным преобразованием. Проекция ортогональная, поэтому
 перенос точный при любом повороте.
 
-Стиль — как у рисованных Minecraft-анимаций: плоская заливка, грани, которые смотрят вбок,
-темнее, тонкий чёрный контур одной толщины по силуэту и по рёбрам, лёгкая «рукописная»
-неровность линий (фильтр ROUGH).
+Стиль — чиби-стикеры по Minecraft: блоки со скруглёнными углами, толстый тёмный контур
+только по силуэту каждой части (снизу и справа толще, как кистью), внутренние рёбра без
+линий — только сменой тона. Три тона на грань: верхняя светлее, обращённая к камере — база,
+боковые — тень с холодным оттенком; поверх — мягкий градиент (верх светлее, низ темнее).
 
 Система координат модели: x — к левому боку персонажа (вправо от зрителя на виде
 спереди), y — вверх, z — к зрителю. Земля — y = 0.
 """
 import math
 
-OUT = '#151515'       # контур
-SW = 4.5              # контур каждой коробки, px на экране
-DET = 3.4             # внутренние рёбра и линии рисунка, px
-SHADE = ('#000000', 0.23)   # тень боковых граней: цвет и прозрачность поверх заливки
-LIGHT = ('#ffffff', 0.10)   # подсветка верхних граней
-# «рукописная» неровность линий: шум смещает пиксели на ±1,5 px
-ROUGH = ('<filter id="rough" x="-2%" y="-2%" width="104%" height="104%">'
-         '<feTurbulence type="fractalNoise" baseFrequency="0.03" numOctaves="2" seed="11"/>'
-         '<feDisplacementMap in="SourceGraphic" scale="3" xChannelSelector="R" yChannelSelector="G"/>'
-         '</filter>')
+OUT = '#22201f'       # контур
+SW = 8.5              # контур каждой коробки, px на экране
+HEAVY = (1.6, 2.2)    # сдвиг второго контура вниз-вправо: там линия толще
+DET = 3.0             # линии рисунка на гранях, px
+SHADE = ('#cfa8a4', 1.0)    # тень боковых граней: тёплый тон в режиме «умножение»
+LIGHT = ('#ffffff', 0.20)   # подсветка верхних граней
+# мягкий градиент на вертикальных гранях: верх чуть светлее, низ чуть темнее
+DEFS = ('<linearGradient id="soft" x1="0" y1="0" x2="0" y2="1">'
+        '<stop offset="0" stop-color="#ffffff" stop-opacity="0.14"/>'
+        '<stop offset="0.5" stop-color="#ffffff" stop-opacity="0"/>'
+        '<stop offset="1" stop-color="#3b2238" stop-opacity="0.09"/>'
+        '</linearGradient>')
 FONT = "'DejaVu Sans', 'Segoe UI', Arial, sans-serif"
 
 NSS = 'vector-effect="non-scaling-stroke"'
@@ -148,10 +151,12 @@ class Box:
              у переднего ребра. 'around' — на всех четырёх вертикальных гранях.
     pivot, rot — точка поворота и углы (x, y, z) в градусах — для поз;
     after — имена коробок, поверх которых эта рисуется всегда;
-    shade — своя густота тени боковых граней (по умолчанию SHADE).
+    shade — своя густота тени боковых граней (по умолчанию SHADE);
+    round — радиус скругления углов силуэта, в единицах.
     """
 
-    def __init__(self, name, size, at, color, decals=None, pivot=None, rot=(0, 0, 0), after=(), shade=None):
+    def __init__(self, name, size, at, color, decals=None, pivot=None, rot=(0, 0, 0), after=(), shade=None,
+                 round=0.0):
         self.name, self.size, self.at = name, size, at
         self.color = color if isinstance(color, dict) else {'default': color}
         self.decals = decals or {}
@@ -160,10 +165,11 @@ class Box:
         self.rot = rot
         self.after = tuple(after)
         self.shade = shade
+        self.round = round
 
     def posed(self, rot=None, pivot=None):
         b = Box(self.name, self.size, self.at, self.color, self.decals, pivot or self.pivot,
-                rot if rot is not None else self.rot, self.after, self.shade)
+                rot if rot is not None else self.rot, self.after, self.shade, self.round)
         return b
 
     def face_color(self, face):
@@ -249,7 +255,7 @@ def render(boxes, cam, pfx='v'):
         if not visible:
             continue
         lit = max((f for f in visible if abs(f[1][1]) < 0.55), key=lambda f: f[1][2], default=None)
-        parts = []
+        fills = []
         all_pts = []
         for face, nv, o, U, Vv, ul, vl in visible:
             O = model(o)
@@ -268,16 +274,38 @@ def render(boxes, cam, pfx='v'):
                 g.append(f'<g transform="{M}">{dec}</g>')
             if nv[1] > 0.55:
                 g.append(f'<path d="{poly_d}" fill="{LIGHT[0]}" opacity="{LIGHT[1]}"/>')
-            elif lit is None or face != lit[0]:
-                g.append(f'<path d="{poly_d}" fill="{SHADE[0]}" opacity="{b.shade or SHADE[1]}"/>')
-            g.append(f'<path d="{poly_d}" fill="none" stroke="{OUT}" stroke-width="{DET}" '
-                     f'stroke-linejoin="round"/>')
-            parts.append(f'<g class="face-{face}">' + ''.join(g) + '</g>')
-        hp = hull(all_pts)
-        parts.append(f'<path d="M{" L".join(f"{n(x)} {n(y)}" for x, y in hp)} Z" fill="none" '
-                     f'stroke="{OUT}" stroke-width="{SW}" stroke-linejoin="round"/>')
+            else:
+                if lit is None or face != lit[0]:
+                    g.append(f'<path d="{poly_d}" fill="{SHADE[0]}" opacity="{b.shade or SHADE[1]}" '
+                             f'style="mix-blend-mode:multiply"/>')
+                g.append(f'<path d="{poly_d}" fill="url(#soft)"/>')
+            fills.append(f'<g class="face-{face}">' + ''.join(g) + '</g>')
+        hull_d = rounded(hull(all_pts), b.round * cam.S)
+        cid = f'{pfx}-{b.name}-clip'
+        parts = [f'<path d="{hull_d}" fill="none" stroke="{OUT}" stroke-width="{SW}" stroke-linejoin="round" '
+                 f'transform="translate({HEAVY[0]} {HEAVY[1]})"/>',
+                 f'<clipPath id="{cid}"><path d="{hull_d}"/></clipPath>',
+                 f'<g clip-path="url(#{cid})">' + ''.join(fills) + '</g>',
+                 f'<path d="{hull_d}" fill="none" stroke="{OUT}" stroke-width="{SW}" stroke-linejoin="round"/>']
         out.append(f'<g id="{pfx}-{b.name}">\n  ' + '\n  '.join(parts) + '\n</g>')
     return '\n'.join(out)
+
+
+def rounded(pts, r):
+    """Замкнутый путь по точкам со скруглёнными углами радиуса r (px)."""
+    if r <= 0 or len(pts) < 3:
+        return 'M' + ' L'.join(f'{n(x)} {n(y)}' for x, y in pts) + ' Z'
+    d = []
+    k = len(pts)
+    for i in range(k):
+        p0, p1, p2 = pts[i - 1], pts[i], pts[(i + 1) % k]
+        v1, v2 = sub(p0, p1), sub(p2, p1)
+        l1, l2 = math.hypot(*v1), math.hypot(*v2)
+        rr = min(r, l1 * 0.45, l2 * 0.45)
+        a = add(p1, scale(v1, rr / l1)) if l1 else p1
+        c = add(p1, scale(v2, rr / l2)) if l2 else p1
+        d.append(f'{"L" if d else "M"}{n(a[0])} {n(a[1])} Q{n(p1[0])} {n(p1[1])} {n(c[0])} {n(c[1])}')
+    return ' '.join(d) + ' Z'
 
 
 def bounds(boxes, cam):
