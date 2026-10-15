@@ -1,0 +1,36 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>POV style test</title>
+<link rel="stylesheet" href="/node_modules/@fontsource/space-grotesk/500.css">
+<link rel="stylesheet" href="/node_modules/@fontsource/space-grotesk/700.css">
+<link rel="stylesheet" href="/node_modules/@fontsource/jetbrains-mono/500.css">
+<link rel="stylesheet" href="/node_modules/@fontsource/jetbrains-mono/600.css">
+<link rel="stylesheet" href="hud.css">
+<script type="importmap">{ "imports": { "three": "/node_modules/three/build/three.module.js" } }</script>
+</head>
+<body>
+<div id="stage">
+  <canvas id="c" width="1280" height="720"></canvas>
+  <div id="hud">
+    <div id="scrim-top"></div>
+    <div id="scrim-bottom"></div>
+    <div id="where"><div id="place"></div><div id="coords">40.758° N · 73.986° W</div></div>
+    <div id="gauge">
+      <div class="label">DEPTH</div>
+      <div class="value"><span id="depth">0.00</span><span class="unit">m</span></div>
+      <div id="next"></div>
+    </div>
+    <div id="bar"><div id="dot"></div></div>
+  </div>
+  <div id="caption"></div>
+  <div id="title">
+    <div class="big">What if you kept<br>sinking forever?</div>
+    <div class="small">first-person style test · draft</div>
+  </div>
+  <div id="fade"></div>
+</div>
+<script type="module" src="main.js"></script>
+</body>
+</html>

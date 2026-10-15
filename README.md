@@ -93,3 +93,31 @@ python3 tools/build_characters.py        # SVG всех персонажей (и
 npm i --no-save playwright && npx playwright install chromium
 node tools/render.js                     # PNG ×2 (или: node tools/render.js 2 sarah)
 ```
+
+## POV — тест стиля от первого лица
+
+![Тест стиля](pov/renders/style_test_v1.mp4)
+
+25-секундный черновик начала ролика «What if you kept sinking forever?»: Таймс-сквер в сумерках,
+вид от первого лица. Камера ведёт себя как голова: смотрит вдоль проспекта, поворачивается на то,
+что происходит (такси слева, трубы, поезд метро), а тело появляется по ходу действия — руки для
+равновесия, браслет-глубиномер на левом запястье, кроссовки, уходящие в асфальт, ладонь, закрывающая
+лицо от фар. Экранный стиль свой: глубиномер внизу слева, шкала пути справа, прямые подписи.
+
+| Путь | Что это |
+|---|---|
+| `pov/timeline.js` | раскадровка: глубина, повороты головы, позы рук, подписи |
+| `pov/body.js` | тело героя: корпус, ноги, руки с IK на два сустава, браслет |
+| `pov/city.js` | проспект: дома, абстрактные экраны без брендов, такси, пешеходы |
+| `pov/underground.js` | под тротуаром: грунт, трубы, тоннель метро с поездом, сланец |
+| `pov/hud.js`, `pov/hud.css` | надписи поверх кадра |
+| `pov/audio.py` | звук: всё синтезируется, без чужих записей |
+| `pov/render.js` | рендер кадров в headless Chromium и сборка видео через ffmpeg |
+| `pov/renders/style_test_v1.mp4` | готовый тест, 1280×720, 30 к/с, со звуком |
+
+```bash
+npm i --no-save playwright three @fontsource/space-grotesk @fontsource/jetbrains-mono
+python3 pov/audio.py                     # pov/out/audio.wav
+node pov/render.js                       # pov/out/style_test.mp4 (≈4 мин на 750 кадров)
+node pov/render.js --stills 9.8,18.9     # отдельные кадры для проверки
+```
