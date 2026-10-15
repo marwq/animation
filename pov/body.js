@@ -6,17 +6,17 @@ import { box, canvasTexture, clamp, lambert } from './util.js';
 const UPPER = 0.31; // плечо → локоть
 const FORE = 0.27; // локоть → запястье
 
-// Палитра заказчика (#A3B886, #A38B4A, #F3E6AB), чуть светлее — в сумерках так читается лучше
+// Палитра: зелёная куртка, голубая футболка, синие брюки, белые кеды с зелёной полосой
 const COLORS = {
-  jacket: 0xadc392, // шалфейная куртка-рубашка
-  jacketDark: 0x8ea476, // швы, клапаны карманов
-  shirt: 0xf6ebb6, // кремовая футболка под расстёгнутой курткой
-  rib: 0xf1e3a6, // кремовые трикотажные манжеты и низ куртки
-  trousers: 0xb19755, // брюки цвета хаки
-  trousersDark: 0x947c43, // карманы-карго
-  shoe: 0xf6ebb6, // кремовые кеды
-  stripe: 0xadc392, // шалфейная полоса на кедах
-  sole: 0xfbf8ef,
+  jacket: 0x47a463, // зелёная куртка-рубашка
+  jacketDark: 0x37844d, // швы, клапаны карманов
+  shirt: 0xa6d2f2, // голубая футболка под расстёгнутой курткой
+  rib: 0x3b8fb8, // сине-бирюзовые трикотажные манжеты и низ куртки
+  trousers: 0x3f68b4, // синие брюки
+  trousersDark: 0x31559a, // карманы-карго
+  shoe: 0xeef3f7, // белые кеды
+  stripe: 0x47a463, // зелёная полоса на кедах
+  sole: 0xfbfbfb,
   skin: 0xd59d78,
   band: 0x2a2c30,
 };
@@ -142,9 +142,9 @@ export function buildBody() {
   });
 
   // Свечение браслета: под землёй это единственный свет рядом с героем
-  const glow = new THREE.PointLight(0xa8f4ee, 0, 10, 1.4);
+  const glow = new THREE.PointLight(0xa8f4ee, 0, 8, 1.6);
   arms[0].wrist.add(glow);
-  glow.position.set(-0.16, 0.05, 0); // в стороне от кисти, чтобы не пересвечивать её
+  glow.position.set(-0.4, 0.12, 0.1); // в стороне от руки: светит на стены, а не пересвечивает рукав
 
   // Шея → камера: голова вращается вокруг шеи, глаза чуть впереди
   const neck = new THREE.Group();
@@ -178,7 +178,7 @@ function pose(s, name) {
       return { pos, pole: v3(-0.7, -0.7, 0.1), fingers: v3(0.9, 0.05, -0.35), palm: toEye.negate() };
     }
     case 'shield':
-      return { pos: v3(0.06, 1.52, -0.33), pole: v3(0.8, -0.5, 0.2), fingers: v3(-0.25, 0.75, -0.3), palm: v3(0.05, 0, -1) };
+      return { pos: v3(0.0, 1.52, -0.34), pole: v3(0.8, -0.5, 0.2), fingers: v3(-0.28, 0.75, -0.3), palm: v3(-0.1, 0, -1) };
   }
 }
 
@@ -235,10 +235,12 @@ export function poseBody(body, t, w) {
     solveArm(arm, goal);
   }
   for (const leg of body.legs) {
-    // ноги слегка расходятся, когда опора уходит из-под ног
-    leg.hip.rotation.z = leg.s * (0.03 + 0.06 * w.balance);
-    leg.knee.rotation.x = 0.04 + 0.08 * w.balance;
-    leg.foot.rotation.x = -0.04 - 0.08 * w.balance;
+    // ноги слегка расходятся и пружинят, когда опора уходит из-под ног. Колено сгибается только
+    // назад: бедро вперёд (+X), голень назад (-2a), стопа доворачивается, чтобы подошва осталась ровной
+    const a = 0.025 + 0.07 * w.balance;
+    leg.hip.rotation.set(a, 0, leg.s * (0.03 + 0.06 * w.balance));
+    leg.knee.rotation.x = -2 * a;
+    leg.foot.rotation.x = a;
   }
 }
 

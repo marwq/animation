@@ -9,6 +9,7 @@
 Запуск из корня:  python3 pov/audio.py   ->  pov/out/audio.wav (48 кГц, стерео)
 """
 import json
+import os
 import wave
 from pathlib import Path
 
@@ -168,13 +169,23 @@ eye_y = SCENE['plaza'] - depth + 1.66
 UNDER = SCENE['under']
 CRACK = SCENE['crack']
 TR = SCENE['train']
-TITLE = SCENE['title'][0]
+TITLE = SCENE['title'][0] if SCENE['title'] else DUR + 10  # титра в этом куске нет
 MH = SCENE['manhole']
 SOIL = SCENE['soil_top']  # верх грунта под коллектором: трубы и тоннель — ниже на столько же
 T_STREET = float(t[np.argmax(eye_y < SCENE['plaza'])])  # глаза уходят ниже площади
 T_SEWER = float(t[np.argmax(eye_y < MH['crown'])])  # глаза проходят свод коллектора
 T_WATER = float(t[np.argmax(SCENE['plaza'] - depth < MH['water'])])  # крышка и подошвы касаются воды
 TUNNEL_TOP, TUNNEL_BOTTOM = SOIL - 5.3, SOIL - 9.9
+speed = np.gradient(depth) * SR  # скорость погружения, м/с
+
+
+def crossing(y):
+    return float(t[np.argmax(eye_y < y)])
+
+
+# Глаза проходят сквозь сплошное: потолок и пол тоннеля метро, свод и лоток водовода; километр вниз
+T_CEIL, T_FLOOR, T_CROWN, T_INVERT = (crossing((a + b) / 2) for a, b in SCENE['slabs'][1:5])
+KM = float(t[np.argmax(depth >= 1000)]) if depth[-1] >= 1000 else DUR + 10
 in_tunnel = (eye_y < TUNNEL_TOP + 0.1) & (eye_y > TUNNEL_BOTTOM - 0.1)
 
 # --- пространство: расстояние, Доплер, панорама от головы, «тень» головы ----
@@ -255,16 +266,35 @@ def osc(freq, n, table=SAW, phase0=0.0):
 
 
 def music():
-    # Оригинальная гармония: Cmaj9 → Am9 → Fmaj7(#11) → Dm9 (шахта) → Bbmaj9 (коллектор)
-    # → (под землёй) Dm(add9) низко → Cadd9
+    # Оригинальная гармония, по сценам: улица (Cmaj9 → Am9 → Fmaj7#11) → люк и шахта (Dm9) → коллектор (Bbmaj9)
+    # → грунт (Dm add9 низко, Gm9) → метро (A7sus4, напряжение) → сланец (медленный круг Dm–Bb–F–C/E–Dm11–Bb–Gm9–A7sus)
+    # → водовод (Ebmaj9, «под водой») → глубже (Dm–Bb–F–C–Dm/A–Bb–Csus, всё выше и светлее) → удар на километре
     chords = [
         (0.0, 6.0, [48, 55, 59, 62, 64]),
         (5.4, 11.6, [40, 57, 59, 60, 64]),
         (11.0, 15.2, [41, 48, 52, 57, 59]),
         (14.6, 19.6, [38, 50, 53, 60, 64]),
         (19.0, UNDER + 0.85, [34, 46, 53, 57, 60, 62]),
-        (UNDER + 0.05, UNDER + 5.85, [26, 38, 45, 53, 64]),
-        (TITLE - 0.3, DUR, [36, 43, 50, 52, 55, 60]),
+        (UNDER + 0.05, 30.0, [26, 38, 45, 53, 64]),
+        (29.4, T_CEIL + 0.2, [31, 43, 50, 53, 57, 62]),
+        (T_CEIL - 0.4, T_FLOOR - 1.0, [33, 45, 52, 55, 57, 62]),
+        (T_FLOOR - 0.4, 55.5, [38, 50, 57, 60, 64]),
+        (55.0, 63.5, [34, 46, 53, 57, 60, 64]),
+        (63.0, 71.5, [41, 48, 55, 57, 60, 64]),
+        (71.0, 79.5, [40, 48, 55, 60, 62, 67]),
+        (79.0, 87.5, [38, 50, 55, 57, 60, 65]),
+        (87.0, 95.5, [34, 46, 53, 57, 62, 65]),
+        (95.0, 103.5, [43, 50, 55, 58, 62, 65]),
+        (103.0, T_CROWN, [45, 52, 55, 57, 62]),
+        (T_CROWN - 0.4, T_INVERT + 3.5, [39, 46, 51, 55, 58, 65]),
+        (T_INVERT + 3.0, 132.5, [38, 45, 50, 53, 57, 64]),
+        (132.0, 140.5, [34, 46, 50, 53, 58, 65]),
+        (140.0, 148.5, [41, 48, 53, 57, 60, 65]),
+        (148.0, 156.5, [36, 48, 55, 60, 62, 67]),
+        (156.0, 164.5, [33, 45, 50, 53, 57, 62, 69]),
+        (164.0, 172.5, [34, 46, 53, 58, 62, 65, 70]),
+        (172.0, KM - 0.1, [36, 43, 48, 55, 60, 65, 72]),
+        (KM - 0.2, DUR, [26, 38, 50, 57, 64, 69, 76]),
     ]
     pad = np.zeros((2, N))
     for a, b, notes in chords:
@@ -275,20 +305,34 @@ def music():
         for note in notes:
             f = midi(note)
             for det, pan in [(-0.006, -0.6), (0.0, 0.0), (0.006, 0.6)]:
-                v = osc(f * (1 + det), n, phase0=rng.uniform()) * e * (0.11 if note < 45 else 0.07)
+                v = osc(f * (1 + det), n, phase0=rng.uniform()) * e * (0.11 if note < 45 else 0.07 if note < 70 else 0.045)
                 pad[0, i0:i1] += v * np.cos((pan + 1) * np.pi / 4)
                 pad[1, i0:i1] += v * np.sin((pan + 1) * np.pi / 4)
-    # фильтр «дышит»: над землёй светлее, перед провалом темнеет, под землёй глухо, на титре раскрывается
+    # фильтр «дышит»: улица светлая, под землёй глухо, в скале чуть раскрывается, в воде качается,
+    # глубже — светлеет к удару на километре
     cut = env([(0, 900), (3, 1900), (10, 2600), (12.4, 2000), (16.8, 1500), (19.5, 1200), (UNDER - 0.15, 1100), (UNDER + 0.15, 520),
-               (UNDER + 5.05, 650), (TITLE, 2800), (DUR, 3200)])
+               (T_CEIL, 700), (T_FLOOR, 650), (T_FLOOR + 6, 900), (100, 1100), (T_CROWN, 800), (T_INVERT, 600), (T_INVERT + 4, 900),
+               (150, 1500), (KM - 1.5, 2600), (KM, 3600), (DUR, 3000)])
+    cut = cut * (1 + 0.25 * np.sin(2 * np.pi * 0.6 * t) * ((t > T_CROWN) & (t < T_INVERT)))
     pad = np.stack([vlp(pad[c], cut) for c in range(2)])
     pad *= 1 + 0.06 * np.sin(2 * np.pi * 0.11 * t)
 
-    # Мелодия: мягкий «колокольчик», свой мотив в пентатонике
+    # Мелодия: мягкий «колокольчик», свои мотивы в пентатонике; в каждом аккорде — 2–3 ноты из его верхних тонов
     motif = [(1.4, 76), (2.3, 79), (3.1, 81), (4.6, 79), (5.9, 76), (6.8, 74), (7.6, 76), (8.9, 79), (9.7, 84), (10.6, 83),
-             (11.6, 81), (13.2, 76), (14.6, 74), (17.7, 81), (18.5, 76), (20.5, 74), (21.5, 69),
-             (UNDER + 0.75, 69), (UNDER + 1.95, 64), (UNDER + 4.25, 62)]
-    motif += [(TITLE + dt, note) for dt, note in [(-0.05, 72), (0.2, 76), (0.45, 79), (0.7, 84), (1.15, 86)]]
+             (11.6, 81), (13.2, 76), (14.6, 74), (17.7, 81), (18.5, 76), (20.5, 74), (21.5, 69)]
+    mr = np.random.default_rng(11)
+    for a, b, notes in chords[5:-1]:
+        tops = sorted({n + 12 * k for n in notes for k in range(0, 4) if 67 <= n + 12 * k <= 86})
+        if not tops:
+            continue
+        for j in range(2 if b - a < 6 else 3):
+            ts = a + 1.0 + j * (b - a - 1.5) / 3 + mr.uniform(-0.3, 0.3)
+            motif.append((ts, int(mr.choice(tops))))
+    # водовод: быстрые тихие переливы — «капли» в воде
+    for k in range(18):
+        motif.append((T_CROWN + 0.4 + k * 0.29, [70, 75, 79, 82, 87, 82, 79, 75][k % 8]))
+    # километр: восходящий аккорд-арпеджио на ударе
+    motif += [(KM + dt, note) for dt, note in [(0.0, 69), (0.18, 74), (0.36, 76), (0.54, 81), (0.8, 86), (1.3, 88)]]
     bell = np.zeros(N)
     partials = [(1.0, 1.0, 1.7), (2.0, 0.36, 0.9), (3.01, 0.17, 0.5), (4.2, 0.08, 0.3), (5.43, 0.05, 0.2)]
     for start, note in motif:
@@ -296,22 +340,28 @@ def music():
         n = int(3.2 * SR)
         tt = np.arange(n) / SR
         y = sum(a * np.sin(2 * np.pi * f * r * tt) * np.exp(-tt / dcy) for r, a, dcy in partials)
-        y *= np.minimum(1, tt / 0.004) * (0.7 if T_STREET < start < TITLE - 0.2 else 1.0)
+        quiet = 0.45 if T_CROWN < start < T_INVERT else 0.7 if T_STREET < start < KM - 0.1 else 1.0
+        y *= np.minimum(1, tt / 0.004) * quiet
         bell += at(y * 0.09, start)
     bell_st = np.vstack([bell * 0.9, bell * 1.0])
 
-    # Пульс под землёй — как сердцебиение, сгущается к поезду; на титре — низкая нота
+    # Пульс в скале — как сердцебиение, всё чаще с глубиной; в водоводе стихает; на километре — низкий удар
     pulse = np.zeros(N)
-    beat = UNDER + 0.25
-    while beat < TITLE - 0.6:
-        pulse += at(tone(48, 0.5, 0.004, 0.13, ((1, 1), (2, 0.25))), beat) * 0.45
-        pulse += at(tone(44, 0.4, 0.004, 0.11), beat + 0.22) * 0.25
-        beat += 0.83 if beat < UNDER + 1.65 else 0.62
-    pulse += at(tone(32.7, 3.0, 0.3, 1.6, ((1, 1), (2, 0.3))), TITLE - 0.05) * 0.8
-    # Подъём перед титром
-    riser = bp(noise(), 300, 6000) * env([(0, 0), (TITLE - 1.1, 0), (TITLE - 0.08, 1), (TITLE - 0.04, 0), (DUR, 0)]) ** 2 * 0.07
-    glide = np.sin(2 * np.pi * np.cumsum(env([(0, 200), (TITLE - 1.1, 200), (TITLE - 0.05, 900), (DUR, 900)])) / SR)
-    riser += glide * env([(0, 0), (TITLE - 1.1, 0), (TITLE - 0.1, 0.05), (TITLE - 0.04, 0), (DUR, 0)])
+    beat = T_FLOOR + 0.5
+    while beat < KM - 0.3:
+        if T_CROWN - 0.5 < beat < T_INVERT + 2.0:
+            beat += 0.7
+            continue
+        k = np.clip((beat - T_FLOOR) / (KM - T_FLOOR), 0, 1)
+        g = 0.25 + 0.3 * k
+        pulse += at(tone(48, 0.5, 0.004, 0.13, ((1, 1), (2, 0.25))), beat) * g
+        pulse += at(tone(44, 0.4, 0.004, 0.11), beat + 0.2) * g * 0.55
+        beat += 1.05 - 0.6 * k
+    pulse += at(tone(32.7, 4.0, 0.2, 2.0, ((1, 1), (2, 0.3))), KM - 0.02) * 0.9
+    # Подъём перед километром
+    riser = bp(noise(), 300, 6000) * env([(0, 0), (KM - 1.6, 0), (KM - 0.06, 1), (KM - 0.02, 0), (DUR, 0)]) ** 2 * 0.07
+    glide = np.sin(2 * np.pi * np.cumsum(env([(0, 200), (KM - 1.6, 200), (KM - 0.03, 900), (DUR, 900)])) / SR)
+    riser += glide * env([(0, 0), (KM - 1.6, 0), (KM - 0.1, 0.05), (KM - 0.02, 0), (DUR, 0)])
 
     dry = pad + bell_st + np.vstack([pulse, pulse]) + np.vstack([riser, riser])
     wet = reverb(pad[0] * 0.5 + pad[1] * 0.5 + bell * 1.6, IR_HALL, 0.55)
@@ -633,65 +683,144 @@ def sewer():
 # --- под землёй -----------------------------------------------------------
 
 def underground():
+    """Грунт под коллектором: гул земли, трубы рядом (вода, пар, гудение кабелей), капли."""
     out = np.zeros((2, N))
-    below = env([(0, 0), (UNDER - 0.1, 0), (UNDER + 0.25, 1), (DUR, 1)])
-    # Толща земли: низкий гул, шорох грунта, редкие скрипы породы
+    below = env([(0, 0), (UNDER - 0.1, 0), (UNDER + 0.25, 1), (T_FLOOR - 0.3, 1), (T_FLOOR + 1.0, 0), (DUR, 0)])
     earth = lp(brown(), 90) * 0.9 + lp(pink(), 1600) * 0.12 * (1 + 0.5 * np.sin(2 * np.pi * 0.37 * t))
+    soil_only = env([(0, 0), (UNDER - 0.1, 0), (UNDER + 0.25, 1), (T_CEIL - 0.3, 1), (T_CEIL + 0.3, 0.35), (DUR, 0.35)])
     creaks = np.zeros(N)
     pos = UNDER + 0.6
-    while pos < DUR - 0.5:
+    while pos < T_FLOOR:
         n = int(rng.uniform(0.25, 0.6) * SR)
         f0 = rng.uniform(140, 380)
         tt = np.arange(n) / SR
         creak = np.sin(2 * np.pi * np.cumsum(f0 * (1 + 0.3 * tt)) / SR) * (1 + 0.6 * rng.standard_normal(n)) * np.sin(np.pi * tt / tt[-1]) ** 2
         creaks += at(bp(creak, f0 * 0.6, f0 * 3) * rng.uniform(0.3, 1), pos)
-        pos += rng.uniform(0.7, 1.6)
-    out += np.vstack([earth, earth]) * below * 0.22
-    out += spatial(creaks * 0.18, rng.uniform(-3, 3), SOIL - 6, rng.uniform(-3, 3), ref=4, doppler=False) * below
+        pos += rng.uniform(0.9, 2.0)
+    out += np.vstack([earth, earth]) * below * soil_only * 0.22
+    out += spatial(creaks * 0.16, rng.uniform(-3, 3), SOIL - 3, rng.uniform(-3, 3), ref=4, doppler=False) * below * soil_only
 
-    # Трубы: вода в водопроводе, пар, гудение кабелей — громче, когда проезжаем мимо.
-    # С площади их не слышно: всё это начинается, только когда уши уходят под плитку.
+    # Трубы: вода в водопроводе, пар, гудение кабелей — громко, только пока проходим рядом
+    P = SCENE['pipes']
     pipes = np.zeros((2, N))
     water = bp(pink(), 160, 800) * (1 + 0.8 * lp(noise(), 6) * 4)
-    pipes += spatial(through_soil(water * 0.45, SOIL - 1.7), 1.4, SOIL - 1.7, 0, ref=1.5, doppler=False)
+    pipes += spatial(through_soil(water * 0.45, P['water']), 1.4, P['water'], 0, ref=1.5, doppler=False)
     steam = hp(noise(), 2200) * (1 + 0.4 * lp(noise(), 4) * 4)
-    pipes += spatial(through_soil(steam * 0.22, SOIL - 2.6), 0, SOIL - 2.6, -1.3, ref=1.5, doppler=False)
+    pipes += spatial(through_soil(steam * 0.13, P['steam'], 0.9), 0, P['steam'], -1.3, ref=1.5, doppler=False)
     hum_ph = 2 * np.pi * 60 * t
     hum = np.sin(hum_ph) + 0.6 * np.sin(2 * hum_ph) + 0.35 * np.sin(3 * hum_ph) + 0.2 * np.sin(4 * hum_ph)
     hum = np.clip(hum * 1.4, -1, 1) * 0.5
-    pipes += spatial(through_soil(hum * 0.18, SOIL - 3.3), -1.3, SOIL - 3.3, 0, ref=1.5, doppler=False)
-    # Капли воды
+    pipes += spatial(through_soil(hum * 0.18, P['duct']), -1.3, P['duct'], 0, ref=1.5, doppler=False)
+    gas = bp(noise(), 3000, 9000) * 0.3  # еле слышное шипение у газовой трубы
+    pipes += spatial(through_soil(gas * 0.05, P['gas'], 0.8), 0, P['gas'], -1.6, ref=1.5, doppler=False)
     drops = np.zeros(N)
-    for ts in rng.uniform(UNDER + 0.3, UNDER + 2.45, 14):
+    for ts in rng.uniform(UNDER + 0.3, T_CEIL - 0.5, 30):
         n = int(0.12 * SR)
         tt = np.arange(n) / SR
         f = rng.uniform(1500, 2600) * (1 + 0.6 * np.exp(-tt / 0.01))
         drops += at(np.sin(2 * np.pi * np.cumsum(f) / SR) * np.exp(-tt / 0.035), ts)
-    pipes += spatial(drops * 0.12, rng.uniform(-2, 2), SOIL - 3, rng.uniform(-2, 2), ref=2, doppler=False)
-    out += pipes * below
-
-    # Скала: тяжёлый скрежет и глубокие трещины
-    rock = (t > TUNNEL_BOTTOM_T).astype(float)
-    grindr = lp(brown(), 180) * env([(0, 0), (TUNNEL_BOTTOM_T, 0), (UNDER + 4.05, 1), (DUR, 1)])
-    deep = np.zeros(N)
-    for ts in [UNDER + 3.75, UNDER + 4.5, UNDER + 5.15]:
-        deep += at(lp(grain(0.9, 0.25, 40, 400), 300) * 2.5, ts)
-    out += np.vstack([hp(grindr, 30) * 0.16 + deep * 0.3] * 2) * rock
+    pipes += spatial(drops * 0.1, rng.uniform(-2, 2), SOIL - 3, rng.uniform(-2, 2), ref=2, doppler=False)
+    out += pipes * below * 0.72
     return out + reverb(out[0] * 0.5 + out[1] * 0.5, IR_EARTH, 0.35)
 
 
-TUNNEL_BOTTOM_T = float(t[np.argmax(eye_y < TUNNEL_BOTTOM)])
+def deep():
+    """Скала: тишина породы, свист скорости, щелчки напряжения, далёкий гул, вода в трещине, водовод."""
+    out = np.zeros((2, N))
+    RK = SCENE['rock']
+    Tn = RK['tunnel']
+    rock = env([(0, 0), (T_FLOOR - 0.2, 0), (T_FLOOR + 0.4, 1), (DUR, 1)])
+    water_in = env([(0, 0), (T_CROWN - 0.15, 0), (T_CROWN + 0.1, 1), (T_INVERT - 0.1, 1), (T_INVERT + 0.15, 0), (DUR, 0)])
+    dry_rock = rock * (1 - water_in)
+    k_depth = np.clip(np.log10(np.maximum(depth, 1)) / 3, 0, 1)  # 0 у поверхности → 1 на километре
+
+    # Тишина породы: низкий гул, глубже — ниже и плотнее
+    tone_ = lp(brown(), 70) * (0.6 + 0.6 * k_depth) + bp(pink(), 250, 1100) * 0.04
+    out += np.vstack([tone_, tone_]) * dry_rock * 0.14
+    # Свист и рокот скорости: чем быстрее падение, тем выше и громче шум
+    spd = np.clip(speed, 0, None)
+    whoosh = vlp(pink(), 120 + 70 * spd) * np.clip(spd / 30, 0, 1) ** 0.8
+    rumble = vlp(brown(), 60 + 4 * spd) * np.clip(spd / 25, 0, 1)
+    sway = 0.15 * np.sin(2 * np.pi * 0.13 * t)
+    out += np.vstack([whoosh * (0.5 - sway), whoosh * (0.5 + sway)]) * dry_rock * 0.32
+    out += np.vstack([rumble, rumble]) * dry_rock * 0.12
+    # Щелчки напряжения в породе: с глубиной всё чаще; эхо — коротким каменным залом
+    pops = np.zeros((2, N))
+    pos = T_FLOOR + 1.0
+    while pos < DUR - 0.3:
+        if not (T_CROWN - 1 < pos < T_INVERT + 1):
+            i = int(pos * SR)
+            n = int(0.25 * SR)
+            tt = np.arange(n) / SR
+            click = grain(0.02, 0.003, 900, 7000) * rng.uniform(0.3, 1)
+            body = np.sin(2 * np.pi * rng.uniform(70, 140) * tt) * np.exp(-tt / 0.05) * rng.uniform(0.2, 0.6)
+            body[:len(click)] += click
+            th = rng.uniform(0, 2 * np.pi)
+            pops += spatial(at(body * 0.3, pos), 3 * np.sin(th), eye_y[min(i, N - 1)] + rng.uniform(-3, 3), 3 * np.cos(th), ref=2, doppler=False)
+        pos += rng.exponential(2.2 - 1.4 * k_depth[min(int(pos * SR), N - 1)])
+    out += pops
+    # Далёкий гул: где-то глубоко сдвинулась порода
+    for ts in [62.0, 97.5, 141.0, 158.5, 171.0]:
+        n = int(3.0 * SR)
+        tt = np.arange(n) / SR
+        g = lp(rng.standard_normal(n), 120) * np.sin(np.pi * tt / tt[-1]) ** 2 * 1.6
+        out += np.vstack([at(g, ts), at(g * 0.9, ts + 0.03)]) * 0.35
+    # Вода в трещине: журчание у стены, громче, пока проходим мимо; капли
+    F = RK['fracture']
+    fx, fz = 3 * np.sin(F['angle']), 3 * np.cos(F['angle'])
+    fy = np.clip(eye_y, F['y1'], F['y0'])
+    trickle = bp(noise(), 700, 5000) * (0.5 + np.clip(lp(noise(), 12) * 6, 0, None))
+    out += spatial(trickle * 0.14, fx, fy, fz, ref=1.5, doppler=False)
+    plinks = np.zeros(N)
+    for ts in rng.uniform(55, 80, 26):
+        n = int(0.1 * SR)
+        tt = np.arange(n) / SR
+        f = rng.uniform(1300, 2400) * (1 + 0.8 * (1 - np.exp(-tt / 0.01)))
+        plinks += at(np.sin(2 * np.pi * np.cumsum(f) / SR) * np.exp(-tt / 0.03), ts)
+    out += spatial(plinks * 0.12, fx, fy, fz, ref=1.5, doppler=False)
+    # Водовод: издалека — глухой шум воды сквозь камень, внутри — рёв потока, пузыри, гул бетона
+    roar = lp(pink(), 900) * (1 + 0.3 * lp(noise(), 3) * 3) + lp(brown(), 140) * 0.8
+    dist = np.abs(eye_y - Tn['y'])
+    approach = np.clip(1 - (dist - Tn['r_in']) / 40, 0, 1) ** 2 * (1 - water_in)
+    muffled = lp(roar, 260) * approach
+    out += np.vstack([muffled, muffled]) * 0.3
+    inside = roar * water_in
+    out += np.vstack([lp(inside, 1400) * 0.32, lp(inside, 1400) * 0.3])
+    bub = np.zeros(N)
+    for k in range(60):
+        ts = rng.uniform(T_CROWN, T_INVERT)
+        n = int(0.05 * SR)
+        tt = np.arange(n) / SR
+        f = rng.uniform(300, 800) * (1 + 1.5 * tt / tt[-1])
+        bub += at(np.sin(2 * np.pi * np.cumsum(f) / SR) * np.exp(-tt / 0.02) * rng.uniform(0.2, 0.8), ts)
+    out += np.vstack([lp(bub, 2000) * 0.15] * 2)
+    # Сквозь перекрытия: глухой удар; в воду и из воды — всплеск-«ух»
+    def thud(length=0.9, f0=60):
+        n = int(length * SR)
+        tt = np.arange(n) / SR
+        return np.sin(2 * np.pi * (f0 * tt - 8 * tt ** 2)) * np.exp(-tt / 0.25) + lp(rng.standard_normal(n), 300) * np.exp(-tt / 0.12) * 0.6
+    for ts in (T_CEIL, T_FLOOR):
+        out += np.vstack([at(thud(), ts - 0.03)] * 2) * 0.45
+    for ts in (T_CROWN, T_INVERT):
+        n = int(1.0 * SR)
+        tt = np.arange(n) / SR
+        swoosh = bp(rng.standard_normal(n), 200, 3000) * np.exp(-tt / 0.25)
+        out += np.vstack([at(thud(1.0, 48) * 0.8 + swoosh * 0.5, ts - 0.03)] * 2) * 0.45
+    return out + reverb((out[0] + out[1]) * 0.5 * dry_rock, IR_EARTH, 0.4)
 
 
 def train():
-    """Поезд метро: тележки стучат на стыках, колёса и моторы, свист реборд, гудок, порыв воздуха."""
+    """Поезд метро: издалека — нарастающий гул, гудок, тележки стучат на стыках, моторы, свист реборд, порыв воздуха."""
     out = np.zeros((2, N))
+    cars = TR['cars']
+    length = cars * 15.6
     front0 = lambda tt: -7.5 + TR['speed'] * (tt - TR['pass'])  # noqa: E731 — x передней кромки
-    a, b = TR['pass'] - 2.4, min(DUR, TR['pass'] + 2.8)
+    a, b = TR['pass'] - 6.0, min(DUR, TR['pass'] + length / TR['speed'] + 4.0)
     i0, i1 = int(a * SR), int(b * SR)
     tt = t[i0:i1]
     n = i1 - i0
-    bogies = [-2.5, -12.5, -18.1, -28.1, -33.7, -43.7]
+    wheels_y, motor_y = TUNNEL_BOTTOM + 0.6, TUNNEL_BOTTOM + 1.6
+    bogies = [off - 15.6 * k for k in range(cars) for off in (-2.5, -12.5)]
     for off in bogies:
         xs = front0(tt) + off
         clacks = np.zeros(n)
@@ -702,37 +831,40 @@ def train():
                 g = lp(grain(0.05, 0.015, 60, 600), 400)
                 g[:int(0.03 * SR)] += grain(0.03, 0.006, 600, 5000) * 1.5
                 j = c + axle
-                k = min(len(g), n - j)
-                if k > 0:
-                    clacks[j:j + k] += g[:k]
-        roll = bp(rng.standard_normal(n), 250, 3200) * 0.55 + lp(rng.standard_normal(n), 120) * 0.8
-        out += spatial(np.concatenate([np.zeros(i0), clacks * 0.6 + roll * 0.35, np.zeros(N - i1)])[i0:i1], xs, SOIL - 9.4, TR['track'], start=i0, ref=3)
-    # Моторы: тональный вой на каждом вагоне
-    for car in range(3):
+                kk = min(len(g), n - j)
+                if kk > 0:
+                    clacks[j:j + kk] += g[:kk]
+        roll = bp(rng.standard_normal(n), 250, 3200) * 0.45 + lp(rng.standard_normal(n), 120) * 0.7
+        out += spatial(clacks * 0.55 + roll * 0.3, xs, wheels_y, TR['track'], start=i0, ref=3)
+    for car in range(cars):
         xs = front0(tt) - 7.5 - car * 15.6
-        fw = 760 + 120 * (tt - a) / (b - a)
+        fw = 620 + 140 * np.clip((tt - a) / 6, 0, 1) + 15 * car
         ph = np.cumsum(fw / SR)
         whine = np.sin(2 * np.pi * ph) + 0.45 * np.sin(4 * np.pi * ph) + 0.2 * np.sin(2 * np.pi * 3.02 * ph)
-        out += spatial(whine * 0.05, xs, SOIL - 8.6, TR['track'], start=i0, ref=3)
-    # Гудок на подходе и свист реборд на проходе
-    hn = int(0.65 * SR)
-    ht = np.arange(hn) / SR
-    horn = lp(np.sign(np.sin(2 * np.pi * 330 * ht)) * 0.6 + np.sign(np.sin(2 * np.pi * 415 * ht)) * 0.5, 2200) * np.minimum(1, ht / 0.02) * np.clip((0.65 - ht) / 0.06, 0, 1)
-    hs = int((TR['pass'] - 0.55) * SR) - i0
+        out += spatial(whine * 0.04, xs, motor_y, TR['track'], start=i0, ref=3)
+    # Гудок: два коротких на подходе
+    def horn_blast(dur):
+        m = int(dur * SR)
+        ht = np.arange(m) / SR
+        return lp(np.sign(np.sin(2 * np.pi * 330 * ht)) * 0.6 + np.sign(np.sin(2 * np.pi * 415 * ht)) * 0.5, 2200) * np.minimum(1, ht / 0.02) * np.clip((dur - ht) / 0.06, 0, 1)
     horn_sig = np.zeros(n)
-    horn_sig[hs:hs + hn] = horn
-    out += spatial(horn_sig * 0.35, front0(tt), SOIL - 7.8, TR['track'], start=i0, ref=4)
+    for off, dur in ((-1.7, 0.35), (-1.2, 0.6)):
+        hs = int((TR['pass'] + off - a) * SR)
+        hb = horn_blast(dur)
+        horn_sig[hs:hs + len(hb)] += hb
+    out += spatial(horn_sig * 0.35, front0(tt), motor_y + 0.8, TR['track'], start=i0, ref=4)
     sq = np.zeros(n)
-    s0 = int((TR['pass'] + 0.1 - a) * SR)
-    sn = int(0.55 * SR)
+    s0 = int((TR['pass'] + 0.8 - a) * SR)
+    sn = int(1.6 * SR)
     st_ = np.arange(sn) / SR
     sq[s0:s0 + sn] = np.sin(2 * np.pi * 2850 * st_ + 3 * np.sin(2 * np.pi * 7 * st_)) * np.sin(np.pi * st_ / st_[-1]) ** 2
-    out += spatial(sq * 0.06, front0(tt) - 20, SOIL - 9.4, TR['track'], start=i0, ref=3)
-    # Порыв воздуха, пока вагоны проносятся в двух метрах
-    blast = (bp(noise(), 120, 5000) * 0.8 + lp(brown(), 90) * 1.2) * env([(0, 0), (TR['pass'] - 0.3, 0), (TR['pass'] + 0.05, 1), (TR['pass'] + 0.9, 0.8), (TR['pass'] + 1.4, 0), (DUR, 0)])
-    out += np.vstack([blast, blast]) * 0.22
-    # Пока мы в грунте — поезд слышен глухо сквозь землю; в тоннеле — открыто и гулко
-    open_ = env([(0, 0), (UNDER + 2.0, 0), (UNDER + 2.17, 1), (UNDER + 3.3, 1), (UNDER + 3.5, 0.0), (DUR, 0)])
+    out += spatial(sq * 0.05, front0(tt) - 30, wheels_y, TR['track'], start=i0, ref=3)
+    # Порыв воздуха, пока вагоны проносятся в метре от лица
+    tail = TR['pass'] + length / TR['speed']
+    blast = (bp(noise(), 120, 5000) * 0.8 + lp(brown(), 90) * 1.2) * env([(0, 0), (TR['pass'] - 0.3, 0), (TR['pass'] + 0.05, 1), (tail - 0.3, 0.75), (tail + 0.6, 0), (DUR, 0)])
+    out += np.vstack([blast, blast]) * 0.2
+    # Из грунта и из скалы поезд слышен глухо; в тоннеле — открыто и гулко
+    open_ = env([(0, 0), (T_CEIL - 0.1, 0), (T_CEIL + 0.1, 1), (T_FLOOR - 0.1, 1), (T_FLOOR + 0.1, 0.0), (DUR, 0)])
     cut = 250 + 17000 * open_
     dry = np.stack([vlp(out[c], cut) for c in range(2)])
     wet = reverb(out[0] * 0.5 + out[1] * 0.5, IR_TUNNEL, 0.5) * open_
@@ -772,11 +904,24 @@ def lufs(x):
     return -0.691 + 10 * np.log10(np.mean(ms))
 
 
+CACHE = HERE / 'out' / 'stems'
+ONLY = {s for s in os.environ.get('AUDIO_ONLY', '').split(',') if s}
+
+
 def stem(fn, seed):
-    """Каждая дорожка со своим зерном: правка одной не меняет случайные детали других."""
+    """Каждая дорожка со своим зерном: правка одной не меняет случайные детали других.
+    Готовые дорожки кешируются в pov/out/stems; AUDIO_ONLY=deep,train пересчитывает только эти."""
     global rng
+    path = CACHE / f'{fn.__name__}.npy'
+    if ONLY and fn.__name__ not in ONLY and path.exists():
+        cached = np.load(path)
+        if cached.shape == (2, N):
+            return cached
     rng = np.random.default_rng(seed)
-    return fn()
+    out = fn()
+    CACHE.mkdir(parents=True, exist_ok=True)
+    np.save(path, out.astype(np.float32))
+    return out
 
 
 def main():
@@ -786,6 +931,7 @@ def main():
         'manhole': stem(manhole, 3) * 1.3,
         'sewer': stem(sewer, 4) * 1.0,
         'underground': stem(underground, 5) * 1.0,
+        'deep': stem(deep, 7) * 1.0,
         'train': stem(train, 6) * 1.3,
     }
     mix = sum(stems.values())

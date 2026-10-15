@@ -29,15 +29,11 @@ export const CRACK = scene.crack; // крышка люка лязгает и п�
 export const UNDER = scene.under; // глаза уходят под воду коллектора — дальше грунт
 export const MANHOLE = scene.manhole; // люк, шахта и коллектор: размеры по Y, капли, крыса
 export const SOIL_TOP = scene.soil_top; // верх грунта под коллектором: трубы, тоннель метро и скала — ниже
+export const PIPES = scene.pipes; // высоты труб под коллектором (y мира)
+export const ROCK = scene.rock; // скала под тоннелем: пузырь видимости, слои, водовод, трещина, гранаты
+export const SLABS = scene.slabs; // сплошные перекрытия: когда глаза проходят сквозь них, кадр на миг гаснет
+export const COMPARE = scene.compare; // подпись под глубиной: «глубже, чем…»
 export const TRAIN = scene.train;
 
-// Вехи пути вниз (по глубине подошв, м) — для строки «дальше» и шкалы справа
-export const MILESTONES = [
-  [1.66, 'under the street'],
-  [4.85, 'sewer'],
-  [3.4 - SOIL_TOP, 'water mains'],
-  [7.1 - SOIL_TOP, 'subway tunnel'],
-  [11.7 - SOIL_TOP, 'bedrock'],
-  [55, 'deepest subway station'],
-  [4000, 'deepest mine'],
-];
+// Вехи пути вниз (по глубине подошв, м) — для строки «дальше»
+export const MILESTONES = scene.milestones;

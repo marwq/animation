@@ -2,7 +2,9 @@
 //
 // Нужны Playwright, three и шрифты:  npm i --no-save playwright three @fontsource/space-grotesk @fontsource/jetbrains-mono
 // Видео:   node pov/render.js [fps]            -> pov/out/style_test.mp4 (60 к/с по умолчанию; со звуком, если есть pov/out/audio.wav)
+// Кусок:   node pov/render.js 60 --range 30,60 --out pov/out/part.mp4   (кадры с 30 по 60 с, без звука; см. render-all.js)
 // Кадры:   node pov/render.js --stills 2,9.5   -> pov/out/still_2.png, pov/out/still_9.5.png
+// Позы:    node pov/render.js --debug 14,20 front,side -> вид на героя со стороны: pov/out/debug_14_front.png …
 const fs = require('fs');
 const http = require('http');
 const path = require('path');
@@ -53,8 +55,11 @@ function run(cmd, args, input) {
 
 (async () => {
   const args = process.argv.slice(2);
+  const debug = args[0] === '--debug' ? { times: args[1].split(',').map(Number), views: (args[2] || 'front,side').split(',') } : null;
   const stills = args[0] === '--stills' ? args[1].split(',').map(Number) : null;
-  const fps = stills ? 0 : parseFloat(args[0] || String(SCENE.fps));
+  const fps = stills || debug ? 0 : parseFloat(args[0] || String(SCENE.fps));
+  const opt = (name) => (args.includes(name) ? args[args.indexOf(name) + 1] : null);
+  const range = opt('--range') ? opt('--range').split(',').map(Number) : null;
   fs.mkdirSync(OUT, { recursive: true });
 
   const server = await serve();
@@ -69,7 +74,16 @@ function run(cmd, args, input) {
   await page.waitForFunction('window.ready === true', null, { timeout: 120000 });
   const stage = await page.$('#stage');
 
-  if (stills) {
+  if (debug) {
+    for (const t of debug.times) {
+      for (const v of debug.views) {
+        await page.evaluate(([s, view]) => window.renderDebug(s, view), [t, v]);
+        const file = path.join(OUT, `debug_${t}_${v}.png`);
+        await stage.screenshot({ path: file });
+        console.log(path.relative(ROOT, file));
+      }
+    }
+  } else if (stills) {
     for (const t of stills) {
       await page.evaluate((s) => window.renderAt(s), t);
       const file = path.join(OUT, `still_${t}.png`);
@@ -77,24 +91,27 @@ function run(cmd, args, input) {
       console.log(path.relative(ROOT, file));
     }
   } else {
-    const video = path.join(OUT, 'video.mp4');
-    const frames = Math.round(DURATION * fps);
+    const video = opt('--out') ? path.resolve(opt('--out')) : path.join(OUT, 'video.mp4');
+    const first = range ? Math.round(range[0] * fps) : 0;
+    const last = range ? Math.round(range[1] * fps) : Math.round(DURATION * fps);
     const started = Date.now();
     await run(
       'ffmpeg',
       ['-y', '-loglevel', 'error', '-f', 'image2pipe', '-framerate', String(fps), '-i', '-', '-c:v', 'libx264', '-preset', 'slow', '-crf', '17', '-pix_fmt', 'yuv420p', video],
       async (stdin) => {
-        for (let i = 0; i < frames; i++) {
+        for (let i = first; i < last; i++) {
           await page.evaluate((s) => window.renderAt(s), i / fps);
           stdin.write(await stage.screenshot({ type: 'jpeg', quality: 95 }));
-          if (i % 60 === 0) console.log(`frame ${i}/${frames}  ${((Date.now() - started) / 1000).toFixed(0)} s`);
+          if ((i - first) % 60 === 0) console.log(`frame ${i - first}/${last - first}  ${((Date.now() - started) / 1000).toFixed(0)} s`);
         }
         stdin.end();
       }
     );
     const audio = path.join(OUT, 'audio.wav');
     const final = path.join(OUT, 'style_test.mp4');
-    if (fs.existsSync(audio)) {
+    if (range) {
+      console.log(path.relative(ROOT, video));
+    } else if (fs.existsSync(audio)) {
       await run('ffmpeg', ['-y', '-loglevel', 'error', '-i', video, '-i', audio, '-c:v', 'copy', '-c:a', 'aac', '-b:a', '192k', '-shortest', final]);
     } else {
       fs.copyFileSync(video, final);

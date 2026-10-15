@@ -1,5 +1,6 @@
-// Надписи поверх кадра: место, глубиномер со строкой «дальше», шкала пути справа, подписи, титр, затемнения.
-import { CAPTIONS, MILESTONES, TITLE, DURATION, UNDER } from './timeline.js';
+// Надписи поверх кадра: крупный блок глубины сверху слева (место, число, сравнение, что дальше),
+// шкала пути справа, подписи по центру, затемнения на входе, на выходе и сквозь перекрытия.
+import { CAPTIONS, COMPARE, MILESTONES, TITLE, DURATION } from './timeline.js';
 import { smooth, window01 } from './util.js';
 
 const $ = (id) => document.getElementById(id);
@@ -29,34 +30,48 @@ export function buildHud() {
   }
 }
 
+// Число глубины и единица: до 10 км — метры, дальше — километры
 function formatDepth(d) {
-  if (d < 10) return d.toFixed(2);
-  if (d < 100) return d.toFixed(1);
-  return Math.round(d).toLocaleString('en-US');
+  if (d >= 10000) return [(d / 1000).toLocaleString('en-US', { maximumFractionDigits: d < 100000 ? 1 : 0 }), 'km'];
+  if (d < 10) return [d.toFixed(2), 'm'];
+  if (d < 100) return [d.toFixed(1), 'm'];
+  return [Math.round(d).toLocaleString('en-US'), 'm'];
 }
 
-export function updateHud(t, depth, underground) {
-  $('place').textContent = underground ? 'BELOW TIMES SQUARE' : 'TIMES SQUARE · NEW YORK';
-  $('depth').textContent = formatDepth(depth);
+export function updateHud(t, depth, underground, through = 0) {
+  $('place').textContent = underground ? 'BELOW TIMES SQUARE · NEW YORK' : 'TIMES SQUARE · NEW YORK';
+  const [num, unit] = formatDepth(depth);
+  $('depth').textContent = num;
+  $('depth').nextSibling.textContent = unit;
+  let cmp = COMPARE[0][1];
+  for (const [m, text] of COMPARE) if (depth >= m) cmp = text;
+  $('compare').textContent = cmp;
   const next = MILESTONES.find(([m]) => m > depth + 0.05);
-  $('next').textContent = next ? `NEXT · ${next[1]} in ${formatDepth(next[0] - depth)} m` : '';
+  if (next) {
+    const [n, u] = formatDepth(next[0] - depth);
+    $('nextname').textContent = next[1];
+    $('nextdist').textContent = `in ${n} ${u}`;
+  }
   $('dot').style.top = `${scale(depth) * 100}%`;
 
-  const hudIn = smooth((t - 0.6) / 0.8) * (1 - smooth((t - TITLE[0] + 0.2) / 0.6));
-  $('hud').style.opacity = hudIn.toFixed(3);
+  const hudOut = TITLE ? smooth((t - TITLE[0] + 0.2) / 0.6) : 0;
+  $('hud').style.opacity = (smooth((t - 0.6) / 0.8) * (1 - hudOut)).toFixed(3);
 
   const cap = CAPTIONS.find(([a, b]) => t >= a && t <= b);
   const el = $('caption');
   if (cap) {
-    el.textContent = cap[2];
+    if (el.dataset.text !== cap[2]) {
+      el.dataset.text = cap[2];
+      el.innerHTML = '';
+      el.appendChild(document.createElement('span')).textContent = cap[2];
+    }
     el.style.opacity = window01(t, cap[0], cap[1], 0.28).toFixed(3);
   } else {
     el.style.opacity = '0';
   }
 
-  $('title').style.opacity = smooth((t - TITLE[0]) / 0.7).toFixed(3);
-  // затемнение: вход из чёрного, короткая темнота при проходе сквозь асфальт, уход в чёрное
-  const through = Math.exp(-(((t - UNDER) / 0.16) ** 2)) * 0.9;
+  $('title').style.opacity = TITLE ? smooth((t - TITLE[0]) / 0.7).toFixed(3) : '0';
+  // затемнение: вход из чёрного, миг темноты сквозь перекрытия и воду, уход в чёрное
   const fade = Math.max(1 - smooth(t / 0.8), through, smooth((t - (DURATION - 0.6)) / 0.6));
   $('fade').style.opacity = fade.toFixed(3);
 }
