@@ -2,6 +2,7 @@
 // Камера сидит в голове, сама голова не рисуется. Руки ставятся через IK на два сустава.
 import * as THREE from 'three';
 import { box, canvasTexture, clamp, lambert } from './util.js';
+import { EARTH } from './timeline.js';
 
 const UPPER = 0.31; // плечо → локоть
 const FORE = 0.27; // локоть → запястье
@@ -131,10 +132,11 @@ export function buildBody() {
     if (s === -1) {
       // Браслет на тыльной стороне левого запястья
       const band = box(0.05, 0.04, 0.1, m.band);
-      band.position.set(0.0, 0.022, 0);
+      band.position.set(0.0, 0.022, -0.01);
       wrist.add(band);
-      const face = new THREE.Mesh(new THREE.PlaneGeometry(0.084, 0.05), new THREE.MeshBasicMaterial({ map: screenTex }));
-      face.position.set(-0.026, 0.022, 0);
+      // экран чуть ближе к кисти: манжета рукава не заходит на цифры
+      const face = new THREE.Mesh(new THREE.PlaneGeometry(0.078, 0.05), new THREE.MeshBasicMaterial({ map: screenTex }));
+      face.position.set(-0.026, 0.022, -0.02);
       face.rotation.set(0, -Math.PI / 2, -Math.PI / 2); // текст вдоль предплечья
       wrist.add(face);
     }
@@ -268,20 +270,33 @@ export function poseBody(body, t, w) {
 
 // Число на экране браслета
 export function drawGauge(body, depth) {
-  const text = depth < 10 ? depth.toFixed(2) : depth < 100 ? depth.toFixed(1) : Math.round(depth).toString();
-  if (text === body.screen.text) return;
-  body.screen.text = text;
+  // глубина под поверхностью: после центра Земли — сколько осталось до поверхности на той стороне
+  const d = depth > EARTH / 2 ? Math.max(0, EARTH - depth) : depth;
+  const km = d >= 1000;
+  const v = km ? d / 1000 : d;
+  const text = v < 10 ? v.toFixed(km ? 2 : 2) : v < 100 ? v.toFixed(1) : Math.round(v).toString();
+  const unit = km ? 'km' : 'm';
+  if (text + unit === body.screen.text) return;
+  body.screen.text = text + unit;
   const ctx = body.screen.canvas;
   const { width: w, height: h } = ctx.canvas;
   ctx.fillStyle = '#05090b';
   ctx.fillRect(0, 0, w, h);
   ctx.fillStyle = '#5ff2e8';
-  ctx.font = '600 52px "JetBrains Mono", monospace';
   ctx.textAlign = 'center';
   ctx.textBaseline = 'middle';
-  ctx.fillText(text, w / 2 - 10, h / 2 - 6);
+  // число всегда целиком: шрифт ужимается, если цифр много
+  // видимая часть экрана — ближе к кисти (у рукава край прикрыт манжетой): цифры прижаты вправо
+  ctx.font = '600 52px "JetBrains Mono", monospace';
+  const right = w - (km ? 38 : 24);
+  const room = right - w * 0.38;
+  const size = Math.min(48, Math.floor((52 * room) / ctx.measureText(text).width));
+  ctx.font = `600 ${size}px "JetBrains Mono", monospace`;
+  ctx.textAlign = 'right';
+  ctx.fillText(text, right, h / 2 - 6);
   ctx.font = '600 24px "JetBrains Mono", monospace';
-  ctx.fillText('m', w - 18, h / 2 + 14);
-  ctx.fillRect(14, h - 14, (w - 28) * Math.min(1, Math.log10(1 + depth) / 4), 4);
+  ctx.textAlign = 'right';
+  ctx.fillText(unit, w - 8, h / 2 + 14);
+  ctx.fillRect(w * 0.38, h - 14, (w * 0.62 - 10) * Math.min(1, Math.log10(1 + d) / Math.log10(1 + EARTH / 2)), 4);
   body.screenTex.needsUpdate = true;
 }

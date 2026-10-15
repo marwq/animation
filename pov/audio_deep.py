@@ -409,6 +409,11 @@ def motion(tt, r):
     return np.vstack([whoosh * (0.5 - sway), whoosh * (0.5 + sway)]) * 0.3 * w + np.vstack([rumble, rumble]) * 0.12 * w
 
 
+def smooth_np(x):
+    x = np.clip(x, 0, 1)
+    return x * x * (3 - 2 * x)
+
+
 def thud(r, length=1.2, f0=50):
     n = int(length * SR)
     t = np.arange(n) / SR
@@ -476,6 +481,54 @@ def events(tt, r):
         f = rng_for('dia', k).uniform(3000, 6200)
         ping = (np.sin(2 * np.pi * f * tl) + 0.4 * np.sin(2 * np.pi * f * 2.76 * tl)) * np.exp(-tl / 0.12)
         place(out, tt, ping * 0.03, ts, az=rng_for('dia', k).uniform(-2, 2))
+    # то, что встречается в стенке (sights.js): жеода звенит стеклом, трещина журчит, разлом гудит и сыплется
+    if a < 211 and b > 205:
+        gr = rng_for('geode', 0)
+        for k in range(26):
+            ts = 207.0 + k * 0.11 + gr.uniform(0, 0.08)
+            n = int(0.9 * SR)
+            tl = np.arange(n) / SR
+            f = gr.uniform(2400, 5200)
+            ping = (np.sin(2 * np.pi * f * tl) + 0.3 * np.sin(2 * np.pi * f * 2.41 * tl)) * np.exp(-tl / 0.22)
+            place(out, tt, ping * 0.022 * np.exp(-((ts - 208.4) / 1.2) ** 2), ts, az=np.radians(50))
+    if a < 369 and b > 363:
+        gr = rng_for('peridot', 0)
+        for k in range(20):
+            ts = 365.0 + k * 0.13 + gr.uniform(0, 0.08)
+            n = int(0.9 * SR)
+            tl = np.arange(n) / SR
+            f = gr.uniform(1600, 3400)
+            ping = (np.sin(2 * np.pi * f * tl) + 0.35 * np.sin(2 * np.pi * f * 2.0 * tl)) * np.exp(-tl / 0.26)
+            place(out, tt, ping * 0.02 * np.exp(-((ts - 366.2) / 1.2) ** 2), ts, az=np.radians(50))
+    if a < 255 and b > 248.5:
+        cr = rng_for('crack', 0)
+        t0, t1 = 249.3, 254.4
+        n = int((t1 - t0) * SR)
+        tl = np.arange(n) / SR
+        swell = np.sin(np.pi * tl / tl[-1]) ** 2
+        trickle = bp(cr.standard_normal(n), 900, 5000) * (0.5 + 0.5 * np.abs(lp(cr.standard_normal(n), 14)) * 3)
+        place(out, tt, trickle * swell * 0.05, t0, az=np.radians(-52))
+        td = t0 + 0.3
+        while td < t1 - 0.3:
+            m = int(0.12 * SR)
+            tm = np.arange(m) / SR
+            f = cr.uniform(900, 1600) * (1 + 0.6 * tm / tm[-1])
+            plink = np.sin(2 * np.pi * np.cumsum(f) / SR) * np.exp(-tm / 0.03)
+            place(out, tt, plink * 0.09 * np.sin(np.pi * (td - t0) / (t1 - t0)), td, az=np.radians(-52))
+            td += cr.uniform(0.25, 0.6)
+    if a < 262 and b > 257:
+        fr = rng_for('fault', 0)
+        place(out, tt, thud(fr, 2.4, 36), 258.3, 0.7)
+        n = int(2.6 * SR)
+        tl = np.arange(n) / SR
+        grit = np.zeros(n)
+        for i in np.nonzero(fr.random(n) < 0.004 * np.exp(-tl / 0.8))[0]:
+            m = min(n - i, 400)
+            grit[i:i + m] += fr.standard_normal(m) * np.exp(-np.arange(m) / 60) * fr.uniform(0.2, 1)
+        grit = bp(grit, 300, 4000)
+        place(out, tt, grit * 0.12, 258.3, az=np.radians(40))
+        rum = lp(fr.standard_normal(n), 90) * np.exp(-tl / 0.9) * smooth_np(tl / 0.15)
+        place(out, tt, rum * 1.3, 258.25)
     # браслет: сигнал, когда подносим к глазам
     for c in CHECKS:
         if c + 0.4 < a or c > b:

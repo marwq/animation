@@ -17,6 +17,8 @@ export const SIGHTS = [
   { name: 'geode', t: 208.4, slow: 2.6, win: [205.2, 211.4], yaw: 50, y: -0.15, axes: [0.95, 1.25, 1.05] },
   { name: 'crack', t: 251.7, slow: 2.4, win: [249.0, 254.4], yaw: -52, y: 0.1 },
   { name: 'fault', t: 258.6, slow: 3.0, win: [255.8, 261.2], yaw: 40, y: 0, dip: 34, width: 0.42, shift: 0.31 },
+  { name: 'look', t: 335, slow: 1.6, win: [330.4, 339.4] }, // «Присмотрись»: первое свечение по швам зёрен
+  { name: 'geode', kind: 'peridot', t: 366.2, slow: 2.6, win: [363.6, 368.8], yaw: 50, y: -0.1, axes: [0.8, 1.05, 0.9] },
 ];
 export const FAULT = SIGHTS.find((sg) => sg.name === 'fault');
 
@@ -65,30 +67,33 @@ function buildGeode(spec, textures, origin) {
   const sphere = new THREE.SphereGeometry(1, 48, 32);
   const sp = sphere.attributes.position;
   const vc = new Float32Array(sp.count * 3);
-  const rim = new THREE.Color(0.8, 0.82, 0.86);
-  const mid = new THREE.Color(0.36, 0.3, 0.44);
-  const back = new THREE.Color(0.16, 0.1, 0.22);
+  const peridot = spec.kind === 'peridot';
+  // перидот: гнездо в перидотите — тёмная оливковая порода у края, внутри зелёные кристаллы оливина
+  const rim = peridot ? new THREE.Color(0.32, 0.36, 0.2) : new THREE.Color(0.8, 0.82, 0.86);
+  const mid = peridot ? new THREE.Color(0.2, 0.28, 0.1) : new THREE.Color(0.36, 0.3, 0.44);
+  const back = peridot ? new THREE.Color(0.1, 0.16, 0.05) : new THREE.Color(0.16, 0.1, 0.22);
   const tmp = new THREE.Color();
   for (let i = 0; i < sp.count; i++) {
     const z = sp.getZ(i);
     // полосы агата у края: белая, серо-голубая, белая, потом фиолетовая глубина
     if (z < 0.05) tmp.copy(rim);
-    else if (z < 0.09) tmp.setRGB(0.56, 0.6, 0.68);
+    else if (z < 0.09) tmp.setRGB(...(peridot ? [0.26, 0.24, 0.16] : [0.56, 0.6, 0.68]));
     else if (z < 0.12) tmp.copy(rim);
     else if (z < 0.3) tmp.copy(rim).lerp(mid, (z - 0.12) / 0.18);
     else tmp.copy(mid).lerp(back, Math.min(1, (z - 0.3) / 0.5));
     vc.set([tmp.r, tmp.g, tmp.b], i * 3);
   }
   sphere.setAttribute('color', new THREE.BufferAttribute(vc, 3));
-  const shellMat = outsideTube(new THREE.MeshStandardMaterial({ vertexColors: true, roughness: 0.5, metalness: 0.05, side: THREE.BackSide }), origin);
+  // в мантии порода раскалена (~700 °C): оболочка и кристаллы тускло светятся, как стенка вокруг
+  const shellMat = outsideTube(new THREE.MeshStandardMaterial({ vertexColors: true, roughness: 0.5, metalness: 0.05, side: THREE.BackSide, emissive: peridot ? 0x3a0c02 : 0x000000 }), origin);
   const shell = new THREE.Mesh(sphere, shellMat);
   shell.scale.set(a, b, c);
   g.add(shell);
 
   // кристаллы растут от стенки к центру полости плотной щёткой: видны в основном острые верхушки
-  const r = rng(77);
+  const r = rng(peridot ? 78 : 77);
   const N = 1000;
-  const mat = new THREE.MeshStandardMaterial({ color: 0xffffff, roughness: 0.14, metalness: 0.15, flatShading: true, emissive: 0x1c1628, side: THREE.DoubleSide });
+  const mat = new THREE.MeshStandardMaterial({ color: 0xffffff, roughness: 0.14, metalness: 0.15, flatShading: true, emissive: peridot ? 0x2a1004 : 0x1c1628, side: THREE.DoubleSide });
   const crystals = new THREE.InstancedMesh(quartzGeometry(), mat, N);
   const m = new THREE.Matrix4();
   const q = new THREE.Quaternion();
@@ -106,8 +111,8 @@ function buildGeode(spec, textures, origin) {
     if (deepK < 0.1) continue; // у самого края — корка халцедона без кристаллов
     const inward = new THREE.Vector3(-p.x / (a * a), -p.y / (b * b), -p.z / (c * c)).normalize();
     const dir = inward.add(new THREE.Vector3(r() - 0.5, r() - 0.5, r() - 0.5).multiplyScalar(0.45)).normalize();
-    const len = 0.07 + r() * 0.07 + deepK * (0.06 + r() * 0.1);
-    const w = len * (0.36 + r() * 0.12);
+    const len = (0.07 + r() * 0.07 + deepK * (0.06 + r() * 0.1)) * (peridot ? 0.8 : 1);
+    const w = len * (peridot ? 0.6 + r() * 0.2 : 0.36 + r() * 0.12);
     // в системе полости ось z — вглубь стенки; ни основание, ни верхушка не заходят в трубу глубже 3 см
     if (radial(p.x + dir.x * len, p.z + dir.z * len) < R - 0.03) continue;
     // основание чуть утоплено в оболочку
@@ -117,7 +122,8 @@ function buildGeode(spec, textures, origin) {
     crystals.setMatrixAt(k, m);
     // аметист: в глубине густо-фиолетовый, ближе к краю светлее, у края — прозрачный кварц
     const h = 0.765 + (r() - 0.5) * 0.03;
-    if (deepK > 0.55) col.setHSL(h, 0.5 + 0.2 * r(), 0.3 + 0.16 * r());
+    if (peridot) col.setHSL(0.2 + (r() - 0.5) * 0.04, 0.55 + 0.25 * r(), 0.32 + 0.22 * r() + 0.08 * (1 - deepK));
+    else if (deepK > 0.55) col.setHSL(h, 0.5 + 0.2 * r(), 0.3 + 0.16 * r());
     else if (deepK > 0.3) col.setHSL(h, 0.32 + 0.15 * r(), 0.52 + 0.14 * r());
     else col.setHSL(0.66, 0.06, 0.8 + 0.12 * r());
     crystals.setColorAt(k, col);
@@ -130,7 +136,7 @@ function buildGeode(spec, textures, origin) {
 
   // холодный блик внутри: грани вспыхивают, когда мимо проходит свет
   const light = new THREE.PointLight(0xe6e2ff, 0, 3.5, 1.3);
-  light.position.set(0.15, 0.75, -0.3);
+  light.position.set(0.1, 0.35, peridot ? 0.2 : -0.3); // у перидота — внутри гнезда, чтобы не засвечивать стенку над ним
   g.add(light);
 
   // ориентация: локальные оси (по кругу, вверх, вглубь) → оси трубы
@@ -318,7 +324,7 @@ export function buildSights(textures) {
   const group = new THREE.Group();
   const origin = { value: new THREE.Vector3() };
   const make = { geode: (sp) => buildGeode(sp, textures, origin), crack: buildCrack, fault: buildFault };
-  const items = SIGHTS.map((spec) => {
+  const items = SIGHTS.filter((spec) => make[spec.name]).map((spec) => {
     const it = make[spec.name](spec);
     group.add(it.group);
     return it;
