@@ -7,7 +7,7 @@ import * as THREE from 'three';
 import { canvasTexture, rng, smooth } from './util.js';
 import { CENTER, DURATION, EARTH, LAYERS, depthAt, temperatureAt } from './timeline.js';
 import { PX, R, TH, TILE, TW, blotches, gneissCanvas, speckle, texturePair, tintAt } from './rock.js';
-import { FAULT, HOLE_GLSL, SIGHTS, buildSights, faultNormal, holeUniforms, inAnyHole, updateSights } from './sights.js';
+import { FAULT, HOLE_GLSL, KIMBERLITE, SIGHTS, SLAB, buildSights, faultNormal, holeUniforms, inAnyHole, thetaOf, updateSights } from './sights.js';
 
 export const HANDOFF = 180; // с этой секунды стенки рисует deep.js (до неё — rock.js в мировых координатах)
 const HALF_LEN = 70; // длина трубы вверх и вниз от глаз, м
@@ -17,6 +17,7 @@ const HALF_LEN = 70; // длина трубы вверх и вниз от гла
 const vcap = (t) => {
   let v = 10 + 28 * (1 - smooth((t - HANDOFF) / 16));
   for (const sg of SIGHTS) {
+    if (!sg.win) continue;
     const w = smooth((t - sg.win[0]) / 1.4) * (1 - smooth((t - sg.win[1] + 1.4) / 1.4));
     v += (Math.min(v, sg.slow) - v) * w;
   }
@@ -258,29 +259,42 @@ const CANVAS = {
     const r = rng(109);
     ctx.fillStyle = '#1c1c1c';
     ctx.fillRect(0, 0, w, h);
-    const pts = Array.from({ length: 420 }, () => [r() * w, r() * h, 90 + r() * 165]);
-    const cell = 64;
+    // ячейки Вороного с повтором по краям; точки разложены по корзинам, чтобы искать только соседей
+    const N = 2400;
+    const B = 96;
+    const bw = Math.ceil(w / B);
+    const bh = Math.ceil(h / B);
+    const buckets = Array.from({ length: bw * bh }, () => []);
+    for (let i = 0; i < N; i++) {
+      const p = [r() * w, r() * h, 125 + r() * 130]; // грани светлее швов (швы ≤ 0,35 яркости)
+      buckets[Math.floor(p[1] / B) * bw + Math.floor(p[0] / B)].push(p);
+    }
     const img = ctx.getImageData(0, 0, w, h);
-    // ячейки Вороного с повтором по краям
     for (let y = 0; y < h; y += 2) {
       for (let x = 0; x < w; x += 2) {
         let best = 1e9;
         let second = 1e9;
         let v = 0;
-        for (const [px, py, val] of pts) {
-          let dx = Math.abs(x - px);
-          let dy = Math.abs(y - py);
-          if (dx > w / 2) dx = w - dx;
-          if (dy > h / 2) dy = h - dy;
-          if (dx > 220 || dy > 220) continue;
-          const d = dx * dx + dy * dy;
-          if (d < best) {
-            second = best;
-            best = d;
-            v = val;
-          } else if (d < second) second = d;
+        const bx = Math.floor(x / B);
+        const by = Math.floor(y / B);
+        for (let oy = -1; oy <= 1; oy++) {
+          for (let ox = -1; ox <= 1; ox++) {
+            const cell = buckets[(((by + oy) % bh) + bh) % bh * bw + ((((bx + ox) % bw) + bw) % bw)];
+            for (const [px, py, val] of cell) {
+              let dx = Math.abs(x - px);
+              let dy = Math.abs(y - py);
+              if (dx > w / 2) dx = w - dx;
+              if (dy > h / 2) dy = h - dy;
+              const d = dx * dx + dy * dy;
+              if (d < best) {
+                second = best;
+                best = d;
+                v = val;
+              } else if (d < second) second = d;
+            }
+          }
         }
-        const edge = Math.sqrt(second) - Math.sqrt(best) < 3 ? 0.35 : 1;
+        const edge = Math.sqrt(second) - Math.sqrt(best) < 1.6 ? 0.3 : 1;
         const shade = Math.round(v * edge * (0.9 + 0.1 * Math.sin(x * 0.05 + y * 0.03)));
         for (const [ox, oy] of [[0, 0], [1, 0], [0, 1], [1, 1]]) {
           const i = ((y + oy) * w + x + ox) * 4;
@@ -290,7 +304,6 @@ const CANVAS = {
       }
     }
     ctx.putImageData(img, 0, 0);
-    void cell;
   },
   // габбро: тёмно-зелёно-серое, белые лейсты плагиоклаза, полосчатость кумулата
   gabbro: (ctx, w, h) => {
@@ -316,12 +329,12 @@ const CANVAS = {
   // параллельные дайки: вертикальные листы базальта с тёмными закалёнными краями
   dikes: (ctx, w, h) => {
     const r = rng(111);
-    ctx.fillStyle = '#353331';
+    ctx.fillStyle = '#4d4945';
     ctx.fillRect(0, 0, w, h);
     let x = 0;
     while (x < w) {
       const wd = (0.25 + r() * 0.9) * PX;
-      const tone = Math.floor(44 + r() * 26);
+      const tone = Math.floor(68 + r() * 30); // базальт тёмный, но на экране должен читаться
       ctx.fillStyle = `rgb(${tone},${tone - 2},${tone - 4})`;
       ctx.fillRect(x, 0, wd, h);
       ctx.fillStyle = 'rgba(12,12,12,0.85)';
@@ -341,18 +354,18 @@ const CANVAS = {
   // подушечная лава: округлые подушки с тёмной стекловатой коркой и радиальными трещинами
   pillows: (ctx, w, h) => {
     const r = rng(112);
-    ctx.fillStyle = '#211f1d';
+    ctx.fillStyle = '#3a3633';
     ctx.fillRect(0, 0, w, h);
     for (let i = 0; i < 520; i++) {
       const x = r() * w;
       const y = r() * h;
       const rx = (0.25 + r() * 0.45) * PX;
       const ry = rx * (0.55 + r() * 0.3);
-      const tone = Math.floor(58 + r() * 30);
+      const tone = Math.floor(84 + r() * 34);
       wrapped(ctx, w, h, x, y, rx, (cx, cy) => {
         ctx.beginPath();
         ctx.ellipse(cx, cy, rx, ry, 0, 0, Math.PI * 2);
-        ctx.fillStyle = '#0e0e0e';
+        ctx.fillStyle = '#1c1a18';
         ctx.fill();
         ctx.beginPath();
         ctx.ellipse(cx, cy - ry * 0.08, rx * 0.86, ry * 0.8, 0, 0, Math.PI * 2);
@@ -434,6 +447,9 @@ uniform sampler2D uDetail;
 uniform float uDetW, uSoft;
 uniform float uFaultY, uFaultW, uFaultShift, uFaultOn;
 uniform vec3 uFaultN;
+uniform vec4 uKimb; // угол, полуширина (рад), верх и низ столба (м от глаз)
+uniform vec3 uSlabN;
+uniform vec3 uSlab; // высота плоскости на оси, полуширина, вкл
 float faultShift = 0.0; // ниже плоскости разлома слои сдвинуты (и цвет, и рельеф)
 varying vec3 vLocal;
 ${HOLE_GLSL}
@@ -490,6 +506,9 @@ function wallMaterial(textures) {
     uFaultShift: { value: FAULT.shift },
     uFaultOn: { value: 0 },
     uFaultN: { value: faultNormal(FAULT) },
+    uKimb: { value: new THREE.Vector4(thetaOf(KIMBERLITE.yaw), KIMBERLITE.half, -9999, -9999) },
+    uSlabN: { value: faultNormal(SLAB) },
+    uSlab: { value: new THREE.Vector3(-9999, SLAB.width, 0) },
     ...holeUniforms(),
   };
   const m = new THREE.MeshStandardMaterial({ map: textures.gneiss, bumpMap: textures.gneiss, bumpScale: 1.6, roughness: 0.85, metalness: 0, side: THREE.BackSide });
@@ -537,6 +556,30 @@ function wallMaterial(textures) {
     float edge = exp(-pow((abs(fd) - uFaultW) / 0.025, 2.0));
     base *= 1.0 - 0.75 * edge;
   }
+  // кимберлит: столб сине-серой брекчии с округлыми светлыми обломками (ксенолитами)
+  float kimbK = 0.0;
+  if (uKimb.z > uKimb.w) {
+    float kth = atan(vLocal.x, vLocal.z);
+    float dth = abs(mod(kth - uKimb.x + 3.14159265, 6.2831853) - 3.14159265);
+    float kk = (1.0 - smoothstep(uKimb.y - 0.07, uKimb.y + 0.07, dth)) * smoothstep(uKimb.w - 2.0, uKimb.w, vLocal.y) * (1.0 - smoothstep(uKimb.z, uKimb.z + 2.0, vLocal.y));
+    if (kk > 0.001) {
+      float kf = texture(uDetail, vec2(vMapUv.x * 6.0, uv.y * 3.0)).r;
+      float kfine = texture(uDetail, vec2(vMapUv.x * 20.0, uv.y * 10.0)).r;
+      vec3 kimb = vec3(0.2, 0.27, 0.3) * (0.75 + 0.5 * kfine);
+      kimb = mix(kimb, vec3(0.62, 0.62, 0.56), smoothstep(0.6, 0.64, kf));
+      kimb = mix(kimb, vec3(0.3, 0.42, 0.2), smoothstep(0.38, 0.34, kf)); // зелёные обломки перидотита
+      base = mix(base, kimb, kk);
+      kimbK = kk;
+    }
+  }
+  // плита: холодная (светится слабее) и тёмная полоса базальта и габбро бывшего океанского дна
+  float slabK = 0.0;
+  if (uSlab.z > 0.5) {
+    float sd = dot(vLocal - vec3(0.0, uSlab.x, 0.0), uSlabN);
+    slabK = 1.0 - smoothstep(uSlab.y - 0.3, uSlab.y + 0.3, abs(sd));
+    float layered = 0.5 + 0.5 * sin(sd * 9.0);
+    base = mix(base, mix(vec3(0.1, 0.12, 0.14), vec3(0.24, 0.25, 0.25), layered) * (0.8 + 0.4 * texture(uDetail, vec2(vMapUv.x * 12.0, uv.y * 6.0)).r), slabK * 0.95);
+  }
   float lum = dot(base, vec3(0.3, 0.5, 0.2));
   // жидкое железо: два слоя узора текут навстречу, яркость → цвет
   float liq = 0.0;
@@ -548,19 +591,25 @@ function wallMaterial(textures) {
     base = mix(base, liquidRamp(liq) * 0.55, uLiquid);
   }
   // кристаллы железа: грани разной яркости
+  // кристаллы железа во внутреннем ядре: золотые грани, раскалённые добела швы, грани чуть мерцают от жара
   float cry = 0.0;
+  float seam = 0.0;
+  vec3 cryCol = vec3(0.0);
   if (uCrystal > 0.001) {
     cry = mix(cA.r, cB.r, uMix);
-    base = mix(base, vec3(1.0, 0.86, 0.62) * (0.35 + 0.65 * cry), uCrystal);
+    seam = 1.0 - smoothstep(0.08, 0.17, cry); // значения линейные (текстура в sRGB): швы ≤ 0,07, грани ≥ 0,2
+    float flick = 0.88 + 0.12 * sin(uTime * (1.3 + cry * 2.7) + cry * 41.0);
+    cryCol = mix(vec3(0.82, 0.46, 0.16), vec3(1.0, 0.88, 0.6), smoothstep(0.2, 1.0, cry)) * flick;
+    base = mix(base, cryCol * (1.0 - 0.6 * seam), uCrystal);
   }
   diffuseColor.rgb *= base;
   // раскалённая порода светится сильнее всего по трещинам и швам между зёрнами — сами минералы
   // сохраняют цвет (зелёный оливин, синий рингвудит)
   float dark = 1.0 - clamp(sqrt(lum) * 1.6, 0.0, 1.0); // яркость «на глаз», а не линейная
   float glowPat = 0.12 + 1.1 * dark * dark * dark;
-  vec3 glowAdd = uGlowCol * uGlow * glowPat * 0.75 * (1.0 - uLiquid) * (1.0 - uCrystal);
+  vec3 glowAdd = uGlowCol * uGlow * glowPat * 0.75 * (1.0 - uLiquid) * (1.0 - uCrystal) * (1.0 - 0.9 * slabK) * (1.0 - 0.6 * kimbK);
   glowAdd += liquidRamp(liq) * (0.9 + 1.6 * liq) * uLiquid * uGlow;
-  glowAdd += (vec3(1.0, 0.84, 0.58) * (0.3 + 0.7 * cry * cry) + vec3(1.0, 0.45, 0.12) * 1.4 * (1.0 - smoothstep(0.0, 0.3, cry))) * uCrystal * uGlow * 0.8;
+  glowAdd += (cryCol * (0.32 + 0.6 * cry * cry) + vec3(1.0, 0.42, 0.08) * 2.4 * seam) * uCrystal * uGlow * 0.8;
 `
       )
       .replace('#include <emissivemap_fragment>', '#include <emissivemap_fragment>\ntotalEmissiveRadiance += glowAdd;')
@@ -798,6 +847,13 @@ export function updateDeep(d, t, s, cam) {
   u.uFaultOn.value = t < CENTER[0] && Math.abs(fy) < 80 ? 1 : 0;
   u.uFaultY.value = fy;
   if (faultPassed) u.uOff.value = (u.uOff.value + FAULT.shift) % 1;
+  const ky = slide - slideAt(KIMBERLITE.t);
+  const kOn = t < CENTER[0] && Math.abs(ky) < KIMBERLITE.length / 2 + 75;
+  u.uKimb.value.z = kOn ? ky + KIMBERLITE.length / 2 : -9999;
+  u.uKimb.value.w = kOn ? ky - KIMBERLITE.length / 2 : -9999;
+  const sy = slide - slideAt(SLAB.t);
+  u.uSlab.value.x = sy;
+  u.uSlab.value.z = t < CENTER[0] && Math.abs(sy) < 80 ? 1 : 0;
   // блёстки и угольки едут вместе со стенкой
   const isCrust = ['gneiss', 'granite', 'granulite', 'gabbro', 'dikes', 'pillows', 'sediment'].includes(st.mix < 0.5 ? st.a : st.b);
   const moveWall = (P, keep) => {
@@ -858,7 +914,7 @@ export function updateDeep(d, t, s, cam) {
     });
     d.dia.instanceMatrix.needsUpdate = true;
   }
-  return { T, glow, glowColor: gc, layer: st, speed };
+  return { T, glow, glowColor: gc, layer: st, speed, crystal: u.uCrystal.value, liquid: u.uLiquid.value };
 }
 
 export { tintAt, TW, TH };

@@ -19,11 +19,17 @@ export const SIGHTS = [
   { name: 'fault', t: 258.6, slow: 3.0, win: [255.8, 261.2], yaw: 40, y: 0, dip: 34, width: 0.42, shift: 0.31 },
   { name: 'look', t: 335, slow: 1.6, win: [330.4, 339.4] }, // «Присмотрись»: первое свечение по швам зёрен
   { name: 'geode', kind: 'peridot', t: 366.2, slow: 2.6, win: [363.6, 368.8], yaw: 50, y: -0.1, axes: [0.8, 1.05, 0.9] },
+  // кимберлитовая трубка: сине-серый вертикальный столб брекчии вдоль стенки (рисует шейдер трубы)
+  { name: 'kimberlite', t: 424.6, yaw: 25, half: 0.55, length: 70 },
+  // плита древнего океанского дна, ушедшая в мантию: широкая наклонная полоса холодной тёмной породы
+  { name: 'slab', t: 506.8, slow: 3.0, win: [504.4, 509.6], yaw: 52, dip: 30, width: 0.75 },
 ];
+export const KIMBERLITE = SIGHTS.find((sg) => sg.name === 'kimberlite');
+export const SLAB = SIGHTS.find((sg) => sg.name === 'slab');
 export const FAULT = SIGHTS.find((sg) => sg.name === 'fault');
 
 // Направление взгляда при повороте головы на yaw → угол на стенке трубы (x = R sin θ, z = R cos θ)
-const thetaOf = (yaw) => (yaw * DEG) + Math.PI;
+export const thetaOf = (yaw) => (yaw * DEG) + Math.PI;
 
 function frame(th) {
   return {

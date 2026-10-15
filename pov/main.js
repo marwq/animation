@@ -34,6 +34,7 @@ const DIRT = new THREE.Color(0x120d0a);
 const SEWER = new THREE.Color(0x0b0d0b);
 const STONE = new THREE.Color(0x100e0d); // в скале; глубже, где теплее, — чуть рыжее
 const WARM = new THREE.Color(0x1d110c);
+const AMBER = new THREE.Color(0x7a3a0e);
 const WATER = new THREE.Color(0x12383a); // мутная вода водовода: зеленоватая, не чёрная
 scene.fog = new THREE.Fog(DUSK, 220, 2900);
 
@@ -223,6 +224,7 @@ window.renderAt = (t) => {
     const settle = smooth((t - HANDOFF) / 12); // на стыке свет точно как у rock.js, дальше — свой
     const warmK = depth < EARTH / 2 ? smooth((depth - 250) / 750) : smooth((env.T - 20) / 60);
     scene.fog.color.copy(STONE).lerp(WARM, warmK).lerp(gc.clone().multiplyScalar(0.3), Math.min(1, g * 1.2));
+    scene.fog.color.lerp(AMBER, 0.75 * env.crystal); // во внутреннем ядре дымка янтарная, а не бежевая
     scene.fog.near = 1.5;
     scene.fog.far = 26 + 10 * g;
     scene.background = scene.fog.color;
@@ -231,7 +233,7 @@ window.renderAt = (t) => {
     const coldCrust = depth > EARTH / 2 ? 1 - smooth((env.T - 150) / 400) : 0;
     hemi.color.copy(COOL).lerp(WARMLIGHT, 0.5 * smooth((env.T - 300) / 900)).lerp(gc, 0.12 * g);
     hemi.groundColor.copy(HEMI_GROUND).lerp(gc.clone().multiplyScalar(0.6), 0.4 * g);
-    hemi.intensity = lerp(0.42, 0.8 + 0.25 * g + 0.5 * coldCrust, settle);
+    hemi.intensity = lerp(0.42, 0.8 + 0.25 * g + 0.9 * coldCrust, settle);
     sun.intensity = 0;
     body.glow.intensity = 1.2 * (1 - g);
     fill.intensity = 1.25;
