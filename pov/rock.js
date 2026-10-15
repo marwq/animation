@@ -6,13 +6,13 @@ import * as THREE from 'three';
 import { canvasTexture, rng, smooth } from './util.js';
 import { PLAYER, ROCK } from './timeline.js';
 
-const R = ROCK.void_r;
+export const R = ROCK.void_r;
 const T = ROCK.tunnel;
-const TILE = 9; // метров на повтор текстуры по вертикали
+export const TILE = 9; // метров на повтор текстуры по вертикали
 const REP_U = 1; // текстура обходит стенку один раз: наклонный слой на цилиндре — одна синусоида
-const TW = 2048; // ширина текстуры = длина окружности пузыря (2πR ≈ 18.8 м)
-const TH = 1024; // высота = TILE метров
-const PX = TH / TILE; // пикселей на метр
+export const TW = 2048; // ширина текстуры = длина окружности пузыря (2πR ≈ 18.8 м)
+export const TH = 1024; // высота = TILE метров
+export const PX = TH / TILE; // пикселей на метр
 
 // --- текстуры: бесшовные по обеим осям --------------------------------------
 // Слоистость Манхэттена падает круто; наклонная плоскость, рассечённая цилиндром, на развёртке —
@@ -37,16 +37,25 @@ function strokeLayer(ctx, w, h, y0, A, phase, wig, wigPhase, width, color, x0, x
   }
 }
 
-function speckle(ctx, w, h, r, n, colors, size) {
+// round — круглые зёрна вместо квадратиков (для глубин, где стенку видно вблизи); раскладка та же
+export function speckle(ctx, w, h, r, n, colors, size, round = false) {
   for (let i = 0; i < n; i++) {
     ctx.fillStyle = colors[Math.floor(r() * colors.length)];
     const s = size[0] + r() * (size[1] - size[0]);
-    ctx.fillRect(r() * w, r() * h, s, s);
+    const x = r() * w;
+    const y = r() * h;
+    if (!round) {
+      ctx.fillRect(x, y, s, s);
+      continue;
+    }
+    ctx.beginPath();
+    ctx.ellipse(x + s / 2, y + s / 2, s * 0.42, s * 0.3, (i * 2.39996) % Math.PI, 0, Math.PI * 2);
+    ctx.fill();
   }
 }
 
 // Крупные светлые и тёмные пятна: ломают повтор
-function blotches(ctx, w, h, r, n, colors, rad) {
+export function blotches(ctx, w, h, r, n, colors, rad) {
   for (let k = 0; k < n; k++) {
     const x = r() * w;
     const y = r() * h;
@@ -132,7 +141,7 @@ function schistCanvas(seed, folded) {
 
 // Гнейс: полосы розового полевого шпата, белого кварца и чёрного биотита, наклон в другую сторону;
 // поперёк — светлая жила пегматита
-function gneissCanvas(seed) {
+export function gneissCanvas(seed, round = false) {
   const r = rng(seed);
   return (ctx, w, h) => {
     ctx.fillStyle = '#9a8f89';
@@ -168,7 +177,7 @@ function gneissCanvas(seed) {
       ctx.fill();
     }
     blotches(ctx, w, h, r, 18, ['rgba(30,26,26,0.25)', 'rgba(230,210,200,0.18)'], [120, 320]);
-    speckle(ctx, w, h, r, 30000, ['rgba(20,18,20,0.7)', 'rgba(240,236,228,0.6)', 'rgba(205,140,120,0.6)', 'rgba(90,84,80,0.5)'], [1.5, 4.5]);
+    speckle(ctx, w, h, r, 30000, ['rgba(20,18,20,0.7)', 'rgba(240,236,228,0.6)', 'rgba(205,140,120,0.6)', 'rgba(90,84,80,0.5)'], [1.5, 4.5], round);
   };
 }
 
@@ -187,7 +196,7 @@ function concreteCanvas(seed, joints) {
   };
 }
 
-function texturePair(draw, w = TW, h = TH) {
+export function texturePair(draw, w = TW, h = TH) {
   const map = canvasTexture(w, h, draw);
   map.wrapS = map.wrapT = THREE.RepeatWrapping;
   // карта рельефа — та же картинка (светлые слои выпуклые)
@@ -277,7 +286,7 @@ const ZONES = [
   [-700, [1.06, 0.98, 0.94]],
   [-1300, [0.96, 0.94, 0.96]],
 ];
-function tintAt(y, th) {
+export function tintAt(y, th) {
   let i = 0;
   while (i < ZONES.length - 2 && y < ZONES[i + 1][0]) i++;
   const [y0, c0] = ZONES[i];

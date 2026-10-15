@@ -179,7 +179,23 @@ function pose(s, name) {
     }
     case 'shield':
       return { pos: v3(0.0, 1.52, -0.34), pole: v3(0.8, -0.5, 0.2), fingers: v3(-0.28, 0.75, -0.3), palm: v3(-0.1, 0, -1) };
+    case 'float':
+      // невесомость (нейтральная поза, как у космонавтов): плечи чуть вперёд и в стороны,
+      // локти согнуты примерно на 70°, кисти расслаблены ладонями вниз
+      return { pos: v3(0.42 * s, 1.2, -0.38), pole: v3(0.7 * s, -0.6, 0.2), fingers: v3(0.3 * s, -0.35, -0.88), palm: v3(-0.3 * s, -0.9, 0.2) };
   }
+}
+
+// Держаться на воде: кисти перед грудью описывают небольшие круги, ладони вниз, поворачиваются по ходу
+function tread(s, t) {
+  const w = 2 * Math.PI * 0.5;
+  const ph = w * t + (s > 0 ? 0 : Math.PI);
+  return {
+    pos: v3((0.33 + 0.07 * Math.cos(ph)) * s, 1.12 + 0.02 * Math.sin(2 * ph), -0.34 + 0.06 * Math.sin(ph)),
+    pole: v3(0.8 * s, -0.5, 0.3),
+    fingers: v3(0.35 * s, -0.12, -0.93),
+    palm: v3(0.3 * Math.sin(ph) * s, -1, 0),
+  };
 }
 
 function mix(a, b, k) {
@@ -226,8 +242,12 @@ function solveArm(arm, goal) {
 
 // Веса: balance — обе руки в стороны для равновесия; check — левая к глазам; shield — правая заслоняет лицо
 export function poseBody(body, t, w) {
+  const fl = w.float || 0;
+  const tr = w.tread || 0;
   for (const arm of body.arms) {
     let goal = mix(pose(arm.s, 'rest'), pose(arm.s, 'balance'), w.balance);
+    if (fl > 0) goal = mix(goal, pose(arm.s, 'float'), fl);
+    if (tr > 0) goal = mix(goal, tread(arm.s, t), tr);
     if (arm.s === -1 && w.check > 0) goal = mix(goal, pose(-1, 'check'), w.check);
     if (arm.s === 1 && w.shield > 0) goal = mix(goal, pose(1, 'shield'), w.shield);
     // чуть дышат, даже когда стоим
@@ -236,11 +256,13 @@ export function poseBody(body, t, w) {
   }
   for (const leg of body.legs) {
     // ноги слегка расходятся и пружинят, когда опора уходит из-под ног. Колено сгибается только
-    // назад: бедро вперёд (+X), голень назад (-2a), стопа доворачивается, чтобы подошва осталась ровной
-    const a = 0.025 + 0.07 * w.balance;
-    leg.hip.rotation.set(a, 0, leg.s * (0.03 + 0.06 * w.balance));
+    // назад: бедро вперёд (+X), голень назад (-2a), стопа доворачивается, чтобы подошва осталась ровной.
+    // В невесомости колени мягко согнуты; на воде ноги по очереди медленно толкаются
+    const kick = tr * 0.13 * Math.sin(2 * Math.PI * 0.5 * t + (leg.s > 0 ? 0 : Math.PI));
+    const a = 0.025 + 0.07 * w.balance + 0.32 * fl + tr * (0.22 + kick);
+    leg.hip.rotation.set(a, 0, leg.s * (0.03 + 0.06 * w.balance + 0.05 * fl + 0.04 * tr));
     leg.knee.rotation.x = -2 * a;
-    leg.foot.rotation.x = a;
+    leg.foot.rotation.x = a * (1 - 0.5 * tr);
   }
 }
 

@@ -70,8 +70,8 @@ function run(cmd, args, input) {
   });
   const page = await browser.newPage({ viewport: { width: 1280, height: 720 } });
   page.on('pageerror', (e) => console.error('page:', e.message));
-  await page.goto(url);
-  await page.waitForFunction('window.ready === true', null, { timeout: 120000 });
+  await page.goto(url, { waitUntil: 'commit', timeout: 180000 });
+  await page.waitForFunction('window.ready === true', null, { timeout: 900000, polling: 500 });
   const stage = await page.$('#stage');
 
   if (debug) {

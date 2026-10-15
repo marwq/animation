@@ -19,7 +19,8 @@ from scipy.signal import butter, fftconvolve, sosfilt, sosfilt_zi
 HERE = Path(__file__).resolve().parent
 SCENE = json.loads((HERE / 'scene.json').read_text())
 SR = 48000
-DUR = float(SCENE['duration'])
+# звук первых трёх минут; остальное — audio_deep.py. AUDIO_DUR=186 даёт запас для перекрёстка на 3:00
+DUR = float(os.environ.get('AUDIO_DUR', 180))
 N = int(SR * DUR)
 t = np.arange(N) / SR
 rng = np.random.default_rng(7)
@@ -941,10 +942,15 @@ def main():
     mix *= env([(0, 0), (0.6, 1), (DUR - 0.6, 1), (DUR, 0)])
     mix = hp(mix, 28)  # инфразвук не слышен, но съедает запас по громкости
     mix = compress(mix)
-    mix = np.tanh(mix / np.max(np.abs(mix)) * 1.6) / np.tanh(1.6)
-    mix *= 0.89 / np.max(np.abs(mix))
+    drive = 1.6 / np.max(np.abs(mix))
+    mix = np.tanh(mix * drive) / np.tanh(1.6)
+    gain = 0.89 / np.max(np.abs(mix))
+    mix *= gain
     # громкость как у роликов на YouTube (-14 LUFS), но без превышения пика
-    mix *= min(1.0, 10 ** ((-14 - lufs(mix)) / 20))
+    k = min(1.0, 10 ** ((-14 - lufs(mix)) / 20))
+    mix *= k
+    # тот же мастер для остальной части ролика (audio_deep.py): громкость не прыгает на стыке
+    (HERE / 'out' / 'master_gain.json').write_text(json.dumps({'drive': float(drive), 'gain': float(gain * k)}))
     out = HERE / 'out' / 'audio.wav'
     out.parent.mkdir(exist_ok=True)
     with wave.open(str(out), 'wb') as w:

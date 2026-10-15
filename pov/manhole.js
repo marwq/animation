@@ -564,7 +564,7 @@ export function updateManhole(m, t, depth, eye) {
   m.stubDrop.visible = sl < 0.92;
 
   // коллектор: вода течёт, мусор плывёт, струя льётся
-  m.sewer.visible = eye.y < M.crown + 0.6 && eye.y > M.water - 0.03;
+  m.sewer.visible = eye.y < M.crown + 0.6 && eye.y > M.water - 0.8; // ниже воды коллектор растворяется над головой
   if (!m.sewer.visible) return;
   m.water.normalMap.offset.y = t * 0.55;
   for (const f of m.floaters) {

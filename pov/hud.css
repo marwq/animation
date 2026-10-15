@@ -18,6 +18,9 @@ canvas { display: block; width: 1280px; height: 720px; }
 #where .rule { width: 230px; height: 1px; background: rgba(255,255,255,.35); margin: 15px 0 11px; }
 #where .nextlabel { font-weight: 700; font-size: 12px; letter-spacing: .18em; opacity: .72; }
 #nextdist { font-family: 'JetBrains Mono', monospace; font-weight: 500; font-size: 21px; margin-top: 4px; }
+#temp { margin-top: 12px; opacity: 0; }
+#temp .tl { font-weight: 700; font-size: 12px; letter-spacing: .18em; opacity: .72; }
+#tval { font-family: 'JetBrains Mono', monospace; font-weight: 600; font-size: 19px; margin-left: 6px; }
 #bar { position: absolute; right: 56px; top: 96px; bottom: 96px; width: 2px; background: rgba(255,255,255,.28); }
 #bar .tick { position: absolute; right: 12px; transform: translateY(-50%); font-size: 11px; font-weight: 500; letter-spacing: .12em; text-transform: uppercase; white-space: nowrap; opacity: .7; }
 #bar .tick::after { content: ''; position: absolute; right: -14px; top: 50%; width: 8px; height: 2px; background: rgba(255,255,255,.5); }
@@ -25,7 +28,7 @@ canvas { display: block; width: 1280px; height: 720px; }
 #caption { position: absolute; left: 0; right: 0; bottom: 104px; text-align: center; font-weight: 500; font-size: 31px; letter-spacing: .005em; text-shadow: 0 2px 14px rgba(0,0,0,.75), 0 0 2px rgba(0,0,0,.6); opacity: 0; }
 /* мягкое тёмное пятно под строкой: подпись читается и на белом вагоне, и на светлом экране */
 #caption span { display: inline-block; padding: 16px 70px; background: radial-gradient(closest-side, rgba(0,0,0,.5), rgba(0,0,0,.28) 55%, rgba(0,0,0,0)); }
-#title { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; background: rgba(5,8,12,.55); opacity: 0; text-align: center; }
+#title { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; background: radial-gradient(ellipse at 50% 50%, rgba(0,0,0,.32), rgba(0,0,0,0) 60%); opacity: 0; text-align: center; text-shadow: 0 2px 18px rgba(0,0,0,.6); }
 #title .big { font-weight: 700; font-size: 64px; line-height: 1.04; text-transform: uppercase; letter-spacing: .02em; }
 #title .small { font-family: 'JetBrains Mono', monospace; font-size: 15px; color: var(--accent); margin-top: 22px; letter-spacing: .14em; text-transform: uppercase; }
 #fade { position: absolute; inset: 0; background: #000; opacity: 1; pointer-events: none; }
