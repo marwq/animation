@@ -1,11 +1,12 @@
-// Под тротуаром: стенки «шахты» вокруг героя по слоям (бетон, грунт, скала), трубы и кабели,
+// Под коллектором: стенки «шахты» вокруг героя по слоям (бетон, грунт, скала), трубы и кабели,
 // прямоугольный тоннель метро с колоннами и поездом. Шахта нужна только для взгляда изнутри.
+// Всё строится от нуля и опускается целиком на SOIL_TOP — верх грунта под дном коллектора.
 import * as THREE from 'three';
 import { box, canvasTexture, lambert, rng } from './util.js';
-import { PLAYER, TRAIN } from './timeline.js';
+import { PLAYER, SOIL_TOP, TRAIN } from './timeline.js';
 
 const R = 6; // радиус «шахты» вокруг героя: просторнее — видно стены, трубы и слои
-export const TUNNEL = { y: -7.6, height: 4.6, width: 9, track: TRAIN.track }; // центр тоннеля по Y, путь с поездом по Z
+export const TUNNEL = { y: -7.6, height: 4.6, width: 9, track: TRAIN.track }; // центр тоннеля по Y (от верха грунта), путь с поездом по Z
 
 // Стенка из грубого камня: цилиндр изнутри, вершины чуть сдвинуты, цвет по слоям
 function wall(top, bottom, colorAt, r) {
@@ -213,6 +214,7 @@ export function buildUnderground() {
   sparkleGeo.setAttribute('position', new THREE.Float32BufferAttribute(pts, 3));
   group.add(new THREE.Points(sparkleGeo, new THREE.PointsMaterial({ color: 0xdfe8ff, size: 0.035 })));
 
+  group.position.y = SOIL_TOP;
   return { group, train, lamps };
 }
 

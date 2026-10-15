@@ -1,12 +1,13 @@
-// Тест стиля «от первого лица»: «What if you kept sinking forever?», первые 25 секунд, Таймс-сквер.
+// Тест стиля «от первого лица»: «What if you kept sinking forever?», первые 30 секунд, Таймс-сквер.
 // Кадр рисует window.renderAt(t) — время задаёт рендер (pov/render.js), анимация детерминирована.
 import * as THREE from 'three';
 import { buildBody, drawGauge, poseBody } from './body.js';
 import { buildCity, updateCity } from './nyc.js';
 import { buildUnderground, updateUnderground } from './underground.js';
+import { buildManhole, updateManhole } from './manhole.js';
 import { buildHud, updateHud } from './hud.js';
-import { PLAYER, SIDEWALK, balance, bodyYaw, check, depthAt, headPitch, headYaw, shield } from './timeline.js';
-import { clamp, smooth } from './util.js';
+import { MANHOLE, PLAYER, SIDEWALK, SOIL_TOP, balance, bodyYaw, check, depthAt, headPitch, headYaw, shield } from './timeline.js';
+import { clamp, lerp, smooth } from './util.js';
 
 const W = 1280;
 const H = 720;
@@ -25,6 +26,7 @@ renderer.toneMappingExposure = 1.12;
 const scene = new THREE.Scene();
 const DUSK = new THREE.Color(0x8e86a8);
 const DIRT = new THREE.Color(0x120d0a);
+const SEWER = new THREE.Color(0x0b0d0b);
 scene.fog = new THREE.Fog(DUSK, 220, 2900);
 
 const hemi = new THREE.HemisphereLight(0xa9b8ff, 0x4d4038, 1.55);
@@ -34,7 +36,8 @@ scene.add(hemi, sun);
 
 const city = buildCity();
 const under = buildUnderground();
-scene.add(city.group, under.group);
+const manhole = buildManhole();
+scene.add(city.group, under.group, manhole.group);
 
 const body = buildBody();
 scene.add(body.root);
@@ -70,20 +73,49 @@ window.renderAt = (t) => {
   camera.updateMatrixWorld(true);
   const eye = camera.getWorldPosition(new THREE.Vector3());
   const underground = eye.y < SIDEWALK - 0.02;
+  // где глаза: на площади → в шахте люка (город ещё виден сверху) → в коллекторе → в грунте
+  const inShaft = underground && eye.y > MANHOLE.crown;
+  const inSewer = eye.y <= MANHOLE.crown && eye.y > MANHOLE.water;
+  const inSoil = eye.y <= MANHOLE.water;
+  const shaftK = smooth((SIDEWALK - eye.y) / (SIDEWALK - MANHOLE.crown));
 
-  // над землёй — сумерки и город; под землёй — темнота, свет от браслета и ламп тоннеля
-  city.group.visible = eye.y > -1.0;
-  under.group.visible = eye.y < 0.6;
-  scene.fog.color.copy(underground ? DIRT : DUSK);
-  scene.fog.near = underground ? 1 : 220;
-  scene.fog.far = underground ? (eye.y < -4.8 && eye.y > -10.6 ? 80 : 18) : 2900;
-  scene.background = underground ? DIRT : null;
-  hemi.intensity = underground ? 0.32 : 1.55;
-  sun.intensity = underground ? 0 : 1.1;
-  body.glow.intensity = 9 * smooth((depth - 1.4) / 0.8);
-  fill.intensity = underground ? 2.2 : 0.9;
+  city.group.visible = eye.y > MANHOLE.crown;
+  under.group.visible = inSoil;
+  if (inSoil) {
+    // грунт — темнота, свет от браслета и ламп тоннеля
+    const top = SOIL_TOP;
+    scene.fog.color.copy(DIRT);
+    scene.fog.near = 1;
+    scene.fog.far = eye.y < top - 4.8 && eye.y > top - 10.6 ? 80 : 18;
+    scene.background = DIRT;
+    hemi.intensity = 0.32;
+    sun.intensity = 0;
+    body.glow.intensity = 9;
+    fill.intensity = 2.2;
+  } else if (inSewer) {
+    // коллектор: тусклые лампы в решётках, вода, туннель уходит в темноту
+    scene.fog.color.copy(SEWER);
+    scene.fog.near = 1.5;
+    scene.fog.far = 30;
+    scene.background = SEWER;
+    hemi.intensity = 0.4;
+    sun.intensity = 0;
+    body.glow.intensity = 3;
+    fill.intensity = 1.6;
+  } else {
+    // площадь и шахта: сумерки сверху, к низу шахты свет гаснет
+    scene.fog.color.copy(DUSK);
+    scene.fog.near = 220;
+    scene.fog.far = 2900;
+    scene.background = null;
+    hemi.intensity = lerp(1.55, 0.75, inShaft ? shaftK : 0);
+    sun.intensity = lerp(1.1, 0.3, inShaft ? shaftK : 0);
+    body.glow.intensity = 2.5 * smooth((depth - 1.4) / 0.8);
+    fill.intensity = lerp(0.9, 1.5, inShaft ? shaftK : 0);
+  }
 
   updateCity(city, t, depth, eye);
+  updateManhole(manhole, t, depth, eye);
   updateUnderground(under, t);
   updateHud(t, depth, underground);
   renderer.render(scene, camera);

@@ -8,7 +8,7 @@ import { Batch, canvasTexture, lambert, rng, uvBox } from './util.js';
 import { chrysler, empireState, oneTimesSquare, redSteps } from './landmarks.js';
 import { buildFleet, updateFleet } from './fleet.js';
 import { buildCrowd, updateCrowd } from './crowd.js';
-import { CRACK, PLAYER, SCENE, SIDEWALK } from './timeline.js';
+import { CRACK, MANHOLE, PLAYER, SCENE, SIDEWALK } from './timeline.js';
 
 // План: x — запад (+) / восток (-), z — север (+) / юг (-)
 const AVE = { west: -10, east: -27 }; // проезжая часть 7-й авеню
@@ -27,6 +27,41 @@ const LANDMARKS = [
   { x: -430, z: -830, h: 443, keep: 0.5 }, // Эмпайр-стейт: видна верхняя половина
   { x: -385, z: -990, h: 319, keep: 0.5 }, // Крайслер
 ];
+
+// Кусок площади, в котором стоит герой: верх с круглым вырезом под люк (развёртка — как у uvBox,
+// чтобы плитка легла без шва), боковые грани обычные, низа нет — снизу на него смотрят из шахты.
+function plazaWithHole(x0, x1, z0, z1, tile) {
+  const shape = new THREE.Shape();
+  shape.moveTo(x0, -z1);
+  shape.lineTo(x1, -z1);
+  shape.lineTo(x1, -z0);
+  shape.lineTo(x0, -z0);
+  shape.closePath();
+  const hole = new THREE.Path();
+  hole.absarc(PLAYER.x, -PLAYER.z, MANHOLE.radius, 0, Math.PI * 2, true);
+  shape.holes.push(hole);
+  const top = new THREE.ShapeGeometry(shape, 48);
+  top.rotateX(-Math.PI / 2);
+  top.translate(0, SIDEWALK, 0);
+  const p = top.attributes.position;
+  const uv = top.attributes.uv;
+  for (let i = 0; i < p.count; i++) uv.setXY(i, (p.getX(i) - x0) / tile, (z1 - p.getZ(i)) / tile);
+  const sides = uvBox(x1 - x0, SIDEWALK, z1 - z0, tile, tile).toNonIndexed();
+  sides.translate((x0 + x1) / 2, SIDEWALK / 2, (z0 + z1) / 2);
+  const keep = [];
+  const n = sides.attributes.normal;
+  for (let i = 0; i < n.count; i += 3) if (Math.abs(n.getY(i)) < 0.5) keep.push(i, i + 1, i + 2);
+  const out = new THREE.BufferGeometry();
+  for (const name of ['position', 'normal', 'uv']) {
+    const src = sides.attributes[name];
+    const arr = new Float32Array(keep.length * src.itemSize);
+    keep.forEach((v, j) => {
+      for (let c = 0; c < src.itemSize; c++) arr[j * src.itemSize + c] = src.array[v * src.itemSize + c];
+    });
+    out.setAttribute(name, new THREE.BufferAttribute(arr, src.itemSize));
+  }
+  return [top, out];
+}
 
 function sky() {
   const R = 4000;
@@ -233,7 +268,12 @@ export function buildCity() {
 
   // --- земля ------------------------------------------------------------
   const asphalt = lambert(0x2c2d33);
-  b.box(2400, 1.2, 2400, asphalt, 0, -0.6, 0);
+  // асфальт — четырьмя плитами вокруг шахты люка
+  const H = MANHOLE.shaft_radius + 0.05;
+  b.box(1200 - H, 1.2, 2400, asphalt, PLAYER.x - H - (1200 - H) / 2, -0.6, 0);
+  b.box(1200 - H, 1.2, 2400, asphalt, PLAYER.x + H + (1200 - H) / 2, -0.6, 0);
+  b.box(2 * H, 1.2, 1200 - H, asphalt, PLAYER.x, -0.6, PLAYER.z + H + (1200 - H) / 2);
+  b.box(2 * H, 1.2, 1200 - H, asphalt, PLAYER.x, -0.6, PLAYER.z - H - (1200 - H) / 2);
   const paverTex = canvasTexture(256, 256, (ctx, w, h) => {
     ctx.fillStyle = '#4a4a50';
     ctx.fillRect(0, 0, w, h);
@@ -275,7 +315,8 @@ export function buildCity() {
   for (const [z0, z1] of segs) {
     const len = z1 - z0;
     const zc = (z0 + z1) / 2;
-    b.add(uvBox(PLAZA.west - AVE.west, SIDEWALK, len, 4, 4), paver, (PLAZA.west + AVE.west) / 2, SIDEWALK / 2, zc);
+    if (PLAYER.z > z0 && PLAYER.z < z1) for (const g of plazaWithHole(AVE.west, PLAZA.west, z0, z1, 4)) b.add(g, paver);
+    else b.add(uvBox(PLAZA.west - AVE.west, SIDEWALK, len, 4, 4), paver, (PLAZA.west + AVE.west) / 2, SIDEWALK / 2, zc);
     b.box(WEST_FRONT - PLAZA.west, SIDEWALK, len, walk, (WEST_FRONT + PLAZA.west) / 2, SIDEWALK / 2, zc);
     b.box(AVE.east - EAST_FRONT, SIDEWALK, len, walk, (AVE.east + EAST_FRONT) / 2, SIDEWALK / 2, zc);
     for (const x of [AVE.west + 0.1, AVE.east - 0.1, PLAZA.west + 0.1]) b.box(0.22, SIDEWALK + 0.01, len, curb, x, (SIDEWALK + 0.01) / 2, zc);
@@ -502,46 +543,26 @@ export function buildCity() {
   group.add(fleet.group);
 
   // Цветной свет от экранов на площадь и свет фонаря рядом с героем
+  const lights = [];
   for (const [x, y, z, c, i] of [[12, 14, -20, 0xff4fa0, 60], [-30, 14, -12, 0x3fd8ff, 70], [-1, 30, -150, 0xffc070, 120], [12, 12, 30, 0x9b7bff, 50]]) {
     const l = new THREE.PointLight(c, i, 70, 1.2);
     l.position.set(x, y, z);
     group.add(l);
+    lights.push(l);
   }
   const near = new THREE.PointLight(0xffdcae, 8, 22, 1.1);
   near.position.set(-3, 7, -4);
   group.add(near);
+  lights.push(near);
 
-  // Провал под ногами: трещины, тёмная ямка, вздыбленная плитка
-  const cracks = new THREE.Group();
-  const crackM = new THREE.MeshBasicMaterial({ color: 0x2c2a29 });
-  for (let k = 0; k < 11; k++) {
-    const a = (k / 11) * Math.PI * 2 + r() * 0.4;
-    const len = 0.6 + r() * 1.2;
-    const c = new THREE.Mesh(new THREE.BoxGeometry(0.018, 0.003, len), crackM);
-    c.position.set(Math.sin(a) * (0.35 + len / 2), 0, Math.cos(a) * (0.35 + len / 2));
-    c.rotation.y = a;
-    cracks.add(c);
-  }
-  const pit = new THREE.Mesh(new THREE.CircleGeometry(0.4, 22), new THREE.MeshBasicMaterial({ color: 0x302c29, transparent: true, opacity: 0.85 }));
-  pit.rotation.x = -Math.PI / 2;
-  cracks.add(pit);
-  const tiles = [];
-  for (let k = 0; k < 10; k++) {
-    const a = (k / 10) * Math.PI * 2 + 0.3;
-    const tile = new THREE.Mesh(new THREE.BoxGeometry(0.32, 0.05, 0.26), paver);
-    tile.position.set(Math.sin(a) * 0.62, 0.01, Math.cos(a) * 0.62);
-    tile.rotation.y = a;
-    cracks.add(tile);
-    tiles.push({ tile, a });
-  }
-  cracks.position.set(PLAYER.x, SIDEWALK + 0.003, PLAYER.z - 0.05);
-  group.add(cracks);
-
-  return { group, skyMesh, screens, screenMeshes, ticker: ots.ticker, ball: ots.ball, steam, stackPos, crowd, fleet, cracks, tiles };
+  return { group, skyMesh, screens, screenMeshes, ticker: ots.ticker, ball: ots.ball, steam, stackPos, crowd, fleet, lights: lights.map((l) => [l, l.intensity]) };
 }
 
 export function updateCity(city, t, depth, camPos) {
   city.skyMesh.position.copy(camPos);
+  // цветной свет экранов не проникает в шахту люка: внизу его гасим, иначе он красит кирпич и воду
+  const open = 1 - Math.min(1, Math.max(0, (SIDEWALK - camPos.y) / 0.8));
+  for (const [l, i] of city.lights) l.intensity = i * open;
   for (const s of city.screens.pool) s.tex.offset.x = t * s.speed;
   city.ticker.offset.x = -t * 0.06;
   city.ball.rotation.y = t * 0.4;
@@ -553,14 +574,4 @@ export function updateCity(city, t, depth, camPos) {
   }
   updateFleet(city.fleet, t);
   updateCrowd(city.crowd, t, CRACK);
-  // плитка вокруг ног вздыбливается и кренится внутрь провала
-  const k = Math.min(1, depth / 0.5);
-  city.cracks.scale.setScalar(0.25 + 0.75 * k);
-  city.cracks.visible = depth > 0.005;
-  // у самой плитки трещины, уходящие вдаль, превращаются в чёрные «шипы» — прячем их
-  for (const c of city.cracks.children) if (c.geometry.type === 'BoxGeometry' && c.geometry.parameters.height < 0.01) c.visible = depth < 1.15;
-  for (const { tile } of city.tiles) {
-    tile.rotation.x = -0.35 * k;
-    tile.position.y = -0.03 * k;
-  }
 }
