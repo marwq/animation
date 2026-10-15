@@ -48,8 +48,8 @@ rise_km = [[712, 6370.6], [716, 6364], [720, 6335], [724, 6240], [728, 6000], [7
            [810, 13.5], [815, 11.32], [821, 8.6], [826, 6.4], [831, 4.8], [835, 4.321]]
 depth += [[t, round(EARTH - r * 1000, 1)] for t, r in rise_km]
 # океан: глаза идут головой вверх; r — сколько метров воды над глазами
-ocean_r = [[839, 4302], [842, 4240], [846, 3900], [850, 3300], [853, 2850], [856, 2640], [860, 2590], [863, 2380], [866, 1960],
-           [869, 1780], [875, 1700], [878, 1330], [881, 930], [884, 640], [889, 560], [892, 310], [895, 125], [897.5, 32],
+ocean_r = [[839, 4302], [842, 4240], [846, 3900], [850, 3300], [852.4, 2965], [853.6, 2908], [855.6, 2900], [857.2, 2700], [858.3, 2632], [859.4, 2615], [860.6, 2590], [863, 2380], [866, 1960],
+           [868.5, 1785], [870.5, 1728], [873, 1712], [875.5, 1700], [877.5, 1672], [879.3, 1300], [881, 930], [884, 640], [889, 560], [892, 310], [895, 125], [897.5, 32],
            [899.2, 5], [900.2, 0], [901, -0.25], [930, -0.25]]
 depth += [[t, round(EARTH - r, 2)] for t, r in ocean_r]
 
@@ -309,7 +309,7 @@ s['center'] = [697, 708]  # невесомость в центре, с; даль
 s['ocean'] = {'seafloor': 4321, 'emerge': 835, 'surface': 900.2, 'lat': -40.758, 'lon': 106.0145}
 
 # сравнение и «дальше» — на весь путь (первая половина — глубина, вторая — до поверхности)
-s['compare'] = s['compare'][:-1] + [
+s['compare'] = [c for c in s['compare'] if c[0] < 1000] + [  # первые три минуты — как были; повторный запуск не дублирует
     [1000, 'ONE KILOMETRE DOWN'], [1857, 'AS DEEP AS THE GRAND CANYON'], [2212, 'DEEPER THAN ANY CAVE ON EARTH'],
     [4000, 'DEEPER THAN THE DEEPEST MINE'], [8849, 'DEEPER THAN EVEREST IS TALL'], [10935, 'DEEPER THAN THE OCEAN FLOOR'],
     [12262, 'DEEPER THAN ANY HOLE EVER DRILLED'], [18000, 'IN THE LOWER CRUST'], [36000, 'IN THE MANTLE'],
@@ -320,7 +320,7 @@ s['compare'] = s['compare'][:-1] + [
     [EARTH - 2890000, 'RISING THROUGH THE MANTLE'], [EARTH - 11320, 'IN THE OCEANIC CRUST'],
     [EARTH - 4321, 'IN THE DEEP OCEAN'], [EARTH - 1000, 'IN THE TWILIGHT ZONE'], [EARTH - 200, 'IN THE SUNLIT OCEAN'],
     [EARTH - 0.5, 'ON THE SURFACE']]
-s['milestones'] = [m for m in s['milestones'] if m[0] < 4000] + [
+s['milestones'] = [m for m in s['milestones'] if m[0] <= 1000] + [
     [1857, 'GRAND CANYON DEPTH'], [2212, 'DEEPEST CAVE'], [4000, 'DEEPEST MINE'], [8849, 'EVEREST HEIGHT'],
     [10935, 'DEEPEST OCEAN POINT'], [12262, 'DEEPEST HOLE EVER DRILLED'], [36000, 'THE MANTLE'], [100000, 'BOTTOM OF THE PLATE'],
     [150000, 'DIAMONDS'], [410000, 'TRANSITION ZONE'], [660000, 'LOWER MANTLE'], [2890000, 'THE CORE'], [5150000, 'INNER CORE'],

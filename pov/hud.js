@@ -1,6 +1,7 @@
 // Надписи поверх кадра: крупный блок глубины сверху слева (место, число, сравнение, что дальше),
 // шкала пути справа, подписи по центру, затемнения на входе, на выходе и сквозь перекрытия.
-import { CAPTIONS, CENTER, COMPARE, EARTH, MILESTONES, TITLE, DURATION, temperatureAt } from './timeline.js';
+import { CAPTIONS, CENTER, COMPARE, EARTH, MILESTONES, OCEAN, TITLE, DURATION, temperatureAt } from './timeline.js';
+import { rng } from './util.js';
 import { smooth, window01 } from './util.js';
 
 const $ = (id) => document.getElementById(id);
@@ -32,7 +33,19 @@ const TICKS = [
   [EARTH, 'INDIAN OCEAN', 3],
 ];
 
+const DROPS = [];
 export function buildHud() {
+  // капли на объективе после выхода из воды
+  const r = rng(808);
+  for (let i = 0; i < 18; i++) {
+    const el = document.createElement('div');
+    el.className = 'drop';
+    const size = 18 + r() * r() * 70;
+    el.style.width = `${size}px`;
+    el.style.height = `${size * (1.05 + r() * 0.2)}px`;
+    $('drops').appendChild(el);
+    DROPS.push({ el, x: r() * 1240, y: r() * 680, v: 8 + r() * 40 * (size / 80), size });
+  }
   const bar = $('bar');
   for (const [m, label, group] of TICKS) {
     const tick = document.createElement('div');
@@ -78,6 +91,10 @@ export function updateHud(t, depth, underground, through = 0) {
     $('nextname').textContent = next[1];
     $('nextdist').textContent = `in ${n} ${u}`;
   }
+  // на поверхности «дальше» уже нет
+  const nextOn = next ? 1 : 0;
+  $('nextname').parentElement.style.opacity = nextOn;
+  $('nextdist').style.opacity = nextOn;
   $('dot').style.top = `${scale(depth) * 100}%`;
   // температура вокруг — с тех пор, как вокруг скала
   $('tval').textContent = formatTemp(temperatureAt(depth));
@@ -105,6 +122,11 @@ export function updateHud(t, depth, underground, through = 0) {
     el.style.opacity = '0';
   }
 
+  // капли: появляются, когда голова выходит из воды, сползают и высыхают
+  const ds = t - OCEAN.surface;
+  const dropsOn = ds > -0.05 && ds < 3.2 ? smooth((ds + 0.05) / 0.1) * (1 - smooth((ds - 1.6) / 1.6)) : 0;
+  $('drops').style.opacity = dropsOn.toFixed(3);
+  if (dropsOn > 0) for (const d of DROPS) d.el.style.transform = `translate(${d.x}px, ${(d.y + d.v * Math.max(0, ds) ** 1.5).toFixed(1)}px)`;
   $('title').style.opacity = TITLE ? smooth((t - TITLE[0]) / 0.7).toFixed(3) : '0';
   // затемнение: вход из чёрного, миг темноты сквозь перекрытия и воду, уход в чёрное
   const fade = Math.max(1 - smooth(t / 0.8), through, smooth((t - (DURATION - 0.6)) / 0.6));

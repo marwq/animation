@@ -443,6 +443,7 @@ uniform float uLB;
 uniform float uMix, uOff, uBlur, uGlow, uLiquid, uCrystal, uTime, uFlow, uVarW, uWY;
 uniform vec3 uTintA, uTintB, uGlowCol;
 uniform vec4 uCav;
+uniform float uTopCut; // выше этой высоты (м от глаз) трубы нет: там уже морское дно
 uniform sampler2D uDetail;
 uniform float uDetW, uSoft;
 uniform float uFaultY, uFaultW, uFaultShift, uFaultOn;
@@ -498,6 +499,7 @@ function wallMaterial(textures) {
     uTintB: { value: new THREE.Vector3(1, 1, 1) },
     uGlowCol: { value: new THREE.Vector3(0, 0, 0) },
     uCav: { value: new THREE.Vector4(0, 9999, 0, 0) },
+    uTopCut: { value: 1e6 },
     uDetail: { value: null },
     uDetW: { value: 0 },
     uSoft: { value: 0 },
@@ -524,6 +526,7 @@ function wallMaterial(textures) {
         `
   if (distance(vLocal, uCav.xyz) < uCav.w) discard; // полость в центре Земли
   if (inHole(vLocal)) discard; // то, что встречается в стенке (sights.js)
+  if (vLocal.y > uTopCut) discard;
   float fd = dot(vLocal - vec3(0.0, uFaultY, 0.0), uFaultN);
   faultShift = fd < 0.0 ? uFaultShift * uFaultOn : 0.0;
   vec2 uv = vMapUv + vec2(0.0, uOff + faultShift);
@@ -787,11 +790,12 @@ const e4 = new THREE.Euler();
 const one = new THREE.Vector3();
 
 // t — время, s — пройденный путь (м), camY — высота камеры в мире; возвращает свет и туман для main.js
-export function updateDeep(d, t, s, cam) {
+export function updateDeep(d, t, s, cam, topCut = 1e6) {
   d.group.position.copy(cam);
   const slide = slideAt(t);
   const yVis = cam.y - slide; // «мировая» высота камеры для текстуры: как в rock.js
   const u = d.uniforms;
+  u.uTopCut.value = topCut;
   const st = layerState(t, s);
   const A = LAYER[st.a];
   const B = LAYER[st.b];
@@ -864,7 +868,7 @@ export function updateDeep(d, t, s, cam) {
       const rr = R - 0.012;
       const x = rr * Math.sin(p.th);
       const z = rr * Math.cos(p.th);
-      const visible = keep(p, y) && !inAnyHole(u, x, y, z);
+      const visible = keep(p, y) && y < topCut && !inAnyHole(u, x, y, z);
       arr[i * 3] = x;
       arr[i * 3 + 1] = visible ? y : 9999;
       arr[i * 3 + 2] = z;
@@ -895,7 +899,8 @@ export function updateDeep(d, t, s, cam) {
       y = ((((y + HALF_LEN) % (2 * HALF_LEN)) + 2 * HALF_LEN) % (2 * HALF_LEN)) - HALF_LEN;
       const x = p.rr * Math.sin(p.th);
       const z = p.rr * Math.cos(p.th);
-      arr.set([x, y, z, x, y - p.len * (t < DIR_FLIP ? 1 : -1), z], i * 6);
+      const yy = y < topCut - p.len ? y : 9999;
+      arr.set([x, yy, z, x, yy - p.len * (t < DIR_FLIP ? 1 : -1), z], i * 6);
     });
     d.streakGeo.attributes.position.needsUpdate = true;
   }

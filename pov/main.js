@@ -9,6 +9,7 @@ import { buildManhole, updateManhole } from './manhole.js';
 import { buildRock, updateRock } from './rock.js';
 import { HANDOFF, buildDeep, updateDeep } from './deep.js';
 import { FAULT } from './sights.js';
+import { FLOOR, OCEAN_T0, buildOcean, rEye, updateOcean } from './ocean.js';
 import { buildHud, updateHud } from './hud.js';
 import { EARTH, MANHOLE, PLAYER, ROCK, SIDEWALK, SLABS, SOIL_TOP, balance, bodyYaw, check, depthAt, floatW, headPitch, headYaw, shield, treadW } from './timeline.js';
 import { clamp, lerp, smooth } from './util.js';
@@ -48,7 +49,8 @@ const under = buildUnderground();
 const manhole = buildManhole();
 const rock = buildRock();
 const deep = buildDeep();
-scene.add(city.group, under.group, manhole.group, rock.group, deep.group);
+const ocean = buildOcean();
+scene.add(city.group, under.group, manhole.group, rock.group, deep.group, ocean.group);
 const HEMI_SKY = new THREE.Color(0xa9b8ff);
 const HEMI_GROUND = new THREE.Color(0x4d4038);
 const COOL = new THREE.Color(0xa9b8ff);
@@ -212,13 +214,16 @@ window.renderAt = (t) => {
   under.group.visible = !deepPhase && eye.y <= MANHOLE.water + 0.8 && eye.y > ROCK.top - 3;
   rock.group.visible = !deepPhase && eye.y < ROCK.top + 1.5;
   manhole.group.visible = !deepPhase;
-  deep.group.visible = deepPhase;
+  // океан на той стороне: строится чуть раньше выхода из дна; труба исчезает, когда дно далеко внизу
+  const oc = t >= OCEAN_T0 ? updateOcean(ocean, t, new THREE.Vector3(body.root.position.x, eye.y, body.root.position.z), bodyYaw(t) + headYaw(t)) : null;
+  if (!oc) ocean.group.visible = false;
+  deep.group.visible = deepPhase && !(oc && rEye(t) < FLOOR - 75);
   hemi.color.copy(HEMI_SKY);
   hemi.groundColor.copy(HEMI_GROUND);
   renderer.toneMappingExposure = 1.12;
   if (deepPhase) {
     // глубже километра: свет и туман от температуры породы — от тёмной скалы до белого каления
-    const env = updateDeep(deep, t, depth, eye);
+    const env = updateDeep(deep, t, depth, eye, oc ? rEye(t) - FLOOR : 1e6);
     const g = Math.min(1, env.glow);
     const gc = env.glowColor;
     const settle = smooth((t - HANDOFF) / 12); // на стыке свет точно как у rock.js, дальше — свой
@@ -240,6 +245,26 @@ window.renderAt = (t) => {
     fill.distance = 9;
     fill.decay = 0.7;
     renderer.toneMappingExposure = 1.12 - 0.38 * smooth((env.T - 1500) / 3200);
+    if (oc) {
+      // из трубы в воду: за полторы секунды свет и туман переходят к океанским
+      const k = smooth((t - OCEAN_T0 - 2.5) / 1.5);
+      scene.fog.color.lerp(oc.fog, k);
+      scene.fog.near = lerp(scene.fog.near, oc.near, k);
+      scene.fog.far = lerp(scene.fog.far, oc.far, k);
+      scene.background = oc.bg ? scene.fog.color : null;
+      hemi.color.lerp(oc.hemiSky, k);
+      hemi.groundColor.lerp(oc.hemiGround, k);
+      hemi.intensity = lerp(hemi.intensity, oc.hemi, k);
+      body.glow.intensity = lerp(body.glow.intensity, oc.glow, k);
+      body.glow.distance = lerp(8, 30, k);
+      body.glow.decay = lerp(1.6, 1.15, k); // в воде свет браслета добивает дальше: дно, медуза, кашалот
+      fill.intensity = lerp(fill.intensity, oc.above ? 0.5 : 1.0, k);
+      fill.distance = lerp(fill.distance, oc.above ? 4 : 13, k); // в воде мягкий свет у глаз достаёт до кашалота
+      renderer.toneMappingExposure = lerp(renderer.toneMappingExposure, oc.above ? 1.0 : 1.12, k);
+    } else {
+      body.glow.distance = 8;
+      body.glow.decay = 1.6;
+    }
   } else {
     // выше километра: свет и туман по зонам (площадь и шахта, коллектор, мутная вода, грунт, тоннель метро,
     // скала, водовод); на границах зон — плавный переход по высоте глаз, без затемнений
