@@ -4,6 +4,7 @@
 
     python3 pov/assemble_audio.py 180 240   -> pov/out/min/audio_180_240.wav
 """
+import json
 import re
 import sys
 import wave
@@ -17,6 +18,7 @@ XF = 0.25
 HANDOFF = 180.0
 JOIN = 2.0  # с: перекрёсток первых трёх минут и глубин
 DEEP_TRIM = 10 ** (1.0 / 20)  # глубины на 1 дБ тише конца третьей минуты — выравниваем
+DUR = float(json.loads((HERE / 'scene.json').read_text())['duration'])
 
 
 def load(path):
@@ -64,6 +66,8 @@ def build(a, b):
         g = np.sin(kin * np.pi / 2) * np.cos((1 - kout) * np.pi / 2)
         mix[:, lo:hi] += x[:, lo - i0:hi - i0] * g
         weight[lo:hi] += g ** 2
+    # конец ролика: звук уходит вместе с титром
+    mix *= 1 - np.clip((tt - (DUR - 2.5)) / 2.5, 0, 1) ** 2
     gaps = np.mean(weight < 0.5)
     if gaps > 0:
         print(f'warning: {gaps * 100:.1f}% of [{a}, {b}] has no audio source')
