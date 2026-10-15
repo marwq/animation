@@ -740,7 +740,8 @@ export function buildDeep() {
   // развёртка сферы: u — по кругу, v — по высоте (как у трубы)
   const sp = sphere.attributes.position;
   const suv = sphere.attributes.uv;
-  for (let i = 0; i < sp.count; i++) suv.setXY(i, (Math.atan2(sp.getX(i), sp.getZ(i)) / (Math.PI * 2) + 1) % 1, sp.getY(i) / TILE);
+  // u — родная развёртка сферы (шов продублирован, без полосы), v — по высоте, как у трубы
+  for (let i = 0; i < sp.count; i++) suv.setXY(i, suv.getX(i), sp.getY(i) / TILE);
   const cavity = new THREE.Mesh(sphere, cav.material);
   cavity.visible = false;
   group.add(cavity);
