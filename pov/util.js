@@ -1,5 +1,6 @@
 // Общие помощники сцены: случайные числа с зерном, сглаживание, ключевые кадры, текстуры из canvas.
 import * as THREE from 'three';
+import { mergeGeometries } from 'three/addons/utils/BufferGeometryUtils.js';
 
 // Детерминированный генератор (mulberry32): одна и та же сцена при каждом рендере
 export function rng(seed) {
@@ -99,4 +100,66 @@ export const lambert = (color, extra = {}) => new THREE.MeshLambertMaterial({ co
 
 export function box(w, h, d, material) {
   return new THREE.Mesh(new THREE.BoxGeometry(w, h, d), material);
+}
+
+// Плавная дорожка движения: монотонный сплайн по ключам, пропущенный через критически
+// демпфированную «пружину». Скорость непрерывна, у поворотов есть естественная инерция.
+export function track(keys, omega = 6, rate = 240) {
+  const f = monotone(keys);
+  const t0 = keys[0][0] - 1;
+  const n = Math.ceil((keys[keys.length - 1][0] + 1 - t0) * rate) + 1;
+  const out = new Float32Array(n);
+  const dt = 1 / rate;
+  let x = f(t0);
+  let v = 0;
+  for (let i = 0; i < n; i++) {
+    v += (omega * omega * (f(t0 + i * dt) - x) - 2 * omega * v) * dt;
+    x += v * dt;
+    out[i] = x;
+  }
+  return (t) => {
+    const p = clamp((t - t0) * rate, 0, n - 1);
+    const i = Math.floor(p);
+    return i + 1 < n ? lerp(out[i], out[i + 1], p - i) : out[n - 1];
+  };
+}
+
+// Коробка, у которой развёртка в метрах: текстура окон повторяется по фасаду, а не растягивается
+export function uvBox(w, h, d, tileU = 1, tileV = 1) {
+  const g = new THREE.BoxGeometry(w, h, d);
+  const uv = g.attributes.uv;
+  const dims = [[d, h], [d, h], [w, d], [w, d], [w, h], [w, h]]; // +x, -x, +y, -y, +z, -z
+  for (let f = 0; f < 6; f++) {
+    for (let k = 0; k < 4; k++) {
+      const i = f * 4 + k;
+      uv.setXY(i, (uv.getX(i) * dims[f][0]) / tileU, (uv.getY(i) * dims[f][1]) / tileV);
+    }
+  }
+  return g;
+}
+
+// Склейка статичной геометрии по материалам: тысячи деталей — десяток вызовов отрисовки
+export class Batch {
+  constructor() {
+    this.parts = new Map();
+    this.m = new THREE.Matrix4();
+    this.q = new THREE.Quaternion();
+    this.e = new THREE.Euler();
+  }
+  add(geometry, material, x = 0, y = 0, z = 0, ry = 0, rx = 0, rz = 0) {
+    const g = (geometry.index ? geometry.toNonIndexed() : geometry.clone());
+    for (const name of Object.keys(g.attributes)) if (!['position', 'normal', 'uv'].includes(name)) g.deleteAttribute(name);
+    this.q.setFromEuler(this.e.set(rx, ry, rz));
+    g.applyMatrix4(this.m.compose(new THREE.Vector3(x, y, z), this.q, new THREE.Vector3(1, 1, 1)));
+    if (!this.parts.has(material)) this.parts.set(material, []);
+    this.parts.get(material).push(g);
+    return this;
+  }
+  box(w, h, d, material, x, y, z, ry = 0) {
+    return this.add(new THREE.BoxGeometry(w, h, d), material, x, y, z, ry);
+  }
+  build(group) {
+    for (const [material, list] of this.parts) group.add(new THREE.Mesh(mergeGeometries(list, false), material));
+    this.parts.clear();
+  }
 }

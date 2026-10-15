@@ -6,28 +6,45 @@ import { box, canvasTexture, clamp, lambert } from './util.js';
 const UPPER = 0.31; // плечо → локоть
 const FORE = 0.27; // локоть → запястье
 
+// Палитра заказчика (#A3B886, #A38B4A, #F3E6AB), чуть светлее — в сумерках так читается лучше
 const COLORS = {
-  jacket: 0xc4572c, // ржаво-оранжевая ветровка
-  jacketDark: 0x8f3a1c,
-  trousers: 0x2f3540,
-  shoe: 0x1f8f8a, // бирюзовые кроссовки
-  sole: 0xf1efe8,
+  jacket: 0xadc392, // шалфейная куртка-рубашка
+  jacketDark: 0x8ea476, // швы, клапаны карманов
+  shirt: 0xf6ebb6, // кремовая футболка под расстёгнутой курткой
+  rib: 0xf1e3a6, // кремовые трикотажные манжеты и низ куртки
+  trousers: 0xb19755, // брюки цвета хаки
+  trousersDark: 0x947c43, // карманы-карго
+  shoe: 0xf6ebb6, // кремовые кеды
+  stripe: 0xadc392, // шалфейная полоса на кедах
+  sole: 0xfbf8ef,
   skin: 0xd59d78,
-  band: 0x15171b,
+  band: 0x2a2c30,
 };
 
 export function buildBody() {
   const m = Object.fromEntries(Object.entries(COLORS).map(([k, c]) => [k, lambert(c)]));
   const root = new THREE.Group();
 
-  const torso = box(0.44, 0.56, 0.23, m.jacket);
-  torso.position.set(0, 1.19, 0.01);
+  // Куртка нараспашку: шалфейные полы, между ними кремовая футболка, внизу трикотажная резинка
+  const torso = box(0.44, 0.54, 0.23, m.jacket);
+  torso.position.set(0, 1.2, 0.01);
   root.add(torso);
-  const zip = box(0.018, 0.52, 0.006, m.jacketDark);
-  zip.position.set(0, 1.19, -0.103);
-  root.add(zip);
+  const shirt = box(0.15, 0.5, 0.006, m.shirt);
+  shirt.position.set(0, 1.21, -0.103);
+  root.add(shirt);
+  for (const s of [-1, 1]) {
+    const placket = box(0.022, 0.5, 0.008, m.jacketDark);
+    placket.position.set(0.085 * s, 1.21, -0.104);
+    root.add(placket);
+    const pocket = box(0.11, 0.1, 0.008, m.jacketDark);
+    pocket.position.set(0.15 * s, 1.31, -0.105);
+    root.add(pocket);
+  }
+  const hem = box(0.45, 0.05, 0.235, m.rib);
+  hem.position.set(0, 0.95, 0.01);
+  root.add(hem);
   const hips = box(0.38, 0.2, 0.22, m.trousers);
-  hips.position.set(0, 0.88, 0);
+  hips.position.set(0, 0.86, 0);
   root.add(hips);
 
   const legs = [-1, 1].map((s) => {
@@ -37,6 +54,9 @@ export function buildBody() {
     const thigh = box(0.16, 0.44, 0.18, m.trousers);
     thigh.position.y = -0.22;
     hip.add(thigh);
+    const cargo = box(0.012, 0.14, 0.12, m.trousersDark);
+    cargo.position.set(0.086 * s, -0.27, 0);
+    hip.add(cargo);
     const knee = new THREE.Group();
     knee.position.y = -0.44;
     hip.add(knee);
@@ -49,12 +69,15 @@ export function buildBody() {
     const upper = box(0.13, 0.09, 0.29, m.shoe);
     upper.position.set(0, 0, -0.06);
     foot.add(upper);
-    const sole = box(0.136, 0.035, 0.3, m.sole);
-    sole.position.set(0, -0.06, -0.06);
+    const stripe = box(0.134, 0.03, 0.16, m.stripe);
+    stripe.position.set(0, -0.005, -0.04);
+    foot.add(stripe);
+    const sole = box(0.138, 0.04, 0.3, m.sole);
+    sole.position.set(0, -0.062, -0.06);
     foot.add(sole);
-    const lace = box(0.07, 0.012, 0.12, m.sole);
-    lace.position.set(0, 0.048, -0.1);
-    foot.add(lace);
+    const tongue = box(0.07, 0.014, 0.12, m.stripe);
+    tongue.position.set(0, 0.049, -0.1);
+    foot.add(tongue);
     return { hip, knee, foot, s };
   });
 
@@ -79,7 +102,7 @@ export function buildBody() {
     const fore = box(0.105, FORE - 0.07, 0.105, m.jacket);
     fore.position.y = -(FORE - 0.07) / 2;
     elbow.add(fore);
-    const cuff = box(0.116, 0.045, 0.116, m.jacketDark);
+    const cuff = box(0.118, 0.05, 0.118, m.rib);
     cuff.position.y = -FORE + 0.075;
     elbow.add(cuff);
 

@@ -1,7 +1,7 @@
 // Рендер POV-теста в видео через headless Chromium (WebGL на SwiftShader) и ffmpeg.
 //
 // Нужны Playwright, three и шрифты:  npm i --no-save playwright three @fontsource/space-grotesk @fontsource/jetbrains-mono
-// Видео:   node pov/render.js [fps]            -> pov/out/style_test.mp4 (со звуком, если есть pov/out/audio.wav)
+// Видео:   node pov/render.js [fps]            -> pov/out/style_test.mp4 (60 к/с по умолчанию; со звуком, если есть pov/out/audio.wav)
 // Кадры:   node pov/render.js --stills 2,9.5   -> pov/out/still_2.png, pov/out/still_9.5.png
 const fs = require('fs');
 const http = require('http');
@@ -11,8 +11,9 @@ const { chromium } = require('playwright');
 
 const ROOT = path.resolve(__dirname, '..');
 const OUT = path.join(__dirname, 'out');
-const DURATION = 25;
-const TYPES = { '.html': 'text/html', '.js': 'text/javascript', '.css': 'text/css', '.woff2': 'font/woff2', '.woff': 'font/woff' };
+const SCENE = JSON.parse(fs.readFileSync(path.join(__dirname, 'scene.json'), 'utf8'));
+const DURATION = SCENE.duration;
+const TYPES = { '.html': 'text/html', '.js': 'text/javascript', '.json': 'application/json', '.css': 'text/css', '.woff2': 'font/woff2', '.woff': 'font/woff' };
 
 // Модули ES и шрифты не грузятся со страницы file://, поэтому отдаём корень репозитория по HTTP
 function serve() {
@@ -53,7 +54,7 @@ function run(cmd, args, input) {
 (async () => {
   const args = process.argv.slice(2);
   const stills = args[0] === '--stills' ? args[1].split(',').map(Number) : null;
-  const fps = stills ? 0 : parseFloat(args[0] || '30');
+  const fps = stills ? 0 : parseFloat(args[0] || String(SCENE.fps));
   fs.mkdirSync(OUT, { recursive: true });
 
   const server = await serve();

@@ -2,10 +2,10 @@
 // прямоугольный тоннель метро с колоннами и поездом. Шахта нужна только для взгляда изнутри.
 import * as THREE from 'three';
 import { box, canvasTexture, lambert, rng } from './util.js';
-import { PLAYER } from './timeline.js';
+import { PLAYER, TRAIN } from './timeline.js';
 
-const R = 4; // радиус «шахты» вокруг героя
-export const TUNNEL = { y: -7.6, height: 4.6, width: 9, track: -2.2 }; // центр тоннеля по Y, путь с поездом по Z
+const R = 6; // радиус «шахты» вокруг героя: просторнее — видно стены, трубы и слои
+export const TUNNEL = { y: -7.6, height: 4.6, width: 9, track: TRAIN.track }; // центр тоннеля по Y, путь с поездом по Z
 
 // Стенка из грубого камня: цилиндр изнутри, вершины чуть сдвинуты, цвет по слоям
 function wall(top, bottom, colorAt, r) {
@@ -216,7 +216,7 @@ export function buildUnderground() {
   return { group, train, lamps };
 }
 
-// Передняя кромка поезда проходит мимо героя в t = 18.45 с, 45 м/с
+// Передняя кромка поезда проходит мимо героя в момент TRAIN.pass (scene.json — оттуда же звук)
 export function updateUnderground(u, t) {
-  u.train.position.x = PLAYER.x + 7.5 + 45 * (t - 18.45);
+  u.train.position.x = PLAYER.x - 7.5 + TRAIN.speed * (t - TRAIN.pass);
 }

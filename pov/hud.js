@@ -1,5 +1,5 @@
 // Надписи поверх кадра: место, глубиномер со строкой «дальше», шкала пути справа, подписи, титр, затемнения.
-import { CAPTIONS, MILESTONES, TITLE, DURATION } from './timeline.js';
+import { CAPTIONS, MILESTONES, TITLE, DURATION, UNDER } from './timeline.js';
 import { smooth, window01 } from './util.js';
 
 const $ = (id) => document.getElementById(id);
@@ -56,7 +56,7 @@ export function updateHud(t, depth, underground) {
 
   $('title').style.opacity = smooth((t - TITLE[0]) / 0.7).toFixed(3);
   // затемнение: вход из чёрного, короткая темнота при проходе сквозь асфальт, уход в чёрное
-  const through = Math.exp(-(((t - 14.72) / 0.16) ** 2)) * 0.9;
+  const through = Math.exp(-(((t - UNDER) / 0.16) ** 2)) * 0.9;
   const fade = Math.max(1 - smooth(t / 0.8), through, smooth((t - (DURATION - 0.6)) / 0.6));
   $('fade').style.opacity = fade.toFixed(3);
 }
