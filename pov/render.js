@@ -12,8 +12,10 @@ const { spawn } = require('child_process');
 const { chromium } = require('playwright');
 
 const ROOT = path.resolve(__dirname, '..');
-const OUT = path.join(__dirname, 'out');
-const SCENE = JSON.parse(fs.readFileSync(path.join(__dirname, 'scene.json'), 'utf8'));
+// какой ролик: APP=spin берёт spin/index.html, spin/scene.json и пишет в spin/out
+const APP = process.env.APP || 'pov';
+const OUT = path.join(ROOT, APP, 'out');
+const SCENE = JSON.parse(fs.readFileSync(path.join(ROOT, APP, 'scene.json'), 'utf8'));
 const DURATION = SCENE.duration;
 const TYPES = { '.html': 'text/html', '.js': 'text/javascript', '.json': 'application/json', '.css': 'text/css', '.woff2': 'font/woff2', '.woff': 'font/woff' };
 
@@ -63,7 +65,7 @@ function run(cmd, args, input) {
   fs.mkdirSync(OUT, { recursive: true });
 
   const server = await serve();
-  const url = `http://127.0.0.1:${server.address().port}/pov/index.html`;
+  const url = `http://127.0.0.1:${server.address().port}/${APP}/index.html`;
   const browser = await chromium.launch({
     executablePath: executable(),
     args: ['--use-angle=swiftshader', '--enable-unsafe-swiftshader', '--ignore-gpu-blocklist'],
@@ -84,6 +86,8 @@ function run(cmd, args, input) {
       }
     }
   } else if (stills) {
+    // CAM='{"pos":[x,y,z],"look":[x,y,z],"fov":40}' — свободная камера для проверки (если страница её понимает)
+    if (process.env.CAM) await page.evaluate((c) => { window.__cam = JSON.parse(c); }, process.env.CAM);
     for (const t of stills) {
       await page.evaluate((s) => window.renderAt(s), t);
       const file = path.join(OUT, `still_${t}.png`);

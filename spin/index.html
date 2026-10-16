@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>What if Earth spun faster and faster?</title>
+<link rel="stylesheet" href="/node_modules/@fontsource/space-grotesk/500.css">
+<link rel="stylesheet" href="/node_modules/@fontsource/space-grotesk/700.css">
+<link rel="stylesheet" href="/node_modules/@fontsource/jetbrains-mono/500.css">
+<link rel="stylesheet" href="/node_modules/@fontsource/jetbrains-mono/600.css">
+<link rel="stylesheet" href="hud.css">
+<script type="importmap">{ "imports": { "three": "/node_modules/three/build/three.module.js", "three/addons/": "/node_modules/three/examples/jsm/" } }</script>
+</head>
+<body>
+<div id="stage">
+  <canvas id="c" width="1280" height="720"></canvas>
+  <div id="hud">
+    <div id="scrim-top"></div>
+    <div id="where">
+      <div id="place"></div>
+      <div class="lbl">ONE DAY LASTS</div>
+      <div class="value"><span id="dayh">23</span><span class="unit">h</span><span id="daym">56</span><span class="unit">min</span></div>
+      <div id="compare"></div>
+      <div class="rule"></div>
+      <div class="row"><span class="tl">YOUR WEIGHT</span><span class="rv" id="wval"></span></div>
+      <div class="row"><span class="tl" id="slbl">GROUND SPEED</span><span class="rv" id="sval"></span></div>
+      <div class="row" id="searow"><span class="tl">SEA LEVEL HERE</span><span class="rv" id="seaval"></span></div>
+      <div id="lapse">TIME-LAPSE · <span id="lval"></span></div>
+    </div>
+    <div id="bar"><div id="dot"></div></div>
+  </div>
+  <div id="caption"></div>
+  <div id="title">
+    <div class="big">What if Earth spun<br>faster and faster?</div>
+    <div class="small">From a 24-hour day to a ring around the planet</div>
+  </div>
+  <div id="fade"></div>
+</div>
+<script type="module" src="main.js"></script>
+</body>
+</html>

@@ -8,8 +8,9 @@ const path = require('path');
 const { spawn } = require('child_process');
 
 const ROOT = path.resolve(__dirname, '..');
-const OUT = path.join(__dirname, 'out');
-const SCENE = JSON.parse(fs.readFileSync(path.join(__dirname, 'scene.json'), 'utf8'));
+const APP = process.env.APP || 'pov'; // APP=spin — ролик из папки spin (см. render.js)
+const OUT = path.join(ROOT, APP, 'out');
+const SCENE = JSON.parse(fs.readFileSync(path.join(ROOT, APP, 'scene.json'), 'utf8'));
 const argv = process.argv.slice(2);
 const opt = (name) => (argv.includes(name) ? argv[argv.indexOf(name) + 1] : null);
 const plain = argv.filter((a, i) => !a.startsWith('--') && !(i > 0 && argv[i - 1].startsWith('--')));
