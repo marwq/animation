@@ -728,9 +728,10 @@ def cut(a, b):
         t = tt[lo:hi]
         kin = np.ones_like(t) if s0 == 0 else np.clip((t - (s0 - XF)) / (2 * XF), 0, 1)
         kout = np.ones_like(t) if s1 >= DUR else 1 - np.clip((t - (s1 - XF)) / (2 * XF), 0, 1)
-        g = np.sin(kin * np.pi / 2) * np.sin(kout * np.pi / 2)
+        # линейный перекрёсток: музыка в соседних окнах одинаковая (коррелирована) — на стыке громкость не скачет
+        g = kin * kout
         mix[:, lo:hi] += x[:, lo - i0:hi - i0] * g
-        weight[lo:hi] += g ** 2
+        weight[lo:hi] += g
     mix *= smooth(tt / 0.7)
     mix *= 1 - np.clip((tt - (DUR - 2.5)) / 2.5, 0, 1) ** 2
     gaps = np.mean(weight < 0.5)
