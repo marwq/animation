@@ -16,8 +16,8 @@ DUR = 968.0  # 16:08
 # --- время: сколько часов истории проходит за секунду ролика ------------------------------------------------
 # сначала реальное время, потом разгон до 1 с = 30 мин (с 24-й по 36-ю секунду)
 TIMELAPSE = [[0, 1 / 3600], [24, 1 / 3600], [36, 0.5], [448.2, 0.5], [452.8, 1 / 60], [474, 1 / 60], [490, 0.5], [540, 0.5],
-             [552, 24], [600, 24], [612, 168], [660, 168], [672, 730], [720, 730], [732, 8766], [770, 8766], [782, 1 / 60],
-             [800, 1 / 60], [806, 1 / 3600], [905, 1 / 3600], [925, 8.766e9], [DUR, 8.766e9]]
+             [552, 24], [636, 24], [644, 168], [666, 168], [672, 730], [717, 730], [723, 8766], [764, 8766], [771, 1 / 60],
+             [797, 1 / 60], [801, 1 / 3600], [905, 1 / 3600], [925, 8.766e9], [DUR, 8.766e9]]
 TAU0 = 5.75  # местное солнечное время в начале, ч (5:45, рассвет ещё не наступил)
 
 # --- вращение: сутки сокращаются по экспоненте от 23 ч 56 мин; ниже ~2,2 ч Земля раскрутиться не может ---------
@@ -51,7 +51,9 @@ def period_at(t):
     P = SPIN['P0'] * math.exp(-max(0.0, t - SPIN['t_start']) * SPIN['rate'] / SPIN['T'])
     # мягкий упор в предел: ниже Земля сбрасывает экватор в кольцо и быстрее не крутится
     m = SPIN['P_min']
-    return m + (P - m) * smooth((P - m) / 0.6) if P < m + 0.6 else P
+    P = m + (P - m) * smooth((P - m) / 0.6) if P < m + 0.6 else P
+    # в конце (миллионы лет в секунду) приливы новой луны понемногу тормозят Землю
+    return P + 0.32 * smooth((t - 922.0) / 36.0)
 
 
 def integrate(step=1 / 240):
@@ -226,6 +228,106 @@ CAPTIONS = [
     [526.6, 530.2, 'Earth is growing a ring.'],
     [530.8, 534.4, 'Like Saturn.'],
     [535.0, 538.6, 'And you are inside it.'],
+    # 9:00–10:00 — кольцо целиком
+    [540.4, 544.0, 'Now imagine the push stops.'],
+    [544.6, 548.2, 'From here on, it is just physics.'],
+    [548.8, 552.4, "Let's speed up time: one second, one day."],
+    [553.0, 556.6, 'Behind you, the ring takes shape.'],
+    [557.2, 560.8, 'Rock and ice, grinding together in orbit.'],
+    [561.4, 565.0, 'The ring is thousands of kilometres wide,'],
+    [565.4, 569.0, 'and only a few kilometres thick.'],
+    [569.6, 573.2, 'It casts a shadow across the planet.'],
+    [573.8, 577.4, "And Earth's shadow falls across the ring."],
+    [578.0, 581.6, "Earth's day is stuck at 2 hours and 12 minutes."],
+    [582.2, 585.8, 'Its oceans and air hug the swollen equator.'],
+    [586.4, 590.0, 'Collisions slowly push the ring outward.'],
+    [590.6, 594.2, 'And they carry you outward with it.'],
+    [594.8, 598.4, 'How far can a ring spread?'],
+    # 10:00–11:00 — предел Роша
+    [600.4, 604.0, 'There is a limit.'],
+    [604.6, 608.2, 'Close to a planet, tides stretch anything in orbit.'],
+    [608.8, 612.4, 'The near side of a clump is pulled harder than its far side.'],
+    [613.0, 616.6, 'So clumps are torn apart before they can grow.'],
+    [617.2, 620.8, 'This boundary is called the Roche limit.'],
+    [621.4, 625.0, 'For rock around Earth: about 19,000 km from the centre.'],
+    [625.6, 629.2, 'Inside it, you get a ring.'],
+    [629.8, 633.4, "That's why Saturn's rings never became moons."],
+    [634.0, 637.6, 'Outside it, clumps can survive.'],
+    [638.2, 641.8, "Let's speed up again: one second, one week."],
+    [642.4, 646.0, 'The ring spreads past the line.'],
+    [646.6, 650.2, 'And out there, something changes.'],
+    [650.8, 654.4, 'The ring starts to break into clumps.'],
+    [655.0, 658.6, 'They are no longer torn apart.'],
+    # 11:00–12:00 — комки и луночки
+    [660.4, 664.0, 'Snowballs. Boulders. Hills.'],
+    [664.6, 668.2, 'They collide gently and stick together.'],
+    [668.8, 672.4, 'One second: one month.'],
+    [673.0, 676.6, 'Moonlets, tens of kilometres across.'],
+    [677.2, 680.8, 'They grow by sweeping up the ring.'],
+    [681.4, 685.0, 'Each one clears a lane as it orbits.'],
+    [685.6, 689.2, 'Some of them crash into each other,'],
+    [689.6, 693.2, 'and merge.'],
+    [694.0, 697.6, 'Hundreds of kilometres across now.'],
+    [698.2, 701.8, 'One of them is winning.'],
+    [702.4, 706.0, 'The biggest one pulls the hardest.'],
+    [706.6, 710.2, 'It swallows its neighbours, one by one.'],
+    [710.8, 714.4, 'And keeps growing.'],
+    # 12:00–13:00 — новая луна
+    [720.4, 724.0, 'One second: one year.'],
+    [724.6, 728.2, 'Inside the limit, the ring slowly rains back down onto Earth.'],
+    [728.8, 732.4, 'Outside it, the debris feeds one growing world.'],
+    [733.0, 736.6, 'A few decades after you floated off...'],
+    [737.2, 740.8, 'Earth has a second moon.'],
+    [741.4, 745.0, 'About 2,600 km across: three-quarters the size of ours.'],
+    [745.6, 749.2, 'Born from the ring around Earth.'],
+    [749.8, 753.4, 'Far away, the old Moon is still there.'],
+    [754.0, 757.6, 'You drift toward the new one.'],
+    [758.2, 761.8, 'Its gravity takes hold of you.'],
+    [766.6, 770.2, "Let's slow time down."],
+    [771.0, 774.6, 'You are falling toward a brand-new world.'],
+    [775.2, 778.8, 'Fresh rock, frosted with ice from Earth’s old oceans.'],
+    # 13:00–14:00 — посадка
+    [780.4, 784.0, 'Gravity here is weak.'],
+    [784.6, 788.2, 'You fall slowly.'],
+    [796.6, 800.2, 'Back to real time.'],
+    [802.4, 805.6, 'Touchdown.'],
+    [806.2, 809.8, 'Your weight: 8 kg.'],
+    [810.4, 814.0, 'Look up.'],
+    [814.6, 818.2, 'Earth fills almost 40 degrees of the sky.'],
+    [818.8, 822.4, 'A squashed, striped planet with a ring.'],
+    [823.0, 826.6, 'It spins once every 2 hours and 12 minutes.'],
+    [827.2, 830.8, 'And there is the old Moon.'],
+    [831.4, 835.0, 'Two moons now circle Earth.'],
+    [835.6, 839.2, 'But this has happened before.'],
+    # 14:00–15:00 — разгадка
+    [840.4, 844.0, 'Sound familiar?'],
+    [844.6, 848.2, 'Remember the 5-hour day?'],
+    [848.8, 852.4, '4.5 billion years ago, a world the size of Mars hit the young Earth.'],
+    [853.0, 856.6, 'Scientists call it Theia.'],
+    [857.2, 860.8, 'The impact melted Earth and set it spinning fast.'],
+    [861.4, 865.0, 'It threw molten rock into orbit.'],
+    [865.6, 869.2, 'The debris formed a ring around Earth.'],
+    [869.8, 873.4, 'Inside the Roche limit, it stayed a ring.'],
+    [874.0, 877.6, 'Outside it, the debris clumped together.'],
+    [878.2, 881.8, 'Within a century, it had become a moon.'],
+    [882.4, 886.0, 'Our Moon.'],
+    [886.6, 890.2, "Moon rocks are almost identical to Earth's mantle."],
+    [890.8, 894.4, 'And back then, Earth spun once every 5 hours.'],
+    [894.8, 898.4, 'That was the mark on the dial.'],
+    # 15:00–16:08 — приливы тормозят Землю
+    [900.4, 904.0, 'So where did the 5-hour day go?'],
+    [904.6, 908.2, "The Moon's pull raises tides on Earth."],
+    [908.8, 912.4, "The tides act like a brake on Earth's spin."],
+    [913.0, 916.6, "And Earth's lost spin pushes the Moon away."],
+    [917.2, 920.8, 'Watch it happen to your new moon.'],
+    [921.4, 925.0, 'One second: one million years.'],
+    [925.6, 929.2, 'Earth shrinks in the sky as the moon drifts away.'],
+    [929.8, 933.4, "The ring is gone. Earth's day grows longer."],
+    [934.0, 937.6, 'Over billions of years, this turned our 5-hour day into 24 hours.'],
+    [938.2, 941.8, 'And it is still happening.'],
+    [942.4, 946.0, 'The Moon drifts 3.8 cm farther away every year.'],
+    [946.6, 950.2, 'And every century, your day grows about 1.8 milliseconds longer.'],
+    [950.8, 955.6, 'Every tide you see is the Moon slowing Earth down.'],
 ]
 
 # --- взгляд: (начало, конец, поворот головы, наклон) — относительно корпуса, который смотрит на восток ---------
@@ -261,7 +363,7 @@ LOOKS = [
     (473.8, 480.0, 30, -40),
     # 8:00–9:00 (тело вертикально, как на вершине)
     (480.6, 488.2, 10, -72), (489.0, 492.4, 70, -15), (493.2, 500.8, 0, -86), (501.6, 505.0, 20, 50),
-    (505.8, 513.4, 0, -40), (514.2, 521.8, 90, -60), (522.6, 530.2, 4, 6), (530.8, 546.0, -176, 8), (552.0, 600.0, 0, -10),
+    (505.8, 513.4, 0, -40), (514.2, 521.8, 30, -78), (522.6, 530.2, 4, 6), (531.0, 546.0, 0, -62), (552.0, 600.0, 0, -10),
 ]
 
 # --- уровень моря у вершины (м над нынешним) ---------------------------------------------------------------
@@ -327,12 +429,23 @@ GROUND = [[461.5, 0.0], [480, 4e-6], [490, 6e-4], [500, 0.012], [520, 0.12], [54
 
 
 # в космосе (с 540 с): [t, расстояние от центра Земли (км), наклон к плоскости колец (°), долгота (°, от вершины к востоку)]
-CAM3 = [[540, 9888, 0.0, 0.0], [552, 11500, 1.5, -1.0], [570, 15500, 8.0, -6.0], [600, 24000, 19.0, -14.0], [630, 30000, 23.0, -18.0],
-        [660, 33000, 20.0, -10.0], [690, 31000, 12.0, 10.0], [720, 28500, 7.0, 24.0], [750, 27000, 5.0, 33.0], [780, 26200, 4.2, 38.0]]
+CAM3 = [[540, 9888, 1.5, 0.0], [552, 11500, 2.5, -1.0], [570, 15500, 8.0, -6.0], [600, 24000, 19.0, -14.0], [630, 30000, 23.0, -18.0],
+        [660, 33000, 20.0, -10.0], [690, 31500, 10.0, 8.0], [720, 29500, 6.0, 22.0], [745, 28500, 5.0, 30.0], [762, 28000, 4.5, 33.0]]
 # куда смотреть в космосе: [начало, конец, цель, поворот °, наклон °]; цели: planet, ring (точка кольца на 15 000 км у долготы
 # героя), moon (новая луна), sun, oldmoon, out (от Земли), along (вдоль орбиты)
-LOOK3 = [[540, 552, 'along', 0, -4], [554, 600, 'planet', 0, 0], [602, 640, 'planet', 8, 4], [642, 660, 'ring', 0, 0],
-         [662, 700, 'along', 0, -6], [702, 720, 'moon', 0, 0], [722, 760, 'moon', 0, 0], [762, 780, 'moon', 0, 0]]
+LOOK3 = [[540, 552, 'planet', 0, 0], [555, 598, 'planet', 0, 0], [601, 616, 'planet', 0, 0], [617, 637, 'planet', 0, -8],
+         [640, 658, 'roche', 0, 0], [661, 672, 'along', -10, -4], [674, 696, 'moonlets', 0, 0], [699, 716, 'moon', 0, 0],
+         [720, 748, 'planet', 0, 0], [750, 753.4, 'oldmoon', 0, 0], [755, 780, 'moon', 0, 0]]
+# подлёт к новой луне: [t, высота над её поверхностью, м]
+APPROACH = [[762, 3.0e6], [772, 1.2e6], [780, 2.5e5], [790, 2.0e4], [797, 900], [801, 40], [803.2, 0.0]]
+LAND_AT = 803.2
+# после посадки: [начало, конец, цель, поворот, наклон] — цели earth, oldmoon, ground, horizon, sun
+LOOK_MOON = [[803.2, 809.0, 'ground', 0, 0], [810.4, 822.4, 'earth', 0, 0], [823, 826.6, 'earth', 6, -3], [827.2, 834.0, 'oldmoon', 0, 0],
+             [835.0, 852.0, 'earth', -8, -6], [853.0, 864.0, 'earth', 10, 0], [865.0, 878.0, 'ring', 0, 0], [879.0, 890.0, 'oldmoon', 0, 0],
+             [891.0, 912.0, 'earth', 0, -4], [913.0, 968.0, 'earth', 0, 0]]
+# луна уходит от Земли в конце: [t, расстояние от центра Земли, км]
+MOON_A = [[0, 24500], [915, 24500], [925, 27000], [945, 52000], [968, 70000]]
+RING = {'grow': (508, 538), 'spread': (600, 660), 'fade': (720, 760), 'gone': (915, 935)}
 
 
 # облачность: доля неба под облаками внизу (на рассвете — море облаков, при потопе — реже)
@@ -395,6 +508,11 @@ def main():
         'sun_freeze': SUN_FREEZE,
         'cam3': CAM3,
         'look3': LOOK3,
+        'approach': APPROACH,
+        'land_at': LAND_AT,
+        'look_moon': LOOK_MOON,
+        'moon_a': MOON_A,
+        'ring': RING,
         'shield': [[0, 0], [DUR, 0]],
         'sun_events': events,
         'sea': sea_keys(table),

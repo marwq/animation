@@ -3,13 +3,13 @@
 import * as THREE from 'three';
 import { buildBody, drawGauge, poseBody } from './body.js';
 import { buildHud, updateHud } from './hud.js';
-import { buildSky, updateSky } from './sky.js';
+import { buildSky, skyDir, updateSky } from './sky.js';
 import { buildSummit, updateSummit } from './summit.js';
 import { buildFx, updateFx } from './fx.js';
 import { buildPlanet, updatePlanet } from './planet.js';
-import { buildDebris, buildMoons, moonCenter, updateDebris, updateMoons } from './space.js';
+import { MOON, buildDebris, buildMoonSurface, buildMoons, buildRoche, moonCenter, moonDir, updateDebris, updateMoons } from './space.js';
 import {
-  CAM3_START, FLOAT_AT, JUMPS, LAT, LOOK3, cam3, groundShift, heroAlt, balance, bodyYaw, cloudAt, seaAt, shakeAt, check, dayLength, floatW, headPitch, headYaw, radiusAt, shield, solarHours, speedAt, tauAt, timelapse, weightAt,
+  APPROACH_START, CAM3_START, FLOAT_AT, JUMPS, LAND_AT, LAT, LOOK3, LOOK_MOON, RING, approachH, cam3, groundShift, heroAlt, moonA, balance, bodyYaw, cloudAt, seaAt, shakeAt, check, dayLength, floatW, headPitch, headYaw, radiusAt, shield, solarHours, speedAt, tauAt, timelapse, weightAt,
 } from './timeline.js';
 import { clamp, lerp, rng, smooth } from '../pov/util.js';
 
@@ -42,18 +42,54 @@ const local = new THREE.Group();
 pivot.add(local);
 local.add(summit.group, fx.group);
 const debris = buildDebris();
-const moons = buildMoons();
-scene.add(sky.group, pivot, planet.group, debris.group, moons.group);
+
+// место посадки на новой луне: Земля над горизонтом на ~35°, подлёт — со стороны, где герой в 762 с
+const LAND = (() => {
+  const C0 = new THREE.Vector3(0, -8.588e6, 0);
+  const M0 = moonCenter(C0);
+  const [rk, ik, lk] = cam3(APPROACH_START);
+  const P0 = new THREE.Vector3(Math.sin(lk * DEG) * Math.cos(ik * DEG), Math.cos(lk * DEG) * Math.cos(ik * DEG), -Math.sin(ik * DEG)).multiplyScalar(rk * 1000).add(C0);
+  const e = C0.clone().sub(M0).normalize(); // на Землю
+  const d0 = P0.clone().sub(M0).normalize();
+  // Солнце в космосе неподвижно (см. story.py SUN_FREEZE)
+  const sunW = skyDir(-0.3 * DEG, ((solarHours(520) - 12) / 24) * Math.PI * 2, LAT * DEG);
+  // «верх» места посадки — между направлением на Землю и осью колец (тогда кольцо и экватор Земли лежат
+  // поперёк неба), с поворотом к Солнцу, пока Солнце не поднимется хотя бы на 25°
+  // «верх» места посадки — между направлением на Землю и осью колец: кольцо и экватор Земли лежат поперёк неба
+  const N = new THREE.Vector3(0, 0, -1);
+  const n = e.clone().multiplyScalar(Math.cos(55 * DEG)).add(N.clone().multiplyScalar(Math.sin(55 * DEG))).normalize();
+  // Солнце в космосе: на 23° над плоскостью колец (как в солнцестояние), сбоку от Земли — Земля освещена
+  // наполовину с небольшим, над местом посадки Солнце низко (длинные тени)
+  const tt = N.clone().cross(e).normalize();
+  const dl = 23.4 * DEG;
+  const cf = 0.1 / Math.cos(dl);
+  const sunSpace = e.clone().negate().multiplyScalar(cf).add(tt.multiplyScalar(Math.sqrt(1 - cf * cf))).multiplyScalar(Math.cos(dl)).add(N.clone().multiplyScalar(Math.sin(dl))).normalize();
+  // старая Луна: с места посадки — левее Земли и ниже, над горизонтом (направление от центра Земли почти то же)
+  const fwd = e.clone().sub(n.clone().multiplyScalar(e.dot(n))).normalize();
+  const right = fwd.clone().cross(n);
+  // с той стороны от Земли, где Луна освещена почти полностью (Солнце за спиной у смотрящего на неё)
+  const om = (sg) => fwd.clone().multiplyScalar(Math.cos(62 * DEG) * Math.cos(16 * DEG)).add(right.clone().multiplyScalar(sg * Math.sin(62 * DEG) * Math.cos(16 * DEG))).add(n.clone().multiplyScalar(Math.sin(16 * DEG))).normalize();
+  const oldMoon = om(1).dot(sunSpace) < om(-1).dot(sunSpace) ? om(1) : om(-1);
+  return { n, d0, e, sunW, sunSpace, oldMoon };
+})();
+const moons = buildMoons(LAND.n);
+const surface = buildMoonSurface(MOON.R);
+surface.group.quaternion.setFromUnitVectors(new THREE.Vector3(0, 1, 0), LAND.n);
+const roche = buildRoche(1.9e7);
+scene.add(sky.group, pivot, planet.group, debris.group, moons.group, surface.group, roche.group);
 
 // взгляд в космосе: направление на цель и «верх» (от Земли, а когда смотрим на Землю — на север)
 const NORTH = new THREE.Vector3(0, 0, -1);
 const _m = new THREE.Matrix4();
+let t_now = 0;
 function lookTarget(name, eye, C, lonRad) {
   switch (name) {
     case 'planet': return C.clone();
     case 'ring': return new THREE.Vector3(Math.sin(lonRad), Math.cos(lonRad), 0).multiplyScalar(1.5e7).add(C);
-    case 'moon': return moonCenter(C);
-    case 'oldmoon': return planet.moon.getWorldPosition(new THREE.Vector3());
+    case 'moon': return moonCenter(C, new THREE.Vector3(), moonA(t_now));
+    case 'moonlets': return moonCenter(C, new THREE.Vector3(), moonA(t_now)).multiplyScalar(0.7).add(C.clone().multiplyScalar(0.3));
+    case 'roche': return new THREE.Vector3(Math.sin(lonRad + 0.5), Math.cos(lonRad + 0.5), 0).multiplyScalar(1.9e7).add(C);
+    case 'oldmoon': return LAND.oldMoon.clone().multiplyScalar(3.844e8).add(C);
     case 'out': return eye.clone().sub(C).add(eye);
     case 'along': default: return eye.clone().add(new THREE.Vector3(Math.cos(lonRad), -Math.sin(lonRad), 0).multiplyScalar(1e6));
   }
@@ -66,6 +102,42 @@ function lookQuat(eye, target, C, yawDeg, pitchDeg) {
   q.multiply(new THREE.Quaternion().setFromEuler(new THREE.Euler(pitchDeg * DEG, yawDeg * DEG, 0, 'YXZ')));
   return q;
 }
+// на луне: тело стоит (верх — от центра луны), взгляд на цель — поворотом головы и корпуса
+function moonLookAngles(name, eye, C, M) {
+  const up = LAND.n;
+  const fwd = LAND.e.clone().sub(up.clone().multiplyScalar(LAND.e.dot(up))).normalize(); // к Земле по горизонту
+  const right = fwd.clone().cross(up);
+  let dir;
+  switch (name) {
+    case 'earth': dir = C.clone().sub(eye).normalize(); break;
+    case 'ring': dir = new THREE.Vector3(0.0, 0.0, 0.0).add(C).add(new THREE.Vector3(0, 1.3e7, 0)).sub(eye).normalize(); break;
+    case 'oldmoon': dir = LAND.oldMoon.clone().multiplyScalar(3.844e8).add(C).sub(eye).normalize(); break;
+    case 'ground': dir = fwd.clone().multiplyScalar(0.8).add(up.clone().multiplyScalar(-0.6)).normalize(); break;
+    default: dir = fwd.clone();
+  }
+  const yaw = Math.atan2(-dir.dot(right), dir.dot(fwd)) / DEG; // + влево
+  const pitch = Math.asin(clamp(dir.dot(up), -1, 1)) / DEG;
+  return { yaw, pitch, fwd, up, right };
+}
+function moonLook(t, eye, C, M) {
+  let i = LOOK_MOON.findIndex(([a]) => t < a);
+  if (i === -1) i = LOOK_MOON.length;
+  const cur = LOOK_MOON[Math.max(0, i - 1)];
+  const a0 = moonLookAngles(cur[2], eye, C, M);
+  let yaw = a0.yaw + cur[3];
+  let pitch = a0.pitch + cur[4];
+  if (i > 0 && i < LOOK_MOON.length && t > cur[1]) {
+    const nxt = LOOK_MOON[i];
+    const a1 = moonLookAngles(nxt[2], eye, C, M);
+    const u = smooth((t - cur[1]) / (nxt[0] - cur[1]));
+    let dy = a1.yaw + nxt[3] - yaw;
+    dy = ((dy + 540) % 360) - 180;
+    yaw += dy * u;
+    pitch += (a1.pitch + nxt[4] - pitch) * u;
+  }
+  return { yaw, pitch, frame: a0 };
+}
+
 function spaceQuat(t, eye, C, lonRad) {
   if (!LOOK3.length) return null;
   let i = LOOK3.findIndex(([a]) => t < a);
@@ -160,13 +232,13 @@ function jumpY(t) {
 const GRAINS = 1400;
 const grainGeo = new THREE.BufferGeometry();
 grainGeo.setAttribute('position', new THREE.BufferAttribute(new Float32Array(GRAINS * 3), 3));
-const grainMat = new THREE.PointsMaterial({ color: 0xffffff, size: 0.035, transparent: true, opacity: 0, depthWrite: false });
+const grainMat = new THREE.PointsMaterial({ color: 0xffffff, size: 0.07, transparent: true, opacity: 0, depthWrite: false });
 const grains = new THREE.Points(grainGeo, grainMat);
 grains.frustumCulled = false;
 local.add(grains);
 const GR = (() => {
   const r = rng(404);
-  return Array.from({ length: GRAINS }, () => ({ a: r() * Math.PI * 2, d: 0.6 + Math.sqrt(r()) * 24, ph: r(), sp: 0.5 + r(), wob: r() * 6 }));
+  return Array.from({ length: GRAINS }, () => ({ a: r() * Math.PI * 2, d: 0.4 + r() ** 1.5 * 20, ph: r(), sp: 0.5 + r(), wob: r() * 6 }));
 })();
 
 const drift = (t, a, b, c) => Math.sin(t * a) * 0.6 + Math.sin(t * b + 1.3) * 0.3 + Math.sin(t * c + 2.1) * 0.1;
@@ -184,6 +256,7 @@ function skyColors(sy) {
   return { hor, zen, day, twi, night };
 }
 
+const TAU500 = tauAt(500);
 const MOON0 = 62 * DEG; // элонгация Луны в начале: молодая Луна вечером; растёт на 12,19° в сутки (по времени, не по вращению)
 
 window.renderAt = (t) => {
@@ -192,8 +265,9 @@ window.renderAt = (t) => {
   const k = timelapse(t);
   const solar = solarHours(t);
   const Hsun = ((solar - 12) / 24) * Math.PI * 2;
-  const sidereal = Hsun + (tau / 24 / 365.25) * Math.PI * 2 + 2.1;
-  const elong = MOON0 + (tau / 24) * 12.19 * DEG;
+  const tauSky = Math.min(tau, TAU500); // в космосе небо не вращается (при годах в секунду звёзды бы мелькали)
+  const sidereal = Hsun + (tauSky / 24 / 365.25) * Math.PI * 2 + 2.1;
+  const elong = MOON0 + (tauSky / 24) * 12.19 * DEG;
   const rate = (k / P) * Math.PI * 2; // рад неба за секунду ролика
 
   // герой: корпус, голова (сплайн + пружина + живое покачивание), позы рук
@@ -201,6 +275,13 @@ window.renderAt = (t) => {
   const sh = shakeAt(t);
   const jig = (f, ph) => Math.sin(t * f + ph) * 0.6 + Math.sin(t * f * 1.73 + ph * 2.1) * 0.4;
   body.root.position.set(sh * 0.05 * jig(17, 0.3), sh * 0.03 * jig(23, 1.1) + jumpY(t) + heroAlt(t), sh * 0.05 * jig(19, 2.2));
+  if (t > 512 && t < CAM3_START) {
+    // столкновения в кольце понемногу выводят героя из его плоскости (к северу)
+    const inc = 1.5 * DEG * smooth((t - 512) / 28);
+    const rr = radiusAt(t) * 1000 + heroAlt(t);
+    body.root.position.y = rr * Math.cos(inc) - radiusAt(t) * 1000;
+    body.root.position.z = -rr * Math.sin(inc);
+  }
   body.root.rotation.set(0, bodyYaw(t) * DEG, sh * 0.02 * jig(11, 0.7));
   const yaw = headYaw(t);
   const yawVel = (headYaw(t + 0.02) - headYaw(t - 0.02)) / 0.04;
@@ -209,15 +290,43 @@ window.renderAt = (t) => {
   const roll = clamp(-yawVel * 0.035, -2.5, 2.5) + 0.3 * drift(t, 0.31, 0.83, 1.7);
   body.neck.rotation.set((pitch + 0.5 * drift(t, 0.43, 1.07, 2.3) + sh * 1.6 * jig(31, 0.5)) * DEG, (yaw + 0.6 * drift(t, 0.37, 0.91, 1.9) + sh * 1.2 * jig(27, 1.9)) * DEG, (roll + sh * 1.4 * jig(29, 2.7)) * DEG);
   body.neck.position.y = 1.52 + 0.006 * breath;
-  // космос: герой на орбите по ключам cam3, взгляд — на цель (плавно сменяет управление головой)
+  // в невесомости корпус поворачивается вслед за взглядом (как у парашютиста): смотришь вниз — лежишь
+  // на животе, и собственная куртка не закрывает Землю; шея поворачивается лишь немного
+  const wFloat = smooth((t - FLOAT_AT) / 2.5);
+  if (wFloat > 0) {
+    const ny = body.neck.rotation.y;
+    const nx = body.neck.rotation.x;
+    const qDes = body.root.quaternion.clone().multiply(body.neck.quaternion);
+    const lim = (v, a, b) => v + (clamp(v, a, b) - v) * wFloat;
+    body.neck.rotation.set(lim(nx, -28 * DEG, 18 * DEG), lim(ny, -45 * DEG, 45 * DEG), body.neck.rotation.z);
+    const qRoot = qDes.multiply(body.neck.quaternion.clone().invert());
+    body.root.quaternion.slerp(qRoot, wFloat);
+  }
+  // космос: герой на орбите по ключам cam3, взгляд — на цель (плавно сменяет управление головой). У луны все
+  // координаты сдвигаются так, чтобы место посадки было в начале (точность float32 рядом с камерой)
+  t_now = t;
   const Rm0 = radiusAt(t) * 1000;
-  const C = new THREE.Vector3(0, -Rm0, 0);
+  const C00 = new THREE.Vector3(0, -Rm0, 0);
+  const M00 = moonCenter(C00, new THREE.Vector3(), moonA(t));
+  const LANDP = M00.clone().add(LAND.n.clone().multiplyScalar(MOON.R));
+  const O = t >= APPROACH_START ? LANDP : new THREE.Vector3();
+  const C = C00.clone().sub(O);
+  const Mc = M00.clone().sub(O);
   let lonRad = 0;
   if (t >= CAM3_START) {
     const [rk, ik, lk] = cam3(t);
     lonRad = lk * DEG;
     const ir = ik * DEG;
     body.root.position.set(Math.sin(lonRad) * Math.cos(ir), Math.cos(lonRad) * Math.cos(ir), -Math.sin(ir)).multiplyScalar(rk * 1000).add(C);
+  }
+  if (t >= APPROACH_START) {
+    // подлёт: от точки на орбите — к месту посадки, по высоте над поверхностью луны
+    const [rk, ik, lk] = cam3(APPROACH_START);
+    const P0 = new THREE.Vector3(Math.sin(lk * DEG) * Math.cos(ik * DEG), Math.cos(lk * DEG) * Math.cos(ik * DEG), -Math.sin(ik * DEG)).multiplyScalar(rk * 1000).add(C);
+    const h0 = P0.distanceTo(Mc) - MOON.R;
+    const sc = lerp(h0 / approachH(APPROACH_START), 1, smooth((t - APPROACH_START) / 22));
+    const dir = LAND.d0.clone().lerp(LAND.n, smooth((t - APPROACH_START) / 30)).normalize();
+    body.root.position.copy(dir.multiplyScalar(MOON.R + approachH(t) * sc)).add(Mc);
   }
   const wSpace = smooth((t - (CAM3_START - 2)) / 8);
   if (wSpace > 0) {
@@ -227,20 +336,37 @@ window.renderAt = (t) => {
     const eye0 = body.root.position.clone().add(new THREE.Vector3(0, 1.6, 0));
     const qSpace = spaceQuat(t, eye0, C, lonRad);
     if (qSpace) {
-      const qCam = qCamSummit.slerp(qSpace, wSpace);
-      body.root.quaternion.copy(qCam.multiply(qNeck.invert()));
+      let qCam = qCamSummit.slerp(qSpace, wSpace);
+      // посадка: тело встаёт на ноги (верх — от центра луны), смотрим по ключам LOOK_MOON
+      const wLand = smooth((t - (LAND_AT - 5)) / 5);
+      if (wLand > 0) {
+        const eye1 = body.root.position.clone().add(LAND.n.clone().multiplyScalar(1.6));
+        const lk = moonLook(t, eye1, C, Mc);
+        const f = lk.frame;
+        const qBody = new THREE.Quaternion().setFromRotationMatrix(new THREE.Matrix4().makeBasis(f.right, f.up, f.fwd.clone().negate()));
+        const qN = new THREE.Quaternion().setFromEuler(new THREE.Euler((lk.pitch + 0.4 * Math.sin(t * 0.5)) * DEG, lk.yaw * DEG, 0, 'YXZ'));
+        qCam = qCam.slerp(qBody.clone().multiply(qN), wLand);
+        if (wLand >= 1) {
+          body.root.quaternion.copy(qBody);
+          body.neck.quaternion.copy(qN);
+        } else {
+          body.root.quaternion.copy(qCam.clone().multiply(qNeck.clone().invert()));
+        }
+      } else {
+        body.root.quaternion.copy(qCam.multiply(qNeck.invert()));
+      }
     }
   }
-  poseBody(body, t, { balance: balance(t), check: check(t), shield: shield(t), float: floatW(t), tread: 0 });
-  const weight = weightAt(t);
+  poseBody(body, t, { balance: balance(t), check: check(t), shield: shield(t), float: floatW(t) * (1 - smooth((t - LAND_AT + 1.5) / 2.5)), tread: 0 });
+  const weight = t >= LAND_AT - 0.3 ? 7.8 * smooth((t - LAND_AT + 0.3) / 0.6) : weightAt(t);
   drawGauge(body, weight);
   camera.updateMatrixWorld(true);
   const eye = camera.getWorldPosition(new THREE.Vector3());
 
   // после отрыва: поверхность уезжает на восток, воздух под героем редеет
   const Rm = radiusAt(t) * 1000;
-  const hAlt = t >= CAM3_START ? body.root.position.distanceTo(new THREE.Vector3(0, -Rm, 0)) - Rm : heroAlt(t);
-  const air = 1 - smooth((hAlt - 25000) / 90000);
+  const hAlt = t >= CAM3_START ? body.root.position.distanceTo(C) - Rm : heroAlt(t);
+  const air = 1 - smooth((hAlt - 12000) / 50000);
   pivot.position.set(0, -Rm, 0);
   local.position.set(0, Rm, 0);
   pivot.rotation.z = -groundShift(t);
@@ -250,13 +376,15 @@ window.renderAt = (t) => {
   }
 
   // небо и свет
-  const sk = updateSky(sky, eye, Hsun, sidereal, elong, LAT * DEG, rate * air * (t > 488 ? 1 - smooth((t - 488.2) / 12) : 1), air);
+  // в космосе Солнце плавно переходит в положение, выбранное для сцен у кольца и на луне
+  const sunOv = t > 505 ? LAND.sunW.clone().lerp(LAND.sunSpace, smooth((t - 505) / 35)).normalize() : null;
+  const sk = updateSky(sky, eye, Hsun, sidereal, elong, LAT * DEG, rate * air * (t > 488 ? 1 - smooth((t - 488.2) / 12) : 1), air, sunOv);
   const sy = sk.sun.y;
   const col = skyColors(sy);
   const alt = Math.asin(clamp(sy, -1, 1));
   sun.position.copy(sk.sun).multiplyScalar(100).add(body.root.position);
   sun.target.position.copy(body.root.position);
-  sun.intensity = 2.8 * smooth((alt + 0.01) / 0.07);
+  sun.intensity = t > 505 ? 3.3 : 2.8 * smooth((alt + 0.01) / 0.07); // в космосе высота над «горизонтом вершины» не важна
   sun.color.setRGB(1, 0.55, 0.32).lerp(new THREE.Color(1, 0.97, 0.92), smooth(alt / 0.4));
   // свет неба: днём голубой, в сумерках — сиреневый от светлого горизонта (снег в сумерках светлее неба над ним)
   hemi.color.copy(col.zen).lerp(new THREE.Color(0.75, 0.82, 0.95), 0.35 * col.day).lerp(new THREE.Color(0.5, 0.47, 0.64), col.twi * (1 - col.day) * 0.8).multiplyScalar(1.2);
@@ -274,7 +402,7 @@ window.renderAt = (t) => {
   hemi.intensity *= 0.15 + 0.85 * air;
   renderer.toneMappingExposure = (0.92 + 0.63 * col.night + 0.2 * col.twi) * air + 1.0 * (1 - air);
 
-  updateSummit(summit, t, { sun: sk.sun, sunColor: sun.color.clone().multiplyScalar(smooth((alt + 0.02) / 0.06)), horizon: col.hor, zenith: col.zen, tau, seaLevel: seaAt(t), bands: smooth((t - 262) / 60), cover: cloudAt(t) + 0.08 * Math.sin(tau * 0.21) });
+  updateSummit(summit, t, { sun: sk.sun, sunColor: sun.color.clone().multiplyScalar(smooth((alt + 0.02) / 0.06)), horizon: col.hor, zenith: col.zen, tau, seaLevel: seaAt(t), bands: smooth((t - 240) / 35), cover: cloudAt(t) + 0.08 * Math.sin(tau * 0.21) });
 
   // крупа: поднимается тем быстрее и гуще, чем меньше вес
   const lift = smooth((32 - weight) / 26);
@@ -290,7 +418,7 @@ window.renderAt = (t) => {
       arr[i * 3 + 2] = Math.sin(g.a) * g.d + 0.15 * Math.cos(t * 0.7 + g.wob);
     });
     grainGeo.attributes.position.needsUpdate = true;
-    grainMat.opacity = 0.85 * lift;
+    grainMat.opacity = Math.min(1, 1.2 * lift);
     grainMat.color.setRGB(1, 1, 1).multiplyScalar(0.35 + 0.65 * (col.day + 0.4 * col.twi));
   }
 
@@ -302,7 +430,7 @@ window.renderAt = (t) => {
   puffs.forEach((p, i) => {
     const age = (((t - i * BREATH) % (BREATH * 3)) + BREATH * 3) % (BREATH * 3) / BREATH; // 0…3 — какой по счёту выдох
     const a = age < 1.4 ? age / 1.4 : 9;
-    const show = a <= 1;
+    const show = a <= 1 && t < FLOAT_AT + 1.5; // в невесомости облачко пара перед глазами мешает
     p.visible = show;
     if (show) {
       p.position.set(0.02 * Math.sin(i * 2.1), -0.12 + 0.08 * a, -0.32 - 0.45 * a);
@@ -312,22 +440,57 @@ window.renderAt = (t) => {
   });
   void phase;
 
-  updateHud(t, { day: P, weight, speed: speedAt(t), k, sea: seaAt(t), alt: hAlt / 1000, place: t > 479 ? 'IN ORBIT' : 'CHIMBORAZO · ECUADOR' });
+  // разглядываем старую Луну: взгляд «сосредотачивается» (поле зрения сужается)
+  const focus = (smooth((t - 827.2) / 1.6) * (1 - smooth((t - 833.4) / 1.6))) + (smooth((t - 879) / 1.6) * (1 - smooth((t - 889) / 1.6)));
+  const fov = 76 - 34 * focus;
+  if (Math.abs(camera.fov - fov) > 1e-3) {
+    camera.fov = fov;
+    camera.updateProjectionMatrix();
+  }
+  let row2 = null;
+  if (t >= LAND_AT) row2 = ['EARTH DISTANCE', `${Math.round(moonA(t) / 1000).toLocaleString('en-US')} km`];
+  else if (t >= APPROACH_START + 4) {
+    const hm = body.root.position.distanceTo(Mc) - MOON.R;
+    row2 = ['TO THE SURFACE', hm > 2000 ? `${Math.round(hm / 1000).toLocaleString('en-US')} km` : `${Math.max(0, Math.round(hm)).toLocaleString('en-US')} m`];
+  }
+  const place = t >= LAND_AT - 1 ? 'NEW MOON' : t > 479 ? 'IN ORBIT' : 'CHIMBORAZO · ECUADOR';
+  updateHud(t, { day: P, weight, speed: speedAt(t), k, sea: seaAt(t), alt: hAlt / 1000, place, row2 });
   // Земля целиком (после отрыва от вершины; для проверки — всегда, если задана свободная камера)
   const R = Rm;
   const a = R - 3000 * (1 - smooth((hAlt - 3e5) / 6e5)); // пока внизу подробная местность, шар чуть ниже её
-  const ringGrow = smooth((t - 508) / 30);
+  // кольцо: растёт до предела Роша, потом расползается за него и рвётся на комки, внутреннее редеет; в конце исчезает
+  const rg = RING;
+  const ringGrow = smooth((t - rg.grow[0]) / (rg.grow[1] - rg.grow[0]));
+  const ringSpread = smooth((t - rg.spread[0]) / (rg.spread[1] - rg.spread[0]));
+  const ringFade = smooth((t - rg.fade[0]) / (rg.fade[1] - rg.fade[0]));
+  const ringGone = smooth((t - rg.gone[0]) / (rg.gone[1] - rg.gone[0]));
+  const roR = 1.9e7;
   updatePlanet(planet, {
-    visible: !!window.__cam || t > FLOAT_AT, R, a, c: Math.min(6.357e6, 6.357e6 - 0.22 * (R - 6.378e6)), cusp: Math.max(0, (R - 7.6e6) / 1.1e6) * 0.06,
+    visible: !!window.__cam || t > FLOAT_AT, center: C, R, a, c: Math.min(6.357e6, 6.357e6 - 0.22 * (R - 6.378e6)), cusp: Math.max(0, (R - 7.6e6) / 1.1e6) * 0.06,
     spin: -11.2 * DEG + groundShift(t), sun: sk.sun, time: t, bands: smooth((t - 240) / 200), cloud: 0.5,
-    ringIn: R * 1.004, ringOut: R * (1.03 + 1.2 * ringGrow), ringDense: window.__cam?.ring ?? 0.85 * ringGrow,
-    clump: 0, roche: 1.9e7, moonDir: sk.moon,
+    ringIn: R * 1.004, ringOut: R * 1.03 + (roR - R * 1.03) * ringGrow + 0.9e7 * ringSpread * (1 - ringFade * 0.6),
+    ringDense: window.__cam?.ring ?? 0.85 * ringGrow * (1 - 0.55 * ringFade) * (1 - ringGone),
+    clump: ringSpread, roche: roR, moonDir: t > 505 ? LAND.oldMoon : sk.moon, atmo: 1,
   });
+  roche.group.position.copy(C);
+  const rocheOn = smooth((t - 617) / 2) * (1 - smooth((t - 661) / 3));
+  roche.group.visible = rocheOn > 0.01;
+  roche.line.material.opacity = 0.75 * rocheOn;
+  roche.label.material.opacity = rocheOn;
+  if (roche.group.visible) {
+    const lp = new THREE.Vector3(Math.sin(lonRad + 0.62), Math.cos(lonRad + 0.62), 0).multiplyScalar(roR);
+    roche.label.position.copy(lp).add(new THREE.Vector3(0, 0, -6e5));
+    const dl = roche.label.getWorldPosition(new THREE.Vector3()).distanceTo(eye);
+    roche.label.scale.set(dl * 0.09, dl * 0.017, 1);
+  }
   // местность вершины растворяется, когда герой выше 300–900 км
   const fadeLocal = 1 - smooth((hAlt - 3e5) / 6e5);
   local.visible = fadeLocal > 0.01;
   updateDebris(debris, t, eye, smooth((t - 466) / 10) * (1 - smooth((t - 600) / 40)) + 0.8 * smooth((t - 670) / 20) * (1 - smooth((t - 770) / 15)), 0.3 + 0.7 * smooth((sk.sun.y + 0.1) / 0.2));
-  updateMoons(moons, t, new THREE.Vector3(0, -Rm, 0), smooth((t - 700) / 60), smooth((t - 650) / 12));
+  updateMoons(moons, t, C, smooth((t - 698) / 60), smooth((t - 650) / 12) * (1 - smooth((t - 770) / 10)), Mc);
+  // поверхность новой луны рядом с местом посадки
+  surface.group.position.copy(LANDP).sub(O);
+  surface.group.visible = t >= APPROACH_START && approachH(t) < 6e4;
   if (window.__cam) {
     const c = window.__cam;
     debugCam.fov = c.fov || 40;

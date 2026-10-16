@@ -8,7 +8,7 @@ import * as THREE from 'three';
 import { rng } from '../pov/util.js';
 
 const NOISE = `
-float h3(vec3 p) { p = fract(p * 0.3183099 + 0.1); p *= 17.0; return fract(p.x * p.y * p.z * (p.x + p.y + p.z)); }
+float h3(vec3 p) { return fract(sin(dot(p, vec3(127.1, 311.7, 74.7))) * 43758.5453); }
 float n3(vec3 x) {
   vec3 i = floor(x); vec3 f = fract(x); f = f * f * (3.0 - 2.0 * f);
   return mix(mix(mix(h3(i), h3(i + vec3(1,0,0)), f.x), mix(h3(i + vec3(0,1,0)), h3(i + vec3(1,1,0)), f.x), f.y),
@@ -74,18 +74,20 @@ void main() {
   vec3 ocean = mix(vec3(0.02, 0.07, 0.17), vec3(0.03, 0.12, 0.22), smoothstep(0.9, 0.0, alat));
   vec3 col = mix(ocean, cl, smoothstep(0.35, 0.65, land));
   col = mix(col, vec3(0.86, 0.9, 0.95), clamp(ice, 0.0, 1.0));
-  // облака: полосы вдоль широт, течения в соседних полосах — в разные стороны; чем быстрее вращение, тем уже полосы
-  float bandN = mix(5.0, 16.0, uBands);
+  // облака: полосы вдоль широт (течения в соседних полосах — в разные стороны), мягкие, с вихрями на границах;
+  // чем быстрее вращение, тем сильнее вытянуты вдоль широт
+  float bandN = mix(3.0, 7.0, uBands);
   float jet = sin(lat * bandN * 2.0);
-  float shift = uTime * 0.05 * jet * uBands;
-  vec3 cp = vec3(cos(lon + shift) * cos(lat), sin(lat) * mix(1.0, 3.5, uBands), sin(lon + shift) * cos(lat));
-  vec3 stretch = vec3(mix(1.0, 0.25, uBands), 1.0, mix(1.0, 0.25, uBands));
-  float cn = fbm3(cp * stretch * 6.0 + vec3(0.0, 0.0, uTime * 0.01));
-  float wob = fbm3(cp * vec3(0.5, 2.0, 0.5) * 3.0 + 4.0);
-  float bands = 0.5 + 0.5 * sin(lat * bandN * 2.0 + (wob - 0.5) * 5.0);
-  float cloud = smoothstep(0.5 - 0.2 * uCloud, 0.82, mix(cn, cn * 0.75 + bands * 0.3, uBands));
-  vec3 cloudCol = mix(vec3(0.95, 0.95, 0.96), mix(vec3(0.92, 0.86, 0.76), vec3(0.98, 0.98, 1.0), bands), uBands * 0.7);
-  col = mix(col, cloudCol, cloud * 0.92);
+  float shift = 0.35 * jet * uBands * sin((uTime - 480.0) * 0.012); // соседние полосы смещаются друг относительно друга (ограниченно)
+  vec3 cp = vec3(cos(lon + shift) * cos(lat), sin(lat), sin(lon + shift) * cos(lat));
+  vec3 stretch = vec3(mix(1.0, 0.6, uBands), mix(1.0, 1.25, uBands), mix(1.0, 0.6, uBands));
+  float cn = fbm3(cp * stretch * 2.4 + vec3(0.0, 0.0, uTime * 0.004));
+  float swirl = fbm3(cp * 4.0 + 11.0);
+  float bands = 0.5 + 0.5 * sin(lat * bandN * 2.0 + (swirl - 0.5) * 3.0);
+  float cover = mix(cn, cn * 0.6 + bands * 0.45, uBands);
+  float cloud = smoothstep(0.52 - 0.15 * uCloud, 0.78, cover);
+  vec3 cloudCol = mix(vec3(0.95, 0.95, 0.96), mix(vec3(0.9, 0.84, 0.74), vec3(0.97, 0.97, 0.99), bands), uBands * 0.6);
+  col = mix(col, cloudCol, cloud * 0.9);
   // свет: Ламберт с мягким терминатором; океан — блик
   vec3 N = normalize(vN);
   vec3 L = normalize(uSun);
@@ -165,8 +167,10 @@ void main() {
   float r = length(vL);
   if (r < uIn || r > uOut) discard;
   float x = (r - uIn) / (uOut - uIn);
-  float n = n3(vec3(r / 700000.0, 0.0, 0.0)) * 0.55 + n3(vec3(r / 220000.0, 3.0, 0.0)) * 0.3 + n3(vec3(r / 70000.0, 7.0, 0.0)) * 0.15;
-  float d = uDense * (0.25 + 0.95 * n * n * 1.4) * smoothstep(0.0, 0.08, x) * (1.0 - smoothstep(0.7, 1.0, x));
+  // несколько широких колец со щелями между ними, внутри — мягкая неоднородность
+  float n = n3(vec3(r / 1600000.0, 0.0, 0.0)) * 0.6 + n3(vec3(r / 520000.0, 3.0, 0.0)) * 0.3 + n3(vec3(r / 180000.0, 7.0, 0.0)) * 0.1;
+  float gaps = smoothstep(0.18, 0.32, n3(vec3(r / 900000.0, 13.0, 0.0)));
+  float d = uDense * (0.3 + 0.7 * n) * (0.5 + 0.5 * gaps) * smoothstep(0.0, 0.08, x) * (1.0 - smoothstep(0.75, 1.0, x)) * 0.8;
   // за пределом Роша вещество слипается в комки: кольцо там рвётся на сгустки
   float ang = atan(vL.y, vL.x);
   float beyond = smoothstep(uRoche * 0.97, uRoche * 1.05, r);
@@ -178,7 +182,7 @@ void main() {
   float along = dot(p, L);
   vec3 perp = p - along * L;
   float shadow = along < 0.0 ? smoothstep(uA * 0.98, uA * 1.02, length(perp)) : 1.0;
-  vec3 col = mix(vec3(0.78, 0.72, 0.64), vec3(0.93, 0.95, 0.98), n) * (0.08 + 0.95 * shadow);
+  vec3 col = mix(vec3(0.72, 0.66, 0.58), vec3(0.9, 0.9, 0.92), n) * (0.06 + 0.85 * shadow);
   // кольцо светится сильнее, если смотреть против Солнца (рассеяние вперёд на мелких частицах)
   vec3 V = normalize(vW - cameraPosition);
   col *= 1.0 + 1.2 * pow(max(0.0, dot(V, L)), 6.0);
@@ -271,7 +275,8 @@ export function buildPlanet() {
 export function updatePlanet(p, st) {
   p.group.visible = st.visible;
   if (!st.visible) return;
-  p.group.position.set(0, -st.R, 0);
+  if (st.center) p.group.position.copy(st.center);
+  else p.group.position.set(0, -st.R, 0);
   p.spin.rotation.y = st.spin;
   p.gu.uA.value = st.a;
   p.gu.uC.value = st.c;

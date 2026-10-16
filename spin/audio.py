@@ -220,6 +220,33 @@ CHORDS += cycle(120.0, 168.5, [[33, 45, 52, 57, 60, 64], [36, 48, 55, 60, 62, 67
 # напряжение перед землетрясением и сами толчки: низкие кластеры
 CHORDS += [(168.0, 180.5, [28, 40, 47, 52, 53, 59])]
 CHORDS += cycle(180.0, 240.5, [[28, 40, 47, 52, 55, 59], [29, 41, 48, 53, 56, 60], [31, 43, 50, 55, 58, 62], [26, 38, 45, 50, 53, 57]], 7.0)
+# легче: вес уходит
+CHORDS += cycle(240.0, 300.5, [[45, 57, 64, 68, 71, 76], [42, 54, 61, 66, 69, 73], [38, 50, 57, 62, 66, 69], [40, 52, 59, 64, 68, 71]], 7.0)
+# «запомните это число»: загадка
+CHORDS += cycle(300.0, 360.5, [[37, 49, 56, 61, 64, 68], [42, 54, 61, 64, 66, 69], [35, 47, 54, 59, 63, 66], [40, 52, 59, 62, 64, 71]], 7.0)
+# прыжки, напряжение растёт
+CHORDS += cycle(360.0, 420.5, [[38, 50, 57, 62, 65, 69], [41, 53, 60, 65, 69, 72], [36, 48, 55, 60, 64, 67], [43, 55, 62, 65, 67, 74]], 6.0)
+CHORDS += cycle(420.0, 452.5, [[40, 52, 59, 64, 67, 71], [36, 48, 55, 60, 64, 67], [38, 50, 57, 62, 66, 69], [43, 50, 55, 59, 62, 67]], 5.0)
+CHORDS += [(452.0, 462.5, [52, 59, 64, 66, 71, 76]), (461.5, 481.0, [28, 40, 47, 52, 59, 64, 68, 71, 76])]
+# подъём: простор
+CHORDS += cycle(480.0, 540.5, [[33, 45, 52, 57, 61, 64, 69], [38, 50, 57, 61, 64, 66, 73], [35, 47, 54, 59, 62, 66, 71], [40, 52, 59, 64, 66, 68, 71]], 8.0)
+# кольцо: лидийское мерцание
+CHORDS += cycle(540.0, 600.5, [[36, 48, 55, 59, 62, 66, 71], [38, 50, 57, 62, 66, 69, 74], [31, 43, 50, 55, 59, 62, 66], [33, 45, 52, 57, 60, 64, 71]], 9.0)
+# предел Роша: загадка
+CHORDS += cycle(600.0, 660.5, [[32, 44, 51, 56, 59, 63], [37, 49, 56, 61, 63, 68], [30, 42, 49, 54, 58, 61], [35, 47, 54, 59, 62, 66]], 9.0)
+# комки растут
+CHORDS += cycle(660.0, 720.5, [[40, 52, 59, 64, 67, 71], [43, 55, 62, 67, 71, 74], [38, 50, 57, 62, 65, 69], [45, 52, 57, 61, 64, 69]], 7.0)
+# рождение луны
+CHORDS += cycle(720.0, 780.5, [[41, 53, 60, 65, 69, 72], [45, 57, 64, 69, 72, 76], [43, 55, 62, 67, 71, 74], [38, 50, 57, 62, 65, 69]], 8.0)
+CHORDS += [(780.0, 804.0, [36, 48, 55, 62, 67])]
+# на луне
+CHORDS += cycle(803.0, 840.5, [[33, 45, 52, 57, 64, 69], [29, 41, 48, 53, 60, 65], [31, 43, 50, 55, 62, 67], [36, 48, 55, 60, 64, 67]], 9.0)
+# разгадка
+CHORDS += cycle(840.0, 893.5, [[38, 50, 57, 62, 65, 69], [34, 46, 53, 58, 62, 65], [41, 53, 60, 65, 69, 72], [36, 48, 55, 60, 64, 67]], 7.5)
+CHORDS += [(893.0, 901.0, [43, 50, 55, 60, 62, 67]), (900.0, 909.0, [40, 52, 59, 64, 68, 71, 76])]
+# финал
+CHORDS += cycle(908.0, 956.5, [[40, 52, 59, 64, 68, 71], [37, 49, 56, 61, 64, 68], [33, 45, 52, 57, 61, 64], [35, 47, 54, 59, 63, 66]], 8.0)
+CHORDS += [(956.0, 970.0, [28, 40, 47, 52, 56, 59, 64, 71])]
 # мотив рассвета: на каждом рассвете — восходящая фраза колокольчиков (дальше — короче, когда дни сжимаются)
 MOTIF = [(0.0, 76), (0.32, 79), (0.64, 83), (1.1, 81), (1.55, 78), (2.1, 76)]
 OPENING = [(1.6, 71), (2.6, 74), (3.5, 76), (5.2, 74), (6.6, 71), (8.4, 69), (9.4, 71), (11.4, 74), (12.4, 79), (13.6, 78), (15.4, 76)]
@@ -240,6 +267,10 @@ def bells_list():
     for s in SUNSETS:
         out.append((s, 71, 0.6))
         out.append((s + 0.5, 64, 0.6))
+    # разгадка: отметка на шкале открывается — мотив рассвета; в титрах — мотив начала ролика
+    for dt, n in MOTIF:
+        out.append((900.0 + dt, n, 1.1))
+    out += [(956.5 + t * 1.15, n, 0.9) for t, n in OPENING]
     return sorted(out)
 
 
@@ -281,6 +312,17 @@ def music(tt):
     return dry + reverb(pad[0] * 0.5 + pad[1] * 0.5 + bell * 1.7, IR_HALL, 0.6)
 
 
+# --- после отрыва: сколько воздуха вокруг (1 — у вершины, 0 — космос) ------------------------------------------------
+def air_at(tt):
+    keys = SC.get('hero_alt', [[1e9, 0]])
+    xs = np.array([k[0] for k in keys])
+    ys = np.log(np.array([k[1] for k in keys]) + 1)
+    alt = np.exp(np.interp(tt, xs, ys)) - 1
+    alt = np.where(tt <= SC.get('float_at', 1e9), 0, alt)
+    alt = np.where(tt >= xs[-1], 1e7, alt)
+    return 1 - smooth((alt - 12000) / 50000)
+
+
 # --- вершина: ветер, дыхание, снег --------------------------------------------------------------------------
 def wind(tt, r):
     n = len(tt)
@@ -299,7 +341,7 @@ def wind(tt, r):
     pan = 0.25 * np.sin(2 * np.pi * 0.031 * tt)
     left = (base * (0.6 - pan) + whistle * 0.25) * level
     right = (base2 * (0.6 + pan) + np.roll(whistle, 701) * 0.25) * level
-    return np.vstack([left, right])
+    return np.vstack([left, right]) * air_at(tt)
 
 
 def breathing(tt, r):
@@ -314,11 +356,12 @@ def breathing(tt, r):
         n = int(1.4 * SR)
         tl = np.arange(n) / SR
         ex = bp(br.standard_normal(n), 250, 1600) * np.sin(np.pi * np.clip(tl / 1.25, 0, 1)) ** 1.6
-        place(out, tt, ex * 0.05 * br.uniform(0.85, 1.1), t0 + 0.05)
+        hel = 1 + 0.6 * float(1 - air_at(np.array([t0]))[0])  # в космосе дыхание слышно ближе (шлем)
+        place(out, tt, ex * 0.05 * br.uniform(0.85, 1.1) * hel, t0 + 0.05)
         m = int(1.15 * SR)
         tm = np.arange(m) / SR
         inh = bp(br.standard_normal(m), 600, 3200) * np.sin(np.pi * np.clip(tm / 1.1, 0, 1)) ** 2.2
-        place(out, tt, inh * 0.03 * br.uniform(0.85, 1.1), t0 + 1.75)
+        place(out, tt, inh * 0.03 * br.uniform(0.85, 1.1) * hel, t0 + 1.75)
     return out
 
 
@@ -371,6 +414,7 @@ def hum(tt):
     S = spin_amount(tt)
     on = smooth((tt - 36) / 14)
     lvl = on * (0.02 + 0.08 * S)
+    lvl = lvl * (1 - 0.85 * smooth((tt - 495) / 40))  # в космосе гул вращения уходит на дальний план
     x = np.sin(ph) + 0.55 * np.sin(2 * ph + 0.3) + 0.3 * np.sin(3 * ph + 1.1) + 0.12 * np.sin(5 * ph + 0.4)
     beat = 1 + 0.25 * np.sin(2 * np.pi * 0.37 * tt)
     return np.vstack([x * lvl * beat, x * lvl * (2 - beat)])
@@ -517,6 +561,87 @@ def eruptions(tt, r):
     return out
 
 
+def space(tt, r):
+    """Космос: тихий низкий фон и вентилятор скафандра; искры льда рядом (как в space.js — когда обломков много)."""
+    n = len(tt)
+    vac = 1 - air_at(tt)
+    if vac.max() < 0.01:
+        return np.zeros((2, n))
+    room = lp(r.standard_normal(n), 90, 2)
+    room = room / (np.std(room) + 1e-9)
+    fan = bp(pink(r, n), 900, 5000)
+    out = np.vstack([room * 0.05 + fan * 0.012, np.roll(room, 997) * 0.05 + np.roll(fan, 313) * 0.012]) * vac
+    dens = smooth((tt - 466) / 10) * (1 - smooth((tt - 600) / 40)) + 0.8 * smooth((tt - 670) / 20) * (1 - smooth((tt - 770) / 15))
+    if dens.max() > 0.01:
+        sp = np.zeros((2, n))
+        a0, b0 = tt[0], tt[-1]
+        pr = rng_for('sparks', a0)
+        tcur = a0
+        while tcur < b0:
+            d = float(np.interp(tcur, tt, dens))
+            tcur += pr.exponential(0.12 / max(d, 0.05))
+            if d < 0.02:
+                continue
+            m = int(0.4 * SR)
+            tl = np.arange(m) / SR
+            f = pr.uniform(3000, 7500)
+            ping = (np.sin(2 * np.pi * f * tl) + 0.3 * np.sin(2 * np.pi * f * 2.7 * tl)) * np.exp(-tl / 0.06)
+            place(sp, tt, ping * pr.uniform(0.004, 0.02) * d, tcur, pan=pr.uniform(-0.9, 0.9))
+        out += sp
+    return out
+
+
+def actions(tt, r):
+    """Действия героя: сигнал весов, прыжки (хруст наста), отрыв от льда, крупа, посадка на луну."""
+    out = np.zeros((2, len(tt)))
+    a, b = tt[0], tt[-1]
+    for c0, c1 in [(248.8, 253.2), (331.0, 335.0), (385.6, 389.6), (414.8, 419.4), (424.6, 428.8), (449.6, 454.0)]:
+        if c0 + 1.5 < a or c0 > b:
+            continue
+        n1 = int(0.08 * SR)
+        tl = np.arange(n1) / SR
+        beep = np.concatenate([np.sin(2 * np.pi * 1760 * tl) * np.exp(-tl / 0.05), np.zeros(int(0.025 * SR)), np.sin(2 * np.pi * 2637 * np.arange(int(0.1 * SR)) / SR) * np.exp(-np.arange(int(0.1 * SR)) / SR / 0.06)])
+        place(out, tt, beep * 0.12, c0 + 0.7)
+    for t0, g in SC.get('jumps', []):
+        T = 2 * 2.6 / g
+        for tj, gain in ((t0 - 0.05, 0.35), (t0 + T, 0.5)):
+            if tj + 0.6 < a or tj > b:
+                continue
+            cr = rng_for('jump', tj)
+            place(out, tt, crunch(tj, cr, 0.4), tj, gain)
+            m = int(0.5 * SR)
+            tl = np.arange(m) / SR
+            place(out, tt, lp(cr.standard_normal(m), 140) * np.exp(-tl / 0.12) * 0.6, tj, gain)
+    fa = SC.get('float_at', 1e9)
+    if fa - 0.5 < b and fa + 6 > a:
+        fr = rng_for('float')
+        m = int(0.5 * SR)
+        tl = np.arange(m) / SR
+        clink = (np.sin(2 * np.pi * 2350 * tl) + 0.5 * np.sin(2 * np.pi * 3710 * tl)) * np.exp(-tl / 0.08)
+        place(out, tt, clink * 0.08, fa - 0.2, pan=-0.2)
+        place(out, tt, clink * 0.06, fa + 0.1, pan=0.25)
+        m = int(5 * SR)
+        tl = np.arange(m) / SR
+        whoosh = vbp(fr.standard_normal(m), 200 + 900 * smooth(tl / 3), q=1.2) * np.sin(np.pi * np.clip(tl / 5, 0, 1)) ** 2
+        place(out, tt, whoosh * 0.09, fa)
+    # крупа поднимается: тихое шуршание (вес < 32 кг, примерно 428–462 с)
+    if a < 463 and b > 426:
+        n = len(tt)
+        hiss = hp(r.standard_normal(n), 3000) * smooth((tt - 426) / 6) * (1 - smooth((tt - 461) / 3)) * 0.02
+        out += np.vstack([hiss, np.roll(hiss, 401)])
+    land = SC.get('land_at', 1e9)
+    if land - 0.5 < b and land + 3 > a:
+        lr = rng_for('land')
+        m = int(2.0 * SR)
+        tl = np.arange(m) / SR
+        thud = np.sin(2 * np.pi * (55 * tl - 8 * tl ** 2)) * np.exp(-tl / 0.18) + lp(lr.standard_normal(m), 400) * np.exp(-tl / 0.12) * 0.7
+        place(out, tt, thud * 0.45, land)
+        place(out, tt, crunch(land, lr, 0.6), land + 0.02, 0.5)
+        dust = bp(lr.standard_normal(m), 1500, 7000) * np.exp(-tl / 0.5) * 0.04
+        place(out, tt, dust, land + 0.05)
+    return out
+
+
 def compress(x, threshold_db=-18, ratio=2.2, attack=0.01, release=0.2):
     level = np.sqrt(lp(np.mean(x ** 2, axis=0), 30) + 1e-12)
     db = 20 * np.log10(level)
@@ -532,7 +657,7 @@ def compress(x, threshold_db=-18, ratio=2.2, attack=0.01, release=0.2):
     return x * 10 ** (-g / 20)
 
 
-GAINS = {'music': 0.42, 'wind': 1.9, 'breath': 3.0, 'snow': 1.4, 'riser': 1.3, 'hum': 1.3, 'ticks': 2.6, 'quake': 0.55, 'aval': 1.0, 'erupt': 0.8}
+GAINS = {'music': 0.42, 'wind': 1.9, 'breath': 3.0, 'snow': 1.4, 'riser': 1.3, 'hum': 1.3, 'ticks': 2.6, 'quake': 0.55, 'aval': 1.0, 'erupt': 0.8, 'space': 1.0, 'actions': 1.0}
 DRIVE = 1.3
 MASTER = 1.2  # постоянное усиление (не по окну), подбирается по громкости первой минуты: −14 LUFS
 
@@ -552,12 +677,17 @@ def render(a, b):
         'quake': quakes(tt, r),
         'aval': avalanches(tt, r),
         'erupt': eruptions(tt, r),
+        'space': space(tt, r),
+        'actions': actions(tt, r),
     }
     stems['erupt'] = stems['erupt'] + reverb(stems['erupt'][0] * 0.5 + stems['erupt'][1] * 0.5, IR_HALL, 0.25)
     mix = sum(GAINS[k] * v for k, v in stems.items())
     mix = hp(mix, 26)
     mix = compress(mix)
     mix = np.tanh(mix * DRIVE) / np.tanh(DRIVE) * MASTER
+    # потолок: выше 0,9 — мягкое колено, громкие места (землетрясения) не клиппируют
+    a_ = np.abs(mix)
+    mix = np.where(a_ > 0.9, np.sign(mix) * (0.9 + 0.09 * np.tanh((a_ - 0.9) / 0.09)), mix)
     keep = (tt >= a - XF) & (tt < b + XF)
     return mix[:, keep], {k: round(float(20 * np.log10(np.sqrt(np.mean(v[:, keep] ** 2)) + 1e-12)), 1) for k, v in stems.items()}
 

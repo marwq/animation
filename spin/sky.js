@@ -144,10 +144,10 @@ export function buildSky() {
 
 // solar — часовой угол Солнца (рад, растёт), sidereal — поворот звёздного неба (рад), elong — элонгация Луны,
 // lat — широта (рад), rate — скорость вращения неба (рад за секунду ролика): длина треков
-export function updateSky(s, cam, solarH, siderealA, elongation, lat, rate, air = 1) {
+export function updateSky(s, cam, solarH, siderealA, elongation, lat, rate, air = 1, sunOverride = null) {
   s.group.position.copy(cam);
   s.uniforms.uAir.value = air;
-  const sun = skyDir(-0.3 * DEG, solarH, lat);
+  const sun = sunOverride ? sunOverride.clone() : skyDir(-0.3 * DEG, solarH, lat);
   const moonDir = skyDir(1.5 * DEG, solarH - elongation, lat);
   s.uniforms.uSun.value.copy(sun);
   s.uniforms.uMoon.value.copy(moonDir);

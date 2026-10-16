@@ -226,9 +226,9 @@ float dens(vec2 p) {
 void main() {
   #include <logdepthbuf_fragment>
   // при быстром вращении облака вытягиваются вдоль широт (восток — запад) и собираются в полосы
-  vec2 p = vXZ / 42000.0 * vec2(mix(1.0, 0.22, uBands), 1.0) + uOff;
+  vec2 p = vXZ / 42000.0 * vec2(mix(1.0, 0.55, uBands), 1.0) + uOff;
   float n = dens(p);
-  n = mix(n, n * (0.55 + 0.9 * smoothstep(-0.2, 0.9, sin(vXZ.y / 23000.0 + 1.3 + 0.6 * sin(vXZ.x / 90000.0)))), uBands);
+  n = mix(n, n * (0.55 + 0.9 * smoothstep(-0.2, 0.9, sin(vXZ.y / 23000.0 + 1.3 + 0.6 * sin(vXZ.x / 90000.0)))), uBands * 0.55);
   float a = smoothstep(1.0 - uCover - uSoft, 1.0 - uCover + uSoft, n);
   if (a < 0.01) discard;
   float e = 0.004;

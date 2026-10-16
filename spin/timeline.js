@@ -24,7 +24,8 @@ const S = scene.spin;
 function periodAt(t) {
   const P = S.P0 * Math.exp(-Math.max(0, t - S.t_start) * S.rate / S.T);
   const m = S.P_min;
-  return P < m + 0.6 ? m + (P - m) * smooth((P - m) / 0.6) : P;
+  const Q = P < m + 0.6 ? m + (P - m) * smooth((P - m) / 0.6) : P;
+  return Q + 0.32 * smooth((t - 922.0) / 36.0); // в конце приливы новой луны понемногу тормозят Землю
 }
 
 // интеграл по сетке 1/240 с: часы истории, обороты относительно Солнца, длина суток
@@ -118,6 +119,17 @@ export const cam3 = (t) => {
   return [Math.exp(c3r(tt)), c3i(tt), c3l(tt)];
 };
 export const LOOK3 = scene.look3 || [];
+// подлёт и посадка на новую луну
+const APP = scene.approach || [[1e9, 1]];
+const appLog = monotone(APP.map(([t, h]) => [t, Math.log(h + 1)]));
+export const APPROACH_START = APP[0][0];
+export const LAND_AT = scene.land_at ?? 1e9;
+export const approachH = (t) => (t >= LAND_AT ? 0 : Math.exp(appLog(Math.max(APPROACH_START, t))) - 1);
+export const LOOK_MOON = scene.look_moon || [];
+const MA = scene.moon_a || [[0, 24500]];
+const maf = monotone(MA);
+export const moonA = (t) => maf(Math.min(t, MA[MA.length - 1][0])) * 1000; // м
+export const RING = scene.ring || null;
 export const AVALANCHES = scene.avalanches || [];
 
 export const headYaw = track(scene.head_yaw, 5.5);

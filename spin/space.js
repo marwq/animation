@@ -2,6 +2,7 @@
 // экватора), комки за пределом Роша, которые слипаются в луны, и новая луна, на которую герой садится.
 // Координаты те же, что у вершины: центр Земли — (0, −R, 0), экватор — плоскость XY, север — −Z.
 import * as THREE from 'three';
+import { mergeVertices } from 'three/addons/utils/BufferGeometryUtils.js';
 import { rng, smooth } from '../pov/util.js';
 
 // --- шум для неровных тел ---------------------------------------------------------------------------------
@@ -40,9 +41,15 @@ function fbm3(x, y, z, oct = 4) {
 }
 
 // неровное тело: икосаэдр, вершины сдвинуты шумом; seed — чтобы все были разные
-export function lumpyGeometry(detail, seed, rough = 0.25, craters = 0) {
-  const g = new THREE.IcosahedronGeometry(1, detail);
+// вершины общие (без швов): после сдвига шумом поверхность гладкая и без трещин; цвет — в вершинах
+// (тёмный и светлый реголит, иней), без текстуры и её шва
+export function lumpyGeometry(detail, seed, rough = 0.25, craters = 0, flat = null, frost = 0) {
+  let g = new THREE.IcosahedronGeometry(1, detail);
+  g.deleteAttribute('uv');
+  g.deleteAttribute('normal');
+  g = mergeVertices(g);
   const p = g.attributes.position;
+  const colors = new Float32Array(p.count * 3);
   const r = rng(seed);
   const cr = Array.from({ length: craters }, () => {
     const v = new THREE.Vector3(r() - 0.5, r() - 0.5, r() - 0.5).normalize();
@@ -57,9 +64,16 @@ export function lumpyGeometry(detail, seed, rough = 0.25, craters = 0) {
       const d = v.angleTo(c.v) / c.s;
       if (d < 1.4) h += (d < 1 ? -0.06 * c.s * (1 - d * d) : 0.03 * c.s * Math.sin(((d - 1) / 0.4) * Math.PI)) * 2;
     }
+    if (flat) h = 1 + (h - 1) * smooth((v.angleTo(flat) - 0.012) / 0.05); // ровная площадка, где садится герой
+    const shade = 0.36 + 0.1 * fbm3(v.x * 6 + o, v.y * 6, v.z * 6, 3) + 0.25 * (h - 1);
+    const ice = frost * smooth((fbm3(v.x * 3.3 + o, v.y * 3.3 + 5, v.z * 3.3, 4) - 0.05) / 0.25);
+    colors[i * 3] = shade * 1.02 + ice * 0.55;
+    colors[i * 3 + 1] = shade + ice * 0.58;
+    colors[i * 3 + 2] = shade * 0.95 + ice * 0.62;
     v.multiplyScalar(h);
     p.setXYZ(i, v.x, v.y, v.z);
   }
+  g.setAttribute('color', new THREE.BufferAttribute(colors, 3));
   g.computeVertexNormals();
   return g;
 }
@@ -111,8 +125,9 @@ export function buildDebris() {
   const pts = new THREE.Points(geo, new THREE.PointsMaterial({ size: 0.09, vertexColors: true, transparent: true, opacity: 0, blending: THREE.AdditiveBlending, depthWrite: false }));
   pts.frustumCulled = false;
   group.add(pts);
-  const rockGeo = lumpyGeometry(1, 31, 0.35);
-  const rockMat = new THREE.MeshStandardMaterial({ color: 0x8a8279, roughness: 0.95, metalness: 0, transparent: true, opacity: 1 });
+  const rockGeo = lumpyGeometry(2, 31, 0.35);
+  rockGeo.deleteAttribute('color');
+  const rockMat = new THREE.MeshStandardMaterial({ color: 0x8a8279, roughness: 0.95, metalness: 0 });
   const rocks = new THREE.InstancedMesh(rockGeo, rockMat, ROCKS);
   rocks.frustumCulled = false;
   const rk = Array.from({ length: ROCKS }, (_, i) => ({
@@ -174,29 +189,31 @@ const LETS = [
 ];
 export const MOON = { a: 2.45e7, lon: 41, incl: 3.5, R: 1.3e6 }; // новая луна: орбита, долгота, наклон, радиус
 
-export function moonCenter(C, out = new THREE.Vector3()) {
+export function moonDir(out = new THREE.Vector3()) {
   const l = (MOON.lon * Math.PI) / 180;
   const i = (MOON.incl * Math.PI) / 180;
-  return out.set(Math.sin(l) * Math.cos(i), Math.cos(l) * Math.cos(i), -Math.sin(i)).multiplyScalar(MOON.a).add(C);
+  return out.set(Math.sin(l) * Math.cos(i), Math.cos(l) * Math.cos(i), -Math.sin(i));
+}
+export function moonCenter(C, out = new THREE.Vector3(), a = MOON.a) {
+  return moonDir(out).multiplyScalar(a).add(C);
 }
 
-export function buildMoons() {
+export function buildMoons(flatDir = null) {
   const group = new THREE.Group();
   const lets = LETS.map(([a, lon, rad, merge, seed]) => {
-    const mesh = new THREE.Mesh(lumpyGeometry(3, seed, 0.3, 6), new THREE.MeshStandardMaterial({ map: rockTexture(seed, 8), roughness: 1, metalness: 0 }));
+    const mesh = new THREE.Mesh(lumpyGeometry(14, seed, 0.3, 6, null, 0.3), new THREE.MeshStandardMaterial({ vertexColors: true, roughness: 1, metalness: 0 }));
     group.add(mesh);
     return { mesh, a: a * 1000, lon, rad: rad * 1000, merge, seed };
   });
-  const main = new THREE.Mesh(lumpyGeometry(6, 99, 0.06, 40), new THREE.MeshStandardMaterial({ map: rockTexture(99, 40), roughness: 1, metalness: 0 }));
+  const main = new THREE.Mesh(lumpyGeometry(56, 99, 0.018, 40, flatDir, 0.5), new THREE.MeshStandardMaterial({ vertexColors: true, roughness: 1, metalness: 0 }));
   group.add(main);
   return { group, lets, main };
 }
 
 // grow 0…1 — насколько выросла главная луна; clumps 0…1 — видны ли комки (появляются за пределом Роша)
-export function updateMoons(m, t, C, grow, clumps) {
+export function updateMoons(m, t, C, grow, clumps, M = moonCenter(C)) {
   m.group.visible = clumps > 0.005 || grow > 0.005;
   if (!m.group.visible) return;
-  const M = moonCenter(C);
   for (const l of m.lets) {
     const lon = ((l.lon + (t - 640) * 0.02 * (24500 / (l.a / 1000)) ** 1.5) * Math.PI) / 180;
     const pos = new THREE.Vector3(Math.sin(lon), Math.cos(lon), 0).multiplyScalar(l.a).add(C);
@@ -211,8 +228,144 @@ export function updateMoons(m, t, C, grow, clumps) {
     l.mesh.rotation.set(t * 0.01 * l.seed, t * 0.013, 0);
   }
   m.main.position.copy(M);
-  const R = MOON.R * (0.25 + 0.75 * grow);
-  m.main.scale.setScalar(R * grow + 1);
+  m.main.scale.setScalar(MOON.R * (0.12 + 0.88 * grow) * Math.min(1, grow * 4) + 1);
   m.main.visible = grow > 0.01;
-  m.main.rotation.y = 0.4;
+}
+
+// --- поверхность новой луны вокруг места посадки (локальная система: +Y — вверх от центра луны) -----------------
+function regolithTexture() {
+  const c = document.createElement('canvas');
+  c.width = c.height = 512;
+  const ctx = c.getContext('2d');
+  ctx.fillStyle = '#8b857d';
+  ctx.fillRect(0, 0, 512, 512);
+  const r = rng(515);
+  const tile = (fn) => { for (const dx of [-512, 0, 512]) for (const dy of [-512, 0, 512]) fn(dx, dy); };
+  for (let i = 0; i < 60; i++) {
+    const x = r() * 512;
+    const y = r() * 512;
+    const rad = 20 + r() * 70;
+    const light = r() < 0.35;
+    tile((dx, dy) => {
+      const g = ctx.createRadialGradient(x + dx, y + dy, 0, x + dx, y + dy, rad);
+      g.addColorStop(0, light ? 'rgba(232,237,244,0.6)' : 'rgba(96,91,86,0.3)');
+      g.addColorStop(1, light ? 'rgba(232,237,244,0)' : 'rgba(96,91,86,0)');
+      ctx.fillStyle = g;
+      ctx.fillRect(x + dx - rad, y + dy - rad, rad * 2, rad * 2);
+    });
+  }
+  for (let i = 0; i < 14000; i++) {
+    const v = 80 + r() * 100;
+    ctx.fillStyle = `rgba(${v},${v * 0.97},${v * 0.93},${0.25 + r() * 0.35})`;
+    ctx.fillRect(r() * 512, r() * 512, 1 + r() * 2.5, 1 + r() * 2.5);
+  }
+  const t = new THREE.CanvasTexture(c);
+  t.colorSpace = THREE.SRGBColorSpace;
+  t.wrapS = t.wrapT = THREE.RepeatWrapping;
+  t.anisotropy = 8;
+  return t;
+}
+
+export function buildMoonSurface(radius) {
+  const group = new THREE.Group();
+  // полярная сетка до 5 км: кривизна шара, мягкие холмы, чаши кратеров
+  const rings = 90;
+  const sectors = 200;
+  const r0 = 0.3;
+  const r1 = 5000;
+  const pos = [];
+  const uv = [];
+  const idx = [];
+  const rr = rng(616);
+  const craters = Array.from({ length: 26 }, () => ({ x: (rr() - 0.5) * 7000, z: (rr() - 0.5) * 7000, s: 15 + rr() ** 2 * 420 }));
+  craters.push({ x: -38, z: -95, s: 22 });
+  const height = (x, z) => {
+    let h = 6 * fbm3(x / 900, 0.3, z / 900, 4) + 0.6 * fbm3(x / 40, 1.7, z / 40, 3) + 0.08 * fbm3(x / 3, 2.1, z / 3, 2);
+    for (const c of craters) {
+      const d = Math.hypot(x - c.x, z - c.z) / c.s;
+      if (d < 1.5) h += d < 1 ? -0.22 * c.s * (1 - d * d) : 0.1 * c.s * Math.sin(((d - 1) / 0.5) * Math.PI) * (1.5 - d) * 2;
+    }
+    // площадка посадки — ровная
+    const near = Math.hypot(x, z);
+    h *= smooth((near - 3) / 25);
+    return h - (x * x + z * z) / (2 * radius);
+  };
+  for (let i = 0; i <= rings; i++) {
+    const rad = r0 * Math.pow(r1 / r0, i / rings);
+    for (let j = 0; j <= sectors; j++) {
+      const a = (j / sectors) * Math.PI * 2;
+      const x = Math.cos(a) * rad;
+      const z = Math.sin(a) * rad;
+      pos.push(x, height(x, z), z);
+      uv.push(x / 9, z / 9);
+    }
+  }
+  for (let i = 0; i < rings; i++) {
+    for (let j = 0; j < sectors; j++) {
+      const a = i * (sectors + 1) + j;
+      const b = a + sectors + 1;
+      idx.push(a, a + 1, b, a + 1, b + 1, b);
+    }
+  }
+  const g = new THREE.BufferGeometry();
+  g.setAttribute('position', new THREE.Float32BufferAttribute(pos, 3));
+  g.setAttribute('uv', new THREE.Float32BufferAttribute(uv, 2));
+  g.setIndex(idx);
+  g.computeVertexNormals();
+  const ground = new THREE.Mesh(g, new THREE.MeshStandardMaterial({ map: regolithTexture(), roughness: 1, metalness: 0 }));
+  ground.receiveShadow = true;
+  group.add(ground);
+  // валуны: от гальки у ног до глыб вдали
+  const N = 420;
+  const rockG = lumpyGeometry(2, 717, 0.35);
+  rockG.deleteAttribute('color');
+  const rocks = new THREE.InstancedMesh(rockG, new THREE.MeshStandardMaterial({ color: 0x7c766f, roughness: 1, metalness: 0 }), N);
+  const m = new THREE.Matrix4();
+  const qq = new THREE.Quaternion();
+  for (let i = 0; i < N; i++) {
+    const d = 1.2 + rr() ** 1.6 * 900;
+    const a = rr() * Math.PI * 2;
+    const x = Math.cos(a) * d;
+    const z = Math.sin(a) * d;
+    const s = (0.03 + rr() ** 4 * 0.9) * Math.min(4, 0.25 + d / 25); // у ног — галька, вдали — глыбы
+    qq.setFromEuler(new THREE.Euler(rr() * 6, rr() * 6, rr() * 6));
+    m.compose(new THREE.Vector3(x, height(x, z) + s * 0.25, z), qq, new THREE.Vector3(s, s * (0.6 + rr() * 0.5), s));
+    rocks.setMatrixAt(i, m);
+    rocks.setColorAt(i, new THREE.Color().setScalar(0.75 + rr() * 0.5));
+  }
+  rocks.castShadow = true;
+  rocks.receiveShadow = true;
+  group.add(rocks);
+  return { group, ground, rocks, height };
+}
+
+// --- предел Роша: пунктирный круг в плоскости колец и подпись ------------------------------------------------
+export function buildRoche(radius) {
+  const pts = [];
+  for (let i = 0; i <= 256; i++) {
+    const a = (i / 256) * Math.PI * 2;
+    pts.push(new THREE.Vector3(Math.sin(a) * radius, Math.cos(a) * radius, 0));
+  }
+  const g = new THREE.BufferGeometry().setFromPoints(pts);
+  const line = new THREE.Line(g, new THREE.LineDashedMaterial({ color: 0x9ff7ef, dashSize: radius * 0.02, gapSize: radius * 0.015, transparent: true, opacity: 0, depthWrite: false }));
+  line.computeLineDistances();
+  line.frustumCulled = false;
+  const c = document.createElement('canvas');
+  c.width = 512;
+  c.height = 96;
+  const ctx = c.getContext('2d');
+  ctx.font = '700 40px "Space Grotesk", sans-serif';
+  ctx.fillStyle = '#9ff7ef';
+  ctx.textAlign = 'center';
+  ctx.textBaseline = 'middle';
+  ctx.fillText('ROCHE LIMIT', 256, 30);
+  ctx.font = '500 30px "JetBrains Mono", monospace';
+  ctx.fillText('19,000 km', 256, 72);
+  const tex = new THREE.CanvasTexture(c);
+  tex.colorSpace = THREE.SRGBColorSpace;
+  const label = new THREE.Sprite(new THREE.SpriteMaterial({ map: tex, transparent: true, opacity: 0, depthTest: false, depthWrite: false }));
+  label.renderOrder = 20;
+  const group = new THREE.Group();
+  group.add(line, label);
+  return { group, line, label };
 }

@@ -25,10 +25,11 @@ const COMPARE = [
   [16.1, 'AS SHORT AS A DAY ON URANUS'],
   [10.7, 'SHORTER THAN A DAY ON NEPTUNE'],
   [9.93, 'AS SHORT AS A DAY ON SATURN'],
-  [5.0, 'SHORTER THAN A DAY ON JUPITER'],
-  [3.92, 'AS SHORT AS EARTH’S DAY 4.5 BILLION YEARS AGO'],
-  [2.4, 'AS SHORT AS A DAY ON HAUMEA'],
-  [0, 'ALMOST FAST ENOUGH TO ORBIT'],
+  [3.92, 'SHORTER THAN A DAY ON JUPITER'],
+  [3.75, 'AS SHORT AS A DAY ON HAUMEA'],
+  [2.4, 'SHORTER THAN A DAY ON HAUMEA'],
+  [2.27, 'ALMOST FAST ENOUGH TO ORBIT'],
+  [0, 'THE FASTEST EARTH CAN SPIN'],
 ];
 export const REVEAL = 900; // с этой секунды «?» на шкале становится «EARLY EARTH»
 
@@ -67,15 +68,15 @@ export function updateHud(t, st) {
   if (st.place && $('place').textContent !== st.place) $('place').textContent = st.place;
   // в космосе вторая строка — высота над экватором вместо скорости земли
   const space = st.alt != null && st.alt > 50;
-  $('slbl').textContent = space ? 'ALTITUDE' : 'GROUND SPEED';
+  $('slbl').textContent = st.row2 ? st.row2[0] : space ? 'ALTITUDE' : 'GROUND SPEED';
   const mins = Math.round(st.day * 60);
   const h = Math.floor(mins / 60);
   const m = mins % 60;
   $('dayh').textContent = String(h);
   $('daym').textContent = String(m).padStart(2, '0');
-  $('compare').textContent = COMPARE.find(([p]) => st.day > p)?.[1] ?? COMPARE[COMPARE.length - 1][1];
+  $('compare').textContent = t > 921 ? 'GETTING LONGER' : COMPARE.find(([p]) => st.day > p)?.[1] ?? COMPARE[COMPARE.length - 1][1];
   $('wval').textContent = `${st.weight.toFixed(1)} kg`;
-  $('sval').textContent = space ? `${Math.round(st.alt).toLocaleString('en-US')} km` : `${Math.round(st.speed).toLocaleString('en-US')} km/h`;
+  $('sval').textContent = st.row2 ? st.row2[1] : space ? `${Math.round(st.alt).toLocaleString('en-US')} km` : `${Math.round(st.speed).toLocaleString('en-US')} km/h`;
   $('lval').textContent = lapseText(st.k);
   // уровень моря у вершины: строка появляется, когда вода заметно поднялась
   const sea = Math.round(st.sea / 10) * 10;
