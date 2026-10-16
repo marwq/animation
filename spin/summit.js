@@ -321,6 +321,15 @@ export function buildSummit() {
   const snow = new THREE.Mesh(near, snowMat);
   snow.receiveShadow = true;
   group.add(snow);
+  // середина сетки (r < 0,4 м) пустая — под ботинками её не видно, но после отрыва сверху она была бы дырой
+  const capGeo = new THREE.CircleGeometry(0.45, 32);
+  capGeo.rotateX(-Math.PI / 2);
+  const cuv = capGeo.attributes.uv;
+  for (let i = 0; i < cuv.count; i++) cuv.setXY(i, capGeo.attributes.position.getX(i) / 11, capGeo.attributes.position.getZ(i) / 11);
+  const cap = new THREE.Mesh(capGeo, snowMat);
+  cap.position.y = near.attributes.position.getY(0) - 0.002; // на высоте внутреннего кольца сетки
+  cap.receiveShadow = true;
+  group.add(cap);
 
   // всё остальное: от 560 м (стык со снегом — те же вершины по кругу) до 320 км, цвет по высоте
   const far = polarGrid(560, 320000, 150, 288, (x, z, rr) => elevation(x / 1000, -z / 1000) - SUMMIT - drop(rr), (x, z, y, c) => {

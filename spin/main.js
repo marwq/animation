@@ -237,7 +237,20 @@ function jumpY(t) {
 const GRAINS = 1400;
 const grainGeo = new THREE.BufferGeometry();
 grainGeo.setAttribute('position', new THREE.BufferAttribute(new Float32Array(GRAINS * 3), 3));
-const grainMat = new THREE.PointsMaterial({ color: 0xffffff, size: 0.07, transparent: true, opacity: 0, depthWrite: false });
+// круглая мягкая точка (без текстуры точки рисуются квадратами)
+const dotTex = (() => {
+  const c = document.createElement('canvas');
+  c.width = c.height = 64;
+  const ctx = c.getContext('2d');
+  const g = ctx.createRadialGradient(32, 32, 0, 32, 32, 32);
+  g.addColorStop(0, 'rgba(255,255,255,1)');
+  g.addColorStop(0.45, 'rgba(255,255,255,0.8)');
+  g.addColorStop(1, 'rgba(255,255,255,0)');
+  ctx.fillStyle = g;
+  ctx.fillRect(0, 0, 64, 64);
+  return new THREE.CanvasTexture(c);
+})();
+const grainMat = new THREE.PointsMaterial({ color: 0xffffff, size: 0.045, map: dotTex, transparent: true, opacity: 0, depthWrite: false, alphaTest: 0.02 });
 const grains = new THREE.Points(grainGeo, grainMat);
 grains.frustumCulled = false;
 local.add(grains);
@@ -462,7 +475,9 @@ window.renderAt = (t) => {
   updateHud(t, { day: P, weight, speed: speedAt(t), k, sea: seaAt(t), alt: hAlt / 1000, place, row2 });
   // Земля целиком (после отрыва от вершины; для проверки — всегда, если задана свободная камера)
   const R = Rm;
-  const a = R - 3000 * (1 - smooth((hAlt - 3e5) / 6e5)); // пока внизу подробная местность, шар чуть ниже её
+  // пока внизу подробная местность вершины, шар Земли — на 2,5 км ниже её уровня моря (иначе он протыкает
+  // низины и море колпаком); когда местность растворилась — на своём месте
+  const a = R - (6263 + 2500) * (1 - smooth((hAlt - 3e5) / 6e5));
   // кольцо: растёт до предела Роша, потом расползается за него и рвётся на комки, внутреннее редеет; в конце исчезает
   const rg = RING;
   const ringGrow = smooth((t - rg.grow[0]) / (rg.grow[1] - rg.grow[0]));
