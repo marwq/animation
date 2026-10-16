@@ -205,7 +205,22 @@ export function buildMoons(flatDir = null) {
     group.add(mesh);
     return { mesh, a: a * 1000, lon, rad: rad * 1000, merge, seed };
   });
-  const main = new THREE.Mesh(lumpyGeometry(56, 99, 0.018, 40, flatDir, 0.5), new THREE.MeshStandardMaterial({ vertexColors: true, roughness: 1, metalness: 0 }));
+  const mainMat = new THREE.MeshStandardMaterial({ vertexColors: true, roughness: 1, metalness: 0 });
+  // мелкая неоднородность реголита по мировым координатам (при подлёте грани шара не выглядят гладкими)
+  mainMat.onBeforeCompile = (sh) => {
+    sh.vertexShader = sh.vertexShader.replace('#include <common>', '#include <common>\nvarying vec3 vLocal;').replace('#include <begin_vertex>', '#include <begin_vertex>\nvLocal = position;');
+    sh.fragmentShader = sh.fragmentShader.replace('#include <common>', `#include <common>
+      varying vec3 vLocal;
+      float hh(vec3 p) { return fract(sin(dot(p, vec3(127.1, 311.7, 74.7))) * 43758.5453); }
+      float vn(vec3 x) { vec3 i = floor(x); vec3 f = fract(x); f = f * f * (3.0 - 2.0 * f);
+        return mix(mix(mix(hh(i), hh(i + vec3(1,0,0)), f.x), mix(hh(i + vec3(0,1,0)), hh(i + vec3(1,1,0)), f.x), f.y),
+                   mix(mix(hh(i + vec3(0,0,1)), hh(i + vec3(1,0,1)), f.x), mix(hh(i + vec3(0,1,1)), hh(i + vec3(1,1,1)), f.x), f.y), f.z); }`)
+      .replace('#include <color_fragment>', `#include <color_fragment>
+      vec3 q = normalize(vLocal);
+      float d = vn(q * 60.0) * 0.5 + vn(q * 240.0) * 0.3 + vn(q * 960.0) * 0.2;
+      diffuseColor.rgb *= 0.7 + 0.6 * d;`);
+  };
+  const main = new THREE.Mesh(lumpyGeometry(56, 99, 0.018, 40, flatDir, 0.22), mainMat);
   group.add(main);
   return { group, lets, main };
 }

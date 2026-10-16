@@ -88,6 +88,11 @@ function lookTarget(name, eye, C, lonRad) {
     case 'ring': return new THREE.Vector3(Math.sin(lonRad), Math.cos(lonRad), 0).multiplyScalar(1.5e7).add(C);
     case 'moon': return moonCenter(C, new THREE.Vector3(), moonA(t_now));
     case 'moonlets': return moonCenter(C, new THREE.Vector3(), moonA(t_now)).multiplyScalar(0.7).add(C.clone().multiplyScalar(0.3));
+    case 'mhorizon': {
+      // при спуске на луну: к её горизонту в сторону Земли, чуть вниз — над горизонтом встаёт Земля
+      const fw = LAND.e.clone().sub(LAND.n.clone().multiplyScalar(LAND.e.dot(LAND.n))).normalize();
+      return eye.clone().add(fw.multiplyScalar(1e6)).add(LAND.n.clone().multiplyScalar(-2.6e5));
+    }
     case 'roche': return new THREE.Vector3(Math.sin(lonRad + 0.5), Math.cos(lonRad + 0.5), 0).multiplyScalar(1.9e7).add(C);
     case 'oldmoon': return LAND.oldMoon.clone().multiplyScalar(3.844e8).add(C);
     case 'out': return eye.clone().sub(C).add(eye);
@@ -466,7 +471,7 @@ window.renderAt = (t) => {
   const ringGone = smooth((t - rg.gone[0]) / (rg.gone[1] - rg.gone[0]));
   const roR = 1.9e7;
   updatePlanet(planet, {
-    visible: !!window.__cam || t > FLOAT_AT, center: C, R, a, c: Math.min(6.357e6, 6.357e6 - 0.22 * (R - 6.378e6)), cusp: Math.max(0, (R - 7.6e6) / 1.1e6) * 0.06,
+    visible: !!window.__cam || t > FLOAT_AT, center: C, R, a, c: Math.min(6.357e6, 6.357e6 - 0.22 * (R - 6.378e6)), cusp: Math.max(0, (R - 7.6e6) / 1.1e6) * 0.035,
     spin: -11.2 * DEG + groundShift(t), sun: sk.sun, time: t, bands: smooth((t - 240) / 200), cloud: 0.5,
     ringIn: R * 1.004, ringOut: R * 1.03 + (roR - R * 1.03) * ringGrow + 0.9e7 * ringSpread * (1 - ringFade * 0.6),
     ringDense: window.__cam?.ring ?? 0.85 * ringGrow * (1 - 0.55 * ringFade) * (1 - ringGone),
@@ -478,10 +483,13 @@ window.renderAt = (t) => {
   roche.line.material.opacity = 0.75 * rocheOn;
   roche.label.material.opacity = rocheOn;
   if (roche.group.visible) {
-    const lp = new THREE.Vector3(Math.sin(lonRad + 0.62), Math.cos(lonRad + 0.62), 0).multiplyScalar(roR);
-    roche.label.position.copy(lp).add(new THREE.Vector3(0, 0, -6e5));
+    // подпись — на ближней к нам стороне круга, чуть в стороне от центра кадра
+    const toEye = eye.clone().sub(C);
+    const ang = Math.atan2(toEye.x, toEye.y) + 0.45;
+    const lp = new THREE.Vector3(Math.sin(ang), Math.cos(ang), 0).multiplyScalar(roR);
+    roche.label.position.copy(lp).add(new THREE.Vector3(0, 0, -8e5));
     const dl = roche.label.getWorldPosition(new THREE.Vector3()).distanceTo(eye);
-    roche.label.scale.set(dl * 0.09, dl * 0.017, 1);
+    roche.label.scale.set(dl * 0.24, dl * 0.045, 1);
   }
   // местность вершины растворяется, когда герой выше 300–900 км
   const fadeLocal = 1 - smooth((hAlt - 3e5) / 6e5);
@@ -490,7 +498,7 @@ window.renderAt = (t) => {
   updateMoons(moons, t, C, smooth((t - 698) / 60), smooth((t - 650) / 12) * (1 - smooth((t - 770) / 10)), Mc);
   // поверхность новой луны рядом с местом посадки
   surface.group.position.copy(LANDP).sub(O);
-  surface.group.visible = t >= APPROACH_START && approachH(t) < 6e4;
+  surface.group.visible = t >= APPROACH_START && approachH(t) < 2500;
   if (window.__cam) {
     const c = window.__cam;
     debugCam.fov = c.fov || 40;

@@ -23,7 +23,7 @@ uniform float uA; uniform float uC; uniform float uCusp;
 vec3 shape(vec3 p) {
   float cl = sqrt(max(0.0, 1.0 - p.y * p.y));        // cos широты
   float r = 1.0 / sqrt(p.y * p.y / (uC * uC) + cl * cl / (uA * uA));
-  r *= 1.0 - uCusp * (1.0 - pow(cl, 28.0)); // экватор остаётся на радиусе a, остальное чуть ниже — острый край
+  r *= 1.0 - uCusp * (1.0 - pow(cl, 12.0)); // экватор остаётся на радиусе a, остальное чуть ниже — острый край
   return p * r;
 }
 `;
@@ -186,7 +186,9 @@ void main() {
   // кольцо светится сильнее, если смотреть против Солнца (рассеяние вперёд на мелких частицах)
   vec3 V = normalize(vW - cameraPosition);
   col *= 1.0 + 1.2 * pow(max(0.0, dot(V, L)), 6.0);
-  gl_FragColor = vec4(col, clamp(d, 0.0, 0.95));
+  // рядом с камерой кольцо — это отдельные обломки (их рисует space.js), плоскость там прозрачна
+  float near = smoothstep(1.5e6, 5e6, length(vW - cameraPosition));
+  gl_FragColor = vec4(col, clamp(d, 0.0, 0.95) * near);
   #include <tonemapping_fragment>
   #include <colorspace_fragment>
 }`;

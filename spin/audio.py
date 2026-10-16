@@ -543,7 +543,7 @@ def eruptions(tt, r):
         seg = (tt > start)
         if seg.any():
             age = np.maximum(tt - start, 0)
-            envl = smooth(age / 1.2) * (0.35 + 0.65 * np.exp(-age / 18)) * seg
+            envl = smooth(age / 1.2) * (0.35 + 0.65 * np.exp(-age / 18)) * seg * (1 - smooth((age - 45) / 45))  # как в fx.js
             g = lp(r.standard_normal(len(tt)), 160) * 2.2 * (0.7 + 0.3 * slow(r, len(tt), 1.5))
             out += pan_az(g * envl * 0.09 * power * near ** 0.5, az, tt)
         # молнии в пепле: те же вспышки, что в fx.js (слоты по 0,07 с)
@@ -552,7 +552,7 @@ def eruptions(tt, r):
         for slot in range(s0, s1 + 1):
             age = slot * 0.07 - start
             p0 = 0.14 * np.exp(-age / 25) + 0.03
-            if _hash(slot + start * 13) < p0:
+            if _hash(slot + start * 13) < p0 and (1 - smooth((age - 45) / 45)) > 0.3:
                 lr = rng_for('bolt', slot)
                 m = int(1.6 * SR)
                 tm = np.arange(m) / SR
