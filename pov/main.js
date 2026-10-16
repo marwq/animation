@@ -22,8 +22,8 @@ const DEG = Math.PI / 180;
 await Promise.all(['700 40px "Space Grotesk"', '500 40px "Space Grotesk"', '600 40px "JetBrains Mono"'].map((f) => document.fonts.load(f)));
 
 const QS = new URLSearchParams(location.search);
-const renderer = new THREE.WebGLRenderer({ canvas: document.getElementById('c'), antialias: QS.get('aa') !== '0', preserveDrawingBuffer: true });
-renderer.setPixelRatio(1);
+const renderer = new THREE.WebGLRenderer({ canvas: document.getElementById('c'), antialias: QS.get('aa') !== '0', preserveDrawingBuffer: true, alpha: QS.get('alpha') === '1' });
+renderer.setPixelRatio(parseFloat(QS.get('dpr') || '1')); // ?dpr=2 — кадры для обложек в двойном разрешении
 renderer.setSize(W, H, false);
 renderer.outputColorSpace = THREE.SRGBColorSpace;
 renderer.toneMapping = THREE.ACESFilmicToneMapping;
@@ -182,9 +182,17 @@ window.renderAt = (t) => {
   body.root.rotation.y = bodyYaw(t) * DEG;
 
   const sway = 1 + 1.2 * smooth((depth - 0.05) / 0.5);
-  const yaw = headYaw(t);
+  // обложки (pov/thumbs): можно чуть довернуть голову и сменить угол обзора, не трогая раскадровку
+  const TH = window.__thumb || {};
+  const yaw = headYaw(t) + (TH.yaw || 0);
   const yawVel = (headYaw(t + 0.02) - headYaw(t - 0.02)) / 0.04 + (bodyYaw(t + 0.02) - bodyYaw(t - 0.02)) / 0.04;
-  const pitch = headPitch(t) + 0.28 * Math.sin(t * 2 * Math.PI * 0.23); // дыхание
+  const pitch = headPitch(t) + (TH.pitch || 0) + 0.28 * Math.sin(t * 2 * Math.PI * 0.23); // дыхание
+  if (TH.fov && camera.fov !== TH.fov) {
+    camera.fov = TH.fov;
+    camera.updateProjectionMatrix();
+  }
+  if (TH.shiftx) camera.setViewOffset(W, H, -TH.shiftx, 0, W, H); // кадр сдвинут вбок (место под надпись)
+  else if (camera.view && camera.view.enabled) camera.clearViewOffset();
   // голова чуть наклоняется в сторону поворота, как у живого человека
   const roll = clamp(-yawVel * 0.035, -2.5, 2.5) + 0.25 * drift(t, 0.31, 0.83, 1.7) * sway;
   // толчок у разлома: короткая затухающая дрожь

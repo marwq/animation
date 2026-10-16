@@ -1,3 +1,5 @@
 node_modules/
 __pycache__/
 pov/out/
+pov/thumbs/src/
+pov/thumbs/draft_*.png

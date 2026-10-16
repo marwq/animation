@@ -1,0 +1,125 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Thumbnails</title>
+<!-- Сборка обложек 1280×720 из кадров ролика и сцен hole.html / cutaway.html. ?c=A|B|C — какую показать.
+     Шрифты и бирюзовый акцент — как у надписей в самом ролике: обложка обещает ровно то, что зритель увидит. -->
+<link rel="stylesheet" href="/node_modules/@fontsource/space-grotesk/500.css">
+<link rel="stylesheet" href="/node_modules/@fontsource/space-grotesk/700.css">
+<link rel="stylesheet" href="/node_modules/@fontsource/jetbrains-mono/600.css">
+<style>
+:root { --accent: #5ff2e8; --ink: #f6f8fa; }
+html, body { margin: 0; background: #000; }
+.thumb { position: relative; width: 1280px; height: 720px; overflow: hidden; display: none; font-family: 'Space Grotesk', sans-serif; color: var(--ink); }
+.thumb.on { display: block; }
+.layer { position: absolute; inset: 0; width: 1280px; height: 720px; }
+img.layer { object-fit: cover; }
+.label { font-weight: 700; letter-spacing: .2em; text-transform: uppercase; color: var(--accent); }
+.num { font-weight: 700; letter-spacing: -.02em; line-height: .95; }
+.num small { font-size: .42em; letter-spacing: 0; margin-left: .12em; opacity: .9; }
+.mono { font-family: 'JetBrains Mono', monospace; font-weight: 600; }
+.shadow { text-shadow: 0 4px 24px rgba(0,0,0,.65), 0 2px 4px rgba(0,0,0,.6); }
+
+/* --- A: открытый люк на Таймс-сквер, под ним — все слои Земли --------------------------------------- */
+.A .bloom { background: radial-gradient(circle at 790px 482px, rgba(255,248,224,1) 0, rgba(255,214,120,.75) 30px, rgba(255,150,50,.32) 95px, rgba(255,110,30,0) 230px); mix-blend-mode: screen; }
+/* неон Таймс-сквер на мостовой: розовый слева сверху, бирюзовый справа */
+.A .neon { background: radial-gradient(ellipse 620px 420px at 0 0, rgba(255,60,170,.32), rgba(255,60,170,0) 70%), radial-gradient(ellipse 560px 420px at 1280px 0, rgba(60,210,255,.26), rgba(60,210,255,0) 70%); mix-blend-mode: screen; }
+.A .heat { background: radial-gradient(ellipse 420px 360px at 790px 400px, rgba(255,120,30,.0) 55%, rgba(255,120,30,.22) 72%, rgba(255,120,30,0) 100%); mix-blend-mode: screen; }
+.A .warm { background: linear-gradient(to top, rgba(255,150,60,0) 0%, rgba(255,150,60,0) 30%, rgba(255,150,60,.55) 62%, rgba(255,170,80,.75) 72%); -webkit-mask-image: url(src/body_A.png); mask-image: url(src/body_A.png); -webkit-mask-size: 1280px 720px; mask-size: 1280px 720px; mix-blend-mode: soft-light; }
+.A .vig { background: radial-gradient(ellipse 900px 620px at 760px 380px, rgba(0,0,0,0) 55%, rgba(4,2,12,.55) 100%); }
+.A .copy { position: absolute; left: 48px; top: 40px; }
+.A .label { font-size: 30px; }
+.A .num { font-size: 124px; margin-top: 8px; }
+
+/* --- B: «было — стало»: узкая полоса Таймс-сквер, широкий кадр внутреннего ядра ------------------------- */
+.B .left { clip-path: polygon(0 0, 452px 0, 392px 720px, 0 720px); }
+.B .left img { position: absolute; height: 720px; width: 1280px; left: -150px; top: 0; filter: saturate(1.15) brightness(1.05); }
+.B .left .dim { position: absolute; inset: 0; background: linear-gradient(to top, rgba(6,4,20,.8) 0%, rgba(6,4,20,0) 42%); }
+.B .core { filter: saturate(1.1) contrast(1.05); }
+.B .scrim { background: radial-gradient(ellipse 560px 260px at 860px 120px, rgba(20,6,0,.72) 0%, rgba(20,6,0,.45) 50%, rgba(20,6,0,0) 100%); }
+.B .edge { position: absolute; inset: 0; }
+.B .start { position: absolute; left: 34px; bottom: 34px; }
+.B .start .label { font-size: 22px; }
+.B .start .num { font-size: 76px; margin-top: 4px; }
+.B .now { position: absolute; left: 520px; top: 34px; }
+.B .now .label { font-size: 26px; color: #ffe2a8; }
+.B .now .num { font-size: 132px; margin-top: 6px; }
+
+/* --- C: Земля в разрезе, путь из Нью-Йорка насквозь, на выходе — «?» ---------------------------------- */
+.C .space { background: radial-gradient(ellipse 900px 700px at 900px 360px, #13234a 0%, #0a1430 45%, #050916 100%); }
+.C canvas.layer { mix-blend-mode: screen; }
+.C .bloom { background: radial-gradient(circle at 884px 352px, rgba(255,236,190,.55) 0, rgba(255,170,70,.28) 60px, rgba(255,120,40,0) 170px); mix-blend-mode: screen; }
+.C .globe { position: absolute; left: 545px; top: 4px; width: 712px; height: 712px; }
+.C .copy { position: absolute; left: 50px; top: 150px; }
+.C .copy .label { font-size: 26px; }
+.C .copy .num { font-size: 112px; margin-top: 10px; line-height: .92; }
+.C .copy .sub { font-size: 34px; margin-top: 22px; opacity: .92; }
+.C .tag { position: absolute; font-weight: 700; font-size: 24px; letter-spacing: .16em; }
+.C .q { position: absolute; width: 96px; height: 96px; border-radius: 50%; border: 5px solid var(--accent); color: var(--accent); font-weight: 700; font-size: 72px; line-height: 88px; text-align: center; box-shadow: 0 0 30px rgba(95,242,232,.55), inset 0 0 18px rgba(95,242,232,.35); background: rgba(5,12,26,.55); }
+</style>
+</head>
+<body>
+
+<div class="thumb A">
+  <img class="layer" src="src/hole_A.png">
+  <div class="layer neon"></div>
+  <div class="layer heat"></div>
+  <div class="layer bloom"></div>
+  <img class="layer body" src="src/body_A.png">
+  <div class="layer warm"></div>
+  <div class="layer vig"></div>
+  <div class="copy shadow">
+    <div class="label">Straight down</div>
+    <div class="num mono">12,742<small>km</small></div>
+  </div>
+</div>
+
+<div class="thumb B">
+  <img class="layer core" src="src/core_g.png">
+  <div class="layer scrim"></div>
+  <div class="layer left"><img src="src/ts_c.png"><div class="dim"></div></div>
+  <svg class="edge" width="1280" height="720"><line x1="452" y1="0" x2="392" y2="720" stroke="#5ff2e8" stroke-width="6"/><line x1="452" y1="0" x2="392" y2="720" stroke="#5ff2e8" stroke-width="22" stroke-opacity=".25"/></svg>
+  <div class="start shadow">
+    <div class="label">Times Square</div>
+    <div class="num mono">0<small>m</small></div>
+  </div>
+  <div class="now shadow">
+    <div class="label">Centre of the Earth</div>
+    <div class="num mono">6,371<small>km</small></div>
+  </div>
+</div>
+
+<div class="thumb C">
+  <div class="layer space"></div>
+  <canvas class="layer" id="stars" width="1280" height="720"></canvas>
+  <img class="globe" src="src/globe_C.png">
+  <div class="layer bloom"></div>
+  <div class="tag shadow" style="left: 940px; top: 46px;">NEW YORK</div>
+  <div class="q" style="left: 752px; top: 552px;">?</div>
+  <div class="copy shadow">
+    <div class="label">Times Square</div>
+    <div class="num">STRAIGHT<br>THROUGH</div>
+    <div class="sub mono">12,742 km</div>
+  </div>
+</div>
+
+<script>
+const c = new URLSearchParams(location.search).get('c') || 'A';
+document.querySelector('.thumb.' + c).classList.add('on');
+// звёзды для C
+const sc = document.getElementById('stars');
+const ctx = sc.getContext('2d');
+let seed = 11;
+const rnd = () => ((seed = (seed * 16807) % 2147483647) / 2147483647);
+for (let i = 0; i < 260; i++) {
+  const a = 0.15 + rnd() * 0.6;
+  ctx.fillStyle = `rgba(220,232,255,${a})`;
+  ctx.beginPath();
+  ctx.arc(rnd() * 1280, rnd() * 720, rnd() < 0.9 ? 0.8 : 1.6, 0, Math.PI * 2);
+  ctx.fill();
+}
+Promise.all([document.fonts.ready, ...[...document.images].map((im) => im.decode().catch(() => {}))]).then(() => (window.ready = true));
+</script>
+</body>
+</html>

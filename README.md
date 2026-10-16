@@ -170,3 +170,20 @@ node pov/render-all.js 3 60 --range 180,240 --out pov/out/min/video_180_240.mp4
 python3 pov/assemble_audio.py 180 240        # pov/out/min/audio_180_240.wav
 pov/review-segment.sh pov/out/min/seg_180_240.mp4 pov/renders/minutes/04_3-00_4-00.mp4
 ```
+
+### Обложки
+
+Три варианта обложки, 1280×720 (`pov/thumbs/thumb_*.jpg`). Шрифты и бирюзовый акцент — как у надписей в ролике.
+
+| Файл | Идея |
+|---|---|
+| `thumb_A_straight_down.jpg` | открытый люк на Таймс-сквер, под ним — кольца всех слоёв Земли до раскалённого центра; «STRAIGHT DOWN · 12,742 km» |
+| `thumb_B_times_square_to_core.jpg` | «было — стало»: полоса Таймс-сквер (0 m) и центр Земли с браслетом (6,371 km) |
+| `thumb_C_straight_through.jpg` | Земля в разрезе: путь из Нью-Йорка насквозь, на выходе — «?»; «TIMES SQUARE · STRAIGHT THROUGH» |
+
+```bash
+node pov/thumbs/grab.js '[{"name":"core_g","t":695,"fov":72}]'          # кадр ролика без надписей, 2560×1440
+node pov/thumbs/shot.js hole.html "pitch=-80&fov=50&shiftx=150" pov/thumbs/src/hole_A.png canvas
+node pov/thumbs/shot.js cutaway.html "spin=200&cx=1.1&cy=2.6&cz=3.3&hero=1.75&heroy=0.45" pov/thumbs/src/globe_C.png canvas
+node pov/thumbs/shot.js thumbs.html "c=A" pov/thumbs/draft_A.png      # сборка обложки (A, B или C)
+```

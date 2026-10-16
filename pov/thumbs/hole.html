@@ -1,0 +1,248 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Thumbnail scene: the hole</title>
+<!-- Обложка A: открытый люк на Таймс-сквер, а под ним — шахта сквозь все слои Земли (настоящие текстуры
+     из deep.js), всё горячее к центру, внизу — раскалённое ядро. Камера — глаза героя, взгляд вниз. -->
+<link rel="stylesheet" href="/node_modules/@fontsource/space-grotesk/700.css">
+<style>html, body { margin: 0; background: #000; } canvas { display: block; }</style>
+<script type="importmap">{ "imports": { "three": "/node_modules/three/build/three.module.js" } }</script>
+</head>
+<body>
+<canvas id="c"></canvas>
+<script type="module">
+import * as THREE from 'three';
+
+const QS = new URLSearchParams(location.search);
+const W = 1280;
+const H = 720;
+const PITCH = parseFloat(QS.get('pitch') || '-80');
+const FOV = parseFloat(QS.get('fov') || '50');
+const COVER = QS.get('cover') === '1';
+const renderer = new THREE.WebGLRenderer({ canvas: document.getElementById('c'), antialias: true, preserveDrawingBuffer: true, alpha: true });
+renderer.setPixelRatio(2);
+renderer.setSize(W, H, false);
+renderer.outputColorSpace = THREE.SRGBColorSpace;
+renderer.toneMapping = THREE.ACESFilmicToneMapping;
+renderer.toneMappingExposure = 1.1;
+
+const scene = new THREE.Scene();
+scene.background = new THREE.Color(0x05040a);
+const camera = new THREE.PerspectiveCamera(FOV, W / H, 0.02, 2000);
+camera.rotation.order = 'YXZ';
+// люк — точно на оси взгляда
+camera.position.set(0, 1.62, 1.62 / Math.tan((-PITCH * Math.PI) / 180));
+camera.rotation.set((PITCH * Math.PI) / 180, 0, 0);
+// сдвиг кадра вбок (место под надпись): то же, что сдвинуть картинку, без пустого края
+const SHIFT = parseFloat(QS.get('shiftx') || '0');
+if (SHIFT) camera.setViewOffset(W, H, -SHIFT, 0, W, H);
+
+const loader = new THREE.TextureLoader();
+const tex = (name) => {
+  const t = loader.load(`/pov/thumbs/src/tex_${name}.png`);
+  t.colorSpace = THREE.SRGBColorSpace;
+  t.wrapS = t.wrapT = THREE.RepeatWrapping;
+  t.anisotropy = 8;
+  return t;
+};
+
+// --- шахта: слои по логарифму глубины, у каждого свой оттенок свечения ------------------------------------
+const R = 0.6;
+// [слой, °C, свечение, жидкость, кристалл, освещённость]: зелёный и синий слои светятся слабо — их цвет читается
+const LAYERS = [
+  ['gneiss', 0, 0.0, 0, 0, 0.55],
+  ['granite', 0, 0.0, 0, 0, 0.75],
+  ['granulite', 600, 0.35, 0, 0, 0.7],
+  ['peridotite', 800, 0.25, 0, 0, 1.15],
+  ['wadsleyite', 1400, 0.2, 0, 0, 1.2],
+  ['ringwoodite', 1550, 0.25, 0, 0, 1.35],
+  ['bridgmanite', 2200, 0.9, 0, 0, 1.25],
+  ['dpp', 3200, 1.3, 0, 0, 1.2],
+  ['liquid', 4500, 1.4, 1, 0, 1.0],
+  ['crystal', 5300, 1.5, 0, 1, 1.0],
+];
+// радиусы колец на экране (доли внешнего): к центру чуть теснее — шахта читается глубокой, но каждый слой виден
+const RING = [1, 0.86, 0.735, 0.62, 0.52, 0.43, 0.35, 0.28, 0.215, 0.155, 0.1];
+function blackbody(c) {
+  const k = (c + 273) / 100;
+  let r, g, b;
+  if (k <= 66) { r = 255; g = 99.47 * Math.log(k) - 161.12; b = k <= 19 ? 0 : 138.52 * Math.log(k - 10) - 305.04; }
+  else { r = 329.7 * Math.pow(k - 60, -0.1332); g = 288.12 * Math.pow(k - 60, -0.0755); b = 255; }
+  return new THREE.Color(Math.min(255, Math.max(0, r)) / 255, Math.min(255, Math.max(0, g)) / 255, Math.min(255, Math.max(0, b)) / 255).convertSRGBToLinear();
+}
+
+const wallVS = `
+varying vec2 vUv; varying float vK;
+uniform float uK0, uK1;
+void main() { vUv = uv; vK = mix(uK0, uK1, uv.y); gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0); }`;
+const wallFS = `
+uniform sampler2D uMap; uniform vec3 uGlowCol; uniform float uGlow, uLiquid, uCrystal, uRepV, uLight;
+varying vec2 vUv; varying float vK;
+vec3 liquidRamp(float v) {
+  vec3 a = vec3(0.42, 0.06, 0.01), b = vec3(1.0, 0.36, 0.05), c = vec3(1.0, 0.78, 0.32), d = vec3(1.0, 0.97, 0.88);
+  return v < 0.4 ? mix(a, b, v / 0.4) : v < 0.75 ? mix(b, c, (v - 0.4) / 0.35) : mix(c, d, (v - 0.75) / 0.25);
+}
+void main() {
+  vec2 uv = vec2(vUv.x, vUv.y * uRepV);
+  vec3 base = texture2D(uMap, uv).rgb;
+  float lum = dot(base, vec3(0.3, 0.5, 0.2));
+  float dark = 1.0 - clamp(sqrt(lum) * 1.6, 0.0, 1.0);
+  vec3 col = base * uLight;
+  col += uGlowCol * uGlow * (0.12 + 1.1 * dark * dark * dark) * 0.9;
+  if (uLiquid > 0.5) {
+    float l = clamp(base.r * 1.2 - 0.05, 0.0, 1.0);
+    col = liquidRamp(l) * (0.9 + 1.4 * l);
+  }
+  if (uCrystal > 0.5) {
+    float cry = base.r;
+    float seam = 1.0 - smoothstep(0.08, 0.17, cry);
+    vec3 cc = mix(vec3(0.82, 0.46, 0.16), vec3(1.0, 0.88, 0.6), smoothstep(0.2, 1.0, cry));
+    col = cc * (1.0 - 0.6 * seam) * 1.1 + vec3(1.0, 0.42, 0.08) * 2.4 * seam;
+  }
+  // граница слоёв: тонкий тёмный шов и светлая кромка — слои читаются как кольца
+  float e = min(vUv.y, 1.0 - vUv.y);
+  col *= 0.55 + 0.45 * smoothstep(0.0, 0.035, e);
+  col += uGlowCol * uGlow * 0.6 * (1.0 - smoothstep(0.0, 0.02, vUv.y));
+  gl_FragColor = vec4(col, 1.0);
+  #include <tonemapping_fragment>
+  #include <colorspace_fragment>
+}`;
+
+const shaft = new THREE.Group();
+scene.add(shaft);
+const EYE = 1.62;
+const D0 = EYE + 0.3; // от глаз до верха первого слоя
+// бетон под плиткой
+{
+  const g = new THREE.CylinderGeometry(R, R, 0.3, 48, 1, true);
+  g.translate(0, -0.15, 0);
+  shaft.add(new THREE.Mesh(g, new THREE.MeshLambertMaterial({ color: 0x2c2a30, side: THREE.BackSide })));
+}
+LAYERS.forEach(([name, T, glow, liquid, crystal, light], i) => {
+  const a = D0 / RING[i] - EYE;
+  const b = D0 / RING[i + 1] - EYE;
+  const len = b - a;
+  const g = new THREE.CylinderGeometry(R, R, len, 64, 1, true);
+  g.translate(0, -(a + len / 2), 0);
+  const uvA = g.attributes.uv;
+  for (let k = 0; k < uvA.count; k++) uvA.setY(k, 1 - uvA.getY(k));
+  const mat = new THREE.ShaderMaterial({
+    uniforms: {
+      uMap: { value: tex(name) },
+      uGlowCol: { value: T ? blackbody(T) : new THREE.Color(0, 0, 0) },
+      uGlow: { value: glow },
+      uLiquid: { value: liquid },
+      uCrystal: { value: crystal },
+      uRepV: { value: Math.max(0.6, len / 1.2) },
+      uLight: { value: light },
+      uK0: { value: 0 }, uK1: { value: 1 },
+    },
+    vertexShader: wallVS,
+    fragmentShader: wallFS,
+    side: THREE.BackSide,
+  });
+  shaft.add(new THREE.Mesh(g, mat));
+});
+const BOTTOM = D0 / RING[RING.length - 1] - EYE;
+// дно шахты — центр Земли: белое каление
+{
+  const cap = new THREE.Mesh(new THREE.CircleGeometry(R, 48), new THREE.MeshBasicMaterial({ color: new THREE.Color(1.0, 0.96, 0.86).multiplyScalar(4) }));
+  cap.rotation.x = -Math.PI / 2;
+  cap.position.y = -BOTTOM;
+  shaft.add(cap);
+}
+
+// --- мостовая Таймс-сквер с дырой, чугунная рама люка ------------------------------------------------
+function paverTexture() {
+  const c = document.createElement('canvas');
+  c.width = c.height = 512;
+  const ctx = c.getContext('2d');
+  ctx.fillStyle = '#4c4a55';
+  ctx.fillRect(0, 0, 512, 512);
+  let seed = 7;
+  const rnd = () => ((seed = (seed * 16807) % 2147483647) / 2147483647);
+  for (let y = 0; y < 512; y += 64) for (let x = 0; x < 512; x += 128) {
+    const v = 70 + Math.floor(rnd() * 14);
+    ctx.fillStyle = `rgb(${v},${v - 3},${v + 10})`;
+    ctx.fillRect(x + 3, y + 3, 122, 58);
+  }
+  for (let i = 0; i < 4; i++) {
+    ctx.fillStyle = 'rgba(190,194,204,0.55)';
+    ctx.beginPath();
+    ctx.arc(rnd() * 512, rnd() * 512, 3, 0, Math.PI * 2);
+    ctx.fill();
+  }
+  const t = new THREE.CanvasTexture(c);
+  t.colorSpace = THREE.SRGBColorSpace;
+  t.wrapS = t.wrapT = THREE.RepeatWrapping;
+  t.repeat.set(5, 5);
+  t.anisotropy = 8;
+  return t;
+}
+{
+  const shape = new THREE.Shape();
+  shape.moveTo(-8, -8); shape.lineTo(8, -8); shape.lineTo(8, 8); shape.lineTo(-8, 8); shape.lineTo(-8, -8);
+  const hole = new THREE.Path();
+  hole.absarc(0, 0, R + 0.12, 0, Math.PI * 2, true);
+  shape.holes.push(hole);
+  const g = new THREE.ShapeGeometry(shape, 64);
+  const uv = g.attributes.uv;
+  const p = g.attributes.position;
+  for (let i = 0; i < p.count; i++) uv.setXY(i, p.getX(i) / 3.2, p.getY(i) / 3.2);
+  const pave = new THREE.Mesh(g, new THREE.MeshLambertMaterial({ map: paverTexture() }));
+  pave.rotation.x = -Math.PI / 2;
+  scene.add(pave);
+  // рама: чугунное кольцо чуть выше плитки, болты
+  const frame = new THREE.Mesh(new THREE.RingGeometry(R, R + 0.12, 64), new THREE.MeshStandardMaterial({ color: 0x3a3a40, roughness: 0.45, metalness: 0.6 }));
+  frame.rotation.x = -Math.PI / 2;
+  frame.position.y = 0.004;
+  scene.add(frame);
+  const lip = new THREE.Mesh(new THREE.CylinderGeometry(R, R, 0.06, 64, 1, true), new THREE.MeshStandardMaterial({ color: 0x2a2a30, roughness: 0.5, metalness: 0.6, side: THREE.BackSide }));
+  lip.position.y = -0.03;
+  scene.add(lip);
+}
+
+// --- крышка люка проваливается в шахту ------------------------------------------------------------------
+if (COVER) {
+  const c = document.createElement('canvas');
+  c.width = c.height = 512;
+  const ctx = c.getContext('2d');
+  const m = 256;
+  const disc = (rad, fill) => { ctx.fillStyle = fill; ctx.beginPath(); ctx.arc(m, m, rad, 0, Math.PI * 2); ctx.fill(); };
+  disc(256, '#6b6b72'); disc(238, '#2a2a2f'); disc(182, '#6b6b72'); disc(172, '#2a2a2f');
+  ctx.save(); ctx.beginPath(); ctx.arc(m, m, 164, 0, Math.PI * 2); ctx.clip();
+  for (let y = 0; y < 512; y += 30) for (let x = 0; x < 512; x += 30) { ctx.fillStyle = '#4a4a52'; ctx.fillRect(x + 5, y + 5, 20, 20); }
+  ctx.restore();
+  ctx.fillStyle = '#7a7a82';
+  ctx.font = '700 44px "Space Grotesk", sans-serif';
+  ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+  const chars = [...'NEW YORK CITY'];
+  chars.forEach((ch, i) => {
+    const a = -Math.PI / 2 - 1.2 + (2.4 * i) / (chars.length - 1);
+    ctx.save(); ctx.translate(m + Math.cos(a) * 210, m + Math.sin(a) * 210); ctx.rotate(a + Math.PI / 2); ctx.fillText(ch, 0, 0); ctx.restore();
+  });
+  const ct = new THREE.CanvasTexture(c);
+  ct.colorSpace = THREE.SRGBColorSpace;
+  const top = new THREE.MeshStandardMaterial({ map: ct, roughness: 0.55, metalness: 0.3 });
+  const side = new THREE.MeshStandardMaterial({ color: 0x2c2c30, roughness: 0.5, metalness: 0.4 });
+  const cover = new THREE.Mesh(new THREE.CylinderGeometry(R * 0.96, R * 0.96, 0.05, 48), [side, top, side]);
+  cover.position.set(parseFloat(QS.get('cx') || '0.05'), -parseFloat(QS.get('cd') || '1.15'), parseFloat(QS.get('cz') || '-0.12'));
+  cover.rotation.set(parseFloat(QS.get('ctx') || '0.55'), 0.4, parseFloat(QS.get('ctz') || '-0.35'));
+  scene.add(cover);
+}
+
+// --- свет: холодный неон площади сверху, жар снизу из шахты ---------------------------------------------
+scene.add(new THREE.HemisphereLight(0x8f7cff, 0x1a1020, 0.9));
+const neonA = new THREE.DirectionalLight(0xff4fa0, 0.7); neonA.position.set(-3, 4, 1); scene.add(neonA);
+const neonB = new THREE.DirectionalLight(0x3fd8ff, 0.6); neonB.position.set(3, 4, -1); scene.add(neonB);
+// жар поднимается из люка: подсвечивает раму и плитку вокруг (и героя — это делает склейка)
+const heat = new THREE.PointLight(0xff8a30, parseFloat(QS.get('heat') || '3.2'), 4.5, 1.4);
+heat.position.set(0, 0.12, 0);
+scene.add(heat);
+
+window.render = () => renderer.render(scene, camera);
+THREE.DefaultLoadingManager.onLoad = () => { window.render(); window.ready = true; };
+</script>
+</body>
+</html>
