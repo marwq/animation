@@ -217,7 +217,7 @@ void main() {
 // от неба, тёплое свечение в сторону Солнца на рассвете и закате, дымка вдали
 const CLOUD_FS = `
 uniform sampler2D uNoise; uniform vec2 uOff; uniform float uCover; uniform vec3 uSun; uniform vec3 uLit; uniform vec3 uShade;
-uniform vec3 uGlow; uniform vec3 uHaze; uniform float uHazeK; uniform float uSoft; uniform float uBands;
+uniform vec3 uGlow; uniform vec3 uHaze; uniform float uHazeK; uniform float uSoft; uniform float uBands; uniform float uFade;
 varying vec2 vXZ; varying float vDist; varying vec3 vW;
 #include <logdepthbuf_pars_fragment>
 float dens(vec2 p) {
@@ -245,7 +245,7 @@ void main() {
   c += uGlow * fwd * (0.4 + 0.6 * top);
   float haze = 1.0 - exp(-pow(vDist * uHazeK, 2.0));
   c = mix(c, uHaze, haze * 0.8);
-  gl_FragColor = vec4(c, a * (1.0 - smoothstep(180000.0, 230000.0, vDist)));
+  gl_FragColor = vec4(c, a * (1.0 - smoothstep(180000.0, 230000.0, vDist)) * uFade);
   #include <tonemapping_fragment>
   #include <colorspace_fragment>
 }`;
@@ -346,7 +346,7 @@ export function buildSummit() {
   const seaU = {
     uSea: { value: 0 }, uSun: { value: new THREE.Vector3(0, 1, 0) }, uSunCol: { value: new THREE.Color(1, 1, 1) },
     uHor: { value: new THREE.Color() }, uZen: { value: new THREE.Color() }, uDeep: { value: new THREE.Color(0.03, 0.12, 0.22) },
-    uHaze: { value: new THREE.Color() }, uHazeK: { value: 1 / 220000 }, uNoise: { value: noise }, uTime: { value: 0 }, uLight: { value: 1 },
+    uHaze: { value: new THREE.Color() }, uHazeK: { value: 1 / 220000 }, uNoise: { value: noise }, uTime: { value: 0 }, uLight: { value: 1 }, uFade: { value: 1 },
   };
   const seaMat = new THREE.ShaderMaterial({
     uniforms: seaU,
@@ -364,7 +364,7 @@ export function buildSummit() {
       }`,
     fragmentShader: `
       uniform vec3 uSun; uniform vec3 uSunCol; uniform vec3 uHor; uniform vec3 uZen; uniform vec3 uDeep; uniform vec3 uHaze;
-      uniform float uHazeK; uniform sampler2D uNoise; uniform float uTime; uniform float uLight;
+      uniform float uHazeK; uniform sampler2D uNoise; uniform float uTime; uniform float uLight; uniform float uFade;
       varying vec3 vW; varying float vDist;
       #include <logdepthbuf_pars_fragment>
       void main() {
@@ -389,7 +389,7 @@ export function buildSummit() {
         c += uSunCol * spec * smoothstep(-0.03, 0.03, uSun.y);
         float haze = 1.0 - exp(-pow(vDist * uHazeK, 2.0));
         c = mix(c, uHaze, haze * 0.55);
-        gl_FragColor = vec4(c, 1.0);
+        gl_FragColor = vec4(c, uFade);
         #include <tonemapping_fragment>
         #include <colorspace_fragment>
       }`,
@@ -403,7 +403,7 @@ export function buildSummit() {
   const cloudU = {
     uNoise: { value: noise }, uOff: { value: new THREE.Vector2() }, uCover: { value: 0.55 }, uSoft: { value: 0.08 },
     uSun: { value: new THREE.Vector3(0, 1, 0) }, uLit: { value: new THREE.Color(1, 1, 1) }, uShade: { value: new THREE.Color(0.6, 0.65, 0.75) }, uGlow: { value: new THREE.Color(0, 0, 0) },
-    uHaze: { value: new THREE.Color(0.7, 0.75, 0.85) }, uHazeK: { value: 1 / 160000 }, uBase: { value: 0 }, uBands: { value: 0 },
+    uHaze: { value: new THREE.Color(0.7, 0.75, 0.85) }, uHazeK: { value: 1 / 160000 }, uBase: { value: 0 }, uBands: { value: 0 }, uFade: { value: 1 },
   };
   const cloudGeo = polarGrid(1500, 240000, 70, 200, (x, z, rr) => 3900 - SUMMIT - drop(rr) + 120 * fbm(x / 4000, z / 4000, 3));
   const cloudMat = new THREE.ShaderMaterial({ uniforms: cloudU, vertexShader: CLOUD_VS, fragmentShader: CLOUD_FS, transparent: true, depthWrite: false, side: THREE.DoubleSide });
@@ -412,7 +412,26 @@ export function buildSummit() {
   clouds.renderOrder = 2;
   group.add(clouds);
 
-  return { group, snow, land, sea, seaU, clouds, cloudU };
+  return { group, snow, cap, land, sea, seaU, clouds, cloudU };
+}
+
+// растворение всей местности (после отрыва, когда герой поднимается над ней): 1 — видна, 0 — нет
+export function setSummitFade(s, f) {
+  const on = f < 0.999;
+  for (const m of [s.snow.material, s.land.material]) {
+    if (m.transparent !== on) {
+      m.transparent = on;
+      m.needsUpdate = true;
+    }
+    m.opacity = f;
+    m.depthWrite = !on || f > 0.5;
+  }
+  if (s.sea.material.transparent !== on) {
+    s.sea.material.transparent = on;
+    s.sea.material.needsUpdate = true;
+  }
+  s.seaU.uFade.value = f;
+  s.cloudU.uFade.value = f;
 }
 
 // env: { sun, horizon, zenith, dark, tau, seaLevel, cover }

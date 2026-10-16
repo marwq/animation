@@ -4,7 +4,7 @@ import * as THREE from 'three';
 import { buildBody, drawGauge, poseBody } from './body.js';
 import { buildHud, updateHud } from './hud.js';
 import { buildSky, skyDir, updateSky } from './sky.js';
-import { buildSummit, updateSummit } from './summit.js';
+import { buildSummit, setSummitFade, updateSummit } from './summit.js';
 import { buildFx, updateFx } from './fx.js';
 import { buildPlanet, updatePlanet } from './planet.js';
 import { MOON, buildDebris, buildMoonSurface, buildMoons, buildRoche, moonCenter, moonDir, updateDebris, updateMoons } from './space.js';
@@ -477,7 +477,7 @@ window.renderAt = (t) => {
   const R = Rm;
   // пока внизу подробная местность вершины, шар Земли — на 2,5 км ниже её уровня моря (иначе он протыкает
   // низины и море колпаком); когда местность растворилась — на своём месте
-  const a = R - (6263 + 2500) * (1 - smooth((hAlt - 3e5) / 6e5));
+  const a = R - (6263 + 2500) * (1 - smooth((hAlt - 3e4) / 6e4));
   // кольцо: растёт до предела Роша, потом расползается за него и рвётся на комки, внутреннее редеет; в конце исчезает
   const rg = RING;
   const ringGrow = smooth((t - rg.grow[0]) / (rg.grow[1] - rg.grow[0]));
@@ -506,9 +506,11 @@ window.renderAt = (t) => {
     const dl = roche.label.getWorldPosition(new THREE.Vector3()).distanceTo(eye);
     roche.label.scale.set(dl * 0.24, dl * 0.045, 1);
   }
-  // местность вершины растворяется, когда герой выше 300–900 км
-  const fadeLocal = 1 - smooth((hAlt - 3e5) / 6e5);
+  // местность вершины растворяется, когда герой выше 100–300 км (дальше видна сама планета)
+  const fadeLocal = 1 - smooth((hAlt - 3e4) / 6e4); // пока герой смотрит вверх на чёрное небо
   local.visible = fadeLocal > 0.01;
+  setSummitFade(summit, fadeLocal);
+  fx.group.visible = fadeLocal > 0.5;
   updateDebris(debris, t, eye, smooth((t - 466) / 10) * (1 - smooth((t - 600) / 40)) + 0.8 * smooth((t - 670) / 20) * (1 - smooth((t - 770) / 15)), 0.3 + 0.7 * smooth((sk.sun.y + 0.1) / 0.2));
   updateMoons(moons, t, C, smooth((t - 698) / 60), smooth((t - 650) / 12) * (1 - smooth((t - 770) / 10)), Mc);
   // поверхность новой луны рядом с местом посадки
