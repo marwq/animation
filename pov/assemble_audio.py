@@ -86,7 +86,7 @@ def write(path, x):
 
 if __name__ == '__main__':
     a, b = float(sys.argv[1]), float(sys.argv[2])
-    out = Path(sys.argv[3]) if len(sys.argv) > 3 else HERE / 'out' / 'min' / f'audio_{int(a)}_{int(b)}.wav'
+    out = Path(sys.argv[3]).resolve() if len(sys.argv) > 3 else HERE / 'out' / 'min' / f'audio_{int(a)}_{int(b)}.wav'
     mix = build(a, b)
     write(out, mix)
     print(out.relative_to(HERE.parent), 'peak', round(float(np.max(np.abs(mix))), 3))
