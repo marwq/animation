@@ -46,6 +46,7 @@ def main():
     starts = []
     for line, idx, text in CHUNKS:
         starts.append(by_line[line][idx]['s'])
+    t_title = by_line[7][4]['s']
     for k, (line, idx, text) in enumerate(CHUNKS):
         a = starts[k]
         same_line_next = k + 1 < len(CHUNKS) and CHUNKS[k + 1][0] == line
@@ -53,10 +54,11 @@ def main():
             b = starts[k + 1]
         else:
             b = by_line[line][-1]['e'] + (0.45 if line == 5 else 0.15)
+        if line == 7:
+            b = min(b, t_title)                 # последняя фраза уступает место титру
         pop = '{\\fscx78\\fscy78\\t(0,90,\\fscx104\\fscy104)\\t(90,150,\\fscx100\\fscy100)}'
         events.append(f'Dialogue: 0,{ts(a - 0.03)},{ts(b)},Sub,,0,0,0,,{pop}{styled(text)}')
     # финальный титр — вместо последней фразы «the Jersey barrier.»
-    t_title = by_line[7][4]['s']
     events.append(f'Dialogue: 1,{ts(t_title)},{ts(28.0)},Title,,0,0,0,,'
                   '{\\fscx60\\fscy60\\t(0,120,\\fscx108\\fscy108)\\t(120,220,\\fscx100\\fscy100)}' + TITLE)
     # плашка реального случая (план 7)
@@ -74,8 +76,8 @@ ScaledBorderAndShadow: yes
 Format: Name, Fontname, Fontsize, PrimaryColour, SecondaryColour, OutlineColour, BackColour, Bold, Italic, Underline, StrikeOut, ScaleX, ScaleY, Spacing, Angle, BorderStyle, Outline, Shadow, Alignment, MarginL, MarginR, MarginV, Encoding
 Style: Sub,Montserrat ExtraBold,76,&H00FFFFFF,&H00FFFFFF,&H00101010,&H90000000,0,0,0,0,100,100,0,0,1,6,3,5,70,70,0,1
 Style: Title,Montserrat ExtraBold,118,&H0018C8FF,&H0018C8FF,&H00101010,&H90000000,0,0,0,0,100,100,2,0,1,8,4,5,40,40,0,1
-Style: Plate,Montserrat ExtraBold,64,&H00FFFFFF,&H00FFFFFF,&H00000000,&HB0101010,0,0,0,0,100,100,2,0,3,18,0,8,60,60,250,1
-Style: PlateSmall,Montserrat ExtraBold,40,&H00FFFFFF,&H00FFFFFF,&H00000000,&HB0101090,0,0,0,0,100,100,2,0,3,12,0,8,60,60,345,1
+Style: Plate,Montserrat ExtraBold,70,&H00FFFFFF,&H00FFFFFF,&H00000000,&HB0101010,0,0,0,0,100,100,2,0,3,18,0,8,60,60,250,1
+Style: PlateSmall,Montserrat ExtraBold,50,&H00FFFFFF,&H00FFFFFF,&H00000000,&HB0101090,0,0,0,0,100,100,2,0,3,12,0,8,60,60,360,1
 
 [Events]
 Format: Layer, Start, End, Style, Name, MarginL, MarginR, MarginV, Effect, Text""")
