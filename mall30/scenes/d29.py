@@ -114,7 +114,7 @@ def shot_turn_away(ctx, t, S):
             m.vx = -45
             m.f = -1
         draw_crowd(ctx, crowd, t)
-        w = Walk(Keys((0, 1700), (4, 2300, "lin")), 1000, 80, "sneak", t1=6)
+        w = Walk(Keys((0, 1250), (4, 1850, "lin")), 1000, 80, "sneak", t1=6)
         w.draw(ctx, HERO, t, {"face": "worried"})
         draw_dog(ctx, w.x(t) - 110, 1004, 64, 1, dog_pose(t, "trot", phase=w.dist(t) * 1.2, wag=0))
     fx.darkness(ctx, 0.62, [fx.Light(-100, 500, 900, power=0.7, glow="#9fe0ff", glow_a=0.2)])

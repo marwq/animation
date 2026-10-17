@@ -38,6 +38,7 @@ def shot_rise(ctx, t, S):
     cam = Cam(960, Keys((0, 640), (5, 520)), Keys((0, 0.9), (5, 0.8)), shake=lambda t: 0.25)
     with layer(ctx, cam, t):
         roof_bg29(ctx, "dawn")
+        CITY.roof_door(ctx, 1450, 860, 0.0, "dawn")
         hy = Keys((0, 1200), (3.0, 520, "out"))(t)
         CITY.helicopter(ctx, 700, hy, 1.0, t, False, 1.0, -0.05, inside=heli_inside(True, True, t))
         CITY.parapet_front(ctx, -1200, 3200, 1000, tod="dawn")

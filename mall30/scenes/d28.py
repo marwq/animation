@@ -48,7 +48,7 @@ def shot_climb(ctx, t, S):
         bg(ctx, "esc_big_n", (-400, -400, 2800, 1700), ST.escalator_big)
         # зомби следом
         for k in range(8):
-            fk = f(t) - 0.08 - k * 0.055
+            fk = f(t) - 0.15 - k * 0.06
             if fk < -0.1:
                 continue
             x, y = ST.esc_point(clamp(fk, -0.2, 1))
@@ -102,4 +102,4 @@ def build(S):
         Shot(c(3) - 0.1, shot_climb),
         Shot(c(4) - 0.1, shot_top),
     ]
-    S.sfx += [(c(0, True) - 1.6 + 0.45, "hatch_bang", 1.0), (c(2) - 0.1 + 0.85, "scream", 1.0)]
+    S.sfx += [(c(0, True) - 1.6 + 0.45, "hatch_bang", 1.0), (c(2) - 0.1 + 0.5, "scream", 1.0), (c(2) + 0.45, "bark", 0.7)]

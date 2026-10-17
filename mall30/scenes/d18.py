@@ -119,7 +119,7 @@ def shot_taste(ctx, t, S):
 def shot_wish(ctx, t, S):
     """Монетка в фонтан (замедление), закрытые глаза. Потом пьёт."""
     T = 0.5
-    cam = Cam(Keys((0, 1080), (3, 1040)), Keys((0, 2460), (3, 2480)), Keys((0, 1.6), (3, 1.8)))
+    cam = Cam(Keys((0, 1080), (3, 1040)), Keys((0, 2400), (3, 2410)), Keys((0, 1.6), (3, 1.8)))
     fy = M.AT_LEVELS[0]
     with layer(ctx, cam, t):
         atrium_bg("golden", 0.0, {})(ctx)

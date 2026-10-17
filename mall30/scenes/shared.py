@@ -133,7 +133,8 @@ def rosa_window_close(ctx, t, tod="dusk", sign=None, sign_k=1.0, pose_fn=None, l
     p = pose_fn(t) if pose_fn else R.stand("front", t, 4)
     ROSA.draw(ctx, 960, 1180, 150, 1, p)
     if sign:
-        sign_card(ctx, 960, 760, sign, sign_k, w=700)
+        n = len(sign) if isinstance(sign, (list, tuple)) else 1
+        sign_card(ctx, 960, 760 - max(0, n - 2) * 60, sign, sign_k, w=700)
     if flash > 0:
         fx.glow(ctx, 1120, 560, 260, "#fff2c8", 0.7 * flash)
         D.circle(ctx, 1120, 560, 30, hexrgb("#fff8e0"), None, 0, alpha=flash)

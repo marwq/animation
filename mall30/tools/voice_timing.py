@@ -49,10 +49,22 @@ def trim(path, out):
     return len(y) / sr
 
 
+def _num(m):
+    from num2words import num2words
+    txt = m.group(0)
+    if ":" in txt or "." in txt:
+        a, b = re.split(r"[:.]", txt)[:2]
+        return num2words(int(a)) + " " + num2words(int(b))
+    return num2words(int(txt.replace(",", "")))
+
+
 def norm_words(s):
-    s = s.lower().replace("-", " ")
-    s = re.sub(r"[^a-z0-9' ]", " ", s)
-    return [w for w in s.split() if w]
+    s = s.lower()
+    s = re.sub(r"(\d+)(st|nd|rd|th)\b", lambda m: __import__("num2words").num2words(int(m.group(1)), to="ordinal"), s)
+    s = re.sub(r"\d+[:.]\d+|\d[\d,]*", _num, s)
+    s = s.replace("-", " ").replace("a.m", "am").replace("p.m", "pm")
+    s = re.sub(r"[^a-z' ]", " ", s)
+    return [w for w in s.split() if w and w != "and"]
 
 
 def wer(ref, hyp):

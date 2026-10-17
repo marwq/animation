@@ -225,3 +225,6 @@ def build(S):
     ]
     S.shots[-1].hide_day = True
     S.shots[-1].hide_caps = True
+    t_turn = S.shots[4].start
+    S.sfx += [(t2 + 0.45, "hatch_bang", 0.9), (t_turn + 0.5, "scream", 1.0), (t_turn + 0.55, "bark", 0.7),
+              (8.35, "metal_hit", 1.0)]
