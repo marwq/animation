@@ -1,17 +1,19 @@
-"""Озвучка: edge-tts по репликам из script.py, тайминги каждого слова, общая дорожка.
+"""Озвучка: edge-tts по репликам из films/<ролик>/script.py, тайминги слов, общая дорожка.
 
-Результат:
-  build/tts/<id>-<hash>.mp3/.json  — кэш реплик (повторно не запрашиваются)
-  build/timeline.json              — начало/конец реплик и слов на общей шкале
-  build/voice.wav                  — голос целиком, 48 кГц моно, обработанный
+Результат (в build/<ролик>/):
+  tts/<id>-<hash>.mp3/.json  — кэш реплик (повторно не запрашиваются)
+  timeline.json              — начало/конец реплик и слов на общей шкале
+  voice.wav                  — голос целиком, 48 кГц моно, обработанный
 
-Запуск:  python tts.py [--voice en-US-ChristopherNeural] [--rate -4%] [--pitch -2Hz]
-Через прокси с собственным CA:  EDGE_CA_BUNDLE=/path/ca.crt python tts.py
+Запуск:  python tts.py --film burglar [--voice en-US-ChristopherNeural] [--rate -2%] [--pitch -2Hz]
+Если в сценарии задан TARGET (секунды), паузы растягиваются так, чтобы ролик длился ровно столько.
+Через прокси с собственным CA:  EDGE_CA_BUNDLE=/path/ca.crt python tts.py ...
 """
 import argparse
 import asyncio
 import difflib
 import hashlib
+import importlib
 import json
 import os
 import re
@@ -21,10 +23,7 @@ import sys
 
 import numpy as np
 
-import script
-
 HERE = os.path.dirname(os.path.abspath(__file__))
-BUILD = os.path.join(HERE, "build")
 SR = 48000
 FORMAT = "audio-24khz-96kbitrate-mono-mp3"
 
@@ -149,20 +148,23 @@ def process_voice(src, dst):
 
 def main():
     ap = argparse.ArgumentParser()
+    ap.add_argument("--film", default="vacuum")
     ap.add_argument("--voice", default="en-US-ChristopherNeural")
     ap.add_argument("--rate", default="-2%")
     ap.add_argument("--pitch", default="-2Hz")
     args = ap.parse_args()
+    script = importlib.import_module(f"films.{args.film}.script")
+    build = os.path.join(HERE, "build", args.film)
 
-    os.makedirs(os.path.join(BUILD, "tts"), exist_ok=True)
+    os.makedirs(os.path.join(build, "tts"), exist_ok=True)
     edge_tts = setup_edge()
 
-    clips, t = [], script.LEAD_IN
-    timeline = {"lines": [], "voice": args.voice}
+    # 1) синтез (с кэшем) и обрезка тишины по краям
+    takes = []
     for lid, text, gap, opts in script.LINES:
         say = spoken_text(text, opts)
         key = hashlib.sha1(f"{args.voice}|{args.rate}|{args.pitch}|{FORMAT}|{say}".encode()).hexdigest()[:10]
-        mp3 = os.path.join(BUILD, "tts", f"{lid}-{key}.mp3")
+        mp3 = os.path.join(build, "tts", f"{lid}-{key}.mp3")
         meta = mp3[:-4] + ".json"
         if not (os.path.exists(mp3) and os.path.exists(meta)):
             for attempt in range(4):
@@ -175,8 +177,23 @@ def main():
         words = json.load(open(meta))
         x = decode(mp3)
         a, b = speech_bounds(x)
-        x = x[a:b]
-        lead = a / SR
+        takes.append((lid, text, gap, opts, words, x[a:b], a / SR))
+
+    # 2) масштаб пауз: под TARGET или из сценария
+    gs = getattr(script, "GAP_SCALE", 1.0)
+    target = getattr(script, "TARGET", None)
+    last_gap = takes[-1][2] * gs
+    if target:
+        last_gap = takes[-1][2]
+        fixed = script.LEAD_IN + sum(script.PRE_GAP.values()) + sum(len(tk[5]) / SR for tk in takes) + last_gap + 0.5
+        inner = sum(tk[2] for tk in takes[:-1])
+        gs = min(1.6, max(0.7, (target - fixed) / inner))
+        last_gap = max(1.5, target - (fixed - last_gap) - gs * inner)
+
+    # 3) раскладка на общей шкале
+    clips, t = [], script.LEAD_IN
+    timeline = {"lines": [], "voice": args.voice, "gap_scale": round(gs, 4)}
+    for i, (lid, text, gap, opts, words, x, lead) in enumerate(takes):
         t += script.PRE_GAP.get(lid, 0.0)
         start = t
         disp = display_words(text)
@@ -188,7 +205,7 @@ def main():
                        "t1": round(start + max(0, t1 - lead), 4)} for (w, e), (t0, t1) in zip(disp, wt)],
         })
         clips.append((start, x))
-        t = start + len(x) / SR + gap * script.GAP_SCALE
+        t = start + len(x) / SR + (last_gap if i == len(takes) - 1 else gap * gs)
         print(f"{lid:4s} {start:7.2f}s  {len(x)/SR:5.2f}s  {text[:60]}")
 
     total = t + 0.5
@@ -197,11 +214,11 @@ def main():
     for start, x in clips:
         i = int(start * SR)
         voice[i:i + len(x)] += x
-    raw = os.path.join(BUILD, "voice_raw.f32")
+    raw = os.path.join(build, "voice_raw.f32")
     voice.tofile(raw)
-    process_voice(raw, os.path.join(BUILD, "voice.wav"))
-    json.dump(timeline, open(os.path.join(BUILD, "timeline.json"), "w"), indent=1)
-    print(f"total {total:.1f}s, {sum(len(l[1].split()) for l in script.LINES)} words")
+    process_voice(raw, os.path.join(build, "voice.wav"))
+    json.dump(timeline, open(os.path.join(build, "timeline.json"), "w"), indent=1)
+    print(f"total {total:.2f}s, gap scale {gs:.3f}, {sum(len(l[1].split()) for l in script.LINES)} words")
 
 
 if __name__ == "__main__":

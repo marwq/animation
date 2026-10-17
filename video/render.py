@@ -1,10 +1,11 @@
-"""Рендер ролика.
+"""Рендер ролика из films/<ролик>/.
 
-  python render.py                       # весь ролик → out/video.mp4 (4 процесса)
-  python render.py --from 60 --to 75     # кусок для проверки → out/preview.mp4
-  python render.py --stills 3.2,40,95    # отдельные кадры → out/stills/*.png и лист out/sheet.png
+  python render.py --film burglar                     # весь ролик → out/burglar/video.mp4 (4 процесса)
+  python render.py --film burglar --from 60 --to 75   # кусок для проверки → out/burglar/preview.mp4
+  python render.py --film burglar --stills 3.2,40,95  # кадры → out/burglar/stills/*.png и лист sheet.png
 """
 import argparse
+import importlib
 import json
 import multiprocessing as mp
 import os
@@ -14,20 +15,29 @@ import time
 import numpy as np
 import skia
 
-import scenes
-import script
 from engine import hud
 from engine.core import BG, CX, CY, FPS, H, W, color, layer
 from engine.fx import Post
 from engine.stage import Stage
 
 HERE = os.path.dirname(os.path.abspath(__file__))
-BUILD = os.path.join(HERE, "build")
-OUT = os.path.join(HERE, "out")
+FILM = os.environ.get("FILM", "vacuum")
 
 
-def build_stage():
-    tl = json.load(open(os.path.join(BUILD, "timeline.json")))
+def paths(film=None):
+    film = film or FILM
+    return os.path.join(HERE, "build", film), os.path.join(HERE, "out", film)
+
+
+def film_modules(film=None):
+    film = film or FILM
+    return (importlib.import_module(f"films.{film}.script"), importlib.import_module(f"films.{film}.scenes"))
+
+
+def build_stage(film=None):
+    build, _ = paths(film)
+    script, scenes = film_modules(film)
+    tl = json.load(open(os.path.join(build, "timeline.json")))
     S = Stage(tl)
     scenes.build(S)
     S.finalize()
@@ -36,6 +46,7 @@ def build_stage():
 
 class Renderer:
     def __init__(self):
+        self.script, scenes = film_modules()
         self.S = build_stage()
         self.caps = hud.Captions(self.S.tl, scenes.NOCAP)
         self.post = Post()
@@ -59,7 +70,7 @@ class Renderer:
         c.restore()
         rule = sum(1 for rt in self.rule_t if t >= rt - 0.05)
         if sc.hud:
-            hud.hud(c, t, rule, script.FILE_NO, script.AGENCY, done=max(0, rule - 1))
+            hud.hud(c, t, rule, self.script.FILE_NO, self.script.AGENCY, done=max(0, rule - 1))
         if sc.captions:
             self.caps.draw(c, t)
         return self.post.apply(self.arr, t, i, glitch=S.glitch_amt(t), flash=S.flash_amt(t))
@@ -70,7 +81,7 @@ def encode_range(args):
     r = Renderer()
     ff = subprocess.Popen(["ffmpeg", "-v", "error", "-y", "-f", "rawvideo", "-pix_fmt", "rgb24",
                            "-s", f"{W}x{H}", "-r", str(FPS), "-i", "-", "-c:v", "libx264", "-preset", "medium",
-                           "-crf", "19", "-maxrate", "14M", "-bufsize", "28M", "-pix_fmt", "yuv420p", path], stdin=subprocess.PIPE)
+                           "-crf", "19", "-maxrate", "10M", "-bufsize", "20M", "-pix_fmt", "yuv420p", path], stdin=subprocess.PIPE)
     t = time.time()
     for i in range(a, b):
         ff.stdin.write(r.frame(i).tobytes())
@@ -82,13 +93,15 @@ def encode_range(args):
 
 
 def audio_path():
-    mix = os.path.join(BUILD, "mix.wav")
-    return mix if os.path.exists(mix) else os.path.join(BUILD, "voice.wav")
+    build, _ = paths()
+    mix = os.path.join(build, "mix.wav")
+    return mix if os.path.exists(mix) else os.path.join(build, "voice.wav")
 
 
 def render_video(t_from, t_to, out, workers):
-    os.makedirs(OUT, exist_ok=True)
-    tmp = os.path.join(BUILD, "segments")
+    build, outdir = paths()
+    os.makedirs(outdir, exist_ok=True)
+    tmp = os.path.join(build, "segments")
     os.makedirs(tmp, exist_ok=True)
     a, b = int(t_from * FPS), int(t_to * FPS)
     n = max(1, workers)
@@ -112,7 +125,8 @@ def render_video(t_from, t_to, out, workers):
 
 def stills(times, sheet=True):
     from PIL import Image
-    d = os.path.join(OUT, "stills")
+    _, outdir = paths()
+    d = os.path.join(outdir, "stills")
     os.makedirs(d, exist_ok=True)
     r = Renderer()
     ims = []
@@ -127,25 +141,29 @@ def stills(times, sheet=True):
         sh = Image.new("RGB", (cols * 480, rows * 270))
         for k, im in enumerate(ims):
             sh.paste(im, ((k % cols) * 480, (k // cols) * 270))
-        sh.save(os.path.join(OUT, "sheet.png"))
-        print("→", os.path.join(OUT, "sheet.png"))
+        sh.save(os.path.join(outdir, "sheet.png"))
+        print("→", os.path.join(outdir, "sheet.png"))
 
 
 def main():
+    global FILM
     ap = argparse.ArgumentParser()
+    ap.add_argument("--film", default=FILM)
     ap.add_argument("--from", dest="t_from", type=float, default=None)
     ap.add_argument("--to", dest="t_to", type=float, default=None)
     ap.add_argument("--stills", default=None)
     ap.add_argument("--workers", type=int, default=4)
     ap.add_argument("--out", default=None)
     args = ap.parse_args()
+    FILM = os.environ["FILM"] = args.film  # дочерние процессы наследуют выбор ролика
     if args.stills:
         stills([float(x) for x in args.stills.split(",")])
         return
-    dur = json.load(open(os.path.join(BUILD, "timeline.json")))["duration"]
+    build, outdir = paths()
+    dur = json.load(open(os.path.join(build, "timeline.json")))["duration"]
     a = args.t_from or 0.0
     b = args.t_to or dur
-    out = args.out or os.path.join(OUT, "video.mp4" if args.t_from is None and args.t_to is None else "preview.mp4")
+    out = args.out or os.path.join(outdir, "video.mp4" if args.t_from is None and args.t_to is None else "preview.mp4")
     render_video(a, b, out, args.workers)
 
 

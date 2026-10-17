@@ -2,7 +2,7 @@
 
 **Название:** If Your Robot Vacuum Ever Stops Next To Your Bed… DO NOT GET UP
 
-**Обложка:** `out/thumbnail.png` (собирается `python thumbnail.py`)
+**Обложка:** `out/vacuum/thumbnail.png` (собирается `python thumbnail.py --film vacuum`)
 
 **Описание:**
 

@@ -7,7 +7,6 @@ import math
 
 import skia
 
-import script
 from engine import hud
 from engine import kit as K
 from engine import mapplan as M
@@ -15,6 +14,8 @@ from engine import picto as P
 from engine.core import (AMBER, BG, CX, CY, DARK, DIM, dashed, GREEN, GREY, H, PAPER, RED, SOFT, W, WHITE, blink,
                          clamp, color, draw_text, ease_in, ease_io, ease_out, fade, font, glow_circle, hash01,
                          layer, lerp, out_back, paint, pop, prog, rrect, spring, text_width, window, wobble, xf)
+
+from . import script
 
 FL = 770          # линия пола в «спальне»
 NOCAP = {"g21"}   # реплики без субтитров (текст уже крупно на экране)
@@ -750,7 +751,5 @@ def build(S):
     S.add(L("a7") - 0.2, s_checklist)
     S.add(L("a8") - 0.25, s_korea, push=0.03)
     S.add(L("a14") - 0.2, s_zone)
-    import os
-    if os.path.exists(os.path.join(os.path.dirname(os.path.abspath(__file__)), "scenes2.py")):
-        import scenes2
-        scenes2.build(S)
+    from . import scenes2
+    scenes2.build(S)

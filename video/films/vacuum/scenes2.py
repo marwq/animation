@@ -9,7 +9,7 @@ from engine import picto as P
 from engine.core import (AMBER, BG, CX, CY, DARK, DIM, GREEN, GREY, H, PAPER, RED, SOFT, W, WHITE, blink, clamp,
                          color, dashed, draw_text, ease_in, ease_io, ease_out, fade, font, glow_circle, hash01,
                          layer, lerp, out_back, paint, pop, prog, rrect, spring, text_width, window, wobble, xf)
-from scenes import BED_HEAD, FL, SCAN, VAC_STOP, bedroom, card, ghost_sit, lidar_side
+from .scenes import BED_HEAD, FL, SCAN, VAC_STOP, bedroom, card, ghost_sit, lidar_side
 
 
 # ------------------------------------------------------------------ правило 2

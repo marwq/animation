@@ -112,7 +112,7 @@ class Captions:
                 x += ww + sp
 
 
-def rule_card(c, t, t0, n, subtitle, done_t=None):
+def rule_card(c, t, t0, n, subtitle, file_no="017"):
     """Карточка правила на чёрном фоне. t0 — начало."""
     lt = t - t0
     f_big = font(150, "bold")
@@ -164,7 +164,7 @@ def rule_card(c, t, t0, n, subtitle, done_t=None):
             c.drawRRect(r, paint(RED if red7 else WHITE, ki * (0.6 + 0.4 * blink(lt, 2.5))))
         else:
             c.drawRRect(r, paint(GREY, 0.6 * ki, stroke=1.5))
-    draw_text(c, f"DIRECTIVE 017-{n}  •  COMPLIANCE IS MANDATORY", W / 2, 790, f_small,
+    draw_text(c, f"DIRECTIVE {file_no}-{n}  •  COMPLIANCE IS MANDATORY", W / 2, 790, f_small,
               paint(GREY, ease_out(prog(lt, 0.8, 0.4))), "center", tracking=4)
 
 

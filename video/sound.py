@@ -1,6 +1,6 @@
 """Звук: процедурная музыка, шумовые эффекты по меткам из сцен, сведение с голосом.
 
-  python sound.py      → build/mix.wav (48 кГц, стерео, около −14 LUFS)
+  python sound.py --film burglar      → build/burglar/mix.wav (48 кГц, стерео, около −14 LUFS)
 
 Все звуки синтезируются здесь же (numpy/scipy), без внешних сэмплов.
 """
@@ -12,7 +12,6 @@ import numpy as np
 from scipy.signal import butter, fftconvolve, sosfilt
 
 HERE = os.path.dirname(os.path.abspath(__file__))
-BUILD = os.path.join(HERE, "build")
 SR = 48000
 RNG = np.random.default_rng(17)
 
@@ -448,11 +447,190 @@ def fx_heartbeat(dur=4.0, **_):
     return x
 
 
+def fx_knock(n=3, soft=False, **_):
+    gap = 0.32 if not soft else 0.45
+    d = gap * n + 0.4
+    x = np.zeros(int(d * SR))
+    for k in range(n):
+        dk = 0.18
+        hitk = (np.sin(2 * np.pi * 140 * tt(dk)) * env(dk, 0.001, 0.035) * 0.9 +
+                filt(noise(dk), "band", (300, 2500)) * env(dk, 0.0005, 0.02) * 0.8)
+        i = int(k * gap * SR)
+        x[i:i + len(hitk)] += hitk * (0.45 if soft else 1.0)
+    return x * 0.7
+
+
+def fx_fridge(**_):
+    d = 2.2
+    x = filt(noise(d), "low", 300) * env(d, 0.002, 0.08) * 0.6
+    t = tt(d)
+    x += (np.sin(2 * np.pi * 60 * t) * 0.5 + np.sin(2 * np.pi * 120 * t) * 0.3) * np.clip(t / 0.3, 0, 1) * \
+        np.clip((d - t) / 0.5, 0, 1) * 0.12
+    c = fx_click() * 0.5
+    x[:len(c)] += c
+    return x
+
+
+def fx_drawer(**_):
+    d = 0.6
+    t = tt(d)
+    x = filt(noise(d), "band", (200, 1800)) * (0.5 + 0.5 * np.sin(2 * np.pi * 23 * t)) * np.sin(np.pi * t / d) * 0.4
+    b = fx_bump() * 0.6
+    x[-len(b):] += b[: len(x)]
+    return x
+
+
+def fx_door_close(**_):
+    d = 0.5
+    x = np.sin(2 * np.pi * 85 * tt(d)) * env(d, 0.002, 0.12) * 0.9
+    x += filt(noise(d), "low", 1200) * env(d, 0.001, 0.05) * 0.6
+    c = fx_click()
+    x[int(0.04 * SR):int(0.04 * SR) + len(c)] += c * 0.6
+    return np.tanh(x * 1.3) * 0.7
+
+
+def fx_lock(**_):
+    d = 0.25
+    x = np.zeros(int(d * SR))
+    for off in (0.0, 0.09):
+        c = fx_click() * 0.9
+        i = int(off * SR)
+        x[i:i + len(c)] += c[: len(x) - i]
+    return x
+
+
+def fx_scrape(dur=1.0, pitch=1.0, **_):
+    d = max(0.3, dur)
+    t = tt(d)
+    jitter = 1 + 0.3 * filt(noise(d), "low", 15)
+    x = filt(noise(d), "band", (120 * pitch, 900 * pitch)) * jitter
+    src = saw_add(1, np.cumsum(55 * pitch * jitter) / SR, 10, 0.8)
+    x += filt(src, "band", (200, 1200)) * 0.4
+    return x * env(d, 0.05, None, 0.15) * 0.35
+
+
+def fx_coin(**_):
+    d = 0.8
+    x = np.zeros(int(d * SR))
+    for k, f in enumerate((4200, 5300, 6100)):
+        x += np.sin(2 * np.pi * f * tt(d)) * env(d, 0.001, 0.25) * 0.05
+    x[: int(0.4 * SR)] += fx_scrape(0.4, 3.0)[: int(0.4 * SR)] * 0.4
+    return x
+
+
+def fx_dtmf(key="9", **_):
+    lo = {"1": 697, "2": 697, "3": 697, "4": 770, "5": 770, "6": 770, "7": 852, "8": 852, "9": 852, "*": 941,
+          "0": 941, "#": 941}[key]
+    hi = {"1": 1209, "4": 1209, "7": 1209, "*": 1209, "2": 1336, "5": 1336, "8": 1336, "0": 1336, "3": 1477,
+          "6": 1477, "9": 1477, "#": 1477}[key]
+    d = 0.16
+    t = tt(d)
+    return (np.sin(2 * np.pi * lo * t) + np.sin(2 * np.pi * hi * t)) * env(d, 0.004, None, 0.02) * 0.07
+
+
+def fx_vibrate(**_):
+    d = 0.5
+    t = tt(d)
+    x = np.sin(2 * np.pi * 160 * t) * (np.sin(2 * np.pi * 8 * t) > 0) * 0.25
+    return filt(x, "low", 600) * env(d, 0.01, None, 0.05)
+
+
+def fx_message(**_):
+    d = 0.35
+    return sweep(600, 1400, d) * env(d, 0.003, 0.15) * 0.12
+
+
+def fx_house_alarm(dur=2.0, **_):
+    d = max(0.5, dur)
+    t = tt(d)
+    f = np.where((t * 2) % 1 < 0.5, 1800, 1400)
+    x = np.sign(np.sin(2 * np.pi * np.cumsum(f) / SR))
+    return filt(x, "low", 4000) * env(d, 0.01, None, 0.1) * 0.06
+
+
+def fx_horn(dur=1.6, **_):
+    d = max(0.4, dur)
+    t = tt(d)
+    on = ((t * 2.2) % 1 < 0.55).astype(float)
+    src = saw_add(1, t * 400, 12, 0.85) + saw_add(1, t * 500, 12, 0.85)
+    x = filt(src, "band", (300, 3000)) * on
+    return x * env(d, 0.01, None, 0.05) * 0.12
+
+
+def fx_rewind(dur=0.8, **_):
+    d = max(0.3, dur)
+    t = tt(d)
+    x = sweep(1800, 300, d) * 0.15 + filt(noise(d), "band", (2000, 8000)) * 0.2 * (0.5 + 0.5 * np.sin(2 * np.pi * 30 * t))
+    return x * env(d, 0.02, None, 0.05)
+
+
+def fx_water(dur=1.5, **_):
+    d = max(0.3, dur)
+    x = filt(noise(d), "band", (800, 5000)) * (0.6 + 0.4 * filt(np.abs(noise(d)), "low", 12))
+    return x * env(d, 0.1, None, 0.3) * 0.2
+
+
+def fx_clock(dur=4.0, **_):
+    x = np.zeros(int((dur + 0.1) * SR))
+    t = 0.0
+    k = 0
+    while t < dur:
+        c = fx_tick(pitch=0.55 if k % 2 else 0.6) * 0.5
+        i = int(t * SR)
+        x[i:i + len(c)] += c[: len(x) - i]
+        t += 1.0
+        k += 1
+    return x
+
+
+def fx_meow(**_):
+    d = 0.7
+    t = tt(d)
+    f = 550 + 250 * np.sin(np.pi * t / d)
+    src = saw_add(1, np.cumsum(f) / SR, 10, 0.8)
+    x = filt(src, "band", (700, 2500)) * np.sin(np.pi * t / d) ** 2
+    return x * 0.18
+
+
+def fx_siren_far(dur=4.0, **_):
+    return fx_siren(dur) * 0.6
+
+
+def fx_car_door(**_):
+    return fx_door_close() * 0.8
+
+
+def fx_boots(dur=2.0, **_):
+    x = np.zeros(int((dur + 0.3) * SR))
+    t = 0.0
+    while t < dur:
+        s = fx_bump() * 0.9
+        i = int(t * SR)
+        x[i:i + len(s)] += s[: len(x) - i]
+        t += 0.34
+    return x
+
+
+def fx_whisper(dur=1.5, **_):
+    d = max(0.4, dur)
+    t = tt(d)
+    syll = 0.5 + 0.5 * np.sin(2 * np.pi * 5 * t)
+    x = filt(noise(d), "band", (1500, 6000)) * syll
+    return x * env(d, 0.05, None, 0.2) * 0.12
+
+
+def fx_radio(dur=1.0, **_):
+    d = max(0.3, dur)
+    x = filt(noise(d), "band", (500, 3500)) * 0.25 + fx_murmur(d)[: int(d * SR)] * 1.5
+    return np.tanh(x * 3) * 0.15 * env(d, 0.01, None, 0.05)
+
+
 # мелодия-«колыбельная» (тема канала)
 THEME = [(69, 0.0), (74, 0.32), (77, 0.64), (76, 0.96), (74, 1.28), (69, 1.6), (73, 1.92), (74, 2.4)]
 
 
-def theme(scale=1.0, notes=THEME, gain=0.3, octave=0):
+def theme(scale=1.0, notes=None, gain=0.3, octave=0):
+    notes = notes or THEME
     d = notes[-1][1] * scale + 2.8
     x = np.zeros(int(d * SR))
     for n, off in notes:
@@ -484,37 +662,41 @@ GAIN = {"pop": 0.4, "tick": 0.5, "click": 0.3, "shutter": 0.3, "type": 0.4, "pap
         "theme": 0.6, "theme_end": 0.5, "theme_hit": 0.6, "vac_drive": 0.6, "vac_idle": 0.8, "office_vac": 0.8,
         "scan": 0.6, "suck": 0.7, "chase": 0.7, "shout": 0.6, "murmur": 0.8, "heartbeat": 0.6,
         "door_roll": 0.5, "drain": 0.6, "whoosh": 0.6, "chime": 0.8, "sting": 0.8, "bump": 0.6, "drop": 0.8,
-        "scanbeep": 0.7, "vac_stop": 0.6, "alarm_blip": 0.8}
+        "scanbeep": 0.7, "vac_stop": 0.6, "alarm_blip": 0.8,
+        "knock": 0.7, "fridge": 0.8, "drawer": 0.6, "door_close": 0.6, "lock": 0.6, "scrape": 0.7, "coin": 0.8,
+        "vibrate": 0.6, "message": 0.8, "horn": 0.6, "rewind": 0.5, "water": 0.6, "clock": 0.4, "meow": 0.8,
+        "car_door": 0.6, "boots": 0.5, "whisper": 0.8, "radio": 0.8}
 
 
 # ------------------------------------------------------------------ музыка
-def music(dur, tl):
-    """Тёмная подложка: гул ре, аккорды, верхний «звон»; интенсивность по разделам."""
+def music(dur, tl, cfg):
+    """Тёмная подложка: гул на тонике, аккорды, верхний «звон»; интенсивность по репликам (cfg из сценария)."""
     t = tt(dur)
     starts = {L["id"]: L["start"] for L in tl["lines"]}
     r7 = starts["r7"]
-    hold = starts["g21"]
+    hold = starts[cfg["hold"]]
 
     def curve(points):
         xs, ys = zip(*points)
         return np.interp(t, xs, ys)
 
-    inten = curve([(0, 0.0), (1.0, 0.55), (starts["o9"], 0.7), (starts["i1"] - 1.0, 0.25), (starts["i1"], 0.5),
-                   (starts["r1"], 0.55), (r7 - 1, 0.6), (r7, 0.85), (starts["g10"], 0.95), (starts["g14"], 1.0),
-                   (starts["g17"], 0.8), (hold - 0.05, 0.9), (hold, 0.0), (dur, 0.0)])
+    pts = [(0, 0.0), (1.0, 0.55)] + [(starts[lid] + off, v) for lid, off, v in cfg["curve"]]
+    pts += [(hold - 0.05, 0.9), (hold, 0.0), (dur, 0.0)]
+    inten = curve(sorted(pts))
+    root = cfg["root"]
     x = np.zeros_like(t)
-    # гул: ре и ля с медленно «дышащим» тембром
-    for f, a in ((36.71, 0.55), (73.42, 0.45), (110.0, 0.18)):
+    # гул: тоника, октава и квинта с медленно «дышащим» тембром
+    for f, a in ((root, 0.55), (root * 2, 0.45), (root * 3, 0.18)):
         for k in range(1, 7):
             lfo = 0.5 + 0.5 * np.sin(2 * np.pi * (0.03 + 0.01 * k) * t + k)
             x += a / k * lfo * np.sin(2 * np.pi * f * k * t + k)
     x *= 0.5
-    # аккорды: Dm — B♭ — Gm — A, по 9 секунд, с плавной сменой
-    chords = [(62, 65, 69), (58, 62, 65), (55, 58, 62), (57, 61, 64)]
+    # аккорды по 9 секунд, с плавной сменой
+    chords = cfg["chords"]
     seg = 9.0
     pad = np.zeros_like(t)
     for i in range(int(dur / seg) + 1):
-        notes = chords[i % 4]
+        notes = chords[i % len(chords)]
         a0 = i * seg - 2.0
         a1 = a0 + seg + 4.0
         mask = (t >= a0) & (t < a1)
@@ -529,7 +711,8 @@ def music(dur, tl):
     pad = filt(pad, "low", 1400)
     x += pad
     # верхний звон в напряжённых местах
-    shimmer = (np.sin(2 * np.pi * midi(86) * t) + 0.7 * np.sin(2 * np.pi * midi(93) * t * 1.001)) * 0.012
+    top = midi(chords[0][0] + 24)
+    shimmer = (np.sin(2 * np.pi * top * t) + 0.7 * np.sin(2 * np.pi * top * 1.4983 * t * 1.001)) * 0.012
     shimmer *= 0.5 + 0.5 * np.sin(2 * np.pi * 0.21 * t)
     shimmer *= curve([(0, 0.6), (starts["i1"], 0.2), (r7, 0.9), (hold, 0.9), (hold + 0.01, 0)])
     x += shimmer
@@ -537,8 +720,8 @@ def music(dur, tl):
 
 
 # ------------------------------------------------------------------ сведение
-def load_voice():
-    raw = subprocess.run(["ffmpeg", "-v", "error", "-i", os.path.join(BUILD, "voice.wav"), "-f", "f32le", "-ac", "1",
+def load_voice(build):
+    raw = subprocess.run(["ffmpeg", "-v", "error", "-i", os.path.join(build, "voice.wav"), "-f", "f32le", "-ac", "1",
                           "-ar", str(SR), "-"], capture_output=True, check=True).stdout
     return np.frombuffer(raw, dtype=np.float32).astype(np.float64)
 
@@ -571,20 +754,31 @@ def reverb_ir(dur=2.6):
 
 
 def main():
+    import argparse
+    import importlib
     import sys
+    global THEME
+    ap = argparse.ArgumentParser()
+    ap.add_argument("--film", default="vacuum")
+    args = ap.parse_args()
     sys.path.insert(0, HERE)
     from render import build_stage
 
-    S = build_stage()
+    script = importlib.import_module(f"films.{args.film}.script")
+    cfg = script.MUSIC
+    THEME = cfg["theme"]
+    build = os.path.join(HERE, "build", args.film)
+    S = build_stage(args.film)
     tl = S.tl
-    voice = load_voice()
+    voice = load_voice(build)
     dur = max(len(voice) / SR, tl["duration"]) + 3.0
     n = int(dur * SR)
     voice = np.pad(voice, (0, n - len(voice)))
 
     sfx = np.zeros((2, n))
     wet = np.zeros((2, n))
-    long_kinds = {"vac_drive", "vac_idle", "office_vac", "siren", "scan", "suck", "chase", "murmur"}
+    long_kinds = {"vac_drive", "vac_idle", "office_vac", "siren", "scan", "suck", "chase", "murmur", "house_alarm",
+                  "horn", "siren_far", "water", "steps", "boots", "clock", "whisper", "radio"}
     duck_sfx = np.zeros(n)
     for cue in sorted(S.cues, key=lambda c: c["t"]):
         kind = cue["kind"]
@@ -608,7 +802,7 @@ def main():
         wet[0, i:i + len(x)] += x * w
         wet[1, i:i + len(x)] += x * w
 
-    mus = music(dur, tl)
+    mus = music(dur, tl, cfg)
     venv = envelope(voice)
     duck = 1 - 0.5 * np.clip(venv / 0.12, 0, 1)
     mus *= duck
@@ -622,7 +816,7 @@ def main():
     rev = np.stack([fftconvolve(wet[0], irl)[:n], fftconvolve(wet[1], irr)[:n]]) * 0.5
 
     # «HOLD STILL»: всё стихает, кроме финального удара
-    hold = S.at("g21")
+    hold = S.at(cfg["hold"])
     fade = np.ones(n)
     k0 = int((hold - 0.02) * SR)
     fade[k0:] = 0.0
@@ -643,9 +837,9 @@ def main():
     # мягкий лимитер
     peak = np.max(np.abs(mix))
     mix = np.tanh(mix / max(1.0, peak * 0.9) * 1.1) * 0.95
-    raw = os.path.join(BUILD, "mix_raw.f32")
+    raw = os.path.join(build, "mix_raw.f32")
     mix.T.astype(np.float32).tofile(raw)
-    out = os.path.join(BUILD, "mix.wav")
+    out = os.path.join(build, "mix.wav")
     subprocess.run(["ffmpeg", "-v", "error", "-y", "-f", "f32le", "-ar", str(SR), "-ac", "2", "-i", raw,
                     "-af", "loudnorm=I=-14:TP=-1.2:LRA=9", "-ar", str(SR), out], check=True)
     print("→", out, f"{dur:.1f}s, cues: {len(S.cues)}")
