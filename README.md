@@ -93,3 +93,8 @@ python3 tools/build_characters.py        # SVG всех персонажей (и
 npm i --no-save playwright && npx playwright install chromium
 node tools/render.js                     # PNG ×2 (или: node tools/render.js 2 sarah)
 ```
+
+## Ролик «If Your Robot Vacuum Ever Stops Next To Your Bed… DO NOT GET UP»
+
+Анимационный ролик в стиле канала @BradikininVideos: сценарий, озвучка, сцены, звук и рендер лежат в
+[`video/`](video/README.md).

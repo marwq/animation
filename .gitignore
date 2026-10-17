@@ -1,2 +1,7 @@
 node_modules/
 __pycache__/
+video/build/
+video/out/
+# Lucida Sans Unicode — шрифт Microsoft, в репозиторий не кладём
+video/fonts/l_10646.ttf
+video/fonts/LSANSUNI.TTF
