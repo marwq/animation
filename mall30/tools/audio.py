@@ -173,12 +173,21 @@ def place(buf, x, t, gain=1.0):
     buf[max(0, i):j] += x[a:a + (j - max(0, i))] * gain
 
 
+def movavg(x, k):
+    """Скользящее среднее (через накопленную сумму — быстро на длинных сигналах)."""
+    k = max(1, int(k))
+    c = np.cumsum(np.concatenate([np.zeros(1), x]))
+    y = (c[k:] - c[:-k]) / k
+    pad_l = (len(x) - len(y)) // 2
+    return np.concatenate([np.full(pad_l, y[0]), y, np.full(len(x) - len(y) - pad_l, y[-1])])
+
+
 def reverb(x, seconds=2.2, mix=0.25):
     n = int(seconds * SR)
     ir = rng.standard_normal(n) * np.exp(-np.arange(n) / SR * (6.9 / seconds))
     ir = lp(ir, 5000)
     ir /= np.sqrt(np.sum(ir ** 2)) + 1e-9
-    wet = signal.fftconvolve(x, ir)[:len(x)]
+    wet = signal.oaconvolve(x, ir)[:len(x)]
     return x * (1 - mix) + wet * mix * 1.6
 
 
@@ -557,12 +566,9 @@ def build(film_segments=None):
             place(fxb, sfx(name), t0 + t, g)
         print("audio", S.key, flush=True)
     # ducking: музыка тише под голосом
-    env = np.abs(voice)
-    k = int(0.05 * SR)
-    env = np.convolve(env, np.ones(k) / k, mode="same")
+    env = movavg(np.abs(voice), 0.05 * SR)
     env = np.minimum(1, env / 0.02)
-    sm = int(0.25 * SR)
-    env = np.convolve(env, np.ones(sm) / sm, mode="same")
+    env = movavg(env, 0.25 * SR)
     duck = 1 - 0.55 * env
     mus = reverb(mus, 2.4, 0.3) * duck
     fxb = reverb(fxb, 1.2, 0.15)
