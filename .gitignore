@@ -1,2 +1,7 @@
 node_modules/
 __pycache__/
+
+# shorts: ассеты и рендеры не храним
+shorts/*/assets/
+shorts/*/out/
+*.blend1

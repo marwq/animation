@@ -1,0 +1,631 @@
+{
+ "lines": [
+  {
+   "file": "takes/00.wav",
+   "start": 0.1,
+   "speech_end": 2.54,
+   "text": "This car just crossed the median and hit an SUV head-on."
+  },
+  {
+   "file": "takes/01.wav",
+   "start": 2.84,
+   "speech_end": 2.44,
+   "text": "That's why highways put a concrete wall down the middle."
+  },
+  {
+   "file": "takes/02.wav",
+   "start": 5.48,
+   "speech_end": 2.02,
+   "text": "But look at the bottom. It's sloped."
+  },
+  {
+   "file": "takes/03.wav",
+   "start": 7.7,
+   "speech_end": 2.48,
+   "text": "Against a flat wall, the body takes the hit."
+  },
+  {
+   "file": "takes/04.wav",
+   "start": 10.38,
+   "speech_end": 6.36,
+   "text": "Here, the tire hits first and climbs. The car lifts, the tires grip less, and the wall slides it back into its lane."
+  },
+  {
+   "file": "takes/05.wav",
+   "start": 16.94,
+   "speech_end": 1.4,
+   "text": "No wall? This happens."
+  },
+  {
+   "file": "takes/06.wav",
+   "start": 19.14,
+   "speech_end": 6.2,
+   "text": "In August, on New Jersey's Route 55, a car crossed a grass median and killed a sixty-eight-year-old man driving the other way."
+  },
+  {
+   "file": "takes/07.wav",
+   "start": 25.54,
+   "speech_end": 2.08,
+   "text": "The state that invented the Jersey barrier."
+  }
+ ],
+ "words": [
+  {
+   "w": "This",
+   "s": 0.1,
+   "e": 0.26,
+   "line": 0
+  },
+  {
+   "w": "car",
+   "s": 0.26,
+   "e": 0.48,
+   "line": 0
+  },
+  {
+   "w": "just",
+   "s": 0.48,
+   "e": 0.66,
+   "line": 0
+  },
+  {
+   "w": "crossed",
+   "s": 0.66,
+   "e": 0.9,
+   "line": 0
+  },
+  {
+   "w": "the",
+   "s": 0.9,
+   "e": 1.06,
+   "line": 0
+  },
+  {
+   "w": "median",
+   "s": 1.06,
+   "e": 1.26,
+   "line": 0
+  },
+  {
+   "w": "and",
+   "s": 1.26,
+   "e": 1.48,
+   "line": 0
+  },
+  {
+   "w": "hit",
+   "s": 1.48,
+   "e": 1.64,
+   "line": 0
+  },
+  {
+   "w": "an",
+   "s": 1.64,
+   "e": 1.78,
+   "line": 0
+  },
+  {
+   "w": "SUV",
+   "s": 1.78,
+   "e": 2.08,
+   "line": 0
+  },
+  {
+   "w": "head",
+   "s": 2.08,
+   "e": 2.4,
+   "line": 0
+  },
+  {
+   "w": "on.",
+   "s": 2.4,
+   "e": 2.64,
+   "line": 0
+  },
+  {
+   "w": "That's",
+   "s": 2.84,
+   "e": 3.12,
+   "line": 1
+  },
+  {
+   "w": "why",
+   "s": 3.12,
+   "e": 3.24,
+   "line": 1
+  },
+  {
+   "w": "highways",
+   "s": 3.24,
+   "e": 3.6,
+   "line": 1
+  },
+  {
+   "w": "put",
+   "s": 3.6,
+   "e": 3.82,
+   "line": 1
+  },
+  {
+   "w": "a",
+   "s": 3.82,
+   "e": 4.02,
+   "line": 1
+  },
+  {
+   "w": "concrete",
+   "s": 4.02,
+   "e": 4.4,
+   "line": 1
+  },
+  {
+   "w": "wall",
+   "s": 4.4,
+   "e": 4.7,
+   "line": 1
+  },
+  {
+   "w": "down",
+   "s": 4.7,
+   "e": 4.96,
+   "line": 1
+  },
+  {
+   "w": "the",
+   "s": 4.96,
+   "e": 5.1,
+   "line": 1
+  },
+  {
+   "w": "middle.",
+   "s": 5.1,
+   "e": 5.28,
+   "line": 1
+  },
+  {
+   "w": "But",
+   "s": 5.48,
+   "e": 5.68,
+   "line": 2
+  },
+  {
+   "w": "look",
+   "s": 5.68,
+   "e": 5.8,
+   "line": 2
+  },
+  {
+   "w": "at",
+   "s": 5.8,
+   "e": 5.92,
+   "line": 2
+  },
+  {
+   "w": "the",
+   "s": 5.92,
+   "e": 6.02,
+   "line": 2
+  },
+  {
+   "w": "bottom.",
+   "s": 6.02,
+   "e": 6.3,
+   "line": 2
+  },
+  {
+   "w": "It's",
+   "s": 6.84,
+   "e": 7.02,
+   "line": 2
+  },
+  {
+   "w": "sloped.",
+   "s": 7.02,
+   "e": 7.5,
+   "line": 2
+  },
+  {
+   "w": "Against",
+   "s": 7.7,
+   "e": 8.08,
+   "line": 3
+  },
+  {
+   "w": "a",
+   "s": 8.08,
+   "e": 8.3,
+   "line": 3
+  },
+  {
+   "w": "flat",
+   "s": 8.3,
+   "e": 8.54,
+   "line": 3
+  },
+  {
+   "w": "wall",
+   "s": 8.54,
+   "e": 8.92,
+   "line": 3
+  },
+  {
+   "w": "the",
+   "s": 8.92,
+   "e": 9.28,
+   "line": 3
+  },
+  {
+   "w": "body",
+   "s": 9.28,
+   "e": 9.52,
+   "line": 3
+  },
+  {
+   "w": "takes",
+   "s": 9.52,
+   "e": 9.8,
+   "line": 3
+  },
+  {
+   "w": "the",
+   "s": 9.8,
+   "e": 10.02,
+   "line": 3
+  },
+  {
+   "w": "hit",
+   "s": 10.02,
+   "e": 10.18,
+   "line": 3
+  },
+  {
+   "w": "Here,",
+   "s": 10.38,
+   "e": 10.9,
+   "line": 4
+  },
+  {
+   "w": "the",
+   "s": 11.24,
+   "e": 11.32,
+   "line": 4
+  },
+  {
+   "w": "tire",
+   "s": 11.32,
+   "e": 11.54,
+   "line": 4
+  },
+  {
+   "w": "hits",
+   "s": 11.54,
+   "e": 11.76,
+   "line": 4
+  },
+  {
+   "w": "first",
+   "s": 11.76,
+   "e": 12.0,
+   "line": 4
+  },
+  {
+   "w": "and",
+   "s": 12.0,
+   "e": 12.22,
+   "line": 4
+  },
+  {
+   "w": "climbs,",
+   "s": 12.22,
+   "e": 12.52,
+   "line": 4
+  },
+  {
+   "w": "the",
+   "s": 12.9,
+   "e": 13.0,
+   "line": 4
+  },
+  {
+   "w": "car",
+   "s": 13.0,
+   "e": 13.2,
+   "line": 4
+  },
+  {
+   "w": "lifts,",
+   "s": 13.2,
+   "e": 13.44,
+   "line": 4
+  },
+  {
+   "w": "the",
+   "s": 13.84,
+   "e": 13.88,
+   "line": 4
+  },
+  {
+   "w": "tires",
+   "s": 13.88,
+   "e": 14.16,
+   "line": 4
+  },
+  {
+   "w": "grip",
+   "s": 14.16,
+   "e": 14.42,
+   "line": 4
+  },
+  {
+   "w": "less,",
+   "s": 14.42,
+   "e": 14.74,
+   "line": 4
+  },
+  {
+   "w": "and",
+   "s": 15.08,
+   "e": 15.16,
+   "line": 4
+  },
+  {
+   "w": "the",
+   "s": 15.16,
+   "e": 15.26,
+   "line": 4
+  },
+  {
+   "w": "wall",
+   "s": 15.26,
+   "e": 15.5,
+   "line": 4
+  },
+  {
+   "w": "slides",
+   "s": 15.5,
+   "e": 15.86,
+   "line": 4
+  },
+  {
+   "w": "it",
+   "s": 15.86,
+   "e": 16.0,
+   "line": 4
+  },
+  {
+   "w": "back",
+   "s": 16.0,
+   "e": 16.18,
+   "line": 4
+  },
+  {
+   "w": "into",
+   "s": 16.18,
+   "e": 16.34,
+   "line": 4
+  },
+  {
+   "w": "its",
+   "s": 16.34,
+   "e": 16.5,
+   "line": 4
+  },
+  {
+   "w": "lane.",
+   "s": 16.5,
+   "e": 16.74,
+   "line": 4
+  },
+  {
+   "w": "No",
+   "s": 16.94,
+   "e": 17.22,
+   "line": 5
+  },
+  {
+   "w": "wall,",
+   "s": 17.22,
+   "e": 17.5,
+   "line": 5
+  },
+  {
+   "w": "this",
+   "s": 17.86,
+   "e": 18.02,
+   "line": 5
+  },
+  {
+   "w": "happens.",
+   "s": 18.02,
+   "e": 18.34,
+   "line": 5
+  },
+  {
+   "w": "In",
+   "s": 19.14,
+   "e": 19.46,
+   "line": 6
+  },
+  {
+   "w": "August,",
+   "s": 19.46,
+   "e": 19.76,
+   "line": 6
+  },
+  {
+   "w": "on",
+   "s": 19.94,
+   "e": 20.08,
+   "line": 6
+  },
+  {
+   "w": "New",
+   "s": 20.08,
+   "e": 20.18,
+   "line": 6
+  },
+  {
+   "w": "Jersey's",
+   "s": 20.18,
+   "e": 20.6,
+   "line": 6
+  },
+  {
+   "w": "Route",
+   "s": 20.6,
+   "e": 20.7,
+   "line": 6
+  },
+  {
+   "w": "55,",
+   "s": 20.7,
+   "e": 21.12,
+   "line": 6
+  },
+  {
+   "w": "a",
+   "s": 21.52,
+   "e": 21.68,
+   "line": 6
+  },
+  {
+   "w": "car",
+   "s": 21.68,
+   "e": 21.86,
+   "line": 6
+  },
+  {
+   "w": "crossed",
+   "s": 21.86,
+   "e": 22.14,
+   "line": 6
+  },
+  {
+   "w": "a",
+   "s": 22.14,
+   "e": 22.3,
+   "line": 6
+  },
+  {
+   "w": "grass",
+   "s": 22.3,
+   "e": 22.48,
+   "line": 6
+  },
+  {
+   "w": "median",
+   "s": 22.48,
+   "e": 22.82,
+   "line": 6
+  },
+  {
+   "w": "and",
+   "s": 22.82,
+   "e": 23.1,
+   "line": 6
+  },
+  {
+   "w": "killed",
+   "s": 23.1,
+   "e": 23.28,
+   "line": 6
+  },
+  {
+   "w": "a",
+   "s": 23.28,
+   "e": 23.48,
+   "line": 6
+  },
+  {
+   "w": "68",
+   "s": 23.48,
+   "e": 23.82,
+   "line": 6
+  },
+  {
+   "w": "-year",
+   "s": 23.82,
+   "e": 24.1,
+   "line": 6
+  },
+  {
+   "w": "-old",
+   "s": 24.1,
+   "e": 24.26,
+   "line": 6
+  },
+  {
+   "w": "man",
+   "s": 24.26,
+   "e": 24.48,
+   "line": 6
+  },
+  {
+   "w": "driving",
+   "s": 24.48,
+   "e": 24.78,
+   "line": 6
+  },
+  {
+   "w": "the",
+   "s": 24.78,
+   "e": 24.96,
+   "line": 6
+  },
+  {
+   "w": "other",
+   "s": 24.96,
+   "e": 25.08,
+   "line": 6
+  },
+  {
+   "w": "way.",
+   "s": 25.08,
+   "e": 25.34,
+   "line": 6
+  },
+  {
+   "w": "The",
+   "s": 25.54,
+   "e": 25.84,
+   "line": 7
+  },
+  {
+   "w": "state",
+   "s": 25.84,
+   "e": 26.12,
+   "line": 7
+  },
+  {
+   "w": "that",
+   "s": 26.12,
+   "e": 26.34,
+   "line": 7
+  },
+  {
+   "w": "invented",
+   "s": 26.34,
+   "e": 26.68,
+   "line": 7
+  },
+  {
+   "w": "the",
+   "s": 26.68,
+   "e": 27.0,
+   "line": 7
+  },
+  {
+   "w": "Jersey",
+   "s": 27.0,
+   "e": 27.3,
+   "line": 7
+  },
+  {
+   "w": "Barrier.",
+   "s": 27.3,
+   "e": 27.62,
+   "line": 7
+  }
+ ],
+ "title_time": 27.0
+}

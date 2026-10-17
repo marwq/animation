@@ -1,0 +1,47 @@
+[Script Info]
+ScriptType: v4.00+
+PlayResX: 1080
+PlayResY: 1920
+WrapStyle: 0
+ScaledBorderAndShadow: yes
+
+[V4+ Styles]
+Format: Name, Fontname, Fontsize, PrimaryColour, SecondaryColour, OutlineColour, BackColour, Bold, Italic, Underline, StrikeOut, ScaleX, ScaleY, Spacing, Angle, BorderStyle, Outline, Shadow, Alignment, MarginL, MarginR, MarginV, Encoding
+Style: Sub,Montserrat ExtraBold,76,&H00FFFFFF,&H00FFFFFF,&H00101010,&H90000000,0,0,0,0,100,100,0,0,1,6,3,5,70,70,0,1
+Style: Title,Montserrat ExtraBold,118,&H0018C8FF,&H0018C8FF,&H00101010,&H90000000,0,0,0,0,100,100,2,0,1,8,4,5,40,40,0,1
+Style: Plate,Montserrat ExtraBold,64,&H00FFFFFF,&H00FFFFFF,&H00000000,&HB0101010,0,0,0,0,100,100,2,0,3,18,0,8,60,60,250,1
+Style: PlateSmall,Montserrat ExtraBold,40,&H00FFFFFF,&H00FFFFFF,&H00000000,&HB0101090,0,0,0,0,100,100,2,0,3,12,0,8,60,60,345,1
+
+[Events]
+Format: Layer, Start, End, Style, Name, MarginL, MarginR, MarginV, Effect, Text
+Dialogue: 0,0:00:00.07,0:00:00.66,Sub,,0,0,0,,{\pos(540,1180)}{\fscx78\fscy78\t(0,90,\fscx104\fscy104)\t(90,150,\fscx100\fscy100)}This car just
+Dialogue: 0,0:00:00.63,0:00:01.26,Sub,,0,0,0,,{\pos(540,1180)}{\fscx78\fscy78\t(0,90,\fscx104\fscy104)\t(90,150,\fscx100\fscy100)}crossed the median
+Dialogue: 0,0:00:01.23,0:00:02.08,Sub,,0,0,0,,{\pos(540,1180)}{\fscx78\fscy78\t(0,90,\fscx104\fscy104)\t(90,150,\fscx100\fscy100)}and hit an SUV
+Dialogue: 0,0:00:02.05,0:00:02.79,Sub,,0,0,0,,{\pos(540,1180)}{\fscx78\fscy78\t(0,90,\fscx104\fscy104)\t(90,150,\fscx100\fscy100)}{\c&H0018C8FF&}HEAD-ON.{\c&H00FFFFFF&}
+Dialogue: 0,0:00:02.81,0:00:03.60,Sub,,0,0,0,,{\pos(540,1180)}{\fscx78\fscy78\t(0,90,\fscx104\fscy104)\t(90,150,\fscx100\fscy100)}That's why highways
+Dialogue: 0,0:00:03.57,0:00:04.70,Sub,,0,0,0,,{\pos(540,1180)}{\fscx78\fscy78\t(0,90,\fscx104\fscy104)\t(90,150,\fscx100\fscy100)}put a {\c&H0018C8FF&}concrete wall{\c&H00FFFFFF&}
+Dialogue: 0,0:00:04.67,0:00:05.43,Sub,,0,0,0,,{\pos(540,1180)}{\fscx78\fscy78\t(0,90,\fscx104\fscy104)\t(90,150,\fscx100\fscy100)}down the middle.
+Dialogue: 0,0:00:05.45,0:00:06.84,Sub,,0,0,0,,{\pos(540,1180)}{\fscx78\fscy78\t(0,90,\fscx104\fscy104)\t(90,150,\fscx100\fscy100)}But look at the bottom.
+Dialogue: 0,0:00:06.81,0:00:07.65,Sub,,0,0,0,,{\pos(540,1180)}{\fscx78\fscy78\t(0,90,\fscx104\fscy104)\t(90,150,\fscx100\fscy100)}It's {\c&H0018C8FF&}sloped.{\c&H00FFFFFF&}
+Dialogue: 0,0:00:07.67,0:00:08.92,Sub,,0,0,0,,{\pos(540,1180)}{\fscx78\fscy78\t(0,90,\fscx104\fscy104)\t(90,150,\fscx100\fscy100)}Against a {\c&H0018C8FF&}flat wall,{\c&H00FFFFFF&}
+Dialogue: 0,0:00:08.89,0:00:10.33,Sub,,0,0,0,,{\pos(540,1180)}{\fscx78\fscy78\t(0,90,\fscx104\fscy104)\t(90,150,\fscx100\fscy100)}the body takes the hit.
+Dialogue: 0,0:00:10.35,0:00:11.24,Sub,,0,0,0,,{\pos(540,1180)}{\fscx78\fscy78\t(0,90,\fscx104\fscy104)\t(90,150,\fscx100\fscy100)}Here,
+Dialogue: 0,0:00:11.21,0:00:12.00,Sub,,0,0,0,,{\pos(540,1180)}{\fscx78\fscy78\t(0,90,\fscx104\fscy104)\t(90,150,\fscx100\fscy100)}the tire hits first
+Dialogue: 0,0:00:11.97,0:00:12.90,Sub,,0,0,0,,{\pos(540,1180)}{\fscx78\fscy78\t(0,90,\fscx104\fscy104)\t(90,150,\fscx100\fscy100)}and {\c&H0018C8FF&}climbs,{\c&H00FFFFFF&}
+Dialogue: 0,0:00:12.87,0:00:13.84,Sub,,0,0,0,,{\pos(540,1180)}{\fscx78\fscy78\t(0,90,\fscx104\fscy104)\t(90,150,\fscx100\fscy100)}the car {\c&H0018C8FF&}lifts,{\c&H00FFFFFF&}
+Dialogue: 0,0:00:13.81,0:00:15.08,Sub,,0,0,0,,{\pos(540,1180)}{\fscx78\fscy78\t(0,90,\fscx104\fscy104)\t(90,150,\fscx100\fscy100)}the tires {\c&H0018C8FF&}grip less,{\c&H00FFFFFF&}
+Dialogue: 0,0:00:15.05,0:00:16.00,Sub,,0,0,0,,{\pos(540,1180)}{\fscx78\fscy78\t(0,90,\fscx104\fscy104)\t(90,150,\fscx100\fscy100)}and the wall slides it
+Dialogue: 0,0:00:15.97,0:00:16.89,Sub,,0,0,0,,{\pos(540,1180)}{\fscx78\fscy78\t(0,90,\fscx104\fscy104)\t(90,150,\fscx100\fscy100)}{\c&H0018C8FF&}back into its lane.{\c&H00FFFFFF&}
+Dialogue: 0,0:00:16.91,0:00:17.86,Sub,,0,0,0,,{\pos(540,1180)}{\fscx78\fscy78\t(0,90,\fscx104\fscy104)\t(90,150,\fscx100\fscy100)}No wall?
+Dialogue: 0,0:00:17.83,0:00:18.79,Sub,,0,0,0,,{\pos(540,1180)}{\fscx78\fscy78\t(0,90,\fscx104\fscy104)\t(90,150,\fscx100\fscy100)}{\c&H0018C8FF&}This happens.{\c&H00FFFFFF&}
+Dialogue: 0,0:00:19.11,0:00:19.94,Sub,,0,0,0,,{\pos(540,1180)}{\fscx78\fscy78\t(0,90,\fscx104\fscy104)\t(90,150,\fscx100\fscy100)}In August,
+Dialogue: 0,0:00:19.91,0:00:21.52,Sub,,0,0,0,,{\pos(540,1180)}{\fscx78\fscy78\t(0,90,\fscx104\fscy104)\t(90,150,\fscx100\fscy100)}on New Jersey's {\c&H0018C8FF&}Route 55,{\c&H00FFFFFF&}
+Dialogue: 0,0:00:21.49,0:00:22.14,Sub,,0,0,0,,{\pos(540,1180)}{\fscx78\fscy78\t(0,90,\fscx104\fscy104)\t(90,150,\fscx100\fscy100)}a car crossed
+Dialogue: 0,0:00:22.11,0:00:22.82,Sub,,0,0,0,,{\pos(540,1180)}{\fscx78\fscy78\t(0,90,\fscx104\fscy104)\t(90,150,\fscx100\fscy100)}a {\c&H0018C8FF&}grass median{\c&H00FFFFFF&}
+Dialogue: 0,0:00:22.79,0:00:23.28,Sub,,0,0,0,,{\pos(540,1180)}{\fscx78\fscy78\t(0,90,\fscx104\fscy104)\t(90,150,\fscx100\fscy100)}and killed
+Dialogue: 0,0:00:23.25,0:00:24.48,Sub,,0,0,0,,{\pos(540,1180)}{\fscx78\fscy78\t(0,90,\fscx104\fscy104)\t(90,150,\fscx100\fscy100)}a 68-year-old man
+Dialogue: 0,0:00:24.45,0:00:25.49,Sub,,0,0,0,,{\pos(540,1180)}{\fscx78\fscy78\t(0,90,\fscx104\fscy104)\t(90,150,\fscx100\fscy100)}driving the other way.
+Dialogue: 0,0:00:25.51,0:00:27.77,Sub,,0,0,0,,{\pos(540,1180)}{\fscx78\fscy78\t(0,90,\fscx104\fscy104)\t(90,150,\fscx100\fscy100)}The state that invented
+Dialogue: 1,0:00:26.68,0:00:28.00,Title,,0,0,0,,{\pos(540,760)}{\fscx60\fscy60\t(0,120,\fscx108\fscy108)\t(120,220,\fscx100\fscy100)}JERSEY BARRIER
+Dialogue: 1,0:00:19.30,0:00:25.40,Plate,,0,0,0,,{\fad(200,250)}AUG 22, 2026
+Dialogue: 1,0:00:19.45,0:00:25.40,PlateSmall,,0,0,0,,{\fad(200,250)}ROUTE 55 · VINELAND, NJ
