@@ -12,12 +12,11 @@ from . import timing
 HERE = os.path.dirname(os.path.abspath(__file__))
 
 # время суток в начале сегмента (для значка ☀/☾)
-TOD = {"cold": "dawn", "d01": "day", "d02": "day", "d03": "day", "d04": "day", "d05": "day",
-       "d06": "night", "d07": "day", "d08": "day", "d09": "night", "d10": "day", "d11": "dawn", "d12": "night",
-       "d13": "night", "d14": "day", "d15": "day", "d16": "night", "d17": "night", "d18": "day", "d19": "night",
-       "d20": "night", "d21": "day", "d22": "day", "d23": "night", "d24": "night", "d25": "day",
-       "d26": "night", "d27": "night", "d28": "night", "d29": "night", "d30": "dawn", "epi": "day",
-       "end": "night"}
+TOD = {"cold": "night", "d01": "day", "d02": "morning", "d03": "day", "d04": "day", "d05": "day",
+       "d06": "night", "d07": "day", "d08": "day", "d09": "night", "d10": "day", "d11": "day", "d12": "night",
+       "d13": "day", "d14": "day", "d15": "day", "d16": "day", "d17": "dusk", "d18": "day", "d19": "night",
+       "d20": "day", "d21": "day", "d22": "night", "d23": "storm", "d24": "day", "d25": "night", "d26": "day",
+       "d27": "night", "d28": "night", "d29": "night", "d30": "night", "epi": "day", "end": "night"}
 
 
 def _placeholder(key):

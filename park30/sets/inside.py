@@ -596,3 +596,86 @@ def lighthouse_room(ctx, tod="night", x0=-600, x1=3600, t=0.0, beam=0.0, park_li
 
 
 GUS_RADIO_X = 1800    # центр стола рации (мировой x)
+
+
+# --- комната в башне замка (спальня Тео) -------------------------------------------------
+
+TOWER_WIN_X = 1300     # центр стрельчатого окна (мировой x)
+TOWER_BED_X = 2500     # центр лежанки
+TOWER_CRATE_X = 700    # ящик с рацией
+
+
+def tower_room(ctx, tod="night", x0=-600, x1=3600, t=0.0, lit=True, beam=0.0, view=None):
+    """Каменная комната в башне: стрельчатое окно на озеро (маяк вдали мигает beam), лежанка из
+    подушек и костюмной ткани, ящик с рацией, гирлянда, фонарик."""
+    T = Tf(tod)
+    D.rect(ctx, x0, -900, x1 - x0, FL + 900, T("#cfc4b4"), None, 0, wob=0)
+    r = rng(12)
+    for row in range(int((FL + 900) / 90)):
+        yy = -900 + row * 90
+        off = 0 if row % 2 else 90
+        for k in range(int((x1 - x0) / 180) + 2):
+            D.rect(ctx, x0 - off + k * 180 + 4, yy + 4, 172, 82, T(r.choice(["#d8cebe", "#c8bca8", "#d2c6b4"])),
+                   None, 0, wob=0)
+    # окно
+    wx, wy0, ww, wh = TOWER_WIN_X, -60, 520, 640
+    ctx.save()
+    ctx.move_to(wx - ww / 2, wy0 + wh)
+    ctx.line_to(wx - ww / 2, wy0 + ww / 2)
+    ctx.arc(wx, wy0 + ww / 2, ww / 2, math.pi, 0)
+    ctx.line_to(wx + ww / 2, wy0 + wh)
+    ctx.close_path()
+    ctx.clip()
+    from sets import sea as SEA
+    if view:
+        view(ctx, wx - ww / 2, wy0, ww, wh)
+    else:
+        SEA.sky(ctx, wx - ww / 2, wy0, ww, wh * 0.7, tod)
+        if tod in NIGHT:
+            SEA.stars(ctx, wx - ww / 2, wy0, ww, wh * 0.6, t, 5, 1.6)
+        far = SEA.SEA.get(tod, SEA.SEA["day"])
+        D.vgrad(ctx, wx - ww / 2, wy0 + wh * 0.62, ww, wh * 0.4, [(0, far[0]), (1, far[1])])
+        lx, ly = wx + 120, wy0 + wh * 0.62
+        D.poly(ctx, [(lx - 90, ly), (lx - 40, ly - 14), (lx + 60, ly - 12), (lx + 110, ly)], T("#2a3a2a"), None, 0,
+               wob=0)
+        D.rect(ctx, lx - 6, ly - 70, 12, 58, T("#fbfaf6"), INK, 1.5, wob=0)
+        D.rect(ctx, lx - 8, ly - 84, 16, 14, hexrgb("#fff2a0") if beam > 0 else T("#2b2f3a"), INK, 1.5, wob=0)
+        if beam > 0:
+            D.radial(ctx, lx, ly - 78, 90, "#fff2a0", 0.9 * beam, 0)
+    ctx.restore()
+    ctx.move_to(wx - ww / 2, wy0 + wh)
+    ctx.line_to(wx - ww / 2, wy0 + ww / 2)
+    ctx.arc(wx, wy0 + ww / 2, ww / 2, math.pi, 0)
+    ctx.line_to(wx + ww / 2, wy0 + wh)
+    ctx.close_path()
+    D.col(ctx, INK)
+    ctx.set_line_width(16)
+    ctx.stroke()
+    D.line(ctx, wx, wy0, wx, wy0 + wh, T("#5a4a3a"), 10)
+    D.rect(ctx, wx - ww / 2 - 40, wy0 + wh, ww + 80, 40, T("#b8ac98"), INK, 4, wob=0)
+    # гирлянда
+    for k in range(18):
+        u = k / 17
+        gx = lerp(x0 + 200, x1 - 200, u)
+        gy = -120 + 120 * 4 * u * (1 - u)
+        D.circle(ctx, gx, gy, 12, hexrgb(BRIGHT[k % 8]) if lit else T("#7a7a7a"), INK, 2)
+        if lit:
+            D.radial(ctx, gx, gy, 50, BRIGHT[k % 8], 0.35, 0)
+    D.curve(ctx, [(x0 + 200, -120), ((x0 + x1) / 2, -0), (x1 - 200, -120)], INK, 3)
+    # ящик с рацией и фонарик
+    cx = TOWER_CRATE_X
+    D.rect(ctx, cx - 160, FL - 280, 320, 240, T("#c8903a"), INK, 4, wob=0)
+    D.line(ctx, cx - 160, FL - 280, cx + 160, FL - 40, T("#a8702a"), 6)
+    D.text(ctx, "POPCORN", cx, FL - 120, 34, D.FONT_TITLE, T("#e8423c"))
+    radio(ctx, cx + 60, FL - 280, 0.9, True, tod, 9, t)
+    D.rrect(ctx, cx - 140, FL - 330, 110, 50, 16, T("#ffd23a"), INK, 3)
+    # лежанка
+    bx = TOWER_BED_X
+    D.rrect(ctx, bx - 520, FL - 170, 1040, 140, 50, T("#e8423c"), INK, 4)
+    for k, c in enumerate(("#3fbf6a", "#fbfaf6", "#2f8fd8", "#ffd23a")):
+        D.ellipse(ctx, bx - 380 + k * 120, FL - 190, 90, 50, T(c), INK, 3)
+    D.ellipse(ctx, bx + 360, FL - 200, 150, 60, T("#f05a8a"), INK, 3)
+    D.rect(ctx, x0, FL - 40, x1 - x0, 900, T("#9a8a74"), None, 0, wob=0)
+    for k in range(int((x1 - x0) / 200) + 1):
+        D.line(ctx, x0 + k * 200, FL - 40, x0 + k * 200 + (k * 200 - (x1 - x0) / 2) * 0.4, FL + 800, T("#8a7a64"), 3)
+    D.rect(ctx, x0, FL - 50, x1 - x0, 14, T("#6a5a44"), None, 0, wob=0)

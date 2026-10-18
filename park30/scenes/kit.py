@@ -12,23 +12,19 @@ from engine import fx
 from engine.film import Cam, layer, Shot, bg, cached, blit
 from engine.cat import draw_cat, cat_pose
 from engine import overlay as O
-from sets import common as C, sea as SEA, terminal as TM, apron as AP, plane as PL, rooms as RM, outside as OS
-from sets.base import tone, logo, jerrycan
+from engine.raccoon import draw_raccoon, raccoon_pose, raccoon_head
+from sets import sea as SEA, park as PK, rides as RD, balloon as BL, castle as CA, inside as IN, lake as LK
+from sets.base import tone
+from sets.park import star
 
-LEO = R.Fig(R.LEO)
-LEO_CAP = R.Fig(R.LEO_CAP)
-LEO_VEST = R.Fig(R.LEO_VEST)
-DANNY = R.Fig(R.DANNY)
-DANNY_JACKET = R.Fig(R.DANNY_JACKET)
-DANNY_PILOT = R.Fig(R.DANNY_PILOT)
-WALT = R.Fig(R.WALT)
-JUNE = R.Fig(R.JUNE)
-CAPTAIN = R.Fig(R.CAPTAIN)
-CAPTAIN_Z = R.Fig(R.CAPTAIN_Z)
-DOLORES = R.Fig(R.DOLORES)
-MOM = R.Fig(R.MOM)
-MAX = R.Fig(R.MAX)
-GUARD = R.Fig(R.GUARD)
+RASCAL = R.Fig(R.RASCAL)
+RASCAL_PATCH = R.Fig(R.RASCAL_PATCH)
+RASCAL_RIP = R.Fig(R.RASCAL_RIP)
+THEO = R.Fig(R.THEO)
+THEO_FUR = R.Fig(R.THEO_FUR)
+THEO_FUR_PATCH = R.Fig(R.THEO_FUR_PATCH)
+GUS = R.Fig(R.GUS)
+LILY = R.Fig(R.LILY)
 
 
 # --- ходьба без проскальзывания --------------------------------------------------
@@ -141,7 +137,7 @@ def make_crowd(seed, n, x0, x1, y0, y1, s0, s1, vx=(0.0, 0.0), face=None, kinds=
     for i in range(n):
         m = Member()
         m.seed = seed * 1000 + i
-        m.look = R.zombie_look(m.seed, r.choice(kinds) if kinds else None)
+        m.look = R.park_zombie(m.seed, r.choice(kinds) if kinds else None)
         m.fig = R.Fig(m.look)
         m.y = r.uniform(y0, y1)
         k = (m.y - y0) / max(1e-6, (y1 - y0))
