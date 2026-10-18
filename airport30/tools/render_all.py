@@ -1,7 +1,7 @@
 """Рендер всего ролика: по файлу на сегмент (параллельно), склейка, звук.
 
 python tools/render_all.py [--jobs 4] [--only d01,d02] [--force]
-  → build/render/<сегмент>.mp4, build/video_noaudio.mp4, build/SeaEmpress_30days.mp4
+  → build/render/<сегмент>.mp4, build/video_noaudio.mp4, build/Lakeshore_30days.mp4
 Уже отрендеренные сегменты пропускаются, если файл новее сцен и тайминга (или нет --force).
 """
 import argparse
@@ -91,7 +91,7 @@ def main():
     subprocess.run(["ffmpeg", "-v", "error", "-y", "-f", "concat", "-safe", "0", "-i", lst, "-c", "copy", vid],
                    check=True)
     mix = os.path.join(ROOT, "build", "audio", "mix.wav")
-    final = os.path.join(ROOT, "build", "SeaEmpress_30days.mp4")
+    final = os.path.join(ROOT, "build", "Lakeshore_30days.mp4")
     if os.path.exists(mix):
         subprocess.run(["ffmpeg", "-v", "error", "-y", "-i", vid, "-i", mix, "-map", "0:v", "-map", "1:a", "-c:v",
                         "copy", "-c:a", "aac", "-b:a", "192k", "-shortest", "-movflags", "+faststart", final],
