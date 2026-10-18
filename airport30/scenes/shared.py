@@ -238,3 +238,47 @@ def living_look(seed, kind=None):
     L.head_shade = shade(L.head, -0.13)
     L.details = tuple(d for d in L.details if d not in ("stains", "torn"))
     return L
+
+
+def rule_card(ctx, t, num, lines, t0=0.0, x=W / 2, y=H / 2 - 20, rot=-0.04):
+    """Страница блокнота: «RULE #N» и надпись от руки, строки появляются по очереди."""
+    k = ease_out_back(clamp((t - t0) / 0.35))
+    if k <= 0:
+        return
+    ctx.save()
+    ctx.translate(x, y)
+    ctx.rotate(rot)
+    ctx.scale(k, k)
+    D.rect(ctx, -520, -300, 1040, 600, hexrgb("#fbf3dc"), D.INK, 6, wob=0)
+    for j in range(7):
+        D.line(ctx, -500, -170 + j * 72, 500, -170 + j * 72, hexrgb("#a8c8e8"), 2)
+    D.line(ctx, -420, -300, -420, 300, hexrgb("#e8a0a0"), 3)
+    for j in range(5):
+        D.circle(ctx, -480, -230 + j * 110, 14, hexrgb("#2b2f3a"), None, 0)
+    D.text(ctx, "RULE #%d" % num, -380, -190, 90, D.FONT_TITLE, hexrgb("#e8423c"), "left")
+    for i, ln in enumerate(lines):
+        n = int(clamp((t - t0 - 0.5 - i * 0.8) / 0.8) * len(ln))
+        D.text(ctx, ln[:n], -380, -60 + i * 110, 84, D.FONT_HAND, hexrgb("#2a3a7a"), "left")
+    ctx.restore()
+
+
+def mannequin_look(seed, c="#e8423c", dress=False):
+    kw = dict(R.MANNEQUIN)
+    kw.update(body=c, seed=seed)
+    if dress:
+        kw.update(style="dress", length=0.4)
+    return R.Look(**kw)
+
+
+def speakers(ctx, t, pts, k=1.0, c="#fff6d8"):
+    """Потолочные динамики с расходящимися волнами звука (экранные точки)."""
+    for i, (x, y) in enumerate(pts):
+        D.rrect(ctx, x - 40, y - 24, 80, 48, 10, hexrgb("#2b2f3a"), D.INK, 4)
+        D.circle(ctx, x, y, 16, hexrgb("#5a606c"), None, 0)
+        if k > 0:
+            for j in range(3):
+                r = 50 + ((t * 120 + j * 40 + i * 20) % 120)
+                ctx.arc(x, y + 10, r, math.pi * 0.2, math.pi * 0.8)
+                D.col(ctx, hexrgb(c), k * (1 - (r - 50) / 120))
+                ctx.set_line_width(6)
+                ctx.stroke()

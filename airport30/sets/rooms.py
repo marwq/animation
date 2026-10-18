@@ -20,19 +20,22 @@ def _T(power, tod="night"):
 def belt(ctx, x0, x1, y, t=0.0, run=1.0, T=lambda c: c, legs=True, h=36):
     """Багажная лента: чёрное полотно с бегущими швами, серая рама, ролики, ножки."""
     if legs:
-        for k in range(int((x1 - x0) / 300) + 1):
-            lx = x0 + 60 + k * 300
-            if lx < x1:
-                D.rect(ctx, lx, y + h, 18, FL - y - h, T("#8f99a3"), INK, 3, wob=0)
+        lx = math.ceil((x0 - 60) / 300) * 300 + 60
+        while lx < x1:
+            D.rect(ctx, lx, y + h, 18, FL - y - h, T("#8f99a3"), INK, 3, wob=0)
+            lx += 300
     D.rect(ctx, x0, y, x1 - x0, h, T("#9aa3ac"), INK, 4, wob=0)
     D.rect(ctx, x0, y - 10, x1 - x0, 14, T("#22252c"), INK, 3, wob=0)
     off = (t * 160 * run) % 60
-    for k in range(int((x1 - x0) / 60) + 1):
-        xx = x0 + k * 60 + off
-        if x0 < xx < x1:
+    xx = math.floor(x0 / 60) * 60 + off
+    while xx < x1:
+        if xx > x0:
             D.line(ctx, xx, y - 8, xx, y + 2, T("#3a3f48"), 3)
-    for k in range(int((x1 - x0) / 120) + 1):
-        D.circle(ctx, x0 + 30 + k * 120, y + h / 2, 9, T("#c9d0d6"), INK, 2)
+        xx += 60
+    xx = math.ceil((x0 - 30) / 120) * 120 + 30
+    while xx < x1:
+        D.circle(ctx, xx, y + h / 2, 9, T("#c9d0d6"), INK, 2)
+        xx += 120
 
 
 def bags(ctx, x0, x1, y, t=0.0, run=1.0, seed=0, gap=170, T=lambda c: c, skip=None):
