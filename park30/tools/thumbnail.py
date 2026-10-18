@@ -1,9 +1,9 @@
-"""Обложка «DAY 1 / DAY 30» для аэропорта.
+"""Обложка «DAY 1 / DAY 30» для парка развлечений.
 
-Слева день 1: солнечный перрон, лайнер, Дэнни в светоотражающем жилете весело подбрасывает чемодан.
-Справа день 30: ночь, луна, вышка с красным огнём, синие огни полосы, орда сочно-зелёных зомби со
-светящимися глазами до горизонта; Дэнни в наушниках пилота прячется за багажной тележкой, обнимает
-Пиклз (в огромных наушниках), весь в поту, а из-за чемоданов уже тянутся руки.
+Слева день 1: солнечный парк — колесо обозрения, горка, карусель; Раскал в костюме весело машет со сладкой ватой.
+Справа день 30: ночь, луна, салют над замком, светящийся шар в заплатках, орда сочно-зелёных зомби со светящимися
+глазами до горизонта; Тео без костюма прячется за корзиной шара, обнимает Бандит, весь в поту, а через борт уже
+тянутся руки.
 
     python3 tools/thumbnail.py        → build/thumbnail.png (1280x720), docs/thumbnail.jpg
 """
@@ -36,22 +36,27 @@ def clip_right(ctx):
 def left(ctx):
     ctx.save()
     clip_left(ctx)
-    cam = Cam(400, 380, 0.62)
-    apron_back(ctx, 0.0, cam, "day", 1.0, sun=(1300, -150, 80), x0=-1600, x1=2600)
+    cam = Cam(450, 260, 0.42)
+    grass_back(ctx, 0.0, cam, "day", -3000, 5000, sun=(1900, -700, 120))
     with layer(ctx, cam, 0.0):
-        PL.jet(ctx, 900, AP.GY - 20, 1.1, -1, "day", door=1.0)
-        PL.tug(ctx, -350, AP.GY + 120, 1.0, 1, "day", carts=2, load=1.0, seed=3)
-    # летящие чемоданы
-    r = rng(5)
-    for i, (x, y, a) in enumerate(((150, 330, -0.5), (330, 180, 0.4), (820, 300, 0.8), (720, 520, -0.3))):
-        suitcase(ctx, x, y, 0.9 + 0.2 * (i % 2), RM.BAG_COLS[(i * 3) % len(RM.BAG_COLS)], a)
-    # Дэнни крупно, по пояс: чемодан над головой
-    s = 300
-    p = R.stand("side", 0, 1)
-    p.update(face="laugh", hturn=0.85, h1=(1.35, -3.7), h2=(0.9, -2.3), mouth=0.9, blink=0.0)
-    J = DANNY.draw(ctx, 430, 1640, s, 1, p)
-    hx, hy = DANNY.world(430, 1640, s, 1, J["hand1"])
-    suitcase(ctx, hx + 20, hy + 60, 2.1, "#e8423c", 0.25)
+        RD.big_wheel(ctx, -350, PK.FL - 1550, 1250, 0.2, "day", t=0.0, gy=PK.FL)
+        tr = RD.Track(RD.thunderbolt_track(800, PK.FL, 2100))
+        RD.coaster_track(ctx, tr, PK.FL, "day")
+        RD.coaster_train(ctx, tr, 3300, 4, 240, "day")
+        RD.carousel(ctx, 1150, PK.FL + 420, 0.8, 0.5, 0.0, "day", run=1.0, music=1.0)
+        PK.balloon_bunch(ctx, 2050, PK.FL - 20, 0.0, 7, 1.8, seed=3, string_len=300)
+    # Раскал крупно: машет, в другой руке сладкая вата
+    s = 235
+    p = R.stand("front", 0, 1)
+    p.update(h1=(-1.15, -2.7), h2=(1.0, -2.3), blink=0.0)
+    J = RASCAL.draw(ctx, 470, 1650, s, 1, rascal_pose(p, None))
+    hx, hy = RASCAL.world(470, 1650, s, 1, J["hand2"])
+    D.line(ctx, hx, hy, hx + 16, hy - 150, hexrgb("#fbfaf6"), 12)
+    D.line(ctx, hx, hy, hx + 16, hy - 150, D.INK, 2)
+    D.circle(ctx, hx + 22, hy - 220, 95, hexrgb("#ffb6d8"), D.INK, 6)
+    D.circle(ctx, hx - 20, hy - 250, 40, hexrgb("#ffd6e8"), None, 0)
+    for (x, y, r_) in ((120, 420, 28), (860, 560, 34), (770, 330, 22)):
+        star(ctx, x, y, r_, hexrgb("#ffd23a"), 3)
     ctx.restore()
 
 
@@ -81,7 +86,7 @@ def zombie(ctx, x, gy, s, f, seed, kind=None, reach=True):
     if reach:
         p.update(a1=(1.45 + 0.25 * math.sin(seed), -0.15), a2=(1.25, -0.05), lean=0.2)
     p.update(mouth=0.9, blink=0.0)
-    fig = R.Fig(R.zombie_look(seed, kind))
+    fig = R.Fig(R.park_zombie(seed, kind))
     J = fig.draw(ctx, x, gy, s, f, p)
     return fig.world(x, gy, s, f, J["head"])
 
@@ -91,102 +96,58 @@ def right(ctx):
     clip_right(ctx)
     D.vgrad(ctx, 0, 0, W, H, [(0, "#050822"), (0.55, "#13205a"), (1, "#1d2f6e")])
     SEA.stars(ctx, 880, 0, 1100, 520, 0.0, 7, 1.2)
-    fx.glow(ctx, 1260, 250, 460, "#cfe0ff", 0.45)
-    SEA.moon(ctx, 1260, 250, 74)
-    SEA.cloudbank(ctx, 1500, 2150, 300, "night", seed=8, n=6, s0=1.0, s1=1.5, alpha=0.95)
-    # горизонт: огни терминала, вышка
-    HZ = 560
-    D.rect(ctx, 880, HZ - 70, 1100, 70, hexrgb("#1a2240"), D.INK, 4, wob=0)
-    for k in range(22):
-        D.rect(ctx, 900 + k * 50, HZ - 54, 30, 18, hexrgb("#ffd978"), None, 0, wob=0, alpha=0.7)
-    tx = 1760
-    D.rect(ctx, tx - 22, HZ - 330, 44, 300, hexrgb("#1a2240"), D.INK, 5, wob=0)
-    D.poly(ctx, [(tx - 80, HZ - 400), (tx + 80, HZ - 400), (tx + 60, HZ - 330), (tx - 60, HZ - 330)],
-           hexrgb("#2a3a6a"), D.INK, 5, wob=0)
-    D.rect(ctx, tx - 66, HZ - 392, 132, 40, hexrgb("#7fe0c8"), D.INK, 3, wob=0, alpha=0.8)
-    fx.glow(ctx, tx, HZ - 420, 90, "#ff4a3a", 0.7)
-    D.circle(ctx, tx, HZ - 420, 12, hexrgb("#ff4a3a"), None, 0)
-    # молния
-    pts = [(1900, 0), (1860, 110), (1895, 140), (1830, 280), (1860, 300), (1810, 420)]
-    D.polyline(ctx, pts, hexrgb("#bfe0ff"), 22, 0.35)
-    D.polyline(ctx, pts, hexrgb("#ffffff"), 8)
-    # бетон и синие огни полосы
-    D.rect(ctx, 880, HZ, 1100, H - HZ, hexrgb("#2a3048"), None, 0, wob=0)
-    D.poly(ctx, [(1350, HZ), (1420, HZ), (1980, H), (1100, H)], hexrgb("#353c58"), None, 0, wob=0)
-    for k in range(9):
-        u = (k / 9) ** 1.7
-        y = HZ + (H - HZ) * u
-        for xx in (lerp(1350, 1100, u), lerp(1420, 1980, u)):
-            fx.glow(ctx, xx, y, 20 + 40 * u, "#4f8fff", 0.6)
-            D.circle(ctx, xx, y, 3 + 9 * u, hexrgb("#9fc4ff"), None, 0)
+    # салют
+    for (x, y, c, k, sd) in ((1080, 360, "#ff4a6a", 0.55, 1), (1330, 120, "#4ad8ff", 0.5, 3)):
+        LK.firework(ctx, x, y, k, 0.8, c, seed=sd, n=30)
+    # замок на горизонте
+    HZ = 620
+    ctx.save()
+    ctx.translate(1240, HZ)
+    ctx.scale(0.2, 0.2)
+    CA.castle(ctx, 0, 0, 1.0, "night", 0.0, lit=0.9)
+    ctx.restore()
+    D.rect(ctx, 880, HZ, 1100, H - HZ, hexrgb("#1f2a3a"), None, 0, wob=0)
+    # светящийся шар с корзиной справа: огромный, уходит за верх кадра
+    bx, bgy, bs = 1740, 1190, 0.62
+    fx.glow(ctx, bx, 300, 520, "#ffb03c", 0.4)
+    by = bgy - (300 + 420 + 160) * bs
+    e = BL.envelope(ctx, bx, by, 0.85 * bs, 1.0, "night", glow=1.0, t=0.0)
     # орда до горизонта
     heads = []
     r = rng(30)
-    rows = [(HZ + 30, 44, 22), (HZ + 90, 56, 18), (HZ + 160, 72, 15), (HZ + 240, 92, 12)]
+    rows = [(HZ + 20, 40, 26), (HZ + 80, 52, 22), (HZ + 150, 68, 17), (HZ + 230, 88, 13)]
     for ri, (gy, sc, n) in enumerate(rows):
         for i in range(n):
             x = 900 + (i + r.uniform(-0.3, 0.3)) * (1100 / n)
-            if ri >= 2 and x > 1560:
-                continue
-            hx, hy = zombie(ctx, x, gy + sc * 2.2, sc, 1 if x < 1500 else -1, 5000 + ri * 40 + i, reach=ri >= 1)
+            hx, hy = zombie(ctx, x, gy + sc * 2.2, sc, 1 if x < 1600 else -1, 5000 + ri * 40 + i, reach=ri >= 1)
             heads.append((hx, hy, sc))
-    D.rect(ctx, 880, 0, 1100, H, hexrgb("#0a1236"), None, 0, wob=0, alpha=0.35)
+    D.rect(ctx, 880, 0, 1100, H, hexrgb("#0a1236"), None, 0, wob=0, alpha=0.3)
     for hx, hy, sc in heads:
         zombie_glow_eyes(ctx, hx + 0.1 * sc, hy, sc * 0.13, 0.9)
-    # средний план
     mids = []
-    for i, (x, gy, sc) in enumerate(((960, 1290, 115), (1110, 1320, 125), (1250, 1300, 118), (1500, 1250, 100),
-                                     (1650, 1230, 95))):
-        mids.append((zombie(ctx, x, gy, sc, 1 if x < 1450 else -1, 6100 + i,
-                            ["pilot", "attendant", "business", "tsa", "traveler"][i]), sc))
-    D.rect(ctx, 880, 0, 1100, H, hexrgb("#0a1236"), None, 0, wob=0, alpha=0.18)
+    for i, (x, gy, sc) in enumerate(((955, 1250, 112), (1900, 1250, 108))):
+        mids.append((zombie(ctx, x, gy, sc, 1 if x < 1600 else -1, 6100 + i, ["staff", "chef"][i]), sc))
     for (hx, hy), sc in mids:
         zombie_glow_eyes(ctx, hx + 0.1 * sc, hy, sc * 0.13, 1.0)
-    # передний план: зомби тянется к тележке
-    p = zombie_reach(0.2, 7000)
-    p.update(a1=(1.75, -0.2), a2=(1.55, -0.12), lean=0.28, mouth=1.0, blink=0.0, neck=-0.05)
-    fig = R.Fig(R.zombie_look(7000, "traveler"))
-    J = fig.draw(ctx, 1060, 1520, 205, 1, p)
-    hx, hy = fig.world(1060, 1520, 205, 1, J["head"])
-    zombie_glow_eyes(ctx, hx + 0.1 * 205, hy, 205 * 0.13, 1.0)
-    # багажная тележка с горой чемоданов — укрытие
-    bx0, bx1, by0 = 1250, 1610, 850
-    r = rng(12)
-    for row in range(3):
-        for col in range(4 - row):
-            cx = bx0 + 50 + col * 85 + row * 40 + r.uniform(-8, 8)
-            cy = by0 - row * 100
-            suitcase(ctx, cx, cy, 0.95, RM.BAG_COLS[r.randrange(len(RM.BAG_COLS))], r.uniform(-0.12, 0.12),
-                     handle=row == 2)
-    D.rect(ctx, bx0 - 20, by0, bx1 - bx0 + 40, 40, hexrgb("#c9d0d6"), D.INK, 7, wob=0)
-    D.rect(ctx, bx0, by0 + 40, bx1 - bx0, H - by0, hexrgb("#8f99a3"), D.INK, 7, wob=0)
-    D.rect(ctx, bx0 + 30, by0 + 70, bx1 - bx0 - 60, 60, hexrgb("#f2c230"), D.INK, 5, wob=0)
-    D.text(ctx, "BAGGAGE", (bx0 + bx1) / 2, by0 + 116, 40, D.FONT_TITLE, hexrgb("#22252c"))
-    # из-за чемоданов высовывается зомби-пилот: голова над грудой, руки через край
-    sc = 180
-    zx, zy = 1440, by0 - 330
-    ctx.save()
-    ctx.rectangle(880, 0, 1100, by0 - 260)
-    ctx.clip()
-    R.Fig(R.zombie_look(7101, "pilot")).head_only(ctx, zx, zy, sc, 1, {"view": "front", "mouth": 1.0,
-                                                                      "neck_line": False, "blink": 0.0})
-    ctx.restore()
-    zombie_glow_eyes(ctx, zx, zy - 0.02 * sc, sc * 0.13, 1.0)
-    for k, (hx_, hy_, ang) in enumerate(((1330, by0 - 235, -0.3), (1550, by0 - 250, 0.3))):
+    BL.basket(ctx, bx, bgy, bs * 1.6, "night", 1.0, 0.0, tanks=2,
+              cables_to=(e["left"][0], e["left"][1], e["right"][0], e["right"][1]))
+    rim = bgy - 300 * bs * 1.6
+    # через борт тянутся зелёные руки
+    for (hx_, hy_, ang) in ((bx + 60, rim - 18, 0.3), (bx + 180, rim - 8, 0.5), (bx - 40, rim - 24, -0.2)):
         D.ellipse(ctx, hx_, hy_, 34, 20, hexrgb(R.ZOMBIE_SKIN[1]), D.INK, 5)
         for f_ in range(4):
             fx_ = hx_ - 24 + f_ * 16
             D.line(ctx, fx_, hy_ + 8, fx_ + ang * 10, hy_ + 40, D.INK, 13)
             D.line(ctx, fx_, hy_ + 8, fx_ + ang * 10, hy_ + 40, hexrgb(R.ZOMBIE_SKIN[1]), 7)
-    # Дэнни прячется за тележкой: сжался, обнимает Пиклз, косится на зомби
-    s = 215
-    lx, lgy = 1800, 1150
+    # Тео прячется слева от корзины: сжался, обнимает Бандит, косится на руки; весь в поту
+    s = 220
+    lx, lgy = 1250, 1160
     p = floor_sit_pose(0.0, 1, "scared", hug=True)
-    p.update(blink=0.0, mouth=0.4, hturn=0.3, look=(-1.0, 0.0), lean=0.12, neck=0.18)
-    J = DANNY_PILOT.draw(ctx, lx, lgy, s, -1, p)
-    hx, hy = DANNY_PILOT.world(lx, lgy, s, -1, J["head"])
-    cx, cy = DANNY_PILOT.world(lx, lgy, s, -1, J["hand1"])
-    draw_lab(ctx, cx - 10, cy + 170, 220, -1, dog_pose(0.0, "sit", headset=1.35, wag=0.0, look=-0.3))
+    p.update(blink=0.0, mouth=0.45, hturn=0.35, look=(1.0, -0.3), lean=0.12, neck=0.18)
+    J = THEO.draw(ctx, lx, lgy, s, 1, p)
+    hx, hy = THEO.world(lx, lgy, s, 1, J["head"])
+    cx, cy = THEO.world(lx, lgy, s, 1, J["hand1"])
+    draw_raccoon(ctx, cx - 30, cy + 120, 150, 1, raccoon_pose(0.0, "sit", look=0.8))
     for (dx, dy, ds, da) in ((-150, -10, 22, -0.7), (150, -20, 24, 0.7), (-175, 80, 17, -1.1), (180, 70, 18, 1.1),
                              (-120, -95, 14, -0.4), (125, -100, 15, 0.4), (40, 30, 11, 0.0)):
         drop(ctx, hx + dx, hy + dy, ds, da)
@@ -197,7 +158,6 @@ def right(ctx):
             D.col(ctx, hexrgb("#fff6d8"), 0.9 - jj * 0.25)
             ctx.set_line_width(8)
             ctx.stroke()
-    SEA.rain_streaks(ctx, 0.0, TOP_X - 120, 0, W - TOP_X + 120, H, 0.5, 0.5, alpha=0.25)
     ctx.restore()
 
 
