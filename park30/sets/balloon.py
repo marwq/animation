@@ -377,26 +377,43 @@ def shed(ctx, x, gy, w=1600, h=1100, tod="day", open_k=0.0, lit=None):
     D.rect(ctx, x - dw / 2 - 30, gy - dh - 30, dw + 60, 30, T("#5a606c"), INK, 3, wob=0)
 
 
-def trash_balloon(ctx, x, y, s=1.0, t=0.0, tod="day", fill=1.0):
-    """Модель из мусорного пакета со свечкой (урок первый)."""
+def trash_balloon(ctx, x, y, s=1.0, t=0.0, tod="day", fill=1.0, lit=True):
+    """Модель из белого мусорного пакета со свечкой (урок первый): (x, y) — горловина пакета,
+    стаканчик со свечкой висит ниже, его дно — y + 72·s."""
     T = Tf(tod)
     ctx.save()
     ctx.translate(x, y)
     ctx.scale(s, s)
     h = 220 * (0.4 + 0.6 * fill)
-    ctx.move_to(-30, 0)
-    ctx.curve_to(-150, -h * 0.4, -110, -h, 0, -h)
-    ctx.curve_to(110, -h, 150, -h * 0.4, 30, 0)
-    ctx.close_path()
-    D.col(ctx, T("#2b2f3a"))
-    ctx.fill_preserve()
+    wob = (1 - fill) * 18
+
+    def bag_path():
+        ctx.move_to(-30, 0)
+        ctx.curve_to(-150 + wob, -h * 0.4, -110, -h + wob, 0, -h)
+        ctx.curve_to(110, -h - wob, 150 - wob, -h * 0.4, 30, 0)
+        ctx.close_path()
+    bag_path()
+    D.col(ctx, T("#eef2f5"))
+    ctx.fill()
+    if lit:       # свечка подсвечивает пакет изнутри
+        bag_path()
+        ctx.save()
+        ctx.clip()
+        D.radial(ctx, 0, -20, h * 0.9, "#ffc870", 0.55, 0)
+        ctx.restore()
+    bag_path()
     D.col(ctx, INK)
     ctx.set_line_width(4)
     ctx.stroke()
-    D.curve(ctx, [(-60, -h * 0.6), (-20, -h * 0.75), (20, -h * 0.6)], T("#5a606c"), 4)
+    for k in (-1, 1):       # складки плёнки
+        D.curve(ctx, [(k * 40, -h * 0.2), (k * 70, -h * 0.5), (k * 40, -h * 0.85)], T("#b8c4cc"), 4)
+    D.curve(ctx, [(-34, -4), (-10, 6), (10, -2), (34, -4)], T("#e8423c"), 6)      # завязки
+    D.line(ctx, -34, -4, -48, 10, T("#e8423c"), 5)
     for k in (-1, 1):
         D.line(ctx, k * 30, 0, k * 14, 60, INK, 2)
     D.rect(ctx, -16, 60, 32, 12, T("#c9d0d6"), INK, 2, wob=0)
-    D.rect(ctx, -6, 34, 12, 26, T("#f6e6c8"), INK, 2, wob=0)
-    flame(ctx, 0, 34, 0.12, 0.5, t)
+    D.rect(ctx, -6, 34, 12, 26, T("#f6a8c8"), INK, 2, wob=0)
+    D.line(ctx, 0, 34, 0, 26, INK, 2)
+    if lit:
+        flame(ctx, 0, 30, 0.12, 0.5, t)
     ctx.restore()
