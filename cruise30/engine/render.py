@@ -96,6 +96,10 @@ def _whip(ctx, shot, t, S, direction, k):
     n = 7
     off = (1 - k) * W * 0.25 * direction
     blur = (1 - k) * 160 + 20
+    ctx.save()
+    ctx.set_source(pat)
+    ctx.paint()
+    ctx.restore()
     for j in range(n):
         ctx.save()
         ctx.translate(off + (j / (n - 1) - 0.5) * blur, 0)
