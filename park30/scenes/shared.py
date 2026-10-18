@@ -90,7 +90,7 @@ def theo_radio(ctx, t, cam, talk=0.0, face="neutral", tod="night", fig=None, bea
     with layer(ctx, cam, t):
         x = IN.TOWER_CRATE_X + 420
         p = floor_sit_pose(t, 1, face)
-        p.update(mouth=talk_mouth(t, talk), h1=(0.55, -2.25), hturn=-0.7)
+        p.update(mouth=talk_mouth(t, talk), h1=(0.62, -1.72), hturn=-0.7)
         J = fig.draw(ctx, x, IN.FL - 40, 112, -1, p)
         hx, hy = fig.world(x, IN.FL - 40, 112, -1, J["hand1"])
         D.rrect(ctx, hx - 16, hy - 30, 32, 52, 10, tone("#2b2f3a", tod), D.INK, 3)
