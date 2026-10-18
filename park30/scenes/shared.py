@@ -240,8 +240,9 @@ def place_tag(ctx, txt, t, x=70, y=210, c="#fff6d8", bgc="#1c3f7c"):
     ctx.save()
     ctx.translate(x, y)
     ctx.scale(k, k)
-    D.rrect(ctx, 0, -50, 40 + 34 * len(txt), 100, 24, hexrgb(bgc), D.INK, 6)
-    D.text(ctx, txt, 20 + 17 * len(txt), 22, 62, D.FONT_TITLE, hexrgb(c))
+    w = D.text_width(ctx, txt, 62, D.FONT_TITLE) + 50
+    D.rrect(ctx, 0, -50, w, 100, 24, hexrgb(bgc), D.INK, 6)
+    D.text(ctx, txt, w / 2, 22, 62, D.FONT_TITLE, hexrgb(c))
     ctx.restore()
 
 
