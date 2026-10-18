@@ -206,10 +206,11 @@ PROG = {
     "silence": [("A", "m"), ("F", "M"), ("A", "m"), ("E", "m")],
     "dread": [("C", "m"), ("C", "m"), ("Db", "M"), ("C", "m")],
     "flight": [("D", "M"), ("A", "M"), ("B", "m"), ("G", "M")],
+    "carnival": [("C", "M"), ("G", "M"), ("C", "M"), ("F", "M")],
 }
 TEMPO = {"lonely": 72, "hope": 80, "fun": 112, "wonder": 76, "tension": 100, "mystery": 66, "action": 138,
          "storm": 90, "tropical": 116, "silence": 60, "dread": 70,
-         "flight": 118}
+         "flight": 118, "carnival": 126}
 
 
 def steelpan(n, dur=0.9, amp=0.2):
@@ -316,6 +317,9 @@ def music(mood, dur, seed=0, intensity=1.0):
                 place(x, bass(ch[0] - 12 + (7 if k == 2 else 0), beat * 0.6, 0.28), t0 + k * beat)
                 place(x, kick(0.35 * intensity), t0 + k * beat)
                 place(x, shaker(0.06), t0 + k * beat + beat / 2)
+        elif mood == "carnival":
+            if b == 0:
+                place(x, calliope(dur + 1.0, seed, 0.9 * intensity), 0)
         elif mood == "silence":
             place(x, pad([n + 12 for n in ch], bar + 1.0, 700, 0.06), t0)
             if b % 2 == 0:
@@ -334,7 +338,8 @@ BASE = {"storm": ("storm", 1.0), "party": ("fun", 1.0), "sneak": ("mystery", 0.9
         "chase": ("action", 1.0), "warm": ("hope", 0.8), "silence": ("silence", 1.0), "joy": ("flight", 1.0),
         "sad": ("lonely", 1.0), "tension": ("tension", 1.0), "lonely": ("lonely", 1.0), "routine": ("fun", 0.9),
         "dread": ("dread", 1.0), "wonder": ("wonder", 1.0), "plan": ("hope", 1.0), "hope": ("hope", 1.0),
-        "happy_end": ("flight", 0.8), "fun": ("fun", 1.0), "mystery": ("mystery", 1.0)}
+        "happy_end": ("flight", 0.8), "fun": ("fun", 1.0), "mystery": ("mystery", 1.0),
+        "carnival": ("carnival", 1.0)}
 
 
 def scene_moods(S):
@@ -965,10 +970,289 @@ def cruise_sfx(name):
     return None
 
 
+# --- парк: калиопа и эффекты ---------------------------------------------------------
+
+def pipe(n, dur=0.4, amp=0.2):
+    """Труба паровой каллиопы: богатые гармоники, лёгкое вибрато, дыхание."""
+    t = t_(dur)
+    f = midi(n) * (1 + 0.006 * np.sin(2 * np.pi * 6.0 * t))
+    ph = np.cumsum(f) / SR
+    x = (np.sin(2 * np.pi * ph) + 0.55 * np.sin(4 * np.pi * ph) + 0.3 * np.sin(6 * np.pi * ph)
+         + 0.15 * np.sin(8 * np.pi * ph)) * 0.5
+    x += hp(noise(dur), 3000) * 0.04
+    env = np.minimum(1, t / 0.012) * np.where(t > dur - 0.06, np.maximum(0, (dur - t) / 0.06), 1)
+    return x * env * amp
+
+
+def calliope(dur, seed=0, amp=1.0, bpm=126):
+    """Марш каруселей: «ум-па» в басу, аккорды на слабые доли, мелодия трубами."""
+    r = np.random.default_rng(seed)
+    beat = 60 / bpm
+    bar = beat * 4
+    x = np.zeros(int((dur + 2) * SR))
+    prog = [("C", "M"), ("G", "M"), ("C", "M"), ("F", "M"), ("C", "M"), ("G", "M"), ("G", "M"), ("C", "M")]
+    tunes = [[0, 2, 4, 2], [4, 5, 4, 2], [0, 4, 7, 4], [5, 4, 2, 0]]
+    for b in range(int(dur / bar) + 2):
+        root, kind = prog[b % len(prog)]
+        ch = chord(root, kind, 3)
+        t0 = b * bar
+        for k in range(4):
+            if k % 2 == 0:
+                place(x, bass(ch[0] - 12 + (7 if k == 2 else 0), beat * 0.5, 0.3 * amp), t0 + k * beat)
+            else:
+                for n in ch:
+                    place(x, pipe(n + 12, beat * 0.4, 0.06 * amp), t0 + k * beat)
+        mel = tunes[b % len(tunes)]
+        for k, step in enumerate(mel):
+            n = ch[0] + 24 + step
+            place(x, pipe(n, beat * (0.9 if k < 3 else 1.6), 0.13 * amp), t0 + k * beat)
+            if r.random() < 0.4:
+                place(x, pipe(n + 2, beat * 0.4, 0.08 * amp), t0 + k * beat + beat / 2)
+        place(x, _bell(midi(ch[0] + 36), 0.5, 0.05 * amp), t0)
+    return x[:int(dur * SR)]
+
+
+def _chirp(f0, f1, d, amp=0.2):
+    t = t_(d)
+    f = np.linspace(f0, f1, len(t))
+    return np.sin(2 * np.pi * np.cumsum(f) / SR) * np.sin(np.linspace(0, np.pi, len(t))) * amp
+
+
+def park_sfx(name):
+    if name == "beep":
+        return _tone(1046, 0.14, 0.3, 4.0)
+    if name == "click":
+        x = np.zeros(int(0.3 * SR))
+        place(x, mixl(bp(noise(0.02), 1500, 6000) * 0.6, _tone(2200, 0.04, 0.2, 60)), 0)
+        return x
+    if name == "birds":
+        d = 5.0
+        x = np.zeros(int(d * SR))
+        for k in range(14):
+            f0 = rng.uniform(2500, 4200)
+            c = mixl(_chirp(f0, f0 * rng.uniform(1.1, 1.4), 0.07, 0.14), np.zeros(int(0.1 * SR)))
+            place(x, c, rng.uniform(0, d - 0.2))
+            if rng.random() < 0.5:
+                place(x, _chirp(f0 * 1.2, f0 * 0.9, 0.06, 0.1), rng.uniform(0, d - 0.2))
+        return x
+    if name == "bonk":
+        t = t_(0.6)
+        f = 330 * np.exp(-t * 3)
+        x = np.sin(2 * np.pi * np.cumsum(f) / SR) * np.exp(-t * 9) * 0.5
+        return mixl(x, _bell(820, 0.6, 0.12), kick(0.4, 0.6))
+    if name == "boom":
+        t = t_(2.5)
+        return mixl(kick(1.0, 2.5), lp(noise(2.5), 220) * np.exp(-t * 1.6) * 0.9)
+    if name == "burner":
+        d = 2.4
+        t = t_(d)
+        x = lp(noise(d), 1100) * 0.7 + bp(noise(d), 150, 500) * 0.6
+        x *= (0.85 + 0.15 * np.sin(2 * np.pi * 13 * t)) * np.minimum(1, t / 0.06)
+        x *= np.where(t > d - 0.5, np.maximum(0, (d - t) / 0.5), 1)
+        return x * 0.6
+    if name == "buzzer":
+        d = 0.8
+        t = t_(d)
+        x = np.sign(np.sin(2 * np.pi * 110 * t)) * 0.5 + np.sign(np.sin(2 * np.pi * 116 * t)) * 0.3
+        return lp(x, 2500) * np.minimum(1, t / 0.01) * np.where(t > d - 0.05, (d - t) / 0.05, 1) * 0.35
+    if name == "cable_hum":
+        d = 8.0
+        t = t_(d)
+        x = (np.sin(2 * np.pi * 60 * t) + 0.4 * np.sin(2 * np.pi * 120 * t)) * 0.06 + bp(noise(d), 300, 900) * 0.05
+        for k in range(4):
+            place(x, mixl(_tone(700, 0.3, 0.2, 10), bp(noise(0.1), 1000, 4000) * 0.3), 1.0 + k * 2.0)
+        return x
+    if name == "car_horns":
+        d = 3.0
+        x = np.zeros(int(d * SR))
+        for k in range(6):
+            place(x, _horn(rng.uniform(0.25, 0.7), rng.uniform(300, 520), 0.25, 2600), rng.uniform(0, d - 0.8))
+        return x
+    if name == "carousel":
+        x = calliope(7.0, 7, 0.9)
+        return bp(x, 180, 5000) * _fade(np.ones(len(x)), 0.2, 1.2) * 1.2
+    if name == "chain":
+        return _sfx_base("chain_rattle")
+    if name in ("clank", "tonk"):
+        d = 0.9 if name == "clank" else 0.6
+        x = mixl(_bell(410, d, 0.3), _bell(1015, d, 0.15), bp(noise(0.05), 1500, 6000) * 0.3)
+        if name == "clank":
+            place(x, _bell(560, 0.5, 0.2), 0.11)
+        return x
+    if name == "coaster":
+        d = 6.0
+        t = t_(d)
+        x = lp(noise(d), 250) * 0.5 * np.minimum(1, t / 1.0)
+        x = mixl(x, _clacks(d, 9, 0.14, (800, 3000))[:len(x)] * np.where(t < 2.5, 1, 0))
+        sw = bp(noise(d), 400, 2500) * np.clip((t - 2.5) / 0.4, 0, 1) * np.exp(-np.maximum(0, t - 3) * 0.6) * 0.35
+        return (x + sw) * 0.8
+    if name == "crowd_groan":
+        return groans(3.5, 12) * 1.4
+    if name in ("crowd_happy", "screams_fun", "screams"):
+        d = 3.0
+        t = t_(d)
+        x = bp(noise(d), 500, 2800) * 0.08 * (1 + 0.3 * np.sin(2 * np.pi * 1.3 * t))
+        n = 7 if name != "crowd_happy" else 4
+        for k in range(n):
+            if name == "crowd_happy":
+                v = _voice([rng.uniform(220, 320)] * 3, 0.16, 0.18, (800, 1500), 0.18)
+            else:
+                v = _sfx_base("scream")
+                if name == "screams_fun":
+                    v = v * 0.6
+            place(x, v, rng.uniform(0, d - 1.4), rng.uniform(0.5, 1.0))
+        return x * _fade(np.ones(len(x)), 0.2, 0.8)
+    if name == "drill":
+        d = 1.6
+        t = t_(d)
+        f = 170 + 40 * np.minimum(1, t / 0.2)
+        x = bp(saw(1, d) * 0 + np.sign(np.sin(2 * np.pi * np.cumsum(f) / SR)), 300, 3000) * 0.25
+        x *= np.where((t % 0.5) < 0.38, 1, 0.2) * np.minimum(1, t / 0.03)
+        return x
+    if name == "fan":
+        d = 5.0
+        t = t_(d)
+        sp = np.minimum(1, t / 2.0)
+        x = lp(noise(d), 1000) * (0.4 + 0.25 * np.sin(2 * np.pi * np.cumsum(4 + 20 * sp) / SR))
+        return x * sp * 0.5
+    if name == "firework":
+        d = 3.2
+        x = np.zeros(int(d * SR))
+        place(x, _chirp(700, 2200, 0.7, 0.06) + hp(noise(0.7), 4000) * 0.04 * np.linspace(0.3, 1, int(0.7 * SR)), 0)
+        t = t_(2.4)
+        bang = mixl(kick(1.0, 2.4), lp(noise(2.4), 1500) * np.exp(-t * 4) * 0.7)
+        place(x, bang, 0.7)
+        for k in range(30):
+            place(x, hp(noise(0.02), 3000) * 0.25 * rng.uniform(0.3, 1), 0.9 + rng.uniform(0, 1.5))
+        return x
+    if name == "gate":
+        return mixl(_sfx_base("metal_creak") * 0.8, np.concatenate([np.zeros(int(1.0 * SR)), _sfx_base("gate_slam")]))
+    if name == "glass_ring":
+        d = 3.0
+        x = np.zeros(int(d * SR))
+        for k, f in enumerate((1760, 2349, 2637, 3136)):
+            place(x, _bell(f, 2.5, 0.08), k * 0.18)
+        return x
+    if name == "jump_boing":
+        d = 0.8
+        t = t_(d)
+        f = 180 + 320 * np.exp(-t * 4) * (1 + 0.25 * np.sin(2 * np.pi * 18 * t))
+        return np.sin(2 * np.pi * np.cumsum(f) / SR) * np.exp(-t * 3.5) * 0.4
+    if name == "kids_laugh":
+        x = np.zeros(int(2.2 * SR))
+        for k in range(3):
+            f0 = rng.uniform(380, 520)
+            place(x, _voice([f0, f0 * 1.05, f0 * 0.98, f0 * 1.08], 0.11, 0.14, (1100, 2400), 0.2), rng.uniform(0, 0.8))
+        return x
+    if name == "ladder":
+        d = 3.0
+        x = np.zeros(int(d * SR))
+        for k in range(8):
+            place(x, mixl(_bell(rng.uniform(900, 1200), 0.25, 0.12), kick(0.15, 0.2)), k * 0.36 + rng.uniform(0, 0.04))
+        return x
+    if name == "machine":
+        d = 3.5
+        t = t_(d)
+        f = 30 + 30 * np.minimum(1, t / 2.0)
+        x = lp(saw(1, d) * 0 + (2 * ((np.cumsum(f) / SR) % 1) - 1), 400) * 0.3
+        x = mixl(x, _chirp(300, 900, d, 0.05))
+        return x * np.minimum(1, t / 0.2) * np.where(t > d - 0.6, (d - t) / 0.6, 1)
+    if name == "match":
+        x = np.zeros(int(1.2 * SR))
+        place(x, hp(noise(0.12), 2500) * np.exp(-t_(0.12) * 20) * 0.6, 0)
+        place(x, lp(noise(0.8), 1200) * np.sin(np.linspace(0, np.pi, int(0.8 * SR))) * 0.3, 0.08)
+        return x
+    if name == "munch":
+        d = 2.0
+        x = np.zeros(int(d * SR))
+        for k in range(8):
+            place(x, lp(noise(0.09), 900) * np.exp(-t_(0.09) * 30) * 0.5, k * 0.24 + rng.uniform(0, 0.03))
+        return x
+    if name == "projector":
+        d = 5.0
+        t = t_(d)
+        return mixl(_clacks(d, 24, 0.08, (1500, 6000)), np.sin(2 * np.pi * 110 * t) * 0.02)
+    if name == "rip":
+        d = 0.7
+        t = t_(d)
+        x = hp(noise(d), 1500) * (0.4 + 0.6 * (rng.random(len(t)) > 0.5)) * np.sin(np.linspace(0, np.pi, len(t))) ** 0.5
+        return lp(x, 7000) * 0.7
+    if name == "rocket":
+        d = 1.1
+        t = t_(d)
+        return mixl(_chirp(600, 2600, d, 0.18), hp(noise(d), 3000) * 0.12 * np.linspace(0.2, 1, len(t)))
+    if name == "roll":
+        d = 4.0
+        t = t_(d)
+        x = bp(noise(d), 90, 500) * 0.25 * (0.7 + 0.3 * np.sin(2 * np.pi * 3 * t))
+        for k in range(10):
+            place(x, kick(0.12, 0.2), k * 0.4)
+        return x
+    if name == "rope_creak":
+        d = 1.6
+        t = t_(d)
+        f = 230 + 70 * np.sin(2 * np.pi * 1.4 * t)
+        x = bp(np.sign(np.sin(2 * np.pi * np.cumsum(f) / SR)), 350, 1800) * 0.12
+        return x * np.sin(np.linspace(0, np.pi, len(t)))
+    if name == "running":
+        return _steps(12, 3.0, 0.45, 0.02)
+    if name == "scamper":
+        return _clacks(1.8, 16, 0.12, (2500, 7000))
+    if name == "sewing":
+        d = 5.0
+        t = t_(d)
+        return mixl(_clacks(d, 15, 0.12, (1200, 4000)), np.sin(2 * np.pi * 140 * t) * 0.04)
+    if name == "slide_squeak":
+        d = 0.7
+        t = t_(d)
+        f = 950 - 350 * t / d + 30 * np.sin(2 * np.pi * 40 * t)
+        return bp(np.sign(np.sin(2 * np.pi * np.cumsum(f) / SR)), 600, 3000) * np.sin(np.linspace(0, np.pi, len(t))) * 0.15
+    if name == "snip":
+        x = np.zeros(int(0.4 * SR))
+        for k in range(2):
+            place(x, mixl(hp(noise(0.03), 3000) * 0.4, _bell(3200, 0.08, 0.1)), k * 0.09)
+        return x
+    if name == "twang":
+        d = 1.8
+        t = t_(d)
+        f = 85 * (1 + 0.4 * np.exp(-t * 6))
+        x = (2 * ((np.cumsum(f) / SR) % 1) - 1) * np.exp(-t * 2.5) * 0.4
+        return mixl(lp(x, 1500), kick(0.4, 0.3))
+    if name == "yuck":
+        return _voice([200, 180, 150], 0.25, 0.2, (600, 1000), 0.3)
+    if name == "park_day":
+        d = 24.0
+        x = lp(noise(d), 350) * 0.03
+        for k in range(10):
+            place(x, park_sfx("birds") * 0.35, rng.uniform(0, d - 5))
+        return x
+    if name == "park_night":
+        d = 24.0
+        t = t_(d)
+        x = lp(noise(d), 250) * 0.035
+        for k in range(60):     # сверчки
+            f = rng.uniform(4200, 5200)
+            c = np.sin(2 * np.pi * f * t_(0.25)) * (0.5 + 0.5 * np.sign(np.sin(2 * np.pi * 30 * t_(0.25)))) * 0.025
+            place(x, c, rng.uniform(0, d - 0.3))
+        return x
+    if name == "lake":
+        d = 20.0
+        t = t_(d)
+        return lp(noise(d), 600) * 0.06 * (0.6 + 0.4 * np.sin(2 * np.pi * 0.25 * t)) + hp(noise(d), 3000) * 0.01
+    if name == "indoor_hum":
+        d = 20.0
+        t = t_(d)
+        return np.sin(2 * np.pi * 60 * t) * 0.01 + lp(noise(d), 200) * 0.02
+    return None
+
+
 def sfx(name):
     global rng
     rng = np.random.default_rng(zlib.crc32(name.encode()))
-    y = airport_sfx(name)
+    y = park_sfx(name)
+    if y is None:
+        rng = np.random.default_rng(zlib.crc32(name.encode()))
+        y = airport_sfx(name)
     if y is None:
         rng = np.random.default_rng(zlib.crc32(name.encode()))
         y = cruise_sfx(name)
@@ -1153,23 +1437,27 @@ def groans(d, n):
 
 # сегмент → эмбиент: [(с, до, имя, громкость)]
 AMB = {
-    "cold": [(0, 10, "wind_loop", 0.8)], "d01": [(0, 30, "terminal_hum", 0.8), (12, 30, "groans", 0.5)],
-    "d02": [(0, 30, "terminal_hum", 0.6)], "d03": [(0, 30, "belt_loop", 0.6)],
-    "d04": [(0, 30, "terminal_hum", 0.7), (12, 30, "groans", 0.5)],
-    "d05": [(0, 30, "terminal_hum", 0.6), (8, 30, "groans", 0.4)], "d06": [(0, 30, "night_air", 0.8)],
-    "d07": [(0, 30, "terminal_hum", 0.5)], "d08": [(0, 30, "terminal_hum", 0.6), (8, 30, "groans", 0.35)],
-    "d09": [(0, 30, "night_air", 0.8)], "d10": [(0, 30, "terminal_hum", 0.5)],
-    "d11": [(0, 30, "wind_loop", 0.8), (0, 12, "groans", 0.3)], "d12": [(0, 30, "night_air", 0.5)],
-    "d13": [(0, 30, "belt_loop", 0.6), (8, 30, "groans", 0.5)], "d14": [(0, 30, "terminal_hum", 0.6)],
-    "d15": [(0, 30, "terminal_hum", 0.5)], "d16": [(0, 30, "night_air", 0.7), (0, 30, "groans", 0.4)],
-    "d17": [(0, 30, "night_air", 0.8)], "d18": [(0, 30, "terminal_hum", 0.6)],
-    "d19": [(0, 30, "night_air", 0.7)], "d20": [(0, 30, "night_air", 0.7), (0, 30, "groans", 0.3)],
-    "d21": [(0, 30, "wind_loop", 0.7)], "d22": [(0, 30, "wind_loop", 0.6), (0, 30, "groans", 0.7)],
-    "d23": [(0, 30, "night_air", 0.6)], "d24": [(0, 30, "storm_loop", 1.2)],
-    "d25": [(0, 30, "basement", 1.0), (5, 22, "groans", 0.5)], "d26": [(0, 30, "night_air", 0.6)],
-    "d27": [(0, 30, "terminal_hum", 0.4)], "d28": [(0, 30, "belt_loop", 0.5), (5, 30, "groans", 0.7)],
-    "d29": [(0, 15, "rain_loop", 0.8), (13, 30, "night_air", 0.8)],
-    "d30": [(0, 30, "wind_loop", 0.7), (6, 30, "groans", 0.6)], "epi": [(0, 12, "desert_wind", 0.8)],
+    "cold": [(0, 10, "park_night", 0.6), (0, 10, "groans", 0.5)],
+    "d01": [(0, 30, "park_day", 0.6), (15, 30, "groans", 0.4)], "d02": [(0, 30, "park_day", 0.5)],
+    "d03": [(0, 30, "park_day", 0.5), (10, 30, "groans", 0.35)], "d04": [(0, 30, "park_day", 0.5)],
+    "d05": [(0, 30, "park_day", 0.5), (12, 30, "wind_loop", 0.4)], "d06": [(0, 30, "park_night", 0.7)],
+    "d07": [(0, 30, "park_day", 0.5)], "d08": [(0, 30, "indoor_hum", 0.6)], "d09": [(0, 30, "park_night", 0.6)],
+    "d10": [(0, 30, "park_day", 0.5)], "d11": [(0, 10, "indoor_hum", 0.5), (10, 30, "park_day", 0.5)],
+    "d12": [(0, 30, "park_night", 0.6)], "d13": [(0, 30, "park_day", 0.5), (8, 30, "groans", 0.5)],
+    "d14": [(0, 30, "park_day", 0.4)], "d15": [(0, 30, "park_day", 0.4), (5, 30, "groans", 0.6)],
+    "d16": [(0, 30, "lake", 0.6), (0, 30, "park_day", 0.4)], "d17": [(0, 30, "park_night", 0.7),
+                                                                    (5, 30, "wind_loop", 0.5)],
+    "d18": [(0, 30, "park_day", 0.4), (5, 30, "lake", 0.5)], "d19": [(0, 30, "park_night", 0.7),
+                                                                     (15, 30, "groans", 0.5)],
+    "d20": [(0, 30, "park_day", 0.5), (12, 30, "groans", 0.4)], "d21": [(0, 30, "park_day", 0.5),
+                                                                        (6, 30, "wind_loop", 0.4)],
+    "d22": [(0, 30, "park_night", 0.6)], "d23": [(0, 30, "storm_loop", 1.0)],
+    "d24": [(0, 30, "park_day", 0.5), (0, 12, "lake", 0.4)], "d25": [(0, 30, "park_night", 0.6)],
+    "d26": [(0, 18, "park_day", 0.4), (18, 30, "park_night", 0.6)], "d27": [(0, 30, "park_night", 0.6)],
+    "d28": [(0, 10, "park_night", 0.5), (10, 30, "park_day", 0.5), (8, 30, "groans", 0.8)],
+    "d29": [(0, 30, "park_night", 0.7), (12, 30, "groans", 0.4)],
+    "d30": [(0, 30, "park_night", 0.6), (0, 30, "groans", 0.7)],
+    "epi": [(0, 12, "lake", 0.7), (0, 12, "park_day", 0.3)],
 }
 
 
