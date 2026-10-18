@@ -123,7 +123,7 @@ def shot_food(ctx, t, S):
             J = LEO_CAP.draw(ctx, IN.ICE_X - 260, 960, 125, 1, p)
             hx, hy = LEO_CAP.world(IN.ICE_X - 260, 960, 125, 1, J["hand1"])
             D.poly(ctx, [(hx - 22, hy - 10), (hx + 22, hy - 10), (hx, hy + 50)], hexrgb("#d9a25a"), D.INK, 3, wob=0)
-            n = int(clamp(tt / 1.6) * 8) + 1
+            n = min(8, int(clamp(tt / 1.6) * 8) + 1)
             cols = ["#f6e3c4", "#7a4a30", "#f08cb0", "#9bd666", "#f2c230", "#7fd0ff", "#c9a0f0", "#e8423c"]
             for i in range(n):
                 wob = math.sin(tt * 4 + i) * (2 + i * 1.5)
