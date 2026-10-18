@@ -8,19 +8,6 @@ SHED_W, SHED_H = 1600, 1100
 DOOR_W, DOOR_H = SHED_W * 0.7, SHED_H * 0.82
 
 
-def shed_inside(ctx, x0, x1, y_top=-900, floor=IN.FL, tod="day"):
-    """Внутри сарая: вертикальные доски, балка, пол из досок, окошко с лучом."""
-    T = lambda c: tone(c, tod)
-    D.rect(ctx, x0, y_top, x1 - x0, floor - y_top, T("#8a4a2a"), None, 0, wob=0)
-    for k in range(int((x1 - x0) / 90)):
-        xx = x0 + k * 90
-        D.line(ctx, xx, y_top, xx, floor, T("#6a3a20"), 4)
-    D.rect(ctx, x0, 40, x1 - x0, 50, T("#5a3018"), D.INK, 4, wob=0)
-    D.rect(ctx, x0, floor, x1 - x0, 900, T("#a8703a"), None, 0, wob=0)
-    for k in range(10):
-        D.line(ctx, x0, floor + 40 + k * 70, x1, floor + 40 + k * 70, T("#8a5a2a"), 3)
-
-
 def mouse(ctx, x, y, s=1.0, f=1, t=0.0, run=0.0):
     """Мышка сбоку; run — фаза бега (ножки мелькают)."""
     ctx.save()
@@ -225,17 +212,17 @@ def shot_tethered(ctx, t, S):
 def shot_learn(ctx, t, S):
     """В сарае: Тео с толстой книгой «BALLOONS 101», Бандит грызёт конец верёвки; календарь — 20 дней."""
     d = S.dur - S.cue(3)
-    cam = Cam(1250, 520, Keys((0, 1.0), (d, 1.1)))
-    back(ctx, t, cam, "shed_inside", lambda c: shed_inside(c, -600, 3600), (-600, -900, 4200, 2700), 0.6)
+    cam = Cam(1000, 520, Keys((0, 0.92), (d, 0.98)))
+    room_back(ctx, t, cam, "workshop_0", lambda c: IN.workshop(c, "day", patches_done=0), (-600, -900, 4200, 2700), 0.6)
     with layer(ctx, cam, t):
-        BL.folded(ctx, 2300, IN.FL, 0.9, "day")
+        BL.folded(ctx, 2450, IN.FL + 40, 0.9, "day")
         # календарь на стене
-        D.rect(ctx, 520, 160, 420, 400, hexrgb("#fbfaf6"), D.INK, 5, wob=0)
-        D.rect(ctx, 520, 160, 420, 70, hexrgb("#e8423c"), D.INK, 5, wob=0)
-        D.text(ctx, "JULY", 730, 214, 44, D.FONT_TITLE, hexrgb("#fbfaf6"))
+        D.rect(ctx, 30, 200, 420, 400, hexrgb("#fbfaf6"), D.INK, 5, wob=0)
+        D.rect(ctx, 30, 200, 420, 70, hexrgb("#e8423c"), D.INK, 5, wob=0)
+        D.text(ctx, "JULY", 240, 254, 44, D.FONT_TITLE, hexrgb("#fbfaf6"))
         for n in range(10, 31):
             i = n - 10
-            cx, cy = 560 + (i % 6) * 68, 270 + (i // 6) * 70
+            cx, cy = 70 + (i % 6) * 68, 310 + (i // 6) * 70
             D.text(ctx, str(n), cx, cy + 14, 30, D.FONT_HAND, hexrgb("#2b2f3a"))
             if n == 30:
                 D.circle(ctx, cx, cy + 4, 30, None, hexrgb("#e8423c"), 5)
@@ -243,13 +230,13 @@ def shot_learn(ctx, t, S):
                 D.line(ctx, cx - 22, cy - 18, cx + 22, cy + 26, hexrgb("#e8423c"), 5)
                 D.line(ctx, cx + 22, cy - 18, cx - 22, cy + 26, hexrgb("#e8423c"), 5)
         # ящик, Тео читает
-        D.rect(ctx, 1040, IN.FL - 280, 300, 280, hexrgb("#c8903a"), D.INK, 5, wob=0)
-        D.line(ctx, 1040, IN.FL - 140, 1340, IN.FL - 140, hexrgb("#8a5a24"), 6)
+        D.rect(ctx, 1360, IN.FL - 280, 300, 280, hexrgb("#c8903a"), D.INK, 5, wob=0)
+        D.line(ctx, 1360, IN.FL - 140, 1660, IN.FL - 140, hexrgb("#8a5a24"), 6)
         p = sit_pose(t, 1, "worried")
         flip = int(t / 1.8) % 2
         p.update(h1=(0.8, -1.6), h2=(0.7, -1.5), look=(1, 0.8), neck=0.35)
-        J = THEO_FUR.draw(ctx, 1190, IN.FL - 270, 112, 1, p)
-        hx, hy = THEO_FUR.world(1190, IN.FL - 270, 112, 1, J["hand1"])
+        J = THEO_FUR.draw(ctx, 1510, IN.FL - 270, 112, 1, p)
+        hx, hy = THEO_FUR.world(1510, IN.FL - 270, 112, 1, J["hand1"])
         ctx.save()
         ctx.translate(hx + 10, hy + 20)
         ctx.rotate(-0.15)
@@ -265,11 +252,11 @@ def shot_learn(ctx, t, S):
         def rope_end(c, x, y):
             D.line(c, x - 0.05, y + 0.02, x + 0.5, y + 0.12, D.INK, 0.075)
             D.line(c, x - 0.05, y + 0.02, x + 0.5, y + 0.12, hexrgb("#d8b878"), 0.05)
-        draw_raccoon(ctx, 1600, IN.FL + 40, 105, -1, raccoon_pose(t, "eat", chew=math.sin(t * 16), hold=rope_end))
-        D.curve(ctx, [(1550, IN.FL + 20), (1700, IN.FL + 60), (1900, IN.FL + 40), (2000, IN.FL)], D.INK, 14)
-        D.curve(ctx, [(1550, IN.FL + 20), (1700, IN.FL + 60), (1900, IN.FL + 40), (2000, IN.FL)],
+        draw_raccoon(ctx, 1920, IN.FL + 40, 105, -1, raccoon_pose(t, "eat", chew=math.sin(t * 16), hold=rope_end))
+        D.curve(ctx, [(1870, IN.FL + 20), (2020, IN.FL + 60), (2220, IN.FL + 40), (2320, IN.FL)], D.INK, 14)
+        D.curve(ctx, [(1870, IN.FL + 20), (2020, IN.FL + 60), (2220, IN.FL + 40), (2320, IN.FL)],
                 hexrgb("#d8b878"), 8)
-    pop_text(ctx, "20 DAYS", 440, 680, t, d * 0.3, 110, "#e8423c", dur=d, shake=False)
+    pop_text(ctx, "20 DAYS", 260, 720, t, d * 0.3, 100, "#e8423c", dur=d, shake=False)
     if t > d * 0.6:
         pop_text(ctx, "LEARN FAST.", W / 2 + 380, 230, t, d * 0.6, 90, "#fff6d8", dur=d, shake=False)
 
