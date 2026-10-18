@@ -82,7 +82,7 @@ def shot_parade(ctx, t, S):
 
 def shot_land(ctx, t, S):
     d = S.dur - S.cue(3)
-    T_LAND, T_STAMP = 1.0, d * 0.55
+    T_LAND, T_STAMP = 1.0, max(2.0, S.cue(3, True) - S.cue(3) - 1.4)
     if t < T_STAMP:
         cam = Cam(1250, 560, Keys((0, 0.95), (T_STAMP, 1.1)))
         room_back(ctx, t, cam, "claim", lambda c: TM.baggage_claim(c, 0.0), (-800, -1500, 4400, 3300))
@@ -126,7 +126,6 @@ def build(S):
         Shot(c(2) - 0.1, shot_parade, "fade", 0.25),
         Shot(c(3) - 0.1, shot_land, "whip", 0.25),
     ]
-    d3 = S.dur - c(3)
-    S.sfx += [(c(1), "rc_buzz", 0.9), (c(2), "rc_buzz", 0.7), (c(3) + 1.0, "ding", 0.8),
-              (c(3) + d3 * 0.55 + 0.3, "stamp", 1.0)]
-    S.music = [(0, "fun", 1.0), (c(3) + d3 * 0.55, "mystery", 0.6)]
+    ts = c(3) + max(2.0, c(3, True) - c(3) - 1.4)
+    S.sfx += [(c(1), "rc_buzz", 0.9), (c(2), "rc_buzz", 0.7), (c(3) + 1.0, "ding", 0.8), (ts + 0.3, "stamp", 1.0)]
+    S.music = [(0, "fun", 1.0), (ts, "mystery", 0.6)]

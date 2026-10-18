@@ -63,9 +63,17 @@ def shot_army(ctx, t, S):
     d = S.dur - S.cue(3)
     k = smooth(clamp(t / 1.5))
     D.vgrad(ctx, 0, 0, W, H, [(0, "#0a1238"), (1, "#2c4a8c")])
-    map_view(ctx, t, W / 2, H / 2 + 80, 0.14, "night", army=k, labels=False)
-    if t > d * 0.5:
-        k2 = ease_out_back(clamp((t - d * 0.5) / 0.35))
+    z = 0.14 + 0.05 * smooth(clamp(t / d))
+    for i in range(3):
+        a = -math.pi / 2 + 0.5 * math.sin(t * 0.7 + i * 2.1)
+        x0 = W * (0.2 + 0.3 * i)
+        D.poly(ctx, [(x0, H + 20), (x0 + math.cos(a - 0.06) * 1400, H + 20 + math.sin(a - 0.06) * 1400),
+                     (x0 + math.cos(a + 0.06) * 1400, H + 20 + math.sin(a + 0.06) * 1400)],
+               hexrgb("#cfe0ff"), None, 0, wob=0, alpha=0.07 * k)
+    map_view(ctx, t, W / 2, H / 2 + 80, z, "night", army=k, labels=False)
+    T_LAB = max(1.0, S.cue(3, True) - S.cue(3) - 1.2)
+    if t > T_LAB:
+        k2 = ease_out_back(clamp((t - T_LAB) / 0.35))
         ctx.save()
         ctx.translate(W / 2, 200)
         ctx.scale(k2, k2)

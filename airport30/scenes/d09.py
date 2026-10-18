@@ -102,7 +102,7 @@ def shot_teach(ctx, t, S):
 
 def shot_roger(ctx, t, S):
     d = S.dur - S.cue(4)
-    T_SQ = d * 0.55
+    T_SQ = max(1.5, S.cue(4, True) - S.cue(4) - 1.7)
     cam = Cam(Keys((0, OS.RADIO_X - 100), (T_SQ, OS.PERCH_X - 20)), Keys((0, 560), (T_SQ, 520)),
               Keys((0, 1.5), (T_SQ, 3.0, "io")))
     walt_radio(ctx, t, cam, 0.0, "neutral", parrot_talk=1.0 if t > T_SQ else 0.0)
@@ -127,5 +127,5 @@ def build(S):
     ]
     S.tods = [(0, "night")]
     S.sfx += [(c(1) + 0.4, "stamp", 0.8), (c(1) + 1.2, "stamp", 0.8), (c(1) + 2.0, "stamp", 0.8),
-              (c(4) + 0.3, "crickets", 0.8), (c(4) + (S.dur - c(4)) * 0.55, "parrot", 1.0)]
+              (c(4) + 0.3, "crickets", 0.8), (c(4) + max(1.5, c(4, True) - c(4) - 1.7), "parrot", 1.0)]
     S.music = [(0, "dread", 0.8), (c(3), "hope", 0.8)]
