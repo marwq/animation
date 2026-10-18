@@ -24,16 +24,17 @@ CHAIR_X = 860
 CHART_X = 2500
 
 
-def outside(ctx, t, tod="day", rough=0.0, hy=360, roll=0.0, sun=None, moon=None):
+def outside(ctx, t, tod="day", rough=0.0, hy=360, roll=0.0, sun=None, moon=None, clip=True):
     """Вид за окнами (каждый кадр). roll — крен в радианах (шторм)."""
     ctx.save()
-    _win_path(ctx)
-    ctx.clip()
+    if clip:
+        _win_path(ctx)
+        ctx.clip()
     ctx.translate(1460, hy)
     ctx.rotate(roll)
     ctx.translate(-1460, -hy)
     sky_tod = tod
-    SEA.sky(ctx, -400, -700, 3800, hy + 700, sky_tod)
+    SEA.sky(ctx, -1400, -3000, 5800, hy + 3000, sky_tod)
     if tod in ("night", "deepnight"):
         SEA.stars(ctx, 0, -300, 3000, hy + 300, t, 3, 1.0)
     if sun:
@@ -42,7 +43,7 @@ def outside(ctx, t, tod="day", rough=0.0, hy=360, roll=0.0, sun=None, moon=None)
         SEA.moon(ctx, *moon)
     if tod not in ("night", "deepnight"):
         SEA.cloudbank(ctx, 0, 3000, hy - 160, tod, seed=8, n=6, s0=0.4, s1=0.8)
-    SEA.ocean(ctx, t, -400, 3400, hy, hy + 600, tod, rough=rough, seed=7, sun_x=(sun or moon or (None,))[0])
+    SEA.ocean(ctx, t, -1400, 4400, hy, hy + 1400, tod, rough=rough, seed=7, sun_x=(sun or moon or (None,))[0])
     ctx.restore()
 
 

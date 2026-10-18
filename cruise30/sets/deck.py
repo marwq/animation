@@ -12,7 +12,7 @@ from . import sea as SEA
 INK = D.INK
 GF = 880
 HY = 560
-X0, X1 = -800, 4600
+X0, X1 = -800, 5600
 POOL = (1400, 2600)
 TUB = (2760, 3060)
 TOWER = (3200, 3420)
