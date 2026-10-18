@@ -410,8 +410,6 @@ def arcade(ctx, tod="day", x0=-600, x1=3600, lit=True, t=0.0, prize=True, pegs=(
             D.ellipse(ctx, px, ry, 34, 10, None, T(BRIGHT[k % 8]), 5)
     if prize:
         ux = x1 - 520
-        D.line(ctx, ux + 120, 120, ux + 120, 190, INK, 6)
-        D.curve(ctx, [(ux + 120, 190), (ux + 104, 214), (ux + 132, 220)], INK, 6)
         unicorn(ctx, ux, FL - 50, unicorn_s, tod, -1, t)
     if lit:
         D.radial(ctx, (bx0 + bx1) / 2, 300, 900, "#ffe9a0", 0.12, 0)

@@ -139,15 +139,6 @@ def shot_mom(ctx, t, S):
             heart(ctx, hx, hy, 18 * (1 - ph * 0.4), 1 - ph)
 
 
-def heart(ctx, x, y, r, a=1.0):
-    pts = []
-    for i in range(40):
-        u = i / 40 * TAU
-        pts.append((x + r * 0.06 * 16 * math.sin(u) ** 3,
-                    y - r * 0.06 * (13 * math.cos(u) - 5 * math.cos(2 * u) - 2 * math.cos(3 * u) - math.cos(4 * u))))
-    D.poly(ctx, pts, hexrgb("#f05a8a"), D.INK, 3, wob=0, alpha=a)
-
-
 def shot_gates(ctx, t, S):
     """Ворота на цепи → мост, забитый машинами; между машинами бредут они."""
     d = S.cue(3) - S.cue(2)

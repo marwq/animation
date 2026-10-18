@@ -263,3 +263,22 @@ def heads_sea(ctx, t, x0, x1, y0, y1, n=60, seed=1, s0=40, s1=110, up=1.0, arms=
                                                        "look": (0.0, -up), "neck_line": False, "blink": 0})
         if glow > 0:
             zombie_glow_eyes(ctx, x + sw * 0.3, y - s * 0.05, s * 0.32, glow)
+
+
+def heart(ctx, x, y, r, a=1.0):
+    pts = []
+    for i in range(40):
+        u = i / 40 * TAU
+        pts.append((x + r * 0.06 * 16 * math.sin(u) ** 3,
+                    y - r * 0.06 * (13 * math.cos(u) - 5 * math.cos(2 * u) - 2 * math.cos(3 * u) - math.cos(4 * u))))
+    D.poly(ctx, pts, hexrgb("#f05a8a"), D.INK, 3, wob=0, alpha=a)
+
+
+def memory_tint(ctx, a=1.0):
+    """Флешбэк: тёплая сепия и тёмные края."""
+    D.rect(ctx, 0, 0, W, H, hexrgb("#d8a860"), None, 0, wob=0, alpha=0.22 * a)
+    g = cairo.RadialGradient(W / 2, H / 2, H * 0.35, W / 2, H / 2, W * 0.62)
+    g.add_color_stop_rgba(0, 0.1, 0.06, 0.02, 0.0)
+    g.add_color_stop_rgba(1, 0.1, 0.06, 0.02, 0.6 * a)
+    ctx.set_source(g)
+    ctx.paint()
