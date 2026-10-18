@@ -314,3 +314,13 @@ def draw_lying(ctx, fig, x, gy, s, f, p, k_up, t=0.0):
     J = fig.draw(ctx, x, gy, s, f, p)
     ctx.restore()
     return J
+
+
+def stink(ctx, x, y, t, s=1.0, a=1.0, c="#b8c860"):
+    """Волны запаха: зелёно-жёлтые завитки поднимаются вверх."""
+    for k in range(5):
+        ph = (t * 0.7 + k / 5) % 1
+        xx = x + math.sin(k * 2.3) * 60 * s
+        yy = y - ph * 260 * s
+        D.curve(ctx, [(xx, yy), (xx + 30 * s, yy - 30 * s), (xx - 10 * s, yy - 60 * s), (xx + 20 * s, yy - 90 * s)],
+                hexrgb(c), 9 * s, a * (1 - ph) * 0.9)

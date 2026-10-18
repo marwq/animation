@@ -600,14 +600,15 @@ class Fig:
             ctx.rectangle(px, -0.62, 0.26, 0.27)
             ctx.stroke()
             ctx.set_dash([])
-        if "rip" in det:     # разорванный бок
-            px = -0.1 if side else -0.22
-            ctx.move_to(px, -0.62)
-            for k in range(7):
-                ctx.line_to(px + 0.04 + k * 0.035, -0.62 + (0.06 if k % 2 else -0.03) + k * 0.035)
-            ctx.line_to(px + 0.1, -0.3)
-            for k in range(6):
-                ctx.line_to(px + 0.06 - k * 0.03, -0.32 - (0.05 if k % 2 else 0.0) - k * 0.05)
+        if "rip" in det:     # разорванный бок: рваная дыра, под ней кожа
+            px = -0.16 if side else -0.26
+            ctx.move_to(px, -0.66)
+            for k in range(8):
+                ctx.line_to(px + 0.05 + k * 0.04, -0.68 + (0.06 if k % 2 else -0.02) + k * 0.03)
+            ctx.line_to(px + 0.3, -0.28)
+            for k in range(8):
+                ctx.line_to(px + 0.26 - k * 0.04, -0.28 - (0.05 if k % 2 else 0.0) - k * 0.01)
+            ctx.line_to(px - 0.04, -0.4)
             ctx.close_path()
             D.col(ctx, hexrgb("#f3d6bd"))
             ctx.fill_preserve()

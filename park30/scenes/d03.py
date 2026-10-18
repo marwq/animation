@@ -6,16 +6,6 @@ from scenes.shared import *
 HOTDOG_X = 3110      # витрина HOT DOGS на Главной улице (main_street с x0 = -1400)
 
 
-def stink(ctx, x, y, t, s=1.0, a=1.0, c="#b8c860"):
-    """Волны запаха: зелёно-жёлтые завитки поднимаются вверх."""
-    for k in range(5):
-        ph = (t * 0.7 + k / 5) % 1
-        xx = x + math.sin(k * 2.3) * 60 * s
-        yy = y - ph * 260 * s
-        D.curve(ctx, [(xx, yy), (xx + 30 * s, yy - 30 * s), (xx - 10 * s, yy - 60 * s), (xx + 20 * s, yy - 90 * s)],
-                hexrgb(c), 9 * s, a * (1 - ph) * 0.9)
-
-
 def hot_dog(ctx, x, y, s=1.0, ang=0.0, bite=0):
     ctx.save()
     ctx.translate(x, y)
