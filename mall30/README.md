@@ -7,6 +7,8 @@
 - `docs/01_analysis.md` — анализ канала и присланного ролика.
 - `docs/03_script.md` — сценарий: озвучка на английском, перевод и кадры по дням.
 - `docs/characters_sheet.png` — персонажи: виды, эмоции, цикл шага и бега.
+- `docs/thumbnail.jpg` — обложка «DAY 1 / DAY 30»: толстый Сэм объедается сладостями,
+  а через 30 дней худой и мокрый от страха в темноте, вокруг зомби.
 
 ## Структура
 
@@ -33,6 +35,9 @@ python tools/audio.py                                      # build/audio/mix.wav
 # 4. Видео: по файлу на сегмент, склейка и звук
 python tools/render_all.py --jobs 4                        # build/LibertyMall_30days.mp4
 ```
+
+Обложка: `python tools/thumbnail.py` → `build/thumbnail.png` (1280×720 для YouTube),
+`build/thumbnail_1080p.png` и `docs/thumbnail.jpg`.
 
 Проверка отдельного дня: `python tools/preview.py sheet d07` (контактный лист),
 `python tools/preview.py still d07 12.5`, `python tools/preview.py clip d07 0 5`.

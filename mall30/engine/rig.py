@@ -41,6 +41,9 @@ class Look:
         self.name = ""
         self.seed = 0
         self.eye_size = 1.0
+        self.girth = 1.0             # полнота: >1 живот, <1 худоба
+        self.limb_k = 1.0            # толщина рук и ног
+        self.torso_line = False      # обводка туловища (для обложки; в фильме её нет)
         for k, v in kw.items():
             if isinstance(v, str) and v.startswith("#"):
                 v = hexrgb(v)
@@ -257,7 +260,8 @@ class Fig:
             if view == "side":
                 sx, sy = rot(0.0, sh_y, lean)
             else:
-                sx, sy = rot(-0.25 if i == 1 else 0.25, sh_y, lean)
+                sw = 0.25 * (1 + (L.girth - 1) * 0.55)
+                sx, sy = rot(-sw if i == 1 else sw, sh_y, lean)
             sp = (top[0] + sx, top[1] + sy)
             if ("h%d" % i) in pose:
                 hxp, hyp = pose["h%d" % i]
@@ -292,7 +296,7 @@ class Fig:
         ctx.scale(f * s, s)
         J = self.joints(pose)
         view = J["view"]
-        lw = max(LIMB_W, 1.6 / s)
+        lw = max(LIMB_W * L.limb_k, 1.6 / s)
         ow = max(OUT_W, 1.1 / s)
         if alpha < 1:
             ctx.push_group()
@@ -415,10 +419,15 @@ class Fig:
         hip, lean, view = J["hip"], J["lean"], J["view"]
         side = view == "side"
         wt, wb = (0.38, 0.44) if side else (0.56, 0.60)
+        g = L.girth
+        wt *= 1 + (g - 1) * 0.55
+        wb *= g
         ext = 0.14 + L.length
         if L.style in ("coat", "dress"):
             wb += 0.12 + L.length * (0.35 if L.style == "dress" else 0.18)
-        pts = [(-wt / 2, -TORSO), (wt / 2, -TORSO), (wb / 2, ext), (-wb / 2, ext)]
+        # живот: бока выгибаются наружу (в профиль — только вперёд)
+        bulge = max(0.0, g - 1.0) * 0.55
+        bl = 0.0 if side else bulge
         # скругление плеч
         ctx.save()
         ctx.translate(*hip)
@@ -427,6 +436,8 @@ class Fig:
         ctx.move_to(-wt / 2, -TORSO + r)
         ctx.arc(-wt / 2 + r, -TORSO + r, r, math.pi, 1.5 * math.pi)
         ctx.arc(wt / 2 - r, -TORSO + r, r, 1.5 * math.pi, 2 * math.pi)
+        if bulge > 0:
+            ctx.curve_to(wt / 2 + bulge * 0.4, -TORSO * 0.55, wb / 2 + bulge, -0.15, wb / 2, ext)
         if L.style == "dress" or "torn" in L.details:
             # рваный подол
             n = 5
@@ -438,11 +449,17 @@ class Fig:
         else:
             ctx.line_to(wb / 2, ext)
             ctx.line_to(-wb / 2, ext)
+        if bulge > 0:
+            ctx.curve_to(-wb / 2 - bl, -0.15, -wt / 2 - bl * 0.4, -TORSO * 0.55, -wt / 2, -TORSO + r)
         ctx.close_path()
         D.col(ctx, L.body)
         ctx.fill_preserve()
         ctx.save()
         ctx.clip_preserve()
+        outline = None
+        if L.torso_line:
+            outline = ctx.copy_path()
+            ctx.new_path()
         # тень на спине
         D.col(ctx, shade(L.body, -0.18))
         bx = -wb / 2 if side else wb / 2 - 0.12
@@ -450,6 +467,9 @@ class Fig:
         ctx.fill()
         self._details(ctx, wt, wb, ext, side, f)
         ctx.restore()
+        if outline is not None:
+            ctx.new_path()
+            ctx.append_path(outline)
         D.col(ctx, D.INK)
         ctx.set_line_width(ow)
         ctx.set_line_join(cairo.LINE_JOIN_ROUND)
@@ -462,11 +482,11 @@ class Fig:
         cx = 0.04 if side else 0.0
         if "vest" in det:   # светоотражающий жилет
             D.col(ctx, hexrgb("#e8853a"))
-            ctx.rectangle(-0.4, -TORSO, 0.8, TORSO + ext)
+            ctx.rectangle(-1.5, -TORSO, 3.0, TORSO + ext)
             ctx.fill()
             D.col(ctx, hexrgb("#f1e9c8"))
-            ctx.rectangle(-0.4, -0.62, 0.8, 0.09)
-            ctx.rectangle(-0.4, -0.3, 0.8, 0.09)
+            ctx.rectangle(-1.5, -0.62, 3.0, 0.09)
+            ctx.rectangle(-1.5, -0.3, 3.0, 0.09)
             ctx.fill()
         if "apron" in det:
             D.col(ctx, L.body2 or hexrgb("#f1e9d8"))
@@ -475,7 +495,7 @@ class Fig:
         if "stripes" in det:
             D.col(ctx, L.body2 or shade(L.body, -0.2))
             for k in range(4):
-                ctx.rectangle(-0.4, -TORSO + 0.2 + k * 0.28, 0.8, 0.1)
+                ctx.rectangle(-1.5, -TORSO + 0.2 + k * 0.28, 3.0, 0.1)
             ctx.fill()
         if "tie" in det:
             D.col(ctx, L.body2 or hexrgb("#9b3b34"))
@@ -504,7 +524,7 @@ class Fig:
             ctx.fill()
         if "belt" in det:
             D.col(ctx, shade(L.body, -0.35))
-            ctx.rectangle(-0.4, -0.08, 0.8, 0.08)
+            ctx.rectangle(-1.5, -0.08, 3.0, 0.08)
             ctx.fill()
         if "iloveny" in det:
             ctx.save()
@@ -529,6 +549,39 @@ class Fig:
                 sy = -0.9 + ((rr * 7 + k * 5) % 9) / 9 * 0.9
                 ctx.arc(sx, sy, 0.05 + 0.03 * (k % 2), 0, TAU)
                 ctx.fill()
+        if "belly" in det:    # рубашка мала: снизу торчит живот с пупком
+            D.col(ctx, L.head)
+            ctx.rectangle(-1.5, -0.24, 3.0, 1.0)
+            ctx.fill()
+            D.col(ctx, L.head_shade)
+            ctx.rectangle(-1.5, 0.02, 3.0, 1.0)
+            ctx.fill()
+            D.col(ctx, D.INK)
+            ctx.set_line_width(0.035)
+            ctx.move_to(-1.5, -0.2)
+            ctx.curve_to(-0.3, -0.3, 0.3, -0.3, 1.5, -0.2)
+            ctx.stroke()
+            ctx.set_line_width(0.022)
+            ctx.arc(cx, -0.06, 0.035, 0.3, math.pi * 2 - 0.3)
+            ctx.stroke()
+        if "buttons" in det:  # пуговицы еле держатся
+            D.col(ctx, D.INK)
+            ctx.set_line_width(0.018)
+            for y in (-0.82, -0.6, -0.4):
+                ctx.move_to(cx - 0.12, y - 0.03)
+                ctx.line_to(cx - 0.03, y)
+                ctx.line_to(cx - 0.12, y + 0.03)
+                ctx.move_to(cx + 0.12, y - 0.03)
+                ctx.line_to(cx + 0.03, y)
+                ctx.line_to(cx + 0.12, y + 0.03)
+            ctx.stroke()
+            for y in (-0.82, -0.6, -0.4):
+                ctx.arc(cx, y, 0.03, 0, TAU)
+                D.col(ctx, hexrgb("#e9dfc8"))
+                ctx.fill_preserve()
+                D.col(ctx, D.INK)
+                ctx.set_line_width(0.012)
+                ctx.stroke()
         if "jacket" in det:   # куртка поверх
             D.col(ctx, L.body2 or shade(L.body, -0.15))
             ctx.rectangle(-0.4, -TORSO, 0.4 if not side else 0.18, TORSO + ext)
@@ -550,6 +603,18 @@ class Fig:
         ctx.translate(hx, hy)
         ctx.rotate(J["head_ang"] + pose.get("htilt", 0.0))
         ctx.scale(R / 0.5, R / 0.5)
+        if L.girth > 1.15 and pose.get("chin", True) and view != "back":
+            # второй подбородок
+            D.col(ctx, L.head_shade)
+            ctx.save()
+            ctx.translate(0.05 * turn, 0.42)
+            ctx.scale(0.3, 0.12)
+            ctx.arc(0, 0, 1, 0, math.pi)
+            ctx.restore()
+            ctx.fill_preserve()
+            D.col(ctx, D.INK)
+            ctx.set_line_width(ow)
+            ctx.stroke()
         if L.hair:
             hair_back(ctx, L, turn, view)
         # голова с тенью
@@ -612,10 +677,11 @@ def face(ctx, L, pose, turn):
         ctx.fill()
         return
     big = ex in ("scared", "shock", "scream")
+    eyes = pose.get("eyes")
     # белки для испуга
-    if big:
+    if big and eyes != "happy":
         for (x, y) in (e1, e2):
-            ctx.arc(x, y - 0.01, 0.095, 0, TAU)
+            ctx.arc(x, y - 0.01, 0.095 * pose.get("whites", 1.0), 0, TAU)
             D.col(ctx, hexrgb("#ffffff"))
             ctx.fill_preserve()
             D.col(ctx, ink)
@@ -623,7 +689,7 @@ def face(ctx, L, pose, turn):
             ctx.stroke()
     for k, (x, y) in enumerate((e1, e2)):
         D.col(ctx, ink)
-        if ex in ("happy", "laugh"):
+        if eyes == "happy" or (eyes is None and ex in ("happy", "laugh")):
             ctx.set_line_width(0.035)
             ctx.arc(x, y + 0.03, 0.055, math.pi + 0.3, TAU - 0.3)
             ctx.stroke()
@@ -639,7 +705,7 @@ def face(ctx, L, pose, turn):
             ctx.line_to(x + 0.045, y)
             ctx.stroke()
         else:
-            r = es * (0.62 if big else 1.0)
+            r = es * (0.62 if big else 1.0) * pose.get("pupil", 1.0)
             ctx.save()
             ctx.translate(x + (lx * 0.03 if big else 0), y + (ly * 0.03 if big else 0))
             ctx.scale(0.85, 1.12)
@@ -658,9 +724,45 @@ def face(ctx, L, pose, turn):
             ctx.move_to(x + 0.055 * inner, yy - brow * 0.06)
             ctx.line_to(x - 0.055 * inner, yy + brow * 0.06)
             ctx.stroke()
+    # круги под глазами
+    if pose.get("bags", 0) > 0:
+        D.col(ctx, hexrgb("#6b5a66"), 0.55 * pose["bags"])
+        ctx.set_line_width(0.028)
+        for (x, y) in (e1, e2):
+            ctx.arc(x, y + 0.035, 0.085, 0.35, math.pi - 0.35)
+            ctx.stroke()
+    # впалые щёки
+    if pose.get("hollow", 0) > 0:
+        D.col(ctx, ink, 0.55 * pose["hollow"])
+        ctx.set_line_width(0.022)
+        for k in (-1, 1):
+            x = cx + k * 0.24
+            ctx.move_to(x - k * 0.02, 0.1)
+            ctx.curve_to(x + k * 0.02, 0.18, x + k * 0.02, 0.24, x - k * 0.03, 0.3)
+            ctx.stroke()
     # рот
     mx = cx + 0.06 * turn
     my = 0.22
+    # надутые щёки (рот набит)
+    if pose.get("cheeks", 0) > 0:
+        ck = pose["cheeks"]
+        for k in (-1, 1):
+            x = mx + k * 0.19
+            D.col(ctx, hexrgb("#f2b8a8"), 0.7)
+            ctx.arc(x, my - 0.03, 0.085 * ck, 0, TAU)
+            ctx.fill()
+            D.col(ctx, ink)
+            ctx.set_line_width(0.022)
+            ctx.arc(x, my - 0.03, 0.1 * ck, (0.2 if k > 0 else 1.9) , (1.25 if k > 0 else 2.95))
+            ctx.stroke()
+    # шоколад вокруг рта
+    if pose.get("smear", 0) > 0:
+        D.col(ctx, hexrgb("#6b3a24"), 0.85)
+        for (dx, dy, rr) in ((-0.1, 0.27, 0.04), (0.08, 0.3, 0.035), (0.12, 0.2, 0.025), (-0.05, 0.33, 0.03),
+                             (0.0, 0.31, 0.03)):
+            ctx.arc(mx + dx * pose["smear"], my + dy - 0.22, rr, 0, TAU)
+            ctx.fill()
+    D.col(ctx, ink)
     D.col(ctx, ink)
     ctx.set_line_width(0.03)
     if ex in ("scream", "shock") or mo > 0.05 and ex not in ("happy",):
@@ -714,6 +816,48 @@ def face(ctx, L, pose, turn):
                 ctx.arc(0, 0, 1, 0, TAU)
                 ctx.restore()
                 ctx.fill()
+    # грязь и ссадины
+    if pose.get("dirt", 0) > 0:
+        dk = pose["dirt"]
+        for (dx, dy, rr, c) in ((-0.3, 0.12, 0.07, "#7d6a5c"), (0.27, -0.25, 0.05, "#7d6a5c"),
+                                (0.33, 0.2, 0.045, "#8a5a50"), (-0.18, -0.3, 0.035, "#7d6a5c"),
+                                (0.05, 0.38, 0.05, "#7d6a5c")):
+            D.col(ctx, hexrgb(c), 0.5 * dk)
+            ctx.save()
+            ctx.translate(cx * 0.5 + dx, dy)
+            ctx.scale(1.0, 0.75)
+            ctx.arc(0, 0, rr, 0, TAU)
+            ctx.restore()
+            ctx.fill()
+        # царапина
+        D.col(ctx, hexrgb("#a8473c"), 0.8 * dk)
+        ctx.set_line_width(0.018)
+        for j in range(3):
+            ctx.move_to(cx * 0.5 - 0.36 + j * 0.03, -0.12 + j * 0.02)
+            ctx.line_to(cx * 0.5 - 0.27 + j * 0.03, -0.2 + j * 0.02)
+        ctx.stroke()
+    # пот
+    if pose.get("sweat", 0) > 0:
+        sk = pose["sweat"]
+        drops = ((-0.34, -0.22, 0.05, 0.3), (0.36, -0.28, 0.055, -0.2), (0.12, -0.38, 0.04, 0.0),
+                 (-0.2, -0.4, 0.035, 0.2), (0.42, 0.02, 0.045, -0.3), (-0.42, 0.05, 0.04, 0.35))
+        for (dx, dy, rr, a) in drops[:max(1, int(len(drops) * sk + 0.5))]:
+            ctx.save()
+            ctx.translate(dx, dy)
+            ctx.rotate(a)
+            ctx.move_to(0, -rr * 2.0)
+            ctx.curve_to(rr * 0.9, -rr * 0.4, rr, rr * 0.9, 0, rr)
+            ctx.curve_to(-rr, rr * 0.9, -rr * 0.9, -rr * 0.4, 0, -rr * 2.0)
+            ctx.close_path()
+            D.col(ctx, hexrgb("#a9d8f0"))
+            ctx.fill_preserve()
+            D.col(ctx, ink)
+            ctx.set_line_width(0.016)
+            ctx.stroke()
+            D.col(ctx, hexrgb("#ffffff"), 0.9)
+            ctx.arc(-rr * 0.3, -rr * 0.1, rr * 0.25, 0, TAU)
+            ctx.fill()
+            ctx.restore()
     # румянец
     if "blush" in L.details:
         D.col(ctx, hexrgb("#f0a29a"), 0.55)
