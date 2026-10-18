@@ -51,13 +51,13 @@ def backdrop(ctx, t, tod="day", x0=X0 - 600, x1=X1 + 600, hy=HY, sun=None, moon=
         SEA.moon(ctx, *moon)
     if clouds:
         SEA.cloudbank(ctx, x0, x1, hy - 260, sky_tod if tod != "rain" else "storm", seed=seed, n=9, s0=0.5, s1=1.0)
-    SEA.ocean(ctx, t, x0, x1, hy, hy + 420, sea_tod if tod != "rain" else "storm", rough=rough, seed=seed,
+    SEA.ocean(ctx, t, x0, x1, hy, hy + 1600, sea_tod if tod != "rain" else "storm", rough=rough, seed=seed,
               sun_x=(sun or moon or (None,))[0])
 
 
 # --- дальний план: надстройки за палубой (кэш) -------------------------------------
 
-def far(ctx, tod="day", power=1.0, screen=True, slides=True, broken=False):
+def far(ctx, tod="day", power=1.0, screen=True, slides=True, broken=False, has_ladder=True):
     T = lambda c: tone(c, tod)
     lit = power > 0 and tod in NIGHT
     # дальнее стеклянное ограждение
@@ -140,7 +140,8 @@ def far(ctx, tod="day", power=1.0, screen=True, slides=True, broken=False):
     D.text(ctx, "CREW", CREW_DOOR + 5, 572, 26, D.FONT_TITLE, INK)
     D.text(ctx, "ONLY", CREW_DOOR + 5, 600, 22, D.FONT_TITLE, INK)
     D.circle(ctx, CREW_DOOR + 45, 660, 8, T("#d6b24c"), INK, 2)
-    ladder(ctx, LADDER_X, 100, 780, tod)
+    if has_ladder:
+        ladder(ctx, LADDER_X, 100, 780, tod)
     D.rect(ctx, LADDER_X - 160, 60, 400, 50, T("#e8eef0"), INK, 4, wob=0)
     # гирлянды и флажки
     _bunting(ctx, -600, 4400, 250, tod, lit)

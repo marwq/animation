@@ -10,13 +10,13 @@ def deck_s(y):
 
 
 def deck_back(ctx, t, cam, tod="day", power=1.0, sun=None, moon=None, screen=True, rough=0.0, mess=0.0,
-              slides=True, broken=False, chairs=True, clouds=True, scale=1.0, key=""):
+              slides=True, broken=False, chairs=True, clouds=True, scale=1.0, key="", has_ladder=True):
     """Небо и океан (параллакс 0.3), надстройки и палуба (кэш)."""
     with layer(ctx, cam, t, 0.3):
         DK.backdrop(ctx, t, tod, sun=sun, moon=moon, rough=rough, clouds=clouds)
     with layer(ctx, cam, t):
-        k = "deckfar_%s_%s_%s_%s_%s_%s" % (tod, power, screen, slides, broken, key)
-        bg(ctx, k, DECK_RECT, lambda c: DK.far(c, tod, power, screen, slides, broken), scale)
+        k = "deckfar_%s_%s_%s_%s_%s_%s_%s" % (tod, power, screen, slides, broken, key, has_ladder)
+        bg(ctx, k, DECK_RECT, lambda c: DK.far(c, tod, power, screen, slides, broken, has_ladder), scale)
         k2 = "deckfloor_%s_%s_%s_%s" % (tod, chairs, mess, key)
         bg(ctx, k2, (DK.X0 - 200, 600, DK.X1 - DK.X0 + 400, 1200), lambda c: DK.floor(c, tod, chairs, mess), scale)
 
