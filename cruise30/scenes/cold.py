@@ -53,24 +53,27 @@ def pyramid(ctx, t, height, x=PYR_X, s=100, seed=0, reach=1.0):
 
 
 def wing_scene(ctx, t, cam, height, grab=None, leo_x=1430, face="scared", cat_mode="held", rain=1.0, flash=0.0,
-               hatch=False):
+               hatch=False, release=None):
     """Крыло мостика ночью в грозу. grab — время хвата за щиколотку (или None)."""
     sea_back(ctx, t, cam, "deepnight", rough=0.9, hy=1500, clouds=False, p=0.2)
     with layer(ctx, cam, t, 0.2):
         SEA.cloudbank(ctx, -3000, 6000, 600, "night", seed=5, n=12, s0=1.2, s1=2.0)
         bolt_line(ctx, 2600, -900, 700, 3, flash)
     with layer(ctx, cam, t):
-        bg(ctx, "wing_night", (-700, -600, 2900, 3000), lambda c: OD.wing(c, "night", 0.0))
+        bg(ctx, "wing_night_lower", (-700, -600, 3500, 3300), lambda c: OD.wing(c, "night", 0.0, lower=True))
         pyramid(ctx, t, height)
         pl = R.stand("side", t, 1)
         pl.update(face=face, blink=0, lean=-0.12, hturn=0.9, h1=(0.45, -2.15), h2=(0.38, -2.05))
         if grab is not None and t > grab:
             k = clamp((t - grab) / 0.25)
             pl.update(f1=(0.35 + 0.25 * k, -0.15 * k), face="scream")
+            if release is not None and t > release - 0.3:
+                kk = math.sin(clamp((t - release + 0.3) / 0.6) * math.pi)
+                pl.update(f1=(0.6 + 0.55 * kk, -0.15 - 0.3 * kk), face="angry" if t < release + 0.6 else "shock")
         J = LEO_CAP.draw(ctx, leo_x, OD.WING_Y, 100, 1, pl)
         if cat_mode == "held":
             draw_held_cat(ctx, LEO_CAP, leo_x, OD.WING_Y, 100, 1, J, t, scale=0.85, vest=True, meow=0.0)
-        if grab is not None and t > grab - 0.3:
+        if grab is not None and t > grab - 0.3 and (release is None or t < release):
             k = clamp((t - grab + 0.3) / 0.3)
             fx_, fy_ = LEO_CAP.world(leo_x, OD.WING_Y, 100, 1, J["foot1"])
             sx, sy = PYR_X - 20, OD.WING_Y - 130

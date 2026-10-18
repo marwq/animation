@@ -94,10 +94,13 @@ WING_Y = 420        # пол крыла
 WING_X0, WING_X1 = 700, 1700
 
 
-def wing(ctx, tod="night", power=0.0):
+def wing(ctx, tod="night", power=0.0, lower=False):
     """Крыло мостика: площадка с ограждением над пропастью вдоль борта; слева дверь и окна
     мостика, ниже — отвесный борт с балконами (по нему лезет пирамида)."""
     T = lambda c: tone(c, tod)
+    # нижние палубы правее крыла (утоплены в глубину): по их балконам лезет пирамида
+    if lower:
+        _lower_decks(ctx, T, power)
     # стена мостика
     D.rect(ctx, -600, -400, WING_X0 + 600, WING_Y + 400, T("#eef0f0"), INK, 4, wob=0)
     D.rect(ctx, -500, -200, 900, 260, T("#1f2c44") if power <= 0 else hexrgb("#6fa8c8"), INK, 5, wob=0)
@@ -125,6 +128,18 @@ def wing(ctx, tod="night", power=0.0):
         x = WING_X0 + 60 + k * 260
         D.poly(ctx, [(x, WING_Y + 40), (x + 30, WING_Y + 40), (WING_X0 - 10, WING_Y + 300)], T("#b8c0c6"), INK, 3,
                wob=0)
+
+
+def _lower_decks(ctx, T, power):
+    D.rect(ctx, WING_X0, WING_Y + 240, 2700 - WING_X0, 2400, T("#cfd5da"), INK, 4, wob=0)
+    for k in range(14):
+        y = WING_Y + 300 + k * 160
+        for i in range(8):
+            bx = WING_X0 + 60 + i * 250
+            D.rect(ctx, bx, y, 170, 86, T("#8fc4da") if power <= 0 else hexrgb("#ffd978"), INK, 2, wob=0)
+        D.rect(ctx, WING_X0, y + 96, 2700 - WING_X0, 12, T("#b0b8be"), INK, 2, wob=0)
+        for i in range(30):
+            D.line(ctx, WING_X0 + i * 70, y + 96, WING_X0 + i * 70, y + 60, INK, 2)
 
 
 # --- спортивная палуба: скалодром на трубе ----------------------------------------------
