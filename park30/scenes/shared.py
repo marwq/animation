@@ -22,6 +22,7 @@ def room_back(ctx, t, cam, name, fn, rect=(-600, -900, 4200, 2700), scale=0.8):
 def sky_back(ctx, t, cam, tod="day", x0=-3000, x1=9000, sun=None, moon=None, clouds=True, lighthouse=None,
              beam=0.0, town=False, p=0.3):
     """Небо (параллакс p) и дальнее озеро с маяком (параллакс 0.5)."""
+    D.rect(ctx, 0, 0, W, H, tone("#9fd27a", tod), None, 0, wob=0)
     with layer(ctx, cam, t, p):
         PK.sky(ctx, t, tod, x0, x1, sun=sun, moon=moon, clouds=clouds)
     with layer(ctx, cam, t, 0.5):
