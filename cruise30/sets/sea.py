@@ -289,9 +289,9 @@ def cutter(ctx, x, wl, s, f=-1):
     D.rect(ctx, -90, -200, 70, 70, hexrgb("#f7f7f2"), INK, 4, wob=0)
     D.line(ctx, -55, -200, -55, -270, INK, 5)
     D.line(ctx, -85, -245, -25, -245, INK, 4)
-    D.text(ctx, "COAST GUARD", -60 + 120, -20, 30, D.FONT_TITLE, hexrgb("#24324a"))
     D.rect(ctx, -250, -6, 530, 8, hexrgb("#e8423c"), None, 0, wob=0)
     ctx.restore()
+    D.text(ctx, "COAST GUARD", x + f * s * 0 - s * 0, wl - 20 * s, 30 * s, D.FONT_TITLE, hexrgb("#24324a"))
 
 
 def rain_streaks(ctx, t, x0, y0, w, h, amount=1.0, wind=0.35, seed=1, alpha=0.5, speed=1.0, c="#dfe8f4"):
