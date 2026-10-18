@@ -11,8 +11,8 @@ SUN = (1700, 120, 70)
 CHAIN = (1370, 515)       # ручка цепи гудка в мире funnel_top
 
 
-def funnel_bg(ctx, t, cam, tod="day", sun=SUN, moon=None):
-    sea_back(ctx, t, cam, tod, sun=sun, moon=moon, hy=900, p=0.2)
+def funnel_bg(ctx, t, cam, tod="day", sun=SUN, moon=None, hy=900):
+    sea_back(ctx, t, cam, tod, sun=sun, moon=moon, hy=hy, p=0.2)
     with layer(ctx, cam, t):
         bg(ctx, "funnel_" + tod, (-500, 0, 3000, 1300), lambda c: OD.funnel_top(c, tod))
 
