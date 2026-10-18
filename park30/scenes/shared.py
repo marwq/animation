@@ -161,23 +161,29 @@ def sniff_lines(ctx, x, y, t, s=1.0, a=1.0):
 # --- плашки и облачка --------------------------------------------------------------------------
 
 def speech(ctx, x, y, txt, t, t0, size=60, w=None, c="#1c3f7c", tail=(-1, 1), dur=99.0, typed=True):
-    """Облачко реплики с печатающимся текстом."""
+    """Облачко реплики с печатающимся текстом; '\n' — перенос строки."""
     k = t - t0
     if k < 0 or k > dur:
         return
     sc = ease_out_back(clamp(k / 0.25))
-    n = int(clamp(k / max(0.4, len(txt) * 0.04)) * len(txt)) if typed else len(txt)
-    w = w or D.text_width(ctx, txt, size, D.FONT_TITLE) + 70
-    h = size * 1.7
+    lines = txt.split("\n")
+    total = sum(len(L) for L in lines)
+    n = int(clamp(k / max(0.4, total * 0.04)) * total) if typed else total
+    w = w or max(D.text_width(ctx, L, size, D.FONT_TITLE) for L in lines) + 70
+    lh = size * 1.15
+    h = size * 1.7 + lh * (len(lines) - 1)
     ctx.save()
     ctx.translate(x, y)
     ctx.scale(sc, sc)
-    D.rrect(ctx, -w / 2, -h / 2, w, h, h * 0.4, hexrgb("#fff6d8"), D.INK, 6)
+    D.rrect(ctx, -w / 2, -h / 2, w, h, min(h, size * 1.7) * 0.4, hexrgb("#fff6d8"), D.INK, 6)
     tx, ty = tail
     D.poly(ctx, [(tx * w * 0.2 - 24, h / 2 - 4), (tx * w * 0.2 + 24, h / 2 - 4), (tx * w * 0.32, h / 2 + 50)],
            hexrgb("#fff6d8"), D.INK, 6, wob=0)
     D.rect(ctx, tx * w * 0.2 - 30, h / 2 - 12, 60, 12, hexrgb("#fff6d8"), None, 0, wob=0)
-    D.text(ctx, txt[:n], 0, size * 0.35, size, D.FONT_TITLE, hexrgb(c))
+    y0 = -lh * (len(lines) - 1) / 2 + size * 0.35
+    for i, L in enumerate(lines):
+        D.text(ctx, L[:max(0, n)], 0, y0 + i * lh, size, D.FONT_TITLE, hexrgb(c))
+        n -= len(L)
     ctx.restore()
 
 

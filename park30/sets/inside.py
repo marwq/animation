@@ -308,7 +308,7 @@ def control_room(ctx, tod="day", x0=-600, x1=3600, power=1.0, countdown=None, ba
     D.rect(ctx, cx - 220, 165, 440, 190, hexrgb("#0e1410"), INK, 4, wob=0)
     if countdown is not None:
         D.text(ctx, countdown_text(countdown), cx, 275, 58, D.FONT_TITLE, hexrgb("#ff4a3a"))
-        D.text(ctx, "DAY 30 · 00:00 · GRAND FINALE", cx, 330, 20, D.FONT_TITLE, hexrgb("#ff9a8a"))
+        D.text(ctx, "DAY 30 · MIDNIGHT · GRAND FINALE", cx, 330, 20, D.FONT_TITLE, hexrgb("#ff9a8a"))
     for k in range(8):
         on = (power > 0 or battery) and (k + int(t * 3)) % 3
         D.circle(ctx, cx - 190 + k * 54, 400, 16, hexrgb("#4cff8a") if on else T("#2b3a2b"), INK, 2)
