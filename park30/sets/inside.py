@@ -603,7 +603,7 @@ TOWER_BED_X = 2500     # центр лежанки
 TOWER_CRATE_X = 700    # ящик с рацией
 
 
-def tower_room(ctx, tod="night", x0=-600, x1=3600, t=0.0, lit=True, beam=0.0, view=None):
+def tower_room(ctx, tod="night", x0=-600, x1=3600, t=0.0, lit=True, beam=0.0, view=None, torch=True):
     """Каменная комната в башне: стрельчатое окно на озеро (маяк вдали мигает beam), лежанка из
     подушек и костюмной ткани, ящик с рацией, гирлянда, фонарик."""
     T = Tf(tod)
@@ -665,8 +665,9 @@ def tower_room(ctx, tod="night", x0=-600, x1=3600, t=0.0, lit=True, beam=0.0, vi
     D.rect(ctx, cx - 160, FL - 280, 320, 240, T("#c8903a"), INK, 4, wob=0)
     D.line(ctx, cx - 160, FL - 280, cx + 160, FL - 40, T("#a8702a"), 6)
     D.text(ctx, "POPCORN", cx, FL - 120, 34, D.FONT_TITLE, T("#e8423c"))
-    D.rrect(ctx, cx - 140, FL - 330, 110, 50, 16, T("#ffd23a"), INK, 3)       # фонарик
-    D.circle(ctx, cx - 140, FL - 305, 22, hexrgb("#fff2a0") if lit else T("#c9d0d6"), INK, 3)
+    if torch:
+        D.rrect(ctx, cx - 140, FL - 330, 110, 50, 16, T("#ffd23a"), INK, 3)       # фонарик
+        D.circle(ctx, cx - 140, FL - 305, 22, hexrgb("#fff2a0") if lit else T("#c9d0d6"), INK, 3)
     for k, c in enumerate(("#e8423c", "#2f8fd8", "#f05a8a")):              # пакеты попкорна и сладостей
         D.poly(ctx, [(cx + 10 + k * 50, FL - 280), (cx + 50 + k * 50, FL - 280), (cx + 56 + k * 50, FL - 360),
                      (cx + 4 + k * 50, FL - 360)], T(c), INK, 3, wob=0)
