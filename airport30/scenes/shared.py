@@ -282,3 +282,12 @@ def speakers(ctx, t, pts, k=1.0, c="#fff6d8"):
                 D.col(ctx, hexrgb(c), k * (1 - (r - 50) / 120))
                 ctx.set_line_width(6)
                 ctx.stroke()
+
+
+def star(ctx, x, y, r, c="#f2c230", lw=4):
+    pts = []
+    for k in range(10):
+        a = -math.pi / 2 + k * math.pi / 5
+        rr = r if k % 2 == 0 else r * 0.45
+        pts.append((x + math.cos(a) * rr, y + math.sin(a) * rr))
+    D.poly(ctx, pts, hexrgb(c), D.INK, lw, wob=0)
