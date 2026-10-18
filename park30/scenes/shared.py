@@ -288,3 +288,29 @@ def memory_tint(ctx, a=1.0):
     g.add_color_stop_rgba(1, 0.1, 0.06, 0.02, 0.6 * a)
     ctx.set_source(g)
     ctx.paint()
+
+
+def draw_lying(ctx, fig, x, gy, s, f, p, k_up, t=0.0):
+    """Лежит на спине, ноги вытянуты (k_up=0) → садится (k_up=1).
+    Лёжа: стойка, повёрнутая на 90° вокруг таза; садясь — поза «сидя на полу» с поворотом корпуса."""
+    if k_up <= 0:
+        q = R.stand("side", t, 1)
+        q.update({k: v for k, v in p.items() if k in ("face", "blink", "look", "mouth")})
+        q.update(a1=(0.1, 0.2), a2=(-0.1, 0.2))
+        hip_y = gy - 0.12 * s
+        ctx.save()
+        ctx.translate(x, hip_y)
+        ctx.rotate(-f * math.pi / 2)
+        ctx.translate(-x, -(gy - R.HIP_H * s))
+        J = fig.draw(ctx, x, gy, s, f, q)
+        ctx.restore()
+        return J
+    ang = -1.3 * (1 - k_up)
+    hip_y = gy - 0.12 * s
+    ctx.save()
+    ctx.translate(x, hip_y)
+    ctx.rotate(f * ang)
+    ctx.translate(-x, -hip_y)
+    J = fig.draw(ctx, x, gy, s, f, p)
+    ctx.restore()
+    return J
