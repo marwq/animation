@@ -148,7 +148,7 @@ def shot_bang(ctx, t, S):
         impact(ctx, W / 2, H / 2 - 40, clamp((t - T_HIT) / 0.35), 260, "#ffffff")
         pop_text(ctx, "BANG!", W / 2 - 420, 250, t, T_HIT, 170, "#fff6d8")
     if t > T_HIT + 1.5:
-        pop_text(ctx, "THE GLASS HOLDS.", W / 2, 920, t, T_HIT + 1.5, 70, "#4cff8a", dur=3.0, shake=False)
+        pop_text(ctx, "THE GLASS HOLDS.", W / 2 + 200, 240, t, T_HIT + 1.5, 70, "#4cff8a", dur=3.0, shake=False)
 
 
 def build(S):
