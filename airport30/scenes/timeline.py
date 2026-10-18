@@ -12,11 +12,11 @@ from . import timing
 HERE = os.path.dirname(os.path.abspath(__file__))
 
 # время суток в начале сегмента (для значка ☀/☾)
-TOD = {"cold": "night", "d01": "day", "d02": "morning", "d03": "dawn", "d04": "day", "d05": "day",
-       "d06": "night", "d07": "dawn", "d08": "night", "d09": "day", "d10": "night", "d11": "dawn", "d12": "night",
-       "d13": "day", "d14": "night", "d15": "day", "d16": "dusk", "d17": "day", "d18": "day", "d19": "night",
-       "d20": "night", "d21": "night", "d22": "dusk", "d23": "day", "d24": "night", "d25": "morning",
-       "d26": "dusk", "d27": "night", "d28": "night", "d29": "night", "d30": "dawn", "epi": "day",
+TOD = {"cold": "dawn", "d01": "day", "d02": "day", "d03": "day", "d04": "day", "d05": "day",
+       "d06": "night", "d07": "day", "d08": "day", "d09": "night", "d10": "day", "d11": "dawn", "d12": "night",
+       "d13": "night", "d14": "day", "d15": "day", "d16": "night", "d17": "night", "d18": "day", "d19": "night",
+       "d20": "night", "d21": "day", "d22": "day", "d23": "night", "d24": "night", "d25": "day",
+       "d26": "night", "d27": "night", "d28": "night", "d29": "night", "d30": "dawn", "epi": "day",
        "end": "night"}
 
 
@@ -32,7 +32,7 @@ def build(only=None):
     T = timing.load()
     segs = []
     for key in timing.ORDER:
-        day = 28 if key == "cold" else (int(key[1:]) if key.startswith("d") else (30 if key == "epi" else None))
+        day = 30 if key == "cold" else (int(key[1:]) if key.startswith("d") else (30 if key == "epi" else None))
         S = Segment(key, timing.SEG_DUR[key], day=day, tod=TOD.get(key, "day"))
         S.paper, S.grain, S.vignette = 0.16, 0.05, 0.5
         S.cues = T.get(key, {}).get("cues", [])

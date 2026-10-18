@@ -146,8 +146,8 @@ def title_card(ctx, t, alpha=1.0):
     ctx.translate(math.sin(t * 90) * sh, 0)
     D.text(ctx, "ZOMBIE OUTBREAK", W / 2, 390, 54 * k1, D.FONT_TITLE, hexrgb("#d9483b"), "center",
            alpha=alpha, tracking=6)
-    _c(ctx, "30 DAYS TRAPPED ON", 520, 100 * k2, alpha)
-    _c(ctx, "A CRUISE SHIP", 650, 130 * k3, alpha)
+    _c(ctx, "30 DAYS TRAPPED IN", 520, 100 * k2, alpha)
+    _c(ctx, "AN AIRPORT", 650, 130 * k3, alpha)
     ctx.restore()
 
 

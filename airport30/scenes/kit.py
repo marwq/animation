@@ -13,6 +13,7 @@ from engine.film import Cam, layer, Shot, bg, cached, blit
 from engine.cat import draw_cat, cat_pose
 from engine import overlay as O
 from sets import common as C, sea as SEA, terminal as TM, apron as AP, plane as PL, rooms as RM, outside as OS
+from sets.base import tone, logo, jerrycan
 
 LEO = R.Fig(R.LEO)
 LEO_CAP = R.Fig(R.LEO_CAP)
