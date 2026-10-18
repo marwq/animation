@@ -1,3 +1,0 @@
-Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
-/tmp/claude-0/-home-user-animation/44ebb5a3-10c9-50bf-9929-e6e7db0a07d2/scratchpad/tts-venv/lib/python3.13/site-packages/diffusers/models/lora.py:393: FutureWarning: `LoRACompatibleLinear` is deprecated and will be removed in version 1.0.0. Use of `LoRACompatibleLinear` is deprecated. Please switch to PEFT backend by installing PEFT: `pip install peft`.
-  deprecate("LoRACompatibleLinear", "1.0.0", deprecation_message)
