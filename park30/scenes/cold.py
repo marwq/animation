@@ -31,7 +31,7 @@ def balloon_rig(ctx, t, x, gy, s=1.0, tod="night", burner=1.0, inside_fn=None, t
     return e
 
 
-def crew(ctx, x, rim, s, t, face="scared", grab=0.0):
+def crew(ctx, x, rim, s, t, face="scared", grab=0.0, bandit=True):
     """Кто в корзине: Тео (без костюма, в поту, держит клапан горелки), единорог, Бандит с малышами."""
     IN.unicorn(ctx, x + 110 * s, rim + 250 * s, 0.45 * s, "night", -1, t)
     pull = 0.5 + 0.5 * math.sin(t * 9)
@@ -41,7 +41,8 @@ def crew(ctx, x, rim, s, t, face="scared", grab=0.0):
     J = THEO.draw(ctx, x - 60 * s, rim + 190 * s, 112 * s, 1, p)      # стоит на баллоне — по пояс над бортом
     hx, hy = THEO.world(x - 60 * s, rim + 190 * s, 112 * s, 1, J["hand2"])
     D.curve(ctx, [(hx, hy), (hx + 20 * s, hy - 80 * s), (x - 20 * s, rim - 400 * s)], D.INK, 4 * s)   # шнур клапана
-    draw_raccoon(ctx, x - 150 * s, rim + 6 * s, 80 * s, 1, raccoon_pose(t, "sit", look=0.3 * grab))
+    if bandit:
+        draw_raccoon(ctx, x - 150 * s, rim + 6 * s, 80 * s, 1, raccoon_pose(t, "sit", look=0.3 * grab))
     for k in range(3):
         draw_raccoon(ctx, x + 10 * s + k * 40 * s, rim + 8 * s, 70 * s, -1 if k % 2 else 1,
                      raccoon_pose(t + k, "peek", baby=True, look=-0.2))

@@ -245,7 +245,8 @@ def place_tag(ctx, txt, t, x=70, y=210, c="#fff6d8", bgc="#1c3f7c"):
     ctx.restore()
 
 
-def heads_sea(ctx, t, x0, x1, y0, y1, n=60, seed=1, s0=40, s1=110, up=1.0, arms=0.6, glow=0.0, kinds=None):
+def heads_sea(ctx, t, x0, x1, y0, y1, n=60, seed=1, s0=40, s1=110, up=1.0, arms=0.6, glow=0.0, kinds=None,
+              side=0.0):
     """Море голов (вид спереди): ряды от дальнего y0 (масштаб s0) к ближнему y1 (s1); up — смотрят
     вверх; arms — доля тянущих руки; glow — светящиеся глаза в темноте."""
     r = rng(seed)
@@ -265,10 +266,11 @@ def heads_sea(ctx, t, x0, x1, y0, y1, n=60, seed=1, s0=40, s1=110, up=1.0, arms=
                 D.line(ctx, ax, y + s * 0.6, ax + side * s * 0.15 + sw, y - s * (0.7 + 0.3 * up), D.INK, max(3, s * 0.12))
                 D.circle(ctx, ax + side * s * 0.15 + sw, y - s * (0.75 + 0.3 * up), s * 0.1, L.head, D.INK, 2)
         D.rect(ctx, x - s * 0.42, y + s * 0.45, s * 0.84, s * 0.9, L.body, D.INK, max(2, s * 0.04), wob=0)
-        R.Fig(L).head_only(ctx, x + sw * 0.3, y, s, 1, {"view": "front", "mouth": 0.6 + 0.3 * math.sin(t * 4 + i),
-                                                       "look": (0.0, -up), "neck_line": False, "blink": 0})
+        R.Fig(L).head_only(ctx, x + sw * 0.3, y, s, 1 if side >= 0 else -1,
+                           {"view": "front", "mouth": 0.6 + 0.3 * math.sin(t * 4 + i), "hturn": abs(side) * 0.7,
+                            "look": (abs(side), -up * (1 - abs(side))), "neck_line": False, "blink": 0})
         if glow > 0:
-            zombie_glow_eyes(ctx, x + sw * 0.3, y - s * 0.05, s * 0.32, glow)
+            zombie_glow_eyes(ctx, x + sw * 0.3 + side * s * 0.15, y - s * 0.05, s * 0.32, glow)
 
 
 def heart(ctx, x, y, r, a=1.0):
