@@ -124,7 +124,10 @@ def draw_dog(ctx, x, gy, s, f, p, alpha=1.0):
     ctx.translate(0.5, -0.32 + hb)
     ctx.rotate(-0.1 * bark + look * 0.2)
     # уши
-    for ex, c in ((-0.05, FUR_D), (0.08, FUR)):
+    if p.get("floppy"):
+        for ex, c in ((-0.12, FUR_D), (0.02, FUR)):
+            D.ellipse(ctx, ex, 0.02, 0.1, 0.24, c, D.INK, lw * 0.7, rot=0.25)
+    for ex, c in (() if p.get("floppy") else ((-0.05, FUR_D), (0.08, FUR))):
         ctx.move_to(ex - 0.12, -0.12)
         ctx.line_to(ex - 0.04, -0.48)
         ctx.line_to(ex + 0.1, -0.14)

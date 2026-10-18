@@ -449,3 +449,38 @@ def zombie_glow_eyes(ctx, x, y, s, a=1.0):
     for k in (-1, 1):
         fx.glow(ctx, x + k * s * 0.55, y, s * 2.4, "#c8ff80", 0.25 * a)
         D.ellipse(ctx, x + k * s * 0.55, y, s * 0.32, s * 0.24, "#efffc8", None, 0, alpha=a)
+
+
+# --- бигль Бисквит (собака Долорес) ------------------------------------------------------
+
+from engine import dog as _DOG
+from engine.dog import dog_pose
+
+
+def draw_beagle(ctx, x, gy, s, f, p):
+    keep = (_DOG.FUR, _DOG.FUR_D, _DOG.WHITE)
+    _DOG.FUR, _DOG.FUR_D, _DOG.WHITE = hexrgb("#c8843a"), hexrgb("#2a2220"), hexrgb("#fbf4e8")
+    p = dict(p)
+    p["floppy"] = True
+    try:
+        _DOG.draw_dog(ctx, x, gy, s, f, p)
+    finally:
+        _DOG.FUR, _DOG.FUR_D, _DOG.WHITE = keep
+
+
+def diag_split(ctx, left_fn, right_fn, k=1.0, x_top=1060, x_bot=860):
+    """Экран, разрезанный наискосок: k 0..1 — насколько выехала правая половина."""
+    off = (1 - ease_out(clamp(k))) * (W - min(x_top, x_bot) + 80)
+    ctx.save()
+    D.path(ctx, [(0, 0), (x_top + off, 0), (x_bot + off, H), (0, H)])
+    ctx.clip()
+    left_fn(ctx)
+    ctx.restore()
+    ctx.save()
+    D.path(ctx, [(x_top + off, 0), (W + 10, 0), (W + 10, H), (x_bot + off, H)])
+    ctx.clip()
+    ctx.translate(off, 0)
+    right_fn(ctx)
+    ctx.restore()
+    D.line(ctx, x_top + off, -10, x_bot + off, H + 10, D.INK, 22)
+    D.line(ctx, x_top + off, -10, x_bot + off, H + 10, hexrgb("#fff6d8"), 9)
