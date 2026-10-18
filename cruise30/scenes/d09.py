@@ -146,4 +146,4 @@ def build(S):
     ]
     S.tods = [(0, "day"), (c(2), "dusk")]
     S.sfx += [(c(1) - 1.2, "splash", 1.0), (c(2) + 0.8, "click", 0.7)]
-    S.music = "fun_to_eerie"
+    S.music = [(0, "party", 1.0), (c(3) - 0.1, "dread", 0.7)]

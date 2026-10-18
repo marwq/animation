@@ -202,9 +202,23 @@ PROG = {
     "mystery": [("C", "m"), ("Ab", "M"), ("C", "m"), ("G", "M")],
     "action": [("D", "m"), ("Bb", "M"), ("C", "M"), ("A", "M")],
     "storm": [("E", "m"), ("C", "M"), ("E", "m"), ("B", "M")],
+    "tropical": [("C", "M"), ("F", "M"), ("G", "M"), ("C", "M")],
+    "silence": [("A", "m"), ("F", "M"), ("A", "m"), ("E", "m")],
+    "dread": [("C", "m"), ("C", "m"), ("Db", "M"), ("C", "m")],
 }
 TEMPO = {"lonely": 72, "hope": 80, "fun": 112, "wonder": 76, "tension": 100, "mystery": 66, "action": 138,
-         "storm": 90}
+         "storm": 90, "tropical": 116, "silence": 60, "dread": 70}
+
+
+def steelpan(n, dur=0.9, amp=0.2):
+    """Стальной барабан: металлические обертоны с быстрым затуханием."""
+    t = t_(dur)
+    f = midi(n)
+    x = np.zeros_like(t)
+    for r, a, dk in ((1.0, 0.6, 3.0), (2.0, 0.35, 4.5), (2.98, 0.16, 6.0), (4.1, 0.07, 8.0)):
+        x += a * np.sin(2 * np.pi * f * r * t) * np.exp(-t * dk)
+    x *= np.minimum(1, t / 0.004)
+    return x * amp
 
 
 def music(mood, dur, seed=0, intensity=1.0):
@@ -272,8 +286,55 @@ def music(mood, dur, seed=0, intensity=1.0):
                 for k in range(4):
                     place(x, tom(45 - k * 2, 0.3 * intensity, 0.4), t0 + 3 * beat + k * beat / 4)
             place(x, strings([ch[0] + 24, ch[2] + 12], bar, 0.06 * intensity), t0)
+        elif mood == "tropical":
+            place(x, pad([n + 12 for n in ch], bar, 1100, 0.04), t0)
+            mel = [0, 2, 1, 2, 0, 1, 2, 1]
+            for k in range(8):
+                if (k + b) % 3 == 2 and k % 2:
+                    continue
+                n = ch[mel[k]] + 24 + (12 if (k == 6 and b % 2) else 0)
+                place(x, steelpan(n, 0.8, 0.2 * intensity), t0 + k * beat / 2)
+            for k in range(4):
+                place(x, bass(ch[0] - 12 + (7 if k % 2 else 0), beat * 0.45, 0.26), t0 + k * beat)
+                place(x, shaker(0.07), t0 + k * beat + beat / 2)
+                place(x, shaker(0.04), t0 + k * beat + beat * 0.75)
+            place(x, kick(0.25), t0)
+            place(x, kick(0.2), t0 + 2 * beat)
+            place(x, tom(52, 0.12, 0.3), t0 + 3.5 * beat)
+        elif mood == "silence":
+            place(x, pad([n + 12 for n in ch], bar + 1.0, 700, 0.06), t0)
+            if b % 2 == 0:
+                place(x, piano(ch[2] + 24, 3.0, 0.06), t0 + beat)
+        elif mood == "dread":
+            place(x, pad([ch[0] - 12, ch[0] - 11, ch[0] + 7], bar + 0.8, 450, 0.12 * intensity), t0)
+            place(x, heartbeat(0.3 * intensity), t0 + beat * 0.5)
+            place(x, heartbeat(0.25 * intensity), t0 + beat * 2.5)
+            place(x, strings([ch[0] + 24, ch[0] + 25], bar + 0.5, 0.03 * intensity), t0)
     x = x[:int(dur * SR)]
     return x
+
+
+# имя настроения в сцене → (базовое настроение, интенсивность)
+BASE = {"storm": ("storm", 1.0), "party": ("tropical", 1.0), "eerie_morning": ("mystery", 0.7),
+        "sneak": ("mystery", 0.9), "comic": ("fun", 1.0), "chase": ("action", 1.0), "warm": ("hope", 0.8),
+        "night_fun": ("tropical", 0.8), "fun_to_eerie": ("tropical", 1.0), "silence": ("silence", 1.0),
+        "joy": ("tropical", 0.9), "sad": ("lonely", 1.0), "tension": ("tension", 1.0), "lonely": ("lonely", 1.0),
+        "routine": ("fun", 0.9), "rain_joy": ("tropical", 1.0), "tender": ("hope", 0.6), "dread": ("dread", 1.0),
+        "wonder": ("wonder", 1.0), "plan": ("hope", 1.0), "storm_coming": ("dread", 0.8),
+        "hurricane": ("storm", 1.0), "hope": ("hope", 1.0), "finale": ("action", 1.0),
+        "happy_end": ("tropical", 0.9)}
+
+
+def scene_moods(S):
+    """S.music: строка или [(t, имя, интенсивность)] → [(t, базовое, интенсивность)]."""
+    m = getattr(S, "music", None) or "lonely"
+    if isinstance(m, str):
+        m = [(0.0, m, 1.0)]
+    out = []
+    for t, name, k in m:
+        base, kk = BASE.get(name, (name if name in PROG else "lonely", 1.0))
+        out.append((max(0.0, t), base, kk * k))
+    return out
 
 
 # сегмент → [(с секунды, настроение, интенсивность)]
@@ -299,8 +360,8 @@ MOODS = {
 }
 
 
-def segment_music(key, dur, seed):
-    parts = MOODS.get(key, [(0, "lonely", 1)])
+def segment_music(key, dur, seed, parts=None):
+    parts = parts or MOODS.get(key, [(0, "lonely", 1)])
     out = np.zeros(int(dur * SR))
     for i, (t0, mood, inten) in enumerate(parts):
         t1 = parts[i + 1][0] if i + 1 < len(parts) else dur
@@ -318,9 +379,383 @@ def segment_music(key, dur, seed):
 
 # --- эффекты -------------------------------------------------------------------------
 
+# --- эффекты круиза --------------------------------------------------------------------
+
+def _tone(f, d, amp=0.3, dk=8.0):
+    t = t_(d)
+    return np.sin(2 * np.pi * f * t) * np.exp(-t * dk) * amp
+
+
+def _beeps(fs, gap=0.18, d=0.12, amp=0.25):
+    x = np.zeros(int((len(fs) * gap + 0.4) * SR))
+    for i, f in enumerate(fs):
+        b = np.sin(2 * np.pi * f * t_(d)) * amp
+        b[:200] *= np.linspace(0, 1, 200)
+        b[-200:] *= np.linspace(1, 0, 200)
+        place(x, b, i * gap)
+    return x
+
+
+def _voice(f0s, d=0.18, gap=0.22, form=(700, 1200), amp=0.3, breath=0.3):
+    """Грубый «голос»: пилa через формантный фильтр (смех, мяу, мычание)."""
+    x = np.zeros(int((len(f0s) * gap + d + 0.3) * SR))
+    for i, f0 in enumerate(f0s):
+        t = t_(d)
+        f = f0 * (1 - 0.15 * t / d)
+        ph = np.cumsum(f) / SR
+        src = 2 * (ph % 1) - 1 + breath * noise(d) * 0.5
+        v = bp(src, form[0] * 0.6, form[0] * 1.4) + 0.6 * bp(src, form[1] * 0.7, form[1] * 1.3)
+        v *= np.sin(np.linspace(0, np.pi, len(v))) ** 0.7
+        place(x, v * amp, i * gap)
+    return x
+
+
+def _horn(d=2.6, f=98.0, amp=0.5, cut=900):
+    t = t_(d)
+    vib = 1 + 0.004 * np.sin(2 * np.pi * 5 * t)
+    x = saw(f, d) * 0 + 0
+    ph1 = np.cumsum(f * vib) / SR
+    ph2 = np.cumsum(f * 1.5 * vib) / SR
+    x = (2 * (ph1 % 1) - 1) + 0.7 * (2 * (ph2 % 1) - 1)
+    x = lp(x, cut, 4)
+    env = np.minimum(1, t / 0.08) * np.where(t > d - 0.4, np.maximum(0, (d - t) / 0.4), 1)
+    return x * env * amp
+
+
+def _steps(n, d, amp=0.5, seed_spread=0.0):
+    x = np.zeros(int(d * SR))
+    for k in range(n):
+        tt = k * d / n + rng.uniform(-seed_spread, seed_spread)
+        place(x, mixl(kick(amp * rng.uniform(0.6, 1.0), 0.25), bp(noise(0.08), 300, 2000) * 0.15), max(0, tt))
+    return x
+
+
+def mixl(*xs):
+    """Сложить сигналы разной длины."""
+    out = np.zeros(max(len(x) for x in xs))
+    for x in xs:
+        out[:len(x)] += x
+    return out
+
+
+def cruise_sfx(name):
+    if name in ("door_slam",):
+        return sfx("door_bang")
+    if name in ("bang_glass",):
+        return sfx("glass_bang")
+    if name == "rain":
+        return sfx("rain_loop")
+    if name == "chomp":
+        x = np.zeros(int(0.9 * SR))
+        for k in range(2):
+            t = t_(0.18)
+            place(x, (bp(noise(0.18), 300, 3500) * 0.6 + kick(0.3, 0.18)) * np.exp(-t * 18), k * 0.3)
+        return x
+    if name == "glass":
+        d = 1.6
+        x = hp(noise(d), 2500) * np.exp(-t_(d) * 6) * 0.35
+        for k in range(18):
+            place(x, _tone(rng.uniform(2500, 6000), 0.5, 0.08, 10), rng.uniform(0, 0.6))
+        return x
+    if name == "fanfare":
+        x = np.zeros(int(2.6 * SR))
+        for (n, t0, d) in ((nm("C5"), 0.0, 0.18), (nm("C5"), 0.2, 0.18), (nm("C5"), 0.4, 0.18),
+                           (nm("G5"), 0.6, 1.4)):
+            for r in (0, 4, 7):
+                ph = np.cumsum(np.full(int(d * SR), midi(n + r))) / SR
+                v = lp(2 * (ph % 1) - 1, 2400) * np.minimum(1, t_(d) / 0.02) * 0.12
+                v[-400:] *= np.linspace(1, 0, 400)
+                place(x, v, t0)
+        return x
+    if name == "meow":
+        t = t_(0.7)
+        f = 520 + 260 * np.sin(np.pi * np.clip(t / 0.7, 0, 1)) ** 0.8
+        ph = np.cumsum(f) / SR
+        src = 2 * (ph % 1) - 1
+        v = bp(src, 600, 1500) + 0.7 * bp(src, 1800, 3200)
+        return v * np.sin(np.linspace(0, np.pi, len(v))) ** 0.6 * 0.28
+    if name == "static":
+        d = 1.4
+        x = bp(noise(d), 900, 5000) * 0.12
+        for k in range(30):
+            place(x, hp(noise(0.01), 3000) * 0.3, rng.uniform(0, d - 0.02))
+        return x * np.sin(np.linspace(0, np.pi, len(x))) ** 0.3
+    if name == "hiss_crowd":
+        d = 1.8
+        return mixl(hp(noise(d), 2500) * 0.25 * np.sin(np.linspace(0, np.pi, int(d * SR))), groans(3.0, 3)[:int(d * SR)] * 0.6)
+    if name == "squeak":
+        x = np.zeros(int(0.6 * SR))
+        for k in range(2):
+            t = t_(0.12)
+            f = 2000 + 700 * t / 0.12
+            place(x, np.sin(2 * np.pi * np.cumsum(f) / SR) * 0.12 * np.sin(np.linspace(0, np.pi, len(t))), k * 0.2)
+        return x
+    if name == "stomach":
+        d = 1.4
+        t = t_(d)
+        f = 70 + 25 * np.sin(2 * np.pi * 3 * t)
+        x = np.sin(2 * np.pi * np.cumsum(f) / SR) * 0.4 + lp(noise(d), 200) * 0.4
+        return x * np.sin(np.linspace(0, np.pi, len(t))) * (0.6 + 0.4 * np.sin(2 * np.pi * 9 * t))
+    if name == "button":
+        x = hp(noise(0.02), 2000) * 0.3
+        return np.concatenate([x, _beeps([880], 0.1, 0.12, 0.2)])
+    if name == "horn":
+        return _horn(2.8, 98.0, 0.55)
+    if name == "horn_short":
+        return _horn(0.7, 98.0, 0.45)
+    if name == "ship_horn_far":
+        return lp(_horn(3.0, 82.0, 0.3, 500), 400)
+    if name == "pencil":
+        d = 1.2
+        t = t_(d)
+        return bp(noise(d), 2000, 6000) * 0.12 * (0.5 + 0.5 * np.sign(np.sin(2 * np.pi * 7 * t)))
+    if name == "splash":
+        d = 1.6
+        t = t_(d)
+        x = lp(noise(d), 3000) * np.exp(-t * 4) * 0.6 + kick(0.4, d) * 0.5
+        for k in range(10):
+            tt = rng.uniform(0.1, 1.0)
+            tb = t_(0.08)
+            fb = rng.uniform(400, 1200) * (1 + 3 * tb)
+            place(x, np.sin(2 * np.pi * np.cumsum(fb) / SR) * 0.06 * np.exp(-tb * 30), tt)
+        return x
+    if name == "stampede":
+        d = 3.5
+        x = np.zeros(int(d * SR))
+        for k in range(70):
+            place(x, kick(rng.uniform(0.2, 0.45), 0.2), rng.uniform(0, d - 0.2))
+        x = mixl(x, groans(d, 5) * 0.8)[:len(x)]
+        return x * np.minimum(1, t_(d) / 0.3)
+    if name == "stamp":
+        return kick(0.7, 0.4) + bp(noise(0.4), 400, 3000) * np.exp(-t_(0.4) * 25) * 0.5
+    if name == "party_horn":
+        t = t_(0.9)
+        f = 420 * (1 + 0.05 * np.sin(2 * np.pi * 9 * t) + 0.08 * t)
+        ph = np.cumsum(f) / SR
+        v = bp(2 * (ph % 1) - 1, 500, 3000)
+        return v * np.minimum(1, t / 0.03) * np.exp(-np.maximum(0, t - 0.7) * 20) * 0.25
+    if name == "jackpot":
+        x = np.zeros(int(3.0 * SR))
+        for i, n in enumerate([nm("C6"), nm("E6"), nm("G6"), nm("C7")] * 3):
+            place(x, piano(n, 0.6, 0.18), i * 0.09)
+        for k in range(40):
+            place(x, _tone(rng.uniform(3000, 6000), 0.2, 0.05, 25), rng.uniform(0.2, 2.5))
+        return x
+    if name == "slot_spin":
+        x = np.zeros(int(1.8 * SR))
+        tt = 0.0
+        gap = 0.03
+        while tt < 1.6:
+            place(x, hp(noise(0.006), 2000) * 0.3, tt)
+            tt += gap
+            gap *= 1.04
+        return x
+    if name == "sting":
+        d = 2.2
+        x = strings([nm("C3"), nm("Gb3"), nm("C4")], d, 0.12) + strings([nm("Db6")], d, 0.05)
+        return x * np.exp(-t_(d) * 0.8) + kick(0.5, d) * 0.5
+    if name == "zip":
+        d = 2.0
+        t = t_(d)
+        x = np.zeros(int(d * SR))
+        f = 700 + 1800 * t / d
+        for k in range(0, len(x), 2400):
+            x[k:k + 2400] = bp(noise(0.05)[:len(x[k:k + 2400])], f[k] * 0.7, f[k] * 1.3, 1)
+        return x * 0.3 * np.minimum(1, t / 0.1) * np.where(t > d - 0.3, (d - t) / 0.3, 1)
+    if name == "click":
+        return mixl(hp(noise(0.015), 2500) * 0.4, _tone(1800, 0.05, 0.1, 80))
+    if name == "engine_down":
+        d = 3.0
+        t = t_(d)
+        f = 60 * np.exp(-t * 0.8) + 12
+        x = lp(saw(1, d) * 0, 100)
+        ph = np.cumsum(f) / SR
+        x = lp(2 * (ph % 1) - 1, 400) * 0.35 + lp(noise(d), 200) * 0.2
+        return x * np.exp(-t * 0.9)
+    if name == "footsteps":
+        return _steps(6, 3.0, 0.35, 0.02)
+    if name == "waves":
+        d = 12.0
+        t = t_(d)
+        return lp(noise(d), 700) * 0.18 * (0.55 + 0.45 * np.sin(2 * np.pi * t / 4.0) ** 2)
+    if name == "wave_soft":
+        d = 3.0
+        return lp(noise(d), 900) * 0.25 * np.sin(np.linspace(0, np.pi, int(d * SR))) ** 2
+    if name == "wave_crash":
+        d = 3.0
+        t = t_(d)
+        sw = np.minimum(1, t / 0.6) ** 2 * np.exp(-np.maximum(0, t - 0.6) * 1.5)
+        return lp(noise(d), 1800) * 0.6 * sw + kick(0.6, d) * 0.4
+    if name == "door_slide":
+        d = 1.2
+        return bp(noise(d), 300, 1500) * 0.15 * np.sin(np.linspace(0, np.pi, int(d * SR))) + kick(0.2, d)
+    if name in ("jetski", "engine"):
+        d = 3.0
+        t = t_(d)
+        f = 85 + 40 * np.minimum(1, t / 0.8) + 6 * np.sin(2 * np.pi * 3 * t)
+        ph = np.cumsum(f) / SR
+        x = 2 * (ph % 1) - 1
+        x = bp(x, 80, 1500) * 0.3 + bp(noise(d), 400, 3000) * 0.05
+        return x * np.minimum(1, t / 0.2) * np.where(t > d - 0.6, (d - t) / 0.6, 1)
+    if name == "hiss_cat":
+        d = 0.9
+        t = t_(d)
+        return hp(noise(d), 2500) * 0.35 * np.minimum(1, t / 0.02) * np.exp(-t * 2.5)
+    if name == "purr":
+        d = 2.6
+        t = t_(d)
+        return lp(noise(d), 250) * 0.5 * (0.5 + 0.5 * np.sin(2 * np.pi * 24 * t)) * np.sin(
+            np.linspace(0, np.pi, len(t)))
+    if name == "climb":
+        x = np.zeros(int(2.8 * SR))
+        for k in range(7):
+            place(x, _tone(rng.uniform(600, 900), 0.3, 0.15, 14) + kick(0.15, 0.3), k * 0.37)
+        return x
+    if name == "flies":
+        d = 3.0
+        t = t_(d)
+        f = 220 + 30 * np.sin(2 * np.pi * 13 * t) + 20 * np.sin(2 * np.pi * 0.7 * t)
+        ph = np.cumsum(f) / SR
+        return bp(2 * (ph % 1) - 1, 300, 2500) * 0.06 * (0.6 + 0.4 * np.sin(2 * np.pi * 0.5 * t))
+    if name == "morse":
+        seq = "...---..."
+        x = np.zeros(int(3.0 * SR))
+        tt = 0.0
+        for ch in seq:
+            d = 0.1 if ch == "." else 0.3
+            b = np.sin(2 * np.pi * 800 * t_(d)) * 0.15
+            place(x, b, tt)
+            tt += d + 0.1
+        return x
+    if name == "laugh_old":
+        return _voice([300, 290, 280, 270, 260], 0.16, 0.2, (750, 1300), 0.3)
+    if name == "laugh":
+        return _voice([230, 220, 215, 205, 200, 190], 0.15, 0.19, (700, 1200), 0.3)
+    if name == "humming":
+        d = 4.0
+        x = np.zeros(int(d * SR))
+        mel = [nm("C4"), nm("C4"), nm("D4"), nm("C4"), nm("F4"), nm("E4")]
+        for i, n in enumerate(mel):
+            dd = 0.6 if i < 5 else 1.0
+            t = t_(dd)
+            f = midi(n) * (1 + 0.006 * np.sin(2 * np.pi * 5 * t))
+            ph = np.cumsum(f) / SR
+            v = (np.sin(2 * np.pi * ph) + 0.4 * np.sin(4 * np.pi * ph) + 0.2 * np.sin(6 * np.pi * ph)) * 0.12
+            v *= np.sin(np.linspace(0, np.pi, len(v))) ** 0.4
+            place(x, lp(v, 900), i * 0.6)
+        return x
+    if name == "knock":
+        x = np.zeros(int(1.0 * SR))
+        for k in range(3):
+            t = t_(0.15)
+            place(x, (bp(noise(0.15), 200, 1200) * 0.6 + np.sin(2 * np.pi * 180 * t) * 0.4) * np.exp(-t * 30),
+                  k * 0.22)
+        return x
+    if name == "pipe_cough":
+        x = np.zeros(int(1.8 * SR))
+        for k in range(14):
+            t = t_(0.12)
+            f = rng.uniform(90, 260) * (1 + 2 * t)
+            place(x, np.sin(2 * np.pi * np.cumsum(f) / SR) * 0.2 * np.exp(-t * 20), rng.uniform(0, 1.5))
+        return x + lp(noise(1.8), 300) * 0.1
+    if name == "can_open":
+        return mixl(hp(noise(0.03), 2000) * 0.4, np.concatenate(
+            [np.zeros(int(0.03 * SR)), hp(noise(0.4), 3000) * np.exp(-t_(0.4) * 8) * 0.15]))
+    if name == "dial":
+        x = np.zeros(int(2.0 * SR))
+        rows, cols = (697, 770, 852, 941), (1209, 1336, 1477)
+        for k in range(7):
+            t = t_(0.12)
+            v = (np.sin(2 * np.pi * rows[k % 4] * t) + np.sin(2 * np.pi * cols[(k * 2) % 3] * t)) * 0.08
+            place(x, v, k * 0.2)
+        return x
+    if name == "cannon":
+        d = 2.5
+        t = t_(d)
+        return kick(1.0, d) + lp(noise(d), 500) * np.exp(-t * 2.5) * 0.9
+    if name == "tap":
+        x = np.zeros(int(0.8 * SR))
+        for k in range(2):
+            place(x, mixl(_tone(2200, 0.06, 0.2, 60), hp(noise(0.01), 3000) * 0.2), k * 0.25)
+        return x
+    if name == "shimmer":
+        x = np.zeros(int(2.0 * SR))
+        for i, n in enumerate([nm("C6"), nm("E6"), nm("G6"), nm("B6"), nm("D7"), nm("G7")]):
+            place(x, piano(n, 1.4, 0.1), i * 0.07)
+        return x
+    if name == "whistle":
+        d = 1.0
+        t = t_(d)
+        f = 1300 + 900 * np.sin(np.pi * t / d) ** 2 - 500 * (t / d) ** 2
+        return np.sin(2 * np.pi * np.cumsum(f) / SR) * 0.15 * np.sin(np.linspace(0, np.pi, len(t))) ** 0.5
+    if name == "radio_beep":
+        return _beeps([1000, 1500], 0.15, 0.1, 0.18)
+    if name == "low_battery":
+        return _beeps([1200, 900, 600], 0.22, 0.14, 0.2)
+    if name == "stopwatch":
+        x = np.zeros(int(4.0 * SR))
+        for k in range(40):
+            place(x, _tone(3000 if k % 2 else 2600, 0.02, 0.15, 120), k * 0.1)
+        return x
+    if name == "radar_ping":
+        return _tone(1250, 1.4, 0.2, 3.0)
+    if name == "snap":
+        d = 0.8
+        return mixl(hp(noise(d), 1000) * np.exp(-t_(d) * 30) * 0.8 + kick(0.6, d), sfx("metal_hit") * 0.4)
+    if name == "spark":
+        x = np.zeros(int(1.0 * SR))
+        for k in range(8):
+            place(x, hp(noise(0.03), 2500) * 0.4, rng.uniform(0, 0.8))
+        t = t_(1.0)
+        return x + np.sign(np.sin(2 * np.pi * 120 * t)) * 0.03 * np.exp(-t * 3)
+    if name == "drone":
+        d = 4.5
+        t = t_(d)
+        x = lp(saw(55, d) + saw(58.3, d), 300) * 0.25
+        return x * np.minimum(1, t / 1.0) * np.where(t > d - 1.0, (d - t) / 1.0, 1)
+    if name == "thud":
+        return kick(0.9, 0.6) + lp(noise(0.6), 500) * np.exp(-t_(0.6) * 12) * 0.5
+    if name == "scratch":
+        d = 1.0
+        x = np.zeros(int(d * SR))
+        for k in range(5):
+            dd = rng.uniform(0.08, 0.18)
+            place(x, bp(noise(dd), 1500, 5000) * 0.3 * np.sin(np.linspace(0, np.pi, int(dd * SR))),
+                  rng.uniform(0, d - dd))
+        return x
+    if name == "door_crash":
+        return mixl(sfx("door_burst"), sfx("glass") * 0.6)
+    if name == "grab":
+        return mixl(sfx("whoosh") * 0.6, np.concatenate([np.zeros(int(0.12 * SR)), kick(0.5, 0.3) + bp(
+            noise(0.3), 500, 3000) * np.exp(-t_(0.3) * 30) * 0.5]))
+    if name == "punch":
+        return kick(0.9, 0.4) + bp(noise(0.4), 300, 2500) * np.exp(-t_(0.4) * 30) * 0.6
+    if name == "zombie_groan":
+        return groans(3.0, 4)
+    if name == "title_hit":
+        d = 3.0
+        t = t_(d)
+        rev = hp(noise(0.8), 3000) * np.linspace(0, 1, int(0.8 * SR)) ** 3 * 0.3
+        x = np.zeros(int(d * SR))
+        place(x, rev, 0)
+        place(x, kick(1.0, 2.0) + lp(noise(2.0), 300) * np.exp(-t_(2.0) * 2) * 0.6, 0.8)
+        return x
+    return None
+
+
 def sfx(name):
     global rng
     rng = np.random.default_rng(zlib.crc32(name.encode()))
+    y = cruise_sfx(name)
+    if y is None:
+        rng = np.random.default_rng(zlib.crc32(name.encode()))
+        y = _sfx_base(name)
+    pk = np.abs(y).max() if len(y) else 0
+    return y * (0.9 / pk) if pk > 0.9 else y
+
+
+def _sfx_base(name):
+    global rng
     if name == "whoosh":
         d = 0.6
         x = noise(d)
@@ -491,13 +926,18 @@ def groans(d, n):
 
 # сегмент → эмбиент: [(с, до, имя, громкость)]
 AMB = {
-    "cold": [(0, 7, "groans", 0.5)], "d01": [(0, 6, "city_ambience", 0.8), (0, 30, "groans", 0.7)],
-    "d04": [(5, 16, "groans", 0.6)], "d10": [(24, 30, "groans", 0.7)], "d11": [(0, 30, "rain_loop", 0.8),
-                                                                              (21, 30, "groans", 0.6)],
-    "d13": [(26, 30, "groans", 0.4)], "d17": [(14, 19, "rain_loop", 0.7)], "d21": [(15, 22, "groans", 0.6)],
-    "d24": [(21, 30, "storm_loop", 0.3)], "d25": [(0, 30, "storm_loop", 1.0), (16, 30, "groans", 0.7)],
-    "d26": [(0, 30, "storm_loop", 0.5), (8, 30, "groans", 0.8)], "d28": [(6, 30, "groans", 1.0)],
-    "d29": [(0, 30, "groans", 0.9)], "d30": [(0, 30, "groans", 0.6)], "epi": [(0, 4, "helicopter", 0.5)],
+    "cold": [(0, 10, "storm_loop", 1.0)], "d01": [(0, 30, "waves", 0.6), (8, 30, "groans", 0.6)],
+    "d02": [(0, 30, "waves", 0.7)], "d03": [(0, 30, "groans", 0.35)], "d04": [(0, 30, "waves", 0.6),
+                                                                           (8, 30, "groans", 0.5)],
+    "d05": [(0, 30, "waves", 0.5), (0, 30, "groans", 0.5)], "d07": [(0, 30, "waves", 0.6)],
+    "d09": [(0, 30, "waves", 0.6)], "d10": [(0, 30, "waves", 0.9)], "d11": [(0, 30, "waves", 1.0)],
+    "d13": [(0, 30, "groans", 0.4)], "d14": [(0, 30, "waves", 0.8)], "d15": [(0, 30, "waves", 0.7)],
+    "d17": [(5, 30, "rain_loop", 0.9)], "d18": [(0, 30, "groans", 0.5)], "d20": [(0, 30, "waves", 0.7)],
+    "d21": [(0, 30, "waves", 0.6)], "d22": [(0, 30, "waves", 0.6)], "d23": [(0, 30, "waves", 0.8)],
+    "d24": [(0, 30, "storm_loop", 1.4)], "d25": [(0, 30, "waves", 0.8)], "d26": [(12, 30, "groans", 0.8)],
+    "d27": [(0, 30, "waves", 0.5)], "d28": [(0, 30, "storm_loop", 1.0), (0, 30, "groans", 0.8)],
+    "d29": [(0, 30, "waves", 0.6), (0, 30, "groans", 0.6)], "d30": [(0, 30, "waves", 0.7), (10, 30, "groans", 0.6)],
+    "epi": [(0, 12, "waves", 0.8)],
 }
 
 
@@ -547,7 +987,7 @@ def build(film_segments=None):
                 v = load_voice(L["file"], tempo)
                 place(voice, v, t0 + L["start"])
         # музыка
-        m = segment_music(S.key, S.dur + 1.0, i)
+        m = segment_music(S.key, S.dur + 1.0, i, scene_moods(S))
         e = np.ones(len(m))
         f = int(0.5 * SR)
         e[:f] = np.linspace(0.3, 1, f)

@@ -162,4 +162,4 @@ def build(S):
     ]
     S.sfx += [(0.2, "pencil", 0.6), (c(3) + 2.4, "purr", 0.8), (c(4) + 0.2, "bang_glass", 1.0),
               (c(4) + 0.3, "hiss_cat", 0.8)]
-    S.music = "sad"
+    S.music = [(0, "sad", 1.0), (c(4) - 0.4, "tension", 1.0)]

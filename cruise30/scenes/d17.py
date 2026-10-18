@@ -154,4 +154,4 @@ def build(S):
     ]
     S.tods = [(0, "day"), (c(1), "storm")]
     S.sfx += [(0.3, "pipe_cough", 0.8), (c(1) + 1.4, "thunder", 1.0), (c(1) + 1.6, "rain", 1.0)]
-    S.music = "rain_joy"
+    S.music = [(0, "rain_joy", 1.0), (c(4) + 1.5, "dread", 0.8)]

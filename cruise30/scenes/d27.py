@@ -168,4 +168,4 @@ def build(S):
     S.tods = [(0, "night")]
     S.sfx += [(1.9, "low_battery", 0.8), (c(1) + 0.5, "pop", 0.6), (c(3) + 0.3, "scratch", 0.8),
               (c(3) + 1.3, "scratch", 0.9), (c(3) + 2.3, "scratch", 1.0)]
-    S.music = "tender"
+    S.music = [(0, "tender", 1.0), (c(3), "dread", 0.8)]

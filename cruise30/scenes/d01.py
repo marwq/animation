@@ -295,4 +295,4 @@ def build(S):
     ]
     S.sfx += [(t_bite + max(1.0, c(2, True) - t_bite - 0.7), "chomp", 1.0), (c(4) + 0.45, "glass", 1.0),
               (c(4) + 1.1 + 5.0, "door_slam", 0.9)]
-    S.music = "party"
+    S.music = [(0, "party", 1.0), (t_bite, "chase", 1.0)]

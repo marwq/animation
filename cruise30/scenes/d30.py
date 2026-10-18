@@ -336,4 +336,4 @@ def build(S):
     S.sfx += [(S.cue(1), "static", 0.8), (S.cue(2) + 0.6, "meow", 0.9), (st["horn"], "horn", 1.0),
               (st["turn"] + 0.3, "zombie_groan", 1.0), (st["zip"], "zip", 1.0), (st["ski"] + 0.2, "engine", 0.9),
               (st["end"] + 1.0, "ding", 1.0)]
-    S.music = "finale"
+    S.music = [(0, "hope", 0.7), (st["horn"], "chase", 1.0), (st["end"], "happy_end", 1.0)]
