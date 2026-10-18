@@ -133,7 +133,9 @@ def horse(ctx, x, y, s, f, c, t=0.0, tod="day", seed=0):
     ctx.restore()
 
 
-def carousel(ctx, x, gy, s=1.0, ang=0.0, t=0.0, tod="day", lights=None, run=1.0, riders=None, n=12, music=0.0):
+def carousel(ctx, x, gy, s=1.0, ang=0.0, t=0.0, tod="day", lights=None, run=1.0, riders=None, n=12, music=0.0,
+             standers=None, n_stand=0):
+    """standers(ctx, j, px, py, depth, f) — кто стоит на платформе между лошадками (n_stand мест)."""
     """Карусель в 3/4: платформа, центральная колонна, лошадки на шестах (вверх-вниз),
     купол с фестонами и лампочками. riders(ctx, i, hx, hy, hs, f, front) — кто на лошадке i."""
     T = Tf(tod)
@@ -156,7 +158,16 @@ def carousel(ctx, x, gy, s=1.0, ang=0.0, t=0.0, tod="day", lights=None, run=1.0,
         bob = math.sin(t * 2.4 * run + i * 1.7) * 60 * s * run if run > 0 else math.sin(i * 1.7) * 30 * s
         f = -1 if depth > 0 else 1
         slots.append((depth, i, hx, hy_base, bob, f))
+    stand_slots = []
+    for j in range(n_stand):
+        a = ang + (j + 0.5) * TAU / max(1, n_stand) + 0.13
+        rr = (0.55 + 0.3 * ((j * 7) % 3) / 2)
+        px = x + math.cos(a) * rx * rr
+        depth = math.sin(a)
+        py = py_ = (gy - 120 * s) + depth * ry * rr
+        stand_slots.append((depth, j, px, py, -1 if math.cos(a) * (1 if depth > 0 else -1) > 0 else 1))
     slots.sort()
+    stand_slots.sort()
 
     def pole_and_horse(i, hx, hy_base, bob, f, depth):
         hs = s * (0.9 + 0.12 * depth)
@@ -167,18 +178,28 @@ def carousel(ctx, x, gy, s=1.0, ang=0.0, t=0.0, tod="day", lights=None, run=1.0,
         if riders:
             riders(ctx, i, hx, hy - 30 * hs, hs, f, depth > 0)
 
+    def standers_where(cond):
+        if standers:
+            for depth, j, px, py, f in stand_slots:
+                if cond(depth):
+                    standers(ctx, j, px, py, depth, f)
+
+    standers_where(lambda dd: dd <= -0.3)
     for depth, i, hx, hb, bob, f in slots:
         if depth <= 0:
             pole_and_horse(i, hx, hb, bob, f, depth)
+    standers_where(lambda dd: -0.3 < dd <= 0)
     # центральная колонна с зеркалами
     D.rect(ctx, x - 150 * s, top, 300 * s, py - top, T("#2f8fd8"), INK, 5, wob=0)
     for k in range(4):
         D.rrect(ctx, x - 120 * s + k * 62 * s, top + 120 * s, 52 * s, 180 * s, 14 * s,
                 T("#cfeaff") if not lights else hexrgb("#fff2c0"), INK, 3)
         star(ctx, x - 94 * s + k * 62 * s, top + 360 * s, 16 * s, T("#ffd23a"))
+    standers_where(lambda dd: 0 < dd <= 0.4)
     for depth, i, hx, hb, bob, f in slots:
         if depth > 0:
             pole_and_horse(i, hx, hb, bob, f, depth)
+    standers_where(lambda dd: dd > 0.4)
     # купол: передняя кромка с фестонами
     nf = 16
     for k in range(nf):
