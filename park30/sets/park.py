@@ -67,8 +67,9 @@ def far_lake(ctx, t, tod="day", x0=-3000, x1=8000, hz=HZ, lighthouse_x=None, bea
             bx = x0 + 200 + k * 150 + r.uniform(-20, 20)
             bh = r.uniform(40, 130)
             D.rect(ctx, bx, hz - bh, r.uniform(60, 110), bh, T("#6f8fb0"), None, 0, wob=0)
-    # вода
+    # вода и берег острова ниже (чтобы под горизонтом не было пустоты)
     far, near = SEA.SEA.get(tod, SEA.SEA["day"])
+    D.rect(ctx, x0, hz + 80, x1 - x0, 2600, T("#9fd27a"), None, 0, wob=0)
     D.vgrad(ctx, x0, hz, x1 - x0, 90, [(0, far), (1, mix(hexrgb(far), hexrgb(near), 0.5))])
     for k in range(int((x1 - x0) / 60)):
         wx = x0 + k * 60 + (t * 12 + k * 37) % 60
