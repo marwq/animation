@@ -167,25 +167,34 @@ ZIP = ((-300, -380), (3300, 520))      # тарзанка: верхняя и н�
 def boardwalk(ctx, tod="night", power=1.0):
     T = lambda c: tone(c, tod if power <= 0 else ("day" if tod not in ("night", "deepnight") else "dusk"))
     lit = power > 0 and tod in ("night", "deepnight", "dusk")
-    SEA.sky(ctx, -800, -1400, 4800, 900, tod)
+    SEA.sky(ctx, -1800, -2400, 7000, 1900, tod)
     if tod in ("night", "deepnight"):
-        SEA.stars(ctx, -800, -1400, 4800, 700, 0, 4, 0.7)
+        SEA.stars(ctx, -1800, -2400, 7000, 1700, 0, 4, 0.7)
     # стены кают по бокам «каньона» — дальняя стена с балконами
-    D.rect(ctx, -800, -600, 4800, 1500, T("#f2f4f4"), INK, 4, wob=0)
+    D.rect(ctx, -1800, -600, 7000, 1500, T("#f2f4f4"), INK, 4, wob=0)
     r = rng(9)
+    for i in range(35):
+        x = -1760 + i * 200
+        if i % 4 == 0:
+            D.rect(ctx, x - 20, -600, 30, 1500, T(["#16a39a", "#f05a8a", "#2f8fd8"][(i // 4) % 3]), None, 0, wob=0)
     for k in range(9):
         y = -560 + k * 110
-        for i in range(24):
-            x = -760 + i * 200
+        for i in range(35):
+            x = -1760 + i * 200
             win = hexrgb("#ffd978") if (lit and r.random() < 0.5) else T("#9fd8ec")
             D.rect(ctx, x, y, 160, 70, win, INK, 2, wob=0)
             D.line(ctx, x, y + 40, x + 160, y + 40, T("#ffffff"), 3)
+            if r.random() < 0.18:
+                D.rect(ctx, x + 10, y + 56, 140, 14, T("#a86a3a"), INK, 1.5, wob=0)
+                for j in range(5):
+                    D.circle(ctx, x + 24 + j * 28, y + 54, 9, T(r.choice(["#e8423c", "#f2c230", "#f05a8a", "#3fbf6a"])),
+                             INK, 1.2)
     # лавки
     shop(ctx, -300, "SWEET SPOT", "#f05a8a", T, lit)
     shop(ctx, 2550, "HOT DOGS", "#f2c230", T, lit)
     shop(ctx, 3350, "ARCADE", "#7a4fc2", T, lit)
     # гирлянды
-    for x0 in range(-700, 3900, 500):
+    for x0 in range(-1700, 4900, 500):
         for i in range(10):
             u = (i + 0.5) / 10
             px, py = x0 + 500 * u, 300 + math.sin(math.pi * u) * 50
@@ -193,15 +202,15 @@ def boardwalk(ctx, tod="night", power=1.0):
                 D.radial(ctx, px, py, 26, "#ffe08a", 0.5, 0)
             D.circle(ctx, px, py, 7, hexrgb("#fff2b0") if lit else T("#f6f0d8"), INK, 1.2)
     # пол-деревянный настил
-    D.rect(ctx, -800, FL - 20, 4800, 600, T("#c99a62"), None, 0, wob=0)
+    D.rect(ctx, -1800, FL - 20, 7000, 900, T("#c99a62"), None, 0, wob=0)
     D.col(ctx, T("#a87a48"))
     ctx.set_line_width(3)
     for k in range(9):
         y = FL - 20 + k * k * 7
-        ctx.move_to(-800, y)
-        ctx.line_to(4000, y)
+        ctx.move_to(-1800, y)
+        ctx.line_to(5200, y)
     ctx.stroke()
-    D.line(ctx, -800, FL - 20, 4000, FL - 20, INK, 3)
+    D.line(ctx, -1800, FL - 20, 5200, FL - 20, INK, 3)
     # трос тарзанки
     (zx0, zy0), (zx1, zy1) = ZIP
     D.rect(ctx, zx0 - 200, zy0 - 20, 260, 40, T("#c9d0d4"), INK, 4, wob=0)
