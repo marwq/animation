@@ -59,7 +59,7 @@ def shot_timer(ctx, t, S):
 
 def shot_note(ctx, t, S):
     d = S.dur - S.cue(3)
-    T_TAPE = d * 0.6
+    T_TAPE = max(1.8, S.cue(3, True) - S.cue(3) - 2.4)
     if t < T_TAPE:
         D.vgrad(ctx, 0, 0, W, H, [(0, "#2a2448"), (1, "#141030")])
         ctx.save()
@@ -68,7 +68,8 @@ def shot_note(ctx, t, S):
         D.rect(ctx, -460, -330, 920, 660, hexrgb("#fbf3dc"), D.INK, 6, wob=0)
         lines = ["Dear Grandma June,", "If you're reading this,", "I tried. I flew.", "Eat a vegetable.", "— Danny"]
         for i, ln in enumerate(lines):
-            n = int(clamp((t - i * 0.7) / 0.7) * len(ln))
+            step = (T_TAPE - 0.2) / len(lines)
+            n = int(clamp((t - i * step) / step) * len(ln))
             D.text(ctx, ln[:n], -400, -200 + i * 110, 70, D.FONT_HAND, hexrgb("#2a3a7a"), "left")
         ctx.restore()
         return
@@ -87,7 +88,7 @@ def shot_note(ctx, t, S):
         D.rect(ctx, 20, -36, 30, 10, hexrgb("#e8e0c0"), None, 0, wob=0, alpha=0.8)
         ctx.restore()
     fx.darkness(ctx, 0.4, [fx.Light(W / 2, H / 2, 500, power=0.6, glow_a=0.0)])
-    pop_text(ctx, "JUST IN CASE.", W / 2, 230, tt, 0.3, 90, "#fff6d8", dur=d, shake=False)
+    pop_text(ctx, "JUST IN CASE.", W / 2, 230, tt, 1.2, 90, "#fff6d8", dur=d, shake=False)
 
 
 def build(S):

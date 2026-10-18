@@ -110,13 +110,15 @@ def shot_rain(ctx, t, S):
 
 def shot_walt(ctx, t, S):
     d = S.dur - S.cue(4)
-    T_TALK = d * 0.3
+    end = S.cue(4, True) - S.cue(4)
+    T_TALK = max(0.5, end - 3.3)
+    T_GO = max(T_TALK + 1.2, end - 1.0)
     cam = Cam(OS.RADIO_X - 240, 520, Keys((0, 1.6), (d, 1.9)))
-    walt_radio(ctx, t, cam, 1.0 if t > T_TALK else 0.0, "determined", "night")
+    walt_radio(ctx, t, cam, 1.0 if T_TALK < t < end + 0.3 else 0.0, "determined", "night")
     if t > T_TALK:
         speech(ctx, W / 2 + 380, 220, "EVERY AIRPORT HAS A GENERATOR.", t, T_TALK, 44, tail=(-1, 1),
-               dur=(d - T_TALK) * 0.55)
-        speech(ctx, W / 2 + 380, 220, "GO FIND IT.", t, T_TALK + (d - T_TALK) * 0.55, 70, tail=(-1, 1))
+               dur=T_GO - T_TALK)
+        speech(ctx, W / 2 + 380, 220, "GO FIND IT.", t, T_GO, 70, tail=(-1, 1))
 
 
 def build(S):

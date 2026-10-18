@@ -131,8 +131,8 @@ def shot_pound(ctx, t, S):
                 D.line(ctx, fx_ + j * 16, RM.FL + 44, fx_ + j * 16 + math.sin(t * 7 + k + j) * 6, RM.FL + 70, D.INK, 12)
                 D.line(ctx, fx_ + j * 16, RM.FL + 44, fx_ + j * 16 + math.sin(t * 7 + k + j) * 6, RM.FL + 70,
                        hexrgb(R.ZOMBIE_SKIN[k % 7]), 7)
-    for k in range(4):
-        pop_text(ctx, "BANG", 1200 + (k % 2) * 300, 260 + k * 80, t, 0.2 + k * 0.6, 90, "#fff6d8", dur=0.5)
+    for k in range(int(t / 0.6) + 1):
+        pop_text(ctx, "BANG", 1200 + (k % 2) * 300, 260 + (k % 4) * 80, t, 0.2 + k * 0.6, 90, "#fff6d8", dur=0.5)
 
 
 def build(S):
