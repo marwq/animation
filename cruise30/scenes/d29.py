@@ -151,7 +151,7 @@ def shot_stack(ctx, t, S):
         pile(ctx, t, top, seed=29)
     fx.grade(ctx, "dusk", 0.3)
     x, y = cam.to_screen(t, OD._holds()[-1][0] - 300, OD._holds()[-1][1])
-    D.text(ctx, "LAST HOLD", x - 20, y + 18, 50, D.FONT_TITLE, hexrgb("#ff8a7a"), "right", stroke=D.INK, slw=6)
+    D.text(ctx, "LAST HOLD", x - 20, y + 95, 50, D.FONT_TITLE, hexrgb("#ff8a7a"), "right", stroke=D.INK, slw=6)
     if t > d * 0.55:
         pop_text(ctx, "HIGHER.", W / 2 + 350, 300, t, d * 0.55, 140, "#9fc86a", dur=3, shake=False)
 
