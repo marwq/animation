@@ -38,7 +38,7 @@ def shot_slowly(ctx, t, S):
 def shot_navy(ctx, t, S):
     d = S.cue(2) - S.cue(1)
     cam = Cam(Keys((0, 200), (d, 380)), 420, Keys((0, 0.8), (d, 0.9)))
-    sea_back(ctx, t, cam, "night", moon=(-400, -100, 45), hy=600, p=0.3)
+    sea_back(ctx, t, cam, "night", moon=(600, -150, 45), hy=600, p=0.3)
     with layer(ctx, cam, t):
         tf = d * 0.45
         warship(ctx, -250, 640, 1.2, 1, flash=clamp(1 - abs(t - tf) / 0.25))
