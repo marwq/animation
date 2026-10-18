@@ -58,7 +58,7 @@ def shot_climb(ctx, t, S):
         fx.darkness(ctx, 0.25)
         return
     tt = t - T_WIDE
-    cam = Cam(WX + 200, WCY - 300, Keys((0, 0.3), (d - T_WIDE, 0.33)), anchor=(WX, 520))
+    cam = Cam(WX + 200, WCY - 300, Keys((T_WIDE, 0.3), (d, 0.33)), anchor=(WX, 520))
     sky_back(ctx, t, cam, "night", -4000, 7000, moon=(2600, -900, 140))
     with layer(ctx, cam, t):
         PK.plaza(ctx, "night", -4000, 7000)
@@ -73,7 +73,7 @@ def panorama(ctx, t, cam, beam=0.0):
     with layer(ctx, cam, t, 0.2):
         PK.sky(ctx, t, "night", -2000, 9000, hz=HZ, moon=(3600, -200, 120), clouds=False)
     with layer(ctx, cam, t):
-        LK.water(ctx, t, -2000, 9000, HZ, HZ + 1400, "night", glitter=0.6)
+        LK.water(ctx, t, -2000, 9000, HZ, HZ + 2600, "night", glitter=0.6)
         # дальний берег слева с городом
         D.poly(ctx, [(-2000, HZ), (-2000, HZ - 40), (2900, HZ - 60), (3200, HZ)], hexrgb("#1e2a3a"), None, 0, wob=0)
         ctx.save()
@@ -121,7 +121,8 @@ def shot_view(ctx, t, S):
 def shot_blink(ctx, t, S):
     """Маяк на том берегу мигает: раз, два, три. На переднем плане — Раскал и Бандит на крыше кабинки."""
     d = S.cue(3) - S.cue(2)
-    blinks = [d * 0.25, d * 0.45, d * 0.65]
+    st = S.cue(2) - 0.1
+    blinks = [S.word(w, S.cue(2) + 0.8, st + d * k) - st for w, k in (("gus", 0.25), ("light", 0.45), ("times", 0.65))]
     beam = 1.0 if any(0 <= t - b < 0.3 for b in blinks) else 0.0
     cam = Cam(LH_X - 200, HZ - 40, Keys((0, 1.4), (d, 1.55)))
     panorama(ctx, t, cam, beam)
@@ -168,5 +169,6 @@ def build(S):
     S.tods = [(0, "night")]
     d2 = c(3) - c(2)
     S.sfx += [(0.2, "ladder", 0.8), (c(1), "wind", 0.7), (c(1) + 0.5, "crowd_groan", 0.4)]
-    S.sfx += [(c(2) + d2 * k, "ding", 0.5) for k in (0.25, 0.45, 0.65)]
+    S.sfx += [(S.word(w, c(2) + 0.8, c(2) + d2 * k), "ding", 0.5) for w, k in (("gus", 0.25), ("light", 0.45),
+                                                                                    ("times", 0.65))]
     S.music = [(0, "tension", 0.6), (c(1), "wonder", 1.0), (c(3), "lonely", 0.8)]

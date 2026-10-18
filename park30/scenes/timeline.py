@@ -35,6 +35,7 @@ def build(only=None):
         S = Segment(key, timing.SEG_DUR[key], day=day, tod=TOD.get(key, "day"))
         S.paper, S.grain, S.vignette = 0.16, 0.05, 0.5
         S.cues = T.get(key, {}).get("cues", [])
+        S.words = T.get(key, {}).get("words", [])
         if only and key not in only:
             S.shots = [Shot(0, _placeholder(key))]
         elif os.path.exists(os.path.join(HERE, key + ".py")):

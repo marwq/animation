@@ -51,8 +51,8 @@ def shot_gus(ctx, t, S):
     k = smooth(clamp((t - 0.2) / 0.5))
     diag_split(ctx, lambda c: theo_radio(c, t, camL, 0.0, "shock", "night", fig=THEO_FUR),
                lambda c: gus_radio(c, t, camR, 1.0, "smile", "night"), k)
-    D.rrect(ctx, 60, 100, 230, 90, 18, hexrgb("#9fe870"), D.INK, 5)
-    D.text(ctx, "CH 9", 175, 166, 60, D.FONT_TITLE, hexrgb("#1c3a1c"))
+    D.rrect(ctx, 60, 180, 230, 90, 18, hexrgb("#9fe870"), D.INK, 5)
+    D.text(ctx, "CH 9", 175, 246, 60, D.FONT_TITLE, hexrgb("#1c3a1c"))
     speech(ctx, 1450, 230, "THIS IS GUS.", t, 0.6, 70, tail=(-1, 1))
 
 

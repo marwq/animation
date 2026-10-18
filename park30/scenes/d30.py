@@ -47,7 +47,7 @@ def shot_turn(ctx, t, S):
                   side=side)
     else:
         tt = t - d * 0.62
-        cam = Cam(Keys((0, 1500), (d - d * 0.62, 2100)), FL - 400, 0.38, anchor=(1500, 520))
+        cam = Cam(Keys((d * 0.62, 1500), (d, 2100)), FL - 400, 0.38, anchor=(1500, 520))
         sky_back(ctx, t, cam, "night", -4000, 9000)
         with layer(ctx, cam, t):
             PK.plaza(ctx, "night", -4000, 9000, c="#2a3a2a")
@@ -127,7 +127,7 @@ def shot_stuck(ctx, t, S):
         return
     tt = t - T_KNOT
     # крупно: Тео перегнулся через борт и дёргает узел у кольца — не поддаётся
-    cam = Cam(BX - 220, GY - 250 - lift, Keys((0, 1.5), (d - T_KNOT, 1.65)), shake=lambda q: 0.15)
+    cam = Cam(BX - 220, GY - 250 - lift, Keys((T_KNOT, 1.5), (d, 1.65)), shake=lambda q: 0.15)
     court_bg(ctx, t, cam)
     with layer(ctx, cam, t):
         vib = math.sin(t * 70) * 4

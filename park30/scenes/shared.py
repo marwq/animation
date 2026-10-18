@@ -215,7 +215,7 @@ def rule_card(ctx, t, num, lines, t0=0.0, x=W / 2, y=H / 2 - 20, rot=-0.04):
         D.circle(ctx, -480, -230 + j * 110, 14, hexrgb("#2b2f3a"), None, 0)
     D.text(ctx, "RULE #%d" % num, -380, -190, 90, D.FONT_TITLE, hexrgb("#e8423c"), "left")
     for i, ln in enumerate(lines):
-        n = int(clamp((t - t0 - 0.5 - i * 0.8) / 0.8) * len(ln))
+        n = int(clamp((t - t0 - 0.35 - i * 0.55) / 0.55) * len(ln))
         D.text(ctx, ln[:n], -380, -60 + i * 110, 84, D.FONT_HAND, hexrgb("#2a3a7a"), "left")
     ctx.restore()
 

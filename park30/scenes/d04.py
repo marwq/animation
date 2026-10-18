@@ -110,7 +110,7 @@ def shot_turn(ctx, t, S):
 
 def shot_round(ctx, t, S):
     d = S.dur - S.cue(3)
-    T_SPIN = d * 0.35
+    T_SPIN = S.word("and", S.cue(3) + 1.0, S.cue(3) + d * 0.35) - (S.cue(3) - 0.1) - 0.15
     if t < T_SPIN:
         D.vgrad(ctx, 0, 0, W, H, [(0, "#2a2448"), (1, "#141030")])
         rule_card(ctx, t, 2, ["They follow", "MUSIC."], 0.0)

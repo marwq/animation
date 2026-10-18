@@ -149,6 +149,14 @@ class Segment:
         i = max(0, min(i, len(self.cues) - 1))
         return self.cues[i][1 if end else 0]
 
+    def word(self, w, after=0.0, default=None):
+        """Время начала слова w (без регистра и знаков) после секунды after; default — если нет."""
+        key = "".join(ch for ch in w.lower() if ch.isalnum())
+        for ww, a, b in getattr(self, "words", []):
+            if a >= after - 1e-6 and "".join(ch for ch in ww.lower() if ch.isalnum()) == key:
+                return a
+        return default if default is not None else after
+
     def finalize(self):
         self.shots.sort(key=lambda s: s.start)
         for a, b in zip(self.shots, self.shots[1:]):

@@ -25,8 +25,9 @@ def ladder(ctx, x, y0, y1, w=90, c="#8f99a3", s=112.0):
 def shot_slide(ctx, t, S):
     """Детская горка: зомби лезет по скату и съезжает; другой бьётся о лестницу. Затем правило."""
     d = S.cue(1) - 0.1
-    T_RULE = d * 0.62
-    if t > T_RULE:
+    T_RULE = S.word("rule", 0.0, 1.4) - 0.15                  # врезка-карточка: «Rule number three. They can't climb.»
+    T_BACK = S.word("not", T_RULE + 0.5, T_RULE + 2.5) - 0.1
+    if T_RULE <= t < T_BACK:
         D.vgrad(ctx, 0, 0, W, H, [(0, "#2a2448"), (1, "#141030")])
         rule_card(ctx, t, 3, ["They can't", "CLIMB."], T_RULE)
         return
@@ -161,6 +162,6 @@ def build(S):
         Shot(c(3) - 0.1, shot_highway, "fade", 0.3),
     ]
     S.tods = [(0, "day")]
-    S.sfx += [(0.9, "slide_squeak", 0.8), (2.2, "slide_squeak", 0.8), ((c(1) - 0.1) * 0.62, "stamp", 0.9),
+    S.sfx += [(0.9, "slide_squeak", 0.8), (4.8, "slide_squeak", 0.8), (S.word("rule", 0.0, 1.4) - 0.15, "stamp", 0.9),
               (c(1) + 0.2, "ladder", 0.8), (c(2), "cable_hum", 0.8), (c(3), "wind", 0.6)]
     S.music = [(0, "comic", 0.8), (c(1), "wonder", 1.0)]

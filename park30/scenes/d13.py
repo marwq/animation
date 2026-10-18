@@ -171,7 +171,7 @@ def shot_patch(ctx, t, S):
         return
     if t < T_POSE:
         tt = t - T_SEW
-        cam = Cam(1100, 620, Keys((0, 1.4), (T_POSE - T_SEW, 1.5)))
+        cam = Cam(1100, 620, Keys((T_SEW, 1.4), (T_POSE, 1.5)))
         room_back(ctx, t, cam, "workshop_day13", lambda c: IN.workshop(c, "day", patches_done=13),
                   (-600, -900, 4200, 2700), 0.6)
         with layer(ctx, cam, t):
@@ -193,7 +193,7 @@ def shot_patch(ctx, t, S):
         pop_text(ctx, "BALLOON FABRIC", W / 2, 200, tt, 0.3, 80, "#ffd23a", dur=T_POSE, shake=False)
         return
     tt = t - T_POSE
-    cam = Cam(1300, 560, Keys((0, 1.2), (d - T_POSE, 1.32)))
+    cam = Cam(1300, 560, Keys((T_POSE, 1.2), (d, 1.32)))
     room_back(ctx, t, cam, "workshop_day13", lambda c: IN.workshop(c, "day", patches_done=13),
               (-600, -900, 4200, 2700), 0.6)
     with layer(ctx, cam, t):

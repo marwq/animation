@@ -158,7 +158,7 @@ def shot_cut(ctx, t, S):
             pop_text(ctx, "TWANG!", W / 2 - 300, 260, t, T_CUT, 120, "#fff6d8", dur=1.0)
         return
     tt = t - T_COIL
-    cam = Cam(ZX1 - 900, FL - 300, Keys((0, 1.0), (d - T_COIL, 1.08)), anchor=(ZX1, 520))
+    cam = Cam(ZX1 - 900, FL - 300, Keys((T_COIL, 1.0), (d, 1.08)), anchor=(ZX1, 520))
     grass_back(ctx, t, cam, "golden", -3000, 9000, sun=(ZX1 - 300, 300, 160))
     with layer(ctx, cam, t):
         cx, cy = ZX1 - 900, FL + 40

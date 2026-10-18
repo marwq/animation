@@ -167,7 +167,10 @@ def shot_lessons(ctx, t, S):
             for j in range(3):
                 a = t * 4 + j * TAU / 3
                 star(ctx, hx + math.cos(a) * 90, hy - 170 + math.sin(a) * 24, 18, hexrgb("#ffd23a"), 2)
-    for i, (txt, ok, t0) in enumerate((("LESSON 1: IT WORKS", True, 0.2), ("LESSON 2: YOU CAN'T STEER", False, d * 0.45))):
+    st = S.cue(3) - 0.1
+    l1 = S.word("lesson", S.cue(3) - 0.2, st + 0.3) - st
+    l2 = S.word("lesson", st + l1 + 0.5, st + d * 0.45) - st
+    for i, (txt, ok, t0) in enumerate((("LESSON 1: IT WORKS", True, l1), ("LESSON 2: YOU CAN'T STEER", False, l2))):
         if t < t0:
             continue
         k = ease_out_back(clamp((t - t0) / 0.3))

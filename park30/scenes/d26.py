@@ -140,7 +140,7 @@ def shot_party(ctx, t, S):
         for j in range(3):
             ph = (t * 0.6 + j / 3) % 1
             RD.note(c, x + 120 + j * 120, y + h * 0.6 - ph * 160, 0.5, "#ffd23a", 1 - ph, j % 2 == 0)
-    cam = Cam(IN.TOWER_WIN_X, 400, Keys((0, 1.05), (d - T_TOWER, 1.2)))
+    cam = Cam(IN.TOWER_WIN_X, 400, Keys((T_TOWER, 1.05), (d, 1.2)))
     room_back(ctx, t, cam, "tower_party_%d" % (int(t * 4) % 8), lambda c: IN.tower_room(c, "night", view=view),
               (-600, -900, 4200, 2700), 0.7)
     with layer(ctx, cam, t):

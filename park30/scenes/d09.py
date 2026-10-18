@@ -103,7 +103,10 @@ def shot_horde(ctx, t, S):
 def shot_up(ctx, t, S):
     """«Уйду раньше». — «Малыш, с острова один путь…» — камера по башне замка вверх, в звёзды: ВВЕРХ."""
     d = S.dur - S.cue(3)
-    T_GUS, T_SKY = d * 0.3, d * 0.62
+    t0 = S.cue(3) - 0.1                                     # начало кадра в секундах сегмента
+    T_GUS = S.word("kid", S.cue(3), t0 + d * 0.3) - t0 - 0.1
+    T_UP = S.word("up", S.cue(3) + 2.0, t0 + d * 0.7) - t0  # «Up.»
+    T_SKY = T_UP - 0.9
     if t < T_GUS:
         cam = Cam(IN.TOWER_CRATE_X + 600, 520, Keys((0, 1.15), (T_GUS, 1.22)))
         theo_radio(ctx, t, cam, 1.0, "worried", "night", fig=THEO_FUR)
@@ -116,14 +119,14 @@ def shot_up(ctx, t, S):
         return
     tt = t - T_SKY
     dd = d - T_SKY
-    cam = Cam(0, Keys((0, PK.FL - 700), (dd * 0.7, -1700, "io"), (dd, -1750)), Keys((0, 0.55), (dd, 0.5)),
+    cam = Cam(0, Keys((T_SKY, PK.FL - 700), (T_UP + 0.5, -1700, "io"), (d, -1750)), Keys((T_SKY, 0.55), (d, 0.5)),
               anchor=(0, 520))
     sky_back(ctx, t, cam, "night", -4000, 4000, moon=(500, -500, 90))
     with layer(ctx, cam, t):
         PK.plaza(ctx, "night", -4000, 4000, c="#3a5a3a")
         CA.castle(ctx, 0, PK.FL, 0.9, "night", t, lit=0.9)
-    if tt > dd * 0.55:
-        pop_text(ctx, "UP.", W / 2, H / 2 + 40, tt, dd * 0.55, 260, "#fff6d8", dur=dd, shake=False, rot=0.0)
+    if t > T_UP:
+        pop_text(ctx, "UP.", W / 2, H / 2 + 40, t, T_UP, 260, "#fff6d8", dur=dd, shake=False, rot=0.0)
 
 
 def build(S):

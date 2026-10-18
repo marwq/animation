@@ -159,7 +159,7 @@ def shot_ride(ctx, t, S):
     dd = d - T_CASTLE
     T_GATE = dd * 0.7
     x_last = lerp(CASTLE_X - 700, CASTLE_X, smooth(clamp(tt / T_GATE)))
-    cam = Cam(CASTLE_X - 300, FL - 700, Keys((0, 0.42), (dd, 0.45)), anchor=(CASTLE_X, 520))
+    cam = Cam(CASTLE_X - 300, FL - 700, Keys((T_CASTLE, 0.42), (d, 0.45)), anchor=(CASTLE_X, 520))
     street_back(ctx, t, cam, "day", -1400, 8000, shut=True, sun=(9000, -900, 120))
     with layer(ctx, cam, t):
         CA.castle(ctx, CASTLE_X, FL, 0.9, "day", t, gate_open=1.0)
