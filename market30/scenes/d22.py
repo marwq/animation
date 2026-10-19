@@ -108,8 +108,8 @@ def all_at_once(ctx, T, S):
             uu = max(0.0, u - d)
             x = x0 + i * cw + vx * uu
             y = y0 + j * cw + vy * uu + 650 * uu * uu
-            if y > H + 40:
-                continue
+            floor = 960 - r_.uniform(0, 1) ** 2 * 70 * (1 - abs(i - cols / 2) / (cols / 2))   # горка на полу
+            y = min(y, floor)
             D.rect(ctx, x, y, cw * 0.92, cw * 0.92, hexrgb("#c9e2ef"), hexrgb("#7a9aaa"), 1.5, wob=0)
     if u < hold + 0.3:
         D.rect(ctx, x0, y0, w, h, None, INK, 9, wob=0, alpha=clamp(1 - (u - hold) / 0.3))
