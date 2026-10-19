@@ -1379,6 +1379,77 @@ def market_sfx(name):
                 y += np.sin(2 * np.pi * f * t) * np.exp(-t * 25) * 0.05
             place(x, y, dt)
         return x
+    if name == "generator":
+        d = 8.0
+        t = t_(d)
+        f = 30 * (1 + 0.02 * np.sin(2 * np.pi * 0.5 * t))
+        ph = np.cumsum(f) / SR
+        x = np.sign(np.sin(2 * np.pi * ph)) * 0.12 + lp(noise(d), 600) * 0.08
+        return lp(x, 900) * (1 + 0.15 * np.sin(2 * np.pi * 7 * t))
+    if name == "cardboard":
+        t = t_(0.7)
+        return bp(noise(0.7), 300, 2500) * np.exp(-t * 6) * 0.5
+    if name == "can_bin":
+        t = t_(0.6)
+        x = lp(noise(0.6), 2500) * np.exp(-t * 25) * 0.6
+        for f in (900, 1450, 2300):
+            x += np.sin(2 * np.pi * f * t) * np.exp(-t * 12) * 0.08
+        return x
+    if name == "rats":
+        d = 6.0
+        x = np.zeros(int(d * SR))
+        for k in range(40):
+            place(x, bp(noise(0.03), 2500, 7000) * 0.2, rng.uniform(0, d - 0.1))
+        for k in range(6):
+            t = t_(0.12)
+            place(x, np.sin(2 * np.pi * (3200 + 800 * t / 0.12) * t) * np.exp(-t * 20) * 0.08, rng.uniform(0, d - 0.2))
+        return x
+    if name == "glass_crack":
+        x = np.zeros(int(1.2 * SR))
+        for k in range(12):
+            t = t_(0.05)
+            place(x, bp(noise(0.05), 2000, 9000) * np.exp(-t * 80) * rng.uniform(0.2, 0.6), k * 0.07 + rng.uniform(0, 0.03))
+        return x
+    if name == "shatter":
+        d = 2.5
+        t = t_(d)
+        x = bp(noise(d), 2500, 9000) * np.exp(-t * 2.5) * 0.7 + lp(noise(d), 400) * np.exp(-t * 8) * 0.8
+        for k in range(60):
+            place(x, _tone(rng.uniform(3000, 7000), 0.08, 0.06, 40), rng.uniform(0.05, 2.0))
+        return x
+    if name == "chain":
+        x = np.zeros(int(1.4 * SR))
+        for k in range(10):
+            place(x, mixl(_tone(rng.uniform(1800, 3200), 0.15, 0.12, 25), bp(noise(0.03), 2000, 6000) * 0.1),
+                  k * 0.12 + rng.uniform(0, 0.04))
+        return x
+    if name in ("engine_fail", "engine_start"):
+        d = 3.0 if name == "engine_start" else 1.4
+        t = t_(d)
+        crank = (np.sin(2 * np.pi * 9 * t) > 0).astype(float) * lp(noise(d), 500) * 0.4 * (t < 1.0)
+        x = crank
+        if name == "engine_start":
+            f = 25 + 20 * np.clip((t - 1.0) / 0.4, 0, 1)
+            ph = np.cumsum(f) / SR
+            x = x + lp(np.sign(np.sin(2 * np.pi * ph)) * 0.25 + noise(d) * 0.05, 700) * (t > 1.0)
+        return x
+    if name == "truck_drive":
+        d = 6.0
+        t = t_(d)
+        f = 32 + 10 * np.clip(t / 3, 0, 1)
+        ph = np.cumsum(f) / SR
+        return lp(np.sign(np.sin(2 * np.pi * ph)) * 0.25 + noise(d) * 0.08, 800)
+    if name == "roll_door":
+        d = 2.2
+        x = np.zeros(int(d * SR))
+        k = 0.0
+        while k < d - 0.1:
+            place(x, bp(noise(0.03), 700, 4000) * 0.3, k)
+            k += 0.035
+        return x + lp(noise(d), 200) * 0.2
+    if name == "freezer_door":
+        t = t_(1.2)
+        return lp(noise(1.2), 250) * np.exp(-t * 10) * 1.0 + np.sin(2 * np.pi * 70 * t) * np.exp(-t * 6) * 0.4
     if name == "lamp_buzz":
         d = 8.0
         t = t_(d)

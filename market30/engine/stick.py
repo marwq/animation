@@ -378,7 +378,7 @@ def draw(ctx, x, gy, r, f, pose, look=None, alpha=1.0):
         ctx.arc(cx, cy, r - lw * 0.2, 0, TAU)
         ctx.clip()
         if p.get("view") == "back":
-            D.ellipse(ctx, cx, cy - r * 0.35, r * 1.1, r * 0.95, hexrgb(look["hair"]), None, 0)
+            D.ellipse(ctx, cx, cy - r * 0.55, r * 1.1, r * 0.8, hexrgb(look["hair"]), None, 0)
         else:
             D.ellipse(ctx, cx - f * r * 0.15, cy - r * 0.95, r * 1.05, r * 0.55, hexrgb(look["hair"]), None, 0)
         ctx.restore()

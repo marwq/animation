@@ -52,6 +52,7 @@ def crowd_glass(ctx, T, n=14, near=False, seed=50):
         ST.draw(ctx, x + 6 * math.sin(T * 0.8 + i), gy, r, 1 if i % 2 else -1, p,
                 zombie_look(seed + i, ("#3a4256", 0.18)))
     ctx.restore()
+    front_day_fg(ctx)
     # блики стекла поверх
     for j in range(6):
         xx = 250 + j * 430
@@ -69,8 +70,8 @@ def peek_count(ctx, T, S):
         multiply(ctx, "#3a4258", 0.3)
         x, gy = 1560, 1420
         r = persp(gy, FD_A, FD_HZ)
-        p = crouch(T, 3, face="worried", look=(0.5, -0.4), h1=(1.6, -3.4), h2=(1.3, -2.6), lean=0.45,
-                   hip=(0.0, 1.8))
+        p = crouch(T, 3, face="worried", look=(0.5, -0.4), h1=(1.3, -3.6), h2=(1.0, -3.0), lean=0.3,
+                   hip=(0.0, 2.1), f1=(0.45, 0.0), f2=(-0.45, 0.0))
         J = figure(ctx, x, gy, r, -1, p, HERO, tint=("#6a7590", 0.25))
         hx, hy = at(J, x, gy, r, -1, "h2")
         clipboard(ctx, hx, hy - 10, 0.9 * r, -0.2, lines=4)
@@ -88,14 +89,14 @@ def chart(ctx, T, S):
 def they_stand(ctx, T, S):
     """Снаружи: двадцать шесть у фасада, покачиваются и ждут."""
     l = T - (S.cue(2) - 0.3)
-    cam = PlateCam("exterior_day", 1330, 880, Keys((0, 1.0), (6, 1.1, "lin")))
+    cam = PlateCam("exterior_day", 1420, 900, Keys((0, 1.75), (6, 1.9, "lin")))
     with on(ctx, cam, l):
         paint(ctx, "exterior_day")
         r_ = rng(9)
         items = []
         for i in range(26):
-            x = 640 + r_.uniform(0, 1380)
-            gy = 1000 + r_.uniform(0, 120)
+            x = 1220 + r_.uniform(0, 520)
+            gy = 990 + r_.uniform(0, 60)
             items.append((gy, x, i))
         for gy, x, i in sorted(items):
             r = persp(gy, EXT_A, EXT_HZ)
@@ -129,7 +130,8 @@ def retreat(ctx, T, S):
         x = 1900 - l * 230
         ph = (1900 - x) / (ST.WALK_STRIDE * r * 0.8)
         g = ST.gait(ph)
-        p = crouch(T, 3, face="scared", look=(0.5, -0.2))
+        p = crouch(T, 3, face="scared", look=(0.5, -0.2), lean=0.35, hip=(0.0, 2.05), h1=(0.9, -2.9),
+                   h2=(0.5, -2.8))
         p.update(f1=(g["f1"][0] * 0.8, g["f1"][1]), f2=(g["f2"][0] * 0.8, g["f2"][1]))
         figure(ctx, x, gy, r, -1, p, HERO, tint=("#6a7590", 0.28))
 

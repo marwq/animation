@@ -120,7 +120,7 @@ def barricade(ctx, T, S):
         # носит мешок: ходит вдоль стены туда-обратно
         u = (l / 1.6) % 2.0
         k = u if u < 1 else 2 - u
-        x = lerp(2150, 1900, smooth(k))
+        x = lerp(2060, 1840, smooth(k))
         f = -1 if u < 1 else 1
         p = pose(T, 3, face="determined", look=(0.4, 0.0))
         p.update(ST.gait(l * 1.2))

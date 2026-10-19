@@ -384,3 +384,150 @@ def seated(t=0.0, seed=0, seat=2.1, **kw):
     p.update(hip=(0.0, seat), f1=(1.25, 0.0), f2=(1.0, 0.0), lean=0.05, h1=(1.0, -2.6), h2=(0.8, -2.5))
     p.update(kw)
     return p
+
+
+# front_day: стеллаж и кассовые стойки на переднем плане (для перекрытия фигур за стеклом)
+FRONT_DAY_FG = [
+    [(0, 0), (355, 0), (355, 862), (600, 862), (600, 772), (612, 712), (800, 702), (800, 630), (922, 630),
+     (922, 690), (1062, 690), (1062, 860), (1182, 860), (1182, 1536), (0, 1536)],
+    [(2120, 905), (2160, 892), (2720, 880), (2720, 1536), (2120, 1536)],
+]
+
+
+def front_day_fg(ctx):
+    for pts in FRONT_DAY_FG:
+        mask_bg(ctx, "front_day", pts)
+
+
+def cart(ctx, x, gy, s, f=1, tilt=0.0, alpha=1.0):
+    """Тележка сбоку: (x, gy) — середина между колёсами на полу, s — высота, f — куда смотрит ручка (-1/1)."""
+    ctx.save()
+    ctx.translate(x, gy)
+    ctx.rotate(tilt)
+    ctx.scale(f, 1)
+    if alpha < 1:
+        ctx.push_group()
+    lw = max(2.0, s * 0.025)
+    metal = hexrgb("#8f969e")
+    L = s * 1.0
+    top, bot = -s * 0.95, -s * 0.45
+    basket = [(-L * 0.5, top), (L * 0.42, top), (L * 0.3, bot), (-L * 0.42, bot)]
+    D.poly(ctx, basket, hexrgb("#c9ced4"), INK, lw * 1.4, wob=0, alpha=0.35)
+    for k in range(1, 8):
+        u = k / 8
+        xa = lerp(-L * 0.5, L * 0.42, u)
+        xb = lerp(-L * 0.42, L * 0.3, u)
+        D.line(ctx, xa, top, xb, bot, metal, lw * 0.6)
+    for k in range(1, 4):
+        v = k / 4
+        D.line(ctx, lerp(-L * 0.5, -L * 0.42, v), lerp(top, bot, v), lerp(L * 0.42, L * 0.3, v), lerp(top, bot, v),
+               metal, lw * 0.6)
+    D.poly(ctx, basket, None, INK, lw * 1.4, wob=0)
+    # ручка (красная) и рама
+    D.line(ctx, -L * 0.5, top, -L * 0.62, top - s * 0.08, INK, lw * 1.4)
+    D.line(ctx, -L * 0.66, top - s * 0.11, -L * 0.6, top - s * 0.05, hexrgb("#c8392f"), lw * 3)
+    D.line(ctx, -L * 0.42, bot, -L * 0.38, -s * 0.12, INK, lw * 1.4)
+    D.line(ctx, L * 0.3, bot, L * 0.34, -s * 0.12, INK, lw * 1.4)
+    D.line(ctx, -L * 0.42, -s * 0.12, L * 0.38, -s * 0.12, INK, lw * 1.4)
+    for wx in (-L * 0.36, L * 0.32):
+        D.circle(ctx, wx, -s * 0.06, s * 0.06, hexrgb("#2b2c30"), INK, lw)
+    if alpha < 1:
+        ctx.pop_group_to_source()
+        ctx.paint_with_alpha(alpha)
+    ctx.restore()
+
+
+def chain_line(ctx, x0, y0, x1, y1, s=1.0, sag=20):
+    """Цепь звеньями между двумя точками с провисом."""
+    n = max(4, int(math.hypot(x1 - x0, y1 - y0) / (18 * s)))
+    for i in range(n):
+        u = (i + 0.5) / n
+        x = lerp(x0, x1, u)
+        y = lerp(y0, y1, u) + math.sin(u * math.pi) * sag
+        D.ellipse(ctx, x, y, 11 * s, 6 * s, None, hexrgb("#6a7078"), 4 * s, rot=(0.6 if i % 2 else -0.6))
+
+
+def truck_side(ctx, x, gy, s, f=-1, t=0.0, lights=0.0, shake=0.0):
+    """Рефрижератор сбоку: (x, gy) — середина на земле, s — высота кузова; f — куда едет кабина."""
+    ctx.save()
+    ctx.translate(x, gy + shake * math.sin(t * 60))
+    ctx.scale(f, 1)
+    lw = max(2.0, s * 0.03)
+    L = s * 2.6
+    # кузов
+    D.rrect(ctx, -L * 0.5, -s * 1.12, L * 0.68, s * 0.92, s * 0.03, hexrgb("#f4f4f2"), INK, lw)
+    D.rect(ctx, -L * 0.42, -s * 1.28, L * 0.22, s * 0.16, hexrgb("#c9ccd2"), INK, lw, wob=0)
+    for k in range(1, 6):
+        D.line(ctx, -L * 0.5 + k * L * 0.68 / 6, -s * 1.1, -L * 0.5 + k * L * 0.68 / 6, -s * 0.22,
+               hexrgb("#dfe1e4"), lw * 0.6)
+    # кабина
+    cx0 = L * 0.2
+    D.poly(ctx, [(cx0, -s * 0.85), (cx0 + L * 0.2, -s * 0.85), (cx0 + L * 0.3, -s * 0.5), (cx0 + L * 0.3, -s * 0.22),
+                 (cx0, -s * 0.22)], hexrgb("#f4f4f2"), INK, lw, wob=0)
+    D.poly(ctx, [(cx0 + L * 0.03, -s * 0.8), (cx0 + L * 0.18, -s * 0.8), (cx0 + L * 0.26, -s * 0.52),
+                 (cx0 + L * 0.03, -s * 0.52)], hexrgb("#9fd2ea"), INK, lw * 0.8, wob=0)
+    D.rect(ctx, -L * 0.52, -s * 0.24, L * 1.02, s * 0.06, hexrgb("#3a3c42"), INK, lw * 0.6, wob=0)
+    if lights > 0:
+        fx.glow(ctx, cx0 + L * 0.31, -s * 0.33, s * 0.45, "#fff2c0", 0.45 * lights)
+        D.ellipse(ctx, cx0 + L * 0.3, -s * 0.33, s * 0.03, s * 0.05, hexrgb("#fff8d8"), INK, lw * 0.5)
+    D.rect(ctx, -L * 0.52, -s * 0.5, s * 0.05, s * 0.1, hexrgb("#c8392f"), INK, lw * 0.5, wob=0)
+    for wx in (-L * 0.32, -L * 0.18, cx0 + L * 0.15):
+        D.circle(ctx, wx, -s * 0.13, s * 0.14, hexrgb("#2b2c30"), INK, lw)
+        a = -t * 12
+        D.line(ctx, wx, -s * 0.13, wx + math.cos(a) * s * 0.08, -s * 0.13 + math.sin(a) * s * 0.08,
+               hexrgb("#9aa0a8"), lw * 0.8)
+        D.circle(ctx, wx, -s * 0.13, s * 0.05, hexrgb("#c9ccd2"), None, 0)
+    ctx.restore()
+
+
+def truck_rear(ctx, x, gy, s, lights=1.0):
+    """Рефрижератор сзади (уезжает): s — высота."""
+    lw = max(1.5, s * 0.03)
+    w = s * 0.9
+    D.rect(ctx, x - w / 2, gy - s, w, s * 0.82, hexrgb("#f1f1ee"), INK, lw, wob=0)
+    D.line(ctx, x, gy - s, x, gy - s * 0.18, INK, lw * 0.7)
+    D.rect(ctx, x - w * 0.4, gy - s * 1.12, w * 0.8, s * 0.12, hexrgb("#c9ccd2"), INK, lw, wob=0)
+    for sx in (-1, 1):
+        D.rect(ctx, x + sx * w * 0.42 - s * 0.03, gy - s * 0.3, s * 0.06, s * 0.08, hexrgb("#e0453a"), None, 0, wob=0)
+        fx.glow(ctx, x + sx * w * 0.42, gy - s * 0.26, s * 0.25, "#ff4a3a", 0.3 * lights)
+        D.rect(ctx, x + sx * w * 0.36 - s * 0.09, gy - s * 0.12, s * 0.18, s * 0.12, hexrgb("#2b2c30"), None, 0, wob=0)
+    D.rect(ctx, x - w / 2, gy - s * 0.18, w, s * 0.06, hexrgb("#3a3c42"), None, 0, wob=0)
+
+
+def glass_corner(ctx, T, crack=0.0, to_top=0.0, seed=7, dark=0.0):
+    """Крупный план угла витрины (экранные координаты): рама слева и снизу, трещина от угла.
+    crack — длина начальной трещины (0..1), to_top — рост к верху кадра (0..1)."""
+    fx_ = 150
+    D.rect(ctx, 0, 0, fx_, H, hexrgb("#3a3d44"), INK, 8, wob=0)
+    D.rect(ctx, 0, H - 150, W, 150, hexrgb("#3a3d44"), INK, 8, wob=0)
+    D.line(ctx, fx_ + 14, 0, fx_ + 14, H - 150, hexrgb("#1d1f24"), 16)
+    D.line(ctx, fx_, H - 164, W, H - 164, hexrgb("#1d1f24"), 16)
+    if crack <= 0:
+        return
+    r_ = rng(seed)
+    ox, oy = fx_ + 22, H - 172
+    branches = []
+    for b in range(4):
+        ang = -0.25 - b * 0.35 + r_.uniform(-0.1, 0.1)
+        pts = [(ox, oy)]
+        x, y = ox, oy
+        L = (260 + b * 40) * crack
+        steps = 8
+        for k in range(steps):
+            a = ang + r_.uniform(-0.35, 0.35)
+            x += math.cos(a) * L / steps
+            y += math.sin(a) * L / steps
+            pts.append((x, y))
+        branches.append(pts)
+    if to_top > 0:
+        x, y = branches[1][-1]
+        pts = [(x, y)]
+        while y > -40:
+            x += r_.uniform(-30, 50)
+            y -= 60
+            pts.append((x, y))
+        n = max(2, int(len(pts) * to_top))
+        branches.append(pts[:n])
+    for pts in branches:
+        D.polyline(ctx, pts, hexrgb("#f4f8fb"), 6, 0.95)
+        D.polyline(ctx, pts, hexrgb("#7a8a96"), 2, 0.9)

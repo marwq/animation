@@ -341,3 +341,154 @@ def icon_ruth(ctx):
         D.circle(ctx, x, -60, 10, ink, None, 0)
     D.line(ctx, -9, -60, 9, -60, hexrgb("#7a3a8a"), 7)
     D.curve(ctx, [(-30, 10), (0, 22), (30, 10)], ink, 7)
+
+
+def icon_generator(ctx):
+    ink = _ink()
+    D.rrect(ctx, -170, -110, 340, 200, 20, hexrgb("#e2b33a"), ink, 8)
+    D.rrect(ctx, -120, -70, 150, 110, 12, hexrgb("#3a3c42"), ink, 6)
+    for k in range(4):
+        D.line(ctx, -105, -50 + k * 25, 15, -50 + k * 25, hexrgb("#6a6e78"), 5)
+    D.circle(ctx, 90, -20, 34, hexrgb("#f4efe2"), ink, 6)
+    D.line(ctx, 90, -20, 108, -38, ink, 5)
+    D.rect(ctx, 50, 40, 90, 30, hexrgb("#c8392f"), ink, 5, wob=0)
+    D.line(ctx, -190, -130, 190, -130, ink, 14)
+    D.line(ctx, -190, -130, -190, 120, ink, 14)
+    D.line(ctx, 190, -130, 190, 120, ink, 14)
+    for x in (-140, 140):
+        D.circle(ctx, x, 120, 26, hexrgb("#2b2c30"), ink, 5)
+
+
+def icon_co(ctx):
+    """Угарный газ: серое облако с черепом."""
+    ink = _ink()
+    D.blob(ctx, [(-170, 60), (-180, -10), (-120, -70), (-50, -110), (30, -120), (110, -80), (170, -20), (175, 60)],
+           hexrgb("#c9cdd3"), ink, 8)
+    D.circle(ctx, 0, -10, 70, hexrgb("#f4f2ec"), ink, 7)
+    D.rrect(ctx, -40, 40, 80, 40, 10, hexrgb("#f4f2ec"), ink, 7)
+    for x in (-25, 25):
+        D.circle(ctx, x, -15, 18, ink, None, 0)
+    D.poly(ctx, [(0, 10), (-9, 26), (9, 26)], ink, None, 0, wob=0)
+    for x in (-15, 0, 15):
+        D.line(ctx, x, 45, x, 75, ink, 4)
+
+
+def icon_can_bulge(ctx):
+    ink = _ink()
+    ctx.move_to(-90, -130)
+    ctx.curve_to(-150, -60, -150, 60, -90, 130)
+    ctx.line_to(90, 130)
+    ctx.curve_to(150, 60, 150, -60, 90, -130)
+    ctx.close_path()
+    D.col(ctx, hexrgb("#c7ccd2"))
+    ctx.fill_preserve()
+    D.col(ctx, ink)
+    ctx.set_line_width(8)
+    ctx.stroke()
+    D.rect(ctx, -125, -60, 250, 120, hexrgb("#c23b2e"), None, 0, wob=0)
+    D.rect(ctx, -125, -15, 250, 40, hexrgb("#f4efe4"), None, 0, wob=0)
+    D.ellipse(ctx, 0, -138, 92, 30, hexrgb("#dde1e6"), ink, 7)
+    D.ellipse(ctx, 0, -150, 50, 22, hexrgb("#eef0f2"), ink, 5)
+
+
+def icon_leak(ctx):
+    icon_can_big(ctx)
+    for k, (x, y) in enumerate(((60, 140), (75, 185), (50, 225))):
+        D.ellipse(ctx, x, y, 12, 18, hexrgb("#9a7a3a"), _ink(), 4)
+
+
+def icon_hiss(ctx):
+    icon_can_big(ctx)
+    for k in range(3):
+        y = -170 - k * 30
+        D.curve(ctx, [(-60 + k * 10, y), (-20, y - 20), (20, y + 5), (60 - k * 10, y - 15)], hexrgb("#8a9098"), 7)
+
+
+def icon_rat(ctx):
+    ink = _ink()
+    D.curve(ctx, [(140, 40), (200, 20), (230, -40), (260, -20)], hexrgb("#c99a9a"), 10)
+    D.ellipse(ctx, 20, 20, 130, 80, hexrgb("#8a8a92"), ink, 8)
+    D.ellipse(ctx, -110, 0, 70, 52, hexrgb("#8a8a92"), ink, 8, rot=-0.2)
+    D.circle(ctx, -90, -55, 30, hexrgb("#c99a9a"), ink, 6)
+    D.circle(ctx, -135, -10, 9, ink, None, 0)
+    D.circle(ctx, -178, 10, 10, hexrgb("#e08a9a"), None, 0)
+    for k in range(3):
+        D.line(ctx, -170, 12, -215, -5 + k * 15, ink, 3)
+    for x in (-40, 80):
+        D.line(ctx, x, 90, x - 10, 110, ink, 8)
+
+
+def icon_jar(ctx):
+    ink = _ink()
+    D.rrect(ctx, -90, -100, 180, 230, 30, hexrgb("#d9eef2"), ink, 8)
+    D.rrect(ctx, -100, -140, 200, 50, 10, hexrgb("#c8392f"), ink, 8)
+    D.rect(ctx, -90, 0, 180, 120, hexrgb("#f1e6c4"), None, 0, wob=0)
+    D.rrect(ctx, -90, -100, 180, 230, 30, None, ink, 8)
+    D.line(ctx, -55, -70, -55, 90, hexrgb("#ffffff"), 10, 0.7)
+
+
+def icon_box(ctx):
+    ink = _ink()
+    D.rect(ctx, -110, -140, 220, 280, hexrgb("#d9b46a"), ink, 8, wob=0)
+    D.rect(ctx, -80, -100, 160, 110, hexrgb("#f4e3b5"), ink, 5, wob=0)
+    D.poly(ctx, [(-110, 140), (-60, 90), (-20, 140)], hexrgb("#f3efe6"), ink, 6, wob=0)    # прогрызено
+
+
+def icon_bag(ctx):
+    ink = _ink()
+    D.poly(ctx, [(-100, -110), (100, -110), (120, 130), (-120, 130)], hexrgb("#e4e8ee"), ink, 8, wob=0)
+    for k in range(4):
+        D.line(ctx, -90 + k * 10, -110, -80 + k * 10, -140, ink, 5)
+    D.rect(ctx, -70, -30, 140, 80, hexrgb("#f2c84b"), ink, 5, wob=0)
+
+
+def icon_shield_pane(ctx):
+    ink = _ink()
+    D.rect(ctx, -160, -130, 320, 260, hexrgb("#cfe6f2"), ink, 8, wob=0)
+    D.line(ctx, -120, 80, -60, -80, hexrgb("#ffffff"), 12, 0.8)
+
+
+def icon_truck(ctx):
+    ink = _ink()
+    D.rrect(ctx, -220, -130, 300, 190, 10, hexrgb("#f4f4f2"), ink, 8)
+    D.rect(ctx, -180, -170, 120, 40, hexrgb("#c9ccd2"), ink, 6, wob=0)
+    D.poly(ctx, [(80, -60), (170, -60), (220, 0), (220, 60), (80, 60)], hexrgb("#f4f4f2"), ink, 8, wob=0)
+    D.poly(ctx, [(100, -45), (160, -45), (195, 0), (100, 0)], hexrgb("#9fd2ea"), ink, 6, wob=0)
+    for x in (-150, 150):
+        D.circle(ctx, x, 70, 45, hexrgb("#2b2c30"), ink, 6)
+        D.circle(ctx, x, 70, 16, hexrgb("#c9ccd2"), None, 0)
+
+
+def icon_key(ctx):
+    ink = _ink()
+    D.circle(ctx, -110, 0, 70, hexrgb("#d9b54a"), ink, 8)
+    D.circle(ctx, -110, 0, 26, hexrgb("#f3f0e8"), ink, 6)
+    D.rect(ctx, -45, -18, 220, 36, hexrgb("#d9b54a"), ink, 7, wob=0)
+    for x in (110, 150):
+        D.rect(ctx, x, 18, 22, 40, hexrgb("#d9b54a"), ink, 6, wob=0)
+
+
+def icon_snowflake_door(ctx):
+    """Морозильная камера: стальная дверь с ручкой и снежинкой."""
+    ink = _ink()
+    D.rrect(ctx, -140, -180, 280, 360, 16, hexrgb("#d4dbe2"), ink, 8)
+    D.rrect(ctx, 70, -30, 40, 110, 12, hexrgb("#8a9098"), ink, 6)
+    for k in range(3):
+        a = k * math.pi / 3
+        D.line(ctx, -40 - 60 * math.cos(a), -60 - 60 * math.sin(a), -40 + 60 * math.cos(a),
+               -60 + 60 * math.sin(a), hexrgb("#4aa3e8"), 10)
+
+
+def split_card(ctx, t, title, left, right, caption=None, t_right=1.2):
+    """Две колонки: left/right = (заголовок, цвет, [значки])."""
+    cream(ctx)
+    D.text(ctx, title, W / 2, 230, 58, FONT, TXT, bold=True, alpha=_a(t, 0.0))
+    for side, (head, col, icons), t0 in ((-1, left, 0.3), (1, right, t_right)):
+        cx = W / 2 + side * 420
+        a = _a(t, t0)
+        D.text(ctx, head, cx, 380, 56, FONT, hexrgb(col), bold=True, alpha=a)
+        for i, ic in enumerate(icons):
+            icon_at(ctx, ic, cx + (i - (len(icons) - 1) / 2) * 260, 620, 0.62, t, t0 + 0.15 + i * 0.2)
+    D.line(ctx, W / 2, 330, W / 2, 860, hexrgb("#d8d1c2"), 5, _a(t, 0.2))
+    if caption:
+        D.text(ctx, caption, W / 2, 930, 34, FONT, GREY, alpha=_a(t, t_right + 0.6))

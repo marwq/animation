@@ -79,9 +79,10 @@ def quiet(ctx, T, S):
         ctx.save()
         ctx.rectangle(0, 340, 2720, 660)
         ctx.clip()
-        for i, (x, gy, r, f) in enumerate(((600, 1010, 60, 1), (2030, 1000, 56, -1), (2330, 1015, 62, -1))):
+        for i, (x, gy, r, f) in enumerate(((1300, 1005, 60, 1), (1780, 1000, 56, -1), (2330, 1012, 62, -1))):
             zombie_outside(ctx, T, x, gy, r, f, 20 + i, t_out + i * 0.35)
         ctx.restore()
+        front_day_fg(ctx)
         multiply(ctx, "#3a4258", 0.35)
         x, gy = 1650, 1400
         r = persp(gy, FD_A, FD_HZ)
