@@ -50,7 +50,7 @@ def main():
     out = os.path.join(BUILD, name + ".mp4")
     subprocess.run(["ffmpeg", "-v", "error", "-y", "-f", "concat", "-safe", "0", "-i", lst,
                     "-i", os.path.join(BUILD, "audio", "mix.wav"), "-map", "0:v", "-map", "1:a", "-c:v", "copy",
-                    "-af", "alimiter=limit=0.89:level=false", "-c:a", "aac", "-b:a", "256k", "-shortest",
+                    "-af", "volume=2.7dB,alimiter=limit=0.89:level=false", "-c:a", "aac", "-b:a", "256k", "-shortest",
                     "-movflags", "+faststart", out], check=True)
     print(out)
 
