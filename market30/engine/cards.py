@@ -127,3 +127,30 @@ def icon_can(ctx, full=True):
     c = hexrgb("#ef8a2e") if full else hexrgb("#f1e3d3")
     D.rrect(ctx, -26, -34, 52, 72, 8, c, ink, 4)
     D.rect(ctx, -26, -12, 52, 26, hexrgb("#f7efe2") if full else hexrgb("#f7f2ea"), ink, 3, wob=0)
+
+
+def icon_bulb(ctx):
+    """Лампочка со свечением."""
+    ink = hexrgb("#2b2a2e")
+    D.radial(ctx, 0, -40, 190, hexrgb("#ffe27a"), 0.45, 0)
+    for k in range(7):
+        a = math.pi * (1.1 + k * 0.8 / 6)
+        D.line(ctx, math.cos(a) * 150, -40 + math.sin(a) * 150, math.cos(a) * 185, -40 + math.sin(a) * 185,
+               hexrgb("#f2b33a"), 12)
+    ctx.move_to(-48, 40)
+    ctx.curve_to(-48, 0, -95, -20, -95, -60)
+    ctx.curve_to(-95, -120, -50, -150, 0, -150)
+    ctx.curve_to(50, -150, 95, -120, 95, -60)
+    ctx.curve_to(95, -20, 48, 0, 48, 40)
+    ctx.close_path()
+    D.col(ctx, hexrgb("#ffe27a"))
+    ctx.fill_preserve()
+    D.col(ctx, ink)
+    ctx.set_line_width(8)
+    ctx.stroke()
+    D.curve(ctx, [(-22, 30), (-22, -40), (0, -60), (22, -40), (22, 30)], hexrgb("#c98a2a"), 6)
+    D.ellipse(ctx, -45, -95, 14, 26, hexrgb("#ffffff"), None, 0, alpha=0.8, rot=0.5)
+    D.rrect(ctx, -52, 40, 104, 70, 12, hexrgb("#a9adb4"), ink, 8)
+    for k in range(2):
+        D.line(ctx, -50, 62 + k * 22, 50, 62 + k * 22, ink, 5)
+    D.rrect(ctx, -26, 108, 52, 22, 8, hexrgb("#5d6168"), ink, 6)

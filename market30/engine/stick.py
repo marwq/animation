@@ -348,8 +348,18 @@ def draw(ctx, x, gy, r, f, pose, look=None, alpha=1.0):
     if look.get("tie"):
         D.poly(ctx, [(nx, ny + r * 0.15), (nx + r * 0.1, ny + r * 0.35), (nx, ny + r * 1.1), (nx - r * 0.1, ny + r * 0.35)],
                hexrgb(look["tie"]), INK, lw * 0.4, wob=0)
-    if look.get("apron"):
+    if look.get("apron") and p.get("view") != "back":
         apron(ctx, J, x, gy, r, f, look["apron"], lw * 0.55)
+    elif look.get("apron"):
+        # со спины видны только завязки фартука
+        bx, by = W_("hip")
+        bx, by = lerp(bx, nx, 0.25), lerp(by, ny, 0.25)
+        c_ = hexrgb(look["apron"])
+        for sgn in (-1, 1):
+            D.ellipse(ctx, bx + sgn * r * 0.22, by, r * 0.2, r * 0.1, c_, INK, lw * 0.4, rot=sgn * 0.4)
+            D.line(ctx, bx, by, bx + sgn * r * 0.12, by + r * 0.45, c_, lw * 0.9)
+        D.circle(ctx, bx, by, r * 0.08, shade(c_, -0.15), INK, lw * 0.4)
+        D.line(ctx, bx - r * 0.5, by, bx + r * 0.5, by, c_, lw * 0.7)
     # голова
     cx, cy = W_("head")
     D.line(ctx, nx, ny, cx - f * math.sin(p["lean"]) * r * 0.9, cy + r * 0.9, ink, lw)

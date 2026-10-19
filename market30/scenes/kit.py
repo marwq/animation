@@ -154,3 +154,56 @@ def note(ctx, x, y, s, alpha=1.0, double=False, fill="#fff3d6"):
             D.ellipse(ctx, hx, hy, s * 0.36 + grow, s * 0.26 + grow, c, None, 0, alpha=alpha, rot=-0.4)
         for x0, y0, x1, y1 in stems:
             D.line(ctx, x0, y0, x1, y1, c, s * 0.12 + grow * 2, alpha)
+
+
+def day_shot(n):
+    """Чёрная карточка «DAY N» (план)."""
+    return lambda ctx, t, S: CD.day_card(ctx, n, t)
+
+
+def shamble(ph, seed=0):
+    """Походка зомби: медленный шаг, руки вперёд, наклон, голова набок."""
+    p = ST.gait(ph, run=False)
+    a = ph * TAU
+    p.update(lean=0.14, tilt=0.12 + 0.05 * math.sin(a + seed),
+             h1=(1.9 + 0.12 * math.sin(a), -4.0 + 0.1 * math.cos(a)), h2=(1.6 + 0.12 * math.sin(a + 2), -3.75),
+             mouth=0.6 + 0.3 * math.sin(a * 0.5 + seed))
+    return p
+
+
+def zombie_look(seed, tint=None):
+    """Разные зомби: рубашка и волосы по seed."""
+    r = rng(seed)
+    shirts = ["#6f6a5c", "#5a6a7a", "#7a4f45", "#4f5f4a", "#8a7a5a", "#5c5470"]
+    hair = ["#4a4a3a", "#3a3028", "#6b6050", None, "#2a2a2a"]
+    lk = dict(ST.ZOMBIE, shirt=shirts[r.randrange(len(shirts))])
+    h = hair[r.randrange(len(hair))]
+    if h:
+        lk["hair"] = h
+    if tint:
+        lk["tint"] = tint
+    return lk
+
+
+def clipboard(ctx, x, y, s, ang=0.0, lines=0):
+    """Планшет с листом: lines — сколько строк уже записано."""
+    ctx.save()
+    ctx.translate(x, y)
+    ctx.rotate(ang)
+    D.rrect(ctx, -s * 0.5, -s * 0.68, s, s * 1.36, s * 0.06, hexrgb("#b88a55"), INK, max(2, s * 0.04))
+    D.rect(ctx, -s * 0.42, -s * 0.56, s * 0.84, s * 1.18, hexrgb("#f7f4ea"), INK, max(1.5, s * 0.025), wob=0)
+    D.rrect(ctx, -s * 0.2, -s * 0.74, s * 0.4, s * 0.16, s * 0.04, hexrgb("#9aa0a8"), INK, max(1.5, s * 0.03))
+    for k in range(lines):
+        y0 = -s * 0.38 + k * s * 0.16
+        D.line(ctx, -s * 0.32, y0, s * (0.05 + 0.2 * ((k * 7) % 3) / 2), y0, hexrgb("#3a3c44"), max(1.5, s * 0.03))
+    ctx.restore()
+
+
+def pencil(ctx, x, y, s, ang=-0.6):
+    ctx.save()
+    ctx.translate(x, y)
+    ctx.rotate(ang)
+    D.rect(ctx, -s * 0.06, -s * 0.9, s * 0.12, s * 0.75, hexrgb("#f2c94c"), INK, max(1.5, s * 0.03), wob=0)
+    D.poly(ctx, [(-s * 0.06, -s * 0.15), (s * 0.06, -s * 0.15), (0, 0)], hexrgb("#e8c9a0"), INK, max(1.5, s * 0.03),
+           wob=0)
+    ctx.restore()

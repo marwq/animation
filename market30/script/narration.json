@@ -10,14 +10,20 @@
     "He doesn't come back. You have one key ring, one store, and forty thousand square feet of food."
   ],
   "d01": [
-    "Day one. You count.",
-    "Water. Aisle three. Three hundred and forty gallons. One person needs about one gallon a day, for drinking and washing. That's almost a year.",
+    "Day one.",
+    "At dawn, you look through the crack in the back door. Dale's car is still there. The driver's door is wide open.",
+    "So you do the only thing you can do. You count.",
+    "Water. Aisle three. Three hundred and forty gallons.",
+    "One person needs about one gallon a day, for drinking and washing. That's almost a year.",
     "Food, everything. But the power is still on, and the freezers are still humming. That won't last."
   ],
   "d02": [
-    "Day two. The store is lit up like a lantern. Every light, every sign, every fridge.",
-    "And outside, they are drifting toward it. Slowly. The way moths do.",
-    "You find the breaker panel in the back, and you turn off the front of the store. All of it."
+    "Day two.",
+    "At night, the store is lit up like a lantern. Every light, every sign, every fridge.",
+    "Out in the parking lot, shapes start drifting toward it. Slowly. The way moths do.",
+    "In a town with no power, one lit window can be seen from miles away.",
+    "You find the breaker panel in the stockroom. Forty switches, and not one of them is labeled.",
+    "One by one, you turn off the front of the store. The sign goes last."
   ],
   "d03": [
     "Day three. At four in the afternoon, the power dies for good.",

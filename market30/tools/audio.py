@@ -1305,6 +1305,40 @@ def market_sfx(name):
         return mixl(sfx("keys") * 0.8, sfx("whoosh") * 0.3)
     if name == "card":
         return _bell(nm("E5"), 1.6, 0.15)
+    if name == "day_hit":
+        # глухой удар на чёрной карточке дня
+        t = t_(1.6)
+        x = np.sin(2 * np.pi * 55 * t) * np.exp(-t * 3.5) * 0.6 + lp(noise(1.6), 300) * np.exp(-t * 6) * 0.3
+        return x * 0.8
+    if name == "freezer_hum":
+        d = 8.0
+        t = t_(d)
+        x = (np.sin(2 * np.pi * 60 * t) * 0.06 + np.sin(2 * np.pi * 180 * t) * 0.025 + lp(noise(d), 900) * 0.05
+             + bp(noise(d), 2500, 5000) * 0.01)
+        return x * (1 + 0.1 * np.sin(2 * np.pi * 0.3 * t))
+    if name == "flicker":
+        x = np.zeros(int(0.6 * SR))
+        for k, dt in enumerate((0.0, 0.16, 0.3)):
+            place(x, bp(noise(0.05), 1500, 6000) * 0.4 + _tone(120, 0.05, 0.2, 40), dt)
+        return x
+    if name == "breaker":
+        x = np.zeros(int(0.4 * SR))
+        place(x, bp(noise(0.02), 800, 6000) * 0.9, 0)
+        place(x, _tone(900, 0.03, 0.3, 80), 0.003)
+        place(x, lp(noise(0.06), 400) * 0.6, 0.0)
+        return x
+    if name == "power_down":
+        t = t_(1.4)
+        f = 120 * np.exp(-t * 1.5) + 20
+        ph = np.cumsum(f) / SR
+        return np.sin(2 * np.pi * ph) * np.exp(-t * 2.2) * 0.35 + bp(noise(1.4), 200, 900) * np.exp(-t * 4) * 0.1
+    if name == "sign_off":
+        t = t_(0.8)
+        return mixl(sfx("breaker") * 0.6, np.sin(2 * np.pi * 120 * t) * np.exp(-t * 6) * 0.25)
+    if name == "lamp_buzz":
+        d = 8.0
+        t = t_(d)
+        return (np.sin(2 * np.pi * 120 * t) * 0.03 + bp(noise(d), 3000, 7000) * 0.006) * (1 + 0.2 * np.sin(t * 5))
     return None
 
 
