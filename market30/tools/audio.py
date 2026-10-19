@@ -1335,6 +1335,50 @@ def market_sfx(name):
     if name == "sign_off":
         t = t_(0.8)
         return mixl(sfx("breaker") * 0.6, np.sin(2 * np.pi * 120 * t) * np.exp(-t * 6) * 0.25)
+    if name == "spoon":
+        x = np.zeros(int(0.4 * SR))
+        place(x, mixl(_tone(2600, 0.25, 0.12, 18), _tone(3900, 0.2, 0.06, 22)), 0)
+        return x
+    if name == "flies":
+        d = 8.0
+        t = t_(d)
+        x = np.zeros(int(d * SR))
+        for k in range(3):
+            f0 = 190 + 40 * k
+            f = f0 * (1 + 0.04 * np.sin(2 * np.pi * (0.7 + k * 0.3) * t))
+            ph = np.cumsum(f) / SR
+            env = 0.5 + 0.5 * np.sin(2 * np.pi * (0.13 + 0.07 * k) * t + k)
+            x += np.sign(np.sin(2 * np.pi * ph)) * 0.02 * env
+        return bp(x, 150, 2500)
+    if name == "lock_click":
+        x = np.zeros(int(0.5 * SR))
+        place(x, sfx("breaker") * 0.8, 0)
+        place(x, sfx("keys") * 0.3, 0.02)
+        return x
+    if name == "knock":
+        # глухой удар по стальной створке: низ + металлический звон
+        t = t_(0.9)
+        x = lp(noise(0.9), 220) * np.exp(-t * 22) * 1.2
+        for f in (95, 210, 455, 760):
+            x += np.sin(2 * np.pi * f * t) * np.exp(-t * (7 + f / 120)) * 0.18
+        return x * 0.9
+    if name == "tiptoe":
+        x = np.zeros(int(3.0 * SR))
+        for k in range(6):
+            place(x, lp(noise(0.04), 900) * np.exp(-t_(0.04) * 60) * 0.25, 0.1 + k * 0.45)
+        return x
+    if name == "bag_drop":
+        t = t_(0.6)
+        return lp(noise(0.6), 300) * np.exp(-t * 14) * 0.9 + bp(noise(0.6), 1500, 4000) * np.exp(-t * 30) * 0.15
+    if name == "glass_tap":
+        x = np.zeros(int(0.8 * SR))
+        for k, dt in enumerate((0.0, 0.18, 0.31)):
+            t = t_(0.3)
+            y = lp(noise(0.3), 1800) * np.exp(-t * 35) * 0.5
+            for f in (1800, 2600, 3500):
+                y += np.sin(2 * np.pi * f * t) * np.exp(-t * 25) * 0.05
+            place(x, y, dt)
+        return x
     if name == "lamp_buzz":
         d = 8.0
         t = t_(d)

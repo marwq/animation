@@ -29,13 +29,15 @@ def main():
         i = args.index("--name")
         name = args[i + 1]
         del args[i:i + 2]
+    mux_only = "--mux-only" in args
+    args = [a for a in args if a != "--mux-only"]
     only = args or None
     film = timeline.build(only)
     n = int(round(film.dur * FPS))
     os.makedirs(os.path.join(BUILD, "parts"), exist_ok=True)
     bounds = [n * k // jobs for k in range(jobs + 1)]
     outs = [os.path.join(BUILD, "parts", f"{name}_{k:02d}.mp4") for k in range(jobs)]
-    ps = [Process(target=part, args=(only, bounds[k], bounds[k + 1], outs[k])) for k in range(jobs)]
+    ps = [] if mux_only else [Process(target=part, args=(only, bounds[k], bounds[k + 1], outs[k])) for k in range(jobs)]
     for p in ps:
         p.start()
     for p in ps:

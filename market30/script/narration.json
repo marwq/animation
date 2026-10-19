@@ -26,74 +26,111 @@
     "One by one, you turn off the front of the store. The sign goes last."
   ],
   "d03": [
-    "Day three. At four in the afternoon, the power dies for good.",
-    "A fridge with the door shut keeps food safe for about four hours. A full freezer, about two days.",
-    "So you eat ice cream for breakfast, lunch, and dinner. It is the best and worst day of your life."
+    "Day three.",
+    "At four in the afternoon, the hum stops. Every freezer, every light, every fan. The power is gone for good.",
+    "The store goes quiet in a way you've never heard before. And now you can hear them outside.",
+    "A closed fridge keeps food safe for about four hours. A full freezer, about two days.",
+    "So you eat ice cream for breakfast, lunch, and dinner.",
+    "It is the best and the worst day of your life."
   ],
   "d05": [
-    "Day five. The milk turns. Then the meat. The smell finds every corner of the store.",
-    "You sort the shelves by what dies first. Fresh first. Bread next. Cans, rice, and beans last.",
-    "Rice and dried beans keep for years. Honey never spoils at all. You move them to the back, and you lock the door."
+    "Day five.",
+    "The milk turns first. Then the meat. The smell finds every corner of the store.",
+    "And it finds its way outside, too.",
+    "You sort everything by what dies first. Fresh food first. Bread next. Cans, rice, and beans last.",
+    "White rice and dried beans keep for years. Honey never spoils at all.",
+    "You move them into the stockroom, and you lock the door."
   ],
   "d07": [
-    "Day seven. Something is knocking on the loading dock door. Not hard. Just steady. All night.",
+    "Day seven.",
+    "Something is knocking on the loading dock door. Not hard. Just steady. All night.",
     "Steel doors carry sound. If you can hear them, they can hear you.",
-    "You stack pallets of dog food against the door, and you stop walking in the back in shoes."
+    "You stack pallets of dog food against the door. Forty-pound bags, six rows high.",
+    "And you stop walking around the back in shoes."
   ],
   "d09": [
     "Day nine. You count them at the glass.",
     "Day two, three. Day five, eleven. Day nine, twenty-six.",
-    "They don't leave. They don't sleep. They just wait for the window to change its mind."
+    "They don't leave. They don't sleep. They just stand there, as if the window might change its mind.",
+    "Twenty-six of them, and one sheet of glass.",
+    "You stop going to the front of the store in daylight."
   ],
   "d11": [
-    "Day eleven. Three in the morning. A tapping. Not from outside. From inside the store.",
-    "From behind the pharmacy shutter, the one that has been locked since day zero.",
+    "Day eleven.",
+    "Three in the morning. A tapping. Not from outside. From inside the store.",
+    "It comes from behind the pharmacy shutter. The one that has been locked since day zero.",
+    "Tap. Tap tap. Then nothing.",
+    "You stand there with a broom handle for an hour. Then you tap back.",
     "Tap. Tap tap. Somebody has been in there the whole time."
   ],
   "d12": [
+    "Day twelve.",
     "Her name is Ruth. Sixty-eight. The pharmacist.",
-    "She locked herself in when the alert came, with a case of water, a box of crackers, and a chair. She didn't make a sound for eleven days.",
-    "Two people now. Everything runs out twice as fast. But Ruth knows things."
+    "When the alert came, she locked herself in with a case of water, a box of crackers, and a chair.",
+    "She didn't make a sound for eleven days. She heard you counting cans the whole time.",
+    "Two people now. Everything runs out twice as fast.",
+    "But Ruth knows things."
   ],
   "d14": [
-    "Day fourteen. Ruth finds a generator in the garden center.",
-    "You want it inside, behind locked doors. Ruth says no.",
-    "Generators make carbon monoxide. You can't see it, you can't smell it, and in a closed room it kills you in your sleep. It goes on the roof, or it doesn't go at all."
+    "Day fourteen.",
+    "Ruth finds a generator in the garden center, still in its box.",
+    "You want it inside, behind a locked door, where they can't hear it.",
+    "Ruth says no. Generators make carbon monoxide. You can't see it. You can't smell it.",
+    "In a closed room, it kills you in your sleep.",
+    "It goes on the roof, or it doesn't go at all."
   ],
   "d16": [
-    "Day sixteen. You climb the ladder in the stockroom, and you open the roof hatch.",
-    "The whole town is below you. The parking lot is full. The highway is full. And there is smoke over the hospital.",
-    "Up here, they can't see you. Up here, you can breathe."
+    "Day sixteen.",
+    "You climb the ladder in the stockroom, and you push open the roof hatch.",
+    "The whole town is below you. The parking lot is full. The highway is full.",
+    "And there's smoke rising over the hospital.",
+    "Up here, they can't see you. Up here, you can breathe.",
+    "You carry the generator up, one piece at a time."
   ],
   "d18": [
-    "Day eighteen. Ruth checks every can before you open it.",
-    "If it's bulging, leaking, or it hisses when you open it, it goes in the bin. Botulism doesn't care how hungry you are.",
-    "You throw away nine cans. It hurts more than it should."
+    "Day eighteen.",
+    "Ruth checks every can before you open it.",
+    "If it's bulging, leaking, or it hisses when you open it, it goes in the bin.",
+    "Botulism doesn't care how hungry you are. One bad can is enough.",
+    "You throw away nine cans.",
+    "It hurts more than it should."
   ],
   "d20": [
-    "Day twenty. Rats. They came in with the smell, and now they are in the cereal aisle.",
-    "Anything in cardboard or plastic is theirs. Anything in metal or glass is yours.",
-    "You empty the cooler bins, wash them, and seal the rice inside."
+    "Day twenty.",
+    "Rats. They came in with the smell, and now they live in the cereal aisle.",
+    "Anything in cardboard or plastic is theirs now. Anything in metal or glass is yours.",
+    "You empty the cooler bins, wash them, and seal the rice inside.",
+    "Ruth makes a trap out of a bucket and a soup can. By morning, it has caught four."
   ],
   "d22": [
-    "Day twenty-two. A crack in the front window. Bottom left corner. As long as your finger.",
-    "Store glass is tempered. It's strong in the middle, and weak at the edges. When it goes, it all goes at once.",
+    "Day twenty-two.",
+    "A crack in the front window. Bottom left corner. As long as your finger.",
+    "Store glass is tempered. It's strong in the middle, and weak at the edges.",
+    "When it goes, it doesn't crack. It all goes at once.",
     "You build a wall of shopping carts, chained together, three rows deep."
   ],
   "d25": [
-    "Day twenty-five. Ruth goes through Dale's key ring, one key at a time.",
-    "One of them fits the refrigerated truck at the loading dock. It's been parked there since day zero. Half a tank. Dead battery.",
-    "The generator on the roof can charge it. Four hours, every night, quietly."
+    "Day twenty-five.",
+    "Ruth goes through Dale's key ring, one key at a time.",
+    "One of them fits the refrigerated truck at the loading dock. It's been parked there since day zero.",
+    "Half a tank of diesel. A dead battery.",
+    "The generator on the roof can charge it. Four hours a night, one cable down through the hatch.",
+    "For the first time in twenty-five days, there's a way out."
   ],
   "d28": [
-    "Day twenty-eight. Midnight. The crack reaches the top of the window.",
+    "Day twenty-eight. Midnight.",
+    "The crack reaches the top of the window.",
     "The glass goes all at once, like a wave. The carts hold for eleven minutes.",
-    "You and Ruth run for the walk-in freezer. It's insulated, it's steel, and it opens from the inside. You hold the handle, and you listen."
+    "You and Ruth run for the walk-in freezer. It's insulated, it's steel, and it opens from the inside.",
+    "You hold the handle, and you listen to them fill the store."
   ],
   "d30": [
-    "Day thirty. The truck starts on the second try.",
+    "Day thirty.",
+    "At dawn, the store finally goes quiet. They've drifted out, looking for whatever made the last noise.",
+    "You and Ruth run for the dock. The truck starts on the second try.",
     "Ruth opens the dock door. You drive through the parking lot, through the carts, through all of them.",
-    "Behind you, Greenleaf Market gets smaller and smaller. In front of you, the highway, and a full tank of nowhere to go.",
+    "Behind you, Greenleaf Market gets smaller and smaller.",
+    "In front of you, the highway, half a tank, and a whole world of nowhere to go.",
     "Part two is coming."
   ]
 }

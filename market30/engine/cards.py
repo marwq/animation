@@ -3,7 +3,7 @@
 Анимация минимальная: элементы проявляются по очереди (0.25 с), значок чуть «подпрыгивает».
 """
 import math
-from .core import W, H, hexrgb, clamp, ease_out, ease_out_back, shade
+from .core import W, H, hexrgb, clamp, lerp, ease_out, ease_out_back, shade
 from . import draw as D
 
 FONT = "Inter"
@@ -154,3 +154,190 @@ def icon_bulb(ctx):
     for k in range(2):
         D.line(ctx, -50, 62 + k * 22, 50, 62 + k * 22, ink, 5)
     D.rrect(ctx, -26, 108, 52, 22, 8, hexrgb("#5d6168"), ink, 6)
+
+
+def bar_card(ctx, t, title, bars, unit_max, caption=None):
+    """Полоски, которые вырастают: bars = [(подпись, значение, текст значения, цвет)]."""
+    cream(ctx)
+    n = len(bars)
+    top = H / 2 - n * 75 - 40
+    D.text(ctx, title, W / 2, top, 58, FONT, TXT, bold=True, alpha=_a(t, 0.0))
+    x0, wmax = W / 2 - 430, 860
+    for i, (label, val, txt, col) in enumerate(bars):
+        y = top + 110 + i * 160
+        a = _a(t, 0.25 + i * 0.35)
+        D.text(ctx, label, x0, y, 32, FONT, GREY, align="left", alpha=a)
+        k = ease_out(clamp((t - 0.35 - i * 0.35) / 0.9))
+        w = max(8, wmax * val / unit_max * k)
+        D.rrect(ctx, x0, y + 22, wmax, 46, 23, hexrgb("#e4dfd3"), None, 0, alpha=a)
+        D.rrect(ctx, x0, y + 22, w, 46, 23, hexrgb(col), None, 0, alpha=a)
+        D.text(ctx, txt, x0 + wmax, y, 50, FONT, TXT, align="right", bold=True, alpha=a)
+    if caption:
+        D.text(ctx, caption, W / 2, top + 110 + n * 160 + 10, 32, FONT, GREY, alpha=_a(t, 0.4 + n * 0.35))
+
+
+def timeline_card(ctx, t, title, items, caption=None, times=None):
+    """Шкала слева направо: items = [(значок, подпись, срок)]; times — моменты появления (сек от начала)."""
+    cream(ctx)
+    n = len(items)
+    D.text(ctx, title, W / 2, 300, 58, FONT, TXT, bold=True, alpha=_a(t, 0.0))
+    x0, x1, y = 300, W - 300, 560
+    k = ease_out(clamp((t - 0.2) / 0.8))
+    D.line(ctx, x0 - 40, y + 120, lerp(x0 - 40, x1 + 60, k), y + 120, hexrgb("#cfc8b8"), 8)
+    if k > 0.98:
+        D.poly(ctx, [(x1 + 60, y + 104), (x1 + 92, y + 120), (x1 + 60, y + 136)], hexrgb("#cfc8b8"), None, 0, wob=0)
+    for i, (icon, label, when) in enumerate(items):
+        x = x0 + (x1 - x0) * i / max(1, n - 1)
+        t0 = times[i] if times else 0.4 + i * 0.3
+        icon_at(ctx, icon, x, y, 0.55, t, t0)
+        a = _a(t, t0 + 0.1)
+        D.circle(ctx, x, y + 120, 12, hexrgb("#8a826f"), None, 0, alpha=a)
+        D.text(ctx, label, x, y + 185, 34, FONT, TXT, bold=True, alpha=a)
+        D.text(ctx, when, x, y + 230, 30, FONT, GREY, alpha=a)
+    if caption:
+        D.text(ctx, caption, W / 2, 900, 32, FONT, GREY, alpha=_a(t, (times[-1] if times else 2.0) + 0.4))
+
+
+def _ink():
+    return hexrgb("#2b2a2e")
+
+
+def icon_milk(ctx):
+    ink = _ink()
+    D.poly(ctx, [(-80, -60), (0, -150), (80, -60), (80, 150), (-80, 150)], hexrgb("#f4f6f8"), ink, 8, wob=0)
+    D.poly(ctx, [(-80, -60), (0, -150), (80, -60)], hexrgb("#dfe6ee"), ink, 8, wob=0)
+    D.rect(ctx, -20, -175, 40, 30, hexrgb("#4aa3e8"), ink, 6, wob=0)
+    D.rect(ctx, -80, 10, 160, 70, hexrgb("#4aa3e8"), ink, 6, wob=0)
+    for k in range(3):                      # волны запаха
+        x = -50 + k * 50
+        D.curve(ctx, [(x, -170), (x + 15, -200), (x - 10, -230), (x + 5, -260)], hexrgb("#8dbb4e"), 7)
+
+
+def icon_steak(ctx):
+    ink = _ink()
+    D.blob(ctx, [(-150, -20), (-90, -100), (40, -110), (140, -50), (150, 40), (60, 100), (-80, 90), (-150, 40)],
+           hexrgb("#d9534a"), ink, 8)
+    D.blob(ctx, [(-110, -10), (-70, -60), (20, -70), (90, -30), (100, 30), (30, 60), (-60, 55)],
+           hexrgb("#e8746a"), None, 0)
+    D.circle(ctx, 60, 0, 34, hexrgb("#f4e7d4"), ink, 6)
+
+
+def icon_bread(ctx):
+    ink = _ink()
+    D.rrect(ctx, -160, -60, 320, 150, 60, hexrgb("#d89a52"), ink, 8)
+    for k in range(4):
+        x = -100 + k * 65
+        D.line(ctx, x, -45, x + 30, -10, hexrgb("#a66a2c"), 9)
+    D.rrect(ctx, -140, 40, 280, 40, 20, hexrgb("#c48542"), None, 0)
+
+
+def icon_can_big(ctx):
+    ink = _ink()
+    D.rrect(ctx, -95, -130, 190, 260, 16, hexrgb("#c7ccd2"), ink, 8)
+    D.rect(ctx, -95, -80, 190, 160, hexrgb("#c23b2e"), ink, 6, wob=0)
+    D.rect(ctx, -95, -20, 190, 50, hexrgb("#f4efe4"), None, 0, wob=0)
+    D.ellipse(ctx, 0, -130, 95, 22, hexrgb("#dde1e6"), ink, 6)
+
+
+def icon_sack(ctx):
+    ink = _ink()
+    D.blob(ctx, [(-120, 140), (-130, 0), (-90, -100), (-40, -130), (40, -130), (90, -100), (130, 0), (120, 140)],
+           hexrgb("#efe6cf"), ink, 8)
+    D.line(ctx, -50, -105, 50, -105, hexrgb("#8a6d3b"), 10)
+    D.circle(ctx, 0, 40, 46, hexrgb("#f7f4ea"), ink, 5)
+    for k in range(5):
+        D.ellipse(ctx, -18 + (k % 3) * 18, 28 + (k // 3) * 22, 7, 4, hexrgb("#d9cfb5"), ink, 2, rot=0.4)
+
+
+def icon_honey(ctx):
+    ink = _ink()
+    D.rrect(ctx, -110, -90, 220, 230, 40, hexrgb("#f2a93b"), ink, 8)
+    D.rrect(ctx, -120, -140, 240, 60, 14, hexrgb("#e8e2d4"), ink, 8)
+    D.blob(ctx, [(-110, -80), (-60, -60), (-40, -10), (-20, -60), (40, -40), (60, 20), (90, -60), (110, -80)],
+           hexrgb("#ffc860"), None, 0)
+    D.ellipse(ctx, -55, 40, 18, 40, hexrgb("#ffffff"), None, 0, alpha=0.5, rot=0.2)
+    D.rrect(ctx, -70, 10, 140, 70, 10, hexrgb("#f7f0dc"), ink, 5)
+    for k in range(3):                      # соты
+        D.poly(ctx, [(-30 + k * 30 + 12 * math.cos(a * math.pi / 3), 45 + 12 * math.sin(a * math.pi / 3))
+                     for a in range(6)], hexrgb("#f2a93b"), ink, 3, wob=0)
+
+
+def icon_ear(ctx):
+    ink = _ink()
+    ctx.move_to(-60, 120)
+    ctx.curve_to(-120, 60, -130, -120, 0, -140)
+    ctx.curve_to(120, -140, 130, -20, 60, 30)
+    ctx.curve_to(20, 60, 40, 130, -20, 150)
+    ctx.curve_to(-50, 160, -60, 140, -60, 120)
+    ctx.close_path()
+    D.col(ctx, hexrgb("#f6f3ec"))
+    ctx.fill_preserve()
+    D.col(ctx, ink)
+    ctx.set_line_width(8)
+    ctx.stroke()
+    D.curve(ctx, [(-40, 40), (-60, -60), (10, -90), (50, -40), (10, 0)], ink, 7)
+    for k in range(3):
+        ctx.arc(-20, -10, 190 + k * 40, -0.5, 0.5)
+        D.col(ctx, hexrgb("#c8392f"), 0.9 - k * 0.25)
+        ctx.set_line_width(10)
+        ctx.stroke()
+
+
+def zhead(ctx, x, y, s, alpha=1.0):
+    """Значок-головка зомби для графиков."""
+    ink = _ink()
+    ctx.save()
+    ctx.push_group()
+    D.circle(ctx, x, y, s, hexrgb("#a7b48f"), ink, s * 0.12)
+    D.circle(ctx, x - s * 0.33, y - s * 0.1, s * 0.22, hexrgb("#eef0dc"), ink, s * 0.07)
+    D.circle(ctx, x + s * 0.3, y - s * 0.05, s * 0.17, hexrgb("#eef0dc"), ink, s * 0.07)
+    D.circle(ctx, x - s * 0.3, y - s * 0.08, s * 0.07, ink, None, 0)
+    D.circle(ctx, x + s * 0.32, y - s * 0.03, s * 0.06, ink, None, 0)
+    D.ellipse(ctx, x, y + s * 0.45, s * 0.22, s * 0.13, hexrgb("#3a2a2a"), ink, s * 0.05)
+    ctx.pop_group_to_source()
+    ctx.paint_with_alpha(alpha)
+    ctx.restore()
+
+
+def count_card(ctx, t, title, groups, caption=None, cols=5):
+    """Столбики из головок по дням (как «IN THE HALLWAY»): groups = [(подпись, n, момент)]."""
+    cream(ctx)
+    D.text(ctx, title, W / 2, 250, 58, FONT, TXT, bold=True, alpha=_a(t, 0.0))
+    base = 800
+    gx = [W / 2 - 480 + i * 960 / max(1, len(groups) - 1) for i in range(len(groups))]
+    D.line(ctx, gx[0] - 150, base + 10, gx[-1] + 150, base + 10, hexrgb("#cfc8b8"), 6, _a(t, 0.1))
+    s = 26
+    for (label, n, t0), x in zip(groups, gx):
+        a = _a(t, t0)
+        D.text(ctx, label, x, base + 70, 34, FONT, GREY, alpha=a)
+        shown = int(n * clamp((t - t0) / 0.6) + 0.999) if t > t0 else 0
+        rows = (n + cols - 1) // cols
+        for k in range(shown):
+            cx = x + ((k % cols) - (min(n, cols) - 1) / 2) * s * 2.25
+            cy = base - s * 1.3 - (k // cols) * s * 2.25
+            zhead(ctx, cx, cy, s)
+        if shown >= n and n > 0:
+            ty = base - s * 1.3 - (rows - 1) * s * 2.25 - 70
+            D.text(ctx, str(n), x, ty, 54, FONT, RED, bold=True, alpha=_a(t, t0 + 0.6))
+    if caption:
+        D.text(ctx, caption, W / 2, base + 140, 32, FONT, GREY, alpha=_a(t, groups[-1][2] + 0.8))
+
+
+def icon_ruth(ctx):
+    """Профиль-значок: седой пучок, фиолетовые очки, белый халат."""
+    ink = _ink()
+    D.rrect(ctx, -150, 60, 300, 120, 50, hexrgb("#f4f6f8"), ink, 8)
+    D.poly(ctx, [(-40, 60), (0, 130), (40, 60)], hexrgb("#c9d3dc"), ink, 6, wob=0)
+    D.circle(ctx, 70, -175, 52, hexrgb("#e6e3df"), ink, 8)
+    D.circle(ctx, 0, -60, 130, hexrgb("#f6f3ec"), ink, 9)
+    ctx.save()
+    ctx.arc(0, -60, 126, 0, 2 * math.pi)
+    ctx.clip()
+    D.ellipse(ctx, 0, -180, 150, 80, hexrgb("#e6e3df"), None, 0)
+    ctx.restore()
+    D.circle(ctx, 0, -60, 130, None, ink, 9)
+    for x in (-45, 45):
+        D.circle(ctx, x, -60, 36, None, hexrgb("#7a3a8a"), 9)
+        D.circle(ctx, x, -60, 10, ink, None, 0)
+    D.line(ctx, -9, -60, 9, -60, hexrgb("#7a3a8a"), 7)
+    D.curve(ctx, [(-30, 10), (0, 22), (30, 10)], ink, 7)
