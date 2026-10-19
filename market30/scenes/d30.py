@@ -63,7 +63,7 @@ def empty_store(ctx, T, S):
         r_ = rng(8)
         for i in range(9):
             gy = 1100 + r_.uniform(0, 260)
-            s = 0.62 * persp(gy, FD_A, FD_HZ) * 4.2
+            s = 4.4 * persp(gy, FD_A, FD_HZ)
             cart(ctx, 1250 + r_.uniform(0, 900), gy, s, 1 if i % 2 else -1, tilt=r_.uniform(-0.6, 0.6))
         for i in range(120):
             x = r_.uniform(1150, 2150)
@@ -127,19 +127,21 @@ def drive(ctx, T, S):
     with on(ctx, cam, l):
         paint(ctx, "exterior_day")
         multiply(ctx, "#f4c89a", 0.15)
-        gy = 1300
-        tx = lerp(2900, -500, clamp(l / 3.4))
+        gy = 1420
+        TS = 520
+        tx = lerp(3400, -1200, clamp(l / 3.6))
+        front = tx - 1.3 * TS
         r_ = rng(12)
         for i in range(10):
             zx = 400 + i * 200 + r_.uniform(-40, 40)
             zgy = 1260 + r_.uniform(-30, 60)
             r = persp(zgy, EXT_A, EXT_HZ)
-            hit = tx < zx + 120
+            hit = front < zx + 40
             if hit:
-                u = clamp((zx + 120 - tx) / 600)
+                u = clamp((zx + 40 - front) / 700)
                 ctx.save()
-                ctx.translate(zx - u * 500, zgy - math.sin(u * math.pi) * 200)
-                ctx.rotate(-u * 2.5)
+                ctx.translate(zx - u * 420, zgy - math.sin(u * math.pi) * 220)
+                ctx.rotate(-u * 1.55)
                 p = ST.stand(T, i)
                 p.update(h1=(1.5, -5.0), h2=(-1.2, -4.8), mouth=1.0, blink=False)
                 ST.draw(ctx, 0, 0, r, 1, p, zombie_look(90 + i))
@@ -148,7 +150,7 @@ def drive(ctx, T, S):
                 p = shamble(T * 0.5 + i, i)
                 p["blink"] = False
                 ST.draw(ctx, zx, zgy, r, 1, p, zombie_look(90 + i))
-        truck_side(ctx, tx, gy, 300, -1, T, 1.0, shake=2)
+        truck_side(ctx, tx, gy, TS, -1, T, 1.0, shake=2)
 
 
 def smaller(ctx, T, S):

@@ -52,7 +52,6 @@ def climb(ctx, T, S):
         p.update(face="happy" if k > 0.8 else "neutral", h1=(0.9, -5.6 + 1.2 * k), h2=(-0.9, -5.6 + 1.2 * k))
         figure(ctx, hx, gy, r, 1, p, HERO, tint=("#ffb27a", 0.08))
         ctx.restore()
-        smoke(ctx, T, 2350, 220, 6, 0.6)
 
 
 def town(ctx, T, S):
@@ -63,7 +62,6 @@ def town(ctx, T, S):
     with on(ctx, cam, l):
         paint(ctx, "roof")
         dots(ctx, T, [(800, 560, 2400, 640, 90), (1700, 480, 2700, 540, 50)], seed=3, s=5)
-        smoke(ctx, T, 2350, 220, 6, 0.6)
     for txt, w_, y in (("THE PARKING LOT", "parking", 140), ("THE HIGHWAY", "highway", 140)):
         tw = S.word(w_, S.cue(2)) - 0.1
         if tw <= T < tw + 1.6:
@@ -76,23 +74,21 @@ def hospital(ctx, T, S):
     cam = PlateCam("roof", 2150, 340, Keys((0, 2.6), (4, 2.85, "lin")))
     with on(ctx, cam, l):
         paint(ctx, "roof")
-        smoke(ctx, T, 2350, 220, 9, 0.6)
 
 
 def breathe(ctx, T, S):
     """Сидит у парапета, закат, ветер; глубокий вдох."""
     l = T - (S.cue(4) - 0.3)
     t_breathe = S.word("breathe", S.cue(4)) - 0.2
-    cam = PlateCam("roof", 1350, 860, Keys((0, 1.25), (5, 1.32, "lin")))
+    cam = PlateCam("roof", 2000, 640, Keys((0, 2.0), (5, 2.1, "lin")))
     with on(ctx, cam, l):
         paint(ctx, "roof")
-        smoke(ctx, T, 2350, 220, 6, 0.6)
-        gy = 1080
+        gy = 805
         r = persp(gy, RF_A, RF_HZ)
         big = math.sin(clamp((T - t_breathe) / 1.4) * math.pi) if T > t_breathe else 0.0
         p = sit(T, 3, face="sleep" if big > 0.3 else "happy", look=(0.3, -0.3), h1=(1.0, -1.6), h2=(0.8, -1.4),
                 lean=-0.12 - 0.1 * big)
-        figure(ctx, 1500, gy, r, -1, p, HERO, tint=("#ffb27a", 0.1))
+        figure(ctx, 1980, gy, r, 1, p, HERO, tint=("#ffb27a", 0.1))
 
 
 def carry(ctx, T, S):
@@ -101,17 +97,16 @@ def carry(ctx, T, S):
     cam = PlateCam("roof", 1500, 1000, Keys((0, 1.05), (4, 1.1, "lin")))
     with on(ctx, cam, l):
         paint(ctx, "roof")
-        smoke(ctx, T, 2350, 220, 6, 0.6)
         n_done = int(l / 1.6)
         for i in range(min(n_done, 3)):                              # уже принесённые части
-            D.rrect(ctx, 1560 + i * 90, 1340 - i * 10, 80, 60, 8, hexrgb(["#e2b33a", "#3a3c42", "#c8392f"][i]),
-                    INK, 4)
-        gy = 1360
+            D.rrect(ctx, 1720 + i * 120, 1400 - i * 12, 110, 80, 10, hexrgb(["#e2b33a", "#3a3c42", "#c8392f"][i]),
+                    INK, 5)
+        gy = 1480
         r = persp(gy, RF_A, RF_HZ)
         u = (l / 1.6) % 1.0
         go = u < 0.5
         k = smooth(u / 0.5) if go else smooth((1 - u) / 0.5)
-        x = lerp(1180, 1520, k)
+        x = lerp(1330, 1620, k)
         f = 1 if go else -1
         p = pose(T, 3, face="determined", look=(0.5, 0.0))
         p.update(ST.gait(l * 1.6))
@@ -120,7 +115,7 @@ def carry(ctx, T, S):
         J = figure(ctx, x, gy, r, f, p, HERO, tint=("#ffb27a", 0.1))
         if go:
             hx, hy = at(J, x, gy, r, f, "h1")
-            D.rrect(ctx, hx - 30, hy - 10, 80, 60, 8, hexrgb(["#e2b33a", "#3a3c42", "#c8392f"][n_done % 3]), INK, 4)
+            D.rrect(ctx, hx - 40, hy - 20, 110, 80, 10, hexrgb(["#e2b33a", "#3a3c42", "#c8392f"][n_done % 3]), INK, 5)
 
 
 def build(S):

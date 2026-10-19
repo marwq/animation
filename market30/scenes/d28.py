@@ -65,8 +65,8 @@ def shards(ctx, T, t0, n=160, seed=3, region=(1100, 340, 1100, 680)):
         y = y0 + r_.random() * h + r_.uniform(-60, 80) * u + 1300 * u * u
         if y > 1700:
             continue
-        s = r_.uniform(6, 14)
-        D.rect(ctx, x, y, s, s, hexrgb("#d4ecf6"), hexrgb("#6a8a9a"), 1.5, wob=0, alpha=0.9)
+        s = r_.uniform(12, 28)
+        D.rect(ctx, x, y, s, s, hexrgb("#d4ecf6"), hexrgb("#6a8a9a"), 2, wob=0, alpha=0.9)
 
 
 def shatter(ctx, T, S):
@@ -96,12 +96,12 @@ def shatter(ctx, T, S):
         jit = 6 * math.sin(T * 40) if T > t_go else 0
         for row in range(3):
             gy = 1080 + row * 55
-            s = 0.62 * persp(gy, FD_A, FD_HZ) * 4.2
+            s = 4.4 * persp(gy, FD_A, FD_HZ)
             for i in range(6):
                 cart(ctx, 1240 + i * 176 + (row % 2) * 40 + jit * (1 if (i + row) % 2 else -1), gy, s,
                      1 if row % 2 == 0 else -1, tilt=0.03 * math.sin(T * 30 + i) if T > t_go else 0)
             chain_line(ctx, 1180, gy - s * 0.75 + jit, 2140, gy - s * 0.75 - jit, 1.0, 14)
-        shards(ctx, T, t_go, 220, region=(360, 340, 1760, 660))
+        shards(ctx, T, t_go, 420, region=(360, 340, 1760, 660))
         multiply(ctx, "#101838", 0.6)
     ctx.restore()
     if t_go <= T < t_go + 0.12:
@@ -121,11 +121,12 @@ def run(ctx, T, S):
     with on(ctx, cam, l):
         paint(ctx, "stockroom")
         multiply(ctx, "#1c2440", 0.6)
+        dur = (S.cue(3, end=True) - 1.6) - (S.cue(3) - 0.3) - 0.2
         for who, look, d0, seed in ((HERO, 0.0, 0.0, 3), (RUTH, 0.35, 0.3, 5)):
-            k = clamp((l - d0) / 2.2)
+            k = clamp((l - d0) / (dur - 0.3))
             e = ease_in(k) * 0.3 + k * 0.7
-            x = lerp(2600, 1700, e)
-            gy = lerp(1480, 960, e)
+            x = lerp(2600, 1700, e) + (140 if who is RUTH else 0) * (1 - e)
+            gy = lerp(1480, 960, e) + (60 if who is RUTH else 0) * (1 - e)
             r = persp(gy, STK_A, STK_HZ)
             if k >= 1:
                 continue
@@ -149,14 +150,15 @@ def hold(ctx, T, S):
             D.rect(ctx, x, 1394, 40, 16, hexrgb("#101018"), None, 0, wob=0, alpha=0.9)
         gy = 1470
         r = 92
-        p = pose(T, 3, face="scared", look=(0.6, -0.1), h1=(1.8, -4.1), h2=(1.6, -4.0), sweat=True,
-                 f1=(0.4, 0.0), f2=(-0.6, 0.0), lean=-0.1)
-        figure(ctx, 1450, gy, r, 1, p, HERO, tint=("#3a4868", 0.4))
+        tug = 0.06 * math.sin(T * 9) * (math.sin(T * 1.3) > 0.4)
+        p = pose(T, 3, face="scared", look=(0.6, -0.3), h1=(1.3 + tug, -6.35), h2=(1.05 + tug, -6.15), sweat=True,
+                 f1=(-0.2, 0.0), f2=(-0.75, 0.0), lean=-0.12)
+        figure(ctx, 1183, gy, r, -1, p, HERO, tint=("#3a4868", 0.4))
         q = pose(T, 5, face="worried", look=(0.6, 0.0), h1=(0.5, -2.6), h2=(0.2, -2.7))
-        figure(ctx, 1120, gy + 20, r, 1, q, RUTH, tint=("#3a4868", 0.4))
+        figure(ctx, 1520, gy + 20, r, -1, q, RUTH, tint=("#3a4868", 0.4))
         for k in range(3):                                           # пар изо рта
             u = (T * 0.7 + k / 3) % 1.0
-            D.circle(ctx, 1600 + u * 60, 820 - u * 80, 14 + u * 22, hexrgb("#dfe8f0"), None, 0, alpha=0.4 * (1 - u))
+            D.circle(ctx, 1080 - u * 60, 880 - u * 80, 14 + u * 22, hexrgb("#dfe8f0"), None, 0, alpha=0.4 * (1 - u))
 
 
 def build(S):

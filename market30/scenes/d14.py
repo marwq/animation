@@ -112,7 +112,7 @@ def roof_place(ctx, T, S):
         gy = 1420
         r = persp(gy, RF_A, RF_HZ)
         p = pose(T, 5, face="determined", look=(-0.4, 0.0), h1=(0.3, -2.4), h2=(-0.2, -2.45))
-        figure(ctx, 2050, gy, r, -1, p, RUTH, tint=("#ffb27a", 0.1))
+        figure(ctx, 2450, gy, r, -1, p, RUTH, tint=("#ffb27a", 0.1))
     D.rrect(ctx, W / 2 - 330, 80, 660, 110, 18, hexrgb("#f3f0e8"), INK, 5, alpha=clamp(l / 0.3))
     D.text(ctx, "STORE RULE 3", W / 2, 128, 40, "Inter", hexrgb("#24252a"), bold=True, alpha=clamp(l / 0.3))
     D.text(ctx, "Engines live outside.", W / 2, 172, 32, "Inter", hexrgb("#6d6e73"), alpha=clamp(l / 0.3))

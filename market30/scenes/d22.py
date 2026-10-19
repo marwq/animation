@@ -97,20 +97,22 @@ def all_at_once(ctx, T, S):
         D.rect(ctx, x0, y0, w, h, hexrgb("#d6eaf4"), INK, 9, wob=0)
         return
     r_ = rng(4)
-    n = 24
-    cw, ch = w / n, h / (n * h / w)
-    rows = int(h / cw)
-    for i in range(n):
+    cw = w / 24
+    cols, rows = 24, int(h / cw)
+    hold = 0.35                                   # сначала покрывается сеткой трещин, потом осыпается
+    for i in range(cols):
         for j in range(rows):
-            vy = r_.uniform(0, 120)
-            vx = r_.uniform(-80, 80)
-            d = r_.uniform(0, 0.15)
+            vy = r_.uniform(0, 60)
+            vx = r_.uniform(-60, 60)
+            d = hold + (rows - j) * 0.012 + r_.uniform(0, 0.08)
             uu = max(0.0, u - d)
             x = x0 + i * cw + vx * uu
-            y = y0 + j * cw + vy * uu + 1400 * uu * uu
+            y = y0 + j * cw + vy * uu + 650 * uu * uu
             if y > H + 40:
                 continue
-            D.rect(ctx, x, y, cw * 0.9, cw * 0.9, hexrgb("#c9e2ef"), hexrgb("#7a9aaa"), 1.5, wob=0)
+            D.rect(ctx, x, y, cw * 0.92, cw * 0.92, hexrgb("#c9e2ef"), hexrgb("#7a9aaa"), 1.5, wob=0)
+    if u < hold + 0.3:
+        D.rect(ctx, x0, y0, w, h, None, INK, 9, wob=0, alpha=clamp(1 - (u - hold) / 0.3))
 
 
 def carts_wall(ctx, T, S, rows_k, hero=True):
@@ -120,7 +122,7 @@ def carts_wall(ctx, T, S, rows_k, hero=True):
         if k <= 0:
             continue
         gy = 1080 + row * 55
-        s = 0.62 * persp(gy, FD_A, FD_HZ) * 4.2
+        s = 4.4 * persp(gy, FD_A, FD_HZ)
         n = 6
         for i in range(n):
             if i / n > k:
@@ -148,7 +150,7 @@ def barricade(ctx, T, S):
         u = (l / 2.2) % 1.0
         k = smooth(clamp(u / 0.7))
         x = lerp(2300, 1880, k)
-        cs = 0.62 * r * 4.2
+        cs = 4.4 * r
         cart(ctx, x - 1.7 * r - cs * 0.3, gy, cs, -1)
         p = pose(T, 3, face="determined", look=(-0.5, 0.0))
         if u < 0.7:
