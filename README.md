@@ -1,3 +1,13 @@
+# Шортсы с двумя POV (Minecraft)
+
+| Раздел | Что внутри |
+|---|---|
+| [research/split-pov/](research/split-pov/analysis.md) | разбор канала toonz CRAFT и покадровый разбор трёх роликов со звуком |
+| [guide/voice-and-sound.md](guide/voice-and-sound.md) | озвучка, музыка, эффекты, субтитры |
+| [guide/world-and-screenshots.md](guide/world-and-screenshots.md) | мир Minecraft и скриншоты фона на высоте глаз персонажа |
+| [cast/](cast/README.md) | персонажи: Hank, Pip, Lid, Granny Moss, Rocky |
+| [shorts/](shorts/README.md) | 8 сценариев с раскадровкой по половинам и ещё 10 идей |
+
 # Персонажи — развороты (спереди / сбоку / сзади)
 
 Все персонажи нарисованы в стиле первого референса: большая голова, простое лицо
