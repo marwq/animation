@@ -27,7 +27,7 @@
 | 06 | [Shortest Scary Story…](06-shortest-scary-story.md) | 4 с | Hank, Pip | спальня ночью | ★☆☆ |
 | 07 | [Which Chest Is the Mimic?](07-which-chest-is-the-mimic.md) | ~12 с | Hank, Pip, Lid | кладовая | ★★☆ |
 | 08 | [Granny vs. Lid](08-granny-vs-lid.md) | ~14 с | Granny, Lid | крыльцо Granny Moss | ★★☆ |
-| 09 | [La Peace, Make Me BIG!](09-la-peace-make-me-big.md) | ~14,5 с | Little Verity, Big Verity, La Peace | двор перед замком | ★★★ |
+| 09 | [How to Calm Down Verity?](09-how-to-calm-down-verity.md) | ~13,5 с | Verity (маленький → большой, когда злится), La Peace | зал замка La Peace | ★★☆ |
 
 **С чего начать: 06 → 01 → 02.**
 - 06 — четыре секунды и три скриншота в одной комнате.
