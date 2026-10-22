@@ -103,4 +103,5 @@ node tools/render.js                     # PNG ×2 (или: node tools/render.js
 `fight/export/baby_vs_lord.mp4` (малыш против лорда, луг у пруда),
 `fight/export/fat_vs_la_peace.mp4` (толстый против Ла Писа, яблоня на ферме),
 `fight/export/baby_vs_skeleton.mp4` (малыш против скелета, жвачка, мельницы),
-`fight/export/lord_vs_la_peace.mp4` (лорд против Ла Писа, банановая кожура, осень).
+`fight/export/lord_vs_la_peace.mp4` (лорд против Ла Писа, банановая кожура, осень),
+`fight/export/lord_vs_fat.mp4` (лорд против толстого, торт-приманка, море).

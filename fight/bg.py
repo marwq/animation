@@ -334,7 +334,91 @@ MEADOWS = {
     'autumn': dict(sky=('#4a96e0', '#9ccbee', '#fbe9cf'), grass='#62bf3a', grass_dark='#58ab33',
                    grass_light='#76cd4b', dirt='#a5612f', dirt_dark=('#8d5228', '#7f4923', '#995a2c'),
                    hills=('#d9e3b8', '#b5d48a'), autumn=True, leaves=True),
+    'coast': dict(sky=('#2f96ea', '#86c8f2', '#e8f7fb'), grass='#4cc83c', grass_dark='#43b435',
+                  grass_light='#5ed64d', dirt='#a86a38', dirt_dark=('#8f5a2f', '#81502a', '#9c6233'),
+                  hills=('#b9e3c2', '#86d07a'), sea=True, lighthouse=True, daisies=True),
 }
+
+
+def _sea(ctx, rng, y0=770, y1=880):
+    """Море до горизонта: полосы синего, белые пиксельные барашки, парусник."""
+    g = cairo.LinearGradient(0, y0, 0, y1)
+    g.add_color_stop_rgb(0, *hexc('#5fb7ec')[:3])
+    g.add_color_stop_rgb(1, *hexc('#2a7fcc')[:3])
+    ctx.set_source(g)
+    ctx.rectangle(-M, y0, W + 2 * M, y1 - y0)
+    ctx.fill()
+    ctx.set_source_rgba(1, 1, 1, 0.6)
+    for _ in range(40):
+        x, y = rng.uniform(-M, W + M), rng.uniform(y0 + 8, y1 - 10)
+        ctx.rectangle(round(x / 6) * 6, round(y / 6) * 6, 6 * rng.randint(2, 5), 4)
+    ctx.fill()
+    # парусник
+    bx, by = 1180, y0 + 26
+    ctx.move_to(bx - 40, by)
+    ctx.line_to(bx + 40, by)
+    ctx.line_to(bx + 28, by + 14)
+    ctx.line_to(bx - 28, by + 14)
+    ctx.close_path()
+    ctx.set_source_rgba(*hexc('#8a4b2a'))
+    ctx.fill()
+    ctx.move_to(bx, by - 2)
+    ctx.line_to(bx, by - 70)
+    ctx.line_to(bx + 34, by - 8)
+    ctx.close_path()
+    ctx.set_source_rgba(*hexc('#f7f4ea'))
+    ctx.fill()
+    ctx.move_to(bx - 3, by - 2)
+    ctx.line_to(bx - 3, by - 56)
+    ctx.line_to(bx - 30, by - 8)
+    ctx.close_path()
+    ctx.set_source_rgba(*hexc('#e8463c'))
+    ctx.fill()
+    # чайки
+    ctx.set_source_rgba(0.2, 0.22, 0.28, 0.8)
+    ctx.set_line_width(3)
+    for gx, gy, s in ((640, 520, 1.0), (700, 560, 0.8), (1420, 470, 0.9)):
+        ctx.move_to(gx - 12 * s, gy)
+        ctx.curve_to(gx - 8 * s, gy - 8 * s, gx - 3 * s, gy - 6 * s, gx, gy)
+        ctx.curve_to(gx + 3 * s, gy - 6 * s, gx + 8 * s, gy - 8 * s, gx + 12 * s, gy)
+        ctx.stroke()
+
+
+def _lighthouse(ctx, x, base, s=1.0):
+    """Пиксельный маяк в красно-белую полоску."""
+    b = 10 * s
+    rows = 18
+    for r in range(rows):
+        w = 3 + r * 0.12
+        ctx.rectangle(x - w * b, base - (rows - r) * b, 2 * w * b, b + 0.5)
+        ctx.set_source_rgba(*hexc('#e8463c' if (r // 3) % 2 == 0 else '#f7f4ea'))
+        ctx.fill()
+    top = base - rows * b
+    ctx.rectangle(x - 2.4 * b, top - 3 * b, 4.8 * b, 3 * b)
+    ctx.set_source_rgba(*hexc('#ffe27a'))
+    ctx.fill()
+    ctx.rectangle(x - 3.4 * b, top - 0.6 * b, 6.8 * b, 0.8 * b)
+    ctx.rectangle(x - 3.4 * b, top - 3.6 * b, 6.8 * b, 0.8 * b)
+    ctx.set_source_rgba(*hexc('#3b3f46'))
+    ctx.fill()
+    for r, (a, e) in enumerate(((-1, 1), (-2, 2), (-3, 3))):
+        ctx.rectangle(x + a * b, top - (6.6 - r) * b, (e - a) * b, b + 0.5)
+    ctx.set_source_rgba(*hexc('#c23a32'))
+    ctx.fill()
+
+
+def _daisy(ctx, x, y, s=1.0):
+    p = 5 * s
+    ctx.set_source_rgba(*hexc('#2d7d24'))
+    ctx.rectangle(x - 1.5 * s, y - 14 * s, 3 * s, 14 * s)
+    ctx.fill()
+    ctx.set_source_rgba(1, 1, 1)
+    for dx, dy in ((0, -1), (1, 0), (0, 1), (-1, 0)):
+        ctx.rectangle(x + dx * p - p / 2, y - 18 * s + dy * p - p / 2, p, p)
+    ctx.fill()
+    ctx.set_source_rgba(*hexc('#ffd23f'))
+    ctx.rectangle(x - p / 2, y - 18 * s - p / 2, p, p)
+    ctx.fill()
 
 
 def _leaf(ctx, x, y, color, rot, s=1.0):
@@ -630,11 +714,21 @@ def meadow(name='spring', seed=11):
         ctx.set_source(g2)
         ctx.rectangle(-M, 560, W + 2 * M, 300)
         ctx.fill()
-    else:
+    elif not v.get('sea'):
         _poly(ctx, _stepped_hills(rng, 900, 640, 16, [(250, 260, 170), (900, 330, 120), (1600, 300, 190)]))
         ctx.set_source_rgba(*hexc(far))
         ctx.fill()
     hills = _stepped_hills(rng, 900, 700, 16, [(-50, 300, 140), (620, 240, 95), (1300, 320, 130), (2000, 260, 120)])
+    if v.get('sea'):
+        _sea(ctx, rng)
+        for hx0, hx1, hh in ((-M, 420, 110), (1480, W + M, 140)):
+            pts = _stepped_hills(rng, 900, 900 - hh, 16, [((hx0 + hx1) / 2, (hx1 - hx0) / 2.2, hh)])
+            pts = [(min(max(px, hx0), hx1), py) for px, py in pts]
+            _poly(ctx, pts)
+            ctx.set_source_rgba(*hexc(near))
+            ctx.fill()
+        if v.get('lighthouse'):
+            _lighthouse(ctx, 1720, 790, 1.0)
     if v.get('windmill'):
         _poly(ctx, hills)
         ctx.set_source_rgba(*hexc(near))
@@ -673,9 +767,10 @@ def meadow(name='spring', seed=11):
         for k, (tx, sc) in enumerate(((90, 1.0), (330, 0.8), (560, 0.7), (1380, 0.75), (1600, 0.9), (1840, 1.05))):
             ty = min(y for x, y in hills if abs(x - tx) < 40) + 6
             _tree(ctx, tx, ty, sc, rng, palettes[k % 3])
-    _poly(ctx, hills)
-    ctx.set_source_rgba(*hexc(near))
-    ctx.fill()
+    if not v.get('sea'):
+        _poly(ctx, hills)
+        ctx.set_source_rgba(*hexc(near))
+        ctx.fill()
     if v.get('lake'):
         _lake(ctx, rng)
     if v.get('fence'):
@@ -771,6 +866,9 @@ def meadow(name='spring', seed=11):
             ctx.set_source_rgba(*OUT)
             ctx.set_line_width(2)
             ctx.stroke()
+    if v.get('daisies'):
+        for _ in range(34):
+            _daisy(ctx, rng.uniform(0, W), rng.uniform(915, 985), rng.uniform(0.9, 1.2))
     if v.get('leaves'):
         for _ in range(40):
             _leaf(ctx, rng.uniform(0, W), rng.uniform(905, 990), rng.choice(('#e8892a', '#f2c43a', '#c9442a')),
