@@ -482,6 +482,15 @@ class Ball:
         self.h = y1 - y0
         self.k = BALL_W[key] / (x1 - x0) if key in BALL_W else BALL_PX / max(x1 - x0, y1 - y0)
         self.center_y = (y0 + y1) / 2
+        self.prop = None
+        if key == 'child':
+            # шапка с пропеллером: лопасти (фигуры 6 и 8) и пятачок (7) рисуются отдельно
+            hat = next(l for l in self.layers if l.name == 'hat')
+            hub = hat.shapes[7]
+            xs = [p[0] for loop in hub.loops for g in loop for p in g]
+            self.prop = (moho.Layer('hat', hat.shapes[:6]),
+                         moho.Layer('blades', [hat.shapes[6], hat.shapes[8]]),
+                         moho.Layer('hub', [hub]), (min(xs) + max(xs)) / 2)
         mouths = [l for l in self.layers if l.switch == 'mouth']
         self.mouth_c = {}
         for m in mouths:
@@ -531,8 +540,50 @@ class Ball:
                         ctx.translate(-c[0], -c[1])
                 if L.switch == 'mouth':
                     self._mouth_xf(ctx, L.name, pose)
+                if L.name == 'mouth' and pose.get('mouth_s'):
+                    a, b, c, d = L.bbox()
+                    ms = pose['mouth_s']
+                    ctx.translate((a + c) / 2, b)
+                    ctx.scale(ms[0], ms[1])
+                    ctx.translate(-(a + c) / 2, -b)
+            if L.name == 'hat' and self.prop:
+                self._draw_prop_hat(ctx, pose, alpha)
+                ctx.restore()
+                continue
             draw_layer(ctx, L, alpha)
             ctx.restore()
+
+    def _draw_prop_hat(self, ctx, pose, alpha):
+        """Шапка с пропеллером: лопасти крутятся (сжатие по ширине), в полёте — размыто."""
+        static, blades, hub, hx = self.prop
+        draw_layer(ctx, static, alpha)
+        a = pose.get('prop', 0.0)
+        ghosts = ((0, 1.0), (-28, 0.45), (-56, 0.25)) if pose.get('prop_blur') else ((0, 1.0),)
+        for da, al in ghosts:
+            c = math.cos(math.radians(a + da))
+            c = math.copysign(max(abs(c), 0.06), c)
+            ctx.save()
+            ctx.translate(hx, 0)
+            ctx.scale(c, 1)
+            ctx.translate(-hx, 0)
+            draw_layer(ctx, blades, alpha * al)
+            ctx.restore()
+        draw_layer(ctx, hub, alpha)
+
+    def layer_center(self, name):
+        a, b, c, d = self.layer(name).bbox()
+        return (a + c) / 2, (b + d) / 2
+
+    def draw_layer_at(self, ctx, name, x, y, rot=0.0, d=1, scale=1.0):
+        """Слой рига отдельно от персонажа (слетевшая шляпа): центр слоя в (x, y)."""
+        c = self.layer_center(name)
+        ctx.save()
+        ctx.translate(x, y)
+        ctx.rotate(math.radians(rot))
+        ctx.scale(d * self.k * scale, self.k * scale)
+        ctx.translate(-c[0], -c[1])
+        draw_layer(ctx, self.layer(name))
+        ctx.restore()
 
     def _mouth_xf(self, ctx, name, pose):
         """Огромный рот: масштаб вокруг центра рта и сдвиг (в единицах рига)."""

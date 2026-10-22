@@ -99,4 +99,5 @@ node tools/render.js                     # PNG ×2 (или: node tools/render.js
 Ролики-драки из ригов Moho — в папке [`fight/`](fight/README.md).
 Готовые видео: `fight/export/skeleton_vs_lord.mp4` (скелет против лорда, пустынный каньон),
 `fight/export/pink_vs_la_peace.mp4` (розовая против Ла Писа и поклонников, луг),
-`fight/export/fat_vs_skeleton.mp4` (толстый против скелета, луг у гор).
+`fight/export/fat_vs_skeleton.mp4` (толстый против скелета, луг у гор),
+`fight/export/baby_vs_lord.mp4` (малыш против лорда, луг у пруда).

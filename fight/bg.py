@@ -322,7 +322,79 @@ MEADOWS = {
     'mountains': dict(sky=('#2a9fe2', '#8fd3f2', '#f0f7da'), grass='#4cc63c', grass_dark='#41b433',
                       grass_light='#5dd64c', dirt='#a8642c', dirt_dark=('#8f5325', '#7d4820', '#9a5a27'),
                       hills=('#a9c9df', '#8fd27f'), mountains=True, bushes=True, mushrooms=True, stones=True),
+    'lake': dict(sky=('#3a8fe8', '#7fc0f0', '#e6f1ff'), grass='#3fbf3a', grass_dark='#36aa31',
+                 grass_light='#52cf47', dirt='#b0703a', dirt_dark=('#985e2f', '#8a5229', '#a4683a'),
+                 hills=('#c3e3cf', '#93d48c'), lake=True, birches=True, sunflowers=True),
 }
+
+
+def _lake(ctx, rng, y0=812, y1=874, step=12):
+    """Пруд за краем травы: пиксельный берег, светлая рябь, камыши."""
+    pts = []
+    x = 260
+    while x <= 1700:
+        pts.append((x, y0 + step * rng.choice([0, 0, 1])))
+        x += step * rng.randint(3, 6)
+    poly = [(240, y1)]
+    for (xa, ya), (xb, _) in zip(pts, pts[1:] + [(1720, 0)]):
+        poly += [(xa, ya), (xb, ya)]
+    poly.append((1720, y1))
+    _poly(ctx, poly)
+    g = cairo.LinearGradient(0, y0, 0, y1)
+    g.add_color_stop_rgb(0, *hexc('#4aa8e8')[:3])
+    g.add_color_stop_rgb(1, *hexc('#2f84cf')[:3])
+    ctx.set_source(g)
+    ctx.fill()
+    ctx.set_source_rgba(1, 1, 1, 0.55)
+    for _ in range(26):
+        rx, ry = rng.uniform(320, 1640), rng.uniform(y0 + 14, y1 - 8)
+        ctx.rectangle(round(rx / 6) * 6, round(ry / 6) * 6, step * rng.randint(2, 5), 4)
+    ctx.fill()
+    # камыши по краям
+    for bx in (300, 340, 1630, 1675):
+        for k in range(3):
+            xx = bx + k * 9
+            h = rng.uniform(40, 70)
+            ctx.rectangle(xx, y0 + 30 - h, 4, h)
+            ctx.set_source_rgba(*hexc('#3b7f2a'))
+            ctx.fill()
+            ctx.rectangle(xx - 2, y0 + 30 - h, 8, 16)
+            ctx.set_source_rgba(*hexc('#7a4a22'))
+            ctx.fill()
+
+
+def _birch(ctx, x, base, s, rng):
+    """Берёзка: белый ствол с чёрными пятнами, светлая крона из квадратов."""
+    ctx.rectangle(x - 7 * s, base - 110 * s, 14 * s, 110 * s)
+    ctx.set_source_rgba(*hexc('#f1efe6'))
+    ctx.fill()
+    ctx.set_source_rgba(*hexc('#2b2b2b'))
+    for k in range(5):
+        ctx.rectangle(x - 7 * s + rng.choice([0, 6]) * s, base - (18 + k * 20) * s, 8 * s, 4 * s)
+    ctx.fill()
+    leaf = [hexc('#7cc84f'), hexc('#8fd65c'), hexc('#6ab843')]
+    b = 20 * s
+    for r, (a, e) in enumerate(((-1, 2), (-2, 3), (-2, 3), (-1, 2))):
+        for c in range(a, e):
+            ctx.set_source_rgba(*rng.choice(leaf))
+            ctx.rectangle(x + c * b - b / 2, base - 110 * s - (4 - r) * b + b, b + 0.5, b + 0.5)
+            ctx.fill()
+
+
+def _sunflower(ctx, x, y, s=1.0):
+    """Пиксельный подсолнух на коротком стебле."""
+    p = 7 * s
+    ctx.set_source_rgba(*hexc('#2d7d24'))
+    ctx.rectangle(x - 2 * s, y - 26 * s, 4 * s, 26 * s)
+    ctx.rectangle(x + 2 * s, y - 14 * s, 8 * s, 4 * s)
+    ctx.fill()
+    ctx.set_source_rgba(*hexc('#ffcc1f'))
+    for dx, dy in ((-1, -1), (0, -1), (1, -1), (-1, 0), (1, 0), (-1, 1), (0, 1), (1, 1), (0, -2), (0, 2), (-2, 0), (2, 0)):
+        ctx.rectangle(x + dx * p - p / 2, y - 34 * s + dy * p - p / 2, p, p)
+    ctx.fill()
+    ctx.set_source_rgba(*hexc('#7a4a1c'))
+    ctx.rectangle(x - p / 2, y - 34 * s - p / 2, p, p)
+    ctx.fill()
 
 
 def _mountains(ctx, rng, base, step=16):
@@ -425,6 +497,13 @@ def meadow(name='spring', seed=11):
         ctx.set_source_rgba(*hexc(far))
         ctx.fill()
     hills = _stepped_hills(rng, 900, 700, 16, [(-50, 300, 140), (620, 240, 95), (1300, 320, 130), (2000, 260, 120)])
+    if v.get('birches'):
+        _poly(ctx, hills)
+        ctx.set_source_rgba(*hexc(near))
+        ctx.fill()
+        for bx, sc in ((120, 0.95), (210, 0.75), (1770, 0.9), (1860, 1.05)):
+            by = min(y for x, y in hills if abs(x - bx) < 40) + 4
+            _birch(ctx, bx, by, sc, rng)
     if v.get('bushes'):
         _poly(ctx, hills)
         ctx.set_source_rgba(*hexc(near))
@@ -439,6 +518,8 @@ def meadow(name='spring', seed=11):
     _poly(ctx, hills)
     ctx.set_source_rgba(*hexc(near))
     ctx.fill()
+    if v.get('lake'):
+        _lake(ctx, rng)
 
     # трава: верхний край неровный, с пучками, чёрная обводка
     top = 872
@@ -530,6 +611,9 @@ def meadow(name='spring', seed=11):
             ctx.set_source_rgba(*OUT)
             ctx.set_line_width(2)
             ctx.stroke()
+    if v.get('sunflowers'):
+        for fx_ in (60, 330, 700, 1230, 1580, 1850):
+            _sunflower(ctx, fx_ + rng.uniform(-25, 25), rng.uniform(930, 985), rng.uniform(0.9, 1.15))
     if v.get('mushrooms'):
         for mx in (70, 610, 1180, 1690, 1880):
             _mushroom(ctx, mx + rng.uniform(-30, 30), rng.uniform(925, 975), rng.uniform(0.9, 1.2))
