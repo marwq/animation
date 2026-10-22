@@ -1,6 +1,9 @@
 """Обложка для лонга (1280×720), в духе обложек @HugyTi: крупные персонажи
-двумя командами по краям, белое «VS» в центре за ними, мягкие пиксельные
-облака и размытая трава.
+по краям, белое «VS» в центре за ними (шрифт M PLUS Rounded 1c Black — fonts/),
+мягкие пиксельные облака и размытая трава.
+
+Слева влюблённый лорд, справа большая розовая, за ней влюблённый скелет;
+снизу малыш и толстый злобно смотрят друг на друга.
 
     python3 cover.py                 # export/cover.png и export/cover_no_vs.png
 """
@@ -10,7 +13,7 @@ import random
 import cairo
 
 import fx
-from rig import LORD_BIG, SKELETON_BIG, Ball, Big
+from rig import GIRL_BIG, LORD_BIG, SKELETON_BIG, Ball, Big
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 W, H = 1280, 720
@@ -81,29 +84,35 @@ def background(ctx):
     paint_soft(ctx, soft_layer(ground, 5))
 
 
+FONT = os.path.join(HERE, 'fonts', 'MPLUSRounded1c-Black-latin.ttf')
+
+
 def vs(ctx, x, y, size):
-    """Белое «VS» с мягкой серой тенью, как у конкурента."""
-    ctx.save()
-    ctx.select_font_face('Inter', cairo.FONT_SLANT_ITALIC, cairo.FONT_WEIGHT_BOLD)
-    ctx.set_font_size(size)
-    ext = ctx.text_extents('VS')
-    ox, oy = x - ext.width / 2 - ext.x_bearing, y - ext.height / 2 - ext.y_bearing
-    for k in range(8, 0, -1):
-        ctx.move_to(ox + k * 1.6, oy + k * 1.6)
-        ctx.text_path('VS')
-        ctx.set_source_rgba(0.25, 0.30, 0.45, 0.06)
-        ctx.fill()
-    ctx.move_to(ox, oy)
-    ctx.text_path('VS')
-    g = cairo.LinearGradient(0, oy - ext.height, 0, oy)
-    g.add_color_stop_rgb(0, 1, 1, 1)
-    g.add_color_stop_rgb(1, 0.86, 0.89, 0.95)
-    ctx.set_source(g)
-    ctx.fill_preserve()
-    ctx.set_source_rgba(0.35, 0.40, 0.55, 0.55)
-    ctx.set_line_width(3)
-    ctx.stroke()
-    ctx.restore()
+    """Белое «VS» жирным округлым шрифтом с мягкой размытой тенью, как у конкурента."""
+    import numpy as np
+    from PIL import Image, ImageDraw, ImageFilter, ImageFont
+    font = ImageFont.truetype(FONT, size)
+    l, t, r, b = ImageDraw.Draw(Image.new('L', (1, 1))).textbbox((0, 0), 'V S', font=font)
+    ox, oy = x - (l + r) / 2, y - (t + b) / 2
+    text = Image.new('L', (W, H), 0)
+    ImageDraw.Draw(text).text((ox, oy), 'V S', font=font, fill=255)
+    shadow = Image.new('L', (W, H), 0)
+    ImageDraw.Draw(shadow).text((ox + 7, oy + 11), 'V S', font=font, fill=255)
+    shadow = shadow.filter(ImageFilter.GaussianBlur(11))
+    a_txt = np.asarray(text, dtype=np.float32) / 255
+    a_sh = np.asarray(shadow, dtype=np.float32) / 255 * 0.55
+    # белый сверху, чуть сероватый к низу букв
+    yy = np.linspace(0, 1, H, dtype=np.float32)[:, None]
+    k = np.clip((yy * H - (oy + t)) / max(1, b - t), 0, 1)
+    white = np.stack([1 - 0.10 * k, 1 - 0.08 * k, 1 - 0.03 * k], -1) * np.ones((H, W, 1), np.float32)
+    shade = np.array([0.40, 0.45, 0.62], np.float32)
+    a = a_txt + a_sh * (1 - a_txt)
+    rgb = (white * a_txt[..., None] + shade * (a_sh * (1 - a_txt))[..., None])   # премультиплицировано
+    bgra = np.dstack([rgb[..., 2], rgb[..., 1], rgb[..., 0], a])
+    buf = (np.clip(bgra, 0, 1) * 255 + 0.5).astype(np.uint8)
+    surf = cairo.ImageSurface.create_for_data(bytearray(buf.tobytes()), cairo.FORMAT_ARGB32, W, H, W * 4)
+    ctx.set_source_surface(surf, 0, 0)
+    ctx.paint()
 
 
 def eye_centres(ball, key='normal'):
@@ -120,55 +129,46 @@ def eye_centres(ball, key='normal'):
     return [(p[0], p[1]) for p in two]
 
 
-def cake(ctx, x, y, s=1.0):
-    from film_lord_vs_fat import cake as draw_cake
-    draw_cake(ctx, x, y, s)
-
-
 def render(with_vs=True):
     surf = cairo.ImageSurface(cairo.FORMAT_ARGB32, W, H)
     ctx = cairo.Context(surf)
     background(ctx)
     if with_vs:
-        vs(ctx, 640, 300, 250)
+        vs(ctx, 585, 300, 220)
 
     lord = Big(LORD_BIG)
     skel = Big(SKELETON_BIG)
+    girl = Big(GIRL_BIG)
     baby = Ball('child')
-    girl = Ball('girl_small')
     fat = Ball('fat')
 
-    # слева: лорд в шоке, тянет руку к центру
-    lord.draw(ctx, dict(x=215, y=1062, dir=1, scale=1.28, eyes=(1.12, 1.12), mouth=(1.0, 1.15),
-                        face_shift=0.0, head=-6.0, armF=(62.0, 18.0, 0.0), armN=(-12.0, 25.0, 0.0)))
-    # справа: крылатый скелет, крылья вверх, злая ухмылка, тянет когти к центру
-    skel.draw(ctx, dict(x=1075, y=1040, dir=-1, scale=1.25, wings=38.0, eyes=(1.0, 0.5),
-                        face_shift=0.0, head=4.0, armF=(70.0, 25.0, 0.0), armN=(-15.0, 30.0, 0.0)))
-
-    # впереди: малыш (слюнки, пропеллер), розовая с глазами‑сердечками, толстый с тортом
-    bp = dict(x=360, y=790, dir=1, scale=1.12, face_shift=0.04, eyes='normal', eye_s=(1.15, 1.15),
-              mouth_s=(1.15, 1.15), prop=20.0)
-    baby.draw(ctx, bp)
-
-    gp = dict(x=655, y=805, dir=1, scale=1.05, face_shift=0.0, eyes='normal', mouth='puzzlement',
-              hide=('normal',))
+    # слева: лорд влюблённо смотрит на розовую — глаза‑сердечки, румянец, тянется к ней
+    lp = dict(x=200, y=1062, dir=1, scale=1.28, hearts=1.1, face_shift=0.06, head=7.0,
+              lean=4.0, armF=(78.0, 12.0, 0.0), armN=(-10.0, 25.0, 0.0))
+    lord.draw(ctx, lp)
+    # справа сзади: крылатый скелет тоже влюблён, тянется к ней из‑за спины
+    sp = dict(x=1215, y=1030, dir=-1, scale=1.22, wings=34.0, hearts=1.15, face_shift=0.035,
+              head=-10.0, lean=10.0, armF=(40.0, 35.0, 0.0), armN=(-20.0, 30.0, 0.0))
+    skel.draw(ctx, sp)
+    # справа впереди: большая розовая — красуется
+    gp = dict(x=880, y=1048, dir=-1, scale=1.25, face_shift=0.0, sw_eyes='normal', sw_mouth='happy',
+              armF=(128.0, 28.0, 0.0), armN=(-40.0, 80.0, 0.0), head=-4.0)
     girl.draw(ctx, gp)
-    for ex, ey in eye_centres(girl):
-        px, py = girl.point(gp, (ex, ey), face=True)
-        fx.heart(ctx, px, py, 34)
-    for i, (dx, dy, r) in enumerate(((-150, -310, 22), (-90, -380, 16), (120, -340, 19))):
-        fx.heart(ctx, 655 + dx, 805 + dy, r, alpha=0.95)
 
-    fpose = dict(x=1010, y=830, dir=-1, scale=0.95, face_shift=0.10, eyes='normal', eye_s=(1.25, 1.25),
-                 mouth='happy', mouth_s=(2.1, 2.1), mouth_off=(0.0, 0.10), eye_dy=-0.05)
+    # слюнки и сердечки над влюблёнными
+    for rig_, pose, mouth_pt in ((lord, lp, (-0.10, -0.47)), (skel, sp, (-0.02, -0.40))):
+        top = rig_.joint(pose, 'head', (0.05, -0.92))
+        fx.hearts_up(ctx, top[0], top[1] + 10, 11, 3, 1.4)
+        fx.drool(ctx, *rig_.joint(pose, 'face', mouth_pt), 9, 1.6)
+
+    # снизу: малыш и толстый злобно смотрят друг на друга
+    bp = dict(x=330, y=800, dir=1, scale=1.12, face_shift=0.14, eyes='angry', mouth_s=(1.1, 0.9), prop=20.0)
+    baby.draw(ctx, bp)
+    fpose = dict(x=760, y=812, dir=-1, scale=0.92, face_shift=0.14, eyes='angry', mouth='theeth smile')
     fat.draw(ctx, fpose)
-    m = fat.point(fpose, (fat.mouth_c['happy'][0], fat.mouth_c['happy'][1] + 0.10), face=True)
-    ctx.save()
-    fat.swallow_clip(ctx, fpose, W, H)
-    cake(ctx, m[0] - 70, m[1] - 10, 1.25)
-    ctx.restore()
-    fx.drool(ctx, m[0] + 40, m[1] + 70, 6, 1.6)
-
+    # злятся друг на друга: жилки злости сбоку от лица
+    fx.anger(ctx, 205, 590, 2, 1.1)
+    fx.anger(ctx, 905, 470, 5, 1.1)
     return surf
 
 
