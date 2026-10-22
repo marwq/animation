@@ -127,6 +127,21 @@ def _chain(edges):
     return out
 
 
+def _prune(edges):
+    """Убирает висячие рёбра (линии внутри фигуры с концом в никуда): в Moho
+    они только рисуются обводкой, а в заливку не входят."""
+    edges = list(edges)
+    while True:
+        deg = {}
+        for a, b, _ in edges:
+            deg[a] = deg.get(a, 0) + 1
+            deg[b] = deg.get(b, 0) + 1
+        keep = [e for e in edges if deg[e[0]] > 1 and deg[e[1]] > 1]
+        if len(keep) == len(edges):
+            return keep
+        edges = keep
+
+
 def _fill_loops(edges, curves):
     """Контуры заливки. Если фигура целиком охватывает замкнутые кривые, заливка
     берётся по ним, а рёбра открытых кривых (складки, линии внутри фигуры)
@@ -137,7 +152,7 @@ def _fill_loops(edges, curves):
     full = [ci for ci, es in by_curve.items()
             if curves[ci]['closed'] and len(es) == len(curves[ci]['points'])]
     if not full:
-        return [loop for loop, _, _ in _chain([(a, b, seg) for _, a, b, seg in edges])]
+        return [loop for loop, _, closed in _chain(_prune([(a, b, seg) for _, a, b, seg in edges])) if closed]
     loops, used = [], set()
     for ci in full:
         for loop, ids, _ in _chain(by_curve[ci]):

@@ -468,6 +468,9 @@ class Big:
 
 
 # --------------------------------------------------------------------- шарики
+BALL_W = {'fat': 530}     # толстый шире шарика: ~530 × 460 px
+
+
 class Ball:
     """Маленький персонаж: тело, переключатели глаз и рта, шляпа."""
 
@@ -477,8 +480,13 @@ class Ball:
         x0, y0, x1, y1 = body.bbox()
         self.cx, self.bottom = (x0 + x1) / 2, y1
         self.h = y1 - y0
-        self.k = BALL_PX / max(x1 - x0, y1 - y0)
+        self.k = BALL_W[key] / (x1 - x0) if key in BALL_W else BALL_PX / max(x1 - x0, y1 - y0)
         self.center_y = (y0 + y1) / 2
+        mouths = [l for l in self.layers if l.switch == 'mouth']
+        self.mouth_c = {}
+        for m in mouths:
+            a, b, c, d = m.bbox()
+            self.mouth_c[m.name] = ((a + c) / 2, (b + d) / 2)
 
     def place(self, pose):
         s = self.k * pose.get('scale', 1.0)
@@ -514,13 +522,56 @@ class Ball:
             ctx.transform(place)
             if L.switch in ('eyes', 'mouth') or L.name in ('mouth', 'blush'):
                 ctx.translate(fs, 0)
-                if L.switch == 'eyes' and pose.get('eye_s'):
-                    c = (self.cx + 0.0, self.center_y - 0.08)
-                    ctx.translate(*c)
-                    ctx.scale(*pose['eye_s'])
-                    ctx.translate(-c[0], -c[1])
+                if L.switch == 'eyes':
+                    ctx.translate(0, pose.get('eye_dy', 0.0))
+                    if pose.get('eye_s'):
+                        c = (self.cx + 0.0, self.center_y - 0.08)
+                        ctx.translate(*c)
+                        ctx.scale(*pose['eye_s'])
+                        ctx.translate(-c[0], -c[1])
+                if L.switch == 'mouth':
+                    self._mouth_xf(ctx, L.name, pose)
             draw_layer(ctx, L, alpha)
             ctx.restore()
 
+    def _mouth_xf(self, ctx, name, pose):
+        """Огромный рот: масштаб вокруг центра рта и сдвиг (в единицах рига)."""
+        ms = pose.get('mouth_s')
+        if not ms:
+            return
+        c = self.mouth_c[name]
+        dx, dy = pose.get('mouth_off', (0.0, 0.0))
+        ctx.translate(c[0] + dx, c[1] + dy)
+        ctx.scale(ms[0], ms[1])
+        ctx.translate(-c[0], -c[1])
+
+    def _loops_path(self, ctx, layer, shape=0):
+        for loop in layer.shapes[shape].loops:
+            ctx.move_to(*loop[0][0])
+            for g in loop:
+                ctx.curve_to(*g[1], *g[2], *g[3])
+            ctx.close_path()
+
+    def swallow_clip(self, ctx, pose, w=1920, h=1080, pad=400):
+        """Обрезка для того, что попадает в рот: видно всё вне тела и внутри рта."""
+        mouth = self.layer(pose.get('mouth', 'smile normal'))
+        ctx.new_path()
+        ctx.rectangle(-pad, -pad, w + 2 * pad, h + 2 * pad)
+        ctx.save()
+        ctx.transform(self.place(pose))
+        self._loops_path(ctx, self.layer('body'))
+        ctx.translate(pose.get('face_shift', 0.05), 0)
+        self._mouth_xf(ctx, mouth.name, pose)
+        self._loops_path(ctx, mouth)
+        ctx.restore()
+        ctx.set_fill_rule(cairo.FILL_RULE_EVEN_ODD)
+        ctx.clip()
+
+    def point(self, pose, p, face=False):
+        """Точка рига в кадре; face=True — с учётом сдвига лица."""
+        m = self.place(pose)
+        x = p[0] + (pose.get('face_shift', 0.05) if face else 0.0)
+        return m.transform_point(x, p[1])
+
     def layer(self, name):
-        return next(l for l in self.layers if l.name == name)
+        return next(l for l in self.layers if l.name == name and l.switch != 'eyes')

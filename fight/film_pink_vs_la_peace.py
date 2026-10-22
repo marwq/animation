@@ -447,14 +447,14 @@ class Film:
             (256, dict(self.STAND_G, scale=0.55), 'lin'),
             (260, dict(scale=1.1)), (263, dict(scale=0.96)), (266, dict(scale=1.0)),
             (270, {}), (276, dict(armF=HIPS_F, armN=HIPS_N, sw_mouth='happy')),
-            (300, {}), (308, dict(armF=HIPS_F, sw_mouth='happy')),
+            (302, {}), (310, dict(armF=REST, armN=REST, sw_mouth='happy')),
             (461, {}), (462, dict(sw_eyes='angry', sw_mouth='sad')),
             (470, {}), (477, dict(armF=(135.0, 40.0, 0.0), lean=-5.0)),
             (478, {}, 'in'), (482, dict(lean=10.0)),
-            (490, {}), (500, dict(armF=HIPS_F, lean=0.0, sw_eyes='normal', sw_mouth='happy')),
+            (490, {}), (500, dict(armF=REST, lean=0.0, sw_eyes='normal', sw_mouth='happy')),
             (522, {}), (528, dict(armF=REST, armN=REST)),
             (562, {}), (566, dict(face_shift=-0.07)),
-            (566, {}), (574, dict(armF=HIPS_F, armN=HIPS_N)),
+            (566, {}), (574, dict(armN=(-122.0, -18.0, 0.0))),
         ]
         p = pose_keys(f, keys)
         # воздушный поцелуй Ла Пису: рука к краю лица, потом вперёд
@@ -463,15 +463,16 @@ class Film:
                 kiss = g.joint(dict(p, armF=REST), 'head', (0.27, -0.50))
                 to_face = g.arm_ik(dict(p, armF=REST), 'F', kiss, tip=TIP_G)
                 fwd = (95.0, 0.0, 0.0) if a == 280 else (110.0, 10.0, 0.0)
+                start = HIPS_F if a == 280 else REST
                 p['sw_mouth'] = 'puzzlement' if f < a + 12 else 'happy'
                 if f < a + 6:
-                    p['armF'] = lerp(HIPS_F, to_face, ease_io(seg(f, a, a + 6)))
+                    p['armF'] = lerp(start, to_face, ease_io(seg(f, a, a + 6)))
                 elif f < a + 10:
                     p['armF'] = lerp(to_face, fwd, ease_out(seg(f, a + 6, a + 10)))
                 elif a == 280:
-                    p['armF'] = lerp(fwd, HIPS_F, ease_io(seg(f, a + 14, a + 22)))
+                    p['armF'] = fwd if f < a + 14 else lerp(fwd, HIPS_F, ease_io(seg(f, a + 14, a + 22)))
                 else:
-                    p['armF'] = fwd if f < a + 16 else lerp(fwd, HIPS_F, ease_io(seg(f, a + 16, a + 22)))
+                    p['armF'] = fwd if f < a + 16 else lerp(fwd, REST, ease_io(seg(f, a + 16, a + 24)))
         # пощёчина (кадр 482)
         if 478 <= f < 500:
             hit = g.arm_ik(dict(p, armF=REST, lean=10.0), 'F', self.hit_face(), tip=TIP_G)
@@ -480,7 +481,7 @@ class Film:
             elif f < 490:
                 p['armF'] = hit
             else:
-                p['armF'] = lerp(hit, HIPS_F, ease_io(seg(f, 490, 500)))
+                p['armF'] = lerp(hit, REST, ease_io(seg(f, 490, 500)))
         w = walk(f, 528, GB_X, CENTER, 4, 7, g, 1)
         if w:
             p.update(w)
