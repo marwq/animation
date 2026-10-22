@@ -341,7 +341,33 @@ MEADOWS = {
                     grass_light='#57d34a', dirt='#ab6c39', dirt_dark=('#925b30', '#844f2a', '#9f6434'),
                     hills=('#c7e6cc', '#97d687'), rainbow=True, sakura=True,
                     flowers=('#ff8fc4', '#ffffff', '#ffd23f', '#ff5c8a')),
+    'village': dict(sky=('#2c9de0', '#86d0ee', '#eef8e0'), grass='#4ac43b', grass_dark='#41b034',
+                    grass_light='#5bd24c', dirt='#a4693a', dirt_dark=('#8c5931', '#7e4f2b', '#986034'),
+                    hills=('#bfe3c4', '#8fd383'), village=True, flowers=('#ffffff', '#ffd23f', '#ff6b6b')),
 }
+
+
+def _house(ctx, x, base, s, roof, wall='#f3e6c8'):
+    """Пиксельный домик: стены, окно, дверь, крыша и труба."""
+    b = 10 * s
+    w, h = 9, 6
+    ctx.rectangle(x - w / 2 * b, base - h * b, w * b, h * b)
+    ctx.set_source_rgba(*hexc(wall))
+    ctx.fill()
+    ctx.rectangle(x - 3.5 * b, base - 4.5 * b, 2 * b, 2 * b)
+    ctx.set_source_rgba(*hexc('#7fc4ec'))
+    ctx.fill()
+    ctx.rectangle(x + 1 * b, base - 3.5 * b, 2 * b, 3.5 * b)
+    ctx.set_source_rgba(*hexc('#8a5b36'))
+    ctx.fill()
+    ctx.rectangle(x + 2 * b, base - 7.5 * b - 3 * b, 1.4 * b, 3 * b)
+    ctx.set_source_rgba(*hexc('#9a8f86'))
+    ctx.fill()
+    for r in range(4):
+        a = (r + 1) * 1.25
+        ctx.rectangle(x - a * b, base - h * b - (4 - r) * b, 2 * a * b, b + 0.5)
+    ctx.set_source_rgba(*hexc(roof))
+    ctx.fill()
 
 
 def _rainbow(ctx, cx=960, cy=980, r=820, band=26):
@@ -775,6 +801,14 @@ def meadow(name='spring', seed=11):
             _block_bush(ctx, bx, by, sc, rng)
     if v.get('trees'):
         for tx, sc in ((150, 0.9), (700, 0.75), (1250, 1.0), (1440, 0.8), (1820, 0.9)):
+            ty = min(y for x, y in hills if abs(x - tx) < 40) + 6
+            _tree(ctx, tx, ty, sc, rng)
+    if v.get('village'):
+        for hx, sc, roof in ((180, 1.0, '#c2412f'), (420, 0.8, '#3d6fb8'), (1500, 0.85, '#c2412f'),
+                             (1760, 1.05, '#8a4fb0')):
+            hy = min(y for x, y in hills if abs(x - hx) < 40) + 10
+            _house(ctx, hx, hy, sc, roof)
+        for tx, sc in ((300, 0.7), (1640, 0.75)):
             ty = min(y for x, y in hills if abs(x - tx) < 40) + 6
             _tree(ctx, tx, ty, sc, rng)
     if v.get('rainbow'):
