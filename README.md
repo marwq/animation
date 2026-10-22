@@ -93,3 +93,8 @@ python3 tools/build_characters.py        # SVG всех персонажей (и
 npm i --no-save playwright && npx playwright install chromium
 node tools/render.js                     # PNG ×2 (или: node tools/render.js 2 sarah)
 ```
+
+## Драки (animal hospital long)
+
+Ролики-драки из ригов Moho — в папке [`fight/`](fight/README.md).
+Готовое видео: `fight/export/skeleton_vs_lord.mp4` (скелет против лорда, пустынный каньон).
