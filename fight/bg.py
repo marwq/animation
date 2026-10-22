@@ -261,7 +261,181 @@ def desert(seed=7):
     return surf
 
 
-SKIES = {'desert': desert}
+# ------------------------------------------------------------------ луг (как в роликах автора)
+def _stepped_hills(rng, base, top, step, bumps):
+    """Пологие холмы с пиксельным (ступенчатым) краем."""
+    pts = [(-M, base)]
+    x = -M
+    while x <= W + M:
+        y = base - sum(h * math.exp(-((x - cx) / w) ** 2) for cx, w, h in bumps)
+        y = round(max(top, y) / step) * step
+        pts += [(x, pts[-1][1]), (x, y)]
+        x += step * rng.randint(2, 4)
+    pts += [(W + M, pts[-1][1]), (W + M, base)]
+    return pts
+
+
+def _tree(ctx, x, base, s, rng):
+    """Блочное дерево: ствол и крона из квадратов, без обводки (дальний план)."""
+    ctx.set_source_rgba(*hexc('#8a5a32'))
+    ctx.rectangle(x - 8 * s, base - 70 * s, 16 * s, 70 * s)
+    ctx.fill()
+    leaf = [hexc('#3f9e3c'), hexc('#4fb44a'), hexc('#37893a')]
+    b = 22 * s
+    rows = [(-2, 2), (-3, 3), (-3, 3), (-2, 2)]
+    for r, (a, e) in enumerate(rows):
+        for c in range(a, e):
+            ctx.set_source_rgba(*rng.choice(leaf))
+            ctx.rectangle(x + c * b, base - 70 * s - (len(rows) - r) * b, b + 0.5, b + 0.5)
+            ctx.fill()
+
+
+def _tuft(ctx, x, y, s=1.0):
+    """Пучок травы «ʍ» тёмной линией."""
+    ctx.move_to(x, y)
+    ctx.line_to(x + 5 * s, y - 13 * s)
+    ctx.line_to(x + 10 * s, y - 3 * s)
+    ctx.line_to(x + 16 * s, y - 15 * s)
+    ctx.line_to(x + 21 * s, y - 2 * s)
+    ctx.line_to(x + 27 * s, y - 12 * s)
+
+
+def _flower(ctx, x, y, color, s=1.0):
+    p = 6 * s
+    ctx.set_source_rgba(*hexc('#2d7d24'))
+    ctx.rectangle(x - 1.5 * s, y, 3 * s, 12 * s)
+    ctx.fill()
+    ctx.set_source_rgba(*hexc(color))
+    for dx, dy in ((0, -p), (p, 0), (0, p), (-p, 0)):
+        ctx.rectangle(x + dx - p / 2, y + dy - p / 2 - p, p, p)
+    ctx.fill()
+    ctx.set_source_rgba(*hexc('#ffe14a'))
+    ctx.rectangle(x - p / 2, y - p / 2 - p, p, p)
+    ctx.fill()
+
+
+MEADOWS = {
+    # каждый ролик — свой вариант: другое небо, трава, дальний план
+    'spring': dict(sky=('#3b97ee', '#86c9f3', '#e3f4cf'), grass='#43c934', grass_dark='#3bb72e',
+                   grass_light='#50d240', dirt='#b46d2f', dirt_dark=('#9b5a26', '#8b4f21', '#a86429'),
+                   hills=('#b5e2c4', '#86cf8a'), trees=True, flowers=('#ff4b5c', '#ffffff', '#ffd23f', '#7a8cff')),
+}
+
+
+def meadow(name='spring', seed=11):
+    """Луг: небо с переходом цвета, трава с рукописным краем и пучками,
+    ступенчатая граница с пиксельной землёй. Ступни бойцов — на y = 945."""
+    v = MEADOWS[name]
+    rng = random.Random(seed)
+    surf = cairo.ImageSurface(cairo.FORMAT_RGB24, W + 2 * M, H + 2 * M)
+    ctx = cairo.Context(surf)
+    ctx.translate(M, M)
+
+    g = cairo.LinearGradient(0, -M, 0, 880)
+    for t, c in zip((0.0, 0.55, 1.0), v['sky']):
+        g.add_color_stop_rgb(t, *hexc(c)[:3])
+    ctx.set_source(g)
+    ctx.paint()
+
+    # дальний план: холмы и блочные деревья
+    far, near = v['hills']
+    _poly(ctx, _stepped_hills(rng, 900, 640, 16, [(250, 260, 170), (900, 330, 120), (1600, 300, 190)]))
+    ctx.set_source_rgba(*hexc(far))
+    ctx.fill()
+    hills = _stepped_hills(rng, 900, 700, 16, [(-50, 300, 140), (620, 240, 95), (1300, 320, 130), (2000, 260, 120)])
+    if v.get('trees'):
+        for tx, sc in ((150, 0.9), (700, 0.75), (1250, 1.0), (1440, 0.8), (1820, 0.9)):
+            ty = min(y for x, y in hills if abs(x - tx) < 40) + 6
+            _tree(ctx, tx, ty, sc, rng)
+    _poly(ctx, hills)
+    ctx.set_source_rgba(*hexc(near))
+    ctx.fill()
+
+    # трава: верхний край неровный, с пучками, чёрная обводка
+    top = 872
+    edge = [(-M, top)]
+    x = -M
+    while x < W + M:
+        if rng.random() < 0.18:
+            for _ in range(rng.randint(2, 4)):
+                edge.append((x, top + rng.uniform(-2, 2)))
+                edge.append((x + 5, top - rng.uniform(9, 17)))
+                x += rng.uniform(9, 13)
+        x += rng.uniform(18, 34)
+        edge.append((x, top + rng.uniform(-3, 3)))
+    # нижний край травы — ступеньки блоков, уходящих в землю
+    bottom = []
+    x = W + M
+    while x > -M:
+        y = 990 + 26 * rng.choice([0, 1, 1, 2, 3])
+        w = 52 * rng.randint(1, 2)
+        bottom += [(x, y), (x - w, y)]
+        x -= w
+    grass = edge + bottom
+
+    # земля
+    ctx.set_source_rgba(*hexc(v['dirt']))
+    ctx.rectangle(-M, 960, W + 2 * M, H + M - 960 + M)
+    ctx.fill()
+    for yy in range(980, H + M, 30):
+        for xx in range(-M, W + M, 30):
+            if rng.random() < 0.38:
+                ctx.set_source_rgba(*hexc(rng.choice(v['dirt_dark'])))
+                ctx.rectangle(xx, yy, 30, 30)
+                ctx.fill()
+    for _ in range(40):
+        ctx.save()
+        ctx.translate(rng.uniform(-M, W + M), rng.uniform(1030, H + M))
+        ctx.scale(rng.uniform(5, 10), rng.uniform(4, 7))
+        ctx.arc(0, 0, 1, 0, 2 * math.pi)
+        ctx.restore()
+        ctx.set_source_rgba(0.35, 0.18, 0.08, 0.8)
+        ctx.fill()
+
+    _poly(ctx, grass)
+    ctx.set_source_rgba(*hexc(v['grass']))
+    ctx.fill_preserve()
+    ctx.save()
+    ctx.clip()
+    for yy in range(top - 20, 1100, 32):
+        for xx in range(-M, W + M, 32):
+            r = rng.random()
+            if r < 0.16:
+                ctx.set_source_rgba(*hexc(v['grass_dark']))
+            elif r < 0.24:
+                ctx.set_source_rgba(*hexc(v['grass_light']))
+            else:
+                continue
+            ctx.rectangle(xx, yy, 32, 32)
+            ctx.fill()
+    ctx.restore()
+    ctx.set_line_join(cairo.LINE_JOIN_ROUND)
+    ctx.set_line_cap(cairo.LINE_CAP_ROUND)
+    # обводка: верхний край и ступеньки
+    ctx.move_to(*edge[0])
+    for p in edge[1:]:
+        ctx.line_to(*p)
+    ctx.set_source_rgba(*OUT)
+    ctx.set_line_width(5)
+    ctx.stroke()
+    ctx.move_to(*bottom[0])
+    for p in bottom[1:]:
+        ctx.line_to(*p)
+    ctx.set_line_width(5)
+    ctx.stroke()
+
+    # пучки травы и цветочки (не там, где стоят бойцы — им не мешают, они ниже ступней)
+    ctx.set_source_rgba(*hexc('#1f5f1a'))
+    ctx.set_line_width(3.5)
+    for _ in range(26):
+        _tuft(ctx, rng.uniform(0, W), rng.uniform(905, 985), rng.uniform(0.9, 1.3))
+    ctx.stroke()
+    for _ in range(22):
+        _flower(ctx, rng.uniform(0, W), rng.uniform(900, 975), rng.choice(v['flowers']), rng.uniform(0.8, 1.1))
+    return surf
+
+
+SKIES = {'desert': desert, 'meadow': meadow}
 
 
 # ------------------------------------------------------------------ облачка

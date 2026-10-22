@@ -31,7 +31,8 @@ def lerp(a, b, t):
         return out
     if isinstance(a, (int, float)) and isinstance(b, (int, float)) and not isinstance(a, bool):
         return a + (b - a) * t
-    return b if t >= 0.5 else a
+    # переключатели (рот, глаза) меняются ровно на ключе, без середины
+    return b if t >= 1.0 else a
 
 
 def key(f, keys):

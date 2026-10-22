@@ -219,3 +219,14 @@ def load(path):
 
     walk(doc['layers'], None, None)
     return layers
+
+
+def mirror(layers):
+    """Зеркалит риг по горизонтали (x → −x), чтобы персонаж смотрел вправо."""
+    def seg(g):
+        return tuple((-p[0], p[1]) for p in g)
+    for L in layers:
+        for s in L.shapes:
+            s.loops = [[seg(g) for g in loop] for loop in s.loops]
+            s.strokes = [(seg(g), w) for g, w in s.strokes]
+    return layers

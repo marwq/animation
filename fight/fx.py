@@ -318,3 +318,56 @@ def whoosh(ctx, x, y, age, size=1.0, dur=14, trail=-1):
         puff_cloud(ctx, x + trail * 40 * k * size * (1 + t), y + (k - 1) * 18 * size,
                    (22 - 4 * k) * size * (0.7 + 0.6 * t), (1 - t) * 0.95,
                    fill=(1, 1, 1), line=(0.55, 0.6, 0.65), seed=k + 11, n=5)
+
+
+def heart(ctx, x, y, r, alpha=1.0, lw=None, color=(0.93, 0.10, 0.25)):
+    """Сердечко с обводкой: центр (x, y), полуширина r (в текущих единицах)."""
+    ctx.save()
+    ctx.translate(x, y)
+    ctx.scale(r, r)
+    ctx.move_to(0, 0.95)
+    ctx.curve_to(-0.35, 0.6, -1.0, 0.25, -1.0, -0.3)
+    ctx.curve_to(-1.0, -0.85, -0.3, -1.05, 0, -0.55)
+    ctx.curve_to(0.3, -1.05, 1.0, -0.85, 1.0, -0.3)
+    ctx.curve_to(1.0, 0.25, 0.35, 0.6, 0, 0.95)
+    ctx.close_path()
+    ctx.restore()
+    ctx.set_source_rgba(*color, alpha)
+    ctx.fill_preserve()
+    ctx.set_source_rgba(0.12, 0.02, 0.05, alpha)
+    ctx.set_line_width(lw if lw is not None else max(2.0, r * 0.14))
+    ctx.stroke()
+    # блик
+    ctx.save()
+    ctx.translate(x - r * 0.45, y - r * 0.4)
+    ctx.scale(r * 0.22, r * 0.14)
+    ctx.arc(0, 0, 1, 0, 2 * math.pi)
+    ctx.restore()
+    ctx.set_source_rgba(1, 1, 1, 0.75 * alpha)
+    ctx.fill()
+
+
+def hearts_up(ctx, x, y, age, n=3, size=1.0):
+    """Маленькие сердечки поднимаются над головой и тают — влюблённость."""
+    for i in range(n):
+        t = ((age + i * 9) % 27) / 27
+        px = x + (i - (n - 1) / 2) * 34 * size + math.sin(age * 0.18 + i * 2.1) * 10 * size
+        py = y - 120 * t * size
+        heart(ctx, px, py, 15 * size * (0.6 + 0.6 * t), alpha=1 - t * t)
+
+
+def drool(ctx, x, y, age, size=1.0):
+    """Слюнка: капля тянется вниз от уголка рта и падает."""
+    t = (age % 16) / 16
+    ln = 22 * size * (0.4 + 1.2 * t)
+    ctx.save()
+    ctx.set_source_rgba(0.55, 0.85, 1.0, 0.95)
+    ctx.move_to(x - 4 * size, y)
+    ctx.curve_to(x - 4 * size, y + ln * 0.6, x - 7 * size, y + ln, x, y + ln + 6 * size)
+    ctx.curve_to(x + 7 * size, y + ln, x + 4 * size, y + ln * 0.6, x + 4 * size, y)
+    ctx.close_path()
+    ctx.fill_preserve()
+    ctx.set_source_rgba(0.15, 0.35, 0.6, 0.95)
+    ctx.set_line_width(2)
+    ctx.stroke()
+    ctx.restore()

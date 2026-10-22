@@ -14,6 +14,7 @@ import os
 import cairo
 
 import moho
+from fx import heart
 
 RIGS = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'rigs')
 GROUND_Y = 945          # ступни на ~88 % высоты кадра
@@ -111,6 +112,7 @@ LORD_BIG = dict(
         'head': 'head', 'mouth': 'face', 'eye': 'face', 'hat': 'hat',
     },
     eye_layer='eye', mouth_layer='mouth', eye_c=(0.03, -0.73), mouth_c=(0.02, -0.56),
+    eye_pts=[(-0.055, -0.728), (0.118, -0.73)], cheeks=[(-0.13, -0.60), (0.17, -0.60)], heart_r=0.075,
 )
 
 SKELETON_BIG = dict(
@@ -137,6 +139,58 @@ SKELETON_BIG = dict(
         'wing 1': 'WN', 'wing 2': 'WF',
     },
     eye_layer='eye', mouth_layer='mouth', eye_c=(0.14, -0.67), mouth_c=(0.12, -0.50),
+    eye_pts=[(0.059, -0.665), (0.22, -0.67)], cheeks=[(-0.02, -0.57), (0.28, -0.57)], heart_r=0.07,
+)
+
+GIRL_BIG = dict(
+    file='girl_verity_big.moho',
+    top=-0.996, sole=0.986, mid_x=-0.07, face_shift=0.0,
+    bones={
+        'torso': ('root', (-0.07, 0.15)),
+        'head': ('torso', (-0.07, -0.42)),
+        'face': ('head', (0.0, -0.60)),
+        'F1': ('torso', (0.047, -0.231)), 'F2': ('F1', (0.175, 0.032)), 'F3': ('F2', (0.215, 0.28)),
+        'N1': ('torso', (-0.205, -0.234)), 'N2': ('N1', (-0.319, 0.035)), 'N3': ('N2', (-0.36, 0.28)),
+        'FL1': ('root', (-0.009, 0.302)), 'FL2': ('FL1', (0.002, 0.671)), 'FL3': ('FL2', (0.0, 0.90)),
+        'NL1': ('root', (-0.133, 0.302)), 'NL2': ('NL1', (-0.139, 0.671)), 'NL3': ('NL2', (-0.14, 0.90)),
+        'pelvis': ('root', (-0.07, 0.15)),
+    },
+    layers={
+        'hand left 1': 'F1', 'hand left 2': 'F2', 'hand right 1': 'N1', 'hand right 2': 'N2',
+        'leg left 1': 'FL1', 'leg left 2': 'FL2', 'leg right 1': 'NL1', 'leg right 2': 'NL2',
+        'body': 'torso', 'skirt': 'pelvis', 'head': 'head', 'bow': 'head',
+    },
+    switch_bone={'eyes': 'face', 'mouth': 'face'},
+    switch_default={'eyes': 'normal', 'mouth': 'smile normal'},
+    # ботинок — одна деталь с голенью: режем по щиколотке
+    splits={'leg left 2': ('FL3', 0.885), 'leg right 2': ('NL3', 0.885)},
+    eye_layers=(), mouth_layers=(), eye_c=(0.02, -0.645), mouth_c=(0.0, -0.50),
+    eye_pts=[(-0.065, -0.645), (0.10, -0.645)], cheeks=[(-0.14, -0.55), (0.17, -0.55)], heart_r=0.055,
+)
+
+# Ла Пис нарисован лицом влево — зеркалим, чтобы, как все, смотрел вправо.
+# Он меньше больших, но больше шариков; ног нет — парит над землёй.
+LA_PEACE = dict(
+    file='la_peace.moho', mirror=True, px=500,
+    top=-0.967, sole=0.989, mid_x=-0.04, face_shift=0.0,
+    bones={
+        'torso': ('root', (0.0, 0.30)),
+        'head': ('torso', (0.04, -0.22)),
+        'face': ('head', (0.04, -0.50)),
+        'F1': ('torso', (0.13, -0.12)), 'F2': ('F1', (0.188, 0.111)), 'F3': ('F2', (0.252, 0.391)),
+        'N1': ('torso', (-0.25, -0.12)), 'N2': ('N1', (-0.305, 0.111)), 'N3': ('N2', (-0.344, 0.398)),
+        'pelvis': ('root', (0.0, 0.30)),
+    },
+    layers={
+        'hand right 1': 'F1', 'hand right 2': 'F2', 'hand left 1': 'N1', 'hand left 2': 'N2',
+        'body': 'torso', 'hair behind': 'head', 'hair front 2': 'head', 'head': 'head',
+        'hair front': 'head', 'ear': 'head', 'bread': 'head',
+        'eye brows': 'face', 'pupils': 'face', ' eyelids': 'face',
+    },
+    switch_bone={'mouth': 'face'},
+    switch_default={'mouth': 'mouth smile'},
+    eye_layers=('pupils', ' eyelids'), mouth_layers=(), eye_c=(0.14, -0.50), mouth_c=(0.15, -0.34),
+    eye_pts=[(0.30, -0.49), (-0.013, -0.49)], cheeks=[(0.36, -0.40), (-0.06, -0.40)], heart_r=0.075,
 )
 
 BALLS = {
@@ -188,8 +242,12 @@ class Big:
     def __init__(self, spec):
         self.spec = spec
         self.layers = moho.load(os.path.join(RIGS, spec['file']))
-        self.k = BIG_PX / (spec['sole'] - spec['top'])   # px на единицу
+        if spec.get('mirror'):
+            moho.mirror(self.layers)
+        self.k = spec.get('px', BIG_PX) / (spec['sole'] - spec['top'])   # px на единицу
         self.bones = spec['bones']
+        self.eye_layers = set(spec.get('eye_layers', (spec.get('eye_layer'),)))
+        self.mouth_layers = set(spec.get('mouth_layers', (spec.get('mouth_layer'),)))
 
     # точки рига
     def P(self, b):
@@ -205,13 +263,15 @@ class Big:
         M['torso'] = torso
         head = _rot_about(cairo.Matrix(), self.P('head'), pose.get('head', 0.0)).multiply(torso)
         M['head'] = head
-        fs = pose.get('face_shift', 0.035)
+        fs = pose.get('face_shift', self.spec.get('face_shift', 0.035))
         face = cairo.Matrix(x0=fs, y0=0.0).multiply(head)
         M['face'] = face
         if 'hat' in self.bones:
             M['hat'] = head
         # руки: углы (плечо, локоть, кисть) — «вперёд» положительно
         for side in ('F', 'N'):
+            if side + '1' not in self.bones:
+                continue
             arm = pose.get('arm' + side, (0.0, 0.0, 0.0))
             if isinstance(arm, dict):          # IK: {'to': (x, y) в координатах рига, 'bend': ±1, 'wrist': deg}
                 tgt = arm['to']
@@ -230,6 +290,8 @@ class Big:
             M[side + '1'], M[side + '2'], M[side + '3'] = m1, m2, m3
         # ноги: IK от бедра (сдвинутого вместе с тазом) к щиколотке
         for side in ('F', 'N'):
+            if side + 'L1' not in self.bones:
+                continue          # без ног (Ла Пис парит)
             off = pose.get('foot' + side, (0.0, 0.0))
             frot = pose.get('foot' + side + 'rot', 0.0)
             H0, K0, A0 = self.P(side + 'L1'), self.P(side + 'L2'), self.P(side + 'L3')
@@ -323,23 +385,75 @@ class Big:
         hide = pose.get('hide', ())
         only = pose.get('only')
         alpha = pose.get('alpha', 1.0)
+        hearts = pose.get('hearts', 0.0)
+        extras = pose.get('blush', 0.0) or hearts
+        extras_done = False
         for L in self.layers:
-            b = sp['layers'].get(L.name)
+            if L.switch:
+                if L.name != pose.get('sw_' + L.switch, sp['switch_default'][L.switch]):
+                    continue
+                b = sp['switch_bone'][L.switch]
+            else:
+                b = sp['layers'].get(L.name)
             if b is None or L.name in hide or not L.shapes:
                 continue
             if only is not None and L.name not in only:
                 continue
+            is_eye = L.name in self.eye_layers or L.switch == 'eyes'
+            is_mouth = L.name in self.mouth_layers or L.switch == 'mouth'
+            if is_eye and extras and not extras_done:
+                # румянец и глаза‑сердечки рисуются на месте глаз
+                self._face_extras(ctx, place, M['face'], hearts, pose.get('blush', 0.0), alpha)
+                extras_done = True
+            if is_eye and hearts:
+                continue
             ctx.save()
             ctx.transform(place)
             ctx.transform(M[b])
-            if L.name == sp['eye_layer']:
+            if is_eye:
                 self._scale_about(ctx, sp['eye_c'], pose.get('eyes', (1.0, 1.0)))
-            elif L.name == sp['mouth_layer']:
+            elif is_mouth:
                 self._scale_about(ctx, sp['mouth_c'], pose.get('mouth', (1.0, 1.0)))
             elif L.name == 'head' and pose.get('head_sx'):
                 self._scale_about(ctx, (0.0, -0.66), (pose['head_sx'], 1.0))
+            split = sp.get('splits', {}).get(L.name)
+            if split:
+                # цельная голень с ботинком: стопа держит свой поворот, подошва ровная
+                foot, cut = split
+                ctx.restore()
+                ctx.save()
+                ctx.transform(place)
+                ctx.transform(M[foot])
+                ctx.rectangle(-5, cut - 0.015, 10, 5)
+                ctx.clip()
+                draw_layer(ctx, L, alpha)
+                ctx.restore()
+                ctx.save()
+                ctx.transform(place)
+                ctx.transform(M[b])
+                ctx.rectangle(-5, -5, 10, cut + 0.02 + 5)
+                ctx.clip()
             draw_layer(ctx, L, alpha)
             ctx.restore()
+
+    def _face_extras(self, ctx, place, face, hearts, blush, alpha):
+        sp = self.spec
+        ctx.save()
+        ctx.transform(place)
+        ctx.transform(face)
+        if blush:
+            for cx, cy in sp['cheeks']:
+                ctx.save()
+                ctx.translate(cx, cy)
+                ctx.scale(sp['heart_r'] * 1.5, sp['heart_r'] * 0.8)
+                ctx.arc(0, 0, 1, 0, 2 * math.pi)
+                ctx.restore()
+                ctx.set_source_rgba(1.0, 0.35, 0.45, 0.55 * blush * alpha)
+                ctx.fill()
+        if hearts:
+            for cx, cy in sp['eye_pts']:
+                heart(ctx, cx, cy, sp['heart_r'] * hearts, alpha, lw=0.012)
+        ctx.restore()
 
     @staticmethod
     def _scale_about(ctx, c, s):

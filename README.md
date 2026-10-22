@@ -97,4 +97,5 @@ node tools/render.js                     # PNG ×2 (или: node tools/render.js
 ## Драки (animal hospital long)
 
 Ролики-драки из ригов Moho — в папке [`fight/`](fight/README.md).
-Готовое видео: `fight/export/skeleton_vs_lord.mp4` (скелет против лорда, пустынный каньон).
+Готовые видео: `fight/export/skeleton_vs_lord.mp4` (скелет против лорда, пустынный каньон),
+`fight/export/pink_vs_la_peace.mp4` (розовая против Ла Писа и поклонников, луг).
