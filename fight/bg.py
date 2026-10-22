@@ -275,12 +275,12 @@ def _stepped_hills(rng, base, top, step, bumps):
     return pts
 
 
-def _tree(ctx, x, base, s, rng):
+def _tree(ctx, x, base, s, rng, leaves=('#3f9e3c', '#4fb44a', '#37893a')):
     """Блочное дерево: ствол и крона из квадратов, без обводки (дальний план)."""
     ctx.set_source_rgba(*hexc('#8a5a32'))
     ctx.rectangle(x - 8 * s, base - 70 * s, 16 * s, 70 * s)
     ctx.fill()
-    leaf = [hexc('#3f9e3c'), hexc('#4fb44a'), hexc('#37893a')]
+    leaf = [hexc(c) for c in leaves]
     b = 22 * s
     rows = [(-2, 2), (-3, 3), (-3, 3), (-2, 2)]
     for r, (a, e) in enumerate(rows):
@@ -331,7 +331,25 @@ MEADOWS = {
     'windmill': dict(sky=('#3d9be9', '#8dcbf1', '#eaf6ec'), grass='#47c43a', grass_dark='#3eb033',
                      grass_light='#58d14a', dirt='#a0663a', dirt_dark=('#895631', '#7b4c2b', '#955e35'),
                      hills=('#bfe0c6', '#8fd07f'), windmill=True, tulips=True),
+    'autumn': dict(sky=('#4a96e0', '#9ccbee', '#fbe9cf'), grass='#62bf3a', grass_dark='#58ab33',
+                   grass_light='#76cd4b', dirt='#a5612f', dirt_dark=('#8d5228', '#7f4923', '#995a2c'),
+                   hills=('#d9e3b8', '#b5d48a'), autumn=True, leaves=True),
 }
+
+
+def _leaf(ctx, x, y, color, rot, s=1.0):
+    """Опавший листик на траве."""
+    ctx.save()
+    ctx.translate(x, y)
+    ctx.rotate(rot)
+    ctx.scale(11 * s, 6 * s)
+    ctx.arc(0, 0, 1, 0, 2 * math.pi)
+    ctx.restore()
+    ctx.set_source_rgba(*hexc(color))
+    ctx.fill_preserve()
+    ctx.set_source_rgba(*OUT)
+    ctx.set_line_width(1.8)
+    ctx.stroke()
 
 
 def _windmill(ctx, x, base, s):
@@ -649,6 +667,12 @@ def meadow(name='spring', seed=11):
         for tx, sc in ((150, 0.9), (700, 0.75), (1250, 1.0), (1440, 0.8), (1820, 0.9)):
             ty = min(y for x, y in hills if abs(x - tx) < 40) + 6
             _tree(ctx, tx, ty, sc, rng)
+    if v.get('autumn'):
+        palettes = (('#e8892a', '#f2a93b', '#d46a1f'), ('#f2c43a', '#e9b02c', '#f7d65a'),
+                    ('#c9442a', '#de5a32', '#b8381f'))
+        for k, (tx, sc) in enumerate(((90, 1.0), (330, 0.8), (560, 0.7), (1380, 0.75), (1600, 0.9), (1840, 1.05))):
+            ty = min(y for x, y in hills if abs(x - tx) < 40) + 6
+            _tree(ctx, tx, ty, sc, rng, palettes[k % 3])
     _poly(ctx, hills)
     ctx.set_source_rgba(*hexc(near))
     ctx.fill()
@@ -747,6 +771,10 @@ def meadow(name='spring', seed=11):
             ctx.set_source_rgba(*OUT)
             ctx.set_line_width(2)
             ctx.stroke()
+    if v.get('leaves'):
+        for _ in range(40):
+            _leaf(ctx, rng.uniform(0, W), rng.uniform(905, 990), rng.choice(('#e8892a', '#f2c43a', '#c9442a')),
+                  rng.uniform(0, math.pi), rng.uniform(0.9, 1.3))
     if v.get('tulips'):
         cols = ('#e8323a', '#ffcf2e', '#ff6fb0', '#f47a1f')
         for k in range(30):
