@@ -328,7 +328,61 @@ MEADOWS = {
     'farm': dict(sky=('#4aa3e6', '#9bd2ef', '#fbf3d9'), grass='#5cc23a', grass_dark='#51ad33',
                  grass_light='#6fd14a', dirt='#a96a33', dirt_dark=('#91582a', '#844f25', '#9d6230'),
                  hills=('#cfe6c0', '#a6d98a'), fence=True, haystacks=True, pumpkins=True),
+    'windmill': dict(sky=('#3d9be9', '#8dcbf1', '#eaf6ec'), grass='#47c43a', grass_dark='#3eb033',
+                     grass_light='#58d14a', dirt='#a0663a', dirt_dark=('#895631', '#7b4c2b', '#955e35'),
+                     hills=('#bfe0c6', '#8fd07f'), windmill=True, tulips=True),
 }
+
+
+def _windmill(ctx, x, base, s):
+    """Пиксельная мельница на холме: башня, крыша, четыре крыла."""
+    b = 10 * s
+    tower = [(-3, 3)] * 4 + [(-4, 4)] * 5 + [(-5, 5)] * 5 + [(-6, 6)] * 4
+    top = base - len(tower) * b
+    for r, (a, e) in enumerate(tower):
+        ctx.rectangle(x + a * b, top + r * b, (e - a) * b, b + 0.5)
+    ctx.set_source_rgba(*hexc('#e9dcc3'))
+    ctx.fill()
+    ctx.rectangle(x - 1.5 * b, base - 4 * b, 3 * b, 4 * b)
+    ctx.set_source_rgba(*hexc('#8a5b36'))
+    ctx.fill()
+    ctx.rectangle(x - 1.5 * b, top + 4 * b, 3 * b, 2 * b)
+    ctx.set_source_rgba(*hexc('#7fb6e0'))
+    ctx.fill()
+    for r, (a, e) in enumerate(((-1, 1), (-2, 2), (-4, 4))):
+        ctx.rectangle(x + a * b, top - (3 - r) * b, (e - a) * b, b + 0.5)
+    ctx.set_source_rgba(*hexc('#b8483a'))
+    ctx.fill()
+    hub = (x, top - b)
+    for k in range(4):
+        ctx.save()
+        ctx.translate(*hub)
+        ctx.rotate(math.radians(20 + 90 * k))
+        ctx.rectangle(-b * 0.4, 0, b * 0.8, 10 * b)
+        ctx.set_source_rgba(*hexc('#7a5332'))
+        ctx.fill()
+        for j in range(3, 10, 2):
+            ctx.rectangle(b * 0.4, j * b, 2.4 * b, b * 1.4)
+        ctx.set_source_rgba(*hexc('#f7f2e6'))
+        ctx.fill()
+        ctx.restore()
+    ctx.rectangle(hub[0] - b * 0.8, hub[1] - b * 0.8, b * 1.6, b * 1.6)
+    ctx.set_source_rgba(*hexc('#5c3d24'))
+    ctx.fill()
+
+
+def _tulip(ctx, x, y, color, s=1.0):
+    p = 6 * s
+    ctx.set_source_rgba(*hexc('#2d7d24'))
+    ctx.rectangle(x - 1.5 * s, y - 22 * s, 3 * s, 22 * s)
+    ctx.rectangle(x - 7 * s, y - 12 * s, 6 * s, 3 * s)
+    ctx.fill()
+    ctx.set_source_rgba(*hexc(color))
+    for dx, dy in ((-1, 0), (0, 0), (1, 0), (-1, -1), (1, -1), (0, -1), (-1, 1), (0, 1), (1, 1)):
+        if (dx, dy) == (0, -1):
+            continue
+        ctx.rectangle(x + dx * p - p / 2, y - 28 * s + dy * p - p / 2, p, p)
+    ctx.fill()
 
 
 def _fence(ctx, base, rng):
@@ -563,6 +617,13 @@ def meadow(name='spring', seed=11):
         ctx.set_source_rgba(*hexc(far))
         ctx.fill()
     hills = _stepped_hills(rng, 900, 700, 16, [(-50, 300, 140), (620, 240, 95), (1300, 320, 130), (2000, 260, 120)])
+    if v.get('windmill'):
+        _poly(ctx, hills)
+        ctx.set_source_rgba(*hexc(near))
+        ctx.fill()
+        for wx, sc in ((300, 1.0), (1650, 0.8)):
+            wy = min(y for x, y in hills if abs(x - wx) < 40) + 8
+            _windmill(ctx, wx, wy, sc)
     if v.get('haystacks'):
         _poly(ctx, hills)
         ctx.set_source_rgba(*hexc(near))
@@ -686,6 +747,11 @@ def meadow(name='spring', seed=11):
             ctx.set_source_rgba(*OUT)
             ctx.set_line_width(2)
             ctx.stroke()
+    if v.get('tulips'):
+        cols = ('#e8323a', '#ffcf2e', '#ff6fb0', '#f47a1f')
+        for k in range(30):
+            tx = 40 + k * 64 + rng.uniform(-12, 12)
+            _tulip(ctx, tx, rng.uniform(925, 985), cols[k % 4], rng.uniform(0.9, 1.15))
     if v.get('pumpkins'):
         for px_ in (90, 520, 1380, 1700, 1870):
             _pumpkin(ctx, px_ + rng.uniform(-25, 25), rng.uniform(935, 985), rng.uniform(0.9, 1.2))
