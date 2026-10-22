@@ -337,7 +337,23 @@ MEADOWS = {
     'coast': dict(sky=('#2f96ea', '#86c8f2', '#e8f7fb'), grass='#4cc83c', grass_dark='#43b435',
                   grass_light='#5ed64d', dirt='#a86a38', dirt_dark=('#8f5a2f', '#81502a', '#9c6233'),
                   hills=('#b9e3c2', '#86d07a'), sea=True, lighthouse=True, daisies=True),
+    'rainbow': dict(sky=('#3592e6', '#8cc8f1', '#f3f7e4'), grass='#45c63a', grass_dark='#3cb233',
+                    grass_light='#57d34a', dirt='#ab6c39', dirt_dark=('#925b30', '#844f2a', '#9f6434'),
+                    hills=('#c7e6cc', '#97d687'), rainbow=True, sakura=True,
+                    flowers=('#ff8fc4', '#ffffff', '#ffd23f', '#ff5c8a')),
 }
+
+
+def _rainbow(ctx, cx=960, cy=980, r=820, band=26):
+    """Радуга — пиксельными полосами, полупрозрачная."""
+    cols = ('#ff4b4b', '#ff9a2e', '#ffe14a', '#5fd35a', '#4aa8ff', '#7a6cf0')
+    for k, c in enumerate(cols):
+        ctx.new_path()
+        ctx.arc(cx, cy, r - k * band, math.pi, 2 * math.pi)
+        ctx.arc_negative(cx, cy, r - (k + 1) * band, 2 * math.pi, math.pi)
+        ctx.close_path()
+        ctx.set_source_rgba(*hexc(c)[:3], 0.55)
+        ctx.fill()
 
 
 def _sea(ctx, rng, y0=770, y1=880):
@@ -761,6 +777,13 @@ def meadow(name='spring', seed=11):
         for tx, sc in ((150, 0.9), (700, 0.75), (1250, 1.0), (1440, 0.8), (1820, 0.9)):
             ty = min(y for x, y in hills if abs(x - tx) < 40) + 6
             _tree(ctx, tx, ty, sc, rng)
+    if v.get('rainbow'):
+        _rainbow(ctx)
+    if v.get('sakura'):
+        pinks = ('#ffb3d1', '#ff9cc4', '#ffc9de')
+        for tx, sc in ((120, 1.0), (380, 0.8), (1520, 0.85), (1790, 1.05)):
+            ty = min(y for x, y in hills if abs(x - tx) < 40) + 6
+            _tree(ctx, tx, ty, sc, rng, pinks)
     if v.get('autumn'):
         palettes = (('#e8892a', '#f2a93b', '#d46a1f'), ('#f2c43a', '#e9b02c', '#f7d65a'),
                     ('#c9442a', '#de5a32', '#b8381f'))
