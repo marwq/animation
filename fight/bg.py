@@ -325,7 +325,73 @@ MEADOWS = {
     'lake': dict(sky=('#3a8fe8', '#7fc0f0', '#e6f1ff'), grass='#3fbf3a', grass_dark='#36aa31',
                  grass_light='#52cf47', dirt='#b0703a', dirt_dark=('#985e2f', '#8a5229', '#a4683a'),
                  hills=('#c3e3cf', '#93d48c'), lake=True, birches=True, sunflowers=True),
+    'farm': dict(sky=('#4aa3e6', '#9bd2ef', '#fbf3d9'), grass='#5cc23a', grass_dark='#51ad33',
+                 grass_light='#6fd14a', dirt='#a96a33', dirt_dark=('#91582a', '#844f25', '#9d6230'),
+                 hills=('#cfe6c0', '#a6d98a'), fence=True, haystacks=True, pumpkins=True),
 }
+
+
+def _fence(ctx, base, rng):
+    """Деревянный пиксельный забор вдоль дальнего края луга."""
+    post, rail, dark = hexc('#b07a45'), hexc('#c48c52'), hexc('#8a5b30')
+    for y in (base - 46, base - 24):
+        ctx.rectangle(-M, y, W + 2 * M, 9)
+        ctx.set_source_rgba(*rail)
+        ctx.fill()
+        ctx.rectangle(-M, y + 7, W + 2 * M, 2)
+        ctx.set_source_rgba(*dark)
+        ctx.fill()
+    x = -M + 10
+    while x < W + M:
+        ctx.rectangle(x, base - 62, 14, 62)
+        ctx.set_source_rgba(*post)
+        ctx.fill()
+        ctx.rectangle(x + 10, base - 62, 4, 62)
+        ctx.set_source_rgba(*dark)
+        ctx.fill()
+        x += 88
+
+
+def _haystack(ctx, x, base, s, rng):
+    """Стог сена из пиксельных рядов: широкий низ, круглая макушка."""
+    cols = [hexc('#e8c24a'), hexc('#d9ae3a'), hexc('#f2d36a')]
+    b = 14 * s
+    rows = [(-1, 1), (-3, 3), (-4, 4), (-5, 5), (-5, 5), (-6, 6), (-6, 6)]
+    for r, (a, e) in enumerate(rows):
+        for c in range(a, e):
+            ctx.set_source_rgba(*rng.choice(cols))
+            ctx.rectangle(x + c * b, base - (len(rows) - r) * b, b + 0.5, b + 0.5)
+            ctx.fill()
+    ctx.set_source_rgba(*hexc('#b8902c'))
+    for k in range(3):
+        ctx.rectangle(x - 4 * b + k * 3 * b, base - 3 * b, 2 * b, 3)
+    ctx.fill()
+
+
+def _pumpkin(ctx, x, y, s=1.0):
+    """Тыковка с обводкой и хвостиком."""
+    ctx.save()
+    ctx.translate(x, y - 14 * s)
+    ctx.scale(22 * s, 15 * s)
+    ctx.arc(0, 0, 1, 0, 2 * math.pi)
+    ctx.restore()
+    ctx.set_source_rgba(*hexc('#f08a24'))
+    ctx.fill_preserve()
+    ctx.set_source_rgba(*OUT)
+    ctx.set_line_width(2.5)
+    ctx.stroke()
+    ctx.set_source_rgba(*hexc('#c96a14'))
+    ctx.set_line_width(2)
+    for dx in (-8, 8):
+        ctx.move_to(x + dx * s, y - 27 * s)
+        ctx.curve_to(x + dx * 1.4 * s, y - 18 * s, x + dx * 1.4 * s, y - 10 * s, x + dx * s, y - 1 * s)
+    ctx.stroke()
+    ctx.rectangle(x - 2.5 * s, y - 36 * s, 5 * s, 9 * s)
+    ctx.set_source_rgba(*hexc('#4f7a22'))
+    ctx.fill_preserve()
+    ctx.set_source_rgba(*OUT)
+    ctx.set_line_width(2)
+    ctx.stroke()
 
 
 def _lake(ctx, rng, y0=812, y1=874, step=12):
@@ -497,6 +563,13 @@ def meadow(name='spring', seed=11):
         ctx.set_source_rgba(*hexc(far))
         ctx.fill()
     hills = _stepped_hills(rng, 900, 700, 16, [(-50, 300, 140), (620, 240, 95), (1300, 320, 130), (2000, 260, 120)])
+    if v.get('haystacks'):
+        _poly(ctx, hills)
+        ctx.set_source_rgba(*hexc(near))
+        ctx.fill()
+        for hx, sc in ((170, 1.0), (330, 0.75), (1600, 0.9), (1790, 1.1)):
+            hy = min(y for x, y in hills if abs(x - hx) < 40) + 6
+            _haystack(ctx, hx, hy, sc, rng)
     if v.get('birches'):
         _poly(ctx, hills)
         ctx.set_source_rgba(*hexc(near))
@@ -520,6 +593,8 @@ def meadow(name='spring', seed=11):
     ctx.fill()
     if v.get('lake'):
         _lake(ctx, rng)
+    if v.get('fence'):
+        _fence(ctx, 878, rng)
 
     # трава: верхний край неровный, с пучками, чёрная обводка
     top = 872
@@ -611,6 +686,9 @@ def meadow(name='spring', seed=11):
             ctx.set_source_rgba(*OUT)
             ctx.set_line_width(2)
             ctx.stroke()
+    if v.get('pumpkins'):
+        for px_ in (90, 520, 1380, 1700, 1870):
+            _pumpkin(ctx, px_ + rng.uniform(-25, 25), rng.uniform(935, 985), rng.uniform(0.9, 1.2))
     if v.get('sunflowers'):
         for fx_ in (60, 330, 700, 1230, 1580, 1850):
             _sunflower(ctx, fx_ + rng.uniform(-25, 25), rng.uniform(930, 985), rng.uniform(0.9, 1.15))

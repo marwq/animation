@@ -116,7 +116,7 @@ class Film:
         return self._cache[key]
 
     def _baby(self, f):
-        p = dict(dir=1, face_shift=0.06, eyes='normal', prop=f * 8.0, prop_blur=False)
+        p = dict(dir=1, face_shift=0.12, eyes='normal', prop=f * 8.0, prop_blur=False)
         x, lift, sx, sy, rot = BX, 0.0, 1.0, 1.0, 0.0
         flying = False
         # стойка: два радостных подскока
@@ -223,7 +223,7 @@ class Film:
             x = CENTER
             sx, sy = ball_squash(f, 484, 490, 0, 8)
             if f >= 524:
-                p['face_shift'] = lerp(0.06, 0.0, seg(f, 524, 528))
+                p['face_shift'] = lerp(0.12, 0.0, seg(f, 524, 528))
             for a in (540, 564):
                 if a - 4 <= f < a + 20:
                     _, lift = hop(f, a, a + 12, CENTER, CENTER, 60)
@@ -245,7 +245,7 @@ class Film:
         def calc():
             lp = self.lord_ball(132)
             hc = self.hat_on_lord(lp)
-            q = dict(x=0.0, y=0.0, dir=1, face_shift=0.06, rot=15.0)
+            q = dict(x=0.0, y=0.0, dir=1, face_shift=0.12, rot=15.0)
             m = self.mouth_pt(q)
             # рот малыша — на левом краю полей
             target = (hc[0] - CARRY0[0], hc[1] - CARRY0[1])
@@ -293,7 +293,7 @@ class Film:
     def _lord_ball(self, f):
         if f >= 232:
             return None
-        p = dict(dir=-1, face_shift=0.06, eyes='angry', mouth='smile normal')
+        p = dict(dir=-1, face_shift=0.12, eyes='angry', mouth='smile normal')
         x, lift, sx, sy = LB, 0.0, 1.0, 1.0
         if 50 <= f < 96:
             p['mouth'] = 'theeth smile'

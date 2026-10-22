@@ -530,7 +530,11 @@ class Ball:
             ctx.save()
             ctx.transform(place)
             if L.switch in ('eyes', 'mouth') or L.name in ('mouth', 'blush'):
-                ctx.translate(fs, 0)
+                if abs(fs) > 0.03:
+                    # черты лица не вылезают за контур тела
+                    self._loops_path(ctx, self.layer('body'))
+                    ctx.clip()
+                self._face_xf(ctx, fs, eyes=L.switch == 'eyes')
                 if L.switch == 'eyes':
                     ctx.translate(0, pose.get('eye_dy', 0.0))
                     if pose.get('eye_s'):
@@ -585,6 +589,14 @@ class Ball:
         draw_layer(ctx, self.layer(name))
         ctx.restore()
 
+    def _face_xf(self, ctx, fs, eyes=False):
+        """Поворот лица в три четверти: черты сдвинуты к взгляду, лицо сужено,
+        глаза сдвинуты чуть сильнее рта."""
+        sq = 1.0 - min(0.18, 1.3 * abs(fs))
+        ctx.translate(self.cx + fs * (1.3 if eyes else 1.0), 0)
+        ctx.scale(sq, 1)
+        ctx.translate(-self.cx, 0)
+
     def _mouth_xf(self, ctx, name, pose):
         """Огромный рот: масштаб вокруг центра рта и сдвиг (в единицах рига)."""
         ms = pose.get('mouth_s')
@@ -611,7 +623,7 @@ class Ball:
         ctx.save()
         ctx.transform(self.place(pose))
         self._loops_path(ctx, self.layer('body'))
-        ctx.translate(pose.get('face_shift', 0.05), 0)
+        self._face_xf(ctx, pose.get('face_shift', 0.05))
         self._mouth_xf(ctx, mouth.name, pose)
         self._loops_path(ctx, mouth)
         ctx.restore()
@@ -621,7 +633,10 @@ class Ball:
     def point(self, pose, p, face=False):
         """Точка рига в кадре; face=True — с учётом сдвига лица."""
         m = self.place(pose)
-        x = p[0] + (pose.get('face_shift', 0.05) if face else 0.0)
+        x = p[0]
+        if face:
+            fs = pose.get('face_shift', 0.05)
+            x = self.cx + fs + (1.0 - min(0.18, 1.3 * abs(fs))) * (x - self.cx)
         return m.transform_point(x, p[1])
 
     def layer(self, name):
