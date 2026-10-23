@@ -311,6 +311,36 @@ def s_spring(**_):
     return norm(x * decay(d, 0.22, 0.002), 0.7)
 
 
+def s_suck(seed=19, dur=2.0, **_):
+    """Огромный вдох: нарастающий рёв воздуха и низкий гул."""
+    d = max(0.5, dur)
+    t = tt(d)
+    up = np.clip(t / (0.35 * d), 0, 1)
+    env = up * np.clip((d - t) / 0.12, 0, 1)
+    w = noise(d, seed)
+    air = lowpass2(w, 300 + 1500 * up) - lowpass2(w, 80)
+    hum = osc(70 + 40 * up, d, 'saw')
+    return norm((norm(air) + 0.35 * norm(lowpass(hum, 300))) * env, 0.7)
+
+
+def s_gulp(**_):
+    """Глоток: «гульп» — булькающий тон вниз."""
+    d = 0.35
+    t = tt(d)
+    f = np.interp(t, [0, 0.08, 0.2, d], [300, 520, 160, 90])
+    x = osc(f, d) * bell(d, 0.2) + 0.4 * osc(f * 2.02, d) * decay(d, 0.06)
+    return norm(lowpass(x, 2500), 0.75)
+
+
+def s_spit(seed=20, **_):
+    """Выплюнул: «тьфу» — короткий взрыв воздуха и брызги."""
+    d = 0.45
+    puff_ = lowpass2(noise(d, seed), 1800) * decay(d, 0.05, 0.002)
+    spray = bandpass(noise(d, seed + 1), 3000, 9000) * decay(d, 0.12, 0.01)
+    pop = osc(glide(240, 90, d), d) * decay(d, 0.04)
+    return norm(norm(puff_) + 0.4 * norm(spray) + 0.6 * pop, 0.85)
+
+
 # ---------------------------------------------------------------- злость, сила
 def s_anger(seed=10, dur=1.0, **_):
     """Жилка и пар: шипение и рычание."""
@@ -446,7 +476,7 @@ def write_wav(path, st):
 def demo():
     cues, t = [], 0.3
     for k in SOUNDS:
-        cues.append({'t': t, 'kind': k, 'dur': 1.2 if k in ('dizzy', 'gust', 'anger', 'whirr') else 0})
+        cues.append({'t': t, 'kind': k, 'dur': 1.2 if k in ('dizzy', 'gust', 'anger', 'whirr', 'suck') else 0})
         t += 1.8 if k in ('dizzy', 'gust', 'slam', 'love') else 1.0
     return {'duration': t + 0.5, 'cues': cues}
 

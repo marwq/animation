@@ -323,6 +323,7 @@ const E = (() => {
     //   b_<кость>                              дополнительный поворот любой кости (крылья)
     //   look -1..1, zF/zB 'front'|'back', mouth, eyes, hide, alpha
     //   spin (обороты), spinBlur 0..1                пропеллер (opts.spin в конструкторе)
+    //   mouthK                                       рот крупнее в mouthK раз (вокруг его центра)
     // world.hitF/hitB/kickF {at, w} — тянуть кулак/стопу к точке сцены с весом w.
     pose(p, world = {}) {
       const dir = this.dir;
@@ -461,6 +462,10 @@ const E = (() => {
         const i = l.bone in this.idx ? this.idx[l.bone] : this.root;
         let M = mul(cam, mul(st.G, st.W[i]));
         if (l.sw === 'mouth' || l.sw === 'eyes' || l.name === 'eye') M = mul(M, T(shift, 0));
+        if (l.sw === 'mouth' && p.mouthK && p.mouthK !== 1) {          // огромный рот (засасывает, кричит)
+          const cx = (l.bbox[0] + l.bbox[2]) / 2, cy = (l.bbox[1] + l.bbox[3]) / 2;
+          M = mul(M, mul(T(cx, cy), mul(S(p.mouthK, p.mouthK), T(-cx, -cy))));
+        }
         else if (narrow !== 1 && l.name === 'head') M = mul(M, mul(T(fcx, 0), mul(S(narrow, 1), T(-fcx, 0))));
         if (l.spinAxis !== undefined && (p.spin || p.spinBlur)) {
           const blur = clamp(p.spinBlur || 0, 0, 1), b = l.bbox, a = l.spinAxis;

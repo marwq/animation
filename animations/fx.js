@@ -312,6 +312,41 @@ const FX = (() => {
     }
   }
 
+  // засасывание: травинки, листья и пыль летят по сходящимся дугам в точку (mx, my); t — секунды
+  function suck(ctx, mx, my, x0, ground, t, alpha = 1, seed = 9) {
+    const r = rng(seed);
+    for (let i = 0; i < 30; i++) {
+      const sp = 0.55 + r() * 0.5, ph = r(), h = 10 + r() * 330, kind = r(), sz = r();
+      const u = (t * sp + ph) % 1;                                   // 0 — у края, 1 — во рту
+      const e = u * u;
+      const sx = x0 + r() * 160, sy = ground - h;
+      const x = sx + (mx - sx) * e, y = sy + (my - sy) * e + Math.sin(u * 7 + i) * 10 * (1 - u);
+      const a = alpha * Math.min(1, u * 5) * Math.min(1, (1 - u) * 6);
+      if (a <= 0) continue;
+      if (kind < 0.45) puff(ctx, x, y, (12 + sz * 16) * (1 - 0.6 * u), 0.8 * a, '#f1e6cc', '#a8936a');
+      else {
+        ctx.save(); ctx.globalAlpha = a; ctx.translate(x, y); ctx.rotate(u * 16 + i);
+        ctx.beginPath(); ctx.ellipse(0, 0, (14 + sz * 8) * (1 - 0.5 * u), 5, 0, 0, TAU);
+        ctx.fillStyle = kind < 0.75 ? '#25c516' : '#7cc23a'; ctx.fill();
+        ctx.lineWidth = 2; ctx.strokeStyle = '#0d4f07'; ctx.stroke(); ctx.restore();
+      }
+    }
+  }
+
+  // капли слюны: летят из (x, y) веером и падают; life 0..1
+  function drool(ctx, x, y, life, dir = 1, seed = 4) {
+    if (life < 0 || life > 1) return;
+    const r = rng(seed);
+    for (let i = 0; i < 10; i++) {
+      const vx = dir * (60 + r() * 260), vy = -120 - r() * 200, s = 7 + r() * 8;
+      const px = x + vx * life, py = y + vy * life + 520 * life * life;
+      ctx.save(); ctx.globalAlpha = 1 - life * 0.6;
+      ctx.beginPath(); ctx.ellipse(px, py, s * 0.7, s, Math.atan2(vy + 1040 * life, vx) + Math.PI / 2, 0, TAU);
+      ctx.fillStyle = '#9ee7ff'; ctx.fill(); ctx.lineWidth = 2.5; ctx.strokeStyle = '#1b5e8c'; ctx.stroke();
+      ctx.restore();
+    }
+  }
+
   // банановая кожура (лежит на траве): s — ширина, rot — поворот
   function banana(ctx, x, y, s = 90, rot = 0) {
     ctx.save();
@@ -389,5 +424,5 @@ const FX = (() => {
   }
 
   return { rng, background, cloud, shadow, spark, dust, smoke, flash, rays, vein, steam, sweat, stars, twinkle, whoosh, puff,
-    heart, hearts, wind, banana, giftBox };
+    heart, hearts, wind, banana, giftBox, suck, drool };
 })();

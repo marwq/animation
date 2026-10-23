@@ -37,7 +37,7 @@ function Stage(cfg) {
 
   // ---------------------------------------------------------------- события эффектов
   const FX_EV = { spark: [], shake: [], zoom: [], dust: [], smoke: [], flash: [], rays: [], vein: [], steam: [],
-    sweat: [], stars: [], twinkle: [], whoosh: [], hearteyes: [], hearts: [], wind: [], heartshot: [] };
+    sweat: [], stars: [], twinkle: [], whoosh: [], hearteyes: [], hearts: [], wind: [], heartshot: [], suck: [], drool: [] };
   const SFX = [];
   const sfx = (kind, f, o = {}) => SFX.push({ kind, f, ...o });
   // эффект + его звук (если у эффекта он есть и не выключен snd: false)
@@ -62,6 +62,8 @@ function Stage(cfg) {
       if (o.pop !== false) sfx('pop', o.f1, { at: o.to, gain: 0.6 });
     }
     else if (kind === 'wind') sfx('gust', o.f0, { x: (o.x0 + o.x1) / 2, dur: o.f1 - o.f0, gain: g });
+    else if (kind === 'suck') sfx('suck', o.f0, { who: o.who, dur: o.f1 - o.f0, gain: g });
+    else if (kind === 'drool') sfx('spit', o.f, { at: o.at, gain: g });
     else if (o.snd) sfx(o.snd, o.f ?? o.f0, { x: o.x, who: o.who, at: o.at, gain: g });
   };
 
@@ -422,7 +424,7 @@ function Stage(cfg) {
 
   // ---------------------------------------------------------------- позы и точки
   const DEF = { x: 0, y: GROUND, face: 1, hip: [0, 0], lean: 0, head: 0, rot: 0, sx: 1, sy: 1, pivot: 0, look: 0,
-    hide: [], legF: null, legB: null, hitF: 0, hitB: 0, kickF: 0, zF: null, zB: null, over: null };
+    hide: [], legF: null, legB: null, hitF: 0, hitB: 0, kickF: 0, zF: null, zB: null, over: null, z: 0, alpha: 1, mouthK: 1 };
 
   function poseOf(who, f) {
     const p = TR[who].sample(F(f), { ...DEF });
@@ -530,8 +532,10 @@ function Stage(cfg) {
     }
     // персонажи от дальнего к ближнему; влюблённым прячем глаза — вместо них сердечки
     const loveEyes = (who) => FX_EV.hearteyes.filter((h) => h.who === who && f >= h.f0 && f <= h.f1);
-    for (const who of ORDER) {
+    const ORD = [...ORDER].sort((a, b) => (S[a].p.z || 0) - (S[b].p.z || 0));   // z — временно дальше/ближе
+    for (const who of ORD) {
       const { ch, st, p } = S[who];
+      if (p.alpha === 0) continue;
       let pp = hooks.drawPose ? hooks.drawPose(who, p, f) : p;
       const info = (h) => (h.layer ? { layer: h.layer, eyes: h.eyes, hide: [h.layer] } : eyeInfo(ch));
       for (const h of loveEyes(who)) pp = { ...pp, hide: [...(pp.hide || []), ...info(h).hide] };
@@ -560,6 +564,17 @@ function Stage(cfg) {
       FX.hearts(ctx, top[0], top[1] + 20, (f - h.f0) / FPS, Math.min(1, (h.f1 - f) / 8));
     }
     for (const w of FX_EV.wind) FX.wind(ctx, w.x0, w.x1, GROUND, (f - w.f0) / (w.f1 - w.f0), w.f0);
+    for (const k of FX_EV.suck) {
+      if (f < k.f0 || f > k.f1) continue;
+      const m = target(k.at, S), fade = Math.min(1, (f - k.f0) / 6, (k.f1 - f) / 6);
+      FX.suck(ctx, m[0], m[1], k.x0, GROUND, (f - k.f0) / FPS, fade, k.f0);
+    }
+    for (const d of FX_EV.drool) {
+      const u = (f - d.f) / (d.n || 20);
+      if (u < 0 || u > 1) continue;
+      const m = typeof d.at === 'string' ? target(d.at, statesAt(d.f)) : d.at;
+      FX.drool(ctx, m[0], m[1], u, d.dir || 1, d.f);
+    }
     for (const h of FX_EV.heartshot) {           // большое сердце летит по дуге в лицо
       const u = (f - h.f0) / (h.f1 - h.f0);
       const a = typeof h.from === 'string' ? target(h.from, statesAt(h.f0)) : h.from;
@@ -645,7 +660,7 @@ function Stage(cfg) {
     };
     const cues = SFX.filter((c) => c.f >= 0 && c.f < NF).sort((a, b) => a.f - b.f).map((c) => ({
       t: c.f / FPS, kind: c.kind, gain: c.gain ?? 1, dur: c.dur ? c.dur / FPS : 0, pitch: pitchOf(c),
-      pan: E.clamp((xOf(c) - W / 2) / (W / 2), -1, 1) * 0.6 }));
+      pan: (E.clamp((xOf(c) - W / 2) / (W / 2), -1, 1) * 0.6) || 0 }));
     return { duration: NF / FPS, cues };
   }
 
