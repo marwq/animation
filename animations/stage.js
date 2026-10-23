@@ -697,9 +697,14 @@ function Stage(cfg) {
     window.SCENE.audio = audio;
   }
 
+  // кусок фона поверх персонажа (воткнулся головой в землю — голова «под землёй»)
+  function bgPatch(ctx, x, y, w, h) {
+    ctx.drawImage(BG.canvas, x + BG.margin, y + BG.margin, w, h, x, y, w, h);
+  }
+
   // stateAt — то же, что statesAt, но без кэша: можно звать, пока ключи ещё ставятся
   return { FPS, W, H, NF, GROUND, EDGE, F, CAST, C, key, move, ev, sfx, hop, tumble, laugh, tremble, transform,
     love, blowKiss, stance, walk, turn, strike, kick, dodge, duck, recoil, fallBack, flyOff, victory, hand, toRig,
     chuckle, spinAround, stomp, getUp, slip, shrink,
-    target, parts, statesAt, stateAt: evalStates, hooks, start };
+    target, parts, statesAt, stateAt: evalStates, hooks, start, bgPatch };
 }

@@ -505,6 +505,22 @@ const FX = (() => {
     ctx.restore();
   }
 
+  // качели: бревно-опора и доска; x, y — ось (верх бревна), len — длина доски, ang — наклон (радианы)
+  function seesaw(ctx, x, y, len, ang) {
+    ctx.save();
+    ctx.lineJoin = 'round'; ctx.lineWidth = 6; ctx.strokeStyle = '#111';
+    // бревно
+    ctx.beginPath(); ctx.moveTo(x - 60, y + 62); ctx.lineTo(x, y); ctx.lineTo(x + 60, y + 62); ctx.closePath();
+    ctx.fillStyle = '#9a6a35'; ctx.fill(); ctx.stroke();
+    ctx.beginPath(); ctx.arc(x, y + 10, 16, 0, TAU); ctx.fillStyle = '#6b4520'; ctx.fill(); ctx.stroke();
+    // доска
+    ctx.translate(x, y); ctx.rotate(ang);
+    ctx.beginPath(); ctx.rect(-len / 2, -18, len, 22); ctx.fillStyle = '#c98b47'; ctx.fill(); ctx.stroke();
+    ctx.lineWidth = 3; ctx.strokeStyle = '#8a5a2b';
+    for (const k of [-0.3, 0.05, 0.38]) { ctx.beginPath(); ctx.moveTo(len * k, -12); ctx.lineTo(len * k + 40, -12); ctx.stroke(); }
+    ctx.restore();
+  }
+
   // банановая кожура (лежит на траве): s — ширина, rot — поворот
   function banana(ctx, x, y, s = 90, rot = 0) {
     ctx.save();
@@ -582,5 +598,5 @@ const FX = (() => {
   }
 
   return { rng, background, cloud, shadow, spark, dust, smoke, flash, rays, vein, steam, sweat, stars, twinkle, whoosh, puff,
-    heart, hearts, wind, banana, giftBox, suck, drool, tree, apple, bubble, gumSplat, rainCloud, rain, lightning, puddle };
+    heart, hearts, wind, banana, giftBox, suck, drool, tree, apple, bubble, gumSplat, rainCloud, rain, lightning, puddle, seesaw };
 })();
