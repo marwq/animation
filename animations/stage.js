@@ -347,7 +347,7 @@ function Stage(cfg) {
   function fallBack(who, f, x, face, o = {}) {
     const n = o.n || 16;
     key(who, f, { legFfk: 1, legBfk: 1, legF: [0, 0, 0], legB: [0, 0, 0], mouth: o.mouth || 'puzzlement',
-      handF: hand(who, 'F', 0.1, -0.95), handB: hand(who, 'B', -0.05, -0.95), zB: 'back', lean: 0, head: 0 }, 5);
+      handF: hand(who, 'F', 0.1, -0.95), handB: hand(who, 'B', -0.05, -0.95), zB: 'back', lean: 0, head: 0 }, o.dur || 5);
     key(who, f, { rot: 0, pivot: 0 }, 0);
     move(who, f, { x, y: GROUND });
     move(who, f + n, { rot: -90 * face, y: GROUND - (o.lift || CAST[who].lie || 50) }, 'in');

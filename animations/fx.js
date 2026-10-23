@@ -335,6 +335,51 @@ const FX = (() => {
     ctx.restore();
   }
 
+  // подарок-ловушка: красная коробка с жёлтой лентой; lid 0..1 — крышка откинута;
+  // spring {dx, dy} — пружина с боксёрской перчаткой от верха коробки (координаты сцены)
+  function giftBox(ctx, x, y, s = 110, rot = 0, lid = 0, spring = null) {
+    const w = s, h = s * 0.72, ink = '#111';
+    ctx.save();
+    ctx.lineJoin = 'round'; ctx.lineCap = 'round';
+    // пружина и перчатка — из коробки, позади крышки
+    if (spring && Math.hypot(spring.dx, spring.dy) > 4) {
+      const top = [x + Math.sin(rot) * h, y - Math.cos(rot) * h];
+      const L = Math.hypot(spring.dx, spring.dy), ux = spring.dx / L, uy = spring.dy / L;
+      const n = Math.max(4, Math.round(L / 22)), amp = 16;
+      ctx.beginPath(); ctx.moveTo(top[0], top[1]);
+      for (let i = 1; i <= n; i++) {
+        const t = i / n, side = i === n ? 0 : (i % 2 ? 1 : -1) * amp;
+        ctx.lineTo(top[0] + ux * L * t - uy * side, top[1] + uy * L * t + ux * side);
+      }
+      ctx.lineWidth = 9; ctx.strokeStyle = ink; ctx.stroke();
+      ctx.lineWidth = 5; ctx.strokeStyle = '#c9c9c9'; ctx.stroke();
+      const g = [top[0] + spring.dx, top[1] + spring.dy];
+      ctx.save(); ctx.translate(g[0], g[1]); ctx.rotate(Math.atan2(uy, ux));
+      ctx.lineWidth = 5; ctx.strokeStyle = ink;
+      ctx.beginPath(); ctx.rect(-26, -20, 18, 40); ctx.fillStyle = '#fff'; ctx.fill(); ctx.stroke();   // манжета
+      ctx.beginPath(); ctx.ellipse(16, 0, 34, 30, 0, 0, Math.PI * 2); ctx.fillStyle = '#e8262d'; ctx.fill(); ctx.stroke();
+      ctx.beginPath(); ctx.ellipse(8, -26, 16, 11, -0.3, 0, Math.PI * 2); ctx.fill(); ctx.stroke();       // большой палец
+      ctx.beginPath(); ctx.ellipse(22, -8, 9, 6, -0.4, 0, Math.PI * 2); ctx.fillStyle = 'rgba(255,255,255,0.7)'; ctx.fill();
+      ctx.restore();
+    }
+    ctx.translate(x, y); ctx.rotate(rot);
+    ctx.lineWidth = 5; ctx.strokeStyle = ink;
+    ctx.beginPath(); ctx.rect(-w / 2, -h, w, h); ctx.fillStyle = '#e8303a'; ctx.fill(); ctx.stroke();
+    ctx.beginPath(); ctx.rect(-w * 0.09, -h, w * 0.18, h); ctx.fillStyle = '#ffd21f'; ctx.fill(); ctx.stroke();
+    // крышка с бантом, откидывается назад на петле
+    ctx.save();
+    ctx.translate(-w * 0.55, -h); ctx.rotate(-lid * 1.9); ctx.translate(w * 0.55, 0);
+    ctx.beginPath(); ctx.rect(-w * 0.55, -h * 0.26, w * 1.1, h * 0.26); ctx.fillStyle = '#ff4650'; ctx.fill(); ctx.stroke();
+    ctx.beginPath(); ctx.rect(-w * 0.09, -h * 0.26, w * 0.18, h * 0.26); ctx.fillStyle = '#ffd21f'; ctx.fill(); ctx.stroke();
+    for (const k of [-1, 1]) {
+      ctx.beginPath(); ctx.ellipse(k * w * 0.16, -h * 0.4, w * 0.16, h * 0.13, k * 0.5, 0, Math.PI * 2);
+      ctx.fillStyle = '#ffd21f'; ctx.fill(); ctx.stroke();
+    }
+    ctx.beginPath(); ctx.arc(0, -h * 0.3, w * 0.06, 0, Math.PI * 2); ctx.fill(); ctx.stroke();
+    ctx.restore();
+    ctx.restore();
+  }
+
   // «вжух» — удар прошёл мимо: маленькое облачко
   function whoosh(ctx, x, y, life) {
     if (life < 0 || life > 1) return;
@@ -344,5 +389,5 @@ const FX = (() => {
   }
 
   return { rng, background, cloud, shadow, spark, dust, smoke, flash, rays, vein, steam, sweat, stars, twinkle, whoosh, puff,
-    heart, hearts, wind, banana };
+    heart, hearts, wind, banana, giftBox };
 })();
