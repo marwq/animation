@@ -157,6 +157,20 @@ function Stage(cfg) {
     return g + 6;
   }
 
+  // обратно в маленькую версию: дым, вспышка, шарик выскакивает (0.6 -> 1.15 -> 1)
+  function shrink(who, f, x, face, o = {}) {
+    ev('flash', { f, who, strength: 0.25 });
+    ev('smoke', { f, who, size: o.smoke || 460, dx: 0, y: GROUND - 210 });     // низко — над шариком
+    ev('shake', { f, amp: 8, n: 6 });
+    sfx('poof', f, { who });
+    sfx('pop', f + 4, { who, gain: 0.7 });
+    key(who, f + 4, { form: 'small', x, face, sx: 0.6, sy: 0.6, rot: 0, pivot: 0, look: o.look ?? 1,
+      mouth: o.mouth || mood(who, 'small', 'smile normal'), eyes: o.eyes || 'normal' }, 0);
+    key(who, f + 8, { sx: 1.15, sy: 1.15 }, 4, 'out');
+    key(who, f + 12, { sx: 1, sy: 1 }, 4);
+    return f + 4;
+  }
+
   // ---------------------------------------------------------------- любовь
   // сердечки вместо глаз (центры глаз — animations/eyes.json), сердечки над головой, звук
   function love(who, f0, f1, o = {}) {
@@ -603,7 +617,7 @@ function Stage(cfg) {
       if (u < 0 || u > 1) continue;
       const { ch, st } = statesAt(s.f)[s.who];   // облако стоит там, где началось превращение
       const base = E.apply(st.G, ch.anchor);
-      FX.smoke(ctx, base[0] + (s.dx || 0), GROUND - 380, s.size, u, s.f);
+      FX.smoke(ctx, base[0] + (s.dx || 0), s.y ?? GROUND - 380, s.size, u, s.f);
     }
     for (const v of FX_EV.vein) {
       if (f < v.f0 || f > v.f1) continue;
@@ -686,6 +700,6 @@ function Stage(cfg) {
   // stateAt — то же, что statesAt, но без кэша: можно звать, пока ключи ещё ставятся
   return { FPS, W, H, NF, GROUND, EDGE, F, CAST, C, key, move, ev, sfx, hop, tumble, laugh, tremble, transform,
     love, blowKiss, stance, walk, turn, strike, kick, dodge, duck, recoil, fallBack, flyOff, victory, hand, toRig,
-    chuckle, spinAround, stomp, getUp, slip,
+    chuckle, spinAround, stomp, getUp, slip, shrink,
     target, parts, statesAt, stateAt: evalStates, hooks, start };
 }
