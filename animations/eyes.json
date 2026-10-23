@@ -1,0 +1,167 @@
+{
+ "all-verity-color": {
+  "layer": "eye",
+  "eyes": [
+   [
+    141,
+    213,
+    60
+   ],
+   [
+    330,
+    220,
+    60
+   ]
+  ]
+ },
+ "child-verity-big": {
+  "layer": "eye",
+  "eyes": [
+   [
+    182,
+    349,
+    56
+   ],
+   [
+    357,
+    356,
+    56
+   ]
+  ]
+ },
+ "child-verity-pink": {
+  "layer": "normal",
+  "eyes": [
+   [
+    200,
+    540,
+    44
+   ],
+   [
+    386,
+    540,
+    44
+   ]
+  ]
+ },
+ "fat-verity-small": {
+  "layer": "normal",
+  "eyes": [
+   [
+    494,
+    285,
+    46
+   ],
+   [
+    680,
+    285,
+    46
+   ]
+  ]
+ },
+ "girl-verity-big": {
+  "layer": "normal",
+  "eyes": [
+   [
+    371,
+    383,
+    40
+   ],
+   [
+    537,
+    383,
+    40
+   ]
+  ]
+ },
+ "girl-verity-small": {
+  "layer": "normal",
+  "eyes": [
+   [
+    270,
+    434,
+    46
+   ],
+   [
+    460,
+    434,
+    46
+   ]
+  ]
+ },
+ "lord-verity-big": {
+  "layer": "eye",
+  "eyes": [
+   [
+    293,
+    288,
+    56
+   ],
+   [
+    467,
+    282,
+    54
+   ]
+  ]
+ },
+ "lord-verity-small": {
+  "layer": "normal",
+  "eyes": [
+   [
+    342,
+    444,
+    44
+   ],
+   [
+    528,
+    444,
+    44
+   ]
+  ]
+ },
+ "skeleton-verity-big": {
+  "layer": "eye",
+  "eyes": [
+   [
+    1078,
+    195,
+    52
+   ],
+   [
+    1242,
+    188,
+    52
+   ]
+  ]
+ },
+ "skeleton-verity-small": {
+  "layer": "normal",
+  "eyes": [
+   [
+    540,
+    432,
+    44
+   ],
+   [
+    726,
+    432,
+    44
+   ]
+  ]
+ },
+ "verity-big-girl": {
+  "layer": "normal",
+  "eyes": [
+   [
+    371,
+    383,
+    40
+   ],
+   [
+    537,
+    383,
+    40
+   ]
+  ]
+ }
+}

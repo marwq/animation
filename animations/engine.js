@@ -76,13 +76,66 @@ const E = (() => {
     return { canvas: out, x: x0, y: y0, w, h };
   }
 
-  async function loadRig(name) {
+  // Перекраска рига при загрузке (для персонажей, у которых нет своей маленькой версии):
+  //   yellow  — розовую девочку в жёлтую (как verity big girl): розовый -> жёлтый, красный -> оранжевый
+  //   rainbow — серый шарик-скелет в радужный (как All verity color): светло-серое -> радуга сверху вниз
+  const hsv = (r, g, b) => {
+    const mx = Math.max(r, g, b), mn = Math.min(r, g, b), d = mx - mn;
+    let h = 0;
+    if (d > 0) h = mx === r ? ((g - b) / d + 6) % 6 : mx === g ? (b - r) / d + 2 : (r - g) / d + 4;
+    return [h / 6, mx ? d / mx : 0, mx / 255];
+  };
+  const RAINBOW = [[40, 90, 255], [0, 200, 255], [40, 220, 60], [255, 235, 30], [255, 140, 0], [255, 40, 60],
+    [230, 40, 200]];
+  const RECOLOR = {
+    yellow(px) {
+      for (let i = 0; i < px.length; i += 4) {
+        if (!px[i + 3]) continue;
+        const [h, s, v] = hsv(px[i], px[i + 1], px[i + 2]);
+        if (s < 0.35 || v < 0.15) continue;
+        let to = null;
+        if (h > 0.8 && h < 0.92) to = [252, 252, 44];                          // розовый -> жёлтый
+        else if (h >= 0.92 || h < 0.03) to = [252, 124, 0];                     // красный -> оранжевый
+        if (!to) continue;
+        const k = v / (h > 0.8 && h < 0.92 ? 0.99 : 0.88);
+        for (let c = 0; c < 3; c++) px[i + c] = Math.min(255, to[c] * k);
+      }
+    },
+    rainbow(px, w, h, box) {
+      for (let y = 0, i = 0; y < h; y++) {
+        const u = Math.min(0.999, Math.max(0, (y - box[1]) / (box[3] - box[1]))) * (RAINBOW.length - 1);
+        const a = RAINBOW[Math.floor(u)], b = RAINBOW[Math.floor(u) + 1], t = u - Math.floor(u);
+        for (let x = 0; x < w; x++, i += 4) {
+          if (!px[i + 3]) continue;
+          const [, s, v] = hsv(px[i], px[i + 1], px[i + 2]);
+          if (s > 0.12 || v < 0.3 || v > 0.95) continue;                       // контур, блик, цветное — как есть
+          const k = v / 0.86;
+          for (let c = 0; c < 3; c++) px[i + c] = Math.min(255, (a[c] + (b[c] - a[c]) * t) * k);
+        }
+      }
+    },
+  };
+
+  async function loadRig(name, opts = {}) {
     const base = `/rigs/${name}/`;
     const rig = await (await fetch(base + 'rig.json')).json();
     const layers = rig.layers.map((l) => ({ ...l, sw: null }));
     for (const s of rig.switches) for (const c of s.children) layers.push({ ...c, sw: s.name });
     layers.sort((a, b) => a.order - b.order);
     await Promise.all(layers.map(async (l) => { l.full = await loadImage(base + l.png); }));
+    if (opts.recolor) {
+      const body = (layers.find((l) => l.name === 'body') || layers[0]).bbox;
+      for (const l of layers) {
+        const c = document.createElement('canvas');
+        c.width = l.full.width; c.height = l.full.height;
+        const g = c.getContext('2d');
+        g.drawImage(l.full, 0, 0);
+        const d = g.getImageData(0, 0, c.width, c.height);
+        RECOLOR[opts.recolor](d.data, c.width, c.height, body);
+        g.putImageData(d, 0, 0);
+        l.full = c;
+      }
+    }
     return { name, rig, layers };
   }
 

@@ -56,7 +56,10 @@ function Stage(cfg) {
     else if (kind === 'sweat') sfx('drip', o.f0 + 3, { who: o.who, gain: g ?? 0.7 });
     else if (kind === 'whoosh') sfx('whoosh', o.f - 3, { at: o.at, gain: g ?? 0.8 });
     else if (kind === 'hearts') sfx('love', o.f0, { who: o.who, gain: g });
-    else if (kind === 'heartshot') sfx('heart', o.f0, { at: o.from, gain: g });
+    else if (kind === 'heartshot') {
+      sfx('heart', o.f0, { at: o.from, gain: g });
+      if (o.pop !== false) sfx('pop', o.f1, { at: o.to, gain: 0.6 });
+    }
     else if (kind === 'wind') sfx('gust', o.f0, { x: (o.x0 + o.x1) / 2, dur: o.f1 - o.f0, gain: g });
     else if (o.snd) sfx(o.snd, o.f ?? o.f0, { x: o.x, who: o.who, at: o.at, gain: g });
   };
@@ -146,7 +149,23 @@ function Stage(cfg) {
     key(who, g + 10, { sx: 1.1, sy: 1.1 }, 4, 'out');
     key(who, g + 13, { sx: 0.96, sy: 0.96 }, 3);
     key(who, g + 16, { sx: 1, sy: 1 }, 3);
+    // девушка стала большой — в неё влюбляются (o.love: кто, o.loveDur: сколько кадров)
+    for (const w of [].concat(o.love || [])) love(w, g + 10, g + 10 + (o.loveDur || 50));
     return g + 6;
+  }
+
+  // ---------------------------------------------------------------- любовь
+  // сердечки вместо глаз (центры глаз — animations/eyes.json), сердечки над головой, звук
+  function love(who, f0, f1, o = {}) {
+    ev('hearteyes', { who, f0, f1 });
+    if (o.hearts !== false) ev('hearts', { who, f0: f0 + 2, f1: f1 - 2, snd: false });
+    if (o.snd !== false) sfx('love', f0, { who, gain: o.gain ?? 0.8 });
+    if (o.mouth !== false) key(who, f0, { mouth: o.mouth || mood(who, 'love', 'happy - spittle') }, 0);
+  }
+  // воздушный поцелуй: сердце летит по дуге от губ к лицу цели
+  function blowKiss(who, f, tgt, o = {}) {
+    sfx('kiss', f - 3, { who });
+    ev('heartshot', { f0: f, f1: f + (o.n || 12), from: `${who}:lips`, to: tgt, size: o.size || 120 });
   }
 
   // большой: стойка как в риге (стопы на месте, руки висят чуть вперёд)
@@ -188,6 +207,142 @@ function Stage(cfg) {
     if (swing) key(who, f0 + steps * n + 4, { handF: [rf[0] + 70, rf[1] - 60], handB: [rb[0] - 10, rb[1] - 20] }, 4);
   }
 
+  // ---------------------------------------------------------------- приёмы больших
+  // Длины и позы считаются от рига персонажа: руки — в долях длины руки, присед — в пикселях сцены.
+  const big = (who) => C[who].big;
+  const toRig = (who, v) => v / big(who).scale;                    // пиксели сцены -> пиксели рига
+  function armLen(who, k = 'F') {
+    const ch = big(who), a = ch.arm[k], b = ch.bones;
+    const d = (i, j) => Math.hypot(b[j].base[0] - b[i].base[0], b[j].base[1] - b[i].base[1]);
+    return d(a[0], a[1]) + d(a[1], a[2]);
+  }
+  const hand = (who, k, fwd, down) => { const L = armLen(who, k); return [fwd * L, down * L]; };
+
+  // разворот на месте: на 1 кадр сжать, отразить, вернуть
+  function turn(who, f, face, x) {
+    key(who, f, { sx: 0.3 }, 1);
+    key(who, f + 1, { face, ...big(who).feet(x, face) }, 0);
+    key(who, f + 2, { sx: 1 }, 1);
+  }
+
+  // удар рукой: замах (рука назад) к f-4, в кадре f кисть точно в цели, проводка, возврат в стойку.
+  // o: arm 'F'|'B', x, face (где стоит), back/to — позы кисти в долях руки, snd, hard (тряска и наезд), over
+  function strike(who, f, tgt, o = {}) {
+    const k = o.arm || 'F', H = 'hand' + k, HT = 'hit' + k;
+    key(who, f - 4, { [H]: hand(who, k, ...(o.back || [-0.75, 0.25])), lean: -8, hip: [0, toRig(who, 18)], [HT]: 0 }, o.wind || 6);
+    if (o.over !== false) key(who, f - 1, { over: k }, 0);
+    key(who, f, { [H]: hand(who, k, ...(o.to || [0.95, -0.15])), lean: o.lean ?? 14, hip: [toRig(who, 6), toRig(who, 30)],
+      [HT]: 1, [HT + 'to']: tgt, [HT + 'fix']: f, mouth: o.mouth || 'angry theeth' }, 4, 'in2');
+    key(who, f + (o.hold || 4), { [HT]: 1 }, 0);
+    key(who, f + (o.hold || 4) + 4, { [HT]: 0, over: null }, 4);
+    if (o.x !== undefined) key(who, f + (o.ret || 16), stance(who, o.x, o.face), 10);
+    ev('spark', { f, at: tgt, r: o.r || 70, snd: o.snd || 'punch', swing: false });
+    sfx('swing', f - 5, { who, gain: 0.8 });
+    ev('shake', { f, amp: o.hard ? 20 : 12, n: o.hard ? 14 : 9 });
+    if (o.hard !== false) ev('zoom', { f, n: 12, k: o.hard ? 0.09 : 0.05, at: tgt });
+  }
+
+  // пинок: колено вверх (замах), стопа в цели в кадре f, нога назад, стойка
+  function kick(who, f, tgt, o = {}) {
+    key(who, f - 4, { legFfk: 1, legF: [62, -100], lean: -10, hip: [0, toRig(who, 10)], kickF: 0,
+      handF: hand(who, 'F', -0.3, 0.6), handB: hand(who, 'B', -0.6, 0.5) }, o.wind || 6);
+    key(who, f, { kickF: 1, kickFto: tgt, kickFfix: f, lean: -16, mouth: o.mouth || 'angry theeth' }, 4, 'in2');
+    key(who, f + 5, { kickF: 1 }, 0);
+    key(who, f + 11, { kickF: 0 }, 6);
+    if (o.x !== undefined) key(who, f + 18, stance(who, o.x, o.face), 7);
+    ev('spark', { f, at: tgt, r: o.r || 80, snd: o.snd || 'kick', swing: false });
+    sfx('swing', f - 5, { who, gain: 0.8 });
+    ev('shake', { f, amp: o.hard ? 22 : 14, n: o.hard ? 14 : 10 });
+    if (o.hard !== false) ev('zoom', { f, n: 12, k: o.hard ? 0.1 : 0.05, at: tgt });
+  }
+
+  // отскок назад (уклон): корпус откинут, колени вперёд, приземлился на ноги
+  function dodge(who, f, x0, x1, face, o = {}) {
+    key(who, f, { hip: [0, toRig(who, 15)] }, 3);
+    move(who, f, { x: x0, y: GROUND });
+    key(who, f + 1, { legFfk: 1, legBfk: 1, legF: [12, -24], legB: [-14, 26], lean: -14, head: -6,
+      hip: [toRig(who, -7), toRig(who, 15)], mouth: o.mouth || 'puzzlement' }, 3);
+    move(who, f + 5, { y: GROUND - (o.h || 40) }, 'out2');
+    move(who, f + 10, { y: GROUND }, 'in2');
+    move(who, f + 10, { x: x1 }, 'out2');
+    key(who, f + 8, { ...big(who).feet(x1, face), legFfk: 1, legBfk: 1 }, 0);
+    key(who, f + 12, { legFfk: 0, legBfk: 0, hip: [0, toRig(who, 33)], lean: -4, head: 0 }, 3);
+    key(who, f + 22, stance(who, x1, face), 10);
+    ev('dust', { f: f + 10, x: x1, r: 30, n: 4, snd: 'land' });
+    sfx('jump', f + 2, { who, gain: 0.5 });
+  }
+
+  // нырок вниз на согнутых коленях (удар проходит над головой): f0 вниз, f1 вверх.
+  // Глубже 60 % длины ноги колени уже не сгибаются как надо — глубина ограничена.
+  function duck(who, f0, f1, x, face, depth = 250) {
+    const ch = big(who), lg = ch.leg.F, b = ch.bones;
+    const d = (i, j) => Math.hypot(b[j].base[0] - b[i].base[0], b[j].base[1] - b[i].base[1]);
+    depth = Math.min(depth, 0.6 * (d(lg[0], lg[1]) + d(lg[1], lg[2])) * ch.scale);
+    key(who, f0, { hip: [0, toRig(who, depth)], lean: 0, head: -6, mouth: 'puzzlement',
+      handF: hand(who, 'F', 0.2, 0.55), handB: hand(who, 'B', -0.1, 0.55) }, 5);
+    key(who, f1, { hip: [0, toRig(who, depth)] }, 0);
+    key(who, f1 + 8, stance(who, x, face), 8);
+  }
+
+  // получил удар: откинулся, отъехал назад на ногах (ступни скользят по земле), «ой»
+  function recoil(who, f, x0, x1, face, o = {}) {
+    key(who, f, { lean: -22, head: -14, hip: [toRig(who, -10), toRig(who, 20)], mouth: 'puzzlement', eyes: 'sad',
+      handF: hand(who, 'F', 0.5, -0.4), handB: hand(who, 'B', -0.5, -0.3), legFfk: 1, legBfk: 1 }, 2, 'out');
+    move(who, f, { x: x0 });
+    move(who, f + 8, { x: x1 }, 'out2');
+    key(who, f + 8, { ...big(who).feet(x1, face), legFfk: 1, legBfk: 1 }, 0);
+    key(who, f + 12, { legFfk: 0, legBfk: 0, lean: -6, head: 0 }, 4);
+    key(who, f + (o.ret || 22), stance(who, x1, face, { mouth: o.mouth || 'angry theeth', eyes: 'angry' }), 10);
+    ev('dust', { f: f + 6, x: x1, r: 24, n: 3, snd: false });
+  }
+
+  // падает на спину: ноги прямые, руки за голову, лежит на траве; o.lift — толщина тела лёжа
+  function fallBack(who, f, x, face, o = {}) {
+    const n = o.n || 16;
+    key(who, f, { legFfk: 1, legBfk: 1, legF: [0, 0, 0], legB: [0, 0, 0], mouth: o.mouth || 'puzzlement',
+      handF: hand(who, 'F', 0.1, -0.95), handB: hand(who, 'B', -0.05, -0.95), zB: 'back', lean: 0, head: 0 }, 5);
+    key(who, f, { rot: 0, pivot: 0 }, 0);
+    move(who, f, { x, y: GROUND });
+    move(who, f + n, { rot: -90 * face, y: GROUND - (o.lift || 50) }, 'in');
+    const h = big(who).height;
+    ev('dust', { f: f + n, x: x - face * h * 0.55, r: 80, n: 8, snd: 'slam' });
+    ev('shake', { f: f + n, amp: 22, n: 16 });
+    ev('zoom', { f: f + n, n: 14, k: 0.07, at: [x - face * h * 0.5, GROUND - 60] });
+    sfx('whoosh', f + 2, { who, dur: n - 2, gain: 0.6 });
+    if (o.stars !== false) ev('stars', { who, f0: f + n + 4, f1: f + n + 4 + (o.stars || 50) });
+    return f + n;
+  }
+
+  // улетает за кадр кувырком (o.to — куда, o.turns — обороты), на месте ухода — блеск
+  function flyOff(who, f0, f1, from, to, o = {}) {
+    const ch = big(who);
+    key(who, f0, { pivot: (ch.anchor[1] - ch.top) / 2, legFfk: 1, legBfk: 1, legF: [-30, 50], legB: [25, -40],
+      mouth: 'puzzlement', eyes: 'sad', handF: hand(who, 'F', -0.3, -0.8), handB: hand(who, 'B', -0.7, -0.5) }, 0);
+    move(who, f0, { x: from[0], y: from[1], rot: 0 });
+    move(who, f1, { x: to[0], rot: 360 * (o.turns || 3) * (to[0] > from[0] ? 1 : -1) }, 'lin');
+    move(who, f1, { y: to[1] }, 'out2');
+    sfx('whoosh', f0, { who, dur: f1 - f0, gain: 0.7 });
+    sfx('scared', f0 + 2, { who, gain: 0.7 });
+    const tx = E.clamp(to[0], 110, W - 110), ty = E.clamp(to[1], 90, H - 300);
+    ev('twinkle', { f: f1 - 2, at: [tx, ty], n: 22, size: 56 });
+  }
+
+  // победа: идёт в центр (x = 960), поворачивается к зрителю, руки через стороны вверх буквой V, блеск
+  function victory(who, f, x0, o = {}) {
+    const face = o.face || (960 >= x0 ? 1 : -1);
+    const steps = Math.max(1, Math.round(Math.abs(960 - x0) / 95));
+    if (Math.abs(960 - x0) > 20) walk(who, f, x0, 960, steps, 10, face);
+    const g = f + (Math.abs(960 - x0) > 20 ? steps * 10 + 6 : 0);
+    const a = E.rad(CAST[who].vAngle || 25);
+    key(who, g, { look: 0, eyes: 'normal' }, 4);
+    key(who, g + 6, { handF: hand(who, 'F', 0.97, -0.08), handB: hand(who, 'B', -0.97, -0.08) }, 3);
+    key(who, g + 9, { handF: hand(who, 'F', 0.97 * Math.sin(a), -0.97 * Math.cos(a)),
+      handB: hand(who, 'B', -0.97 * Math.sin(a), -0.97 * Math.cos(a)), head: -4, mouth: mood(who, 'win', 'happy with theeth') }, 3);
+    const pts = [[-170, -560], [170, -620], [-200, -330], [210, -380], [0, -700], [-140, -460], [150, -240]];
+    pts.forEach(([dx, dy], i) => { if (g + 10 + i * 8 < NF) ev('twinkle', { f: g + 10 + i * 8, at: [960 + dx, GROUND + dy], n: 16, size: 34 }); });
+    return g + 9;
+  }
+
   // ---------------------------------------------------------------- позы и точки
   const DEF = { x: 0, y: GROUND, face: 1, hip: [0, 0], lean: 0, head: 0, rot: 0, sx: 1, sy: 1, pivot: 0, look: 0,
     hide: [], legF: null, legB: null, hitF: 0, hitB: 0, kickF: 0, zF: null, zB: null, over: null };
@@ -207,12 +362,21 @@ function Stage(cfg) {
       const f = ch.point(st, 'face'), h = ch.point(st, 'head');
       return [h[0] + (f[0] - h[0]) * 1.4, f[1]];
     },
+    front(ch, st, p) {                  // край тела со стороны взгляда, на середине высоты
+      const c = ch.point(st, 'body');
+      return [c[0] + (p.face || 1) * ch.width * 0.45 * (p.sx || 1), c[1]];
+    },
+    lips(ch, st) {
+      const f = ch.point(st, 'face'), h = ch.point(st, 'head');
+      return [h[0] + (f[0] - h[0]) * 1.3, f[1] + ch.height * 0.03];
+    },
     jaw(ch, st) {
       const f = ch.point(st, 'face'), h = ch.point(st, 'head');
       return [f[0] - (f[0] - h[0]) * 0.2, f[1] + (ch.height * 0.06)];
     },
   };
   function target(spec, S) {
+    if (Array.isArray(spec)) return spec;                          // точка сцены
     const [who, part] = spec.split(':');
     const { ch, st } = S[who];
     return parts[part] ? parts[part](ch, st, S[who].p) : ch.point(st, part);
@@ -292,12 +456,14 @@ function Stage(cfg) {
     for (const who of ORDER) {
       const { ch, st, p } = S[who];
       let pp = hooks.drawPose ? hooks.drawPose(who, p, f) : p;
-      for (const h of loveEyes(who)) pp = { ...pp, hide: [...(pp.hide || []), h.layer] };
+      const info = (h) => (h.layer ? { layer: h.layer, eyes: h.eyes, hide: [h.layer] } : eyeInfo(ch));
+      for (const h of loveEyes(who)) pp = { ...pp, hide: [...(pp.hide || []), ...info(h).hide] };
       ch.draw(ctx, { ...st, p: pp }, CAM);
       ctx.setTransform(...CAM);
       for (const h of loveEyes(who)) {
-        const M = ch.eyeMatrix(st, h.layer), k = 1 + 0.12 * Math.sin(t * TAU * 3);
-        for (const [ex, ey, er] of h.eyes) {
+        const { layer, eyes } = info(h);
+        const M = ch.eyeMatrix(st, layer), k = 1 + 0.12 * Math.sin(t * TAU * 3);
+        for (const [ex, ey, er] of eyes) {
           const q = E.apply(M, [ex, ey]);
           FX.heart(ctx, q[0], q[1], er * 2.6 * ch.scale * k * Math.min(1, (f - h.f0 + 1) / 4));
         }
@@ -378,6 +544,14 @@ function Stage(cfg) {
     }
   }
 
+  // глаза рига для сердечек: слой, центры, какие слои спрятать (весь переключатель глаз)
+  let EYES = {};
+  function eyeInfo(ch) {
+    const e = EYES[ch.name];
+    const sw = ch.rig.switches.find((x) => x.children.some((c) => c.name === e.layer));
+    return { layer: e.layer, eyes: e.eyes, hide: sw ? sw.children.map((c) => c.name) : [e.layer] };
+  }
+
   // звук ролика для tools/sfx.py: метки (секунды, вид, громкость, панорама по месту на сцене)
   function audio() {
     const xOf = (c) => {
@@ -403,9 +577,10 @@ function Stage(cfg) {
     const ctx = document.getElementById('stage').getContext('2d');
     window.READY = (async () => {
       for (const [who, c] of Object.entries(CAST)) {
-        C[who] = { small: new E.Character(await E.loadRig(c.small[0]), c.small[1]) };
-        if (c.big) C[who].big = new E.Character(await E.loadRig(c.big[0]), c.big[1]);
+        C[who] = { small: new E.Character(await E.loadRig(c.small[0], c.small[1]), c.small[1]) };
+        if (c.big) C[who].big = new E.Character(await E.loadRig(c.big[0], c.big[1]), c.big[1]);
       }
+      EYES = await (await fetch('/animations/eyes.json')).json();
       if (big) big();
       BG = FX.background(W, H, EDGE, cfg.background || {});
     })();
@@ -415,5 +590,6 @@ function Stage(cfg) {
 
   // stateAt — то же, что statesAt, но без кэша: можно звать, пока ключи ещё ставятся
   return { FPS, W, H, NF, GROUND, EDGE, F, CAST, C, key, move, ev, sfx, hop, tumble, laugh, tremble, transform,
-    stance, walk, target, parts, statesAt, stateAt: evalStates, hooks, start };
+    love, blowKiss, stance, walk, turn, strike, kick, dodge, duck, recoil, fallBack, flyOff, victory, hand, toRig,
+    target, parts, statesAt, stateAt: evalStates, hooks, start };
 }
