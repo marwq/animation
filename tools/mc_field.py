@@ -7,9 +7,16 @@
 
     --shot NAME      field — поле, portal — портал посередине поля; оба прямо спереди
     --out PNG        куда сохранить (по умолчанию backgrounds/field/<shot>.png)
-    --tex DIR        текстуры блоков с именами как в Minecraft (grass_block_top.png, ...)
+    --tex DIR        текстуры блоков с именами как в Minecraft (grass_block_top.png, ...);
+                     по умолчанию backgrounds/textures/minecraft, если есть, иначе
+                     свободные backgrounds/textures/pixel-perfection
     --scale K        доля от полного разрешения, 0.35 — быстрый черновик
     --samples N      сэмплы Cycles
+    --exposure EV    яркость кадра
+
+Камера на высоте глаз игрока и смотрит строго горизонтально: вертикали прямые.
+Цвет в духе роликов toonz CRAFT: сочная жёлто-зелёная трава, лазурное небо,
+мягкие светлые тени, резкость и цветная кайма по краям кадра.
 
 Портал — рамка из обсидиана, внутри пусто: сквозь проём видно поле.
 """
@@ -25,36 +32,42 @@ from mathutils import Euler, Vector, noise
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SIZE = 1080              # квадратный кадр
 
-GRASS = (0x7C, 0xC4, 0x46)    # трава и листва: сочнее, чем в игре
-FOLIAGE = (0x5C, 0xB0, 0x2A)
+GRASS = (0x91, 0xBD, 0x59)    # трава и листва — цвета равнин из игры
+FOLIAGE = (0x77, 0xAB, 0x2F)
 BIRCH = (0x80, 0xA7, 0x55)
 
-SKY_HORIZON = (0.55, 0.80, 1.00)
-SKY_MID = (0.20, 0.52, 1.00)
-SKY_ZENITH = (0.05, 0.26, 0.95)
-SKY_SEEN = 0.7           # яркость неба в кадре; на сцену небо светит с силой 1
-SUN_DIR = Vector((0.62, 0.48, -0.55))   # куда светит солнце: слева из-за спины,
-SUN_COLOR = (1.0, 0.88, 0.72)           # низко — тени длинные, тёплый свет
+SKY_HORIZON = (0.42, 0.75, 1.00)
+SKY_MID = (0.10, 0.50, 1.00)
+SKY_ZENITH = (0.02, 0.28, 0.95)
+SKY_SEEN = 0.75          # яркость неба в кадре
+SKY_LIGHT = 1.2          # сколько света небо даёт сцене: светлые тени
+SKY_AMBIENT = (0.80, 0.90, 1.00)        # цвет этого света — почти белый, без синевы
+SUN_DIR = Vector((0.62, 0.48, -0.60))   # куда светит солнце: слева из-за спины
+SUN_COLOR = (1.0, 0.93, 0.80)
 SUN_POWER = 6.0
-SATURATION = 1.3
+SATURATION = 1.1
 
 PORTAL = (-1, 20)        # левый блок рамки; рамка 4×5 стоит вдоль оси x
 
 # Камеры смотрят прямо вперёд (+y). clear — сколько блоков от камеры чистое поле,
-# дальше роща.
+# дальше роща. shade — деревья сразу за левым краем кадра (от камеры, в блоках):
+# их не видно, но их тень ложится на траву.
 SHOTS = {
-    'field':  {'cam': (-26.0, 4.0, 2.4), 'pitch': 4, 'lens': 26, 'clear': 22,
-               'focus': 9.0, 'fstop': 1.2},
-    'portal': {'cam': (1.0, 8.5, 2.4), 'pitch': 5, 'lens': 30, 'clear': 18,
-               'focus': 12.0, 'fstop': 1.2},
+    'field':  {'cam': (-26.0, 4.0, 2.62), 'shift': -0.08, 'lens': 28, 'clear': 22,
+               'focus': 9.0, 'fstop': 1.4, 'shade': [(-7, 3), (-8, 8)]},
+    'portal': {'cam': (1.0, 8.5, 2.62), 'shift': -0.05, 'lens': 30, 'clear': 18,
+               'focus': 12.0, 'fstop': 1.4, 'shade': [(-7, 2), (-8, 7)]},
 }
 
 
 def args():
     a = sys.argv[sys.argv.index('--') + 1:] if '--' in sys.argv else []
+    tex = os.path.join(ROOT, 'backgrounds', 'textures')
     opt = {'shot': 'field', 'out': '',
-           'tex': os.path.join(ROOT, 'backgrounds', 'textures', 'pixel-perfection'),
-           'scale': 1.0, 'samples': 128, 'seed': 11}
+           # свои текстуры Minecraft, если положены локально, иначе свободные
+           'tex': next(p for p in (os.path.join(tex, 'minecraft'), os.path.join(tex, 'pixel-perfection'))
+                       if os.path.isdir(p)),
+           'scale': 1.0, 'samples': 128, 'seed': 11, 'exposure': 0.0}
     for k, v in zip(a[::2], a[1::2]):
         k = k.lstrip('-').replace('-', '_')
         opt[k] = v if isinstance(opt[k], str) else type(opt[k])(v)
@@ -276,6 +289,12 @@ def world(seed):
               for i in range(4) for k in range(5) if i in (0, 3) or k in (0, 4)}
     taken = dict(portal)
     trees = []
+    for v in views:
+        for dx, dy in v.s['shade']:
+            x, y = int(v.pos.x + dx), int(v.pos.y + dy)
+            blocks = tree_shape(rng, x, y, cols[(x, y)], 'oak')
+            taken.update(blocks)
+            trees.append((x, y, blocks))
     cand = list(cols)
     rng.shuffle(cand)
     for x, y in cand:
@@ -365,7 +384,7 @@ def build_scene(opt, view):
         d, lat = view.depth(x + 0.5, y + 0.5), abs(x + 0.5 - view.pos.x)
         if d > 60 or not view.visible(x + 0.5, y + 0.5, pad=1.5) or (d < 3.5 and lat < 0.8):
             continue
-        if d < 9 and lat < 1.3 or opt['shot'] == 'portal' and d < 12 and lat < 2.5:
+        if d < 12 and lat < 1.5 or opt['shot'] == 'portal' and d < 12 and lat < 2.5:
             continue                           # посередине — чистая трава, к порталу дорожка
         if kind == 'tall_grass':
             m.cross(x, y, z, 'tall_grass_bottom', dx, dy)
@@ -401,25 +420,32 @@ def lights_camera(opt, s):
     el[1].position, el[1].color = 0.6, (*SKY_ZENITH, 1)
     el.new(0.2).color = (*SKY_MID, 1)
     L.new(sep.outputs['Z'], ramp.inputs[0])
-    L.new(ramp.outputs[0], N['Background'].inputs['Color'])
-    k = N.new('ShaderNodeMath')               # в кадре небо темнее, чем светит
+    is_cam = N.new('ShaderNodeLightPath').outputs['Is Camera Ray']
+    col = N.new('ShaderNodeMix')              # камера видит синее небо, сцену оно
+    col.data_type = 'RGBA'                    # освещает почти белым светом
+    L.new(is_cam, col.inputs['Factor'])
+    col.inputs['A'].default_value = (*SKY_AMBIENT, 1)
+    L.new(ramp.outputs[0], col.inputs['B'])
+    L.new(col.outputs['Result'], N['Background'].inputs['Color'])
+    k = N.new('ShaderNodeMath')               # и яркость у них разная
     k.operation = 'MULTIPLY_ADD'
-    L.new(N.new('ShaderNodeLightPath').outputs['Is Camera Ray'], k.inputs[0])
-    k.inputs[1].default_value, k.inputs[2].default_value = SKY_SEEN - 1, 1
+    L.new(is_cam, k.inputs[0])
+    k.inputs[1].default_value, k.inputs[2].default_value = SKY_SEEN - SKY_LIGHT, SKY_LIGHT
     L.new(k.outputs[0], N['Background'].inputs['Strength'])
 
     sun = bpy.data.lights.new('sun', 'SUN')
-    sun.energy, sun.angle, sun.color = SUN_POWER, math.radians(1.2), SUN_COLOR
+    sun.energy, sun.angle, sun.color = SUN_POWER, math.radians(2.5), SUN_COLOR
     so = bpy.data.objects.new('sun', sun)
     so.rotation_euler = SUN_DIR.normalized().to_track_quat('-Z', 'Y').to_euler()
     sc.collection.objects.link(so)
 
     cam = bpy.data.cameras.new('cam')
     cam.lens, cam.sensor_fit, cam.sensor_width = s['lens'], 'AUTO', 36
+    cam.shift_y = s['shift']                  # больше земли в кадре без наклона камеры
     cam.dof.use_dof, cam.dof.focus_distance, cam.dof.aperture_fstop = True, s['focus'], s['fstop']
     co = bpy.data.objects.new('cam', cam)
     co.location = s['cam']
-    co.rotation_euler = Euler((math.radians(90 + s['pitch']), 0, 0))
+    co.rotation_euler = Euler((math.radians(90), 0, 0))   # строго горизонтально
     sc.collection.objects.link(co)
     sc.camera = co
 
@@ -433,26 +459,30 @@ def lights_camera(opt, s):
     c.max_bounces, c.diffuse_bounces, c.glossy_bounces = 6, 3, 1
     c.transmission_bounces, c.transparent_max_bounces = 2, 48
     c.caustics_reflective = c.caustics_refractive = False
-    sc.view_settings.view_transform = 'AgX'
-    sc.view_settings.look = 'AgX - Punchy'
-    sc.view_settings.exposure = 1.0
+    sc.view_settings.view_transform = 'Standard'     # без приглушения цвета, как в игре
+    sc.view_settings.look = 'Medium High Contrast'
+    sc.view_settings.exposure = opt['exposure']
 
-    # сочность и лёгкое свечение светлых мест
+    # сочность, резкость, цветная кайма по краям и лёгкое свечение
     sc.use_nodes = True
     T = sc.node_tree
     T.nodes.clear()
-    rl = T.nodes.new('CompositorNodeRLayers')
+    chain = [T.nodes.new('CompositorNodeRLayers')]
     hs = T.nodes.new('CompositorNodeHueSat')
     hs.inputs['Saturation'].default_value = SATURATION
+    sh = T.nodes.new('CompositorNodeFilter')
+    sh.filter_type = 'SHARPEN'
+    sh.inputs['Fac'].default_value = 0.25
+    ld = T.nodes.new('CompositorNodeLensdist')
+    ld.inputs['Dispersion'].default_value = 0.012
     gl = T.nodes.new('CompositorNodeGlare')
     gl.glare_type = 'BLOOM'
-    gl.inputs['Threshold'].default_value = 1.2
-    gl.inputs['Strength'].default_value = 0.25
+    gl.inputs['Threshold'].default_value = 0.9
+    gl.inputs['Strength'].default_value = 0.2
     gl.inputs['Size'].default_value = 0.6
-    out = T.nodes.new('CompositorNodeComposite')
-    T.links.new(rl.outputs['Image'], hs.inputs['Image'])
-    T.links.new(hs.outputs['Image'], gl.inputs['Image'])
-    T.links.new(gl.outputs['Image'], out.inputs['Image'])
+    chain += [hs, sh, ld, gl, T.nodes.new('CompositorNodeComposite')]
+    for a, b in zip(chain, chain[1:]):
+        T.links.new(a.outputs['Image'], b.inputs['Image'])
 
 
 def main():

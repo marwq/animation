@@ -96,7 +96,8 @@ node tools/render.js                     # PNG ×2 (или: node tools/render.js
 
 ## Фоны Minecraft
 
-Два квадратных фона 1080×1080, оба сняты прямо спереди, отрендерены в Blender:
+Два квадратных фона 1080×1080 в стиле роликов toonz CRAFT, отрендерены в Blender.
+Камера на высоте глаз и смотрит строго прямо: вертикали ровные, без взгляда снизу.
 
 | Файл | Кадр |
 |---|---|
@@ -106,19 +107,22 @@ node tools/render.js                     # PNG ×2 (или: node tools/render.js
 ### Как пересобрать
 
 ```bash
-# нужен Blender 4.2+ (без аддонов); на процессоре ~4 мин на кадр
+# нужен Blender 4.2+ (без аддонов); на процессоре ~3,5 мин на кадр
 blender -b --factory-startup -P tools/mc_field.py -- --shot field
 blender -b --factory-startup -P tools/mc_field.py -- --shot portal
 # черновик за полминуты: ... --scale 0.4 --samples 24 --out /tmp/draft.png
 ```
 
-Камеры, солнце, цвет травы, неба и сочность — константы в начале `tools/mc_field.py`.
+Камеры, солнце, цвет травы и неба, сочность — константы в начале `tools/mc_field.py`.
 
 ### Текстуры
 
-`backgrounds/textures/pixel-perfection/` — текстуры Pixel Perfection (XSSheep,
-[CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/)), взяты из игры
-[Mineclonia](https://codeberg.org/mineclonia/mineclonia). Файлы названы как в Minecraft, поэтому
-можно подставить текстуры из своей игры: распакуй `assets/minecraft/textures/block`
-из `.minecraft/versions/<версия>/<версия>.jar` в отдельную папку и запусти
-`tools/mc_field.py` с `--tex <папка>`. Текстуры Mojang в репозиторий не кладём.
+Картинки отрендерены с текстурами Minecraft 1.21.4 (из официального `client.jar`).
+Их нет в репозитории: скрипт берёт их из `backgrounds/textures/minecraft/`, а эта папка
+в `.gitignore`. Чтобы её заполнить, распакуй `assets/minecraft/textures/block` из
+`.minecraft/versions/<версия>/<версия>.jar` и положи туда файлы с теми же именами,
+что в `backgrounds/textures/pixel-perfection/`.
+
+Без этой папки скрипт берёт свободные текстуры Pixel Perfection (XSSheep,
+[CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/), из игры
+[Mineclonia](https://codeberg.org/mineclonia/mineclonia)) из `backgrounds/textures/pixel-perfection/`.
