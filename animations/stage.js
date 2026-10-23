@@ -584,6 +584,7 @@ function Stage(cfg) {
       }
       EYES = await (await fetch('/animations/eyes.json')).json();
       if (big) big();
+      for (const k of Object.keys(cache)) delete cache[k];             // состояния, посчитанные до всех ключей
       BG = FX.background(W, H, EDGE, cfg.background || {});
     })();
     window.renderFrame = (f) => renderFrame(f, ctx);
