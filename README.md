@@ -138,3 +138,20 @@ python3 tools/mc_grass.py                       # трава, нужен Pillow
 Без этой папки скрипты берут свободные текстуры Pixel Perfection (XSSheep,
 [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/), из игры
 [Mineclonia](https://codeberg.org/mineclonia/mineclonia)) из `backgrounds/textures/pixel-perfection/`.
+
+## Звук для мультика
+
+```bash
+python3 tools/add_sound.py ВИДЕО.mp4      # → videos/<имя>_sound.mp4 и <имя>_sound_vertical.mp4
+```
+
+Звуки Minecraft (портал, шаги по траве, слизень, жители, эндермен, гаст, Незер, лава, еда,
+отрыжка) скачиваются с официального сервера Mojang в `sound/minecraft/` — эта папка в
+`.gitignore`. «Вуш», «бум» и свист падения синтезируются в скрипте. Фоновая музыка — своя
+тихая мелодия на звуках нотных блоков (арфа, бас, колокольчик) с эхом, без чужих треков.
+Расстановка звуков — список `CUES` в начале скрипта: время, звук, громкость, высота.
+
+| Файл | Что это |
+|---|---|
+| `videos/f1f435b4-01_1_sound.mp4` | мультик со звуком, ориентация как у исходника (лежит на боку) |
+| `videos/f1f435b4-01_1_sound_vertical.mp4` | то же, повёрнуто в вертикаль 1080×1920 для Shorts |
