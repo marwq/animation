@@ -285,6 +285,23 @@ def s_whirr(seed=16, dur=1.0, **_):
     return norm((norm(air) * (0.4 + 0.6 * chop) + 0.35 * hum) * env, 0.55)
 
 
+def s_buzz(seed=27, dur=1.0, **_):
+    """Пчёлы: рой жужжит — несколько чуть расстроенных пил с дрожью громкости."""
+    d = max(0.3, dur)
+    t = tt(d)
+    out = np.zeros_like(t)
+    rng = np.random.default_rng(seed)
+    for i in range(5):
+        f0 = 190 + 45 * i + rng.uniform(-8, 8)
+        wob = 1 + 0.035 * np.sin(TAU * (5 + 2 * i) * t + rng.uniform(0, TAU))
+        ph = TAU * np.cumsum(f0 * wob) / SR
+        saw = 2 * ((ph / TAU) % 1) - 1
+        out += saw * (0.6 + 0.4 * np.sin(TAU * (23 + 3 * i) * t + i))
+    out = lowpass2(out, 2600)
+    env = np.clip(t / 0.12, 0, 1) * np.clip((d - t) / 0.2, 0, 1)
+    return norm(out * env, 0.45)
+
+
 def s_chomp(seed=17, **_):
     """Кусь: зубы щёлкнули и сжали."""
     d = 0.3
@@ -556,7 +573,7 @@ def write_wav(path, st):
 def demo():
     cues, t = [], 0.3
     for k in SOUNDS:
-        cues.append({'t': t, 'kind': k, 'dur': 1.2 if k in ('dizzy', 'gust', 'anger', 'whirr', 'suck', 'inflate', 'rain', 'creak', 'sob') else 0})
+        cues.append({'t': t, 'kind': k, 'dur': 1.2 if k in ('dizzy', 'gust', 'anger', 'whirr', 'suck', 'inflate', 'rain', 'creak', 'sob', 'buzz') else 0})
         t += 1.8 if k in ('dizzy', 'gust', 'slam', 'love') else 1.0
     return {'duration': t + 0.5, 'cues': cues}
 

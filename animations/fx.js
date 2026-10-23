@@ -695,6 +695,48 @@ const FX = (() => {
     }
   }
 
+  // пчела: (x, y) — центр, s — масштаб, t — секунды (взмахи крыльев), dir — куда смотрит (1 — вправо)
+  function bee(ctx, x, y, s = 1, t = 0, dir = 1) {
+    ctx.save();
+    ctx.translate(x, y); ctx.scale(s * dir, s);
+    const flap = 0.35 + 0.65 * Math.abs(Math.sin(t * 60));
+    ctx.lineWidth = 2.2; ctx.strokeStyle = '#111';
+    for (const [wx, a] of [[-3, -0.5], [4, 0.3]]) {                       // крылья
+      ctx.save(); ctx.translate(wx, -7); ctx.rotate(a); ctx.scale(1, flap);
+      ctx.beginPath(); ctx.ellipse(0, -7, 6, 9, 0, 0, TAU);
+      ctx.fillStyle = 'rgba(235,248,255,0.85)'; ctx.fill(); ctx.stroke(); ctx.restore();
+    }
+    ctx.beginPath(); ctx.ellipse(0, 0, 13, 9, 0, 0, TAU); ctx.fillStyle = '#ffd21f'; ctx.fill();
+    ctx.save(); ctx.clip();
+    ctx.fillStyle = '#111';
+    for (const sx of [-5, 2]) ctx.fillRect(sx, -10, 3.5, 20);
+    ctx.restore();
+    ctx.beginPath(); ctx.ellipse(0, 0, 13, 9, 0, 0, TAU); ctx.stroke();
+    ctx.beginPath(); ctx.moveTo(-13, 0); ctx.lineTo(-19, 1.5); ctx.lineTo(-13, 3); ctx.fillStyle = '#111'; ctx.fill();   // жало
+    ctx.beginPath(); ctx.arc(8, -2, 2, 0, TAU); ctx.fill();                                                         // глаз
+    ctx.restore();
+  }
+
+  // улей-колпак: (x, y) — центр, s — высота
+  function hive(ctx, x, y, s = 110, rot = 0) {
+    const k = s / 110;
+    ctx.save();
+    ctx.translate(x, y); ctx.rotate(rot); ctx.scale(k, k);
+    ctx.lineWidth = 5; ctx.lineJoin = 'round'; ctx.strokeStyle = '#111';
+    const bands = [[44, 55, 24], [26, 52, 22], [8, 45, 20], [-10, 36, 18], [-27, 25, 16], [-42, 13, 12]];   // y, полуширина, полувысота
+    for (const [by, w, h] of bands) {
+      ctx.beginPath(); ctx.ellipse(0, by, w, h, 0, 0, TAU);
+      ctx.fillStyle = '#e9a92a'; ctx.fill(); ctx.stroke();
+    }
+    for (const [by, w, h] of bands.slice(0, 4)) {
+      ctx.beginPath(); ctx.ellipse(-w * 0.35, by - h * 0.35, w * 0.3, h * 0.28, 0, 0, TAU); ctx.fillStyle = 'rgba(255,225,130,0.8)'; ctx.fill();
+    }
+    ctx.beginPath(); ctx.ellipse(6, 40, 13, 9, 0, 0, TAU); ctx.fillStyle = '#3a2108'; ctx.fill(); ctx.stroke();   // леток
+    ctx.beginPath(); ctx.moveTo(22, 58); ctx.quadraticCurveTo(26, 70, 22, 78); ctx.quadraticCurveTo(18, 70, 22, 58);   // капля мёда
+    ctx.fillStyle = '#ffb000'; ctx.fill(); ctx.lineWidth = 3; ctx.stroke();
+    ctx.restore();
+  }
+
   // футбольный мяч: (x, y) — центр, r — радиус, rot — поворот
   function ball(ctx, x, y, r = 48, rot = 0) {
     const pent = (cx, cy, R, a0) => {
@@ -797,5 +839,5 @@ const FX = (() => {
 
   return { rng, background, cloud, shadow, spark, dust, smoke, flash, rays, vein, steam, sweat, stars, twinkle, whoosh, puff,
     heart, hearts, wind, banana, giftBox, suck, drool, tree, apple, bubble, gumSplat, rainCloud, rain, lightning, puddle, seesaw,
-    mudPit, mudSplash, rope, cake, crown, lollipop, tears, ball, pillow, feathers };
+    mudPit, mudSplash, rope, cake, crown, lollipop, tears, ball, pillow, feathers, bee, hive };
 })();
