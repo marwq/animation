@@ -1,0 +1,260 @@
+{
+ "name": "fat verity small",
+ "source": "moho/fat verity small.moho",
+ "canvas": {
+  "width": 1213,
+  "height": 1072
+ },
+ "moho_frame": {
+  "width": 2000,
+  "height": 2000,
+  "offset": [
+   433,
+   789
+  ],
+  "note": "пиксель кадра Moho = пиксель холста + offset; 1 единица Moho = 1000 px"
+ },
+ "bones": [
+  {
+   "index": 0,
+   "name": "B1",
+   "parent": null,
+   "base": [
+    580.1,
+    1037.2
+   ],
+   "tip": [
+    580.1,
+    23.2
+   ],
+   "angle_deg": -90.0,
+   "length_px": 1014.0,
+   "strength": 0.0,
+   "drives": [
+    "body"
+   ]
+  },
+  {
+   "index": 1,
+   "name": "B2",
+   "parent": "B1",
+   "base": [
+    217.8,
+    273.4
+   ],
+   "tip": [
+    -316.6,
+    273.4
+   ],
+   "angle_deg": -180.0,
+   "length_px": 534.5,
+   "strength": 0.0,
+   "drives": []
+  },
+  {
+   "index": 2,
+   "name": "B3",
+   "parent": "B2",
+   "base": [
+    462.4,
+    470.8
+   ],
+   "tip": [
+    686.7,
+    475.0
+   ],
+   "angle_deg": 1.07,
+   "length_px": 224.4,
+   "strength": 0.0,
+   "drives": [
+    "mouth/smile normal",
+    "mouth/theeth smile",
+    "mouth/happy",
+    "mouth/puzzlement"
+   ]
+  },
+  {
+   "index": 3,
+   "name": "B4",
+   "parent": "B2",
+   "base": [
+    193.6,
+    152.8
+   ],
+   "tip": [
+    193.6,
+    152.8
+   ],
+   "angle_deg": 0.0,
+   "length_px": 0.0,
+   "strength": 0.0,
+   "drives": [
+    "eyes/normal",
+    "eyes/angry",
+    "eyes/sad"
+   ]
+  }
+ ],
+ "layers": [
+  {
+   "order": 1,
+   "name": "body",
+   "png": "png/01-body.png",
+   "svg": "svg/01-body.svg",
+   "bbox": [
+    24.4,
+    24.2,
+    1188.9,
+    1047.6
+   ],
+   "binding": "rigid",
+   "bone": "B1",
+   "pivot": [
+    580.1,
+    1037.2
+   ]
+  }
+ ],
+ "switches": [
+  {
+   "name": "eyes",
+   "order": 2,
+   "default": "normal",
+   "children": [
+    {
+     "order": 2,
+     "name": "normal",
+     "png": "png/02-eyes--normal.png",
+     "svg": "svg/02-eyes--normal.svg",
+     "bbox": [
+      465.5,
+      239.6,
+      713.2,
+      334.9
+     ],
+     "binding": "rigid",
+     "bone": "B4",
+     "pivot": [
+      193.6,
+      152.8
+     ]
+    },
+    {
+     "order": 2,
+     "name": "angry",
+     "png": "png/02-eyes--angry.png",
+     "svg": "svg/02-eyes--angry.svg",
+     "bbox": [
+      462.6,
+      214.1,
+      715.7,
+      334.9
+     ],
+     "binding": "rigid",
+     "bone": "B4",
+     "pivot": [
+      193.6,
+      152.8
+     ]
+    },
+    {
+     "order": 2,
+     "name": "sad",
+     "png": "png/02-eyes--sad.png",
+     "svg": "svg/02-eyes--sad.svg",
+     "bbox": [
+      440.7,
+      214.1,
+      734.1,
+      334.9
+     ],
+     "binding": "rigid",
+     "bone": "B4",
+     "pivot": [
+      193.6,
+      152.8
+     ]
+    }
+   ]
+  },
+  {
+   "name": "mouth",
+   "order": 3,
+   "default": "smile normal",
+   "children": [
+    {
+     "order": 3,
+     "name": "smile normal",
+     "png": "png/03-mouth--smile-normal.png",
+     "svg": "svg/03-mouth--smile-normal.svg",
+     "bbox": [
+      354.2,
+      366.7,
+      825.7,
+      494.6
+     ],
+     "binding": "rigid",
+     "bone": "B3",
+     "pivot": [
+      462.4,
+      470.8
+     ]
+    },
+    {
+     "order": 3,
+     "name": "theeth smile",
+     "png": "png/03-mouth--theeth-smile.png",
+     "svg": "svg/03-mouth--theeth-smile.svg",
+     "bbox": [
+      306.3,
+      297.4,
+      875.3,
+      542.2
+     ],
+     "binding": "rigid",
+     "bone": "B3",
+     "pivot": [
+      462.4,
+      470.8
+     ]
+    },
+    {
+     "order": 3,
+     "name": "happy",
+     "png": "png/03-mouth--happy.png",
+     "svg": "svg/03-mouth--happy.svg",
+     "bbox": [
+      440.5,
+      357.7,
+      763.5,
+      584.4
+     ],
+     "binding": "rigid",
+     "bone": "B3",
+     "pivot": [
+      462.4,
+      470.8
+     ]
+    },
+    {
+     "order": 3,
+     "name": "puzzlement",
+     "png": "png/03-mouth--puzzlement.png",
+     "svg": "svg/03-mouth--puzzlement.svg",
+     "bbox": [
+      536.3,
+      363.6,
+      685.9,
+      548.4
+     ],
+     "binding": "rigid",
+     "bone": "B3",
+     "pivot": [
+      462.4,
+      470.8
+     ]
+    }
+   ]
+  }
+ ]
+}

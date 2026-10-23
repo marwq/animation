@@ -1,0 +1,484 @@
+{
+ "name": "lord verity small",
+ "source": "moho/lord verity small.moho",
+ "canvas": {
+  "width": 801,
+  "height": 824
+ },
+ "moho_frame": {
+  "width": 2000,
+  "height": 2000,
+  "offset": [
+   585,
+   630
+  ],
+  "note": "пиксель кадра Moho = пиксель холста + offset; 1 единица Moho = 1000 px"
+ },
+ "bones": [
+  {
+   "index": 0,
+   "name": "B1",
+   "parent": null,
+   "base": [
+    440.3,
+    785.9
+   ],
+   "tip": [
+    440.3,
+    59.7
+   ],
+   "angle_deg": -90.0,
+   "length_px": 726.3,
+   "strength": 0.0,
+   "drives": [
+    "body"
+   ]
+  },
+  {
+   "index": 1,
+   "name": "B2",
+   "parent": "B1",
+   "base": [
+    369.0,
+    279.1
+   ],
+   "tip": [
+    308.3,
+    78.5
+   ],
+   "angle_deg": -106.84,
+   "length_px": 209.6,
+   "strength": 0.0,
+   "drives": [
+    "hat"
+   ]
+  },
+  {
+   "index": 2,
+   "name": "B3",
+   "parent": "B1",
+   "base": [
+    831.0,
+    479.7
+   ],
+   "tip": [
+    1331.0,
+    479.7
+   ],
+   "angle_deg": 0.0,
+   "length_px": 500.1,
+   "strength": 0.0,
+   "drives": []
+  },
+  {
+   "index": 3,
+   "name": "B4",
+   "parent": "B3",
+   "base": [
+    918.1,
+    313.4
+   ],
+   "tip": [
+    918.1,
+    313.4
+   ],
+   "angle_deg": 0.0,
+   "length_px": 0.0,
+   "strength": 0.0,
+   "drives": [
+    "eyes/normal",
+    "eyes/angry",
+    "eyes/sad"
+   ]
+  },
+  {
+   "index": 4,
+   "name": "B5",
+   "parent": "B3",
+   "base": [
+    292.5,
+    624.9
+   ],
+   "tip": [
+    638.3,
+    609.1
+   ],
+   "angle_deg": -2.62,
+   "length_px": 346.1,
+   "strength": 0.0,
+   "drives": [
+    "mouth/smile normal",
+    "mouth/theeth smile",
+    "mouth/happy with theeth",
+    "mouth/puzzlement",
+    "mouth/sad",
+    "mouth/happy - spittle",
+    "mouth/mini smile",
+    "mouth/excited",
+    "mouth/happy open mouth",
+    "mouth/Throw up",
+    "mouth/angry theeth"
+   ]
+  },
+  {
+   "index": 5,
+   "name": "eye",
+   "parent": null,
+   "base": [
+    1194.2,
+    181.0
+   ],
+   "tip": [
+    1194.2,
+    -20.3
+   ],
+   "angle_deg": -90.0,
+   "length_px": 201.2,
+   "strength": 0.0,
+   "drives": []
+  },
+  {
+   "index": 6,
+   "name": "mouth",
+   "parent": null,
+   "base": [
+    1479.6,
+    181.0
+   ],
+   "tip": [
+    1479.6,
+    -20.3
+   ],
+   "angle_deg": -90.0,
+   "length_px": 201.2,
+   "strength": 0.0,
+   "drives": []
+  }
+ ],
+ "layers": [
+  {
+   "order": 1,
+   "name": "body",
+   "png": "png/01-body.png",
+   "svg": "svg/01-body.svg",
+   "bbox": [
+    93.2,
+    117.6,
+    775.1,
+    799.5
+   ],
+   "binding": "rigid",
+   "bone": "B1",
+   "pivot": [
+    440.3,
+    785.9
+   ]
+  },
+  {
+   "order": 4,
+   "name": "hat",
+   "png": "png/04-hat.png",
+   "svg": "svg/04-hat.svg",
+   "bbox": [
+    24.5,
+    24.2,
+    776.9,
+    363.1
+   ],
+   "binding": "rigid",
+   "bone": "B2",
+   "pivot": [
+    369.0,
+    279.1
+   ]
+  }
+ ],
+ "switches": [
+  {
+   "name": "eyes",
+   "order": 2,
+   "default": "normal",
+   "children": [
+    {
+     "order": 2,
+     "name": "normal",
+     "png": "png/02-eyes--normal.png",
+     "svg": "svg/02-eyes--normal.svg",
+     "bbox": [
+      313.5,
+      398.6,
+      561.2,
+      493.9
+     ],
+     "binding": "rigid",
+     "bone": "B4",
+     "pivot": [
+      918.1,
+      313.4
+     ]
+    },
+    {
+     "order": 2,
+     "name": "angry",
+     "png": "png/02-eyes--angry.png",
+     "svg": "svg/02-eyes--angry.svg",
+     "bbox": [
+      310.6,
+      373.1,
+      563.7,
+      493.9
+     ],
+     "binding": "rigid",
+     "bone": "B4",
+     "pivot": [
+      918.1,
+      313.4
+     ]
+    },
+    {
+     "order": 2,
+     "name": "sad",
+     "png": "png/02-eyes--sad.png",
+     "svg": "svg/02-eyes--sad.svg",
+     "bbox": [
+      288.7,
+      373.1,
+      582.1,
+      493.9
+     ],
+     "binding": "rigid",
+     "bone": "B4",
+     "pivot": [
+      918.1,
+      313.4
+     ]
+    }
+   ],
+   "smart_bone": "eye",
+   "smart_bone_frames": {
+    "normal": 0,
+    "angry": 4,
+    "sad": 8
+   }
+  },
+  {
+   "name": "mouth",
+   "order": 3,
+   "default": "smile normal",
+   "children": [
+    {
+     "order": 3,
+     "name": "smile normal",
+     "png": "png/03-mouth--smile-normal.png",
+     "svg": "svg/03-mouth--smile-normal.svg",
+     "bbox": [
+      202.2,
+      525.7,
+      673.7,
+      653.6
+     ],
+     "binding": "rigid",
+     "bone": "B5",
+     "pivot": [
+      292.5,
+      624.9
+     ]
+    },
+    {
+     "order": 3,
+     "name": "theeth smile",
+     "png": "png/03-mouth--theeth-smile.png",
+     "svg": "svg/03-mouth--theeth-smile.svg",
+     "bbox": [
+      154.3,
+      456.4,
+      723.3,
+      701.2
+     ],
+     "binding": "rigid",
+     "bone": "B5",
+     "pivot": [
+      292.5,
+      624.9
+     ]
+    },
+    {
+     "order": 3,
+     "name": "happy with theeth",
+     "png": "png/03-mouth--happy-with-theeth.png",
+     "svg": "svg/03-mouth--happy-with-theeth.svg",
+     "bbox": [
+      258.1,
+      516.7,
+      581.1,
+      743.4
+     ],
+     "binding": "rigid",
+     "bone": "B5",
+     "pivot": [
+      292.5,
+      624.9
+     ]
+    },
+    {
+     "order": 3,
+     "name": "puzzlement",
+     "png": "png/03-mouth--puzzlement.png",
+     "svg": "svg/03-mouth--puzzlement.svg",
+     "bbox": [
+      342.4,
+      517.9,
+      492.1,
+      702.7
+     ],
+     "binding": "rigid",
+     "bone": "B5",
+     "pivot": [
+      292.5,
+      624.9
+     ]
+    },
+    {
+     "order": 3,
+     "name": "sad",
+     "png": "png/03-mouth--sad.png",
+     "svg": "svg/03-mouth--sad.svg",
+     "bbox": [
+      332.3,
+      571.1,
+      570.8,
+      642.9
+     ],
+     "binding": "rigid",
+     "bone": "B5",
+     "pivot": [
+      292.5,
+      624.9
+     ]
+    },
+    {
+     "order": 3,
+     "name": "happy - spittle",
+     "png": "png/03-mouth--happy-spittle.png",
+     "svg": "svg/03-mouth--happy-spittle.svg",
+     "bbox": [
+      294.7,
+      511.6,
+      602.4,
+      743.3
+     ],
+     "binding": "rigid",
+     "bone": "B5",
+     "pivot": [
+      292.5,
+      624.9
+     ]
+    },
+    {
+     "order": 3,
+     "name": "mini smile",
+     "png": "png/03-mouth--mini-smile.png",
+     "svg": "svg/03-mouth--mini-smile.svg",
+     "bbox": [
+      391.0,
+      529.1,
+      509.3,
+      592.5
+     ],
+     "binding": "rigid",
+     "bone": "B5",
+     "pivot": [
+      292.5,
+      624.9
+     ]
+    },
+    {
+     "order": 3,
+     "name": "excited",
+     "png": "png/03-mouth--excited.png",
+     "svg": "svg/03-mouth--excited.svg",
+     "bbox": [
+      311.7,
+      557.0,
+      572.3,
+      611.1
+     ],
+     "binding": "rigid",
+     "bone": "B5",
+     "pivot": [
+      292.5,
+      624.9
+     ]
+    },
+    {
+     "order": 3,
+     "name": "happy open mouth",
+     "png": "png/03-mouth--happy-open-mouth.png",
+     "svg": "svg/03-mouth--happy-open-mouth.svg",
+     "bbox": [
+      299.5,
+      495.5,
+      605.0,
+      703.9
+     ],
+     "binding": "rigid",
+     "bone": "B5",
+     "pivot": [
+      292.5,
+      624.9
+     ]
+    },
+    {
+     "order": 3,
+     "name": "Throw up",
+     "png": "png/03-mouth--throw-up.png",
+     "svg": "svg/03-mouth--throw-up.svg",
+     "bbox": [
+      299.2,
+      526.2,
+      611.2,
+      768.6
+     ],
+     "binding": "rigid",
+     "bone": "B5",
+     "pivot": [
+      292.5,
+      624.9
+     ]
+    },
+    {
+     "order": 3,
+     "name": "angry theeth",
+     "png": "png/03-mouth--angry-theeth.png",
+     "svg": "svg/03-mouth--angry-theeth.svg",
+     "bbox": [
+      312.6,
+      514.1,
+      597.6,
+      693.9
+     ],
+     "binding": "rigid",
+     "bone": "B5",
+     "pivot": [
+      292.5,
+      624.9
+     ]
+    }
+   ],
+   "smart_bone": "mouth",
+   "smart_bone_frames": {
+    "smile normal": 0,
+    "theeth smile": 2,
+    "happy with theeth": 4,
+    "puzzlement": 6,
+    "sad": 8,
+    "happy - spittle": 10,
+    "mini smile": 12,
+    "excited": 14,
+    "happy open mouth": 16,
+    "Throw up": 18,
+    "angry theeth": 20
+   }
+  }
+ ]
+}

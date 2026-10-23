@@ -1,0 +1,413 @@
+{
+ "name": "girl verity small",
+ "source": "moho/girl verity small.moho",
+ "canvas": {
+  "width": 731,
+  "height": 816
+ },
+ "moho_frame": {
+  "width": 2000,
+  "height": 2000,
+  "offset": [
+   654,
+   638
+  ],
+  "note": "пиксель кадра Moho = пиксель холста + offset; 1 единица Moho = 1000 px"
+ },
+ "bones": [
+  {
+   "index": 0,
+   "name": "B1",
+   "parent": null,
+   "base": [
+    354.5,
+    777.5
+   ],
+   "tip": [
+    354.5,
+    112.1
+   ],
+   "angle_deg": -90.0,
+   "length_px": 665.4,
+   "strength": 0.0,
+   "drives": [
+    "body",
+    "bow"
+   ]
+  },
+  {
+   "index": 1,
+   "name": "B2",
+   "parent": "B1",
+   "base": [
+    885.0,
+    437.0
+   ],
+   "tip": [
+    1476.5,
+    437.0
+   ],
+   "angle_deg": 0.0,
+   "length_px": 591.5,
+   "strength": 0.0,
+   "drives": [
+    "blush"
+   ]
+  },
+  {
+   "index": 2,
+   "name": "B3",
+   "parent": "B2",
+   "base": [
+    866.5,
+    283.9
+   ],
+   "tip": [
+    866.5,
+    283.9
+   ],
+   "angle_deg": 0.0,
+   "length_px": 0.0,
+   "strength": 0.0,
+   "drives": [
+    "eyes/normal",
+    "eyes/angry",
+    "eyes/sad"
+   ]
+  },
+  {
+   "index": 3,
+   "name": "eye",
+   "parent": null,
+   "base": [
+    995.6,
+    155.6
+   ],
+   "tip": [
+    995.6,
+    53.1
+   ],
+   "angle_deg": -90.0,
+   "length_px": 102.5,
+   "strength": 0.0,
+   "drives": []
+  },
+  {
+   "index": 4,
+   "name": "mouth",
+   "parent": null,
+   "base": [
+    1216.8,
+    149.3
+   ],
+   "tip": [
+    1216.8,
+    51.1
+   ],
+   "angle_deg": -90.0,
+   "length_px": 98.2,
+   "strength": 0.0,
+   "drives": []
+  }
+ ],
+ "layers": [
+  {
+   "order": 1,
+   "name": "body",
+   "png": "png/01-body.png",
+   "svg": "svg/01-body.svg",
+   "bbox": [
+    24.2,
+    109.6,
+    706.1,
+    791.5
+   ],
+   "binding": "rigid",
+   "bone": "B1",
+   "pivot": [
+    354.5,
+    777.5
+   ]
+  },
+  {
+   "order": 4,
+   "name": "blush",
+   "png": "png/04-blush.png",
+   "svg": "svg/04-blush.svg",
+   "bbox": [
+    85.0,
+    470.2,
+    653.3,
+    548.0
+   ],
+   "binding": "rigid",
+   "bone": "B2",
+   "pivot": [
+    885.0,
+    437.0
+   ]
+  },
+  {
+   "order": 5,
+   "name": "bow",
+   "png": "png/05-bow.png",
+   "svg": "svg/05-bow.svg",
+   "bbox": [
+    136.5,
+    24.7,
+    447.6,
+    230.7
+   ],
+   "binding": "rigid",
+   "bone": "B1",
+   "pivot": [
+    354.5,
+    777.5
+   ]
+  }
+ ],
+ "switches": [
+  {
+   "name": "eyes",
+   "order": 2,
+   "default": "normal",
+   "children": [
+    {
+     "order": 2,
+     "name": "normal",
+     "png": "png/02-eyes--normal.png",
+     "svg": "svg/02-eyes--normal.svg",
+     "bbox": [
+      234.7,
+      384.0,
+      502.9,
+      485.9
+     ],
+     "binding": "rigid",
+     "bone": "B3",
+     "pivot": [
+      866.5,
+      283.9
+     ]
+    },
+    {
+     "order": 2,
+     "name": "angry",
+     "png": "png/02-eyes--angry.png",
+     "svg": "svg/02-eyes--angry.svg",
+     "bbox": [
+      227.1,
+      365.1,
+      510.5,
+      485.9
+     ],
+     "binding": "rigid",
+     "bone": "B3",
+     "pivot": [
+      866.5,
+      283.9
+     ]
+    },
+    {
+     "order": 2,
+     "name": "sad",
+     "png": "png/02-eyes--sad.png",
+     "svg": "svg/02-eyes--sad.svg",
+     "bbox": [
+      227.1,
+      365.1,
+      510.5,
+      485.9
+     ],
+     "binding": "rigid",
+     "bone": "B3",
+     "pivot": [
+      866.5,
+      283.9
+     ]
+    }
+   ],
+   "smart_bone": "eye",
+   "smart_bone_frames": {
+    "normal": 0,
+    "angry": 3,
+    "sad": 6
+   }
+  },
+  {
+   "name": "mouth",
+   "order": 3,
+   "default": "smile normal",
+   "children": [
+    {
+     "order": 3,
+     "name": "smile normal",
+     "png": "png/03-mouth--smile-normal.png",
+     "svg": "svg/03-mouth--smile-normal.svg",
+     "bbox": [
+      133.2,
+      517.7,
+      604.7,
+      645.6
+     ],
+     "binding": "none",
+     "bone": null
+    },
+    {
+     "order": 3,
+     "name": "theeth smile",
+     "png": "png/03-mouth--theeth-smile.png",
+     "svg": "svg/03-mouth--theeth-smile.svg",
+     "bbox": [
+      85.3,
+      448.4,
+      654.3,
+      693.2
+     ],
+     "binding": "none",
+     "bone": null
+    },
+    {
+     "order": 3,
+     "name": "happy with theeth",
+     "png": "png/03-mouth--happy-with-theeth.png",
+     "svg": "svg/03-mouth--happy-with-theeth.svg",
+     "bbox": [
+      189.1,
+      508.7,
+      512.1,
+      735.4
+     ],
+     "binding": "none",
+     "bone": null
+    },
+    {
+     "order": 3,
+     "name": "puzzlement",
+     "png": "png/03-mouth--puzzlement.png",
+     "svg": "svg/03-mouth--puzzlement.svg",
+     "bbox": [
+      273.4,
+      509.9,
+      423.1,
+      694.7
+     ],
+     "binding": "none",
+     "bone": null
+    },
+    {
+     "order": 3,
+     "name": "sad",
+     "png": "png/03-mouth--sad.png",
+     "svg": "svg/03-mouth--sad.svg",
+     "bbox": [
+      263.3,
+      563.1,
+      501.8,
+      634.9
+     ],
+     "binding": "none",
+     "bone": null
+    },
+    {
+     "order": 3,
+     "name": "happy - spittle",
+     "png": "png/03-mouth--happy-spittle.png",
+     "svg": "svg/03-mouth--happy-spittle.svg",
+     "bbox": [
+      225.7,
+      503.6,
+      533.4,
+      735.3
+     ],
+     "binding": "none",
+     "bone": null
+    },
+    {
+     "order": 3,
+     "name": "mini smile",
+     "png": "png/03-mouth--mini-smile.png",
+     "svg": "svg/03-mouth--mini-smile.svg",
+     "bbox": [
+      322.0,
+      521.1,
+      440.3,
+      584.5
+     ],
+     "binding": "none",
+     "bone": null
+    },
+    {
+     "order": 3,
+     "name": "excited",
+     "png": "png/03-mouth--excited.png",
+     "svg": "svg/03-mouth--excited.svg",
+     "bbox": [
+      242.7,
+      549.0,
+      503.3,
+      603.1
+     ],
+     "binding": "none",
+     "bone": null
+    },
+    {
+     "order": 3,
+     "name": "happy open mouth",
+     "png": "png/03-mouth--happy-open-mouth.png",
+     "svg": "svg/03-mouth--happy-open-mouth.svg",
+     "bbox": [
+      230.5,
+      487.5,
+      536.0,
+      695.9
+     ],
+     "binding": "none",
+     "bone": null
+    },
+    {
+     "order": 3,
+     "name": "Throw up",
+     "png": "png/03-mouth--throw-up.png",
+     "svg": "svg/03-mouth--throw-up.svg",
+     "bbox": [
+      230.2,
+      518.2,
+      542.2,
+      760.6
+     ],
+     "binding": "none",
+     "bone": null
+    },
+    {
+     "order": 3,
+     "name": "angry theeth",
+     "png": "png/03-mouth--angry-theeth.png",
+     "svg": "svg/03-mouth--angry-theeth.svg",
+     "bbox": [
+      243.6,
+      506.1,
+      528.6,
+      685.9
+     ],
+     "binding": "none",
+     "bone": null
+    }
+   ],
+   "smart_bone": "mouth",
+   "smart_bone_frames": {
+    "smile normal": 0,
+    "theeth smile": 2,
+    "happy with theeth": 4,
+    "puzzlement": 6,
+    "sad": 8,
+    "happy - spittle": 10,
+    "mini smile": 12,
+    "excited": 14,
+    "happy open mouth": 16,
+    "Throw up": 18,
+    "angry theeth": 20
+   }
+  }
+ ]
+}
