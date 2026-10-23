@@ -154,6 +154,27 @@ const E = (() => {
       this.top = Math.min(...solid.map((l) => l.bbox[1]));
       const face = data.layers.find((l) => l.name === 'head') || data.layers.find((l) => l.name === 'body');
       this.faceBox = face.bbox;
+      // У некоторых ригов стопа нарисована на одном слое с голенью: режем слой по щиколотке,
+      // нижний кусок (с запасом 40 px рига вверх) едет за костью стопы и остаётся ровным.
+      if (opts.splitFeet) {
+        for (const k of ['F', 'B']) {
+          const ch = this.leg[k];
+          if (!ch || data.layers.some((l) => l.bone === bones[ch[2]].name)) continue;
+          const li = data.layers.findIndex((l) => !l.sw && l.bone === bones[ch[1]].name);
+          if (li < 0) continue;
+          const L = data.layers[li], ank = bones[ch[2]].base[1];
+          const crop = (y0, y1) => {
+            const c = document.createElement('canvas');
+            c.width = L.full.width; c.height = L.full.height;
+            c.getContext('2d').drawImage(L.full, 0, y0, c.width, y1 - y0, 0, y0, c.width, y1 - y0);
+            return c;
+          };
+          const shin = { ...L, full: crop(0, ank), bbox: [L.bbox[0], L.bbox[1], L.bbox[2], Math.min(L.bbox[3], ank)] };
+          const foot = { ...L, name: L.name + ' foot', bone: bones[ch[2]].name, full: crop(ank - 40, L.full.height),
+            bbox: [L.bbox[0], ank - 40, L.bbox[2], L.bbox[3]] };
+          data.layers.splice(li, 1, shin, foot);
+        }
+      }
       if (opts.scale) this.scale = opts.scale;
       else if (opts.height) this.scale = opts.height / (this.anchor[1] - this.top);
       else {
@@ -231,7 +252,8 @@ const E = (() => {
     //   lean, head, neck                       наклон корпуса / головы (+ вперёд), градусы
     //   footF/footB [x на сцене, подъём]       стопа в точке на земле (IK), legF/legB [бедро,
     //                                          голень, стопа] — углы, legFfk — смесь углов и точки
-    //   handF/handB [вперёд, вниз]             кисть относительно плеча (IK), armF/armB — углы
+    //   handF/handB [вперёд, вниз]             кисть относительно плеча (IK), armF/armB — углы,
+    //                                          bendF/bendB = -1 — локоть в другую сторону (руки в боки)
     //   b_<кость>                              дополнительный поворот любой кости (крылья)
     //   look -1..1, zF/zB 'front'|'back', mouth, eyes, hide, alpha
     // world.hitF/hitB/kickF {at, w} — тянуть кулак/стопу к точке сцены с весом w.
@@ -292,7 +314,7 @@ const E = (() => {
           const sh = apply(W[this.parent[ch[0]]], this.bones[ch[0]].base);
           point = [sh[0] + hand[0] * dir, sh[1] + hand[1]];
         }
-        limb(ch, p['arm' + k], point, world['hit' + k], -dir, null, p['arm' + k + 'fk']);
+        limb(ch, p['arm' + k], point, world['hit' + k], -dir * (p['bend' + k] || 1), null, p['arm' + k + 'fk']);
         if (p['wrist' + k]) { delta[ch[2]] = (delta[ch[2]] || 0) + rad(p['wrist' + k]) * dir; W = this.fk(delta, hip); }
       }
       return { G, W, p };
@@ -326,6 +348,17 @@ const E = (() => {
       return mul(st.G, st.W[l.bone in this.idx ? this.idx[l.bone] : this.root]);
     }
 
+    // сдвиг глаз и рта к сопернику (look) в пикселях рига
+    lookShift(p) {
+      const fw = this.faceBox[2] - this.faceBox[0];
+      return (p.look || 0) * this.dir * fw * (this.layers.some((l) => l.name === 'head') ? 0.07 : 0.1);
+    }
+
+    // матрица, которой рисуется слой глаз (со сдвигом look) — для сердечек вместо глаз
+    eyeMatrix(st, name) {
+      return mul(this.layerMatrix(st, name), T(this.lookShift(st.p), 0));
+    }
+
     // Слои рисуются в порядке рига. Руку можно временно поднять над телом
     // (zF/zB = 'front') или убрать за всё (= 'back'); only = 'F'/'B' — рисует одну руку
     // (чтобы бьющая рука легла поверх соперника). look сдвигает глаза и рот к
@@ -336,9 +369,8 @@ const E = (() => {
       const pick = { mouth: p.mouth, eyes: p.eyes };
       const look = p.look || 0;
       const fb = this.faceBox;
-      const fw = fb[2] - fb[0];
       const bigHead = this.layers.some((l) => l.name === 'head');
-      const shift = look * this.dir * fw * (bigHead ? 0.07 : 0.1);
+      const shift = this.lookShift(p);
       const narrow = bigHead ? 1 - 0.06 * Math.abs(look) : 1;
       const fcx = (fb[0] + fb[2]) / 2;
       const visible = this.layers.filter((l) => {

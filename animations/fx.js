@@ -262,6 +262,56 @@ const FX = (() => {
     ctx.restore();
   }
 
+  // сердечко: красное, с чёрной обводкой и бликом; s — ширина
+  function heart(ctx, x, y, s, alpha = 1, rot = 0) {
+    if (alpha <= 0 || s <= 0) return;
+    ctx.save();
+    ctx.globalAlpha = alpha;
+    ctx.translate(x, y); ctx.rotate(rot);
+    ctx.beginPath();
+    ctx.moveTo(0, 0.5 * s);
+    ctx.bezierCurveTo(-0.55 * s, 0.1 * s, -0.62 * s, -0.45 * s, -0.27 * s, -0.47 * s);
+    ctx.bezierCurveTo(-0.1 * s, -0.48 * s, 0, -0.35 * s, 0, -0.24 * s);
+    ctx.bezierCurveTo(0, -0.35 * s, 0.1 * s, -0.48 * s, 0.27 * s, -0.47 * s);
+    ctx.bezierCurveTo(0.62 * s, -0.45 * s, 0.55 * s, 0.1 * s, 0, 0.5 * s);
+    ctx.closePath();
+    ctx.fillStyle = '#ff2d55'; ctx.fill();
+    ctx.lineWidth = Math.max(2, s * 0.07); ctx.strokeStyle = '#111'; ctx.stroke();
+    ctx.beginPath(); ctx.ellipse(-0.28 * s, -0.22 * s, 0.09 * s, 0.05 * s, -0.7, 0, TAU);
+    ctx.fillStyle = 'rgba(255,255,255,0.85)'; ctx.fill();
+    ctx.restore();
+  }
+
+  // маленькие сердечки летят вверх над головой (влюбился); t — секунды
+  function hearts(ctx, x, y, t, life = 1) {
+    for (let i = 0; i < 5; i++) {
+      const u = ((t * 0.7 + i / 5) % 1);
+      const hx = x + Math.sin(u * 7 + i * 2.1) * 28 + (i - 2) * 26;
+      const hy = y - u * 170;
+      heart(ctx, hx, hy, 30 + 10 * Math.sin(i), Math.min(1, (1 - u) * 2.5) * life, Math.sin(u * 6 + i) * 0.3);
+    }
+  }
+
+  // ветер по земле: клубы пыли и травинки летят от x0 к x1 (порыв от крыльев)
+  function wind(ctx, x0, x1, ground, life, seed = 5) {
+    if (life < 0 || life > 1) return;
+    const r = rng(seed);
+    for (let i = 0; i < 34; i++) {
+      const d0 = r() * 0.6, sp = 0.3 + r() * 0.2, h = 15 + r() * 260, kind = r(), sz = r();
+      const u = (life - d0) / sp;
+      if (u < 0 || u > 1) continue;
+      const x = x0 + (x1 - x0) * u, y = ground - h - Math.sin(u * 9 + i) * 16;
+      const a = Math.min(1, Math.sin(Math.PI * u) * 1.6);
+      if (kind < 0.6) puff(ctx, x, y, 16 + sz * 22, 0.85 * a, '#f1e6cc', '#a8936a');
+      else {                                        // травинка кувыркается
+        ctx.save(); ctx.globalAlpha = a; ctx.translate(x, y); ctx.rotate(u * 14 + i);
+        ctx.beginPath(); ctx.ellipse(0, 0, 14 + sz * 8, 5, 0, 0, TAU);
+        ctx.fillStyle = kind < 0.8 ? '#25c516' : '#1c9a10'; ctx.fill();
+        ctx.lineWidth = 2; ctx.strokeStyle = '#0d4f07'; ctx.stroke(); ctx.restore();
+      }
+    }
+  }
+
   // «вжух» — удар прошёл мимо: маленькое облачко
   function whoosh(ctx, x, y, life) {
     if (life < 0 || life > 1) return;
@@ -270,5 +320,6 @@ const FX = (() => {
     }
   }
 
-  return { rng, background, cloud, shadow, spark, dust, smoke, flash, rays, vein, steam, sweat, stars, twinkle, whoosh, puff };
+  return { rng, background, cloud, shadow, spark, dust, smoke, flash, rays, vein, steam, sweat, stars, twinkle, whoosh, puff,
+    heart, hearts, wind };
 })();

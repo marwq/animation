@@ -13,6 +13,10 @@
 //
 // cast: { кто: { small: [риг, опции], big: [риг, опции] (если есть), pivot,
 //                moods: { angry, grin, big } — рты для превращения } }
+//
+// Звук: помощники и эффекты сами ставят звуковые метки (прыжок, приземление, удар, дым…),
+// сцена добавляет свои через sfx(вид, кадр, {who|at|x, gain}). Виды звуков — tools/sfx.py.
+// cfg.music — фоновая 8-битная петля ({bpm, full, end, gain}), null — без музыки.
 'use strict';
 
 function Stage(cfg) {
@@ -20,6 +24,7 @@ function Stage(cfg) {
   const GROUND = cfg.ground || 816, EDGE = cfg.edge || 757;
   window.SCENE = { fps: FPS, duration: NF / FPS, width: W, height: H, name: cfg.name };
   const F = (f) => f / FPS;
+  const TAU = Math.PI * 2;
   const CAST = cfg.cast;
   const ORDER = cfg.order || Object.keys(CAST);   // от дальнего к ближнему
   const TR = {};
@@ -31,8 +36,24 @@ function Stage(cfg) {
 
   // ---------------------------------------------------------------- события эффектов
   const FX_EV = { spark: [], shake: [], zoom: [], dust: [], smoke: [], flash: [], rays: [], vein: [], steam: [],
-    sweat: [], stars: [], twinkle: [], whoosh: [] };
-  const ev = (kind, o) => FX_EV[kind].push(o);
+    sweat: [], stars: [], twinkle: [], whoosh: [], hearteyes: [], hearts: [], wind: [], heartshot: [] };
+  const SFX = [];
+  const sfx = (kind, f, o = {}) => SFX.push({ kind, f, ...o });
+  // эффект + его звук (если у эффекта он есть и не выключен snd: false)
+  const ev = (kind, o) => {
+    FX_EV[kind].push(o);
+    if (o.snd === false) return;
+    const g = o.gain;
+    if (kind === 'spark') sfx(o.snd || 'punch', o.f, { at: o.at, gain: g });
+    else if (kind === 'twinkle') sfx((o.size || 46) >= 46 ? 'twinkle' : 'sparkle', o.f, { at: o.at, gain: g });
+    else if (kind === 'stars') sfx('dizzy', o.f0, { who: o.who, dur: o.f1 - o.f0, gain: g ?? 0.8 });
+    else if (kind === 'sweat') sfx('drip', o.f0 + 3, { who: o.who, gain: g ?? 0.7 });
+    else if (kind === 'whoosh') sfx('whoosh', o.f - 3, { at: o.at, gain: g ?? 0.8 });
+    else if (kind === 'hearts') sfx('love', o.f0, { who: o.who, gain: g });
+    else if (kind === 'heartshot') sfx('heart', o.f0, { at: o.from, gain: g });
+    else if (kind === 'wind') sfx('gust', o.f0, { x: (o.x0 + o.x1) / 2, dur: o.f1 - o.f0, gain: g });
+    else if (o.snd) sfx(o.snd, o.f ?? o.f0, { x: o.x, who: o.who, at: o.at, gain: g });
+  };
 
   // ---------------------------------------------------------------- помощники движения
   // шарик: прыжок с подготовкой (сквош), отрывом (вытягивание) и приземлением
@@ -49,6 +70,8 @@ function Stage(cfg) {
     key(who, f1 + 3, { sx: 0.95, sy: 1.06 }, 3);
     key(who, f1 + 7, { sx: 1, sy: 1 }, 4);
     if (o.dust) ev('dust', { f: f1, x: x1, r: 30, n: 4 });
+    sfx('jump', f0 + 2, { who, gain: 0.55 });
+    sfx('land', f1, { who, gain: 0.5 });
   }
 
   // шарик: отлёт кувырком по дуге (вращение вокруг центра), приземление, отскок, звёздочки
@@ -70,6 +93,9 @@ function Stage(cfg) {
     ev('dust', { f: f1, x: x1, r: 36, n: 6 });
     ev('shake', { f: f1, amp: 8, n: 8 });
     if (o.stars) ev('stars', { who, f0: f1 + 4, f1: f1 + 4 + o.stars });
+    sfx('whoosh', f0, { who, dur: (f1 - f0) * 0.6, gain: 0.5 });
+    sfx('land', f1, { who, gain: 0.9 });
+    sfx('bounce', f1 + 5, { who, gain: 0.5 });
   }
 
   // смех шарика: пульс 1.05×0.95 <-> 0.97×1.03 каждые 4 кадра
@@ -88,17 +114,23 @@ function Stage(cfg) {
 
   // превращение по формуле гайда: злость (жилка, пар) -> ухмылка, лучи, дрожь и рост ->
   // вспышка и дым -> из дыма большая версия (0.55 -> 1.1 -> 0.96 -> 1)
-  function transform(who, f, x, bigX, face) {
+  // o.fast — короткая злость и лучи (большой уже через ~1 с после начала)
+  function transform(who, f, x, bigX, face, o = {}) {
+    const A = o.fast ? 6 : 22, R = o.fast ? 8 : 14;   // злость, лучи — кадры
     key(who, f, { eyes: 'angry', mouth: mood(who, 'angry', 'sad') }, 0);
-    ev('vein', { who, f0: f + 2, f1: f + 26 });
-    ev('steam', { who, f0: f + 4, f1: f + 26 });
-    tremble(who, f + 4, f + 22, x, 2);
-    key(who, f + 22, { mouth: mood(who, 'grin', 'theeth smile') }, 0);
-    ev('rays', { who, f0: f + 24, f1: f + 38 });
-    tremble(who, f + 24, f + 38, x, 6);
-    key(who, f + 24, { sx: 1, sy: 1 }, 0);
-    key(who, f + 38, { sx: 1.1, sy: 1.1 }, 14, 'lin');
-    const g = f + 38;
+    ev('vein', { who, f0: f + 2, f1: f + A + 4 });
+    ev('steam', { who, f0: f + 4, f1: f + A + 4 });
+    tremble(who, f + 4, f + A, x, 2);
+    key(who, f + A, { mouth: mood(who, 'grin', 'theeth smile') }, 0);
+    ev('rays', { who, f0: f + A + 2, f1: f + A + 2 + R });
+    tremble(who, f + A + 2, f + A + 2 + R, x, 6);
+    key(who, f + A + 2, { sx: 1, sy: 1 }, 0);
+    key(who, f + A + 2 + R, { sx: 1.1, sy: 1.1 }, R, 'lin');
+    const g = f + A + 2 + R;
+    sfx('anger', f + 2, { who, dur: A + 2, gain: 0.8 });
+    sfx('powerup', f + A + 2, { who, dur: R, gain: 0.8 });
+    sfx('poof', g, { who });
+    sfx('grow', g + 6, { who, gain: 0.8 });
     ev('flash', { f: g, who });
     ev('smoke', { f: g, who, size: 700, dx: (bigX - x) / 2 });
     ev('shake', { f: g, amp: 14, n: 7 });
@@ -136,6 +168,7 @@ function Stage(cfg) {
       move(who, fe, { [behind]: [tx, 0] }, 'in2');
       key(who, fs + n / 2, { hip: [0, -4] }, n / 2);
       key(who, fe, { hip: [0, 16] }, n / 2);
+      sfx('step', fe, { x: tx, gain: 0.55 });
       if (swing) {
         const fw = behind === 'footB' ? 1 : -1;   // рука напротив ноги
         key(who, fs + n / 2, { handF: [rf[0] + 70 + fw * 70, rf[1] - 60], handB: [rb[0] - fw * 70, rb[1] - 20] }, n / 2);
@@ -247,11 +280,21 @@ function Stage(cfg) {
       const c = ch.point(st, 'body');
       FX.rays(ctx, c[0], c[1], 420, Math.min(1, (f - r.f0) / (r.f1 - r.f0)) * (f > r.f1 ? 1 - (f - r.f1) / 6 : 1), t * 0.6);
     }
-    // персонажи от дальнего к ближнему
+    // персонажи от дальнего к ближнему; влюблённым прячем глаза — вместо них сердечки
+    const loveEyes = (who) => FX_EV.hearteyes.filter((h) => h.who === who && f >= h.f0 && f <= h.f1);
     for (const who of ORDER) {
       const { ch, st, p } = S[who];
-      const pp = hooks.drawPose ? hooks.drawPose(who, p, f) : p;
+      let pp = hooks.drawPose ? hooks.drawPose(who, p, f) : p;
+      for (const h of loveEyes(who)) pp = { ...pp, hide: [...(pp.hide || []), h.layer] };
       ch.draw(ctx, { ...st, p: pp }, CAM);
+      ctx.setTransform(...CAM);
+      for (const h of loveEyes(who)) {
+        const M = ch.eyeMatrix(st, h.layer), k = 1 + 0.12 * Math.sin(t * TAU * 3);
+        for (const [ex, ey, er] of h.eyes) {
+          const q = E.apply(M, [ex, ey]);
+          FX.heart(ctx, q[0], q[1], er * 2.6 * ch.scale * k * Math.min(1, (f - h.f0 + 1) / 4));
+        }
+      }
     }
     // бьющая рука поверх соперника
     for (const who of ORDER) {
@@ -260,6 +303,29 @@ function Stage(cfg) {
     }
     for (const fn of hooks.afterChars) fn(ctx, f, S, CAM);
     ctx.setTransform(...CAM);
+    // любовь и ветер
+    for (const h of FX_EV.hearts) {
+      if (f < h.f0 || f > h.f1) continue;
+      const { ch, st } = S[h.who], top = h.part ? target(`${h.who}:${h.part}`, S) : ch.point(st, 'top');
+      FX.hearts(ctx, top[0], top[1] + 20, (f - h.f0) / FPS, Math.min(1, (h.f1 - f) / 8));
+    }
+    for (const w of FX_EV.wind) FX.wind(ctx, w.x0, w.x1, GROUND, (f - w.f0) / (w.f1 - w.f0), w.f0);
+    for (const h of FX_EV.heartshot) {           // большое сердце летит по дуге в лицо
+      const u = (f - h.f0) / (h.f1 - h.f0);
+      const a = typeof h.from === 'string' ? target(h.from, statesAt(h.f0)) : h.from;
+      const b = typeof h.to === 'string' ? target(h.to, statesAt(h.f1)) : h.to;
+      const size = h.size || 120;
+      if (u >= 0 && u <= 1) {
+        FX.heart(ctx, E.lerp(a[0], b[0], u), E.lerp(a[1], b[1], u) - Math.sin(Math.PI * u) * 60,
+          size * (0.5 + 0.5 * Math.min(1, u * 3)) * (1 + 0.1 * Math.sin(f * 1.3)), 1, Math.sin(f * 0.5) * 0.15);
+      } else if (u > 1 && f - h.f1 <= 12) {     // лопнуло: колечко маленьких сердечек
+        const v = (f - h.f1) / 12;
+        for (let i = 0; i < 8; i++) {
+          const ang = i / 8 * TAU;
+          FX.heart(ctx, b[0] + Math.cos(ang) * (30 + 110 * v), b[1] + Math.sin(ang) * (30 + 90 * v), 34, 1 - v, ang);
+        }
+      }
+    }
     // эффекты поверх
     const at = (o, g) => (typeof o.at === 'string' ? target(o.at, statesAt(g)) : o.at);
     for (const d of FX_EV.dust) FX.dust(ctx, d.x, GROUND + 4, d.r, (f - d.f) / 18, d.n, d.f);
@@ -305,6 +371,23 @@ function Stage(cfg) {
     }
   }
 
+  // звук ролика для tools/sfx.py: метки (секунды, вид, громкость, панорама по месту на сцене) и музыка
+  function audio() {
+    const xOf = (c) => {
+      if (c.x !== undefined) return c.x;
+      const S = statesAt(Math.min(NF - 1, Math.max(0, Math.round(c.f))));
+      if (c.at) return (typeof c.at === 'string' ? target(c.at, S) : c.at)[0];
+      return c.who ? S[c.who].p.x : W / 2;
+    };
+    const victory = SFX.find((c) => c.kind === 'victory');
+    const music = cfg.music === null ? null
+      : { bpm: 150, full: 4, end: victory ? victory.f / FPS : NF / FPS, gain: 0.18, ...(cfg.music || {}) };
+    const cues = SFX.filter((c) => c.f >= 0 && c.f < NF).sort((a, b) => a.f - b.f).map((c) => ({
+      t: c.f / FPS, kind: c.kind, gain: c.gain ?? 1, dur: c.dur ? c.dur / FPS : 0,
+      pan: E.clamp((xOf(c) - W / 2) / (W / 2), -1, 1) * 0.6 }));
+    return { duration: NF / FPS, music, cues };
+  }
+
   // загрузка ригов, затем позы больших (им нужны размеры рук и ног), затем рендер по кадрам
   function start(big) {
     const ctx = document.getElementById('stage').getContext('2d');
@@ -317,8 +400,9 @@ function Stage(cfg) {
       BG = FX.background(W, H, EDGE, cfg.background || {});
     })();
     window.renderFrame = (f) => renderFrame(f, ctx);
+    window.SCENE.audio = audio;
   }
 
-  return { FPS, W, H, NF, GROUND, EDGE, F, CAST, C, key, move, ev, hop, tumble, laugh, tremble, transform,
+  return { FPS, W, H, NF, GROUND, EDGE, F, CAST, C, key, move, ev, sfx, hop, tumble, laugh, tremble, transform,
     stance, walk, target, parts, statesAt, hooks, start };
 }

@@ -3,12 +3,18 @@
 //   node tools/render_anim.js animations/skeleton-vs-lord           # всё видео -> <сцена>/<имя>.mp4
 //   node tools/render_anim.js animations/skeleton-vs-lord --still 4.0,7.4 --out /tmp/kadry
 //                                                                # отдельные кадры (секунды) в PNG
+//   node tools/render_anim.js animations/<сцена> --audio-only     # пересвести только звук
+//   node tools/render_anim.js animations/<сцена> --mute           # видео без звука
+//
+// Звук: если сцена отдаёт window.SCENE.audio() (метки эффектов и музыка), tools/sfx.py
+// сводит его в WAV, и он кладётся в MP4 дорожкой AAC.
 //
 // Сцена — index.html, который выставляет window.READY (Promise), window.SCENE
 // ({fps, duration, width, height, name}) и window.renderFrame(номер кадра).
 // Нужны Playwright (см. README) и ffmpeg с libx264.
 const fs = require('fs');
 const http = require('http');
+const os = require('os');
 const path = require('path');
 const { spawn } = require('child_process');
 const { chromium } = require('playwright');
@@ -34,6 +40,28 @@ function serve() {
   return new Promise((ok) => server.listen(0, '127.0.0.1', () => ok(server)));
 }
 
+function run(cmd, argv) {
+  return new Promise((ok, fail) => {
+    const p = spawn(cmd, argv, { stdio: ['ignore', 'inherit', 'inherit'] });
+    p.on('close', (c) => (c ? fail(new Error(`${cmd} ${c}`)) : ok()));
+  });
+}
+
+// звук сцены -> WAV -> дорожка AAC в готовом MP4 (видео копируется без пережатия)
+async function addSound(page, mp4) {
+  const audio = await page.evaluate(() => (window.SCENE.audio ? window.SCENE.audio() : null));
+  if (!audio) return;
+  const tmp = fs.mkdtempSync(path.join(os.tmpdir(), 'sound-'));
+  const cues = path.join(tmp, 'cues.json'), wav = path.join(tmp, 'sound.wav'), out = path.join(tmp, 'out.mp4');
+  fs.writeFileSync(cues, JSON.stringify(audio));
+  await run('python3', [path.join(__dirname, 'sfx.py'), cues, wav]);
+  await run('ffmpeg', ['-y', '-loglevel', 'error', '-i', mp4, '-i', wav, '-map', '0:v', '-map', '1:a', '-c:v', 'copy',
+    '-c:a', 'aac', '-b:a', '192k', '-shortest', '-movflags', '+faststart', out]);
+  fs.copyFileSync(out, mp4);
+  fs.rmSync(tmp, { recursive: true, force: true });
+  console.log(`звук: ${audio.cues.length} меток${audio.music ? ' + музыка' : ''}`);
+}
+
 (async () => {
   const server = await serve();
   const url = `http://127.0.0.1:${server.address().port}/${path.relative(ROOT, sceneDir)}/${page_}`;
@@ -48,7 +76,9 @@ function serve() {
   const clip = { x: 0, y: 0, width: scene.width, height: scene.height };
 
   const stills = opt('--still');
-  if (stills) {
+  if (args.includes('--audio-only')) {
+    await addSound(page, path.join(sceneDir, `${scene.name}.mp4`));
+  } else if (stills) {
     const out = path.resolve(opt('--out') || path.join(sceneDir, 'stills'));
     fs.mkdirSync(out, { recursive: true });
     for (const s of stills.split(',')) {
@@ -73,6 +103,7 @@ function serve() {
     }
     ff.stdin.end();
     await done;
+    if (!args.includes('--mute')) await addSound(page, mp4);
     console.log(`${path.relative(ROOT, mp4)}  ${total} кадров, ${scene.fps} fps`);
   }
   await browser.close();

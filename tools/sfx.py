@@ -1,0 +1,448 @@
+#!/usr/bin/env python3
+"""Звук для роликов: мультяшные эффекты и фоновая 8-битная музыка, синтез на numpy.
+
+  python3 tools/sfx.py cues.json out.wav     # свести звук ролика по меткам сцены
+  python3 tools/sfx.py --demo out.wav        # все звуки подряд, чтобы послушать
+
+cues.json (его пишет tools/render_anim.js из window.SCENE.audio()):
+  {"duration": 25,
+   "music": {"bpm": 150, "full": 4.0, "end": 22.9, "gain": 0.2} | null,
+   "cues": [{"t": 6.5, "kind": "punch", "gain": 1, "pan": -0.3, "dur": 1.2, "seed": 3}, ...]}
+pan: -1 слева … 1 справа. dur — для звуков, длина которых зависит от сцены (звёздочки, ветер).
+"""
+import json
+import sys
+import wave
+
+import numpy as np
+
+SR = 48000
+TAU = 2 * np.pi
+
+
+# ---------------------------------------------------------------- кирпичики
+def nsamp(d):
+    return max(1, int(round(d * SR)))
+
+
+def tt(d):
+    return np.arange(nsamp(d)) / SR
+
+
+def noise(d, seed=0):
+    return np.random.default_rng(seed).uniform(-1, 1, nsamp(d))
+
+
+def osc(freq, d, kind='sine', duty=0.5):
+    n = nsamp(d)
+    f = np.full(n, float(freq)) if np.ndim(freq) == 0 else np.resize(np.asarray(freq, float), n)
+    ph = np.cumsum(f) / SR
+    if kind == 'sine':
+        return np.sin(TAU * ph)
+    if kind == 'square':
+        return np.where(ph % 1 < duty, 1.0, -1.0)
+    if kind == 'tri':
+        return 4 * np.abs(ph % 1 - 0.5) - 1
+    if kind == 'saw':
+        return 2 * (ph % 1) - 1
+    raise ValueError(kind)
+
+
+def glide(f0, f1, d, curve='exp'):
+    u = np.linspace(0, 1, nsamp(d))
+    return f0 * (f1 / f0) ** u if curve == 'exp' else f0 + (f1 - f0) * u
+
+
+def decay(d, tau, attack=0.002):
+    t = tt(d)
+    e = np.exp(-t / tau)
+    if attack > 0:
+        e = e * np.minimum(1, t / attack)
+    return e
+
+
+def bell(d, peak=0.5):
+    """Плавный подъём до peak (доля длины) и спад до нуля."""
+    u = np.linspace(0, 1, nsamp(d))
+    up = np.sin(np.pi / 2 * np.clip(u / peak, 0, 1))
+    down = np.cos(np.pi / 2 * np.clip((u - peak) / (1 - peak), 0, 1))
+    return np.where(u < peak, up, down) ** 2
+
+
+def bandpass(x, lo, hi):
+    """Полоса через спектр, края мягкие (~24 дБ/окт)."""
+    X = np.fft.rfft(x)
+    f = np.fft.rfftfreq(len(x), 1 / SR)
+    m = 1 / (1 + (lo / np.maximum(f, 1)) ** 4) / (1 + (f / hi) ** 4)
+    return np.fft.irfft(X * m, len(x))
+
+
+def lowpass(x, fc):
+    """Однополюсный ФНЧ; fc может меняться во времени."""
+    fc = np.resize(np.asarray(fc, float), len(x))
+    a = 1 - np.exp(-TAU * fc / SR)
+    y = np.empty_like(x)
+    s = 0.0
+    for i in range(len(x)):
+        s += a[i] * (x[i] - s)
+        y[i] = s
+    return y
+
+
+def lowpass2(x, fc):
+    """Два однополюсных подряд: 12 дБ/окт, шум звучит «воздухом», а не шипением."""
+    return lowpass(lowpass(x, fc), fc)
+
+
+def norm(x, peak=1.0):
+    m = np.max(np.abs(x))
+    return x * (peak / m) if m > 0 else x
+
+
+def put(dst, src, t):
+    i = int(round(t * SR))
+    if i >= len(dst) or i + len(src) <= 0:
+        return
+    s0 = max(0, -i)
+    j = min(len(dst), i + len(src))
+    dst[max(0, i):j] += src[s0:s0 + j - max(0, i)]
+
+
+def repitch(x, k):
+    """Чуть выше/ниже (k > 1 — выше и короче)."""
+    if abs(k - 1) < 1e-3:
+        return x
+    n = int(len(x) / k)
+    return np.interp(np.arange(n) * k, np.arange(len(x)), x)
+
+
+# ---------------------------------------------------------------- удары
+def s_punch(seed=1, **_):
+    d = 0.35
+    body = osc(glide(150, 45, d), d) * decay(d, 0.07)
+    knock = bandpass(noise(d, seed), 250, 1400) * decay(d, 0.025)
+    crack = bandpass(noise(d, seed + 1), 1800, 7000) * decay(d, 0.01)
+    return norm(np.tanh(1.6 * (body + 0.9 * knock + 0.5 * crack)), 0.95)
+
+
+def s_kick(seed=2, **_):
+    d = 0.45
+    body = osc(glide(130, 38, d), d) * decay(d, 0.09)
+    knock = bandpass(noise(d, seed), 200, 1200) * decay(d, 0.035)
+    crack = bandpass(noise(d, seed + 1), 1800, 7000) * decay(d, 0.012)
+    return norm(np.tanh(1.8 * (body + 0.8 * knock + 0.4 * crack)), 0.98)
+
+
+def s_slap(seed=3, **_):
+    d = 0.25
+    crack = bandpass(noise(d, seed), 1500, 9000) * decay(d, 0.022, 0.001)
+    smack = bandpass(noise(d, seed + 1), 500, 2500) * decay(d, 0.04)
+    tone = osc(glide(420, 260, d), d) * decay(d, 0.03)
+    return norm(np.tanh(1.4 * (crack + 0.7 * smack + 0.3 * tone)), 0.9)
+
+
+def s_bonk(seed=4, **_):
+    """Удар головой: деревянный «бонк»."""
+    d = 0.4
+    f = glide(620, 430, d)
+    tone = (osc(f, d) + 0.5 * osc(f * 2.01, d) + 0.25 * osc(f * 3.3, d)) * decay(d, 0.09)
+    click = bandpass(noise(d, seed), 2000, 8000) * decay(d, 0.006)
+    thud = osc(glide(160, 70, d), d) * decay(d, 0.05)
+    return norm(tone + 0.6 * click + 0.7 * thud, 0.9)
+
+
+def s_land(seed=5, **_):
+    d = 0.22
+    thud = osc(glide(170, 60, d), d) * decay(d, 0.04)
+    scuff = bandpass(noise(d, seed), 150, 1500) * decay(d, 0.03)
+    return norm(thud + 0.5 * scuff, 0.8)
+
+
+def s_slam(seed=6, **_):
+    """Тяжёлое падение о землю."""
+    d = 1.2
+    boom = osc(glide(95, 28, d), d) * decay(d, 0.25)
+    rumble = bandpass(noise(d, seed), 30, 350) * decay(d, 0.35, 0.005)
+    crack = bandpass(noise(d, seed + 1), 1200, 6000) * decay(d, 0.02)
+    return norm(np.tanh(2 * (boom + 0.9 * rumble + 0.4 * crack)), 0.98)
+
+
+def s_step(seed=12, **_):
+    d = 0.12
+    tap = bandpass(noise(d, seed), 120, 1200) * decay(d, 0.012)
+    thud = osc(glide(130, 80, d), d) * decay(d, 0.02)
+    return norm(tap + 0.6 * thud, 0.45)
+
+
+# ---------------------------------------------------------------- пружины, прыжки
+def s_boing(**_):
+    """Живот-батут, пружина."""
+    d = 0.75
+    t = tt(d)
+    f = glide(320, 140, d) * (1 + 0.35 * np.sin(TAU * 14 * t) * np.exp(-t / 0.3))
+    x = 0.7 * osc(f, d, 'tri') + 0.3 * osc(f * 2, d)
+    return norm(x * decay(d, 0.22, 0.004), 0.85)
+
+
+def s_bounce(**_):
+    d = 0.3
+    x = osc(glide(300, 180, d), d, 'tri') * decay(d, 0.1, 0.003)
+    return norm(x, 0.5)
+
+
+def s_jump(**_):
+    d = 0.16
+    f = glide(260, 820, d)
+    x = (osc(f, d) + 0.25 * osc(f, d, 'square')) * bell(d, 0.15)
+    return norm(lowpass(x, 3000), 0.55)
+
+
+def s_grow(**_):
+    """Большая версия «выпрыгивает» из дыма."""
+    d = 0.5
+    t = tt(d)
+    f = glide(130, 420, d) * (1 + 0.12 * np.sin(TAU * 16 * t))
+    x = 0.6 * osc(f, d, 'tri') + 0.4 * osc(f * 0.5, d)
+    return norm(x * bell(d, 0.25), 0.7)
+
+
+# ---------------------------------------------------------------- воздух, дым
+def s_whoosh(seed=7, dur=0.4, **_):
+    d = max(0.15, dur)
+    x = noise(d, seed)
+    u = np.linspace(0, 1, nsamp(d))
+    fc = 400 + 3200 * np.sin(np.pi * u) ** 2
+    y = lowpass2(x, fc) - lowpass2(x, fc * 0.3)
+    return norm(y * bell(d, 0.45), 0.7)
+
+
+def s_gust(seed=8, dur=1.6, pulses=3, **_):
+    """Ветер от взмахов крыльев: порывы и низкий «вух» на каждый взмах."""
+    d = max(0.6, dur)
+    t = tt(d)
+    amp = np.zeros_like(t)
+    whump = np.zeros_like(t)
+    for i in range(pulses):
+        c = (i + 0.5) / pulses * d
+        amp += np.exp(-((t - c) / (0.22 * d / pulses + 0.05)) ** 2)
+        put(whump, osc(glide(90, 45, 0.3), 0.3) * decay(0.3, 0.08), c - 0.12)
+    fc = 250 + 650 * amp
+    w = noise(d, seed)
+    y = lowpass2(w, fc) - lowpass2(w, 90)
+    return norm(norm(y * (0.25 + amp)) + 0.6 * whump, 0.75)
+
+
+def s_poof(seed=9, **_):
+    d = 0.9
+    y = lowpass2(noise(d, seed), glide(3500, 400, d)) * decay(d, 0.22, 0.008)
+    low = osc(glide(110, 50, d), d) * decay(d, 0.12)
+    return norm(y + 0.5 * low, 0.85)
+
+
+# ---------------------------------------------------------------- злость, сила
+def s_anger(seed=10, dur=1.0, **_):
+    """Жилка и пар: шипение и рычание."""
+    d = max(0.3, dur)
+    t = tt(d)
+    hiss = bandpass(noise(d, seed), 3000, 11000) * bell(d, 0.3) * (0.7 + 0.3 * np.sin(TAU * 9 * t))
+    growl = lowpass(osc(70 * (1 + 0.05 * np.sin(TAU * 6 * t)), d, 'saw'), 420)
+    growl = growl * bell(d, 0.5) * (0.6 + 0.4 * np.sin(TAU * 24 * t))
+    return norm(0.5 * norm(hiss) + 0.8 * norm(growl), 0.6)
+
+
+def s_powerup(dur=0.7, **_):
+    """Золотые лучи перед превращением: восходящий 8-битный свип."""
+    d = max(0.3, dur)
+    f = glide(180, 1100, d)
+    x = 0.5 * osc(f, d, 'square', 0.25) + 0.5 * osc(f * 1.5, d, 'tri')
+    x = x * (0.75 + 0.25 * np.sin(TAU * 20 * tt(d)))
+    return norm(lowpass(x, 3500) * bell(d, 0.85), 0.5)
+
+
+def s_pop(seed=11, **_):
+    d = 0.3
+    tone = osc(glide(520, 130, d), d) * decay(d, 0.08)
+    click = bandpass(noise(d, seed), 1500, 6000) * decay(d, 0.005)
+    return norm(tone + 0.4 * click, 0.75)
+
+
+# ---------------------------------------------------------------- блеск, звёздочки, пот
+def s_twinkle(**_):
+    d = 0.9
+    x = np.zeros(nsamp(d))
+    for i, f in enumerate([2093, 2637, 3136]):
+        put(x, (osc(f, 0.6) + 0.3 * osc(f * 2, 0.6)) * decay(0.6, 0.18), i * 0.07)
+    return norm(x, 0.45)
+
+
+def s_sparkle(**_):
+    d = 0.4
+    x = osc(3520, d) * decay(d, 0.1) + 0.4 * osc(5274, d) * decay(d, 0.06)
+    return norm(x, 0.28)
+
+
+def s_dizzy(dur=1.5, **_):
+    """Птички над головой: короткие «чик-чирик»."""
+    d = max(0.4, dur)
+    x = np.zeros(nsamp(d))
+    for i, t0 in enumerate(np.arange(0.05, d - 0.12, 0.3)):
+        a, b = (2300, 3300) if i % 2 == 0 else (2700, 3700)
+        put(x, osc(glide(a, b, 0.09), 0.09) * bell(0.09, 0.3), t0)
+        put(x, osc(glide(a, b, 0.07), 0.07) * bell(0.07, 0.3) * 0.7, t0 + 0.11)
+    return norm(x, 0.3)
+
+
+def s_drip(**_):
+    d = 0.12
+    return norm(osc(glide(1300, 500, d), d) * decay(d, 0.035), 0.45)
+
+
+def s_scared(**_):
+    """Свисток вниз: «ой-ой»."""
+    d = 0.6
+    f = glide(1150, 480, d) * (1 + 0.03 * np.sin(TAU * 7 * tt(d)))
+    return norm(osc(f, d) * bell(d, 0.1), 0.4)
+
+
+# ---------------------------------------------------------------- любовь
+def s_heart(**_):
+    d = 0.25
+    x = osc(glide(700, 1400, d), d) * decay(d, 0.07) + 0.3 * osc(glide(1400, 2800, d), d) * decay(d, 0.05)
+    return norm(x, 0.45)
+
+
+def s_kiss(seed=13, **_):
+    """«Чмок»: щелчок губ и короткое «муа»."""
+    d = 0.5
+    smack = bandpass(noise(0.05, seed), 800, 4000) * decay(0.05, 0.008, 0.0005)
+    t = tt(0.4)
+    f = np.interp(t, [0, 0.12, 0.4], [240, 420, 260])
+    voice = lowpass(osc(f, 0.4, 'saw'), np.interp(t, [0, 0.1, 0.4], [400, 2200, 600])) * bell(0.4, 0.3)
+    x = np.zeros(nsamp(d))
+    put(x, norm(smack), 0)
+    put(x, 0.7 * norm(voice), 0.04)
+    return norm(x, 0.6)
+
+
+def s_love(**_):
+    """Мечтательная арфа вверх."""
+    notes = [523, 587, 659, 784, 880, 1047, 1175, 1319]
+    x = np.zeros(nsamp(1.4))
+    for i, f in enumerate(notes):
+        put(x, (osc(f, 0.8) + 0.35 * osc(f * 2, 0.8)) * decay(0.8, 0.3, 0.004), i * 0.055)
+    return norm(x, 0.42)
+
+
+# ---------------------------------------------------------------- победа
+def s_victory(**_):
+    """Короткие 8-битные фанфары."""
+    seq = [(392, 0.11), (523, 0.11), (659, 0.11), (784, 0.24), (659, 0.11), (784, 0.6)]
+    x = np.zeros(nsamp(1.6))
+    t = 0.0
+    for f, d in seq:
+        note = osc(f, d + 0.05, 'square', 0.25) * decay(d + 0.05, d * 0.9, 0.004)
+        put(x, 0.55 * note, t)
+        put(x, 0.4 * osc(f / 4, d + 0.05, 'tri') * decay(d + 0.05, d, 0.004), t)
+        t += d
+    return norm(lowpass(x, 5000), 0.55)
+
+
+SOUNDS = {k[2:]: v for k, v in globals().items() if k.startswith('s_') and callable(v)}
+
+
+# ---------------------------------------------------------------- музыка
+def midi(n):
+    return 440.0 * 2 ** ((n - 69) / 12)
+
+
+def music(duration, bpm=150, full=4.0, end=None, fade=0.8, gain=0.2, **_):
+    """8-битная петля: Am – F – C – G. До full — только бас и тарелочки, после end — стихает."""
+    n = nsamp(duration)
+    out = np.zeros(n)
+    beat = 60 / bpm
+    s16 = beat / 4
+    bar = beat * 4
+    end = duration if end is None else end
+    chords = [(45, [69, 72, 76, 81]), (41, [65, 69, 72, 77]), (48, [67, 72, 76, 79]), (43, [67, 71, 74, 79])]
+    arp = [0, 1, 2, 3, 2, 1, 0, 1, 0, 2, 1, 3, 2, 1, 2, 3]
+    # готовые ноты-кирпичи
+    kick = osc(glide(130, 45, 0.2), 0.2) * decay(0.2, 0.06)
+    snare = bandpass(noise(0.18, 21), 1500, 7000) * decay(0.18, 0.06) + 0.5 * osc(190, 0.18) * decay(0.18, 0.04)
+    hat = bandpass(noise(0.05, 22), 7000, 14000) * decay(0.05, 0.012)
+    t = 0.0
+    i = 0
+    while t < end:
+        root, tones = chords[i % 4]
+        intro = t < full
+        for k in range(8):                                     # бас восьмыми: корень — октава
+            f = midi(root + (12 if k % 2 else 0))
+            put(out, 0.32 * osc(f, beat / 2, 'tri') * decay(beat / 2, beat * 0.4, 0.003), t + k * beat / 2)
+            put(out, 0.06 * hat, t + k * beat / 2 + beat / 4)
+        if not intro:
+            for k in range(16):                                # арпеджио шестнадцатыми
+                f = midi(tones[arp[k]])
+                put(out, 0.07 * osc(f, s16 * 0.9, 'square', 0.125) * decay(s16 * 0.9, s16 * 0.5, 0.002), t + k * s16)
+            for k in range(4):
+                put(out, 0.45 * (kick if k % 2 == 0 else norm(snare, 0.6)), t + k * beat)
+        t += bar
+        i += 1
+    tt_ = np.arange(n) / SR
+    env = np.clip(tt_ / 0.3, 0, 1) * np.clip((end + fade - tt_) / fade, 0, 1)
+    return out * env * gain / 0.6
+
+
+# ---------------------------------------------------------------- сведение
+def render_cue(c):
+    fn = SOUNDS[c['kind']]
+    seed = int(c.get('seed', round(c['t'] * 97)))
+    x = fn(seed=seed, dur=c.get('dur', 0) or None) if c.get('dur') else fn(seed=seed)
+    k = c.get('pitch')
+    if k is None and c['kind'] in ('step', 'punch', 'land', 'jump', 'slap', 'drip'):
+        k = 1 + (np.random.default_rng(seed).random() - 0.5) * 0.1     # чуть разные повторы
+    return repitch(x, k or 1)
+
+
+def mix(spec):
+    n = nsamp(spec['duration'])
+    left = np.zeros(n)
+    right = np.zeros(n)
+    for c in spec['cues']:
+        x = render_cue(c) * c.get('gain', 1.0)
+        p = float(np.clip(c.get('pan', 0), -1, 1))
+        a = (p + 1) * np.pi / 4
+        put(left, x * np.cos(a) * np.sqrt(2), c['t'])
+        put(right, x * np.sin(a) * np.sqrt(2), c['t'])
+    if spec.get('music'):
+        m = music(spec['duration'], **spec['music'])
+        left += m
+        right += m
+    st = np.stack([left, right], 1)
+    st = 0.9 * np.tanh(st / 0.9)                               # мягкий ограничитель
+    return st
+
+
+def write_wav(path, st):
+    data = (np.clip(st, -1, 1) * 32767).astype('<i2')
+    with wave.open(path, 'wb') as w:
+        w.setnchannels(2)
+        w.setsampwidth(2)
+        w.setframerate(SR)
+        w.writeframes(data.tobytes())
+
+
+def demo():
+    cues, t = [], 0.3
+    for k in SOUNDS:
+        cues.append({'t': t, 'kind': k, 'dur': 1.2 if k in ('dizzy', 'gust', 'anger') else 0})
+        t += 1.8 if k in ('dizzy', 'gust', 'slam', 'love', 'victory') else 1.0
+    return {'duration': t + 0.5, 'cues': cues, 'music': None}
+
+
+if __name__ == '__main__':
+    if len(sys.argv) == 3 and sys.argv[1] == '--demo':
+        write_wav(sys.argv[2], mix(demo()))
+    elif len(sys.argv) == 3:
+        with open(sys.argv[1]) as f:
+            write_wav(sys.argv[2], mix(json.load(f)))
+    else:
+        sys.exit(__doc__)
