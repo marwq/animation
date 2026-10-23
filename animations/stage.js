@@ -413,6 +413,7 @@ function Stage(cfg) {
     window.SCENE.audio = audio;
   }
 
+  // stateAt — то же, что statesAt, но без кэша: можно звать, пока ключи ещё ставятся
   return { FPS, W, H, NF, GROUND, EDGE, F, CAST, C, key, move, ev, sfx, hop, tumble, laugh, tremble, transform,
-    stance, walk, target, parts, statesAt, hooks, start };
+    stance, walk, target, parts, statesAt, stateAt: evalStates, hooks, start };
 }

@@ -272,6 +272,36 @@ def s_poof(seed=9, **_):
     return norm(y + 0.5 * low, 0.85)
 
 
+def s_whirr(seed=16, dur=1.0, **_):
+    """Пропеллер: жужжание лопастей, разгоняется в начале и стихает в конце."""
+    d = max(0.3, dur)
+    t = tt(d)
+    up = np.clip(t / 0.35, 0, 1)
+    rate = 9 + 23 * up                                      # взмахов лопастей в секунду
+    chop = 0.5 + 0.5 * np.sign(np.sin(TAU * np.cumsum(rate) / SR))
+    air = lowpass2(noise(d, seed), 1400) - lowpass2(noise(d, seed), 150)
+    hum = osc(110 + 140 * up, d, 'tri')
+    env = np.clip(t / 0.08, 0, 1) * np.clip((d - t) / 0.15, 0, 1)
+    return norm((norm(air) * (0.4 + 0.6 * chop) + 0.35 * hum) * env, 0.55)
+
+
+def s_chomp(seed=17, **_):
+    """Кусь: зубы щёлкнули и сжали."""
+    d = 0.3
+    x = np.zeros(nsamp(d))
+    for t0, g in [(0, 1.0), (0.07, 0.7)]:
+        put(x, g * bandpass(noise(0.05, seed), 1200, 6000) * decay(0.05, 0.006, 0.0005), t0)
+        put(x, g * osc(glide(300, 120, 0.08), 0.08) * decay(0.08, 0.02), t0)
+    return norm(x, 0.7)
+
+
+def s_flick(seed=18, **_):
+    """Щелчок пальцем по пропеллеру."""
+    d = 0.15
+    x = bandpass(noise(d, seed), 2000, 9000) * decay(d, 0.008, 0.0005) + 0.5 * osc(glide(1800, 900, d), d) * decay(d, 0.03)
+    return norm(x, 0.6)
+
+
 # ---------------------------------------------------------------- злость, сила
 def s_anger(seed=10, dur=1.0, **_):
     """Жилка и пар: шипение и рычание."""
@@ -407,7 +437,7 @@ def write_wav(path, st):
 def demo():
     cues, t = [], 0.3
     for k in SOUNDS:
-        cues.append({'t': t, 'kind': k, 'dur': 1.2 if k in ('dizzy', 'gust', 'anger') else 0})
+        cues.append({'t': t, 'kind': k, 'dur': 1.2 if k in ('dizzy', 'gust', 'anger', 'whirr') else 0})
         t += 1.8 if k in ('dizzy', 'gust', 'slam', 'love') else 1.0
     return {'duration': t + 0.5, 'cues': cues}
 

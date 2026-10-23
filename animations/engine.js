@@ -154,6 +154,13 @@ const E = (() => {
       this.top = Math.min(...solid.map((l) => l.bbox[1]));
       const face = data.layers.find((l) => l.name === 'head') || data.layers.find((l) => l.name === 'body');
       this.faceBox = face.bbox;
+      // кусок слоя по строкам рига y0..y1 (полный холст рига, остальное прозрачно)
+      const cropRows = (L, y0, y1) => {
+        const c = document.createElement('canvas');
+        c.width = L.full.width; c.height = L.full.height;
+        c.getContext('2d').drawImage(L.full, 0, y0, c.width, y1 - y0, 0, y0, c.width, y1 - y0);
+        return c;
+      };
       // У некоторых ригов стопа нарисована на одном слое с голенью: режем слой по щиколотке,
       // нижний кусок (с запасом 40 px рига вверх) едет за костью стопы и остаётся ровным.
       if (opts.splitFeet) {
@@ -163,17 +170,23 @@ const E = (() => {
           const li = data.layers.findIndex((l) => !l.sw && l.bone === bones[ch[1]].name);
           if (li < 0) continue;
           const L = data.layers[li], ank = bones[ch[2]].base[1];
-          const crop = (y0, y1) => {
-            const c = document.createElement('canvas');
-            c.width = L.full.width; c.height = L.full.height;
-            c.getContext('2d').drawImage(L.full, 0, y0, c.width, y1 - y0, 0, y0, c.width, y1 - y0);
-            return c;
-          };
+          const crop = (y0, y1) => cropRows(L, y0, y1);
           const shin = { ...L, full: crop(0, ank), bbox: [L.bbox[0], L.bbox[1], L.bbox[2], Math.min(L.bbox[3], ank)] };
           const foot = { ...L, name: L.name + ' foot', bone: bones[ch[2]].name, full: crop(ank - 40, L.full.height),
             bbox: [L.bbox[0], ank - 40, L.bbox[2], L.bbox[3]] };
           data.layers.splice(li, 1, shin, foot);
         }
+      }
+      // Пропеллер: верх слоя (выше строки cut) отдельным слоем, который крутится вокруг
+      // вертикальной оси axis (поза: spin — обороты, spinBlur 0..1 — размытый диск).
+      if (opts.spin) {
+        const { layer, cut, axis } = opts.spin;
+        const li = data.layers.findIndex((l) => l.name === layer);
+        const L = data.layers[li];
+        const cap = { ...L, full: cropRows(L, cut, L.full.height), bbox: [L.bbox[0], cut, L.bbox[2], L.bbox[3]] };
+        const blades = { ...L, name: layer + ' spin', full: cropRows(L, 0, cut), bbox: [L.bbox[0], L.bbox[1], L.bbox[2], cut],
+          spinAxis: axis };
+        data.layers.splice(li, 1, cap, blades);
       }
       if (opts.scale) this.scale = opts.scale;
       else if (opts.height) this.scale = opts.height / (this.anchor[1] - this.top);
@@ -256,6 +269,7 @@ const E = (() => {
     //                                          bendF/bendB = -1 — локоть в другую сторону (руки в боки)
     //   b_<кость>                              дополнительный поворот любой кости (крылья)
     //   look -1..1, zF/zB 'front'|'back', mouth, eyes, hide, alpha
+    //   spin (обороты), spinBlur 0..1                пропеллер (opts.spin в конструкторе)
     // world.hitF/hitB/kickF {at, w} — тянуть кулак/стопу к точке сцены с весом w.
     pose(p, world = {}) {
       const dir = this.dir;
@@ -395,8 +409,23 @@ const E = (() => {
         let M = mul(cam, mul(st.G, st.W[i]));
         if (l.sw === 'mouth' || l.sw === 'eyes' || l.name === 'eye') M = mul(M, T(shift, 0));
         else if (narrow !== 1 && l.name === 'head') M = mul(M, mul(T(fcx, 0), mul(S(narrow, 1), T(-fcx, 0))));
+        if (l.spinAxis !== undefined && (p.spin || p.spinBlur)) {
+          const blur = clamp(p.spinBlur || 0, 0, 1), b = l.bbox, a = l.spinAxis;
+          if (blur > 0) {                          // размытый диск от лопастей
+            ctx.setTransform(M[0], M[1], M[2], M[3], M[4], M[5]);
+            ctx.beginPath();
+            ctx.ellipse(a, (b[1] + b[3]) / 2 - (b[3] - b[1]) * 0.12, (b[2] - b[0]) / 2, (b[3] - b[1]) * 0.22, 0, 0, Math.PI * 2);
+            ctx.fillStyle = `rgba(20, 110, 20, ${0.45 * blur})`; ctx.fill();
+            ctx.lineWidth = 6; ctx.strokeStyle = `rgba(0, 0, 0, ${0.35 * blur})`; ctx.stroke();
+          }
+          const c = Math.cos(2 * Math.PI * (p.spin || 0));
+          const k = (c < 0 ? -1 : 1) * Math.max(0.1, Math.abs(c));
+          M = mul(M, mul(T(a, 0), mul(S(k, 1), T(-a, 0))));
+          ctx.globalAlpha = (p.alpha === undefined ? 1 : p.alpha) * (1 - 0.45 * blur);
+        }
         ctx.setTransform(M[0], M[1], M[2], M[3], M[4], M[5]);
         ctx.drawImage(l.img.canvas, l.img.x, l.img.y, l.img.w, l.img.h);
+        ctx.globalAlpha = p.alpha === undefined ? 1 : p.alpha;
       }
       ctx.globalAlpha = 1;
       ctx.setTransform(1, 0, 0, 1, 0, 0);
