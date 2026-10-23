@@ -249,7 +249,9 @@ function Stage(cfg) {
     key(who, f, { kickF: 1, kickFto: tgt, kickFfix: f, lean: -16, mouth: o.mouth || 'angry theeth' }, 4, 'in2');
     key(who, f + 5, { kickF: 1 }, 0);
     key(who, f + 11, { kickF: 0 }, 6);
+    // нога обратно на землю (стопа — туда, где стояла), корпус ровно
     if (o.x !== undefined) key(who, f + 18, stance(who, o.x, o.face), 7);
+    else key(who, f + 18, { legFfk: 0, lean: 0, hip: [0, toRig(who, 3)] }, 7);
     ev('spark', { f, at: tgt, r: o.r || 80, snd: o.snd || 'kick', swing: false });
     sfx('swing', f - 5, { who, gain: 0.8 });
     ev('shake', { f, amp: o.hard ? 22 : 14, n: o.hard ? 14 : 10 });
