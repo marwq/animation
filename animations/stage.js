@@ -12,7 +12,8 @@
 // прошлого ключа (дуги прыжков, полёты). Свойства позы — см. animations/engine.js.
 //
 // cast: { кто: { small: [риг, опции], big: [риг, опции] (если есть), pivot,
-//                moods: { angry, grin, big } — рты для превращения, voice — высота «ой» } }
+//                moods: { angry, grin, big } — рты для превращения, voice — высота «ой»,
+//                lie — на сколько поднять лежащего (толщина спины), vAngle — руки буквой V } }
 //
 // Звук — только эффекты, без музыки. Помощники и эффекты сами ставят звуковые метки:
 // взмах перед ударом, удар, «ой» у того, кого ударили, прыжок, приземление, падение, дым…
@@ -349,7 +350,7 @@ function Stage(cfg) {
       handF: hand(who, 'F', 0.1, -0.95), handB: hand(who, 'B', -0.05, -0.95), zB: 'back', lean: 0, head: 0 }, 5);
     key(who, f, { rot: 0, pivot: 0 }, 0);
     move(who, f, { x, y: GROUND });
-    move(who, f + n, { rot: -90 * face, y: GROUND - (o.lift || 50) }, 'in');
+    move(who, f + n, { rot: -90 * face, y: GROUND - (o.lift || CAST[who].lie || 50) }, 'in');
     const h = big(who).height;
     ev('dust', { f: f + n, x: x - face * h * 0.55, r: 80, n: 8, snd: 'slam' });
     ev('shake', { f: f + n, amp: 22, n: 16 });
@@ -359,10 +360,30 @@ function Stage(cfg) {
     return f + n;
   }
 
+  // поскользнулся: передняя нога вылетает вперёд-вверх, падает на спину (ноги задраны), звёздочки
+  function slip(who, f, x, face, o = {}) {
+    const n = o.n || 12, h = big(who).height;
+    // углы ног: положительный — назад, поэтому вперёд-вверх — отрицательный
+    key(who, f, { legFfk: 1, legBfk: 1, legF: [-80, 10, 0], legB: [-40, 5, 0], lean: -10, head: -10,
+      mouth: 'puzzlement', eyes: 'sad', handF: hand(who, 'F', 0.3, -0.95), handB: hand(who, 'B', -0.5, -0.8), zB: 'back' }, 3, 'out');
+    key(who, f, { pivot: 0 }, 0);
+    move(who, f, { x, y: GROUND, rot: 0 });
+    move(who, f + n * 0.4, { y: GROUND - (o.up || 70) }, 'out2');
+    move(who, f + n, { y: GROUND - (o.lift || CAST[who].lie || 50), rot: -90 * face }, 'in2');
+    key(who, f + n, { legF: [-60, 10, 0], legB: [-30, 5, 0] }, 4);                 // лёжа ноги задраны
+    sfx('whoosh', f, { who, dur: n, gain: 0.6 });
+    sfx('scared', f + 1, { who, gain: 0.7 });
+    ev('dust', { f: f + n, x: x - face * h * 0.5, r: 80, n: 8, snd: 'slam' });
+    ev('shake', { f: f + n, amp: 20, n: 14 });
+    sfx('hurt', f + n + 2, { who });
+    if (o.stars !== false) ev('stars', { who, f0: f + n + 4, f1: f + n + 4 + (o.stars || 44) });
+    return f + n;
+  }
+
   // встаёт после падения на спину: поворот обратно за n кадров, стойка
   function getUp(who, f, x, face, o = {}) {
     const n = o.n || 14;
-    move(who, f, { rot: -90 * face, y: GROUND - (o.lift || 50), x });
+    move(who, f, { rot: -90 * face, y: GROUND - (o.lift || CAST[who].lie || 50), x });
     move(who, f + n, { rot: 0, y: GROUND }, 'io');
     key(who, f + n, { ...stance(who, x, face), zB: null, mouth: o.mouth || 'angry theeth', eyes: 'angry' }, n);
     sfx('jump', f + 2, { who, gain: 0.4 });
@@ -648,6 +669,6 @@ function Stage(cfg) {
   // stateAt — то же, что statesAt, но без кэша: можно звать, пока ключи ещё ставятся
   return { FPS, W, H, NF, GROUND, EDGE, F, CAST, C, key, move, ev, sfx, hop, tumble, laugh, tremble, transform,
     love, blowKiss, stance, walk, turn, strike, kick, dodge, duck, recoil, fallBack, flyOff, victory, hand, toRig,
-    chuckle, spinAround, stomp, getUp,
+    chuckle, spinAround, stomp, getUp, slip,
     target, parts, statesAt, stateAt: evalStates, hooks, start };
 }

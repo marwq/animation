@@ -312,6 +312,29 @@ const FX = (() => {
     }
   }
 
+  // банановая кожура (лежит на траве): s — ширина, rot — поворот
+  function banana(ctx, x, y, s = 90, rot = 0) {
+    ctx.save();
+    ctx.translate(x, y); ctx.rotate(rot); ctx.scale(s / 100, s / 100);
+    ctx.lineJoin = 'round'; ctx.lineWidth = 5; ctx.strokeStyle = '#111';
+    const flap = (dx, ang, len) => {
+      ctx.save(); ctx.translate(dx, -8); ctx.rotate(ang);
+      ctx.beginPath(); ctx.moveTo(-9, 0);
+      ctx.quadraticCurveTo(-14, len * 0.55, 0, len); ctx.quadraticCurveTo(14, len * 0.55, 9, 0); ctx.closePath();
+      ctx.fillStyle = '#ffe14d'; ctx.fill(); ctx.stroke();
+      ctx.beginPath(); ctx.moveTo(-2, len * 0.15); ctx.quadraticCurveTo(-6, len * 0.55, 0, len * 0.85);
+      ctx.lineWidth = 3; ctx.strokeStyle = '#e8b800'; ctx.stroke(); ctx.lineWidth = 5; ctx.strokeStyle = '#111';
+      ctx.restore();
+    };
+    flap(-20, 1.25, 48); flap(20, -1.25, 48); flap(-8, 0.45, 42); flap(8, -0.45, 42);
+    // середина (мякоть ушла) и хвостик
+    ctx.beginPath(); ctx.ellipse(0, -10, 16, 12, 0, 0, Math.PI * 2);
+    ctx.fillStyle = '#fff3a8'; ctx.fill(); ctx.stroke();
+    ctx.beginPath(); ctx.moveTo(-5, -20); ctx.lineTo(-4, -34); ctx.lineTo(5, -34); ctx.lineTo(5, -20); ctx.closePath();
+    ctx.fillStyle = '#6b4a1e'; ctx.fill(); ctx.stroke();
+    ctx.restore();
+  }
+
   // «вжух» — удар прошёл мимо: маленькое облачко
   function whoosh(ctx, x, y, life) {
     if (life < 0 || life > 1) return;
@@ -321,5 +344,5 @@ const FX = (() => {
   }
 
   return { rng, background, cloud, shadow, spark, dust, smoke, flash, rays, vein, steam, sweat, stars, twinkle, whoosh, puff,
-    heart, hearts, wind };
+    heart, hearts, wind, banana };
 })();
