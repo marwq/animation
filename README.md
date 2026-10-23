@@ -103,6 +103,7 @@ node tools/render.js                     # PNG ×2 (или: node tools/render.js
 |---|---|
 | `backgrounds/field/field.png` | чистое поле с цветами, сзади деревья |
 | `backgrounds/field/portal.png` | портал в Незер посередине того же поля; внутри рамки пусто |
+| `backgrounds/field/field_toon.png`, `portal_toon.png` | те же кадры в рисованном стиле, как персонажи: толстая чёрная обводка, плоские сочные цвета, одна тень |
 
 ### Как пересобрать
 
@@ -110,10 +111,12 @@ node tools/render.js                     # PNG ×2 (или: node tools/render.js
 # нужен Blender 4.2+ (без аддонов); на процессоре ~3,5 мин на кадр
 blender -b --factory-startup -P tools/mc_field.py -- --shot field
 blender -b --factory-startup -P tools/mc_field.py -- --shot portal
+blender -b --factory-startup -P tools/mc_field.py -- --shot field --style toon   # ~1 мин
 # черновик за полминуты: ... --scale 0.4 --samples 24 --out /tmp/draft.png
 ```
 
-Камеры, солнце, цвет травы и неба, сочность — константы в начале `tools/mc_field.py`.
+Камеры, солнце, цвет травы и неба, сочность, палитра и обводка рисованного стиля
+(`TOON…`) — константы в начале `tools/mc_field.py`.
 
 ### Текстуры
 

@@ -13,10 +13,16 @@
     --scale K        доля от полного разрешения, 0.35 — быстрый черновик
     --samples N      сэмплы Cycles
     --exposure EV    яркость кадра
+    --style toon     рисованный стиль (по умолчанию <shot>_toon.png)
 
 Камера на высоте глаз игрока и смотрит строго горизонтально: вертикали прямые.
 Цвет в духе роликов toonz CRAFT: сочная жёлто-зелёная трава, лазурное небо,
 мягкие светлые тени, резкость и цветная кайма по краям кадра.
+
+Рисованный стиль — как у персонажей: толстая чёрная обводка, плоские сочные цвета
+и одна тень. Blender рендерит служебные проходы (цвет, глубина, нормали, свет
+солнца) в EXR, а toon_post() собирает из них картинку: тон по свету/тени,
+обводка там, где скачет глубина, нормаль или материал.
 
 Портал — рамка из обсидиана, внутри пусто: сквозь проём видно поле.
 """
@@ -60,6 +66,37 @@ SHOTS = {
 }
 
 
+# Рисованный стиль. Плоские цвета блоков, sRGB: (тёмный, светлый, доля тёмного) —
+# текстура делится по яркости на два тона; без светлого — один плоский цвет.
+TOON = {
+    'grass_top': ((112, 198, 60), None, 0),
+    'dirt': ((152, 102, 62), None, 0),
+    'oak_log': ((92, 62, 38), (128, 90, 54), 0.5),
+    'oak_log_top': ((136, 100, 58), (186, 148, 94), 0.4),
+    'oak_leaves': ((70, 164, 52), None, 0),
+    'birch_log': ((44, 44, 44), (238, 236, 226), 0.2),
+    'birch_log_top': ((160, 130, 86), (208, 184, 136), 0.4),
+    'birch_leaves': ((112, 172, 70), None, 0),
+    'obsidian': ((46, 28, 78), (126, 84, 196), 0.85),
+    'short_grass': ((84, 172, 50), None, 0),
+    'tall_grass_bottom': ((84, 172, 50), None, 0),
+    'tall_grass_top': ((84, 172, 50), None, 0),
+}
+TOON_PLANTS = range(7, 13)                      # трава и цветы: только тонкий контур
+TOON_GROUP = {                                  # обводка там, где меняется группа
+    'grass_top': 1, 'grass_side': 1, 'dirt': 1, 'oak_log': 2, 'oak_log_top': 2,
+    'birch_log': 3, 'birch_log_top': 3, 'oak_leaves': 4, 'birch_leaves': 5, 'obsidian': 6,
+    'short_grass': 7, 'tall_grass_bottom': 7, 'tall_grass_top': 7, 'poppy': 8,
+    'dandelion': 9, 'oxeye_daisy': 10, 'cornflower': 11, 'azure_bluet': 12, 'cloud': 13,
+}
+TOON_LIT = (1.0, 1.0, 1.0)
+TOON_SHADE = (0.62, 0.70, 0.88)                 # тень темнее и чуть синее
+TOON_CLOUD_SHADE = (0.86, 0.90, 0.98)
+TOON_SKY_TOP, TOON_SKY_HORIZON = (60, 152, 236), (178, 224, 252)
+TOON_LINE = (28, 26, 26)                        # как контур у персонажей
+TOON_SS = 2                                     # рендер вдвое крупнее, потом уменьшаем
+
+
 def args():
     a = sys.argv[sys.argv.index('--') + 1:] if '--' in sys.argv else []
     tex = os.path.join(ROOT, 'backgrounds', 'textures')
@@ -67,11 +104,14 @@ def args():
            # свои текстуры Minecraft, если положены локально, иначе свободные
            'tex': next(p for p in (os.path.join(tex, 'minecraft'), os.path.join(tex, 'pixel-perfection'))
                        if os.path.isdir(p)),
-           'scale': 1.0, 'samples': 128, 'seed': 11, 'exposure': 0.0}
+           'scale': 1.0, 'samples': 0, 'seed': 11, 'exposure': 0.0, 'style': 'photo'}
     for k, v in zip(a[::2], a[1::2]):
         k = k.lstrip('-').replace('-', '_')
         opt[k] = v if isinstance(opt[k], str) else type(opt[k])(v)
-    opt['out'] = opt['out'] or os.path.join(ROOT, 'backgrounds', 'field', opt['shot'] + '.png')
+    toon = opt['style'] == 'toon'
+    opt['samples'] = opt['samples'] or (16 if toon else 128)
+    name = opt['shot'] + ('_toon' if toon else '') + '.png'
+    opt['out'] = opt['out'] or os.path.join(ROOT, 'backgrounds', 'field', name)
     return opt
 
 
@@ -95,7 +135,7 @@ def tint(a, rgb):
     return a
 
 
-def textures(tex):
+def textures(tex, toon=False):
     t = {}
     dirt = load_rgba(tex, 'dirt')
     over = tint(load_rgba(tex, 'grass_block_side_overlay'), GRASS)
@@ -114,6 +154,8 @@ def textures(tex):
     t['tall_grass_top'] = tint(load_rgba(tex, 'tall_grass_top'), GRASS)
     for f in ('poppy', 'dandelion', 'oxeye_daisy', 'cornflower', 'azure_bluet'):
         t[f] = load_rgba(tex, f)
+    if toon:
+        t = toon_textures(t, load_rgba(tex, 'grass_block_side_overlay'))
     imgs = {}
     for k, a in t.items():
         img = bpy.data.images.new(k, a.shape[1], a.shape[0], alpha=True)
@@ -123,9 +165,67 @@ def textures(tex):
     return imgs
 
 
+def toon_textures(t, overlay):
+    """Текстуры рисованного стиля: один-два плоских тона, цветы — сочнее."""
+    out = {}
+    for k, a in t.items():
+        a = a.copy()
+        if k in TOON:
+            dark, light, q = TOON[k]
+            dark = np.array(dark, np.float32) / 255
+            light = None if light is None else np.array(light, np.float32) / 255
+            if light is None:
+                a[..., :3] = dark
+            else:
+                lum = a[..., :3].mean(-1)
+                a[..., :3] = np.where((lum > np.quantile(lum, q))[..., None], light, dark)
+            if 'grass' not in k:
+                a[..., 3] = 1                    # листва сплошная: в дырках был бы чёрный
+        elif k not in ('grass_side',):           # цветы: та же форма, цвет сочнее
+            g = a[..., :3].mean(-1, keepdims=True)
+            a[..., :3] = np.clip(g + (a[..., :3] - g) * 1.5, 0, 1)
+        out[k] = a
+    side = np.empty_like(out['dirt'])
+    side[...] = out['dirt']
+    side[..., :3] = np.where(overlay[..., 3:] > 0.5, out['grass_top'][..., :3], out['dirt'][..., :3])
+    out['grass_side'] = side
+    return out
+
+
 # ------------------------------------------------------------------ материалы
-def material(name, img, kind):
+def toon_material(name, img, kind):
+    """Рисованный стиль: только цвет, без блеска и дымки; вырез — у травы и цветов."""
+    m = bpy.data.materials.new(name)
+    m.pass_index = TOON_GROUP[name]
+    m.use_nodes = True
+    N, L = m.node_tree.nodes, m.node_tree.links
+    N.clear()
+    out = N.new('ShaderNodeOutputMaterial')
+    bsdf = N.new('ShaderNodeBsdfDiffuse')
+    if img:
+        tx = N.new('ShaderNodeTexImage')
+        tx.image, tx.interpolation = img, 'Closest'
+        L.new(tx.outputs['Color'], bsdf.inputs['Color'])
+    else:
+        bsdf.inputs['Color'].default_value = (1, 1, 1, 1)
+    surf = bsdf.outputs[0]
+    if kind == 'plant':
+        up = N.new('ShaderNodeCombineXYZ')
+        up.inputs[2].default_value = 1
+        L.new(up.outputs[0], bsdf.inputs['Normal'])
+        cut = N.new('ShaderNodeMixShader')
+        L.new(tx.outputs['Alpha'], cut.inputs[0])
+        L.new(N.new('ShaderNodeBsdfTransparent').outputs[0], cut.inputs[1])
+        L.new(surf, cut.inputs[2])
+        surf = cut.outputs[0]
+    L.new(surf, out.inputs['Surface'])
+    return m
+
+
+def material(name, img, kind, toon=False):
     """kind: block, leaves, plant, glossy (обсидиан), cloud."""
+    if toon:
+        return toon_material(name, img, kind)
     m = bpy.data.materials.new(name)
     m.use_nodes = True
     N, L = m.node_tree.nodes, m.node_tree.links
@@ -216,12 +316,13 @@ class Mesh:
     def face(self, x, y, z, n, mat):
         self.quad([(x + a, y + b, z + c) for a, b, c in FACES[n]], mat)
 
-    def blocks(self, blocks):
-        """Грани блоков; к непрозрачному соседу грань не нужна, листва — как в игре."""
+    def blocks(self, blocks, solid=False):
+        """Грани блоков; к непрозрачному соседу грань не нужна, листва — как в игре
+        (сквозная) или сплошная (solid, для рисованного стиля)."""
         for (x, y, z), t in blocks.items():
             for n in FACES:
                 nb = blocks.get((x + n[0], y + n[1], z + n[2]))
-                if nb and not nb.endswith('_leaves'):
+                if nb and (solid or not nb.endswith('_leaves')):
                     continue
                 self.face(x, y, z, n, t + '_top' if t.endswith('_log') and n[2] else t)
 
@@ -340,12 +441,13 @@ def world(seed):
 
 
 def build_scene(opt, view):
+    toon = opt['style'] == 'toon'
     mats = {}
-    for k, img in textures(opt['tex']).items():
+    for k, img in textures(opt['tex'], toon).items():
         kind = ('leaves' if k.endswith('leaves') else 'glossy' if k == 'obsidian' else
                 'block' if k in ('grass_top', 'grass_side', 'dirt') or '_log' in k else 'plant')
-        mats[k] = material(k, img, kind)
-    mats['cloud'] = material('cloud', None, 'cloud')
+        mats[k] = material(k, img, kind, toon)
+    mats['cloud'] = material('cloud', None, 'cloud', toon)
 
     cols, portal, trees, plants, clouds = world(opt['seed'])
 
@@ -364,7 +466,7 @@ def build_scene(opt, view):
     m = Mesh()
     for x, y, blocks in trees:
         if view.visible(x + 0.5, y + 0.5, pad=8, far=130):
-            m.blocks(blocks)
+            m.blocks(blocks, solid=toon)
     m.build('trees', mats)
 
     m = Mesh()
@@ -388,6 +490,8 @@ def build_scene(opt, view):
             continue                           # посередине — чистая трава, к порталу дорожка
         if not view.s['grass'] and kind in ('short_grass', 'tall_grass'):
             continue
+        if toon and (d > 22 or kind in ('short_grass', 'tall_grass')):
+            continue                           # в рисунке пиксельная трава и мелочь — шум
         if kind == 'tall_grass':
             m.cross(x, y, z, 'tall_grass_bottom', dx, dy)
             m.cross(x, y, z + 1, 'tall_grass_top', dx, dy)
@@ -465,6 +569,23 @@ def lights_camera(opt, s):
     sc.view_settings.look = 'Medium High Contrast'
     sc.view_settings.exposure = opt['exposure']
 
+    if opt['style'] == 'toon':
+        # служебные проходы в EXR, картинку из них соберёт toon_post()
+        sun.angle = math.radians(0.3)          # чёткие края теней
+        N['Background'].inputs['Strength'].default_value = 0   # свет только от солнца
+        L.remove(k.outputs[0].links[0])
+        cam.dof.use_dof = False
+        r.resolution_x = r.resolution_y = round(SIZE * TOON_SS * opt['scale'])
+        r.film_transparent = True
+        r.image_settings.file_format, r.image_settings.color_depth = 'OPEN_EXR_MULTILAYER', '32'
+        r.image_settings.color_mode = 'RGBA'
+        c.use_denoising = c.use_adaptive_sampling = False
+        vl = sc.view_layers[0]
+        vl.use_pass_diffuse_color = vl.use_pass_diffuse_direct = True
+        vl.use_pass_normal = vl.use_pass_z = vl.use_pass_material_index = True
+        sc.use_nodes = False
+        return
+
     # сочность, резкость, цветная кайма по краям и лёгкое свечение
     sc.use_nodes = True
     T = sc.node_tree
@@ -487,6 +608,88 @@ def lights_camera(opt, s):
         T.links.new(a.outputs['Image'], b.inputs['Image'])
 
 
+def srgb(x):
+    x = np.clip(x, 0, 1)
+    return np.where(x <= 0.0031308, x * 12.92, 1.055 * x ** (1 / 2.4) - 0.055)
+
+
+def dilate(mask, r):
+    out = mask.copy()
+    h, w = mask.shape
+    for dy in range(-r, r + 1):
+        for dx in range(-r, r + 1):
+            if 0 < dx * dx + dy * dy <= r * r + r:
+                out[max(dy, 0):h + min(dy, 0), max(dx, 0):w + min(dx, 0)] |= \
+                    mask[max(-dy, 0):h + min(-dy, 0), max(-dx, 0):w + min(-dx, 0)]
+    return out
+
+
+def neighbours(a):
+    """Соседи справа и снизу (на краю — сам пиксель)."""
+    p = np.pad(a, [(0, 1), (0, 1)] + [(0, 0)] * (a.ndim - 2), mode='edge')
+    return p[:-1, 1:], p[1:, :-1]
+
+
+def toon_post(exr, out, s):
+    """Проходы рендера → рисованная картинка: два тона, небо, чёрная обводка."""
+    import OpenImageIO as oiio
+    buf = oiio.ImageBuf(exr)
+    names = list(buf.spec().channelnames)
+    px = buf.get_pixels(oiio.FLOAT)
+    ch = lambda *n: np.stack([px[..., names.index('ViewLayer.' + k)] for k in n], -1)
+    alpha = ch('Combined.A')[..., 0]
+    a = np.maximum(alpha, 1e-4)[..., None]
+    alb = srgb(ch('DiffCol.R', 'DiffCol.G', 'DiffCol.B') / a)
+    light = (ch('DiffDir.R', 'DiffDir.G', 'DiffDir.B') / a).mean(-1)
+    z = ch('Depth.Z')[..., 0]
+    nrm = ch('Normal.X', 'Normal.Y', 'Normal.Z')
+    nrm /= np.maximum(np.linalg.norm(nrm, axis=-1, keepdims=True), 1e-6)
+    idx = np.rint(ch('IndexMA.X')[..., 0]).astype(int)
+    solid = alpha > 0.5
+    h, w = alpha.shape
+    rgb = lambda c: np.array(c, np.float32) / 255
+
+    # два тона: на солнце и в тени; облака в тени светлее
+    lit = light > 0.3 * np.percentile(light[solid], 95)
+    shade = np.where((idx == TOON_GROUP['cloud'])[..., None], TOON_CLOUD_SHADE, TOON_SHADE)
+    col = alb * np.where(lit[..., None], TOON_LIT, shade)
+    horizon = rgb(TOON_SKY_HORIZON)
+    fog = np.clip((z - 45) / 160, 0, 0.4)[..., None]     # даль светлеет к горизонту
+    col = col * (1 - fog) + horizon * fog
+    t = np.clip(np.arange(h) / (h * (0.5 + s['shift'])), 0, 1)[:, None, None]
+    sky = rgb(TOON_SKY_TOP) * (1 - t) + horizon * t
+    img = col * alpha[..., None] + sky * (1 - alpha[..., None])
+
+    # обводка: скачок глубины (по 1/z — на ровной земле он плавный), излом, смена материала
+    inv = np.where(solid, 1 / np.maximum(z, 1e-3), 0)
+    p = np.pad(inv, 1, mode='edge')
+    lap = np.abs(4 * inv - p[:-2, 1:-1] - p[2:, 1:-1] - p[1:-1, :-2] - p[1:-1, 2:])
+    edge = lap > 0.08 * np.maximum(inv, 1e-9)
+    nr, nd = neighbours(nrm)
+    edge |= solid & (z < 40) & (np.minimum((nrm * nr).sum(-1), (nrm * nd).sum(-1)) < 0.75)
+    ir, idn = neighbours(idx)
+    plant = np.isin(idx, TOON_PLANTS)
+    pr, pd = neighbours(plant)
+    near_plant = plant | pr | pd
+    edge &= ~near_plant                         # у травы и цветов — только контур
+    outline = (idx != ir) | (idx != idn)
+    # толщина: вблизи толще, вдали тоньше; трава и цветы — тонко
+    zn = np.where(solid, z, 1e9)
+    zr, zd = neighbours(zn)
+    zmin = np.minimum(zn, np.minimum(zr, zd))
+    line = dilate(outline & near_plant, 1)
+    edge |= outline & ~near_plant
+    for r, lo, hi in ((3, 0, 15), (2, 15, 30), (1, 30, 2e9)):
+        line |= dilate(edge & (zmin >= lo) & (zmin < hi), r)
+    img[line] = rgb(TOON_LINE)
+
+    img = img.reshape(h // TOON_SS, TOON_SS, w // TOON_SS, TOON_SS, 3).mean((1, 3))
+    img = (np.clip(img, 0, 1) * 255 + 0.5).astype(np.uint8)
+    o = oiio.ImageBuf(oiio.ImageSpec(img.shape[1], img.shape[0], 3, oiio.UINT8))
+    o.set_pixels(oiio.ROI(), img)
+    o.write(out)
+
+
 def main():
     opt = args()
     s = SHOTS[opt['shot']]
@@ -494,8 +697,13 @@ def main():
     build_scene(opt, View(s))
     lights_camera(opt, s)
     os.makedirs(os.path.dirname(opt['out']), exist_ok=True)
-    bpy.context.scene.render.filepath = opt['out']
+    toon = opt['style'] == 'toon'
+    path = os.path.join(bpy.app.tempdir, 'passes.exr') if toon else opt['out']
+    bpy.context.scene.render.filepath = path
     bpy.ops.render.render(write_still=True)
+    if toon:
+        toon_post(path, opt['out'], s)
+        os.remove(path)
     print('PNG', opt['out'], flush=True)
 
 
