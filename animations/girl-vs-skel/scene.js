@@ -1,4 +1,5 @@
-// Девочка против Скелета — драка 25 с, 24 кадра/с, со звуком, по стилю «animal hospital long»
+// Девочка против Скелета — драка 25 с, 24 кадра/с, со звуковыми эффектами (без музыки),
+// по стилю «animal hospital long»
 // (docs/animal_hospital_long.md). Один из бойцов становится большим уже к 5-й секунде.
 //
 //   0–4 с     шарик-Девочка (слева) и шарик-Скелет (справа) неподвижно смотрят друг на друга
@@ -17,8 +18,9 @@ const ST = Stage({
   name: 'girl-vs-skel',
   cast: {
     girl: { small: ['girl-verity-small', { bodyHeight: 300 }], big: ['girl-verity-big', { height: 730, splitFeet: true }],
-      pivot: 337, moods: { angry: 'sad', grin: 'theeth smile', big: 'smile normal' } },
-    skel: { small: ['skeleton-verity-small', { scale: 0.455 }], big: ['skeleton-verity-big', { height: 730 }], pivot: 325 },
+      pivot: 337, voice: 1.25, moods: { angry: 'sad', grin: 'theeth smile', big: 'smile normal' } },
+    skel: { small: ['skeleton-verity-small', { scale: 0.455 }], big: ['skeleton-verity-big', { height: 730 }], pivot: 325,
+      voice: 0.9 },
   },
   order: ['skel', 'girl'],    // Девочка ближе к зрителю
   background: { sky: ['#3f9ff4', '#9fc6f2', '#f6e4cf'], seed: 37 },
@@ -53,7 +55,7 @@ ev('sweat', { who: 'girl', f0: SKB + 2, f1: SKB + 30 });
 key('girl', 146, { sx: 1.12, sy: 0.9, eyes: 'sad', mouth: 'sad' }, 4);
 move('girl', 146, { x: 560 });
 move('girl', 154, { x: 520 }, 'in2');
-tumble('girl', 156, 180, 520, 320, 120, -1, { stars: 32 });
+tumble('girl', 156, 180, 520, 320, 120, -1, { stars: 32, hurt: true });
 key('girl', 158, { sx: 1, sy: 1 }, 3);
 key('girl', 181, { eyes: 'sad', mouth: 'sad' }, 0);
 
@@ -126,6 +128,8 @@ const BIG = () => {
   key('girl', 448, { ...stance('girl', G2, 1), zF: null, mouth: 'theeth smile' }, 8);
   // сердце в лицо: застыл, снова влюблён — и падает на спину
   ev('hearteyes', { who: 'skel', f0: 446, f1: 600, layer: 'eye', eyes: SKEL_EYES });
+  sfx('pop', 446, { who: 'skel', gain: 0.6 });                                    // сердце лопнуло о лицо
+  sfx('love', 448, { who: 'skel', gain: 0.8 });
   key('skel', 446, { mouth: 'happy - spittle', handF: [200, 380], lean: -4, hip: [0, 20] }, 4);
   // падает на спину: ноги прямые как в риге, руки за голову, крылья складываются вдоль тела
   key('skel', 452, { legFfk: 1, legBfk: 1, legF: [0, 0, 0], legB: [0, 0, 0], b_B16: 40, b_B17: -40,
@@ -150,7 +154,6 @@ const BIG = () => {
   key('girl', 518, { handF: [560, -60], handB: [-560, -60] }, 3);                 // руки через стороны
   // руки буквой V шире головы (у Девочки голова большая, а руки короткие)
   key('girl', 521, { handF: [520, -440], handB: [-520, -440], head: -4, mouth: 'happy with theeth' }, 3);
-  sfx('victory', 521, { x: 960 });
   for (const [f, x, y] of [[522, 790, 260], [530, 1130, 200], [538, 760, 470], [546, 1170, 430], [554, 960, 110],
     [566, 820, 330], [578, 1100, 300]]) {
     ev('twinkle', { f, at: [x, y], n: 16, size: 34 });

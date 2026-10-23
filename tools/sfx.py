@@ -1,14 +1,14 @@
 #!/usr/bin/env python3
-"""Звук для роликов: мультяшные эффекты и фоновая 8-битная музыка, синтез на numpy.
+"""Звуковые эффекты для роликов (без музыки): синтез на numpy.
 
   python3 tools/sfx.py cues.json out.wav     # свести звук ролика по меткам сцены
   python3 tools/sfx.py --demo out.wav        # все звуки подряд, чтобы послушать
 
 cues.json (его пишет tools/render_anim.js из window.SCENE.audio()):
   {"duration": 25,
-   "music": {"bpm": 150, "full": 4.0, "end": 22.9, "gain": 0.2} | null,
-   "cues": [{"t": 6.5, "kind": "punch", "gain": 1, "pan": -0.3, "dur": 1.2, "seed": 3}, ...]}
+   "cues": [{"t": 6.5, "kind": "punch", "gain": 1, "pan": -0.3, "dur": 1.2, "pitch": 1.2}, ...]}
 pan: -1 слева … 1 справа. dur — для звуков, длина которых зависит от сцены (звёздочки, ветер).
+pitch — выше/ниже (голос маленького выше, большого ниже).
 """
 import json
 import sys
@@ -174,6 +174,39 @@ def s_step(seed=12, **_):
     return norm(tap + 0.6 * thud, 0.45)
 
 
+def s_fall(seed=14, **_):
+    """Упал на землю после отлёта: глухой удар телом и шорох травы."""
+    d = 0.7
+    thud = osc(glide(120, 40, d), d) * decay(d, 0.12)
+    body = bandpass(noise(d, seed), 80, 900) * decay(d, 0.09, 0.003)
+    grass = bandpass(noise(d, seed + 1), 1500, 6000) * decay(d, 0.05)
+    return norm(np.tanh(1.8 * (thud + 0.8 * body + 0.25 * grass)), 0.9)
+
+
+def s_swing(seed=15, **_):
+    """Взмах рукой или ногой перед ударом: короткий «вжух» с подъёмом."""
+    d = 0.24
+    u = np.linspace(0, 1, nsamp(d))
+    x = noise(d, seed)
+    fc = 500 + 3500 * u ** 1.5
+    y = lowpass2(x, fc) - lowpass2(x, fc * 0.3)
+    return norm(y * bell(d, 0.8), 0.6)
+
+
+def s_hurt(**_):
+    """Получил урон: мультяшное «ой!» (голос: пила через форманты «о-а», высота вверх-вниз)."""
+    d = 0.42
+    t = tt(d)
+    f0 = np.interp(t, [0, 0.06, 0.16, d], [380, 520, 430, 260])
+    src = osc(f0 * (1 + 0.015 * np.sin(TAU * 30 * t)), d, 'saw')
+    def vowel(bands):
+        return sum(g * bandpass(src, lo, hi) for lo, hi, g in bands)
+    o = vowel([(400, 800, 1.0), (750, 1200, 0.6), (2300, 3100, 0.2)])
+    a = vowel([(650, 1100, 1.0), (1050, 1600, 0.7), (2400, 3300, 0.25)])
+    u = np.clip(t / 0.2, 0, 1)                                         # «о» -> «а»
+    return norm((o * (1 - u) + a * u) * bell(d, 0.12), 0.75)
+
+
 # ---------------------------------------------------------------- пружины, прыжки
 def s_boing(**_):
     """Живот-батут, пружина."""
@@ -333,62 +366,7 @@ def s_love(**_):
     return norm(x, 0.42)
 
 
-# ---------------------------------------------------------------- победа
-def s_victory(**_):
-    """Короткие 8-битные фанфары."""
-    seq = [(392, 0.11), (523, 0.11), (659, 0.11), (784, 0.24), (659, 0.11), (784, 0.6)]
-    x = np.zeros(nsamp(1.6))
-    t = 0.0
-    for f, d in seq:
-        note = osc(f, d + 0.05, 'square', 0.25) * decay(d + 0.05, d * 0.9, 0.004)
-        put(x, 0.55 * note, t)
-        put(x, 0.4 * osc(f / 4, d + 0.05, 'tri') * decay(d + 0.05, d, 0.004), t)
-        t += d
-    return norm(lowpass(x, 5000), 0.55)
-
-
 SOUNDS = {k[2:]: v for k, v in globals().items() if k.startswith('s_') and callable(v)}
-
-
-# ---------------------------------------------------------------- музыка
-def midi(n):
-    return 440.0 * 2 ** ((n - 69) / 12)
-
-
-def music(duration, bpm=150, full=4.0, end=None, fade=0.8, gain=0.2, **_):
-    """8-битная петля: Am – F – C – G. До full — только бас и тарелочки, после end — стихает."""
-    n = nsamp(duration)
-    out = np.zeros(n)
-    beat = 60 / bpm
-    s16 = beat / 4
-    bar = beat * 4
-    end = duration if end is None else end
-    chords = [(45, [69, 72, 76, 81]), (41, [65, 69, 72, 77]), (48, [67, 72, 76, 79]), (43, [67, 71, 74, 79])]
-    arp = [0, 1, 2, 3, 2, 1, 0, 1, 0, 2, 1, 3, 2, 1, 2, 3]
-    # готовые ноты-кирпичи
-    kick = osc(glide(130, 45, 0.2), 0.2) * decay(0.2, 0.06)
-    snare = bandpass(noise(0.18, 21), 1500, 7000) * decay(0.18, 0.06) + 0.5 * osc(190, 0.18) * decay(0.18, 0.04)
-    hat = bandpass(noise(0.05, 22), 7000, 14000) * decay(0.05, 0.012)
-    t = 0.0
-    i = 0
-    while t < end:
-        root, tones = chords[i % 4]
-        intro = t < full
-        for k in range(8):                                     # бас восьмыми: корень — октава
-            f = midi(root + (12 if k % 2 else 0))
-            put(out, 0.32 * osc(f, beat / 2, 'tri') * decay(beat / 2, beat * 0.4, 0.003), t + k * beat / 2)
-            put(out, 0.06 * hat, t + k * beat / 2 + beat / 4)
-        if not intro:
-            for k in range(16):                                # арпеджио шестнадцатыми
-                f = midi(tones[arp[k]])
-                put(out, 0.07 * osc(f, s16 * 0.9, 'square', 0.125) * decay(s16 * 0.9, s16 * 0.5, 0.002), t + k * s16)
-            for k in range(4):
-                put(out, 0.45 * (kick if k % 2 == 0 else norm(snare, 0.6)), t + k * beat)
-        t += bar
-        i += 1
-    tt_ = np.arange(n) / SR
-    env = np.clip(tt_ / 0.3, 0, 1) * np.clip((end + fade - tt_) / fade, 0, 1)
-    return out * env * gain / 0.6
 
 
 # ---------------------------------------------------------------- сведение
@@ -412,10 +390,6 @@ def mix(spec):
         a = (p + 1) * np.pi / 4
         put(left, x * np.cos(a) * np.sqrt(2), c['t'])
         put(right, x * np.sin(a) * np.sqrt(2), c['t'])
-    if spec.get('music'):
-        m = music(spec['duration'], **spec['music'])
-        left += m
-        right += m
     st = np.stack([left, right], 1)
     st = 0.9 * np.tanh(st / 0.9)                               # мягкий ограничитель
     return st
@@ -434,8 +408,8 @@ def demo():
     cues, t = [], 0.3
     for k in SOUNDS:
         cues.append({'t': t, 'kind': k, 'dur': 1.2 if k in ('dizzy', 'gust', 'anger') else 0})
-        t += 1.8 if k in ('dizzy', 'gust', 'slam', 'love', 'victory') else 1.0
-    return {'duration': t + 0.5, 'cues': cues, 'music': None}
+        t += 1.8 if k in ('dizzy', 'gust', 'slam', 'love') else 1.0
+    return {'duration': t + 0.5, 'cues': cues}
 
 
 if __name__ == '__main__':

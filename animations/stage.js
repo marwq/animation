@@ -12,11 +12,11 @@
 // прошлого ключа (дуги прыжков, полёты). Свойства позы — см. animations/engine.js.
 //
 // cast: { кто: { small: [риг, опции], big: [риг, опции] (если есть), pivot,
-//                moods: { angry, grin, big } — рты для превращения } }
+//                moods: { angry, grin, big } — рты для превращения, voice — высота «ой» } }
 //
-// Звук: помощники и эффекты сами ставят звуковые метки (прыжок, приземление, удар, дым…),
-// сцена добавляет свои через sfx(вид, кадр, {who|at|x, gain}). Виды звуков — tools/sfx.py.
-// cfg.music — фоновая 8-битная петля ({bpm, full, end, gain}), null — без музыки.
+// Звук — только эффекты, без музыки. Помощники и эффекты сами ставят звуковые метки:
+// взмах перед ударом, удар, «ой» у того, кого ударили, прыжок, приземление, падение, дым…
+// Сцена добавляет свои через sfx(вид, кадр, {who|at|x, gain}). Виды звуков — tools/sfx.py.
 'use strict';
 
 function Stage(cfg) {
@@ -44,7 +44,13 @@ function Stage(cfg) {
     FX_EV[kind].push(o);
     if (o.snd === false) return;
     const g = o.gain;
-    if (kind === 'spark') sfx(o.snd || 'punch', o.f, { at: o.at, gain: g });
+    if (kind === 'spark') {
+      // удар: взмах за 5 кадров, сам удар, «ой» у того, в кого попали ('кто:часть' или victim)
+      if (o.swing !== false) sfx('swing', o.f - 5, { at: o.at, gain: 0.8 });
+      sfx(o.snd || 'punch', o.f, { at: o.at, gain: g });
+      const victim = o.victim || (typeof o.at === 'string' ? o.at.split(':')[0] : null);
+      if (victim && o.hurt !== false) sfx('hurt', o.f + 2, { who: victim, gain: 0.9 });
+    }
     else if (kind === 'twinkle') sfx((o.size || 46) >= 46 ? 'twinkle' : 'sparkle', o.f, { at: o.at, gain: g });
     else if (kind === 'stars') sfx('dizzy', o.f0, { who: o.who, dur: o.f1 - o.f0, gain: g ?? 0.8 });
     else if (kind === 'sweat') sfx('drip', o.f0 + 3, { who: o.who, gain: g ?? 0.7 });
@@ -94,8 +100,9 @@ function Stage(cfg) {
     ev('shake', { f: f1, amp: 8, n: 8 });
     if (o.stars) ev('stars', { who, f0: f1 + 4, f1: f1 + 4 + o.stars });
     sfx('whoosh', f0, { who, dur: (f1 - f0) * 0.6, gain: 0.5 });
-    sfx('land', f1, { who, gain: 0.9 });
+    sfx('fall', f1, { who, gain: 0.9 });
     sfx('bounce', f1 + 5, { who, gain: 0.5 });
+    if (o.hurt) sfx('hurt', f1 + 2, { who, gain: 0.8 });
   }
 
   // смех шарика: пульс 1.05×0.95 <-> 0.97×1.03 каждые 4 кадра
@@ -371,7 +378,7 @@ function Stage(cfg) {
     }
   }
 
-  // звук ролика для tools/sfx.py: метки (секунды, вид, громкость, панорама по месту на сцене) и музыка
+  // звук ролика для tools/sfx.py: метки (секунды, вид, громкость, панорама по месту на сцене)
   function audio() {
     const xOf = (c) => {
       if (c.x !== undefined) return c.x;
@@ -379,13 +386,16 @@ function Stage(cfg) {
       if (c.at) return (typeof c.at === 'string' ? target(c.at, S) : c.at)[0];
       return c.who ? S[c.who].p.x : W / 2;
     };
-    const victory = SFX.find((c) => c.kind === 'victory');
-    const music = cfg.music === null ? null
-      : { bpm: 150, full: 4, end: victory ? victory.f / FPS : NF / FPS, gain: 0.18, ...(cfg.music || {}) };
+    // «ой»: маленький (шарик) пищит выше, большой — ниже; у каждого ещё свой голос (cast.voice)
+    const pitchOf = (c) => {
+      if (c.pitch || c.kind !== 'hurt' || !c.who) return c.pitch;
+      const p = statesAt(Math.min(NF - 1, Math.round(c.f)))[c.who].p;
+      return (p.form === 'big' ? 0.85 : 1.3) * (CAST[c.who].voice || 1);
+    };
     const cues = SFX.filter((c) => c.f >= 0 && c.f < NF).sort((a, b) => a.f - b.f).map((c) => ({
-      t: c.f / FPS, kind: c.kind, gain: c.gain ?? 1, dur: c.dur ? c.dur / FPS : 0,
+      t: c.f / FPS, kind: c.kind, gain: c.gain ?? 1, dur: c.dur ? c.dur / FPS : 0, pitch: pitchOf(c),
       pan: E.clamp((xOf(c) - W / 2) / (W / 2), -1, 1) * 0.6 }));
-    return { duration: NF / FPS, music, cues };
+    return { duration: NF / FPS, cues };
   }
 
   // загрузка ригов, затем позы больших (им нужны размеры рук и ног), затем рендер по кадрам

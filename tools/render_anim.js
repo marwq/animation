@@ -6,7 +6,7 @@
 //   node tools/render_anim.js animations/<сцена> --audio-only     # пересвести только звук
 //   node tools/render_anim.js animations/<сцена> --mute           # видео без звука
 //
-// Звук: если сцена отдаёт window.SCENE.audio() (метки эффектов и музыка), tools/sfx.py
+// Звук: если сцена отдаёт window.SCENE.audio() (метки звуковых эффектов), tools/sfx.py
 // сводит его в WAV, и он кладётся в MP4 дорожкой AAC.
 //
 // Сцена — index.html, который выставляет window.READY (Promise), window.SCENE
@@ -59,7 +59,7 @@ async function addSound(page, mp4) {
     '-c:a', 'aac', '-b:a', '192k', '-shortest', '-movflags', '+faststart', out]);
   fs.copyFileSync(out, mp4);
   fs.rmSync(tmp, { recursive: true, force: true });
-  console.log(`звук: ${audio.cues.length} меток${audio.music ? ' + музыка' : ''}`);
+  console.log(`звук: ${audio.cues.length} меток`);
 }
 
 (async () => {
