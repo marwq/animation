@@ -424,6 +424,8 @@ function Stage(cfg) {
   // победа: идёт в центр (x = 960), поворачивается к зрителю, руки через стороны вверх буквой V, блеск
   function victory(who, f, x0, o = {}) {
     const face = o.face || (960 >= x0 ? 1 : -1), n = o.n || 10;
+    // смотрит в другую сторону — сначала разворот
+    if ((evalStates(f + 1)[who].p.face || 1) !== face) { turn(who, f + 1, face, x0); f += 4; }
     const steps = Math.max(1, Math.round(Math.abs(960 - x0) / (o.stride || 95)));
     if (Math.abs(960 - x0) > 20) walk(who, f, x0, 960, steps, n, face);
     const g = f + (Math.abs(960 - x0) > 20 ? steps * n + 6 : 0);
