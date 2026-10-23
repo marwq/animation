@@ -274,6 +274,50 @@ function Stage(cfg) {
     sfx('jump', f + 2, { who, gain: 0.5 });
   }
 
+  // большой смеётся: голова кивает (f0..f1), рот смеётся
+  function chuckle(who, f0, f1, o = {}) {
+    key(who, f0, { mouth: o.mouth || 'happy with theeth', eyes: o.eyes || 'normal' }, 0);
+    for (let f = f0 + 2; f < f1 - 2; f += 6) key(who, f, { head: ((f - f0) / 6) % 2 < 1 ? 6 : -4 }, 3);
+    key(who, f1, { head: 0 }, 3);
+  }
+
+  // кружится после удара: n разворотов по 4 кадра, потом стойка и звёздочки
+  function spinAround(who, f, x, face, o = {}) {
+    const n = o.n || 6;
+    key(who, f, { legFfk: 1, legBfk: 1, lean: 0, head: -6, hip: [0, toRig(who, 3)], mouth: 'puzzlement',
+      handF: hand(who, 'F', 0.3, 0.9), handB: hand(who, 'B', -0.2, 0.9) }, 2);
+    for (let i = 0; i < n; i++) {
+      key(who, f + 3 + i * 4, { face: i % 2 ? face : -face }, 3);
+      sfx('whoosh', f + 2 + i * 4, { who, dur: 4, gain: 0.35 });
+    }
+    const g = f + 3 + n * 4;
+    key(who, g, { ...stance(who, x, face), head: -8 }, 3);
+    ev('stars', { who, f0: g - 2, f1: g + (o.stars || 34) });
+    for (let k = g + 4; k < g + (o.stars || 34) - 4; k += 8) key(who, k, { head: ((k - g) / 8) % 2 < 1 ? -8 : 4 }, 4);
+    key(who, g + (o.stars || 34), { head: 0 }, 4);
+    return g;
+  }
+
+  // большой прыгает невысоко и топает в точку x1 (o.h — высота, по гайду 80–100 px)
+  function stomp(who, f, x0, x1, face, o = {}) {
+    const n = o.n || 12, h = o.h || 90;
+    key(who, f - 4, { hip: [0, toRig(who, 60)], lean: 8, mouth: 'angry theeth' }, 4);   // присел
+    move(who, f, { x: x0, y: GROUND });
+    key(who, f + 1, { legFfk: 1, legBfk: 1, legF: [40, -70], legB: [10, -60], hip: [0, 0], lean: 0,
+      handF: hand(who, 'F', 0.4, -0.6), handB: hand(who, 'B', -0.4, -0.6) }, 3);
+    move(who, f + n / 2, { y: GROUND - h }, 'out2');
+    move(who, f + n, { y: GROUND }, 'in2');
+    move(who, f + n, { x: x1 }, 'lin');
+    key(who, f + n - 1, { ...big(who).feet(x1, face), legFfk: 1, legBfk: 1 }, 0);
+    key(who, f + n + 1, { legFfk: 0, legBfk: 0, hip: [0, toRig(who, 40)], handF: hand(who, 'F', 0.3, 0.6),
+      handB: hand(who, 'B', -0.3, 0.6) }, 2);
+    key(who, f + n + 12, stance(who, x1, face), 8);
+    sfx('jump', f + 1, { who, gain: 0.6 });
+    ev('dust', { f: f + n, x: x1, r: 50, n: 6, snd: 'slam', gain: 0.8 });
+    ev('shake', { f: f + n, amp: 16, n: 10 });
+    return f + n;
+  }
+
   // нырок вниз на согнутых коленях (удар проходит над головой): f0 вниз, f1 вверх.
   // Глубже 60 % длины ноги колени уже не сгибаются как надо — глубина ограничена.
   function duck(who, f0, f1, x, face, depth = 250) {
@@ -315,6 +359,16 @@ function Stage(cfg) {
     return f + n;
   }
 
+  // встаёт после падения на спину: поворот обратно за n кадров, стойка
+  function getUp(who, f, x, face, o = {}) {
+    const n = o.n || 14;
+    move(who, f, { rot: -90 * face, y: GROUND - (o.lift || 50), x });
+    move(who, f + n, { rot: 0, y: GROUND }, 'io');
+    key(who, f + n, { ...stance(who, x, face), zB: null, mouth: o.mouth || 'angry theeth', eyes: 'angry' }, n);
+    sfx('jump', f + 2, { who, gain: 0.4 });
+    return f + n;
+  }
+
   // улетает за кадр кувырком (o.to — куда, o.turns — обороты), на месте ухода — блеск
   function flyOff(who, f0, f1, from, to, o = {}) {
     const ch = big(who);
@@ -331,10 +385,10 @@ function Stage(cfg) {
 
   // победа: идёт в центр (x = 960), поворачивается к зрителю, руки через стороны вверх буквой V, блеск
   function victory(who, f, x0, o = {}) {
-    const face = o.face || (960 >= x0 ? 1 : -1);
-    const steps = Math.max(1, Math.round(Math.abs(960 - x0) / 95));
-    if (Math.abs(960 - x0) > 20) walk(who, f, x0, 960, steps, 10, face);
-    const g = f + (Math.abs(960 - x0) > 20 ? steps * 10 + 6 : 0);
+    const face = o.face || (960 >= x0 ? 1 : -1), n = o.n || 10;
+    const steps = Math.max(1, Math.round(Math.abs(960 - x0) / (o.stride || 95)));
+    if (Math.abs(960 - x0) > 20) walk(who, f, x0, 960, steps, n, face);
+    const g = f + (Math.abs(960 - x0) > 20 ? steps * n + 6 : 0);
     const a = E.rad(CAST[who].vAngle || 25);
     key(who, g, { look: 0, eyes: 'normal' }, 4);
     key(who, g + 6, { handF: hand(who, 'F', 0.97, -0.08), handB: hand(who, 'B', -0.97, -0.08) }, 3);
@@ -594,5 +648,6 @@ function Stage(cfg) {
   // stateAt — то же, что statesAt, но без кэша: можно звать, пока ключи ещё ставятся
   return { FPS, W, H, NF, GROUND, EDGE, F, CAST, C, key, move, ev, sfx, hop, tumble, laugh, tremble, transform,
     love, blowKiss, stance, walk, turn, strike, kick, dodge, duck, recoil, fallBack, flyOff, victory, hand, toRig,
+    chuckle, spinAround, stomp, getUp,
     target, parts, statesAt, stateAt: evalStates, hooks, start };
 }
