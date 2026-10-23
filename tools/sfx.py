@@ -359,6 +359,29 @@ def s_burst(seed=21, **_):
     return norm(norm(crack) + 0.7 * norm(wet) + 0.5 * thump, 0.9)
 
 
+def s_rain(seed=22, dur=2.0, **_):
+    """Дождь: ровный шум и редкие капли."""
+    d = max(0.5, dur)
+    t = tt(d)
+    hiss = bandpass(noise(d, seed), 1200, 7000)
+    drops = np.zeros(nsamp(d))
+    rr = np.random.default_rng(seed)
+    for t0 in rr.uniform(0, d - 0.05, int(d * 14)):
+        put(drops, osc(glide(1800 + rr.random() * 900, 700, 0.04), 0.04) * decay(0.04, 0.01), t0)
+    env = np.clip(t / 0.25, 0, 1) * np.clip((d - t) / 0.3, 0, 1)
+    return norm((0.6 * norm(hiss) + 0.5 * norm(drops)) * env, 0.45)
+
+
+def s_zap(seed=23, **_):
+    """Молния: электрический треск и раскат грома."""
+    d = 1.6
+    t = tt(d)
+    crackle = bandpass(noise(d, seed), 2000, 10000) * (np.random.default_rng(seed).random(nsamp(d)) > 0.7) * decay(d, 0.18, 0.001)
+    buzz = osc(120, d, 'square') * decay(d, 0.25) * (0.5 + 0.5 * np.sign(np.sin(TAU * 30 * t)))
+    boom = lowpass2(noise(d, seed + 1), 200) * decay(d, 0.6, 0.04)
+    return norm(0.8 * norm(crackle) + 0.25 * lowpass(buzz, 1500) + norm(boom), 0.95)
+
+
 # ---------------------------------------------------------------- злость, сила
 def s_anger(seed=10, dur=1.0, **_):
     """Жилка и пар: шипение и рычание."""
@@ -494,7 +517,7 @@ def write_wav(path, st):
 def demo():
     cues, t = [], 0.3
     for k in SOUNDS:
-        cues.append({'t': t, 'kind': k, 'dur': 1.2 if k in ('dizzy', 'gust', 'anger', 'whirr', 'suck', 'inflate') else 0})
+        cues.append({'t': t, 'kind': k, 'dur': 1.2 if k in ('dizzy', 'gust', 'anger', 'whirr', 'suck', 'inflate', 'rain') else 0})
         t += 1.8 if k in ('dizzy', 'gust', 'slam', 'love') else 1.0
     return {'duration': t + 0.5, 'cues': cues}
 

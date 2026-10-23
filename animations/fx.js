@@ -446,6 +446,65 @@ const FX = (() => {
     ctx.restore();
   }
 
+  // тучка-реквизит: тёмная, с обводкой; s — ширина
+  function rainCloud(ctx, x, y, s = 260) {
+    const k = s / 260, P = [[-90, 10, 55], [-40, -25, 70], [30, -30, 65], [90, 5, 55], [0, 20, 60], [-60, 30, 45], [60, 30, 45]];
+    ctx.save();
+    ctx.lineWidth = 6; ctx.strokeStyle = '#1f232a';
+    for (const [dx, dy, r] of P) { ctx.beginPath(); ctx.arc(x + dx * k, y + dy * k, r * k, 0, TAU); ctx.stroke(); }
+    for (const [dx, dy, r] of P) { ctx.beginPath(); ctx.arc(x + dx * k, y + dy * k, r * k - 3, 0, TAU); ctx.fillStyle = '#7d8796'; ctx.fill(); }
+    for (const [dx, dy, r] of P.slice(1, 3)) {
+      ctx.beginPath(); ctx.arc(x + (dx - 15) * k, y + (dy - 18) * k, r * k * 0.45, 0, TAU); ctx.fillStyle = '#9aa4b2'; ctx.fill();
+    }
+    ctx.restore();
+  }
+
+  // дождь из-под тучки: x — центр, w — ширина, от y0 до земли y1; t — секунды
+  function rain(ctx, x, y0, y1, w, t, alpha = 1, seed = 7) {
+    const r = rng(seed);
+    ctx.save();
+    ctx.globalAlpha = alpha; ctx.lineCap = 'round';
+    for (let i = 0; i < 40; i++) {
+      const dx = (r() - 0.5) * w, ph = r(), sp = 1.6 + r() * 0.8;
+      const u = (t * sp + ph) % 1, y = y0 + u * (y1 - y0);
+      ctx.beginPath(); ctx.moveTo(x + dx, y); ctx.lineTo(x + dx - 3, y + 26);
+      ctx.lineWidth = 5; ctx.strokeStyle = '#1b5e8c'; ctx.stroke();
+      ctx.lineWidth = 2.5; ctx.strokeStyle = '#9ee7ff'; ctx.stroke();
+    }
+    ctx.restore();
+  }
+
+  // молния: зигзаг от (x0, y0) к (x1, y1); life 0..1 — мигает и гаснет
+  function lightning(ctx, x0, y0, x1, y1, life, seed = 11) {
+    if (life < 0 || life > 1) return;
+    const r = rng(seed + Math.floor(life * 6));
+    const n = 8, pts = [[x0, y0]];
+    for (let i = 1; i < n; i++) {
+      const u = i / n;
+      pts.push([x0 + (x1 - x0) * u + (r() - 0.5) * 70, y0 + (y1 - y0) * u]);
+    }
+    pts.push([x1, y1]);
+    ctx.save();
+    ctx.globalAlpha = life < 0.6 ? 1 : (1 - life) / 0.4;
+    ctx.lineJoin = 'round'; ctx.lineCap = 'round';
+    for (const [wdt, col] of [[22, '#111'], [16, '#ffe14d'], [6, '#ffffff']]) {
+      ctx.beginPath(); pts.forEach(([px, py], i) => (i ? ctx.lineTo(px, py) : ctx.moveTo(px, py)));
+      ctx.lineWidth = wdt; ctx.strokeStyle = col; ctx.stroke();
+    }
+    ctx.restore();
+  }
+
+  // лужа на траве
+  function puddle(ctx, x, y, w, alpha = 1) {
+    if (alpha <= 0 || w <= 0) return;
+    ctx.save(); ctx.globalAlpha = alpha;
+    ctx.beginPath(); ctx.ellipse(x, y, w / 2, w * 0.09, 0, 0, TAU);
+    ctx.fillStyle = '#58b8ef'; ctx.fill(); ctx.lineWidth = 3; ctx.strokeStyle = '#1b5e8c'; ctx.stroke();
+    ctx.beginPath(); ctx.ellipse(x - w * 0.15, y - w * 0.02, w * 0.12, w * 0.02, 0, 0, TAU);
+    ctx.fillStyle = 'rgba(255,255,255,0.7)'; ctx.fill();
+    ctx.restore();
+  }
+
   // банановая кожура (лежит на траве): s — ширина, rot — поворот
   function banana(ctx, x, y, s = 90, rot = 0) {
     ctx.save();
@@ -523,5 +582,5 @@ const FX = (() => {
   }
 
   return { rng, background, cloud, shadow, spark, dust, smoke, flash, rays, vein, steam, sweat, stars, twinkle, whoosh, puff,
-    heart, hearts, wind, banana, giftBox, suck, drool, tree, apple, bubble, gumSplat };
+    heart, hearts, wind, banana, giftBox, suck, drool, tree, apple, bubble, gumSplat, rainCloud, rain, lightning, puddle };
 })();
