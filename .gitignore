@@ -1,4 +1,2 @@
 node_modules/
 __pycache__/
-backgrounds/**/layers/glow_on.png
-backgrounds/**/layers/glow_off.png
