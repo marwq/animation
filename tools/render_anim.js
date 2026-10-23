@@ -1,7 +1,7 @@
 // Рендер анимации из animations/<сцена>/ в MP4 через headless Chromium + ffmpeg.
 //
-//   node tools/render_anim.js animations/fight-test              # всё видео -> <сцена>/<имя>.mp4
-//   node tools/render_anim.js animations/fight-test --still 4.0,7.4 --out /tmp/kadry
+//   node tools/render_anim.js animations/skeleton-vs-lord           # всё видео -> <сцена>/<имя>.mp4
+//   node tools/render_anim.js animations/skeleton-vs-lord --still 4.0,7.4 --out /tmp/kadry
 //                                                                # отдельные кадры (секунды) в PNG
 //
 // Сцена — index.html, который выставляет window.READY (Promise), window.SCENE
@@ -15,7 +15,7 @@ const { chromium } = require('playwright');
 
 const ROOT = path.resolve(__dirname, '..');
 const args = process.argv.slice(2);
-const sceneDir = path.resolve(args[0] || 'animations/fight-test');
+const sceneDir = path.resolve(args[0] || 'animations/skeleton-vs-lord');
 const opt = (name) => { const i = args.indexOf(name); return i >= 0 ? args[i + 1] : null; };
 const page_ = opt('--page') || 'index.html';
 

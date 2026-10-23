@@ -1,4 +1,4 @@
-// Пробная драка, 25 секунд: Лорд против Розового скелета, в середине с неба падает
+// v1 (первая версия, архив; рендерится своими engine-v1.js и fx-v1.js). Пробная драка, 25 секунд: Лорд против Розового скелета, в середине с неба падает
 // Толстяк, в конце приходит Радужный скелет.
 //
 // Время везде в секундах. Ключи поз: track.add(t, {свойство: значение}, ease).
@@ -16,7 +16,7 @@
 'use strict';
 
 const FPS = 25, DUR = 25, W = 1920, H = 1080, GROUND = 938, SC = 0.29;
-window.SCENE = { fps: FPS, duration: DUR, width: W, height: H, name: 'fight-test' };
+window.SCENE = { fps: FPS, duration: DUR, width: W, height: H, name: 'fight-test-v1' };
 
 const FACING = { lord: 1, pink: -1, fat: 1, rainbow: -1 };
 const RIGS = { lord: 'lord-verity-big', pink: 'child-verity-big', fat: 'fat-verity-small', rainbow: 'all-verity-color' };

@@ -1,14 +1,20 @@
-// Движок анимации риговых персонажей (rigs/<имя>/): PNG-слои, кости, IK, сцена.
+// Движок анимации риговых персонажей (rigs/<имя>/): PNG-слои, кости, IK, ключи.
 //
-// Каждый PNG-слой привязан к кости (rig.json: layers[].bone). Поза задаётся
-// поворотами костей вокруг их суставов (base), дочерние кости едут вместе с
-// родительской — так локоть всегда остаётся на конце плеча, колено на конце бедра.
-// Руки и ноги можно ставить через IK по двум звеньям (плечо–предплечье,
-// бедро–голень): задаётся точка кисти/щиколотки, углы считаются сами, а сторона
-// сгиба фиксирована — колени наружу, локти вниз.
+// Каждый PNG-слой привязан к кости (rig.json: layers[].bone). Поза — это повороты
+// костей вокруг их суставов; дочерние кости едут вместе с родительской, поэтому
+// локоть всегда на конце плеча, колено на конце бедра.
 //
-// Координаты персонажа — пиксели его холста из rig.json (+x вперёд, к сопернику,
-// +y вниз). На сцену персонаж ставится точкой между стопами на линии земли.
+// Персонажи нарисованы в три четверти: носки смотрят в одну сторону (dir: +1 —
+// вправо, -1 — влево). Отсюда правила сгиба (стиль «animal hospital long»):
+//   - оба колена сгибаются вперёд, туда, куда смотрят носки (никакой «лягушки»);
+//   - локти сгибаются назад, при вытянутой вперёд руке — вниз;
+//   - стопа, поставленная на землю, стоит ровно и не скользит.
+// Персонаж разворачивается к сопернику свойством face (+1/-1); если face совпадает
+// с dir, картинка не отражается.
+//
+// Углы и смещения в позе пишутся «по-человечески»: + вперёд (к носкам), а не в
+// координатах холста, — поэтому одна и та же поза подходит персонажу, нарисованному
+// лицом вправо и лицом влево.
 'use strict';
 
 const E = (() => {
@@ -28,6 +34,7 @@ const E = (() => {
   const T = (x, y) => [1, 0, 0, 1, x, y];
   const R = (a) => [Math.cos(a), Math.sin(a), -Math.sin(a), Math.cos(a), 0, 0];
   const S = (x, y) => [x, 0, 0, y, 0, 0];
+  const I = [1, 0, 0, 1, 0, 0];
   const rotAbout = (p, a) => mul(T(p[0], p[1]), mul(R(a), T(-p[0], -p[1])));
   const ang = (m) => Math.atan2(m[1], m[0]);
   const rad = (d) => (d * Math.PI) / 180;
@@ -69,30 +76,27 @@ const E = (() => {
     return { canvas: out, x: x0, y: y0, w, h };
   }
 
-  async function loadRig(name, k) {
+  async function loadRig(name) {
     const base = `/rigs/${name}/`;
     const rig = await (await fetch(base + 'rig.json')).json();
     const layers = rig.layers.map((l) => ({ ...l, sw: null }));
     for (const s of rig.switches) for (const c of s.children) layers.push({ ...c, sw: s.name });
     layers.sort((a, b) => a.order - b.order);
-    await Promise.all(layers.map(async (l) => {
-      l.img = prescale(await loadImage(base + l.png), l.bbox, k);
-    }));
+    await Promise.all(layers.map(async (l) => { l.full = await loadImage(base + l.png); }));
     return { name, rig, layers };
   }
 
   // ---------------------------------------------------------------- персонаж
   class Character {
+    // opts.scale — масштаб пикселей рига; или opts.height — рост на сцене (верх
+    // шляпы/черепа/банта — подошвы), или opts.body + opts.bodyHeight — высота одного слоя.
     constructor(data, opts = {}) {
       this.name = data.name;
       this.rig = data.rig;
-      this.layers = data.layers;
-      this.scale = opts.scale || 0.3;
-      const bones = this.rig.bones;
-      this.bones = bones;
+      this.bones = this.rig.bones;
+      const bones = this.bones;
       this.idx = Object.fromEntries(bones.map((b, i) => [b.name, i]));
       this.parent = bones.map((b) => (b.parent === null ? -1 : this.idx[b.parent]));
-      // родители раньше детей
       this.topo = [];
       const seen = new Set();
       const visit = (i) => {
@@ -102,7 +106,7 @@ const E = (() => {
       };
       bones.forEach((_, i) => visit(i));
       const byLayer = {};
-      for (const l of this.layers) byLayer[l.name] = l.bone;
+      for (const l of data.layers) byLayer[l.name] = l.bone;
       const bi = (n) => (n in this.idx ? this.idx[n] : -1);
       this.spine = bi(byLayer.body);
       this.head = bi(byLayer.head);
@@ -115,46 +119,80 @@ const E = (() => {
         if (c < 0) c = bones.findIndex((x, i) => this.parent[i] === b);
         return c < 0 ? null : [a, b, c];
       };
+      const legsAll = ['left', 'right'].map((s) => chain('leg', s)).filter(Boolean);
+      // куда смотрят носки: стопа — от щиколотки к носку
+      let toe = 0;
+      for (const c of legsAll) toe += bones[c[2]].tip[0] - bones[c[2]].base[0];
+      this.dir = toe < 0 ? -1 : 1;
       const limbs = (kind) => {
         const out = ['left', 'right'].map((s) => chain(kind, s)).filter(Boolean);
-        out.sort((p, q) => bones[q[0]].base[0] - bones[p[0]].base[0]);
-        return { F: out[0] || null, B: out[1] || null };   // F — ближняя к +x (вперёд)
+        out.sort((p, q) => (bones[q[0]].base[0] - bones[p[0]].base[0]) * this.dir);
+        return { F: out[0] || null, B: out[1] || null };   // F — со стороны носков (к сопернику)
       };
-      const arms = limbs('hand'), legs = limbs('leg');
-      this.arm = arms; this.leg = legs;
-      // корень — общий предок ног (или кость туловища у шариков без ног)
-      const anc = (i) => { const r = []; for (; i >= 0; i = this.parent[i]) r.push(i); return r; };
-      if (legs.F) {
-        const a = anc(legs.F[0]);
-        this.root = a[a.length - 1];
-      } else {
-        const a = anc(this.spine >= 0 ? this.spine : 0);
-        this.root = a[a.length - 1];
+      this.arm = limbs('hand'); this.leg = limbs('leg');
+      this.armLayers = { F: new Set(), B: new Set() };
+      for (const k of ['F', 'B']) {
+        if (!this.arm[k]) continue;
+        const ids = new Set(this.arm[k].map((i) => bones[i].name));
+        for (const l of data.layers) if (ids.has(l.bone)) this.armLayers[k].add(l.name);
       }
+      const anc = (i) => { const r = []; for (; i >= 0; i = this.parent[i]) r.push(i); return r; };
+      const a = anc(this.leg.F ? this.leg.F[0] : (this.spine >= 0 ? this.spine : 0));
+      this.root = a[a.length - 1];
       // точка постановки: между щиколотками на уровне подошв (или низ тела)
-      let bottom = 0;
-      for (const l of this.layers) if (!l.sw) bottom = Math.max(bottom, l.bbox[3]);
-      if (legs.F && legs.B) {
-        const fx = bones[legs.F[2]].base[0], bx = bones[legs.B[2]].base[0];
-        this.anchor = [(fx + bx) / 2, bottom - 6];
-        this.ankleH = bottom - 6 - (bones[legs.F[2]].base[1] + bones[legs.B[2]].base[1]) / 2;
+      const solid = data.layers.filter((l) => !l.sw);
+      const bottom = Math.max(...solid.map((l) => l.bbox[3]));
+      if (this.leg.F && this.leg.B) {
+        const fx = bones[this.leg.F[2]].base[0], bx = bones[this.leg.B[2]].base[0];
+        this.anchor = [(fx + bx) / 2, bottom - 4];
+        this.ankleH = this.anchor[1] - (bones[this.leg.F[2]].base[1] + bones[this.leg.B[2]].base[1]) / 2;
       } else {
-        const b = this.layers.find((l) => l.name === 'body');
-        this.anchor = [(b.bbox[0] + b.bbox[2]) / 2, b.bbox[3] - 6];
+        const b = data.layers.find((l) => l.name === 'body');
+        this.anchor = [(b.bbox[0] + b.bbox[2]) / 2, b.bbox[3] - 4];
         this.ankleH = 0;
       }
-      this.width = Math.max(...this.layers.map((l) => l.bbox[2])) - Math.min(...this.layers.map((l) => l.bbox[0]));
-      this.height = this.anchor[1] - Math.min(...this.layers.map((l) => l.bbox[1]));
+      this.top = Math.min(...solid.map((l) => l.bbox[1]));
+      const face = data.layers.find((l) => l.name === 'head') || data.layers.find((l) => l.name === 'body');
+      this.faceBox = face.bbox;
+      if (opts.scale) this.scale = opts.scale;
+      else if (opts.height) this.scale = opts.height / (this.anchor[1] - this.top);
+      else {
+        const b = data.layers.find((l) => l.name === (opts.body || 'body'));
+        this.scale = (opts.bodyHeight || 300) / (b.bbox[3] - b.bbox[1]);
+      }
+      // слои — заранее уменьшенные до масштаба сцены (с запасом на наезд камеры)
+      this.layers = data.layers.map((l) => ({ ...l, img: prescale(l.full, l.bbox, this.scale * 1.25) }));
+      this.width = (Math.max(...solid.map((l) => l.bbox[2])) - Math.min(...solid.map((l) => l.bbox[0]))) * this.scale;
+      this.height = (this.anchor[1] - this.top) * this.scale;
     }
 
-    boneLen(i, j) { return len(sub(this.bones[j].base, this.bones[i].base)); }
+    // Стопы на месте как в риге (чуть шире/уже — spread, пиксели рига вперёд/назад):
+    // {footF, footB} для персонажа в x, смотрящего в face.
+    feet(x, face, spreadF = 0, spreadB = 0, lift = [0, 0]) {
+      const out = {};
+      for (const [k, sp, li] of [['F', spreadF, lift[0]], ['B', -spreadB, lift[1]]]) {
+        if (!this.leg[k]) continue;
+        const fwd = (this.bones[this.leg[k][2]].base[0] - this.anchor[0]) * this.dir + sp;
+        out['foot' + k] = [x + face * fwd * this.scale, li];
+      }
+      return out;
+    }
 
-    // матрица персонажа: локальные пиксели холста -> пиксели сцены
-    // pivot — центр поворота rot: на сколько пикселей персонажа выше точки постановки
+    // кисть в покое относительно плеча: [вперёд, вниз] в пикселях рига
+    handRest(k) {
+      const ch = this.arm[k];
+      if (!ch) return [0, 0];
+      const a = this.bones[ch[0]].base, c = this.bones[ch[2]].base;
+      return [(c[0] - a[0]) * this.dir, c[1] - a[1]];
+    }
+
+    // матрица персонажа: локальные пиксели холста -> пиксели сцены.
+    // rot вращает вокруг точки на pivot пикселей рига выше стоп.
     globalMatrix(p) {
       const s = this.scale, pv = (p.pivot || 0) * s * (p.sy || 1);
+      const flip = (p.face || this.dir) * this.dir;
       return mul(T(p.x, p.y - pv), mul(R(rad(p.rot || 0)), mul(T(0, pv),
-        mul(S((p.facing || 1) * s * (p.sx || 1), s * (p.sy || 1)), T(-this.anchor[0], -this.anchor[1])))));
+        mul(S(flip * s * (p.sx || 1), s * (p.sy || 1)), T(-this.anchor[0], -this.anchor[1])))));
     }
 
     fk(delta, hip) {
@@ -166,12 +204,11 @@ const E = (() => {
       return W;
     }
 
-    // IK по двум звеньям. target — точка конца второго звена (локальные пиксели).
-    // bend: +1/-1 — по какую сторону от линии «сустав–цель» уходит средний сустав.
-    solve2(W, delta, ch, target, bend, endRot) {
+    // IK по двум звеньям: target — точка конца второго звена (локальные пиксели),
+    // bend +1/-1 — в какую сторону от линии «сустав–цель» уходит средний сустав.
+    solve2(W, delta, ch, target, bend) {
       const [a, b, c] = ch;
-      const pa = this.parent[a];
-      const Wp = pa >= 0 ? W[pa] : (a === this.root ? T(0, 0) : [1, 0, 0, 1, 0, 0]);
+      const Wp = this.parent[a] >= 0 ? W[this.parent[a]] : I;
       const rho = ang(Wp);
       const j0 = apply(Wp, this.bones[a].base);
       const r1 = sub(this.bones[b].base, this.bones[a].base), r2 = sub(this.bones[c].base, this.bones[b].base);
@@ -186,48 +223,54 @@ const E = (() => {
       const th2 = Math.atan2(end[1] - knee[1], end[0] - knee[0]);
       delta[a] = th1 - Math.atan2(r1[1], r1[0]) - rho;
       delta[b] = th2 - Math.atan2(r2[1], r2[0]) - rho - delta[a];
-      if (endRot !== undefined && endRot !== null) delta[c] = endRot - rho - delta[a] - delta[b];
     }
 
-    // колени наружу от середины тела: у передней ноги колено уходит в +x (и вверх при ударе)
-    kneeBend(ch) {
-      return this.bones[ch[0]].base[0] > this.anchor[0] ? 1 : -1;
-    }
-
+    // Поза. Свойства p (все необязательные):
+    //   x, y, face, rot, pivot, sx, sy        положение на сцене, разворот, наклон, сквош
+    //   hip [вперёд, вниз]                     сдвиг таза (присед — вниз)
+    //   lean, head, neck                       наклон корпуса / головы (+ вперёд), градусы
+    //   footF/footB [x на сцене, подъём]       стопа в точке на земле (IK), legF/legB [бедро,
+    //                                          голень, стопа] — углы, legFfk — смесь углов и точки
+    //   handF/handB [вперёд, вниз]             кисть относительно плеча (IK), armF/armB — углы
+    //   b_<кость>                              дополнительный поворот любой кости (крылья)
+    //   look -1..1, zF/zB 'front'|'back', mouth, eyes, hide, alpha
+    // world.hitF/hitB/kickF {at, w} — тянуть кулак/стопу к точке сцены с весом w.
     pose(p, world = {}) {
+      const dir = this.dir;
       const delta = {};
-      const r = this.root;
-      if (this.spine >= 0) delta[this.spine] = rad(p.lean || 0);
-      if (this.head >= 0) delta[this.head] = rad(p.head || 0);
-      if (this.neck >= 0 && p.neck) delta[this.neck] = rad(p.neck);
-      const hip = p.hip || [0, 0];
+      if (this.spine >= 0) delta[this.spine] = rad(p.lean || 0) * dir;
+      if (this.head >= 0) delta[this.head] = rad(p.head || 0) * dir;
+      if (this.neck >= 0 && p.neck) delta[this.neck] = rad(p.neck) * dir;
+      for (const k of Object.keys(p)) {
+        if (k.startsWith('b_') && k.slice(2) in this.idx) delta[this.idx[k.slice(2)]] = rad(p[k]) * dir;
+      }
+      const hp = p.hip || [0, 0];
+      const hip = [hp[0] * dir, hp[1]];
       const G = this.globalMatrix(p);
       const Gi = inv(G);
+      const flip = (p.face || dir) * dir;
       let W = this.fk(delta, hip);
 
-      // Конечность ставится тремя способами:
-      //   точка  — IK: стопа на сцене / кисть относительно плеча, сустав гнётся сам;
-      //   углы   — повороты трёх костей в градусах;
-      //   точка + углы — смесь с весом fk (0 — точка, 1 — углы): так нога плавно
-      //   переходит от «стоит на земле» к «поджата в прыжке» без рывка.
-      // Удар (world.kick*/hit*) затем тянет конец конечности к цели с весом w.
-      const limb = (ch, angles, point, reach, solve, endRot, fk) => {
+      // Конечность: углы, точка (IK) или их смесь с весом fk; удар тянет конец к цели.
+      const limb = (ch, angles, point, reach, bend, endRot, fk) => {
         const ids = [ch[0], ch[1], ch[2]];
         let ikD = null;
         if (point) {
           const d2 = { ...delta };
-          solve(ch, point, d2);
+          this.solve2(W, d2, ch, point, bend);
           if (endRot !== null) d2[ch[2]] = endRot - ang(W[this.parent[ch[0]]]) - d2[ch[0]] - d2[ch[1]];
           ikD = ids.map((i) => d2[i] || 0);
         }
-        const fkD = angles ? [rad(angles[0]), rad(angles[1]), rad(angles[2] || 0)] : null;
+        const fkD = angles ? [rad(angles[0]) * dir, rad(angles[1]) * dir, rad(angles[2] || 0) * dir] : null;
         const w = clamp(fk === undefined || fk === null ? (point ? 0 : 1) : fk, 0, 1);
         const res = ikD && fkD ? ikD.map((v, j) => lerp(v, fkD[j], w)) : (ikD || fkD);
         if (res) { ids.forEach((i, j) => { delta[i] = res[j]; }); W = this.fk(delta, hip); }
         if (reach && reach.w > 0) {
           const from = apply(W[ch[1]], this.bones[ch[2]].base);
           const rt = apply(Gi, reach.at);
-          solve(ch, [lerp(from[0], rt[0], reach.w), lerp(from[1], rt[1], reach.w)], delta);
+          const keep = delta[ch[2]];
+          this.solve2(W, delta, ch, [lerp(from[0], rt[0], reach.w), lerp(from[1], rt[1], reach.w)], bend);
+          delta[ch[2]] = keep;
           W = this.fk(delta, hip);
         }
       };
@@ -235,11 +278,10 @@ const E = (() => {
         const ch = this.leg[k];
         if (!ch) continue;
         const foot = p['foot' + k];
-        const point = foot ? apply(Gi, [foot[0], world.ground - this.ankleH * this.scale - (foot[1] || 0)]) : null;
-        // стопа на земле стоит ровно, даже если персонаж наклонён целиком
-        const endRot = foot ? rad(p['footRot' + k] || 0) - rad(p.rot || 0) * (p.facing || 1) : null;
-        limb(ch, p['leg' + k], point, world['kick' + k],
-          (c, tgt, d) => this.solve2(W, d, c, tgt, this.kneeBend(c)), endRot, p['leg' + k + 'fk']);
+        const point = foot ? apply(Gi, [foot[0], world.ground - this.ankleH * this.scale * (p.sy || 1) - (foot[1] || 0)]) : null;
+        // стопа стоит ровно: её поворот на сцене как в риге, даже если персонаж наклонён
+        const endRot = foot ? rad(p['footRot' + k] || 0) * dir - rad(p.rot || 0) * flip : null;
+        limb(ch, p['leg' + k], point, world['kick' + k], dir, endRot, p['leg' + k + 'fk']);
       }
       for (const k of ['F', 'B']) {
         const ch = this.arm[k];
@@ -248,70 +290,84 @@ const E = (() => {
         let point = null;
         if (hand) {
           const sh = apply(W[this.parent[ch[0]]], this.bones[ch[0]].base);
-          point = [sh[0] + hand[0], sh[1] + hand[1]];
+          point = [sh[0] + hand[0] * dir, sh[1] + hand[1]];
         }
-        // локоть вниз: из двух решений берём то, где он ниже
-        const elbowDown = (c, tgt, d) => {
-          const tryBend = (sgn) => {
-            const d2 = { ...d };
-            this.solve2(W, d2, c, tgt, sgn);
-            return [d2, apply(this.fk(d2, hip)[c[1]], this.bones[c[1]].base)[1]];
-          };
-          const [da, ya] = tryBend(1), [db, yb] = tryBend(-1);
-          const best = ya >= yb ? da : db;
-          d[c[0]] = best[c[0]]; d[c[1]] = best[c[1]];
-        };
-        limb(ch, p['arm' + k], point, world['hit' + k], elbowDown, null, p['arm' + k + 'fk']);
-        if (p['wrist' + k]) { delta[ch[2]] = (delta[ch[2]] || 0) + rad(p['wrist' + k]); W = this.fk(delta, hip); }
+        limb(ch, p['arm' + k], point, world['hit' + k], -dir, null, p['arm' + k + 'fk']);
+        if (p['wrist' + k]) { delta[ch[2]] = (delta[ch[2]] || 0) + rad(p['wrist' + k]) * dir; W = this.fk(delta, hip); }
       }
       return { G, W, p };
     }
 
     // точки тела на сцене (для попаданий, эффектов)
     point(st, what) {
-      const { G, W } = st;
-      const bone = (i, t = 0.5) => {
-        const b = this.bones[i];
-        const q = [lerp(b.base[0], b.tip[0], t), lerp(b.base[1], b.tip[1], t)];
-        return apply(G, apply(W[i], q));
-      };
+      const { G, W, p } = st;
       const layerCenter = (name) => {
         const l = this.layers.find((x) => x.name === name);
-        const i = this.idx[l.bone];
+        const i = l.bone in this.idx ? this.idx[l.bone] : this.root;
         return apply(G, apply(W[i], [(l.bbox[0] + l.bbox[2]) / 2, (l.bbox[1] + l.bbox[3]) / 2]));
       };
-      if (what === 'head') return layerCenter(this.layers.some((l) => l.name === 'head') ? 'head' : 'body');
+      const has = (n) => this.layers.some((l) => l.name === n);
+      if (what === 'head' || what === 'face' || what === 'top') {
+        const c = layerCenter(has('head') ? 'head' : 'body');
+        const fb = this.faceBox, s = this.scale;
+        if (what === 'top') return [c[0], c[1] - (fb[3] - fb[1]) * s * 0.5 * (p.sy || 1)];
+        if (what === 'head') return c;
+        return [c[0] + (p.face || this.dir) * (fb[2] - fb[0]) * s * 0.32 * (p.sx || 1), c[1] + (fb[3] - fb[1]) * s * 0.08];
+      }
       if (what === 'body') return layerCenter('body');
       if (what === 'hat') return layerCenter('hat');
-      if (what === 'handF' && this.arm.F) return bone(this.arm.F[2], 0.5);
-      if (what === 'footF' && this.leg.F) return bone(this.leg.F[2], 0.5);
+      if (what === 'handF' && this.arm.F) return apply(G, apply(W[this.arm.F[2]], this.bones[this.arm.F[2]].base));
+      if (what === 'handB' && this.arm.B) return apply(G, apply(W[this.arm.B[2]], this.bones[this.arm.B[2]].base));
       return apply(G, this.anchor);
     }
 
     layerMatrix(st, name) {
       const l = this.layers.find((x) => x.name === name);
-      return mul(st.G, st.W[this.idx[l.bone]]);
+      return mul(st.G, st.W[l.bone in this.idx ? this.idx[l.bone] : this.root]);
     }
 
+    // Слои рисуются в порядке рига. Руку можно временно поднять над телом
+    // (zF/zB = 'front') или убрать за всё (= 'back'); only = 'F'/'B' — рисует одну руку
+    // (чтобы бьющая рука легла поверх соперника). look сдвигает глаза и рот к
+    // сопернику и чуть сужает голову — лицо в три четверти.
     draw(ctx, st, cam) {
       const p = st.p;
       const hide = new Set(p.hide || []);
       const pick = { mouth: p.mouth, eyes: p.eyes };
-      for (const l of this.layers) {
-        if (hide.has(l.name)) continue;
-        if (l.sw) {
-          const sw = this.rig.switches.find((s) => s.name === l.sw);
-          const want = pick[l.sw] || sw.default;
-          const has = sw.children.some((c) => c.name === want);
-          if (l.name !== (has ? want : sw.default)) continue;
+      const look = p.look || 0;
+      const fb = this.faceBox;
+      const fw = fb[2] - fb[0];
+      const bigHead = this.layers.some((l) => l.name === 'head');
+      const shift = look * this.dir * fw * (bigHead ? 0.07 : 0.1);
+      const narrow = bigHead ? 1 - 0.06 * Math.abs(look) : 1;
+      const fcx = (fb[0] + fb[2]) / 2;
+      const visible = this.layers.filter((l) => {
+        if (hide.has(l.name)) return false;
+        if (p.only && !this.armLayers[p.only].has(l.name)) return false;
+        if (!l.sw) return true;
+        const sw = this.rig.switches.find((s) => s.name === l.sw);
+        const want = pick[l.sw] || sw.default;
+        return l.name === (sw.children.some((c) => c.name === want) ? want : sw.default);
+      });
+      const zOf = (l) => {
+        for (const k of ['F', 'B']) {
+          if (this.armLayers[k].has(l.name)) return p['z' + k] === 'front' ? 1 : p['z' + k] === 'back' ? -1 : 0;
         }
+        return 0;
+      };
+      const order = [...visible.filter((l) => zOf(l) < 0), ...visible.filter((l) => zOf(l) === 0),
+        ...visible.filter((l) => zOf(l) > 0)];
+      ctx.globalAlpha = p.alpha === undefined ? 1 : p.alpha;
+      for (const l of order) {
         const i = l.bone in this.idx ? this.idx[l.bone] : this.root;
-        const M = mul(cam, mul(st.G, st.W[i]));
+        let M = mul(cam, mul(st.G, st.W[i]));
+        if (l.sw === 'mouth' || l.sw === 'eyes' || l.name === 'eye') M = mul(M, T(shift, 0));
+        else if (narrow !== 1 && l.name === 'head') M = mul(M, mul(T(fcx, 0), mul(S(narrow, 1), T(-fcx, 0))));
         ctx.setTransform(M[0], M[1], M[2], M[3], M[4], M[5]);
-        ctx.globalAlpha = p.alpha === undefined ? 1 : p.alpha;
         ctx.drawImage(l.img.canvas, l.img.x, l.img.y, l.img.w, l.img.h);
       }
       ctx.globalAlpha = 1;
+      ctx.setTransform(1, 0, 0, 1, 0, 0);
     }
   }
 
@@ -322,91 +378,52 @@ const E = (() => {
     in: (t) => t * t * t,
     in2: (t) => t * t,
     out: (t) => 1 - Math.pow(1 - t, 3),
+    out2: (t) => 1 - (1 - t) * (1 - t),
     back: (t) => { const c = 1.70158; return 1 + (c + 1) * Math.pow(t - 1, 3) + c * Math.pow(t - 1, 2); },
     step: (t) => (t >= 1 ? 1 : 0),
   };
 
-  // Дорожка ключей: add(t, {свойство: значение}, ease). Значение держится до
-  // следующего ключа этого свойства; числа и массивы плавно, строки — ступенькой.
+  // Дорожка ключей. add(t, {свойство: значение}, ease, dur):
+  //   dur — за сколько секунд до t начинается переход; до этого держится прежнее
+  //   значение (поза-на-позу, без дрейфа). Без dur переход идёт от прошлого ключа.
+  // Числа и массивы меняются плавно, строки и прочее — ступенькой в момент t.
   class Track {
     constructor() { this.keys = {}; }
-    add(t, props, ease = 'io') {
-      for (const [k, v] of Object.entries(props)) (this.keys[k] = this.keys[k] || []).push([t, v, ease]);
+    add(t, props, ease = 'io', dur = null) {
+      for (const [k, v] of Object.entries(props)) {
+        const ks = (this.keys[k] = this.keys[k] || []);
+        ks.push([t, v, ease, dur]);
+        ks.sorted = false;
+      }
       return this;
     }
     get(k, t, def) {
       const ks = this.keys[k];
       if (!ks) return def;
       if (!ks.sorted) { ks.sort((a, b) => a[0] - b[0]); ks.sorted = true; }
-      // до первого ключа — значение по умолчанию (если задано), иначе первый ключ
       if (t < ks[0][0]) return def !== undefined ? def : ks[0][1];
       for (let i = 1; i < ks.length; i++) {
         if (t < ks[i][0]) {
-          const [t0, v0] = ks[i - 1], [t1, v1, e] = ks[i];
-          const u = EASE[e]((t - t0) / (t1 - t0));
+          const [t0, v0] = ks[i - 1], [t1, v1, e, dur] = ks[i];
+          const start = dur === null || dur === undefined ? t0 : Math.max(t0, t1 - dur);
+          if (t < start) return v0;
+          const u = EASE[e]((t - start) / (t1 - start));
           if (typeof v0 === 'number' && typeof v1 === 'number') return lerp(v0, v1, u);
-          if (Array.isArray(v0) && Array.isArray(v1) && v0.length === v1.length) return v0.map((x, j) => lerp(x, v1[j], u));
+          if (Array.isArray(v0) && Array.isArray(v1) && v0.length === v1.length &&
+            v0.every((x) => typeof x === 'number') && v1.every((x) => typeof x === 'number')) {
+            return v0.map((x, j) => lerp(x, v1[j], u));
+          }
           return u >= 1 ? v1 : v0;
         }
       }
       return ks[ks.length - 1][1];
     }
-    sample(t, names, defs) {
+    sample(t, defs) {
       const out = { ...defs };
-      for (const k of Object.keys(this.keys)) if (!names || names.includes(k)) out[k] = this.get(k, t, out[k]);
+      for (const k of Object.keys(this.keys)) out[k] = this.get(k, t, out[k]);
       return out;
     }
   }
 
-  // ---------------------------------------------------------------- пиксельный шрифт
-  // Буквы 5×7, как в надписях «FIGHT» / «WIN» у референсов: белые блоки с чёрной обводкой.
-  const GLYPHS = {
-    A: ['01110', '10001', '10001', '11111', '10001', '10001', '10001'],
-    B: ['11110', '10001', '10001', '11110', '10001', '10001', '11110'],
-    C: ['01111', '10000', '10000', '10000', '10000', '10000', '01111'],
-    E: ['11111', '10000', '10000', '11110', '10000', '10000', '11111'],
-    F: ['11111', '10000', '10000', '11110', '10000', '10000', '10000'],
-    G: ['01111', '10000', '10000', '10011', '10001', '10001', '01111'],
-    H: ['10001', '10001', '10001', '11111', '10001', '10001', '10001'],
-    I: ['11111', '00100', '00100', '00100', '00100', '00100', '11111'],
-    K: ['10001', '10010', '10100', '11000', '10100', '10010', '10001'],
-    L: ['10000', '10000', '10000', '10000', '10000', '10000', '11111'],
-    N: ['10001', '11001', '10101', '10011', '10001', '10001', '10001'],
-    O: ['01110', '10001', '10001', '10001', '10001', '10001', '01110'],
-    R: ['11110', '10001', '10001', '11110', '10100', '10010', '10001'],
-    T: ['11111', '00100', '00100', '00100', '00100', '00100', '00100'],
-    W: ['10001', '10001', '10001', '10101', '10101', '11011', '10001'],
-    '1': ['00100', '01100', '10100', '00100', '00100', '00100', '11111'],
-    '2': ['01110', '10001', '00001', '00110', '01000', '10000', '11111'],
-    '3': ['11110', '00001', '00001', '01110', '00001', '00001', '11110'],
-    '!': ['00100', '00100', '00100', '00100', '00100', '00000', '00100'],
-    '.': ['00000', '00000', '00000', '00000', '00000', '00000', '00100'],
-    ' ': ['00000', '00000', '00000', '00000', '00000', '00000', '00000'],
-  };
-
-  function pixelText(ctx, text, cx, cy, px, opts = {}) {
-    const chars = [...text.toUpperCase()];
-    const gw = 5, gap = 1;
-    const W = (chars.length * (gw + gap) - gap) * px, H = 7 * px;
-    const x0 = cx - W / 2, y0 = cy - H / 2;
-    const cells = [];
-    chars.forEach((ch, n) => {
-      const g = GLYPHS[ch] || GLYPHS[' '];
-      g.forEach((row, y) => [...row].forEach((b, x) => {
-        if (b === '1') cells.push([x0 + (n * (gw + gap) + x) * px, y0 + y * px]);
-      }));
-    });
-    const ol = opts.outline || px * 0.42;
-    const r = px * 0.28;
-    const rect = (x, y, w, h, rr) => { ctx.beginPath(); ctx.roundRect(x, y, w, h, rr); ctx.fill(); };
-    ctx.save();
-    ctx.fillStyle = '#111';
-    for (const [x, y] of cells) rect(x - ol, y - ol, px + 2 * ol, px + 2 * ol, r + ol * 0.6);
-    // белые клетки вплотную, без щелей — буква сплошная
-    ctx.fillStyle = opts.color || '#fff';
-    for (const [x, y] of cells) ctx.fillRect(x - 0.5, y - 0.5, px + 1, px + 1);
-    ctx.restore();
-  }
-
-  return { mul, apply, inv, T, R, S, rad, lerp, clamp, loadRig, Character, Track, EASE, pixelText };
+  return { mul, apply, inv, T, R, S, I, rad, lerp, clamp, loadRig, Character, Track, EASE };
 })();
