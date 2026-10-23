@@ -1,0 +1,990 @@
+{
+ "name": "All verity color",
+ "source": "moho/All verity color.moho",
+ "canvas": {
+  "width": 711,
+  "height": 2036
+ },
+ "moho_frame": {
+  "width": 2000,
+  "height": 2000,
+  "offset": [
+   672,
+   -13
+  ],
+  "note": "пиксель кадра Moho = пиксель холста + offset; 1 единица Moho = 1000 px"
+ },
+ "bones": [
+  {
+   "index": 0,
+   "name": "B1",
+   "parent": null,
+   "base": [
+    375.8,
+    1228.0
+   ],
+   "tip": [
+    934.7,
+    1225.3
+   ],
+   "angle_deg": -0.28,
+   "length_px": 558.8,
+   "strength": 0.0,
+   "drives": []
+  },
+  {
+   "index": 1,
+   "name": "B2",
+   "parent": "B1",
+   "base": [
+    375.8,
+    1228.0
+   ],
+   "tip": [
+    359.9,
+    996.6
+   ],
+   "angle_deg": -93.93,
+   "length_px": 231.9,
+   "strength": 0.0,
+   "drives": [
+    "hip"
+   ]
+  },
+  {
+   "index": 2,
+   "name": "B3",
+   "parent": "B2",
+   "base": [
+    359.9,
+    996.6
+   ],
+   "tip": [
+    423.5,
+    1001.9
+   ],
+   "angle_deg": 4.76,
+   "length_px": 63.8,
+   "strength": 0.0,
+   "drives": []
+  },
+  {
+   "index": 3,
+   "name": "B4",
+   "parent": "B3",
+   "base": [
+    359.9,
+    996.6
+   ],
+   "tip": [
+    352.9,
+    675.2
+   ],
+   "angle_deg": -91.26,
+   "length_px": 321.5,
+   "strength": 0.0,
+   "drives": [
+    "body"
+   ]
+  },
+  {
+   "index": 4,
+   "name": "B5",
+   "parent": "B4",
+   "base": [
+    352.9,
+    675.2
+   ],
+   "tip": [
+    328.1,
+    578.1
+   ],
+   "angle_deg": -104.28,
+   "length_px": 100.2,
+   "strength": 0.0,
+   "drives": [
+    "neck"
+   ]
+  },
+  {
+   "index": 5,
+   "name": "B6",
+   "parent": "B5",
+   "base": [
+    274.7,
+    616.2
+   ],
+   "tip": [
+    277.4,
+    28.4
+   ],
+   "angle_deg": -89.73,
+   "length_px": 587.8,
+   "strength": 0.0,
+   "drives": [
+    "head"
+   ]
+  },
+  {
+   "index": 6,
+   "name": "B7",
+   "parent": "B6",
+   "base": [
+    -51.0,
+    218.8
+   ],
+   "tip": [
+    -387.6,
+    205.0
+   ],
+   "angle_deg": -177.65,
+   "length_px": 336.9,
+   "strength": 0.0,
+   "drives": [
+    "mouth/mouth",
+    "mouth/smile normal",
+    "mouth/theeth smile",
+    "mouth/happy with theeth",
+    "mouth/puzzlement",
+    "mouth/sad",
+    "mouth/happy - spittle",
+    "mouth/mini smile",
+    "mouth/excited",
+    "mouth/happy open mouth",
+    "mouth/Throw up",
+    "mouth/angry theeth"
+   ]
+  },
+  {
+   "index": 7,
+   "name": "B8",
+   "parent": "B7",
+   "base": [
+    366.5,
+    418.4
+   ],
+   "tip": [
+    115.4,
+    410.7
+   ],
+   "angle_deg": -178.25,
+   "length_px": 251.2,
+   "strength": 0.0,
+   "drives": []
+  },
+  {
+   "index": 8,
+   "name": "B9",
+   "parent": "B7",
+   "base": [
+    15.8,
+    125.2
+   ],
+   "tip": [
+    15.8,
+    125.2
+   ],
+   "angle_deg": 0.0,
+   "length_px": 0.0,
+   "strength": 0.0,
+   "drives": [
+    "eye"
+   ]
+  },
+  {
+   "index": 9,
+   "name": "B10",
+   "parent": "B4",
+   "base": [
+    548.5,
+    691.5
+   ],
+   "tip": [
+    626.8,
+    1104.1
+   ],
+   "angle_deg": 79.25,
+   "length_px": 420.0,
+   "strength": 0.0,
+   "drives": [
+    "hand right 1"
+   ]
+  },
+  {
+   "index": 10,
+   "name": "B11",
+   "parent": "B10",
+   "base": [
+    626.8,
+    1104.1
+   ],
+   "tip": [
+    611.1,
+    1448.8
+   ],
+   "angle_deg": 92.6,
+   "length_px": 345.1,
+   "strength": 0.0,
+   "drives": [
+    "hand right 2"
+   ]
+  },
+  {
+   "index": 11,
+   "name": "B12",
+   "parent": "B11",
+   "base": [
+    611.1,
+    1448.8
+   ],
+   "tip": [
+    602.0,
+    1659.1
+   ],
+   "angle_deg": 92.49,
+   "length_px": 210.4,
+   "strength": 0.0,
+   "drives": [
+    "hand right 3"
+   ]
+  },
+  {
+   "index": 12,
+   "name": "B13",
+   "parent": "B4",
+   "base": [
+    220.7,
+    700.2
+   ],
+   "tip": [
+    139.1,
+    1108.2
+   ],
+   "angle_deg": 101.31,
+   "length_px": 416.1,
+   "strength": 0.0,
+   "drives": [
+    "hand left 1"
+   ]
+  },
+  {
+   "index": 13,
+   "name": "B14",
+   "parent": "B13",
+   "base": [
+    139.1,
+    1108.2
+   ],
+   "tip": [
+    122.8,
+    1451.0
+   ],
+   "angle_deg": 92.73,
+   "length_px": 343.1,
+   "strength": 0.0,
+   "drives": [
+    "hand left 2"
+   ]
+  },
+  {
+   "index": 14,
+   "name": "B15",
+   "parent": "B14",
+   "base": [
+    122.8,
+    1451.0
+   ],
+   "tip": [
+    130.9,
+    1675.4
+   ],
+   "angle_deg": 87.92,
+   "length_px": 224.6,
+   "strength": 0.0,
+   "drives": [
+    "hand left 3"
+   ]
+  },
+  {
+   "index": 15,
+   "name": "B18",
+   "parent": "B1",
+   "base": [
+    491.5,
+    1248.0
+   ],
+   "tip": [
+    439.8,
+    1587.3
+   ],
+   "angle_deg": 98.67,
+   "length_px": 343.3,
+   "strength": 0.0,
+   "drives": [
+    "leg right 1"
+   ]
+  },
+  {
+   "index": 16,
+   "name": "B19",
+   "parent": "B18",
+   "base": [
+    439.8,
+    1587.3
+   ],
+   "tip": [
+    528.2,
+    1922.6
+   ],
+   "angle_deg": 75.23,
+   "length_px": 346.7,
+   "strength": 0.0,
+   "drives": [
+    "leg right 2"
+   ]
+  },
+  {
+   "index": 17,
+   "name": "B20",
+   "parent": "B19",
+   "base": [
+    528.2,
+    1922.6
+   ],
+   "tip": [
+    328.0,
+    1974.3
+   ],
+   "angle_deg": 165.52,
+   "length_px": 206.7,
+   "strength": 0.0,
+   "drives": [
+    "leg right 3"
+   ]
+  },
+  {
+   "index": 18,
+   "name": "B21",
+   "parent": "B1",
+   "base": [
+    294.7,
+    1225.3
+   ],
+   "tip": [
+    221.3,
+    1552.3
+   ],
+   "angle_deg": 102.65,
+   "length_px": 335.1,
+   "strength": 0.0,
+   "drives": [
+    "leg left 1"
+   ]
+  },
+  {
+   "index": 19,
+   "name": "B22",
+   "parent": "B21",
+   "base": [
+    221.3,
+    1552.3
+   ],
+   "tip": [
+    281.3,
+    1879.2
+   ],
+   "angle_deg": 79.59,
+   "length_px": 332.4,
+   "strength": 0.0,
+   "drives": [
+    "leg left 2"
+   ]
+  },
+  {
+   "index": 20,
+   "name": "B23",
+   "parent": "B22",
+   "base": [
+    281.3,
+    1879.2
+   ],
+   "tip": [
+    77.8,
+    1927.6
+   ],
+   "angle_deg": 166.63,
+   "length_px": 209.2,
+   "strength": 0.0,
+   "drives": [
+    "leg left 3"
+   ]
+  },
+  {
+   "index": 21,
+   "name": "B24",
+   "parent": null,
+   "base": [
+    528.2,
+    1922.6
+   ],
+   "tip": [
+    528.2,
+    2224.2
+   ],
+   "angle_deg": 90.0,
+   "length_px": 301.6,
+   "strength": 1.0,
+   "drives": []
+  },
+  {
+   "index": 22,
+   "name": "B25",
+   "parent": null,
+   "base": [
+    281.3,
+    1879.2
+   ],
+   "tip": [
+    281.3,
+    2218.6
+   ],
+   "angle_deg": 90.0,
+   "length_px": 339.4,
+   "strength": 1.0,
+   "drives": []
+  }
+ ],
+ "layers": [
+  {
+   "order": 1,
+   "name": "hand left 3",
+   "png": "png/01-hand-left-3.png",
+   "svg": "svg/01-hand-left-3.svg",
+   "bbox": [
+    40.8,
+    1407.1,
+    215.2,
+    1672.2
+   ],
+   "binding": "rigid",
+   "bone": "B15",
+   "pivot": [
+    122.8,
+    1451.0
+   ]
+  },
+  {
+   "order": 2,
+   "name": "hand left 2",
+   "png": "png/02-hand-left-2.png",
+   "svg": "svg/02-hand-left-2.svg",
+   "bbox": [
+    74.9,
+    1065.9,
+    185.0,
+    1448.8
+   ],
+   "binding": "rigid",
+   "bone": "B14",
+   "pivot": [
+    139.1,
+    1108.2
+   ]
+  },
+  {
+   "order": 3,
+   "name": "hand left 1",
+   "png": "png/03-hand-left-1.png",
+   "svg": "svg/03-hand-left-1.svg",
+   "bbox": [
+    89.0,
+    681.4,
+    259.4,
+    1122.7
+   ],
+   "binding": "rigid",
+   "bone": "B13",
+   "pivot": [
+    220.7,
+    700.2
+   ]
+  },
+  {
+   "order": 4,
+   "name": "leg left 3",
+   "png": "png/04-leg-left-3.png",
+   "svg": "svg/04-leg-left-3.svg",
+   "bbox": [
+    54.1,
+    1831.9,
+    338.7,
+    1961.8
+   ],
+   "binding": "rigid",
+   "bone": "B23",
+   "pivot": [
+    281.3,
+    1879.2
+   ]
+  },
+  {
+   "order": 5,
+   "name": "leg left 2",
+   "png": "png/05-leg-left-2.png",
+   "svg": "svg/05-leg-left-2.svg",
+   "bbox": [
+    173.8,
+    1508.2,
+    323.9,
+    1864.9
+   ],
+   "binding": "rigid",
+   "bone": "B22",
+   "pivot": [
+    221.3,
+    1552.3
+   ]
+  },
+  {
+   "order": 6,
+   "name": "leg left 1",
+   "png": "png/06-leg-left-1.png",
+   "svg": "svg/06-leg-left-1.svg",
+   "bbox": [
+    177.2,
+    1203.0,
+    327.7,
+    1560.3
+   ],
+   "binding": "rigid",
+   "bone": "B21",
+   "pivot": [
+    294.7,
+    1225.3
+   ]
+  },
+  {
+   "order": 7,
+   "name": "hip",
+   "png": "png/07-hip.png",
+   "svg": "svg/07-hip.svg",
+   "bbox": [
+    219.7,
+    942.7,
+    554.3,
+    1329.6
+   ],
+   "binding": "rigid",
+   "bone": "B2",
+   "pivot": [
+    375.8,
+    1228.0
+   ]
+  },
+  {
+   "order": 8,
+   "name": "leg right 3",
+   "png": "png/08-leg-right-3.png",
+   "svg": "svg/08-leg-right-3.svg",
+   "bbox": [
+    279.6,
+    1877.5,
+    572.7,
+    2011.1
+   ],
+   "binding": "rigid",
+   "bone": "B20",
+   "pivot": [
+    528.2,
+    1922.6
+   ]
+  },
+  {
+   "order": 9,
+   "name": "leg right 2",
+   "png": "png/09-leg-right-2.png",
+   "svg": "svg/09-leg-right-2.svg",
+   "bbox": [
+    396.1,
+    1552.3,
+    551.5,
+    1922.3
+   ],
+   "binding": "rigid",
+   "bone": "B19",
+   "pivot": [
+    439.8,
+    1587.3
+   ]
+  },
+  {
+   "order": 10,
+   "name": "leg right 1",
+   "png": "png/10-leg-right-1.png",
+   "svg": "svg/10-leg-right-1.svg",
+   "bbox": [
+    386.3,
+    1223.7,
+    535.4,
+    1593.8
+   ],
+   "binding": "rigid",
+   "bone": "B18",
+   "pivot": [
+    491.5,
+    1248.0
+   ]
+  },
+  {
+   "order": 11,
+   "name": "body",
+   "png": "png/11-body.png",
+   "svg": "svg/11-body.svg",
+   "bbox": [
+    153.5,
+    615.6,
+    576.5,
+    1041.1
+   ],
+   "binding": "rigid",
+   "bone": "B4",
+   "pivot": [
+    359.9,
+    996.6
+   ]
+  },
+  {
+   "order": 12,
+   "name": "neck",
+   "png": "png/12-neck.png",
+   "svg": "svg/12-neck.svg",
+   "bbox": [
+    256.6,
+    485.2,
+    423.6,
+    696.7
+   ],
+   "binding": "rigid",
+   "bone": "B5",
+   "pivot": [
+    352.9,
+    675.2
+   ]
+  },
+  {
+   "order": 13,
+   "name": "head",
+   "png": "png/13-head.png",
+   "svg": "svg/13-head.svg",
+   "bbox": [
+    24.6,
+    24.4,
+    507.6,
+    621.5
+   ],
+   "binding": "rigid",
+   "bone": "B6",
+   "pivot": [
+    274.7,
+    616.2
+   ]
+  },
+  {
+   "order": 15,
+   "name": "eye",
+   "png": "png/15-eye.png",
+   "svg": "svg/15-eye.svg",
+   "bbox": [
+    83.1,
+    141.5,
+    401.6,
+    293.4
+   ],
+   "binding": "rigid",
+   "bone": "B9",
+   "pivot": [
+    15.8,
+    125.2
+   ]
+  },
+  {
+   "order": 16,
+   "name": "hand right 3",
+   "png": "png/16-hand-right-3.png",
+   "svg": "svg/16-hand-right-3.svg",
+   "bbox": [
+    509.7,
+    1428.2,
+    686.8,
+    1697.6
+   ],
+   "binding": "rigid",
+   "bone": "B12",
+   "pivot": [
+    611.1,
+    1448.8
+   ]
+  },
+  {
+   "order": 17,
+   "name": "hand right 2",
+   "png": "png/17-hand-right-2.png",
+   "svg": "svg/17-hand-right-2.svg",
+   "bbox": [
+    562.5,
+    1076.3,
+    674.1,
+    1464.1
+   ],
+   "binding": "rigid",
+   "bone": "B11",
+   "pivot": [
+    626.8,
+    1104.1
+   ]
+  },
+  {
+   "order": 18,
+   "name": "hand right 1",
+   "png": "png/18-hand-right-1.png",
+   "svg": "svg/18-hand-right-1.svg",
+   "bbox": [
+    504.8,
+    681.1,
+    671.8,
+    1123.3
+   ],
+   "binding": "rigid",
+   "bone": "B10",
+   "pivot": [
+    548.5,
+    691.5
+   ]
+  }
+ ],
+ "switches": [
+  {
+   "name": "mouth",
+   "order": 14,
+   "default": "mouth",
+   "children": [
+    {
+     "order": 14,
+     "name": "mouth",
+     "png": "png/14-mouth--mouth.png",
+     "svg": "svg/14-mouth--mouth.svg",
+     "bbox": [
+      37.1,
+      279.8,
+      476.8,
+      598.4
+     ],
+     "binding": "rigid",
+     "bone": "B7",
+     "pivot": [
+      -51.0,
+      218.8
+     ]
+    },
+    {
+     "order": 14,
+     "name": "smile normal",
+     "png": "png/14-mouth--smile-normal.png",
+     "svg": "svg/14-mouth--smile-normal.svg",
+     "bbox": [
+      74.5,
+      332.6,
+      416.6,
+      428.8
+     ],
+     "binding": "rigid",
+     "bone": "B7",
+     "pivot": [
+      -51.0,
+      218.8
+     ]
+    },
+    {
+     "order": 14,
+     "name": "theeth smile",
+     "png": "png/14-mouth--theeth-smile.png",
+     "svg": "svg/14-mouth--theeth-smile.svg",
+     "bbox": [
+      33.4,
+      310.8,
+      451.7,
+      490.9
+     ],
+     "binding": "rigid",
+     "bone": "B7",
+     "pivot": [
+      -51.0,
+      218.8
+     ]
+    },
+    {
+     "order": 14,
+     "name": "happy with theeth",
+     "png": "png/14-mouth--happy-with-theeth.png",
+     "svg": "svg/14-mouth--happy-with-theeth.svg",
+     "bbox": [
+      105.4,
+      324.3,
+      391.7,
+      525.7
+     ],
+     "binding": "rigid",
+     "bone": "B7",
+     "pivot": [
+      -51.0,
+      218.8
+     ]
+    },
+    {
+     "order": 14,
+     "name": "puzzlement",
+     "png": "png/14-mouth--puzzlement.png",
+     "svg": "svg/14-mouth--puzzlement.svg",
+     "bbox": [
+      184.4,
+      373.7,
+      354.7,
+      584.4
+     ],
+     "binding": "rigid",
+     "bone": "B7",
+     "pivot": [
+      -51.0,
+      218.8
+     ]
+    },
+    {
+     "order": 14,
+     "name": "sad",
+     "png": "png/14-mouth--sad.png",
+     "svg": "svg/14-mouth--sad.svg",
+     "bbox": [
+      106.2,
+      370.3,
+      381.3,
+      452.0
+     ],
+     "binding": "rigid",
+     "bone": "B7",
+     "pivot": [
+      -51.0,
+      218.8
+     ]
+    },
+    {
+     "order": 14,
+     "name": "happy - spittle",
+     "png": "png/14-mouth--happy-spittle.png",
+     "svg": "svg/14-mouth--happy-spittle.svg",
+     "bbox": [
+      65.9,
+      332.6,
+      420.6,
+      600.1
+     ],
+     "binding": "rigid",
+     "bone": "B7",
+     "pivot": [
+      -51.0,
+      218.8
+     ]
+    },
+    {
+     "order": 14,
+     "name": "mini smile",
+     "png": "png/14-mouth--mini-smile.png",
+     "svg": "svg/14-mouth--mini-smile.svg",
+     "bbox": [
+      180.3,
+      363.9,
+      316.6,
+      437.6
+     ],
+     "binding": "rigid",
+     "bone": "B7",
+     "pivot": [
+      -51.0,
+      218.8
+     ]
+    },
+    {
+     "order": 14,
+     "name": "excited",
+     "png": "png/14-mouth--excited.png",
+     "svg": "svg/14-mouth--excited.svg",
+     "bbox": [
+      86.3,
+      360.9,
+      386.8,
+      422.1
+     ],
+     "binding": "rigid",
+     "bone": "B7",
+     "pivot": [
+      -51.0,
+      218.8
+     ]
+    },
+    {
+     "order": 14,
+     "name": "happy open mouth",
+     "png": "png/14-mouth--happy-open-mouth.png",
+     "svg": "svg/14-mouth--happy-open-mouth.svg",
+     "bbox": [
+      70.1,
+      318.8,
+      401.1,
+      544.2
+     ],
+     "binding": "rigid",
+     "bone": "B7",
+     "pivot": [
+      -51.0,
+      218.8
+     ]
+    },
+    {
+     "order": 14,
+     "name": "Throw up",
+     "png": "png/14-mouth--throw-up.png",
+     "svg": "svg/14-mouth--throw-up.svg",
+     "bbox": [
+      81.1,
+      337.8,
+      382.2,
+      571.7
+     ],
+     "binding": "rigid",
+     "bone": "B7",
+     "pivot": [
+      -51.0,
+      218.8
+     ]
+    },
+    {
+     "order": 14,
+     "name": "angry theeth",
+     "png": "png/14-mouth--angry-theeth.png",
+     "svg": "svg/14-mouth--angry-theeth.svg",
+     "bbox": [
+      89.0,
+      354.3,
+      355.0,
+      505.5
+     ],
+     "binding": "rigid",
+     "bone": "B7",
+     "pivot": [
+      -51.0,
+      218.8
+     ]
+    }
+   ]
+  }
+ ]
+}

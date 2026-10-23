@@ -98,7 +98,8 @@ node tools/render.js                     # PNG ×2 (или: node tools/render.js
 
 # Персонажи из Moho — каждый слой в PNG
 
-Исходники лежат в `moho/*.moho`: риги с костями из Moho. Каждый векторный слой выгружен
+Исходники лежат в `moho/*.moho`: риги с костями из Moho. Картинка-радуга для
+радужного скелета лежит в `moho/Images/`. Каждый векторный слой выгружен
 в отдельный PNG **на общем холсте персонажа**. У всех PNG одного персонажа одинаковый
 размер, а часть нарисована ровно на своём месте. Положите файлы друг на друга по порядку
 номеров, и руки, локти, колени встанут туда же, где они в Moho.
@@ -109,6 +110,7 @@ node tools/render.js                     # PNG ×2 (или: node tools/render.js
 
 | Персонаж | Папка | Холст | Слоёв | Рты | Глаза | Костей |
 |---|---|---|---|---|---|---|
+| <img src="rigs/all-verity-color/preview.png" height="140"> All verity color | `rigs/all-verity-color/` | 711×2036 | 17 | 12 | — | 23 |
 | <img src="rigs/child-verity-big/preview.png" height="140"> child verity big | `rigs/child-verity-big/` | 709×2031 | 18 | 12 | — | 24 |
 | <img src="rigs/child-verity-pink/preview.png" height="100"> child verity pink | `rigs/child-verity-pink/` | 733×946 | 2 | 6 | 3 | 6 |
 | <img src="rigs/fat-verity-small/preview.png" height="100"> fat verity small | `rigs/fat-verity-small/` | 1213×1072 | 1 | 4 | 3 | 4 |
@@ -120,11 +122,15 @@ node tools/render.js                     # PNG ×2 (или: node tools/render.js
 | <img src="rigs/skeleton-verity-small/preview.png" height="100"> skeleton verity small | `rigs/skeleton-verity-small/` | 1266×812 | 1 | 11 | 3 | 6 |
 | <img src="rigs/verity-big-girl/preview.png" height="140"> verity big girl | `rigs/verity-big-girl/` | 734×2045 | 12 | 11 | 3 | 27 |
 
-«Слоёв» — обычные слои без вариантов рта и глаз. У child, lord и skeleton verity big
-глаза — один слой `eye`, без вариантов.
+«Слоёв» — обычные слои без вариантов рта и глаз. У All verity color, child, lord и
+skeleton verity big глаза — один слой `eye`, без вариантов.
 
-**All verity color** (радужный скелет) пока не выгружен. Его радуга — это картинка
-`Снимок экрана 2026-10-23 141923.png`, которой нет в архиве; персонаж придёт отдельно.
+**All verity color** — радужный скелет. В Moho каждая группа (рука, нога, тело, голова)
+закрашена картинкой-радугой через маску. В PNG каждая часть уже радужная, с обводкой:
+заливка части, поверх неё радуга, обрезанная по форме этой части, а сверху линии
+(в Moho у этих слоёв включено «исключить линии из маски»). Верхушка позвоночника в слое
+`hip` выходит за край картинки и осталась исходного цвета, как и в Moho: в собранном
+персонаже её закрывает тело.
 
 ## Что лежит в папке персонажа
 

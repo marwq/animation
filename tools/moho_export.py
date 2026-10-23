@@ -19,6 +19,7 @@ PNG из этих SVG делает tools/render_rigs.js.
 трансформаций слоёв сверены с описанием формата, восстановленным по экспорту
 самого Moho: https://github.com/vinhio/moho2svg (docs/moho-svg-internals.md).
 """
+import base64
 import json
 import math
 import os
@@ -32,7 +33,6 @@ OUT_DIR = os.path.join(ROOT, 'rigs')
 
 PAD = 24            # поля холста вокруг персонажа, px
 TANGENT_BIAS = 0.19  # направление касательной в точке кривой (см. curve_segments)
-SKIP = {'All verity color'}   # радужный вариант: нет картинки-текстуры, придёт отдельно
 
 
 # ------------------------------------------------------------------ каналы
@@ -295,9 +295,64 @@ class Canvas:
         return ((p[0] - self.cx) * self.k + self.W / 2 - self.dx,
                 self.H / 2 - (p[1] - self.cy) * self.k - self.dy)
 
+    def matrix(self):
+        """То же, что px(), в виде аффинной матрицы."""
+        return (self.k, 0.0, 0.0, -self.k,
+                self.W / 2 - self.cx * self.k - self.dx, self.H / 2 + self.cy * self.k - self.dy)
 
-def mesh_svg(L, m, cv):
-    """SVG-элементы векторного слоя (в пикселях холста) и рамка нарисованного."""
+
+# ------------------------------------------------------------------ картинки (ImageLayer)
+class Textures:
+    """Картинки из слоёв-изображений: один <image> в <defs> на документ, дальше <use>."""
+
+    def __init__(self, src):
+        self.base = os.path.dirname(os.path.abspath(src))
+        self.items = {}     # путь -> (id, data URI, ширина, высота)
+
+    def find(self, L):
+        rel = L['image_path'].replace('\\', '/')
+        for cand in (os.path.join(self.base, rel),
+                     os.path.join(self.base, 'Images', os.path.basename(rel))):
+            if os.path.isfile(cand):
+                return cand
+        return None
+
+    def use(self, L, m, cv):
+        """<use> картинки слоя L (матрица m — все трансформации до слоя костей включительно)."""
+        path = self.find(L)
+        if not path:
+            print(f'  ! нет картинки {L["image_path"]} (слой {L["name"]})', file=sys.stderr)
+            return ''
+        if path not in self.items:
+            with open(path, 'rb') as f:
+                raw = f.read()
+            if raw[:8] != b'\x89PNG\r\n\x1a\n':
+                raise SystemExit(f'поддерживаются только PNG: {path}')
+            iw, ih = int.from_bytes(raw[16:20], 'big'), int.from_bytes(raw[20:24], 'big')
+            uri = 'data:image/png;base64,' + base64.b64encode(raw).decode('ascii')
+            self.items[path] = (f'tex{len(self.items)}', uri, iw, ih)
+        tid, _, iw, ih = self.items[path]
+        # пиксель картинки -> слой: картинка занимает ±width/2 × ±height/2 вокруг начала слоя
+        W, H = L['width'], L['height']
+        img = (W / iw, 0.0, 0.0, -H / ih, -W / 2, H / 2)
+        a, b, c, d, e, f = mul(cv.matrix(), mul(m, img))
+        return f'<use href="#{tid}" transform="matrix({a:.5f} {b:.5f} {c:.5f} {d:.5f} {e:.2f} {f:.2f})"/>'
+
+    def defs(self, body):
+        used = [v for v in self.items.values() if f'href="#{v[0]}"' in body]
+        if not used:
+            return ''
+        return '<defs>' + ''.join(f'<image id="{tid}" width="{iw}" height="{ih}" preserveAspectRatio="none" '
+                                  f'href="{uri}"/>' for tid, uri, iw, ih in used) + '</defs>\n'
+
+
+def mesh_svg(L, m, cv, overlay='', uid=''):
+    """SVG-элементы векторного слоя (в пикселях холста) и рамка нарисованного.
+
+    overlay — картинки, которые в Moho обрезаны маской этого слоя (группа с
+    маской «скрыть всё», слой «+ добавить в маску», картинки «по маске»). Маска —
+    заливки слоя; при «исключить линии из маски» линии слоя лежат поверх картинок.
+    """
     mesh = L['mesh']
     to_px = lambda p: cv.px(apply(m, p))
     # ручки строятся в собственных координатах слоя (ось Y вверх, как в Moho),
@@ -313,7 +368,8 @@ def mesh_svg(L, m, cv):
         curves.append(segs)
     # толщина линии в Moho — доля высоты кадра; масштаб слоёв её тоже меняет
     line_k = mat_scale(m) * cv.k * 2
-    out = []
+    out = []            # заливка и линии каждой фигуры по очереди
+    fills, lines, clip = [], [], []
     xs, ys = [], []
 
     def grow(chain, pad):
@@ -335,6 +391,8 @@ def mesh_svg(L, m, cv):
                 op = f' fill-opacity="{fmt(a)}"' if a < 1 else ''
                 d = ''.join(path_d(lp, True) for lp in loops)
                 out.append(f'<path d="{d}" fill="{hexc}"{op} fill-rule="evenodd"/>')
+                fills.append(out[-1])
+                clip.append(f'<path d="{d}" clip-rule="evenodd"/>')
                 for lp in loops:
                     grow(lp, 0)
         if sh['has_outline']:
@@ -349,6 +407,7 @@ def mesh_svg(L, m, cv):
                     w = lw * ws.pop()
                     if w > 0:
                         out.append(f'<path d="{path_d(chain, False)}" {attrs} stroke-width="{fmt(w)}"/>')
+                        lines.append(out[-1])
                         grow(chain, w / 2)
                     continue
                 # линия переменной толщины: режем на короткие куски, у каждого своя толщина
@@ -366,6 +425,13 @@ def mesh_svg(L, m, cv):
                     grow([sg], lw * max(sg['w0'], sg['w1']) / 2)
                 if pieces:
                     out.append(f'<g {attrs}>' + ''.join(pieces) + '</g>')
+                    lines.append(out[-1])
+    if overlay and clip:
+        if not L.get('exclude_lines_from_mask'):
+            print(f'  ! {L["name"]}: линии входят в маску — картинка ляжет и на них', file=sys.stderr)
+            lines, fills = [], out
+        out = (fills + [f'<clipPath id="clip-{uid}">' + ''.join(clip) + '</clipPath>',
+                        f'<g clip-path="url(#clip-{uid})">{overlay}</g>'] + lines)
     bbox = (min(xs), min(ys), max(xs), max(ys)) if xs else None
     return out, bbox
 
@@ -399,20 +465,46 @@ def slug(s):
 
 
 def collect(doc):
-    """Плоский список рисуемых слоёв в порядке отрисовки (снизу вверх)."""
+    """Плоский список рисуемых слоёв в порядке отрисовки (снизу вверх).
+
+    Слои-картинки отдельно не выгружаются: в этих ригах они — текстура, которую
+    маска группы обрезает по векторным слоям. Такие картинки прикладываются к
+    слою-источнику маски (item['overlay']).
+    """
     items = []
     skel = None
 
-    def walk(L, m, path, switch):
+    def walk(L, m, path, switch, overlay=()):
         nonlocal skel
         m = mul(m, layer_matrix(L))
         t = L['type']
         if t == 'BoneLayer' and skel is None:
             skel = {'layer': L, 'matrix': m}
         if t == 'MeshLayer':
-            items.append({'layer': L, 'matrix': m, 'path': path + [L['name']], 'switch': switch})
-        elif t == 'ImageLayer':
-            print(f'  ! пропущен слой-картинка {"/".join(path + [L["name"]])}', file=sys.stderr)
+            items.append({'layer': L, 'matrix': m, 'path': path + [L['name']], 'switch': switch,
+                          'overlay': list(overlay)})
+        elif t == 'ImageLayer' and not overlay_of.get(id(L)):
+            print(f'  ! слой-картинка вне маски пропущен: {"/".join(path + [L["name"]])}', file=sys.stderr)
+        kids = L.get('layers', [])
+        if L.get('group_mask') and t != 'SwitchLayer':
+            # маска группы строится по порядку: картинка «по маске» (0) обрезается
+            # слоями «+ в маску» (2), которые лежат под ней
+            for c in kids:
+                if c['masking'] not in (0, 1, 2):
+                    print(f'  ! режим маски {c["masking"]} не поддержан: {c["name"]}', file=sys.stderr)
+                if c['type'] == 'ImageLayer' and c['masking'] == 0:
+                    overlay_of[id(c)] = True
+            mask_overlays = {}
+            for i, c in enumerate(kids):
+                if c['type'] == 'MeshLayer' and c['masking'] == 2:
+                    mask_overlays[i] = [(k, mul(m, layer_matrix(k))) for k in kids[i + 1:]
+                                        if k['type'] == 'ImageLayer' and k['masking'] == 0]
+                elif c['type'] == 'MeshLayer' and c['masking'] == 0:
+                    print(f'  ! векторный слой по маске не поддержан: {c["name"]}', file=sys.stderr)
+            sub = path if t == 'BoneLayer' else path + [L['name']]
+            for i, c in enumerate(kids):
+                walk(c, m, sub, switch, mask_overlays.get(i, ()))
+            return
         if t == 'SwitchLayer':
             sw = {'layer': L}
             for c in L.get('layers', []):
@@ -422,6 +514,7 @@ def collect(doc):
         for c in L.get('layers', []):
             walk(c, m, sub, switch)
 
+    overlay_of = {}
     for L in doc['layers']:
         walk(L, IDENT, [], None)
     return items, skel
@@ -483,10 +576,11 @@ def binding(L, sw, bones):
     return 'none', None, {}
 
 
-def svg_doc(w, h, body, comment=''):
+def svg_doc(w, h, body, comment='', tex=None):
     c = f'<!-- {comment} -->\n' if comment else ''
+    defs = tex.defs(body) if tex else ''
     return (f'<svg xmlns="http://www.w3.org/2000/svg" width="{w}" height="{h}" viewBox="0 0 {w} {h}">\n'
-            f'{c}{body}\n</svg>\n')
+            f'{c}{defs}{body}\n</svg>\n')
 
 
 def bones_svg(bones):
@@ -522,6 +616,8 @@ def variants_svg(switches, recs, bg):
         fade = lambda parts: f'<g opacity=".4">{"".join(parts)}</g>' if parts else ''
         for c in kids:
             body = fade(under) + ''.join(''.join(r['svg']) for r in recs if r['rec'] is c) + fade(over)
+            # у каждой плитки свои id масок, чтобы они не повторялись в документе
+            body = body.replace('"clip-', f'"clip-t{len(tiles)}-').replace('#clip-', f'#clip-t{len(tiles)}-')
             tiles.append((sw['name'], c['name'], c['name'] == sw['default'], vb, body))
     if not tiles:
         return None
@@ -547,11 +643,16 @@ def export(src):
     with zipfile.ZipFile(src) as z:
         doc = json.loads(z.read('Project.mohoproj').decode('utf-8'))
     cv = Canvas(doc)
+    tex = Textures(src)
     items, skel = collect(doc)
 
+    def draw(i, it):
+        overlay = ''.join(tex.use(img, im, cv) for img, im in it['overlay'])
+        return mesh_svg(it['layer'], it['matrix'], cv, overlay, str(i))
+
     # 1) геометрия всех слоёв в пикселях кадра Moho; пустые слои не нужны
-    for it in items:
-        it['svg'], it['bbox'] = mesh_svg(it['layer'], it['matrix'], cv)
+    for i, it in enumerate(items):
+        it['svg'], it['bbox'] = draw(i, it)
     for it in items:
         if not it['svg']:
             print(f'  пустой слой пропущен: {"/".join(it["path"])}')
@@ -564,8 +665,8 @@ def export(src):
     # 2) холст персонажа = рамка всех слоёв (включая все рты/глаза) + поля
     cv.dx, cv.dy = x0, y0
     cw, chh = x1 - x0, y1 - y0
-    for it in items:
-        it['svg'], it['bbox'] = mesh_svg(it['layer'], it['matrix'], cv)
+    for i, it in enumerate(items):
+        it['svg'], it['bbox'] = draw(i, it)
 
     out = os.path.join(OUT_DIR, slug(name))
     svg_dir = os.path.join(out, 'svg')
@@ -601,7 +702,7 @@ def export(src):
                 f'{sw["layer"]["name"]}/{L["name"]}' if sw else L['name'])
         rec.update(extra)
         with open(os.path.join(svg_dir, fn + '.svg'), 'w', encoding='utf-8') as f:
-            f.write(svg_doc(cw, chh, '\n'.join(it['svg']), f'{name} / {"/".join(it["path"])}'))
+            f.write(svg_doc(cw, chh, '\n'.join(it['svg']), f'{name} / {"/".join(it["path"])}', tex))
         if sw:
             if not switches or switches[-1]['_src'] is not sw:
                 sk = sw['layer']['switch_keys']
@@ -623,14 +724,14 @@ def export(src):
     shown = ''.join(''.join(r['svg']) for r in recs
                     if r['switch'] is None or r['rec']['name'] == r['switch']['default'])
     with open(os.path.join(out, 'preview.svg'), 'w', encoding='utf-8') as f:
-        f.write(svg_doc(cw, chh, f'<rect width="{cw}" height="{chh}" fill="{bg}"/>' + shown, name))
+        f.write(svg_doc(cw, chh, f'<rect width="{cw}" height="{chh}" fill="{bg}"/>' + shown, name, tex))
     with open(os.path.join(out, 'bones.svg'), 'w', encoding='utf-8') as f:
         f.write(svg_doc(cw, chh, f'<rect width="{cw}" height="{chh}" fill="{bg}"/>'
-                        f'<g opacity=".55">{shown}</g>' + bones_svg(bones), name + ' — кости'))
+                        f'<g opacity=".55">{shown}</g>' + bones_svg(bones), name + ' — кости', tex))
     var = variants_svg(switches, recs, bg)
     if var:
         with open(os.path.join(out, 'variants.svg'), 'w', encoding='utf-8') as f:
-            f.write(svg_doc(var[0], var[1], var[2], name + ' — варианты switch-слоёв'))
+            f.write(svg_doc(var[0], var[1], var[2], name + ' — варианты switch-слоёв', tex))
     elif os.path.exists(os.path.join(out, 'variants.svg')):
         os.remove(os.path.join(out, 'variants.svg'))
 
@@ -657,9 +758,6 @@ def export(src):
 def main(args):
     srcs = args or sorted(os.path.join(SRC_DIR, f) for f in os.listdir(SRC_DIR) if f.endswith('.moho'))
     for src in srcs:
-        if os.path.splitext(os.path.basename(src))[0] in SKIP and not args:
-            print(f'пропуск: {os.path.basename(src)}')
-            continue
         export(src)
 
 
