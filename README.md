@@ -96,36 +96,45 @@ node tools/render.js                     # PNG ×2 (или: node tools/render.js
 
 ## Фоны Minecraft
 
-Два квадратных фона 1080×1080 в стиле роликов toonz CRAFT, отрендерены в Blender.
-Камера на высоте глаз и смотрит строго прямо: вертикали ровные, без взгляда снизу.
+Квадратные картинки 1080×1080, отрендерены в Blender. Камера на высоте глаз и смотрит
+строго прямо: вертикали ровные, без взгляда снизу.
 
-| Файл | Кадр |
+| Файл | Что на картинке |
 |---|---|
-| `backgrounds/field/field.png` | чистое поле с цветами, сзади деревья |
+| `backgrounds/field/field.png` | поле с цветами, сзади деревья — в стиле роликов toonz CRAFT |
 | `backgrounds/field/portal.png` | портал в Незер посередине того же поля; внутри рамки пусто |
-| `backgrounds/field/field_toon.png`, `portal_toon.png` | те же кадры в рисованном стиле, как персонажи: толстая чёрная обводка, плоские сочные цвета, одна тень |
+| `backgrounds/field/field_toon.png` | поле в рисованном стиле |
+| `backgrounds/field/portal_toon.png` | горящий портал в рисованном стиле: внутри фиолетовое пламя, вокруг свечение |
+| `backgrounds/nether/nether_toon.png` | Незер в рисованном стиле: земля из незерака, огонь, лужа и река лавы, вдали скалы с лавопадами |
+| `backgrounds/grass/grass_toon.png` | только трава Minecraft в рисованном стиле, фон прозрачный — слой поверх фона |
+
+Рисованный стиль — как у персонажей: толстая чёрная обводка, плоские сочные цвета и одна
+тень. Обводка вблизи толще, вдали тоньше.
 
 ### Как пересобрать
 
 ```bash
-# нужен Blender 4.2+ (без аддонов); на процессоре ~3,5 мин на кадр
-blender -b --factory-startup -P tools/mc_field.py -- --shot field
-blender -b --factory-startup -P tools/mc_field.py -- --shot portal
-blender -b --factory-startup -P tools/mc_field.py -- --shot field --style toon   # ~1 мин
+# нужен Blender 4.2+ (без аддонов); на процессоре ~3,5 мин на кадр, рисованный — ~1 мин
+blender -b --factory-startup -P tools/mc_scene.py -- --shot field
+blender -b --factory-startup -P tools/mc_scene.py -- --shot portal
+blender -b --factory-startup -P tools/mc_scene.py -- --shot field --style toon
+blender -b --factory-startup -P tools/mc_scene.py -- --shot portal --style toon
+blender -b --factory-startup -P tools/mc_scene.py -- --shot nether --style toon
+python3 tools/mc_grass.py                       # трава, нужен Pillow
 # черновик за полминуты: ... --scale 0.4 --samples 24 --out /tmp/draft.png
 ```
 
-Камеры, солнце, цвет травы и неба, сочность, палитра и обводка рисованного стиля
-(`TOON…`) — константы в начале `tools/mc_field.py`.
+Камеры, солнце, цвета, сочность, палитра и обводка рисованного стиля (`TOON…`), рельеф
+Незера и лавопады (`NETHER_FALLS`) — константы в `tools/mc_scene.py`.
 
 ### Текстуры
 
 Картинки отрендерены с текстурами Minecraft 1.21.4 (из официального `client.jar`).
-Их нет в репозитории: скрипт берёт их из `backgrounds/textures/minecraft/`, а эта папка
+Их нет в репозитории: скрипты берут их из `backgrounds/textures/minecraft/`, а эта папка
 в `.gitignore`. Чтобы её заполнить, распакуй `assets/minecraft/textures/block` из
 `.minecraft/versions/<версия>/<версия>.jar` и положи туда файлы с теми же именами,
 что в `backgrounds/textures/pixel-perfection/`.
 
-Без этой папки скрипт берёт свободные текстуры Pixel Perfection (XSSheep,
+Без этой папки скрипты берут свободные текстуры Pixel Perfection (XSSheep,
 [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/), из игры
 [Mineclonia](https://codeberg.org/mineclonia/mineclonia)) из `backgrounds/textures/pixel-perfection/`.
