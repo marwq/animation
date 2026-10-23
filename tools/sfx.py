@@ -382,6 +382,27 @@ def s_zap(seed=23, **_):
     return norm(0.8 * norm(crackle) + 0.25 * lowpass(buzz, 1500) + norm(boom), 0.95)
 
 
+def s_splash(seed=24, **_):
+    """Шлёпнулся в грязь: тяжёлый мокрый шлепок и бульканье."""
+    d = 0.9
+    thud = osc(glide(110, 45, d), d) * decay(d, 0.12)
+    wet = lowpass2(noise(d, seed), glide(2500, 300, d)) * decay(d, 0.18, 0.003)
+    x = np.zeros(nsamp(d))
+    for i, t0 in enumerate([0.12, 0.22, 0.35, 0.5]):
+        put(x, 0.5 * osc(glide(300 + 80 * i, 700, 0.06), 0.06) * bell(0.06, 0.3), t0)
+    return norm(norm(thud) + 0.9 * norm(wet) + 0.6 * x, 0.9)
+
+
+def s_creak(dur=1.0, **_):
+    """Натянутая верёвка: скрип."""
+    d = max(0.3, dur)
+    t = tt(d)
+    f = 240 * (1 + 0.15 * np.sin(TAU * 3 * t))
+    chop = 0.5 + 0.5 * np.sign(np.sin(TAU * 35 * t))
+    x = lowpass(osc(f, d, 'saw'), 1800) * chop
+    return norm(x * bell(d, 0.5), 0.35)
+
+
 # ---------------------------------------------------------------- злость, сила
 def s_anger(seed=10, dur=1.0, **_):
     """Жилка и пар: шипение и рычание."""
@@ -517,7 +538,7 @@ def write_wav(path, st):
 def demo():
     cues, t = [], 0.3
     for k in SOUNDS:
-        cues.append({'t': t, 'kind': k, 'dur': 1.2 if k in ('dizzy', 'gust', 'anger', 'whirr', 'suck', 'inflate', 'rain') else 0})
+        cues.append({'t': t, 'kind': k, 'dur': 1.2 if k in ('dizzy', 'gust', 'anger', 'whirr', 'suck', 'inflate', 'rain', 'creak') else 0})
         t += 1.8 if k in ('dizzy', 'gust', 'slam', 'love') else 1.0
     return {'duration': t + 0.5, 'cues': cues}
 

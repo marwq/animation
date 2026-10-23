@@ -421,7 +421,7 @@ const FX = (() => {
   }
 
   // жвачка лопнула и облепила: розовая клякса с потёками; s — ширина
-  function gumSplat(ctx, x, y, s, seed = 3) {
+  function gumSplat(ctx, x, y, s, seed = 3, fill = '#ff6ec7', line = '#7a1050') {
     if (s <= 1) return;
     const r = rng(seed);
     ctx.save();
@@ -434,12 +434,12 @@ const FX = (() => {
       i ? ctx.lineTo(px, py) : ctx.moveTo(px, py);
     }
     ctx.closePath();
-    ctx.fillStyle = '#ff6ec7'; ctx.fill();
-    ctx.lineJoin = 'round'; ctx.lineWidth = Math.max(3, s * 0.03); ctx.strokeStyle = '#7a1050'; ctx.stroke();
+    ctx.fillStyle = fill; ctx.fill();
+    ctx.lineJoin = 'round'; ctx.lineWidth = Math.max(3, s * 0.03); ctx.strokeStyle = line; ctx.stroke();
     for (let i = 0; i < 3; i++) {                                     // потёки вниз
       const dx = (r() - 0.5) * s * 0.6, len = s * (0.2 + r() * 0.25);
       ctx.beginPath(); ctx.ellipse(dx, s * 0.35 + len * 0.5, s * 0.05, len * 0.5, 0, 0, TAU);
-      ctx.fillStyle = '#ff6ec7'; ctx.fill(); ctx.stroke();
+      ctx.fillStyle = fill; ctx.fill(); ctx.stroke();
     }
     ctx.beginPath(); ctx.ellipse(-s * 0.15, -s * 0.15, s * 0.08, s * 0.05, -0.5, 0, TAU);
     ctx.fillStyle = 'rgba(255,255,255,0.8)'; ctx.fill();
@@ -521,6 +521,48 @@ const FX = (() => {
     ctx.restore();
   }
 
+  // грязевая лужа: тёмно-коричневая, с пузырями; t — секунды
+  function mudPit(ctx, x, y, w, t) {
+    ctx.save();
+    ctx.beginPath(); ctx.ellipse(x, y, w / 2, w * 0.11, 0, 0, TAU);
+    ctx.fillStyle = '#5b3a1a'; ctx.fill(); ctx.lineWidth = 5; ctx.strokeStyle = '#2a170a'; ctx.stroke();
+    ctx.beginPath(); ctx.ellipse(x - w * 0.12, y - w * 0.025, w * 0.22, w * 0.03, 0, 0, TAU);
+    ctx.fillStyle = '#7a5129'; ctx.fill();
+    for (let i = 0; i < 4; i++) {                                     // пузыри то надуваются, то лопаются
+      const u = (t * 0.8 + i * 0.27) % 1, bx = x + (i - 1.5) * w * 0.2, r = 4 + 10 * Math.sin(Math.PI * u);
+      ctx.beginPath(); ctx.arc(bx, y - 4, r, Math.PI, 0); ctx.fillStyle = '#6b4522'; ctx.fill();
+      ctx.lineWidth = 2.5; ctx.strokeStyle = '#2a170a'; ctx.stroke();
+    }
+    ctx.restore();
+  }
+
+  // брызги грязи веером вверх; life 0..1
+  function mudSplash(ctx, x, y, life, size = 1, seed = 5) {
+    if (life < 0 || life > 1) return;
+    const r = rng(seed);
+    for (let i = 0; i < 16; i++) {
+      const a = -Math.PI * (0.1 + 0.8 * r()), sp = (160 + r() * 260) * size;
+      const px = x + Math.cos(a) * sp * life, py = y + Math.sin(a) * sp * life + 700 * life * life * size;
+      const s = (10 + r() * 14) * size * (1 - 0.4 * life);
+      if (py > y + 16) continue;                                      // упала обратно — в лужу
+      ctx.save(); ctx.globalAlpha = 1 - life * 0.5;
+      ctx.beginPath(); ctx.arc(px, py, s, 0, TAU); ctx.fillStyle = '#5b3a1a'; ctx.fill();
+      ctx.lineWidth = 2.5; ctx.strokeStyle = '#2a170a'; ctx.stroke(); ctx.restore();
+    }
+  }
+
+  // верёвка: от a к b, sag — провис (0 — натянута)
+  function rope(ctx, a, b, sag = 0) {
+    ctx.save();
+    ctx.lineCap = 'round';
+    const mx = (a[0] + b[0]) / 2, my = (a[1] + b[1]) / 2 + sag;
+    for (const [w, c] of [[11, '#3a2410'], [7, '#d9b56b']]) {
+      ctx.beginPath(); ctx.moveTo(a[0], a[1]); ctx.quadraticCurveTo(mx, my, b[0], b[1]);
+      ctx.lineWidth = w; ctx.strokeStyle = c; ctx.stroke();
+    }
+    ctx.restore();
+  }
+
   // банановая кожура (лежит на траве): s — ширина, rot — поворот
   function banana(ctx, x, y, s = 90, rot = 0) {
     ctx.save();
@@ -598,5 +640,6 @@ const FX = (() => {
   }
 
   return { rng, background, cloud, shadow, spark, dust, smoke, flash, rays, vein, steam, sweat, stars, twinkle, whoosh, puff,
-    heart, hearts, wind, banana, giftBox, suck, drool, tree, apple, bubble, gumSplat, rainCloud, rain, lightning, puddle, seesaw };
+    heart, hearts, wind, banana, giftBox, suck, drool, tree, apple, bubble, gumSplat, rainCloud, rain, lightning, puddle, seesaw,
+    mudPit, mudSplash, rope };
 })();
