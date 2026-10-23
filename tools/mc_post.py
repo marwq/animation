@@ -61,6 +61,9 @@ def main(d):
     img = None
     for name in meta['order']:
         layer = load(os.path.join(d, name + '.png'))
+        if (layer[..., 3] == 0).any():
+            layer[layer[..., 3] == 0] = 0        # пустые пиксели — нули: файл меньше
+            save(layer, os.path.join(d, name + '.png'))
         img = layer if img is None else over(img, layer)
         if name == 'portal':
             img[..., :3] = np.clip(img[..., :3] + g, 0, 1)

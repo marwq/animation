@@ -1,0 +1,51 @@
+{
+  "shot": "field",
+  "frame": [
+    1080,
+    1080
+  ],
+  "overscan": 1.25,
+  "layer_size": [
+    1350,
+    1350
+  ],
+  "focal_px": 720.0,
+  "order": [
+    "sky",
+    "far",
+    "mid",
+    "ground",
+    "portal",
+    "fg"
+  ],
+  "depth": {
+    "far": 45,
+    "mid": 18,
+    "ground": 4.5,
+    "fg": 2.4,
+    "portal": 21.07
+  },
+  "feet": [
+    540.0,
+    839.3
+  ],
+  "block_px_at_feet": 160.0,
+  "portal_inside": [
+    [
+      658.4,
+      598.7
+    ],
+    [
+      715.3,
+      597.9
+    ],
+    [
+      714.0,
+      497.5
+    ],
+    [
+      657.5,
+      494.4
+    ]
+  ]
+}
