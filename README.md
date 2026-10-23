@@ -101,7 +101,7 @@ node tools/render.js                     # PNG ×2 (или: node tools/render.js
 
 | Файл | Кадр |
 |---|---|
-| `backgrounds/field/field.png` | поле: трава на переднем плане, поле, сзади деревья |
+| `backgrounds/field/field.png` | чистое поле с цветами, сзади деревья |
 | `backgrounds/field/portal.png` | портал в Незер посередине того же поля; внутри рамки пусто |
 
 ### Как пересобрать

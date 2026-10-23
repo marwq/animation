@@ -51,12 +51,12 @@ PORTAL = (-1, 20)        # левый блок рамки; рамка 4×5 ст�
 
 # Камеры смотрят прямо вперёд (+y). clear — сколько блоков от камеры чистое поле,
 # дальше роща. shade — деревья сразу за левым краем кадра (от камеры, в блоках):
-# их не видно, но их тень ложится на траву.
+# их не видно, но их тень ложится на траву. grass — пучки травы (цветы есть всегда).
 SHOTS = {
     'field':  {'cam': (-26.0, 4.0, 2.62), 'shift': -0.08, 'lens': 28, 'clear': 22,
-               'focus': 9.0, 'fstop': 1.4, 'shade': [(-7, 3), (-8, 8)]},
+               'focus': 9.0, 'fstop': 1.4, 'shade': [(-7, 3), (-8, 8)], 'grass': False},
     'portal': {'cam': (1.0, 8.5, 2.62), 'shift': -0.05, 'lens': 30, 'clear': 18,
-               'focus': 12.0, 'fstop': 1.4, 'shade': [(-7, 2), (-8, 7)]},
+               'focus': 12.0, 'fstop': 1.4, 'shade': [(-7, 2), (-8, 7)], 'grass': True},
 }
 
 
@@ -386,6 +386,8 @@ def build_scene(opt, view):
             continue
         if d < 12 and lat < 1.5 or opt['shot'] == 'portal' and d < 12 and lat < 2.5:
             continue                           # посередине — чистая трава, к порталу дорожка
+        if not view.s['grass'] and kind in ('short_grass', 'tall_grass'):
+            continue
         if kind == 'tall_grass':
             m.cross(x, y, z, 'tall_grass_bottom', dx, dy)
             m.cross(x, y, z + 1, 'tall_grass_top', dx, dy)
