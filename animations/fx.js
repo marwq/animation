@@ -648,6 +648,53 @@ const FX = (() => {
     ctx.restore();
   }
 
+  // подушка: (x, y) — середина края, за который держат; rot — куда вытянута (0 — вверх);
+  // L — длина, W — ширина, k — сплющенность поперёк (удар, лежит на траве)
+  function pillow(ctx, x, y, rot = 0, L = 190, W = 124, k = 1) {
+    ctx.save();
+    ctx.translate(x, y); ctx.rotate(rot); ctx.scale(k, 1);
+    const w = W / 2, b = 12;                                         // b — выпуклость сторон
+    ctx.beginPath();
+    ctx.moveTo(-w, -4);
+    ctx.quadraticCurveTo(0, b, w, -4);                                 // край у руки
+    ctx.quadraticCurveTo(w + b, -L / 2, w, -L + 4);                    // правый бок
+    ctx.quadraticCurveTo(0, -L - b, -w, -L + 4);                       // дальний край
+    ctx.quadraticCurveTo(-w - b, -L / 2, -w, -4);                      // левый бок
+    ctx.closePath();
+    ctx.fillStyle = '#f4f7ff'; ctx.fill();
+    ctx.lineWidth = 5; ctx.lineJoin = 'round'; ctx.strokeStyle = '#111'; ctx.stroke();
+    ctx.save(); ctx.clip();
+    ctx.beginPath(); ctx.ellipse(w * 0.35, -L * 0.5, w * 0.55, L * 0.42, 0, 0, TAU); ctx.fillStyle = 'rgba(150,170,220,0.25)'; ctx.fill();
+    ctx.beginPath(); ctx.ellipse(-w * 0.35, -L * 0.62, w * 0.22, L * 0.2, 0.15, 0, TAU); ctx.fillStyle = 'rgba(255,255,255,0.9)'; ctx.fill();
+    ctx.restore();
+    ctx.lineWidth = 3; ctx.strokeStyle = 'rgba(40,40,60,0.55)';
+    ctx.beginPath(); ctx.moveTo(-w * 0.55, -L * 0.18); ctx.quadraticCurveTo(-w * 0.2, -L * 0.24, 0, -L * 0.2); ctx.stroke();   // складки
+    ctx.beginPath(); ctx.moveTo(w * 0.15, -L * 0.82); ctx.quadraticCurveTo(w * 0.4, -L * 0.76, w * 0.6, -L * 0.8); ctx.stroke();
+    ctx.restore();
+  }
+
+  // перья: разлетаются из точки (x, y) и медленно падают, покачиваясь; t — секунды от удара
+  function feathers(ctx, x, y, t, seed = 1, n = 18, size = 1) {
+    const LIFE = 2.6;
+    if (t < 0 || t > LIFE) return;
+    const r = rng(seed * 31 + 7);
+    for (let i = 0; i < n; i++) {
+      const a = r() * TAU, v = 180 + r() * 380, ph = r() * TAU, sw = 18 + r() * 26, s = (0.7 + r() * 0.6) * size;
+      const burst = (1 - Math.exp(-4 * t)) / 4;
+      const px = x + Math.cos(a) * v * burst + Math.sin(t * 3 + ph) * sw;
+      const py = y + Math.sin(a) * v * burst * 0.8 + 70 * t;
+      const ang = Math.sin(t * 3 + ph) * 0.9 + a;
+      ctx.save();
+      ctx.globalAlpha = Math.min(1, (LIFE - t) / 0.6);
+      ctx.translate(px, py); ctx.rotate(ang); ctx.scale(s, s);
+      ctx.beginPath();
+      ctx.moveTo(-17, 0); ctx.quadraticCurveTo(-4, -10, 17, -2); ctx.quadraticCurveTo(2, 9, -17, 0);
+      ctx.fillStyle = '#fff'; ctx.fill(); ctx.lineWidth = 2.5; ctx.strokeStyle = '#555'; ctx.stroke();
+      ctx.beginPath(); ctx.moveTo(-20, 1); ctx.lineTo(14, -1); ctx.lineWidth = 1.6; ctx.stroke();
+      ctx.restore();
+    }
+  }
+
   // футбольный мяч: (x, y) — центр, r — радиус, rot — поворот
   function ball(ctx, x, y, r = 48, rot = 0) {
     const pent = (cx, cy, R, a0) => {
@@ -750,5 +797,5 @@ const FX = (() => {
 
   return { rng, background, cloud, shadow, spark, dust, smoke, flash, rays, vein, steam, sweat, stars, twinkle, whoosh, puff,
     heart, hearts, wind, banana, giftBox, suck, drool, tree, apple, bubble, gumSplat, rainCloud, rain, lightning, puddle, seesaw,
-    mudPit, mudSplash, rope, cake, crown, lollipop, tears, ball };
+    mudPit, mudSplash, rope, cake, crown, lollipop, tears, ball, pillow, feathers };
 })();
