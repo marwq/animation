@@ -81,11 +81,12 @@ def main(opt):
     mx, mz = (float(v) for v in opt['move'].split(','))
 
     stack = []                                  # (имя, картинка, глубина)
+    char_z = meta['depth']['ground']
     for name in meta['order']:
         z = meta['depth'].get(name, 1e9)
+        if name != 'sky' and z < char_z and all(n != 'char' for n, _, _ in stack):
+            stack.append(('char', premul(character(opt, meta, size, pad)), char_z))
         stack.append((name, premul(Image.open(os.path.join(L, name + '.png'))), z))
-        if name == 'ground':
-            stack.append(('char', premul(character(opt, meta, size, pad)), z))
     glow = None
     if not opt['no_glow'] and os.path.exists(os.path.join(L, 'portal_glow.png')):
         glow = Image.open(os.path.join(L, 'portal_glow.png')).convert('RGB')
