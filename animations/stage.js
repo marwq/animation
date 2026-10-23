@@ -352,11 +352,12 @@ function Stage(cfg) {
       handF: hand(who, 'F', 0.1, -0.95), handB: hand(who, 'B', -0.05, -0.95), zB: 'back', lean: 0, head: 0 }, o.dur || 5);
     key(who, f, { rot: 0, pivot: 0 }, 0);
     move(who, f, { x, y: GROUND });
-    move(who, f + n, { rot: -90 * face, y: GROUND - (o.lift || CAST[who].lie || 50) }, 'in');
+    move(who, f + n, { rot: (o.forward ? 90 : -90) * face, y: GROUND - (o.lift || CAST[who].lie || 50) }, 'in');
     const h = big(who).height;
-    ev('dust', { f: f + n, x: x - face * h * 0.55, r: 80, n: 8, snd: 'slam' });
+    const side = o.forward ? -face : face;                          // куда легла голова
+    ev('dust', { f: f + n, x: x - side * h * 0.55, r: 80, n: 8, snd: 'slam' });
     ev('shake', { f: f + n, amp: 22, n: 16 });
-    ev('zoom', { f: f + n, n: 14, k: 0.07, at: [x - face * h * 0.5, GROUND - 60] });
+    ev('zoom', { f: f + n, n: 14, k: 0.07, at: [x - side * h * 0.5, GROUND - 60] });
     sfx('whoosh', f + 2, { who, dur: n - 2, gain: 0.6 });
     if (o.stars !== false) ev('stars', { who, f0: f + n + 4, f1: f + n + 4 + (o.stars || 50) });
     return f + n;
@@ -486,7 +487,7 @@ function Stage(cfg) {
   // ---------------------------------------------------------------- сборка кадра
   const CLOUDS = cfg.clouds || [[140, 70, 1.2, 0, 26], [620, 200, 0.9, 1, 20], [980, 60, 1.0, 2, 30],
     [1320, 150, 1.3, 0, 22], [1700, 250, 0.8, 1, 34], [420, 300, 0.7, 2, 18]];
-  const hooks = { drawPose: null, afterChars: [] };   // сцена: скрыть слой, дорисовать предмет
+  const hooks = { drawPose: null, afterChars: [], beforeChars: [] };   // сцена: скрыть слой, дорисовать предмет
   let BG;
 
   function renderFrame(f, ctx) {
@@ -514,6 +515,7 @@ function Stage(cfg) {
       const span = W + 300;
       FX.cloud(ctx, ((x0 + v * t + 150) % span) - 150, y, s, kind);
     }
+    for (const fn of hooks.beforeChars) { fn(ctx, f, S, CAM); ctx.setTransform(...CAM); }   // деревья, домики — позади всех
     // тени
     for (const who of Object.keys(S)) {
       const { ch, st, p } = S[who];

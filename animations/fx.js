@@ -347,6 +347,66 @@ const FX = (() => {
     }
   }
 
+  // дерево (яблоня): ствол, крона из кругов; shake — качание кроны (радианы), apples — какие висят
+  // [[dx, dy, golden], ...] относительно центра кроны
+  function tree(ctx, x, ground, shake = 0, apples = [], s = 1) {
+    const cy = ground - 520 * s, R = 235 * s;
+    ctx.save();
+    ctx.lineJoin = 'round'; ctx.lineWidth = 6; ctx.strokeStyle = '#111';
+    // ствол с развилкой
+    ctx.beginPath();
+    ctx.moveTo(x - 46 * s, ground + 4); ctx.quadraticCurveTo(x - 30 * s, ground - 200 * s, x - 34 * s, cy + 120 * s);
+    ctx.lineTo(x - 90 * s, cy + 40 * s); ctx.lineTo(x - 66 * s, cy + 24 * s); ctx.lineTo(x - 6 * s, cy + 90 * s);
+    ctx.lineTo(x + 40 * s, cy + 20 * s); ctx.lineTo(x + 62 * s, cy + 36 * s); ctx.lineTo(x + 30 * s, cy + 120 * s);
+    ctx.quadraticCurveTo(x + 28 * s, ground - 200 * s, x + 46 * s, ground + 4);
+    ctx.closePath(); ctx.fillStyle = '#8a5a2b'; ctx.fill(); ctx.stroke();
+    ctx.beginPath(); ctx.moveTo(x - 10 * s, ground - 60 * s); ctx.quadraticCurveTo(x - 4 * s, ground - 160 * s, x - 14 * s, ground - 250 * s);
+    ctx.lineWidth = 4; ctx.strokeStyle = '#5e3a17'; ctx.stroke();
+    // крона качается вокруг развилки
+    ctx.translate(x, cy + 100 * s); ctx.rotate(shake); ctx.translate(-x, -(cy + 100 * s));
+    const blobs = [[0, -40, 1.0], [-150, 20, 0.62], [150, 20, 0.62], [-95, -120, 0.6], [100, -125, 0.6], [0, 70, 0.7],
+      [-190, -50, 0.45], [190, -55, 0.45]];
+    ctx.lineWidth = 6; ctx.strokeStyle = '#111';
+    for (const [bx, by, k] of blobs) { ctx.beginPath(); ctx.arc(x + bx * s, cy + by * s, R * k * 0.8, 0, Math.PI * 2); ctx.stroke(); }
+    for (const [bx, by, k] of blobs) {
+      ctx.beginPath(); ctx.arc(x + bx * s, cy + by * s, R * k * 0.8 - 3, 0, Math.PI * 2); ctx.fillStyle = '#2fb52a'; ctx.fill();
+    }
+    for (const [bx, by, k] of blobs.slice(0, 5)) {
+      ctx.beginPath(); ctx.arc(x + bx * s - R * k * 0.2, cy + by * s - R * k * 0.25, R * k * 0.3, 0, Math.PI * 2);
+      ctx.fillStyle = '#4fd13e'; ctx.fill();
+    }
+    for (const [ax, ay, gold] of apples) apple(ctx, x + ax * s, cy + ay * s, 26 * s, 0, gold);
+    ctx.restore();
+  }
+
+  // яблоко (красное или золотое) с листиком
+  function apple(ctx, x, y, r = 26, rot = 0, gold = false) {
+    ctx.save();
+    ctx.translate(x, y); ctx.rotate(rot);
+    ctx.lineWidth = Math.max(3, r * 0.16); ctx.strokeStyle = '#111'; ctx.lineJoin = 'round';
+    ctx.beginPath();
+    ctx.moveTo(0, -r * 0.7);
+    ctx.bezierCurveTo(r * 0.6, -r * 1.15, r * 1.25, -r * 0.5, r * 0.95, r * 0.35);
+    ctx.bezierCurveTo(r * 0.75, r * 1.0, r * 0.25, r * 1.05, 0, r * 0.85);
+    ctx.bezierCurveTo(-r * 0.25, r * 1.05, -r * 0.75, r * 1.0, -r * 0.95, r * 0.35);
+    ctx.bezierCurveTo(-r * 1.25, -r * 0.5, -r * 0.6, -r * 1.15, 0, -r * 0.7);
+    ctx.closePath();
+    ctx.fillStyle = gold ? '#ffcf1f' : '#e8262d'; ctx.fill(); ctx.stroke();
+    ctx.beginPath(); ctx.ellipse(-r * 0.4, -r * 0.25, r * 0.16, r * 0.28, 0.4, 0, Math.PI * 2);
+    ctx.fillStyle = 'rgba(255,255,255,0.75)'; ctx.fill();
+    ctx.beginPath(); ctx.moveTo(0, -r * 0.65); ctx.lineTo(r * 0.08, -r * 1.15); ctx.stroke();
+    ctx.beginPath(); ctx.ellipse(r * 0.38, -r * 1.05, r * 0.32, r * 0.14, -0.5, 0, Math.PI * 2);
+    ctx.fillStyle = '#3fbf30'; ctx.fill(); ctx.lineWidth = Math.max(2, r * 0.1); ctx.stroke();
+    if (gold) {
+      ctx.lineWidth = 3; ctx.strokeStyle = '#fff6b0';
+      for (let i = 0; i < 4; i++) {
+        const a = i * Math.PI / 2 + 0.4;
+        ctx.beginPath(); ctx.moveTo(Math.cos(a) * r * 1.3, Math.sin(a) * r * 1.3); ctx.lineTo(Math.cos(a) * r * 1.6, Math.sin(a) * r * 1.6); ctx.stroke();
+      }
+    }
+    ctx.restore();
+  }
+
   // банановая кожура (лежит на траве): s — ширина, rot — поворот
   function banana(ctx, x, y, s = 90, rot = 0) {
     ctx.save();
@@ -424,5 +484,5 @@ const FX = (() => {
   }
 
   return { rng, background, cloud, shadow, spark, dust, smoke, flash, rays, vein, steam, sweat, stars, twinkle, whoosh, puff,
-    heart, hearts, wind, banana, giftBox, suck, drool };
+    heart, hearts, wind, banana, giftBox, suck, drool, tree, apple };
 })();
