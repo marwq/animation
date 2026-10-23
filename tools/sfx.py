@@ -403,6 +403,24 @@ def s_creak(dur=1.0, **_):
     return norm(x * bell(d, 0.5), 0.35)
 
 
+def s_sob(dur=1.0, **_):
+    """Плач: «уа-а» волнами."""
+    d = max(0.4, dur)
+    t = tt(d)
+    f0 = 520 + 120 * np.sin(TAU * 2.2 * t) * np.sin(TAU * 0.5 * t / d)
+    src = osc(f0, d, 'saw')
+    v = bandpass(src, 700, 1500) + 0.6 * bandpass(src, 1500, 2600)
+    env = (0.55 + 0.45 * np.sin(TAU * 2.2 * t - 1.2)) * np.clip(t / 0.06, 0, 1) * np.clip((d - t) / 0.15, 0, 1)
+    return norm(v * env, 0.55)
+
+
+def s_lick(seed=25, **_):
+    """Лизнул: мокрое «шлюп»."""
+    d = 0.22
+    x = lowpass2(noise(d, seed), glide(2500, 700, d)) * bell(d, 0.3)
+    return norm(x + 0.3 * osc(glide(500, 900, d), d) * bell(d, 0.4), 0.45)
+
+
 # ---------------------------------------------------------------- злость, сила
 def s_anger(seed=10, dur=1.0, **_):
     """Жилка и пар: шипение и рычание."""
@@ -538,7 +556,7 @@ def write_wav(path, st):
 def demo():
     cues, t = [], 0.3
     for k in SOUNDS:
-        cues.append({'t': t, 'kind': k, 'dur': 1.2 if k in ('dizzy', 'gust', 'anger', 'whirr', 'suck', 'inflate', 'rain', 'creak') else 0})
+        cues.append({'t': t, 'kind': k, 'dur': 1.2 if k in ('dizzy', 'gust', 'anger', 'whirr', 'suck', 'inflate', 'rain', 'creak', 'sob') else 0})
         t += 1.8 if k in ('dizzy', 'gust', 'slam', 'love') else 1.0
     return {'duration': t + 0.5, 'cues': cues}
 

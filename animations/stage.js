@@ -37,7 +37,7 @@ function Stage(cfg) {
 
   // ---------------------------------------------------------------- события эффектов
   const FX_EV = { spark: [], shake: [], zoom: [], dust: [], smoke: [], flash: [], rays: [], vein: [], steam: [],
-    sweat: [], stars: [], twinkle: [], whoosh: [], hearteyes: [], hearts: [], wind: [], heartshot: [], suck: [], drool: [] };
+    sweat: [], stars: [], twinkle: [], whoosh: [], hearteyes: [], hearts: [], wind: [], heartshot: [], suck: [], drool: [], tears: [] };
   const SFX = [];
   const sfx = (kind, f, o = {}) => SFX.push({ kind, f, ...o });
   // эффект + его звук (если у эффекта он есть и не выключен snd: false)
@@ -54,6 +54,7 @@ function Stage(cfg) {
     }
     else if (kind === 'twinkle') sfx((o.size || 46) >= 46 ? 'twinkle' : 'sparkle', o.f, { at: o.at, gain: g });
     else if (kind === 'stars') sfx('dizzy', o.f0, { who: o.who, dur: o.f1 - o.f0, gain: g ?? 0.8 });
+    else if (kind === 'tears') sfx('sob', o.f0, { who: o.who, dur: o.f1 - o.f0, gain: g ?? 0.8 });
     else if (kind === 'sweat') sfx('drip', o.f0 + 3, { who: o.who, gain: g ?? 0.7 });
     else if (kind === 'whoosh') sfx('whoosh', o.f - 3, { at: o.at, gain: g ?? 0.8 });
     else if (kind === 'hearts') sfx('love', o.f0, { who: o.who, gain: g });
@@ -638,6 +639,13 @@ function Stage(cfg) {
       const side = -(st.p.face || 1);
       const u = (f - v.f0) / (v.f1 - v.f0);
       FX.sweat(ctx, h[0] + side * (ch.height * (st.p.form === 'big' ? 0.16 : 0.42)), h[1] - ch.height * 0.08 + u * 30, 1.3, Math.min(1, (v.f1 - f) / 6));
+    }
+    for (const v of FX_EV.tears) {               // плачет: из обоих глаз по дуге в стороны
+      if (f < v.f0 || f > v.f1) continue;
+      const { ch, st } = S[v.who], e = EYES[ch.name];
+      const M = ch.eyeMatrix(st, e.layer), qs = e.eyes.map(([ex, ey]) => E.apply(M, [ex, ey]));
+      const mid = qs.reduce((a, q) => a + q[0], 0) / qs.length;
+      for (const q of qs) FX.tears(ctx, q[0], q[1], q[0] < mid ? -1 : 1, (f - v.f0) / FPS, v.s || 1, Math.min(1, (v.f1 - f) / 6));
     }
     for (const v of FX_EV.stars) {
       if (f < v.f0 || f > v.f1) continue;

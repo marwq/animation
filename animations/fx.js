@@ -242,6 +242,25 @@ const FX = (() => {
     ctx.restore();
   }
 
+  // слёзы ручьём: из глаза (x, y) капли летят по дуге в сторону side, t — секунды от начала
+  function tears(ctx, x, y, side, t, s = 1, alpha = 1) {
+    const EVERY = 0.11, LIFE = 0.55;
+    for (let i = Math.max(0, Math.floor((t - LIFE) / EVERY)); i * EVERY <= t; i++) {
+      const u = (t - i * EVERY) / LIFE;
+      if (u < 0 || u > 1) continue;
+      const v = 0.8 + 0.4 * (((i * 7919) % 13) / 13);
+      const px = x + side * 150 * s * u * v, py = y - 40 * s * u + 260 * s * u * u;
+      const ang = Math.atan2(260 * 2 * u - 40, side * 150 * v);
+      ctx.save();
+      ctx.globalAlpha = alpha * Math.min(1, (1 - u) * 4);
+      ctx.translate(px, py); ctx.rotate(ang - Math.PI / 2); ctx.scale(s * 0.75, s * 0.75);
+      ctx.beginPath();
+      ctx.moveTo(0, -22); ctx.bezierCurveTo(10, -6, 14, 2, 14, 8); ctx.arc(0, 8, 14, 0, Math.PI); ctx.bezierCurveTo(-14, 2, -10, -6, 0, -22);
+      ctx.fillStyle = '#7fd0f7'; ctx.fill(); ctx.lineWidth = 3.5; ctx.strokeStyle = '#1d5e86'; ctx.stroke();
+      ctx.restore();
+    }
+  }
+
   // звёздочки над головой оглушённого
   function stars(ctx, x, y, t, r = 60) {
     for (let i = 0; i < 3; i++) {
@@ -608,6 +627,27 @@ const FX = (() => {
     ctx.restore();
   }
 
+  // леденец на палочке: (x, y) — конец палочки, rot — наклон (0 — конфета сверху), s — длина
+  function lollipop(ctx, x, y, s = 120, rot = 0) {
+    const k = s / 120;
+    ctx.save();
+    ctx.translate(x, y); ctx.rotate(rot); ctx.scale(k, k);
+    ctx.lineCap = 'round';
+    ctx.beginPath(); ctx.moveTo(0, 0); ctx.lineTo(0, -78);
+    ctx.lineWidth = 12; ctx.strokeStyle = '#111'; ctx.stroke();
+    ctx.lineWidth = 7; ctx.strokeStyle = '#f4f1ea'; ctx.stroke();
+    ctx.beginPath(); ctx.arc(0, -112, 40, 0, TAU); ctx.fillStyle = '#ff4fa3'; ctx.fill();
+    ctx.lineWidth = 5; ctx.strokeStyle = '#111'; ctx.stroke();
+    ctx.beginPath();
+    for (let a = 0; a < TAU * 2.2; a += 0.15) {                      // спираль
+      const r = 3 + a * 2.25, px = Math.cos(a) * r, py = -112 + Math.sin(a) * r;
+      a ? ctx.lineTo(px, py) : ctx.moveTo(px, py);
+    }
+    ctx.lineWidth = 7; ctx.strokeStyle = '#fff3fa'; ctx.stroke();
+    ctx.beginPath(); ctx.ellipse(-16, -128, 8, 5, -0.6, 0, TAU); ctx.fillStyle = 'rgba(255,255,255,0.85)'; ctx.fill();
+    ctx.restore();
+  }
+
   // банановая кожура (лежит на траве): s — ширина, rot — поворот
   function banana(ctx, x, y, s = 90, rot = 0) {
     ctx.save();
@@ -686,5 +726,5 @@ const FX = (() => {
 
   return { rng, background, cloud, shadow, spark, dust, smoke, flash, rays, vein, steam, sweat, stars, twinkle, whoosh, puff,
     heart, hearts, wind, banana, giftBox, suck, drool, tree, apple, bubble, gumSplat, rainCloud, rain, lightning, puddle, seesaw,
-    mudPit, mudSplash, rope, cake, crown };
+    mudPit, mudSplash, rope, cake, crown, lollipop, tears };
 })();
