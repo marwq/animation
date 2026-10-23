@@ -737,6 +737,42 @@ const FX = (() => {
     ctx.restore();
   }
 
+  // стол: (x, ground) — середина под столом, w — ширина столешницы, h — высота
+  function table(ctx, x, ground, w = 260, h = 170) {
+    ctx.save();
+    ctx.lineJoin = 'round'; ctx.lineWidth = 5; ctx.strokeStyle = '#111';
+    for (const sx of [-1, 1]) {                                           // ножки
+      ctx.beginPath();
+      ctx.moveTo(x + sx * (w / 2 - 34), ground - h + 20); ctx.lineTo(x + sx * (w / 2 - 14), ground + 2);
+      ctx.lineTo(x + sx * (w / 2 - 34), ground + 2); ctx.lineTo(x + sx * (w / 2 - 52), ground - h + 20); ctx.closePath();
+      ctx.fillStyle = '#9a6430'; ctx.fill(); ctx.stroke();
+    }
+    ctx.beginPath(); ctx.rect(x - w / 2, ground - h, w, 26); ctx.fillStyle = '#c58646'; ctx.fill(); ctx.stroke();   // столешница
+    ctx.beginPath(); ctx.moveTo(x - w / 2 + 12, ground - h + 9); ctx.lineTo(x + w / 2 - 40, ground - h + 9);
+    ctx.lineWidth = 3; ctx.strokeStyle = 'rgba(255,230,190,0.7)'; ctx.stroke();
+    ctx.restore();
+  }
+
+  // торт-пирог с кремом: (x, y) — середина донышка, s — ширина
+  function pie(ctx, x, y, s = 110, rot = 0) {
+    const k = s / 110;
+    ctx.save();
+    ctx.translate(x, y); ctx.rotate(rot); ctx.scale(k, k);
+    ctx.lineJoin = 'round'; ctx.lineWidth = 4.5; ctx.strokeStyle = '#111';
+    ctx.beginPath(); ctx.moveTo(-55, -22); ctx.lineTo(55, -22); ctx.lineTo(44, 0); ctx.lineTo(-44, 0); ctx.closePath();   // форма
+    ctx.fillStyle = '#c9ccd6'; ctx.fill(); ctx.stroke();
+    ctx.beginPath(); ctx.moveTo(-50, -14); ctx.lineTo(50, -14); ctx.lineWidth = 2.5; ctx.strokeStyle = 'rgba(255,255,255,0.8)'; ctx.stroke();
+    ctx.lineWidth = 4.5; ctx.strokeStyle = '#111';
+    ctx.beginPath();                                                          // крем
+    ctx.moveTo(-56, -22);
+    for (const [cx, r] of [[-40, 17], [-15, 22], [12, 21], [38, 17]]) ctx.arc(cx, -30, r, Math.PI * 0.95, Math.PI * 0.05, false);
+    ctx.lineTo(56, -22); ctx.closePath();
+    ctx.fillStyle = '#fffdf5'; ctx.fill(); ctx.stroke();
+    ctx.beginPath(); ctx.arc(0, -58, 10, 0, TAU); ctx.fillStyle = '#e8203a'; ctx.fill(); ctx.stroke();       // вишенка
+    ctx.beginPath(); ctx.arc(-3, -61, 3, 0, TAU); ctx.fillStyle = '#fff'; ctx.fill();
+    ctx.restore();
+  }
+
   // футбольный мяч: (x, y) — центр, r — радиус, rot — поворот
   function ball(ctx, x, y, r = 48, rot = 0) {
     const pent = (cx, cy, R, a0) => {
@@ -839,5 +875,5 @@ const FX = (() => {
 
   return { rng, background, cloud, shadow, spark, dust, smoke, flash, rays, vein, steam, sweat, stars, twinkle, whoosh, puff,
     heart, hearts, wind, banana, giftBox, suck, drool, tree, apple, bubble, gumSplat, rainCloud, rain, lightning, puddle, seesaw,
-    mudPit, mudSplash, rope, cake, crown, lollipop, tears, ball, pillow, feathers, bee, hive };
+    mudPit, mudSplash, rope, cake, crown, lollipop, tears, ball, pillow, feathers, bee, hive, table, pie };
 })();
