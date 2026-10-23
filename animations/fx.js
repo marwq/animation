@@ -407,6 +407,45 @@ const FX = (() => {
     ctx.restore();
   }
 
+  // пузырь жвачки: розовый полупрозрачный шар с бликом
+  function bubble(ctx, x, y, r) {
+    if (r <= 1) return;
+    ctx.save();
+    ctx.beginPath(); ctx.arc(x, y, r, 0, TAU);
+    ctx.fillStyle = 'rgba(255, 110, 200, 0.82)'; ctx.fill();
+    ctx.lineWidth = Math.max(3, r * 0.035); ctx.strokeStyle = '#7a1050'; ctx.stroke();
+    ctx.beginPath(); ctx.arc(x, y, r * 0.72, Math.PI * 1.1, Math.PI * 1.45);
+    ctx.lineWidth = Math.max(3, r * 0.08); ctx.lineCap = 'round'; ctx.strokeStyle = 'rgba(255,255,255,0.85)'; ctx.stroke();
+    ctx.beginPath(); ctx.arc(x - r * 0.18, y - r * 0.62, r * 0.06, 0, TAU); ctx.fillStyle = 'rgba(255,255,255,0.85)'; ctx.fill();
+    ctx.restore();
+  }
+
+  // жвачка лопнула и облепила: розовая клякса с потёками; s — ширина
+  function gumSplat(ctx, x, y, s, seed = 3) {
+    if (s <= 1) return;
+    const r = rng(seed);
+    ctx.save();
+    ctx.translate(x, y);
+    ctx.beginPath();
+    const n = 14;
+    for (let i = 0; i <= n; i++) {
+      const a = i / n * TAU, k = 0.42 + r() * 0.16 + (Math.sin(a) > 0.3 ? r() * 0.25 : 0);
+      const px = Math.cos(a) * s * k, py = Math.sin(a) * s * k * 0.9;
+      i ? ctx.lineTo(px, py) : ctx.moveTo(px, py);
+    }
+    ctx.closePath();
+    ctx.fillStyle = '#ff6ec7'; ctx.fill();
+    ctx.lineJoin = 'round'; ctx.lineWidth = Math.max(3, s * 0.03); ctx.strokeStyle = '#7a1050'; ctx.stroke();
+    for (let i = 0; i < 3; i++) {                                     // потёки вниз
+      const dx = (r() - 0.5) * s * 0.6, len = s * (0.2 + r() * 0.25);
+      ctx.beginPath(); ctx.ellipse(dx, s * 0.35 + len * 0.5, s * 0.05, len * 0.5, 0, 0, TAU);
+      ctx.fillStyle = '#ff6ec7'; ctx.fill(); ctx.stroke();
+    }
+    ctx.beginPath(); ctx.ellipse(-s * 0.15, -s * 0.15, s * 0.08, s * 0.05, -0.5, 0, TAU);
+    ctx.fillStyle = 'rgba(255,255,255,0.8)'; ctx.fill();
+    ctx.restore();
+  }
+
   // банановая кожура (лежит на траве): s — ширина, rot — поворот
   function banana(ctx, x, y, s = 90, rot = 0) {
     ctx.save();
@@ -484,5 +523,5 @@ const FX = (() => {
   }
 
   return { rng, background, cloud, shadow, spark, dust, smoke, flash, rays, vein, steam, sweat, stars, twinkle, whoosh, puff,
-    heart, hearts, wind, banana, giftBox, suck, drool, tree, apple };
+    heart, hearts, wind, banana, giftBox, suck, drool, tree, apple, bubble, gumSplat };
 })();

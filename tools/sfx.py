@@ -341,6 +341,24 @@ def s_spit(seed=20, **_):
     return norm(norm(puff_) + 0.4 * norm(spray) + 0.6 * pop, 0.85)
 
 
+def s_inflate(dur=1.0, **_):
+    """Надувает пузырь: резиновый писк, растущий вверх."""
+    d = max(0.3, dur)
+    t = tt(d)
+    f = glide(160, 520, d) * (1 + 0.04 * np.sin(TAU * 11 * t))
+    x = lowpass(osc(f, d, 'saw'), 900 + 1500 * t / d) + 0.3 * osc(f * 2, d)
+    return norm(x * bell(d, 0.85), 0.5)
+
+
+def s_burst(seed=21, **_):
+    """Пузырь лопнул: резкий хлопок и мокрый шлепок."""
+    d = 0.5
+    crack = bandpass(noise(d, seed), 1500, 9000) * decay(d, 0.012, 0.0005)
+    wet = lowpass2(noise(d, seed + 1), 1500) * decay(d, 0.08, 0.004)
+    thump = osc(glide(260, 80, d), d) * decay(d, 0.05)
+    return norm(norm(crack) + 0.7 * norm(wet) + 0.5 * thump, 0.9)
+
+
 # ---------------------------------------------------------------- злость, сила
 def s_anger(seed=10, dur=1.0, **_):
     """Жилка и пар: шипение и рычание."""
@@ -476,7 +494,7 @@ def write_wav(path, st):
 def demo():
     cues, t = [], 0.3
     for k in SOUNDS:
-        cues.append({'t': t, 'kind': k, 'dur': 1.2 if k in ('dizzy', 'gust', 'anger', 'whirr', 'suck') else 0})
+        cues.append({'t': t, 'kind': k, 'dur': 1.2 if k in ('dizzy', 'gust', 'anger', 'whirr', 'suck', 'inflate') else 0})
         t += 1.8 if k in ('dizzy', 'gust', 'slam', 'love') else 1.0
     return {'duration': t + 0.5, 'cues': cues}
 

@@ -386,7 +386,7 @@ function Stage(cfg) {
   // встаёт после падения на спину: поворот обратно за n кадров, стойка
   function getUp(who, f, x, face, o = {}) {
     const n = o.n || 14;
-    move(who, f, { rot: -90 * face, y: GROUND - (o.lift || CAST[who].lie || 50), x });
+    move(who, f, { rot: (o.forward ? 90 : -90) * face, y: GROUND - (o.lift || CAST[who].lie || 50), x });
     move(who, f + n, { rot: 0, y: GROUND }, 'io');
     key(who, f + n, { ...stance(who, x, face), zB: null, mouth: o.mouth || 'angry theeth', eyes: 'angry' }, n);
     sfx('jump', f + 2, { who, gain: 0.4 });
