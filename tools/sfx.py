@@ -582,6 +582,39 @@ def s_sneeze(seed=29, **_):
     return norm(np.concatenate([norm(ah, 0.45), gap, norm(chu + tone, 1.0)]), 0.95)
 
 
+def s_crunch(seed=30, **_):
+    """Хруст снега: несколько коротких шорохов подряд."""
+    d = 0.32
+    out = np.zeros(nsamp(d))
+    rng = np.random.default_rng(seed)
+    for k in range(5):
+        g = bandpass(noise(0.05, seed + k), 900, 6000) * decay(0.05, 0.012, 0.002)
+        put(out, g * (0.6 + 0.4 * rng.random()), k * 0.055 + rng.random() * 0.02)
+    return norm(out, 0.7)
+
+
+def s_snowhit(seed=31, **_):
+    """Снежок попал: мягкий глухой шлепок и рассыпчатый хруст."""
+    d = 0.35
+    t = tt(d)
+    thud = osc(110 * np.exp(-t * 6), d, 'sine') * decay(d, 0.05, 0.002)
+    crunch = bandpass(noise(d, seed), 700, 7000) * decay(d, 0.09, 0.002)
+    return norm(0.9 * thud + 0.8 * crunch, 0.9)
+
+
+def s_chatter(seed=32, dur=1.0, **_):
+    """Зубы стучат от холода: частые сухие щелчки."""
+    d = max(0.3, dur)
+    out = np.zeros(nsamp(d))
+    t = 0.0
+    rng = np.random.default_rng(seed)
+    while t < d - 0.03:
+        c = bandpass(noise(0.02, seed + int(t * 100)), 1800, 6000) * decay(0.02, 0.004, 0.0005)
+        put(out, c * (0.7 + 0.3 * rng.random()), t)
+        t += 0.045 + rng.random() * 0.015
+    return norm(out, 0.55)
+
+
 def s_slide(seed=28, **_):
     """Свисток вверх: превращение «щёлк» — тон 600 → 3200 Гц и воздух."""
     d = 0.3
@@ -639,7 +672,7 @@ def write_wav(path, st):
 def demo():
     cues, t = [], 0.3
     for k in SOUNDS:
-        cues.append({'t': t, 'kind': k, 'dur': 1.2 if k in ('dizzy', 'gust', 'anger', 'whirr', 'suck', 'inflate', 'rain', 'creak', 'sob', 'buzz') else 0})
+        cues.append({'t': t, 'kind': k, 'dur': 1.2 if k in ('dizzy', 'gust', 'anger', 'whirr', 'suck', 'inflate', 'rain', 'creak', 'sob', 'buzz', 'chatter') else 0})
         t += 1.8 if k in ('dizzy', 'gust', 'slam', 'love') else 1.0
     return {'duration': t + 0.5, 'cues': cues}
 

@@ -96,6 +96,40 @@ const FX = (() => {
       grass: ['#4fd12c', '#74ea45', '#36ad16', '#237a0c'], trees: ['jungle', 'jungle', 'oak'], flowers: ['#ff8a00', '#ff2e8a', '#ffe500'], cloud: ['#ffffff', '#c9f1ff'] },
     evening: { sky: ['#3d2cc9', '#a14dff', '#ff9ccf'], moon: '#fffbe0', hills: ['#7a4fc7', '#5d3aa6'],
       grass: ['#4ec12b', '#6ad545', '#37a01b', '#246f0f'], trees: ['spruce', 'spruce', 'birch'], flowers: ['#7af0ff', '#ffffff', '#ff7ad9'], cloud: ['#fdf1ff', '#e2c6ff'] },
+    // ---- голубое небо, сочная трава (серия по образцу)
+    birch: { sky: ['#2f9bff', '#86d0ff', '#eefaff'], sun: '#fff38a', hills: ['#a9e3c9', '#86d4ac'],
+      grass: ['#63d637', '#82e65a', '#4abb24', '#2f8c15'], trees: ['birch', 'birch', 'birch', 'oak'], flowers: ['#4f7dff', '#ffffff', '#ffe02e'], cloud: ['#ffffff', '#d8eeff'],
+      features: ['bushes'] },
+    taiga: { sky: ['#1e6fff', '#5aa8ff', '#d6ecff'], sun: '#fff6a0', hills: ['#8fc6c0', '#6fb19a'],
+      grass: ['#57cf2f', '#74e04a', '#3fae1d', '#277d10'], trees: ['spruce', 'spruce', 'spruce', 'birch'], flowers: ['#4f7dff', '#ffffff', '#b06bff'], cloud: ['#ffffff', '#cfe4ff'],
+      features: ['mountains', 'rocks'] },
+    plains: { sky: ['#0f7ff0', '#4fb6ff', '#d2f1ff'], sun: '#fff27a', hills: ['#a3dcb4', '#7fcd93'],
+      grass: ['#62d633', '#7fe852', '#48bc1f', '#2f8c12'], trees: ['oak', 'oak'], sparse: true, flowers: ['#ff3040', '#ffe02e', '#ff8a00'], cloud: ['#ffffff', '#d3ebff'],
+      features: ['sunflowers', 'fence'] },
+    orchard: { sky: ['#1b8cff', '#6cc8ff', '#e6f8ff'], sun: '#fff27a', hills: ['#b5e3b0', '#90d48d'],
+      grass: ['#5fd331', '#7be64e', '#46b81f', '#2e8a12'], trees: ['apple', 'apple', 'oak'], flowers: ['#ff3040', '#ffffff', '#ffe02e'], cloud: ['#ffffff', '#d3ebff'],
+      features: ['fence', 'pumpkins'] },
+    savanna: { sky: ['#0a9bff', '#5fd0ff', '#e5fbff'], sun: '#fffb8a', hills: ['#c6e09a', '#a7d07b'],
+      grass: ['#6ad13a', '#8ae25c', '#50b526', '#348616'], trees: ['acacia', 'acacia', 'oak'], sparse: true, flowers: ['#ff8a00', '#ffe02e', '#ff3040'], cloud: ['#ffffff', '#d6f3ff'],
+      features: ['rocks'] },
+    lakeside: { sky: ['#2f9bff', '#86d0ff', '#eefaff'], sun: '#fff38a', hills: ['#9fd8c0', '#7cc79f'],
+      grass: ['#5fd331', '#79e449', '#46b81f', '#2e8a12'], trees: ['oak', 'birch', 'oak'], flowers: ['#ff5fb0', '#ffffff', '#4f7dff'], cloud: ['#ffffff', '#d3ebff'],
+      features: ['lake', 'sugarcane'] },
+    village: { sky: ['#1b8cff', '#62c3ff', '#dff6ff'], sun: '#fff27a', hills: ['#a9dcc0', '#86cda0'],
+      grass: ['#60d432', '#7de650', '#47b920', '#2e8a12'], trees: ['oak', 'oak', 'birch'], sparse: true, flowers: ['#ff3040', '#ffe02e', '#ffffff'], cloud: ['#ffffff', '#d3ebff'],
+      features: ['houses', 'fence'] },
+    mushroom: { sky: ['#38a6ff', '#a6dcff', '#f4fbff'], sun: '#fff59a', hills: ['#b9e0c4', '#98d1a8'],
+      grass: ['#5fd331', '#7be64e', '#46b81f', '#2e8a12'], trees: ['mushroom', 'oak', 'mushroom', 'birch'], flowers: ['#ff3040', '#ffffff', '#ff8a00'], cloud: ['#ffffff', '#dff2ff'],
+      features: ['bushes'] },
+    darkforest: { sky: ['#1e6fff', '#5aa8ff', '#d6ecff'], sun: '#fff6a0', hills: ['#86c9a6', '#62b386'],
+      grass: ['#55cc2e', '#72de48', '#3cab1b', '#25790f'], trees: ['darkoak', 'darkoak', 'oak'], flowers: ['#ff3040', '#ffffff', '#b06bff'], cloud: ['#ffffff', '#cfe4ff'],
+      features: ['bushes', 'rocks'] },
+    castle: { sky: ['#0f7ff0', '#4fb6ff', '#d2f1ff'], sun: '#fff27a', hills: ['#a3d6c4', '#7fc7a0'],
+      grass: ['#60d432', '#7de650', '#47b920', '#2e8a12'], trees: ['oak', 'spruce', 'oak'], sparse: true, flowers: ['#ffe02e', '#ffffff', '#ff3040'], cloud: ['#ffffff', '#d3ebff'],
+      features: ['mountains', 'castle'] },
+    flowerfield: { sky: ['#2f9bff', '#86d0ff', '#eefaff'], sun: '#fff38a', hills: ['#b2e6bd', '#8fd79c'],
+      grass: ['#63d637', '#82e65a', '#4abb24', '#2f8c15'], trees: ['oak', 'birch', 'cherry'], sparse: true, flowers: ['#ff3040', '#ffe02e', '#ffffff', '#ff5fb0', '#4f7dff', '#ff8a00'], cloud: ['#ffffff', '#d8eeff'],
+      features: ['meadowflowers'] },
   };
   const mix = (c1, c2, k) => {
     const p = (c) => [1, 3, 5].map((i) => parseInt(c.slice(i, i + 2), 16));
@@ -114,12 +148,34 @@ const FX = (() => {
       cherry: { trunk: ['#5b3a2e', '#43291f'], leaf: ['#ff9fd2', '#ff78bd', '#ffc6e6'] },
       spruce: { trunk: ['#5a3b1f', '#40290f'], leaf: ['#2d7a3a', '#22612d', '#3b9449'] },
       jungle: { trunk: ['#8a6a35', '#6a4f24'], leaf: ['#2fae2a', '#228c1e', '#4fcd3c'] },
+      apple: { trunk: ['#7a5230', '#5e3d22'], leaf: ['#3dbb2c', '#2f9e22', '#57d23f'] },
+      acacia: { trunk: ['#8c6a4a', '#6e5238'], leaf: ['#79c234', '#64a92a', '#93d64b'] },
+      darkoak: { trunk: ['#4a3420', '#38261a'], leaf: ['#2a8a2a', '#1f6f22', '#3aa23a'] },
+      mushroom: { trunk: ['#e9dfc8', '#d4c7aa'], leaf: ['#e8262e', '#c81d24', '#ff4a4f'] },
     }[kind];
-    const th = kind === 'spruce' ? 2 : kind === 'jungle' ? 6 + Math.floor(r() * 3) : 3 + Math.floor(r() * 2);
+    const th = kind === 'spruce' ? 2 : kind === 'jungle' ? 6 + Math.floor(r() * 3) : kind === 'mushroom' ? 3 + Math.floor(r() * 2)
+      : kind === 'darkoak' ? 3 : 3 + Math.floor(r() * 2);
     const cells = [];
-    for (let i = 0; i < th; i++) cells.push([0, i, kind === 'birch' && r() < 0.3 ? pal.trunk[1] : pal.trunk[i % 2 ? 1 : 0]]);
     const leaf = (cx, cy) => { const v = r(); cells.push([cx, cy, pal.leaf[v < 0.55 ? 0 : v < 0.8 ? 1 : 2]]); };
-    if (kind === 'spruce') {
+    if (kind === 'acacia') {                                       // кривой ствол и плоская широкая крона
+      const lean = r() < 0.5 ? -1 : 1;
+      cells.push([0, 0, pal.trunk[0]], [0, 1, pal.trunk[1]], [lean, 2, pal.trunk[0]], [lean * 2, 3, pal.trunk[1]]);
+      for (let cx = -3; cx <= 3; cx++) leaf(lean * 2 + cx, 4);
+      for (let cx = -2; cx <= 2; cx++) leaf(lean * 2 + cx, 5);
+    } else if (kind === 'mushroom') {                              // большой гриб: светлая ножка, красная шляпка в белых точках
+      for (let i = 0; i < th; i++) cells.push([0, i, pal.trunk[i % 2]]);
+      for (let cx = -2; cx <= 2; cx++) cells.push([cx, th, pal.leaf[0]], [cx, th + 1, pal.leaf[cx % 2 ? 1 : 0]]);
+      for (let cx = -1; cx <= 1; cx++) cells.push([cx, th + 2, pal.leaf[0]]);
+      cells.push([-3, th, pal.leaf[1]], [3, th, pal.leaf[1]]);
+      for (const [cx, cy] of [[-1, th + 1], [2, th], [1, th + 2], [-2, th]]) cells.push([cx, cy, '#ffffff']);
+    } else if (kind === 'darkoak') {                               // толстый ствол в два блока, крона пошире
+      for (let i = 0; i < th; i++) cells.push([0, i, pal.trunk[i % 2]], [1, i, pal.trunk[(i + 1) % 2]]);
+      for (let cy = th - 1; cy < th + 2; cy++) for (let cx = -2; cx <= 3; cx++) if (!(cy === th - 1 && (cx === -2 || cx === 3))) leaf(cx, cy);
+      for (let cx = -1; cx <= 2; cx++) leaf(cx, th + 2);
+    } else for (let i = 0; i < th; i++) cells.push([0, i, kind === 'birch' && r() < 0.3 ? pal.trunk[1] : pal.trunk[i % 2 ? 1 : 0]]);
+    if (kind === 'acacia' || kind === 'mushroom' || kind === 'darkoak') {
+      /* крона уже собрана */
+    } else if (kind === 'spruce') {
       let y = th;
       for (const w of [2, 1, 2, 1, 1, 0, 0]) { for (let cx = -w; cx <= w; cx++) leaf(cx, y); y++; }
     } else {
@@ -128,6 +184,7 @@ const FX = (() => {
       for (let cx = -1; cx <= 1; cx++) leaf(cx, top + 2);
       if (r() < 0.6) leaf(0, top + 3);
       if (kind === 'cherry') for (let cx = -w - 1; cx <= w + 1; cx += 2 * w + 2) if (r() < 0.7) leaf(cx, top);   // лепестки свисают
+      if (kind === 'apple') for (let k = 0; k < 4; k++) cells.push([Math.floor(r() * 5) - 2, top - 1 + Math.floor(r() * 3), '#e8262e']);   // яблоки
     }
     // обводка: тень на блок вокруг силуэта
     g.save();
@@ -139,8 +196,124 @@ const FX = (() => {
     g.restore();
   }
 
+  // ---- детали фона
+  const block = (g, x, y, b, col, line = 'rgba(0,0,0,0.18)') => {
+    g.fillStyle = col; g.fillRect(Math.round(x), Math.round(y), Math.ceil(b), Math.ceil(b));
+    if (line) { g.fillStyle = line; g.fillRect(Math.round(x), Math.round(y + b - 3), Math.ceil(b), 3); }
+  };
+  // горы со снежными шапками далеко за холмами
+  function mcMountains(g, w, edge, margin, r, sky) {
+    const B = 36, peaks = [];
+    for (let i = 0; i < 3 + Math.floor(r() * 2); i++) peaks.push([w * (0.05 + 0.9 * (i + r() * 0.8) / 4), 300 + r() * 170]);
+    const rock = mix('#7f8fa6', sky, 0.45), rock2 = mix('#6c7c93', sky, 0.45), snow = mix('#ffffff', sky, 0.15);
+    for (let x = -margin; x < w + margin; x += B) {
+      let hgt = 0;
+      for (const [px, ph] of peaks) hgt = Math.max(hgt, ph - Math.abs(x + B / 2 - px) * 0.95);
+      hgt = Math.floor(hgt / B) * B;
+      if (hgt <= 0) continue;
+      const top = edge - 40 - hgt;
+      for (let y = top; y < edge; y += B) {
+        const depth = y - top;
+        g.fillStyle = depth < B * 1.2 ? snow : ((x / B + y / B) % 3 === 0 ? rock2 : rock);
+        g.fillRect(x, y, B + 1, B + 1);
+      }
+    }
+  }
+  // озеро: голубые блоки воды с бликами
+  function mcLake(g, x, lw, edge, r) {
+    const B = 22, y0 = edge - 66;
+    for (let y = y0; y < edge + 4; y += B) {
+      const inset = y === y0 ? B * 3 : y === y0 + B ? B : 0;
+      for (let xx = x + inset; xx < x + lw - inset; xx += B) {
+        const v = r();
+        g.fillStyle = v < 0.2 ? '#5ab0ff' : v < 0.35 ? '#2f7fe0' : '#3f95f5';
+        g.fillRect(xx, y, B + 1, B + 1);
+      }
+    }
+    g.fillStyle = 'rgba(255,255,255,0.75)';
+    for (let i = 0; i < 6; i++) g.fillRect(x + B * 2 + r() * (lw - B * 6), y0 + 6 + Math.floor(r() * 3) * B, 26 + r() * 30, 4);
+  }
+  // домик из досок вдали: стены, брёвна по углам, крыша ступеньками, дверь и окно
+  function mcHouse(g, x, base, b, r, haze, sky) {
+    const H = (c) => mix(c, sky, haze), W = 7, WH = 4;
+    const x0 = x - (W * b) / 2;
+    g.fillStyle = H('#1d1a14');                                       // обводка по силуэту
+    g.fillRect(x0 - 3, base - WH * b - 3, W * b + 6, WH * b + 3);
+    for (let j = 0; j < 4; j++) g.fillRect(x0 + j * b - 3, base - (WH + j + 1) * b - 3, (W - 2 * j) * b + 6, b + 3);
+    for (let i = 0; i < W; i++) for (let j = 0; j < WH; j++) {
+      const corner = i === 0 || i === W - 1;
+      block(g, x0 + i * b, base - (j + 1) * b, b, H(corner ? '#6b4a2a' : j % 2 ? '#b7864a' : '#c39258'));
+    }
+    for (let j = 0; j < 4; j++) for (let i = j; i < W - j; i++) block(g, x0 + i * b, base - (WH + j + 1) * b, b, H(j % 2 ? '#8a5a32' : '#7a4b2a'));
+    block(g, x0 + 3 * b, base - b, b, H('#5a3a1e'), null); block(g, x0 + 3 * b, base - 2 * b, b, H('#5a3a1e'), null);   // дверь
+    block(g, x0 + 1 * b, base - 3 * b, b, H('#aee3ff'), null); block(g, x0 + 5 * b, base - 3 * b, b, H('#aee3ff'), null); // окна
+  }
+  // замок вдали: стена с зубцами и две башни
+  function mcCastle(g, x, base, b, sky) {
+    const H = (c) => mix(c, sky, 0.4);
+    const col = (i, j) => H((i + j) % 3 ? '#9aa3ad' : '#868f99');
+    const tower = (tx, hgt) => {
+      for (let i = 0; i < 4; i++) for (let j = 0; j < hgt; j++) block(g, tx + i * b, base - (j + 1) * b, b, col(i, j));
+      for (let i = 0; i < 4; i += 2) block(g, tx + i * b, base - (hgt + 1) * b, b, col(i, 9));
+      block(g, tx + 1.5 * b, base - (hgt - 2) * b, b, H('#3a3f46'), null);
+    };
+    for (let i = 0; i < 14; i++) for (let j = 0; j < 7; j++) block(g, x - 7 * b + i * b, base - (j + 1) * b, b, col(i, j));
+    for (let i = 0; i < 14; i += 2) block(g, x - 7 * b + i * b, base - 8 * b, b, col(i, 3));
+    tower(x - 9 * b, 12); tower(x + 5 * b, 12);
+    block(g, x - b, base - 2 * b, b * 2, H('#4a3220'), null);
+    g.fillStyle = H('#ff3040'); g.fillRect(x - 7 * b, base - 16 * b, 3, b * 3); g.fillRect(x - 7 * b + 3, base - 16 * b, b * 1.4, b * 0.9);
+  }
+  // забор на кромке травы
+  function mcFence(g, x0, x1, edge, b) {
+    const post = (x) => { g.fillStyle = '#111'; g.fillRect(x - 3, edge - b * 1.5 - 3, 16, b * 1.5 + 3); g.fillStyle = '#b07d45'; g.fillRect(x, edge - b * 1.5, 10, b * 1.5); };
+    for (const y of [edge - b * 1.25, edge - b * 0.7]) {
+      g.fillStyle = '#111'; g.fillRect(x0, y - 3, x1 - x0, 13); g.fillStyle = '#c08b52'; g.fillRect(x0, y, x1 - x0, 7);
+    }
+    for (let x = x0; x <= x1; x += b * 1.6) post(x);
+  }
+  function mcBush(g, x, edge, b, r) {
+    const cells = [[0, 0], [1, 0], [-1, 0], [0, 1]];
+    if (r() < 0.5) cells.push([1, 1]);
+    for (const [cx, cy] of cells) { g.fillStyle = '#163d12'; g.fillRect(x + cx * b - 2, edge - (cy + 1) * b - 2, b + 4, b + 4); }
+    for (const [cx, cy] of cells) block(g, x + cx * b, edge - (cy + 1) * b, b, r() < 0.5 ? '#3dbb2c' : '#2f9e22');
+  }
+  function mcRock(g, x, edge, b, r) {
+    const cells = [[0, 0], [1, 0]];
+    if (r() < 0.6) cells.push([0, 1]);
+    for (const [cx, cy] of cells) { g.fillStyle = '#2a2a2a'; g.fillRect(x + cx * b - 2, edge - (cy + 1) * b - 2, b + 4, b + 4); }
+    for (const [cx, cy] of cells) {
+      block(g, x + cx * b, edge - (cy + 1) * b, b, r() < 0.5 ? '#8f8f8f' : '#a3a3a3');
+      g.fillStyle = '#6f6f6f'; g.fillRect(x + cx * b + 6, edge - (cy + 1) * b + 8, 8, 6); g.fillRect(x + cx * b + 18, edge - (cy + 1) * b + 18, 8, 6);
+    }
+  }
+  function mcPumpkin(g, x, edge, b) {
+    g.fillStyle = '#111'; g.fillRect(x - 3, edge - b - 3, b + 6, b + 6);
+    g.fillStyle = '#f08a12'; g.fillRect(x, edge - b, b, b);
+    g.fillStyle = '#d2700a'; for (const k of [0.25, 0.6]) g.fillRect(x + b * k, edge - b, 4, b);
+    g.fillStyle = '#4a7a1a'; g.fillRect(x + b * 0.4, edge - b - 8, 8, 8);
+  }
+  function mcSunflower(g, x, edge, b) {
+    g.fillStyle = '#1d5e12'; g.fillRect(x - 2, edge - 7 * b, b + 4, 7 * b);
+    g.fillStyle = '#3ea82a'; g.fillRect(x, edge - 7 * b, b, 7 * b);
+    g.fillStyle = '#4fc43a'; g.fillRect(x + b, edge - 4 * b, b * 1.4, b); g.fillRect(x - b * 1.4, edge - 5.5 * b, b * 1.4, b);   // листья
+    const cx = x + b / 2, cy = edge - 9 * b;
+    g.fillStyle = '#111';
+    for (const [dx, dy] of [[-1, -2.6], [-2.6, -1], [0.6, -2.6], [1.6, -1], [-1, 1.6], [-2.6, 0.6], [0.6, 1.6], [1.6, 0.6]]) g.fillRect(cx + dx * b - 2, cy + dy * b - 2, b + 4, b + 4);
+    g.fillStyle = '#ffd21f';
+    for (const [dx, dy] of [[-1, -2.6], [-2.6, -1], [0.6, -2.6], [1.6, -1], [-1, 1.6], [-2.6, 0.6], [0.6, 1.6], [1.6, 0.6]]) g.fillRect(cx + dx * b, cy + dy * b, b, b);
+    g.fillStyle = '#111'; g.fillRect(cx - 1.7 * b - 3, cy - 1.7 * b - 3, 3.4 * b + 6, 3.4 * b + 6);
+    g.fillStyle = '#ffd21f'; g.fillRect(cx - 1.7 * b, cy - 1.7 * b, 3.4 * b, 3.4 * b);
+    g.fillStyle = '#7a4a1e'; g.fillRect(cx - b, cy - b, 2 * b, 2 * b);
+    g.fillStyle = '#5a3412'; g.fillRect(cx - b, cy, b, b);
+  }
+  function mcCane(g, x, edge, b, n) {
+    for (let i = 0; i < n; i++) { g.fillStyle = '#1d5e12'; g.fillRect(x - 2, edge - (i + 1) * b - 6 - 2, 12, b + 2); g.fillStyle = i % 2 ? '#8fdc5a' : '#76c844'; g.fillRect(x, edge - (i + 1) * b - 6, 8, b); }
+  }
+
   function mcBackground(w, h, edge, opts = {}) {
     const T = { ...MC_THEMES[opts.theme || 'meadow'], ...(opts.override || {}) };
+    if (opts.trees) T.trees = opts.trees;
+    if (opts.sky) T.sky = opts.sky;
     const margin = 80;
     const c = document.createElement('canvas');
     c.width = w + 2 * margin; c.height = h + 2 * margin;
@@ -172,15 +345,36 @@ const FX = (() => {
         g.fillRect(x, y, B + 1, edge - y + 10);
       }
     };
+    const F = new Set(opts.features || T.features || []);
+    const fr = rng((opts.seed || 7) * 13 + 5);                      // особенности — свой генератор (деревья не сдвигаются)
+    const skyLow = T.sky[2];
+    if (F.has('mountains')) mcMountains(g, w, edge, margin, fr, skyLow);
     hills(T.hills[0], edge - 70, 230, 40, (opts.seed || 7) + 1);
     hills(T.hills[1], edge - 20, 120, 32, (opts.seed || 7) + 2);
+    if (F.has('castle')) mcCastle(g, w * (0.2 + fr() * 0.6), edge + 2, 16, skyLow);
+    // озеро — полоса воды за травой; деревья в нём не растут
+    let lake = null;
+    if (F.has('lake')) {
+      const lw = 520 + fr() * 260, lx = fr() < 0.5 ? 60 + fr() * 200 : w - lw - 60 - fr() * 200;
+      lake = [lx, lx + lw];
+      mcLake(g, lx, lw, edge, fr);
+    }
     // деревья вдали: дальний ряд (меньше, в дымке) и ближний
-    const rows = [[0.55, 17, 9 + Math.floor(r() * 3)], [0.2, 27, 5 + Math.floor(r() * 3)]];
-    for (const [haze, B, n] of rows) {
+    const rows = T.sparse ? [[0.55, 17, 6 + Math.floor(r() * 3)], [0.2, 27, 3 + Math.floor(r() * 2)]]
+      : [[0.55, 17, 9 + Math.floor(r() * 3)], [0.2, 27, 5 + Math.floor(r() * 3)]];
+    const houses = [];
+    if (F.has('houses')) for (let i = 0; i < 2 + Math.floor(fr() * 2); i++) houses.push(w * (0.08 + 0.84 * (i + 0.2 + fr() * 0.6) / 3));
+    rows.forEach(([haze, B, n], ri) => {
       const xs = [];
       for (let i = 0; i < n; i++) xs.push(-60 + (i + 0.2 + r() * 0.6) * (w + 120) / n);
-      for (const x of xs) mcTree(g, T.trees[Math.floor(r() * T.trees.length)], x, edge + 2, B, r, haze, T.sky[2]);
-    }
+      const kinds = xs.map(() => T.trees[Math.floor(r() * T.trees.length)]);
+      xs.forEach((x, i) => {
+        if (lake && x > lake[0] - 60 && x < lake[1] + 60) return;
+        if (houses.some((hx) => Math.abs(x - hx) < 150)) return;
+        mcTree(g, kinds[i], x, edge + 2, B, r, haze, skyLow);
+      });
+      if (ri === 0) for (const hx of houses) mcHouse(g, hx, edge + 2, 20, fr, 0.25, skyLow);
+    });
     // земля: блоки трёх оттенков, кое-где камень
     const B = 34;
     g.fillStyle = '#8b5a2b'; g.fillRect(-margin, edge + 40, c.width, h + margin - edge);
@@ -227,6 +421,23 @@ const FX = (() => {
     g.beginPath();
     drips.forEach(([x, sw, y], i) => { i ? g.lineTo(x, y) : g.moveTo(x, y); g.lineTo(x + sw, y); });
     g.stroke();
+    // предметы на кромке травы — по краям кадра (в середине стоят герои)
+    const sideX = (k) => (fr() < 0.5 ? 40 + fr() * 300 : w - 340 + fr() * 300);
+    if (F.has('fence')) {
+      const L = fr() < 0.5;
+      mcFence(g, L ? -20 : w - 360, L ? 360 : w + 20, edge, 40);
+      if (fr() < 0.6) mcFence(g, L ? w - 300 : -20, L ? w + 20 : 300, edge, 40);
+    }
+    if (F.has('sugarcane') && lake) for (let i = 0; i < 4; i++) mcCane(g, lake[0] + 30 + fr() * (lake[1] - lake[0] - 60), edge, 18, 2 + Math.floor(fr() * 3));
+    if (F.has('bushes')) for (let i = 0; i < 4; i++) mcBush(g, sideX(), edge, 30, fr);
+    if (F.has('rocks')) for (let i = 0; i < 3; i++) mcRock(g, sideX(), edge, 32, fr);
+    if (F.has('pumpkins')) for (let i = 0; i < 3; i++) mcPumpkin(g, sideX(), edge, 40);
+    if (F.has('sunflowers')) for (let i = 0; i < 5; i++) mcSunflower(g, sideX(), edge, 12);
+    if (F.has('meadowflowers')) for (let i = 0; i < 22; i++) {
+      const x = 20 + fr() * (w - 40), fb = 6, col = T.flowers[Math.floor(fr() * T.flowers.length)];
+      g.fillStyle = '#2f8a17'; g.fillRect(x, edge - 3 * fb, fb, 2 * fb + 2);
+      g.fillStyle = col; g.fillRect(x - fb, edge - 5 * fb, 3 * fb, 2 * fb); g.fillRect(x, edge - 6 * fb, fb, fb);
+    }
     // цветы на кромке травы (в стороне от середины, где стоят герои)
     for (let i = 0; i < 9; i++) {
       const x = r() < 0.5 ? 30 + r() * 320 : w - 350 + r() * 320, col = T.flowers[Math.floor(r() * T.flowers.length)];
@@ -412,6 +623,88 @@ const FX = (() => {
       const a = i / 14 * TAU, d = r * (0.9 + 0.5 * life);
       ctx.beginPath(); ctx.arc(x + Math.cos(a) * d, y + Math.sin(a) * d + 60 * life * life, Math.max(2, r * 0.05 * (1 - life)), 0, TAU);
       ctx.fillStyle = 'rgba(200,240,255,0.95)'; ctx.fill(); ctx.lineWidth = 2; ctx.strokeStyle = '#4b8fc8'; ctx.stroke();
+    }
+    ctx.restore();
+  }
+
+  // снежок: (x, y) — центр, r — радиус
+  function snowball(ctx, x, y, r = 26, rot = 0) {
+    ctx.save();
+    ctx.translate(x, y); ctx.rotate(rot);
+    ctx.beginPath();
+    for (let i = 0; i <= 48; i++) {                                    // чуть комковатый, но гладкий край
+      const a = i / 48 * TAU, k = 1 + 0.035 * Math.sin(a * 5 + 1.3) + 0.02 * Math.sin(a * 9);
+      i ? ctx.lineTo(Math.cos(a) * r * k, Math.sin(a) * r * k) : ctx.moveTo(Math.cos(a) * r * k, Math.sin(a) * r * k);
+    }
+    ctx.closePath();
+    ctx.fillStyle = '#ffffff'; ctx.fill();
+    ctx.lineWidth = Math.max(3, r * 0.12); ctx.lineJoin = 'round'; ctx.strokeStyle = '#1b2a3a'; ctx.stroke();
+    ctx.save(); ctx.clip();
+    ctx.beginPath(); ctx.arc(r * 0.25, r * 0.3, r * 0.85, 0, TAU); ctx.fillStyle = 'rgba(150,190,235,0.45)'; ctx.fill();
+    ctx.restore();
+    ctx.beginPath(); ctx.arc(-r * 0.35, -r * 0.35, r * 0.18, 0, TAU); ctx.fillStyle = '#ffffff'; ctx.fill();
+    ctx.restore();
+  }
+
+  // куча снежных блоков: (x, ground) — середина низа, w — ширина, rows — сколько рядов, taken — сколько «вычерпано»
+  function snowPile(ctx, x, ground, w = 200, rows = 3, seed = 3) {
+    const r = rng(seed), B = 40;
+    const cells = [];
+    for (let j = 0; j < rows; j++) {
+      const n = Math.max(1, Math.round(w / B) - j - (j > 1 ? 1 : 0));
+      for (let i = 0; i < n; i++) cells.push([x - (n * B) / 2 + i * B, ground - (j + 1) * B + 4]);
+    }
+    ctx.save();
+    ctx.fillStyle = '#1b2a3a';
+    for (const [bx, by] of cells) ctx.fillRect(bx - 3, by - 3, B + 6, B + 6);
+    for (const [bx, by] of cells) {
+      const v = r();
+      ctx.fillStyle = v < 0.3 ? '#eaf4ff' : v < 0.45 ? '#d8e9fb' : '#ffffff'; ctx.fillRect(bx, by, B, B);
+      ctx.fillStyle = 'rgba(140,180,225,0.35)'; ctx.fillRect(bx, by + B - 7, B, 7);
+    }
+    ctx.restore();
+  }
+
+  // снег на макушке: кучка комков, (x, y) — низ середины, w — ширина
+  function snowCap(ctx, x, y, w = 120, alpha = 1) {
+    if (alpha <= 0) return;
+    ctx.save(); ctx.globalAlpha = alpha;
+    const lumps = [[-0.42, -0.08, 0.15], [0.43, -0.07, 0.15], [-0.26, -0.16, 0.2], [0.26, -0.16, 0.21], [0, -0.2, 0.24],
+      [-0.1, -0.3, 0.17], [0.14, -0.3, 0.16], [-0.47, 0.06, 0.08], [0.48, 0.08, 0.08]];   // пологий сугроб и комья по бокам
+    ctx.lineWidth = Math.max(3, w * 0.035); ctx.strokeStyle = '#1b2a3a';
+    for (const [dx, dy, rr] of lumps) { ctx.beginPath(); ctx.arc(x + dx * w, y + dy * w, rr * w, 0, TAU); ctx.stroke(); }
+    for (const [dx, dy, rr] of lumps) { ctx.beginPath(); ctx.arc(x + dx * w, y + dy * w, rr * w - ctx.lineWidth / 2, 0, TAU); ctx.fillStyle = '#ffffff'; ctx.fill(); }
+    ctx.beginPath(); ctx.ellipse(x + 0.12 * w, y - 0.08 * w, 0.34 * w, 0.07 * w, 0, 0, TAU); ctx.fillStyle = 'rgba(150,190,235,0.45)'; ctx.fill();
+    ctx.restore();
+  }
+
+  // снег на лице/теле: круглая кучка комьев, (x, y) — центр, w — ширина
+  function snowSplat(ctx, x, y, w = 140, alpha = 1, seed = 3) {
+    if (alpha <= 0) return;
+    const r = rng(seed);
+    const lumps = [[0, 0, 0.3]];
+    for (let i = 0; i < 7; i++) { const a = i / 7 * TAU + r() * 0.5; lumps.push([Math.cos(a) * 0.3, Math.sin(a) * 0.26, 0.17 + r() * 0.06]); }
+    ctx.save(); ctx.globalAlpha = alpha;
+    ctx.lineWidth = Math.max(3, w * 0.03); ctx.strokeStyle = '#1b2a3a';
+    for (const [dx, dy, rr] of lumps) { ctx.beginPath(); ctx.arc(x + dx * w, y + dy * w, rr * w, 0, TAU); ctx.stroke(); }
+    for (const [dx, dy, rr] of lumps) { ctx.beginPath(); ctx.arc(x + dx * w, y + dy * w, rr * w - ctx.lineWidth / 2, 0, TAU); ctx.fillStyle = '#ffffff'; ctx.fill(); }
+    ctx.beginPath(); ctx.ellipse(x + 0.08 * w, y + 0.14 * w, 0.28 * w, 0.1 * w, 0, 0, TAU); ctx.fillStyle = 'rgba(150,190,235,0.4)'; ctx.fill();
+    ctx.beginPath(); ctx.arc(x - 0.12 * w, y - 0.12 * w, 0.06 * w, 0, TAU); ctx.fillStyle = '#ffffff'; ctx.fill();
+    ctx.restore();
+  }
+
+  // снег разлетелся: белые комки во все стороны и вниз
+  function snowBurst(ctx, x, y, life, size = 1, seed = 5) {
+    if (life < 0 || life > 1) return;
+    const r = rng(seed);
+    ctx.save();
+    for (let i = 0; i < 18; i++) {
+      const a = r() * TAU, sp = (120 + r() * 260) * size;
+      const px = x + Math.cos(a) * sp * life, py = y + Math.sin(a) * sp * life * 0.8 + 600 * life * life * size;
+      const s = (8 + r() * 12) * size * (1 - 0.4 * life);
+      ctx.globalAlpha = Math.min(1, (1 - life) * 2.5);
+      ctx.beginPath(); ctx.arc(px, py, s, 0, TAU);
+      ctx.fillStyle = '#ffffff'; ctx.fill(); ctx.lineWidth = 2.5; ctx.strokeStyle = '#6a8db3'; ctx.stroke();
     }
     ctx.restore();
   }
@@ -1206,7 +1499,7 @@ const FX = (() => {
     }
   }
 
-  return { rng, background, mcBackground, limb, note, waterBalloon, basket, waterSplash, boomerang, flower, bubbleWand, soapBubble, bubblePop, cloud, shadow, spark, dust, smoke, flash, rays, vein, steam, sweat, stars, twinkle, whoosh, puff,
+  return { rng, background, mcBackground, limb, note, waterBalloon, basket, waterSplash, boomerang, flower, bubbleWand, soapBubble, bubblePop, snowball, snowPile, snowCap, snowSplat, snowBurst, cloud, shadow, spark, dust, smoke, flash, rays, vein, steam, sweat, stars, twinkle, whoosh, puff,
     heart, hearts, wind, banana, giftBox, suck, drool, tree, apple, bubble, gumSplat, rainCloud, rain, lightning, puddle, seesaw,
     mudPit, mudSplash, rope, cake, crown, lollipop, tears, ball, pillow, feathers, bee, hive, table, pie };
 })();
