@@ -637,6 +637,30 @@ def s_burp(seed=34, **_):
     return norm((buzz + rasp) * env, 0.95)
 
 
+def s_fuse(seed=35, dur=1.0, **_):
+    """Горящий фитиль: шипение с треском."""
+    d = max(0.3, dur)
+    t = tt(d)
+    hiss = bandpass(noise(d, seed), 2500, 9000) * (0.6 + 0.4 * np.sin(TAU * 13 * t) ** 2)
+    crack = np.zeros_like(t)
+    rng = np.random.default_rng(seed)
+    for k in range(int(d * 18)):
+        i = int(rng.random() * (len(t) - 400))
+        crack[i:i + 400] += bandpass(noise(400 / SR, seed + k), 1500, 8000) * decay(400 / SR, 0.002)
+    env = np.clip(t / 0.05, 0, 1) * np.clip((d - t) / 0.05, 0, 1)
+    return norm((hiss * 0.5 + crack) * env, 0.5)
+
+
+def s_explode(seed=36, **_):
+    """Взрыв: удар, низкий гул и шуршащий хвост."""
+    d = 1.3
+    t = tt(d)
+    thump = osc(70 * np.exp(-t * 3) + 30, d, 'sine') * decay(d, 0.35, 0.002)
+    roar = lowpass2(noise(d, seed), 900) * decay(d, 0.45, 0.003)
+    crackle = bandpass(noise(d, seed + 1), 1500, 6000) * decay(d, 0.25, 0.002) * 0.4
+    return norm(1.2 * thump + roar + crackle, 1.0)
+
+
 def s_slide(seed=28, **_):
     """Свисток вверх: превращение «щёлк» — тон 600 → 3200 Гц и воздух."""
     d = 0.3
@@ -694,7 +718,7 @@ def write_wav(path, st):
 def demo():
     cues, t = [], 0.3
     for k in SOUNDS:
-        cues.append({'t': t, 'kind': k, 'dur': 1.2 if k in ('dizzy', 'gust', 'anger', 'whirr', 'suck', 'inflate', 'rain', 'creak', 'sob', 'buzz', 'chatter') else 0})
+        cues.append({'t': t, 'kind': k, 'dur': 1.2 if k in ('dizzy', 'gust', 'anger', 'whirr', 'suck', 'inflate', 'rain', 'creak', 'sob', 'buzz', 'chatter', 'fuse') else 0})
         t += 1.8 if k in ('dizzy', 'gust', 'slam', 'love') else 1.0
     return {'duration': t + 0.5, 'cues': cues}
 

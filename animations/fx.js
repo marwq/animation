@@ -351,7 +351,8 @@ const FX = (() => {
     if (F.has('mountains')) mcMountains(g, w, edge, margin, fr, skyLow);
     hills(T.hills[0], edge - 70, 230, 40, (opts.seed || 7) + 1);
     hills(T.hills[1], edge - 20, 120, 32, (opts.seed || 7) + 2);
-    if (F.has('castle')) mcCastle(g, w * (0.2 + fr() * 0.6), edge + 2, 16, skyLow);
+    let castleX = null;
+    if (F.has('castle')) { castleX = w * (0.2 + fr() * 0.6); mcCastle(g, castleX, edge + 2, 22, skyLow); }
     // озеро — полоса воды за травой; деревья в нём не растут
     let lake = null;
     if (F.has('lake')) {
@@ -371,6 +372,7 @@ const FX = (() => {
       xs.forEach((x, i) => {
         if (lake && x > lake[0] - 60 && x < lake[1] + 60) return;
         if (houses.some((hx) => Math.abs(x - hx) < 150)) return;
+        if (castleX !== null && Math.abs(x - castleX) < 290) return;
         mcTree(g, kinds[i], x, edge + 2, B, r, haze, skyLow);
       });
       if (ri === 0) for (const hx of houses) mcHouse(g, hx, edge + 2, 20, fr, 0.25, skyLow);
@@ -767,6 +769,71 @@ const FX = (() => {
     }
     ctx.restore();
     for (const [dx, dy] of fruits) tomato(ctx, x + dx, ground + dy, 24, 0);
+  }
+
+  // блок динамита (майнкрафт): (x, y) — середина низа, s — сторона, flash — 0..1 мигание белым, rot — поворот
+  function tnt(ctx, x, y, s = 90, flash = 0, rot = 0) {
+    ctx.save();
+    ctx.translate(x, y - s / 2); ctx.rotate(rot);
+    const h = s / 2;
+    ctx.fillStyle = '#d8322a'; ctx.fillRect(-h, -h, s, s);
+    ctx.fillStyle = '#b02520'; for (let i = -h; i < h; i += s / 6) ctx.fillRect(i, -h, s / 18, s);
+    ctx.fillStyle = '#f2f2f2'; ctx.fillRect(-h, -s * 0.16, s, s * 0.32);                     // белая полоса
+    ctx.fillStyle = '#222'; ctx.font = `bold ${Math.round(s * 0.24)}px monospace`; ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+    ctx.fillText('TNT', 0, s * 0.01);
+    ctx.fillStyle = '#e9e1c8'; ctx.fillRect(-h, -h, s, s * 0.1);                             // верх
+    if (flash > 0) { ctx.fillStyle = `rgba(255,255,255,${0.75 * flash})`; ctx.fillRect(-h, -h, s, s); }
+    ctx.lineWidth = 5; ctx.strokeStyle = '#2a0c08'; ctx.strokeRect(-h, -h, s, s);
+    ctx.beginPath(); ctx.moveTo(0, -h); ctx.quadraticCurveTo(s * 0.12, -h - s * 0.18, s * 0.04, -h - s * 0.3);   // фитиль
+    ctx.lineWidth = 6; ctx.strokeStyle = '#222'; ctx.stroke();
+    ctx.restore();
+  }
+
+  // искры горящего фитиля: (x, y) — кончик фитиля, t — секунды
+  function fuseSparks(ctx, x, y, t, s = 1) {
+    const r = rng(Math.floor(t * 30) + 7);
+    ctx.save();
+    for (let i = 0; i < 9; i++) {
+      const a = r() * TAU, d = (6 + r() * 22) * s;
+      ctx.beginPath(); ctx.moveTo(x, y); ctx.lineTo(x + Math.cos(a) * d, y + Math.sin(a) * d);
+      ctx.lineWidth = 3 * s; ctx.strokeStyle = r() < 0.5 ? '#ffd21f' : '#ff8a00'; ctx.stroke();
+    }
+    ctx.beginPath(); ctx.arc(x, y, 6 * s, 0, TAU); ctx.fillStyle = '#fff6a0'; ctx.fill();
+    ctx.restore();
+  }
+
+  // взрыв мультяшный: оранжево-жёлтая звезда-облако и клубы дыма, life 0..1
+  function boom(ctx, x, y, size, life, seed = 3) {
+    if (life < 0 || life > 1) return;
+    const r = rng(seed);
+    ctx.save();
+    const k = Math.min(1, life / 0.25), fade = life < 0.5 ? 1 : 1 - (life - 0.5) / 0.5;
+    ctx.globalAlpha = fade;
+    for (const [col, kk] of [['#ff5a1f', 1], ['#ffb21f', 0.72], ['#fff3a0', 0.42]]) {
+      ctx.beginPath();
+      for (let i = 0; i <= 16; i++) {
+        const a = i / 16 * TAU, rr = size * kk * k * (i % 2 ? 0.62 : 1) * (0.9 + r() * 0.2);
+        i ? ctx.lineTo(x + Math.cos(a) * rr, y + Math.sin(a) * rr * 0.85) : ctx.moveTo(x + Math.cos(a) * rr, y + Math.sin(a) * rr * 0.85);
+      }
+      ctx.closePath(); ctx.fillStyle = col; ctx.fill();
+      if (kk === 1) { ctx.lineWidth = 6; ctx.strokeStyle = '#5a1a08'; ctx.stroke(); }
+    }
+    ctx.restore();
+    if (life > 0.2) for (let i = 0; i < 7; i++) {
+      const a = r() * TAU, d = size * (0.5 + 0.6 * (life - 0.2)), u = (life - 0.2) / 0.8;
+      puff(ctx, x + Math.cos(a) * d, y + Math.sin(a) * d * 0.7 - u * 80, size * (0.22 + 0.12 * r()) * (0.6 + u), 0.9 * (1 - u), '#6d6d6d', '#2f2f2f');
+    }
+  }
+
+  // сажа на лице: тёмная клякса с белыми «просветами» — (x, y) центр, w ширина
+  function soot(ctx, x, y, w = 160, alpha = 1, seed = 5) {
+    if (alpha <= 0) return;
+    const r = rng(seed);
+    ctx.save(); ctx.globalAlpha = alpha * 0.6;
+    ctx.beginPath();
+    for (let i = 0; i <= 14; i++) { const a = i / 14 * TAU, rr = w * (0.42 + r() * 0.12); i ? ctx.lineTo(x + Math.cos(a) * rr, y + Math.sin(a) * rr * 0.85) : ctx.moveTo(x + Math.cos(a) * rr, y + Math.sin(a) * rr * 0.85); }
+    ctx.closePath(); ctx.fillStyle = '#2b2b2b'; ctx.fill();
+    ctx.restore();
   }
 
   // пиксельное облачко без обводки (белое, снизу светло-голубая полоса)
@@ -1559,7 +1626,7 @@ const FX = (() => {
     }
   }
 
-  return { rng, background, mcBackground, limb, note, waterBalloon, basket, waterSplash, boomerang, flower, bubbleWand, soapBubble, bubblePop, snowball, snowPile, snowCap, snowSplat, snowBurst, slimeBlock, tomato, gardenBed, tomatoBush, cloud, shadow, spark, dust, smoke, flash, rays, vein, steam, sweat, stars, twinkle, whoosh, puff,
+  return { rng, background, mcBackground, limb, note, waterBalloon, basket, waterSplash, boomerang, flower, bubbleWand, soapBubble, bubblePop, snowball, snowPile, snowCap, snowSplat, snowBurst, slimeBlock, tomato, gardenBed, tomatoBush, tnt, fuseSparks, boom, soot, cloud, shadow, spark, dust, smoke, flash, rays, vein, steam, sweat, stars, twinkle, whoosh, puff,
     heart, hearts, wind, banana, giftBox, suck, drool, tree, apple, bubble, gumSplat, rainCloud, rain, lightning, puddle, seesaw,
     mudPit, mudSplash, rope, cake, crown, lollipop, tears, ball, pillow, feathers, bee, hive, table, pie };
 })();
