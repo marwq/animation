@@ -709,6 +709,25 @@ const FX = (() => {
     ctx.restore();
   }
 
+  // блок слизи (майнкрафт): (x, y) — середина низа, s — сторона, sx/sy — сплющивание, alpha — прозрачность
+  function slimeBlock(ctx, x, y, s = 130, sx = 1, sy = 1, alpha = 1, rot = 0) {
+    const w = s * sx, h = s * sy;
+    ctx.save();
+    ctx.translate(x, y - h / 2); ctx.rotate(rot);
+    ctx.globalAlpha = alpha;
+    ctx.lineJoin = 'round';
+    ctx.fillStyle = 'rgba(126, 222, 92, 0.78)'; ctx.fillRect(-w / 2, -h / 2, w, h);
+    ctx.fillStyle = '#4fae35'; ctx.fillRect(-w * 0.3, -h * 0.3, w * 0.6, h * 0.6);           // ядро
+    ctx.fillStyle = 'rgba(255,255,255,0.55)';
+    ctx.fillRect(-w / 2 + w * 0.08, -h / 2 + h * 0.08, w * 0.18, h * 0.08); ctx.fillRect(-w / 2 + w * 0.08, -h / 2 + h * 0.08, w * 0.08, h * 0.2);
+    ctx.fillStyle = '#2f7a1f';                                                             // пиксели-глазки ядра
+    ctx.fillRect(-w * 0.18, -h * 0.12, w * 0.1, h * 0.1); ctx.fillRect(w * 0.08, -h * 0.12, w * 0.1, h * 0.1);
+    ctx.fillRect(-w * 0.04, h * 0.1, w * 0.08, h * 0.06);
+    ctx.lineWidth = 5; ctx.strokeStyle = '#1f4a14'; ctx.strokeRect(-w / 2, -h / 2, w, h);
+    ctx.lineWidth = 3; ctx.strokeStyle = '#2f7a1f'; ctx.strokeRect(-w * 0.3, -h * 0.3, w * 0.6, h * 0.6);
+    ctx.restore();
+  }
+
   // пиксельное облачко без обводки (белое, снизу светло-голубая полоса)
   function cloud(ctx, x, y, s, kind, tint) {
     const u = 16 * s;
@@ -1499,7 +1518,7 @@ const FX = (() => {
     }
   }
 
-  return { rng, background, mcBackground, limb, note, waterBalloon, basket, waterSplash, boomerang, flower, bubbleWand, soapBubble, bubblePop, snowball, snowPile, snowCap, snowSplat, snowBurst, cloud, shadow, spark, dust, smoke, flash, rays, vein, steam, sweat, stars, twinkle, whoosh, puff,
+  return { rng, background, mcBackground, limb, note, waterBalloon, basket, waterSplash, boomerang, flower, bubbleWand, soapBubble, bubblePop, snowball, snowPile, snowCap, snowSplat, snowBurst, slimeBlock, cloud, shadow, spark, dust, smoke, flash, rays, vein, steam, sweat, stars, twinkle, whoosh, puff,
     heart, hearts, wind, banana, giftBox, suck, drool, tree, apple, bubble, gumSplat, rainCloud, rain, lightning, puddle, seesaw,
     mudPit, mudSplash, rope, cake, crown, lollipop, tears, ball, pillow, feathers, bee, hive, table, pie };
 })();

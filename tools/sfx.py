@@ -615,6 +615,15 @@ def s_chatter(seed=32, dur=1.0, **_):
     return norm(out, 0.55)
 
 
+def s_squish(seed=33, **_):
+    """Слизь: влажный «чвак» с бульком вниз."""
+    d = 0.3
+    t = tt(d)
+    blub = osc(380 * np.exp(-t * 7) + 90, d, 'sine') * decay(d, 0.09, 0.004)
+    wet = bandpass(noise(d, seed), 300, 2500) * decay(d, 0.05, 0.002)
+    return norm(blub + 0.5 * wet, 0.85)
+
+
 def s_slide(seed=28, **_):
     """Свисток вверх: превращение «щёлк» — тон 600 → 3200 Гц и воздух."""
     d = 0.3
