@@ -181,7 +181,7 @@ function Stage(cfg) {
     // музыка превращения: по умолчанию присланная (ускорена в 1.5 раза), включается с ухмылкой; cfg.transformMusic — другая
     const mus = o.music ?? cfg.transformMusic ?? 'transform-music2';
     if (mus === 'transform-music') sfx('ref:transform-music', g - 5, { gain: o.musicGain ?? 0.75, dur: o.musicDur });
-    else if (mus) sfx('ref:' + mus, f + 2, { gain: o.musicGain ?? 0.6, dur: o.musicDur ?? 6 });
+    else if (mus) sfx('ref:' + mus, f + 2, { gain: o.musicGain ?? 1.4, dur: o.musicDur ?? 3 * FPS });   // dur — в кадрах: 3 с, громко
     ev('shake', { f: g, amp: 10, n: 8 });
     key(who, g, { form: 'big', x: bigX, y: GROUND, face, sx: 0.95, sy: 0.72, look: 1, mouth: mood(who, 'big', 'mouth'), rot: 0, pivot: 0 }, 0);
     ev('dust', { f: g, x: bigX, r: 60, n: 6, snd: 'land' });
