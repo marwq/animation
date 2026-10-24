@@ -624,6 +624,19 @@ def s_squish(seed=33, **_):
     return norm(blub + 0.5 * wet, 0.85)
 
 
+def s_burp(seed=34, **_):
+    """Громкая отрыжка: низкий хриплый «бу-у-урп» с дрожью."""
+    d = 0.75
+    t = tt(d)
+    f0 = 95 * (1 + 0.25 * np.sin(TAU * 7 * t)) * (1.1 - 0.3 * t / d)
+    ph = TAU * np.cumsum(f0) / SR
+    buzz = np.sign(np.sin(ph)) * 0.6 + np.sin(ph * 2) * 0.3
+    buzz = bandpass(buzz, 60, 1200) * (0.7 + 0.3 * np.abs(np.sin(TAU * 23 * t)))
+    rasp = bandpass(noise(d, seed), 200, 900) * 0.25
+    env = np.clip(t / 0.04, 0, 1) * np.clip((d - t) / 0.2, 0, 1)
+    return norm((buzz + rasp) * env, 0.95)
+
+
 def s_slide(seed=28, **_):
     """Свисток вверх: превращение «щёлк» — тон 600 → 3200 Гц и воздух."""
     d = 0.3

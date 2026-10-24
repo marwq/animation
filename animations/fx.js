@@ -728,6 +728,47 @@ const FX = (() => {
     ctx.restore();
   }
 
+  // помидор: (x, y) — центр, r — радиус, rot — поворот
+  function tomato(ctx, x, y, r = 24, rot = 0) {
+    ctx.save();
+    ctx.translate(x, y); ctx.rotate(rot);
+    ctx.beginPath(); ctx.ellipse(0, 0, r * 1.08, r * 0.95, 0, 0, TAU);
+    ctx.fillStyle = '#ec2d2d'; ctx.fill(); ctx.lineWidth = Math.max(3, r * 0.13); ctx.strokeStyle = '#3a0c0c'; ctx.stroke();
+    ctx.beginPath(); ctx.ellipse(-r * 0.38, -r * 0.32, r * 0.22, r * 0.14, -0.6, 0, TAU); ctx.fillStyle = 'rgba(255,255,255,0.7)'; ctx.fill();
+    ctx.beginPath();                                                          // зелёная звёздочка-хвостик
+    for (let i = 0; i < 10; i++) { const a = -Math.PI / 2 + i * TAU / 10, rr = i % 2 ? r * 0.16 : r * 0.42; ctx.lineTo(Math.cos(a) * rr, -r * 0.82 + Math.sin(a) * rr * 0.6); }
+    ctx.closePath(); ctx.fillStyle = '#3cae2a'; ctx.fill(); ctx.lineWidth = Math.max(2, r * 0.07); ctx.strokeStyle = '#173d10'; ctx.stroke();
+    ctx.restore();
+  }
+
+  // грядка: тёмная земля бортиком и ростки; (x, ground) — середина, w — ширина
+  function gardenBed(ctx, x, ground, w = 260) {
+    ctx.save();
+    ctx.lineJoin = 'round';
+    ctx.beginPath(); ctx.moveTo(x - w / 2, ground + 2); ctx.lineTo(x - w / 2 + 14, ground - 34); ctx.lineTo(x + w / 2 - 14, ground - 34); ctx.lineTo(x + w / 2, ground + 2); ctx.closePath();
+    ctx.fillStyle = '#6b3d1c'; ctx.fill(); ctx.lineWidth = 5; ctx.strokeStyle = '#2a170a'; ctx.stroke();
+    ctx.fillStyle = '#4e2a12';
+    for (let i = 0; i < 6; i++) ctx.fillRect(x - w / 2 + 24 + i * (w - 48) / 6, ground - 26, 18, 8);
+    ctx.restore();
+  }
+
+  // куст помидоров на колышке: (x, ground) — низ, h — высота; fruits — [dx, dy] видимых помидоров
+  function tomatoBush(ctx, x, ground, h = 230, fruits = []) {
+    ctx.save();
+    ctx.lineCap = 'round'; ctx.lineJoin = 'round';
+    ctx.beginPath(); ctx.moveTo(x + 6, ground + 2); ctx.lineTo(x + 6, ground - h);
+    ctx.lineWidth = 12; ctx.strokeStyle = '#2a170a'; ctx.stroke(); ctx.lineWidth = 7; ctx.strokeStyle = '#b58146'; ctx.stroke();   // колышек
+    ctx.beginPath(); ctx.moveTo(x, ground); ctx.bezierCurveTo(x - 30, ground - h * 0.4, x + 30, ground - h * 0.6, x - 4, ground - h * 0.95);
+    ctx.lineWidth = 12; ctx.strokeStyle = '#173d10'; ctx.stroke(); ctx.lineWidth = 7; ctx.strokeStyle = '#3cae2a'; ctx.stroke();
+    for (const [dx, dy, a] of [[-40, -0.35, 0.4], [38, -0.5, -0.5], [-36, -0.7, 0.6], [34, -0.82, -0.4], [-8, -0.98, 0]]) {
+      ctx.save(); ctx.translate(x + dx * 0.4, ground + dy * h); ctx.rotate(a);
+      ctx.beginPath(); ctx.ellipse(dx * 0.6, 0, 34, 16, 0, 0, TAU); ctx.fillStyle = '#3cae2a'; ctx.fill(); ctx.lineWidth = 4; ctx.strokeStyle = '#173d10'; ctx.stroke();
+      ctx.restore();
+    }
+    ctx.restore();
+    for (const [dx, dy] of fruits) tomato(ctx, x + dx, ground + dy, 24, 0);
+  }
+
   // пиксельное облачко без обводки (белое, снизу светло-голубая полоса)
   function cloud(ctx, x, y, s, kind, tint) {
     const u = 16 * s;
@@ -1518,7 +1559,7 @@ const FX = (() => {
     }
   }
 
-  return { rng, background, mcBackground, limb, note, waterBalloon, basket, waterSplash, boomerang, flower, bubbleWand, soapBubble, bubblePop, snowball, snowPile, snowCap, snowSplat, snowBurst, slimeBlock, cloud, shadow, spark, dust, smoke, flash, rays, vein, steam, sweat, stars, twinkle, whoosh, puff,
+  return { rng, background, mcBackground, limb, note, waterBalloon, basket, waterSplash, boomerang, flower, bubbleWand, soapBubble, bubblePop, snowball, snowPile, snowCap, snowSplat, snowBurst, slimeBlock, tomato, gardenBed, tomatoBush, cloud, shadow, spark, dust, smoke, flash, rays, vein, steam, sweat, stars, twinkle, whoosh, puff,
     heart, hearts, wind, banana, giftBox, suck, drool, tree, apple, bubble, gumSplat, rainCloud, rain, lightning, puddle, seesaw,
     mudPit, mudSplash, rope, cake, crown, lollipop, tears, ball, pillow, feathers, bee, hive, table, pie };
 })();
