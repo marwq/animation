@@ -268,6 +268,75 @@ const FX = (() => {
     ctx.restore();
   }
 
+  // шарик с водой: (x, y) — центр, r — радиус, col — цвет, rot — поворот (узелок снизу при rot = 0), k — сплющенность
+  function waterBalloon(ctx, x, y, r = 30, col = '#ff4f6d', rot = 0, k = 1) {
+    ctx.save();
+    ctx.translate(x, y); ctx.rotate(rot); ctx.scale(1 / Math.sqrt(k), k);
+    ctx.lineJoin = 'round'; ctx.lineWidth = 4; ctx.strokeStyle = '#111';
+    ctx.beginPath();
+    ctx.moveTo(0, -r);
+    ctx.bezierCurveTo(r * 1.15, -r, r * 1.2, r * 0.75, 0, r * 1.02);
+    ctx.bezierCurveTo(-r * 1.2, r * 0.75, -r * 1.15, -r, 0, -r);
+    ctx.fillStyle = col; ctx.fill(); ctx.stroke();
+    ctx.beginPath(); ctx.moveTo(-r * 0.2, r * 1.28); ctx.lineTo(0, r * 0.98); ctx.lineTo(r * 0.2, r * 1.28); ctx.closePath();   // узелок
+    ctx.fillStyle = col; ctx.fill(); ctx.stroke();
+    ctx.beginPath(); ctx.ellipse(-r * 0.38, -r * 0.42, r * 0.2, r * 0.32, 0.5, 0, TAU); ctx.fillStyle = 'rgba(255,255,255,0.75)'; ctx.fill();
+    ctx.beginPath(); ctx.arc(-r * 0.1, -r * 0.72, r * 0.08, 0, TAU); ctx.fill();
+    ctx.restore();
+  }
+
+  // корзина с шариками: (x, ground) — середина дна, w — ширина, cols — цвета шариков (сколько осталось)
+  function basket(ctx, x, ground, w = 170, cols = []) {
+    const h = w * 0.5;
+    ctx.save();
+    ctx.lineJoin = 'round';
+    cols.forEach((c, i) => {
+      const n = cols.length, u = n > 1 ? i / (n - 1) : 0.5;
+      waterBalloon(ctx, x + (u - 0.5) * w * 0.62, ground - h - 6 - Math.sin(u * Math.PI) * 18, w * 0.15, c, (u - 0.5) * 0.9);
+    });
+    ctx.beginPath();
+    ctx.moveTo(x - w / 2, ground - h); ctx.lineTo(x + w / 2, ground - h); ctx.lineTo(x + w * 0.4, ground); ctx.lineTo(x - w * 0.4, ground); ctx.closePath();
+    ctx.fillStyle = '#d29a4c'; ctx.fill();
+    ctx.save(); ctx.clip();
+    ctx.strokeStyle = '#9a6526'; ctx.lineWidth = 4;
+    for (let y = ground - h + 12; y < ground; y += 14) { ctx.beginPath(); ctx.moveTo(x - w / 2, y); ctx.lineTo(x + w / 2, y); ctx.stroke(); }
+    for (let i = -4; i <= 4; i++) { ctx.beginPath(); ctx.moveTo(x + i * w * 0.11, ground - h); ctx.lineTo(x + i * w * 0.09, ground); ctx.stroke(); }
+    ctx.restore();
+    ctx.beginPath();
+    ctx.moveTo(x - w / 2, ground - h); ctx.lineTo(x + w / 2, ground - h); ctx.lineTo(x + w * 0.4, ground); ctx.lineTo(x - w * 0.4, ground); ctx.closePath();
+    ctx.lineWidth = 5; ctx.strokeStyle = '#111'; ctx.stroke();
+    ctx.beginPath(); ctx.rect(x - w / 2 - 6, ground - h - 6, w + 12, 14); ctx.fillStyle = '#b97d34'; ctx.fill(); ctx.stroke();   // обод
+    ctx.restore();
+  }
+
+  // брызги лопнувшего шарика: капли во все стороны (вниз падают быстрее), в центре — клякса воды
+  function waterSplash(ctx, x, y, life, size = 1, seed = 5) {
+    if (life < 0 || life > 1) return;
+    const r = rng(seed);
+    ctx.save();
+    if (life < 0.35) {                                               // клякса в первые кадры
+      const k = life / 0.35;
+      ctx.globalAlpha = 1 - k;
+      ctx.beginPath();
+      for (let i = 0; i <= 12; i++) {
+        const a = i / 12 * TAU, rr = (40 + 50 * k) * size * (0.75 + 0.5 * r());
+        i ? ctx.lineTo(x + Math.cos(a) * rr, y + Math.sin(a) * rr * 0.8) : ctx.moveTo(x + Math.cos(a) * rr, y + Math.sin(a) * rr * 0.8);
+      }
+      ctx.closePath(); ctx.fillStyle = '#8fd7ff'; ctx.fill(); ctx.lineWidth = 4; ctx.strokeStyle = '#1d6fa6'; ctx.stroke();
+    }
+    for (let i = 0; i < 22; i++) {
+      const a = r() * TAU, sp = (140 + r() * 300) * size;
+      const px = x + Math.cos(a) * sp * life, py = y + Math.sin(a) * sp * life * 0.8 + 520 * life * life * size;
+      const s = (7 + r() * 10) * size * (1 - 0.5 * life);
+      ctx.globalAlpha = Math.min(1, (1 - life) * 2.5);
+      ctx.save(); ctx.translate(px, py); ctx.rotate(Math.atan2(Math.sin(a) * 0.8 + 2 * life, Math.cos(a)) - Math.PI / 2);
+      ctx.beginPath(); ctx.moveTo(0, -s * 1.6); ctx.quadraticCurveTo(s, 0, 0, s); ctx.quadraticCurveTo(-s, 0, 0, -s * 1.6);
+      ctx.fillStyle = '#8fd7ff'; ctx.fill(); ctx.lineWidth = 2.5; ctx.strokeStyle = '#1d6fa6'; ctx.stroke();
+      ctx.restore();
+    }
+    ctx.restore();
+  }
+
   // пиксельное облачко без обводки (белое, снизу светло-голубая полоса)
   function cloud(ctx, x, y, s, kind, tint) {
     const u = 16 * s;
@@ -1058,7 +1127,7 @@ const FX = (() => {
     }
   }
 
-  return { rng, background, mcBackground, limb, note, cloud, shadow, spark, dust, smoke, flash, rays, vein, steam, sweat, stars, twinkle, whoosh, puff,
+  return { rng, background, mcBackground, limb, note, waterBalloon, basket, waterSplash, cloud, shadow, spark, dust, smoke, flash, rays, vein, steam, sweat, stars, twinkle, whoosh, puff,
     heart, hearts, wind, banana, giftBox, suck, drool, tree, apple, bubble, gumSplat, rainCloud, rain, lightning, puddle, seesaw,
     mudPit, mudSplash, rope, cake, crown, lollipop, tears, ball, pillow, feathers, bee, hive, table, pie };
 })();

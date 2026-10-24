@@ -37,7 +37,7 @@ function Stage(cfg) {
 
   // ---------------------------------------------------------------- события эффектов
   const FX_EV = { spark: [], shake: [], zoom: [], dust: [], smoke: [], flash: [], rays: [], vein: [], steam: [],
-    sweat: [], stars: [], twinkle: [], whoosh: [], hearteyes: [], hearts: [], wind: [], heartshot: [], suck: [], drool: [], tears: [], sprout: [] };
+    sweat: [], stars: [], twinkle: [], whoosh: [], hearteyes: [], hearts: [], wind: [], heartshot: [], suck: [], drool: [], tears: [], sprout: [], wet: [] };
   const SFX = [];
   const sfx = (kind, f, o = {}) => SFX.push({ kind, f, ...o });
   // эффект + его звук (если у эффекта он есть и не выключен snd: false)
@@ -56,6 +56,7 @@ function Stage(cfg) {
     else if (kind === 'twinkle') sfx((o.size || 46) >= 46 ? 'twinkle' : 'sparkle', o.f, { at: o.at, gain: g });
     else if (kind === 'stars') sfx('dizzy', o.f0, { who: o.who, dur: o.f1 - o.f0, gain: g ?? 0.8 });
     else if (kind === 'tears') sfx('sob', o.f0, { who: o.who, dur: o.f1 - o.f0, gain: g ?? 0.8 });
+    else if (kind === 'wet') for (let f = o.f0 + 4; f < o.f1 - 4; f += 14) sfx('drip', f, { who: o.who, gain: (g ?? 0.6) * (f === o.f0 + 4 ? 1 : 0.6) });
     else if (kind === 'sweat') sfx('drip', o.f0 + 3, { who: o.who, gain: g ?? 0.7 });
     else if (kind === 'whoosh') sfx('whoosh', o.f - 3, { at: o.at, gain: g ?? 0.8 });
     else if (kind === 'hearts') sfx('love', o.f0, { who: o.who, gain: g });
@@ -587,7 +588,7 @@ function Stage(cfg) {
     for (const sp of FX_EV.sprout) {
       if (f < sp.a1 || f >= sp.g) continue;
       const { ch, st, p } = S[sp.who];
-      const c = ch.point(st, 'body'), R = ch.width * 0.5 * (p.sx || 1);
+      const c = ch.point(st, 'body'), R = Math.min(ch.width, ch.height) * 0.5 * (p.sx || 1);   // крылья/шляпа не в счёт
       const base = statesAt(sp.a1)[sp.who].ch.point(statesAt(sp.a1)[sp.who].st, 'body');
       for (const [side, f0] of [[-1, sp.a1], [1, sp.a2]]) {
         if (f < f0) continue;
@@ -702,6 +703,17 @@ function Stage(cfg) {
       const side = -(st.p.face || 1);
       const u = (f - v.f0) / (v.f1 - v.f0);
       FX.sweat(ctx, h[0] + side * (ch.height * (st.p.form === 'big' ? 0.16 : 0.42)), h[1] - ch.height * 0.08 + u * 30, 1.3, Math.min(1, (v.f1 - f) / 6));
+    }
+    for (const v of FX_EV.wet) {                 // мокрый: капли стекают с макушки и боков
+      if (f < v.f0 || f > v.f1 + 14) continue;
+      const { ch, st, p } = S[v.who], top = ch.point(st, 'top'), c = ch.point(st, p.form === 'big' ? 'head' : 'body');
+      const R = (p.form === 'big' ? ch.height * 0.11 : ch.width * 0.42) * (p.sx || 1), rr = FX.rng(v.f0 * 7 + 3);
+      for (let k = v.f0; k <= Math.min(f, v.f1); k += 3) {
+        const u = (f - k) / 14, a = Math.PI * (1.05 + 0.9 * rr()), side = Math.cos(a);
+        if (u < 0 || u > 1) continue;
+        const x0 = c[0] + side * R * 1.02, y0 = c[1] + Math.sin(a) * (c[1] - top[1]) * 0.95;
+        FX.sweat(ctx, x0 + side * 14 * u, y0 + 150 * u * u + 10 * u, 0.62, Math.min(1, (1 - u) * 3));
+      }
     }
     for (const v of FX_EV.tears) {               // плачет: из обоих глаз по дуге в стороны
       if (f < v.f0 || f > v.f1) continue;
