@@ -149,6 +149,21 @@
    ]
   ]
  },
+ "skeleton-verity-small-v1": {
+  "layer": "normal",
+  "eyes": [
+   [
+    540,
+    432,
+    44
+   ],
+   [
+    726,
+    432,
+    44
+   ]
+  ]
+ },
  "verity-big-girl": {
   "layer": "normal",
   "eyes": [

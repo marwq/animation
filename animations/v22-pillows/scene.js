@@ -14,7 +14,7 @@
 const ST = Stage({
   name: 'v22-pillows',
   cast: {
-    skel: { small: ['skeleton-verity-small', { scale: 0.455 }], big: ['skeleton-verity-big', { height: 730 }], pivot: 325,
+    skel: { small: ['skeleton-verity-small-v1', { scale: 0.455 }], big: ['skeleton-verity-big', { height: 730 }], pivot: 325,
       voice: 0.9, lie: 60 },
     girl: { small: ['girl-verity-small', { bodyHeight: 300, recolor: 'yellow' }],
       big: ['verity-big-girl', { height: 730, splitFeet: true, recolor: 'yellow' }], pivot: 337, voice: 1.4, vAngle: 50,

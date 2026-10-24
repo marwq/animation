@@ -23,6 +23,7 @@ const ST = Stage({
       pivot: 337, voice: 1.35, vAngle: 50, color: '#ff4fc8',
       moods: { angry: 'angry theeth', grin: 'theeth smile', big: 'theeth smile' } },
   },
+  transformMusic: 'transform-music',     // как было при рендере (музыка из первого образца)
   order: ['lord', 'pink'],
   background: { theme: 'cherry', seed: 5, sunX: 1460, sunY: 170 },
   clouds: [[120, 70, 2.6, 0, 14], [700, 150, 2.0, 1, 18], [1180, 40, 2.8, 0, 12], [1640, 230, 1.8, 2, 20], [380, 300, 1.5, 1, 16]],

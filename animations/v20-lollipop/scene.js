@@ -20,7 +20,7 @@ const ST = Stage({
     baby: { small: ['child-verity-pink', { bodyHeight: 300, spin: { layer: 'hat', cut: 122, axis: 389 } }],
       big: ['child-verity-big', { height: 730, spin: { layer: 'hat', cut: 106, axis: 330 } }], pivot: 338, voice: 1.25,
       lie: 60, moods: { angry: ' 5', grin: ' 1', big: 'mouth' } },
-    rb: { small: ['skeleton-verity-small', { scale: 0.455, recolor: 'rainbow' }], big: ['all-verity-color', { height: 730 }],
+    rb: { small: ['skeleton-verity-small-v1', { scale: 0.455, recolor: 'rainbow' }], big: ['all-verity-color', { height: 730 }],
       pivot: 325, voice: 0.85, moods: { big: 'theeth smile' } },
     pink: { small: ['girl-verity-small', { bodyHeight: 300 }], big: ['girl-verity-big', { height: 730, splitFeet: true }],
       pivot: 337, voice: 1.35, vAngle: 50, moods: { angry: 'sad', grin: 'theeth smile', big: 'smile normal' } },

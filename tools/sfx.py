@@ -561,11 +561,25 @@ def render_sample(c):
     k = c.get('pitch') or 1
     if k != 1:
         x = np.stack([repitch(x[:, i], k) for i in range(x.shape[1])], 1)
-    if c.get('dur'):                                              # обрезать с коротким затуханием
+    if c.get('dur'):                                              # обрезать с затуханием (у длинной музыки — подольше)
         n = min(len(x), nsamp(c['dur']))
-        f = min(n, nsamp(0.05))
+        f = min(n, nsamp(min(0.8, max(0.05, c['dur'] * 0.12))))
         x = x[:n] * np.concatenate([np.ones(n - f), np.linspace(1, 0, f)])[:, None]
     return x[:, 0] if x.shape[1] == 1 else x
+
+
+def s_sneeze(seed=29, **_):
+    """Чих «а-а-апчхи!»: вдох с подъёмом тона, пауза и резкий шумный выдох."""
+    d1, d2 = 0.55, 0.32
+    t = tt(d1)
+    f = 330 * (1 + 0.55 * t / d1)
+    ah = osc(f, d1, 'saw') * 0.5 + osc(f * 2, d1, 'sine') * 0.25
+    ah = bandpass(ah, 300, 2600) * np.clip(t / 0.05, 0, 1) * np.clip((d1 - t) / 0.06, 0, 1) * (0.4 + 0.6 * t / d1)
+    t2 = tt(d2)
+    chu = bandpass(noise(d2, seed), 1800, 9000) * decay(d2, 0.09, 0.004)
+    tone = osc(260 * (1 - 0.4 * t2 / d2), d2, 'saw') * decay(d2, 0.07) * 0.5
+    gap = np.zeros(nsamp(0.07))
+    return norm(np.concatenate([norm(ah, 0.45), gap, norm(chu + tone, 1.0)]), 0.95)
 
 
 def s_slide(seed=28, **_):

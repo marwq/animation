@@ -15,7 +15,7 @@
 const ST = Stage({
   name: 'v23-bees',
   cast: {
-    rb: { small: ['skeleton-verity-small', { scale: 0.455, recolor: 'rainbow' }], big: ['all-verity-color', { height: 730 }],
+    rb: { small: ['skeleton-verity-small-v1', { scale: 0.455, recolor: 'rainbow' }], big: ['all-verity-color', { height: 730 }],
       pivot: 325, voice: 0.85, lie: 55, moods: { big: 'theeth smile' } },
     fat: { small: ['fat-verity-small', { bodyHeight: 450 }], pivot: 508, voice: 0.75, moods: { love: 'happy' } },
     pink: { small: ['girl-verity-small', { bodyHeight: 300 }], big: ['girl-verity-big', { height: 730, splitFeet: true }],

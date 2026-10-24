@@ -337,6 +337,85 @@ const FX = (() => {
     ctx.restore();
   }
 
+  // бумеранг: (x, y) — центр сгиба, s — размах, rot — поворот
+  function boomerang(ctx, x, y, s = 120, rot = 0) {
+    const k = s / 120;
+    ctx.save();
+    ctx.translate(x, y); ctx.rotate(rot); ctx.scale(k, k);
+    ctx.lineJoin = 'round';
+    ctx.beginPath();
+    ctx.moveTo(-60, 26); ctx.quadraticCurveTo(-30, -6, 2, -22); ctx.quadraticCurveTo(32, -6, 62, 26);
+    ctx.quadraticCurveTo(66, 38, 54, 38); ctx.quadraticCurveTo(28, 14, 2, 4); ctx.quadraticCurveTo(-26, 14, -52, 38);
+    ctx.quadraticCurveTo(-66, 38, -60, 26); ctx.closePath();
+    ctx.fillStyle = '#e8892c'; ctx.fill(); ctx.lineWidth = 5; ctx.strokeStyle = '#111'; ctx.stroke();
+    ctx.beginPath(); ctx.moveTo(-44, 22); ctx.quadraticCurveTo(-20, 0, 2, -10); ctx.quadraticCurveTo(24, 0, 46, 22);
+    ctx.lineWidth = 4; ctx.strokeStyle = '#ffd36b'; ctx.stroke();
+    ctx.restore();
+  }
+
+  // цветок на стебле: (x, y) — низ стебля, s — длина, rot — наклон
+  function flower(ctx, x, y, s = 110, rot = 0, col = '#ff4fa0') {
+    const k = s / 110;
+    ctx.save();
+    ctx.translate(x, y); ctx.rotate(rot); ctx.scale(k, k);
+    ctx.lineCap = 'round';
+    ctx.beginPath(); ctx.moveTo(0, 0); ctx.quadraticCurveTo(8, -40, 0, -78);
+    ctx.lineWidth = 11; ctx.strokeStyle = '#111'; ctx.stroke(); ctx.lineWidth = 6; ctx.strokeStyle = '#2fa82a'; ctx.stroke();
+    ctx.beginPath(); ctx.ellipse(12, -38, 14, 7, -0.6, 0, TAU); ctx.fillStyle = '#3ec43a'; ctx.fill(); ctx.lineWidth = 3.5; ctx.strokeStyle = '#111'; ctx.stroke();
+    for (let i = 0; i < 6; i++) {
+      const a = i / 6 * TAU;
+      ctx.beginPath(); ctx.ellipse(Math.cos(a) * 17, -96 + Math.sin(a) * 17, 13, 10, a, 0, TAU);
+      ctx.fillStyle = col; ctx.fill(); ctx.lineWidth = 3.5; ctx.strokeStyle = '#111'; ctx.stroke();
+    }
+    ctx.beginPath(); ctx.arc(0, -96, 11, 0, TAU); ctx.fillStyle = '#ffd92e'; ctx.fill(); ctx.stroke();
+    ctx.restore();
+  }
+
+  // палочка для мыльных пузырей: (x, y) — низ ручки, s — длина, rot — наклон (0 — кольцо сверху)
+  function bubbleWand(ctx, x, y, s = 120, rot = 0) {
+    const k = s / 120;
+    ctx.save();
+    ctx.translate(x, y); ctx.rotate(rot); ctx.scale(k, k);
+    ctx.lineCap = 'round';
+    ctx.beginPath(); ctx.moveTo(0, 0); ctx.lineTo(0, -74);
+    ctx.lineWidth = 12; ctx.strokeStyle = '#111'; ctx.stroke(); ctx.lineWidth = 7; ctx.strokeStyle = '#4fc3ff'; ctx.stroke();
+    ctx.beginPath(); ctx.ellipse(0, -100, 24, 27, 0, 0, TAU);
+    ctx.lineWidth = 12; ctx.strokeStyle = '#111'; ctx.stroke(); ctx.lineWidth = 7; ctx.strokeStyle = '#4fc3ff'; ctx.stroke();
+    ctx.beginPath(); ctx.ellipse(0, -100, 18, 21, 0, 0, TAU); ctx.fillStyle = 'rgba(190,235,255,0.45)'; ctx.fill();
+    ctx.restore();
+  }
+
+  // мыльный пузырь (прозрачный, радужный блик): (x, y) — центр, r — радиус, t — секунды (переливы)
+  function soapBubble(ctx, x, y, r, t = 0, alpha = 1) {
+    if (r <= 1) return;
+    ctx.save();
+    ctx.globalAlpha = alpha;
+    const g = ctx.createRadialGradient(x - r * 0.3, y - r * 0.35, r * 0.1, x, y, r);
+    g.addColorStop(0, 'rgba(255,255,255,0.10)'); g.addColorStop(0.75, 'rgba(180,230,255,0.16)'); g.addColorStop(1, 'rgba(150,120,255,0.38)');
+    ctx.beginPath(); ctx.arc(x, y, r, 0, TAU); ctx.fillStyle = g; ctx.fill();
+    const hue = (t * 90) % 360;
+    ctx.lineWidth = Math.max(3, r * 0.025);
+    ctx.strokeStyle = `hsla(${hue}, 90%, 60%, 0.8)`; ctx.beginPath(); ctx.arc(x, y, r, Math.PI * 0.1, Math.PI * 1.0); ctx.stroke();
+    ctx.strokeStyle = `hsla(${(hue + 140) % 360}, 90%, 60%, 0.8)`; ctx.beginPath(); ctx.arc(x, y, r, Math.PI * 1.0, Math.PI * 2.1); ctx.stroke();
+    ctx.beginPath(); ctx.arc(x, y, r * 0.78, Math.PI * 1.12, Math.PI * 1.42);
+    ctx.lineWidth = Math.max(3, r * 0.06); ctx.lineCap = 'round'; ctx.strokeStyle = 'rgba(255,255,255,0.9)'; ctx.stroke();
+    ctx.beginPath(); ctx.arc(x + r * 0.45, y + r * 0.5, r * 0.06, 0, TAU); ctx.fillStyle = 'rgba(255,255,255,0.8)'; ctx.fill();
+    ctx.restore();
+  }
+
+  // пузырь лопнул: колечко капель
+  function bubblePop(ctx, x, y, r, life) {
+    if (life < 0 || life > 1) return;
+    ctx.save();
+    ctx.globalAlpha = 1 - life;
+    for (let i = 0; i < 14; i++) {
+      const a = i / 14 * TAU, d = r * (0.9 + 0.5 * life);
+      ctx.beginPath(); ctx.arc(x + Math.cos(a) * d, y + Math.sin(a) * d + 60 * life * life, Math.max(2, r * 0.05 * (1 - life)), 0, TAU);
+      ctx.fillStyle = 'rgba(200,240,255,0.95)'; ctx.fill(); ctx.lineWidth = 2; ctx.strokeStyle = '#4b8fc8'; ctx.stroke();
+    }
+    ctx.restore();
+  }
+
   // пиксельное облачко без обводки (белое, снизу светло-голубая полоса)
   function cloud(ctx, x, y, s, kind, tint) {
     const u = 16 * s;
@@ -1127,7 +1206,7 @@ const FX = (() => {
     }
   }
 
-  return { rng, background, mcBackground, limb, note, waterBalloon, basket, waterSplash, cloud, shadow, spark, dust, smoke, flash, rays, vein, steam, sweat, stars, twinkle, whoosh, puff,
+  return { rng, background, mcBackground, limb, note, waterBalloon, basket, waterSplash, boomerang, flower, bubbleWand, soapBubble, bubblePop, cloud, shadow, spark, dust, smoke, flash, rays, vein, steam, sweat, stars, twinkle, whoosh, puff,
     heart, hearts, wind, banana, giftBox, suck, drool, tree, apple, bubble, gumSplat, rainCloud, rain, lightning, puddle, seesaw,
     mudPit, mudSplash, rope, cake, crown, lollipop, tears, ball, pillow, feathers, bee, hive, table, pie };
 })();

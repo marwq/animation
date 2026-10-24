@@ -18,7 +18,7 @@ const ST = Stage({
   name: 'skeleton-vs-lord',
   cast: {
     lord: { small: ['lord-verity-small', { bodyHeight: 300 }], big: ['lord-verity-big', { height: 730 }], pivot: 337 },
-    skel: { small: ['skeleton-verity-small', { scale: 0.455 }], big: ['skeleton-verity-big', { height: 730 }], pivot: 325 },
+    skel: { small: ['skeleton-verity-small-v1', { scale: 0.455 }], big: ['skeleton-verity-big', { height: 730 }], pivot: 325 },
   },
   order: ['skel', 'lord'],   // Скелет дальше, Лорд ближе к зрителю
 });

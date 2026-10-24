@@ -140,6 +140,10 @@ const E = (() => {
   }
 
   // ---------------------------------------------------------------- персонаж
+  // шарики без ног, нарисованные смотрящими влево: маленький Скелет (v2) — крыло за телом с той
+  // стороны, куда он смотрит, ближнее крыло — поверх тела
+  const RIG_DIR = { 'skeleton-verity-small': -1 };
+
   class Character {
     // opts.scale — масштаб пикселей рига; или opts.height — рост на сцене (верх
     // шляпы/черепа/банта — подошвы), или opts.body + opts.bodyHeight — высота одного слоя.
@@ -177,6 +181,8 @@ const E = (() => {
       let toe = 0;
       for (const c of legsAll) toe += bones[c[2]].tip[0] - bones[c[2]].base[0];
       this.dir = toe < 0 ? -1 : 1;
+      // у шарика нет ног — куда он смотрит, задано рисунком (см. RIG_DIR) или opts.dir
+      if (!legsAll.length) this.dir = opts.dir || RIG_DIR[this.name] || this.dir;
       const limbs = (kind) => {
         const out = ['left', 'right'].map((s) => chain(kind, s)).filter(Boolean);
         out.sort((p, q) => (bones[q[0]].base[0] - bones[p[0]].base[0]) * this.dir);

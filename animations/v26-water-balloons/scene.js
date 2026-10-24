@@ -16,12 +16,13 @@
 const ST = Stage({
   name: 'v26-water-balloons',
   cast: {
-    skel: { small: ['skeleton-verity-small', { scale: 0.455 }], big: ['skeleton-verity-big', { height: 730 }], pivot: 325,
+    skel: { small: ['skeleton-verity-small-v1', { scale: 0.455 }], big: ['skeleton-verity-big', { height: 730 }], pivot: 325,
       voice: 0.9, lie: 60, color: '#f3f1e6' },
     yel: { small: ['girl-verity-small', { bodyHeight: 300, recolor: 'yellow' }],
       big: ['verity-big-girl', { height: 730, splitFeet: true, recolor: 'yellow' }], pivot: 337, voice: 1.45, vAngle: 50,
       color: '#ffe23a', moods: { angry: 'angry theeth', grin: 'theeth smile', big: 'theeth smile' } },
   },
+  transformMusic: 'transform-music',     // как было при рендере (музыка из первого образца)
   order: ['skel', 'yel'],
   background: { theme: 'jungle', seed: 11, sunX: 420, sunY: 150 },
   clouds: [[160, 80, 2.4, 0, 14], [760, 190, 1.8, 1, 19], [1240, 60, 2.6, 2, 12], [1700, 240, 1.7, 0, 21], [470, 320, 1.4, 1, 17]],

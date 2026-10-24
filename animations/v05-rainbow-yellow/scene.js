@@ -17,7 +17,7 @@ const ST = Stage({
     girl: { small: ['girl-verity-small', { bodyHeight: 300, recolor: 'yellow' }],
       big: ['verity-big-girl', { height: 730, splitFeet: true, recolor: 'yellow' }], pivot: 337, voice: 1.4, vAngle: 50,
       moods: { angry: 'sad', grin: 'theeth smile', big: 'smile normal' } },
-    rb: { small: ['skeleton-verity-small', { scale: 0.455, recolor: 'rainbow' }], big: ['all-verity-color', { height: 730 }],
+    rb: { small: ['skeleton-verity-small-v1', { scale: 0.455, recolor: 'rainbow' }], big: ['all-verity-color', { height: 730 }],
       pivot: 325, voice: 0.85, moods: { big: 'theeth smile' } },
   },
   order: ['rb', 'girl'],
