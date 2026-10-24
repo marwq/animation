@@ -22,6 +22,7 @@ const ST = Stage({
     rb: { small: ['skeleton-verity-small', { scale: 0.455, recolor: 'rainbow' }], big: ['all-verity-color', { height: 730 }],
       pivot: 325, voice: 0.85, color: '#ff7a3a', moods: { angry: 'angry theeth', grin: 'happy with theeth', big: 'theeth smile' } },
   },
+  transformMusic: 'transform-music2',     // как было при рендере (ускоренная в 1.5 раза)
   order: ['lord', 'rb'],
   background: { theme: 'plains', seed: 51, sunX: 380, sunY: 160 },
   clouds: [[140, 80, 2.4, 0, 14], [690, 190, 1.8, 1, 18], [1180, 60, 2.6, 2, 12], [1660, 240, 1.6, 0, 20], [420, 310, 1.4, 1, 16]],

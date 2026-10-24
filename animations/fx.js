@@ -836,6 +836,59 @@ const FX = (() => {
     ctx.restore();
   }
 
+  // воздушный шарик на нитке: (x, y) — низ нитки (где держат), len — длина нитки, r — радиус, col — цвет,
+  // sway — наклон нитки (радианы), squash — сплющивание
+  function balloon(ctx, x, y, len = 150, r = 46, col = '#ff3b6b', sway = 0, squash = 1) {
+    const top = [x + Math.sin(sway) * len, y - Math.cos(sway) * len];
+    ctx.save();
+    ctx.beginPath(); ctx.moveTo(x, y);
+    ctx.quadraticCurveTo(x + Math.sin(sway) * len * 0.5 + 12, y - Math.cos(sway) * len * 0.5, top[0], top[1]);
+    ctx.lineWidth = 2.5; ctx.strokeStyle = '#333'; ctx.stroke();
+    ctx.translate(top[0], top[1] - r * squash); ctx.rotate(sway * 0.6);
+    ctx.beginPath(); ctx.ellipse(0, 0, r / Math.sqrt(squash), r * 1.15 * squash, 0, 0, TAU);
+    ctx.fillStyle = col; ctx.fill(); ctx.lineWidth = 4; ctx.strokeStyle = '#2a0a14'; ctx.stroke();
+    ctx.beginPath(); ctx.moveTo(-r * 0.16, r * 1.15 * squash + 8); ctx.lineTo(0, r * 1.15 * squash - 2); ctx.lineTo(r * 0.16, r * 1.15 * squash + 8); ctx.closePath();
+    ctx.fillStyle = col; ctx.fill(); ctx.stroke();
+    ctx.beginPath(); ctx.ellipse(-r * 0.35, -r * 0.45, r * 0.16, r * 0.3, 0.5, 0, TAU); ctx.fillStyle = 'rgba(255,255,255,0.7)'; ctx.fill();
+    ctx.restore();
+  }
+
+  // лопнувший шарик: рваные лоскутки разлетаются
+  function balloonPop(ctx, x, y, life, col = '#ff3b6b', size = 1, seed = 3) {
+    if (life < 0 || life > 1) return;
+    const r = rng(seed);
+    ctx.save();
+    ctx.globalAlpha = Math.min(1, (1 - life) * 2);
+    for (let i = 0; i < 9; i++) {
+      const a = r() * TAU, d = (40 + r() * 90) * size * life;
+      ctx.save(); ctx.translate(x + Math.cos(a) * d, y + Math.sin(a) * d + 160 * life * life); ctx.rotate(a + life * 6);
+      ctx.beginPath(); ctx.moveTo(-10 * size, -6 * size); ctx.lineTo(12 * size, -3 * size); ctx.lineTo(4 * size, 8 * size); ctx.closePath();
+      ctx.fillStyle = col; ctx.fill(); ctx.lineWidth = 2.5; ctx.strokeStyle = '#2a0a14'; ctx.stroke();
+      ctx.restore();
+    }
+    if (life < 0.3) {                                                  // «ба-бах» — звёздочка
+      ctx.globalAlpha = 1 - life / 0.3;
+      ctx.beginPath();
+      for (let i = 0; i < 16; i++) { const a = i / 16 * TAU, rr = (i % 2 ? 22 : 50) * size * (0.6 + life * 2); ctx.lineTo(x + Math.cos(a) * rr, y + Math.sin(a) * rr); }
+      ctx.closePath(); ctx.fillStyle = '#fff6a0'; ctx.fill(); ctx.lineWidth = 3; ctx.strokeStyle = '#b07a00'; ctx.stroke();
+    }
+    ctx.restore();
+  }
+
+  // кактус (майнкрафт): (x, ground) — середина низа, h — высота в блоках, b — блок
+  function cactus(ctx, x, ground, h = 3, b = 46) {
+    ctx.save();
+    for (let i = 0; i < h; i++) {
+      const y = ground - (i + 1) * b;
+      ctx.fillStyle = '#163d12'; ctx.fillRect(x - b / 2 - 3, y - 3, b + 6, b + 6);
+      ctx.fillStyle = '#3e9a2f'; ctx.fillRect(x - b / 2, y, b, b);
+      ctx.fillStyle = '#2f7d23'; ctx.fillRect(x - b / 2 + b * 0.2, y, b * 0.12, b); ctx.fillRect(x + b * 0.15, y, b * 0.12, b);
+      ctx.fillStyle = '#d9f2b0';
+      for (const [dx, dy] of [[-0.44, 0.2], [0.44, 0.55], [-0.44, 0.75], [0.44, 0.1]]) ctx.fillRect(x + dx * b - 3 + (dx > 0 ? 3 : -3), y + dy * b, 6, 3);   // колючки
+    }
+    ctx.restore();
+  }
+
   // пиксельное облачко без обводки (белое, снизу светло-голубая полоса)
   function cloud(ctx, x, y, s, kind, tint) {
     const u = 16 * s;
@@ -1626,7 +1679,7 @@ const FX = (() => {
     }
   }
 
-  return { rng, background, mcBackground, limb, note, waterBalloon, basket, waterSplash, boomerang, flower, bubbleWand, soapBubble, bubblePop, snowball, snowPile, snowCap, snowSplat, snowBurst, slimeBlock, tomato, gardenBed, tomatoBush, tnt, fuseSparks, boom, soot, cloud, shadow, spark, dust, smoke, flash, rays, vein, steam, sweat, stars, twinkle, whoosh, puff,
+  return { rng, background, mcBackground, limb, note, waterBalloon, basket, waterSplash, boomerang, flower, bubbleWand, soapBubble, bubblePop, snowball, snowPile, snowCap, snowSplat, snowBurst, slimeBlock, tomato, gardenBed, tomatoBush, tnt, fuseSparks, boom, soot, balloon, balloonPop, cactus, cloud, shadow, spark, dust, smoke, flash, rays, vein, steam, sweat, stars, twinkle, whoosh, puff,
     heart, hearts, wind, banana, giftBox, suck, drool, tree, apple, bubble, gumSplat, rainCloud, rain, lightning, puddle, seesaw,
     mudPit, mudSplash, rope, cake, crown, lollipop, tears, ball, pillow, feathers, bee, hive, table, pie };
 })();

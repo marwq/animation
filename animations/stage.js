@@ -178,8 +178,9 @@ function Stage(cfg) {
     move(who, g, { y: GROUND - 150 }, 'out2');
     key(who, up, { sx: 0.96, sy: 1.05 }, 3);
     FX_EV.sprout.push({ who, a1, a2, up, g, color: CAST[who].color || '#ff5cc6' });
-    // музыка превращения: по умолчанию присланная (ускорена в 1.5 раза), включается с ухмылкой; cfg.transformMusic — другая
-    const mus = o.music ?? cfg.transformMusic ?? 'transform-music2';
+    // музыка превращения: по умолчанию присланная, в обычном темпе, с ухмылки 3 с и затихает;
+    // cfg.transformMusic — другая ('transform-music2' — ускоренная в 1.5 раза: ролики 03–07 серии)
+    const mus = o.music ?? cfg.transformMusic ?? 'transform-music3';
     if (mus === 'transform-music') sfx('ref:transform-music', g - 5, { gain: o.musicGain ?? 0.75, dur: o.musicDur });
     else if (mus) sfx('ref:' + mus, f + 2, { gain: o.musicGain ?? 1.4, dur: o.musicDur ?? 3 * FPS });   // dur — в кадрах: 3 с, громко
     ev('shake', { f: g, amp: 10, n: 8 });

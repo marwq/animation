@@ -661,6 +661,19 @@ def s_explode(seed=36, **_):
     return norm(1.2 * thump + roar + crackle, 1.0)
 
 
+def s_deflate(seed=37, dur=1.0, **_):
+    """Шарик сдувается и носится: пищащий «пр-р-р» с прыгающей высотой."""
+    d = max(0.3, dur)
+    t = tt(d)
+    f0 = 520 + 260 * np.sin(TAU * 3.3 * t) + 160 * np.sin(TAU * 7.1 * t + 1) - 200 * t / d
+    ph = TAU * np.cumsum(f0) / SR
+    buzz = np.sign(np.sin(ph)) * (0.55 + 0.45 * np.abs(np.sin(TAU * 31 * t)))
+    buzz = bandpass(buzz, 250, 3500)
+    air = bandpass(noise(d, seed), 800, 5000) * 0.25
+    env = np.clip(t / 0.03, 0, 1) * np.clip((d - t) / 0.08, 0, 1)
+    return norm((buzz + air) * env, 0.6)
+
+
 def s_slide(seed=28, **_):
     """Свисток вверх: превращение «щёлк» — тон 600 → 3200 Гц и воздух."""
     d = 0.3
@@ -718,7 +731,7 @@ def write_wav(path, st):
 def demo():
     cues, t = [], 0.3
     for k in SOUNDS:
-        cues.append({'t': t, 'kind': k, 'dur': 1.2 if k in ('dizzy', 'gust', 'anger', 'whirr', 'suck', 'inflate', 'rain', 'creak', 'sob', 'buzz', 'chatter', 'fuse') else 0})
+        cues.append({'t': t, 'kind': k, 'dur': 1.2 if k in ('dizzy', 'gust', 'anger', 'whirr', 'suck', 'inflate', 'rain', 'creak', 'sob', 'buzz', 'chatter', 'fuse', 'deflate') else 0})
         t += 1.8 if k in ('dizzy', 'gust', 'slam', 'love') else 1.0
     return {'duration': t + 0.5, 'cues': cues}
 

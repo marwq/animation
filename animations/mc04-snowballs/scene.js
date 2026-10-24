@@ -24,6 +24,7 @@ const ST = Stage({
       big: ['verity-big-girl', { height: 730, splitFeet: true, recolor: 'yellow' }], pivot: 337, voice: 1.45, vAngle: 50,
       color: '#ffe23a', moods: { angry: 'angry theeth', grin: 'theeth smile', big: 'theeth smile' } },
   },
+  transformMusic: 'transform-music2',     // как было при рендере (ускоренная в 1.5 раза)
   order: ['baby', 'yel'],
   background: { theme: 'taiga', seed: 41, sunX: 1520, sunY: 150 },
   clouds: [[90, 70, 2.4, 0, 14], [640, 170, 1.8, 1, 18], [1130, 50, 2.6, 2, 12], [1640, 250, 1.6, 0, 20], [400, 300, 1.4, 1, 16]],

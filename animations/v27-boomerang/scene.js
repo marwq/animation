@@ -20,6 +20,7 @@ const ST = Stage({
     pink: { small: ['girl-verity-small', { bodyHeight: 300 }], big: ['girl-verity-big', { height: 730, splitFeet: true }],
       pivot: 337, voice: 1.35, vAngle: 50, color: '#ff4fc8', moods: { angry: 'angry theeth', grin: 'theeth smile', big: 'theeth smile' } },
   },
+  transformMusic: 'transform-music2',     // как было при рендере (ускоренная в 1.5 раза)
   order: ['skel', 'pink'],
   background: { theme: 'sunset', seed: 8, sunX: 1500, sunY: 190 },
   clouds: [[120, 90, 2.4, 0, 14], [690, 200, 1.8, 1, 18], [1150, 60, 2.6, 2, 12], [1620, 280, 1.6, 0, 20], [420, 320, 1.4, 1, 16]],

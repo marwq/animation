@@ -22,6 +22,7 @@ const ST = Stage({
     lord: { small: ['lord-verity-small', { bodyHeight: 300 }], big: ['lord-verity-big', { height: 730 }], pivot: 337,
       voice: 1.0, lie: 55, color: '#ffe23a', ouch: ['ref:hit-ow', 1.0, 0.9] },
   },
+  transformMusic: 'transform-music2',     // как было при рендере (ускоренная в 1.5 раза)
   order: ['skel', 'lord'],
   background: { theme: 'castle', seed: 74, sunX: 640, sunY: 160 },
   clouds: [[120, 70, 2.4, 0, 14], [720, 200, 1.8, 1, 18], [1200, 60, 2.6, 2, 12], [1660, 240, 1.6, 0, 20], [420, 300, 1.4, 1, 16]],
