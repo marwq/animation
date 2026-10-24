@@ -83,8 +83,193 @@ const FX = (() => {
     return { canvas: c, margin };
   }
 
+  // ---------------------------------------------------------------- фоны «майнкрафт» по темам
+  // Каждая тема — своё сочное небо, дальние холмы, деревья вдали, цветы; seed меняет расстановку.
+  const MC_THEMES = {
+    meadow: { sky: ['#1b8cff', '#62c3ff', '#dff6ff'], sun: '#fff27a', hills: ['#9fd8c0', '#7cc79f'],
+      grass: ['#5fd331', '#79e449', '#46b81f', '#2e8a12'], trees: ['oak', 'oak', 'birch'], flowers: ['#ff3040', '#ffe02e', '#ffffff'], cloud: ['#ffffff', '#d3ebff'] },
+    cherry: { sky: ['#3aa8ff', '#9fd9ff', '#fff0fa'], sun: '#fff59a', hills: ['#f2bfe0', '#d9a3dc'],
+      grass: ['#62d43a', '#83e65a', '#48b925', '#2f8c17'], trees: ['cherry', 'cherry', 'oak'], flowers: ['#ff5fb0', '#ffffff', '#ffd23a'], cloud: ['#ffffff', '#ffe3f3'] },
+    sunset: { sky: ['#ff4f81', '#ff9f5a', '#ffe38a'], sun: '#fff1a8', hills: ['#c86aa8', '#a5508f'],
+      grass: ['#58c92c', '#73db43', '#3fa51c', '#2a7a10'], trees: ['oak', 'spruce', 'oak'], flowers: ['#ff3a3a', '#ffdd33', '#ff8be0'], cloud: ['#fff6ee', '#ffc8b0'] },
+    jungle: { sky: ['#00a6ff', '#58e1ff', '#e2fff7'], sun: '#fffb8a', hills: ['#7fe0b9', '#4fc79a'],
+      grass: ['#4fd12c', '#74ea45', '#36ad16', '#237a0c'], trees: ['jungle', 'jungle', 'oak'], flowers: ['#ff8a00', '#ff2e8a', '#ffe500'], cloud: ['#ffffff', '#c9f1ff'] },
+    evening: { sky: ['#3d2cc9', '#a14dff', '#ff9ccf'], moon: '#fffbe0', hills: ['#7a4fc7', '#5d3aa6'],
+      grass: ['#4ec12b', '#6ad545', '#37a01b', '#246f0f'], trees: ['spruce', 'spruce', 'birch'], flowers: ['#7af0ff', '#ffffff', '#ff7ad9'], cloud: ['#fdf1ff', '#e2c6ff'] },
+  };
+  const mix = (c1, c2, k) => {
+    const p = (c) => [1, 3, 5].map((i) => parseInt(c.slice(i, i + 2), 16));
+    const a = p(c1), b = p(c2);
+    return '#' + a.map((v, i) => Math.round(v + (b[i] - v) * k).toString(16).padStart(2, '0')).join('');
+  };
+
+  // дерево вдали из блоков: (x, base) — низ ствола, b — размер блока, haze — доля цвета неба
+  function mcTree(g, kind, x, base, b, r, haze, sky) {
+    const H = (c) => mix(c, sky, haze);
+    const out = H('#1d3a1a');
+    const blk = (cx, cy, col) => { g.fillStyle = col; g.fillRect(Math.round(x + cx * b), Math.round(base - (cy + 1) * b), Math.ceil(b), Math.ceil(b)); };
+    const pal = {
+      oak: { trunk: ['#7a5230', '#5e3d22'], leaf: ['#3dbb2c', '#2f9e22', '#57d23f'] },
+      birch: { trunk: ['#f2f0e6', '#2b2b2b'], leaf: ['#7fd34a', '#62bb34', '#9be563'] },
+      cherry: { trunk: ['#5b3a2e', '#43291f'], leaf: ['#ff9fd2', '#ff78bd', '#ffc6e6'] },
+      spruce: { trunk: ['#5a3b1f', '#40290f'], leaf: ['#2d7a3a', '#22612d', '#3b9449'] },
+      jungle: { trunk: ['#8a6a35', '#6a4f24'], leaf: ['#2fae2a', '#228c1e', '#4fcd3c'] },
+    }[kind];
+    const th = kind === 'spruce' ? 2 : kind === 'jungle' ? 6 + Math.floor(r() * 3) : 3 + Math.floor(r() * 2);
+    const cells = [];
+    for (let i = 0; i < th; i++) cells.push([0, i, kind === 'birch' && r() < 0.3 ? pal.trunk[1] : pal.trunk[i % 2 ? 1 : 0]]);
+    const leaf = (cx, cy) => { const v = r(); cells.push([cx, cy, pal.leaf[v < 0.55 ? 0 : v < 0.8 ? 1 : 2]]); };
+    if (kind === 'spruce') {
+      let y = th;
+      for (const w of [2, 1, 2, 1, 1, 0, 0]) { for (let cx = -w; cx <= w; cx++) leaf(cx, y); y++; }
+    } else {
+      const w = kind === 'jungle' ? 3 : 2, top = th;
+      for (let cy = top - 1; cy < top + 2; cy++) for (let cx = -w; cx <= w; cx++) if (!(Math.abs(cx) === w && cy === top - 1 && r() < 0.6)) leaf(cx, cy);
+      for (let cx = -1; cx <= 1; cx++) leaf(cx, top + 2);
+      if (r() < 0.6) leaf(0, top + 3);
+      if (kind === 'cherry') for (let cx = -w - 1; cx <= w + 1; cx += 2 * w + 2) if (r() < 0.7) leaf(cx, top);   // лепестки свисают
+    }
+    // обводка: тень на блок вокруг силуэта
+    g.save();
+    for (const [cx, cy] of cells) {
+      g.fillStyle = out;
+      g.fillRect(Math.round(x + cx * b - 2), Math.round(base - (cy + 1) * b - 2), Math.ceil(b) + 4, Math.ceil(b) + 4);
+    }
+    for (const [cx, cy, col] of cells) blk(cx, cy, H(col));
+    g.restore();
+  }
+
+  function mcBackground(w, h, edge, opts = {}) {
+    const T = { ...MC_THEMES[opts.theme || 'meadow'], ...(opts.override || {}) };
+    const margin = 80;
+    const c = document.createElement('canvas');
+    c.width = w + 2 * margin; c.height = h + 2 * margin;
+    const g = c.getContext('2d');
+    g.translate(margin, margin);
+    const r = rng(opts.seed || 7);
+    // небо
+    const sky = g.createLinearGradient(0, -margin, 0, edge);
+    sky.addColorStop(0, T.sky[0]); sky.addColorStop(0.55, T.sky[1]); sky.addColorStop(1, T.sky[2]);
+    g.fillStyle = sky; g.fillRect(-margin, -margin, c.width, edge + margin + 4);
+    // солнце или луна — квадратные, с ореолом
+    const sx = opts.sunX ?? (w * (0.12 + r() * 0.76)), sy = opts.sunY ?? (150 + r() * 120);
+    const body = T.sun || T.moon;
+    if (body) {
+      const glow = g.createRadialGradient(sx, sy, 20, sx, sy, 260);
+      glow.addColorStop(0, mix(body, '#ffffff', 0.3) + 'cc'); glow.addColorStop(1, body + '00');
+      g.fillStyle = glow; g.fillRect(sx - 260, sy - 260, 520, 520);
+      g.fillStyle = body; g.fillRect(sx - 56, sy - 56, 112, 112);
+      g.fillStyle = mix(body, '#ffffff', 0.55); g.fillRect(sx - 40, sy - 40, 48, 48);
+      if (T.moon) { g.fillStyle = mix(body, '#c9b8ff', 0.4); g.fillRect(sx + 10, sy + 14, 24, 24); g.fillRect(sx - 34, sy + 22, 16, 16); }
+    }
+    // дальние ступенчатые холмы — два слоя
+    const hills = (col, base, amp, B, seed) => {
+      const rr = rng(seed);
+      g.fillStyle = col;
+      let y = base - amp * rr();
+      for (let x = -margin; x < w + margin; x += B) {
+        y = Math.min(base - 10, Math.max(base - amp, y + (Math.floor(rr() * 3) - 1) * B));
+        g.fillRect(x, y, B + 1, edge - y + 10);
+      }
+    };
+    hills(T.hills[0], edge - 70, 230, 40, (opts.seed || 7) + 1);
+    hills(T.hills[1], edge - 20, 120, 32, (opts.seed || 7) + 2);
+    // деревья вдали: дальний ряд (меньше, в дымке) и ближний
+    const rows = [[0.55, 17, 9 + Math.floor(r() * 3)], [0.2, 27, 5 + Math.floor(r() * 3)]];
+    for (const [haze, B, n] of rows) {
+      const xs = [];
+      for (let i = 0; i < n; i++) xs.push(-60 + (i + 0.2 + r() * 0.6) * (w + 120) / n);
+      for (const x of xs) mcTree(g, T.trees[Math.floor(r() * T.trees.length)], x, edge + 2, B, r, haze, T.sky[2]);
+    }
+    // земля: блоки трёх оттенков, кое-где камень
+    const B = 34;
+    g.fillStyle = '#8b5a2b'; g.fillRect(-margin, edge + 40, c.width, h + margin - edge);
+    for (let y = edge + 40; y < h + margin; y += B) {
+      for (let x = -margin; x < w + margin; x += B) {
+        const v = r();
+        g.fillStyle = v < 0.2 ? '#6f4521' : v < 0.34 ? '#a26d3a' : v < 0.38 ? '#8f8f8f' : '#8b5a2b';
+        g.fillRect(x, y, B, B);
+        if (r() < 0.25) { g.fillStyle = 'rgba(0,0,0,0.12)'; g.fillRect(x + B / 2, y + B / 2, B / 2, B / 2); }
+      }
+    }
+    // трава: верхний край с пиксельными бугорками, снизу «натёки» ступеньками
+    const top = [];
+    for (let x = -margin; x <= w + margin; x += 22) top.push([x, edge - (r() < 0.18 ? 11 : 0)]);
+    const drips = [];
+    for (let x = -margin; x < w + margin;) {
+      const sw = 22 * (2 + Math.floor(r() * 4));
+      drips.push([x, sw, edge + 88 + Math.floor(r() * 4) * 22]);
+      x += sw;
+    }
+    const grassPath = () => {
+      g.beginPath();
+      g.moveTo(-margin, edge);
+      for (let i = 0; i < top.length; i++) { const [x, y] = top[i]; g.lineTo(x, y); g.lineTo(x + 22, y); }
+      g.lineTo(w + margin, edge);
+      for (let i = drips.length - 1; i >= 0; i--) { const [x, sw, y] = drips[i]; g.lineTo(x + sw, y); g.lineTo(x, y); }
+      g.closePath();
+    };
+    grassPath(); g.fillStyle = T.grass[0]; g.fill();
+    g.save(); grassPath(); g.clip();
+    const GB = 22;
+    for (let y = edge - 12; y < edge + 190; y += GB) {
+      for (let x = -margin; x < w + margin; x += GB) {
+        const v = r();
+        if (v < 0.22) { g.fillStyle = T.grass[1]; g.fillRect(x, y, GB, GB); }
+        else if (v < 0.22 + 0.1 + (y - edge) / 500) { g.fillStyle = T.grass[2]; g.fillRect(x, y, GB, GB); }
+      }
+    }
+    g.restore();
+    // кромки: тёмно-зелёная линия сверху и по натёкам
+    g.lineJoin = 'miter';
+    g.strokeStyle = T.grass[3]; g.lineWidth = 6;
+    g.beginPath(); top.forEach(([x, y], i) => { i ? g.lineTo(x, y) : g.moveTo(x, y); g.lineTo(x + 22, y); }); g.stroke();
+    g.beginPath();
+    drips.forEach(([x, sw, y], i) => { i ? g.lineTo(x, y) : g.moveTo(x, y); g.lineTo(x + sw, y); });
+    g.stroke();
+    // цветы на кромке травы (в стороне от середины, где стоят герои)
+    for (let i = 0; i < 9; i++) {
+      const x = r() < 0.5 ? 30 + r() * 320 : w - 350 + r() * 320, col = T.flowers[Math.floor(r() * T.flowers.length)];
+      const fb = 7;
+      g.fillStyle = '#2f8a17'; g.fillRect(x, edge - 4 * fb, fb, 3 * fb);
+      g.fillStyle = col; g.fillRect(x - fb, edge - 6 * fb, 3 * fb, 2 * fb); g.fillRect(x, edge - 7 * fb, fb, fb);
+      g.fillStyle = '#ffde3a'; g.fillRect(x, edge - 5 * fb - fb / 2, fb, fb);
+    }
+    return { canvas: c, margin, cloud: T.cloud };
+  }
+
+  // тонкая рука-лапа (превращение «рост»): точки пути, толщина, цвет; на конце три пальца-когтя
+  function limb(ctx, pts, w, col) {
+    ctx.save();
+    ctx.lineCap = 'round'; ctx.lineJoin = 'round';
+    const path = () => { ctx.beginPath(); pts.forEach(([x, y], i) => (i ? ctx.lineTo(x, y) : ctx.moveTo(x, y))); };
+    path(); ctx.lineWidth = w + 8; ctx.strokeStyle = '#111'; ctx.stroke();
+    path(); ctx.lineWidth = w; ctx.strokeStyle = col; ctx.stroke();
+    const [ax, ay] = pts[pts.length - 2], [bx, by] = pts[pts.length - 1];
+    const a = Math.atan2(by - ay, bx - ax);
+    for (const da of [-0.7, 0, 0.7]) {
+      const ex = bx + Math.cos(a + da) * w * 1.6, ey = by + Math.sin(a + da) * w * 1.6;
+      for (const [lw, c] of [[w * 0.55 + 6, '#111'], [w * 0.55, col]]) {
+        ctx.beginPath(); ctx.moveTo(bx, by); ctx.lineTo(ex, ey); ctx.lineWidth = lw; ctx.strokeStyle = c; ctx.stroke();
+      }
+    }
+    ctx.restore();
+  }
+
+  // нотка (поёт): (x, y) — головка, s — масштаб, two — сдвоенная
+  function note(ctx, x, y, s = 1, alpha = 1, two = false, col = '#2b2b2b') {
+    ctx.save();
+    ctx.globalAlpha = alpha; ctx.translate(x, y); ctx.scale(s, s); ctx.rotate(-0.25);
+    ctx.fillStyle = col; ctx.strokeStyle = col; ctx.lineWidth = 4; ctx.lineCap = 'round';
+    const head = (hx) => { ctx.beginPath(); ctx.ellipse(hx, 0, 10, 7.5, -0.4, 0, TAU); ctx.fill(); ctx.beginPath(); ctx.moveTo(hx + 8.5, -2); ctx.lineTo(hx + 8.5, -40); ctx.stroke(); };
+    head(0);
+    if (two) { head(26); ctx.lineWidth = 7; ctx.beginPath(); ctx.moveTo(8.5, -40); ctx.lineTo(34.5, -44); ctx.stroke(); }
+    else { ctx.beginPath(); ctx.moveTo(8.5, -40); ctx.quadraticCurveTo(22, -30, 18, -16); ctx.stroke(); }
+    ctx.restore();
+  }
+
   // пиксельное облачко без обводки (белое, снизу светло-голубая полоса)
-  function cloud(ctx, x, y, s, kind) {
+  function cloud(ctx, x, y, s, kind, tint) {
     const u = 16 * s;
     const shapes = [
       [[2, 0, 4], [0, 1, 9]],
@@ -92,10 +277,10 @@ const FX = (() => {
       [[0, 0, 2]],
     ];
     const rows = shapes[kind % shapes.length];
-    ctx.fillStyle = '#ffffff';
+    ctx.fillStyle = tint ? tint[0] : '#ffffff';
     for (const [a, r, b] of rows) ctx.fillRect(x + a * u, y + r * u, b * u, u + 1);
     const last = rows[rows.length - 1];
-    ctx.fillStyle = '#cfe1f6';
+    ctx.fillStyle = tint ? tint[1] : '#cfe1f6';
     ctx.fillRect(x + last[0] * u, y + (last[1] + 1) * u - u * 0.28, last[2] * u, u * 0.28);
   }
 
@@ -873,7 +1058,7 @@ const FX = (() => {
     }
   }
 
-  return { rng, background, cloud, shadow, spark, dust, smoke, flash, rays, vein, steam, sweat, stars, twinkle, whoosh, puff,
+  return { rng, background, mcBackground, limb, note, cloud, shadow, spark, dust, smoke, flash, rays, vein, steam, sweat, stars, twinkle, whoosh, puff,
     heart, hearts, wind, banana, giftBox, suck, drool, tree, apple, bubble, gumSplat, rainCloud, rain, lightning, puddle, seesaw,
     mudPit, mudSplash, rope, cake, crown, lollipop, tears, ball, pillow, feathers, bee, hive, table, pie };
 })();

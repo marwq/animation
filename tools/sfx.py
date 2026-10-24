@@ -9,8 +9,10 @@ cues.json (его пишет tools/render_anim.js из window.SCENE.audio()):
    "cues": [{"t": 6.5, "kind": "punch", "gain": 1, "pan": -0.3, "dur": 1.2, "pitch": 1.2}, ...]}
 pan: -1 слева … 1 справа. dur — для звуков, длина которых зависит от сцены (звёздочки, ветер).
 pitch — выше/ниже (голос маленького выше, большого ниже).
+kind 'ref:имя' — готовый звук из sounds/ref/имя.wav (музыка превращения, дыхание и пение Лорда и др.).
 """
 import json
+import os
 import sys
 import wave
 
@@ -532,11 +534,57 @@ def s_love(**_):
     return norm(x, 0.42)
 
 
-SOUNDS = {k[2:]: v for k, v in globals().items() if k.startswith('s_') and callable(v)}
 
 
 # ---------------------------------------------------------------- сведение
+# ---------------------------------------------------------------- сэмплы
+# 'ref:имя' — запись из sounds/ref/имя.wav (вырезана из присланного образца; см. sounds/README.md)
+REF_DIR = os.path.join(os.path.dirname(os.path.abspath(__file__)), '..', 'sounds', 'ref')
+_samples = {}
+
+
+def sample(name):
+    if name not in _samples:
+        with wave.open(os.path.join(REF_DIR, name + '.wav')) as w:
+            sr, ch = w.getframerate(), w.getnchannels()
+            x = np.frombuffer(w.readframes(w.getnframes()), '<i2').reshape(-1, ch) / 32768
+        if sr != SR:                                              # к частоте сведения
+            n = int(round(len(x) * SR / sr))
+            src = np.arange(n) * sr / SR
+            x = np.stack([np.interp(src, np.arange(len(x)), x[:, i]) for i in range(ch)], 1)
+        _samples[name] = x
+    return _samples[name]
+
+
+def render_sample(c):
+    x = sample(c['kind'][4:])
+    k = c.get('pitch') or 1
+    if k != 1:
+        x = np.stack([repitch(x[:, i], k) for i in range(x.shape[1])], 1)
+    if c.get('dur'):                                              # обрезать с коротким затуханием
+        n = min(len(x), nsamp(c['dur']))
+        f = min(n, nsamp(0.05))
+        x = x[:n] * np.concatenate([np.ones(n - f), np.linspace(1, 0, f)])[:, None]
+    return x[:, 0] if x.shape[1] == 1 else x
+
+
+def s_slide(seed=28, **_):
+    """Свисток вверх: превращение «щёлк» — тон 600 → 3200 Гц и воздух."""
+    d = 0.3
+    t = tt(d)
+    f = 600 * (3200 / 600) ** (t / d) ** 1.4
+    tone = np.sin(TAU * np.cumsum(f) / SR)
+    air = bandpass(noise(d, seed), 1500, 7000) * 0.25
+    env = np.clip(t / 0.02, 0, 1) * np.clip((d - t) / 0.08, 0, 1)
+    return norm((tone + air) * env, 0.6)
+
+
+SOUNDS = {k[2:]: v for k, v in globals().items() if k.startswith('s_') and callable(v)}
+
+
 def render_cue(c):
+    if c['kind'].startswith('ref:'):
+        return render_sample(c)
     fn = SOUNDS[c['kind']]
     seed = int(c.get('seed', round(c['t'] * 97)))
     x = fn(seed=seed, dur=c.get('dur', 0) or None) if c.get('dur') else fn(seed=seed)
@@ -552,6 +600,10 @@ def mix(spec):
     right = np.zeros(n)
     for c in spec['cues']:
         x = render_cue(c) * c.get('gain', 1.0)
+        if x.ndim == 2:                                           # стерео-сэмпл (музыка) — как есть
+            put(left, x[:, 0], c['t'])
+            put(right, x[:, 1], c['t'])
+            continue
         p = float(np.clip(c.get('pan', 0), -1, 1))
         a = (p + 1) * np.pi / 4
         put(left, x * np.cos(a) * np.sqrt(2), c['t'])

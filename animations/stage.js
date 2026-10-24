@@ -37,7 +37,7 @@ function Stage(cfg) {
 
   // ---------------------------------------------------------------- события эффектов
   const FX_EV = { spark: [], shake: [], zoom: [], dust: [], smoke: [], flash: [], rays: [], vein: [], steam: [],
-    sweat: [], stars: [], twinkle: [], whoosh: [], hearteyes: [], hearts: [], wind: [], heartshot: [], suck: [], drool: [], tears: [] };
+    sweat: [], stars: [], twinkle: [], whoosh: [], hearteyes: [], hearts: [], wind: [], heartshot: [], suck: [], drool: [], tears: [], sprout: [] };
   const SFX = [];
   const sfx = (kind, f, o = {}) => SFX.push({ kind, f, ...o });
   // эффект + его звук (если у эффекта он есть и не выключен snd: false)
@@ -50,7 +50,8 @@ function Stage(cfg) {
       if (o.swing !== false) sfx('swing', o.f - 5, { at: o.at, gain: 0.8 });
       sfx(o.snd || 'punch', o.f, { at: o.at, gain: g });
       const victim = o.victim || (typeof o.at === 'string' ? o.at.split(':')[0] : null);
-      if (victim && o.hurt !== false) sfx('hurt', o.f + 2, { who: victim, gain: 0.9 });
+      const ouch = victim && CAST[victim] && CAST[victim].ouch;          // свой «ой» из записей: [вид, высота, громкость]
+      if (victim && o.hurt !== false) sfx(ouch ? ouch[0] : 'hurt', o.f + 2, { who: victim, gain: ouch ? ouch[2] ?? 0.9 : 0.9, pitch: ouch ? ouch[1] : undefined });
     }
     else if (kind === 'twinkle') sfx((o.size || 46) >= 46 ? 'twinkle' : 'sparkle', o.f, { at: o.at, gain: g });
     else if (kind === 'stars') sfx('dizzy', o.f0, { who: o.who, dur: o.f1 - o.f0, gain: g ?? 0.8 });
@@ -130,6 +131,8 @@ function Stage(cfg) {
   // вспышка и дым -> из дыма большая версия (0.55 -> 1.1 -> 0.96 -> 1)
   // o.fast — короткая злость и лучи (большой уже через ~1 с после начала)
   function transform(who, f, x, bigX, face, o = {}) {
+    if (o.style === 'grow') return transformGrow(who, f, x, bigX, face, o);
+    if (o.style === 'snap') return transformSnap(who, f, bigX, face, o);
     const A = o.fast ? 6 : 22, R = o.fast ? 8 : 14;   // злость, лучи — кадры
     key(who, f, { eyes: 'angry', mouth: mood(who, 'angry', 'sad') }, 0);
     ev('vein', { who, f0: f + 2, f1: f + A + 4 });
@@ -156,6 +159,44 @@ function Stage(cfg) {
     // девушка стала большой — в неё влюбляются (o.love: кто, o.loveDur: сколько кадров)
     for (const w of [].concat(o.love || [])) love(w, g + 10, g + 10 + (o.loveDur || 50));
     return g + 6;
+  }
+
+  // превращение «рост» (как в образце): жуткая ухмылка, из шарика по очереди вырастают две длинные
+  // руки-лапы до земли (хруст), шарик поднимается на них — и под музыку встаёт большим (вытягивается вверх)
+  function transformGrow(who, f, x, bigX, face, o = {}) {
+    const a1 = f + 8, a2 = f + 14, up = f + 21, g = f + 28;
+    key(who, f, { eyes: 'angry', mouth: mood(who, 'angry', 'sad') }, 0);
+    key(who, f + 4, { mouth: mood(who, 'grin', 'theeth smile') }, 0);
+    key(who, f + 4, { sx: 1.08, sy: 0.93 }, 2);
+    key(who, f + 8, { sx: 1, sy: 1 }, 3);
+    sfx('ref:grin-hit', f + 4, { who, gain: 0.8 });
+    tremble(who, f + 5, up, x, 2);
+    sfx('ref:crack1', a1, { who, gain: 0.9 });
+    sfx('ref:crack2', a2, { who, gain: 1.0 });
+    move(who, up, { x, y: GROUND });
+    move(who, g, { y: GROUND - 150 }, 'out2');
+    key(who, up, { sx: 0.96, sy: 1.05 }, 3);
+    FX_EV.sprout.push({ who, a1, a2, up, g, color: CAST[who].color || '#ff5cc6' });
+    if (o.music !== false) sfx('ref:transform-music', g - 5, { gain: o.musicGain ?? 0.75, dur: o.musicDur });
+    ev('shake', { f: g, amp: 10, n: 8 });
+    key(who, g, { form: 'big', x: bigX, y: GROUND, face, sx: 0.95, sy: 0.72, look: 1, mouth: mood(who, 'big', 'mouth'), rot: 0, pivot: 0 }, 0);
+    ev('dust', { f: g, x: bigX, r: 60, n: 6, snd: 'land' });
+    key(who, g + 3, { sx: 1, sy: 1.1 }, 3, 'out');
+    key(who, g + 8, { sy: 0.97 }, 4);
+    key(who, g + 11, { sy: 1 }, 3);
+    for (const w of [].concat(o.love || [])) love(w, g + 6, g + 6 + (o.loveDur || 50));
+    return g;
+  }
+
+  // превращение «щелчок» (Лорд в образце): свисток вверх — и сразу большой, с небольшим «пружинящим» толчком
+  function transformSnap(who, f, bigX, face, o = {}) {
+    sfx('slide', f - 6, { who, gain: 0.7 });
+    ev('flash', { f, who, strength: 0.25 });
+    key(who, f, { form: 'big', x: bigX, y: GROUND, face, sx: 1.08, sy: 0.9, look: 1, mouth: mood(who, 'big', 'mouth'), rot: 0, pivot: 0 }, 0);
+    key(who, f + 4, { sx: 0.97, sy: 1.04 }, 4, 'out');
+    key(who, f + 8, { sx: 1, sy: 1 }, 4);
+    for (const w of [].concat(o.love || [])) love(w, f + 6, f + 6 + (o.loveDur || 50));
+    return f;
   }
 
   // обратно в маленькую версию: дым, вспышка, шарик выскакивает (0.6 -> 1.15 -> 1)
@@ -530,7 +571,7 @@ function Stage(cfg) {
     ctx.drawImage(BG.canvas, -BG.margin, -BG.margin);
     for (const [x0, y, s, kind, v] of CLOUDS) {
       const span = W + 300;
-      FX.cloud(ctx, ((x0 + v * t + 150) % span) - 150, y, s, kind);
+      FX.cloud(ctx, ((x0 + v * t + 150) % span) - 150, y, s, kind, BG.cloud);
     }
     for (const fn of hooks.beforeChars) { fn(ctx, f, S, CAM); ctx.setTransform(...CAM); }   // деревья, домики — позади всех
     // тени
@@ -541,6 +582,28 @@ function Stage(cfg) {
       const air = Math.max(0, GROUND - foot[1]);
       const w = (p.form === 'big' ? 120 : ch.width * 0.42) * Math.max(0.35, 1 - air / 700);
       if (foot[1] > -200) FX.shadow(ctx, foot[0], GROUND + 6, w, 0.3 * Math.max(0.25, 1 - air / 600));
+    }
+    // руки-лапы превращения «рост» — за шариком
+    for (const sp of FX_EV.sprout) {
+      if (f < sp.a1 || f >= sp.g) continue;
+      const { ch, st, p } = S[sp.who];
+      const c = ch.point(st, 'body'), R = ch.width * 0.5 * (p.sx || 1);
+      const base = statesAt(sp.a1)[sp.who].ch.point(statesAt(sp.a1)[sp.who].st, 'body');
+      for (const [side, f0] of [[-1, sp.a1], [1, sp.a2]]) {
+        if (f < f0) continue;
+        const u = E.clamp((f - f0 + 1) / 6, 0, 1);                     // доля выросшей руки
+        const sh = [c[0] + side * R * 0.8, c[1] + R * 0.15];
+        const hand = [base[0] + side * R * 2.5, GROUND - 4];
+        const L = R * 1.75;                                            // длина каждого из двух звеньев
+        const dx = hand[0] - sh[0], dy = hand[1] - sh[1], d = Math.min(Math.hypot(dx, dy), 2 * L - 1);
+        const ang = Math.atan2(dy, dx), k = Math.acos(d / (2 * L));
+        const el = [sh[0] + Math.cos(ang - side * k) * L, sh[1] + Math.sin(ang - side * k) * L];   // локоть вверх и наружу
+        const end = [sh[0] + Math.cos(ang) * d, sh[1] + Math.sin(ang) * d];
+        // растёт: сначала плечо, потом предплечье
+        const pts = u < 0.5 ? [sh, [E.lerp(sh[0], el[0], u * 2), E.lerp(sh[1], el[1], u * 2)]]
+          : [sh, el, [E.lerp(el[0], end[0], (u - 0.5) * 2), E.lerp(el[1], end[1], (u - 0.5) * 2)]];
+        FX.limb(ctx, pts, R * 0.16, sp.color);
+      }
     }
     // лучи — за спиной
     for (const r of FX_EV.rays) {
@@ -701,7 +764,7 @@ function Stage(cfg) {
       EYES = await (await fetch('/animations/eyes.json')).json();
       if (big) big();
       for (const k of Object.keys(cache)) delete cache[k];             // состояния, посчитанные до всех ключей
-      BG = FX.background(W, H, EDGE, cfg.background || {});
+      BG = (cfg.background || {}).theme ? FX.mcBackground(W, H, EDGE, cfg.background) : FX.background(W, H, EDGE, cfg.background || {});
     })();
     window.renderFrame = (f) => renderFrame(f, ctx);
     window.SCENE.audio = audio;
