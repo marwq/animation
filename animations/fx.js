@@ -1582,6 +1582,80 @@ const FX = (() => {
     ctx.restore();
   }
 
+  // пруд в земле (разрез): x0..x1, поверхность воды на y, глубина d; t — время (блики плывут)
+  function pond(ctx, x0, x1, y, d, t = 0) {
+    const B = 22;
+    ctx.save();
+    ctx.fillStyle = '#111'; ctx.fillRect(x0 - 5, y - 14, x1 - x0 + 10, d + 19);
+    ctx.fillStyle = '#5a3a1a'; ctx.fillRect(x0 - 1, y - 10, x1 - x0 + 2, 10);
+    for (let yy = y; yy < y + d; yy += B) {
+      const depth = (yy - y) / d;
+      for (let xx = x0; xx < x1; xx += B) {
+        const h = Math.abs(Math.sin(xx * 12.9898 + yy * 78.233) * 43758.5453) % 1;
+        const base = depth < 0.15 ? ['#6cc0ff', '#4aa6f5', '#5ab4ff'] : depth < 0.5 ? ['#3f95f5', '#2f7fe0', '#4a9ff5'] : ['#2a6fd0', '#2160c0', '#2d78da'];
+        ctx.fillStyle = base[Math.floor(h * 3)];
+        ctx.fillRect(xx, yy, Math.min(B, x1 - xx) + 1, Math.min(B, y + d - yy) + 1);
+      }
+    }
+    ctx.fillStyle = 'rgba(255,255,255,0.8)';
+    for (let i = 0; i < 6; i++) {
+      const px = x0 + ((i * 97 + t * 40) % (x1 - x0 - 50)), py = y + 6 + (i % 3) * B;
+      ctx.fillRect(px, py, 26 + (i % 2) * 18, 4);
+    }
+    ctx.restore();
+  }
+
+  // рыба (майнкрафт-лосось): центр (x, y), длина s, поворот rot; t — время (хвост бьёт)
+  function fish(ctx, x, y, s = 110, rot = 0, t = 0, col = '#e8603a') {
+    ctx.save(); ctx.translate(x, y); ctx.rotate(rot);
+    const h = s * 0.42, ta = Math.sin(t * 22) * 0.45;
+    ctx.lineJoin = 'round'; ctx.lineWidth = Math.max(3, s * 0.05); ctx.strokeStyle = '#111';
+    ctx.save(); ctx.translate(-s * 0.36, 0); ctx.rotate(ta);                // хвост
+    ctx.beginPath(); ctx.moveTo(0, 0); ctx.lineTo(-s * 0.32, -h * 0.6); ctx.lineTo(-s * 0.26, 0); ctx.lineTo(-s * 0.32, h * 0.6); ctx.closePath();
+    ctx.fillStyle = '#c94a2a'; ctx.fill(); ctx.stroke(); ctx.restore();
+    ctx.beginPath(); ctx.ellipse(0, 0, s * 0.42, h / 2, 0, 0, TAU); ctx.fillStyle = col; ctx.fill(); ctx.stroke();
+    ctx.save(); ctx.clip();
+    ctx.fillStyle = '#ffb08a'; ctx.fillRect(-s * 0.42, h * 0.08, s * 0.84, h * 0.5);
+    ctx.fillStyle = '#c94a2a'; for (const k of [-0.15, 0.05]) ctx.fillRect(k * s, -h / 2, s * 0.06, h);
+    ctx.restore();
+    ctx.beginPath(); ctx.moveTo(-s * 0.05, -h * 0.45); ctx.lineTo(s * 0.08, -h * 0.85); ctx.lineTo(s * 0.18, -h * 0.42); ctx.closePath();
+    ctx.fillStyle = '#c94a2a'; ctx.fill(); ctx.stroke();                     // плавник
+    ctx.beginPath(); ctx.arc(s * 0.25, -h * 0.08, s * 0.06, 0, TAU); ctx.fillStyle = '#fff'; ctx.fill(); ctx.lineWidth = 2; ctx.stroke();
+    ctx.beginPath(); ctx.arc(s * 0.265, -h * 0.08, s * 0.03, 0, TAU); ctx.fillStyle = '#111'; ctx.fill();
+    ctx.restore();
+  }
+
+  // удочка: хват в (x, y), угол a (от вертикали, по часовой), длина L; возвращает кончик
+  function fishingRod(ctx, x, y, a, L = 320) {
+    const tx = x + Math.sin(a) * L, ty = y - Math.cos(a) * L;
+    ctx.save(); ctx.lineCap = 'round';
+    ctx.lineWidth = 15; ctx.strokeStyle = '#111'; ctx.beginPath(); ctx.moveTo(x - Math.sin(a) * 30, y + Math.cos(a) * 30); ctx.lineTo(tx, ty); ctx.stroke();
+    ctx.lineWidth = 9; ctx.strokeStyle = '#a8702e'; ctx.stroke();
+    ctx.lineWidth = 3; ctx.strokeStyle = '#d9a35e'; ctx.beginPath(); ctx.moveTo(x, y); ctx.lineTo(tx, ty); ctx.stroke();
+    const rx = x + Math.sin(a) * L * 0.12 - Math.cos(a) * 16, ry = y - Math.cos(a) * L * 0.12 - Math.sin(a) * 16;   // катушка
+    ctx.beginPath(); ctx.arc(rx, ry, 16, 0, TAU); ctx.fillStyle = '#8a8a8a'; ctx.fill(); ctx.lineWidth = 4; ctx.strokeStyle = '#111'; ctx.stroke();
+    ctx.beginPath(); ctx.arc(rx, ry, 5, 0, TAU); ctx.fillStyle = '#111'; ctx.fill();
+    ctx.restore();
+    return [tx, ty];
+  }
+
+  // леска от кончика до крючка (провис sag); крючок или поплавок на конце
+  function fishLine(ctx, tip, end, sag = 30, kind = 'hook') {
+    ctx.save();
+    ctx.lineWidth = 2.5; ctx.strokeStyle = '#2b2b2b';
+    ctx.beginPath(); ctx.moveTo(tip[0], tip[1]); ctx.quadraticCurveTo((tip[0] + end[0]) / 2, (tip[1] + end[1]) / 2 + sag, end[0], end[1]); ctx.stroke();
+    if (kind === 'float') {
+      ctx.lineWidth = 3; ctx.strokeStyle = '#111';
+      ctx.beginPath(); ctx.arc(end[0], end[1], 13, Math.PI, TAU); ctx.fillStyle = '#e8262e'; ctx.fill(); ctx.stroke();
+      ctx.beginPath(); ctx.arc(end[0], end[1], 13, 0, Math.PI); ctx.fillStyle = '#ffffff'; ctx.fill(); ctx.stroke();
+    } else if (kind === 'hook') {
+      ctx.lineWidth = 5; ctx.strokeStyle = '#111'; ctx.lineCap = 'round';
+      ctx.beginPath(); ctx.moveTo(end[0], end[1]); ctx.lineTo(end[0], end[1] + 18); ctx.arc(end[0] - 9, end[1] + 18, 9, 0, Math.PI * 0.9); ctx.stroke();
+      ctx.lineWidth = 2.5; ctx.strokeStyle = '#c8c8c8'; ctx.stroke();
+    }
+    ctx.restore();
+  }
+
   // блок разлетается кусочками: life 0..1, кусочки-квадраты по дугам с вращением
   function blockBurst(ctx, x, y, life, seed = 1, cols = ['#f39314', '#d6740a', '#ffab3a'], n = 14, size = 46, spread = 1, floor = Infinity) {
     if (life < 0 || life > 1) return;
@@ -2388,5 +2462,5 @@ const FX = (() => {
 
   return { rng, background, mcBackground, limb, note, waterBalloon, basket, waterSplash, boomerang, flower, bubbleWand, soapBubble, bubblePop, snowball, snowPile, snowCap, snowSplat, snowBurst, slimeBlock, tomato, gardenBed, tomatoBush, tnt, fuseSparks, boom, soot, balloon, balloonPop, cactus, paintBucket, paintBrush, mustache, paintHole, paintSplash, waterJet, cobble, cloud, shadow, spark, dust, smoke, flash, rays, vein, steam, sweat, stars, twinkle, whoosh, puff,
     heart, hearts, wind, banana, giftBox, suck, drool, tree, apple, bubble, gumSplat, rainCloud, rain, lightning, puddle, seesaw,
-    mudPit, mudSplash, rope, cake, crown, lollipop, tears, ball, pillow, feathers, bee, hive, table, pie, mcAppleTree, pumpkinBlock, blockBurst, mcChest, iceCream, scoopCap, iceBlock, frost, magicBeam, rails, grassSteps, minecart, kite, kiteString, popcorn, popcornPile, popBucket, cornCob, sunRay, pickaxe, grassBlock, pit, chili, chiliBush, fireBreath, flame, bigLeaf };
+    mudPit, mudSplash, rope, cake, crown, lollipop, tears, ball, pillow, feathers, bee, hive, table, pie, mcAppleTree, pumpkinBlock, blockBurst, mcChest, iceCream, scoopCap, iceBlock, frost, magicBeam, rails, grassSteps, minecart, kite, kiteString, popcorn, popcornPile, popBucket, cornCob, sunRay, pickaxe, grassBlock, pit, chili, chiliBush, fireBreath, flame, bigLeaf, pond, fish, fishingRod, fishLine };
 })();
