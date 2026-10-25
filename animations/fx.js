@@ -1267,6 +1267,71 @@ const FX = (() => {
     ctx.restore();
   }
 
+  // рельсы вдоль ломаной pts [[x, y], ...] (y — верх рельса): шпалы и железная полоса
+  function rails(ctx, pts) {
+    ctx.save();
+    ctx.lineCap = 'butt';
+    for (let i = 0; i + 1 < pts.length; i++) {
+      const [x0, y0] = pts[i], [x1, y1] = pts[i + 1], L = Math.hypot(x1 - x0, y1 - y0), a = Math.atan2(y1 - y0, x1 - x0);
+      for (let d = 18; d < L; d += 56) {
+        const px = x0 + Math.cos(a) * d, py = y0 + Math.sin(a) * d;
+        ctx.save(); ctx.translate(px, py); ctx.rotate(a);
+        ctx.fillStyle = '#111'; ctx.fillRect(-19, 2, 38, 16);
+        ctx.fillStyle = '#8a5a2b'; ctx.fillRect(-16, 4, 32, 11);
+        ctx.restore();
+      }
+    }
+    for (const [w, c] of [[12, '#111'], [7, '#a8a8a8']]) {
+      ctx.lineWidth = w; ctx.strokeStyle = c;
+      ctx.beginPath(); pts.forEach(([x, y], i) => (i ? ctx.lineTo(x, y + 2) : ctx.moveTo(x, y + 2))); ctx.stroke();
+    }
+    ctx.lineWidth = 2; ctx.strokeStyle = '#e6e6e6';
+    ctx.beginPath(); pts.forEach(([x, y], i) => (i ? ctx.lineTo(x, y) : ctx.moveTo(x, y))); ctx.stroke();
+    ctx.restore();
+  }
+
+  // горка из блоков земли с травой: столбики [[x, ширина, высота], ...] от земли y
+  function grassSteps(ctx, y, cols, B = 70) {
+    ctx.save();
+    for (const [x, w, h] of cols) {
+      ctx.fillStyle = '#111'; ctx.fillRect(x - 3, y - h - 3, w + 6, h + 3);
+      for (let yy = y - h; yy < y; yy += B) {
+        for (let xx = x; xx < x + w; xx += B) {
+          const top = yy === y - h, bw = Math.min(B, x + w - xx), bh = Math.min(B, y - yy);
+          ctx.fillStyle = top ? '#8a5a2b' : '#7a4f25'; ctx.fillRect(xx, yy, bw, bh);
+          ctx.fillStyle = '#6a421c';
+          for (let k = 0; k < 4; k++) ctx.fillRect(xx + ((k * 37 + yy) % (bw - 12)) + 2, yy + ((k * 23 + xx) % (bh - 12)) + 2, 10, 10);
+          if (top) { ctx.fillStyle = '#5fd331'; ctx.fillRect(xx, yy, bw, bh * 0.28); ctx.fillStyle = '#46b81f'; for (let k = 0; k < bw; k += 14) ctx.fillRect(xx + k, yy + bh * 0.28, 7, 7); }
+          ctx.fillStyle = 'rgba(0,0,0,0.25)'; ctx.fillRect(xx, yy + bh - 3, bw, 3); ctx.fillRect(xx + bw - 3, yy, 3, bh);
+        }
+      }
+    }
+    ctx.restore();
+  }
+
+  // вагонетка (майнкрафт): (x, y) — низ колёс по центру, w — ширина; rot вокруг центра ящика
+  // center: (x, y) — середина ящика (иначе низ колёс; поворот — вокруг этой точки)
+  function minecart(ctx, x, y, w = 240, rot = 0, sq = 1, center = false) {
+    const bh = w * 0.46, wr = w * 0.1, up = wr * 2 + bh / 2 - 4;
+    ctx.save();
+    ctx.translate(x, y); ctx.rotate(rot); ctx.scale(1 / sq, sq);
+    if (!center) ctx.translate(0, -up);
+    ctx.lineJoin = 'round';
+    for (const k of [-0.3, 0.3]) {                                   // колёса
+      ctx.beginPath(); ctx.arc(k * w, bh / 2 + wr - 4, wr, 0, TAU); ctx.fillStyle = '#2b2b2b'; ctx.fill(); ctx.lineWidth = 5; ctx.strokeStyle = '#111'; ctx.stroke();
+      ctx.beginPath(); ctx.arc(k * w, bh / 2 + wr - 4, wr * 0.35, 0, TAU); ctx.fillStyle = '#8a8a8a'; ctx.fill();
+    }
+    ctx.fillStyle = '#111'; ctx.fillRect(-w / 2 - 5, -bh / 2 - 5, w + 10, bh + 10);
+    ctx.fillStyle = '#8f949b'; ctx.fillRect(-w / 2, -bh / 2, w, bh);
+    ctx.fillStyle = '#6c7178';
+    ctx.fillRect(-w / 2, -bh / 2, w, bh * 0.16); ctx.fillRect(-w / 2, bh / 2 - bh * 0.16, w, bh * 0.16);
+    ctx.fillRect(-w / 2, -bh / 2, w * 0.07, bh); ctx.fillRect(w / 2 - w * 0.07, -bh / 2, w * 0.07, bh);
+    ctx.fillStyle = '#b4b9c0'; ctx.fillRect(-w / 2 + w * 0.07, -bh / 2 + bh * 0.16, w * 0.86, bh * 0.08);
+    ctx.fillStyle = '#5a5e64';
+    for (const k of [-0.25, 0, 0.25]) ctx.fillRect(k * w - 5, -bh / 2 + bh * 0.3, 10, bh * 0.38);
+    ctx.restore();
+  }
+
   // блок разлетается кусочками: life 0..1, кусочки-квадраты по дугам с вращением
   function blockBurst(ctx, x, y, life, seed = 1, cols = ['#f39314', '#d6740a', '#ffab3a'], n = 14, size = 46, spread = 1, floor = Infinity) {
     if (life < 0 || life > 1) return;
@@ -2073,5 +2138,5 @@ const FX = (() => {
 
   return { rng, background, mcBackground, limb, note, waterBalloon, basket, waterSplash, boomerang, flower, bubbleWand, soapBubble, bubblePop, snowball, snowPile, snowCap, snowSplat, snowBurst, slimeBlock, tomato, gardenBed, tomatoBush, tnt, fuseSparks, boom, soot, balloon, balloonPop, cactus, paintBucket, paintBrush, mustache, paintHole, paintSplash, waterJet, cobble, cloud, shadow, spark, dust, smoke, flash, rays, vein, steam, sweat, stars, twinkle, whoosh, puff,
     heart, hearts, wind, banana, giftBox, suck, drool, tree, apple, bubble, gumSplat, rainCloud, rain, lightning, puddle, seesaw,
-    mudPit, mudSplash, rope, cake, crown, lollipop, tears, ball, pillow, feathers, bee, hive, table, pie, mcAppleTree, pumpkinBlock, blockBurst, mcChest, iceCream, scoopCap, iceBlock, frost, magicBeam };
+    mudPit, mudSplash, rope, cake, crown, lollipop, tears, ball, pillow, feathers, bee, hive, table, pie, mcAppleTree, pumpkinBlock, blockBurst, mcChest, iceCream, scoopCap, iceBlock, frost, magicBeam, rails, grassSteps, minecart };
 })();
