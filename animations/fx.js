@@ -356,7 +356,8 @@ const FX = (() => {
     // озеро — полоса воды за травой; деревья в нём не растут
     let lake = null;
     if (F.has('lake')) {
-      const lw = 520 + fr() * 260, lx = fr() < 0.5 ? 60 + fr() * 200 : w - lw - 60 - fr() * 200;
+      let lw = 520 + fr() * 260, lx = fr() < 0.5 ? 60 + fr() * 200 : w - lw - 60 - fr() * 200;
+      if (opts.lake) [lx, lw] = opts.lake;                             // [x, ширина] — где озеро
       lake = [lx, lx + lw];
       mcLake(g, lx, lw, edge, fr);
     }
@@ -981,6 +982,40 @@ const FX = (() => {
       ctx.globalAlpha = Math.min(1, (1 - life) * 2.5);
       ctx.beginPath(); ctx.arc(px, py, s, 0, TAU); ctx.fillStyle = col; ctx.fill(); ctx.lineWidth = 2.5; ctx.strokeStyle = '#1a1a1a'; ctx.stroke();
     }
+    ctx.restore();
+  }
+
+  // струя воды от a к b (дугой arc), t — секунды (бежит рябь), w — толщина, u — докуда дошла (0..1)
+  function waterJet(ctx, a, b, t, w = 34, u = 1, arc = 0, alpha = 1) {
+    if (u <= 0 || alpha <= 0) return;
+    const pt = (k) => [a[0] + (b[0] - a[0]) * k, a[1] + (b[1] - a[1]) * k - Math.sin(Math.PI * k) * arc];
+    const n = 24, pts = [];
+    for (let i = 0; i <= n; i++) pts.push(pt((i / n) * u));
+    ctx.save(); ctx.globalAlpha = alpha; ctx.lineCap = 'round'; ctx.lineJoin = 'round';
+    for (const [lw, col] of [[w + 8, '#1d5e8c'], [w, '#5ab8f5'], [w * 0.4, '#bfe6ff']]) {
+      ctx.beginPath(); pts.forEach(([x, y], i) => { const q = Math.sin(i * 1.3 - t * 30) * w * 0.12; i ? ctx.lineTo(x, y + q) : ctx.moveTo(x, y + q); });
+      ctx.lineWidth = lw; ctx.strokeStyle = col; ctx.stroke();
+    }
+    const r = rng(Math.floor(t * 24));                                 // брызги на конце
+    const e = pts[pts.length - 1];
+    for (let i = 0; i < 8; i++) {
+      const ang = r() * TAU, d = w * (0.6 + r() * 1.4);
+      ctx.beginPath(); ctx.arc(e[0] + Math.cos(ang) * d, e[1] + Math.sin(ang) * d, 4 + r() * 6, 0, TAU);
+      ctx.fillStyle = '#8fd7ff'; ctx.fill(); ctx.lineWidth = 2; ctx.strokeStyle = '#1d6fa6'; ctx.stroke();
+    }
+    ctx.restore();
+  }
+
+  // блок булыжника (майнкрафт): (x, y) — центр, s — сторона, rot — поворот
+  function cobble(ctx, x, y, s = 90, rot = 0) {
+    ctx.save();
+    ctx.translate(x, y); ctx.rotate(rot);
+    const h = s / 2, c = s / 4;
+    ctx.fillStyle = '#7d7d7d'; ctx.fillRect(-h, -h, s, s);
+    const cols = ['#9a9a9a', '#6a6a6a', '#8a8a8a', '#a8a8a8', '#5f5f5f'];
+    for (let i = 0; i < 4; i++) for (let j = 0; j < 4; j++) { ctx.fillStyle = cols[(i * 3 + j * 2) % 5]; ctx.fillRect(-h + i * c + 1, -h + j * c + 1, c - 2, c - 2); }
+    ctx.fillStyle = '#4f9a2c'; ctx.fillRect(-h, -h, s, c * 0.45); ctx.fillRect(-h, -h + c * 0.45, c, c * 0.3);    // мох
+    ctx.lineWidth = 5; ctx.strokeStyle = '#2a2a2a'; ctx.strokeRect(-h, -h, s, s);
     ctx.restore();
   }
 
@@ -1774,7 +1809,7 @@ const FX = (() => {
     }
   }
 
-  return { rng, background, mcBackground, limb, note, waterBalloon, basket, waterSplash, boomerang, flower, bubbleWand, soapBubble, bubblePop, snowball, snowPile, snowCap, snowSplat, snowBurst, slimeBlock, tomato, gardenBed, tomatoBush, tnt, fuseSparks, boom, soot, balloon, balloonPop, cactus, paintBucket, paintBrush, mustache, paintHole, paintSplash, cloud, shadow, spark, dust, smoke, flash, rays, vein, steam, sweat, stars, twinkle, whoosh, puff,
+  return { rng, background, mcBackground, limb, note, waterBalloon, basket, waterSplash, boomerang, flower, bubbleWand, soapBubble, bubblePop, snowball, snowPile, snowCap, snowSplat, snowBurst, slimeBlock, tomato, gardenBed, tomatoBush, tnt, fuseSparks, boom, soot, balloon, balloonPop, cactus, paintBucket, paintBrush, mustache, paintHole, paintSplash, waterJet, cobble, cloud, shadow, spark, dust, smoke, flash, rays, vein, steam, sweat, stars, twinkle, whoosh, puff,
     heart, hearts, wind, banana, giftBox, suck, drool, tree, apple, bubble, gumSplat, rainCloud, rain, lightning, puddle, seesaw,
     mudPit, mudSplash, rope, cake, crown, lollipop, tears, ball, pillow, feathers, bee, hive, table, pie };
 })();
