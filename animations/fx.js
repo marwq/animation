@@ -2820,6 +2820,82 @@ const FX = (() => {
     ctx.restore();
   }
 
+  // арбуз-блок (майнкрафт): низ по центру в (x, y), сторона s; rot; sq — сплющивание от низа (площадь та же)
+  function melonBlock(ctx, x, y, s = 180, rot = 0, sq = 1) {
+    ctx.save();
+    ctx.translate(x, y); ctx.scale(1 / sq, sq); ctx.translate(0, -s / 2); ctx.rotate(rot);
+    const h = s / 2, n = 8, u = s / n;
+    ctx.fillStyle = '#111'; ctx.fillRect(-h - 5, -h - 5, s + 10, s + 10);
+    const r = rng(77);
+    for (let i = 0; i < n; i++) for (let j = 0; j < n; j++) {
+      const stripe = (i % 3 === 1), v = r();
+      ctx.fillStyle = stripe ? (v < 0.5 ? '#2f7d14' : '#3b8f1c') : (v < 0.3 ? '#8fd23f' : v < 0.7 ? '#7cc434' : '#a6e04f');
+      ctx.fillRect(-h + i * u, -h + j * u, u + 0.6, u + 0.6);
+    }
+    ctx.fillStyle = 'rgba(255,255,255,0.18)'; ctx.fillRect(-h, -h, s, u * 0.8);
+    ctx.fillStyle = 'rgba(0,0,0,0.12)'; ctx.fillRect(-h, h - u * 0.8, s, u * 0.8);
+    ctx.restore();
+  }
+  // корка арбуза шлемом на голове: (x, y) — низ шлема по центру, w — ширина; rot
+  function melonHelmet(ctx, x, y, w = 220, rot = 0, alpha = 1) {
+    if (alpha <= 0) return;
+    const hh = w * 0.62;
+    ctx.save(); ctx.globalAlpha = alpha; ctx.translate(x, y); ctx.rotate(rot); ctx.lineJoin = 'round';
+    ctx.beginPath(); ctx.ellipse(0, 0, w / 2, hh, 0, Math.PI, TAU); ctx.closePath();
+    ctx.fillStyle = '#3f9a1f'; ctx.fill();
+    ctx.save(); ctx.clip();
+    for (let k = -3; k <= 3; k++) {                 // тёмные полосы
+      ctx.beginPath(); ctx.ellipse(k * w * 0.13, 0, w * 0.035, hh * 1.05, k * 0.12, 0, TAU);
+      ctx.fillStyle = '#1f6410'; ctx.fill();
+    }
+    ctx.fillStyle = 'rgba(255,255,255,0.22)'; ctx.beginPath(); ctx.ellipse(-w * 0.18, -hh * 0.72, w * 0.12, hh * 0.1, -0.4, 0, TAU); ctx.fill();
+    ctx.restore();
+    ctx.lineWidth = Math.max(4, w * 0.025); ctx.strokeStyle = '#111'; ctx.stroke();
+    // край: белая корка и красная мякоть с семечками
+    ctx.beginPath(); ctx.rect(-w / 2 - 4, -w * 0.02, w + 8, w * 0.07); ctx.fillStyle = '#f2ffd9'; ctx.fill(); ctx.stroke();
+    ctx.beginPath(); ctx.rect(-w / 2 + 2, w * 0.05, w - 4, w * 0.06); ctx.fillStyle = '#ff3b4f'; ctx.fill(); ctx.stroke();
+    ctx.fillStyle = '#111';
+    for (let i = 0; i < 6; i++) { ctx.beginPath(); ctx.ellipse(-w * 0.38 + i * w * 0.15, w * 0.08, w * 0.012, w * 0.02, 0, 0, TAU); ctx.fill(); }
+    ctx.restore();
+  }
+  // долька арбуза: (x, y) — середина корки, s — ширина; rot; bite 0..1 — откушено
+  function melonSlice(ctx, x, y, s = 120, rot = 0, bite = 0) {
+    ctx.save(); ctx.translate(x, y); ctx.rotate(rot); ctx.lineJoin = 'round';
+    const h = s * 0.85 * (1 - bite * 0.6);
+    ctx.beginPath(); ctx.moveTo(-s / 2, 0); ctx.lineTo(0, -h); ctx.lineTo(s / 2, 0); ctx.closePath();
+    ctx.fillStyle = '#ff3b4f'; ctx.fill(); ctx.lineWidth = 4; ctx.strokeStyle = '#111'; ctx.stroke();
+    ctx.fillStyle = '#111';
+    for (const [a, b] of [[-0.2, 0.3], [0.15, 0.35], [0, 0.55], [-0.08, 0.2], [0.22, 0.15]]) if (b < 0.7 * (1 - bite * 0.6)) {
+      ctx.beginPath(); ctx.ellipse(a * s, -b * s, s * 0.025, s * 0.04, 0, 0, TAU); ctx.fill();
+    }
+    ctx.beginPath(); ctx.moveTo(-s / 2 - 4, 0); ctx.quadraticCurveTo(0, s * 0.22, s / 2 + 4, 0); ctx.closePath();
+    ctx.fillStyle = '#3f9a1f'; ctx.fill(); ctx.stroke();
+    ctx.beginPath(); ctx.moveTo(-s / 2 + 2, 0); ctx.lineTo(s / 2 - 2, 0); ctx.lineWidth = 6; ctx.strokeStyle = '#f2ffd9'; ctx.stroke();
+    ctx.restore();
+  }
+  // арбузная семечка: чёрная капля с бликом
+  function melonSeed(ctx, x, y, rot = 0, s = 16) {
+    ctx.save(); ctx.translate(x, y); ctx.rotate(rot);
+    ctx.beginPath(); ctx.moveTo(0, -s * 0.7); ctx.quadraticCurveTo(s * 0.55, 0, 0, s * 0.6); ctx.quadraticCurveTo(-s * 0.55, 0, 0, -s * 0.7);
+    ctx.fillStyle = '#1a1208'; ctx.fill(); ctx.lineWidth = 2; ctx.strokeStyle = '#000'; ctx.stroke();
+    ctx.beginPath(); ctx.ellipse(-s * 0.1, -s * 0.15, s * 0.1, s * 0.2, 0.3, 0, TAU); ctx.fillStyle = 'rgba(255,255,255,0.55)'; ctx.fill();
+    ctx.restore();
+  }
+  // арбуз раскололся: красные и зелёные кусочки, капли сока, семечки; life 0..1
+  function melonSplash(ctx, x, y, life, seed = 1, floor = Infinity, size = 1) {
+    if (life < 0 || life > 1) return;
+    blockBurst(ctx, x, y, life, seed, ['#ff3b4f', '#3f9a1f', '#ff6a78', '#8fd23f'], 14, 40 * size, 0.8 * size, floor);
+    const r = rng(seed + 9);
+    ctx.save();
+    for (let i = 0; i < 18; i++) {
+      const a = -Math.PI * r(), v = (200 + 300 * r()) * size, px = x + Math.cos(a) * v * life, py = Math.min(floor, y + Math.sin(a) * v * life + 700 * life * life);
+      ctx.globalAlpha = 1 - life;
+      if (i % 3 === 0) melonSeed(ctx, px, py, life * 10 + i, 14);
+      else { ctx.beginPath(); ctx.arc(px, py, (9 + r() * 9) * (1 - life * 0.5), 0, TAU); ctx.fillStyle = '#ff4a5c'; ctx.fill(); }
+    }
+    ctx.restore();
+  }
+
   // «вжух» — удар прошёл мимо: маленькое облачко
   function whoosh(ctx, x, y, life) {
     if (life < 0 || life > 1) return;
@@ -2830,5 +2906,5 @@ const FX = (() => {
 
   return { rng, background, mcBackground, limb, note, waterBalloon, basket, waterSplash, boomerang, flower, bubbleWand, soapBubble, bubblePop, snowball, snowPile, snowCap, snowSplat, snowBurst, slimeBlock, tomato, gardenBed, tomatoBush, tnt, fuseSparks, boom, soot, balloon, balloonPop, cactus, paintBucket, paintBrush, mustache, paintHole, paintSplash, waterJet, cobble, cloud, shadow, spark, dust, smoke, flash, rays, vein, steam, sweat, stars, twinkle, whoosh, puff,
     heart, hearts, wind, banana, giftBox, suck, drool, tree, apple, bubble, gumSplat, rainCloud, rain, lightning, puddle, seesaw,
-    mudPit, mudSplash, rope, cake, crown, lollipop, tears, ball, pillow, feathers, bee, hive, table, pie, mcAppleTree, pumpkinBlock, blockBurst, mcChest, iceCream, scoopCap, iceBlock, frost, magicBeam, rails, grassSteps, minecart, kite, kiteString, popcorn, popcornPile, popBucket, cornCob, sunRay, pickaxe, grassBlock, pit, chili, chiliBush, fireBreath, flame, bigLeaf, pond, fish, fishingRod, fishLine, feather, sleepBubble, jumpCord, ropeHandle, marshmallow, mallowBag, slingshotY, slingBand, honeyPot, honeyCap, egg, chick, horseshoeMagnet, magnetWaves, anvil, coilSpring, rocket, rocketTrail, fireworkBurst, iceRink, iceSpray, deskFan, fanWind };
+    mudPit, mudSplash, rope, cake, crown, lollipop, tears, ball, pillow, feathers, bee, hive, table, pie, mcAppleTree, pumpkinBlock, blockBurst, mcChest, iceCream, scoopCap, iceBlock, frost, magicBeam, rails, grassSteps, minecart, kite, kiteString, popcorn, popcornPile, popBucket, cornCob, sunRay, pickaxe, grassBlock, pit, chili, chiliBush, fireBreath, flame, bigLeaf, pond, fish, fishingRod, fishLine, feather, sleepBubble, jumpCord, ropeHandle, marshmallow, mallowBag, slingshotY, slingBand, honeyPot, honeyCap, egg, chick, horseshoeMagnet, magnetWaves, anvil, coilSpring, rocket, rocketTrail, fireworkBurst, iceRink, iceSpray, deskFan, fanWind, melonBlock, melonHelmet, melonSlice, melonSeed, melonSplash };
 })();
