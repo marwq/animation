@@ -1381,6 +1381,84 @@ const FX = (() => {
     ctx.restore();
   }
 
+  // попкорн: пушистое облачко с жёлтой серединкой; (x, y) — центр, r — радиус
+  function popcorn(ctx, x, y, r = 16, rot = 0) {
+    ctx.save(); ctx.translate(x, y); ctx.rotate(rot);
+    const P = [[-0.45, 0.1, 0.55], [0.4, 0.15, 0.55], [0, -0.4, 0.6], [0.05, 0.35, 0.5]];
+    ctx.lineWidth = Math.max(2, r * 0.16); ctx.strokeStyle = '#6b5326';
+    for (const [dx, dy, rr] of P) { ctx.beginPath(); ctx.arc(dx * r, dy * r, rr * r, 0, TAU); ctx.stroke(); }
+    ctx.fillStyle = '#fff8e2';
+    for (const [dx, dy, rr] of P) { ctx.beginPath(); ctx.arc(dx * r, dy * r, rr * r - ctx.lineWidth / 2, 0, TAU); ctx.fill(); }
+    ctx.fillStyle = '#ffcf3a'; ctx.beginPath(); ctx.arc(0.1 * r, 0.05 * r, r * 0.22, 0, TAU); ctx.fill();
+    ctx.restore();
+  }
+
+  // куча попкорна: низ по центру в (x, ground), ширина w, высота h
+  function popcornPile(ctx, x, ground, w, h, seed = 3) {
+    if (h < 2) return;
+    const r = rng(seed), R = Math.max(14, Math.min(26, w / 18));
+    ctx.save();
+    ctx.beginPath(); ctx.ellipse(x, ground, w / 2, h, 0, Math.PI, TAU); ctx.closePath();
+    ctx.fillStyle = '#fff1c8'; ctx.fill(); ctx.lineWidth = 5; ctx.strokeStyle = '#6b5326'; ctx.stroke();
+    const n = Math.round(w * h / 1400);
+    for (let i = 0; i < n; i++) {
+      const a = Math.PI + r() * Math.PI, d = Math.sqrt(r());
+      popcorn(ctx, x + Math.cos(a) * w / 2 * d, ground + Math.sin(a) * h * d, R * (0.8 + r() * 0.5), r() * 6);
+    }
+    for (let i = 0; i <= 18; i++) {                         // пушистый край
+      const a = Math.PI + (i / 18) * Math.PI;
+      popcorn(ctx, x + Math.cos(a) * w / 2, ground + Math.sin(a) * h, R * (0.9 + r() * 0.4), r() * 6);
+    }
+    ctx.restore();
+  }
+
+  // ведёрко попкорна (красно-белые полосы): низ по центру в (x, y), s — ширина верха
+  function popBucket(ctx, x, y, s = 160, full = true, rot = 0) {
+    const h = s * 1.1, b = s * 0.7;
+    ctx.save(); ctx.translate(x, y); ctx.rotate(rot);
+    if (full) for (let i = 0; i < 9; i++) popcorn(ctx, (i / 8 - 0.5) * s * 0.85, -h - s * 0.08 - Math.sin(i / 8 * Math.PI) * s * 0.2, s * 0.13, i);
+    ctx.beginPath(); ctx.moveTo(-b / 2, 0); ctx.lineTo(-s / 2, -h); ctx.lineTo(s / 2, -h); ctx.lineTo(b / 2, 0); ctx.closePath();
+    ctx.save(); ctx.clip();
+    for (let i = -4; i <= 4; i++) { ctx.fillStyle = i % 2 ? '#ffffff' : '#e8262e'; ctx.fillRect(i * s / 9 - s / 18, -h, s / 9, h); }
+    ctx.restore();
+    ctx.lineWidth = 5; ctx.strokeStyle = '#111'; ctx.lineJoin = 'round';
+    ctx.beginPath(); ctx.moveTo(-b / 2, 0); ctx.lineTo(-s / 2, -h); ctx.lineTo(s / 2, -h); ctx.lineTo(b / 2, 0); ctx.closePath(); ctx.stroke();
+    ctx.fillStyle = '#ffd21f'; ctx.lineWidth = 4; star(ctx, 0, -h * 0.5, 5, s * 0.17, s * 0.08, 0); ctx.fill(); ctx.stroke();
+    ctx.restore();
+  }
+
+  // початок кукурузы: центр (x, y), длина len, rot; pop 0..1 — початок раздувается и трясётся
+  function cornCob(ctx, x, y, len = 160, rot = 0, pop = 0) {
+    ctx.save(); ctx.translate(x, y); ctx.rotate(rot); ctx.scale(1 + pop * 0.15, 1 + pop * 0.15);
+    const w = len * 0.36;
+    ctx.lineJoin = 'round'; ctx.lineWidth = 5; ctx.strokeStyle = '#111';
+    ctx.beginPath(); ctx.ellipse(0, 0, len / 2, w / 2, 0, 0, TAU); ctx.fillStyle = pop > 0 ? '#ffb21f' : '#ffd21f'; ctx.fill(); ctx.stroke();
+    ctx.save(); ctx.clip();
+    ctx.fillStyle = '#e8a300';
+    for (let i = -6; i <= 6; i++) for (let j = -2; j <= 2; j++) ctx.fillRect(i * len / 13 - 3 + (j % 2) * len / 26, j * w / 5 - 3, 6, 6);
+    ctx.restore();
+    ctx.fillStyle = '#4fc43a';                              // листья обёртки
+    for (const k of [-1, 1]) {
+      ctx.beginPath(); ctx.moveTo(len * 0.5, 0); ctx.quadraticCurveTo(len * 0.2, k * w * 0.9, -len * 0.15, k * w * 0.45);
+      ctx.quadraticCurveTo(len * 0.25, k * w * 0.3, len * 0.5, 0); ctx.fill(); ctx.stroke();
+    }
+    ctx.restore();
+  }
+
+  // солнечный луч (как лупой): от a к b; alpha, t — дрожание
+  function sunRay(ctx, a, b, t, alpha = 1) {
+    if (alpha <= 0) return;
+    ctx.save(); ctx.globalAlpha = alpha; ctx.lineCap = 'round';
+    const wob = Math.sin(t * 30) * 3;
+    for (const [w, c] of [[64 + wob, 'rgba(255,214,40,0.35)'], [36 + wob, 'rgba(255,230,90,0.7)'], [14, '#fffbe0']]) {
+      ctx.lineWidth = w; ctx.strokeStyle = c; ctx.beginPath(); ctx.moveTo(a[0], a[1]); ctx.lineTo(b[0], b[1]); ctx.stroke();
+    }
+    const g = ctx.createRadialGradient(b[0], b[1], 4, b[0], b[1], 90);
+    g.addColorStop(0, 'rgba(255,255,230,1)'); g.addColorStop(0.4, 'rgba(255,190,40,0.6)'); g.addColorStop(1, 'rgba(255,120,0,0)');
+    ctx.fillStyle = g; ctx.beginPath(); ctx.arc(b[0], b[1], 90, 0, TAU); ctx.fill();
+    ctx.restore();
+  }
+
   // блок разлетается кусочками: life 0..1, кусочки-квадраты по дугам с вращением
   function blockBurst(ctx, x, y, life, seed = 1, cols = ['#f39314', '#d6740a', '#ffab3a'], n = 14, size = 46, spread = 1, floor = Infinity) {
     if (life < 0 || life > 1) return;
@@ -2187,5 +2265,5 @@ const FX = (() => {
 
   return { rng, background, mcBackground, limb, note, waterBalloon, basket, waterSplash, boomerang, flower, bubbleWand, soapBubble, bubblePop, snowball, snowPile, snowCap, snowSplat, snowBurst, slimeBlock, tomato, gardenBed, tomatoBush, tnt, fuseSparks, boom, soot, balloon, balloonPop, cactus, paintBucket, paintBrush, mustache, paintHole, paintSplash, waterJet, cobble, cloud, shadow, spark, dust, smoke, flash, rays, vein, steam, sweat, stars, twinkle, whoosh, puff,
     heart, hearts, wind, banana, giftBox, suck, drool, tree, apple, bubble, gumSplat, rainCloud, rain, lightning, puddle, seesaw,
-    mudPit, mudSplash, rope, cake, crown, lollipop, tears, ball, pillow, feathers, bee, hive, table, pie, mcAppleTree, pumpkinBlock, blockBurst, mcChest, iceCream, scoopCap, iceBlock, frost, magicBeam, rails, grassSteps, minecart, kite, kiteString };
+    mudPit, mudSplash, rope, cake, crown, lollipop, tears, ball, pillow, feathers, bee, hive, table, pie, mcAppleTree, pumpkinBlock, blockBurst, mcChest, iceCream, scoopCap, iceBlock, frost, magicBeam, rails, grassSteps, minecart, kite, kiteString, popcorn, popcornPile, popBucket, cornCob, sunRay };
 })();
