@@ -7,9 +7,11 @@
     blender -b --factory-startup -P tools/mc_scene.py -- --shot nether --style toon
 
     --shot NAME      field — поле; portal — горящий портал посередине поля;
-                     nether — Незер: земля из незерака, лава, вдали лавопады
+                     nether — Незер: земля из незерака, лава, вдали лавопады;
+                     meadow — поляна под качели, сочнее и с размытым фоном;
+                     swing — качели из блоков на прозрачном фоне, с обводкой
     --style toon     рисованный стиль (имя файла <shot>_toon.png); Незер — только он
-    --out PNG        куда сохранить (по умолчанию backgrounds/<мир>/<shot>[_toon].png)
+    --out PNG        куда сохранить (по умолчанию backgrounds/<папка>/<shot>[_toon].png)
     --tex DIR        текстуры блоков с именами как в Minecraft (grass_block_top.png, ...);
                      по умолчанию backgrounds/textures/minecraft, если есть, иначе
                      свободные backgrounds/textures/pixel-perfection
@@ -59,18 +61,27 @@ PORTAL = (-1, 20)        # левый блок рамки; рамка 4×5 ст�
 PORTAL_C = Vector((1.0, 20.5, 3.5))     # центр проёма 2×3
 
 # Камеры смотрят прямо вперёд (+y). clear — сколько блоков от камеры чистое поле,
-# дальше роща. shade — деревья сразу за левым краем кадра (от камеры, в блоках):
-# их не видно, но их тень ложится на траву. grass — пучки травы (цветы есть всегда).
+# дальше роща. shade — деревья у края кадра (от камеры, в блоках): их тень ложится
+# на траву. grass — пучки травы (цветы есть всегда). path — посередине без травы:
+# (глубина, полуширина). grade — обработка фото-стиля: сочность, резкость,
+# цветная кайма, свечение; exposure — поправка яркости. fstop 0 — без размытия.
 SHOTS = {
     'field':  {'world': 'field', 'cam': (-26.0, 4.0, 2.62), 'shift': -0.08, 'lens': 28,
                'clear': 22, 'focus': 9.0, 'fstop': 1.4, 'shade': [(-7, 3), (-8, 8)],
-               'grass': False},
+               'grass': False, 'path': (12, 1.5)},
     'portal': {'world': 'field', 'cam': (1.0, 8.5, 2.62), 'shift': -0.05, 'lens': 30,
                'clear': 18, 'focus': 12.0, 'fstop': 1.4, 'shade': [(-7, 2), (-8, 7)],
-               'grass': True},
+               'grass': True, 'path': (12, 2.5)},
     'nether': {'world': 'nether', 'cam': (0.5, 0.0, 2.62), 'shift': -0.08, 'lens': 28,
                'focus': 10.0, 'fstop': 1.4},
+    'meadow': {'world': 'meadow', 'cam': (0.5, 0.0, 2.62), 'shift': -0.08, 'lens': 28,
+               'clear': 15, 'focus': 7.0, 'fstop': 1.0, 'shade': [(-4, 7), (7, 16)],
+               'grass': True, 'path': (10, 3.0), 'exposure': 0.3,
+               'grade': {'sat': 1.25, 'sharpen': 0.35, 'ca': 0.016, 'bloom': 0.3}},
+    'swing':  {'world': 'swing', 'dir': 'props', 'cam': (2.0, -10.0, 1.62), 'shift': 0.06,
+               'lens': 35, 'focus': 10.0, 'fstop': 0, 'exposure': -0.6, 'grade': {'sat': 1.1}},
 }
+GRADE = {'sat': SATURATION, 'sharpen': 0.25, 'ca': 0.012, 'bloom': 0.2}
 
 # Рисованный стиль. Плоские цвета блоков, sRGB: (цвета от тёмного к светлому,
 # границы по яркости как доли пикселей) — текстура делится на столько тонов.
@@ -101,7 +112,8 @@ TOON_GROUP = {                                  # обводка там, где 
     'short_grass': 7, 'tall_grass_bottom': 7, 'tall_grass_top': 7, 'poppy': 8,
     'dandelion': 9, 'oxeye_daisy': 10, 'cornflower': 11, 'azure_bluet': 12, 'cloud': 13,
     'nether_portal': 14, 'lava': 15, 'lava_flow': 15, 'magma': 16, 'fire': 17,
-    'netherrack': 18,
+    'netherrack': 18, 'spruce_planks': 19, 'spruce_trapdoor': 19, 'stone_bricks': 20,
+    'smooth_stone': 20, 'chain': 21,
 }
 TOON_PLANTS = (7, 8, 9, 10, 11, 12, 17)         # трава, цветы, огонь: только тонкий контур
 # Светятся сами (всегда светлый тон) и светят вокруг: группа → (цвет, радиус px, сила)
@@ -134,7 +146,8 @@ def args():
         sys.exit('Незер есть только в рисованном стиле: --style toon')
     opt['samples'] = opt['samples'] or (16 if toon else 128)
     name = opt['shot'] + ('_toon' if toon else '') + '.png'
-    opt['out'] = opt['out'] or os.path.join(ROOT, 'backgrounds', SHOTS[opt['shot']]['world'], name)
+    s = SHOTS[opt['shot']]
+    opt['out'] = opt['out'] or os.path.join(ROOT, 'backgrounds', s.get('dir', s['world']), name)
     return opt
 
 
@@ -176,7 +189,8 @@ def textures(tex, toon=False):
     t['tall_grass_bottom'] = tint(load_rgba(tex, 'tall_grass_bottom'), GRASS)
     t['tall_grass_top'] = tint(load_rgba(tex, 'tall_grass_top'), GRASS)
     for f in ('poppy', 'dandelion', 'oxeye_daisy', 'cornflower', 'azure_bluet', 'netherrack',
-              'magma', 'nether_portal', 'lava_flow'):
+              'magma', 'nether_portal', 'lava_flow', 'spruce_planks', 'spruce_trapdoor',
+              'stone_bricks', 'chain', 'smooth_stone'):
         t[f] = load_rgba(tex, f)
     t['lava'] = load_rgba(tex, 'lava_still')
     t['fire'] = load_rgba(tex, 'fire_0')
@@ -248,7 +262,7 @@ def toon_material(name, img, kind):
 
 
 def material(name, img, kind, toon=False):
-    """kind: block, leaves, plant, glossy (обсидиан), emit (портал, лава), cloud."""
+    """kind: block, leaves, plant, cutout (цепь), glossy (обсидиан), emit (портал, лава), cloud."""
     if toon:
         return toon_material(name, img, kind)
     m = bpy.data.materials.new(name)
@@ -311,7 +325,7 @@ def material(name, img, kind, toon=False):
     L.new(surf, hz.inputs[1])
     L.new(em.outputs[0], hz.inputs[2])
     surf = hz.outputs[0]
-    if kind in ('leaves', 'plant'):
+    if kind in ('leaves', 'plant', 'cutout'):
         cut = N.new('ShaderNodeMixShader')
         L.new(tx.outputs['Alpha'], cut.inputs[0])
         L.new(N.new('ShaderNodeBsdfTransparent').outputs[0], cut.inputs[1])
@@ -322,13 +336,16 @@ def material(name, img, kind, toon=False):
 
 
 def kind_of(name):
+    if name == 'chain':
+        return 'cutout'
     if name.endswith('leaves'):
         return 'leaves'
     if name == 'obsidian':
         return 'glossy'
     if name in ('nether_portal', 'lava', 'lava_flow', 'magma', 'fire'):
         return 'emit'
-    if name in ('grass_top', 'grass_side', 'dirt', 'netherrack') or '_log' in name:
+    if name in ('grass_top', 'grass_side', 'dirt', 'netherrack', 'spruce_planks',
+                'spruce_trapdoor', 'stone_bricks', 'smooth_stone') or '_log' in name:
         return 'block'
     return 'plant'
 
@@ -352,12 +369,25 @@ class Mesh:
     def __init__(self):
         self.v, self.f, self.uv, self.mat = [], [], [], []
 
-    def quad(self, corners, mat):
+    def quad(self, corners, mat, uv=UV):
         i = len(self.v)
         self.v += corners
         self.f.append((i, i + 1, i + 2, i + 3))
-        self.uv += UV
+        self.uv += uv
         self.mat.append(mat)
+
+    def box(self, lo, hi, mat):
+        """Коробка от lo до hi в блоках; текстура по координатам мира, как в игре:
+        узкая деталь берёт середину текстуры, длинная — повторяет её."""
+        (x0, y0, z0), (x1, y1, z1) = lo, hi
+        for c, uv in (
+                ([(x0, y0, z1), (x1, y0, z1), (x1, y1, z1), (x0, y1, z1)], lambda p: (p[0], p[1])),
+                ([(x0, y1, z0), (x1, y1, z0), (x1, y0, z0), (x0, y0, z0)], lambda p: (p[0], -p[1])),
+                ([(x0, y0, z0), (x1, y0, z0), (x1, y0, z1), (x0, y0, z1)], lambda p: (p[0], p[2])),
+                ([(x1, y1, z0), (x0, y1, z0), (x0, y1, z1), (x1, y1, z1)], lambda p: (-p[0], p[2])),
+                ([(x0, y1, z0), (x0, y0, z0), (x0, y0, z1), (x0, y1, z1)], lambda p: (-p[1], p[2])),
+                ([(x1, y0, z0), (x1, y1, z0), (x1, y1, z1), (x1, y0, z1)], lambda p: (p[1], p[2]))):
+            self.quad(c, mat, [uv(p) for p in c])
 
     def face(self, x, y, z, n, mat):
         self.quad([(x + a, y + b, z + c) for a, b, c in FACES[n]], mat)
@@ -421,10 +451,10 @@ def tree_shape(rng, x, y, g, wood):
     return blocks
 
 
-def world(seed):
-    """Поле одно на оба кадра: поле, портал, роща, облака."""
+def world(seed, name='field'):
+    """Поле, одно на все кадры этого мира: трава, роща, облака; в мире field — портал."""
     rng = random.Random(seed)
-    views = [View(s) for s in SHOTS.values() if s['world'] == 'field']
+    views = [View(s) for s in SHOTS.values() if s['world'] == name]
     cols = {}
     for x in range(-75, 60):
         for y in range(-10, 120):
@@ -432,8 +462,8 @@ def world(seed):
             cols[(x, y)] = 0 if y < 36 else max(0, round(n * 1.6 + (y - 36) * 0.05))
 
     x0, py = PORTAL
-    portal = {(x0 + i, py, 1 + k): 'obsidian'
-              for i in range(4) for k in range(5) if i in (0, 3) or k in (0, 4)}
+    portal = {(x0 + i, py, 1 + k): 'obsidian' for i in range(4) for k in range(5)
+              if (i in (0, 3) or k in (0, 4)) and name == 'field'}
     taken = dict(portal)
     trees = []
     for v in views:
@@ -450,7 +480,7 @@ def world(seed):
             continue                           # перед камерами — открытое поле
         if any((Vector(c) - v.pos.xy).length < 12 for v in views):
             continue
-        if abs(c[0] - 1) < 5 and c[1] < 42:
+        if portal and abs(c[0] - 1) < 5 and c[1] < 42:
             continue                           # прямо за порталом — без деревьев
         grove = noise.noise(Vector((x * 0.06, y * 0.06, 1.7)))
         if rng.random() > 0.08 + 0.22 * max(0.0, grove + 0.25):
@@ -467,7 +497,7 @@ def world(seed):
     for (x, y), g in cols.items():
         if (x, y, g + 1) in taken or (x, y, g + 2) in taken:
             continue
-        if 15 <= y < 20 and -2 <= x <= 3:
+        if portal and 15 <= y < 20 and -2 <= x <= 3:
             continue                           # перед порталом — чистая трава
         r = rng.random()
         if r < 0.15:
@@ -488,7 +518,7 @@ def world(seed):
 
 def build_field(opt, view, mats):
     toon = opt['style'] == 'toon'
-    cols, portal, trees, plants, clouds = world(opt['seed'])
+    cols, portal, trees, plants, clouds = world(opt['seed'], view.s['world'])
 
     m = Mesh()
     for (x, y), g in cols.items():
@@ -508,16 +538,18 @@ def build_field(opt, view, mats):
             m.blocks(blocks, solid=toon)
     m.build('trees', mats)
 
-    m = Mesh()
-    m.blocks(portal)
-    m.build('portal', mats)
-    m = Mesh()                                 # портал горит: пламя посередине рамки
-    x0, py = PORTAL
-    for i in (1, 2):
-        for k in (2, 3, 4):
-            x, y = x0 + i, py + 0.5
-            m.quad([(x, y, k), (x + 1, y, k), (x + 1, y, k + 1), (x, y, k + 1)], 'nether_portal')
-    m.build('portal_fill', mats)
+    if portal:
+        m = Mesh()
+        m.blocks(portal)
+        m.build('portal', mats)
+        m = Mesh()                             # портал горит: пламя посередине рамки
+        x0, py = PORTAL
+        for i in (1, 2):
+            for k in (2, 3, 4):
+                x, y = x0 + i, py + 0.5
+                m.quad([(x, y, k), (x + 1, y, k), (x + 1, y, k + 1), (x, y, k + 1)],
+                       'nether_portal')
+        m.build('portal_fill', mats)
 
     # перед камерой — трава по краям кадра, по центру — проход
     rng = random.Random(opt['seed'] * 31 + len(opt['shot']))
@@ -532,7 +564,7 @@ def build_field(opt, view, mats):
         d, lat = view.depth(x + 0.5, y + 0.5), abs(x + 0.5 - view.pos.x)
         if d > 60 or not view.visible(x + 0.5, y + 0.5, pad=1.5) or (d < 3.5 and lat < 0.8):
             continue
-        if d < 12 and lat < 1.5 or opt['shot'] == 'portal' and d < 12 and lat < 2.5:
+        if d < view.s['path'][0] and lat < view.s['path'][1]:
             continue                           # посередине — чистая трава, к порталу дорожка
         if not view.s['grass'] and kind in ('short_grass', 'tall_grass'):
             continue
@@ -638,11 +670,38 @@ def build_nether(opt, view, mats):
     m.build('fire', mats)
 
 
+# ------------------------------------------------------------------ качели
+def build_swing(opt, view, mats):
+    """Качели из блоков: еловые опоры-заборы на столбиках из каменного кирпича, балка
+    с настилом, на двух цепях — лавочка из еловых люков на каменной плите."""
+    m = Mesh()
+    for x in (0, 3):
+        m.box((x + 0.25, 0.25, 0), (x + 0.75, 0.75, 1), 'stone_bricks')          # низ
+        m.box((x + 0.375, 0.375, 1), (x + 0.625, 0.625, 3), 'spruce_planks')     # опора
+        m.box((x + 0.25, 0.25, 3), (x + 0.75, 0.75, 4), 'stone_bricks')          # верх
+    m.box((0, 0.1, 4), (4, 0.9, 4.25), 'spruce_planks')                           # балка
+    m.box((0.75, 0.25, 4.25), (3.25, 0.75, 4.55), 'spruce_planks')                # настил
+    m.box((1.1, 0.15, 0.72), (2.9, 0.85, 0.85), 'smooth_stone')                   # плита
+    m.box((0.95, 0.0, 0.85), (3.05, 1.0, 1.04), 'spruce_trapdoor')                # сиденье
+    m.box((1.0, 0.8125, 1.04), (3.0, 1.0, 2.1), 'spruce_trapdoor')                # спинка
+    w, z0, z1 = 1.5 / 16, 1.04, 4.0
+    for cx in (1.25, 2.75):                    # цепи: две скрещённые полоски, как в игре
+        for (dx, dy), u in (((0.7071, 0.7071), 0), ((0.7071, -0.7071), 3 / 16)):
+            m.quad([(cx - w * dx, 0.5 - w * dy, z0), (cx + w * dx, 0.5 + w * dy, z0),
+                    (cx + w * dx, 0.5 + w * dy, z1), (cx - w * dx, 0.5 - w * dy, z1)],
+                   'chain', [(u, z0), (u + 3 / 16, z0), (u + 3 / 16, z1), (u, z1)])
+    m.build('swing', mats)
+    g = Mesh()                                 # трава под качелями: свет от неё есть, её не видно
+    g.quad([(-20, -20, 0), (24, -20, 0), (24, 20, 0), (-20, 20, 0)], 'grass_top',
+           [(0, 0), (44, 0), (44, 40), (0, 40)])
+    g.build('ground', mats).visible_camera = False
+
+
 def build_scene(opt, view):
     toon = opt['style'] == 'toon'
     mats = {k: material(k, img, kind_of(k), toon) for k, img in textures(opt['tex'], toon).items()}
     mats['cloud'] = material('cloud', None, 'cloud', toon)
-    (build_nether if view.s['world'] == 'nether' else build_field)(opt, view, mats)
+    {'nether': build_nether, 'swing': build_swing}.get(view.s['world'], build_field)(opt, view, mats)
 
 
 def lights_camera(opt, s):
@@ -693,7 +752,8 @@ def lights_camera(opt, s):
     cam = bpy.data.cameras.new('cam')
     cam.lens, cam.sensor_fit, cam.sensor_width = s['lens'], 'AUTO', 36
     cam.shift_y = s['shift']                  # больше земли в кадре без наклона камеры
-    cam.dof.use_dof, cam.dof.focus_distance, cam.dof.aperture_fstop = True, s['focus'], s['fstop']
+    cam.dof.use_dof = s['fstop'] > 0
+    cam.dof.focus_distance, cam.dof.aperture_fstop = s['focus'], s['fstop'] or 1
     co = bpy.data.objects.new('cam', cam)
     co.location = s['cam']
     co.rotation_euler = Euler((math.radians(90), 0, 0))   # строго горизонтально
@@ -712,7 +772,7 @@ def lights_camera(opt, s):
     c.caustics_reflective = c.caustics_refractive = False
     sc.view_settings.view_transform = 'Standard'     # без приглушения цвета, как в игре
     sc.view_settings.look = 'Medium High Contrast'
-    sc.view_settings.exposure = opt['exposure']
+    sc.view_settings.exposure = opt['exposure'] + s.get('exposure', 0)
 
     if opt['style'] == 'toon':
         # служебные проходы в EXR, картинку из них соберёт toon_post()
@@ -735,23 +795,32 @@ def lights_camera(opt, s):
         return
 
     # сочность, резкость, цветная кайма по краям и лёгкое свечение
+    grade = {**GRADE, **s.get('grade', {})}
     sc.use_nodes = True
     T = sc.node_tree
     T.nodes.clear()
     chain = [T.nodes.new('CompositorNodeRLayers')]
     hs = T.nodes.new('CompositorNodeHueSat')
-    hs.inputs['Saturation'].default_value = SATURATION
-    sh = T.nodes.new('CompositorNodeFilter')
-    sh.filter_type = 'SHARPEN'
-    sh.inputs['Fac'].default_value = 0.25
-    ld = T.nodes.new('CompositorNodeLensdist')
-    ld.inputs['Dispersion'].default_value = 0.012
-    gl = T.nodes.new('CompositorNodeGlare')
-    gl.glare_type = 'BLOOM'
-    gl.inputs['Threshold'].default_value = 0.9
-    gl.inputs['Strength'].default_value = 0.2
-    gl.inputs['Size'].default_value = 0.6
-    chain += [hs, sh, ld, gl, T.nodes.new('CompositorNodeComposite')]
+    hs.inputs['Saturation'].default_value = grade['sat']
+    chain.append(hs)
+    if s['world'] == 'swing':
+        # предмет на прозрачном фоне: без неба и без эффектов, портящих края
+        r.film_transparent = True
+        r.image_settings.color_mode = 'RGBA'
+        r.resolution_x = r.resolution_y = round(2400 * opt['scale'])
+    else:
+        sh = T.nodes.new('CompositorNodeFilter')
+        sh.filter_type = 'SHARPEN'
+        sh.inputs['Fac'].default_value = grade['sharpen']
+        ld = T.nodes.new('CompositorNodeLensdist')
+        ld.inputs['Dispersion'].default_value = grade['ca']
+        gl = T.nodes.new('CompositorNodeGlare')
+        gl.glare_type = 'BLOOM'
+        gl.inputs['Threshold'].default_value = 0.9
+        gl.inputs['Strength'].default_value = grade['bloom']
+        gl.inputs['Size'].default_value = 0.6
+        chain += [sh, ld, gl]
+    chain.append(T.nodes.new('CompositorNodeComposite'))
     for a, b in zip(chain, chain[1:]):
         T.links.new(a.outputs['Image'], b.inputs['Image'])
 
@@ -864,6 +933,25 @@ def toon_post(exr, out, s):
     o.write(out)
 
 
+def prop_post(src, out, width=5):
+    """Предмет на прозрачном фоне: обрезать по краям и обвести тонкой чёрной линией."""
+    import OpenImageIO as oiio
+    px = oiio.ImageBuf(src).get_pixels(oiio.FLOAT)
+    ys, xs = np.nonzero(px[..., 3] > 0.02)
+    pad = width * 3
+    px = np.pad(px, ((pad, pad), (pad, pad), (0, 0)))[ys.min():ys.max() + 2 * pad + 1,
+                                                       xs.min():xs.max() + 2 * pad + 1]
+    rgb, a = px[..., :3], px[..., 3]
+    line = np.clip(blur(dilate(a > 0.5, width).astype(np.float32), 1), 0, 1)
+    out_a = a + line * (1 - a)
+    rgb = (rgb * a[..., None] + np.array(TOON_LINE, np.float32) / 255 * (line * (1 - a))[..., None]) \
+        / np.maximum(out_a, 1e-6)[..., None]
+    img = (np.clip(np.dstack([rgb, out_a]), 0, 1) * 255 + 0.5).astype(np.uint8)
+    o = oiio.ImageBuf(oiio.ImageSpec(img.shape[1], img.shape[0], 4, oiio.UINT8))
+    o.set_pixels(oiio.ROI(), img)
+    o.write(out)
+
+
 def main():
     opt = args()
     s = SHOTS[opt['shot']]
@@ -871,12 +959,16 @@ def main():
     build_scene(opt, View(s))
     lights_camera(opt, s)
     os.makedirs(os.path.dirname(opt['out']), exist_ok=True)
-    toon = opt['style'] == 'toon'
-    path = os.path.join(bpy.app.tempdir, 'passes.exr') if toon else opt['out']
+    toon, prop = opt['style'] == 'toon', s['world'] == 'swing'
+    path = os.path.join(bpy.app.tempdir, 'passes.exr' if toon else 'prop.png') \
+        if toon or prop else opt['out']
     bpy.context.scene.render.filepath = path
     bpy.ops.render.render(write_still=True)
     if toon:
         toon_post(path, opt['out'], s)
+    elif prop:
+        prop_post(path, opt['out'])
+    if toon or prop:
         os.remove(path)
     print('PNG', opt['out'], flush=True)
 

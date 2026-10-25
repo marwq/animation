@@ -107,6 +107,8 @@ node tools/render.js                     # PNG ×2 (или: node tools/render.js
 | `backgrounds/field/portal_toon.png` | горящий портал в рисованном стиле: внутри фиолетовое пламя, вокруг свечение |
 | `backgrounds/nether/nether_toon.png` | Незер в рисованном стиле: земля из незерака, огонь, лужа и река лавы, вдали скалы с лавопадами |
 | `backgrounds/grass/grass_toon.png` | только трава Minecraft в рисованном стиле, фон прозрачный — слой поверх фона |
+| `backgrounds/meadow/meadow.png` | поляна в стиле toonz CRAFT: дерево с кроной слева, посередине свободная трава под качели, фон размыт |
+| `backgrounds/props/swing.png` | качели из блоков (ель, каменный кирпич, цепи), прямо спереди, фон прозрачный, тонкая чёрная обводка |
 
 Рисованный стиль — как у персонажей: толстая чёрная обводка, плоские сочные цвета и одна
 тень. Обводка вблизи толще, вдали тоньше.
@@ -120,6 +122,8 @@ blender -b --factory-startup -P tools/mc_scene.py -- --shot portal
 blender -b --factory-startup -P tools/mc_scene.py -- --shot field --style toon
 blender -b --factory-startup -P tools/mc_scene.py -- --shot portal --style toon
 blender -b --factory-startup -P tools/mc_scene.py -- --shot nether --style toon
+blender -b --factory-startup -P tools/mc_scene.py -- --shot meadow
+blender -b --factory-startup -P tools/mc_scene.py -- --shot swing   # качели, PNG с прозрачностью
 python3 tools/mc_grass.py                       # трава, нужен Pillow
 # черновик за полминуты: ... --scale 0.4 --samples 24 --out /tmp/draft.png
 ```
