@@ -1072,6 +1072,78 @@ const FX = (() => {
     ctx.restore();
   }
 
+  // сундук-кусака (майнкрафт): низ по центру в (x, y), ширина s; lid — угол крышки (0 — закрыт);
+  // o: dir — в какую сторону открывается пасть (петли с другой стороны), teeth, eyes (глаза в темноте),
+  // glow 0..1 (золотой свет изнутри), rot, sq (сплющивание от низа, площадь та же)
+  function mcChest(ctx, x, y, s = 170, lid = 0, o = {}) {
+    const dir = o.dir || 1, bh = s * 0.6, lh = s * 0.28, sq = o.sq || 1;
+    ctx.save();
+    ctx.translate(x, y); ctx.rotate(o.rot || 0); ctx.scale(1 / sq, sq);
+    const top = -bh, hx = -dir * s / 2, a = -dir * lid, ca = Math.cos(a), sa = Math.sin(a);
+    const onLid = (px, py) => [hx + px * ca - py * sa, top + px * sa + py * ca];   // точка крышки (от петли)
+    const L = onLid(dir * s, 0);
+    ctx.lineJoin = 'round';
+    if (lid > 0.03) {
+      // пасть
+      ctx.fillStyle = '#1e0f04';
+      ctx.beginPath(); ctx.moveTo(hx, top); ctx.lineTo(-hx, top); ctx.lineTo(L[0], L[1]); ctx.closePath(); ctx.fill();
+      if (o.glow > 0) {
+        const cx = (hx - hx + L[0]) / 3 + hx * 0.33, cy = (top * 2 + L[1]) / 3;
+        ctx.save(); ctx.globalAlpha = o.glow;
+        const g = ctx.createRadialGradient(cx, cy, 4, cx, cy, s * 1.3);
+        g.addColorStop(0, 'rgba(255,240,120,0.95)'); g.addColorStop(0.4, 'rgba(255,214,40,0.45)'); g.addColorStop(1, 'rgba(255,214,40,0)');
+        ctx.fillStyle = g;
+        for (let i = 0; i < 7; i++) {
+          const an = -Math.PI / 2 + (i - 3) * 0.24 + Math.sin((o.t || 0) * 3 + i) * 0.04;
+          ctx.beginPath(); ctx.moveTo(cx, cy);
+          ctx.lineTo(cx + Math.cos(an - 0.07) * s * 1.6, cy + Math.sin(an - 0.07) * s * 1.6);
+          ctx.lineTo(cx + Math.cos(an + 0.07) * s * 1.6, cy + Math.sin(an + 0.07) * s * 1.6);
+          ctx.closePath(); ctx.fill();
+        }
+        ctx.beginPath(); ctx.arc(cx, cy, s * 0.5, 0, Math.PI * 2); ctx.fill();
+        ctx.restore();
+      }
+      if (o.teeth !== false) {
+        const n = 5, th = s * 0.11;
+        ctx.fillStyle = '#fffdf2'; ctx.strokeStyle = '#111'; ctx.lineWidth = 3;
+        for (let i = 0; i < n; i++) {                          // нижние — по краю ящика, вверх
+          const x0 = hx + (-hx * 2) * (i + 0.08) / n, x1 = hx + (-hx * 2) * (i + 0.92) / n;
+          ctx.beginPath(); ctx.moveTo(x0, top); ctx.lineTo((x0 + x1) / 2, top - th); ctx.lineTo(x1, top); ctx.closePath(); ctx.fill(); ctx.stroke();
+        }
+        for (let i = 0; i < n; i++) {                          // верхние — по краю крышки, к ящику
+          const p0 = onLid(dir * s * (i + 0.08) / n, 0), p1 = onLid(dir * s * (i + 0.92) / n, 0), pm = onLid(dir * s * (i + 0.5) / n, th);
+          ctx.beginPath(); ctx.moveTo(p0[0], p0[1]); ctx.lineTo(pm[0], pm[1]); ctx.lineTo(p1[0], p1[1]); ctx.closePath(); ctx.fill(); ctx.stroke();
+        }
+      }
+      if (o.eyes) {
+        const ex = (hx * 0.3 + -hx + L[0]) / 2.3, ey = top - (top - L[1]) * 0.28, r = s * 0.07;
+        for (const k of [-1, 1]) {
+          ctx.fillStyle = '#fff'; ctx.beginPath(); ctx.ellipse(ex + k * r * 1.5, ey, r, r * 1.25, 0, 0, Math.PI * 2); ctx.fill();
+          ctx.fillStyle = '#111'; ctx.beginPath(); ctx.arc(ex + k * r * 1.5 + (o.look || 0) * r * 0.4, ey + r * 0.15, r * 0.5, 0, Math.PI * 2); ctx.fill();
+        }
+      }
+    }
+    // ящик
+    const plank = (px, py, w, h) => {
+      ctx.fillStyle = '#111'; ctx.fillRect(px - 4, py - 4, w + 8, h + 8);
+      ctx.fillStyle = '#a8702e'; ctx.fillRect(px, py, w, h);
+      ctx.fillStyle = '#8c5a22';
+      for (let k = 1; k < 4; k++) ctx.fillRect(px, py + h * k / 4 - 2, w, 4);
+      ctx.fillStyle = '#5e3a12';
+      ctx.fillRect(px, py, w, h * 0.12); ctx.fillRect(px, py + h * 0.88, w, h * 0.12);
+      ctx.fillRect(px, py, w * 0.08, h); ctx.fillRect(px + w * 0.92, py, w * 0.08, h);
+    };
+    plank(-s / 2, top, s, bh);
+    // крышка
+    ctx.save(); ctx.translate(hx, top); ctx.rotate(a);
+    const lx = dir > 0 ? 0 : -s;
+    plank(lx, -lh, s, lh);
+    ctx.fillStyle = '#111'; ctx.fillRect(dir * s * 0.5 - s * 0.075, -lh * 0.45, s * 0.15, s * 0.2);      // замок
+    ctx.fillStyle = '#c9c9c9'; ctx.fillRect(dir * s * 0.5 - s * 0.055, -lh * 0.45 + 3, s * 0.11, s * 0.2 - 6);
+    ctx.restore();
+    ctx.restore();
+  }
+
   // блок разлетается кусочками: life 0..1, кусочки-квадраты по дугам с вращением
   function blockBurst(ctx, x, y, life, seed = 1, cols = ['#f39314', '#d6740a', '#ffab3a'], n = 14, size = 46, spread = 1, floor = Infinity) {
     if (life < 0 || life > 1) return;
@@ -1878,5 +1950,5 @@ const FX = (() => {
 
   return { rng, background, mcBackground, limb, note, waterBalloon, basket, waterSplash, boomerang, flower, bubbleWand, soapBubble, bubblePop, snowball, snowPile, snowCap, snowSplat, snowBurst, slimeBlock, tomato, gardenBed, tomatoBush, tnt, fuseSparks, boom, soot, balloon, balloonPop, cactus, paintBucket, paintBrush, mustache, paintHole, paintSplash, waterJet, cobble, cloud, shadow, spark, dust, smoke, flash, rays, vein, steam, sweat, stars, twinkle, whoosh, puff,
     heart, hearts, wind, banana, giftBox, suck, drool, tree, apple, bubble, gumSplat, rainCloud, rain, lightning, puddle, seesaw,
-    mudPit, mudSplash, rope, cake, crown, lollipop, tears, ball, pillow, feathers, bee, hive, table, pie, mcAppleTree, pumpkinBlock, blockBurst };
+    mudPit, mudSplash, rope, cake, crown, lollipop, tears, ball, pillow, feathers, bee, hive, table, pie, mcAppleTree, pumpkinBlock, blockBurst, mcChest };
 })();
