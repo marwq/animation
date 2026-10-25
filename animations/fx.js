@@ -1686,6 +1686,32 @@ const FX = (() => {
     ctx.restore();
   }
 
+  // шнур скакалки через точки pts (гладко, через середины отрезков); col — цвет
+  function jumpCord(ctx, pts, col = '#ff4f9a') {
+    if (!pts || pts.length < 2) return;
+    ctx.save(); ctx.lineCap = 'round'; ctx.lineJoin = 'round';
+    const path = () => {
+      ctx.beginPath(); ctx.moveTo(pts[0][0], pts[0][1]);
+      for (let i = 1; i < pts.length - 1; i++) {
+        const mx = (pts[i][0] + pts[i + 1][0]) / 2, my = (pts[i][1] + pts[i + 1][1]) / 2;
+        ctx.quadraticCurveTo(pts[i][0], pts[i][1], mx, my);
+      }
+      const l = pts[pts.length - 1]; ctx.lineTo(l[0], l[1]);
+    };
+    path(); ctx.lineWidth = 12; ctx.strokeStyle = '#111'; ctx.stroke();
+    path(); ctx.lineWidth = 6; ctx.strokeStyle = col; ctx.stroke();
+    ctx.restore();
+  }
+  // ручка скакалки: (x, y) — где шнур входит, ang — куда смотрит ручка (от шнура)
+  function ropeHandle(ctx, x, y, ang = Math.PI / 2, s = 60) {
+    ctx.save(); ctx.translate(x, y); ctx.rotate(ang - Math.PI / 2);
+    ctx.lineJoin = 'round'; ctx.lineWidth = 5; ctx.strokeStyle = '#111';
+    ctx.beginPath(); ctx.moveTo(-s * 0.16, 0); ctx.lineTo(-s * 0.2, s); ctx.quadraticCurveTo(0, s * 1.12, s * 0.2, s); ctx.lineTo(s * 0.16, 0); ctx.closePath();
+    ctx.fillStyle = '#ffd21f'; ctx.fill(); ctx.stroke();
+    ctx.fillStyle = '#e8a300'; ctx.fillRect(-s * 0.17, s * 0.35, s * 0.34, s * 0.12); ctx.fillRect(-s * 0.18, s * 0.65, s * 0.36, s * 0.12);
+    ctx.restore();
+  }
+
   // блок разлетается кусочками: life 0..1, кусочки-квадраты по дугам с вращением
   function blockBurst(ctx, x, y, life, seed = 1, cols = ['#f39314', '#d6740a', '#ffab3a'], n = 14, size = 46, spread = 1, floor = Infinity) {
     if (life < 0 || life > 1) return;
@@ -2492,5 +2518,5 @@ const FX = (() => {
 
   return { rng, background, mcBackground, limb, note, waterBalloon, basket, waterSplash, boomerang, flower, bubbleWand, soapBubble, bubblePop, snowball, snowPile, snowCap, snowSplat, snowBurst, slimeBlock, tomato, gardenBed, tomatoBush, tnt, fuseSparks, boom, soot, balloon, balloonPop, cactus, paintBucket, paintBrush, mustache, paintHole, paintSplash, waterJet, cobble, cloud, shadow, spark, dust, smoke, flash, rays, vein, steam, sweat, stars, twinkle, whoosh, puff,
     heart, hearts, wind, banana, giftBox, suck, drool, tree, apple, bubble, gumSplat, rainCloud, rain, lightning, puddle, seesaw,
-    mudPit, mudSplash, rope, cake, crown, lollipop, tears, ball, pillow, feathers, bee, hive, table, pie, mcAppleTree, pumpkinBlock, blockBurst, mcChest, iceCream, scoopCap, iceBlock, frost, magicBeam, rails, grassSteps, minecart, kite, kiteString, popcorn, popcornPile, popBucket, cornCob, sunRay, pickaxe, grassBlock, pit, chili, chiliBush, fireBreath, flame, bigLeaf, pond, fish, fishingRod, fishLine, feather, sleepBubble };
+    mudPit, mudSplash, rope, cake, crown, lollipop, tears, ball, pillow, feathers, bee, hive, table, pie, mcAppleTree, pumpkinBlock, blockBurst, mcChest, iceCream, scoopCap, iceBlock, frost, magicBeam, rails, grassSteps, minecart, kite, kiteString, popcorn, popcornPile, popBucket, cornCob, sunRay, pickaxe, grassBlock, pit, chili, chiliBush, fireBreath, flame, bigLeaf, pond, fish, fishingRod, fishLine, feather, sleepBubble, jumpCord, ropeHandle };
 })();
