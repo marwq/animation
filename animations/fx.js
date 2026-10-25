@@ -1656,6 +1656,36 @@ const FX = (() => {
     ctx.restore();
   }
 
+  // перо: центр (x, y), длина s, поворот rot (0 — вдоль x, очин слева); col — цвет кончика
+  function feather(ctx, x, y, s = 120, rot = 0, col = '#ffffff', bend = 0) {
+    ctx.save(); ctx.translate(x, y); ctx.rotate(rot);
+    const w = s * 0.17;
+    ctx.lineJoin = 'round'; ctx.lineWidth = Math.max(2.5, s * 0.03); ctx.strokeStyle = '#1b1b1b';
+    ctx.beginPath();
+    ctx.moveTo(-s * 0.32, 0);
+    ctx.bezierCurveTo(-s * 0.1, -w * 1.2, s * 0.3, -w * 1.1 + bend * w, s * 0.5, bend * w);
+    ctx.bezierCurveTo(s * 0.3, w * 0.9 + bend * w, -s * 0.1, w * 1.0, -s * 0.32, 0);
+    ctx.closePath(); ctx.fillStyle = '#ffffff'; ctx.fill(); ctx.stroke();
+    ctx.save(); ctx.clip();
+    ctx.fillStyle = col; ctx.beginPath(); ctx.ellipse(s * 0.42, bend * w, s * 0.16, w * 1.3, 0, 0, TAU); ctx.fill();
+    ctx.strokeStyle = 'rgba(0,0,0,0.25)'; ctx.lineWidth = 1.5;
+    for (let i = -3; i <= 4; i++) { ctx.beginPath(); ctx.moveTo(i * s * 0.09, 0); ctx.lineTo(i * s * 0.09 + s * 0.06, -w); ctx.moveTo(i * s * 0.09, 0); ctx.lineTo(i * s * 0.09 + s * 0.06, w); ctx.stroke(); }
+    ctx.restore();
+    ctx.lineWidth = Math.max(2, s * 0.025); ctx.strokeStyle = '#8a8a8a';
+    ctx.beginPath(); ctx.moveTo(-s * 0.5, 0); ctx.quadraticCurveTo(0, 0, s * 0.48, bend * w); ctx.stroke();
+    ctx.restore();
+  }
+
+  // пузырь из носа (спит): (x, y) — у носа, r — радиус
+  function sleepBubble(ctx, x, y, r) {
+    if (r < 2) return;
+    ctx.save();
+    ctx.beginPath(); ctx.arc(x + r * 0.7, y + r * 0.2, r, 0, TAU);
+    ctx.fillStyle = 'rgba(190,230,255,0.55)'; ctx.fill(); ctx.lineWidth = 3; ctx.strokeStyle = '#6aa8d8'; ctx.stroke();
+    ctx.beginPath(); ctx.arc(x + r * 0.45, y - r * 0.15, r * 0.22, 0, TAU); ctx.fillStyle = 'rgba(255,255,255,0.85)'; ctx.fill();
+    ctx.restore();
+  }
+
   // блок разлетается кусочками: life 0..1, кусочки-квадраты по дугам с вращением
   function blockBurst(ctx, x, y, life, seed = 1, cols = ['#f39314', '#d6740a', '#ffab3a'], n = 14, size = 46, spread = 1, floor = Infinity) {
     if (life < 0 || life > 1) return;
@@ -2462,5 +2492,5 @@ const FX = (() => {
 
   return { rng, background, mcBackground, limb, note, waterBalloon, basket, waterSplash, boomerang, flower, bubbleWand, soapBubble, bubblePop, snowball, snowPile, snowCap, snowSplat, snowBurst, slimeBlock, tomato, gardenBed, tomatoBush, tnt, fuseSparks, boom, soot, balloon, balloonPop, cactus, paintBucket, paintBrush, mustache, paintHole, paintSplash, waterJet, cobble, cloud, shadow, spark, dust, smoke, flash, rays, vein, steam, sweat, stars, twinkle, whoosh, puff,
     heart, hearts, wind, banana, giftBox, suck, drool, tree, apple, bubble, gumSplat, rainCloud, rain, lightning, puddle, seesaw,
-    mudPit, mudSplash, rope, cake, crown, lollipop, tears, ball, pillow, feathers, bee, hive, table, pie, mcAppleTree, pumpkinBlock, blockBurst, mcChest, iceCream, scoopCap, iceBlock, frost, magicBeam, rails, grassSteps, minecart, kite, kiteString, popcorn, popcornPile, popBucket, cornCob, sunRay, pickaxe, grassBlock, pit, chili, chiliBush, fireBreath, flame, bigLeaf, pond, fish, fishingRod, fishLine };
+    mudPit, mudSplash, rope, cake, crown, lollipop, tears, ball, pillow, feathers, bee, hive, table, pie, mcAppleTree, pumpkinBlock, blockBurst, mcChest, iceCream, scoopCap, iceBlock, frost, magicBeam, rails, grassSteps, minecart, kite, kiteString, popcorn, popcornPile, popBucket, cornCob, sunRay, pickaxe, grassBlock, pit, chili, chiliBush, fireBreath, flame, bigLeaf, pond, fish, fishingRod, fishLine, feather, sleepBubble };
 })();
