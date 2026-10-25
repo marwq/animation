@@ -1859,6 +1859,23 @@ const FX = (() => {
     ctx.restore();
   }
 
+  // пружина: низ по центру (x, y), длина L вверх (по углу rot от вертикали), ширина w; плашки сверху и снизу
+  function coilSpring(ctx, x, y, L = 100, w = 80, rot = 0) {
+    ctx.save(); ctx.translate(x, y); ctx.rotate(rot);
+    const n = 6, h = Math.max(10, L - 16);
+    const pts = [];
+    for (let i = 0; i <= n * 2; i++) pts.push([(i % 2 ? 1 : -1) * w * 0.42, -8 - h * i / (n * 2)]);
+    ctx.lineCap = 'round'; ctx.lineJoin = 'round';
+    for (const [lw, c] of [[13, '#111'], [7, '#aab3be'], [2.5, '#eef2f6']]) {
+      ctx.lineWidth = lw; ctx.strokeStyle = c; ctx.beginPath(); pts.forEach(([px, py], i) => (i ? ctx.lineTo(px, py) : ctx.moveTo(px, py))); ctx.stroke();
+    }
+    for (const yy of [0, -L]) {
+      ctx.fillStyle = '#111'; ctx.fillRect(-w / 2 - 4, yy - 12, w + 8, 16);
+      ctx.fillStyle = '#e8262e'; ctx.fillRect(-w / 2, yy - 8, w, 8);
+    }
+    ctx.restore();
+  }
+
   // блок разлетается кусочками: life 0..1, кусочки-квадраты по дугам с вращением
   function blockBurst(ctx, x, y, life, seed = 1, cols = ['#f39314', '#d6740a', '#ffab3a'], n = 14, size = 46, spread = 1, floor = Infinity) {
     if (life < 0 || life > 1) return;
@@ -2665,5 +2682,5 @@ const FX = (() => {
 
   return { rng, background, mcBackground, limb, note, waterBalloon, basket, waterSplash, boomerang, flower, bubbleWand, soapBubble, bubblePop, snowball, snowPile, snowCap, snowSplat, snowBurst, slimeBlock, tomato, gardenBed, tomatoBush, tnt, fuseSparks, boom, soot, balloon, balloonPop, cactus, paintBucket, paintBrush, mustache, paintHole, paintSplash, waterJet, cobble, cloud, shadow, spark, dust, smoke, flash, rays, vein, steam, sweat, stars, twinkle, whoosh, puff,
     heart, hearts, wind, banana, giftBox, suck, drool, tree, apple, bubble, gumSplat, rainCloud, rain, lightning, puddle, seesaw,
-    mudPit, mudSplash, rope, cake, crown, lollipop, tears, ball, pillow, feathers, bee, hive, table, pie, mcAppleTree, pumpkinBlock, blockBurst, mcChest, iceCream, scoopCap, iceBlock, frost, magicBeam, rails, grassSteps, minecart, kite, kiteString, popcorn, popcornPile, popBucket, cornCob, sunRay, pickaxe, grassBlock, pit, chili, chiliBush, fireBreath, flame, bigLeaf, pond, fish, fishingRod, fishLine, feather, sleepBubble, jumpCord, ropeHandle, marshmallow, mallowBag, slingshotY, slingBand, honeyPot, honeyCap, egg, chick, horseshoeMagnet, magnetWaves, anvil };
+    mudPit, mudSplash, rope, cake, crown, lollipop, tears, ball, pillow, feathers, bee, hive, table, pie, mcAppleTree, pumpkinBlock, blockBurst, mcChest, iceCream, scoopCap, iceBlock, frost, magicBeam, rails, grassSteps, minecart, kite, kiteString, popcorn, popcornPile, popBucket, cornCob, sunRay, pickaxe, grassBlock, pit, chili, chiliBush, fireBreath, flame, bigLeaf, pond, fish, fishingRod, fishLine, feather, sleepBubble, jumpCord, ropeHandle, marshmallow, mallowBag, slingshotY, slingBand, honeyPot, honeyCap, egg, chick, horseshoeMagnet, magnetWaves, anvil, coilSpring };
 })();
