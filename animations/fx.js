@@ -1496,6 +1496,92 @@ const FX = (() => {
     ctx.restore();
   }
 
+  // острый перец: центр (x, y), длина s, поворот rot (0 — хвостик слева, кончик вправо-вниз)
+  function chili(ctx, x, y, s = 90, rot = 0, col = '#e8262e') {
+    ctx.save(); ctx.translate(x, y); ctx.rotate(rot);
+    const w = s * 0.26;
+    ctx.lineJoin = 'round'; ctx.lineWidth = Math.max(3, s * 0.05); ctx.strokeStyle = '#111';
+    ctx.beginPath();
+    ctx.moveTo(-s * 0.4, -w * 0.5);
+    ctx.bezierCurveTo(-s * 0.05, -w * 0.75, s * 0.35, -w * 0.4, s * 0.5, w * 0.9);
+    ctx.bezierCurveTo(s * 0.25, w * 0.25, -s * 0.1, w * 0.65, -s * 0.4, w * 0.5);
+    ctx.quadraticCurveTo(-s * 0.5, 0, -s * 0.4, -w * 0.5);
+    ctx.closePath(); ctx.fillStyle = col; ctx.fill(); ctx.stroke();
+    ctx.beginPath(); ctx.ellipse(-s * 0.12, -w * 0.25, s * 0.14, w * 0.12, -0.15, 0, TAU); ctx.fillStyle = 'rgba(255,255,255,0.65)'; ctx.fill();
+    ctx.fillStyle = '#3fae2a';                              // чашечка и хвостик
+    ctx.beginPath(); ctx.moveTo(-s * 0.4, -w * 0.6); ctx.lineTo(-s * 0.3, 0); ctx.lineTo(-s * 0.4, w * 0.6); ctx.lineTo(-s * 0.5, 0); ctx.closePath(); ctx.fill(); ctx.stroke();
+    ctx.beginPath(); ctx.moveTo(-s * 0.45, 0); ctx.quadraticCurveTo(-s * 0.6, -w * 0.2, -s * 0.62, -w * 0.9); ctx.lineWidth = Math.max(4, s * 0.07); ctx.strokeStyle = '#111'; ctx.stroke();
+    ctx.lineWidth = Math.max(2, s * 0.035); ctx.strokeStyle = '#3fae2a'; ctx.stroke();
+    ctx.restore();
+  }
+
+  // куст перца из блоков листвы: низ по центру (x, ground), перцы — [[dx, dy, rot], ...] от центра низа
+  function chiliBush(ctx, x, ground, b = 56, peppers = [], seed = 5) {
+    const r = rng(seed), cells = [[-1, 0], [0, 0], [1, 0], [-1, 1], [0, 1], [1, 1], [0, 2], [-2, 0], [2, 0], [-1, 2], [1, 2]];
+    ctx.save();
+    ctx.fillStyle = '#111';
+    for (const [i, j] of cells) ctx.fillRect(x + i * b - b / 2 - 4, ground - (j + 1) * b - 4, b + 8, b + 8);
+    const g = ['#2f8f1f', '#3fae2a', '#4cc232', '#38a326'];
+    for (const [i, j] of cells) {
+      ctx.fillStyle = g[Math.floor(r() * 4)]; ctx.fillRect(x + i * b - b / 2, ground - (j + 1) * b, b, b);
+      ctx.fillStyle = g[Math.floor(r() * 4)]; ctx.fillRect(x + i * b - b / 2 + b * 0.5 * Math.floor(r() * 2), ground - (j + 1) * b + b * 0.5 * Math.floor(r() * 2), b / 2, b / 2);
+    }
+    ctx.restore();
+    for (const [dx, dy, rot] of peppers) chili(ctx, x + dx, ground + dy, b * 1.2, rot);
+  }
+
+  // огненное дыхание: конус языков пламени от a к b; t — время, alpha
+  function fireBreath(ctx, a, b, t, alpha = 1, seed = 2) {
+    if (alpha <= 0) return;
+    const r = rng(seed), L = Math.hypot(b[0] - a[0], b[1] - a[1]) || 1, nx = -(b[1] - a[1]) / L, ny = (b[0] - a[0]) / L;
+    ctx.save();
+    const cols = [['#ffef7a', '#ff9a1f'], ['#ffb21f', '#e8501a'], ['#ff6a1a', '#b81e12']];
+    for (let i = 0; i < 26; i++) {
+      const ph = r(), u = (t * 2.6 + ph) % 1, off = (r() - 0.5) * 2 * u * L * 0.22;
+      const px = a[0] + (b[0] - a[0]) * u + nx * off, py = a[1] + (b[1] - a[1]) * u + ny * off;
+      const c = cols[Math.min(2, Math.floor(u * 3))];
+      puff(ctx, px, py, 14 + u * 52, alpha * Math.min(1, (1 - u) * 2.5), c[0], c[1]);
+    }
+    ctx.restore();
+  }
+
+  // язычок пламени (горит шляпа и т. п.): низ по центру (x, y), высота s; t — время
+  function flame(ctx, x, y, s = 80, t = 0, alpha = 1) {
+    if (alpha <= 0) return;
+    ctx.save(); ctx.globalAlpha = alpha; ctx.lineJoin = 'round';
+    const layers = [[1, '#e8501a', '#111'], [0.72, '#ff9a1f', null], [0.45, '#ffef7a', null]];
+    for (const [k, col, line] of layers) {
+      const h = s * k * (1 + 0.12 * Math.sin(t * 22 + k * 5)), w = s * 0.42 * k, sw = Math.sin(t * 17 + k * 3) * s * 0.08;
+      ctx.beginPath();
+      ctx.moveTo(x - w, y);
+      ctx.quadraticCurveTo(x - w * 1.1, y - h * 0.5, x + sw, y - h);
+      ctx.quadraticCurveTo(x + w * 1.1, y - h * 0.5, x + w, y);
+      ctx.quadraticCurveTo(x, y + w * 0.4, x - w, y);
+      ctx.closePath(); ctx.fillStyle = col; ctx.fill();
+      if (line) { ctx.lineWidth = 4; ctx.strokeStyle = line; ctx.stroke(); }
+    }
+    ctx.restore();
+  }
+
+  // большой лист (джунгли), щит: черенок в (x, y), длина s, поворот rot (0 — лист вверх)
+  function bigLeaf(ctx, x, y, s = 300, rot = 0) {
+    ctx.save(); ctx.translate(x, y); ctx.rotate(rot);
+    ctx.lineJoin = 'round'; ctx.lineWidth = 6; ctx.strokeStyle = '#111';
+    ctx.beginPath(); ctx.moveTo(0, 0); ctx.lineTo(0, -s * 0.25); ctx.stroke();
+    ctx.beginPath();
+    ctx.moveTo(0, -s * 0.2);
+    ctx.bezierCurveTo(s * 0.42, -s * 0.3, s * 0.32, -s * 0.85, 0, -s);
+    ctx.bezierCurveTo(-s * 0.32, -s * 0.85, -s * 0.42, -s * 0.3, 0, -s * 0.2);
+    ctx.closePath(); ctx.fillStyle = '#2fae3a'; ctx.fill(); ctx.stroke();
+    ctx.lineWidth = 4; ctx.strokeStyle = '#1d6e1f';
+    ctx.beginPath(); ctx.moveTo(0, -s * 0.22); ctx.lineTo(0, -s * 0.95); ctx.stroke();
+    for (let i = 1; i < 6; i++) {
+      const yy = -s * (0.22 + i * 0.12);
+      ctx.beginPath(); ctx.moveTo(0, yy); ctx.lineTo(s * 0.3 * Math.sin(i / 6 * Math.PI), yy - s * 0.08); ctx.moveTo(0, yy); ctx.lineTo(-s * 0.3 * Math.sin(i / 6 * Math.PI), yy - s * 0.08); ctx.stroke();
+    }
+    ctx.restore();
+  }
+
   // блок разлетается кусочками: life 0..1, кусочки-квадраты по дугам с вращением
   function blockBurst(ctx, x, y, life, seed = 1, cols = ['#f39314', '#d6740a', '#ffab3a'], n = 14, size = 46, spread = 1, floor = Infinity) {
     if (life < 0 || life > 1) return;
@@ -2302,5 +2388,5 @@ const FX = (() => {
 
   return { rng, background, mcBackground, limb, note, waterBalloon, basket, waterSplash, boomerang, flower, bubbleWand, soapBubble, bubblePop, snowball, snowPile, snowCap, snowSplat, snowBurst, slimeBlock, tomato, gardenBed, tomatoBush, tnt, fuseSparks, boom, soot, balloon, balloonPop, cactus, paintBucket, paintBrush, mustache, paintHole, paintSplash, waterJet, cobble, cloud, shadow, spark, dust, smoke, flash, rays, vein, steam, sweat, stars, twinkle, whoosh, puff,
     heart, hearts, wind, banana, giftBox, suck, drool, tree, apple, bubble, gumSplat, rainCloud, rain, lightning, puddle, seesaw,
-    mudPit, mudSplash, rope, cake, crown, lollipop, tears, ball, pillow, feathers, bee, hive, table, pie, mcAppleTree, pumpkinBlock, blockBurst, mcChest, iceCream, scoopCap, iceBlock, frost, magicBeam, rails, grassSteps, minecart, kite, kiteString, popcorn, popcornPile, popBucket, cornCob, sunRay, pickaxe, grassBlock, pit };
+    mudPit, mudSplash, rope, cake, crown, lollipop, tears, ball, pillow, feathers, bee, hive, table, pie, mcAppleTree, pumpkinBlock, blockBurst, mcChest, iceCream, scoopCap, iceBlock, frost, magicBeam, rails, grassSteps, minecart, kite, kiteString, popcorn, popcornPile, popBucket, cornCob, sunRay, pickaxe, grassBlock, pit, chili, chiliBush, fireBreath, flame, bigLeaf };
 })();

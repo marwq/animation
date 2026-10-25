@@ -116,6 +116,17 @@ const E = (() => {
     },
   };
 
+  // «покраснел» (острый перец): жёлтая и оранжевая кожа -> красная
+  RECOLOR.hot = (px) => {
+    for (let i = 0; i < px.length; i += 4) {
+      if (!px[i + 3]) continue;
+      const [h, s, v] = hsv(px[i], px[i + 1], px[i + 2]);
+      if (s < 0.35 || v < 0.15 || h < 0.06 || h > 0.2) continue;
+      const k = v / 0.95;
+      px[i] = Math.min(255, 245 * k); px[i + 1] = Math.min(255, 52 * k); px[i + 2] = Math.min(255, 38 * k);
+    }
+  };
+
   // перекраска в радугу всего цветного (не только серого): контур и тёмное — как есть
   RECOLOR.rainbowAll = (px, w, h, box) => {
     for (let y = 0, i = 0; y < h; y++) {
