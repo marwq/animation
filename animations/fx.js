@@ -1144,6 +1144,129 @@ const FX = (() => {
     ctx.restore();
   }
 
+  // рожок мороженого: (x, y) — середина края вафли, s — ширина края; вафля вниз (при rot = 0),
+  // шарики вверх стопкой (scoops — цвета снизу вверх); drip 0..1 — потёки по краю
+  function iceCream(ctx, x, y, s = 160, rot = 0, scoops = ['#ff9ec7', '#fff3d6', '#8a5634'], drip = 0) {
+    ctx.save();
+    ctx.translate(x, y); ctx.rotate(rot);
+    ctx.lineJoin = 'round'; ctx.lineWidth = Math.max(4, s * 0.04); ctx.strokeStyle = '#111';
+    const h = s * 1.35;
+    ctx.beginPath(); ctx.moveTo(-s / 2, 0); ctx.lineTo(s / 2, 0); ctx.lineTo(0, h); ctx.closePath();
+    ctx.fillStyle = '#e8b25c'; ctx.fill();
+    ctx.save(); ctx.clip();
+    ctx.strokeStyle = '#b57b2e'; ctx.lineWidth = Math.max(3, s * 0.03);
+    for (let k = -4; k <= 4; k++) {
+      ctx.beginPath(); ctx.moveTo(k * s * 0.22 - s * 0.6, 0); ctx.lineTo(k * s * 0.22 + s * 0.6, h); ctx.stroke();
+      ctx.beginPath(); ctx.moveTo(k * s * 0.22 + s * 0.6, 0); ctx.lineTo(k * s * 0.22 - s * 0.6, h); ctx.stroke();
+    }
+    ctx.restore();
+    ctx.strokeStyle = '#111'; ctx.lineWidth = Math.max(4, s * 0.04);
+    ctx.beginPath(); ctx.moveTo(-s / 2, 0); ctx.lineTo(s / 2, 0); ctx.lineTo(0, h); ctx.closePath(); ctx.stroke();
+    const r = s * 0.5;
+    scoops.forEach((col, i) => {
+      const cy = -r * 0.55 - i * r * 1.25;
+      ctx.beginPath();
+      ctx.arc(0, cy, r, Math.PI * 0.92, Math.PI * 2.08);
+      for (let k = 0; k <= 6; k++) {                          // волнистый низ шарика
+        const u = k / 6, px = r * Math.cos(Math.PI * 0.08) * (1 - 2 * u);
+        ctx.quadraticCurveTo(px + r * 0.16, cy + r * 0.42 + (k % 2 ? r * 0.18 : 0), px, cy + r * 0.3);
+      }
+      ctx.closePath(); ctx.fillStyle = col; ctx.fill(); ctx.stroke();
+      ctx.beginPath(); ctx.ellipse(-r * 0.38, cy - r * 0.35, r * 0.18, r * 0.11, -0.6, 0, TAU); ctx.fillStyle = 'rgba(255,255,255,0.7)'; ctx.fill();
+      if (i === 0 && drip > 0) {
+        for (const [dx, len] of [[-0.6, 0.5], [-0.15, 0.85], [0.42, 0.62]]) {
+          const L = len * drip * r;
+          ctx.beginPath(); ctx.moveTo(dx * r - r * 0.09, cy + r * 0.3); ctx.lineTo(dx * r - r * 0.09, cy + r * 0.3 + L);
+          ctx.arc(dx * r, cy + r * 0.3 + L, r * 0.09, Math.PI, 0, true); ctx.lineTo(dx * r + r * 0.09, cy + r * 0.3);
+          ctx.fillStyle = col; ctx.fill(); ctx.lineWidth = Math.max(3, s * 0.025); ctx.stroke(); ctx.lineWidth = Math.max(4, s * 0.04);
+        }
+      }
+    });
+    ctx.restore();
+  }
+
+  // шарик мороженого на макушке: (x, y) — макушка, w — ширина; drip 0..1 — потёки вниз по лицу
+  function scoopCap(ctx, x, y, w = 150, col = '#8a5634', drip = 0, alpha = 1) {
+    if (alpha <= 0) return;
+    ctx.save(); ctx.globalAlpha = alpha;
+    ctx.lineJoin = 'round'; ctx.lineWidth = Math.max(3, w * 0.035); ctx.strokeStyle = '#111';
+    for (const [dx, len] of [[-0.38, 0.55], [-0.05, 0.9], [0.3, 0.65]]) {
+      const L = len * drip * w, rr = w * 0.07;
+      ctx.beginPath(); ctx.moveTo(x + dx * w - rr, y); ctx.lineTo(x + dx * w - rr, y + L);
+      ctx.arc(x + dx * w, y + L, rr, Math.PI, 0, true); ctx.lineTo(x + dx * w + rr, y);
+      ctx.fillStyle = col; ctx.fill(); ctx.stroke();
+    }
+    ctx.beginPath(); ctx.ellipse(x, y - w * 0.12, w * 0.5, w * 0.36, 0, Math.PI * 0.95, Math.PI * 2.05);
+    for (let k = 0; k <= 6; k++) { const u = k / 6, px = x + w * 0.5 * (1 - 2 * u); ctx.quadraticCurveTo(px + w * 0.08, y + w * 0.12 + (k % 2 ? w * 0.08 : 0), px, y + w * 0.05); }
+    ctx.closePath(); ctx.fillStyle = col; ctx.fill(); ctx.stroke();
+    ctx.beginPath(); ctx.ellipse(x - w * 0.18, y - w * 0.26, w * 0.1, w * 0.06, -0.5, 0, TAU); ctx.fillStyle = 'rgba(255,255,255,0.7)'; ctx.fill();
+    ctx.restore();
+  }
+
+  // ледяная глыба: низ по центру в (x, y), w×h; crack 0..1 — трещины; grow 0..1 — растёт снизу вверх
+  function iceBlock(ctx, x, y, w, h, crack = 0, grow = 1, seed = 3) {
+    if (grow <= 0) return;
+    const hh = h * grow;
+    ctx.save();
+    ctx.lineJoin = 'round';
+    ctx.fillStyle = 'rgba(150,215,255,0.42)'; ctx.fillRect(x - w / 2, y - hh, w, hh);
+    ctx.fillStyle = 'rgba(235,250,255,0.55)';
+    ctx.beginPath(); ctx.moveTo(x - w / 2 + w * 0.08, y - hh + 8); ctx.lineTo(x - w / 2 + w * 0.22, y - hh + 8); ctx.lineTo(x - w / 2 + w * 0.08, y - hh + hh * 0.45); ctx.closePath(); ctx.fill();
+    ctx.fillRect(x + w / 2 - w * 0.12, y - hh + 10, w * 0.05, hh * 0.3);
+    ctx.lineWidth = 6; ctx.strokeStyle = '#2a6fa8'; ctx.strokeRect(x - w / 2, y - hh, w, hh);
+    ctx.lineWidth = 3; ctx.strokeStyle = 'rgba(255,255,255,0.9)'; ctx.strokeRect(x - w / 2 + 7, y - hh + 7, w - 14, hh - 14);
+    if (crack > 0) {
+      const r = rng(seed);
+      ctx.strokeStyle = '#ffffff'; ctx.lineWidth = 4; ctx.lineCap = 'round';
+      for (let i = 0; i < 5; i++) {
+        let px = x + (r() - 0.5) * w * 0.6, py = y - hh * (0.2 + r() * 0.6);
+        ctx.beginPath(); ctx.moveTo(px, py);
+        const n = Math.ceil(4 * crack);
+        for (let k = 0; k < n; k++) { px += (r() - 0.5) * w * 0.35; py += (r() - 0.5) * hh * 0.3; ctx.lineTo(px, py); }
+        ctx.stroke();
+      }
+    }
+    ctx.restore();
+  }
+
+  // морозное дыхание: от a к b клубы и снежинки; t — время (с), alpha
+  function frost(ctx, a, b, t, alpha = 1, seed = 4) {
+    const r = rng(seed);
+    ctx.save();
+    for (let i = 0; i < 14; i++) {
+      const ph = r(), u = (t * 1.8 + ph) % 1, off = (r() - 0.5) * 2;
+      const px = E.lerp(a[0], b[0], u) + off * 30 * u, py = E.lerp(a[1], b[1], u) + off * 60 * u;
+      puff(ctx, px, py, 16 + 40 * u, alpha * 0.75 * (1 - u * 0.6), '#e6f6ff', '#7fb3dc');
+    }
+    ctx.fillStyle = '#ffffff'; ctx.strokeStyle = '#4f8fc4'; ctx.lineWidth = 2;
+    for (let i = 0; i < 10; i++) {
+      const ph = r(), u = (t * 2.2 + ph) % 1, off = (r() - 0.5) * 2;
+      const px = E.lerp(a[0], b[0], u) + off * 50 * u, py = E.lerp(a[1], b[1], u) + off * 70 * u;
+      ctx.globalAlpha = alpha; star(ctx, px, py, 6, 12, 5, t * 4 + i); ctx.fill(); ctx.stroke();
+    }
+    ctx.restore();
+  }
+
+  // волшебный радужный луч из точки a в b; grow 0..1 — дотянулся, alpha
+  function magicBeam(ctx, a, b, t, grow = 1, alpha = 1) {
+    const ex = E.lerp(a[0], b[0], grow), ey = E.lerp(a[1], b[1], grow);
+    ctx.save(); ctx.globalAlpha = alpha; ctx.lineCap = 'round';
+    const cols = ['#ff2a3a', '#ff9a00', '#ffe500', '#2ed14a', '#2aa0ff', '#8a4dff'];
+    const nx = -(ey - a[1]), ny = ex - a[0], L = Math.hypot(nx, ny) || 1;
+    ctx.lineWidth = 50; ctx.strokeStyle = '#111'; ctx.beginPath(); ctx.moveTo(a[0], a[1]); ctx.lineTo(ex, ey); ctx.stroke();
+    cols.forEach((c, i) => {
+      const k = (i - 2.5) * 7.5;
+      ctx.lineWidth = 8.5; ctx.strokeStyle = c;
+      ctx.beginPath(); ctx.moveTo(a[0] + nx / L * k, a[1] + ny / L * k); ctx.lineTo(ex + nx / L * k, ey + ny / L * k); ctx.stroke();
+    });
+    ctx.fillStyle = '#ffffff';
+    for (let i = 0; i < 6; i++) {
+      const u = ((t * 2.5 + i / 6) % 1) * grow;
+      star(ctx, E.lerp(a[0], b[0], u), E.lerp(a[1], b[1], u), 4, 18, 6, t * 5 + i); ctx.fill();
+    }
+    ctx.restore();
+  }
+
   // блок разлетается кусочками: life 0..1, кусочки-квадраты по дугам с вращением
   function blockBurst(ctx, x, y, life, seed = 1, cols = ['#f39314', '#d6740a', '#ffab3a'], n = 14, size = 46, spread = 1, floor = Infinity) {
     if (life < 0 || life > 1) return;
@@ -1950,5 +2073,5 @@ const FX = (() => {
 
   return { rng, background, mcBackground, limb, note, waterBalloon, basket, waterSplash, boomerang, flower, bubbleWand, soapBubble, bubblePop, snowball, snowPile, snowCap, snowSplat, snowBurst, slimeBlock, tomato, gardenBed, tomatoBush, tnt, fuseSparks, boom, soot, balloon, balloonPop, cactus, paintBucket, paintBrush, mustache, paintHole, paintSplash, waterJet, cobble, cloud, shadow, spark, dust, smoke, flash, rays, vein, steam, sweat, stars, twinkle, whoosh, puff,
     heart, hearts, wind, banana, giftBox, suck, drool, tree, apple, bubble, gumSplat, rainCloud, rain, lightning, puddle, seesaw,
-    mudPit, mudSplash, rope, cake, crown, lollipop, tears, ball, pillow, feathers, bee, hive, table, pie, mcAppleTree, pumpkinBlock, blockBurst, mcChest };
+    mudPit, mudSplash, rope, cake, crown, lollipop, tears, ball, pillow, feathers, bee, hive, table, pie, mcAppleTree, pumpkinBlock, blockBurst, mcChest, iceCream, scoopCap, iceBlock, frost, magicBeam };
 })();
