@@ -2746,6 +2746,80 @@ const FX = (() => {
     ctx.restore();
   }
 
+  // напольный вентилятор: (x, y) — низ подставки; s — высота; face -1..1 — куда дует (0 — на зрителя);
+  // ang — угол лопастей; speed 0..1 — размытие; o.btn — нажата кнопка; o.tilt — наклон головы; o.noBase — без подставки
+  function deskFan(ctx, x, y, s = 400, face = 1, ang = 0, speed = 0, o = {}) {
+    const R = s * 0.27, hx = x, hy = y - s * 0.72, af = Math.abs(face), sg = face < 0 ? -1 : 1;
+    ctx.save(); ctx.lineJoin = 'round'; ctx.lineCap = 'round'; ctx.strokeStyle = '#111';
+    if (!o.noBase) {
+      // подставка
+      ctx.beginPath(); ctx.ellipse(x, y - s * 0.045, s * 0.3, s * 0.06, 0, 0, TAU);
+      ctx.fillStyle = '#7d8a9c'; ctx.fill(); ctx.lineWidth = 5; ctx.stroke();
+      ctx.beginPath(); ctx.ellipse(x, y - s * 0.07, s * 0.26, s * 0.045, 0, Math.PI, TAU);
+      ctx.fillStyle = '#a7b4c6'; ctx.fill();
+      // кнопка
+      const bx = x - s * 0.17, by = y - s * 0.075 + (o.btn ? 4 : 0);
+      ctx.beginPath(); ctx.ellipse(bx, by, s * 0.05, s * 0.022, 0, 0, TAU);
+      ctx.fillStyle = o.btn ? '#a8121b' : '#e8262e'; ctx.fill(); ctx.lineWidth = 4; ctx.stroke();
+      if (!o.btn) { ctx.beginPath(); ctx.rect(bx - s * 0.05, by - 9, s * 0.1, 9); ctx.fillStyle = '#e8262e'; ctx.fill(); ctx.stroke();
+        ctx.beginPath(); ctx.ellipse(bx, by - 9, s * 0.05, s * 0.022, 0, 0, TAU); ctx.fillStyle = '#ff5a5f'; ctx.fill(); ctx.stroke(); }
+    }
+    // штанга
+    ctx.beginPath(); ctx.rect(x - s * 0.028, hy, s * 0.056, y - s * 0.08 - hy); ctx.fillStyle = '#c9d3df'; ctx.fill(); ctx.lineWidth = 5; ctx.stroke();
+    ctx.translate(hx, hy); ctx.rotate(o.tilt || 0);
+    // мотор позади решётки
+    const mx = -face * R * 0.55, mw = R * (0.35 + 0.35 * af);
+    ctx.beginPath(); ctx.ellipse(mx, 0, mw, R * 0.42, 0, 0, TAU); ctx.fillStyle = '#5c6878'; ctx.fill(); ctx.lineWidth = 5; ctx.stroke();
+    ctx.beginPath(); ctx.ellipse(mx - sg * mw * 0.2, -R * 0.12, mw * 0.5, R * 0.14, 0, 0, TAU); ctx.fillStyle = '#8693a6'; ctx.fill();
+    // решётка и лопасти (окружность, сплюснутая по x)
+    const gx = face * R * 0.12, rx = R * (1 - 0.58 * af);
+    ctx.save(); ctx.translate(gx, 0); ctx.scale(rx / R, 1);
+    ctx.beginPath(); ctx.arc(0, 0, R, 0, TAU); ctx.fillStyle = 'rgba(214,240,255,0.55)'; ctx.fill();
+    const bl = 1 - Math.min(1, speed * 1.3) * 0.75;
+    for (let i = 0; i < 3; i++) {
+      const a = ang + i * TAU / 3;
+      ctx.save(); ctx.rotate(a); ctx.globalAlpha = bl;
+      ctx.beginPath(); ctx.moveTo(0, 0); ctx.bezierCurveTo(R * 0.25, -R * 0.42, R * 0.86, -R * 0.36, R * 0.84, 0);
+      ctx.bezierCurveTo(R * 0.8, R * 0.22, R * 0.3, R * 0.2, 0, 0);
+      ctx.fillStyle = '#2fa6ff'; ctx.fill(); ctx.lineWidth = 4; ctx.stroke();
+      ctx.restore();
+    }
+    if (speed > 0.05) { ctx.globalAlpha = Math.min(0.75, speed); ctx.beginPath(); ctx.arc(0, 0, R * 0.86, 0, TAU); ctx.fillStyle = '#7fd0ff'; ctx.fill(); ctx.globalAlpha = 1; }
+    ctx.lineWidth = 5;
+    for (let i = 0; i < 8; i++) { const a = i * TAU / 8; ctx.beginPath(); ctx.moveTo(Math.cos(a) * R * 0.18, Math.sin(a) * R * 0.18); ctx.lineTo(Math.cos(a) * R, Math.sin(a) * R); ctx.strokeStyle = 'rgba(40,46,58,0.55)'; ctx.stroke(); }
+    ctx.strokeStyle = '#111';
+    ctx.beginPath(); ctx.arc(0, 0, R * 0.55, 0, TAU); ctx.lineWidth = 3; ctx.strokeStyle = 'rgba(40,46,58,0.55)'; ctx.stroke();
+    ctx.beginPath(); ctx.arc(0, 0, R, 0, TAU); ctx.lineWidth = 9; ctx.strokeStyle = '#3d4756'; ctx.stroke();
+    ctx.lineWidth = 3; ctx.strokeStyle = '#111'; ctx.beginPath(); ctx.arc(0, 0, R + 5, 0, TAU); ctx.stroke();
+    ctx.beginPath(); ctx.arc(0, 0, R * 0.17, 0, TAU); ctx.fillStyle = '#e8262e'; ctx.fill(); ctx.lineWidth = 4; ctx.stroke();
+    ctx.restore();
+    ctx.restore();
+  }
+  // поток от вентилятора: белые штрихи и лепестки летят от (x, y) в сторону dir; len — дальность;
+  // t — секунды; power 0..1; spread — разлёт по вертикали; o.up — подъём струи (px на len)
+  function fanWind(ctx, x, y, dir, len, t, power = 1, spread = 220, seed = 3, o = {}) {
+    if (power <= 0) return;
+    const r = rng(seed);
+    ctx.save(); ctx.lineCap = 'round';
+    for (let i = 0; i < 38; i++) {
+      const ph = r(), sp = 1.3 + r() * 0.7, dy = (r() - 0.5) * 2, L = 60 + r() * 80, kind = r();
+      const u = (t * sp + ph) % 1;
+      const px = x + dir * (30 + len * u), py = y + dy * spread * (0.25 + u) * 0.5 - (o.up || 0) * u + Math.sin(u * 8 + i) * 8;
+      const a = power * Math.min(1, Math.sin(Math.PI * u) * 1.8);
+      if (a <= 0.02) continue;
+      if (kind < 0.78) {
+        ctx.globalAlpha = a * 0.7; ctx.strokeStyle = '#7cc8f0'; ctx.lineWidth = 14;
+        ctx.beginPath(); ctx.moveTo(px - dir * L, py + 6); ctx.quadraticCurveTo(px - dir * L * 0.5, py - 10, px, py); ctx.stroke();
+        ctx.globalAlpha = a; ctx.strokeStyle = '#ffffff'; ctx.lineWidth = 7; ctx.stroke();
+      } else {                                      // листик / лепесток кувыркается
+        ctx.globalAlpha = a; ctx.save(); ctx.translate(px, py); ctx.rotate(u * 16 + i);
+        ctx.beginPath(); ctx.ellipse(0, 0, 13, 5, 0, 0, TAU);
+        ctx.fillStyle = kind < 0.9 ? '#25c516' : '#ff9ad5'; ctx.fill(); ctx.lineWidth = 2; ctx.strokeStyle = '#0d4f07'; ctx.stroke(); ctx.restore();
+      }
+    }
+    ctx.restore();
+  }
+
   // «вжух» — удар прошёл мимо: маленькое облачко
   function whoosh(ctx, x, y, life) {
     if (life < 0 || life > 1) return;
@@ -2756,5 +2830,5 @@ const FX = (() => {
 
   return { rng, background, mcBackground, limb, note, waterBalloon, basket, waterSplash, boomerang, flower, bubbleWand, soapBubble, bubblePop, snowball, snowPile, snowCap, snowSplat, snowBurst, slimeBlock, tomato, gardenBed, tomatoBush, tnt, fuseSparks, boom, soot, balloon, balloonPop, cactus, paintBucket, paintBrush, mustache, paintHole, paintSplash, waterJet, cobble, cloud, shadow, spark, dust, smoke, flash, rays, vein, steam, sweat, stars, twinkle, whoosh, puff,
     heart, hearts, wind, banana, giftBox, suck, drool, tree, apple, bubble, gumSplat, rainCloud, rain, lightning, puddle, seesaw,
-    mudPit, mudSplash, rope, cake, crown, lollipop, tears, ball, pillow, feathers, bee, hive, table, pie, mcAppleTree, pumpkinBlock, blockBurst, mcChest, iceCream, scoopCap, iceBlock, frost, magicBeam, rails, grassSteps, minecart, kite, kiteString, popcorn, popcornPile, popBucket, cornCob, sunRay, pickaxe, grassBlock, pit, chili, chiliBush, fireBreath, flame, bigLeaf, pond, fish, fishingRod, fishLine, feather, sleepBubble, jumpCord, ropeHandle, marshmallow, mallowBag, slingshotY, slingBand, honeyPot, honeyCap, egg, chick, horseshoeMagnet, magnetWaves, anvil, coilSpring, rocket, rocketTrail, fireworkBurst, iceRink, iceSpray };
+    mudPit, mudSplash, rope, cake, crown, lollipop, tears, ball, pillow, feathers, bee, hive, table, pie, mcAppleTree, pumpkinBlock, blockBurst, mcChest, iceCream, scoopCap, iceBlock, frost, magicBeam, rails, grassSteps, minecart, kite, kiteString, popcorn, popcornPile, popBucket, cornCob, sunRay, pickaxe, grassBlock, pit, chili, chiliBush, fireBreath, flame, bigLeaf, pond, fish, fishingRod, fishLine, feather, sleepBubble, jumpCord, ropeHandle, marshmallow, mallowBag, slingshotY, slingBand, honeyPot, honeyCap, egg, chick, horseshoeMagnet, magnetWaves, anvil, coilSpring, rocket, rocketTrail, fireworkBurst, iceRink, iceSpray, deskFan, fanWind };
 })();
