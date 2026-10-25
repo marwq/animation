@@ -1459,6 +1459,43 @@ const FX = (() => {
     ctx.restore();
   }
 
+  // кирка (майнкрафт, алмазная): (x, y) — низ рукояти (хват), s — длина, rot — наклон (0 — головка вверх)
+  function pickaxe(ctx, x, y, s = 200, rot = 0) {
+    ctx.save(); ctx.translate(x, y); ctx.rotate(rot);
+    const w = s * 0.11, q = s / 12;
+    ctx.fillStyle = '#111'; ctx.fillRect(-w / 2 - 4, -s * 0.92, w + 8, s * 0.92 + 4);
+    ctx.fillStyle = '#8a5a2b'; ctx.fillRect(-w / 2, -s * 0.92, w, s * 0.92);
+    ctx.fillStyle = '#5e3a12'; for (let k = 1; k < 6; k++) ctx.fillRect(-w / 2, -k * s * 0.15, w, q * 0.5);
+    // головка: дуга из квадратиков
+    const cells = [[-5, 1], [-4, 0], [-3, -1], [-2, -1], [-1, -2], [0, -2], [1, -2], [2, -1], [3, -1], [4, 0], [5, 1]];
+    ctx.fillStyle = '#111';
+    for (const [i, j] of cells) ctx.fillRect(i * q - q / 2 - 4, -s + j * q - 4, q + 8, q * 1.6 + 8);
+    for (const [i, j] of cells) {
+      ctx.fillStyle = Math.abs(i) > 3 ? '#2fa8a0' : '#5fe0d8'; ctx.fillRect(i * q - q / 2, -s + j * q, q, q * 1.6);
+      ctx.fillStyle = '#c8fffa'; ctx.fillRect(i * q - q / 2, -s + j * q, q, q * 0.4);
+    }
+    ctx.restore();
+  }
+
+  // блок травы (майнкрафт) с центром (x, y), сторона b, поворот rot, масштаб k (появление)
+  function grassBlock(ctx, x, y, b = 100, rot = 0, k = 1) {
+    if (k <= 0) return;
+    ctx.save(); ctx.translate(x, y); ctx.rotate(rot); ctx.scale(k, k);
+    grassSteps(ctx, b / 2, [[-b / 2, b, b]], b);
+    ctx.restore();
+  }
+
+  // яма в земле (разрез): x0..x1, от поверхности y вниз на глубину d
+  function pit(ctx, x0, x1, y, d) {
+    ctx.save();
+    ctx.fillStyle = '#111'; ctx.fillRect(x0 - 4, y - 2, x1 - x0 + 8, d + 6);
+    ctx.fillStyle = '#3a2410'; ctx.fillRect(x0, y, x1 - x0, d);
+    ctx.fillStyle = '#2a190a';
+    for (let yy = y; yy < y + d; yy += 50) for (let xx = x0 + ((yy - y) / 50 % 2) * 25; xx < x1; xx += 50) ctx.fillRect(xx, yy, 24, 24);
+    ctx.fillStyle = 'rgba(0,0,0,0.35)'; ctx.fillRect(x0, y, x1 - x0, 18);
+    ctx.restore();
+  }
+
   // блок разлетается кусочками: life 0..1, кусочки-квадраты по дугам с вращением
   function blockBurst(ctx, x, y, life, seed = 1, cols = ['#f39314', '#d6740a', '#ffab3a'], n = 14, size = 46, spread = 1, floor = Infinity) {
     if (life < 0 || life > 1) return;
@@ -2265,5 +2302,5 @@ const FX = (() => {
 
   return { rng, background, mcBackground, limb, note, waterBalloon, basket, waterSplash, boomerang, flower, bubbleWand, soapBubble, bubblePop, snowball, snowPile, snowCap, snowSplat, snowBurst, slimeBlock, tomato, gardenBed, tomatoBush, tnt, fuseSparks, boom, soot, balloon, balloonPop, cactus, paintBucket, paintBrush, mustache, paintHole, paintSplash, waterJet, cobble, cloud, shadow, spark, dust, smoke, flash, rays, vein, steam, sweat, stars, twinkle, whoosh, puff,
     heart, hearts, wind, banana, giftBox, suck, drool, tree, apple, bubble, gumSplat, rainCloud, rain, lightning, puddle, seesaw,
-    mudPit, mudSplash, rope, cake, crown, lollipop, tears, ball, pillow, feathers, bee, hive, table, pie, mcAppleTree, pumpkinBlock, blockBurst, mcChest, iceCream, scoopCap, iceBlock, frost, magicBeam, rails, grassSteps, minecart, kite, kiteString, popcorn, popcornPile, popBucket, cornCob, sunRay };
+    mudPit, mudSplash, rope, cake, crown, lollipop, tears, ball, pillow, feathers, bee, hive, table, pie, mcAppleTree, pumpkinBlock, blockBurst, mcChest, iceCream, scoopCap, iceBlock, frost, magicBeam, rails, grassSteps, minecart, kite, kiteString, popcorn, popcornPile, popBucket, cornCob, sunRay, pickaxe, grassBlock, pit };
 })();
