@@ -1876,6 +1876,46 @@ const FX = (() => {
     ctx.restore();
   }
 
+  // ракета фейерверка: (x, y) — хвост (низ палочки), s — длина корпуса, rot (0 — носом вверх), col
+  function rocket(ctx, x, y, s = 90, rot = 0, col = '#e8262e') {
+    ctx.save(); ctx.translate(x, y); ctx.rotate(rot);
+    const w = s * 0.3;
+    ctx.lineWidth = 4; ctx.strokeStyle = '#111'; ctx.lineJoin = 'round';
+    ctx.fillStyle = '#c8a060'; ctx.fillRect(-3, -s * 0.2, 6, s * 0.9);  ctx.strokeRect(-3, -s * 0.2, 6, s * 0.9);   // палочка
+    ctx.beginPath(); ctx.rect(-w / 2, -s, w, s * 0.8); ctx.fillStyle = col; ctx.fill(); ctx.stroke();
+    ctx.fillStyle = '#ffffff'; ctx.fillRect(-w / 2 + 2, -s * 0.7, w - 4, s * 0.1);
+    ctx.beginPath(); ctx.moveTo(-w / 2 - 3, -s); ctx.lineTo(0, -s * 1.3); ctx.lineTo(w / 2 + 3, -s); ctx.closePath(); ctx.fillStyle = '#ffd21f'; ctx.fill(); ctx.stroke();
+    ctx.restore();
+  }
+  // хвост искр за летящей ракетой: от (x, y) по направлению rot+π; t — время
+  function rocketTrail(ctx, x, y, rot, t, len = 120) {
+    const r = rng(Math.floor(t * 24));
+    const dx = -Math.sin(rot), dy = Math.cos(rot);
+    ctx.save();
+    for (let i = 0; i < 14; i++) {
+      const u = r(), px = x + dx * len * u + (r() - 0.5) * 22 * u, py = y + dy * len * u + (r() - 0.5) * 22 * u;
+      ctx.fillStyle = u < 0.3 ? '#ffffff' : u < 0.6 ? '#ffe14d' : '#ff8a00';
+      ctx.globalAlpha = 1 - u; ctx.beginPath(); ctx.arc(px, py, 6 + 8 * (1 - u), 0, TAU); ctx.fill();
+    }
+    ctx.restore();
+  }
+  // салют: вспышка-звезда из N лучей с искрами; life 0..1; cols — палитра
+  function fireworkBurst(ctx, x, y, life, size = 260, cols = ['#ff3a6a', '#ffe14d', '#3ad1ff'], seed = 1) {
+    if (life < 0 || life > 1) return;
+    const r = rng(seed), n = 22;
+    ctx.save(); ctx.lineCap = 'round';
+    for (let i = 0; i < n; i++) {
+      const a = (i / n) * TAU + r() * 0.1, d = size * E.EASE.out(life) * (0.75 + r() * 0.3), dropY = 120 * life * life;
+      const px = x + Math.cos(a) * d, py = y + Math.sin(a) * d + dropY, c = cols[i % cols.length];
+      ctx.globalAlpha = 1 - life * 0.8;
+      ctx.strokeStyle = c; ctx.lineWidth = 6 * (1 - life) + 2;
+      ctx.beginPath(); ctx.moveTo(x + Math.cos(a) * d * 0.6, y + Math.sin(a) * d * 0.6 + dropY * 0.6); ctx.lineTo(px, py); ctx.stroke();
+      ctx.fillStyle = '#ffffff'; ctx.beginPath(); ctx.arc(px, py, 5 * (1 - life) + 2, 0, TAU); ctx.fill();
+    }
+    if (life < 0.25) { ctx.globalAlpha = 1 - life * 4; ctx.fillStyle = '#ffffff'; ctx.beginPath(); ctx.arc(x, y, size * 0.35 * (1 - life * 2), 0, TAU); ctx.fill(); }
+    ctx.restore();
+  }
+
   // блок разлетается кусочками: life 0..1, кусочки-квадраты по дугам с вращением
   function blockBurst(ctx, x, y, life, seed = 1, cols = ['#f39314', '#d6740a', '#ffab3a'], n = 14, size = 46, spread = 1, floor = Infinity) {
     if (life < 0 || life > 1) return;
@@ -2682,5 +2722,5 @@ const FX = (() => {
 
   return { rng, background, mcBackground, limb, note, waterBalloon, basket, waterSplash, boomerang, flower, bubbleWand, soapBubble, bubblePop, snowball, snowPile, snowCap, snowSplat, snowBurst, slimeBlock, tomato, gardenBed, tomatoBush, tnt, fuseSparks, boom, soot, balloon, balloonPop, cactus, paintBucket, paintBrush, mustache, paintHole, paintSplash, waterJet, cobble, cloud, shadow, spark, dust, smoke, flash, rays, vein, steam, sweat, stars, twinkle, whoosh, puff,
     heart, hearts, wind, banana, giftBox, suck, drool, tree, apple, bubble, gumSplat, rainCloud, rain, lightning, puddle, seesaw,
-    mudPit, mudSplash, rope, cake, crown, lollipop, tears, ball, pillow, feathers, bee, hive, table, pie, mcAppleTree, pumpkinBlock, blockBurst, mcChest, iceCream, scoopCap, iceBlock, frost, magicBeam, rails, grassSteps, minecart, kite, kiteString, popcorn, popcornPile, popBucket, cornCob, sunRay, pickaxe, grassBlock, pit, chili, chiliBush, fireBreath, flame, bigLeaf, pond, fish, fishingRod, fishLine, feather, sleepBubble, jumpCord, ropeHandle, marshmallow, mallowBag, slingshotY, slingBand, honeyPot, honeyCap, egg, chick, horseshoeMagnet, magnetWaves, anvil, coilSpring };
+    mudPit, mudSplash, rope, cake, crown, lollipop, tears, ball, pillow, feathers, bee, hive, table, pie, mcAppleTree, pumpkinBlock, blockBurst, mcChest, iceCream, scoopCap, iceBlock, frost, magicBeam, rails, grassSteps, minecart, kite, kiteString, popcorn, popcornPile, popBucket, cornCob, sunRay, pickaxe, grassBlock, pit, chili, chiliBush, fireBreath, flame, bigLeaf, pond, fish, fishingRod, fishLine, feather, sleepBubble, jumpCord, ropeHandle, marshmallow, mallowBag, slingshotY, slingBand, honeyPot, honeyCap, egg, chick, horseshoeMagnet, magnetWaves, anvil, coilSpring, rocket, rocketTrail, fireworkBurst };
 })();
