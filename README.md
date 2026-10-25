@@ -108,6 +108,8 @@ node tools/render.js                     # PNG ×2 (или: node tools/render.js
 | `backgrounds/nether/nether_toon.png` | Незер в рисованном стиле: земля из незерака, огонь, лужа и река лавы, вдали скалы с лавопадами |
 | `backgrounds/grass/grass_toon.png` | только трава Minecraft в рисованном стиле, фон прозрачный — слой поверх фона |
 | `backgrounds/meadow/meadow.png` | поляна в стиле toonz CRAFT: дерево с кроной слева, посередине свободная трава под качели, фон размыт |
+| `backgrounds/coast/coast.png` | поле без деревьев, спускается к пляжу, сзади море до горизонта — цвета как у поляны |
+| `backgrounds/sky/sky.png` | только небо с облаками Minecraft, низ кадра на горизонте — цвета как у поляны |
 | `backgrounds/props/swing.png` | качели из блоков (ель, каменный кирпич, цепи), прямо спереди, фон прозрачный, тонкая чёрная обводка |
 
 Рисованный стиль — как у персонажей: толстая чёрная обводка, плоские сочные цвета и одна
@@ -123,6 +125,8 @@ blender -b --factory-startup -P tools/mc_scene.py -- --shot field --style toon
 blender -b --factory-startup -P tools/mc_scene.py -- --shot portal --style toon
 blender -b --factory-startup -P tools/mc_scene.py -- --shot nether --style toon
 blender -b --factory-startup -P tools/mc_scene.py -- --shot meadow
+blender -b --factory-startup -P tools/mc_scene.py -- --shot coast
+blender -b --factory-startup -P tools/mc_scene.py -- --shot sky
 blender -b --factory-startup -P tools/mc_scene.py -- --shot swing   # качели, PNG с прозрачностью
 python3 tools/mc_grass.py                       # трава, нужен Pillow
 # черновик за полминуты: ... --scale 0.4 --samples 24 --out /tmp/draft.png

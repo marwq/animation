@@ -9,7 +9,9 @@
     --shot NAME      field — поле; portal — горящий портал посередине поля;
                      nether — Незер: земля из незерака, лава, вдали лавопады;
                      meadow — поляна под качели, сочнее и с размытым фоном;
-                     swing — качели из блоков на прозрачном фоне, с обводкой
+                     coast — поле без деревьев, сзади пляж и море до горизонта;
+                     sky — только небо с облаками; swing — качели из блоков на
+                     прозрачном фоне, с обводкой. meadow, coast, sky — в одних цветах
     --style toon     рисованный стиль (имя файла <shot>_toon.png); Незер — только он
     --out PNG        куда сохранить (по умолчанию backgrounds/<папка>/<shot>[_toon].png)
     --tex DIR        текстуры блоков с именами как в Minecraft (grass_block_top.png, ...);
@@ -56,6 +58,8 @@ SUN_COLOR = (1.0, 0.93, 0.80)
 SUN_POWER = 6.0
 SATURATION = 1.1
 PORTAL_LIGHT = (0.55, 0.15, 1.0)
+WATER = (0x3F, 0x76, 0xE4)    # море — цвет воды океана из игры
+LUSH = {'sat': 1.25, 'sharpen': 0.35, 'ca': 0.016, 'bloom': 0.3}   # обработка поляны
 
 PORTAL = (-1, 20)        # левый блок рамки; рамка 4×5 стоит вдоль оси x
 PORTAL_C = Vector((1.0, 20.5, 3.5))     # центр проёма 2×3
@@ -65,6 +69,8 @@ PORTAL_C = Vector((1.0, 20.5, 3.5))     # центр проёма 2×3
 # на траву. grass — пучки травы (цветы есть всегда). path — посередине без травы:
 # (глубина, полуширина). grade — обработка фото-стиля: сочность, резкость,
 # цветная кайма, свечение; exposure — поправка яркости. fstop 0 — без размытия.
+# Небо: камера тоже смотрит прямо, кадр сдвинут вверх — низ кадра на горизонте.
+# sky_reflect — в отражениях голубое небо, а не белый свет (для моря).
 SHOTS = {
     'field':  {'world': 'field', 'cam': (-26.0, 4.0, 2.62), 'shift': -0.08, 'lens': 28,
                'clear': 22, 'focus': 9.0, 'fstop': 1.4, 'shade': [(-7, 3), (-8, 8)],
@@ -76,8 +82,12 @@ SHOTS = {
                'focus': 10.0, 'fstop': 1.4},
     'meadow': {'world': 'meadow', 'cam': (0.5, 0.0, 2.62), 'shift': -0.08, 'lens': 28,
                'clear': 15, 'focus': 7.0, 'fstop': 1.0, 'shade': [(-4, 7), (7, 16)],
-               'grass': True, 'path': (10, 3.0), 'exposure': 0.3,
-               'grade': {'sat': 1.25, 'sharpen': 0.35, 'ca': 0.016, 'bloom': 0.3}},
+               'grass': True, 'path': (10, 3.0), 'exposure': 0.3, 'grade': LUSH},
+    'coast':  {'world': 'coast', 'cam': (0.5, 0.0, 2.62), 'shift': -0.08, 'lens': 28,
+               'focus': 7.0, 'fstop': 1.0, 'grass': True, 'path': (10, 3.0),
+               'exposure': 0.3, 'grade': LUSH, 'sky_reflect': True},
+    'sky':    {'world': 'sky', 'cam': (0.5, 0.0, 2.62), 'shift': 0.5, 'lens': 24,
+               'focus': 100.0, 'fstop': 0, 'exposure': 0.3, 'grade': LUSH},
     'swing':  {'world': 'swing', 'dir': 'props', 'cam': (2.0, -10.0, 1.62), 'shift': 0.06,
                'lens': 35, 'focus': 10.0, 'fstop': 0, 'exposure': -0.6, 'grade': {'sat': 1.1}},
 }
@@ -104,6 +114,8 @@ TOON = {
     'lava': ([(240, 90, 16), (255, 150, 34), (255, 218, 92)], [0.3, 0.8]),
     'lava_flow': ([(240, 90, 16), (255, 150, 34), (255, 218, 92)], [0.3, 0.8]),
     'fire': ([(238, 92, 14), (255, 170, 36), (255, 238, 124)], [0.3, 0.75]),
+    'sand': ([(222, 208, 158)], []),
+    'water': ([(52, 108, 222), (74, 138, 238)], [0.5]),
 }
 TOON_CUTOUT = {'short_grass', 'tall_grass_bottom', 'tall_grass_top', 'fire'}
 TOON_GROUP = {                                  # обводка там, где меняется группа
@@ -113,7 +125,7 @@ TOON_GROUP = {                                  # обводка там, где 
     'dandelion': 9, 'oxeye_daisy': 10, 'cornflower': 11, 'azure_bluet': 12, 'cloud': 13,
     'nether_portal': 14, 'lava': 15, 'lava_flow': 15, 'magma': 16, 'fire': 17,
     'netherrack': 18, 'spruce_planks': 19, 'spruce_trapdoor': 19, 'stone_bricks': 20,
-    'smooth_stone': 20, 'chain': 21,
+    'smooth_stone': 20, 'chain': 21, 'sand': 22, 'water': 23,
 }
 TOON_PLANTS = (7, 8, 9, 10, 11, 12, 17)         # трава, цветы, огонь: только тонкий контур
 # Светятся сами (всегда светлый тон) и светят вокруг: группа → (цвет, радиус px, сила)
@@ -135,8 +147,8 @@ def args():
     tex = os.path.join(ROOT, 'backgrounds', 'textures')
     opt = {'shot': 'field', 'out': '',
            # свои текстуры Minecraft, если положены локально, иначе свободные
-           'tex': next(p for p in (os.path.join(tex, 'minecraft'), os.path.join(tex, 'pixel-perfection'))
-                       if os.path.isdir(p)),
+           'tex': next((p for p in (os.path.join(tex, 'minecraft'), os.path.join(tex, 'pixel-perfection'))
+                        if os.path.isdir(p)), ''),
            'scale': 1.0, 'samples': 0, 'seed': 11, 'exposure': 0.0, 'style': 'photo'}
     for k, v in zip(a[::2], a[1::2]):
         k = k.lstrip('-').replace('-', '_')
@@ -190,8 +202,9 @@ def textures(tex, toon=False):
     t['tall_grass_top'] = tint(load_rgba(tex, 'tall_grass_top'), GRASS)
     for f in ('poppy', 'dandelion', 'oxeye_daisy', 'cornflower', 'azure_bluet', 'netherrack',
               'magma', 'nether_portal', 'lava_flow', 'spruce_planks', 'spruce_trapdoor',
-              'stone_bricks', 'chain', 'smooth_stone'):
+              'stone_bricks', 'chain', 'smooth_stone', 'sand'):
         t[f] = load_rgba(tex, f)
+    t['water'] = tint(load_rgba(tex, 'water_still'), WATER)
     t['lava'] = load_rgba(tex, 'lava_still')
     t['fire'] = load_rgba(tex, 'fire_0')
     if toon:
@@ -279,8 +292,8 @@ def material(name, img, kind, toon=False):
         L.new(em.outputs[0], out.inputs['Surface'])
         return m
     bsdf = N.new('ShaderNodeBsdfPrincipled')
-    bsdf.inputs['Roughness'].default_value = 0.3 if kind == 'glossy' else 0.9
-    bsdf.inputs['Specular IOR Level'].default_value = 0.6 if kind == 'glossy' else 0.15
+    bsdf.inputs['Roughness'].default_value = {'glossy': 0.3, 'water': 0.06}.get(kind, 0.9)
+    bsdf.inputs['Specular IOR Level'].default_value = {'glossy': 0.6, 'water': 0.7}.get(kind, 0.15)
     if kind == 'cloud':
         bsdf.inputs['Base Color'].default_value = (1, 1, 1, 1)
         bsdf.inputs['Emission Color'].default_value = (1, 1, 1, 1)
@@ -338,6 +351,8 @@ def material(name, img, kind, toon=False):
 def kind_of(name):
     if name == 'chain':
         return 'cutout'
+    if name == 'water':
+        return 'water'
     if name.endswith('leaves'):
         return 'leaves'
     if name == 'obsidian':
@@ -345,7 +360,7 @@ def kind_of(name):
     if name in ('nether_portal', 'lava', 'lava_flow', 'magma', 'fire'):
         return 'emit'
     if name in ('grass_top', 'grass_side', 'dirt', 'netherrack', 'spruce_planks',
-                'spruce_trapdoor', 'stone_bricks', 'smooth_stone') or '_log' in name:
+                'spruce_trapdoor', 'stone_bricks', 'smooth_stone', 'sand') or '_log' in name:
         return 'block'
     return 'plant'
 
@@ -499,21 +514,78 @@ def world(seed, name='field'):
             continue
         if portal and 15 <= y < 20 and -2 <= x <= 3:
             continue                           # перед порталом — чистая трава
-        r = rng.random()
-        if r < 0.15:
-            kind = 'short_grass'
-        elif r < 0.175:
-            kind = 'tall_grass'
-        elif r < 0.25:
-            kind = rng.choice(['dandelion', 'dandelion', 'poppy', 'poppy', 'oxeye_daisy',
-                               'azure_bluet', 'cornflower'])
-        else:
-            continue
-        plants.append((x, y, g + 1, kind, rng.uniform(-0.2, 0.2), rng.uniform(-0.2, 0.2)))
+        p = random_plant(rng, x, y, g + 1)
+        if p:
+            plants.append(p)
 
-    clouds = {(cx, cy) for cx in range(-60, 70) for cy in range(-15, 75)
-              if noise.noise(Vector((cx * 0.23, cy * 0.23, 5.1))) > 0.25}
-    return cols, portal, trees, plants, clouds
+    return cols, portal, trees, plants, cloud_cells()
+
+
+def cloud_cells():
+    """Где на небе облака: клетки 12×12 блоков."""
+    return {(cx, cy) for cx in range(-60, 70) for cy in range(-15, 75)
+            if noise.noise(Vector((cx * 0.23, cy * 0.23, 5.1))) > 0.25}
+
+
+def build_clouds(view, mats, clouds):
+    m = Mesh()
+    S, H, Z = 12, 4, 120                     # облака как в игре: клетки 12×12, толщина 4
+    up = view.s['world'] == 'sky'            # кадр только с небом — видно и облака над головой
+    for cx, cy in clouds:
+        x, y = cx * S, cy * S
+        near = 170 + (cx * 7919 + cy * 104729) % 90 if up else 230   # граница неровная
+        if not view.visible(x + 6, y + 6, pad=200 if up else 30, far=800) \
+                or view.depth(x + 6, y + 6) < near:
+            continue
+        for n in FACES:
+            if n[2] == 0 and (cx + n[0], cy + n[1]) in clouds:
+                continue
+            m.quad([(x + a * S, y + b * S, Z + c * H) for a, b, c in FACES[n]], 'cloud')
+    m.build('clouds', mats).visible_shadow = False
+
+
+def build_plants(opt, view, mats, cols, plants):
+    """Трава и цветы; перед камерой — трава по краям кадра, по центру — проход."""
+    toon = opt['style'] == 'toon'
+    rng = random.Random(opt['seed'] * 31 + len(opt['shot']))
+    have = {(p[0], p[1]) for p in plants}
+    for (x, y), g in cols.items():
+        d, lat = view.depth(x + 0.5, y + 0.5), abs(x + 0.5 - view.pos.x)
+        if 1.0 < d < 3.5 and lat > 0.8 and (x, y) not in have and rng.random() < 0.6:
+            plants.append((x, y, g + 1, 'tall_grass' if rng.random() < 0.35 else 'short_grass',
+                           rng.uniform(-0.2, 0.2), rng.uniform(-0.2, 0.2)))
+    m = Mesh()
+    for x, y, z, kind, dx, dy in plants:
+        d, lat = view.depth(x + 0.5, y + 0.5), abs(x + 0.5 - view.pos.x)
+        if d > 60 or not view.visible(x + 0.5, y + 0.5, pad=1.5) or (d < 3.5 and lat < 0.8):
+            continue
+        if d < view.s['path'][0] and lat < view.s['path'][1]:
+            continue                           # посередине — чистая трава, к порталу дорожка
+        if not view.s['grass'] and kind in ('short_grass', 'tall_grass'):
+            continue
+        if toon and (d > 22 or kind in ('short_grass', 'tall_grass')):
+            continue                           # в рисунке пиксельная трава и мелочь — шум
+        if kind == 'tall_grass':
+            m.cross(x, y, z, 'tall_grass_bottom', dx, dy)
+            m.cross(x, y, z + 1, 'tall_grass_top', dx, dy)
+        else:
+            m.cross(x, y, z, kind, dx, dy)
+    m.build('plants', mats)
+
+
+def random_plant(rng, x, y, z):
+    """Трава, высокая трава или цветок — или ничего."""
+    r = rng.random()
+    if r < 0.15:
+        kind = 'short_grass'
+    elif r < 0.175:
+        kind = 'tall_grass'
+    elif r < 0.25:
+        kind = rng.choice(['dandelion', 'dandelion', 'poppy', 'poppy', 'oxeye_daisy',
+                           'azure_bluet', 'cornflower'])
+    else:
+        return None
+    return x, y, z, kind, rng.uniform(-0.2, 0.2), rng.uniform(-0.2, 0.2)
 
 
 def build_field(opt, view, mats):
@@ -551,43 +623,71 @@ def build_field(opt, view, mats):
                        'nether_portal')
         m.build('portal_fill', mats)
 
-    # перед камерой — трава по краям кадра, по центру — проход
-    rng = random.Random(opt['seed'] * 31 + len(opt['shot']))
-    have = {(p[0], p[1]) for p in plants}
-    for (x, y), g in cols.items():
-        d, lat = view.depth(x + 0.5, y + 0.5), abs(x + 0.5 - view.pos.x)
-        if 1.0 < d < 3.5 and lat > 0.8 and (x, y) not in have and rng.random() < 0.6:
-            plants.append((x, y, g + 1, 'tall_grass' if rng.random() < 0.35 else 'short_grass',
-                           rng.uniform(-0.2, 0.2), rng.uniform(-0.2, 0.2)))
-    m = Mesh()
-    for x, y, z, kind, dx, dy in plants:
-        d, lat = view.depth(x + 0.5, y + 0.5), abs(x + 0.5 - view.pos.x)
-        if d > 60 or not view.visible(x + 0.5, y + 0.5, pad=1.5) or (d < 3.5 and lat < 0.8):
-            continue
-        if d < view.s['path'][0] and lat < view.s['path'][1]:
-            continue                           # посередине — чистая трава, к порталу дорожка
-        if not view.s['grass'] and kind in ('short_grass', 'tall_grass'):
-            continue
-        if toon and (d > 22 or kind in ('short_grass', 'tall_grass')):
-            continue                           # в рисунке пиксельная трава и мелочь — шум
-        if kind == 'tall_grass':
-            m.cross(x, y, z, 'tall_grass_bottom', dx, dy)
-            m.cross(x, y, z + 1, 'tall_grass_top', dx, dy)
-        else:
-            m.cross(x, y, z, kind, dx, dy)
-    m.build('plants', mats)
+    build_plants(opt, view, mats, cols, plants)
+    build_clouds(view, mats, clouds)
 
+
+# ------------------------------------------------------------------ мир: берег моря
+COAST_SHORE = 24                               # где кончается трава (блоков от камеры)
+SEA_TOP = -2.125                               # вода чуть ниже пляжа, как в игре
+
+
+def coast_world(seed):
+    """Поле без деревьев ступеньками спускается к песчаному пляжу, дальше море до
+    горизонта: с высоты глаз оно видно широкой полосой."""
+    rng = random.Random(seed)
+    cols, sand = {}, set()
+    for x in range(-60, 62):
+        shore = COAST_SHORE + round(2 * noise.noise(Vector((x * 0.05, 0.5, 8.1))))
+        for y in range(-6, 64):
+            step = noise.noise(Vector((x * 0.08, y * 0.08, 6.6)))
+            if y >= shore + 3:
+                h = -4                                       # дно под водой
+            elif y >= shore:
+                h = -3                                       # пляж
+            else:
+                h = -min(3, max(0, round((y - 8 + 2 * step) / 5)))
+            cols[(x, y)] = h
+            if y >= shore:
+                sand.add((x, y))
+    plants = []
+    for (x, y), g in cols.items():
+        p = (x, y) not in sand and random_plant(rng, x, y, g + 1)
+        if p and (p[3] not in ('short_grass', 'tall_grass') or y < 9):
+            plants.append(p)                   # дальше травы нет — не закрывает море
+    return cols, sand, plants, cloud_cells()
+
+
+def build_coast(opt, view, mats):
+    cols, sand, plants, clouds = coast_world(opt['seed'])
     m = Mesh()
-    S, H, Z = 12, 4, 120                     # облака как в игре: клетки 12×12, толщина 4
-    for cx, cy in clouds:
-        x, y = cx * S, cy * S
-        if not view.visible(x + 6, y + 6, pad=30, far=800) or view.depth(x + 6, y + 6) < 230:
+    for (x, y), g in cols.items():
+        if not view.visible(x + 0.5, y + 0.5, pad=4, far=120):
             continue
-        for n in FACES:
-            if n[2] == 0 and (cx + n[0], cy + n[1]) in clouds:
-                continue
-            m.quad([(x + a * S, y + b * S, Z + c * H) for a, b, c in FACES[n]], 'cloud')
-    m.build('clouds', mats).visible_shadow = False
+        sandy = (x, y) in sand
+        m.face(x, y, g, (0, 0, 1), 'sand' if sandy else 'grass_top')
+        for n in SIDES:
+            nh = cols.get((x + n[0], y + n[1]))
+            if nh is not None:
+                for z in range(nh + 1, g + 1):
+                    m.face(x, y, z, n, 'sand' if sandy else 'grass_side' if z == g else 'dirt')
+    m.build('ground', mats)
+
+    m = Mesh()                                 # море: у берега по блокам, дальше до горизонта
+    for (x, y), g in cols.items():
+        if g < -3 and view.visible(x + 0.5, y + 0.5, pad=4, far=120):
+            m.quad([(x, y, SEA_TOP), (x + 1, y, SEA_TOP), (x + 1, y + 1, SEA_TOP),
+                    (x, y + 1, SEA_TOP)], 'water', [(x, y), (x + 1, y), (x + 1, y + 1), (x, y + 1)])
+    far = [(-4000, 64), (4000, 64), (4000, 6000), (-4000, 6000)]
+    m.quad([(x, y, SEA_TOP) for x, y in far], 'water', far)
+    m.build('sea', mats)
+
+    build_plants(opt, view, mats, cols, plants)
+    build_clouds(view, mats, clouds)
+
+
+def build_sky(opt, view, mats):
+    build_clouds(view, mats, cloud_cells())
 
 
 # ------------------------------------------------------------------ мир: Незер
@@ -701,7 +801,8 @@ def build_scene(opt, view):
     toon = opt['style'] == 'toon'
     mats = {k: material(k, img, kind_of(k), toon) for k, img in textures(opt['tex'], toon).items()}
     mats['cloud'] = material('cloud', None, 'cloud', toon)
-    {'nether': build_nether, 'swing': build_swing}.get(view.s['world'], build_field)(opt, view, mats)
+    {'nether': build_nether, 'swing': build_swing, 'coast': build_coast,
+     'sky': build_sky}.get(view.s['world'], build_field)(opt, view, mats)
 
 
 def lights_camera(opt, s):
@@ -718,7 +819,14 @@ def lights_camera(opt, s):
     el[1].position, el[1].color = 0.6, (*SKY_ZENITH, 1)
     el.new(0.2).color = (*SKY_MID, 1)
     L.new(sep.outputs['Z'], ramp.inputs[0])
-    is_cam = N.new('ShaderNodeLightPath').outputs['Is Camera Ray']
+    lp = N.new('ShaderNodeLightPath')
+    is_cam = lp.outputs['Is Camera Ray']
+    if s.get('sky_reflect'):                  # отражения видят то же голубое небо
+        mx = N.new('ShaderNodeMath')
+        mx.operation = 'MAXIMUM'
+        L.new(is_cam, mx.inputs[0])
+        L.new(lp.outputs['Is Glossy Ray'], mx.inputs[1])
+        is_cam = mx.outputs[0]
     col = N.new('ShaderNodeMix')              # камера видит синее небо, сцену оно
     col.data_type = 'RGBA'                    # освещает почти белым светом
     L.new(is_cam, col.inputs['Factor'])
