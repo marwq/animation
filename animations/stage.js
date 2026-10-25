@@ -178,17 +178,20 @@ function Stage(cfg) {
     move(who, g, { y: GROUND - 150 }, 'out2');
     key(who, up, { sx: 0.96, sy: 1.05 }, 3);
     FX_EV.sprout.push({ who, a1, a2, up, g, color: CAST[who].color || '#ff5cc6' });
-    // музыка превращения: по умолчанию присланная, в обычном темпе, с ухмылки 3 с и затихает;
-    // cfg.transformMusic — другая ('transform-music2' — ускоренная в 1.5 раза: ролики 03–07 серии)
-    const mus = o.music ?? cfg.transformMusic ?? 'transform-music3';
+    // музыка превращения: по умолчанию присланная, в обычном темпе, с ухмылки ~4 с — две полные музыкальные
+    // фразы (такт 2.16 с), последняя секунда плавно затихает; cfg.transformMusic — другая
+    // ('transform-music2' — ускоренная в 1.5 раза: ролики 03–07 серии)
+    const mus = o.music ?? cfg.transformMusic ?? cfg.music ?? 'transform-music3';
+    const mdur = o.musicDur ?? cfg.musicDur;
     if (mus === 'transform-music') sfx('ref:transform-music', g - 5, { gain: o.musicGain ?? 0.75, dur: o.musicDur });
-    else if (mus) sfx('ref:' + mus, f + 2, { gain: o.musicGain ?? 1.4, dur: o.musicDur ?? 3 * FPS });   // dur — в кадрах: 3 с, громко
+    else if (mus === 'transform-music3' && mdur === undefined) sfx('ref:' + mus, f + 2, { gain: o.musicGain ?? 1.4, dur: Math.round(4.32 * FPS), fade: 1.2 });
+    else if (mus) sfx('ref:' + mus, f + 2, { gain: o.musicGain ?? 1.4, dur: mdur ?? 3 * FPS });   // dur — в кадрах
     ev('shake', { f: g, amp: 10, n: 8 });
-    key(who, g, { form: 'big', x: bigX, y: GROUND, face, sx: 0.95, sy: 0.72, look: 1, mouth: mood(who, 'big', 'mouth'), rot: 0, pivot: 0 }, 0);
+    key(who, g, { form: 'big', x: bigX, y: GROUND, face, sx: 1.25, sy: 0.75, look: 1, mouth: mood(who, 'big', 'mouth'), rot: 0, pivot: 0 }, 0);
     ev('dust', { f: g, x: bigX, r: 60, n: 6, snd: 'land' });
-    key(who, g + 3, { sx: 1, sy: 1.1 }, 3, 'out');
-    key(who, g + 8, { sy: 0.97 }, 4);
-    key(who, g + 11, { sy: 1 }, 3);
+    key(who, g + 3, { sx: 0.92, sy: 1.1 }, 3, 'out');
+    key(who, g + 8, { sx: 1.03, sy: 0.97 }, 4);
+    key(who, g + 11, { sx: 1, sy: 1 }, 3);
     for (const w of [].concat(o.love || [])) love(w, g + 6, g + 6 + (o.loveDur || 50));
     return g;
   }
@@ -492,6 +495,12 @@ function Stage(cfg) {
 
   function poseOf(who, f) {
     const p = TR[who].sample(F(f), { ...DEF });
+    // сжатие и растяжение не меняют «вес»: если по одной оси меньше, а по другой больше (или равно 1),
+    // площадь возвращается к 1 при той же форме. Поворот (sx < 0.6) и общий рост/уменьшение не трогаем.
+    if (p.sx >= 0.6 && Math.abs(p.sx - p.sy) > 0.01 && (p.sx - 1) * (p.sy - 1) <= 0) {
+      const k = 1 / Math.sqrt(p.sx * p.sy);
+      p.sx *= k; p.sy *= k;
+    }
     const ch = C[who][p.form || 'small'];
     if (p.form !== 'big') {   // у шарика нет рук и ног
       for (const k of Object.keys(p)) if (/^(foot|hand|leg|arm|hit|kick)/.test(k)) delete p[k];
@@ -586,7 +595,7 @@ function Stage(cfg) {
       const foot = E.apply(st.G, ch.anchor);
       const air = Math.max(0, GROUND - foot[1]);
       const w = (p.form === 'big' ? 120 : ch.width * 0.42) * Math.max(0.35, 1 - air / 700);
-      if (foot[1] > -200) FX.shadow(ctx, foot[0], GROUND + 6, w, 0.3 * Math.max(0.25, 1 - air / 600));
+      if (foot[1] > -200 && foot[1] < GROUND + 40) FX.shadow(ctx, foot[0], GROUND + 6, w, 0.3 * Math.max(0.25, 1 - air / 600));
     }
     // руки-лапы превращения «рост» — за шариком
     for (const sp of FX_EV.sprout) {
@@ -624,9 +633,13 @@ function Stage(cfg) {
       const { ch, st, p } = S[who];
       if (p.alpha === 0) continue;
       let pp = hooks.drawPose ? hooks.drawPose(who, p, f) : p;
+      const dch = (p.skin && C[who].alt && C[who].alt[p.skin]) || ch;      // перекрашенный вариант того же рига
       const info = (h) => (h.layer ? { layer: h.layer, eyes: h.eyes, hide: [h.layer] } : eyeInfo(ch));
       for (const h of loveEyes(who)) pp = { ...pp, hide: [...(pp.hide || []), ...info(h).hide] };
-      ch.draw(ctx, { ...st, p: pp }, CAM);
+      ctx.save();
+      if (hooks.clip) { ctx.setTransform(...CAM); if (hooks.clip(ctx, who, f, S)) ctx.clip('evenodd'); }   // спрятать часть (в яме и т. п.)
+      dch.draw(ctx, { ...st, p: pp }, CAM);
+      ctx.restore();
       ctx.setTransform(...CAM);
       for (const h of loveEyes(who)) {
         const { layer, eyes } = info(h);
@@ -640,7 +653,7 @@ function Stage(cfg) {
     // бьющая рука поверх соперника
     for (const who of ORDER) {
       const { ch, st, p } = S[who];
-      if (p.over) ch.draw(ctx, { ...st, p: { ...p, only: p.over } }, CAM);
+      if (p.over) ((p.skin && C[who].alt && C[who].alt[p.skin]) || ch).draw(ctx, { ...st, p: { ...p, only: p.over } }, CAM);
     }
     for (const fn of hooks.afterChars) fn(ctx, f, S, CAM);
     ctx.setTransform(...CAM);
@@ -764,7 +777,7 @@ function Stage(cfg) {
       return (p.form === 'big' ? 0.85 : 1.3) * (CAST[c.who].voice || 1);
     };
     const cues = SFX.filter((c) => c.f >= 0 && c.f < NF).sort((a, b) => a.f - b.f).map((c) => ({
-      t: c.f / FPS, kind: c.kind, gain: c.gain ?? 1, dur: c.dur ? c.dur / FPS : 0, pitch: pitchOf(c),
+      t: c.f / FPS, kind: c.kind, gain: c.gain ?? 1, dur: c.dur ? c.dur / FPS : 0, fade: c.fade || 0, pitch: pitchOf(c),
       pan: (E.clamp((xOf(c) - W / 2) / (W / 2), -1, 1) * 0.6) || 0 }));
     return { duration: NF / FPS, cues };
   }
@@ -776,6 +789,10 @@ function Stage(cfg) {
       for (const [who, c] of Object.entries(CAST)) {
         C[who] = { small: new E.Character(await E.loadRig(c.small[0], c.small[1]), c.small[1]) };
         if (c.big) C[who].big = new E.Character(await E.loadRig(c.big[0], c.big[1]), c.big[1]);
+        if (c.alt) {                                   // перекраски: { имя: [риг, opts] } — тот же скелет, другой цвет
+          C[who].alt = {};
+          for (const [k, [rig, opts]] of Object.entries(c.alt)) C[who].alt[k] = new E.Character(await E.loadRig(rig, opts), opts);
+        }
       }
       EYES = await (await fetch('/animations/eyes.json')).json();
       if (big) big();

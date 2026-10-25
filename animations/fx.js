@@ -889,6 +889,101 @@ const FX = (() => {
     ctx.restore();
   }
 
+  // ведро с краской: (x, y) — середина дна, s — ширина, rot — поворот (π — вверх дном), col — краска
+  function paintBucket(ctx, x, y, s = 110, rot = 0, col = '#e8262e', full = true) {
+    const k = s / 110;
+    ctx.save();
+    ctx.translate(x, y); ctx.rotate(rot); ctx.scale(k, k);
+    ctx.lineJoin = 'round'; ctx.lineWidth = 5; ctx.strokeStyle = '#1d2530';
+    ctx.beginPath(); ctx.moveTo(-46, 0); ctx.lineTo(-55, -96); ctx.lineTo(55, -96); ctx.lineTo(46, 0); ctx.closePath();
+    ctx.fillStyle = '#b9c3cf'; ctx.fill(); ctx.stroke();
+    ctx.fillStyle = 'rgba(255,255,255,0.55)'; ctx.fillRect(-38, -88, 10, 80);
+    if (Math.cos(rot) > -0.9) {                                       // дужка (вверх дном — лежит, не видна)
+      ctx.beginPath(); ctx.moveTo(-55, -96); ctx.quadraticCurveTo(-40, -150, 0, -150); ctx.quadraticCurveTo(40, -150, 55, -96);
+      ctx.lineWidth = 6; ctx.stroke();
+    }
+    ctx.beginPath(); ctx.ellipse(0, -96, 55, 12, 0, 0, TAU); ctx.fillStyle = full ? col : '#5a6470'; ctx.fill(); ctx.lineWidth = 5; ctx.stroke();
+    if (full) {                                                        // потёки краски по борту
+      ctx.fillStyle = col;
+      for (const [dx, l] of [[-34, 26], [6, 40], [30, 18]]) { ctx.beginPath(); ctx.ellipse(dx, -90 + l / 2, 7, l / 2, 0, 0, TAU); ctx.fill(); ctx.lineWidth = 3; ctx.stroke(); }
+    }
+    ctx.restore();
+  }
+
+  // большая малярная кисть: (x, y) — где держат (низ ручки), s — длина, rot — наклон (0 — щетина вверх), col — краска на щетине
+  function paintBrush(ctx, x, y, s = 200, rot = 0, col = '#222') {
+    const k = s / 200;
+    ctx.save();
+    ctx.translate(x, y); ctx.rotate(rot); ctx.scale(k, k);
+    ctx.lineJoin = 'round'; ctx.lineWidth = 5; ctx.strokeStyle = '#1d1208';
+    ctx.beginPath(); ctx.rect(-9, -110, 18, 110); ctx.fillStyle = '#c98b47'; ctx.fill(); ctx.stroke();      // ручка
+    ctx.beginPath(); ctx.rect(-26, -146, 52, 36); ctx.fillStyle = '#b9c3cf'; ctx.fill(); ctx.stroke();     // обойма
+    ctx.beginPath(); ctx.moveTo(-30, -146); ctx.lineTo(-32, -196); ctx.quadraticCurveTo(0, -206, 32, -196); ctx.lineTo(30, -146); ctx.closePath();
+    ctx.fillStyle = '#e8c88a'; ctx.fill(); ctx.stroke();                                                    // щетина
+    ctx.beginPath(); ctx.moveTo(-32, -180); ctx.lineTo(-32, -196); ctx.quadraticCurveTo(0, -206, 32, -196); ctx.lineTo(32, -180); ctx.quadraticCurveTo(0, -172, -32, -180);
+    ctx.fillStyle = col; ctx.fill(); ctx.stroke();                                                          // краска на кончике
+    ctx.restore();
+  }
+
+  // усы, нарисованные краской: (x, y) — середина над губой, w — ширина, part — сколько штрихов (0..3)
+  function mustache(ctx, x, y, w = 120, part = 3, dir = 1) {
+    ctx.save();
+    ctx.translate(x, y); ctx.scale(dir, 1);
+    ctx.lineCap = 'round'; ctx.lineJoin = 'round'; ctx.strokeStyle = '#151515';
+    if (part > 0) {                                                    // левая половина
+      const u = Math.min(1, part);
+      ctx.beginPath(); ctx.moveTo(0, 0); ctx.bezierCurveTo(-w * 0.2 * u, -w * 0.14, -w * 0.45 * u, -w * 0.08, -w * 0.5 * u, w * 0.04 * u);
+      ctx.lineWidth = w * 0.13; ctx.stroke();
+    }
+    if (part > 1) {
+      const u = Math.min(1, part - 1);
+      ctx.beginPath(); ctx.moveTo(0, 0); ctx.bezierCurveTo(w * 0.2 * u, -w * 0.14, w * 0.45 * u, -w * 0.08, w * 0.5 * u, w * 0.04 * u);
+      ctx.lineWidth = w * 0.13; ctx.stroke();
+    }
+    if (part > 2) {                                                    // завитки на кончиках
+      const u = Math.min(1, part - 2);
+      for (const sx of [-1, 1]) {
+        ctx.beginPath(); ctx.arc(sx * w * 0.5, -w * 0.06, w * 0.09, Math.PI * (sx > 0 ? 0.5 : 0.5), Math.PI * (sx > 0 ? 0.5 - 1.6 * u : 0.5 + 1.6 * u), sx < 0);
+        ctx.lineWidth = w * 0.07; ctx.stroke();
+      }
+    }
+    ctx.restore();
+  }
+
+  // нарисованная дыра: чёрный овал с неровным краем; (x, y) — центр, w — ширина, u — сколько нарисовано (0..1)
+  function paintHole(ctx, x, y, w = 260, u = 1, seed = 4) {
+    if (u <= 0) return;
+    const r = rng(seed), h = w * 0.22;
+    ctx.save();
+    ctx.beginPath();
+    const n = 24, m = Math.max(2, Math.round(n * u));
+    for (let i = 0; i <= m; i++) {
+      const a = Math.PI + (i / n) * TAU, j = 1 + (r() - 0.5) * 0.08;
+      const px = x + Math.cos(a) * w / 2 * j, py = y + Math.sin(a) * h / 2 * j;
+      i ? ctx.lineTo(px, py) : ctx.moveTo(px, py);
+    }
+    if (u >= 1) ctx.closePath(); else ctx.lineTo(x, y);
+    ctx.fillStyle = '#0d0d12'; ctx.fill();
+    ctx.lineWidth = 4; ctx.strokeStyle = '#2a2a35'; ctx.stroke();
+    ctx.beginPath(); ctx.ellipse(x - w * 0.12, y - h * 0.18, w * 0.18, h * 0.12, 0, 0, TAU); ctx.fillStyle = 'rgba(60,60,80,0.6)'; ctx.fill();
+    ctx.restore();
+  }
+
+  // брызги краски: цветные капли во все стороны и клякса в первые кадры; cols — цвета
+  function paintSplash(ctx, x, y, life, cols = ['#e8262e'], size = 1, seed = 5) {
+    if (life < 0 || life > 1) return;
+    const r = rng(seed);
+    ctx.save();
+    for (let i = 0; i < 20; i++) {
+      const a = r() * TAU, sp = (110 + r() * 240) * size, col = cols[i % cols.length];
+      const px = x + Math.cos(a) * sp * life, py = y + Math.sin(a) * sp * life * 0.8 + 500 * life * life * size;
+      const s = (8 + r() * 11) * size * (1 - 0.4 * life);
+      ctx.globalAlpha = Math.min(1, (1 - life) * 2.5);
+      ctx.beginPath(); ctx.arc(px, py, s, 0, TAU); ctx.fillStyle = col; ctx.fill(); ctx.lineWidth = 2.5; ctx.strokeStyle = '#1a1a1a'; ctx.stroke();
+    }
+    ctx.restore();
+  }
+
   // пиксельное облачко без обводки (белое, снизу светло-голубая полоса)
   function cloud(ctx, x, y, s, kind, tint) {
     const u = 16 * s;
@@ -1679,7 +1774,7 @@ const FX = (() => {
     }
   }
 
-  return { rng, background, mcBackground, limb, note, waterBalloon, basket, waterSplash, boomerang, flower, bubbleWand, soapBubble, bubblePop, snowball, snowPile, snowCap, snowSplat, snowBurst, slimeBlock, tomato, gardenBed, tomatoBush, tnt, fuseSparks, boom, soot, balloon, balloonPop, cactus, cloud, shadow, spark, dust, smoke, flash, rays, vein, steam, sweat, stars, twinkle, whoosh, puff,
+  return { rng, background, mcBackground, limb, note, waterBalloon, basket, waterSplash, boomerang, flower, bubbleWand, soapBubble, bubblePop, snowball, snowPile, snowCap, snowSplat, snowBurst, slimeBlock, tomato, gardenBed, tomatoBush, tnt, fuseSparks, boom, soot, balloon, balloonPop, cactus, paintBucket, paintBrush, mustache, paintHole, paintSplash, cloud, shadow, spark, dust, smoke, flash, rays, vein, steam, sweat, stars, twinkle, whoosh, puff,
     heart, hearts, wind, banana, giftBox, suck, drool, tree, apple, bubble, gumSplat, rainCloud, rain, lightning, puddle, seesaw,
     mudPit, mudSplash, rope, cake, crown, lollipop, tears, ball, pillow, feathers, bee, hive, table, pie };
 })();

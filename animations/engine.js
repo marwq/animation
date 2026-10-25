@@ -116,6 +116,21 @@ const E = (() => {
     },
   };
 
+  // перекраска в радугу всего цветного (не только серого): контур и тёмное — как есть
+  RECOLOR.rainbowAll = (px, w, h, box) => {
+    for (let y = 0, i = 0; y < h; y++) {
+      const u = Math.min(0.999, Math.max(0, (y - box[1]) / (box[3] - box[1]))) * (RAINBOW.length - 1);
+      const a = RAINBOW[Math.floor(u)], b = RAINBOW[Math.floor(u) + 1], t = u - Math.floor(u);
+      for (let x = 0; x < w; x++, i += 4) {
+        if (!px[i + 3]) continue;
+        const [, s, v] = hsv(px[i], px[i + 1], px[i + 2]);
+        if (v < 0.3 || (s < 0.1 && v > 0.95)) continue;
+        const k = 0.55 + 0.5 * v;
+        for (let c = 0; c < 3; c++) px[i + c] = Math.min(255, (a[c] + (b[c] - a[c]) * t) * k);
+      }
+    }
+  };
+
   async function loadRig(name, opts = {}) {
     const base = `/rigs/${name}/`;
     const rig = await (await fetch(base + 'rig.json')).json();

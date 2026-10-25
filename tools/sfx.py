@@ -561,10 +561,11 @@ def render_sample(c):
     k = c.get('pitch') or 1
     if k != 1:
         x = np.stack([repitch(x[:, i], k) for i in range(x.shape[1])], 1)
-    if c.get('dur'):                                              # обрезать с затуханием (у длинной музыки — подольше)
+    if c.get('dur'):                                              # обрезать с затуханием (fade — секунды, плавно по косинусу)
         n = min(len(x), nsamp(c['dur']))
-        f = min(n, nsamp(min(0.8, max(0.05, c['dur'] * 0.12))))
-        x = x[:n] * np.concatenate([np.ones(n - f), np.linspace(1, 0, f)])[:, None]
+        f = min(n, nsamp(c.get('fade') or min(0.8, max(0.05, c['dur'] * 0.12))))
+        ramp = 0.5 + 0.5 * np.cos(np.linspace(0, np.pi, f)) if c.get('fade') else np.linspace(1, 0, f)
+        x = x[:n] * np.concatenate([np.ones(n - f), ramp])[:, None]
     return x[:, 0] if x.shape[1] == 1 else x
 
 
@@ -672,6 +673,25 @@ def s_deflate(seed=37, dur=1.0, **_):
     air = bandpass(noise(d, seed), 800, 5000) * 0.25
     env = np.clip(t / 0.03, 0, 1) * np.clip((d - t) / 0.08, 0, 1)
     return norm((buzz + air) * env, 0.6)
+
+
+def s_brush(seed=38, **_):
+    """Мазок кистью: влажный шорох."""
+    d = 0.28
+    t = tt(d)
+    swish = bandpass(noise(d, seed), 600, 4500) * np.sin(np.pi * t / d) ** 1.5
+    wet = bandpass(noise(d, seed + 1), 200, 900) * np.sin(np.pi * t / d) * 0.5
+    return norm(swish + wet, 0.6)
+
+
+def s_fallhole(seed=39, **_):
+    """Падение в яму: свист вниз и далёкий глухой стук."""
+    d = 1.0
+    t = tt(d)
+    f0 = 1400 * (180 / 1400) ** (t / 0.8)
+    whistle = np.sin(TAU * np.cumsum(f0) / SR) * np.clip((0.8 - t) / 0.1, 0, 1) * np.clip(t / 0.03, 0, 1)
+    thud = osc(90, d, 'sine') * decay(d, 0.08) * (t > 0.82)
+    return norm(0.6 * whistle + 0.5 * np.roll(thud, 0), 0.7)
 
 
 def s_slide(seed=28, **_):
