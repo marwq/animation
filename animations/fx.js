@@ -1916,6 +1916,40 @@ const FX = (() => {
     ctx.restore();
   }
 
+  // каток: лёд на траве от x0 до x1, верх на y; crack 0..1 — трещины; t — время (блики)
+  function iceRink(ctx, x0, x1, y, crack = 0, t = 0) {
+    ctx.save();
+    ctx.fillStyle = '#111'; ctx.fillRect(x0 - 5, y - 5, x1 - x0 + 10, 42);
+    ctx.fillStyle = '#8fd8ff'; ctx.fillRect(x0, y, x1 - x0, 32);
+    ctx.fillStyle = '#e8f8ff'; ctx.fillRect(x0, y, x1 - x0, 9);
+    ctx.fillStyle = '#8fd0ff'; for (let x = x0 + 30; x < x1 - 40; x += 90) ctx.fillRect(x, y + 12, 50, 4);
+    ctx.fillStyle = 'rgba(255,255,255,0.9)';
+    for (let i = 0; i < 3; i++) { const px = x0 + ((i * 337 + t * 60) % (x1 - x0 - 80)); ctx.fillRect(px, y + 2, 60, 3); }
+    if (crack > 0) {
+      const r = rng(5); ctx.strokeStyle = '#2a6fa8'; ctx.lineWidth = 4;
+      for (let i = 0; i < 6; i++) {
+        let px = x0 + (i + 0.5) * (x1 - x0) / 6, py = y + 10;
+        ctx.beginPath(); ctx.moveTo(px, py);
+        for (let k = 0; k < 4 * crack; k++) { px += (r() - 0.5) * 90; py = y + 4 + r() * 16; ctx.lineTo(px, py); }
+        ctx.stroke();
+      }
+    }
+    ctx.restore();
+  }
+  // ледяная крошка из-под скольжения: life 0..1
+  function iceSpray(ctx, x, y, life, dir = 1, seed = 1) {
+    if (life < 0 || life > 1) return;
+    const r = rng(seed);
+    ctx.save();
+    for (let i = 0; i < 10; i++) {
+      const a = -Math.PI / 2 - dir * (0.4 + r() * 0.9), v = 80 + r() * 140;
+      const px = x + Math.cos(a) * v * life, py = y + Math.sin(a) * v * life + 200 * life * life;
+      ctx.globalAlpha = 1 - life; ctx.fillStyle = r() < 0.5 ? '#ffffff' : '#cdeeff';
+      ctx.fillRect(px - 5, py - 5, 10, 10);
+    }
+    ctx.restore();
+  }
+
   // блок разлетается кусочками: life 0..1, кусочки-квадраты по дугам с вращением
   function blockBurst(ctx, x, y, life, seed = 1, cols = ['#f39314', '#d6740a', '#ffab3a'], n = 14, size = 46, spread = 1, floor = Infinity) {
     if (life < 0 || life > 1) return;
@@ -2722,5 +2756,5 @@ const FX = (() => {
 
   return { rng, background, mcBackground, limb, note, waterBalloon, basket, waterSplash, boomerang, flower, bubbleWand, soapBubble, bubblePop, snowball, snowPile, snowCap, snowSplat, snowBurst, slimeBlock, tomato, gardenBed, tomatoBush, tnt, fuseSparks, boom, soot, balloon, balloonPop, cactus, paintBucket, paintBrush, mustache, paintHole, paintSplash, waterJet, cobble, cloud, shadow, spark, dust, smoke, flash, rays, vein, steam, sweat, stars, twinkle, whoosh, puff,
     heart, hearts, wind, banana, giftBox, suck, drool, tree, apple, bubble, gumSplat, rainCloud, rain, lightning, puddle, seesaw,
-    mudPit, mudSplash, rope, cake, crown, lollipop, tears, ball, pillow, feathers, bee, hive, table, pie, mcAppleTree, pumpkinBlock, blockBurst, mcChest, iceCream, scoopCap, iceBlock, frost, magicBeam, rails, grassSteps, minecart, kite, kiteString, popcorn, popcornPile, popBucket, cornCob, sunRay, pickaxe, grassBlock, pit, chili, chiliBush, fireBreath, flame, bigLeaf, pond, fish, fishingRod, fishLine, feather, sleepBubble, jumpCord, ropeHandle, marshmallow, mallowBag, slingshotY, slingBand, honeyPot, honeyCap, egg, chick, horseshoeMagnet, magnetWaves, anvil, coilSpring, rocket, rocketTrail, fireworkBurst };
+    mudPit, mudSplash, rope, cake, crown, lollipop, tears, ball, pillow, feathers, bee, hive, table, pie, mcAppleTree, pumpkinBlock, blockBurst, mcChest, iceCream, scoopCap, iceBlock, frost, magicBeam, rails, grassSteps, minecart, kite, kiteString, popcorn, popcornPile, popBucket, cornCob, sunRay, pickaxe, grassBlock, pit, chili, chiliBush, fireBreath, flame, bigLeaf, pond, fish, fishingRod, fishLine, feather, sleepBubble, jumpCord, ropeHandle, marshmallow, mallowBag, slingshotY, slingBand, honeyPot, honeyCap, egg, chick, horseshoeMagnet, magnetWaves, anvil, coilSpring, rocket, rocketTrail, fireworkBurst, iceRink, iceSpray };
 })();
