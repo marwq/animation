@@ -1019,6 +1019,73 @@ const FX = (() => {
     ctx.restore();
   }
 
+  // яблоня в стиле майнкрафта: ствол-бревно, крона из блоков листвы, на ней яблоки.
+  // shake — качание кроны (пиксели), apples — [[dx, dy], ...] от центра низа кроны
+  function mcAppleTree(ctx, x, ground, shake = 0, apples = [], o = {}) {
+    const B = o.block || 70, trunkH = o.trunk || 440, bot = ground - trunkH;
+    ctx.save();
+    // ствол
+    const tw = B * 0.95;
+    ctx.fillStyle = '#111'; ctx.fillRect(x - tw / 2 - 4, bot - 10, tw + 8, trunkH + 14);
+    ctx.fillStyle = '#7a5128'; ctx.fillRect(x - tw / 2, bot - 10, tw, trunkH + 10);
+    ctx.fillStyle = '#5c3b1a';
+    for (let i = 0; i < trunkH; i += 34) { ctx.fillRect(x - tw / 2 + ((i / 34) % 3) * 18 + 6, bot + i, 8, 22); ctx.fillRect(x + tw / 2 - 18 - ((i / 34) % 2) * 14, bot + i + 12, 8, 18); }
+    ctx.fillStyle = '#9a6a38'; ctx.fillRect(x - tw / 2, bot - 10, 10, trunkH + 10);
+    // крона: ряды блоков (снизу вверх)
+    const rows = o.rows || [5, 7, 7, 5];
+    const sx = shake;
+    const r = rng(o.seed || 7);
+    const cells = [];
+    rows.forEach((n, j) => { for (let i = 0; i < n; i++) cells.push([x + sx * (0.5 + j * 0.25) + (i - n / 2) * B, bot - (j + 1) * B]); });
+    ctx.fillStyle = '#111';
+    for (const [cx, cy] of cells) ctx.fillRect(cx - 5, cy - 5, B + 10, B + 10);
+    const greens = ['#3fae2a', '#4cc232', '#2f8f1f', '#56cf3a', '#38a326'];
+    for (const [cx, cy] of cells) {
+      ctx.fillStyle = greens[Math.floor(r() * greens.length)]; ctx.fillRect(cx, cy, B, B);
+      for (let k = 0; k < 5; k++) { ctx.fillStyle = greens[Math.floor(r() * greens.length)]; const q = B / 5; ctx.fillRect(cx + Math.floor(r() * 5) * q, cy + Math.floor(r() * 5) * q, q, q); }
+    }
+    ctx.restore();
+    for (const [dx, dy] of apples) apple(ctx, x + sx + dx, bot + dy, 26);
+  }
+
+  // тыква-фонарь (майнкрафт): куб, низ по центру в (x, y), поворот вокруг центра куба; face — вырезанное лицо
+  function pumpkinBlock(ctx, x, y, s = 140, rot = 0, face = true, sq = 1) {
+    ctx.save();
+    ctx.translate(x, y); ctx.scale(1 / sq, sq); ctx.translate(0, -s / 2); ctx.rotate(rot);   // sq — сплющивание от низа, площадь та же
+    const h = s / 2;
+    ctx.fillStyle = '#111'; ctx.fillRect(-h - 5, -h - 5, s + 10, s + 10);
+    ctx.fillStyle = '#f39314'; ctx.fillRect(-h, -h, s, s);
+    ctx.fillStyle = '#d6740a';
+    for (const k of [0.18, 0.5, 0.8]) ctx.fillRect(-h + s * k, -h, s * 0.06, s);
+    ctx.fillStyle = '#ffab3a'; ctx.fillRect(-h, -h, s, s * 0.08);
+    ctx.fillStyle = '#4a7a1a'; ctx.fillRect(-s * 0.08, -h - s * 0.14, s * 0.16, s * 0.14);       // хвостик
+    ctx.strokeStyle = '#111'; ctx.lineWidth = 4; ctx.strokeRect(-s * 0.08, -h - s * 0.14, s * 0.16, s * 0.14);
+    if (face) {
+      const u = s / 8;
+      ctx.fillStyle = '#3a1d05';
+      ctx.fillRect(-2.6 * u, -1.8 * u, 1.6 * u, 1.4 * u); ctx.fillRect(1.0 * u, -1.8 * u, 1.6 * u, 1.4 * u);   // глаза
+      ctx.fillRect(-2.6 * u, 0.8 * u, 5.2 * u, 1.0 * u);                                                         // рот
+      ctx.fillRect(-2.6 * u, 1.8 * u, 1.0 * u, 0.7 * u); ctx.fillRect(-0.5 * u, 1.8 * u, 1.0 * u, 0.7 * u); ctx.fillRect(1.6 * u, 1.8 * u, 1.0 * u, 0.7 * u);
+      ctx.fillStyle = '#ffd23a';
+      ctx.fillRect(-2.3 * u, -1.5 * u, 0.6 * u, 0.5 * u); ctx.fillRect(1.3 * u, -1.5 * u, 0.6 * u, 0.5 * u);
+    }
+    ctx.restore();
+  }
+
+  // блок разлетается кусочками: life 0..1, кусочки-квадраты по дугам с вращением
+  function blockBurst(ctx, x, y, life, seed = 1, cols = ['#f39314', '#d6740a', '#ffab3a'], n = 14, size = 46, spread = 1, floor = Infinity) {
+    if (life < 0 || life > 1) return;
+    const r = rng(seed);
+    for (let i = 0; i < n; i++) {
+      const a = -Math.PI * (0.1 + 0.8 * r()), v = (260 + 320 * r()) * spread, sz = size * (0.5 + 0.6 * r()), spin = (r() - 0.5) * 14;
+      const px = x + Math.cos(a) * v * life * (r() < 0.5 ? -1 : 1), py = Math.min(floor - sz / 2, y + Math.sin(a) * v * life + 900 * life * life);
+      ctx.save(); ctx.translate(px, py); ctx.rotate(spin * life); ctx.globalAlpha = life > 0.75 ? (1 - life) * 4 : 1;
+      ctx.fillStyle = '#111'; ctx.fillRect(-sz / 2 - 3, -sz / 2 - 3, sz + 6, sz + 6);
+      ctx.fillStyle = cols[i % cols.length]; ctx.fillRect(-sz / 2, -sz / 2, sz, sz);
+      ctx.restore();
+    }
+  }
+
   // пиксельное облачко без обводки (белое, снизу светло-голубая полоса)
   function cloud(ctx, x, y, s, kind, tint) {
     const u = 16 * s;
@@ -1811,5 +1878,5 @@ const FX = (() => {
 
   return { rng, background, mcBackground, limb, note, waterBalloon, basket, waterSplash, boomerang, flower, bubbleWand, soapBubble, bubblePop, snowball, snowPile, snowCap, snowSplat, snowBurst, slimeBlock, tomato, gardenBed, tomatoBush, tnt, fuseSparks, boom, soot, balloon, balloonPop, cactus, paintBucket, paintBrush, mustache, paintHole, paintSplash, waterJet, cobble, cloud, shadow, spark, dust, smoke, flash, rays, vein, steam, sweat, stars, twinkle, whoosh, puff,
     heart, hearts, wind, banana, giftBox, suck, drool, tree, apple, bubble, gumSplat, rainCloud, rain, lightning, puddle, seesaw,
-    mudPit, mudSplash, rope, cake, crown, lollipop, tears, ball, pillow, feathers, bee, hive, table, pie };
+    mudPit, mudSplash, rope, cake, crown, lollipop, tears, ball, pillow, feathers, bee, hive, table, pie, mcAppleTree, pumpkinBlock, blockBurst };
 })();
