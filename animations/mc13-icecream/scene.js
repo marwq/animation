@@ -17,6 +17,7 @@
 
 const ST = Stage({
   name: 'mc13-icecream',
+  musicOnce: false,                       // музыка при каждом превращении (как было при рендере)
   cast: {
     lord: { small: ['lord-verity-small', { bodyHeight: 300 }], big: ['lord-verity-big', { height: 730 }], pivot: 337, voice: 1.0, color: '#ffe23a' },
     pink: { small: ['girl-verity-small', { bodyHeight: 300 }], big: ['girl-verity-big', { height: 730, splitFeet: true }],

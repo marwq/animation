@@ -16,6 +16,7 @@
 
 const ST = Stage({
   name: 'mc04-snowballs',
+  musicOnce: false,                       // музыка при каждом превращении (как было при рендере)
   cast: {
     baby: { small: ['child-verity-pink', { bodyHeight: 300, spin: { layer: 'hat', cut: 122, axis: 389 } }],
       big: ['child-verity-big', { height: 730, spin: { layer: 'hat', cut: 106, axis: 330 } }], pivot: 338, voice: 1.25,

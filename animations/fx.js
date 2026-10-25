@@ -1332,6 +1332,55 @@ const FX = (() => {
     ctx.restore();
   }
 
+  // воздушный змей (ромб из цветных клеток, хвост с бантиками): (x, y) — центр, s — высота ромба,
+  // rot — наклон, t — время (хвост вьётся), tail — куда тянется хвост (угол)
+  function kite(ctx, x, y, s = 200, rot = 0, t = 0, tail = Math.PI / 2) {
+    ctx.save();
+    ctx.translate(x, y);
+    // хвост: волнистая линия с бантиками
+    const L = s * 1.6, n = 4;
+    const tp = (u) => {
+      const d = s * 0.5 + u * L, w = Math.sin(u * 9 - t * 8) * s * 0.12 * u;
+      return [Math.cos(tail) * d - Math.sin(tail) * w, Math.sin(tail) * d + Math.cos(tail) * w];
+    };
+    ctx.lineWidth = 5; ctx.strokeStyle = '#111'; ctx.beginPath();
+    for (let i = 0; i <= 20; i++) { const [px, py] = tp(i / 20); i ? ctx.lineTo(px, py) : ctx.moveTo(px, py); }
+    ctx.stroke();
+    const bows = ['#ff2a3a', '#ffd21f', '#2aa0ff', '#2ed14a'];
+    for (let i = 1; i <= n; i++) {
+      const [px, py] = tp(i / n), b = s * 0.08;
+      ctx.fillStyle = bows[i % 4]; ctx.strokeStyle = '#111'; ctx.lineWidth = 3;
+      for (const k of [-1, 1]) { ctx.beginPath(); ctx.moveTo(px, py); ctx.lineTo(px + k * b * 1.4, py - b); ctx.lineTo(px + k * b * 1.4, py + b); ctx.closePath(); ctx.fill(); ctx.stroke(); }
+    }
+    // ромб из клеток
+    ctx.rotate(rot);
+    const h = s / 2, wq = s * 0.36, cols = ['#ff2a3a', '#ff9a00', '#ffe500', '#2ed14a', '#2aa0ff', '#8a4dff'];
+    ctx.save();
+    ctx.beginPath(); ctx.moveTo(0, -h); ctx.lineTo(wq, -h * 0.25); ctx.lineTo(0, h); ctx.lineTo(-wq, -h * 0.25); ctx.closePath(); ctx.clip();
+    const B = s / 8;
+    for (let i = -6; i < 6; i++) for (let j = -5; j < 5; j++) { ctx.fillStyle = cols[((i + j) % 6 + 6) % 6]; ctx.fillRect(i * B, j * B, B, B); }
+    ctx.restore();
+    ctx.lineWidth = 6; ctx.strokeStyle = '#111';
+    ctx.beginPath(); ctx.moveTo(0, -h); ctx.lineTo(wq, -h * 0.25); ctx.lineTo(0, h); ctx.lineTo(-wq, -h * 0.25); ctx.closePath(); ctx.stroke();
+    ctx.lineWidth = 4; ctx.beginPath(); ctx.moveTo(0, -h); ctx.lineTo(0, h); ctx.moveTo(-wq, -h * 0.25); ctx.lineTo(wq, -h * 0.25); ctx.stroke();
+    ctx.restore();
+  }
+
+  // нитка змея: провисающая кривая от a к b; spark 0..1 — искра бежит по нитке от b к a
+  function kiteString(ctx, a, b, sag = 60, spark = -1, t = 0) {
+    const mx = (a[0] + b[0]) / 2, my = (a[1] + b[1]) / 2 + sag;
+    ctx.save();
+    ctx.lineWidth = 3; ctx.strokeStyle = '#2b2b2b';
+    ctx.beginPath(); ctx.moveTo(a[0], a[1]); ctx.quadraticCurveTo(mx, my, b[0], b[1]); ctx.stroke();
+    if (spark >= 0 && spark <= 1) {
+      const u = 1 - spark, px = (1 - u) * (1 - u) * a[0] + 2 * (1 - u) * u * mx + u * u * b[0], py = (1 - u) * (1 - u) * a[1] + 2 * (1 - u) * u * my + u * u * b[1];
+      ctx.fillStyle = '#ffe14d'; ctx.strokeStyle = '#111'; ctx.lineWidth = 3;
+      star(ctx, px, py, 6, 30, 12, t * 20); ctx.fill(); ctx.stroke();
+      ctx.fillStyle = '#fff'; star(ctx, px, py, 6, 14, 6, t * 20); ctx.fill();
+    }
+    ctx.restore();
+  }
+
   // блок разлетается кусочками: life 0..1, кусочки-квадраты по дугам с вращением
   function blockBurst(ctx, x, y, life, seed = 1, cols = ['#f39314', '#d6740a', '#ffab3a'], n = 14, size = 46, spread = 1, floor = Infinity) {
     if (life < 0 || life > 1) return;
@@ -2138,5 +2187,5 @@ const FX = (() => {
 
   return { rng, background, mcBackground, limb, note, waterBalloon, basket, waterSplash, boomerang, flower, bubbleWand, soapBubble, bubblePop, snowball, snowPile, snowCap, snowSplat, snowBurst, slimeBlock, tomato, gardenBed, tomatoBush, tnt, fuseSparks, boom, soot, balloon, balloonPop, cactus, paintBucket, paintBrush, mustache, paintHole, paintSplash, waterJet, cobble, cloud, shadow, spark, dust, smoke, flash, rays, vein, steam, sweat, stars, twinkle, whoosh, puff,
     heart, hearts, wind, banana, giftBox, suck, drool, tree, apple, bubble, gumSplat, rainCloud, rain, lightning, puddle, seesaw,
-    mudPit, mudSplash, rope, cake, crown, lollipop, tears, ball, pillow, feathers, bee, hive, table, pie, mcAppleTree, pumpkinBlock, blockBurst, mcChest, iceCream, scoopCap, iceBlock, frost, magicBeam, rails, grassSteps, minecart };
+    mudPit, mudSplash, rope, cake, crown, lollipop, tears, ball, pillow, feathers, bee, hive, table, pie, mcAppleTree, pumpkinBlock, blockBurst, mcChest, iceCream, scoopCap, iceBlock, frost, magicBeam, rails, grassSteps, minecart, kite, kiteString };
 })();

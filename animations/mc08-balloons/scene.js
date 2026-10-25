@@ -15,6 +15,7 @@
 
 const ST = Stage({
   name: 'mc08-balloons',
+  musicOnce: false,                       // музыка при каждом превращении (как было при рендере)
   cast: {
     pink: { small: ['girl-verity-small', { bodyHeight: 300 }], big: ['girl-verity-big', { height: 730, splitFeet: true }],
       pivot: 337, voice: 1.35, vAngle: 50, color: '#ff4fc8', moods: { angry: 'angry theeth', grin: 'theeth smile', big: 'theeth smile' } },

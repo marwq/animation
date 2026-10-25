@@ -164,6 +164,7 @@ function Stage(cfg) {
 
   // превращение «рост» (как в образце): жуткая ухмылка, из шарика по очереди вырастают две длинные
   // руки-лапы до земли (хруст), шарик поднимается на них — и под музыку встаёт большим (вытягивается вверх)
+  let musicPlayed = false;
   function transformGrow(who, f, x, bigX, face, o = {}) {
     const a1 = f + 8, a2 = f + 14, up = f + 21, g = f + 28;
     key(who, f, { eyes: 'angry', mouth: mood(who, 'angry', 'sad') }, 0);
@@ -181,7 +182,11 @@ function Stage(cfg) {
     // музыка превращения: по умолчанию присланная, в обычном темпе, с ухмылки ~4 с — две полные музыкальные
     // фразы (такт 2.16 с), последняя секунда плавно затихает; cfg.transformMusic — другая
     // ('transform-music2' — ускоренная в 1.5 раза: ролики 03–07 серии)
-    const mus = o.music ?? cfg.transformMusic ?? cfg.music ?? 'transform-music3';
+    // музыка — только при первом превращении в ролике (cfg.musicOnce: false — при каждом, как в роликах до 16-го);
+    // при следующих — короткий звук роста
+    let mus = o.music ?? cfg.transformMusic ?? cfg.music ?? 'transform-music3';
+    if (cfg.musicOnce !== false && musicPlayed && o.music === undefined) { mus = null; sfx('grow', g - 2, { who, gain: 0.8 }); }
+    if (mus) musicPlayed = true;
     const mdur = o.musicDur ?? cfg.musicDur;
     if (mus === 'transform-music') sfx('ref:transform-music', g - 5, { gain: o.musicGain ?? 0.75, dur: o.musicDur });
     else if (mus === 'transform-music3' && mdur === undefined) sfx('ref:' + mus, f + 2, { gain: o.musicGain ?? 1.4, dur: Math.round(4.32 * FPS), fade: 1.2 });

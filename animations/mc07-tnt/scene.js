@@ -16,6 +16,7 @@
 
 const ST = Stage({
   name: 'mc07-tnt',
+  musicOnce: false,                       // музыка при каждом превращении (как было при рендере)
   cast: {
     skel: { small: ['skeleton-verity-small', { scale: 0.455 }], big: ['skeleton-verity-big', { height: 730 }], pivot: 325,
       voice: 0.9, lie: 60, color: '#f3f1e6', moods: { angry: 'angry theeth', grin: 'happy with theeth', big: 'theeth smile' } },

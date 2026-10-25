@@ -17,6 +17,7 @@
 
 const ST = Stage({
   name: 'mc09-paint',
+  musicOnce: false,                       // музыка при каждом превращении (как было при рендере)
   cast: {
     rb: { small: ['skeleton-verity-small', { scale: 0.455, recolor: 'rainbow' }], big: ['all-verity-color', { height: 730 }],
       alt: { grey: ['skeleton-verity-small', { scale: 0.455 }] },
