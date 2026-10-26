@@ -2,8 +2,9 @@
 
 Стиль у всех персонажей один: толстый чёрный контур, плоская заливка с одной
 тенью, руки и ноги — палки. Каждый персонаж описан в своём модуле
-(tools/ellie.py, tools/joel.py): палитра + функции front(), side(), back(),
-которые возвращают пару (defs, body) с SVG-разметкой.
+(tools/ellie.py, tools/joel.py): палитра + функции видов (front(), side(),
+back() или three_quarter()), которые возвращают пару (defs, body) с
+SVG-разметкой; список видов задаёт кортеж VIEWS модуля.
 """
 import os
 
@@ -16,8 +17,9 @@ LIMB = 11         # руки и ноги
 DET = 5           # внутренние линии
 
 FONT = "'DejaVu Sans', 'Segoe UI', Arial, sans-serif"
-LABELS = {'front': 'СПЕРЕДИ', 'side': 'СБОКУ', 'back': 'СЗАДИ'}
-VIEW_TITLES = {'front': 'вид спереди', 'side': 'вид сбоку', 'back': 'вид сзади'}
+LABELS = {'front': 'СПЕРЕДИ', 'three_quarter': '3/4', 'side': 'СБОКУ', 'back': 'СЗАДИ'}
+VIEW_TITLES = {'front': 'вид спереди', 'three_quarter': 'вид 3/4', 'side': 'вид сбоку',
+               'back': 'вид сзади'}
 
 
 # ------------------------------------------------------------------ примитивы
@@ -66,10 +68,10 @@ def svg(w, h, body, defs='', title=''):
 
 # ------------------------------------------------------------------ лист
 def sheet(char):
-    """Три вида в ряд, пунктирные направляющие по высоте и палитра снизу."""
+    """Виды в ряд, пунктирные направляющие по высоте и палитра снизу."""
     vw, vh = char.W, char.H
     top = 30
-    W, H = vw * 3, top + vh + 200
+    W, H = vw * len(char.VIEWS), top + vh + 200
     parts = [f'<rect width="{W}" height="{H}" fill="#fbf8f4"/>']
     for y in char.GUIDES:
         parts.append(f'<line x1="30" y1="{y + top}" x2="{W - 30}" y2="{y + top}" '
@@ -96,12 +98,13 @@ def sheet(char):
                      f'font-size="17" font-weight="700" fill="#5b524a">{label}</text>')
         parts.append(f'<text x="{cx:.0f}" y="{H - 26}" text-anchor="middle" font-family="{FONT}" '
                      f'font-size="15" fill="#8a8178">{color}</text>')
+    views = ', '.join(VIEW_TITLES[name].removeprefix('вид ') for name, _ in char.VIEWS)
     return svg(W, H, '\n'.join(parts), '\n'.join(defs_all),
-               title=f'{char.TITLE} — разворот: спереди, сбоку, сзади')
+               title=f'{char.TITLE} — разворот: {views}')
 
 
 def build(char):
-    """Пишет characters/<name>/{front,side,back,turnaround}.svg."""
+    """Пишет characters/<name>/<вид>.svg для каждого вида и turnaround.svg."""
     out_dir = os.path.join(CHAR_DIR, char.NAME)
     os.makedirs(out_dir, exist_ok=True)
     for name, fn in char.VIEWS:
