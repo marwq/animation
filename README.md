@@ -109,6 +109,7 @@ node tools/render.js                     # PNG ×2 (или: node tools/render.js
 | `backgrounds/grass/grass_toon.png` | только трава Minecraft в рисованном стиле, фон прозрачный — слой поверх фона |
 | `backgrounds/meadow/meadow.png` | поляна в стиле toonz CRAFT: дерево с кроной слева, посередине свободная трава под качели, фон размыт |
 | `backgrounds/coast/coast.png` | поле без деревьев, спускается к пляжу, сзади море до горизонта — цвета как у поляны |
+| `backgrounds/aerial/aerial.png` | вид с большой высоты: земля круглая, внизу поле с рощами и пляж, дальше море с островами, у горизонта полоска суши и свечение атмосферы |
 | `backgrounds/sky/sky.png` | только небо с облаками Minecraft, низ кадра на горизонте — цвета как у поляны |
 | `backgrounds/props/swing.png` | качели из блоков (ель, каменный кирпич, цепи), прямо спереди, фон прозрачный, тонкая чёрная обводка |
 
@@ -127,6 +128,7 @@ blender -b --factory-startup -P tools/mc_scene.py -- --shot nether --style toon
 blender -b --factory-startup -P tools/mc_scene.py -- --shot meadow
 blender -b --factory-startup -P tools/mc_scene.py -- --shot coast
 blender -b --factory-startup -P tools/mc_scene.py -- --shot sky
+blender -b --factory-startup -P tools/mc_scene.py -- --shot aerial
 blender -b --factory-startup -P tools/mc_scene.py -- --shot swing   # качели, PNG с прозрачностью
 python3 tools/mc_grass.py                       # трава, нужен Pillow
 # черновик за полминуты: ... --scale 0.4 --samples 24 --out /tmp/draft.png

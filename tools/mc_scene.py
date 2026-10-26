@@ -10,6 +10,8 @@
                      nether — Незер: земля из незерака, лава, вдали лавопады;
                      meadow — поляна под качели, сочнее и с размытым фоном;
                      coast — поле без деревьев, сзади пляж и море до горизонта;
+                     aerial — с большой высоты: видно, что земля круглая; суша с
+                     рощами, пляж, море с островами;
                      sky — только небо с облаками; swing — качели из блоков на
                      прозрачном фоне, с обводкой. meadow, coast, sky — в одних цветах
     --style toon     рисованный стиль (имя файла <shot>_toon.png); Незер — только он
@@ -35,6 +37,7 @@ import math
 import os
 import random
 import sys
+from collections import deque
 
 import bpy
 import numpy as np
@@ -59,6 +62,9 @@ SUN_POWER = 6.0
 SATURATION = 1.1
 PORTAL_LIGHT = (0.55, 0.15, 1.0)
 WATER = (0x3F, 0x76, 0xE4)    # море — цвет воды океана из игры
+SHALLOW = (0x4C, 0xE4, 0xF2)  # вид сверху: у берега бирюзовая (тёплый океан из игры),
+OPEN_SEA = (0x46, 0x9C, 0xF4)  # дальше голубая,
+DEEP = (0x40, 0x7A, 0xEA)     # на глубине синяя
 LUSH = {'sat': 1.25, 'sharpen': 0.35, 'ca': 0.016, 'bloom': 0.3}   # обработка поляны
 
 PORTAL = (-1, 20)        # левый блок рамки; рамка 4×5 стоит вдоль оси x
@@ -71,6 +77,8 @@ PORTAL_C = Vector((1.0, 20.5, 3.5))     # центр проёма 2×3
 # цветная кайма, свечение; exposure — поправка яркости. fstop 0 — без размытия.
 # Небо: камера тоже смотрит прямо, кадр сдвинут вверх — низ кадра на горизонте.
 # sky_reflect — в отражениях голубое небо, а не белый свет (для моря).
+# look_down — насколько камера смотрит вниз, градусов; planet — радиус шара, на который
+# уложен мир (видно, что земля круглая); haze — дымка вдали (None — без неё).
 SHOTS = {
     'field':  {'world': 'field', 'cam': (-26.0, 4.0, 2.62), 'shift': -0.08, 'lens': 28,
                'clear': 22, 'focus': 9.0, 'fstop': 1.4, 'shade': [(-7, 3), (-8, 8)],
@@ -88,6 +96,9 @@ SHOTS = {
                'exposure': 0.3, 'grade': LUSH, 'sky_reflect': True},
     'sky':    {'world': 'sky', 'cam': (0.5, 0.0, 2.62), 'shift': 0.5, 'lens': 24,
                'focus': 100.0, 'fstop': 0, 'exposure': 0.3, 'grade': LUSH},
+    'aerial': {'world': 'aerial', 'cam': (0.0, 0.0, 80.0), 'look_down': 50, 'shift': 0,
+               'lens': 24, 'focus': 100.0, 'fstop': 0, 'exposure': 0.3, 'grade': LUSH,
+               'sky_reflect': True, 'haze': (60, 260, 0.5), 'planet': 200},
     'swing':  {'world': 'swing', 'dir': 'props', 'cam': (2.0, -10.0, 1.62), 'shift': 0.06,
                'lens': 35, 'focus': 10.0, 'fstop': 0, 'exposure': -0.6, 'grade': {'sat': 1.1}},
 }
@@ -125,7 +136,8 @@ TOON_GROUP = {                                  # обводка там, где 
     'dandelion': 9, 'oxeye_daisy': 10, 'cornflower': 11, 'azure_bluet': 12, 'cloud': 13,
     'nether_portal': 14, 'lava': 15, 'lava_flow': 15, 'magma': 16, 'fire': 17,
     'netherrack': 18, 'spruce_planks': 19, 'spruce_trapdoor': 19, 'stone_bricks': 20,
-    'smooth_stone': 20, 'chain': 21, 'sand': 22, 'water': 23,
+    'smooth_stone': 20, 'chain': 21, 'sand': 22, 'water': 23, 'water_shallow': 23,
+    'water_deep': 23, 'water_open': 23,
 }
 TOON_PLANTS = (7, 8, 9, 10, 11, 12, 17)         # трава, цветы, огонь: только тонкий контур
 # Светятся сами (всегда светлый тон) и светят вокруг: группа → (цвет, радиус px, сила)
@@ -204,7 +216,9 @@ def textures(tex, toon=False):
               'magma', 'nether_portal', 'lava_flow', 'spruce_planks', 'spruce_trapdoor',
               'stone_bricks', 'chain', 'smooth_stone', 'sand'):
         t[f] = load_rgba(tex, f)
-    t['water'] = tint(load_rgba(tex, 'water_still'), WATER)
+    water = load_rgba(tex, 'water_still')
+    t['water'], t['water_shallow'], t['water_open'], t['water_deep'] = (
+        tint(water, c) for c in (WATER, SHALLOW, OPEN_SEA, DEEP))
     t['lava'] = load_rgba(tex, 'lava_still')
     t['fire'] = load_rgba(tex, 'fire_0')
     if toon:
@@ -274,8 +288,9 @@ def toon_material(name, img, kind):
     return m
 
 
-def material(name, img, kind, toon=False):
-    """kind: block, leaves, plant, cutout (цепь), glossy (обсидиан), emit (портал, лава), cloud."""
+def material(name, img, kind, toon=False, haze=(35, 180, 0.3)):
+    """kind: block, leaves, plant, cutout (цепь), glossy (обсидиан), water, emit (портал,
+    лава), cloud. haze — дымка: с какого расстояния, до какого, сколько."""
     if toon:
         return toon_material(name, img, kind)
     m = bpy.data.materials.new(name)
@@ -320,7 +335,7 @@ def material(name, img, kind, toon=False):
     # дымка в цвет горизонта: только для лучей камеры, чем дальше — тем сильнее
     cam = N.new('ShaderNodeCameraData')
     rng = N.new('ShaderNodeMapRange')
-    near, far, top = (150, 600, 0.55) if kind == 'cloud' else (35, 180, 0.3)
+    near, far, top = (150, 600, 0.55) if kind == 'cloud' else haze
     rng.inputs['From Min'].default_value = near
     rng.inputs['From Max'].default_value = far
     rng.inputs['To Max'].default_value = top
@@ -351,7 +366,7 @@ def material(name, img, kind, toon=False):
 def kind_of(name):
     if name == 'chain':
         return 'cutout'
-    if name == 'water':
+    if name.startswith('water'):
         return 'water'
     if name.endswith('leaves'):
         return 'leaves'
@@ -797,12 +812,143 @@ def build_swing(opt, view, mats):
     g.build('ground', mats).visible_camera = False
 
 
+# ------------------------------------------------------------------ мир: планета с высоты
+AERIAL_SEA = 0.875                             # вода чуть ниже пляжа
+ISLANDS = [(38, 58, 7), (-46, 78, 9), (12, 98, 6)]   # острова: x, y, радиус
+
+
+def aerial_world(seed):
+    """С высоты: внизу кадра суша с лугами и рощами, неровный берег с пляжем, дальше
+    море с островами, у горизонта снова полоска суши. Вода светлее у берега."""
+    rng = random.Random(seed)
+    land = {}
+    for x in range(-180, 181):
+        n = noise.noise(Vector((x * 0.03, 0.5, 3.3)))
+        far = noise.noise(Vector((x * 0.025, 0.5, 9.9)))
+        for y in range(-60, 181):
+            isle = any(math.hypot(x - ix, y - iy) + 2.5 * noise.noise(Vector((x * 0.2, y * 0.2, 4.1))) < r
+                       for ix, iy, r in ISLANDS if abs(y - iy) < r + 4)
+            land[(x, y)] = y + 14 * n < 24 or y - 10 * far > 150 or isle
+
+    def dist(to):
+        """Сколько блоков до ближайшей клетки, где land == to."""
+        d = {p: 0 for p, v in land.items() if v == to}
+        q = deque(d)
+        while q:
+            px, py = q.popleft()
+            for nb in ((px + 1, py), (px - 1, py), (px, py + 1), (px, py - 1)):
+                if nb in land and nb not in d:
+                    d[nb] = d[(px, py)] + 1
+                    q.append(nb)
+        return d
+
+    to_land, to_sea = dist(True), dist(False)
+    cols, sand, water = {}, set(), {}
+    for (x, y), is_land in land.items():
+        if is_land:
+            ds = to_sea.get((x, y), 99)
+            hill = noise.noise(Vector((x * 0.07, y * 0.07, 5.5)))
+            cols[(x, y)] = 0 if ds <= 3 else max(0, round(1.2 * hill + (ds - 3) * 0.03))
+            if ds <= 3:
+                sand.add((x, y))                       # пляж
+        else:
+            dl = to_land[(x, y)]
+            cols[(x, y)] = -1 - min(6, dl // 2)        # дно, глубже от берега
+            sand.add((x, y))
+            water[(x, y)] = 'water_shallow' if dl <= 3 else 'water_open' if dl <= 12 else 'water_deep'
+
+    trees, taken, grid = [], {}, {}
+    rest = [p for p in cols if p not in sand]
+    rng.shuffle(rest)
+    for i, (x, y) in enumerate([(ix, iy) for ix, iy, _ in ISLANDS] + rest):
+        if (x, y) in sand or to_sea.get((x, y), 99) < 5:
+            continue
+        grove = noise.noise(Vector((x * 0.06, y * 0.06, 1.7)))
+        if i >= len(ISLANDS) and rng.random() > 0.35 * max(0.0, grove - 0.05):
+            continue                                   # рощи, между ними луга; на островах — по дереву
+        cx, cy = x // 5, y // 5
+        if any((x - a) ** 2 + (y - b) ** 2 < 21 for gx in (cx - 1, cx, cx + 1)
+               for gy in (cy - 1, cy, cy + 1) for a, b in grid.get((gx, gy), ())):
+            continue
+        grid.setdefault((cx, cy), []).append((x, y))
+        wood = 'birch' if rng.random() < 0.25 else 'oak'
+        blocks = {p: t for p, t in tree_shape(rng, x, y, cols[(x, y)], wood).items()
+                  if p not in taken}
+        taken.update(blocks)
+        trees.append((x, y, blocks))
+
+    plants = []
+    for (x, y), g in cols.items():
+        if y < 60 and (x, y) not in sand and (x, y, g + 1) not in taken and (x, y, g + 2) not in taken:
+            p = random_plant(rng, x, y, g + 1)
+            if p and (p[3] not in ('short_grass', 'tall_grass') or rng.random() < 0.35):
+                plants.append(p)                       # сверху кустики — мелкая рябь, меньше
+    return cols, sand, water, trees, plants
+
+
+def bend(radius):
+    """Уложить весь мир на шар: точка на расстоянии r от места под камерой уходит вниз
+    по дуге, и горизонт закругляется, как на снимке с большой высоты."""
+    for ob in bpy.context.scene.objects:
+        if ob.type != 'MESH':
+            continue
+        me = ob.data
+        v = np.empty(len(me.vertices) * 3)
+        me.vertices.foreach_get('co', v)
+        v = v.reshape(-1, 3)
+        r = np.hypot(v[:, 0], v[:, 1])
+        a = r / radius
+        k = (radius + v[:, 2]) * np.sin(a) / np.maximum(r, 1e-9)
+        v[:, 0] *= k
+        v[:, 1] *= k
+        v[:, 2] = (radius + v[:, 2]) * np.cos(a) - radius
+        me.vertices.foreach_set('co', v.ravel())
+        me.update()
+
+
+def build_aerial(opt, view, mats):
+    cols, sand, water, trees, plants = aerial_world(opt['seed'])
+    m = Mesh()
+    for (x, y), g in cols.items():
+        sandy = (x, y) in sand
+        m.face(x, y, g, (0, 0, 1), 'sand' if sandy else 'grass_top')
+        for n in SIDES:
+            nh = cols.get((x + n[0], y + n[1]))
+            if nh is not None:
+                for z in range(nh + 1, g + 1):
+                    m.face(x, y, z, n, 'sand' if sandy else 'grass_side' if z == g else 'dirt')
+    m.build('ground', mats)
+
+    m = Mesh()
+    for (x, y), mat in water.items():
+        m.quad([(x, y, AERIAL_SEA), (x + 1, y, AERIAL_SEA), (x + 1, y + 1, AERIAL_SEA),
+                (x, y + 1, AERIAL_SEA)], mat, [(x, y), (x + 1, y), (x + 1, y + 1), (x, y + 1)])
+    m.build('sea', mats)
+
+    m = Mesh()
+    for x, y, blocks in trees:
+        m.blocks(blocks, solid=y > 100)        # у горизонта деревья крошечные — проще
+    m.build('trees', mats)
+
+    m = Mesh()
+    for x, y, z, kind, dx, dy in plants:
+        if kind == 'tall_grass':
+            m.cross(x, y, z, 'tall_grass_bottom', dx, dy)
+            m.cross(x, y, z + 1, 'tall_grass_top', dx, dy)
+        else:
+            m.cross(x, y, z, kind, dx, dy)
+    m.build('plants', mats)
+    bend(view.s['planet'])
+
+
 def build_scene(opt, view):
     toon = opt['style'] == 'toon'
-    mats = {k: material(k, img, kind_of(k), toon) for k, img in textures(opt['tex'], toon).items()}
+    haze = view.s.get('haze', (35, 180, 0.3)) or (1e5, 2e5, 0)
+    mats = {k: material(k, img, kind_of(k), toon, haze)
+            for k, img in textures(opt['tex'], toon).items()}
     mats['cloud'] = material('cloud', None, 'cloud', toon)
-    {'nether': build_nether, 'swing': build_swing, 'coast': build_coast,
-     'sky': build_sky}.get(view.s['world'], build_field)(opt, view, mats)
+    {'nether': build_nether, 'swing': build_swing, 'coast': build_coast, 'sky': build_sky,
+     'aerial': build_aerial}.get(view.s['world'], build_field)(opt, view, mats)
 
 
 def lights_camera(opt, s):
@@ -819,6 +965,17 @@ def lights_camera(opt, s):
     el[1].position, el[1].color = 0.6, (*SKY_ZENITH, 1)
     el.new(0.2).color = (*SKY_MID, 1)
     L.new(sep.outputs['Z'], ramp.inputs[0])
+    if s.get('planet'):
+        # небо над краем планеты: у края светится атмосфера, выше синее, вверху почти космос
+        R, H = s['planet'], s['cam'][2]
+        limb = -math.sqrt(1 - (R / (R + H)) ** 2)   # куда смотреть на край планеты
+        mr = N.new('ShaderNodeMapRange')
+        mr.inputs['From Min'].default_value, mr.inputs['From Max'].default_value = limb - 0.01, 0.05
+        L.new(sep.outputs['Z'], mr.inputs['Value'])
+        L.new(mr.outputs[0], ramp.inputs[0])
+        el[0].color = (0.85, 0.95, 1.0, 1)
+        el.new(0.07).color = (*SKY_HORIZON, 1)
+        el.new(0.97).color = (0.01, 0.07, 0.42, 1)
     lp = N.new('ShaderNodeLightPath')
     is_cam = lp.outputs['Is Camera Ray']
     if s.get('sky_reflect'):                  # отражения видят то же голубое небо
@@ -864,7 +1021,7 @@ def lights_camera(opt, s):
     cam.dof.focus_distance, cam.dof.aperture_fstop = s['focus'], s['fstop'] or 1
     co = bpy.data.objects.new('cam', cam)
     co.location = s['cam']
-    co.rotation_euler = Euler((math.radians(90), 0, 0))   # строго горизонтально
+    co.rotation_euler = Euler((math.radians(90 - s.get('look_down', 0)), 0, 0))   # прямо
     sc.collection.objects.link(co)
     sc.camera = co
 
