@@ -93,3 +93,8 @@ python3 tools/build_characters.py        # SVG всех персонажей (и
 npm i --no-save playwright && npx playwright install chromium
 node tools/render.js                     # PNG ×2 (или: node tools/render.js 2 sarah)
 ```
+
+## Шортсы
+
+- [`shorts/verity-swing/`](shorts/verity-swing/) — La Peace раскручивает Verity на качелях:
+  ролик 9:16 со звуком, сборка музыки, эффектов и озвучки.

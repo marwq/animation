@@ -1,0 +1,6 @@
+[
+ {"id": "l1", "text": "Lah Peace pushed Verity on the swing.", "seeds": [1]},
+ {"id": "l3", "text": "Speed? Max.", "seeds": [3]},
+ {"id": "l4", "text": "Signal? Lost.", "seeds": [3]},
+ {"id": "yell", "text": "Lah Peace! Noooo!", "ex": 0.8, "cfg": 0.4, "seeds": [2]}
+]
