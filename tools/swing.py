@@ -2,7 +2,7 @@
 """Качели делают полный оборот («солнышко») вокруг перекладины. Вид спереди, фон удалён.
 
     python3 tools/swing.py              # слои, кадры, GIF / WebP / APNG / WebM / MOV
-    python3 tools/swing.py --preview    # только лист ключевых кадров на шахматке
+    python3 tools/swing.py --preview    # только лист ключевых кадров
 
 Исходник — swing/source.png. Картинка режется на неподвижную раму и качелю (цепи,
 сиденье, смайлик). Качеля — плоская двусторонняя текстура с толщиной: она
@@ -392,12 +392,6 @@ def downsample(p):
     return p.reshape(h, SS, w, SS, 4).mean(axis=(1, 3))
 
 
-def checker(h, w, n=16):
-    ys, xs = np.mgrid[0:h, 0:w]
-    v = np.where(((ys // n) + (xs // n)) % 2, 205, 240).astype(np.float32)
-    return np.dstack([v, v, v, np.ones_like(v)])
-
-
 # --- 5. сборка ----------------------------------------------------------------
 def build_layers():
     rgb = np.asarray(Image.open(SRC).convert('RGB'))[:, :CROP_W]
@@ -424,12 +418,11 @@ PREVIEW_KEYS = [0, 8, 14, 20, 30, 45, 60, 70, 76, 82]
 
 
 def save_sheet(images):
-    """Лист ключевых кадров на шахматке: два ряда по пять, в половину размера."""
-    tiles = [over(img, checker(*img.shape[:2])) for img in images]
-    sheet = np.concatenate([np.concatenate(tiles[:5], 1), np.concatenate(tiles[5:], 1)], 0)
+    """Лист ключевых кадров на прозрачном фоне: два ряда по пять, в половину размера."""
+    sheet = np.concatenate([np.concatenate(images[:5], 1), np.concatenate(images[5:], 1)], 0)
+    h, w = sheet.shape[0] // 2, sheet.shape[1] // 2
     path = os.path.join(OUT, 'preview.png')
-    Image.fromarray(unpremul_u8(sheet)[..., :3]).resize((sheet.shape[1] // 2, sheet.shape[0] // 2),
-                                                        Image.LANCZOS).save(path)
+    save_png(sheet[:h * 2, :w * 2].reshape(h, 2, w, 2, 4).mean(axis=(1, 3)), path)
     print('лист:', path)
 
 
