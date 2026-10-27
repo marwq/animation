@@ -3571,6 +3571,31 @@ const FX = (() => {
     ctx.restore();
   }
 
+  // поршень (майнкрафт), смотрит вверх: (x, y) — низ по центру, s — сторона блока; ext 0..1 — выдвинут; grow 0..1 — вырастает из земли
+  function piston(ctx, x, y, s = 150, ext = 0, grow = 1, sticky = false) {
+    if (grow <= 0) return;
+    ctx.save(); ctx.beginPath(); ctx.rect(x - s, -2000, 2 * s, 2000 + y); ctx.clip();
+    ctx.translate(x, y + s * (1 - grow));
+    const h = s / 2, u = s / 8, L = ext * s * 0.9;
+    // шток
+    if (L > 2) {
+      ctx.fillStyle = '#111'; ctx.fillRect(-u * 0.9, -s - L - 2, u * 1.8, L + 4);
+      ctx.fillStyle = '#c9a26a'; ctx.fillRect(-u * 0.6, -s - L, u * 1.2, L);
+      ctx.fillStyle = '#a88452'; ctx.fillRect(-u * 0.6, -s - L, u * 0.35, L);
+    }
+    // корпус: камень
+    ctx.fillStyle = '#111'; ctx.fillRect(-h - 4, -s - 4, s + 8, s + 8);
+    for (let i = 0; i < 8; i++) for (let j = 0; j < 8; j++) { ctx.fillStyle = (i * 7 + j * 3) % 5 === 0 ? '#6e6e6e' : (i + j) % 3 === 0 ? '#8a8a8a' : '#7c7c7c'; ctx.fillRect(-h + i * u, -s + j * u, u + 0.5, u + 0.5); }
+    // доски сверху корпуса (если голова уехала — видно тёмное гнездо)
+    ctx.fillStyle = ext > 0.05 ? '#3a3a3a' : '#c9a26a'; ctx.fillRect(-h, -s, s, u * 2);
+    // голова-плита
+    const hy = -s - L - u * 2;
+    ctx.fillStyle = '#111'; ctx.fillRect(-h - 4, hy - 4, s + 8, u * 2 + 8);
+    for (let i = 0; i < 8; i++) { ctx.fillStyle = i % 2 ? '#c9a26a' : '#b89058'; ctx.fillRect(-h + i * u, hy, u + 0.5, u * 2); }
+    ctx.fillStyle = sticky ? '#7fd34a' : '#a88452'; ctx.fillRect(-h, hy, s, u * 0.5);
+    ctx.restore();
+  }
+
   // «вжух» — удар прошёл мимо: маленькое облачко
   function whoosh(ctx, x, y, life) {
     if (life < 0 || life > 1) return;
@@ -3581,5 +3606,5 @@ const FX = (() => {
 
   return { rng, background, mcBackground, limb, note, waterBalloon, basket, waterSplash, boomerang, flower, bubbleWand, soapBubble, bubblePop, snowball, snowPile, snowCap, snowSplat, snowBurst, slimeBlock, tomato, gardenBed, tomatoBush, tnt, fuseSparks, boom, soot, balloon, balloonPop, cactus, paintBucket, paintBrush, mustache, paintHole, paintSplash, waterJet, cobble, cloud, shadow, spark, dust, smoke, flash, rays, vein, steam, sweat, stars, twinkle, whoosh, puff,
     heart, hearts, wind, banana, giftBox, suck, drool, tree, apple, bubble, gumSplat, rainCloud, rain, lightning, puddle, seesaw,
-    mudPit, mudSplash, rope, cake, crown, lollipop, tears, ball, pillow, feathers, bee, hive, table, pie, mcAppleTree, pumpkinBlock, blockBurst, mcChest, iceCream, scoopCap, iceBlock, frost, magicBeam, rails, grassSteps, minecart, kite, kiteString, popcorn, popcornPile, popBucket, cornCob, sunRay, pickaxe, grassBlock, pit, chili, chiliBush, fireBreath, flame, bigLeaf, pond, fish, fishingRod, fishLine, feather, sleepBubble, jumpCord, ropeHandle, marshmallow, mallowBag, slingshotY, slingBand, honeyPot, honeyCap, egg, chick, horseshoeMagnet, magnetWaves, anvil, coilSpring, rocket, rocketTrail, fireworkBurst, iceRink, iceSpray, deskFan, fanWind, melonBlock, melonHelmet, melonSlice, melonSeed, melonSplash, potion, potionBurst, effectSwirls, portal, fluff, cottonCandy, fluffBurst, mcBell, bellStand, soundRings, lemon, juiceSplash, sourLines, sandBlock, toyArrow, suctionMark, plunger, donut, donutRing, pizza, pizzaSlice, cheeseString, enderPearl, teleportPuff, cobweb, webWrap, webBall, webString, mcBed, snowBlock, snowGolem, yarnBall, yarnThread, yarnWrap, hayBale, hayBurst, hayStuck, berryBush, berry, prickle, mcCake, creamPuddle };
+    mudPit, mudSplash, rope, cake, crown, lollipop, tears, ball, pillow, feathers, bee, hive, table, pie, mcAppleTree, pumpkinBlock, blockBurst, mcChest, iceCream, scoopCap, iceBlock, frost, magicBeam, rails, grassSteps, minecart, kite, kiteString, popcorn, popcornPile, popBucket, cornCob, sunRay, pickaxe, grassBlock, pit, chili, chiliBush, fireBreath, flame, bigLeaf, pond, fish, fishingRod, fishLine, feather, sleepBubble, jumpCord, ropeHandle, marshmallow, mallowBag, slingshotY, slingBand, honeyPot, honeyCap, egg, chick, horseshoeMagnet, magnetWaves, anvil, coilSpring, rocket, rocketTrail, fireworkBurst, iceRink, iceSpray, deskFan, fanWind, melonBlock, melonHelmet, melonSlice, melonSeed, melonSplash, potion, potionBurst, effectSwirls, portal, fluff, cottonCandy, fluffBurst, mcBell, bellStand, soundRings, lemon, juiceSplash, sourLines, sandBlock, toyArrow, suctionMark, plunger, donut, donutRing, pizza, pizzaSlice, cheeseString, enderPearl, teleportPuff, cobweb, webWrap, webBall, webString, mcBed, snowBlock, snowGolem, yarnBall, yarnThread, yarnWrap, hayBale, hayBurst, hayStuck, berryBush, berry, prickle, mcCake, creamPuddle, piston };
 })();
