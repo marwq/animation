@@ -2995,6 +2995,41 @@ const FX = (() => {
     ctx.restore();
   }
 
+  // сахарная вата: пушистый комок, (x, y) — центр, r — радиус
+  function fluff(ctx, x, y, r, seed = 3, alpha = 1, col = '#ff9cd6') {
+    if (r <= 2 || alpha <= 0) return;
+    const g = rng(seed), lumps = [[0, 0, 0.62]];
+    for (let i = 0; i < 11; i++) { const a = i / 11 * TAU + g() * 0.4, d = 0.42 + g() * 0.18; lumps.push([Math.cos(a) * d, Math.sin(a) * d * 0.9, 0.3 + g() * 0.14]); }
+    ctx.save(); ctx.globalAlpha = alpha;
+    ctx.lineWidth = Math.max(3, r * 0.05); ctx.strokeStyle = '#b8287a';
+    for (const [dx, dy, rr] of lumps) { ctx.beginPath(); ctx.arc(x + dx * r, y + dy * r, rr * r, 0, TAU); ctx.stroke(); }
+    for (const [dx, dy, rr] of lumps) { ctx.beginPath(); ctx.arc(x + dx * r, y + dy * r, rr * r - ctx.lineWidth / 2, 0, TAU); ctx.fillStyle = col; ctx.fill(); }
+    ctx.fillStyle = 'rgba(255,240,250,0.8)';
+    for (let i = 0; i < 6; i++) { const a = g() * TAU, d = g() * 0.6; ctx.beginPath(); ctx.arc(x + Math.cos(a) * d * r, y + Math.sin(a) * d * r - r * 0.1, r * (0.07 + g() * 0.06), 0, TAU); ctx.fill(); }
+    ctx.strokeStyle = 'rgba(255,255,255,0.7)'; ctx.lineWidth = Math.max(2, r * 0.025);
+    for (let i = 0; i < 5; i++) { const a = g() * TAU, d = g() * 0.5 * r; ctx.beginPath(); ctx.arc(x + Math.cos(a) * d, y + Math.sin(a) * d, r * 0.18, a, a + 2); ctx.stroke(); }
+    ctx.restore();
+  }
+  // вата на палочке: (x, y) — низ палочки, L — длина, r — радиус ваты (0 — съедена), rot — наклон от вертикали
+  function cottonCandy(ctx, x, y, L = 300, r = 120, rot = 0, seed = 3) {
+    ctx.save(); ctx.translate(x, y); ctx.rotate(rot);
+    ctx.lineCap = 'round';
+    ctx.lineWidth = 16; ctx.strokeStyle = '#111'; ctx.beginPath(); ctx.moveTo(0, 0); ctx.lineTo(0, -L); ctx.stroke();
+    ctx.lineWidth = 9; ctx.strokeStyle = '#f4e3c1'; ctx.stroke();
+    ctx.lineWidth = 9; ctx.strokeStyle = '#ff5fa8'; ctx.setLineDash([14, 18]); ctx.stroke(); ctx.setLineDash([]);
+    ctx.restore();
+    if (r > 2) fluff(ctx, x + Math.sin(rot) * (L - r * 0.15), y - Math.cos(rot) * (L - r * 0.15), r, seed);
+  }
+  // вата разлетелась клочьями: life 0..1
+  function fluffBurst(ctx, x, y, life, size = 1, seed = 6) {
+    if (life < 0 || life > 1) return;
+    const g = rng(seed);
+    for (let i = 0; i < 10; i++) {
+      const a = g() * TAU, v = (160 + 240 * g()) * size;
+      fluff(ctx, x + Math.cos(a) * v * life, y + Math.sin(a) * v * life + 260 * life * life, (26 + 22 * g()) * size * (1 - life * 0.4), seed + i, 1 - life);
+    }
+  }
+
   // «вжух» — удар прошёл мимо: маленькое облачко
   function whoosh(ctx, x, y, life) {
     if (life < 0 || life > 1) return;
@@ -3005,5 +3040,5 @@ const FX = (() => {
 
   return { rng, background, mcBackground, limb, note, waterBalloon, basket, waterSplash, boomerang, flower, bubbleWand, soapBubble, bubblePop, snowball, snowPile, snowCap, snowSplat, snowBurst, slimeBlock, tomato, gardenBed, tomatoBush, tnt, fuseSparks, boom, soot, balloon, balloonPop, cactus, paintBucket, paintBrush, mustache, paintHole, paintSplash, waterJet, cobble, cloud, shadow, spark, dust, smoke, flash, rays, vein, steam, sweat, stars, twinkle, whoosh, puff,
     heart, hearts, wind, banana, giftBox, suck, drool, tree, apple, bubble, gumSplat, rainCloud, rain, lightning, puddle, seesaw,
-    mudPit, mudSplash, rope, cake, crown, lollipop, tears, ball, pillow, feathers, bee, hive, table, pie, mcAppleTree, pumpkinBlock, blockBurst, mcChest, iceCream, scoopCap, iceBlock, frost, magicBeam, rails, grassSteps, minecart, kite, kiteString, popcorn, popcornPile, popBucket, cornCob, sunRay, pickaxe, grassBlock, pit, chili, chiliBush, fireBreath, flame, bigLeaf, pond, fish, fishingRod, fishLine, feather, sleepBubble, jumpCord, ropeHandle, marshmallow, mallowBag, slingshotY, slingBand, honeyPot, honeyCap, egg, chick, horseshoeMagnet, magnetWaves, anvil, coilSpring, rocket, rocketTrail, fireworkBurst, iceRink, iceSpray, deskFan, fanWind, melonBlock, melonHelmet, melonSlice, melonSeed, melonSplash, potion, potionBurst, effectSwirls, portal };
+    mudPit, mudSplash, rope, cake, crown, lollipop, tears, ball, pillow, feathers, bee, hive, table, pie, mcAppleTree, pumpkinBlock, blockBurst, mcChest, iceCream, scoopCap, iceBlock, frost, magicBeam, rails, grassSteps, minecart, kite, kiteString, popcorn, popcornPile, popBucket, cornCob, sunRay, pickaxe, grassBlock, pit, chili, chiliBush, fireBreath, flame, bigLeaf, pond, fish, fishingRod, fishLine, feather, sleepBubble, jumpCord, ropeHandle, marshmallow, mallowBag, slingshotY, slingBand, honeyPot, honeyCap, egg, chick, horseshoeMagnet, magnetWaves, anvil, coilSpring, rocket, rocketTrail, fireworkBurst, iceRink, iceSpray, deskFan, fanWind, melonBlock, melonHelmet, melonSlice, melonSeed, melonSplash, potion, potionBurst, effectSwirls, portal, fluff, cottonCandy, fluffBurst };
 })();
