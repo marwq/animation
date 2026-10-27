@@ -3151,6 +3151,41 @@ const FX = (() => {
     ctx.restore();
   }
 
+  // стрела-присоска: (x, y) — присоска (кончик), rot — куда летит (0 — вправо), L — длина
+  function toyArrow(ctx, x, y, rot = 0, L = 150, cup = '#e8262e') {
+    ctx.save(); ctx.translate(x, y); ctx.rotate(rot); ctx.lineJoin = 'round'; ctx.lineCap = 'round';
+    ctx.lineWidth = 15; ctx.strokeStyle = '#111'; ctx.beginPath(); ctx.moveTo(-L, 0); ctx.lineTo(-12, 0); ctx.stroke();
+    ctx.lineWidth = 8; ctx.strokeStyle = '#ffcf3a'; ctx.stroke();
+    for (const k of [-1, 1]) {                         // оперение
+      ctx.beginPath(); ctx.moveTo(-L + 6, 0); ctx.lineTo(-L - 18, k * 22); ctx.lineTo(-L + 30, k * 4); ctx.closePath();
+      ctx.fillStyle = '#2a8cff'; ctx.fill(); ctx.lineWidth = 3.5; ctx.strokeStyle = '#111'; ctx.stroke();
+    }
+    ctx.beginPath(); ctx.moveTo(-16, -8); ctx.lineTo(-4, -22); ctx.quadraticCurveTo(4, 0, -4, 22); ctx.lineTo(-16, 8); ctx.closePath();
+    ctx.fillStyle = cup; ctx.fill(); ctx.lineWidth = 4; ctx.strokeStyle = '#111'; ctx.stroke();
+    ctx.restore();
+  }
+  // красный кружок-след от присоски
+  function suctionMark(ctx, x, y, r = 22, alpha = 1) {
+    if (alpha <= 0) return;
+    ctx.save(); ctx.globalAlpha = alpha;
+    ctx.beginPath(); ctx.arc(x, y, r, 0, TAU); ctx.lineWidth = r * 0.45; ctx.strokeStyle = 'rgba(230,30,60,0.75)'; ctx.stroke();
+    ctx.beginPath(); ctx.arc(x, y, r * 0.55, 0, TAU); ctx.fillStyle = 'rgba(255,90,120,0.45)'; ctx.fill();
+    ctx.restore();
+  }
+  // вантуз: (x, y) — середина края присоски, rot — куда смотрит присоска (0 — вправо), L — длина ручки, s — ширина присоски
+  function plunger(ctx, x, y, rot = 0, L = 260, s = 130) {
+    ctx.save(); ctx.translate(x, y); ctx.rotate(rot); ctx.lineJoin = 'round'; ctx.lineCap = 'round';
+    ctx.lineWidth = 24; ctx.strokeStyle = '#111'; ctx.beginPath(); ctx.moveTo(-s * 0.45, 0); ctx.lineTo(-s * 0.45 - L, 0); ctx.stroke();
+    ctx.lineWidth = 15; ctx.strokeStyle = '#b07a3e'; ctx.stroke();
+    ctx.lineWidth = 4; ctx.strokeStyle = '#d9a566'; ctx.beginPath(); ctx.moveTo(-s * 0.5, -3); ctx.lineTo(-s * 0.45 - L + 6, -3); ctx.stroke();
+    ctx.beginPath();
+    ctx.moveTo(0, -s / 2); ctx.quadraticCurveTo(-s * 0.55, -s * 0.5, -s * 0.55, 0); ctx.quadraticCurveTo(-s * 0.55, s * 0.5, 0, s / 2);
+    ctx.closePath(); ctx.fillStyle = '#e8262e'; ctx.fill(); ctx.lineWidth = 5; ctx.strokeStyle = '#111'; ctx.stroke();
+    ctx.beginPath(); ctx.ellipse(-s * 0.3, -s * 0.2, s * 0.08, s * 0.16, 0.3, 0, TAU); ctx.fillStyle = 'rgba(255,255,255,0.5)'; ctx.fill();
+    ctx.beginPath(); ctx.rect(-4, -s / 2 - 2, 10, s + 4); ctx.fillStyle = '#a8121b'; ctx.fill(); ctx.stroke();
+    ctx.restore();
+  }
+
   // «вжух» — удар прошёл мимо: маленькое облачко
   function whoosh(ctx, x, y, life) {
     if (life < 0 || life > 1) return;
@@ -3161,5 +3196,5 @@ const FX = (() => {
 
   return { rng, background, mcBackground, limb, note, waterBalloon, basket, waterSplash, boomerang, flower, bubbleWand, soapBubble, bubblePop, snowball, snowPile, snowCap, snowSplat, snowBurst, slimeBlock, tomato, gardenBed, tomatoBush, tnt, fuseSparks, boom, soot, balloon, balloonPop, cactus, paintBucket, paintBrush, mustache, paintHole, paintSplash, waterJet, cobble, cloud, shadow, spark, dust, smoke, flash, rays, vein, steam, sweat, stars, twinkle, whoosh, puff,
     heart, hearts, wind, banana, giftBox, suck, drool, tree, apple, bubble, gumSplat, rainCloud, rain, lightning, puddle, seesaw,
-    mudPit, mudSplash, rope, cake, crown, lollipop, tears, ball, pillow, feathers, bee, hive, table, pie, mcAppleTree, pumpkinBlock, blockBurst, mcChest, iceCream, scoopCap, iceBlock, frost, magicBeam, rails, grassSteps, minecart, kite, kiteString, popcorn, popcornPile, popBucket, cornCob, sunRay, pickaxe, grassBlock, pit, chili, chiliBush, fireBreath, flame, bigLeaf, pond, fish, fishingRod, fishLine, feather, sleepBubble, jumpCord, ropeHandle, marshmallow, mallowBag, slingshotY, slingBand, honeyPot, honeyCap, egg, chick, horseshoeMagnet, magnetWaves, anvil, coilSpring, rocket, rocketTrail, fireworkBurst, iceRink, iceSpray, deskFan, fanWind, melonBlock, melonHelmet, melonSlice, melonSeed, melonSplash, potion, potionBurst, effectSwirls, portal, fluff, cottonCandy, fluffBurst, mcBell, bellStand, soundRings, lemon, juiceSplash, sourLines, sandBlock };
+    mudPit, mudSplash, rope, cake, crown, lollipop, tears, ball, pillow, feathers, bee, hive, table, pie, mcAppleTree, pumpkinBlock, blockBurst, mcChest, iceCream, scoopCap, iceBlock, frost, magicBeam, rails, grassSteps, minecart, kite, kiteString, popcorn, popcornPile, popBucket, cornCob, sunRay, pickaxe, grassBlock, pit, chili, chiliBush, fireBreath, flame, bigLeaf, pond, fish, fishingRod, fishLine, feather, sleepBubble, jumpCord, ropeHandle, marshmallow, mallowBag, slingshotY, slingBand, honeyPot, honeyCap, egg, chick, horseshoeMagnet, magnetWaves, anvil, coilSpring, rocket, rocketTrail, fireworkBurst, iceRink, iceSpray, deskFan, fanWind, melonBlock, melonHelmet, melonSlice, melonSeed, melonSplash, potion, potionBurst, effectSwirls, portal, fluff, cottonCandy, fluffBurst, mcBell, bellStand, soundRings, lemon, juiceSplash, sourLines, sandBlock, toyArrow, suctionMark, plunger };
 })();
