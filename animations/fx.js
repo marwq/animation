@@ -3999,6 +3999,73 @@ const FX = (() => {
     for (let i = 0; i < n; i++) for (let j = 0; j <= i; j++) snowBlock(ctx, x + face * (n - 1 - i) * s, ground - s / 2 - j * s, s, 0, i * 7 + j);
   }
 
+  // столб из дубового бревна: (x, ground) — низ, h — высота, grow — доля выросшего из земли (0..1)
+  function logPost(ctx, x, ground, h = 380, w = 56, grow = 1) {
+    if (grow <= 0) return;
+    ctx.save(); ctx.beginPath(); ctx.rect(x - w, ground - h - 40, 2 * w, h + 40); ctx.clip();
+    ctx.translate(x, ground + h * (1 - grow));
+    const r = rng(17), u = w / 4;
+    ctx.fillStyle = '#111'; ctx.fillRect(-w / 2 - 4, -h - 4, w + 8, h + 8);
+    for (let j = 0; j * u < h; j++) for (let i = 0; i < 4; i++) { const v = r(); ctx.fillStyle = v < 0.3 ? '#5a3d1e' : v < 0.75 ? '#6e4b26' : '#7d5830'; ctx.fillRect(-w / 2 + i * u, -h + j * u, u + 0.6, Math.min(u, h - j * u) + 0.6); }
+    ctx.fillStyle = '#b8894a'; ctx.fillRect(-w / 2, -h, w, u); ctx.fillStyle = '#9a6e36'; ctx.fillRect(-w / 4, -h + u * 0.25, w / 2, u * 0.5);
+    ctx.restore();
+  }
+  // гамак: полотно в полоску по точкам pts (сверху вниз — по краю), верёвки от якорей a, b до концов полотна
+  function hammock(ctx, a, b, pts, cols = ['#e8262e', '#ffffff', '#2f7de1']) {
+    ctx.save(); ctx.lineCap = 'round'; ctx.lineJoin = 'round';
+    const p0 = pts[0], p1 = pts[pts.length - 1];
+    for (const [lw, c] of [[7, '#111'], [3.5, '#e8d6a8']]) {
+      ctx.lineWidth = lw; ctx.strokeStyle = c;
+      if (a) { ctx.beginPath(); ctx.moveTo(a[0], a[1]); ctx.lineTo(p0[0], p0[1]); ctx.stroke(); }
+      if (b) { ctx.beginPath(); ctx.moveTo(b[0], b[1]); ctx.lineTo(p1[0], p1[1]); ctx.stroke(); }
+    }
+    const path = () => { ctx.beginPath(); ctx.moveTo(p0[0], p0[1]); for (let i = 1; i < pts.length - 1; i++) { const mx = (pts[i][0] + pts[i + 1][0]) / 2, my = (pts[i][1] + pts[i + 1][1]) / 2; ctx.quadraticCurveTo(pts[i][0], pts[i][1], mx, my); } ctx.lineTo(p1[0], p1[1]); };
+    path(); ctx.lineWidth = 46; ctx.strokeStyle = '#111'; ctx.stroke();
+    path(); ctx.lineWidth = 38; ctx.strokeStyle = cols[1]; ctx.stroke();
+    path(); ctx.lineWidth = 26; ctx.strokeStyle = cols[2]; ctx.stroke();
+    path(); ctx.lineWidth = 12; ctx.strokeStyle = cols[0]; ctx.stroke();
+    ctx.restore();
+  }
+  // гамак, обёрнутый вокруг (кокон-«буррито»): центр (x, y), w × h, rot
+  function hammockWrap(ctx, x, y, w = 330, h = 200, rot = 0, cols = ['#e8262e', '#ffffff', '#2f7de1']) {
+    ctx.save(); ctx.translate(x, y); ctx.rotate(rot);
+    ctx.beginPath(); ctx.ellipse(0, 0, w / 2, h / 2, 0, 0, TAU);
+    ctx.lineWidth = 7; ctx.strokeStyle = '#111'; ctx.stroke();
+    ctx.save(); ctx.clip();
+    const n = 7;
+    for (let i = 0; i < n; i++) { ctx.fillStyle = cols[i % 3]; ctx.fillRect(-w / 2 + i * w / n, -h / 2, w / n + 1, h); }
+    ctx.fillStyle = 'rgba(0,0,0,0.15)'; ctx.fillRect(-w / 2, h * 0.15, w, h * 0.35);
+    ctx.restore();
+    ctx.restore();
+  }
+  // гамак наброшен сверху (покрывалом): (x, y) — макушка, w — ширина, h — сколько свисает
+  function hammockSheet(ctx, x, y, w = 320, h = 380, t = 0, cols = ['#e8262e', '#ffffff', '#2f7de1']) {
+    ctx.save(); ctx.translate(x, y);
+    ctx.beginPath();
+    ctx.moveTo(-w * 0.5, h * 0.8);
+    ctx.quadraticCurveTo(-w * 0.55, -h * 0.12, 0, -h * 0.12);
+    ctx.quadraticCurveTo(w * 0.55, -h * 0.12, w * 0.5, h * 0.8);
+    for (let i = 8; i >= 0; i--) ctx.lineTo(-w * 0.5 + w * i / 8, h * (0.82 + 0.04 * Math.sin(i * 1.7 + t * 6)));
+    ctx.closePath();
+    ctx.lineWidth = 7; ctx.strokeStyle = '#111'; ctx.stroke();
+    ctx.save(); ctx.clip();
+    for (let i = 0; i < 9; i++) { ctx.fillStyle = cols[i % 3]; ctx.fillRect(-w * 0.6 + i * w * 0.14, -h, w * 0.14 + 1, h * 2); }
+    ctx.restore();
+    // кисточки-верёвки
+    ctx.lineWidth = 4; ctx.strokeStyle = '#e8d6a8';
+    for (const sx of [-1, 1]) { ctx.beginPath(); ctx.moveTo(sx * w * 0.5, h * 0.8); ctx.lineTo(sx * w * 0.56, h * 0.98); ctx.stroke(); }
+    ctx.restore();
+  }
+  // гамак свёрнут в рулон: центр (x, y), длина L, rot
+  function hammockRoll(ctx, x, y, L = 200, rot = 0, cols = ['#e8262e', '#ffffff', '#2f7de1']) {
+    ctx.save(); ctx.translate(x, y); ctx.rotate(rot);
+    ctx.fillStyle = '#111'; ctx.beginPath(); ctx.roundRect(-L / 2 - 5, -32, L + 10, 64, 26); ctx.fill();
+    ctx.save(); ctx.beginPath(); ctx.roundRect(-L / 2, -27, L, 54, 22); ctx.clip();
+    for (let i = 0; i < 6; i++) { ctx.fillStyle = cols[i % 3]; ctx.fillRect(-L / 2 + i * L / 6, -30, L / 6 + 1, 60); }
+    ctx.restore();
+    ctx.restore();
+  }
+
   // «вжух» — удар прошёл мимо: маленькое облачко
   function whoosh(ctx, x, y, life) {
     if (life < 0 || life > 1) return;
@@ -4009,5 +4076,5 @@ const FX = (() => {
 
   return { rng, background, mcBackground, limb, note, waterBalloon, basket, waterSplash, boomerang, flower, bubbleWand, soapBubble, bubblePop, snowball, snowPile, snowCap, snowSplat, snowBurst, slimeBlock, tomato, gardenBed, tomatoBush, tnt, fuseSparks, boom, soot, balloon, balloonPop, cactus, paintBucket, paintBrush, mustache, paintHole, paintSplash, waterJet, cobble, cloud, shadow, spark, dust, smoke, flash, rays, vein, steam, sweat, stars, twinkle, whoosh, puff,
     heart, hearts, wind, banana, giftBox, suck, drool, tree, apple, bubble, gumSplat, rainCloud, rain, lightning, puddle, seesaw,
-    mudPit, mudSplash, rope, cake, crown, lollipop, tears, ball, pillow, feathers, bee, hive, table, pie, mcAppleTree, pumpkinBlock, blockBurst, mcChest, iceCream, scoopCap, iceBlock, frost, magicBeam, rails, grassSteps, minecart, kite, kiteString, popcorn, popcornPile, popBucket, cornCob, sunRay, pickaxe, grassBlock, pit, chili, chiliBush, fireBreath, flame, bigLeaf, pond, fish, fishingRod, fishLine, feather, sleepBubble, jumpCord, ropeHandle, marshmallow, mallowBag, slingshotY, slingBand, honeyPot, honeyCap, egg, chick, horseshoeMagnet, magnetWaves, anvil, coilSpring, rocket, rocketTrail, fireworkBurst, iceRink, iceSpray, deskFan, fanWind, melonBlock, melonHelmet, melonSlice, melonSeed, melonSplash, potion, potionBurst, effectSwirls, portal, fluff, cottonCandy, fluffBurst, mcBell, bellStand, soundRings, lemon, juiceSplash, sourLines, sandBlock, toyArrow, suctionMark, plunger, donut, donutRing, pizza, pizzaSlice, cheeseString, enderPearl, teleportPuff, cobweb, webWrap, webBall, webString, mcBed, snowBlock, snowGolem, yarnBall, yarnThread, yarnWrap, hayBale, hayBurst, hayStuck, berryBush, berry, prickle, mcCake, creamPuddle, piston, woodCrate, mcStick, mcCookie, plank, vacuum, vacHose, vacNozzle, airLines, rollingPin, dough, doughSheet, extinguisher, foamPile, foamJet, mcPig, mcCarrot, jelly, jellyPuddle, umbrella, sled, snowRamp };
+    mudPit, mudSplash, rope, cake, crown, lollipop, tears, ball, pillow, feathers, bee, hive, table, pie, mcAppleTree, pumpkinBlock, blockBurst, mcChest, iceCream, scoopCap, iceBlock, frost, magicBeam, rails, grassSteps, minecart, kite, kiteString, popcorn, popcornPile, popBucket, cornCob, sunRay, pickaxe, grassBlock, pit, chili, chiliBush, fireBreath, flame, bigLeaf, pond, fish, fishingRod, fishLine, feather, sleepBubble, jumpCord, ropeHandle, marshmallow, mallowBag, slingshotY, slingBand, honeyPot, honeyCap, egg, chick, horseshoeMagnet, magnetWaves, anvil, coilSpring, rocket, rocketTrail, fireworkBurst, iceRink, iceSpray, deskFan, fanWind, melonBlock, melonHelmet, melonSlice, melonSeed, melonSplash, potion, potionBurst, effectSwirls, portal, fluff, cottonCandy, fluffBurst, mcBell, bellStand, soundRings, lemon, juiceSplash, sourLines, sandBlock, toyArrow, suctionMark, plunger, donut, donutRing, pizza, pizzaSlice, cheeseString, enderPearl, teleportPuff, cobweb, webWrap, webBall, webString, mcBed, snowBlock, snowGolem, yarnBall, yarnThread, yarnWrap, hayBale, hayBurst, hayStuck, berryBush, berry, prickle, mcCake, creamPuddle, piston, woodCrate, mcStick, mcCookie, plank, vacuum, vacHose, vacNozzle, airLines, rollingPin, dough, doughSheet, extinguisher, foamPile, foamJet, mcPig, mcCarrot, jelly, jellyPuddle, umbrella, sled, snowRamp, logPost, hammock, hammockWrap, hammockSheet, hammockRoll };
 })();
