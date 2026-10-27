@@ -2956,6 +2956,45 @@ const FX = (() => {
     ctx.restore();
   }
 
+  // портал (незер): эллипс с обсидиановой рамкой и фиолетовым вихрем; (x, y) — центр, rx/ry — радиусы,
+  // t — секунды, k 0..1 — раскрытие
+  function portal(ctx, x, y, rx, ry, t, k = 1, seed = 2) {
+    if (k <= 0) return;
+    rx *= k; ry *= k;
+    ctx.save(); ctx.translate(x, y);
+    const g = ctx.createRadialGradient(0, 0, 4, 0, 0, Math.max(rx, ry));
+    g.addColorStop(0, '#ffb3fb'); g.addColorStop(0.35, '#d24dff'); g.addColorStop(0.8, '#6a12c9'); g.addColorStop(1, '#2b0757');
+    ctx.save(); ctx.scale(1, ry / rx);
+    ctx.beginPath(); ctx.arc(0, 0, rx, 0, TAU); ctx.fillStyle = g; ctx.fill();
+    ctx.clip();
+    ctx.lineCap = 'round';
+    for (let i = 0; i < 5; i++) {                   // вихрь
+      const a0 = t * 4 + i * TAU / 5;
+      ctx.beginPath(); ctx.arc(0, 0, rx * (0.25 + i * 0.14), a0, a0 + 2.2);
+      ctx.lineWidth = rx * 0.07; ctx.strokeStyle = i % 2 ? 'rgba(255,200,255,0.75)' : 'rgba(150,60,255,0.8)'; ctx.stroke();
+    }
+    ctx.restore();
+    // обсидиановая рамка с бликами-пикселями
+    ctx.save(); ctx.scale(1, ry / rx);
+    ctx.beginPath(); ctx.arc(0, 0, rx, 0, TAU);
+    ctx.lineWidth = 26 * Math.min(1, rx / 120); ctx.strokeStyle = '#140a24'; ctx.stroke();
+    ctx.lineWidth = 16 * Math.min(1, rx / 120); ctx.strokeStyle = '#2e1650'; ctx.stroke();
+    ctx.restore();
+    const r = rng(seed);
+    for (let i = 0; i < 18; i++) {
+      const a = (i / 18) * TAU, px = Math.cos(a) * rx, py = Math.sin(a) * ry, sz = 7 * Math.min(1, rx / 120);
+      ctx.fillStyle = r() < 0.5 ? '#6b3aa8' : '#4a2380'; ctx.fillRect(px - sz / 2, py - sz / 2, sz, sz);
+    }
+    // искры
+    for (let i = 0; i < 10; i++) {
+      const u = (t * (0.6 + r() * 0.5) + r()) % 1, a = r() * TAU;
+      const px = Math.cos(a) * rx * (0.6 + u * 0.6), py = Math.sin(a) * ry * (0.6 + u * 0.6) - u * 30;
+      ctx.globalAlpha = Math.sin(Math.PI * u); ctx.fillStyle = i % 2 ? '#ff9cf5' : '#c77dff';
+      ctx.fillRect(px - 5, py - 5, 10, 10);
+    }
+    ctx.restore();
+  }
+
   // «вжух» — удар прошёл мимо: маленькое облачко
   function whoosh(ctx, x, y, life) {
     if (life < 0 || life > 1) return;
@@ -2966,5 +3005,5 @@ const FX = (() => {
 
   return { rng, background, mcBackground, limb, note, waterBalloon, basket, waterSplash, boomerang, flower, bubbleWand, soapBubble, bubblePop, snowball, snowPile, snowCap, snowSplat, snowBurst, slimeBlock, tomato, gardenBed, tomatoBush, tnt, fuseSparks, boom, soot, balloon, balloonPop, cactus, paintBucket, paintBrush, mustache, paintHole, paintSplash, waterJet, cobble, cloud, shadow, spark, dust, smoke, flash, rays, vein, steam, sweat, stars, twinkle, whoosh, puff,
     heart, hearts, wind, banana, giftBox, suck, drool, tree, apple, bubble, gumSplat, rainCloud, rain, lightning, puddle, seesaw,
-    mudPit, mudSplash, rope, cake, crown, lollipop, tears, ball, pillow, feathers, bee, hive, table, pie, mcAppleTree, pumpkinBlock, blockBurst, mcChest, iceCream, scoopCap, iceBlock, frost, magicBeam, rails, grassSteps, minecart, kite, kiteString, popcorn, popcornPile, popBucket, cornCob, sunRay, pickaxe, grassBlock, pit, chili, chiliBush, fireBreath, flame, bigLeaf, pond, fish, fishingRod, fishLine, feather, sleepBubble, jumpCord, ropeHandle, marshmallow, mallowBag, slingshotY, slingBand, honeyPot, honeyCap, egg, chick, horseshoeMagnet, magnetWaves, anvil, coilSpring, rocket, rocketTrail, fireworkBurst, iceRink, iceSpray, deskFan, fanWind, melonBlock, melonHelmet, melonSlice, melonSeed, melonSplash, potion, potionBurst, effectSwirls };
+    mudPit, mudSplash, rope, cake, crown, lollipop, tears, ball, pillow, feathers, bee, hive, table, pie, mcAppleTree, pumpkinBlock, blockBurst, mcChest, iceCream, scoopCap, iceBlock, frost, magicBeam, rails, grassSteps, minecart, kite, kiteString, popcorn, popcornPile, popBucket, cornCob, sunRay, pickaxe, grassBlock, pit, chili, chiliBush, fireBreath, flame, bigLeaf, pond, fish, fishingRod, fishLine, feather, sleepBubble, jumpCord, ropeHandle, marshmallow, mallowBag, slingshotY, slingBand, honeyPot, honeyCap, egg, chick, horseshoeMagnet, magnetWaves, anvil, coilSpring, rocket, rocketTrail, fireworkBurst, iceRink, iceSpray, deskFan, fanWind, melonBlock, melonHelmet, melonSlice, melonSeed, melonSplash, potion, potionBurst, effectSwirls, portal };
 })();
