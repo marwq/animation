@@ -3287,6 +3287,59 @@ const FX = (() => {
     ctx.restore();
   }
 
+  // паутина: радиальная сетка с центром (x, y), радиус r; spokes — лучей; alpha; tear 0..1 — порвана
+  function cobweb(ctx, x, y, r = 200, alpha = 1, spokes = 10, seed = 4, k = 1) {
+    if (alpha <= 0) return;
+    const g = rng(seed);
+    ctx.save(); ctx.globalAlpha = alpha; ctx.lineCap = 'round'; ctx.translate(x, y); ctx.scale(k, k);
+    const ang = []; for (let i = 0; i < spokes; i++) ang.push(i / spokes * TAU + (g() - 0.5) * 0.25);
+    const draw = (lw, col) => {
+      ctx.lineWidth = lw; ctx.strokeStyle = col;
+      for (const a of ang) { ctx.beginPath(); ctx.moveTo(0, 0); ctx.lineTo(Math.cos(a) * r, Math.sin(a) * r); ctx.stroke(); }
+      for (let ring = 1; ring <= 5; ring++) {
+        const rr = r * ring / 5.4;
+        ctx.beginPath();
+        ang.forEach((a, i) => { const b = ang[(i + 1) % spokes], m = (a + b) / 2 + (i === spokes - 1 ? Math.PI : 0); const p1 = [Math.cos(a) * rr, Math.sin(a) * rr], p2 = [Math.cos(b) * rr, Math.sin(b) * rr];
+          if (i === 0) ctx.moveTo(p1[0], p1[1]); ctx.quadraticCurveTo(Math.cos(m) * rr * 0.86, Math.sin(m) * rr * 0.86, p2[0], p2[1]); });
+        ctx.stroke();
+      }
+    };
+    draw(7, 'rgba(60,70,90,0.55)'); draw(3.5, '#ffffff');
+    ctx.restore();
+  }
+  // паутина обмотала: белые нити крест-накрест поверх (x, y) — центр, w×h; t — дрожь
+  function webWrap(ctx, x, y, w, h, t = 0, alpha = 1, seed = 6) {
+    if (alpha <= 0) return;
+    const g = rng(seed);
+    ctx.save(); ctx.globalAlpha = alpha; ctx.lineCap = 'round';
+    ctx.beginPath(); ctx.ellipse(x, y, w / 2, h / 2, 0, 0, TAU); ctx.fillStyle = 'rgba(240,245,255,0.35)'; ctx.fill();
+    const lines = [];
+    for (let i = 0; i < 16; i++) {
+      const a = g() * TAU, b = a + Math.PI * (0.6 + g() * 0.8);
+      lines.push([[x + Math.cos(a) * w / 2, y + Math.sin(a) * h / 2], [x + Math.cos(b) * w / 2, y + Math.sin(b) * h / 2], (g() - 0.5) * 40]);
+    }
+    for (const [lw, c] of [[7, 'rgba(60,70,90,0.5)'], [3.5, '#ffffff']]) {
+      ctx.lineWidth = lw; ctx.strokeStyle = c;
+      for (const [a, b, sg] of lines) { ctx.beginPath(); ctx.moveTo(a[0], a[1]); ctx.quadraticCurveTo((a[0] + b[0]) / 2 + sg + Math.sin(t * 20) * 3, (a[1] + b[1]) / 2 + sg, b[0], b[1]); ctx.stroke(); }
+    }
+    ctx.restore();
+  }
+  // комок паутины: (x, y), r
+  function webBall(ctx, x, y, r = 40, rot = 0) {
+    ctx.save(); ctx.translate(x, y); ctx.rotate(rot); ctx.lineCap = 'round';
+    ctx.beginPath(); ctx.arc(0, 0, r, 0, TAU); ctx.fillStyle = 'rgba(235,240,250,0.85)'; ctx.fill(); ctx.lineWidth = 4; ctx.strokeStyle = 'rgba(60,70,90,0.6)'; ctx.stroke();
+    ctx.lineWidth = 3; ctx.strokeStyle = '#ffffff';
+    for (let i = 0; i < 6; i++) { const a = i * 1.1; ctx.beginPath(); ctx.moveTo(Math.cos(a) * r, Math.sin(a) * r); ctx.quadraticCurveTo(0, 0, Math.cos(a + 2.4) * r, Math.sin(a + 2.4) * r); ctx.stroke(); }
+    for (let i = 0; i < 5; i++) { const a = i * 1.3 + 0.4; ctx.beginPath(); ctx.moveTo(Math.cos(a) * r, Math.sin(a) * r); ctx.lineTo(Math.cos(a) * r * 1.5, Math.sin(a) * r * 1.5); ctx.stroke(); }
+    ctx.restore();
+  }
+  // нить паутины между точками
+  function webString(ctx, a, b, sag = 20, alpha = 1) {
+    ctx.save(); ctx.globalAlpha = alpha; ctx.lineCap = 'round';
+    for (const [lw, c] of [[6, 'rgba(60,70,90,0.5)'], [3, '#ffffff']]) { ctx.lineWidth = lw; ctx.strokeStyle = c; ctx.beginPath(); ctx.moveTo(a[0], a[1]); ctx.quadraticCurveTo((a[0] + b[0]) / 2, (a[1] + b[1]) / 2 + sag, b[0], b[1]); ctx.stroke(); }
+    ctx.restore();
+  }
+
   // «вжух» — удар прошёл мимо: маленькое облачко
   function whoosh(ctx, x, y, life) {
     if (life < 0 || life > 1) return;
@@ -3297,5 +3350,5 @@ const FX = (() => {
 
   return { rng, background, mcBackground, limb, note, waterBalloon, basket, waterSplash, boomerang, flower, bubbleWand, soapBubble, bubblePop, snowball, snowPile, snowCap, snowSplat, snowBurst, slimeBlock, tomato, gardenBed, tomatoBush, tnt, fuseSparks, boom, soot, balloon, balloonPop, cactus, paintBucket, paintBrush, mustache, paintHole, paintSplash, waterJet, cobble, cloud, shadow, spark, dust, smoke, flash, rays, vein, steam, sweat, stars, twinkle, whoosh, puff,
     heart, hearts, wind, banana, giftBox, suck, drool, tree, apple, bubble, gumSplat, rainCloud, rain, lightning, puddle, seesaw,
-    mudPit, mudSplash, rope, cake, crown, lollipop, tears, ball, pillow, feathers, bee, hive, table, pie, mcAppleTree, pumpkinBlock, blockBurst, mcChest, iceCream, scoopCap, iceBlock, frost, magicBeam, rails, grassSteps, minecart, kite, kiteString, popcorn, popcornPile, popBucket, cornCob, sunRay, pickaxe, grassBlock, pit, chili, chiliBush, fireBreath, flame, bigLeaf, pond, fish, fishingRod, fishLine, feather, sleepBubble, jumpCord, ropeHandle, marshmallow, mallowBag, slingshotY, slingBand, honeyPot, honeyCap, egg, chick, horseshoeMagnet, magnetWaves, anvil, coilSpring, rocket, rocketTrail, fireworkBurst, iceRink, iceSpray, deskFan, fanWind, melonBlock, melonHelmet, melonSlice, melonSeed, melonSplash, potion, potionBurst, effectSwirls, portal, fluff, cottonCandy, fluffBurst, mcBell, bellStand, soundRings, lemon, juiceSplash, sourLines, sandBlock, toyArrow, suctionMark, plunger, donut, donutRing, pizza, pizzaSlice, cheeseString, enderPearl, teleportPuff };
+    mudPit, mudSplash, rope, cake, crown, lollipop, tears, ball, pillow, feathers, bee, hive, table, pie, mcAppleTree, pumpkinBlock, blockBurst, mcChest, iceCream, scoopCap, iceBlock, frost, magicBeam, rails, grassSteps, minecart, kite, kiteString, popcorn, popcornPile, popBucket, cornCob, sunRay, pickaxe, grassBlock, pit, chili, chiliBush, fireBreath, flame, bigLeaf, pond, fish, fishingRod, fishLine, feather, sleepBubble, jumpCord, ropeHandle, marshmallow, mallowBag, slingshotY, slingBand, honeyPot, honeyCap, egg, chick, horseshoeMagnet, magnetWaves, anvil, coilSpring, rocket, rocketTrail, fireworkBurst, iceRink, iceSpray, deskFan, fanWind, melonBlock, melonHelmet, melonSlice, melonSeed, melonSplash, potion, potionBurst, effectSwirls, portal, fluff, cottonCandy, fluffBurst, mcBell, bellStand, soundRings, lemon, juiceSplash, sourLines, sandBlock, toyArrow, suctionMark, plunger, donut, donutRing, pizza, pizzaSlice, cheeseString, enderPearl, teleportPuff, cobweb, webWrap, webBall, webString };
 })();
