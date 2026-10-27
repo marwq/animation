@@ -2896,6 +2896,66 @@ const FX = (() => {
     ctx.restore();
   }
 
+  // зелье (майнкрафт): колба с горлышком и пробкой; (x, y) — низ по центру, s — высота; col — цвет;
+  // fill 0..1 — сколько осталось; rot — наклон (вокруг низа)
+  function potion(ctx, x, y, s = 110, col = '#3ad15a', rot = 0, fill = 1, t = 0) {
+    ctx.save(); ctx.translate(x, y); ctx.rotate(rot); ctx.lineJoin = 'round';
+    const R = s * 0.34, cy = -R, nw = s * 0.14, nh = s * 0.3;
+    // жидкость
+    ctx.save();
+    ctx.beginPath(); ctx.arc(0, cy, R, 0, TAU); ctx.clip();
+    ctx.fillStyle = 'rgba(220,240,255,0.55)'; ctx.fillRect(-R, cy - R, 2 * R, 2 * R);
+    const top = cy + R - 2 * R * fill * 0.85;
+    ctx.fillStyle = col; ctx.fillRect(-R - 2, top + Math.sin(t * 9) * 3, 2 * R + 4, 2 * R);
+    ctx.fillStyle = 'rgba(255,255,255,0.35)';
+    for (let i = 0; i < 3; i++) { const by = cy + R * 0.5 - ((t * 60 + i * 23) % (R * 1.4)); if (by > top) { ctx.beginPath(); ctx.arc(-R * 0.3 + i * R * 0.3, by, R * 0.08, 0, TAU); ctx.fill(); } }
+    ctx.restore();
+    ctx.beginPath(); ctx.arc(0, cy, R, 0, TAU); ctx.lineWidth = Math.max(4, s * 0.045); ctx.strokeStyle = '#111'; ctx.stroke();
+    // горлышко и пробка
+    ctx.beginPath(); ctx.rect(-nw / 2, cy - R - nh + 6, nw, nh); ctx.fillStyle = 'rgba(220,240,255,0.8)'; ctx.fill(); ctx.stroke();
+    ctx.beginPath(); ctx.rect(-nw * 0.62, cy - R - nh - s * 0.08, nw * 1.24, s * 0.12); ctx.fillStyle = '#b07a3e'; ctx.fill(); ctx.stroke();
+    // блик
+    ctx.beginPath(); ctx.ellipse(-R * 0.42, cy - R * 0.35, R * 0.16, R * 0.3, 0.5, 0, TAU); ctx.fillStyle = 'rgba(255,255,255,0.75)'; ctx.fill();
+    ctx.restore();
+  }
+  // зелье разбилось: осколки стекла и цветные завитки; life 0..1
+  function potionBurst(ctx, x, y, life, col = '#b04dff', seed = 1, size = 1) {
+    if (life < 0 || life > 1) return;
+    const r = rng(seed);
+    ctx.save(); ctx.lineJoin = 'round';
+    for (let i = 0; i < 12; i++) {                  // осколки
+      const a = -Math.PI * (0.05 + 0.9 * r()), v = (180 + 260 * r()) * size, sz = (10 + 14 * r()) * size;
+      const px = x + Math.cos(a) * v * life, py = y + Math.sin(a) * v * life + 500 * life * life;
+      ctx.save(); ctx.translate(px, py); ctx.rotate(life * 12 * (r() - 0.5)); ctx.globalAlpha = 1 - life;
+      ctx.beginPath(); ctx.moveTo(-sz / 2, sz / 3); ctx.lineTo(0, -sz / 2); ctx.lineTo(sz / 2, sz / 3); ctx.closePath();
+      ctx.fillStyle = 'rgba(220,245,255,0.9)'; ctx.fill(); ctx.lineWidth = 2; ctx.strokeStyle = '#3a6a8a'; ctx.stroke();
+      ctx.restore();
+    }
+    for (let i = 0; i < 16; i++) {                  // облачко цвета зелья
+      const a = r() * TAU, d = (60 + 120 * r()) * size * E.EASE.out(life);
+      ctx.globalAlpha = (1 - life) * 0.85;
+      ctx.beginPath(); ctx.arc(x + Math.cos(a) * d, y + Math.sin(a) * d * 0.6 - 60 * life, (26 + 20 * r()) * size * (0.6 + life), 0, TAU);
+      ctx.fillStyle = col; ctx.fill();
+    }
+    ctx.restore();
+  }
+  // частицы действия зелья (как в майнкрафте): пиксельные завитки поднимаются вокруг (x, y); r — радиус
+  function effectSwirls(ctx, x, y, t, col = '#b04dff', r = 140, alpha = 1, seed = 4) {
+    if (alpha <= 0) return;
+    const g = rng(seed);
+    ctx.save();
+    for (let i = 0; i < 24; i++) {
+      const ph = g(), sp = 0.6 + g() * 0.5, ang = g() * TAU, u = (t * sp + ph) % 1;
+      const px = x + Math.cos(ang + u * 3) * r * (0.5 + 0.5 * g()), py = y + r * 0.6 - u * r * 1.8;
+      const a = alpha * Math.sin(Math.PI * u), sz = 11 + 10 * (1 - u);
+      ctx.globalAlpha = a;
+      ctx.fillStyle = '#111'; ctx.fillRect(px - sz / 2 - 2, py - sz / 2 - 2, sz + 4, sz + 4);
+      ctx.fillStyle = i % 3 ? col : '#ffffff'; ctx.fillRect(px - sz / 2, py - sz / 2, sz, sz);
+      if (i % 4 === 0) { ctx.fillRect(px + sz, py - sz, sz * 0.6, sz * 0.6); }
+    }
+    ctx.restore();
+  }
+
   // «вжух» — удар прошёл мимо: маленькое облачко
   function whoosh(ctx, x, y, life) {
     if (life < 0 || life > 1) return;
@@ -2906,5 +2966,5 @@ const FX = (() => {
 
   return { rng, background, mcBackground, limb, note, waterBalloon, basket, waterSplash, boomerang, flower, bubbleWand, soapBubble, bubblePop, snowball, snowPile, snowCap, snowSplat, snowBurst, slimeBlock, tomato, gardenBed, tomatoBush, tnt, fuseSparks, boom, soot, balloon, balloonPop, cactus, paintBucket, paintBrush, mustache, paintHole, paintSplash, waterJet, cobble, cloud, shadow, spark, dust, smoke, flash, rays, vein, steam, sweat, stars, twinkle, whoosh, puff,
     heart, hearts, wind, banana, giftBox, suck, drool, tree, apple, bubble, gumSplat, rainCloud, rain, lightning, puddle, seesaw,
-    mudPit, mudSplash, rope, cake, crown, lollipop, tears, ball, pillow, feathers, bee, hive, table, pie, mcAppleTree, pumpkinBlock, blockBurst, mcChest, iceCream, scoopCap, iceBlock, frost, magicBeam, rails, grassSteps, minecart, kite, kiteString, popcorn, popcornPile, popBucket, cornCob, sunRay, pickaxe, grassBlock, pit, chili, chiliBush, fireBreath, flame, bigLeaf, pond, fish, fishingRod, fishLine, feather, sleepBubble, jumpCord, ropeHandle, marshmallow, mallowBag, slingshotY, slingBand, honeyPot, honeyCap, egg, chick, horseshoeMagnet, magnetWaves, anvil, coilSpring, rocket, rocketTrail, fireworkBurst, iceRink, iceSpray, deskFan, fanWind, melonBlock, melonHelmet, melonSlice, melonSeed, melonSplash };
+    mudPit, mudSplash, rope, cake, crown, lollipop, tears, ball, pillow, feathers, bee, hive, table, pie, mcAppleTree, pumpkinBlock, blockBurst, mcChest, iceCream, scoopCap, iceBlock, frost, magicBeam, rails, grassSteps, minecart, kite, kiteString, popcorn, popcornPile, popBucket, cornCob, sunRay, pickaxe, grassBlock, pit, chili, chiliBush, fireBreath, flame, bigLeaf, pond, fish, fishingRod, fishLine, feather, sleepBubble, jumpCord, ropeHandle, marshmallow, mallowBag, slingshotY, slingBand, honeyPot, honeyCap, egg, chick, horseshoeMagnet, magnetWaves, anvil, coilSpring, rocket, rocketTrail, fireworkBurst, iceRink, iceSpray, deskFan, fanWind, melonBlock, melonHelmet, melonSlice, melonSeed, melonSplash, potion, potionBurst, effectSwirls };
 })();
