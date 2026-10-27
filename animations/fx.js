@@ -3848,6 +3848,64 @@ const FX = (() => {
     }
   }
 
+  // свинья из майнкрафта: (x, y) — середина низа, s — длина тела, face — куда смотрит, phase — шаг ног (рад),
+  // chew — жуёт (0..1), sq — сплющивание при прыжке/посадке
+  function mcPig(ctx, x, y, s = 200, face = 1, phase = 0, chew = 0, sq = 1) {
+    const pk = ['#f2a3a3', '#ec9393', '#f6b3b3', '#e58787'];
+    const box = (bx, by, bw, bh, seed, n = 4) => {
+      ctx.fillStyle = '#111'; ctx.fillRect(bx - 4, by - 4, bw + 8, bh + 8);
+      const r = rng(seed), cw = bw / n, ch = bh / Math.max(1, Math.round(n * bh / bw));
+      for (let i = 0; i < n; i++) for (let j = 0; j * ch < bh - 0.5; j++) { ctx.fillStyle = pk[Math.floor(r() * 4)]; ctx.fillRect(bx + i * cw, by + j * ch, cw + 0.6, Math.min(ch, bh - j * ch) + 0.6); }
+    };
+    ctx.save(); ctx.translate(x, y); ctx.scale(face * (1 / Math.sqrt(sq)), sq);
+    const L = s * 0.28, bw = s, bh = s * 0.5, top = -L - bh;
+    // ноги: дальние темнее
+    const legs = [[-bw * 0.36, 0], [bw * 0.28, Math.PI], [-bw * 0.24, Math.PI], [bw * 0.4, 0]];
+    legs.forEach(([lx, ph], i) => {
+      const sw = Math.sin(phase + ph) * 0.45;
+      ctx.save(); ctx.translate(lx, -L); ctx.rotate(sw);
+      ctx.fillStyle = '#111'; ctx.fillRect(-s * 0.08 - 4, -4, s * 0.16 + 8, L + 8);
+      ctx.fillStyle = i < 2 ? '#d47a7a' : '#ec9393'; ctx.fillRect(-s * 0.08, 0, s * 0.16, L);
+      ctx.fillStyle = '#7a4a3a'; ctx.fillRect(-s * 0.08, L - s * 0.05, s * 0.16, s * 0.05);
+      ctx.restore();
+    });
+    box(-bw / 2, top, bw, bh, 11, 6);
+    // хвостик
+    ctx.fillStyle = '#111'; ctx.fillRect(-bw / 2 - s * 0.06 - 3, top + bh * 0.2 - 3, s * 0.06 + 6, s * 0.06 + 6);
+    ctx.fillStyle = '#e58787'; ctx.fillRect(-bw / 2 - s * 0.06, top + bh * 0.2, s * 0.06, s * 0.06);
+    // голова
+    const hs = s * 0.5, hx = bw / 2 - hs * 0.35, hy = top - hs * 0.25;
+    box(hx, hy, hs, hs, 23, 4);
+    // пятачок
+    const nw = hs * 0.5, nh = hs * 0.3, nx = hx + hs - nw * 0.25, ny = hy + hs * 0.5;
+    ctx.fillStyle = '#111'; ctx.fillRect(nx - 4, ny - 4, nw + 8, nh + 8);
+    ctx.fillStyle = '#f7b7b7'; ctx.fillRect(nx, ny, nw, nh);
+    ctx.fillStyle = '#8a3f3f'; ctx.fillRect(nx + nw * 0.12, ny + nh * 0.3, nw * 0.22, nh * 0.45); ctx.fillRect(nx + nw * 0.62, ny + nh * 0.3, nw * 0.22, nh * 0.45);
+    // рот жуёт
+    if (chew > 0) { ctx.fillStyle = '#5a1f1f'; ctx.fillRect(nx - hs * 0.05, ny + nh + 4, nw * 0.8, hs * 0.08 * (0.4 + 0.6 * Math.abs(Math.sin(chew * 20)))); }
+    // глаза
+    for (const ex of [hx + hs * 0.18, hx + hs * 0.62]) {
+      ctx.fillStyle = '#ffffff'; ctx.fillRect(ex, hy + hs * 0.22, hs * 0.18, hs * 0.14);
+      ctx.fillStyle = '#111'; ctx.fillRect(ex + hs * 0.09, hy + hs * 0.22, hs * 0.09, hs * 0.14);
+    }
+    ctx.restore();
+    return { snout: [x + face * (nx + nw) * (1 / Math.sqrt(sq)), y + (ny + nh / 2) * sq], top: y + top * sq };
+  }
+  // морковка: (x, y) — где привязана (верх), s — длина, rot — наклон, bites — сколько откушено (0..1)
+  function mcCarrot(ctx, x, y, s = 70, rot = 0, bites = 0) {
+    ctx.save(); ctx.translate(x, y); ctx.rotate(rot);
+    const L = s * (1 - bites * 0.8), w = s * 0.32;
+    // ботва
+    ctx.fillStyle = '#111'; ctx.fillRect(-w * 0.45 - 3, -s * 0.28 - 3, w * 0.9 + 6, s * 0.3 + 6);
+    ctx.fillStyle = '#3cb043'; ctx.fillRect(-w * 0.45, -s * 0.28, w * 0.3, s * 0.3); ctx.fillStyle = '#2e8b35'; ctx.fillRect(-w * 0.1, -s * 0.24, w * 0.25, s * 0.26); ctx.fillStyle = '#4ccf55'; ctx.fillRect(w * 0.18, -s * 0.28, w * 0.27, s * 0.3);
+    if (L > 4) {
+      ctx.fillStyle = '#111'; ctx.beginPath(); ctx.moveTo(-w / 2 - 4, -2); ctx.lineTo(w / 2 + 4, -2); ctx.lineTo(w * 0.1, L + 6); ctx.lineTo(-w * 0.1, L + 6); ctx.closePath(); ctx.fill();
+      ctx.fillStyle = '#ff8c1a'; ctx.beginPath(); ctx.moveTo(-w / 2, 0); ctx.lineTo(w / 2, 0); ctx.lineTo(w * 0.08, L); ctx.lineTo(-w * 0.08, L); ctx.closePath(); ctx.fill();
+      ctx.fillStyle = '#d96a00'; for (let i = 1; i < 4; i++) ctx.fillRect(-w * 0.3 + i * 3, L * i / 4, w * 0.25, 3);
+    }
+    ctx.restore();
+  }
+
   // «вжух» — удар прошёл мимо: маленькое облачко
   function whoosh(ctx, x, y, life) {
     if (life < 0 || life > 1) return;
@@ -3858,5 +3916,5 @@ const FX = (() => {
 
   return { rng, background, mcBackground, limb, note, waterBalloon, basket, waterSplash, boomerang, flower, bubbleWand, soapBubble, bubblePop, snowball, snowPile, snowCap, snowSplat, snowBurst, slimeBlock, tomato, gardenBed, tomatoBush, tnt, fuseSparks, boom, soot, balloon, balloonPop, cactus, paintBucket, paintBrush, mustache, paintHole, paintSplash, waterJet, cobble, cloud, shadow, spark, dust, smoke, flash, rays, vein, steam, sweat, stars, twinkle, whoosh, puff,
     heart, hearts, wind, banana, giftBox, suck, drool, tree, apple, bubble, gumSplat, rainCloud, rain, lightning, puddle, seesaw,
-    mudPit, mudSplash, rope, cake, crown, lollipop, tears, ball, pillow, feathers, bee, hive, table, pie, mcAppleTree, pumpkinBlock, blockBurst, mcChest, iceCream, scoopCap, iceBlock, frost, magicBeam, rails, grassSteps, minecart, kite, kiteString, popcorn, popcornPile, popBucket, cornCob, sunRay, pickaxe, grassBlock, pit, chili, chiliBush, fireBreath, flame, bigLeaf, pond, fish, fishingRod, fishLine, feather, sleepBubble, jumpCord, ropeHandle, marshmallow, mallowBag, slingshotY, slingBand, honeyPot, honeyCap, egg, chick, horseshoeMagnet, magnetWaves, anvil, coilSpring, rocket, rocketTrail, fireworkBurst, iceRink, iceSpray, deskFan, fanWind, melonBlock, melonHelmet, melonSlice, melonSeed, melonSplash, potion, potionBurst, effectSwirls, portal, fluff, cottonCandy, fluffBurst, mcBell, bellStand, soundRings, lemon, juiceSplash, sourLines, sandBlock, toyArrow, suctionMark, plunger, donut, donutRing, pizza, pizzaSlice, cheeseString, enderPearl, teleportPuff, cobweb, webWrap, webBall, webString, mcBed, snowBlock, snowGolem, yarnBall, yarnThread, yarnWrap, hayBale, hayBurst, hayStuck, berryBush, berry, prickle, mcCake, creamPuddle, piston, woodCrate, mcStick, mcCookie, plank, vacuum, vacHose, vacNozzle, airLines, rollingPin, dough, doughSheet, extinguisher, foamPile, foamJet };
+    mudPit, mudSplash, rope, cake, crown, lollipop, tears, ball, pillow, feathers, bee, hive, table, pie, mcAppleTree, pumpkinBlock, blockBurst, mcChest, iceCream, scoopCap, iceBlock, frost, magicBeam, rails, grassSteps, minecart, kite, kiteString, popcorn, popcornPile, popBucket, cornCob, sunRay, pickaxe, grassBlock, pit, chili, chiliBush, fireBreath, flame, bigLeaf, pond, fish, fishingRod, fishLine, feather, sleepBubble, jumpCord, ropeHandle, marshmallow, mallowBag, slingshotY, slingBand, honeyPot, honeyCap, egg, chick, horseshoeMagnet, magnetWaves, anvil, coilSpring, rocket, rocketTrail, fireworkBurst, iceRink, iceSpray, deskFan, fanWind, melonBlock, melonHelmet, melonSlice, melonSeed, melonSplash, potion, potionBurst, effectSwirls, portal, fluff, cottonCandy, fluffBurst, mcBell, bellStand, soundRings, lemon, juiceSplash, sourLines, sandBlock, toyArrow, suctionMark, plunger, donut, donutRing, pizza, pizzaSlice, cheeseString, enderPearl, teleportPuff, cobweb, webWrap, webBall, webString, mcBed, snowBlock, snowGolem, yarnBall, yarnThread, yarnWrap, hayBale, hayBurst, hayStuck, berryBush, berry, prickle, mcCake, creamPuddle, piston, woodCrate, mcStick, mcCookie, plank, vacuum, vacHose, vacNozzle, airLines, rollingPin, dough, doughSheet, extinguisher, foamPile, foamJet, mcPig, mcCarrot };
 })();
