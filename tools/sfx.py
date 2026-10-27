@@ -705,6 +705,19 @@ def s_slide(seed=28, **_):
     return norm((tone + air) * env, 0.6)
 
 
+def s_bell(dur=1.8, **_):
+    """Колокол: «дзы-ынь» — неровные обертоны с долгим затуханием и лёгким биением."""
+    d = max(0.6, dur)
+    t = tt(d)
+    x = np.zeros(nsamp(d))
+    for k, a, tau in [(1.0, 1.0, 0.9), (2.0, 0.55, 0.6), (2.76, 0.45, 0.45), (5.4, 0.3, 0.25), (8.93, 0.18, 0.12)]:
+        f = 660 * k
+        x += a * (np.sin(TAU * f * t) + 0.3 * np.sin(TAU * (f + 3.5) * t)) * np.exp(-t / tau)
+    put(x, bandpass(noise(0.03, 41), 2000, 8000) * 0.4, 0)                  # удар языка
+    x *= np.clip(t / 0.003, 0, 1)
+    return norm(x, 0.7)
+
+
 SOUNDS = {k[2:]: v for k, v in globals().items() if k.startswith('s_') and callable(v)}
 
 

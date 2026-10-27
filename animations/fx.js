@@ -3030,6 +3030,62 @@ const FX = (() => {
     }
   }
 
+  // колокол (майнкрафт): (x, y) — точка подвеса (верх), s — ширина низа; rot — качание вокруг подвеса;
+  // flip — вверх ногами (как шапка/колпак: y — середина низа)
+  function mcBell(ctx, x, y, s = 150, rot = 0, sq = 1) {
+    const h = s * 0.95, top = s * 0.62;
+    ctx.save(); ctx.translate(x, y); ctx.rotate(rot); ctx.scale(1 / sq, sq);
+    ctx.lineJoin = 'round'; ctx.lineWidth = Math.max(4, s * 0.035); ctx.strokeStyle = '#111';
+    ctx.beginPath(); ctx.rect(-s * 0.08, 0, s * 0.16, s * 0.12); ctx.fillStyle = '#6b4a2b'; ctx.fill(); ctx.stroke();      // ушко
+    ctx.beginPath();
+    ctx.moveTo(-top / 2, s * 0.12); ctx.lineTo(top / 2, s * 0.12);
+    ctx.quadraticCurveTo(top / 2 + s * 0.06, h * 0.55, s / 2, h);
+    ctx.lineTo(-s / 2, h);
+    ctx.quadraticCurveTo(-top / 2 - s * 0.06, h * 0.55, -top / 2, s * 0.12);
+    ctx.closePath();
+    const g = ctx.createLinearGradient(-s / 2, 0, s / 2, 0);
+    g.addColorStop(0, '#c98a0e'); g.addColorStop(0.35, '#ffe14d'); g.addColorStop(0.6, '#ffd21f'); g.addColorStop(1, '#b0740a');
+    ctx.fillStyle = g; ctx.fill(); ctx.stroke();
+    ctx.beginPath(); ctx.rect(-s / 2 - 6, h - s * 0.1, s + 12, s * 0.12); ctx.fillStyle = '#e8a514'; ctx.fill(); ctx.stroke();       // обод
+    ctx.beginPath(); ctx.rect(-top / 2 - 2, h * 0.38, top + 4, s * 0.07); ctx.fillStyle = '#d18f0f'; ctx.fill();                      // поясок
+    ctx.fillStyle = 'rgba(255,255,255,0.55)'; ctx.fillRect(-top / 2 + s * 0.06, s * 0.2, s * 0.06, h * 0.55);
+    ctx.restore();
+  }
+  // стойка колокола: два бревна и перекладина; (x, y) — низ по центру, H — высота, W — ширина; grow 0..1 — вырастает
+  function bellStand(ctx, x, y, H = 430, W = 300, grow = 1) {
+    if (grow <= 0) return;
+    const hh = H * grow;
+    ctx.save(); ctx.lineJoin = 'round';
+    const post = (px) => {
+      ctx.fillStyle = '#111'; ctx.fillRect(px - 22, y - hh - 4, 44, hh + 4);
+      ctx.fillStyle = '#8a5a2e'; ctx.fillRect(px - 18, y - hh, 36, hh);
+      ctx.fillStyle = '#6b4320'; for (let k = 0; k < hh; k += 34) ctx.fillRect(px - 18, y - hh + k, 36, 6);
+      ctx.fillStyle = '#a8733f'; ctx.fillRect(px - 14, y - hh, 8, hh);
+    };
+    post(x - W / 2); post(x + W / 2);
+    ctx.fillStyle = '#111'; ctx.fillRect(x - W / 2 - 30, y - hh - 30, W + 60, 34);
+    ctx.fillStyle = '#4a2f17'; ctx.fillRect(x - W / 2 - 26, y - hh - 26, W + 52, 26);
+    ctx.fillStyle = '#6b4320'; ctx.fillRect(x - W / 2 - 26, y - hh - 26, W + 52, 6);
+    ctx.restore();
+  }
+  // звуковые волны колокола: дуги расходятся от (x, y); life 0..1; dir 0 — во все стороны, ±1 — в сторону
+  function soundRings(ctx, x, y, life, size = 1, dir = 0) {
+    if (life < 0 || life > 1) return;
+    ctx.save(); ctx.lineCap = 'round';
+    for (let i = 0; i < 4; i++) {
+      const u = life - i * 0.12;
+      if (u <= 0 || u >= 1) continue;
+      const r = (60 + 520 * E.EASE.out(u)) * size;
+      ctx.globalAlpha = (1 - u) * 0.9;
+      for (const [lw, c] of [[16, '#7a5200'], [8, '#ffe14d']]) {
+        ctx.lineWidth = lw * (1 - u * 0.5); ctx.strokeStyle = c;
+        if (dir === 0) { ctx.beginPath(); ctx.arc(x, y, r, 0, TAU); ctx.stroke(); }
+        else { const a0 = dir > 0 ? -0.6 : Math.PI - 0.6; ctx.beginPath(); ctx.arc(x, y, r, a0, a0 + 1.2); ctx.stroke(); }
+      }
+    }
+    ctx.restore();
+  }
+
   // «вжух» — удар прошёл мимо: маленькое облачко
   function whoosh(ctx, x, y, life) {
     if (life < 0 || life > 1) return;
@@ -3040,5 +3096,5 @@ const FX = (() => {
 
   return { rng, background, mcBackground, limb, note, waterBalloon, basket, waterSplash, boomerang, flower, bubbleWand, soapBubble, bubblePop, snowball, snowPile, snowCap, snowSplat, snowBurst, slimeBlock, tomato, gardenBed, tomatoBush, tnt, fuseSparks, boom, soot, balloon, balloonPop, cactus, paintBucket, paintBrush, mustache, paintHole, paintSplash, waterJet, cobble, cloud, shadow, spark, dust, smoke, flash, rays, vein, steam, sweat, stars, twinkle, whoosh, puff,
     heart, hearts, wind, banana, giftBox, suck, drool, tree, apple, bubble, gumSplat, rainCloud, rain, lightning, puddle, seesaw,
-    mudPit, mudSplash, rope, cake, crown, lollipop, tears, ball, pillow, feathers, bee, hive, table, pie, mcAppleTree, pumpkinBlock, blockBurst, mcChest, iceCream, scoopCap, iceBlock, frost, magicBeam, rails, grassSteps, minecart, kite, kiteString, popcorn, popcornPile, popBucket, cornCob, sunRay, pickaxe, grassBlock, pit, chili, chiliBush, fireBreath, flame, bigLeaf, pond, fish, fishingRod, fishLine, feather, sleepBubble, jumpCord, ropeHandle, marshmallow, mallowBag, slingshotY, slingBand, honeyPot, honeyCap, egg, chick, horseshoeMagnet, magnetWaves, anvil, coilSpring, rocket, rocketTrail, fireworkBurst, iceRink, iceSpray, deskFan, fanWind, melonBlock, melonHelmet, melonSlice, melonSeed, melonSplash, potion, potionBurst, effectSwirls, portal, fluff, cottonCandy, fluffBurst };
+    mudPit, mudSplash, rope, cake, crown, lollipop, tears, ball, pillow, feathers, bee, hive, table, pie, mcAppleTree, pumpkinBlock, blockBurst, mcChest, iceCream, scoopCap, iceBlock, frost, magicBeam, rails, grassSteps, minecart, kite, kiteString, popcorn, popcornPile, popBucket, cornCob, sunRay, pickaxe, grassBlock, pit, chili, chiliBush, fireBreath, flame, bigLeaf, pond, fish, fishingRod, fishLine, feather, sleepBubble, jumpCord, ropeHandle, marshmallow, mallowBag, slingshotY, slingBand, honeyPot, honeyCap, egg, chick, horseshoeMagnet, magnetWaves, anvil, coilSpring, rocket, rocketTrail, fireworkBurst, iceRink, iceSpray, deskFan, fanWind, melonBlock, melonHelmet, melonSlice, melonSeed, melonSplash, potion, potionBurst, effectSwirls, portal, fluff, cottonCandy, fluffBurst, mcBell, bellStand, soundRings };
 })();
