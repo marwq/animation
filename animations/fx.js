@@ -3654,6 +3654,75 @@ const FX = (() => {
     ctx.restore();
   }
 
+  // пылесос-баллон на колёсах (блочный, красный): (x, y) — середина низа; on — дрожит и горит лампочка;
+  // inflate — мешок раздувается (1..1.4)
+  function vacuum(ctx, x, y, s = 200, on = 0, t = 0, inflate = 1) {
+    const r = rng(7);
+    ctx.save(); ctx.translate(x + (on ? Math.sin(t * 90) * 2.5 : 0), y);
+    const w = s * 1.25, h = s * 0.62, u = s / 10;
+    // колёса
+    for (const wx of [-w * 0.32, w * 0.32]) { ctx.fillStyle = '#111'; ctx.fillRect(wx - u * 1.3, -u * 2.2, u * 2.6, u * 2.2); ctx.fillStyle = '#555'; ctx.fillRect(wx - u * 0.5, -u * 1.5, u, u); }
+    ctx.translate(0, -u * 1.4);
+    ctx.scale(inflate, inflate * (1 + (inflate - 1) * 0.4));
+    // корпус
+    ctx.fillStyle = '#111'; ctx.fillRect(-w / 2 - 5, -h - 5, w + 10, h + 10);
+    for (let i = 0; i < 12; i++) for (let j = 0; j < 6; j++) { const v = r(); ctx.fillStyle = j < 1 ? '#ff5a4a' : v < 0.2 ? '#c41d1d' : v < 0.75 ? '#e8262e' : '#f04040'; ctx.fillRect(-w / 2 + i * w / 12, -h + j * h / 6, w / 12 + 0.6, h / 6 + 0.6); }
+    // крышка-мешок сверху
+    ctx.fillStyle = '#111'; ctx.fillRect(-w * 0.36 - 4, -h - u * 2.4 - 4, w * 0.72 + 8, u * 2.4 + 8);
+    ctx.fillStyle = '#9a9a9a'; ctx.fillRect(-w * 0.36, -h - u * 2.4, w * 0.72, u * 2.4);
+    ctx.fillStyle = '#c4c4c4'; ctx.fillRect(-w * 0.36, -h - u * 2.4, w * 0.72, u * 0.6);
+    // кнопка и лампочка
+    ctx.fillStyle = '#111'; ctx.fillRect(w * 0.18 - 4, -h - u * 3.4 - 4, u * 2 + 8, u + 8);
+    ctx.fillStyle = '#f2f2f2'; ctx.fillRect(w * 0.18, -h - u * 3.4, u * 2, u);
+    ctx.fillStyle = on ? '#3cff3c' : '#2a5a2a'; ctx.fillRect(-w * 0.3, -h * 0.55, u, u);
+    // патрубок слева
+    ctx.fillStyle = '#111'; ctx.fillRect(-w / 2 - u * 1.4 - 4, -h * 0.62 - 4, u * 1.4 + 8, u * 1.8 + 8);
+    ctx.fillStyle = '#7a7a7a'; ctx.fillRect(-w / 2 - u * 1.4, -h * 0.62, u * 1.4, u * 1.8);
+    ctx.restore();
+  }
+  // гофрированный шланг по точкам
+  function vacHose(ctx, pts, w = 26) {
+    if (!pts || pts.length < 2) return;
+    ctx.save(); ctx.lineCap = 'round'; ctx.lineJoin = 'round';
+    const path = () => {
+      ctx.beginPath(); ctx.moveTo(pts[0][0], pts[0][1]);
+      for (let i = 1; i < pts.length - 1; i++) { const mx = (pts[i][0] + pts[i + 1][0]) / 2, my = (pts[i][1] + pts[i + 1][1]) / 2; ctx.quadraticCurveTo(pts[i][0], pts[i][1], mx, my); }
+      ctx.lineTo(pts[pts.length - 1][0], pts[pts.length - 1][1]);
+    };
+    path(); ctx.lineWidth = w + 8; ctx.strokeStyle = '#111'; ctx.stroke();
+    path(); ctx.lineWidth = w; ctx.strokeStyle = '#6e6e6e'; ctx.stroke();
+    path(); ctx.lineWidth = w * 0.7; ctx.setLineDash([5, 9]); ctx.strokeStyle = '#4a4a4a'; ctx.stroke();
+    ctx.restore();
+  }
+  // насадка: (x, y) — середина раструба, rot — куда смотрит раструб; возвращает точку, где крепится шланг
+  function vacNozzle(ctx, x, y, rot = 0, s = 1) {
+    ctx.save(); ctx.translate(x, y); ctx.rotate(rot); ctx.scale(s, s);
+    ctx.fillStyle = '#111'; ctx.fillRect(-150, -13, 130, 26);
+    ctx.fillStyle = '#b8b8b8'; ctx.fillRect(-148, -9, 126, 18);
+    ctx.fillStyle = '#dcdcdc'; ctx.fillRect(-148, -9, 126, 5);
+    ctx.fillStyle = '#111'; ctx.beginPath(); ctx.moveTo(-26, -18); ctx.lineTo(4, -40); ctx.lineTo(4, 40); ctx.lineTo(-26, 18); ctx.closePath(); ctx.fill();
+    ctx.fillStyle = '#e8262e'; ctx.beginPath(); ctx.moveTo(-22, -13); ctx.lineTo(0, -34); ctx.lineTo(0, 34); ctx.lineTo(-22, 13); ctx.closePath(); ctx.fill();
+    ctx.fillStyle = '#2a2a2a'; ctx.fillRect(-2, -36, 8, 72);
+    ctx.restore();
+    return [x - Math.cos(rot) * 150 * s, y - Math.sin(rot) * 150 * s];
+  }
+  // поток воздуха у раструба: suck — струйки летят внутрь, иначе — наружу; t — секунды
+  function airLines(ctx, x, y, rot, t, suck = true, len = 380, seed = 3) {
+    const r = rng(seed);
+    ctx.save(); ctx.translate(x, y); ctx.rotate(rot); ctx.lineCap = 'round';
+    for (let i = 0; i < 16; i++) {
+      const sp = 1.6 + r() * 1.2, ph = r(), a = (r() - 0.5) * 1.1, L = 30 + r() * 40;
+      let u = (t * sp + ph) % 1; if (suck) u = 1 - u;
+      const d = 30 + u * len, k = suck ? 1 - u * 0.65 : 1 - u * 0.2;
+      const px = Math.cos(a * k) * d, py = Math.sin(a * k) * d * 0.9;
+      ctx.globalAlpha = Math.min(1, (1 - u) * 3) * Math.min(1, u * 6) * 0.9;
+      for (const [lw, c] of [[7, 'rgba(90,120,160,0.5)'], [3.5, '#ffffff']]) {
+        ctx.lineWidth = lw; ctx.strokeStyle = c; ctx.beginPath(); ctx.moveTo(px, py); ctx.lineTo(px + Math.cos(a * k) * L, py + Math.sin(a * k) * L * 0.9); ctx.stroke();
+      }
+    }
+    ctx.restore();
+  }
+
   // «вжух» — удар прошёл мимо: маленькое облачко
   function whoosh(ctx, x, y, life) {
     if (life < 0 || life > 1) return;
@@ -3664,5 +3733,5 @@ const FX = (() => {
 
   return { rng, background, mcBackground, limb, note, waterBalloon, basket, waterSplash, boomerang, flower, bubbleWand, soapBubble, bubblePop, snowball, snowPile, snowCap, snowSplat, snowBurst, slimeBlock, tomato, gardenBed, tomatoBush, tnt, fuseSparks, boom, soot, balloon, balloonPop, cactus, paintBucket, paintBrush, mustache, paintHole, paintSplash, waterJet, cobble, cloud, shadow, spark, dust, smoke, flash, rays, vein, steam, sweat, stars, twinkle, whoosh, puff,
     heart, hearts, wind, banana, giftBox, suck, drool, tree, apple, bubble, gumSplat, rainCloud, rain, lightning, puddle, seesaw,
-    mudPit, mudSplash, rope, cake, crown, lollipop, tears, ball, pillow, feathers, bee, hive, table, pie, mcAppleTree, pumpkinBlock, blockBurst, mcChest, iceCream, scoopCap, iceBlock, frost, magicBeam, rails, grassSteps, minecart, kite, kiteString, popcorn, popcornPile, popBucket, cornCob, sunRay, pickaxe, grassBlock, pit, chili, chiliBush, fireBreath, flame, bigLeaf, pond, fish, fishingRod, fishLine, feather, sleepBubble, jumpCord, ropeHandle, marshmallow, mallowBag, slingshotY, slingBand, honeyPot, honeyCap, egg, chick, horseshoeMagnet, magnetWaves, anvil, coilSpring, rocket, rocketTrail, fireworkBurst, iceRink, iceSpray, deskFan, fanWind, melonBlock, melonHelmet, melonSlice, melonSeed, melonSplash, potion, potionBurst, effectSwirls, portal, fluff, cottonCandy, fluffBurst, mcBell, bellStand, soundRings, lemon, juiceSplash, sourLines, sandBlock, toyArrow, suctionMark, plunger, donut, donutRing, pizza, pizzaSlice, cheeseString, enderPearl, teleportPuff, cobweb, webWrap, webBall, webString, mcBed, snowBlock, snowGolem, yarnBall, yarnThread, yarnWrap, hayBale, hayBurst, hayStuck, berryBush, berry, prickle, mcCake, creamPuddle, piston, woodCrate, mcStick, mcCookie, plank };
+    mudPit, mudSplash, rope, cake, crown, lollipop, tears, ball, pillow, feathers, bee, hive, table, pie, mcAppleTree, pumpkinBlock, blockBurst, mcChest, iceCream, scoopCap, iceBlock, frost, magicBeam, rails, grassSteps, minecart, kite, kiteString, popcorn, popcornPile, popBucket, cornCob, sunRay, pickaxe, grassBlock, pit, chili, chiliBush, fireBreath, flame, bigLeaf, pond, fish, fishingRod, fishLine, feather, sleepBubble, jumpCord, ropeHandle, marshmallow, mallowBag, slingshotY, slingBand, honeyPot, honeyCap, egg, chick, horseshoeMagnet, magnetWaves, anvil, coilSpring, rocket, rocketTrail, fireworkBurst, iceRink, iceSpray, deskFan, fanWind, melonBlock, melonHelmet, melonSlice, melonSeed, melonSplash, potion, potionBurst, effectSwirls, portal, fluff, cottonCandy, fluffBurst, mcBell, bellStand, soundRings, lemon, juiceSplash, sourLines, sandBlock, toyArrow, suctionMark, plunger, donut, donutRing, pizza, pizzaSlice, cheeseString, enderPearl, teleportPuff, cobweb, webWrap, webBall, webString, mcBed, snowBlock, snowGolem, yarnBall, yarnThread, yarnWrap, hayBale, hayBurst, hayStuck, berryBush, berry, prickle, mcCake, creamPuddle, piston, woodCrate, mcStick, mcCookie, plank, vacuum, vacHose, vacNozzle, airLines };
 })();
