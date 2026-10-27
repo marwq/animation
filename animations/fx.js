@@ -3260,6 +3260,33 @@ const FX = (() => {
     ctx.restore();
   }
 
+  // эндер-жемчуг: (x, y) — центр, r — радиус, t — время (переливы)
+  function enderPearl(ctx, x, y, r = 28, t = 0) {
+    ctx.save(); ctx.translate(x, y);
+    const g = ctx.createRadialGradient(-r * 0.3, -r * 0.3, r * 0.1, 0, 0, r);
+    g.addColorStop(0, '#7fe8d6'); g.addColorStop(0.5, '#1f8f86'); g.addColorStop(1, '#0b3d3f');
+    ctx.beginPath(); ctx.arc(0, 0, r, 0, TAU); ctx.fillStyle = g; ctx.fill(); ctx.lineWidth = Math.max(3, r * 0.12); ctx.strokeStyle = '#06201f'; ctx.stroke();
+    ctx.save(); ctx.clip(); ctx.rotate(t * 3);
+    ctx.lineWidth = r * 0.22; ctx.strokeStyle = 'rgba(20,60,60,0.6)'; ctx.beginPath(); ctx.arc(0, 0, r * 0.55, 0.3, 2.6); ctx.stroke();
+    ctx.restore();
+    ctx.beginPath(); ctx.arc(-r * 0.35, -r * 0.35, r * 0.22, 0, TAU); ctx.fillStyle = 'rgba(255,255,255,0.8)'; ctx.fill();
+    ctx.restore();
+  }
+  // телепорт: фиолетовые пиксели-частицы клубятся и поднимаются вокруг (x, y); life 0..1; h — высота облака
+  function teleportPuff(ctx, x, y, life, h = 300, seed = 3) {
+    if (life < 0 || life > 1) return;
+    const r = rng(seed);
+    ctx.save();
+    for (let i = 0; i < 40; i++) {
+      const dx = (r() - 0.5) * h * 0.7, y0 = -r() * h, up = 120 * r() + 40, sz = 8 + r() * 12;
+      const px = x + dx * (1 + life * 0.4), py = y + y0 - up * life;
+      ctx.globalAlpha = (1 - life) * (0.6 + 0.4 * r());
+      ctx.fillStyle = '#111'; ctx.fillRect(px - sz / 2 - 2, py - sz / 2 - 2, sz + 4, sz + 4);
+      ctx.fillStyle = i % 3 === 0 ? '#e9a6ff' : i % 3 === 1 ? '#b04dff' : '#7a1fd1'; ctx.fillRect(px - sz / 2, py - sz / 2, sz, sz);
+    }
+    ctx.restore();
+  }
+
   // «вжух» — удар прошёл мимо: маленькое облачко
   function whoosh(ctx, x, y, life) {
     if (life < 0 || life > 1) return;
@@ -3270,5 +3297,5 @@ const FX = (() => {
 
   return { rng, background, mcBackground, limb, note, waterBalloon, basket, waterSplash, boomerang, flower, bubbleWand, soapBubble, bubblePop, snowball, snowPile, snowCap, snowSplat, snowBurst, slimeBlock, tomato, gardenBed, tomatoBush, tnt, fuseSparks, boom, soot, balloon, balloonPop, cactus, paintBucket, paintBrush, mustache, paintHole, paintSplash, waterJet, cobble, cloud, shadow, spark, dust, smoke, flash, rays, vein, steam, sweat, stars, twinkle, whoosh, puff,
     heart, hearts, wind, banana, giftBox, suck, drool, tree, apple, bubble, gumSplat, rainCloud, rain, lightning, puddle, seesaw,
-    mudPit, mudSplash, rope, cake, crown, lollipop, tears, ball, pillow, feathers, bee, hive, table, pie, mcAppleTree, pumpkinBlock, blockBurst, mcChest, iceCream, scoopCap, iceBlock, frost, magicBeam, rails, grassSteps, minecart, kite, kiteString, popcorn, popcornPile, popBucket, cornCob, sunRay, pickaxe, grassBlock, pit, chili, chiliBush, fireBreath, flame, bigLeaf, pond, fish, fishingRod, fishLine, feather, sleepBubble, jumpCord, ropeHandle, marshmallow, mallowBag, slingshotY, slingBand, honeyPot, honeyCap, egg, chick, horseshoeMagnet, magnetWaves, anvil, coilSpring, rocket, rocketTrail, fireworkBurst, iceRink, iceSpray, deskFan, fanWind, melonBlock, melonHelmet, melonSlice, melonSeed, melonSplash, potion, potionBurst, effectSwirls, portal, fluff, cottonCandy, fluffBurst, mcBell, bellStand, soundRings, lemon, juiceSplash, sourLines, sandBlock, toyArrow, suctionMark, plunger, donut, donutRing, pizza, pizzaSlice, cheeseString };
+    mudPit, mudSplash, rope, cake, crown, lollipop, tears, ball, pillow, feathers, bee, hive, table, pie, mcAppleTree, pumpkinBlock, blockBurst, mcChest, iceCream, scoopCap, iceBlock, frost, magicBeam, rails, grassSteps, minecart, kite, kiteString, popcorn, popcornPile, popBucket, cornCob, sunRay, pickaxe, grassBlock, pit, chili, chiliBush, fireBreath, flame, bigLeaf, pond, fish, fishingRod, fishLine, feather, sleepBubble, jumpCord, ropeHandle, marshmallow, mallowBag, slingshotY, slingBand, honeyPot, honeyCap, egg, chick, horseshoeMagnet, magnetWaves, anvil, coilSpring, rocket, rocketTrail, fireworkBurst, iceRink, iceSpray, deskFan, fanWind, melonBlock, melonHelmet, melonSlice, melonSeed, melonSplash, potion, potionBurst, effectSwirls, portal, fluff, cottonCandy, fluffBurst, mcBell, bellStand, soundRings, lemon, juiceSplash, sourLines, sandBlock, toyArrow, suctionMark, plunger, donut, donutRing, pizza, pizzaSlice, cheeseString, enderPearl, teleportPuff };
 })();
