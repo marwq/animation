@@ -10,6 +10,8 @@
                      nether — Незер: земля из незерака, лава, вдали лавопады;
                      meadow — поляна под качели, сочнее и с размытым фоном;
                      coast — поле без деревьев, сзади пляж и море до горизонта;
+                     village, cottage, grove — солнечные дворы и опушка: домик сбоку,
+                     домик фасадом в центре, опушка с кустами; низкое солнце, тени;
                      aerial — с большой высоты: видно, что земля круглая; суша с
                      рощами, пляж, море с островами;
                      sky — только небо с облаками; swing — качели из блоков на
@@ -66,6 +68,8 @@ SHALLOW = (0x4C, 0xE4, 0xF2)  # вид сверху: у берега бирюз�
 OPEN_SEA = (0x46, 0x9C, 0xF4)  # дальше голубая,
 DEEP = (0x40, 0x7A, 0xEA)     # на глубине синяя
 LUSH = {'sat': 1.25, 'sharpen': 0.35, 'ca': 0.016, 'bloom': 0.3}   # обработка поляны
+# яркое тёплое низкое солнце и глубокие тени — как в роликах toonz CRAFT
+SUNNY = {'sun_power': 9.5, 'sun_color': (1.0, 0.86, 0.62), 'sky_light': 0.45, 'exposure': 0.3}
 
 PORTAL = (-1, 20)        # левый блок рамки; рамка 4×5 стоит вдоль оси x
 PORTAL_C = Vector((1.0, 20.5, 3.5))     # центр проёма 2×3
@@ -77,6 +81,10 @@ PORTAL_C = Vector((1.0, 20.5, 3.5))     # центр проёма 2×3
 # цветная кайма, свечение; exposure — поправка яркости. fstop 0 — без размытия.
 # Небо: камера тоже смотрит прямо, кадр сдвинут вверх — низ кадра на горизонте.
 # sky_reflect — в отражениях голубое небо, а не белый свет (для моря).
+# sun — куда светит солнце, sun_power и sun_color — его сила и цвет, sky_light — свет неба
+# (меньше — тени глубже). Деревья в shade за краем кадра дают пятнистую тень на траве.
+# house — левый передний угол домика; bushes — кусты из листвы: x, y, ширина, высота;
+# fg_grass — кустики травы у самой камеры. В shade третьим можно указать породу.
 # look_down — насколько камера смотрит вниз, градусов; planet — радиус шара, на который
 # уложен мир (видно, что земля круглая); haze — дымка вдали (None — без неё).
 SHOTS = {
@@ -91,6 +99,22 @@ SHOTS = {
     'meadow': {'world': 'meadow', 'cam': (0.5, 0.0, 2.62), 'shift': -0.08, 'lens': 28,
                'clear': 15, 'focus': 7.0, 'fstop': 1.0, 'shade': [(-4, 7), (7, 16)],
                'grass': True, 'path': (10, 3.0), 'exposure': 0.3, 'grade': LUSH},
+    'village': {'world': 'village', 'cam': (0.5, 0.0, 2.62), 'shift': -0.08, 'lens': 28,
+                'clear': 16, 'focus': 8.0, 'fstop': 1.0, 'house': (3, 10),
+                'shade': [(-4, 8), (-11, 6)], **SUNNY,
+                'grass': True, 'fg_grass': False, 'path': (9, 2.0), 'grade': LUSH,
+                'sun': (0.86, 0.06, -0.42)},
+    'cottage': {'world': 'cottage', 'cam': (0.5, 0.0, 2.62), 'shift': -0.08, 'lens': 28,
+                'clear': 16, 'focus': 9.0, 'fstop': 1.0, 'house': (-2, 11),
+                'shade': [(5, 7), (-7, 15, 'birch'), (-9, 4), (-10, 10)], **SUNNY,
+                'grass': True, 'fg_grass': False, 'path': (10, 2.5), 'grade': LUSH,
+                'sun': (0.86, 0.06, -0.42)},
+    'grove':   {'world': 'grove', 'cam': (0.5, 0.0, 2.62), 'shift': -0.08, 'lens': 28,
+                'clear': 15, 'focus': 7.0, 'fstop': 1.0,
+                'shade': [(-4, 7), (5, 11, 'birch'), (-1, 19), (10, 8), (11, 15)],
+                'bushes': [(3, 6, 2, 2), (6, 8, 3, 2), (-6, 12, 2, 1), (8, 13, 2, 3)],
+                **SUNNY, 'grass': True, 'fg_grass': False, 'path': (9, 2.5), 'grade': LUSH,
+                'sun': (-0.72, -0.35, -0.42)},
     'coast':  {'world': 'coast', 'cam': (0.5, 0.0, 2.62), 'shift': -0.08, 'lens': 28,
                'focus': 7.0, 'fstop': 1.0, 'grass': True, 'path': (10, 3.0),
                'exposure': 0.3, 'grade': LUSH, 'sky_reflect': True},
@@ -137,7 +161,8 @@ TOON_GROUP = {                                  # обводка там, где 
     'nether_portal': 14, 'lava': 15, 'lava_flow': 15, 'magma': 16, 'fire': 17,
     'netherrack': 18, 'spruce_planks': 19, 'spruce_trapdoor': 19, 'stone_bricks': 20,
     'smooth_stone': 20, 'chain': 21, 'sand': 22, 'water': 23, 'water_shallow': 23,
-    'water_deep': 23, 'water_open': 23,
+    'water_deep': 23, 'water_open': 23, 'cobblestone': 24, 'oak_planks': 25, 'window': 26,
+    'door_bottom': 27, 'door_top': 27,
 }
 TOON_PLANTS = (7, 8, 9, 10, 11, 12, 17)         # трава, цветы, огонь: только тонкий контур
 # Светятся сами (всегда светлый тон) и светят вокруг: группа → (цвет, радиус px, сила)
@@ -214,8 +239,14 @@ def textures(tex, toon=False):
     t['tall_grass_top'] = tint(load_rgba(tex, 'tall_grass_top'), GRASS)
     for f in ('poppy', 'dandelion', 'oxeye_daisy', 'cornflower', 'azure_bluet', 'netherrack',
               'magma', 'nether_portal', 'lava_flow', 'spruce_planks', 'spruce_trapdoor',
-              'stone_bricks', 'chain', 'smooth_stone', 'sand'):
+              'stone_bricks', 'chain', 'smooth_stone', 'sand', 'cobblestone', 'oak_planks'):
         t[f] = load_rgba(tex, f)
+    inside = t['oak_planks'].copy()             # комната за окном и дверью — темнее
+    inside[..., :3] *= 0.5
+    for k, f in (('window', 'glass'), ('door_bottom', 'oak_door_bottom'), ('door_top', 'oak_door_top')):
+        a = load_rgba(tex, f)
+        t[k] = inside.copy()
+        t[k][..., :3] = a[..., :3] * a[..., 3:] + inside[..., :3] * (1 - a[..., 3:])
     water = load_rgba(tex, 'water_still')
     t['water'], t['water_shallow'], t['water_open'], t['water_deep'] = (
         tint(water, c) for c in (WATER, SHALLOW, OPEN_SEA, DEEP))
@@ -375,7 +406,8 @@ def kind_of(name):
     if name in ('nether_portal', 'lava', 'lava_flow', 'magma', 'fire'):
         return 'emit'
     if name in ('grass_top', 'grass_side', 'dirt', 'netherrack', 'spruce_planks',
-                'spruce_trapdoor', 'stone_bricks', 'smooth_stone', 'sand') or '_log' in name:
+                'spruce_trapdoor', 'stone_bricks', 'smooth_stone', 'sand', 'cobblestone',
+                'oak_planks', 'window', 'door_bottom', 'door_top') or '_log' in name:
         return 'block'
     return 'plant'
 
@@ -494,12 +526,20 @@ def world(seed, name='field'):
     x0, py = PORTAL
     portal = {(x0 + i, py, 1 + k): 'obsidian' for i in range(4) for k in range(5)
               if (i in (0, 3) or k in (0, 4)) and name == 'field'}
-    taken = dict(portal)
+    house = next((village_house(*v.s['house']) for v in views if 'house' in v.s), {})
+    taken = {**portal, **house}
     trees = []
     for v in views:
-        for dx, dy in v.s['shade']:
+        for dx, dy, *wood in v.s['shade']:
             x, y = int(v.pos.x + dx), int(v.pos.y + dy)
-            blocks = tree_shape(rng, x, y, cols[(x, y)], 'oak')
+            blocks = tree_shape(rng, x, y, cols[(x, y)], wood[0] if wood else 'oak')
+            taken.update(blocks)
+            trees.append((x, y, blocks))
+        for dx, dy, w, h in v.s.get('bushes', ()):
+            x, y = int(v.pos.x + dx), int(v.pos.y + dy)
+            blocks = {(x + i, y + j, cols[(x, y)] + 1 + k): 'oak_leaves'
+                      for i in range(w) for j in range(w) for k in range(h)
+                      if not (k == h - 1 and i in (0, w - 1) and j in (0, w - 1) and w > 2)}
             taken.update(blocks)
             trees.append((x, y, blocks))
     cand = list(cols)
@@ -533,7 +573,30 @@ def world(seed, name='field'):
         if p:
             plants.append(p)
 
-    return cols, portal, trees, plants, cloud_cells()
+    return cols, portal, house, trees, plants, cloud_cells()
+
+
+def village_house(x0, y0):
+    """Домик как в деревне, (x0, y0) — левый передний угол: фундамент из булыжника,
+    стены из досок, углы — брёвна, на фасаде дверь и два окна, окна по бокам,
+    ступенчатая двускатная крыша из ели."""
+    W = D = 5
+    b = {}
+    for i in range(W):
+        for j in range(D):
+            for z in range(1, 5):
+                corner = i in (0, W - 1) and j in (0, D - 1)
+                b[(x0 + i, y0 + j, z)] = 'oak_log' if corner else 'cobblestone' if z == 1 \
+                    else 'oak_planks'
+    for i in (1, 3):
+        b[(x0 + i, y0, 3)] = 'window'
+    b[(x0, y0 + 2, 3)] = b[(x0 + W - 1, y0 + 2, 3)] = 'window'
+    b[(x0 + 2, y0, 2)], b[(x0 + 2, y0, 3)] = 'door_bottom', 'door_top'
+    for k, (i0, i1) in enumerate(((-1, W), (0, W - 1), (1, W - 2), (2, 2))):
+        for i in range(i0, i1 + 1):
+            for j in range(-1, D + 1):
+                b[(x0 + i, y0 + j, 5 + k)] = 'spruce_planks'
+    return b
 
 
 def cloud_cells():
@@ -566,7 +629,8 @@ def build_plants(opt, view, mats, cols, plants):
     have = {(p[0], p[1]) for p in plants}
     for (x, y), g in cols.items():
         d, lat = view.depth(x + 0.5, y + 0.5), abs(x + 0.5 - view.pos.x)
-        if 1.0 < d < 3.5 and lat > 0.8 and (x, y) not in have and rng.random() < 0.6:
+        if 1.0 < d < 3.5 and lat > 0.8 and (x, y) not in have and rng.random() < 0.6 \
+                and view.s.get('fg_grass', True):
             plants.append((x, y, g + 1, 'tall_grass' if rng.random() < 0.35 else 'short_grass',
                            rng.uniform(-0.2, 0.2), rng.uniform(-0.2, 0.2)))
     m = Mesh()
@@ -576,8 +640,9 @@ def build_plants(opt, view, mats, cols, plants):
             continue
         if d < view.s['path'][0] and lat < view.s['path'][1]:
             continue                           # посередине — чистая трава, к порталу дорожка
-        if not view.s['grass'] and kind in ('short_grass', 'tall_grass'):
-            continue
+        if kind in ('short_grass', 'tall_grass') and (
+                not view.s['grass'] or not view.s.get('fg_grass', True) and d < 6):
+            continue                           # у камеры кустики закрывали бы кадр
         if toon and (d > 22 or kind in ('short_grass', 'tall_grass')):
             continue                           # в рисунке пиксельная трава и мелочь — шум
         if kind == 'tall_grass':
@@ -605,7 +670,7 @@ def random_plant(rng, x, y, z):
 
 def build_field(opt, view, mats):
     toon = opt['style'] == 'toon'
-    cols, portal, trees, plants, clouds = world(opt['seed'], view.s['world'])
+    cols, portal, house, trees, plants, clouds = world(opt['seed'], view.s['world'])
 
     m = Mesh()
     for (x, y), g in cols.items():
@@ -625,6 +690,10 @@ def build_field(opt, view, mats):
             m.blocks(blocks, solid=toon)
     m.build('trees', mats)
 
+    if house:
+        m = Mesh()
+        m.blocks(house)
+        m.build('house', mats)
     if portal:
         m = Mesh()
         m.blocks(portal)
@@ -993,13 +1062,15 @@ def lights_camera(opt, s):
     k = N.new('ShaderNodeMath')               # и яркость у них разная
     k.operation = 'MULTIPLY_ADD'
     L.new(is_cam, k.inputs[0])
-    k.inputs[1].default_value, k.inputs[2].default_value = SKY_SEEN - SKY_LIGHT, SKY_LIGHT
+    sky_light = s.get('sky_light', SKY_LIGHT)
+    k.inputs[1].default_value, k.inputs[2].default_value = SKY_SEEN - sky_light, sky_light
     L.new(k.outputs[0], N['Background'].inputs['Strength'])
 
     sun = bpy.data.lights.new('sun', 'SUN')
-    sun.energy, sun.angle, sun.color = SUN_POWER, math.radians(2.5), SUN_COLOR
+    sun.energy, sun.angle = s.get('sun_power', SUN_POWER), math.radians(2.5)
+    sun.color = s.get('sun_color', SUN_COLOR)
     so = bpy.data.objects.new('sun', sun)
-    so.rotation_euler = SUN_DIR.normalized().to_track_quat('-Z', 'Y').to_euler()
+    so.rotation_euler = Vector(s.get('sun', SUN_DIR)).normalized().to_track_quat('-Z', 'Y').to_euler()
     sc.collection.objects.link(so)
 
     if s['world'] == 'field':

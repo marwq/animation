@@ -108,6 +108,9 @@ node tools/render.js                     # PNG ×2 (или: node tools/render.js
 | `backgrounds/nether/nether_toon.png` | Незер в рисованном стиле: земля из незерака, огонь, лужа и река лавы, вдали скалы с лавопадами |
 | `backgrounds/grass/grass_toon.png` | только трава Minecraft в рисованном стиле, фон прозрачный — слой поверх фона |
 | `backgrounds/meadow/meadow.png` | поляна в стиле toonz CRAFT: дерево с кроной слева, посередине свободная трава под качели, фон размыт |
+| `backgrounds/village/village.png` | солнечный двор: слева дуб, справа деревенский домик, полоса тени от дерева через двор |
+| `backgrounds/cottage/cottage.png` | домик фасадом прямо в центре, по бокам берёза и дуб, тени полосами поперёк двора |
+| `backgrounds/grove/grove.png` | солнечная опушка: дуб, берёза, кусты из листвы, диагональные тени через траву |
 | `backgrounds/coast/coast.png` | поле без деревьев, спускается к пляжу, сзади море до горизонта — цвета как у поляны |
 | `backgrounds/aerial/aerial.png` | вид с большой высоты: земля круглая, внизу поле с рощами и пляж, дальше море с островами, у горизонта полоска суши и свечение атмосферы |
 | `backgrounds/sky/sky.png` | только небо с облаками Minecraft, низ кадра на горизонте — цвета как у поляны |
@@ -126,6 +129,7 @@ blender -b --factory-startup -P tools/mc_scene.py -- --shot field --style toon
 blender -b --factory-startup -P tools/mc_scene.py -- --shot portal --style toon
 blender -b --factory-startup -P tools/mc_scene.py -- --shot nether --style toon
 blender -b --factory-startup -P tools/mc_scene.py -- --shot meadow
+blender -b --factory-startup -P tools/mc_scene.py -- --shot village   # и cottage, grove
 blender -b --factory-startup -P tools/mc_scene.py -- --shot coast
 blender -b --factory-startup -P tools/mc_scene.py -- --shot sky
 blender -b --factory-startup -P tools/mc_scene.py -- --shot aerial
