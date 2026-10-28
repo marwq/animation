@@ -718,6 +718,28 @@ def s_bell(dur=1.8, **_):
     return norm(x, 0.7)
 
 
+def s_baa(dur=0.7, **_):
+    """Овечка: «бе-е-е» — дрожащий носовой голос."""
+    d = max(0.4, dur)
+    t = tt(d)
+    f0 = 330 * (1 + 0.06 * np.sin(TAU * 0.8 * t / d)) * (1 - 0.12 * t / d)
+    src = osc(f0, d, 'saw')
+    v = bandpass(src, 500, 1100) + 0.7 * bandpass(src, 1800, 3000)
+    env = (0.6 + 0.4 * np.sin(TAU * 22 * t)) * np.clip(t / 0.04, 0, 1) * np.clip((d - t) / 0.18, 0, 1)
+    return norm(v * env, 0.6)
+
+
+def s_snip(seed=42, **_):
+    """Ножницы: металлическое «чик»."""
+    d = 0.16
+    x = np.zeros(nsamp(d))
+    put(x, bandpass(noise(0.025, seed), 3000, 9000) * decay(0.025, 0.008), 0)
+    put(x, bandpass(noise(0.04, seed + 1), 2500, 7000) * decay(0.04, 0.012) * 0.8, 0.06)
+    t = tt(d)
+    x += 0.25 * np.sin(TAU * 4200 * t) * np.exp(-t / 0.03)
+    return norm(x, 0.7)
+
+
 SOUNDS = {k[2:]: v for k, v in globals().items() if k.startswith('s_') and callable(v)}
 
 
