@@ -22,6 +22,7 @@ import numpy as np
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SND = os.path.join(ROOT, 'sound', 'minecraft')
+VOICE = os.path.join(ROOT, 'sound', 'voice')     # своя озвучка: voice/no → sound/voice/no.wav
 RATE = 48000
 VERSION = '1.21.4'
 
@@ -30,8 +31,9 @@ VERSION = '1.21.4'
 def load_cues(path):
     """Расстановка звуков для одного видео: JSON с полями
     cues — список [время, звук, дБ, скорость/высота, панорама -1…1, длина?, "заметки"…]
-           (звук — путь из Minecraft, например "mob/cat/meow1", или свой: whoosh, boom,
-           whistle — свист падения, rise — свист взлёта);
+           (звук — путь из Minecraft, например "mob/cat/meow1", своя озвучка voice/<имя>
+           из sound/voice/<имя>.wav или синтез: whoosh, boom, whistle — свист падения,
+           rise — свист взлёта);
     music_db — громкость музыки, music_end — когда она стихает,
     duck — где её прибрать под важные звуки: [начало, конец, доля];
     transpose — сдвиг мелодии в полутонах, чтобы у роликов она была разной."""
@@ -48,7 +50,8 @@ def load_cues(path):
 # ------------------------------------------------------------------ звуки Minecraft
 def fetch(cues):
     """Скачать нужные звуки с серверов Mojang (как это делает лаунчер)."""
-    need = {c[1] for c in cues if '/' in c[1]} | {'note/harp', 'note/bass', 'note/bell'}
+    need = {c[1] for c in cues if '/' in c[1] and not c[1].startswith('voice/')} \
+        | {'note/harp', 'note/bass', 'note/bell'}
     if all(os.path.exists(os.path.join(SND, n + '.ogg')) for n in need):
         return
     get = lambda u: json.load(urllib.request.urlopen(u, timeout=60))
@@ -64,8 +67,10 @@ def fetch(cues):
 
 
 def load(name):
-    """ogg → float32 стерео RATE Гц."""
-    raw = subprocess.run(['ffmpeg', '-v', 'error', '-i', os.path.join(SND, name + '.ogg'),
+    """Звук Minecraft (ogg) или своя озвучка (voice/…, wav) → float32 стерео RATE Гц."""
+    path = os.path.join(VOICE, name[6:] + '.wav') if name.startswith('voice/') \
+        else os.path.join(SND, name + '.ogg')
+    raw = subprocess.run(['ffmpeg', '-v', 'error', '-i', path,
                           '-f', 'f32le', '-ac', '2', '-ar', str(RATE), '-'],
                          capture_output=True, check=True).stdout
     return np.frombuffer(raw, np.float32).reshape(-1, 2).copy()
