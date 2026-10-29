@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Звук для мультика: звуки Minecraft, свои эффекты и тихая музыка на нотных блоках.
 
-    python3 tools/add_sound.py ВИДЕО.mp4 [--out videos/ИМЯ_sound.mp4]
+    python3 tools/add_sound.py ВИДЕО.mp4 [--cues sound/cues/ИМЯ.json] [--out videos/ИМЯ_sound.mp4]
 
 Звуки Minecraft скачиваются с официального сервера Mojang в sound/minecraft/
 (папка в .gitignore — это файлы Mojang). Свисты, «вуш» и «бум» синтезируются здесь
@@ -9,8 +9,8 @@
 своя, поэтому без претензий за чужую музыку на YouTube.
 
 Делает два файла: в той же ориентации, что исходник, и вертикальный 1080×1920
-(исходник лежит на боку: небо слева). Расстановка звуков — список CUES ниже,
-время в секундах, громкость в дБ.
+(исходник лежит на боку: небо слева). Расстановка звуков для каждого видео — свой
+файл sound/cues/<имя видео>.json (см. load_cues): время в секундах, громкость в дБ.
 """
 import json
 import os
@@ -25,76 +25,30 @@ SND = os.path.join(ROOT, 'sound', 'minecraft')
 RATE = 48000
 VERSION = '1.21.4'
 
-# (время, звук, дБ, скорость/высота, панорама -1…1). Сверху дедушка, снизу смайлик.
-CUES = [
-    # медитация и радуга с печенькой
-    (0.00, 'block/beacon/activate', -9, 1.0, 0),
-    (0.05, 'block/amethyst/shimmer', -12, 1.0, 0.3),
-    (0.22, 'random/pop', -10, 1.3, 0.4),
-    (0.45, 'random/pop', -10, 1.5, 0.5),
-    (0.64, 'mob/slime/small1', -9, 1.4, 0.4),
-    (0.95, 'random/pop', -11, 1.2, 0.3),
-    (1.15, 'whoosh', -16, 1.0, 0),
-    (1.30, 'random/orb', -9, 1.1, 0),            # смайлик появился
-    (1.78, 'boom', -1, 1.0, 0),                  # крупный план обоих
-    (1.95, 'whoosh', -18, 1.3, 0),
-    # дедушка идёт и сердится
-    (2.40, 'step/grass1', -20, 1.0, -0.2),
-    (2.72, 'step/grass2', -18, 1.0, 0.2),
-    (3.04, 'step/grass3', -15, 1.0, -0.2),
-    (3.34, 'step/grass4', -12, 1.0, 0.2),
-    (3.42, 'entity/player/attack/knockback1', -6, 1.0, 0),
-    (3.58, 'mob/slime/big1', -3, 1.0, 0),        # смайлик сплющился
-    (3.75, 'mob/villager/no2', -4, 0.9, 0),      # «хмм!»
-    (4.55, 'whoosh', -15, 0.8, 0),
-    (4.62, 'step/grass5', -12, 1.3, 0),
-    (4.78, 'step/grass6', -12, 1.3, 0),
-    (4.94, 'step/grass2', -12, 1.3, 0),
-    # портал, толкает внутрь
-    (5.00, 'portal/portal', -11, 1.0, 0, 3.4),   # гул портала (длина, с)
-    (5.25, 'block/amethyst/resonate1', -12, 1.0, 0.3),
-    (6.15, 'mob/villager/haggle1', -6, 0.85, 0),
-    (6.70, 'mob/villager/no3', -6, 0.85, 0),
-    (7.00, 'entity/player/attack/sweep1', -4, 1.0, 0),
-    (7.15, 'entity/player/attack/strong1', -4, 1.0, 0),
-    (7.22, 'mob/slime/small3', -6, 1.1, 0),
-    (7.42, 'portal/trigger', -3, 1.0, 0, 1.0),   # засасывает в портал
-    (7.70, 'step/grass1', -20, 1.0, -0.3),
-    (8.00, 'step/grass3', -21, 1.0, -0.3),
-    # Незер
-    (8.35, 'portal/travel', -6, 1.0, 0, 1.6),
-    (8.40, 'ambient/nether/nether_wastes/ambience', -6, 1.0, 0, 1.55),
-    (8.40, 'liquid/lava', -12, 1.0, 0.3, 1.55),
-    (8.55, 'whistle', -9, 1.0, 0),               # смайлик падает
-    (8.75, 'liquid/lavapop', -10, 1.0, 0.5),
-    (9.15, 'liquid/lavapop', -10, 0.9, -0.4),
-    (9.58, 'damage/fallbig', 0, 1.0, 0),
-    (9.60, 'mob/slime/big2', -2, 0.8, 0),        # шлёп
-    (9.72, 'liquid/lavapop', -11, 1.1, 0.3),
-    # снова медитация, смайлик вернулся
-    (9.95, 'block/amethyst/shimmer', -11, 1.0, -0.3),
-    (10.18, 'random/pop', -11, 1.4, 0.4),
-    (10.40, 'mob/slime/small2', -10, 1.4, 0.4),
-    (10.62, 'random/pop', -11, 1.2, 0.3),
-    (10.80, 'mob/endermen/portal', -4, 1.0, 0),  # телепорт: он вернулся
-    (11.95, 'ambient/cave/cave12', -4, 1.0, 0),  # жуткая тишина
-    # скример и хруст
-    (12.36, 'boom', -2, 0.8, 0),
-    (12.38, 'mob/ghast/scream1', -2, 1.0, 0),
-    (12.45, 'mob/villager/hit1', -5, 1.2, 0),
-    (12.58, 'random/eat1', 0, 1.0, 0),
-    (12.72, 'random/eat3', 0, 0.9, 0),
-    (12.88, 'random/burp', 0, 1.0, 0),
-]
-MUSIC_DB = -28                                   # средняя громкость музыки: тихо, фоном
-MUSIC_END = 11.95                                # перед жутью музыка стихает
-DUCK = [(1.7, 2.2, 0.5), (8.35, 9.95, 0.35)]     # где музыку прибрать: начало, конец, доля
+
+
+def load_cues(path):
+    """Расстановка звуков для одного видео: JSON с полями
+    cues — список [время, звук, дБ, скорость/высота, панорама -1…1, длина?, "заметки"…]
+           (звук — путь из Minecraft, например "mob/cat/meow1", или свой: whoosh, boom,
+           whistle — свист падения, rise — свист взлёта);
+    music_db — громкость музыки, music_end — когда она стихает,
+    duck — где её прибрать под важные звуки: [начало, конец, доля];
+    transpose — сдвиг мелодии в полутонах, чтобы у роликов она была разной."""
+    d = json.load(open(path, encoding='utf-8'))
+    cues = []
+    for c in d['cues']:
+        t, name, db, k, pan, *rest = c
+        length = next((x for x in rest if not isinstance(x, str)), None)
+        cues.append((t, name, db, k, pan, length))
+    return {'cues': cues, 'music_db': d.get('music_db', -28), 'music_end': d['music_end'],
+            'duck': d.get('duck', []), 'transpose': d.get('transpose', 0)}
 
 
 # ------------------------------------------------------------------ звуки Minecraft
-def fetch():
+def fetch(cues):
     """Скачать нужные звуки с серверов Mojang (как это делает лаунчер)."""
-    need = {c[1] for c in CUES if '/' in c[1]} | {'note/harp', 'note/bass', 'note/bell'}
+    need = {c[1] for c in cues if '/' in c[1]} | {'note/harp', 'note/bass', 'note/bell'}
     if all(os.path.exists(os.path.join(SND, n + '.ogg')) for n in need):
         return
     get = lambda u: json.load(urllib.request.urlopen(u, timeout=60))
@@ -163,10 +117,11 @@ def synth(name, k=1.0):
         x += rng.standard_normal(n) * np.exp(-t * 60) * 0.3
         x = np.tanh(x * 2.2) * 0.8
         return np.stack([x, x], -1)
-    if name == 'whistle':                        # свист падения, вниз по высоте
-        n = int(1.0 * RATE)
+    if name in ('whistle', 'rise'):              # свист падения — вниз, взлёта — вверх
+        n = int((1.0 if name == 'whistle' else 0.7) / k * RATE)
         t = np.arange(n) / RATE
-        f = 1900 * np.exp(-t * 1.5) + 250 + 18 * np.sin(2 * np.pi * 6 * t)
+        f = 1900 * np.exp(-t * 1.5) + 250 if name == 'whistle' else 400 * np.exp(t * k * 2.6)
+        f = (f + 18 * np.sin(2 * np.pi * 6 * t)) * k
         x = np.sin(2 * np.pi * np.cumsum(f) / RATE) * env(n, 0.04, 0.12) * 0.5
         return np.stack([x, x], -1)
     raise KeyError(name)
@@ -186,12 +141,12 @@ def reverb(x, seconds=2.4, wet=0.45):
     return out + y * wet
 
 
-def music(length):
+def music(length, end, transpose=0):
     """Спокойная мелодия на нотных блоках: арпеджио арфы, бас, колокольчик сверху."""
     harp, bass, bell = load('note/harp'), load('note/bass'), load('note/bell')
     note = lambda base, f: speed(base, f / base_hz[id(base)])
     base_hz = {id(harp): 369.99, id(bass): 92.50, id(bell): 1479.98}   # F#4, F#2, F#6
-    hz = lambda n: 440 * 2 ** ((n - 69) / 12)                          # MIDI → Гц
+    hz = lambda n: 440 * 2 ** ((n + transpose - 69) / 12)              # MIDI → Гц
     beat = 60 / 84
     chords = [(53, [65, 69, 72, 76]), (48, [64, 67, 72, 76]), (45, [64, 69, 72, 76]),
               (43, [62, 67, 71, 74]), (53, [65, 69, 72, 77])]          # F C Am G F
@@ -201,7 +156,8 @@ def music(length):
 
     def put(t, a, g):
         i = int(t * RATE)
-        out[i:i + len(a)] += a[:len(out) - i] * g
+        if i < len(out):                          # ноты за концом ролика не нужны
+            out[i:i + len(a)] += a[:len(out) - i] * g
 
     for bar, (root, tones) in enumerate(chords):
         t0 = bar * 4 * beat
@@ -212,44 +168,48 @@ def music(length):
     for b, n in melody.items():
         put(b * beat, note(bell, hz(n + 12)), 0.25)
     out = reverb(out)
-    return out / np.sqrt((out[:int(MUSIC_END * RATE)] ** 2).mean())   # средняя громкость = 1
+    return out / np.sqrt((out[:int(end * RATE)] ** 2).mean())         # средняя громкость = 1
 
 
 # ------------------------------------------------------------------ сведение
-def mix(length):
+def mix(length, plan):
     out = np.zeros((int(length * RATE) + RATE * 12, 2))
-    for cue in CUES:
-        t, name, db, k, pan = cue[:5]
+    for t, name, db, k, pan, cut in plan['cues']:
         a = synth(name, k) if '/' not in name else speed(load(name), k)
-        if len(cue) > 5:                          # обрезать по длине с плавным концом
-            n = min(len(a), int(cue[5] * RATE))
-            a = a[:n] * env(n, 0.15, min(0.6, cue[5] / 2))[:, None]
+        if cut:                                   # обрезать по длине с плавным концом
+            n = min(len(a), int(cut * RATE))
+            a = a[:n] * env(n, 0.15, min(0.6, cut / 2))[:, None]
         g = 10 ** (db / 20)
         gl, gr = g * min(1, 1 - pan), g * min(1, 1 + pan)
         i = int(t * RATE)
         out[i:i + len(a)] += a * [gl, gr]
 
-    m = music(length)[:len(out)]
+    end = plan['music_end']
+    m = music(length, end, plan['transpose'])[:len(out)]
     t = np.arange(len(m)) / RATE
-    g = np.clip(t / 0.6, 0, 1) * np.clip((MUSIC_END - t) / 0.35, 0, 1)
-    for a, b, k in DUCK:                          # мягко прибрать музыку под важные звуки
+    g = np.clip(t / 0.6, 0, 1) * np.clip((end - t) / 0.35, 0, 1)
+    for a, b, k in plan['duck']:                  # мягко прибрать музыку под важные звуки
         inside = np.clip(np.minimum(t - a + 0.15, b + 0.15 - t) / 0.15, 0, 1)
         g *= 1 - (1 - k) * inside
-    out[:len(m)] += m * (10 ** (MUSIC_DB / 20)) * g[:, None]
+    out[:len(m)] += m * (10 ** (plan['music_db'] / 20)) * g[:, None]
 
     out = out[:int(length * RATE)]
     out /= np.percentile(np.abs(out), 99.95)     # громко, но без перегруза:
-    return 0.85 * np.tanh(out)                   # пики мягко сжаты, с запасом под AAC
+    out = 0.85 * np.tanh(out)                    # пики мягко сжаты, с запасом под AAC
+    out[-int(0.03 * RATE):] *= np.linspace(1, 0, int(0.03 * RATE))[:, None]   # без щелчка в конце
+    return out
 
 
 def main(a):
     src = a[0]
-    out = a[a.index('--out') + 1] if '--out' in a else os.path.join(
-        ROOT, 'videos', os.path.splitext(os.path.basename(src))[0] + '_sound.mp4')
+    name = os.path.splitext(os.path.basename(src))[0]
+    out = a[a.index('--out') + 1] if '--out' in a else os.path.join(ROOT, 'videos', name + '_sound.mp4')
+    cues = a[a.index('--cues') + 1] if '--cues' in a else os.path.join(ROOT, 'sound', 'cues', name + '.json')
+    plan = load_cues(cues)
     length = float(subprocess.run(['ffprobe', '-v', 'error', '-show_entries', 'format=duration',
                                    '-of', 'csv=p=0', src], capture_output=True, text=True).stdout)
-    fetch()
-    audio = mix(length)
+    fetch(plan['cues'])
+    audio = mix(length, plan)
     os.makedirs(os.path.dirname(out), exist_ok=True)
     wav = out[:-4] + '.f32'
     audio.astype(np.float32).tofile(wav)
