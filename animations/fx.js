@@ -454,7 +454,7 @@ const FX = (() => {
 
   // ---------------------------------------------------------------- фон «плитки»: голубое небо с пухлыми облаками,
   // стена из плиток и пол из тех же плиток в перспективе. opts: { theme: 'tiles', seed, wall, floor, motif, sky: [верх, низ] }
-  // motif: squares (3×3 квадратика) | studs (кнопки-«лего») | diamonds (ромбы) | pillows (2×2 подушечки) | dots
+  // motif: squares (3×3 квадратика) | studs (кнопки-«лего») | diamonds (ромбы) | pillows (2×2 подушечки) | dots | stars
   const TILE = { top: 478, cap: 16, rows: 4, size: 60, horizon: 470, z0: 12 };
   function puffShape(kind) {
     return [
@@ -535,6 +535,12 @@ const FX = (() => {
           poly(P, [[a + s, b + s], [a, b + s], [a + e, b + s - e], [a + s - e, b + s - e], [a + s - e, b + e], [a + s, b]]); g.fillStyle = D(col, 0.22); g.fill();
           poly(P, sq(a, b, s)); g.lineWidth = lw * 0.9; g.strokeStyle = dk; g.stroke();
         }
+      } else if (motif === 'stars') {
+        const star = (cx, cy, r1, r2) => Array.from({ length: 10 }, (_, i) => { const a = -Math.PI / 2 + i * Math.PI / 5, rr = i % 2 ? r2 : r1; return [cx + Math.cos(a) * rr, cy + Math.sin(a) * rr]; });
+        poly(P, star(0.53, 0.54, 0.36, 0.15)); g.fillStyle = D(col, 0.22); g.fill();
+        poly(P, star(0.5, 0.5, 0.36, 0.15)); g.fillStyle = L(col, 0.3); g.fill(); g.lineWidth = lw; g.strokeStyle = dk; g.stroke();
+        poly(P, star(0.47, 0.46, 0.12, 0.05)); g.fillStyle = 'rgba(255,255,255,0.5)'; g.fill();
+        for (const [a, b] of [[0.12, 0.12], [0.88, 0.12], [0.12, 0.88], [0.88, 0.88]]) { poly(P, circ(a, b, 0.035, 10)); g.fillStyle = dk; g.fill(); }
       } else if (motif === 'dots') {
         for (const [a, b, rr] of [[0.25, 0.25, 0.1], [0.75, 0.25, 0.1], [0.5, 0.5, 0.14], [0.25, 0.75, 0.1], [0.75, 0.75, 0.1]]) {
           poly(P, circ(a + 0.02, b + 0.03, rr, 16)); g.fillStyle = D(col, 0.25); g.fill();
@@ -1208,7 +1214,16 @@ const FX = (() => {
     ctx.fillStyle = '#ffab3a'; ctx.fillRect(-h, -h, s, s * 0.08);
     ctx.fillStyle = '#4a7a1a'; ctx.fillRect(-s * 0.08, -h - s * 0.14, s * 0.16, s * 0.14);       // хвостик
     ctx.strokeStyle = '#111'; ctx.lineWidth = 4; ctx.strokeRect(-s * 0.08, -h - s * 0.14, s * 0.16, s * 0.14);
-    if (face) {
+    if (face === 'jack') {                                       // фонарь: вырезанное лицо светится изнутри
+      const u = s / 8;
+      const holes = [[-2.7, -2.0, 1.8, 1.6], [0.9, -2.0, 1.8, 1.6], [-0.45, -0.5, 0.9, 0.8], [-2.9, 0.8, 5.8, 1.1], [-2.9, 1.9, 1.1, 0.8], [-0.55, 1.9, 1.1, 0.8], [1.8, 1.9, 1.1, 0.8]];
+      ctx.fillStyle = '#3a1d05';
+      for (const [a, b, w, hh] of holes) ctx.fillRect((a - 0.15) * u, (b - 0.15) * u, (w + 0.3) * u, (hh + 0.3) * u);
+      ctx.fillStyle = '#ffb21f';
+      for (const [a, b, w, hh] of holes) ctx.fillRect(a * u, b * u, w * u, hh * u);
+      ctx.fillStyle = '#fff27a';
+      for (const [a, b, w, hh] of holes) ctx.fillRect((a + w * 0.2) * u, (b + hh * 0.25) * u, w * 0.6 * u, hh * 0.5 * u);
+    } else if (face) {
       const u = s / 8;
       ctx.fillStyle = '#3a1d05';
       ctx.fillRect(-2.6 * u, -1.8 * u, 1.6 * u, 1.4 * u); ctx.fillRect(1.0 * u, -1.8 * u, 1.6 * u, 1.4 * u);   // глаза
