@@ -4430,6 +4430,46 @@ const FX = (() => {
     }
   }
 
+  // огромный красный гриб из майнкрафта: (x, y) — низ ножки, s — ширина шляпки, press — шляпку вдавили (0..1, пружинит),
+  // grow — вырастает из земли (0..1), tilt — качается (рад)
+  function hugeMushroom(ctx, x, y, s = 420, press = 0, grow = 1, tilt = 0) {
+    if (grow <= 0) return;
+    const H = s * 0.95 * grow, sw = s * 0.26, ch = s * 0.34 * (1 - press * 0.35), cw = s * (1 + press * 0.12);
+    const r = rng(23);
+    ctx.save(); ctx.translate(x, y); ctx.rotate(tilt);
+    const stemH = Math.max(0, H - ch * 0.6) * (1 - press * 0.25);
+    // ножка
+    ctx.fillStyle = '#111'; ctx.fillRect(-sw / 2 - 5, -stemH - 5, sw + 10, stemH + 5);
+    for (let j = 0; j * sw / 3 < stemH; j++) for (let i = 0; i < 3; i++) { const v = r(); ctx.fillStyle = v < 0.3 ? '#e2dccb' : v < 0.7 ? '#f2eee2' : '#d6cfba'; ctx.fillRect(-sw / 2 + i * sw / 3, -stemH + j * sw / 3, sw / 3 + 0.6, Math.min(sw / 3, stemH - j * sw / 3) + 0.6); }
+    // шляпка
+    const cy = -stemH - ch * 0.75;
+    ctx.fillStyle = '#111'; ctx.fillRect(-cw / 2 - 6, cy - 6, cw + 12, ch + 12);
+    ctx.fillRect(-cw * 0.36 - 6, cy - ch * 0.35 - 6, cw * 0.72 + 12, ch * 0.35 + 12);
+    ctx.fillStyle = '#d6202a'; ctx.fillRect(-cw / 2, cy, cw, ch); ctx.fillRect(-cw * 0.36, cy - ch * 0.35, cw * 0.72, ch * 0.36);
+    ctx.fillStyle = '#b3141e'; ctx.fillRect(-cw / 2, cy + ch * 0.72, cw, ch * 0.28);
+    ctx.fillStyle = '#f04450'; ctx.fillRect(-cw * 0.36, cy - ch * 0.35, cw * 0.72, ch * 0.1);
+    ctx.fillStyle = '#ffffff';
+    for (const [dx, dy, k] of [[-0.36, 0.15, 1], [-0.08, -0.22, 0.9], [0.22, 0.12, 1.1], [0.4, -0.05, 0.7], [-0.22, 0.45, 0.7], [0.05, 0.42, 0.8]]) {
+      const q = s * 0.06 * k; ctx.fillRect(dx * cw - q, cy + dy * ch + ch * 0.2 - q * 0.8, q * 2, q * 1.6);
+    }
+    ctx.restore();
+    return y - stemH - ch * 0.75 - ch * 0.35;   // верх шляпки (без наклона)
+  }
+  // облачко спор: life 0..1
+  function spores(ctx, x, y, life, size = 1, seed = 2, dir = 1) {
+    if (life < 0 || life > 1) return;
+    const r = rng(seed);
+    ctx.save();
+    for (let i = 0; i < 26; i++) {
+      const a = (r() - 0.5) * 1.6 + (dir > 0 ? 0 : Math.PI), v = (120 + 260 * r()) * size, rr = (4 + 6 * r()) * size;
+      const px = x + Math.cos(a) * v * life, py = y + Math.sin(a) * v * life * 0.7 + 60 * life * life;
+      ctx.globalAlpha = Math.min(1, (1 - life) * 2) * 0.9;
+      ctx.beginPath(); ctx.arc(px, py, rr, 0, TAU); ctx.fillStyle = i % 3 ? '#fff3c4' : '#ffd1d6'; ctx.fill();
+      ctx.lineWidth = 2; ctx.strokeStyle = 'rgba(120,80,40,0.6)'; ctx.stroke();
+    }
+    ctx.restore();
+  }
+
   // «вжух» — удар прошёл мимо: маленькое облачко
   function whoosh(ctx, x, y, life) {
     if (life < 0 || life > 1) return;
@@ -4440,5 +4480,5 @@ const FX = (() => {
 
   return { rng, background, mcBackground, limb, note, waterBalloon, basket, waterSplash, boomerang, flower, bubbleWand, soapBubble, bubblePop, snowball, snowPile, snowCap, snowSplat, snowBurst, slimeBlock, tomato, gardenBed, tomatoBush, tnt, fuseSparks, boom, soot, balloon, balloonPop, cactus, paintBucket, paintBrush, mustache, paintHole, paintSplash, waterJet, cobble, cloud, shadow, spark, dust, smoke, flash, rays, vein, steam, sweat, stars, twinkle, whoosh, puff,
     heart, hearts, wind, banana, giftBox, suck, drool, tree, apple, bubble, gumSplat, rainCloud, rain, lightning, puddle, seesaw,
-    mudPit, mudSplash, rope, cake, crown, lollipop, tears, ball, pillow, feathers, bee, hive, table, pie, mcAppleTree, pumpkinBlock, blockBurst, mcChest, iceCream, scoopCap, iceBlock, frost, magicBeam, rails, grassSteps, minecart, kite, kiteString, popcorn, popcornPile, popBucket, cornCob, sunRay, pickaxe, grassBlock, pit, chili, chiliBush, fireBreath, flame, bigLeaf, pond, fish, fishingRod, fishLine, feather, sleepBubble, jumpCord, ropeHandle, marshmallow, mallowBag, slingshotY, slingBand, honeyPot, honeyCap, egg, chick, horseshoeMagnet, magnetWaves, anvil, coilSpring, rocket, rocketTrail, fireworkBurst, iceRink, iceSpray, deskFan, fanWind, melonBlock, melonHelmet, melonSlice, melonSeed, melonSplash, potion, potionBurst, effectSwirls, portal, fluff, cottonCandy, fluffBurst, mcBell, bellStand, soundRings, lemon, juiceSplash, sourLines, sandBlock, toyArrow, suctionMark, plunger, donut, donutRing, pizza, pizzaSlice, cheeseString, enderPearl, teleportPuff, cobweb, webWrap, webBall, webString, mcBed, snowBlock, snowGolem, yarnBall, yarnThread, yarnWrap, hayBale, hayBurst, hayStuck, berryBush, berry, prickle, mcCake, creamPuddle, piston, woodCrate, mcStick, mcCookie, plank, vacuum, vacHose, vacNozzle, airLines, rollingPin, dough, doughSheet, extinguisher, foamPile, foamJet, mcPig, mcCarrot, jelly, jellyPuddle, umbrella, sled, snowRamp, logPost, hammock, hammockWrap, hammockSheet, hammockRoll, gumBubble, gumPack, windmill, mcSheep, shears, mcSquid, inkPuddle, mcSlime, slimeBurst, mcCow, mcBucket, mcPuffer, mcChicken, yolk, noteBlock, noteBurst };
+    mudPit, mudSplash, rope, cake, crown, lollipop, tears, ball, pillow, feathers, bee, hive, table, pie, mcAppleTree, pumpkinBlock, blockBurst, mcChest, iceCream, scoopCap, iceBlock, frost, magicBeam, rails, grassSteps, minecart, kite, kiteString, popcorn, popcornPile, popBucket, cornCob, sunRay, pickaxe, grassBlock, pit, chili, chiliBush, fireBreath, flame, bigLeaf, pond, fish, fishingRod, fishLine, feather, sleepBubble, jumpCord, ropeHandle, marshmallow, mallowBag, slingshotY, slingBand, honeyPot, honeyCap, egg, chick, horseshoeMagnet, magnetWaves, anvil, coilSpring, rocket, rocketTrail, fireworkBurst, iceRink, iceSpray, deskFan, fanWind, melonBlock, melonHelmet, melonSlice, melonSeed, melonSplash, potion, potionBurst, effectSwirls, portal, fluff, cottonCandy, fluffBurst, mcBell, bellStand, soundRings, lemon, juiceSplash, sourLines, sandBlock, toyArrow, suctionMark, plunger, donut, donutRing, pizza, pizzaSlice, cheeseString, enderPearl, teleportPuff, cobweb, webWrap, webBall, webString, mcBed, snowBlock, snowGolem, yarnBall, yarnThread, yarnWrap, hayBale, hayBurst, hayStuck, berryBush, berry, prickle, mcCake, creamPuddle, piston, woodCrate, mcStick, mcCookie, plank, vacuum, vacHose, vacNozzle, airLines, rollingPin, dough, doughSheet, extinguisher, foamPile, foamJet, mcPig, mcCarrot, jelly, jellyPuddle, umbrella, sled, snowRamp, logPost, hammock, hammockWrap, hammockSheet, hammockRoll, gumBubble, gumPack, windmill, mcSheep, shears, mcSquid, inkPuddle, mcSlime, slimeBurst, mcCow, mcBucket, mcPuffer, mcChicken, yolk, noteBlock, noteBurst, hugeMushroom, spores };
 })();
