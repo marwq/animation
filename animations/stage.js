@@ -591,7 +591,14 @@ function Stage(cfg) {
     ctx.setTransform(1, 0, 0, 1, 0, 0);
     ctx.setTransform(...CAM);
     ctx.drawImage(BG.canvas, -BG.margin, -BG.margin);
-    for (const [x0, y, s, kind, v] of CLOUDS) {
+    if (BG.puffy) {                                    // пухлые облака — только над стеной
+      ctx.save(); ctx.beginPath(); ctx.rect(-300, -300, W + 600, BG.wallTop + 300); ctx.clip();
+      for (const [x0, y, s, kind, v] of CLOUDS) {
+        const u = 20 * s, span = W + 12 * u;
+        FX.puffCloud(ctx, ((x0 + v * t + 6 * u) % span) - 6 * u, y + u, u, kind, BG.cloud);
+      }
+      ctx.restore();
+    } else for (const [x0, y, s, kind, v] of CLOUDS) {
       const span = W + 300;
       FX.cloud(ctx, ((x0 + v * t + 150) % span) - 150, y, s, kind, BG.cloud);
     }
@@ -603,7 +610,7 @@ function Stage(cfg) {
       const foot = E.apply(st.G, ch.anchor);
       const air = Math.max(0, GROUND - foot[1]);
       const w = (p.form === 'big' ? 120 : ch.width * 0.42) * Math.max(0.35, 1 - air / 700);
-      if (foot[1] > -200 && foot[1] < GROUND + 40) FX.shadow(ctx, foot[0], GROUND + 6, w, 0.3 * Math.max(0.25, 1 - air / 600));
+      if (foot[1] > -200 && foot[1] < GROUND + 40) FX.shadow(ctx, foot[0], GROUND + 6, w, 0.3 * Math.max(0.25, 1 - air / 600), BG.shadow);
     }
     // руки-лапы превращения «рост» — за шариком
     for (const sp of FX_EV.sprout) {
@@ -805,7 +812,8 @@ function Stage(cfg) {
       EYES = await (await fetch('/animations/eyes.json')).json();
       if (big) big();
       for (const k of Object.keys(cache)) delete cache[k];             // состояния, посчитанные до всех ключей
-      BG = (cfg.background || {}).theme ? FX.mcBackground(W, H, EDGE, cfg.background) : FX.background(W, H, EDGE, cfg.background || {});
+      const bgc = cfg.background || {};
+      BG = bgc.theme === 'tiles' ? FX.tileBackground(W, H, EDGE, bgc) : bgc.theme ? FX.mcBackground(W, H, EDGE, bgc) : FX.background(W, H, EDGE, bgc);
     })();
     window.renderFrame = (f) => renderFrame(f, ctx);
     window.SCENE.audio = audio;

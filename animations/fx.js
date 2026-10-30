@@ -452,6 +452,153 @@ const FX = (() => {
     return { canvas: c, margin, cloud: T.cloud };
   }
 
+  // ---------------------------------------------------------------- фон «плитки»: голубое небо с пухлыми облаками,
+  // стена из плиток и пол из тех же плиток в перспективе. opts: { theme: 'tiles', seed, wall, floor, motif, sky: [верх, низ] }
+  // motif: squares (3×3 квадратика) | studs (кнопки-«лего») | diamonds (ромбы) | pillows (2×2 подушечки) | dots
+  const TILE = { top: 478, cap: 16, rows: 4, size: 60, horizon: 470, z0: 12 };
+  function puffShape(kind) {
+    return [
+      { c: [[-1.7, 0.15, 0.95], [-0.55, -0.55, 1.3], [0.75, -0.3, 1.12], [1.85, 0.12, 0.82], [-2.6, 0.42, 0.6]], base: 0.95 },
+      { c: [[-1.0, -0.15, 1.1], [0.25, -0.8, 1.28], [1.45, -0.12, 0.98], [-2.0, 0.32, 0.7], [2.35, 0.4, 0.58]], base: 0.98 },
+      { c: [[-0.65, 0.05, 0.78], [0.3, -0.45, 0.95], [1.15, 0.12, 0.66]], base: 0.8 },
+      { c: [[-2.2, 0.2, 0.9], [-1.0, -0.6, 1.25], [0.4, -0.95, 1.45], [1.8, -0.35, 1.15], [2.9, 0.25, 0.75]], base: 1.0 },
+    ][kind % 4];
+  }
+  // пухлое облако с плоским низом: (x, y) — центр, u — единица размера; tint — [цвет, тень снизу]
+  function puffCloud(ctx, x, y, u, kind = 0, tint) {
+    const sh = puffShape(kind), base = y + sh.base * u;
+    const body = () => { ctx.beginPath(); for (const [a, b, r] of sh.c) { ctx.moveTo(x + a * u + r * u, y + b * u); ctx.arc(x + a * u, y + b * u, r * u, 0, TAU); } };
+    ctx.save();
+    ctx.beginPath(); ctx.rect(x - 6 * u, y - 4 * u, 12 * u, base - (y - 4 * u)); ctx.clip();
+    body(); ctx.fillStyle = (tint && tint[0]) || '#ffffff'; ctx.fill();
+    ctx.beginPath(); ctx.rect(x - 6 * u, base - 0.34 * u, 12 * u, 0.34 * u); ctx.clip();          // голубоватая тень снизу
+    body(); ctx.fillStyle = (tint && tint[1]) || '#dcecfa'; ctx.fill();
+    ctx.restore();
+  }
+  function tileBackground(w, h, edge, opts = {}) {
+    const margin = 80;
+    const c = document.createElement('canvas');
+    c.width = w + 2 * margin; c.height = h + 2 * margin;
+    const g = c.getContext('2d');
+    g.translate(margin, margin);
+    const r = rng(opts.seed || 7);
+    const L = (col, k) => mix(col, '#ffffff', k), D = (col, k) => mix(col, '#000000', k);
+    const INK = opts.ink || '#1c1a2a';
+    const WALL = opts.wall || '#22b5a8', FLOOR = opts.floor || '#b9a0f5', motif = opts.motif || 'squares';
+    const sky = opts.sky || ['#3e9cf2', '#d4efff'];
+    const { top: TOP, cap: CAP, rows: ROWS, size: TS, horizon: YH, z0: Z0 } = TILE;
+    const WT = TOP + CAP, WB = WT + ROWS * TS;                 // плитки стены: WT..WB, дальше пол
+    // ---- небо
+    const sg = g.createLinearGradient(0, -margin, 0, TOP);
+    sg.addColorStop(0, sky[0]); sg.addColorStop(0.62, mix(sky[0], sky[1], 0.55)); sg.addColorStop(1, sky[1]);
+    g.fillStyle = sg; g.fillRect(-margin, -margin, c.width, TOP + margin + 2);
+    // дальние облака: большие — из-за стены и с краёв кадра
+    const cl = ['#ffffff', mix(sky[1], '#ffffff', 0.25)];
+    // дальние облака: 2–3 больших из-за стены (у краёв и где-нибудь посередине) и одно — в верхнем углу
+    const side = r() < 0.5 ? -1 : 1, big = opts.bigClouds || [
+      [side < 0 ? -40 + r() * 140 : w + 40 - r() * 140, TOP - 30 - r() * 30, 70 + r() * 25, Math.floor(r() * 4)],
+      [side < 0 ? w + 20 - r() * 100 : -20 + r() * 100, TOP - 10 - r() * 30, 58 + r() * 22, Math.floor(r() * 4)],
+      [w * (0.3 + r() * 0.4), TOP + 10, 40 + r() * 22, Math.floor(r() * 4)],
+      [side < 0 ? w + 30 - r() * 60 : -30 + r() * 60, 40 + r() * 70, 55 + r() * 25, Math.floor(r() * 4)]];
+    for (const [x, y, u, k] of big) puffCloud(g, x, y, u, k, cl);
+    // ---- узор плитки: poly — точки в координатах плитки (u, v ∈ 0..1), P(u, v) — точка на экране
+    const poly = (P, pts) => { g.beginPath(); pts.forEach(([u, v], i) => { const p = P(u, v); i ? g.lineTo(p[0], p[1]) : g.moveTo(p[0], p[1]); }); g.closePath(); };
+    const circ = (cx, cy, rr, n = 22) => Array.from({ length: n }, (_, i) => [cx + Math.cos(i / n * TAU) * rr, cy + Math.sin(i / n * TAU) * rr]);
+    const sq = (u0, v0, s) => [[u0, v0], [u0 + s, v0], [u0 + s, v0 + s], [u0, v0 + s]];
+    const dia = (cx, cy, rr) => [[cx, cy - rr], [cx + rr, cy], [cx, cy + rr], [cx - rr, cy]];
+    function drawMotif(P, col, lw, k = 1) {
+      const D = (c, a) => mix(c, '#000000', a * k);          // k < 1 — мягче тени (пол)
+      const dk = D(col, 0.3), lt = L(col, 0.42), mid = D(col, 0.1);
+      g.lineJoin = 'round';
+      if (motif === 'squares') {
+        for (const a of [0.1, 0.4, 0.7]) for (const b of [0.1, 0.4, 0.7]) {
+          poly(P, sq(a + 0.025, b + 0.03, 0.2)); g.fillStyle = D(col, 0.2); g.fill();
+          poly(P, sq(a, b, 0.2)); g.fillStyle = L(col, 0.12); g.fill(); g.lineWidth = lw; g.strokeStyle = dk; g.stroke();
+          poly(P, [[a + 0.03, b + 0.05], [a + 0.03, b + 0.03], [a + 0.17, b + 0.03]]); g.lineWidth = lw * 0.9; g.strokeStyle = lt; g.stroke();
+        }
+      } else if (motif === 'studs') {
+        for (const a of [0.28, 0.72]) for (const b of [0.28, 0.72]) {
+          poly(P, circ(a + 0.03, b + 0.045, 0.17)); g.fillStyle = D(col, 0.28); g.fill();
+          poly(P, circ(a, b, 0.17)); g.fillStyle = L(col, 0.1); g.fill(); g.lineWidth = lw; g.strokeStyle = dk; g.stroke();
+          poly(P, circ(a - 0.045, b - 0.05, 0.055, 12)); g.fillStyle = 'rgba(255,255,255,0.55)'; g.fill();
+        }
+      } else if (motif === 'diamonds') {
+        poly(P, dia(0.52, 0.53, 0.37)); g.fillStyle = D(col, 0.18); g.fill();
+        poly(P, dia(0.5, 0.5, 0.37)); g.fillStyle = mid; g.fill(); g.lineWidth = lw; g.strokeStyle = dk; g.stroke();
+        poly(P, dia(0.5, 0.5, 0.17)); g.fillStyle = L(col, 0.3); g.fill(); g.lineWidth = lw * 0.8; g.strokeStyle = dk; g.stroke();
+        poly(P, [[0.2, 0.5], [0.5, 0.2], [0.8, 0.5]]); g.lineWidth = lw * 0.8; g.strokeStyle = 'rgba(255,255,255,0.45)'; g.stroke();
+      } else if (motif === 'pillows') {
+        for (const a of [0.07, 0.53]) for (const b of [0.07, 0.53]) {
+          const s = 0.4, e = 0.07;
+          poly(P, sq(a, b, s)); g.fillStyle = col; g.fill();
+          poly(P, [[a, b], [a + s, b], [a + s - e, b + e], [a + e, b + e], [a + e, b + s - e], [a, b + s]]); g.fillStyle = lt; g.fill();
+          poly(P, [[a + s, b + s], [a, b + s], [a + e, b + s - e], [a + s - e, b + s - e], [a + s - e, b + e], [a + s, b]]); g.fillStyle = D(col, 0.22); g.fill();
+          poly(P, sq(a, b, s)); g.lineWidth = lw * 0.9; g.strokeStyle = dk; g.stroke();
+        }
+      } else if (motif === 'dots') {
+        for (const [a, b, rr] of [[0.25, 0.25, 0.1], [0.75, 0.25, 0.1], [0.5, 0.5, 0.14], [0.25, 0.75, 0.1], [0.75, 0.75, 0.1]]) {
+          poly(P, circ(a + 0.02, b + 0.03, rr, 16)); g.fillStyle = D(col, 0.25); g.fill();
+          poly(P, circ(a, b, rr, 16)); g.fillStyle = L(col, 0.35); g.fill(); g.lineWidth = lw * 0.9; g.strokeStyle = dk; g.stroke();
+        }
+      }
+    }
+    // плитка с фаской (стена)
+    function bevelTile(x, y, s, col) {
+      g.fillStyle = col; g.fillRect(x, y, s, s);
+      const e = 4;
+      g.fillStyle = L(col, 0.28); g.beginPath(); g.moveTo(x, y); g.lineTo(x + s, y); g.lineTo(x + s - e, y + e); g.lineTo(x + e, y + e); g.lineTo(x + e, y + s - e); g.lineTo(x, y + s); g.fill();
+      g.fillStyle = D(col, 0.2); g.beginPath(); g.moveTo(x + s, y + s); g.lineTo(x, y + s); g.lineTo(x + e, y + s - e); g.lineTo(x + s - e, y + s - e); g.lineTo(x + s - e, y + e); g.lineTo(x + s, y); g.fill();
+      drawMotif((u, v) => [x + u * s, y + v * s], col, 2.4);
+      g.lineWidth = 1.5; g.strokeStyle = D(col, 0.42); g.strokeRect(x + 0.75, y + 0.75, s - 1.5, s - 1.5);
+    }
+    // ---- стена
+    const wA = WALL, wB = opts.wall2 || D(WALL, 0.16);
+    const x0 = w / 2 - Math.ceil((w / 2 + margin) / TS) * TS;
+    for (let row = 0; row < ROWS; row++) for (let x = x0, i = 0; x < w + margin; x += TS, i++) bevelTile(x, WT + row * TS, TS, (i + row) % 2 ? wB : wA);
+    // тень на стене сверху вниз — объём
+    const wg = g.createLinearGradient(0, WT, 0, WB);
+    wg.addColorStop(0, 'rgba(255,255,255,0.10)'); wg.addColorStop(0.5, 'rgba(255,255,255,0)'); wg.addColorStop(1, 'rgba(0,0,0,0.14)');
+    g.fillStyle = wg; g.fillRect(-margin, WT, c.width, WB - WT);
+    // карниз
+    g.fillStyle = L(WALL, 0.3); g.fillRect(-margin, TOP, c.width, CAP);
+    g.fillStyle = L(WALL, 0.55); g.fillRect(-margin, TOP + 3, c.width, 3);
+    g.fillStyle = D(WALL, 0.25); g.fillRect(-margin, TOP + CAP - 3, c.width, 3);
+    g.fillStyle = 'rgba(0,0,0,0.18)'; g.fillRect(-margin, WT, c.width, 5);
+    g.fillStyle = INK; g.fillRect(-margin, TOP - 4, c.width, 5);
+    // ---- пол: те же плитки в перспективе; z — глубина в плитках (Z0 — у стены), q = Z0 / z — масштаб
+    const PR = (X, z) => { const q = Z0 / z; return [w / 2 + X * TS * q, YH + (WB - YH) * q]; };
+    const fA = FLOOR, fB = D(FLOOR, 0.1);
+    for (let k = 0; ; k++) {
+      const za = Z0 - k, zb = Z0 - k - 1;
+      if (zb <= 0.5 || PR(0, za)[1] > h + margin) break;
+      const qb = Z0 / zb, N = Math.ceil((w / 2 + margin) / (TS * qb)) + 1;
+      for (let X = -N; X < N; X++) {
+        const col = ((X + k) % 2 + 2) % 2 ? fB : fA;
+        const P = (u, v) => PR(X + u, za - v);
+        poly(P, [[0, 0], [1, 0], [1, 1], [0, 1]]); g.fillStyle = col; g.fill();
+        // фаска плитки пола: светлая дальняя кромка, тёмная ближняя
+        poly(P, [[0, 0], [1, 0], [0.96, 0.05], [0.04, 0.05]]); g.fillStyle = L(col, 0.22); g.fill();
+        poly(P, [[0, 1], [1, 1], [0.96, 0.95], [0.04, 0.95]]); g.fillStyle = D(col, 0.12); g.fill();
+        drawMotif(P, col, 2.0 * (Z0 / (za - 0.5)), 0.72);
+        poly(P, [[0, 0], [1, 0], [1, 1], [0, 1]]); g.lineWidth = 1.2 * Z0 / za; g.strokeStyle = D(col, 0.3); g.stroke();
+      }
+    }
+    // дымка у стены, затемнение вниз, тень от стены
+    const fg = g.createLinearGradient(0, WB, 0, h + margin);
+    fg.addColorStop(0, mix(sky[1], '#ffffff', 0.3) + 'aa'); fg.addColorStop(0.18, mix(sky[1], '#ffffff', 0.3) + '00');
+    fg.addColorStop(0.55, 'rgba(0,0,0,0)'); fg.addColorStop(1, 'rgba(0,0,0,0.07)');
+    g.fillStyle = fg; g.fillRect(-margin, WB, c.width, h + margin - WB);
+    const ao = g.createLinearGradient(0, WB, 0, WB + 26);
+    ao.addColorStop(0, 'rgba(0,0,0,0.28)'); ao.addColorStop(1, 'rgba(0,0,0,0)');
+    g.fillStyle = ao; g.fillRect(-margin, WB, c.width, 26);
+    g.fillStyle = INK; g.fillRect(-margin, WB - 1, c.width, 4);
+    // мягкая виньетка
+    const vg = g.createRadialGradient(w / 2, h * 0.5, h * 0.5, w / 2, h * 0.5, w * 0.72);
+    vg.addColorStop(0, 'rgba(0,0,0,0)'); vg.addColorStop(1, 'rgba(0,0,0,0.08)');
+    g.fillStyle = vg; g.fillRect(-margin, TOP, c.width, c.height);
+    return { canvas: c, margin, cloud: cl, puffy: true, wallTop: TOP - 4, shadow: D(FLOOR, 0.6) };
+  }
+
   // тонкая рука-лапа (превращение «рост»): точки пути, толщина, цвет; на конце три пальца-когтя
   function limb(ctx, pts, w, col) {
     ctx.save();
@@ -1981,10 +2128,10 @@ const FX = (() => {
     ctx.fillRect(x + last[0] * u, y + (last[1] + 1) * u - u * 0.28, last[2] * u, u * 0.28);
   }
 
-  function shadow(ctx, x, y, w, alpha) {
+  function shadow(ctx, x, y, w, alpha, col = '#145c0c') {
     ctx.save();
     ctx.globalAlpha = alpha;
-    ctx.fillStyle = '#145c0c';
+    ctx.fillStyle = col;
     ctx.beginPath(); ctx.ellipse(x, y, w, w * 0.13, 0, 0, TAU); ctx.fill();
     ctx.restore();
   }
@@ -4656,7 +4803,7 @@ const FX = (() => {
     }
   }
 
-  return { rng, background, mcBackground, limb, note, waterBalloon, basket, waterSplash, boomerang, flower, bubbleWand, soapBubble, bubblePop, snowball, snowPile, snowCap, snowSplat, snowBurst, slimeBlock, tomato, gardenBed, tomatoBush, tnt, fuseSparks, boom, soot, balloon, balloonPop, cactus, paintBucket, paintBrush, mustache, paintHole, paintSplash, waterJet, cobble, cloud, shadow, spark, dust, smoke, flash, rays, vein, steam, sweat, stars, twinkle, whoosh, puff,
+  return { rng, background, mcBackground, tileBackground, puffCloud, limb, note, waterBalloon, basket, waterSplash, boomerang, flower, bubbleWand, soapBubble, bubblePop, snowball, snowPile, snowCap, snowSplat, snowBurst, slimeBlock, tomato, gardenBed, tomatoBush, tnt, fuseSparks, boom, soot, balloon, balloonPop, cactus, paintBucket, paintBrush, mustache, paintHole, paintSplash, waterJet, cobble, cloud, shadow, spark, dust, smoke, flash, rays, vein, steam, sweat, stars, twinkle, whoosh, puff,
     heart, hearts, wind, banana, giftBox, suck, drool, tree, apple, bubble, gumSplat, rainCloud, rain, lightning, puddle, seesaw,
     mudPit, mudSplash, rope, cake, crown, lollipop, tears, ball, pillow, feathers, bee, hive, table, pie, mcAppleTree, pumpkinBlock, blockBurst, mcChest, iceCream, scoopCap, iceBlock, frost, magicBeam, rails, grassSteps, minecart, kite, kiteString, popcorn, popcornPile, popBucket, cornCob, sunRay, pickaxe, grassBlock, pit, chili, chiliBush, fireBreath, flame, bigLeaf, pond, fish, fishingRod, fishLine, feather, sleepBubble, jumpCord, ropeHandle, marshmallow, mallowBag, slingshotY, slingBand, honeyPot, honeyCap, egg, chick, horseshoeMagnet, magnetWaves, anvil, coilSpring, rocket, rocketTrail, fireworkBurst, iceRink, iceSpray, deskFan, fanWind, melonBlock, melonHelmet, melonSlice, melonSeed, melonSplash, potion, potionBurst, effectSwirls, portal, fluff, cottonCandy, fluffBurst, mcBell, bellStand, soundRings, lemon, juiceSplash, sourLines, sandBlock, toyArrow, suctionMark, plunger, donut, donutRing, pizza, pizzaSlice, cheeseString, enderPearl, teleportPuff, cobweb, webWrap, webBall, webString, mcBed, snowBlock, snowGolem, yarnBall, yarnThread, yarnWrap, hayBale, hayBurst, hayStuck, berryBush, berry, prickle, mcCake, creamPuddle, piston, woodCrate, mcStick, mcCookie, plank, vacuum, vacHose, vacNozzle, airLines, rollingPin, dough, doughSheet, extinguisher, foamPile, foamJet, mcPig, mcCarrot, jelly, jellyPuddle, umbrella, sled, snowRamp, logPost, hammock, hammockWrap, hammockSheet, hammockRoll, gumBubble, gumPack, windmill, mcSheep, shears, mcSquid, inkPuddle, mcSlime, slimeBurst, mcCow, mcBucket, mcPuffer, mcChicken, yolk, noteBlock, noteBurst, hugeMushroom, spores, mcBarrel, mcBarrelEnd, mcFrog, frogTongue, mcFox, mcPanda, bamboo, mcLadder };
 })();
