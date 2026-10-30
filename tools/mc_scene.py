@@ -14,6 +14,8 @@
                      домик фасадом в центре, опушка с кустами; низкое солнце, тени;
                      aerial — с большой высоты: видно, что земля круглая; суша с
                      рощами, пляж, море с островами;
+                     room_door, room_bed — комната в домике: от двери вглубь и от
+                     кровати на дверь; солнце сквозь окна, факелы;
                      sky — только небо с облаками; swing — качели из блоков на
                      прозрачном фоне, с обводкой. meadow, coast, sky — в одних цветах
     --style toon     рисованный стиль (имя файла <shot>_toon.png); Незер — только он
@@ -70,6 +72,9 @@ DEEP = (0x40, 0x7A, 0xEA)     # на глубине синяя
 LUSH = {'sat': 1.25, 'sharpen': 0.35, 'ca': 0.016, 'bloom': 0.3}   # обработка поляны
 # яркое тёплое низкое солнце и глубокие тени — как в роликах toonz CRAFT
 SUNNY = {'sun_power': 9.5, 'sun_color': (1.0, 0.86, 0.62), 'sky_light': 0.45, 'exposure': 0.3}
+# комната: солнце с юго-востока бьёт в окна, тёплый свет под потолком, факелы
+ROOM_LIGHT = {'sun': (-0.70, 0.45, -0.42), 'sun_power': 10.5, 'sun_color': (1.0, 0.86, 0.62),
+              'sky_light': 1.0, 'fill': 140, 'exposure': 0.9}
 
 PORTAL = (-1, 20)        # левый блок рамки; рамка 4×5 стоит вдоль оси x
 PORTAL_C = Vector((1.0, 20.5, 3.5))     # центр проёма 2×3
@@ -85,7 +90,8 @@ PORTAL_C = Vector((1.0, 20.5, 3.5))     # центр проёма 2×3
 # (меньше — тени глубже). Деревья в shade за краем кадра дают пятнистую тень на траве.
 # house — левый передний угол домика; bushes — кусты из листвы: x, y, ширина, высота;
 # fg_grass — кустики травы у самой камеры. В shade третьим можно указать породу.
-# look_down — насколько камера смотрит вниз, градусов; planet — радиус шара, на который
+# yaw — куда повёрнута камера, градусов (180 — на юг); fill — тёплый свет под
+# потолком, Вт; look_down — насколько камера смотрит вниз, градусов; planet — радиус шара, на который
 # уложен мир (видно, что земля круглая); haze — дымка вдали (None — без неё).
 SHOTS = {
     'field':  {'world': 'field', 'cam': (-26.0, 4.0, 2.62), 'shift': -0.08, 'lens': 28,
@@ -123,6 +129,10 @@ SHOTS = {
     'aerial': {'world': 'aerial', 'cam': (0.0, 0.0, 80.0), 'look_down': 50, 'shift': 0,
                'lens': 24, 'focus': 100.0, 'fstop': 0, 'exposure': 0.3, 'grade': LUSH,
                'sky_reflect': True, 'haze': (60, 260, 0.5), 'planet': 200},
+    'room_door': {'world': 'room', 'cam': (0.0, 0.35, 2.62), 'yaw': 0, 'shift': -0.12,
+                  'lens': 18, 'focus': 6.0, 'fstop': 2.8, 'grade': LUSH, **ROOM_LIGHT},
+    'room_bed':  {'world': 'room', 'cam': (0.0, 8.15, 2.62), 'yaw': 180, 'shift': -0.12,
+                  'lens': 18, 'focus': 5.0, 'fstop': 2.8, 'grade': LUSH, **ROOM_LIGHT},
     'swing':  {'world': 'swing', 'dir': 'props', 'cam': (2.0, -10.0, 1.62), 'shift': 0.06,
                'lens': 35, 'focus': 10.0, 'fstop': 0, 'exposure': -0.6, 'grade': {'sat': 1.1}},
 }
@@ -241,6 +251,18 @@ def textures(tex, toon=False):
               'magma', 'nether_portal', 'lava_flow', 'spruce_planks', 'spruce_trapdoor',
               'stone_bricks', 'chain', 'smooth_stone', 'sand', 'cobblestone', 'oak_planks'):
         t[f] = load_rgba(tex, f)
+    for f in ('red_wool', 'white_wool', 'light_blue_wool', 'yellow_wool', 'crafting_table_top',
+              'crafting_table_front', 'crafting_table_side', 'bookshelf', 'furnace_front',
+              'furnace_side', 'furnace_top', 'oak_trapdoor', 'glass'):
+        t[f] = load_rgba(tex, f)
+    t['stripped_oak'] = load_rgba(tex, 'stripped_oak_log')   # полоса под потолком
+    sky = np.array([0.62, 0.80, 0.98], np.float32)  # дверь изнутри: в окошках небо
+    for k, f in (('door_bottom_in', 'oak_door_bottom'), ('door_top_in', 'oak_door_top')):
+        a = load_rgba(tex, f)
+        t[k] = a.copy()
+        t[k][..., :3] = a[..., :3] * a[..., 3:] + sky * (1 - a[..., 3:])
+        t[k][..., 3] = 1
+    t['torch_flame'] = np.tile(np.array([1.0, 0.78, 0.30, 1.0], np.float32), (2, 2, 1))
     inside = t['oak_planks'].copy()             # комната за окном и дверью — темнее
     inside[..., :3] *= 0.5
     for k, f in (('window', 'glass'), ('door_bottom', 'oak_door_bottom'), ('door_top', 'oak_door_top')):
@@ -292,7 +314,7 @@ def toon_textures(t, overlay):
 def toon_material(name, img, kind):
     """Рисованный стиль: только цвет, без блеска и дымки; вырез — у травы, цветов, огня."""
     m = bpy.data.materials.new(name)
-    m.pass_index = TOON_GROUP[name]
+    m.pass_index = TOON_GROUP.get(name, 30)
     m.use_nodes = True
     N, L = m.node_tree.nodes, m.node_tree.links
     N.clear()
@@ -333,7 +355,7 @@ def material(name, img, kind, toon=False, haze=(35, 180, 0.3)):
         tx = N.new('ShaderNodeTexImage')
         tx.image, tx.interpolation = img, 'Closest'
         em = N.new('ShaderNodeEmission')
-        em.inputs['Strength'].default_value = 2.5
+        em.inputs['Strength'].default_value = 12 if name == 'torch_flame' else 2.5
         L.new(tx.outputs['Color'], em.inputs['Color'])
         L.new(em.outputs[0], out.inputs['Surface'])
         return m
@@ -394,8 +416,12 @@ def material(name, img, kind, toon=False, haze=(35, 180, 0.3)):
     return m
 
 
+PLANTS = {'short_grass', 'tall_grass_bottom', 'tall_grass_top', 'poppy', 'dandelion',
+          'oxeye_daisy', 'cornflower', 'azure_bluet'}
+
+
 def kind_of(name):
-    if name == 'chain':
+    if name in ('chain', 'glass'):
         return 'cutout'
     if name.startswith('water'):
         return 'water'
@@ -403,13 +429,9 @@ def kind_of(name):
         return 'leaves'
     if name == 'obsidian':
         return 'glossy'
-    if name in ('nether_portal', 'lava', 'lava_flow', 'magma', 'fire'):
+    if name in ('nether_portal', 'lava', 'lava_flow', 'magma', 'fire', 'torch_flame'):
         return 'emit'
-    if name in ('grass_top', 'grass_side', 'dirt', 'netherrack', 'spruce_planks',
-                'spruce_trapdoor', 'stone_bricks', 'smooth_stone', 'sand', 'cobblestone',
-                'oak_planks', 'window', 'door_bottom', 'door_top') or '_log' in name:
-        return 'block'
-    return 'plant'
+    return 'plant' if name in PLANTS else 'block'
 
 
 # ------------------------------------------------------------------ геометрия
@@ -457,11 +479,12 @@ class Mesh:
     def blocks(self, blocks, solid=False):
         """Грани блоков; к непрозрачному соседу грань не нужна, листва — как в игре
         (сквозная) или сплошная (solid, для рисованного стиля)."""
+        clear = lambda b: b.endswith('_leaves') or b == 'glass'
         for (x, y, z), t in blocks.items():
             for n in FACES:
                 nb = blocks.get((x + n[0], y + n[1], z + n[2]))
-                if nb and (solid or not nb.endswith('_leaves')):
-                    continue
+                if nb and (solid or not clear(nb) or nb == t == 'glass'):
+                    continue                   # за стеклом и листвой грань видна
                 self.face(x, y, z, n, t + '_top' if t.endswith('_log') and n[2] else t)
 
     def cross(self, x, y, z, mat, dx=0.0, dy=0.0):
@@ -1010,6 +1033,111 @@ def build_aerial(opt, view, mats):
     bend(view.s['planet'])
 
 
+# ------------------------------------------------------------------ комната
+# Комната внутри: x от -4 до 4, y от 0 до 9, пол — верх на z = 1. Стены в один блок:
+# x = -5 и 4, y = -1 (юг, дверь) и 9 (север, большое окно). Потолок на z = 5.
+
+
+def cube(m, x, y, z, top, side, front=None, facing=(1, 0, 0), bottom=None):
+    """Блок с разными гранями: верх, бока, лицо в сторону facing (верстак, печка)."""
+    for n in FACES:
+        if n[2] == 1:
+            mat = top
+        elif n[2] == -1:
+            mat = bottom or top
+        else:
+            mat = front if front and n == facing else side
+        m.face(x, y, z, n, mat)
+
+
+def torch(mats, x, y, z, tilt):
+    """Факел на стене: палочка и огонёк, наклон от стены; рядом тёплый свет."""
+    m = Mesh()
+    w = 1 / 16
+    m.box((-w, -w, 0), (w, w, 0.5), 'oak_log')
+    m.box((-w * 1.2, -w * 1.2, 0.5), (w * 1.2, w * 1.2, 0.625), 'torch_flame')
+    ob = m.build('torch', mats)
+    ob.location = (x, y, z)
+    ob.rotation_euler = Euler((math.radians(tilt), 0, 0))
+    lt = bpy.data.lights.new('torch_light', 'POINT')
+    lt.energy, lt.color, lt.shadow_soft_size = 30, (1.0, 0.62, 0.28), 0.1
+    lo = bpy.data.objects.new('torch_light', lt)
+    a = math.radians(tilt)                     # над огоньком, с учётом наклона
+    lo.location = (x, y - 0.75 * math.sin(a), z + 0.75 * math.cos(a))
+    bpy.context.scene.collection.objects.link(lo)
+
+
+def room_walls():
+    b = {}
+    for x in range(-5, 5):
+        for y in range(-1, 10):
+            b[(x, y, 0)] = 'oak_planks'                         # пол
+            b[(x, y, 5)] = 'oak_planks'                         # потолок
+            if x in (-5, 4) or y in (-1, 9):
+                for z in range(1, 5):
+                    corner = x in (-5, 4) and y in (-1, 9)
+                    b[(x, y, z)] = 'oak_log' if corner else 'cobblestone' if z == 1 else \
+                        'stripped_oak' if z == 4 else 'oak_planks'
+    for x in range(-2, 2):                                       # север: большое окно
+        for z in (2, 3):
+            b[(x, 9, z)] = 'glass'
+    for x in (-4, -3, 2, 3):                                     # юг: окна по бокам двери
+        for z in (2, 3):
+            b[(x, -1, z)] = 'glass'
+    for x in (-1, 0):                                            # двойная дверь
+        b[(x, -1, 1)], b[(x, -1, 2)] = 'door_bottom_in', 'door_top_in'
+    for y in range(3, 6):                                        # запад: окно
+        for z in (2, 3):
+            b[(-5, y, z)] = 'glass'
+    for y in range(1, 7):                                        # восток: окно, сюда солнце
+        for z in (2, 3):
+            b[(4, y, z)] = 'glass'
+    return b
+
+
+def build_room(opt, view, mats):
+    rng = random.Random(opt['seed'])
+    m = Mesh()
+    m.blocks(room_walls())
+    for z in (1, 2):                                             # у западной стены
+        for y in (6, 7):
+            cube(m, -4, y, z, 'oak_planks', 'bookshelf')        # книжные полки
+    cube(m, -4, 1, 1, 'crafting_table_top', 'crafting_table_side', 'crafting_table_front')
+    cube(m, -4, 2, 1, 'furnace_top', 'furnace_side', 'furnace_front')
+    for y in range(3, 6):                                        # диван из ступенек у востока
+        m.box((3, y, 1), (4, y + 1, 1.5), 'oak_planks')
+        m.box((3.5, y, 1.5), (4, y + 1, 2), 'oak_planks')
+    m.box((3, 2.8125, 1), (4, 3, 1.8), 'oak_trapdoor')          # подлокотники
+    m.box((3, 6, 1), (4, 6.1875, 1.8), 'oak_trapdoor')
+    m.box((1.875, 4.375, 1), (2.125, 4.625, 1.9375), 'oak_planks')     # столик: столбик
+    m.box((1.5, 4, 1.9375), (2.5, 5, 2), 'oak_planks')                 # и столешница
+    m.box((-1, 7, 1), (1, 9, 1.1875), 'oak_planks')              # кровать под окном: рама,
+    m.box((-0.98, 7.02, 1.1875), (0.98, 8.98, 1.5625), 'red_wool')     # матрас с одеялом,
+    m.box((-0.85, 8.3, 1.5625), (0.85, 8.9, 1.72), 'white_wool')       # подушка
+    for i in range(3):                                           # коврик в клетку у кровати
+        for j in range(2):
+            x, y = -1.5 + i, 4.5 + j
+            m.box((x, y, 1), (x + 1, y + 1, 1.0625), 'light_blue_wool' if (i + j) % 2 else 'white_wool')
+    cube(m, -4, 8, 1, 'oak_planks', 'bookshelf')                 # полка в углу у кровати
+    for y in (2.75, 5.75):                                       # балки под потолком
+        m.box((-5, y, 4.65), (4, y + 0.5, 5), 'stripped_oak')
+    m.build('room', mats)
+    for x, y, tilt in ((-1.5, 0.08, -22.5), (1.5, 0.08, -22.5), (-2.5, 8.92, 22.5), (2.5, 8.92, 22.5)):
+        torch(mats, x, y, 2.3, tilt)
+
+    g = Mesh()                                                   # трава вокруг дома
+    for (x0, y0), (x1, y1) in (((-60, -60), (60, -1)), ((-60, 10), (60, 60)),
+                               ((-60, -1), (-5, 10)), ((5, -1), (60, 10))):
+        g.quad([(x0, y0, 1), (x1, y0, 1), (x1, y1, 1), (x0, y1, 1)], 'grass_top',
+               [(x0, y0), (x1, y0), (x1, y1), (x0, y1)])
+    g.build('ground', mats)
+    t = Mesh()                                                   # деревья за окнами
+    for x, y, *wood in ((-3, 15), (4, 17, 'birch'), (-10, 13), (-12, 4), (-11, -4, 'birch'),
+                        (-8, -9), (11, 14), (-1, -12)):
+        t.blocks(tree_shape(rng, x, y, 0, wood[0] if wood else 'oak'))
+    t.build('trees', mats)
+
+
 def build_scene(opt, view):
     toon = opt['style'] == 'toon'
     haze = view.s.get('haze', (35, 180, 0.3)) or (1e5, 2e5, 0)
@@ -1017,7 +1145,7 @@ def build_scene(opt, view):
             for k, img in textures(opt['tex'], toon).items()}
     mats['cloud'] = material('cloud', None, 'cloud', toon)
     {'nether': build_nether, 'swing': build_swing, 'coast': build_coast, 'sky': build_sky,
-     'aerial': build_aerial}.get(view.s['world'], build_field)(opt, view, mats)
+     'aerial': build_aerial, 'room': build_room}.get(view.s['world'], build_field)(opt, view, mats)
 
 
 def lights_camera(opt, s):
@@ -1092,7 +1220,16 @@ def lights_camera(opt, s):
     cam.dof.focus_distance, cam.dof.aperture_fstop = s['focus'], s['fstop'] or 1
     co = bpy.data.objects.new('cam', cam)
     co.location = s['cam']
-    co.rotation_euler = Euler((math.radians(90 - s.get('look_down', 0)), 0, 0))   # прямо
+    co.rotation_euler = Euler((math.radians(90 - s.get('look_down', 0)), 0,
+                               math.radians(s.get('yaw', 0))))   # прямо, без наклона
+    if s.get('fill'):                         # тёплый свет под потолком, камере не виден
+        fl = bpy.data.lights.new('fill', 'AREA')
+        fl.shape, fl.size, fl.size_y = 'RECTANGLE', 7.0, 8.0
+        fl.energy, fl.color = s['fill'], (1.0, 0.86, 0.68)
+        fo = bpy.data.objects.new('fill', fl)
+        fo.location = (0, 4.5, 4.9)
+        fo.visible_camera = fo.visible_glossy = False
+        sc.collection.objects.link(fo)
     sc.collection.objects.link(co)
     sc.camera = co
 
