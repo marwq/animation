@@ -4225,6 +4225,45 @@ const FX = (() => {
     ctx.restore();
   }
 
+  // слайм из майнкрафта: (x, y) — середина низа, s — размер куба, sq — сплющивание (меньше 1 — сплющен),
+  // look — куда смотрят глаза (−1..1), alpha — прозрачность оболочки, core — рисовать ли ядро
+  function mcSlime(ctx, x, y, s = 240, sq = 1, look = 0, alpha = 0.72, core = true, mouth = 0) {
+    const w = s / Math.sqrt(sq), h = s * sq;
+    ctx.save(); ctx.translate(x, y);
+    const cw = w * 0.62, ch = h * 0.62, u = cw / 8;
+    if (core) {
+      ctx.fillStyle = '#3f9b2c'; ctx.fillRect(-cw / 2, -h / 2 - ch / 2, cw, ch);
+      ctx.fillStyle = '#4fb636'; ctx.fillRect(-cw / 2, -h / 2 - ch / 2, cw, ch * 0.2);
+    }
+    ctx.globalAlpha = alpha;
+    ctx.fillStyle = '#7ed957'; ctx.fillRect(-w / 2, -h, w, h);
+    ctx.globalAlpha = Math.min(1, alpha + 0.1);
+    ctx.fillStyle = '#a9ef86'; ctx.fillRect(-w / 2, -h, w, h * 0.12); ctx.fillRect(-w / 2, -h, w * 0.1, h);
+    ctx.fillStyle = 'rgba(30,90,20,0.35)'; ctx.fillRect(-w / 2, -h * 0.14, w, h * 0.14);
+    ctx.globalAlpha = 1;
+    ctx.fillStyle = 'rgba(255,255,255,0.75)'; ctx.fillRect(-w * 0.36, -h * 0.86, w * 0.12, h * 0.07); ctx.fillRect(-w * 0.36, -h * 0.75, w * 0.05, h * 0.12);
+    if (core) {                                                    // лицо — поверх оболочки
+      ctx.fillStyle = '#163310';
+      for (const ex of [-cw * 0.3, cw * 0.12]) ctx.fillRect(ex + look * u * 0.6, -h / 2 - ch * 0.18, u * 1.4, u * 1.4);
+      ctx.fillRect(-u * 0.6 + look * u * 0.4, -h / 2 + ch * 0.16, u * (1.2 + mouth), u * (0.7 + mouth * 1.3));
+    }
+    ctx.lineWidth = 6; ctx.strokeStyle = '#1f5c12'; ctx.strokeRect(-w / 2, -h, w, h);
+    ctx.restore();
+  }
+  // брызги слизи: life 0..1
+  function slimeBurst(ctx, x, y, life, size = 1, seed = 4) {
+    if (life < 0 || life > 1) return;
+    const r = rng(seed);
+    ctx.save(); ctx.globalAlpha = Math.min(1, (1 - life) * 2);
+    for (let i = 0; i < 14; i++) {
+      const a = -Math.PI * (0.05 + 0.9 * r()), v = (180 + 260 * r()) * size, sz = (16 + 18 * r()) * size * (1 - 0.4 * life);
+      const px = x + Math.cos(a) * v * life, py = y + Math.sin(a) * v * life + 420 * life * life;
+      ctx.fillStyle = '#7ed957'; ctx.fillRect(px - sz / 2, py - sz / 2, sz, sz);
+      ctx.lineWidth = 3; ctx.strokeStyle = '#1f5c12'; ctx.strokeRect(px - sz / 2, py - sz / 2, sz, sz);
+    }
+    ctx.restore();
+  }
+
   // «вжух» — удар прошёл мимо: маленькое облачко
   function whoosh(ctx, x, y, life) {
     if (life < 0 || life > 1) return;
@@ -4235,5 +4274,5 @@ const FX = (() => {
 
   return { rng, background, mcBackground, limb, note, waterBalloon, basket, waterSplash, boomerang, flower, bubbleWand, soapBubble, bubblePop, snowball, snowPile, snowCap, snowSplat, snowBurst, slimeBlock, tomato, gardenBed, tomatoBush, tnt, fuseSparks, boom, soot, balloon, balloonPop, cactus, paintBucket, paintBrush, mustache, paintHole, paintSplash, waterJet, cobble, cloud, shadow, spark, dust, smoke, flash, rays, vein, steam, sweat, stars, twinkle, whoosh, puff,
     heart, hearts, wind, banana, giftBox, suck, drool, tree, apple, bubble, gumSplat, rainCloud, rain, lightning, puddle, seesaw,
-    mudPit, mudSplash, rope, cake, crown, lollipop, tears, ball, pillow, feathers, bee, hive, table, pie, mcAppleTree, pumpkinBlock, blockBurst, mcChest, iceCream, scoopCap, iceBlock, frost, magicBeam, rails, grassSteps, minecart, kite, kiteString, popcorn, popcornPile, popBucket, cornCob, sunRay, pickaxe, grassBlock, pit, chili, chiliBush, fireBreath, flame, bigLeaf, pond, fish, fishingRod, fishLine, feather, sleepBubble, jumpCord, ropeHandle, marshmallow, mallowBag, slingshotY, slingBand, honeyPot, honeyCap, egg, chick, horseshoeMagnet, magnetWaves, anvil, coilSpring, rocket, rocketTrail, fireworkBurst, iceRink, iceSpray, deskFan, fanWind, melonBlock, melonHelmet, melonSlice, melonSeed, melonSplash, potion, potionBurst, effectSwirls, portal, fluff, cottonCandy, fluffBurst, mcBell, bellStand, soundRings, lemon, juiceSplash, sourLines, sandBlock, toyArrow, suctionMark, plunger, donut, donutRing, pizza, pizzaSlice, cheeseString, enderPearl, teleportPuff, cobweb, webWrap, webBall, webString, mcBed, snowBlock, snowGolem, yarnBall, yarnThread, yarnWrap, hayBale, hayBurst, hayStuck, berryBush, berry, prickle, mcCake, creamPuddle, piston, woodCrate, mcStick, mcCookie, plank, vacuum, vacHose, vacNozzle, airLines, rollingPin, dough, doughSheet, extinguisher, foamPile, foamJet, mcPig, mcCarrot, jelly, jellyPuddle, umbrella, sled, snowRamp, logPost, hammock, hammockWrap, hammockSheet, hammockRoll, gumBubble, gumPack, windmill, mcSheep, shears, mcSquid, inkPuddle };
+    mudPit, mudSplash, rope, cake, crown, lollipop, tears, ball, pillow, feathers, bee, hive, table, pie, mcAppleTree, pumpkinBlock, blockBurst, mcChest, iceCream, scoopCap, iceBlock, frost, magicBeam, rails, grassSteps, minecart, kite, kiteString, popcorn, popcornPile, popBucket, cornCob, sunRay, pickaxe, grassBlock, pit, chili, chiliBush, fireBreath, flame, bigLeaf, pond, fish, fishingRod, fishLine, feather, sleepBubble, jumpCord, ropeHandle, marshmallow, mallowBag, slingshotY, slingBand, honeyPot, honeyCap, egg, chick, horseshoeMagnet, magnetWaves, anvil, coilSpring, rocket, rocketTrail, fireworkBurst, iceRink, iceSpray, deskFan, fanWind, melonBlock, melonHelmet, melonSlice, melonSeed, melonSplash, potion, potionBurst, effectSwirls, portal, fluff, cottonCandy, fluffBurst, mcBell, bellStand, soundRings, lemon, juiceSplash, sourLines, sandBlock, toyArrow, suctionMark, plunger, donut, donutRing, pizza, pizzaSlice, cheeseString, enderPearl, teleportPuff, cobweb, webWrap, webBall, webString, mcBed, snowBlock, snowGolem, yarnBall, yarnThread, yarnWrap, hayBale, hayBurst, hayStuck, berryBush, berry, prickle, mcCake, creamPuddle, piston, woodCrate, mcStick, mcCookie, plank, vacuum, vacHose, vacNozzle, airLines, rollingPin, dough, doughSheet, extinguisher, foamPile, foamJet, mcPig, mcCarrot, jelly, jellyPuddle, umbrella, sled, snowRamp, logPost, hammock, hammockWrap, hammockSheet, hammockRoll, gumBubble, gumPack, windmill, mcSheep, shears, mcSquid, inkPuddle, mcSlime, slimeBurst };
 })();
