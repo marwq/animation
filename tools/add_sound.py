@@ -33,7 +33,7 @@ def load_cues(path):
     cues — список [время, звук, дБ, скорость/высота, панорама -1…1, длина?, "заметки"…]
            (звук — путь из Minecraft, например "mob/cat/meow1", своя озвучка voice/<имя>
            из sound/voice/<имя>.wav или синтез: whoosh, boom, whistle — свист падения,
-           rise — свист взлёта);
+           rise — свист взлёта, sad — грустный тромбон);
     music_db — громкость музыки, music_end — когда она стихает,
     duck — где её прибрать под важные звуки: [начало, конец, доля];
     transpose — сдвиг мелодии в полутонах, чтобы у роликов она была разной."""
@@ -128,6 +128,17 @@ def synth(name, k=1.0):
         f = 1900 * np.exp(-t * 1.5) + 250 if name == 'whistle' else 400 * np.exp(t * k * 2.6)
         f = (f + 18 * np.sin(2 * np.pi * 6 * t)) * k
         x = np.sin(2 * np.pi * np.cumsum(f) / RATE) * env(n, 0.04, 0.12) * 0.5
+        return np.stack([x, x], -1)
+    if name == 'sad':                            # грустный тромбон: «уа-уа-уа-уаааа»
+        parts = []
+        for f0, dur in ((233.08, 0.34), (220.0, 0.34), (207.65, 0.34), (196.0, 1.0)):
+            n = int(dur / k * RATE)
+            t = np.arange(n) / RATE
+            vib = 1 + (0.012 * np.sin(2 * np.pi * 5.5 * t) * np.clip(t / 0.3, 0, 1) if dur > 0.5 else 0)
+            ph = 2 * np.pi * np.cumsum(f0 * k * vib) / RATE
+            x = sum(np.sin(h * ph) / h ** 1.2 for h in range(1, 9))   # медный тембр
+            parts.append(x * env(n, 0.03, 0.08 if dur < 0.5 else 0.35))
+        x = np.concatenate(parts) * 0.35
         return np.stack([x, x], -1)
     raise KeyError(name)
 
