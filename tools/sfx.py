@@ -740,6 +740,16 @@ def s_snip(seed=42, **_):
     return norm(x, 0.7)
 
 
+def s_note(dur=0.6, **_):
+    """Нотный блок: деревянный «дзынь» (арфа майнкрафта); высота — через pitch."""
+    d = max(0.3, dur)
+    t = tt(d)
+    f = 523.25
+    x = (np.sin(TAU * f * t) + 0.45 * np.sin(TAU * 2 * f * t) * np.exp(-t / 0.12) + 0.2 * np.sin(TAU * 3 * f * t) * np.exp(-t / 0.06))
+    x *= np.exp(-t / 0.28) * np.clip(t / 0.003, 0, 1)
+    return norm(x, 0.6)
+
+
 SOUNDS = {k[2:]: v for k, v in globals().items() if k.startswith('s_') and callable(v)}
 
 
