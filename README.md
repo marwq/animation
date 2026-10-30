@@ -111,8 +111,9 @@ node tools/render.js                     # PNG ×2 (или: node tools/render.js
 | `backgrounds/village/village.png` | солнечный двор: слева дуб, справа деревенский домик, полоса тени от дерева через двор |
 | `backgrounds/cottage/cottage.png` | домик фасадом прямо в центре, по бокам берёза и дуб, тени полосами поперёк двора |
 | `backgrounds/grove/grove.png` | солнечная опушка: дуб, берёза, кусты из листвы, диагональные тени через траву |
-| `backgrounds/room/room_door.png` | комната в домике от двери: по центру кровать под большим окном, книжные полки, диван, солнечные пятна на полу |
-| `backgrounds/room/room_bed.png` | та же комната от кровати: внизу край одеяла, коврик, по центру двойная дверь с факелами и окнами |
+| `backgrounds/room/room_door.png` | комната в домике от двери: большое окно с факелами, книжные полки, диван, солнечные пятна на полу |
+| `backgrounds/room/room_bed.png` | та же комната от дальней стены: по центру двойная дверь с факелами и окнами |
+| `backgrounds/room/room_bed_open.png` | то же, но дверь распахнута внутрь, в проёме улица |
 | `backgrounds/coast/coast.png` | поле без деревьев, спускается к пляжу, сзади море до горизонта — цвета как у поляны |
 | `backgrounds/aerial/aerial.png` | вид с большой высоты: земля круглая, внизу поле с рощами и пляж, дальше море с островами, у горизонта полоска суши и свечение атмосферы |
 | `backgrounds/sky/sky.png` | только небо с облаками Minecraft, низ кадра на горизонте — цвета как у поляны |
@@ -132,7 +133,7 @@ blender -b --factory-startup -P tools/mc_scene.py -- --shot portal --style toon
 blender -b --factory-startup -P tools/mc_scene.py -- --shot nether --style toon
 blender -b --factory-startup -P tools/mc_scene.py -- --shot meadow
 blender -b --factory-startup -P tools/mc_scene.py -- --shot village   # и cottage, grove
-blender -b --factory-startup -P tools/mc_scene.py -- --shot room_door  # и room_bed
+blender -b --factory-startup -P tools/mc_scene.py -- --shot room_door  # и room_bed, room_bed_open
 blender -b --factory-startup -P tools/mc_scene.py -- --shot coast
 blender -b --factory-startup -P tools/mc_scene.py -- --shot sky
 blender -b --factory-startup -P tools/mc_scene.py -- --shot aerial

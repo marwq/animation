@@ -15,7 +15,7 @@
                      aerial — с большой высоты: видно, что земля круглая; суша с
                      рощами, пляж, море с островами;
                      room_door, room_bed — комната в домике: от двери вглубь и от
-                     кровати на дверь; солнце сквозь окна, факелы;
+                     дальней стены на дверь; room_bed_open — то же, дверь открыта;
                      sky — только небо с облаками; swing — качели из блоков на
                      прозрачном фоне, с обводкой. meadow, coast, sky — в одних цветах
     --style toon     рисованный стиль (имя файла <shot>_toon.png); Незер — только он
@@ -133,6 +133,9 @@ SHOTS = {
                   'lens': 18, 'focus': 6.0, 'fstop': 2.8, 'grade': LUSH, **ROOM_LIGHT},
     'room_bed':  {'world': 'room', 'cam': (0.0, 8.15, 2.62), 'yaw': 180, 'shift': -0.12,
                   'lens': 18, 'focus': 5.0, 'fstop': 2.8, 'grade': LUSH, **ROOM_LIGHT},
+    'room_bed_open': {'world': 'room', 'dir': 'room', 'cam': (0.0, 8.15, 2.62), 'yaw': 180,
+                      'shift': -0.12, 'lens': 18, 'focus': 5.0, 'fstop': 2.8, 'grade': LUSH,
+                      'door_open': True, **ROOM_LIGHT},
     'swing':  {'world': 'swing', 'dir': 'props', 'cam': (2.0, -10.0, 1.62), 'shift': 0.06,
                'lens': 35, 'focus': 10.0, 'fstop': 0, 'exposure': -0.6, 'grade': {'sat': 1.1}},
 }
@@ -256,6 +259,8 @@ def textures(tex, toon=False):
               'furnace_side', 'furnace_top', 'oak_trapdoor', 'glass'):
         t[f] = load_rgba(tex, f)
     t['stripped_oak'] = load_rgba(tex, 'stripped_oak_log')   # полоса под потолком
+    t['door_bottom_cut'] = load_rgba(tex, 'oak_door_bottom')  # открытая дверь: окошки
+    t['door_top_cut'] = load_rgba(tex, 'oak_door_top')        # сквозные
     sky = np.array([0.62, 0.80, 0.98], np.float32)  # дверь изнутри: в окошках небо
     for k, f in (('door_bottom_in', 'oak_door_bottom'), ('door_top_in', 'oak_door_top')):
         a = load_rgba(tex, f)
@@ -421,7 +426,7 @@ PLANTS = {'short_grass', 'tall_grass_bottom', 'tall_grass_top', 'poppy', 'dandel
 
 
 def kind_of(name):
-    if name in ('chain', 'glass'):
+    if name in ('chain', 'glass', 'door_bottom_cut', 'door_top_cut'):
         return 'cutout'
     if name.startswith('water'):
         return 'water'
@@ -1067,7 +1072,7 @@ def torch(mats, x, y, z, tilt):
     bpy.context.scene.collection.objects.link(lo)
 
 
-def room_walls():
+def room_walls(door_open=False):
     b = {}
     for x in range(-5, 5):
         for y in range(-1, 10):
@@ -1085,7 +1090,10 @@ def room_walls():
         for z in (2, 3):
             b[(x, -1, z)] = 'glass'
     for x in (-1, 0):                                            # двойная дверь
-        b[(x, -1, 1)], b[(x, -1, 2)] = 'door_bottom_in', 'door_top_in'
+        if door_open:
+            b.pop((x, -1, 1)), b.pop((x, -1, 2))                 # проём на улицу
+        else:
+            b[(x, -1, 1)], b[(x, -1, 2)] = 'door_bottom_in', 'door_top_in'
     for y in range(3, 6):                                        # запад: окно
         for z in (2, 3):
             b[(-5, y, z)] = 'glass'
@@ -1098,7 +1106,13 @@ def room_walls():
 def build_room(opt, view, mats):
     rng = random.Random(opt['seed'])
     m = Mesh()
-    m.blocks(room_walls())
+    door_open = view.s.get('door_open', False)
+    m.blocks(room_walls(door_open))
+    if door_open:                              # створки распахнуты внутрь, к косякам
+        d = 3 / 16
+        for x0, x1 in ((-1, -1 + d), (1 - d, 1)):
+            m.box((x0, -1, 1), (x1, 0, 2), 'door_bottom_cut')
+            m.box((x0, -1, 2), (x1, 0, 3), 'door_top_cut')
     for z in (1, 2):                                             # у западной стены
         for y in (6, 7):
             cube(m, -4, y, z, 'oak_planks', 'bookshelf')        # книжные полки
@@ -1111,14 +1125,7 @@ def build_room(opt, view, mats):
     m.box((3, 6, 1), (4, 6.1875, 1.8), 'oak_trapdoor')
     m.box((1.875, 4.375, 1), (2.125, 4.625, 1.9375), 'oak_planks')     # столик: столбик
     m.box((1.5, 4, 1.9375), (2.5, 5, 2), 'oak_planks')                 # и столешница
-    m.box((-1, 7, 1), (1, 9, 1.1875), 'oak_planks')              # кровать под окном: рама,
-    m.box((-0.98, 7.02, 1.1875), (0.98, 8.98, 1.5625), 'red_wool')     # матрас с одеялом,
-    m.box((-0.85, 8.3, 1.5625), (0.85, 8.9, 1.72), 'white_wool')       # подушка
-    for i in range(3):                                           # коврик в клетку у кровати
-        for j in range(2):
-            x, y = -1.5 + i, 4.5 + j
-            m.box((x, y, 1), (x + 1, y + 1, 1.0625), 'light_blue_wool' if (i + j) % 2 else 'white_wool')
-    cube(m, -4, 8, 1, 'oak_planks', 'bookshelf')                 # полка в углу у кровати
+    cube(m, -4, 8, 1, 'oak_planks', 'bookshelf')                 # полка в углу
     for y in (2.75, 5.75):                                       # балки под потолком
         m.box((-5, y, 4.65), (4, y + 0.5, 5), 'stripped_oak')
     m.build('room', mats)
