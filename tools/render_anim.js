@@ -10,7 +10,8 @@
 // сводит его в WAV, и он кладётся в MP4 дорожкой AAC.
 //
 // Сцена — index.html, который выставляет window.READY (Promise), window.SCENE
-// ({fps, duration, width, height, name}) и window.renderFrame(номер кадра).
+// ({fps, duration, width, height, name, intro}) и window.renderFrame(номер кадра).
+// intro — заставка assets/intro/<intro>.mov (с прозрачным фоном), накладывается поверх начала видео.
 // Нужны Playwright (см. README) и ffmpeg с libx264.
 const fs = require('fs');
 const http = require('http');
@@ -62,6 +63,20 @@ async function addSound(page, mp4) {
   console.log(`звук: ${audio.cues.length} меток`);
 }
 
+// заставка с прозрачным фоном (assets/intro/<имя>.mov) — поверх первых кадров; видео пережимается, звук не трогаем
+async function addIntro(mp4, name) {
+  const mov = path.join(ROOT, 'assets', 'intro', `${name}.mov`);
+  if (!fs.existsSync(mov)) throw new Error(`нет заставки ${mov}`);
+  const tmp = fs.mkdtempSync(path.join(os.tmpdir(), 'intro-'));
+  const out = path.join(tmp, 'out.mp4');
+  await run('ffmpeg', ['-y', '-loglevel', 'error', '-i', mp4, '-i', mov, '-filter_complex',
+    '[1:v]fps=24,setpts=PTS-STARTPTS[i];[0:v][i]overlay=0:0:eof_action=pass:format=auto,format=yuv420p[v]',
+    '-map', '[v]', '-map', '0:a?', '-c:v', 'libx264', '-preset', 'slow', '-crf', '18', '-c:a', 'copy', '-movflags', '+faststart', out]);
+  fs.copyFileSync(out, mp4);
+  fs.rmSync(tmp, { recursive: true, force: true });
+  console.log(`заставка: ${name}`);
+}
+
 (async () => {
   const server = await serve();
   const url = `http://127.0.0.1:${server.address().port}/${path.relative(ROOT, sceneDir)}/${page_}`;
@@ -103,6 +118,7 @@ async function addSound(page, mp4) {
     }
     ff.stdin.end();
     await done;
+    if (scene.intro) await addIntro(mp4, scene.intro);
     if (!args.includes('--mute')) await addSound(page, mp4);
     console.log(`${path.relative(ROOT, mp4)}  ${total} кадров, ${scene.fps} fps`);
   }

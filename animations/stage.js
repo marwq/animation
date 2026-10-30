@@ -23,7 +23,9 @@
 function Stage(cfg) {
   const FPS = 24, W = 1920, H = 1080, NF = cfg.frames || 600;
   const GROUND = cfg.ground || 816, EDGE = cfg.edge || 757;
-  window.SCENE = { fps: FPS, duration: NF / FPS, width: W, height: H, name: cfg.name };
+  // cfg.intro — заставка-считалка «3, 2, 1, FIGHT» поверх первых кадров (assets/intro/<имя>.mov с прозрачным фоном,
+  // накладывает tools/render_anim.js) и её звук (sounds/ref/<имя>.wav, с нулевого кадра)
+  window.SCENE = { fps: FPS, duration: NF / FPS, width: W, height: H, name: cfg.name, intro: cfg.intro || null };
   const F = (f) => f / FPS;
   const TAU = Math.PI * 2;
   const CAST = cfg.cast;
@@ -40,6 +42,7 @@ function Stage(cfg) {
     sweat: [], stars: [], twinkle: [], whoosh: [], hearteyes: [], hearts: [], wind: [], heartshot: [], suck: [], drool: [], tears: [], sprout: [], wet: [] };
   const SFX = [];
   const sfx = (kind, f, o = {}) => SFX.push({ kind, f, ...o });
+  if (cfg.intro) sfx('ref:' + cfg.intro, 0, { x: W / 2, gain: cfg.introGain ?? 1 });
   // эффект + его звук (если у эффекта он есть и не выключен snd: false)
   const ev = (kind, o) => {
     FX_EV[kind].push(o);
