@@ -1,0 +1,12 @@
+{
+  "name": "whatif-roblox",
+  "private": true,
+  "description": "Cut-out rig + renderer for the 'What if the whole world became Roblox' animation",
+  "scripts": {
+    "sheets": "node tools/sheets.js all",
+    "test-anim": "node tools/anim_test.js concept/rig_test.mp4 60"
+  },
+  "dependencies": {
+    "playwright": "*"
+  }
+}
