@@ -104,12 +104,12 @@ const SHEETS = {
       const items = [
         ['idle + nametag', { face: 'neutral', nametag: { name: HERO_NAME, health: 1 } }],
         ['wave + talk', { armR: 150, armL: 6, face: 'talkHappy', headRot: -4, turn: -0.25 }],
-        ['cheer!', { armL: 162, armR: 162, face: 'joy', lift: 70, sy: 1.04, sx: 0.97 }],
+        ['cheer!', { armL: 162, armR: 162, face: 'joy', lift: 80, sy: 1.04, sx: 0.97, kneeL: 30, kneeR: 30, legL: 6, legR: 6 }],
         ['shock', { armL: 72, armR: 72, face: 'shocked', lift: 30, sy: 1.06, sx: 0.95, headY: -14 }],
         ['T-pose', { armL: 90, armR: 90, face: 'deadpan' }],
         ['steal the egg', { turn: 0.85, bodyY: 34, lean: 6, armL: -30, armR: -18, face: 'sneaky', props: [{ svg: egg({ x: 18, y: -385, size: 250, rarity: 'legendary', glow: false }), layer: 'mid' }] }],
-        ['RUN!', { view: 'side', legL: 34, legR: -30, armL: -40, armR: 44, lean: -8, face: 'scream', lift: 20 }],
-        ['oof (fall)', { rot: -24, armL: 140, armR: 120, legL: 22, legR: -10, face: 'oof', lift: 90 }],
+        ['RUN!', { view: 'side', legL: 42, kneeL: 28, legR: -22, kneeR: 88, armL: -40, armR: 44, lean: -8, face: 'scream', lift: 30 }],
+        ['oof (fall)', { rot: -24, armL: 140, armR: 120, legL: 26, kneeL: 55, legR: -6, kneeR: 25, face: 'oof', lift: 90 }],
       ];
       items.forEach(([name, pz], i) => {
         const col = i % 4, row = Math.floor(i / 4);
