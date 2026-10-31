@@ -7,6 +7,7 @@ const S = require('./svg');
 const C = require('./palette');
 const F = require('./face');
 const { drawCharacter, bentLimb } = require('./body');
+const L = require('./looks');
 const { f } = S;
 
 const SW = C.lineW;
@@ -28,6 +29,16 @@ const BASE_STYLE = {
   blush: false,
   clip: false,      // hair clip colour or false
   neutralMouth: null,
+  // --- variety options (secondary characters) ---
+  hair: 'bob',        // bob | spiky | quiff | cap | buns | none
+  eyeStyle: 'big',    // big | dot
+  brows: null,        // stroke-brow base offsets {L:[in,out],R:[in,out]} for non-bob hair; false hides them
+  top: 'jacket',      // jacket | jersey | varsity | hoodie | tee
+  sleeve: 'short',    // short | long | none
+  sleeveStripe: null,
+  pantsShape: 'wide', // wide | straight
+  size: 1,
+  acc: {},            // { chain: colour, headphones: colour }
 };
 
 function makeStyle(over = {}) {
@@ -55,10 +66,17 @@ function makeArm(style) {
   return function arm({ shade = true, dim = false, view = 'front' } = {}) {
     const id = S.uid('arm');
     const d = view === 'side' ? S.roundedPath([[-40, -20], [40, -20], [40, 248], [-40, 248]], 18) : S.roundedPath([[-30, -18], [30, -18], [40, 268], [-40, 268]], 17);
-    const sleeveY = view === 'side' ? 100 : 112;
-    let inner = S.rect(-60, -40, 120, sleeveY + 40, 0, { fill: c.jacket });
-    if (shade) inner += S.rect(view === 'side' ? 22 : 20, -40, 40, 330, 0, { fill: '#000', opacity: 0.07 });
-    inner += S.path(`M-60 ${sleeveY} L60 ${sleeveY}`, lineOnly(SW));
+    const side = view === 'side';
+    const sleeveY = style.sleeve === 'long' ? (side ? 206 : 226) : style.sleeve === 'none' ? -40 : (side ? 100 : 112);
+    const sc = c.sleeve || c.jacket;
+    let inner = '';
+    if (style.sleeve !== 'none') {
+      inner += S.rect(-60, -40, 120, sleeveY + 40, 0, { fill: sc });
+      if (style.sleeve === 'long') inner += S.rect(-60, sleeveY - 18, 120, 18, 0, { fill: c.cuff || c.topShade || '#0003' }) + S.path(`M-60 ${sleeveY - 18} L60 ${sleeveY - 18}`, lineOnly(4.5));
+      if (style.sleeveStripe) inner += S.rect(-60, sleeveY - 44, 120, 9, 0, { fill: style.sleeveStripe }) + S.rect(-60, sleeveY - 28, 120, 9, 0, { fill: style.sleeveStripe });
+    }
+    if (shade) inner += S.rect(side ? 22 : 20, -40, 40, 330, 0, { fill: '#000', opacity: 0.07 });
+    if (style.sleeve !== 'none') inner += S.path(`M-60 ${sleeveY} L60 ${sleeveY}`, lineOnly(SW));
     if (dim) inner += S.rect(-60, -40, 120, 330, 0, { fill: '#000', opacity: 0.14 });
     return S.clipDef(id, S.path(d)) + S.path(d, { fill: c.skin }) + S.g(inner, null, { 'clip-path': `url(#${id})` }) + S.path(d, outline('none'));
   };
@@ -88,14 +106,16 @@ const mul2 = (a, k) => [a[0] * k, a[1] * k];
 function makeLeg(style) {
   const c = style.col;
   return function leg({ shade = true, dim = false, toeShift = 0, back = false, J } = {}) {
-    let o = pantsWithKnee(style, J, [42, 74, 103], [40, 40, 40], shade, dim);
+    const straight = style.pantsShape === 'straight';
+    let o = pantsWithKnee(style, J, straight ? [42, 46, 54] : [42, 74, 103], [40, 40, 40], shade, dim);
     // sneaker in ankle space (flat on the ground when planted)
-    let shoe = S.path(S.roundedPath([[-44, -4], [107, -4], [107, 40], [-44, 40]], 14), outline(dim ? c.soleShade : c.sole));
-    if (c.soleBand) shoe += S.path(S.roundedPath([[-40, -1], [103, -1], [103, 14], [-40, 14]], 6), { fill: c.soleBand });
-    if (shade) shoe += S.path('M-38 30 L101 30', lineOnly(6, c.soleShade));
-    if (c.soleBand) shoe += S.path(S.roundedPath([[-44, -4], [107, -4], [107, 40], [-44, 40]], 14), outline('none'));
+    const x1 = straight ? 94 : 107, x0 = -44;
+    let shoe = S.path(S.roundedPath([[x0, -4], [x1, -4], [x1, 40], [x0, 40]], 14), outline(dim ? c.soleShade : c.sole));
+    if (c.soleBand) shoe += S.path(S.roundedPath([[x0 + 4, -1], [x1 - 4, -1], [x1 - 4, 14], [x0 + 4, 14]], 6), { fill: c.soleBand });
+    if (shade) shoe += S.path(`M${x0 + 6} 30 L${x1 - 6} 30`, lineOnly(6, c.soleShade));
+    if (c.soleBand) shoe += S.path(S.roundedPath([[x0, -4], [x1, -4], [x1, 40], [x0, 40]], 14), outline('none'));
     if (!back) {
-      const cx = 30 + toeShift;
+      const cx = (straight ? 24 : 30) + toeShift;
       shoe += S.path(`M${f(cx - 42)} -2 A42 37 0 0 1 ${f(cx + 42)} -2 Z`, outline(c.toe));
       if (c.toe !== c.sole) shoe += S.path(`M${f(cx - 22)} -18 Q${f(cx)} -30 ${f(cx + 22)} -18`, lineOnly(4.5, '#fff'));
     }
@@ -107,7 +127,8 @@ function makeLeg(style) {
 function makeLegSide(style) {
   const c = style.col;
   return function legSide({ shade = true, dim = false, J } = {}) {
-    let o = pantsWithKnee(style, J, [64, 74, 85], [58, 69, 80], shade, dim);
+    const straight = style.pantsShape === 'straight';
+    let o = pantsWithKnee(style, J, straight ? [62, 64, 68] : [64, 74, 85], straight ? [56, 58, 62] : [58, 69, 80], shade, dim);
     const sole = dim ? '#D3D5DE' : c.sole;
     let shoe = S.path(S.roundedPath([[-138, -4], [88, -4], [88, 42], [-138, 42]], 16), outline(sole));
     if (c.soleBand) shoe += S.path(S.roundedPath([[-134, -1], [84, -1], [84, 15], [-134, 15]], 6), { fill: dim ? '#B81E33' : c.soleBand }) +
@@ -121,6 +142,16 @@ function makeLegSide(style) {
 // ---------------------------------------------------------------- torso
 function makeTorso(style) {
   const c = style.col;
+  if (style.top !== 'jacket') {
+    return function torsoAlt(t, shade, back = false) {
+      const T = -533, B = -306, W = 100;
+      const id = S.uid('tor');
+      const d = S.roundedPath([[-W, T], [W, T], [W, B], [-W, B]], 16);
+      const inner = L.outfitFront(style, t, shade, back, T, B, W);
+      return S.clipDef(id, S.path(d)) + S.path(d, { fill: c.top }) + S.g(inner, null, { 'clip-path': `url(#${id})` }) + S.path(d, outline('none')) +
+        (style.acc.chain && !back ? L.chain((t >= 0 ? 1 : -1) * Math.abs(t) * 30, T, style.acc.chain) : '');
+    };
+  }
   return function torso(t, shade, back = false) {
     const at = Math.abs(t), dir = t >= 0 ? 1 : -1;
     const T = -533, B = -306, W = 100;
@@ -150,6 +181,18 @@ function makeTorso(style) {
 
 function makeTorsoSide(style) {
   const c = style.col;
+  if (style.top !== 'jacket') {
+    return function torsoSideAlt(shade) {
+      const tid = S.uid('st');
+      const td = S.roundedPath([[-62, -535], [70, -535], [70, -305], [-62, -305]], 16);
+      let inner = S.rect(-80, -545, 40, 260, 0, { fill: c.topShade || c.top });
+      if (style.top === 'varsity') inner += S.rect(-80, -335, 160, 30, 0, { fill: c.trim2 });
+      if (shade) inner += S.rect(-80, -330, 160, 30, 0, { fill: '#000', opacity: 0.12 });
+      let o = S.clipDef(tid, S.path(td)) + S.path(td, { fill: c.top }) + S.g(inner, null, { 'clip-path': `url(#${tid})` }) + S.path(td, outline('none'));
+      if (style.acc.chain) o += S.path('M-62 -520 Q-80 -470 -66 -440', lineOnly(9, style.acc.chain));
+      return o;
+    };
+  }
   return function torsoSide(shade) {
     let o = S.path(S.roundedPath([[-88, -512], [-56, -512], [-56, -312], [-88, -312]], 8), outline(c.shirt));
     const tid = S.uid('st');
@@ -416,14 +459,126 @@ function makeHeadSide(style) {
   };
 }
 
+// ---------------------------------------------------------------- generic heads (non-bob hair)
+function genericEyes(style, fr, feat, at, dir, t, withBlink) {
+  let o = '';
+  const lookBias = t * 0.45;
+  if (style.eyeStyle === 'dot') {
+    const eL = feat([-54, -712]), eR = feat([54, -712]);
+    const lb = (e) => ({ ...e, look: [S.clamp(((e.look || [0, 0])[0]) + lookBias, -1, 1), (e.look || [0, 0])[1]] });
+    o += L.dotEye(eL[0], eL[1], lb(withBlink(fr.eyeL)), -1) + L.dotEye(eR[0], eR[1], lb(withBlink(fr.eyeR)), 1);
+  } else {
+    const eL = feat([-64, -719]), eR = feat([64, -719]);
+    const kNear = 1 - 0.04 * at, kFar = 1 - 0.3 * at;
+    const rxL = 64 * (dir > 0 ? kNear : kFar), rxR = 64 * (dir > 0 ? kFar : kNear);
+    const sL = withBlink(fr.eyeL), sR = withBlink(fr.eyeR);
+    const opts = { lookBias, topW: style.lashes ? 9 : undefined };
+    o += F.eye(eL[0], eL[1], rxL, 80, sL, -1, opts) + F.eye(eR[0], eR[1], rxR, 80, sR, 1, opts);
+    if (style.lashes) o += bigLashes(eL[0], eL[1], rxL, 80, sL, -1) + bigLashes(eR[0], eR[1], rxR, 80, sR, 1);
+  }
+  return o;
+}
+
+function makeGenericHead(style) {
+  const c = style.col;
+  const H = L.HAIR[style.hair] || L.HAIR.none;
+  return function head(face, t, shade) {
+    const { hair, feat, at, dir, fx } = hairMap(t);
+    const fr = resolve(style, face);
+    let o = '';
+    if (H.behind) o += H.behind(hair, feat, c, shade);
+    const hx = dir * 4 * at;
+    const headD = S.roundedPath([[-140 + hx, -890], [140 + hx, -890], [140 + hx, -559], [-140 + hx, -559]], 46);
+    const hid = S.uid('head');
+    o += S.clipDef(hid, S.path(headD)) + S.path(headD, { fill: c.skin });
+    const hairD = H.front(hair, feat);
+    if (shade) {
+      let sh = '';
+      if (at > 0.02) sh += S.rect(dir > 0 ? -150 : 140 - 72 * at + hx, -900, 72 * at + 10, 360, 0, { fill: c.skinShade });
+      if (hairD) sh += S.path(hairD, { fill: c.skinShade, transform: 'translate(0 15)' });
+      sh += S.rect(-160, -590, 320, 40, 0, { fill: c.skinShade, opacity: 0.55 });
+      o += S.g(sh, null, { 'clip-path': `url(#${hid})` });
+    }
+    o += S.path(headD, outline('none'));
+    if (hairD) {
+      const hairId = S.uid('hair');
+      const fill = style.hair === 'cap' ? c.cap : c.hair;
+      o += S.clipDef(hairId, S.path(hairD)) + S.path(hairD, { fill }) + S.g(H.details(hair, feat, c, shade), null, { 'clip-path': `url(#${hairId})` }) + S.path(hairD, outline('none'));
+    }
+    if (H.over) o += H.over(hair, feat, c, style);
+    if (style.acc.headphones) o += L.headphones(hair, style.acc.headphones);
+    const blink = fr.blink || 0;
+    const withBlink = (e) => (blink > 0 && (!e.type || e.type === 'open') ? { ...e, upper: (e.upper || 0) + (1 - (e.upper || 0)) * blink } : e);
+    o += genericEyes(style, fr, feat, at, dir, t, withBlink);
+    if (style.brows !== false && H.browY) o += L.strokeBrows(feat, H.browY, fr.brows, style.brows || {}, c.brow || LINE_COL, 12);
+    if (style.blush) o += S.ellipse(-86 + fx, -616, 28, 11, { fill: C.blush, opacity: 0.5 }) + S.ellipse(86 + fx, -616, 28, 11, { fill: C.blush, opacity: 0.5 });
+    const m = feat([0, -598]);
+    o += F.mouth(fr.mouth, m[0], m[1], (1 - 0.15 * at) * (style.mouthScale || 1), style.mouthScale || 1);
+    o += F.faceFx(fr.fx, { fx });
+    return o;
+  };
+}
+const LINE_COL = C.line;
+
+function makeGenericHeadSide(style) {
+  const c = style.col;
+  const H = L.HAIR[style.hair] || L.HAIR.none;
+  return function headSide(face, shade) {
+    const fr = resolve(style, face);
+    let o = '';
+    if (H.sideBehind) o += H.sideBehind(c);
+    const headD = S.roundedPath([[-165, -885], [150, -885], [150, -553], [-165, -553, 54]], 44);
+    const hid = S.uid('hs');
+    o += S.clipDef(hid, S.path(headD)) + S.path(headD, { fill: c.skin });
+    const d = H.side ? H.side(c) : null;
+    if (shade) o += S.g((d ? S.path(d, { fill: c.skinShade, transform: 'translate(10 14)' }) : '') + S.rect(-180, -590, 360, 40, 0, { fill: c.skinShade, opacity: 0.55 }), null, { 'clip-path': `url(#${hid})` });
+    o += S.path(headD, outline('none'));
+    if (d) o += S.path(d, outline(style.hair === 'cap' ? c.cap : c.hair));
+    if (H.sideOver) o += H.sideOver(c);
+    if (style.acc.headphones) o += S.path(S.roundedPath([[30, -800], [86, -800], [86, -660], [30, -660]], 22), outline(style.acc.headphones, 6)) + S.path('M58 -800 C76 -930 40 -1016 -40 -1020', lineOnly(16, LINE_COL)) + S.path('M58 -800 C76 -930 40 -1016 -40 -1020', lineOnly(8, style.acc.headphones));
+    const blink = fr.blink || 0;
+    const e = fr.eyeL;
+    const ee = blink > 0 && (!e.type || e.type === 'open') ? { ...e, upper: (e.upper || 0) + (1 - (e.upper || 0)) * blink } : e;
+    if (style.eyeStyle === 'dot') o += L.dotEye(-122, -712, { ...ee, look: [-0.8, (ee.look || [0, 0])[1]] }, 1);
+    else o += F.eye(-118, -716, 56, 80, { ...ee, cross: 0 }, 1, { sidePupil: -0.66, topW: style.lashes ? 9 : undefined });
+    if (style.brows !== false && H.browY) {
+      const b = (fr.brows.L || [0, 0]), bb = ((style.brows || {}).L || [0, 0]);
+      o += S.path(`M-160 ${f(H.browY + b[0] + bb[0])} Q-128 ${f(H.browY - 10 + (b[0] + b[1]) / 2)} -92 ${f(H.browY + 6 + b[1] + bb[1])}`, lineOnly(12, c.brow || LINE_COL));
+    }
+    o += F.mouth(fr.mouth, -132, -600, 0.55, 1);
+    o += F.faceFx(fr.fx.filter((x) => (typeof x === 'string' ? x : x.type) !== 'blush'), { fx: 0 });
+    return o;
+  };
+}
+
+function makeGenericHeadBack(style) {
+  const c = style.col;
+  const H = L.HAIR[style.hair] || L.HAIR.none;
+  return function headBack(face, shade) {
+    let o = S.path(S.roundedPath([[-140, -890], [140, -890], [140, -559], [-140, -559]], 46), outline(c.skin));
+    const d = H.back ? H.back(c) : null;
+    if (d) {
+      const id = S.uid('gb');
+      let inner = shade ? S.path('M-130 -900 Q0 -990 130 -900', lineOnly(14, style.hair === 'cap' ? (c.capHi || '#ffffff55') : c.hairHi)) : '';
+      o += S.clipDef(id, S.path(d)) + S.path(d, { fill: style.hair === 'cap' ? c.cap : c.hair }) + S.g(inner, null, { 'clip-path': `url(#${id})` }) + S.path(d, outline('none'));
+    }
+    if (H.backOver) o += H.backOver(c);
+    if (style.acc.headphones) o += S.path('M-172 -760 Q0 -1130 172 -760', lineOnly(22, LINE_COL)) + S.path('M-172 -760 Q0 -1130 172 -760', lineOnly(12, style.acc.headphones));
+    return o;
+  };
+}
+
 // ---------------------------------------------------------------- design factory
 function makeDesign(style, extra = {}) {
   const st = makeStyle(style);
   return {
     style: st,
+    dims: { size: st.size, ...(st.hair !== 'bob' && (L.HAIR[st.hair] || {}).nametagY ? { nametagY: L.HAIR[st.hair].nametagY } : {}) },
     leg: makeLeg(st), legSide: makeLegSide(st), arm: makeArm(st),
     torso: makeTorso(st), torsoSide: makeTorsoSide(st),
-    head: makeHead(st), headSide: makeHeadSide(st), headBack: makeHeadBack(st),
+    head: st.hair === 'bob' ? makeHead(st) : makeGenericHead(st),
+    headSide: st.hair === 'bob' ? makeHeadSide(st) : makeGenericHeadSide(st),
+    headBack: st.hair === 'bob' ? makeHeadBack(st) : makeGenericHeadBack(st),
     ...extra,
   };
 }

@@ -175,15 +175,16 @@ function drawCharacter(design, pose = {}) {
   }
 
   const fs = p.flip ? -1 : 1;
+  const Z = D.size || 1; // character height factor (kids < 1)
   let out = '';
   if (p.shadow) {
     const k = Math.max(0.35, 1 - p.lift / 900);
-    out += S.ellipse(p.x, p.y, D.shadowR * p.s * k * Math.max(p.sx, 0.6), 24 * p.s * k, { fill: C.shadow });
+    out += S.ellipse(p.x, p.y, D.shadowR * p.s * Z * k * Math.max(p.sx, 0.6), 24 * p.s * Z * k, { fill: C.shadow });
   }
-  const tf = `translate(${f(p.x)} ${f(p.y - p.lift)}) scale(${f(fs * p.s)} ${f(p.s)}) rotate(${f(p.rot)} 0 ${f(p.rotY)}) scale(${f(p.sx)} ${f(p.sy)})`;
+  const tf = `translate(${f(p.x)} ${f(p.y - p.lift)}) scale(${f(fs * p.s * Z)} ${f(p.s * Z)}) rotate(${f(p.rot)} 0 ${f(p.rotY)}) scale(${f(p.sx)} ${f(p.sy)})`;
   out += S.g(body + layer('top'), tf);
   if (p.nametag) {
-    const ny = (D.nametagY + p.bodyY + p.headY) * p.sy;
+    const ny = (D.nametagY + p.bodyY + p.headY) * p.sy * Z;
     out += S.g(nametag(p.nametag, ny), `translate(${f(p.x)} ${f(p.y - p.lift)}) scale(${f(p.s)})`);
   }
   return out;

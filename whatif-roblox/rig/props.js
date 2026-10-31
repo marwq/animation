@@ -76,4 +76,38 @@ function bouquet({ x = 0, y = 0, size = 260, rot = 0 } = {}) {
   return S.g(o, `translate(${f(x)} ${f(y)}) rotate(${f(rot)}) scale(${f(k)})`);
 }
 
-module.exports = { egg, bouquet, RARITY };
+const hash = (n) => { const v = Math.sin(n * 127.1 + 311.7) * 43758.5453; return v - Math.floor(v); };
+
+// The glitchy "???" Secret Egg. t drives the pixel flicker and RGB glitch.
+function secretEgg({ x = 0, y = 0, size = 200, t = 0, rot = 0, glow = true } = {}) {
+  const ry = size / 2, rx = ry * 0.74;
+  const d = 'M' + eggPoints(rx, ry).map(([a, b]) => `${f(a)} ${f(b)}`).join(' L') + ' Z';
+  let o = '';
+  if (glow) {
+    const gid = S.uid('sg');
+    o += S.el('radialGradient', { id: gid }, '<stop offset="0" stop-color="#C77DFF" stop-opacity="0.9"/><stop offset="0.5" stop-color="#7B2FFF" stop-opacity="0.35"/><stop offset="1" stop-color="#7B2FFF" stop-opacity="0"/>');
+    o += S.circle(0, 0, size * (1.05 + 0.06 * Math.sin(t * 6)), { fill: `url(#${gid})` });
+  }
+  const id = S.uid('se');
+  const cols = ['#00F0FF', '#FF3DF2', '#FFE600', '#7CFF4F'];
+  const k = Math.floor(t * 12);
+  const cell = size * 0.1;
+  let inner = S.path(d, { fill: '#2A1352' });
+  inner += S.ellipse(0, ry * 0.35, rx * 0.9, ry * 0.5, { fill: '#4B1F8C', opacity: 0.8 });
+  for (let i = 0; i < 30; i++) {
+    const px = (hash(i * 3 + 1) - 0.5) * rx * 2.1, py = (hash(i * 5 + 2) - 0.5) * ry * 2.1;
+    inner += S.rect(px, py, cell, cell, 2, { fill: cols[(i + k) % 4], opacity: f(0.25 + 0.6 * hash(i + k * 31)) });
+  }
+  inner += S.el('text', { x: 0, y: size * 0.11, 'font-family': 'Lilita One, sans-serif', 'font-size': size * 0.32, fill: '#FFFFFF', stroke: '#151515', 'stroke-width': size * 0.03, 'paint-order': 'stroke', 'text-anchor': 'middle' }, '???');
+  inner += S.ellipse(-rx * 0.42, -ry * 0.48, rx * 0.12, ry * 0.2, { fill: '#fff', opacity: 0.75, transform: `rotate(18 ${f(-rx * 0.42)} ${f(-ry * 0.48)})` });
+  o += S.clipDef(id, S.path(d)) + S.g(inner, null, { 'clip-path': `url(#${id})` });
+  o += S.path(d, { fill: 'none', stroke: C.line, 'stroke-width': Math.max(5, size * 0.035), 'stroke-linejoin': 'round' });
+  if (hash(k * 7.3) > 0.72) {
+    const dx = size * (0.03 + 0.04 * hash(k));
+    o += S.path(d, { fill: 'none', stroke: '#00F0FF', 'stroke-width': size * 0.03, opacity: 0.85, transform: `translate(${f(dx)} 0)` });
+    o += S.path(d, { fill: 'none', stroke: '#FF3DF2', 'stroke-width': size * 0.03, opacity: 0.85, transform: `translate(${f(-dx)} 0)` });
+  }
+  return S.g(o, `translate(${f(x)} ${f(y)}) rotate(${f(rot)})`);
+}
+
+module.exports = { egg, bouquet, secretEgg, RARITY };
