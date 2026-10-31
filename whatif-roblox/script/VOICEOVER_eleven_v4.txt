@@ -1,0 +1,305 @@
+WHAT IF THE WHOLE WORLD BECAME ROBLOX... AND I HAD TO BEAT STEAL AN EGG?
+ElevenLabs Eleven v4 · Text to Dialogue · voice-over script
+Generated from script/SCRIPT.md — edit the script, then run: node tools/build_vo.js
+Spoken words: 1940 · estimated runtime: ~13:59 (incl. silent visual beats)
+==============================================================================
+
+HOW TO USE (по-русски)
+- Модель: Eleven v4. Режим Text to Dialogue (кнопка "Add speaker"): каждая строка "SPEAKER: текст"
+  = отдельный блок с выбранным голосом. Имя спикера и двоеточие НЕ вставлять, только текст.
+- Теги в [квадратных скобках] оставляем как есть — это интонация, они не произносятся.
+  КАПС = ударение, "..." и [pause] = паузы, тире "—" = оборванная фраза.
+- Генерируйте по дублям (TAKE). Если строка звучит не так — перегенерируйте только этот дубль,
+  или поменяйте тег на соседний (например [excited] -> [amazed]).
+- NARRATOR и YOU — ОДИН И ТОТ ЖЕ голос (рассказчик и есть герой). Рассказ — бодро и тепло,
+  реплики YOU — живее, громче, с эмоциями.
+- MOM говорит "honey" — озвучиваем как есть, в монтаже закроем "бипом" (шутка про фильтр чата).
+- Файлы называйте по дублям: take01.mp3, take10a.mp3 ... — так я быстрее разложу их по таймлайну.
+
+CAST
+  NARRATOR  (124 lines)  same voice as YOU — upbeat guy ~25, bright, smiling, fast, storyteller energy
+  NOVA      (25 lines)  young woman, confident, low and cool, a little raspy, playful smirk in the voice
+  YOU       (46 lines)  same voice as NARRATOR — more emotional: yells, laughs, whispers, cracks when nervous
+  SYSTEM    (14 lines)  game announcer — booming, slightly robotic; for "chirpy" lines a bright UI voice
+  MOM       ( 3 lines)  warm, cheerful mom, sing-song
+  DAD       ( 4 lines)  calm dad, dry deadpan humour
+  BANANA    ( 2 lines)  goofy friendly neighbour (can reuse DAD voice, higher and sillier)
+  MONSTER   ( 1 lines)  scary creature voice, terrified (can reuse EGGLORD voice)
+  SPEEDY    ( 2 lines)  little kid ~7, high-pitched, giggly
+  EGGLORD   ( 3 lines)  cocky teen gamer, drawling, smug, a bit nasal
+
+==============================================================================
+
+=== TAKE 01 · SC 01 COLD OPEN — флешфорвард · ~0:00–0:22 · 7 lines · 398 chars ===
+
+NARRATOR: [excited, slightly hushed] What if you woke up... and the WHOLE world was Roblox?
+NARRATOR: [playful] Every street. Every person. Every... chicken.
+NARRATOR: [building tension] And to survive, everyone had to pick ONE game.
+NARRATOR: [rushed] You picked the hardest one.
+NOVA: [shouts, confident] You coming or what, noob?!
+YOU: [shouts, panicked] I'M COMING! I'm totally fine, I'm— [screams] AAAAAH!
+NARRATOR: [sighs, playful] Okay. Okay. Let me back up.
+
+=== TAKE 02 · SC 02 ГЛЮЧЕННОЕ ЯЙЦО — ночь · ~0:22–1:04 · 10 lines · 742 chars ===
+
+NARRATOR: [softly, mysterious] It's two A.M. You should be asleep. [pause] You are not asleep.
+NARRATOR: [playful] You're playing Steal an Egg. Just one more round. [pause] That was forty rounds ago.
+NARRATOR: [curious] Then, rolling down the egg belt... something you've never seen before.
+SYSTEM: [glitchy, robotic] Secret Egg. Price: question mark. Question mark. Question mark.
+YOU: [whispers, amazed] Ohhh... what is THAT?
+NARRATOR: You tap it. [pause] It's free. [pause] Nothing good is ever free.
+SYSTEM: [robotic] Before hatching, please enter your username.
+YOU: [sleepy, mumbling] Mm... username... uhh... [yawns] ...you?
+NARRATOR: [deadpan] You typed "YOU." In all caps. [pause] Remember that. It's important.
+NARRATOR: [excited, building] The egg cracks. Pixels pour out of the screen... and EVERYTHING goes— [shouts] BLOCKY!
+
+=== TAKE 03 · SC 03 УТРО: ТЫ — РОБЛОКС · ~1:04–2:28 · 20 lines · 1349 chars ===
+
+NARRATOR: [bright, excited] Morning! Your alarm clock doesn't ring. [pause] It's... loading.
+SYSTEM: [robotic] Loading... twelve percent.
+NARRATOR: Then you look at your hands. [pause] Blocks. Shiny plastic blocks.
+YOU: [gasps] My hands! [rushed] Where are my FINGERS?!
+NARRATOR: You run to the mirror. [pause] Your head is a cube. And your hair is one solid piece... of orange plastic.
+NARRATOR: [curious] You grab it. And it just... comes off.
+YOU: [disbelief] I'm BALD! [nervous laugh] Okay, okay... it clicks back on. Hair is an accessory now. That's fine. That's FINE.
+NARRATOR: And floating above your head, in big white letters... "YOU."
+YOU: [groans] Ugh. Two A.M. me... you absolute noob.
+NARRATOR: [playful] Downstairs, Mom calls you for breakfast. But now her words pop up in a chat bubble.
+MOM: [cheerful, sing-song] Breakfast is ready, honey!
+YOU: [confused] Mom... did you just get filtered?
+MOM: [annoyed, sing-song] I said HONEY!
+NARRATOR: [laughs] Roblox thinks "honey" is a bad word. Mom's been filtered eleven times since sunrise.
+NARRATOR: Breakfast is a pancake. You don't eat it. You EQUIP it.
+YOU: [chewing, then disappointed] Mmm... [pause] tastes like a plastic frisbee.
+NARRATOR: And Dad? [pause] Dad never customized his avatar. Yellow head. Blue shirt. Green pants. The classic noob.
+DAD: [proud, deadpan] I'm not a noob. I'm VINTAGE.
+NARRATOR: He's been trying to sit on the couch for twenty minutes. He keeps sitting INSIDE it.
+DAD: [calm] I'm comfortable. [pause] I'm part of the couch now.
+
+=== TAKE 04 · SC 04 МИР ROBLOX · ~2:28–3:24 · 13 lines · 971 chars ===
+
+NARRATOR: [excited, building] You step outside... and WOW.
+NARRATOR: The street is a giant gray baseplate. The sun is a perfect square. The clouds are... also squares. Everything is squares.
+NARRATOR: Your neighbor is a seven-foot banana. [pause] Yesterday, he was a dentist.
+BANANA: [cheerful, goofy] Morning, YOU! Floss daily!
+NARRATOR: [rushed, playful] A kid on a rainbow jetpack. A lady in thirty-seven hats. And a hot dog who hasn't stopped dancing since six A.M.
+NARRATOR: [amazed] And it's not just your street. It's EVERYWHERE.
+NARRATOR: [like a sports commentator, speeding up] The Eiffel Tower? An obby. The Great Wall? A REALLY long obby. The ocean? [pause] A kill brick.
+NARRATOR: [amazed] Eight billion people. One server. [pause] The ping is... not great.
+NARRATOR: Then the sky goes dark... and a GIANT message appears.
+SYSTEM: [booming, robotic] ATTENTION, PLAYERS. Welcome to Roblox Earth.
+SYSTEM: [booming] By sunset, every player must enter ONE game. Players without a game... will be kicked.
+YOU: [gulps] Kicked... from EARTH?!
+SYSTEM: [booming, then suddenly cheerful] Have fun!
+
+=== TAKE 05 · SC 05 ПОРТАЛЫ · ~3:24–4:28 · 17 lines · 1061 chars ===
+
+NARRATOR: [excited] And then... the portals open.
+NARRATOR: Hundreds of glowing doorways, right in the middle of town. Every single one is a different game.
+NARRATOR: [playful] "Tower of Pain." "Adopt Me Maybe." "Brookhaven't." "Natural Disasters... but REAL."
+NARRATOR: And everyone has to choose.
+NARRATOR: Mom picks Brookhaven't. Instantly, she owns a pink mansion, a pink car... and a pink horse?
+MOM: [dreamy] I'm finally living my best life, honey!
+NARRATOR: [laughs] Filtered again.
+NARRATOR: Dad picks Fishing Simulator. He sits on a dock. He doesn't move. [pause] He's never been happier.
+DAD: [peaceful, happy sigh] ...Peace and quiet.
+NARRATOR: The banana dentist picks Tower of Pain. [pause] He falls off the first step.
+BANANA: [falling, fading away] Ohhhhh nooooo...
+NARRATOR: And Grandma picks DOORS. [pause] Ten seconds later... the monster runs out screaming.
+MONSTER: [screaming, terrified] SHE'S TOO FAST!
+NARRATOR: [softer, curious] And then you see it. One portal... flickering. Glitching. With a familiar egg on the sign.
+NARRATOR: [ominous] "STEAL AN EGG." [pause] The game that started all of this.
+YOU: [nervous, then pumped] Okay. Okay okay okay. [deep breath] Let's GO!
+NARRATOR: [excited] You jump in.
+
+=== TAKE 06 · SC 06 STEAL AN EGG: НОВИЧОК · ~4:28–5:54 · 18 lines · 1259 chars ===
+
+SYSTEM: [cheerful] Welcome to Steal an Egg! Tip: always lock your base!
+NARRATOR: [quickly] Remember that tip. [pause] You won't.
+NARRATOR: You spawn in your own empty base. And the sign out front says... "YOU's Base."
+YOU: [annoyed] "YOU's"? That's not even grammar!
+NARRATOR: In the middle of the map, a conveyor belt rolls eggs past every base. Dirt Egg: ten bucks. Rare Egg: five thousand. Legendary Egg: one MILLION.
+NARRATOR: [mysterious] And for just one second... a glitchy egg with three question marks rolls by. [pause] Then it's gone.
+YOU: [whispers] ...Did anyone else see that?
+NARRATOR: [snappy] Rule one: eggs hatch into pets. Pets make money. Money buys better eggs. [pause] It's basically a job... with chickens.
+NARRATOR: Rule two: you can steal ANY egg, from ANY base. But when you carry one, it sits on top of your head, you run at half speed... [pause] and EVERYONE can see it.
+NARRATOR: Rule three: lock your base.
+YOU: [confident] Got it. Easy.
+NARRATOR: [deadpan] It was not easy.
+NARRATOR: You have zero dollars. So you do the starter quest: "Touch Grass."
+NARRATOR: You touch the grass. [pause] Ten dollars. [laughs] Roblox literally paid you to touch grass.
+NARRATOR: You buy a Dirt Egg. It wobbles... it cracks... and out comes—
+YOU: [softly, amazed] ...a rock. With legs.
+NARRATOR: One dollar per second.
+YOU: [in love, emotional] I'm gonna call you Rocky. You're perfect. I would DIE for you, Rocky.
+
+=== TAKE 07 · SC 07 ОШИБКИ НОВИЧКА · ~5:54–7:00 · 18 lines · 1053 chars ===
+
+NARRATOR: You spend three minutes showing Rocky to... literally no one. And you forget rule three.
+NARRATOR: [rushed] A tiny blur zooms into your base. "xX_Speedy_Xx." He's seven. He's the fastest thief on the server.
+SPEEDY: [high-pitched, giggling] Yoink!
+YOU: [shouts, devastated] ROCKY! NOOOO!
+NARRATOR: You chase him. You're fast. He's FASTER. He slams his laser door right in your face. And behind it... Speedy has two hundred rocks.
+YOU: [crying, dramatic] Why does a seven-year-old need two hundred ROCKS?!
+SPEEDY: [smug] Collection.
+NARRATOR: [determined] Fine. If they can steal... so can you.
+NARRATOR: You pick the biggest target on the server. Number one on the leaderboard: "xX_EggLord_Xx."
+NARRATOR: His base is solid gold. Lasers. Ten Legendary eggs. And a sign that says... "TRY IT."
+YOU: [whispers, sneaky] Sneak... sneak... sneak...
+NARRATOR: You grab a Legendary egg. It lands on your head. [pause] It weighs as much as a fridge.
+YOU: [straining] Why is it so HEAVY?!
+NARRATOR: Alarms. Sirens. And EggLord... slowly turns around.
+EGGLORD: [bored, cocky] ...Bro. Seriously?
+NARRATOR: The lasers go ZAP.
+YOU: [dazed, flat] ...oof.
+NARRATOR: You respawn in your empty base. No Rocky. No egg. No dignity.
+
+=== TAKE 08 · SC 08 NOVA · ~7:00–7:49 · 11 lines · 805 chars ===
+
+NARRATOR: [softer, building] And that's when you see her.
+NARRATOR: A blur. Running straight through EggLord's lasers... with THREE eggs stacked on her head. At FULL speed.
+YOU: [amazed] That's... that's impossible! You're supposed to be SLOW!
+NARRATOR: [like a sports commentator, speeding up] She slides under one laser, wall-jumps over two, backflips over the guard... and lands in her base. Door locked. Perfect.
+NARRATOR: Her name tag says "Nova."
+NOVA: [cool, amused] Nice name tag... YOU.
+YOU: [flustered, rushed] Thanks! It's— uh— it's a long story, I typed it at two A.M., and—
+NOVA: [smirking] Tip, noob. [pause] Never steal a Legendary egg in Common shoes.
+NARRATOR: And she's gone.
+YOU: [dreamy sigh] ...She called me noob.
+NARRATOR: [playful] That's when you decide two things. One: you're gonna become the greatest egg thief this world has ever seen. [pause] Two... you need better shoes.
+
+=== TAKE 09 · SC 09 ПРИЗЫВ ПОДПИСАТЬСЯ · ~7:49–8:06 · 4 lines · 276 chars ===
+
+NARRATOR: [quick, cheerful] Oh! Quick thing. Everyone who subscribes gets a FREE Legendary egg in the new world.
+NARRATOR: [whispers] It's a normal egg. Painted gold. Don't tell anyone.
+NARRATOR: And if you DON'T subscribe... your only pet is a rock. Forever. [pause] Like me.
+YOU: [sad, small voice] I miss Rocky.
+
+=== TAKE 10a · SC 10 ГРИНД · ~8:06–10:08 · 30 lines · 1505 chars ===
+
+NARRATOR: [energetic] So you grind.
+NARRATOR: [rushed] Touch grass. Touch grass. Touch grass. Buy egg. Hatch egg. A chicken in sunglasses! A dog made of toast! A floating eyeball that just... stares.
+NARRATOR: One dollar a second. Fifty. A THOUSAND. Your base gets bigger. And shinier.
+NARRATOR: You practice stealing. You get zapped. And zapped. And zapped. One thousand and forty-seven times.
+NARRATOR: And finally... you buy the Speed Coil.
+YOU: [excited] NEW SHOES!
+NARRATOR: You zoom. You fly. You run straight into a wall.
+YOU: [muffled, face in the wall] ...worth it.
+NARRATOR: And one night... you go back to Speedy's base. Two hundred rocks. All the same. But one of them... looks back at you.
+YOU: [whispers, emotional] Rocky...?
+NARRATOR: [warm] Rocky.
+NARRATOR: You carry him home on your head, at half speed, crying the whole way.
+YOU: [crying happily] You're home, buddy. You're HOME.
+NARRATOR: You keep running into Nova. Well... mostly, she keeps stealing from you.
+NOVA: [playful] Thanks for the egg, YOU!
+YOU: [shouts] THAT WAS MY EGG!
+NOVA: [laughs] Was.
+NARRATOR: You try stealing from her once. [pause] Banana peel trap.
+NOVA: [laughs] Classic.
+NARRATOR: But then, one evening... at the egg belt...
+NOVA: [quieter, curious] You saw it too, didn't you? The question mark egg.
+YOU: [surprised] You saw it?!
+NOVA: [serious] It's the Secret Egg. It's in the Admin Vault. The final level. Nobody's ever beaten it.
+NOVA: [softer] Some people say... if you hatch it, the world goes back to normal.
+YOU: [curious] And what do YOU think?
+NOVA: [smirks] I think... I'm getting it first.
+YOU: [hopeful] Wanna... team up?
+NOVA: [snappy] Ha. No.
+NARRATOR: She walks away. [pause] Then she stops.
+NOVA: [over her shoulder, smug] ...Keep up, and maybe.
+
+=== TAKE 10b · SC 10 ГРИНД · ~8:06–10:08 · 5 lines · 365 chars ===
+
+NARRATOR: [excited] So you KEEP UP. Leaderboard: number eight billion... fifty thousand... three hundred... number THREE!
+NARRATOR: Number two: Nova. Number one... EggLord.
+SYSTEM: [booming] Server event! EGG RAIN!
+NARRATOR: Eggs fall from the sky! The whole server goes crazy. Mom drives through in her pink car. And Dad catches one... with his fishing rod.
+DAD: [calm, pleased] Huh. Biggest fish I ever caught.
+
+=== TAKE 11a · SC 11 ФИНАЛЬНЫЙ УРОВЕНЬ: ADMIN VAULT · ~10:08–12:32 · 29 lines · 1474 chars ===
+
+SYSTEM: [booming, epic] The Admin Vault is now OPEN. Entry fee: ONE BILLION dollars.
+NARRATOR: You check your money. [pause] Nine hundred ninety-nine million, nine hundred ninety-nine thousand, nine hundred ninety-nine.
+YOU: [panicked] One dollar SHORT?! NOOO!
+NARRATOR: [pause] And then... [pause] bloop.
+SYSTEM: [chirpy] Plus one dollar!
+NARRATOR: [warm] Rocky. One dollar per second. Right on time.
+YOU: [shouts with joy] ROCKY, I LOVE YOU!
+NARRATOR: [epic, building] The Admin Vault floats above the clouds. Four stages. One egg. And only three players brave enough to go in.
+EGGLORD: [cocky, laughing] Oh look, the noob and the girl. Good luck. You're gonna need it.
+NOVA: [unbothered, cold] Talk less, EggLord. Run more.
+NARRATOR: [tense] Stage one: the Laser Hall. Red beams, sweeping in every direction.
+NARRATOR: Nova is fast. But not fast enough. One beam clips her shoe.
+NOVA: [gasps] Ah—!
+NARRATOR: [proud] But you? You've been zapped one thousand and forty-seven times. You KNOW lasers.
+YOU: [confident, focused] Left. [pause] Wait... [pause] Jump— NOW!
+NARRATOR: She lands perfectly. And she looks at you.
+NOVA: [impressed, trying to hide it] ...Not bad, noob.
+NARRATOR: Stage two: the Hatchery. A thousand eggs. One is real. The rest...
+NARRATOR: [scared] ...have TEETH.
+YOU: [screams] WHY DO THE EGGS HAVE TEETH?!
+NOVA: [shouts] DON'T TOUCH THE PURPLE ONES!
+NARRATOR: You touch a purple one.
+YOU: [muffled, inside the egg] ...I touched a purple one.
+NARRATOR: Nova grabs your legs and PULLS. Pop! You're free.
+NOVA: [laughs] You owe me.
+YOU: [grinning] Put it on my tab.
+NARRATOR: [epic] Stage three: the Top. And there it is... the Secret Egg.
+NARRATOR: [tense] But EggLord gets there first.
+EGGLORD: [triumphant] MINE!
+
+=== TAKE 11b · SC 11 ФИНАЛЬНЫЙ УРОВЕНЬ: ADMIN VAULT · ~10:08–12:32 · 17 lines · 856 chars ===
+
+NARRATOR: The Secret Egg lands on his head. And remember rule two?
+NARRATOR: [playful] Half speed. And EVERYONE can see it.
+NOVA: [quick, smirking] You thinking what I'm thinking?
+YOU: [smirking] Banana peel?
+NOVA: [laughs] Banana peel.
+NARRATOR: Slip! EggLord flies. The Secret Egg flies even higher—
+NARRATOR: [like a sports commentator, speeding up] You JUMP! You CATCH it! And now YOU are the one at half speed!
+SYSTEM: [booming] Vault closing in TEN seconds!
+NARRATOR: [rushed, tense] Nine. The hatch pad is all the way across the vault. You're too slow. You'll never make it.
+YOU: [shouts] NOVA! CATCH!
+NARRATOR: You throw it. She catches it. She runs. Full speed. Seven. Six.
+NARRATOR: Lasers. Teeth eggs. EggLord, still screaming somewhere. Five. Four.
+NOVA: [shouts] YOU! Your turn!
+NARRATOR: She throws it back. Three. You dive. Two. She dives.
+NARRATOR: [shouts] ONE!
+NARRATOR: [long pause] Two hands. One egg. On the pad. At the exact same time.
+SYSTEM: [booming, triumphant] VAULT COMPLETE! CO-OP HATCH!
+
+=== TAKE 12 · SC 12 ВЫЛУПЛЕНИЕ · ~12:32–12:53 · 7 lines · 360 chars ===
+
+NARRATOR: [soft, amazed] The Secret Egg glows. It cracks. Light everywhere...
+NARRATOR: And out pops... a tiny, glitchy... pixel chick.
+SYSTEM: [gentle] Congratulations, YOU and Nova. Reward: one wish.
+NOVA: [softly] It's your call, noob.
+YOU: [thoughtful] We could turn the world back to normal... [pause] ...tomorrow.
+NOVA: [curious, smirking] Why tomorrow?
+YOU: [nervous] 'Cause today... I've got something to do.
+
+=== TAKE 13 · SC 13 ЦВЕТЫ · ~12:53–13:43 · 15 lines · 785 chars ===
+
+NARRATOR: [warm, playful] So you go to the shop. Flowers are a game pass. They cost... every single dollar you have.
+YOU: [no hesitation] Worth it.
+NARRATOR: You find her on the roof of her base, watching the square sun go down.
+NARRATOR: Your face turns red. Like, actually red. There's a blush texture now.
+YOU: [nervous, stammering] S-so... uh... these are for you.
+NOVA: [teasing] For me? [pause] Or for YOU?
+YOU: [flustered, rushed] For you! Not me-YOU, you-you! You. [pause] ...I'm changing my username.
+NARRATOR: [pause] She looks at the flowers. She looks at you. [pause] And she smirks.
+NOVA: [cool, warm smirk] Smooth... YOU. [pause] Real smooth.
+NARRATOR: She takes the flowers.
+SYSTEM: [cheerful] Nova accepted your gift!
+NARRATOR: [warm] And for the first time since the world turned into Roblox...
+NARRATOR: [playful] you forget how to walk.
+YOU: [dreamy, fainting] ...oof.
+NOVA: [laughs softly] Noob.
+
+=== TAKE 14 · SC 14 АУТРО · ~13:43–13:59 · 3 lines · 243 chars ===
+
+NARRATOR: [excited, fast] Which portal would YOU pick? Tell me in the comments! And comment "EGG" if you'd pick Steal an Egg too.
+NARRATOR: [playful, slowing down] And the wish? [pause] Still unused. Because honestly...
+NARRATOR: [warm] some things are just better in Roblox.
+
+=== END ===

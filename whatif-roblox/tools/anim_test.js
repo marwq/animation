@@ -14,7 +14,7 @@ const { f, ease, inv, lerp, clamp } = S;
 const W = 1920, H = 1080, GROUND = 975, HERO_S = 0.72;
 const EGG_BODY = 250; // egg size in hero space
 const EGG_W = EGG_BODY * HERO_S; // same egg in world pixels
-const NAME = 'Player';
+const NAME = 'YOU';
 
 // ---------------------------------------------------------------- background
 function background() {

@@ -1,0 +1,1570 @@
+[
+ {
+  "scene": "SC 01",
+  "speaker": "NARRATOR",
+  "text": "[excited, slightly hushed] What if you woke up... and the WHOLE world was Roblox?",
+  "estStart": 0,
+  "estDur": 4.6
+ },
+ {
+  "scene": "SC 01",
+  "speaker": "NARRATOR",
+  "text": "[playful] Every street. Every person. Every... chicken.",
+  "estStart": 4.6,
+  "estDur": 2.78
+ },
+ {
+  "scene": "SC 01",
+  "speaker": "NARRATOR",
+  "text": "[building tension] And to survive, everyone had to pick ONE game.",
+  "estStart": 7.38,
+  "estDur": 3.57
+ },
+ {
+  "scene": "SC 01",
+  "speaker": "NARRATOR",
+  "text": "[rushed] You picked the hardest one.",
+  "estStart": 10.95,
+  "estDur": 2.12
+ },
+ {
+  "scene": "SC 01",
+  "speaker": "NOVA",
+  "text": "[shouts, confident] You coming or what, noob?!",
+  "estStart": 13.07,
+  "estDur": 2.12
+ },
+ {
+  "scene": "SC 01",
+  "speaker": "YOU",
+  "text": "[shouts, panicked] I'M COMING! I'm totally fine, I'm— [screams] AAAAAH!",
+  "estStart": 15.19,
+  "estDur": 2.85
+ },
+ {
+  "scene": "SC 01",
+  "speaker": "NARRATOR",
+  "text": "[sighs, playful] Okay. Okay. Let me back up.",
+  "estStart": 18.04,
+  "estDur": 2.48
+ },
+ {
+  "scene": "SC 02",
+  "speaker": "NARRATOR",
+  "text": "[softly, mysterious] It's two A.M. You should be asleep. [pause] You are not asleep.",
+  "estStart": 21.52,
+  "estDur": 4.8
+ },
+ {
+  "scene": "SC 02",
+  "speaker": "NARRATOR",
+  "text": "[playful] You're playing Steal an Egg. Just one more round. [pause] That was forty rounds ago.",
+  "estStart": 26.32,
+  "estDur": 5.89
+ },
+ {
+  "scene": "SC 02",
+  "speaker": "NARRATOR",
+  "text": "[curious] Then, rolling down the egg belt... something you've never seen before.",
+  "estStart": 32.21,
+  "estDur": 4.6
+ },
+ {
+  "scene": "SC 02",
+  "speaker": "SYSTEM",
+  "text": "[glitchy, robotic] Secret Egg. Price: question mark. Question mark. Question mark.",
+  "estStart": 36.81,
+  "estDur": 3.57
+ },
+ {
+  "scene": "SC 02",
+  "speaker": "YOU",
+  "text": "[whispers, amazed] Ohhh... what is THAT?",
+  "estStart": 40.38,
+  "estDur": 2.05
+ },
+ {
+  "scene": "SC 02",
+  "speaker": "NARRATOR",
+  "text": "You tap it. [pause] It's free. [pause] Nothing good is ever free.",
+  "estStart": 42.44,
+  "estDur": 4.94
+ },
+ {
+  "scene": "SC 02",
+  "speaker": "SYSTEM",
+  "text": "[robotic] Before hatching, please enter your username.",
+  "estStart": 47.37,
+  "estDur": 2.48
+ },
+ {
+  "scene": "SC 02",
+  "speaker": "YOU",
+  "text": "[sleepy, mumbling] Mm... username... uhh... [yawns] ...you?",
+  "estStart": 49.85,
+  "estDur": 2.95
+ },
+ {
+  "scene": "SC 02",
+  "speaker": "NARRATOR",
+  "text": "[deadpan] You typed \"YOU.\" In all caps. [pause] Remember that. It's important.",
+  "estStart": 52.81,
+  "estDur": 4.44
+ },
+ {
+  "scene": "SC 02",
+  "speaker": "NARRATOR",
+  "text": "[excited, building] The egg cracks. Pixels pour out of the screen... and EVERYTHING goes— [shouts] BLOCKY!",
+  "estStart": 57.25,
+  "estDur": 5.33
+ },
+ {
+  "scene": "SC 03",
+  "speaker": "NARRATOR",
+  "text": "[bright, excited] Morning! Your alarm clock doesn't ring. [pause] It's... loading.",
+  "estStart": 63.57,
+  "estDur": 4.01
+ },
+ {
+  "scene": "SC 03",
+  "speaker": "SYSTEM",
+  "text": "[robotic] Loading... twelve percent.",
+  "estStart": 67.58,
+  "estDur": 1.69
+ },
+ {
+  "scene": "SC 03",
+  "speaker": "NARRATOR",
+  "text": "Then you look at your hands. [pause] Blocks. Shiny plastic blocks.",
+  "estStart": 69.27,
+  "estDur": 4.44
+ },
+ {
+  "scene": "SC 03",
+  "speaker": "YOU",
+  "text": "[gasps] My hands! [rushed] Where are my FINGERS?!",
+  "estStart": 73.71,
+  "estDur": 2.48
+ },
+ {
+  "scene": "SC 03",
+  "speaker": "NARRATOR",
+  "text": "You run to the mirror. [pause] Your head is a cube. And your hair is one solid piece... of orange plastic.",
+  "estStart": 76.19,
+  "estDur": 8.37
+ },
+ {
+  "scene": "SC 03",
+  "speaker": "NARRATOR",
+  "text": "[curious] You grab it. And it just... comes off.",
+  "estStart": 84.56,
+  "estDur": 3.51
+ },
+ {
+  "scene": "SC 03",
+  "speaker": "YOU",
+  "text": "[disbelief] I'm BALD! [nervous laugh] Okay, okay... it clicks back on. Hair is an accessory now. That's fine. That's FINE.",
+  "estStart": 88.07,
+  "estDur": 6.78
+ },
+ {
+  "scene": "SC 03",
+  "speaker": "NARRATOR",
+  "text": "And floating above your head, in big white letters... \"YOU.\"",
+  "estStart": 94.85,
+  "estDur": 4.24
+ },
+ {
+  "scene": "SC 03",
+  "speaker": "YOU",
+  "text": "[groans] Ugh. Two A.M. me... you absolute noob.",
+  "estStart": 99.09,
+  "estDur": 3.15
+ },
+ {
+  "scene": "SC 03",
+  "speaker": "NARRATOR",
+  "text": "[playful] Downstairs, Mom calls you for breakfast. But now her words pop up in a chat bubble.",
+  "estStart": 102.24,
+  "estDur": 6.12
+ },
+ {
+  "scene": "SC 03",
+  "speaker": "MOM",
+  "text": "[cheerful, sing-song] Breakfast is ready, honey!",
+  "estStart": 108.35,
+  "estDur": 1.75
+ },
+ {
+  "scene": "SC 03",
+  "speaker": "YOU",
+  "text": "[confused] Mom... did you just get filtered?",
+  "estStart": 110.11,
+  "estDur": 2.78
+ },
+ {
+  "scene": "SC 03",
+  "speaker": "MOM",
+  "text": "[annoyed, sing-song] I said HONEY!",
+  "estStart": 112.89,
+  "estDur": 1.39
+ },
+ {
+  "scene": "SC 03",
+  "speaker": "NARRATOR",
+  "text": "[laughs] Roblox thinks \"honey\" is a bad word. Mom's been filtered eleven times since sunrise.",
+  "estStart": 114.28,
+  "estDur": 5.39
+ },
+ {
+  "scene": "SC 03",
+  "speaker": "NARRATOR",
+  "text": "Breakfast is a pancake. You don't eat it. You EQUIP it.",
+  "estStart": 119.67,
+  "estDur": 4.3
+ },
+ {
+  "scene": "SC 03",
+  "speaker": "YOU",
+  "text": "[chewing, then disappointed] Mmm... [pause] tastes like a plastic frisbee.",
+  "estStart": 123.97,
+  "estDur": 3.28
+ },
+ {
+  "scene": "SC 03",
+  "speaker": "NARRATOR",
+  "text": "And Dad? [pause] Dad never customized his avatar. Yellow head. Blue shirt. Green pants. The classic noob.",
+  "estStart": 127.25,
+  "estDur": 6.62
+ },
+ {
+  "scene": "SC 03",
+  "speaker": "DAD",
+  "text": "[proud, deadpan] I'm not a noob. I'm VINTAGE.",
+  "estStart": 133.87,
+  "estDur": 2.48
+ },
+ {
+  "scene": "SC 03",
+  "speaker": "NARRATOR",
+  "text": "He's been trying to sit on the couch for twenty minutes. He keeps sitting INSIDE it.",
+  "estStart": 136.35,
+  "estDur": 6.12
+ },
+ {
+  "scene": "SC 03",
+  "speaker": "DAD",
+  "text": "[calm] I'm comfortable. [pause] I'm part of the couch now.",
+  "estStart": 142.47,
+  "estDur": 3.71
+ },
+ {
+  "scene": "SC 04",
+  "speaker": "NARRATOR",
+  "text": "[excited, building] You step outside... and WOW.",
+  "estStart": 147.68,
+  "estDur": 2.42
+ },
+ {
+  "scene": "SC 04",
+  "speaker": "NARRATOR",
+  "text": "The street is a giant gray baseplate. The sun is a perfect square. The clouds are... also squares. Everything is squares.",
+  "estStart": 150.1,
+  "estDur": 8.24
+ },
+ {
+  "scene": "SC 04",
+  "speaker": "NARRATOR",
+  "text": "Your neighbor is a seven-foot banana. [pause] Yesterday, he was a dentist.",
+  "estStart": 158.34,
+  "estDur": 4.8
+ },
+ {
+  "scene": "SC 04",
+  "speaker": "BANANA",
+  "text": "[cheerful, goofy] Morning, YOU! Floss daily!",
+  "estStart": 163.14,
+  "estDur": 1.75
+ },
+ {
+  "scene": "SC 04",
+  "speaker": "NARRATOR",
+  "text": "[rushed, playful] A kid on a rainbow jetpack. A lady in thirty-seven hats. And a hot dog who hasn't stopped dancing since six A.M.",
+  "estStart": 164.89,
+  "estDur": 8.3
+ },
+ {
+  "scene": "SC 04",
+  "speaker": "NARRATOR",
+  "text": "[amazed] And it's not just your street. It's EVERYWHERE.",
+  "estStart": 173.19,
+  "estDur": 3.21
+ },
+ {
+  "scene": "SC 04",
+  "speaker": "NARRATOR",
+  "text": "[like a sports commentator, speeding up] The Eiffel Tower? An obby. The Great Wall? A REALLY long obby. The ocean? [pause] A kill brick.",
+  "estStart": 176.4,
+  "estDur": 6.98
+ },
+ {
+  "scene": "SC 04",
+  "speaker": "NARRATOR",
+  "text": "[amazed] Eight billion people. One server. [pause] The ping is... not great.",
+  "estStart": 183.38,
+  "estDur": 4.74
+ },
+ {
+  "scene": "SC 04",
+  "speaker": "NARRATOR",
+  "text": "Then the sky goes dark... and a GIANT message appears.",
+  "estStart": 188.12,
+  "estDur": 4.24
+ },
+ {
+  "scene": "SC 04",
+  "speaker": "SYSTEM",
+  "text": "[booming, robotic] ATTENTION, PLAYERS. Welcome to Roblox Earth.",
+  "estStart": 192.35,
+  "estDur": 2.48
+ },
+ {
+  "scene": "SC 04",
+  "speaker": "SYSTEM",
+  "text": "[booming] By sunset, every player must enter ONE game. Players without a game... will be kicked.",
+  "estStart": 194.84,
+  "estDur": 6.05
+ },
+ {
+  "scene": "SC 04",
+  "speaker": "YOU",
+  "text": "[gulps] Kicked... from EARTH?!",
+  "estStart": 200.89,
+  "estDur": 1.69
+ },
+ {
+  "scene": "SC 04",
+  "speaker": "SYSTEM",
+  "text": "[booming, then suddenly cheerful] Have fun!",
+  "estStart": 202.58,
+  "estDur": 1.03
+ },
+ {
+  "scene": "SC 05",
+  "speaker": "NARRATOR",
+  "text": "[excited] And then... the portals open.",
+  "estStart": 203.61,
+  "estDur": 2.42
+ },
+ {
+  "scene": "SC 05",
+  "speaker": "NARRATOR",
+  "text": "Hundreds of glowing doorways, right in the middle of town. Every single one is a different game.",
+  "estStart": 206.03,
+  "estDur": 6.48
+ },
+ {
+  "scene": "SC 05",
+  "speaker": "NARRATOR",
+  "text": "[playful] \"Tower of Pain.\" \"Adopt Me Maybe.\" \"Brookhaven't.\" \"Natural Disasters... but REAL.\"",
+  "estStart": 212.51,
+  "estDur": 4.6
+ },
+ {
+  "scene": "SC 05",
+  "speaker": "NARRATOR",
+  "text": "And everyone has to choose.",
+  "estStart": 217.11,
+  "estDur": 2.12
+ },
+ {
+  "scene": "SC 05",
+  "speaker": "NARRATOR",
+  "text": "Mom picks Brookhaven't. Instantly, she owns a pink mansion, a pink car... and a pink horse?",
+  "estStart": 219.23,
+  "estDur": 6.42
+ },
+ {
+  "scene": "SC 05",
+  "speaker": "MOM",
+  "text": "[dreamy] I'm finally living my best life, honey!",
+  "estStart": 225.65,
+  "estDur": 2.85
+ },
+ {
+  "scene": "SC 05",
+  "speaker": "NARRATOR",
+  "text": "[laughs] Filtered again.",
+  "estStart": 228.49,
+  "estDur": 1.03
+ },
+ {
+  "scene": "SC 05",
+  "speaker": "NARRATOR",
+  "text": "Dad picks Fishing Simulator. He sits on a dock. He doesn't move. [pause] He's never been happier.",
+  "estStart": 229.52,
+  "estDur": 6.62
+ },
+ {
+  "scene": "SC 05",
+  "speaker": "DAD",
+  "text": "[peaceful, happy sigh] ...Peace and quiet.",
+  "estStart": 236.14,
+  "estDur": 1.69
+ },
+ {
+  "scene": "SC 05",
+  "speaker": "NARRATOR",
+  "text": "The banana dentist picks Tower of Pain. [pause] He falls off the first step.",
+  "estStart": 237.83,
+  "estDur": 5.53
+ },
+ {
+  "scene": "SC 05",
+  "speaker": "BANANA",
+  "text": "[falling, fading away] Ohhhhh nooooo...",
+  "estStart": 243.35,
+  "estDur": 1.33
+ },
+ {
+  "scene": "SC 05",
+  "speaker": "NARRATOR",
+  "text": "And Grandma picks DOORS. [pause] Ten seconds later... the monster runs out screaming.",
+  "estStart": 244.68,
+  "estDur": 5.46
+ },
+ {
+  "scene": "SC 05",
+  "speaker": "MONSTER",
+  "text": "[screaming, terrified] SHE'S TOO FAST!",
+  "estStart": 250.15,
+  "estDur": 1.39
+ },
+ {
+  "scene": "SC 05",
+  "speaker": "NARRATOR",
+  "text": "[softer, curious] And then you see it. One portal... flickering. Glitching. With a familiar egg on the sign.",
+  "estStart": 251.54,
+  "estDur": 6.42
+ },
+ {
+  "scene": "SC 05",
+  "speaker": "NARRATOR",
+  "text": "[ominous] \"STEAL AN EGG.\" [pause] The game that started all of this.",
+  "estStart": 257.95,
+  "estDur": 4.44
+ },
+ {
+  "scene": "SC 05",
+  "speaker": "YOU",
+  "text": "[nervous, then pumped] Okay. Okay okay okay. [deep breath] Let's GO!",
+  "estStart": 262.39,
+  "estDur": 2.48
+ },
+ {
+  "scene": "SC 05",
+  "speaker": "NARRATOR",
+  "text": "[excited] You jump in.",
+  "estStart": 264.87,
+  "estDur": 1.39
+ },
+ {
+  "scene": "SC 06",
+  "speaker": "SYSTEM",
+  "text": "[cheerful] Welcome to Steal an Egg! Tip: always lock your base!",
+  "estStart": 268.26,
+  "estDur": 3.94
+ },
+ {
+  "scene": "SC 06",
+  "speaker": "NARRATOR",
+  "text": "[quickly] Remember that tip. [pause] You won't.",
+  "estStart": 272.2,
+  "estDur": 2.62
+ },
+ {
+  "scene": "SC 06",
+  "speaker": "NARRATOR",
+  "text": "You spawn in your own empty base. And the sign out front says... \"YOU's Base.\"",
+  "estStart": 274.82,
+  "estDur": 6.05
+ },
+ {
+  "scene": "SC 06",
+  "speaker": "YOU",
+  "text": "[annoyed] \"YOU's\"? That's not even grammar!",
+  "estStart": 280.87,
+  "estDur": 2.12
+ },
+ {
+  "scene": "SC 06",
+  "speaker": "NARRATOR",
+  "text": "In the middle of the map, a conveyor belt rolls eggs past every base. Dirt Egg: ten bucks. Rare Egg: five thousand. Legendary Egg: one MILLION.",
+  "estStart": 282.99,
+  "estDur": 9.75
+ },
+ {
+  "scene": "SC 06",
+  "speaker": "NARRATOR",
+  "text": "[mysterious] And for just one second... a glitchy egg with three question marks rolls by. [pause] Then it's gone.",
+  "estStart": 292.75,
+  "estDur": 7.28
+ },
+ {
+  "scene": "SC 06",
+  "speaker": "YOU",
+  "text": "[whispers] ...Did anyone else see that?",
+  "estStart": 300.03,
+  "estDur": 2.42
+ },
+ {
+  "scene": "SC 06",
+  "speaker": "NARRATOR",
+  "text": "[snappy] Rule one: eggs hatch into pets. Pets make money. Money buys better eggs. [pause] It's basically a job... with chickens.",
+  "estStart": 302.45,
+  "estDur": 8.01
+ },
+ {
+  "scene": "SC 06",
+  "speaker": "NARRATOR",
+  "text": "Rule two: you can steal ANY egg, from ANY base. But when you carry one, it sits on top of your head, you run at half speed... [pause] and EVERYONE can see it.",
+  "estStart": 310.45,
+  "estDur": 12.74
+ },
+ {
+  "scene": "SC 06",
+  "speaker": "NARRATOR",
+  "text": "Rule three: lock your base.",
+  "estStart": 323.19,
+  "estDur": 2.12
+ },
+ {
+  "scene": "SC 06",
+  "speaker": "YOU",
+  "text": "[confident] Got it. Easy.",
+  "estStart": 325.31,
+  "estDur": 1.39
+ },
+ {
+  "scene": "SC 06",
+  "speaker": "NARRATOR",
+  "text": "[deadpan] It was not easy.",
+  "estStart": 326.7,
+  "estDur": 1.75
+ },
+ {
+  "scene": "SC 06",
+  "speaker": "NARRATOR",
+  "text": "You have zero dollars. So you do the starter quest: \"Touch Grass.\"",
+  "estStart": 328.45,
+  "estDur": 4.66
+ },
+ {
+  "scene": "SC 06",
+  "speaker": "NARRATOR",
+  "text": "You touch the grass. [pause] Ten dollars. [laughs] Roblox literally paid you to touch grass.",
+  "estStart": 333.12,
+  "estDur": 5.53
+ },
+ {
+  "scene": "SC 06",
+  "speaker": "NARRATOR",
+  "text": "You buy a Dirt Egg. It wobbles... it cracks... and out comes—",
+  "estStart": 338.65,
+  "estDur": 5.26
+ },
+ {
+  "scene": "SC 06",
+  "speaker": "YOU",
+  "text": "[softly, amazed] ...a rock. With legs.",
+  "estStart": 343.91,
+  "estDur": 2.05
+ },
+ {
+  "scene": "SC 06",
+  "speaker": "NARRATOR",
+  "text": "One dollar per second.",
+  "estStart": 345.96,
+  "estDur": 1.75
+ },
+ {
+  "scene": "SC 06",
+  "speaker": "YOU",
+  "text": "[in love, emotional] I'm gonna call you Rocky. You're perfect. I would DIE for you, Rocky.",
+  "estStart": 347.72,
+  "estDur": 5.03
+ },
+ {
+  "scene": "SC 07",
+  "speaker": "NARRATOR",
+  "text": "You spend three minutes showing Rocky to... literally no one. And you forget rule three.",
+  "estStart": 353.75,
+  "estDur": 6.05
+ },
+ {
+  "scene": "SC 07",
+  "speaker": "NARRATOR",
+  "text": "[rushed] A tiny blur zooms into your base. \"xX_Speedy_Xx.\" He's seven. He's the fastest thief on the server.",
+  "estStart": 359.8,
+  "estDur": 6.48
+ },
+ {
+  "scene": "SC 07",
+  "speaker": "SPEEDY",
+  "text": "[high-pitched, giggling] Yoink!",
+  "estStart": 366.28,
+  "estDur": 0.66
+ },
+ {
+  "scene": "SC 07",
+  "speaker": "YOU",
+  "text": "[shouts, devastated] ROCKY! NOOOO!",
+  "estStart": 366.95,
+  "estDur": 1.03
+ },
+ {
+  "scene": "SC 07",
+  "speaker": "NARRATOR",
+  "text": "You chase him. You're fast. He's FASTER. He slams his laser door right in your face. And behind it... Speedy has two hundred rocks.",
+  "estStart": 367.97,
+  "estDur": 9.33
+ },
+ {
+  "scene": "SC 07",
+  "speaker": "YOU",
+  "text": "[crying, dramatic] Why does a seven-year-old need two hundred ROCKS?!",
+  "estStart": 377.3,
+  "estDur": 3.21
+ },
+ {
+  "scene": "SC 07",
+  "speaker": "SPEEDY",
+  "text": "[smug] Collection.",
+  "estStart": 380.51,
+  "estDur": 0.66
+ },
+ {
+  "scene": "SC 07",
+  "speaker": "NARRATOR",
+  "text": "[determined] Fine. If they can steal... so can you.",
+  "estStart": 381.17,
+  "estDur": 3.51
+ },
+ {
+  "scene": "SC 07",
+  "speaker": "NARRATOR",
+  "text": "You pick the biggest target on the server. Number one on the leaderboard: \"xX_EggLord_Xx.\"",
+  "estStart": 384.68,
+  "estDur": 5.39
+ },
+ {
+  "scene": "SC 07",
+  "speaker": "NARRATOR",
+  "text": "His base is solid gold. Lasers. Ten Legendary eggs. And a sign that says... \"TRY IT.\"",
+  "estStart": 390.07,
+  "estDur": 6.42
+ },
+ {
+  "scene": "SC 07",
+  "speaker": "YOU",
+  "text": "[whispers, sneaky] Sneak... sneak... sneak...",
+  "estStart": 396.49,
+  "estDur": 2.29
+ },
+ {
+  "scene": "SC 07",
+  "speaker": "NARRATOR",
+  "text": "You grab a Legendary egg. It lands on your head. [pause] It weighs as much as a fridge.",
+  "estStart": 398.78,
+  "estDur": 6.98
+ },
+ {
+  "scene": "SC 07",
+  "speaker": "YOU",
+  "text": "[straining] Why is it so HEAVY?!",
+  "estStart": 405.76,
+  "estDur": 2.12
+ },
+ {
+  "scene": "SC 07",
+  "speaker": "NARRATOR",
+  "text": "Alarms. Sirens. And EggLord... slowly turns around.",
+  "estStart": 407.88,
+  "estDur": 3.15
+ },
+ {
+  "scene": "SC 07",
+  "speaker": "EGGLORD",
+  "text": "[bored, cocky] ...Bro. Seriously?",
+  "estStart": 411.03,
+  "estDur": 1.33
+ },
+ {
+  "scene": "SC 07",
+  "speaker": "NARRATOR",
+  "text": "The lasers go ZAP.",
+  "estStart": 412.35,
+  "estDur": 1.75
+ },
+ {
+  "scene": "SC 07",
+  "speaker": "YOU",
+  "text": "[dazed, flat] ...oof.",
+  "estStart": 414.11,
+  "estDur": 0.96
+ },
+ {
+  "scene": "SC 07",
+  "speaker": "NARRATOR",
+  "text": "You respawn in your empty base. No Rocky. No egg. No dignity.",
+  "estStart": 415.07,
+  "estDur": 4.66
+ },
+ {
+  "scene": "SC 08",
+  "speaker": "NARRATOR",
+  "text": "[softer, building] And that's when you see her.",
+  "estStart": 419.74,
+  "estDur": 2.48
+ },
+ {
+  "scene": "SC 08",
+  "speaker": "NARRATOR",
+  "text": "A blur. Running straight through EggLord's lasers... with THREE eggs stacked on her head. At FULL speed.",
+  "estStart": 422.22,
+  "estDur": 6.78
+ },
+ {
+  "scene": "SC 08",
+  "speaker": "YOU",
+  "text": "[amazed] That's... that's impossible! You're supposed to be SLOW!",
+  "estStart": 429,
+  "estDur": 3.51
+ },
+ {
+  "scene": "SC 08",
+  "speaker": "NARRATOR",
+  "text": "[like a sports commentator, speeding up] She slides under one laser, wall-jumps over two, backflips over the guard... and lands in her base. Door locked. Perfect.",
+  "estStart": 432.51,
+  "estDur": 7.87
+ },
+ {
+  "scene": "SC 08",
+  "speaker": "NARRATOR",
+  "text": "Her name tag says \"Nova.\"",
+  "estStart": 440.38,
+  "estDur": 2.12
+ },
+ {
+  "scene": "SC 08",
+  "speaker": "NOVA",
+  "text": "[cool, amused] Nice name tag... YOU.",
+  "estStart": 442.5,
+  "estDur": 2.05
+ },
+ {
+  "scene": "SC 08",
+  "speaker": "YOU",
+  "text": "[flustered, rushed] Thanks! It's— uh— it's a long story, I typed it at two A.M., and—",
+  "estStart": 444.55,
+  "estDur": 5.39
+ },
+ {
+  "scene": "SC 08",
+  "speaker": "NOVA",
+  "text": "[smirking] Tip, noob. [pause] Never steal a Legendary egg in Common shoes.",
+  "estStart": 449.95,
+  "estDur": 4.44
+ },
+ {
+  "scene": "SC 08",
+  "speaker": "NARRATOR",
+  "text": "And she's gone.",
+  "estStart": 454.38,
+  "estDur": 1.39
+ },
+ {
+  "scene": "SC 08",
+  "speaker": "YOU",
+  "text": "[dreamy sigh] ...She called me noob.",
+  "estStart": 455.77,
+  "estDur": 2.05
+ },
+ {
+  "scene": "SC 08",
+  "speaker": "NARRATOR",
+  "text": "[playful] That's when you decide two things. One: you're gonna become the greatest egg thief this world has ever seen. [pause] Two... you need better shoes.",
+  "estStart": 457.83,
+  "estDur": 9.83
+ },
+ {
+  "scene": "SC 09",
+  "speaker": "NARRATOR",
+  "text": "[quick, cheerful] Oh! Quick thing. Everyone who subscribes gets a FREE Legendary egg in the new world.",
+  "estStart": 468.65,
+  "estDur": 5.75
+ },
+ {
+  "scene": "SC 09",
+  "speaker": "NARRATOR",
+  "text": "[whispers] It's a normal egg. Painted gold. Don't tell anyone.",
+  "estStart": 474.41,
+  "estDur": 3.57
+ },
+ {
+  "scene": "SC 09",
+  "speaker": "NARRATOR",
+  "text": "And if you DON'T subscribe... your only pet is a rock. Forever. [pause] Like me.",
+  "estStart": 477.98,
+  "estDur": 6.19
+ },
+ {
+  "scene": "SC 09",
+  "speaker": "YOU",
+  "text": "[sad, small voice] I miss Rocky.",
+  "estStart": 484.17,
+  "estDur": 1.39
+ },
+ {
+  "scene": "SC 10",
+  "speaker": "NARRATOR",
+  "text": "[energetic] So you grind.",
+  "estStart": 485.56,
+  "estDur": 1.39
+ },
+ {
+  "scene": "SC 10",
+  "speaker": "NARRATOR",
+  "text": "[rushed] Touch grass. Touch grass. Touch grass. Buy egg. Hatch egg. A chicken in sunglasses! A dog made of toast! A floating eyeball that just... stares.",
+  "estStart": 486.95,
+  "estDur": 9.69
+ },
+ {
+  "scene": "SC 10",
+  "speaker": "NARRATOR",
+  "text": "One dollar a second. Fifty. A THOUSAND. Your base gets bigger. And shinier.",
+  "estStart": 496.65,
+  "estDur": 5.03
+ },
+ {
+  "scene": "SC 10",
+  "speaker": "NARRATOR",
+  "text": "You practice stealing. You get zapped. And zapped. And zapped. One thousand and forty-seven times.",
+  "estStart": 501.67,
+  "estDur": 5.75
+ },
+ {
+  "scene": "SC 10",
+  "speaker": "NARRATOR",
+  "text": "And finally... you buy the Speed Coil.",
+  "estStart": 507.43,
+  "estDur": 3.15
+ },
+ {
+  "scene": "SC 10",
+  "speaker": "YOU",
+  "text": "[excited] NEW SHOES!",
+  "estStart": 510.57,
+  "estDur": 1.03
+ },
+ {
+  "scene": "SC 10",
+  "speaker": "NARRATOR",
+  "text": "You zoom. You fly. You run straight into a wall.",
+  "estStart": 511.6,
+  "estDur": 3.94
+ },
+ {
+  "scene": "SC 10",
+  "speaker": "YOU",
+  "text": "[muffled, face in the wall] ...worth it.",
+  "estStart": 515.54,
+  "estDur": 1.33
+ },
+ {
+  "scene": "SC 10",
+  "speaker": "NARRATOR",
+  "text": "And one night... you go back to Speedy's base. Two hundred rocks. All the same. But one of them... looks back at you.",
+  "estStart": 516.86,
+  "estDur": 9.26
+ },
+ {
+  "scene": "SC 10",
+  "speaker": "YOU",
+  "text": "[whispers, emotional] Rocky...?",
+  "estStart": 526.13,
+  "estDur": 0.96
+ },
+ {
+  "scene": "SC 10",
+  "speaker": "NARRATOR",
+  "text": "[warm] Rocky.",
+  "estStart": 527.09,
+  "estDur": 0.66
+ },
+ {
+  "scene": "SC 10",
+  "speaker": "NARRATOR",
+  "text": "You carry him home on your head, at half speed, crying the whole way.",
+  "estStart": 527.75,
+  "estDur": 5.39
+ },
+ {
+  "scene": "SC 10",
+  "speaker": "YOU",
+  "text": "[crying happily] You're home, buddy. You're HOME.",
+  "estStart": 533.15,
+  "estDur": 2.12
+ },
+ {
+  "scene": "SC 10",
+  "speaker": "NARRATOR",
+  "text": "You keep running into Nova. Well... mostly, she keeps stealing from you.",
+  "estStart": 535.26,
+  "estDur": 4.96
+ },
+ {
+  "scene": "SC 10",
+  "speaker": "NOVA",
+  "text": "[playful] Thanks for the egg, YOU!",
+  "estStart": 540.23,
+  "estDur": 2.12
+ },
+ {
+  "scene": "SC 10",
+  "speaker": "YOU",
+  "text": "[shouts] THAT WAS MY EGG!",
+  "estStart": 542.35,
+  "estDur": 1.75
+ },
+ {
+  "scene": "SC 10",
+  "speaker": "NOVA",
+  "text": "[laughs] Was.",
+  "estStart": 544.1,
+  "estDur": 0.66
+ },
+ {
+  "scene": "SC 10",
+  "speaker": "NARRATOR",
+  "text": "You try stealing from her once. [pause] Banana peel trap.",
+  "estStart": 544.76,
+  "estDur": 4.07
+ },
+ {
+  "scene": "SC 10",
+  "speaker": "NOVA",
+  "text": "[laughs] Classic.",
+  "estStart": 548.84,
+  "estDur": 0.66
+ },
+ {
+  "scene": "SC 10",
+  "speaker": "NARRATOR",
+  "text": "But then, one evening... at the egg belt...",
+  "estStart": 549.5,
+  "estDur": 3.81
+ },
+ {
+  "scene": "SC 10",
+  "speaker": "NOVA",
+  "text": "[quieter, curious] You saw it too, didn't you? The question mark egg.",
+  "estStart": 553.31,
+  "estDur": 3.94
+ },
+ {
+  "scene": "SC 10",
+  "speaker": "YOU",
+  "text": "[surprised] You saw it?!",
+  "estStart": 557.25,
+  "estDur": 1.39
+ },
+ {
+  "scene": "SC 10",
+  "speaker": "NOVA",
+  "text": "[serious] It's the Secret Egg. It's in the Admin Vault. The final level. Nobody's ever beaten it.",
+  "estStart": 558.64,
+  "estDur": 6.12
+ },
+ {
+  "scene": "SC 10",
+  "speaker": "NOVA",
+  "text": "[softer] Some people say... if you hatch it, the world goes back to normal.",
+  "estStart": 564.75,
+  "estDur": 5.33
+ },
+ {
+  "scene": "SC 10",
+  "speaker": "YOU",
+  "text": "[curious] And what do YOU think?",
+  "estStart": 570.08,
+  "estDur": 2.12
+ },
+ {
+  "scene": "SC 10",
+  "speaker": "NOVA",
+  "text": "[smirks] I think... I'm getting it first.",
+  "estStart": 572.2,
+  "estDur": 2.78
+ },
+ {
+  "scene": "SC 10",
+  "speaker": "YOU",
+  "text": "[hopeful] Wanna... team up?",
+  "estStart": 574.98,
+  "estDur": 1.69
+ },
+ {
+  "scene": "SC 10",
+  "speaker": "NOVA",
+  "text": "[snappy] Ha. No.",
+  "estStart": 576.67,
+  "estDur": 1.03
+ },
+ {
+  "scene": "SC 10",
+  "speaker": "NARRATOR",
+  "text": "She walks away. [pause] Then she stops.",
+  "estStart": 577.7,
+  "estDur": 2.98
+ },
+ {
+  "scene": "SC 10",
+  "speaker": "NOVA",
+  "text": "[over her shoulder, smug] ...Keep up, and maybe.",
+  "estStart": 580.68,
+  "estDur": 2.05
+ },
+ {
+  "scene": "SC 10",
+  "speaker": "NARRATOR",
+  "text": "[excited] So you KEEP UP. Leaderboard: number eight billion... fifty thousand... three hundred... number THREE!",
+  "estStart": 582.74,
+  "estDur": 6.29
+ },
+ {
+  "scene": "SC 10",
+  "speaker": "NARRATOR",
+  "text": "Number two: Nova. Number one... EggLord.",
+  "estStart": 589.03,
+  "estDur": 2.78
+ },
+ {
+  "scene": "SC 10",
+  "speaker": "SYSTEM",
+  "text": "[booming] Server event! EGG RAIN!",
+  "estStart": 591.81,
+  "estDur": 1.75
+ },
+ {
+  "scene": "SC 10",
+  "speaker": "NARRATOR",
+  "text": "Eggs fall from the sky! The whole server goes crazy. Mom drives through in her pink car. And Dad catches one... with his fishing rod.",
+  "estStart": 593.56,
+  "estDur": 9.69
+ },
+ {
+  "scene": "SC 10",
+  "speaker": "DAD",
+  "text": "[calm, pleased] Huh. Biggest fish I ever caught.",
+  "estStart": 603.25,
+  "estDur": 2.48
+ },
+ {
+  "scene": "SC 11",
+  "speaker": "SYSTEM",
+  "text": "[booming, epic] The Admin Vault is now OPEN. Entry fee: ONE BILLION dollars.",
+  "estStart": 607.74,
+  "estDur": 4.3
+ },
+ {
+  "scene": "SC 11",
+  "speaker": "NARRATOR",
+  "text": "You check your money. [pause] Nine hundred ninety-nine million, nine hundred ninety-nine thousand, nine hundred ninety-nine.",
+  "estStart": 612.04,
+  "estDur": 6.25
+ },
+ {
+  "scene": "SC 11",
+  "speaker": "YOU",
+  "text": "[panicked] One dollar SHORT?! NOOO!",
+  "estStart": 618.29,
+  "estDur": 1.75
+ },
+ {
+  "scene": "SC 11",
+  "speaker": "NARRATOR",
+  "text": "[pause] And then... [pause] bloop.",
+  "estStart": 620.05,
+  "estDur": 2.69
+ },
+ {
+  "scene": "SC 11",
+  "speaker": "SYSTEM",
+  "text": "[chirpy] Plus one dollar!",
+  "estStart": 622.74,
+  "estDur": 1.39
+ },
+ {
+  "scene": "SC 11",
+  "speaker": "NARRATOR",
+  "text": "[warm] Rocky. One dollar per second. Right on time.",
+  "estStart": 624.13,
+  "estDur": 3.21
+ },
+ {
+  "scene": "SC 11",
+  "speaker": "YOU",
+  "text": "[shouts with joy] ROCKY, I LOVE YOU!",
+  "estStart": 627.34,
+  "estDur": 1.75
+ },
+ {
+  "scene": "SC 11",
+  "speaker": "NARRATOR",
+  "text": "[epic, building] The Admin Vault floats above the clouds. Four stages. One egg. And only three players brave enough to go in.",
+  "estStart": 629.09,
+  "estDur": 7.57
+ },
+ {
+  "scene": "SC 11",
+  "speaker": "EGGLORD",
+  "text": "[cocky, laughing] Oh look, the noob and the girl. Good luck. You're gonna need it.",
+  "estStart": 636.66,
+  "estDur": 5.03
+ },
+ {
+  "scene": "SC 11",
+  "speaker": "NOVA",
+  "text": "[unbothered, cold] Talk less, EggLord. Run more.",
+  "estStart": 641.69,
+  "estDur": 2.12
+ },
+ {
+  "scene": "SC 11",
+  "speaker": "NARRATOR",
+  "text": "[tense] Stage one: the Laser Hall. Red beams, sweeping in every direction.",
+  "estStart": 643.81,
+  "estDur": 4.3
+ },
+ {
+  "scene": "SC 11",
+  "speaker": "NARRATOR",
+  "text": "Nova is fast. But not fast enough. One beam clips her shoe.",
+  "estStart": 648.11,
+  "estDur": 4.66
+ },
+ {
+  "scene": "SC 11",
+  "speaker": "NOVA",
+  "text": "[gasps] Ah—!",
+  "estStart": 652.77,
+  "estDur": 0.66
+ },
+ {
+  "scene": "SC 11",
+  "speaker": "NARRATOR",
+  "text": "[proud] But you? You've been zapped one thousand and forty-seven times. You KNOW lasers.",
+  "estStart": 653.44,
+  "estDur": 5.03
+ },
+ {
+  "scene": "SC 11",
+  "speaker": "YOU",
+  "text": "[confident, focused] Left. [pause] Wait... [pause] Jump— NOW!",
+  "estStart": 658.46,
+  "estDur": 3.05
+ },
+ {
+  "scene": "SC 11",
+  "speaker": "NARRATOR",
+  "text": "She lands perfectly. And she looks at you.",
+  "estStart": 661.52,
+  "estDur": 3.21
+ },
+ {
+  "scene": "SC 11",
+  "speaker": "NOVA",
+  "text": "[impressed, trying to hide it] ...Not bad, noob.",
+  "estStart": 664.73,
+  "estDur": 1.69
+ },
+ {
+  "scene": "SC 11",
+  "speaker": "NARRATOR",
+  "text": "Stage two: the Hatchery. A thousand eggs. One is real. The rest...",
+  "estStart": 666.42,
+  "estDur": 4.96
+ },
+ {
+  "scene": "SC 11",
+  "speaker": "NARRATOR",
+  "text": "[scared] ...have TEETH.",
+  "estStart": 671.38,
+  "estDur": 1.33
+ },
+ {
+  "scene": "SC 11",
+  "speaker": "YOU",
+  "text": "[screams] WHY DO THE EGGS HAVE TEETH?!",
+  "estStart": 672.71,
+  "estDur": 2.48
+ },
+ {
+  "scene": "SC 11",
+  "speaker": "NOVA",
+  "text": "[shouts] DON'T TOUCH THE PURPLE ONES!",
+  "estStart": 675.19,
+  "estDur": 2.12
+ },
+ {
+  "scene": "SC 11",
+  "speaker": "NARRATOR",
+  "text": "You touch a purple one.",
+  "estStart": 677.31,
+  "estDur": 2.12
+ },
+ {
+  "scene": "SC 11",
+  "speaker": "YOU",
+  "text": "[muffled, inside the egg] ...I touched a purple one.",
+  "estStart": 679.43,
+  "estDur": 2.42
+ },
+ {
+  "scene": "SC 11",
+  "speaker": "NARRATOR",
+  "text": "Nova grabs your legs and PULLS. Pop! You're free.",
+  "estStart": 681.85,
+  "estDur": 3.57
+ },
+ {
+  "scene": "SC 11",
+  "speaker": "NOVA",
+  "text": "[laughs] You owe me.",
+  "estStart": 685.42,
+  "estDur": 1.39
+ },
+ {
+  "scene": "SC 11",
+  "speaker": "YOU",
+  "text": "[grinning] Put it on my tab.",
+  "estStart": 686.81,
+  "estDur": 2.12
+ },
+ {
+  "scene": "SC 11",
+  "speaker": "NARRATOR",
+  "text": "[epic] Stage three: the Top. And there it is... the Secret Egg.",
+  "estStart": 688.93,
+  "estDur": 4.6
+ },
+ {
+  "scene": "SC 11",
+  "speaker": "NARRATOR",
+  "text": "[tense] But EggLord gets there first.",
+  "estStart": 693.53,
+  "estDur": 2.12
+ },
+ {
+  "scene": "SC 11",
+  "speaker": "EGGLORD",
+  "text": "[triumphant] MINE!",
+  "estStart": 695.65,
+  "estDur": 0.66
+ },
+ {
+  "scene": "SC 11",
+  "speaker": "NARRATOR",
+  "text": "The Secret Egg lands on his head. And remember rule two?",
+  "estStart": 696.31,
+  "estDur": 4.3
+ },
+ {
+  "scene": "SC 11",
+  "speaker": "NARRATOR",
+  "text": "[playful] Half speed. And EVERYONE can see it.",
+  "estStart": 700.61,
+  "estDur": 2.85
+ },
+ {
+  "scene": "SC 11",
+  "speaker": "NOVA",
+  "text": "[quick, smirking] You thinking what I'm thinking?",
+  "estStart": 703.45,
+  "estDur": 2.12
+ },
+ {
+  "scene": "SC 11",
+  "speaker": "YOU",
+  "text": "[smirking] Banana peel?",
+  "estStart": 705.57,
+  "estDur": 1.03
+ },
+ {
+  "scene": "SC 11",
+  "speaker": "NOVA",
+  "text": "[laughs] Banana peel.",
+  "estStart": 706.6,
+  "estDur": 1.03
+ },
+ {
+  "scene": "SC 11",
+  "speaker": "NARRATOR",
+  "text": "Slip! EggLord flies. The Secret Egg flies even higher—",
+  "estStart": 707.63,
+  "estDur": 3.57
+ },
+ {
+  "scene": "SC 11",
+  "speaker": "NARRATOR",
+  "text": "[like a sports commentator, speeding up] You JUMP! You CATCH it! And now YOU are the one at half speed!",
+  "estStart": 711.2,
+  "estDur": 5.39
+ },
+ {
+  "scene": "SC 11",
+  "speaker": "SYSTEM",
+  "text": "[booming] Vault closing in TEN seconds!",
+  "estStart": 716.59,
+  "estDur": 2.12
+ },
+ {
+  "scene": "SC 11",
+  "speaker": "NARRATOR",
+  "text": "[rushed, tense] Nine. The hatch pad is all the way across the vault. You're too slow. You'll never make it.",
+  "estStart": 718.71,
+  "estDur": 6.85
+ },
+ {
+  "scene": "SC 11",
+  "speaker": "YOU",
+  "text": "[shouts] NOVA! CATCH!",
+  "estStart": 725.55,
+  "estDur": 1.03
+ },
+ {
+  "scene": "SC 11",
+  "speaker": "NARRATOR",
+  "text": "You throw it. She catches it. She runs. Full speed. Seven. Six.",
+  "estStart": 726.58,
+  "estDur": 4.66
+ },
+ {
+  "scene": "SC 11",
+  "speaker": "NARRATOR",
+  "text": "Lasers. Teeth eggs. EggLord, still screaming somewhere. Five. Four.",
+  "estStart": 731.25,
+  "estDur": 3.57
+ },
+ {
+  "scene": "SC 11",
+  "speaker": "NOVA",
+  "text": "[shouts] YOU! Your turn!",
+  "estStart": 734.82,
+  "estDur": 1.39
+ },
+ {
+  "scene": "SC 11",
+  "speaker": "NARRATOR",
+  "text": "She throws it back. Three. You dive. Two. She dives.",
+  "estStart": 736.21,
+  "estDur": 3.94
+ },
+ {
+  "scene": "SC 11",
+  "speaker": "NARRATOR",
+  "text": "[shouts] ONE!",
+  "estStart": 740.15,
+  "estDur": 0.66
+ },
+ {
+  "scene": "SC 11",
+  "speaker": "NARRATOR",
+  "text": "[long pause] Two hands. One egg. On the pad. At the exact same time.",
+  "estStart": 740.81,
+  "estDur": 5.76
+ },
+ {
+  "scene": "SC 11",
+  "speaker": "SYSTEM",
+  "text": "[booming, triumphant] VAULT COMPLETE! CO-OP HATCH!",
+  "estStart": 746.57,
+  "estDur": 1.75
+ },
+ {
+  "scene": "SC 12",
+  "speaker": "NARRATOR",
+  "text": "[soft, amazed] The Secret Egg glows. It cracks. Light everywhere...",
+  "estStart": 751.83,
+  "estDur": 3.51
+ },
+ {
+  "scene": "SC 12",
+  "speaker": "NARRATOR",
+  "text": "And out pops... a tiny, glitchy... pixel chick.",
+  "estStart": 755.34,
+  "estDur": 3.81
+ },
+ {
+  "scene": "SC 12",
+  "speaker": "SYSTEM",
+  "text": "[gentle] Congratulations, YOU and Nova. Reward: one wish.",
+  "estStart": 759.15,
+  "estDur": 2.85
+ },
+ {
+  "scene": "SC 12",
+  "speaker": "NOVA",
+  "text": "[softly] It's your call, noob.",
+  "estStart": 761.99,
+  "estDur": 1.75
+ },
+ {
+  "scene": "SC 12",
+  "speaker": "YOU",
+  "text": "[thoughtful] We could turn the world back to normal... [pause] ...tomorrow.",
+  "estStart": 763.75,
+  "estDur": 4.67
+ },
+ {
+  "scene": "SC 12",
+  "speaker": "NOVA",
+  "text": "[curious, smirking] Why tomorrow?",
+  "estStart": 768.42,
+  "estDur": 1.03
+ },
+ {
+  "scene": "SC 12",
+  "speaker": "YOU",
+  "text": "[nervous] 'Cause today... I've got something to do.",
+  "estStart": 769.45,
+  "estDur": 3.15
+ },
+ {
+  "scene": "SC 13",
+  "speaker": "NARRATOR",
+  "text": "[warm, playful] So you go to the shop. Flowers are a game pass. They cost... every single dollar you have.",
+  "estStart": 772.59,
+  "estDur": 7.15
+ },
+ {
+  "scene": "SC 13",
+  "speaker": "YOU",
+  "text": "[no hesitation] Worth it.",
+  "estStart": 779.74,
+  "estDur": 1.03
+ },
+ {
+  "scene": "SC 13",
+  "speaker": "NARRATOR",
+  "text": "You find her on the roof of her base, watching the square sun go down.",
+  "estStart": 780.76,
+  "estDur": 5.75
+ },
+ {
+  "scene": "SC 13",
+  "speaker": "NARRATOR",
+  "text": "Your face turns red. Like, actually red. There's a blush texture now.",
+  "estStart": 786.52,
+  "estDur": 4.66
+ },
+ {
+  "scene": "SC 13",
+  "speaker": "YOU",
+  "text": "[nervous, stammering] S-so... uh... these are for you.",
+  "estStart": 791.18,
+  "estDur": 3.08
+ },
+ {
+  "scene": "SC 13",
+  "speaker": "NOVA",
+  "text": "[teasing] For me? [pause] Or for YOU?",
+  "estStart": 794.26,
+  "estDur": 2.62
+ },
+ {
+  "scene": "SC 13",
+  "speaker": "YOU",
+  "text": "[flustered, rushed] For you! Not me-YOU, you-you! You. [pause] ...I'm changing my username.",
+  "estStart": 796.88,
+  "estDur": 4.74
+ },
+ {
+  "scene": "SC 13",
+  "speaker": "NARRATOR",
+  "text": "[pause] She looks at the flowers. She looks at you. [pause] And she smirks.",
+  "estStart": 801.62,
+  "estDur": 5.66
+ },
+ {
+  "scene": "SC 13",
+  "speaker": "NOVA",
+  "text": "[cool, warm smirk] Smooth... YOU. [pause] Real smooth.",
+  "estStart": 807.28,
+  "estDur": 2.55
+ },
+ {
+  "scene": "SC 13",
+  "speaker": "NARRATOR",
+  "text": "She takes the flowers.",
+  "estStart": 809.84,
+  "estDur": 1.75
+ },
+ {
+  "scene": "SC 13",
+  "speaker": "SYSTEM",
+  "text": "[cheerful] Nova accepted your gift!",
+  "estStart": 811.59,
+  "estDur": 1.75
+ },
+ {
+  "scene": "SC 13",
+  "speaker": "NARRATOR",
+  "text": "[warm] And for the first time since the world turned into Roblox...",
+  "estStart": 813.35,
+  "estDur": 4.6
+ },
+ {
+  "scene": "SC 13",
+  "speaker": "NARRATOR",
+  "text": "[playful] you forget how to walk.",
+  "estStart": 817.95,
+  "estDur": 2.12
+ },
+ {
+  "scene": "SC 13",
+  "speaker": "YOU",
+  "text": "[dreamy, fainting] ...oof.",
+  "estStart": 820.06,
+  "estDur": 0.96
+ },
+ {
+  "scene": "SC 13",
+  "speaker": "NOVA",
+  "text": "[laughs softly] Noob.",
+  "estStart": 821.03,
+  "estDur": 0.66
+ },
+ {
+  "scene": "SC 14",
+  "speaker": "NARRATOR",
+  "text": "[excited, fast] Which portal would YOU pick? Tell me in the comments! And comment \"EGG\" if you'd pick Steal an Egg too.",
+  "estStart": 822.69,
+  "estDur": 7.57
+ },
+ {
+  "scene": "SC 14",
+  "speaker": "NARRATOR",
+  "text": "[playful, slowing down] And the wish? [pause] Still unused. Because honestly...",
+  "estStart": 830.26,
+  "estDur": 3.65
+ },
+ {
+  "scene": "SC 14",
+  "speaker": "NARRATOR",
+  "text": "[warm] some things are just better in Roblox.",
+  "estStart": 833.91,
+  "estDur": 2.85
+ }
+]

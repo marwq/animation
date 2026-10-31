@@ -3,7 +3,18 @@
 Ролик 12–14 мин в формате «what if» (референс — канал Skylox Story), озвучка на английском.
 Сюжет: весь мир становится Roblox, внутри — 1–2 главы по игре **Steal an Egg**.
 
-## Что уже есть
+## Сценарий и озвучка
+
+| Файл | Что это |
+|---|---|
+| `script/SCRIPT.md` | полный сценарий (~14 мин): пересказ, персонажи, 14 сцен — кадр, эмоции, камера, эффекты, реплики |
+| `script/VOICEOVER_eleven_v4.txt` | озвучка для ElevenLabs v4 (Text to Dialogue): 16 дублей, теги интонаций, кастинг голосов |
+| `script/lines.json` | все реплики с расчётным таймингом — для таймлайна анимации |
+
+Сценарий — единственный источник: правим `SCRIPT.md`, потом `node tools/build_vo.js` пересобирает
+файл озвучки, `lines.json` и таймкоды сцен.
+
+## Концепт героя
 
 | Файл | Что это |
 |---|---|
@@ -25,6 +36,7 @@
 - `rig/props.js` — яйца в стиле Steal an Egg (common / rare / epic / legendary / mythic).
 - `tools/render.js` — SVG → Chromium → PNG → ffmpeg (MP4).
 - `tools/sheets.js` — концепт-листы, `tools/anim_test.js` — тестовая сцена.
+- `tools/build_vo.js` — сценарий → файл озвучки + тайминг.
 
 Поза — обычный объект:
 
@@ -38,7 +50,14 @@ drawHero({ x: 960, y: 975, s: 0.72, turn: 0.3, armR: 150, face: { name: 'talkHap
 
 ```bash
 node tools/sheets.js all
+```
+
+```bash
 node tools/anim_test.js concept/rig_test.mp4 60
+```
+
+```bash
+node tools/build_vo.js
 ```
 
 Шрифты Fredoka и Lilita One лежат в `assets/fonts` (лицензия SIL OFL).

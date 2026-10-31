@@ -12,7 +12,7 @@ const { openRenderer } = require('./render');
 const fs = require('fs');
 
 const OUT = path.join(__dirname, '..', 'concept');
-const HERO_NAME = 'Player'; // placeholder until the nickname is chosen
+const HERO_NAME = 'YOU';
 
 function gridBg(w, h, step = 40) {
   let o = S.rect(0, 0, w, h, 0, { fill: '#F2F6FC' });
