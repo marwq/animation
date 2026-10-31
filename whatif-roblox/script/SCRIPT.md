@@ -174,7 +174,7 @@
 ## SC 03 · УТРО: ТЫ — РОБЛОКС
 *~1:04–2:28 · комната, ванная, кухня, гостиная · цвет: тёплое солнечное утро*
 
-- 🎬 Карточка главы: жёлтая рукописная надпись **«NEW WORLD»**. Комната теперь со студами на полу, свет яркий.
+- 🎬 Карточка главы: жёлтая надпись **«NEW WORLD — DAY 1»**. Комната теперь со студами на полу, свет яркий.
 - 🎬 Будильник на тумбочке: вместо цифр — полоска загрузки.
 
 > **NARRATOR:** [bright, excited] Morning! Your alarm clock doesn't ring. [pause] It's... loading.
@@ -193,7 +193,7 @@
 
 > **NARRATOR:** [curious] You grab it. And it just... comes off.
 
-- 🎬 YOU снимает волосы, как шапку: под ними гладкий белый кубик. 🎭 `scream` → `nervous`.
+- 🎬 В зеркале: голова обводится пунктиром «CUBE», YOU стучит по волосам («tok»), тянет — «POP!», волосы в руке, под ними гладкий белый кубик. 🎭 `scream` → `nervous`.
 
 > **YOU:** [disbelief] I'm BALD! [nervous laugh] Okay, okay... it clicks back on. Hair is an accessory now. That's fine. That's FINE.
 

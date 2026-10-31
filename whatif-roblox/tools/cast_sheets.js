@@ -31,19 +31,20 @@ const SHEETS = {
         [NAMES.egglord, draw.egglord, { turn: -0.2 }],
         [NAMES.pinky, draw.pinky, { face: 'happy', armL: 40, armR: 40 }],
         [NAMES.max, draw.max, { face: 'talkHappy', armR: 120 }],
+        [NAMES.mom, draw.mom, { face: 'happy', turn: -0.1 }],
         [NAMES.dad, draw.dad, {}],
       ];
-      row.forEach(([n, fn, pz], i) => { o += fn({ x: 190 + i * 345, y: G, s, nametag: n, ...pz }); });
+      row.forEach(([n, fn, pz], i) => { o += fn({ x: 170 + i * 300, y: G, s: 0.68, nametag: n, ...pz }); });
       o += chicken({ x: 2440, y: G, s: 0.56, look: -0.6 }) + chatBubble('bawk.', 2440, G - 290, { s: 0.7 });
       return o;
     },
   },
 
   expressions: {
-    file: 'cast_expressions.png', w: 2560, h: 1600,
+    file: 'cast_expressions.png', w: 2560, h: 1860,
     draw() {
-      let o = gridBg(2560, 1600) + title('SECONDARY CAST — EXPRESSIONS', 'dot eyes + stroke brows · same expression names as YOU and Nova', 2560);
-      const keys = ['speedy', 'egglord', 'pinky', 'max', 'dad'];
+      let o = gridBg(2560, 1860) + title('SECONDARY CAST — EXPRESSIONS', 'dot eyes + stroke brows · same expression names as YOU and Nova', 2560);
+      const keys = ['speedy', 'egglord', 'pinky', 'max', 'mom', 'dad'];
       const exprs = ['neutral', 'joy', 'shocked', 'angry', 'smug', 'scared'];
       keys.forEach((k, r) => {
         o += label(NAMES[k], 150, 330 + r * 265, 30, 'middle', '#1d2433');

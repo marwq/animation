@@ -166,7 +166,7 @@ function drawCharacter(design, pose = {}) {
     for (const sd of sides) {
       if (farSide === sd) continue;
       const a = sd < 0 ? p.armL : p.armR;
-      if (a > 115) armsAfter += armSvg(sd); else armsBefore += armSvg(sd);
+      if (Math.abs(a) > 115) armsAfter += armSvg(sd); else armsBefore += armSvg(sd);
     }
     if (back) torso += headG + armsBefore + armsAfter;
     else torso += armsBefore + headG + armsAfter;

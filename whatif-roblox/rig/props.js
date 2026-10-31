@@ -123,4 +123,36 @@ function tablet({ x = 0, y = 0, s = 1, rot = 0, on = true, glow = '#A8E8FF' } = 
   return S.g(o, `translate(${f(x)} ${f(y)}) rotate(${f(rot)}) scale(${f(s)})`);
 }
 
-module.exports = { egg, bouquet, secretEgg, tablet, RARITY };
+// ---- kitchen props (all centred at their natural pivot)
+function pancake({ x = 0, y = 0, s = 1, rot = 0, bite = false } = {}) {
+  let o = S.ellipse(0, 10, 92, 30, { fill: '#C9853F', stroke: C.line, 'stroke-width': 6 });
+  o += S.ellipse(0, 0, 92, 30, { fill: '#F2B65A', stroke: C.line, 'stroke-width': 6 });
+  o += S.ellipse(-18, -4, 40, 12, { fill: '#FFD98A', opacity: 0.8 });
+  o += S.rect(-14, -26, 28, 22, 5, { fill: '#FFF3B0', stroke: C.line, 'stroke-width': 4 }) + S.path('M-14 -10 L14 -10', { stroke: '#F5C842', 'stroke-width': 4 });
+  if (bite) o += S.circle(78, -6, 26, { fill: '#FFFFFF' });
+  return S.g(o, `translate(${f(x)} ${f(y)}) rotate(${f(rot)}) scale(${f(s)})`);
+}
+function plate({ x = 0, y = 0, s = 1 } = {}) {
+  return S.g(S.ellipse(0, 6, 150, 40, { fill: '#D9DEE8', stroke: C.line, 'stroke-width': 6 }) + S.ellipse(0, 0, 150, 40, { fill: '#FFFFFF', stroke: C.line, 'stroke-width': 6 }) + S.ellipse(0, 0, 104, 26, { fill: 'none', stroke: '#D9DEE8', 'stroke-width': 5 }), `translate(${f(x)} ${f(y)}) scale(${f(s)})`);
+}
+function pan({ x = 0, y = 0, s = 1, rot = 0 } = {}) {
+  let o = S.rect(110, -14, 170, 28, 12, { fill: '#2B2F3A', stroke: C.line, 'stroke-width': 6 });
+  o += S.ellipse(0, 0, 130, 34, { fill: '#2B2F3A', stroke: C.line, 'stroke-width': 7 }) + S.ellipse(0, -4, 108, 24, { fill: '#454B5C' });
+  return S.g(o, `translate(${f(x)} ${f(y)}) rotate(${f(rot)}) scale(${f(s)})`);
+}
+function spatula({ x = 0, y = 0, s = 1, rot = 0 } = {}) {
+  const o = S.rect(-10, -170, 20, 170, 6, { fill: '#8A5A33', stroke: C.line, 'stroke-width': 5 }) + S.rect(-40, -250, 80, 90, 12, { fill: '#C9CED8', stroke: C.line, 'stroke-width': 6 }) +
+    S.path('M-18 -235 L-18 -175 M0 -235 L0 -175 M18 -235 L18 -175', { stroke: '#8A92A6', 'stroke-width': 5 });
+  return S.g(o, `translate(${f(x)} ${f(y)}) rotate(${f(rot)}) scale(${f(s)})`);
+}
+// apron for the torso 'mid' layer (front view, character space)
+function apron() {
+  return S.path('M-62 -480 L62 -480 L80 -300 L-80 -300 Z', { fill: '#FFFFFF', stroke: C.line, 'stroke-width': 6, 'stroke-linejoin': 'round' }) +
+    S.path('M-62 -480 L-96 -530 M62 -480 L96 -530', { stroke: '#FFFFFF', 'stroke-width': 10 }) +
+    S.path(F_heart(0, -400, 22), { fill: '#FF6FB5', stroke: C.line, 'stroke-width': 4 }) + S.rect(-60, -350, 120, 30, 8, { fill: '#FFD1E3', stroke: C.line, 'stroke-width': 4 });
+}
+function F_heart(cx, cy, s) {
+  return `M${f(cx)} ${f(cy + s * 0.9)} C${f(cx - s * 1.5)} ${f(cy - s * 0.1)} ${f(cx - s * 0.9)} ${f(cy - s * 1.25)} ${f(cx)} ${f(cy - s * 0.45)} C${f(cx + s * 0.9)} ${f(cy - s * 1.25)} ${f(cx + s * 1.5)} ${f(cy - s * 0.1)} ${f(cx)} ${f(cy + s * 0.9)} Z`;
+}
+
+module.exports = { egg, bouquet, secretEgg, tablet, pancake, plate, pan, spatula, apron, RARITY };

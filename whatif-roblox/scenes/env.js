@@ -38,6 +38,10 @@ const DEFS = `<defs>
 <linearGradient id="skyPlaza" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#4A72FF"/><stop offset="0.55" stop-color="#A88CFF"/><stop offset="1" stop-color="#FFD0EC"/></linearGradient>
 <linearGradient id="skyVault" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#120C33"/><stop offset="0.42" stop-color="#3D1A6E"/><stop offset="0.75" stop-color="#A3307E"/><stop offset="1" stop-color="#FF7759"/></linearGradient>
 <linearGradient id="skyNight" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#0A1040"/><stop offset="1" stop-color="#2B3A8C"/></linearGradient>
+<pattern id="bathTiles" width="90" height="90" patternUnits="userSpaceOnUse"><rect width="90" height="90" fill="#C6F0FF"/><rect x="3" y="3" width="84" height="84" rx="10" fill="#D9F6FF"/></pattern>
+<pattern id="backsplash" width="60" height="60" patternUnits="userSpaceOnUse"><rect width="60" height="60" fill="#FFFFFF"/><rect width="30" height="30" fill="#BFF0E0"/><rect x="30" y="30" width="30" height="30" fill="#BFF0E0"/></pattern>
+<pattern id="kitchenFloor" width="140" height="70" patternUnits="userSpaceOnUse"><rect width="140" height="70" fill="#FFE3EE"/><rect width="70" height="35" fill="#FFC7DC"/><rect x="70" y="35" width="70" height="35" fill="#FFC7DC"/></pattern>
+<pattern id="wood" width="400" height="60" patternUnits="userSpaceOnUse"><rect width="400" height="60" fill="#D9945A"/><path d="M0 30 Q100 20 200 32 T400 28" fill="none" stroke="#C47F45" stroke-width="4"/><line x1="0" y1="59" x2="400" y2="59" stroke="#B5703A" stroke-width="3"/></pattern>
 <linearGradient id="wallGrad" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#86CBF2"/><stop offset="1" stop-color="#C2EAFF"/></linearGradient>
 <linearGradient id="beam" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#FFF6D8" stop-opacity="0.5"/><stop offset="1" stop-color="#FFF6D8" stop-opacity="0"/></linearGradient>
 <linearGradient id="hazeDay" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#DDF5FF" stop-opacity="0"/><stop offset="1" stop-color="#DDF5FF" stop-opacity="0.75"/></linearGradient>
@@ -294,7 +298,13 @@ function bedroomLayers(cam, t, opts = {}) {
   const shake = ring ? Math.sin(t * 90) * 7 * ring : 0;
   let clock = S.circle(-52, -66, 22, ol('#FFD34D', 5)) + S.circle(52, -66, 22, ol('#FFD34D', 5)) + S.path('M-40 6 L-52 22 M40 6 L52 22', ln(8));
   clock += R(-76, -60, 152, 92, 22, ol('#FF5A5A', 7)) + R(-58, -44, 116, 54, 10, { fill: '#1B1F2B' });
-  clock += S.el('text', { x: 0, y: -2, 'font-family': 'Fredoka, sans-serif', 'font-weight': 700, 'font-size': 40, fill: opts.clockCol || (ring ? '#FF6B6B' : '#5CFF7A'), 'text-anchor': 'middle' }, opts.clock || '7:00');
+  if (opts.loading !== undefined) {
+    const p = S.clamp(opts.loading, 0, 1);
+    clock += R(-50, -36, 100, 16, 8, { fill: '#2C3448' }) + R(-50, -36, Math.max(16, 100 * p), 16, 8, { fill: '#5CFF7A' });
+    clock += S.el('text', { x: 0, y: 4, 'font-family': 'Fredoka, sans-serif', 'font-weight': 700, 'font-size': 18, fill: '#5CFF7A', 'text-anchor': 'middle' }, opts.loadText || 'LOADING...');
+  } else {
+    clock += S.el('text', { x: 0, y: -2, 'font-family': 'Fredoka, sans-serif', 'font-weight': 700, 'font-size': 40, fill: opts.clockCol || (ring ? '#FF6B6B' : '#5CFF7A'), 'text-anchor': 'middle' }, opts.clock || '7:00');
+  }
   back += S.g(clock, `translate(1565 ${f(640 - Math.abs(shake) * 0.6)}) rotate(${f(shake)})`);
   // bed (behind the sleeper)
   back += R(500, 300, 80, 600, 22, ol('#8A5A3A', 7)) + R(1340, 300, 80, 600, 22, ol('#8A5A3A', 7));
@@ -467,6 +477,58 @@ function beam(x1, y1, x2, y2, k = 1) {
   return S.path(`M${f(x1)} ${f(y1)} L${f(x2)} ${f(y2)}`, ln(36, '#FF2D55', 0.25 * k)) + S.path(`M${f(x1)} ${f(y1)} L${f(x2)} ${f(y2)}`, ln(12, '#FF6A84', k)) + S.path(`M${f(x1)} ${f(y1)} L${f(x2)} ${f(y2)}`, ln(4, '#FFFFFF', k));
 }
 
+// ---------------------------------------------------------------- BATHROOM (mirror)
+const MIRROR = { x: 560, y: 110, w: 800, h: 640 };
+function bathroomLayers(cam, t) {
+  const M = MIRROR;
+  let back = R(-400, -300, 2720, 1500, 0, { fill: 'url(#bathTiles)' }) + R(-400, 760, 2720, 600, 0, { fill: '#7FD0E8' });
+  // towel bar + towel
+  back += R(1500, 300, 260, 16, 8, ol('#C9CED8', 5)) + S.path('M1530 312 L1730 312 L1720 620 Q1630 640 1540 620 Z', ol('#FF8FB0', 6)) + S.path('M1545 560 L1715 560 M1545 585 L1715 585', ln(6, '#FFFFFF'));
+  // shelf with a plant + rubber duck
+  back += R(150, 420, 260, 20, 8, ol('#FFFFFF', 5)) + R(180, 360, 60, 60, 10, ol('#FF8A5B', 5)) + R(196, 300, 14, 64, 6, ol('#3FBF5A', 4)) + R(214, 320, 14, 44, 6, ol('#2FAE6E', 4));
+  back += S.g(R(-40, -50, 80, 60, 26, ol('#FFE14D', 5)) + R(10, -82, 50, 46, 20, ol('#FFE14D', 5)) + S.path('M58 -62 L80 -56 L58 -48 Z', ol('#FF9F1C', 3)) + S.circle(40, -66, 5, { fill: '#151515' }), 'translate(330 420)');
+  // bulbs above the mirror
+  for (let i = 0; i < 5; i++) back += S.circle(M.x + 80 + i * 160, M.y - 30, 34, { fill: 'url(#sunGlow)', opacity: 0.7 }) + S.circle(M.x + 80 + i * 160, M.y - 30, 18, ol('#FFF4C8', 4));
+  const glass = R(M.x, M.y, M.w, M.h, 26, { fill: '#E8FBFF' }) + R(M.x, M.y + M.h * 0.62, M.w, M.h * 0.38, 0, { fill: '#C6F0FF' }) +
+    S.path(`M${M.x + 60} ${M.y} L${M.x + 200} ${M.y} L${M.x + 20} ${M.y + 240} L${M.x} ${M.y + 240} L${M.x} ${M.y + 80} Z`, { fill: '#FFFFFF', opacity: 0.55 });
+  const frame = R(M.x - 26, M.y - 26, M.w + 52, M.h + 52, 40, { fill: 'none', stroke: '#151515', 'stroke-width': 7 }) +
+    R(M.x - 20, M.y - 20, M.w + 40, M.h + 40, 36, { fill: 'none', stroke: '#FFFFFF', 'stroke-width': 26 }) + R(M.x, M.y, M.w, M.h, 26, ln(6)) +
+    S.path(`M${M.x + M.w - 160} ${M.y + M.h} L${M.x + M.w - 40} ${M.y + 360} L${M.x + M.w - 10} ${M.y + 360} L${M.x + M.w - 120} ${M.y + M.h} Z`, { fill: '#FFFFFF', opacity: 0.35 });
+  // counter + sink (in front)
+  let front = R(400, 770, 1120, 400, 0, ol('#FFFFFF', 7)) + R(400, 770, 1120, 36, 10, ol('#EEF2F8', 6));
+  front += S.ellipse(960, 790, 200, 26, ol('#D9E2EE', 6)) + S.path('M940 790 L940 720 Q940 690 980 690 L1010 690', ln(22, '#151515')) + S.path('M940 790 L940 720 Q940 690 980 690 L1010 690', ln(12, '#C9CED8'));
+  front += R(1160, 690, 70, 84, 14, ol('#34C3FF', 5)) + R(1176, 600, 14, 96, 6, ol('#FF5A5A', 4)) + R(1196, 620, 14, 76, 6, ol('#3BD16F', 4));
+  front += R(700, 730, 90, 46, 14, ol('#FF8FB0', 5)) + R(420, 900, 1080, 14, 7, { fill: '#000', opacity: 0.08 });
+  return { back: layer(back, cam, 1), glass: layer(glass, cam, 1), frame: layer(frame, cam, 1), front: layer(front, cam, 1), clip: R(M.x, M.y, M.w, M.h, 26, { transform: camTf(cam, 1) }) };
+}
+
+// ---------------------------------------------------------------- KITCHEN
+function kitchenLayers(cam, t, opts = {}) {
+  let back = R(-400, -300, 2720, 1500, 0, { fill: '#FFE7A8' }) + R(-400, -300, 2720, 1500, 0, { fill: 'url(#wallStripes)', opacity: 0.6 });
+  // doorway on the left
+  back += R(70, 230, 320, 600, 10, ol('#C98B55', 8)) + R(96, 256, 268, 574, 6, { fill: '#B9E3FF' }) + R(96, 256, 268, 574, 6, { fill: 'url(#wallStripes)' }) + S.path('M96 760 L364 760', ln(5, '#8EC5EA'));
+  // window + sun
+  back += S.clipDef('kwin', R(1070, 150, 380, 260, 8));
+  back += R(1070, 150, 380, 260, 8, { fill: 'url(#skyDay)' }) + S.g(sun(1340, 230, 70, t) + cloud(1090, 250, 0.4) + hills(1060, 1460, 400, '#7FD77A', '#9BE594', 3), null, { 'clip-path': 'url(#kwin)' });
+  back += S.path('M1260 150 L1260 410 M1070 280 L1450 280', ln(10, '#FFFFFF')) + R(1060, 140, 400, 280, 12, { fill: 'none', stroke: '#FFFFFF', 'stroke-width': 16 }) + R(1050, 130, 420, 300, 14, ln(6));
+  back += S.path('M1050 130 Q1110 300 1060 440 L1010 440 Q1040 300 1000 130 Z', ol('#FF8A5B', 5)) + S.path('M1470 130 Q1410 300 1460 440 L1510 440 Q1480 300 1520 130 Z', ol('#FF8A5B', 5));
+  // upper cabinets
+  for (const [x, w] of [[460, 280], [740, 280]]) back += R(x, 150, w - 10, 230, 14, ol('#8FE0C8', 6)) + R(x + 18, 170, w - 46, 190, 10, { fill: '#A8EBD6' }) + S.circle(x + w - 40, 330, 9, ol('#FFD34D', 3));
+  // wall clock
+  back += S.circle(1650, 160, 56, ol('#FFFFFF', 6)) + S.path(`M1650 160 L1650 122 M1650 160 L${f(1650 + Math.cos(t) * 30)} ${f(160 + Math.sin(t) * 30)}`, ln(6));
+  // backsplash, counter, lower cabinets, stove
+  back += R(430, 400, 1060, 250, 0, { fill: 'url(#backsplash)' }) + S.path('M430 400 L1490 400', ln(5));
+  back += R(430, 640, 1060, 36, 10, ol('#C98B55', 6)) + R(440, 676, 1040, 160, 8, ol('#8FE0C8', 6));
+  for (let x = 460; x < 1470; x += 210) back += R(x, 692, 190, 126, 10, { fill: '#A8EBD6' }) + S.circle(x + 95, 712, 8, ol('#FFD34D', 3));
+  back += R(690, 600, 320, 50, 8, ol('#FFFFFF', 6)) + S.ellipse(780, 604, 70, 12, { fill: opts.burner ? '#FF6A3D' : '#2B2F3A' }) + S.ellipse(920, 604, 70, 12, { fill: '#2B2F3A' });
+  // fridge
+  back += R(1530, 230, 260, 600, 26, ol('#FFFFFF', 7)) + S.path('M1530 440 L1790 440', ln(6)) + R(1550, 300, 14, 100, 7, ol('#C9CED8', 4)) + R(1550, 470, 14, 140, 7, ol('#C9CED8', 4));
+  back += R(1610, 270, 60, 60, 10, ol('#FF6FB5', 4)) + S.circle(1720, 520, 26, ol('#FFE14D', 4)) + R(1620, 600, 70, 50, 8, ol('#34C3FF', 4));
+  // floor
+  back += R(-400, 830, 2720, 600, 0, { fill: 'url(#kitchenFloor)' }) + S.path('M-400 830 L2320 830', ln(6));
+  return { back: layer(back, cam, 1) };
+}
+
 function vaultLaserFront(cam, t, a) {
   // a sweeping beam in front of the characters (angle a in radians from the right emitter)
   const ex = 1960, ey = 160;
@@ -483,4 +545,4 @@ function timerHud(sec, pulse = 0) {
   return S.g(o, `translate(1670 132) scale(${f(s * 0.85)})`);
 }
 
-module.exports = { DEFS, camTf, layer, townLayers, bedroomLayers, plazaLayers, vaultLayers, vaultHangLayers, beam, vaultLaserFront, timerHud, cloud, sun, car, bird, bush, flowers, PORTALS };
+module.exports = { DEFS, camTf, layer, townLayers, bedroomLayers, bathroomLayers, kitchenLayers, MIRROR, plazaLayers, vaultLayers, vaultHangLayers, beam, vaultLaserFront, timerHud, cloud, sun, car, bird, bush, flowers, PORTALS };

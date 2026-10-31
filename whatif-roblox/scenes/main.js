@@ -7,24 +7,25 @@ const E = require('./env');
 const C = require('./common');
 const intro = require('./intro');
 const sc01b = require('./sc01b');
-let sc02 = null;
-try { sc02 = require('./sc02'); } catch (e) { if (e.code !== 'MODULE_NOT_FOUND') throw e; }
+const sc02 = require('./sc02');
+const sc03 = require('./sc03');
 const { renderVideo } = require('../tools/render');
 
-const DURATION = 61.0;
+const DURATION = sc03.END;
 
-const CAPS = [...intro.CAPS, ...sc01b.TRACK.caps, ...(sc02 ? sc02.TRACK.caps : [])];
+const CAPS = [...intro.CAPS, ...sc01b.TRACK.caps, ...sc02.TRACK.caps, ...sc03.TRACK.caps];
 
 function sceneAt(t) {
   if (t < 10.0) return intro.scene(t);
-  if (t < 19.2 || !sc02) return sc01b.scene(t, sceneAt);
-  return sc02.scene(t);
+  if (t < 19.2) return sc01b.scene(t, sceneAt);
+  if (t < 61.0) return sc02.scene(t);
+  return sc03.scene(t);
 }
 
 function frame(t) {
   let o = E.DEFS + sceneAt(t);
-  o += C.captionAt(CAPS, t);
-  if (sc02 && sc02.overlay) o += sc02.overlay(t);
+  o += C.captionAt(CAPS, t, t >= 61.0 ? sc03.captionY(t) : 1018);
+  if (t < 61.0) o += sc02.overlay(t);
   return o;
 }
 

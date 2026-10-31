@@ -13,8 +13,8 @@ const blinkAt = (t, ...cs) => Math.max(0, ...cs.map((c) => 1 - Math.abs(t - c) /
 
 // ---------------------------------------------------------------- lines -> captions / visemes
 // line: [start, end, speaker, text]; *word* marks a highlighted keyword.
-const SPEAKER_COL = { NARRATOR: '#FFFFFF', YOU: '#FFFFFF', NOVA: '#FF8FB0', SYSTEM: '#7CF7FF' };
-const HILITE = { NARRATOR: '#FFD21F', YOU: '#FFD21F', NOVA: '#FF5A8A', SYSTEM: '#FFFFFF' };
+const SPEAKER_COL = { NARRATOR: '#FFFFFF', YOU: '#FFFFFF', NOVA: '#FF8FB0', SYSTEM: '#7CF7FF', MOM: '#FFB3D1', DAD: '#B8F0A0' };
+const HILITE = { NARRATOR: '#FFD21F', YOU: '#FFD21F', NOVA: '#FF5A8A', SYSTEM: '#FFFFFF', MOM: '#FF5A8A', DAD: '#FFD21F' };
 
 function words(text) {
   const out = []; let hi = false;
@@ -71,7 +71,7 @@ function visemeAt(track, speaker, t) {
     for (const w of l.ws) {
       if (t < w.t0 || t > w.t1) continue;
       const letters = w.w.toLowerCase().replace(/[^a-z]/g, '');
-      if (!letters) return 'X';
+      if (!letters) { if (!w.w.includes('#')) return 'X'; const u0 = (t - w.t0) / (w.t1 - w.t0); return ['C', 'D', 'B', 'E'][Math.floor(u0 * 4) % 4]; }
       const seq = [];
       for (const ch of letters) { const v = letterViseme(ch); if (seq[seq.length - 1] !== v) seq.push(v); }
       const u = (t - w.t0) / (w.t1 - w.t0);
@@ -89,11 +89,11 @@ function captionText(text, color, scale = 1, y = 1018, rot = 0) {
     stroke: '#151515', 'stroke-width': 17, 'paint-order': 'stroke', 'stroke-linejoin': 'round', 'text-anchor': 'middle',
   }, text), `translate(960 ${y}) rotate(${rot}) scale(${f(scale)})`);
 }
-function captionAt(caps, t) {
+function captionAt(caps, t, y = 1018) {
   const c = caps.find(([a, b]) => t >= a && t < b);
   if (!c) return '';
   const sc = lerp(0.5, 1, ease.outBack(inv(c[0], c[0] + 0.13, t))) * (c[4] || 1);
-  return captionText(c[2], c[3], sc, 1018, c[4] > 1 ? -3 : 0);
+  return captionText(c[2], c[3], sc, y, c[4] > 1 ? -3 : 0);
 }
 
 // ---------------------------------------------------------------- transitions / overlays

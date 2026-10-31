@@ -301,10 +301,12 @@ function makeHead(style) {
   return function head(face, t, shade) {
     const { hair, feat, at, dir, fx } = hairMap(t);
     const fr = resolve(style, face);
+    const fo = face && typeof face === 'object' ? face : {};
+    const bald = fo.hair === false;
+    const lift = fo.hairLift || 0, hrot = fo.hairRot || 0;
+    const hairTf = lift || hrot ? `translate(${f(fo.hairDx || 0)} ${f(-lift)}) rotate(${f(hrot)} 0 -800)` : null;
     let o = '';
-    const bh = backHairPath(style, t);
-    o += S.path(bh, outline(c.hair));
-    if (shade) o += S.path(bh, { fill: '#000', opacity: 0.12 });
+    if (!bald) o += S.g(backHair(style, t, shade), hairTf);
     const hx = dir * 4 * at;
     const headD = S.roundedPath([[-140 + hx, -890], [140 + hx, -890], [140 + hx, -559], [-140 + hx, -559]], 46);
     const hid = S.uid('head');
@@ -313,11 +315,28 @@ function makeHead(style) {
     if (shade) {
       let sh = '';
       if (at > 0.02) sh += S.rect(dir > 0 ? -150 : 140 - 72 * at + hx, -900, 72 * at + 10, 360, 0, { fill: c.skinShade });
-      sh += S.path(hairD, { fill: c.skinShade, transform: 'translate(0 15)' });
+      if (!bald && lift < 4) sh += S.path(hairD, { fill: c.skinShade, transform: 'translate(0 15)' });
       sh += S.rect(-160, -590, 320, 40, 0, { fill: c.skinShade, opacity: 0.55 });
       o += S.g(sh, null, { 'clip-path': `url(#${hid})` });
     }
     o += S.path(headD, outline('none'));
+    if (bald) o += S.path(`M${f(-110 + hx)} -868 Q${f(-40 + hx)} -900 ${f(30 + hx)} -872`, lineOnly(10, '#FFFFFF')) + S.ellipse(-60 + hx, -840, 34, 12, { fill: '#FFFFFF', opacity: 0.9, transform: `rotate(-12 ${f(-60 + hx)} -840)` });
+    if (!bald) o += S.g(frontHair(style, t, fr.brows, shade), hairTf);
+    return o + faceLayer(style, fr, t, shade);
+  };
+}
+
+function backHair(style, t, shade) {
+  const c = style.col;
+  const bh = backHairPath(style, t);
+  return S.path(bh, outline(c.hair)) + (shade ? S.path(bh, { fill: '#000', opacity: 0.12 }) : '');
+}
+
+function frontHair(style, t, brows, shade) {
+  const c = style.col;
+  const { hair, feat } = hairMap(t);
+  const hairD = frontHairPath(style, t, brows || {});
+  let o = '';
     const hairId = S.uid('hair');
     o += S.clipDef(hairId, S.path(hairD)) + S.path(hairD, { fill: c.hair });
     let hi = '';
@@ -338,7 +357,14 @@ function makeHead(style) {
       const cp = hair([150, -836]);
       o += S.g(S.rect(-34, -10, 68, 20, 9, outline(style.clip, 5)) + S.rect(-26, 16, 56, 18, 8, outline(style.clip, 5)), `translate(${P(cp)}) rotate(-38)`);
     }
+  return o;
+}
 
+// eyes, glasses, blush, mouth and FX of the bob-hair head
+function faceLayer(style, fr, t, shade) {
+  const { feat, at, dir, fx } = hairMap(t);
+  let o = '';
+  {
     // eyes
     const blink = fr.blink || 0;
     const withBlink = (e) => (blink > 0 && (!e.type || e.type === 'open') ? { ...e, upper: (e.upper || 0) + (1 - (e.upper || 0)) * blink } : e);
@@ -356,8 +382,13 @@ function makeHead(style) {
     const m = feat([0, -595]);
     o += F.mouth(fr.mouth, m[0], m[1], 1 - 0.15 * at, 1);
     o += F.faceFx(fr.fx, { fx });
-    return o;
-  };
+  }
+  return o;
+}
+
+// the hair as a loose piece (head space, centred on x=0; the hairline sits around y=-700)
+function makeHairPiece(style) {
+  return (t = 0, shade = true) => backHair(style, t, shade) + frontHair(style, t, {}, shade);
 }
 
 function makeHeadBack(style) {
@@ -579,6 +610,7 @@ function makeDesign(style, extra = {}) {
     head: st.hair === 'bob' ? makeHead(st) : makeGenericHead(st),
     headSide: st.hair === 'bob' ? makeHeadSide(st) : makeGenericHeadSide(st),
     headBack: st.hair === 'bob' ? makeHeadBack(st) : makeGenericHeadBack(st),
+    hairPiece: st.hair === 'bob' ? makeHairPiece(st) : null,
     ...extra,
   };
 }

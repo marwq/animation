@@ -47,6 +47,16 @@ const DESIGNS = {
       pants: '#3A3F4B', pantsShade: '#2A2E37', sole: '#FFFFFF', toe: '#FF8A1F', soleBand: '#FF8A1F',
     },
   }),
+  // Mom: warm caramel bob, lashes, pink cardigan over a white tee, apron added as a prop
+  mom: makeDesign({
+    size: 1.0, hair: 'bob', longHair: true, notch: 46, lashes: true, blush: true, neutralMouth: 'smile',
+    eye: { pupil: 1.15, sparkle: true, cross: 0.5 },
+    col: {
+      hair: '#A0522D', hairShade: '#7E3E1F', hairHi: '#D98A5B', skin: '#FFFFFF',
+      jacket: '#FF7AA8', jacketLine: '#C24F7A', shirt: '#FFFFFF', shirtShade: '#E7E8F0', collar: '#FFFFFF',
+      pants: '#4A5A9E', pantsShade: '#3A4880', sole: '#FFFFFF', toe: '#FF7AA8', soleBand: '#FF7AA8',
+    },
+  }),
   // classic noob: yellow head, blue tee, green legs
   dad: makeDesign({
     size: 1.05, hair: 'none', eyeStyle: 'dot', top: 'tee', sleeve: 'none', pantsShape: 'straight', neutralMouth: 'smile',
@@ -60,6 +70,6 @@ const DESIGNS = {
 };
 
 const draw = Object.fromEntries(Object.entries(DESIGNS).map(([k, d]) => [k, makeDraw(d)]));
-const NAMES = { speedy: 'xX_Speedy_Xx', egglord: 'xX_EggLord_Xx', pinky: 'PinkPop', max: 'MaxBeatz', dad: 'Dad' };
+const NAMES = { speedy: 'xX_Speedy_Xx', egglord: 'xX_EggLord_Xx', pinky: 'PinkPop', max: 'MaxBeatz', dad: 'Dad', mom: 'Mom' };
 
 module.exports = { DESIGNS, draw, NAMES };
