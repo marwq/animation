@@ -45,7 +45,7 @@ async function renderStill(sceneFn, out, w, h) {
 }
 
 // frameFn(t, i) -> svg inner string. Pipes PNG frames into ffmpeg.
-async function renderVideo(frameFn, { w = 1920, h = 1080, fps = 60, duration, out, audio = null, crf = 16 }) {
+async function renderVideo(frameFn, { w = 1920, h = 1080, fps = 60, duration, out, audio = null, crf = 16, start = 0 }) {
   const r = await openRenderer(w, h);
   fs.mkdirSync(path.dirname(out), { recursive: true });
   const args = ['-y', '-v', 'error', '-f', 'image2pipe', '-framerate', String(fps), '-c:v', 'png', '-i', '-'];
@@ -59,7 +59,7 @@ async function renderVideo(frameFn, { w = 1920, h = 1080, fps = 60, duration, ou
   const t0 = Date.now();
   for (let i = 0; i < n; i++) {
     S.resetIds();
-    const buf = await r.render(frameFn(i / fps, i));
+    const buf = await r.render(frameFn(start + i / fps, i));
     if (!ff.stdin.write(buf)) await new Promise((res) => ff.stdin.once('drain', res));
     if (i % 60 === 0) process.stdout.write(`\rframe ${i}/${n} (${((Date.now() - t0) / 1000).toFixed(1)}s)`);
   }

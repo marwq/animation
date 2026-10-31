@@ -110,4 +110,17 @@ function secretEgg({ x = 0, y = 0, size = 200, t = 0, rot = 0, glow = true } = {
   return S.g(o, `translate(${f(x)} ${f(y)}) rotate(${f(rot)})`);
 }
 
-module.exports = { egg, bouquet, secretEgg, RARITY };
+// Tablet seen from the back, held by two blocky hands. (x, y) = centre; on = screen light spill.
+function tablet({ x = 0, y = 0, s = 1, rot = 0, on = true, glow = '#A8E8FF' } = {}) {
+  let o = '';
+  if (on) o += S.path('M-170 -128 L170 -128 L250 -330 L-250 -330 Z', { fill: glow, opacity: 0.18 });
+  o += S.rect(-180, -130, 360, 250, 30, { fill: '#2B2F3A', stroke: C.line, 'stroke-width': 7 });
+  o += S.rect(-166, -116, 332, 18, 9, { fill: '#3D4250' });
+  if (on) o += S.rect(-170, -136, 340, 9, 4, { fill: glow, opacity: 0.9 });
+  o += S.circle(0, -96, 7, { fill: '#151515' });
+  o += S.g(egg({ x: 0, y: 0, size: 96, rarity: 'legendary', glow: false }), 'rotate(-10)');
+  for (const sx of [-1, 1]) o += S.rect(sx * 170 - 34, 40, 68, 76, 18, { fill: '#FFFFFF', stroke: C.line, 'stroke-width': 7 }) + S.rect(sx * 170 - 34, 92, 68, 24, 10, { fill: '#1E2331', stroke: C.line, 'stroke-width': 6 });
+  return S.g(o, `translate(${f(x)} ${f(y)}) rotate(${f(rot)}) scale(${f(s)})`);
+}
+
+module.exports = { egg, bouquet, secretEgg, tablet, RARITY };

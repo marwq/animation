@@ -296,6 +296,9 @@ function faceFx(list = [], ctx = {}) {
           o += S.path(`M${x} ${y} q${sx * 20} -20 ${sx * 6} -40 q${-sx * 14} -20 ${sx * 6} -42`, { fill: 'none', stroke: '#fff', 'stroke-width': 16, 'stroke-linecap': 'round', opacity: 0.9, transform: `rotate(${a} ${x} ${y})` });
         }
         break;
+      case 'eyebags':
+        for (const sx of [-1, 1]) o += S.path(`M${f(sx * 64 - 44 + fx)} -628 Q${f(sx * 64 + fx)} -606 ${f(sx * 64 + 44 + fx)} -628`, { fill: 'none', stroke: '#8C6BB8', 'stroke-width': 7, 'stroke-linecap': 'round', opacity: 0.8 });
+        break;
       case 'hearts':
         for (const [hx, hy, hs] of [[-200, -960, 20], [210, -1000, 26], [250, -860, 16]]) o += S.path(heartPath(hx, hy, hs), { fill: C.heart, stroke: LW, 'stroke-width': 4 });
         break;

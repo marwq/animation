@@ -37,6 +37,7 @@ const DEFS = `<defs>
 <linearGradient id="skyMorning" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#8FB8FF"/><stop offset="0.45" stop-color="#FF9EC4"/><stop offset="1" stop-color="#FFD98A"/></linearGradient>
 <linearGradient id="skyPlaza" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#4A72FF"/><stop offset="0.55" stop-color="#A88CFF"/><stop offset="1" stop-color="#FFD0EC"/></linearGradient>
 <linearGradient id="skyVault" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#120C33"/><stop offset="0.42" stop-color="#3D1A6E"/><stop offset="0.75" stop-color="#A3307E"/><stop offset="1" stop-color="#FF7759"/></linearGradient>
+<linearGradient id="skyNight" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#0A1040"/><stop offset="1" stop-color="#2B3A8C"/></linearGradient>
 <linearGradient id="wallGrad" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#86CBF2"/><stop offset="1" stop-color="#C2EAFF"/></linearGradient>
 <linearGradient id="beam" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#FFF6D8" stop-opacity="0.5"/><stop offset="1" stop-color="#FFF6D8" stop-opacity="0"/></linearGradient>
 <linearGradient id="hazeDay" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#DDF5FF" stop-opacity="0"/><stop offset="1" stop-color="#DDF5FF" stop-opacity="0.75"/></linearGradient>
@@ -252,9 +253,18 @@ function bedroomLayers(cam, t, opts = {}) {
   let back = R(-400, -300, 2720, 1180, 0, { fill: 'url(#wallGrad)' }) + R(-400, -300, 2720, 1180, 0, { fill: 'url(#wallStripes)' });
   // window
   back += R(110, 150, 470, 440, 14, ol('#FFFFFF', 8));
-  back += R(132, 172, 426, 396, 6, { fill: 'url(#skyMorning)' });
-  back += S.g(sun(440, 470, 100, t) + cloud(170, 260, 0.55, '#FFF4FA', '#FFD3E6') + cloud(360, 350, 0.4, '#FFF4FA', '#FFD3E6') +
-    skyline(132, 560, 568, '#B66FA6', '#FFD7EE', 11), null, { 'clip-path': 'url(#winClip)' });
+  if (opts.night) {
+    back += R(132, 172, 426, 396, 6, { fill: 'url(#skyNight)' });
+    let st = '';
+    const rr = rng(5);
+    for (let i = 0; i < 26; i++) st += R(140 + rr() * 410, 180 + rr() * 260, 5, 5, 1, { fill: '#fff', opacity: f(0.4 + 0.5 * Math.abs(Math.sin(t * 2 + i))) });
+    back += S.g(st + S.circle(460, 270, 70, { fill: 'url(#softWhite)', opacity: 0.3 }) + R(420, 230, 80, 80, 12, { fill: '#FFF3D6' }) +
+      cloud(170, 330, 0.45, '#3A4A9C', '#2E3B80') + skyline(132, 560, 568, '#1B2260', '#FFE38A', 11), null, { 'clip-path': 'url(#winClip)' });
+  } else {
+    back += R(132, 172, 426, 396, 6, { fill: 'url(#skyMorning)' });
+    back += S.g(sun(440, 470, 100, t) + cloud(170, 260, 0.55, '#FFF4FA', '#FFD3E6') + cloud(360, 350, 0.4, '#FFF4FA', '#FFD3E6') +
+      skyline(132, 560, 568, '#B66FA6', '#FFD7EE', 11), null, { 'clip-path': 'url(#winClip)' });
+  }
   back += S.clipDef('winClip', R(132, 172, 426, 396, 6));
   back += S.path('M345 172 L345 568 M132 370 L558 370', ln(12, '#FFFFFF')) + R(110, 150, 470, 440, 14, ln(6));
   back += R(90, 584, 510, 30, 8, ol('#FFFFFF', 6));
@@ -266,7 +276,7 @@ function bedroomLayers(cam, t, opts = {}) {
     back += S.path(`M${cx - 15} 132 L${cx - 15 + dir * sway} 636 M${cx + 15} 132 L${cx + 15 + dir * sway} 640`, ln(4, '#E0663A'));
   }
   // light beam
-  back += S.path('M140 170 L560 170 L1180 1080 L520 1080 Z', { fill: 'url(#beam)', opacity: 0.6 });
+  if (!opts.night) back += S.path('M140 170 L560 170 L1180 1080 L520 1080 Z', { fill: 'url(#beam)', opacity: 0.6 });
   // poster
   const poster = R(0, 0, 250, 330, 10, ol('#7B3FE4', 6)) + R(14, 14, 222, 302, 6, { fill: '#9D5CFF' }) +
     S.g(egg({ x: 125, y: 150, size: 150, rarity: 'legendary', glow: false }), '') +
@@ -284,7 +294,7 @@ function bedroomLayers(cam, t, opts = {}) {
   const shake = ring ? Math.sin(t * 90) * 7 * ring : 0;
   let clock = S.circle(-52, -66, 22, ol('#FFD34D', 5)) + S.circle(52, -66, 22, ol('#FFD34D', 5)) + S.path('M-40 6 L-52 22 M40 6 L52 22', ln(8));
   clock += R(-76, -60, 152, 92, 22, ol('#FF5A5A', 7)) + R(-58, -44, 116, 54, 10, { fill: '#1B1F2B' });
-  clock += S.el('text', { x: 0, y: -2, 'font-family': 'Fredoka, sans-serif', 'font-weight': 700, 'font-size': 40, fill: ring ? '#FF6B6B' : '#5CFF7A', 'text-anchor': 'middle' }, '7:00');
+  clock += S.el('text', { x: 0, y: -2, 'font-family': 'Fredoka, sans-serif', 'font-weight': 700, 'font-size': 40, fill: opts.clockCol || (ring ? '#FF6B6B' : '#5CFF7A'), 'text-anchor': 'middle' }, opts.clock || '7:00');
   back += S.g(clock, `translate(1565 ${f(640 - Math.abs(shake) * 0.6)}) rotate(${f(shake)})`);
   // bed (behind the sleeper)
   back += R(500, 300, 80, 600, 22, ol('#8A5A3A', 7)) + R(1340, 300, 80, 600, 22, ol('#8A5A3A', 7));
@@ -432,6 +442,31 @@ function vaultLayers(cam, t, opts = {}) {
   };
 }
 
+// close shot of the platform's front edge with the void + cloud sea below (for hanging)
+function vaultHangLayers(cam, t, edgeY = 452) {
+  const sky = R(-600, -600, 3120, 2280, 0, { fill: 'url(#skyVault)' });
+  const cloudBand = (y, col, hi, sp) => {
+    let o = '';
+    for (let i = -2; i < 12; i++) { const x = ((i * 260 + t * sp) % 3400) - 700; o += R(x, y - (i % 3) * 22, 300, 500, 90, { fill: col }) + R(x + 40, y - (i % 3) * 22 + 10, 140, 16, 8, { fill: hi, opacity: 0.6 }); }
+    return o;
+  };
+  let stars = '';
+  const r = rng(77);
+  for (let i = 0; i < 40; i++) { const x = r() * 2200 - 140, y = 700 + r() * 200; stars += R(x, y, 4, 4, 1, { fill: '#FFFFFF', opacity: f(0.3 + 0.5 * Math.abs(Math.sin(t * 2 + i))) }); }
+  const far = cloudBand(930, '#6D3A99', '#B57BD6', 10) + cloudBand(1000, '#A24C9E', '#E59AD0', 18) + cloudBand(1060, '#E0739A', '#FFC0D0', 30);
+  let pf = R(-500, edgeY - 120, 2920, 120, 0, { fill: '#3A3F5E' }) + R(-500, edgeY - 120, 2920, 120, 0, { fill: 'url(#studs)' });
+  pf += R(-500, edgeY - 10, 2920, 14, 0, { fill: '#FFC52E' });
+  pf += R(-500, edgeY, 2920, 330, 0, { fill: '#262A40' }) + R(-500, edgeY, 2920, 330, 0, { fill: 'url(#metal)', opacity: 0.6 });
+  for (let x = -500; x < 2420; x += 120) pf += S.path(`M${x} ${edgeY + 4} L${x + 60} ${edgeY + 4} L${x + 20} ${edgeY + 50} L${x - 40} ${edgeY + 50} Z`, { fill: '#FFC52E', opacity: 0.85 });
+  pf += R(-500, edgeY + 120, 2920, 10, 0, { fill: '#FF2D55', opacity: 0.6 + 0.3 * Math.sin(t * 9) });
+  pf += R(-500, edgeY + 300, 2920, 30, 0, { fill: '#15172A' }) + S.path(`M-500 ${edgeY} L2420 ${edgeY} M-500 ${edgeY + 330} L2420 ${edgeY + 330}`, ln(7));
+  return { bg: sky + layer(stars + far, cam, 0.2), platform: layer(pf, cam, 1) };
+}
+
+function beam(x1, y1, x2, y2, k = 1) {
+  return S.path(`M${f(x1)} ${f(y1)} L${f(x2)} ${f(y2)}`, ln(36, '#FF2D55', 0.25 * k)) + S.path(`M${f(x1)} ${f(y1)} L${f(x2)} ${f(y2)}`, ln(12, '#FF6A84', k)) + S.path(`M${f(x1)} ${f(y1)} L${f(x2)} ${f(y2)}`, ln(4, '#FFFFFF', k));
+}
+
 function vaultLaserFront(cam, t, a) {
   // a sweeping beam in front of the characters (angle a in radians from the right emitter)
   const ex = 1960, ey = 160;
@@ -448,4 +483,4 @@ function timerHud(sec, pulse = 0) {
   return S.g(o, `translate(1670 132) scale(${f(s * 0.85)})`);
 }
 
-module.exports = { DEFS, camTf, layer, townLayers, bedroomLayers, plazaLayers, vaultLayers, vaultLaserFront, timerHud, cloud, sun, car, bird, bush, flowers, PORTALS };
+module.exports = { DEFS, camTf, layer, townLayers, bedroomLayers, plazaLayers, vaultLayers, vaultHangLayers, beam, vaultLaserFront, timerHud, cloud, sun, car, bird, bush, flowers, PORTALS };

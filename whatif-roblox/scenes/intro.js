@@ -16,12 +16,10 @@ const { secretEgg } = require('../rig/props');
 const { renderVideo } = require('../tools/render');
 const { f, ease, inv, lerp, clamp } = S;
 
-const W = 1920, H = 1080;
-const hash = (n) => { const v = Math.sin(n * 127.1 + 311.7) * 43758.5453; return v - Math.floor(v); };
-const bump = (t, a, b) => Math.sin(clamp((t - a) / (b - a), 0, 1) * Math.PI); // 0 -> 1 -> 0
-const blinkAt = (t, ...cs) => Math.max(0, ...cs.map((c) => 1 - Math.abs(t - c) / 0.07));
+const C = require('./common');
+const { W, H, hash, bump, blinkAt, pixelWipe, vignette, zzz, musicNotes, speedLines, dust, burst } = C;
 
-// ---------------------------------------------------------------- captions
+// ---------------------------------------------------------------- captions (hand-timed)
 const CAPS = [
   [0.30, 0.72, 'WHAT IF', '#FFFFFF'], [0.72, 0.98, 'YOU', '#FFFFFF'], [0.98, 1.72, 'WOKE UP...', '#FFFFFF'],
   [1.98, 2.30, 'AND THE', '#FFFFFF'], [2.30, 2.95, 'WHOLE WORLD', '#FFD21F'], [2.95, 3.70, 'WAS ROBLOX?!', '#FF5A5A', 1.15],
@@ -31,87 +29,6 @@ const CAPS = [
   [8.02, 8.60, 'ONE GAME.', '#5CFF7A', 1.3],
   [8.74, 9.18, 'YOU PICKED', '#FFFFFF'], [9.18, 9.60, 'THE HARDEST', '#FFFFFF'], [9.60, 10.1, 'ONE.', '#FF4D6D', 1.35],
 ];
-function caption(t) {
-  const c = CAPS.find(([a, b]) => t >= a && t < b);
-  if (!c) return '';
-  const sc = lerp(0.5, 1, ease.outBack(inv(c[0], c[0] + 0.13, t))) * (c[4] || 1);
-  const rot = c[4] ? -3 : 0;
-  return S.g(S.el('text', {
-    x: 0, y: 0, 'font-family': 'Fredoka, sans-serif', 'font-weight': 700, 'font-size': 94, fill: c[3],
-    stroke: '#151515', 'stroke-width': 17, 'paint-order': 'stroke', 'stroke-linejoin': 'round', 'text-anchor': 'middle',
-  }, c[2]), `translate(960 1018) rotate(${rot}) scale(${f(sc)})`);
-}
-
-// ---------------------------------------------------------------- overlays
-const WIPE_COLS = ['#FF5A5A', '#FFB000', '#FFE14D', '#3BD16F', '#34C3FF', '#3B8BFF', '#B06BFF', '#FF6FB5'];
-// cover: squares grow left->right; uncover: they shrink in the same order
-function pixelWipe(p, mode = 'cover', black = false) {
-  const cell = 120, cols = 16, rows = 9;
-  let o = '';
-  for (let r = 0; r < rows; r++) for (let c = 0; c < cols; c++) {
-    const d = ((c + r * 0.6) / (cols + rows * 0.6)) * 0.62 + hash(c * 31 + r * 7) * 0.08;
-    let q = clamp((p - d) / 0.3, 0, 1);
-    q = mode === 'cover' ? ease.outBack(q) : 1 - ease.inOut(q);
-    if (q <= 0.001) continue;
-    const s = cell * Math.min(q, 1.08) + 2;
-    const fill = black ? '#0B0B12' : WIPE_COLS[Math.floor(hash(c * 13 + r * 17) * WIPE_COLS.length)];
-    o += S.rect(c * cell + cell / 2 - s / 2, r * cell + cell / 2 - s / 2, s, s, black ? 2 : 10 * q, { fill });
-  }
-  return o;
-}
-
-function vignette() { return S.rect(0, 0, W, H, 0, { fill: 'url(#vignette)' }); }
-
-function zzz(t, x, y) {
-  let o = '';
-  for (let i = 0; i < 3; i++) {
-    const ph = (t * 0.8 + i / 3) % 1;
-    o += F.markText(i % 2 ? 'Z' : 'z', x + ph * 60 + i * 10, y - ph * 160, 46 + ph * 30, -12, '#FFFFFF');
-  }
-  return S.g(o, null, { opacity: 0.95 });
-}
-
-function musicNotes(t, x, y) {
-  let o = '';
-  for (let i = 0; i < 3; i++) {
-    const ph = (t * 1.3 + i / 3) % 1;
-    const nx = x + Math.sin((ph + i) * 6) * 30 + i * 30, ny = y - ph * 200;
-    const col = ['#FFE14D', '#FF6FB5', '#34C3FF'][i];
-    const g = S.ellipse(0, 0, 16, 12, { fill: col, stroke: '#151515', 'stroke-width': 5, transform: 'rotate(-20)' }) +
-      S.path('M13 -4 L13 -56 L36 -46', { fill: 'none', stroke: '#151515', 'stroke-width': 6, 'stroke-linecap': 'round', 'stroke-linejoin': 'round' });
-    o += S.g(g, `translate(${f(nx)} ${f(ny)}) scale(${f(1 - ph * 0.3)})`, { opacity: f(1 - ph * ph) });
-  }
-  return o;
-}
-
-function speedLines(x0, x1, y, n, seed, col = '#FFFFFF') {
-  let o = '';
-  for (let i = 0; i < n; i++) {
-    const yy = y + (hash(seed + i) - 0.5) * 300, len = 120 + hash(seed + i * 3) * 220, xx = lerp(x0, x1, hash(seed + i * 7));
-    o += S.rect(xx, yy, len, 10, 5, { fill: col, opacity: 0.85 });
-  }
-  return o;
-}
-
-function dust(x, y, t0, t) {
-  let o = '';
-  for (let i = 0; i < 4; i++) {
-    const age = t - t0 - i * 0.04; if (age < 0 || age > 0.45) continue;
-    const k = age / 0.45;
-    o += S.circle(x + i * 40 + k * 60, y - k * 50 - i * 6, 18 + k * 30, { fill: '#FFFFFF', opacity: f(0.8 * (1 - k)), stroke: '#151515', 'stroke-width': 4 });
-  }
-  return o;
-}
-
-function burst(x, y, k, col = '#FFE14D') {
-  if (k <= 0 || k >= 1) return '';
-  let o = '';
-  for (let i = 0; i < 10; i++) {
-    const a = (i / 10) * Math.PI * 2, r0 = 40 + k * 120, r1 = r0 + 60 * (1 - k);
-    o += S.path(`M${f(x + Math.cos(a) * r0)} ${f(y + Math.sin(a) * r0)} L${f(x + Math.cos(a) * r1)} ${f(y + Math.sin(a) * r1)}`, { stroke: col, 'stroke-width': 12 * (1 - k) + 2, 'stroke-linecap': 'round' });
-  }
-  return o + F.sparkle(x - 90 * k, y - 60 * k, 30 * (1 - k)) + F.sparkle(x + 100 * k, y - 30 * k, 24 * (1 - k));
-}
 
 // ---------------------------------------------------------------- shot A: bedroom wake-up (0.00 - 1.95)
 function shotBedroom(t) {
@@ -324,8 +241,8 @@ function shotVault(t) {
 }
 
 // ---------------------------------------------------------------- timeline
-function frame(t) {
-  let o = E.DEFS;
+function scene(t) {
+  let o = '';
   let shot;
   if (t < 1.95) shot = shotBedroom(t);
   else if (t < 3.72) shot = shotTownReveal(t);
@@ -339,7 +256,6 @@ function frame(t) {
   if (whip > 0.02) shot = S.g(shot, `translate(${f((t < 6.5 ? -1 : 1) * whip * 160)} 0)`, { filter: 'url(#whip)' });
   o += shot;
   o += vignette();
-  o += caption(t);
   // opening: black -> pixels
   if (t < 0.5) o += pixelWipe(inv(0.02, 0.5, t), 'uncover', true);
   // bedroom -> town: colourful pixel wave
@@ -348,9 +264,11 @@ function frame(t) {
   return o;
 }
 
+function frame(t) { return E.DEFS + scene(t) + C.captionAt(CAPS, t); }
+
 if (require.main === module) {
   const out = process.argv[2] || path.join(__dirname, '..', 'out', 'intro_10s.mp4');
   const fps = Number(process.argv[3] || 60);
   renderVideo(frame, { w: W, h: H, fps, duration: 10, out, crf: 15 }).catch((e) => { console.error(e); process.exit(1); });
 }
-module.exports = { frame };
+module.exports = { frame, scene, CAPS };

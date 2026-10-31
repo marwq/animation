@@ -122,13 +122,14 @@
 
 > **NARRATOR:** [rushed] You picked the hardest one.
 
-- 🎥 Nova пробегает между лазерами, крупно Nova на краю.
+- 🎥 Nova влетает в кадр: подкат под лазер, сальто через второй, приземление рядом с YOU. Крупно Nova, ухмылка.
 
 > **NOVA:** [shouts, confident] You coming or what, noob?!
 
 > **YOU:** [shouts, panicked] I'M COMING! I'm totally fine, I'm— [screams] AAAAAH!
 
-- 💥 Стоп-кадр на крике (рот `scream`), запись тормозит, VHS-перемотка назад с полосами. ⏱ +1s
+- 🎬 YOU бежит к ней с яйцом на голове, спотыкается и повисает на краю платформы над облаками.
+- 💥 Стоп-кадр на крике (рот `scream`), стрелка-подпись «YOU.», запись тормозит, VHS-перемотка назад с полосами. ⏱ +1s
 
 > **NARRATOR:** [sighs, playful] Okay. Okay. Let me back up.
 
