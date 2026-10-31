@@ -260,4 +260,4 @@ if (require.main === module) {
   const fps = Number(process.argv[3] || 60);
   renderVideo(frame, { w: W, h: H, fps, duration: 10, out }).catch((e) => { console.error(e); process.exit(1); });
 }
-module.exports = { frame };
+module.exports = { frame, background };

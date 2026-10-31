@@ -273,119 +273,43 @@ function drawHeadSide(face, shade) {
   return o;
 }
 
-// ---------------------------------------------------------------- nametag
-function nametag(tag, y = -1030) {
-  if (!tag) return '';
-  const t = typeof tag === 'string' ? { name: tag } : tag;
-  let o = S.el('text', {
-    x: 0, y, 'font-family': 'Fredoka, sans-serif', 'font-weight': 600, 'font-size': 52, fill: '#fff',
-    stroke: '#1b1b1b', 'stroke-width': 9, 'paint-order': 'stroke', 'stroke-linejoin': 'round', 'text-anchor': 'middle',
-  }, t.name);
-  if (t.health !== undefined && t.health !== null) {
-    const w = 190, h = 14, yy = y + 18;
-    o += S.rect(-w / 2, yy, w, h, 7, { fill: '#2b2b2b', stroke: '#111', 'stroke-width': 4 });
-    o += S.rect(-w / 2 + 2, yy + 2, Math.max(0, (w - 4) * t.health), h - 4, 5, { fill: t.health > 0.35 ? '#35D34A' : '#E8243C' });
-  }
+// ---------------------------------------------------------------- side parts
+function drawLegSide({ shade = true, dim = false } = {}) {
+  const id = S.uid('sl');
+  const d = S.roundedPath([[-58, -24], [64, -24], [85, 260, 4], [-80, 260, 4]], 0);
+  let o = S.clipDef(id, S.path(d)) + S.path(d, { fill: C.pants });
+  let inner = shade ? S.rect(-100, -40, 220, 64, 0, { fill: C.pantsShade }) : '';
+  if (dim) inner += S.rect(-100, -40, 220, 320, 0, { fill: '#000', opacity: 0.28 });
+  o += S.g(inner, null, { 'clip-path': `url(#${id})` }) + S.path(d, outline('none'));
+  const shoeFill = dim ? '#D3D5DE' : C.shoe;
+  o += S.path(S.roundedPath([[-138, 256], [88, 256], [88, 302], [-138, 302]], 16), outline(shoeFill));
+  o += S.path('M-130 256 A44 38 0 0 1 -42 256 Z', outline(shoeFill));
   return o;
 }
 
-// ---------------------------------------------------------------- assemble
-function drawHero(pose = {}) {
-  const p = { ...DEFAULTS, ...pose };
-  const shade = p.shade;
-  const props = p.props || [];
-  const layer = (name) => props.filter((q) => (q.layer || 'front') === name).map((q) => q.svg).join('');
-  const hipY = -306 + p.bodyY;
-  const legK = Math.max(0.4, (306 - p.bodyY) / 306);
-  let body = '';
-
-  if (p.view === 'side') {
-    // facing screen-left; + angles swing forward (toward -x)
-    const leg = (a, dx, dim) => {
-      const id = S.uid('sl');
-      const d = S.roundedPath([[-58, -24], [64, -24], [85, 260, 4], [-80, 260, 4]], 0);
-      let o = S.clipDef(id, S.path(d)) + S.path(d, { fill: C.pants });
-      let inner = shade ? S.rect(-100, -40, 220, 64, 0, { fill: C.pantsShade }) : '';
-      if (dim) inner += S.rect(-100, -40, 220, 320, 0, { fill: '#000', opacity: 0.28 });
-      o += S.g(inner, null, { 'clip-path': `url(#${id})` }) + S.path(d, outline('none'));
-      const shoeFill = dim ? '#D3D5DE' : C.shoe;
-      o += S.path(S.roundedPath([[-138, 256], [88, 256], [88, 302], [-138, 302]], 16), outline(shoeFill));
-      o += S.path('M-130 256 A44 38 0 0 1 -42 256 Z', outline(shoeFill));
-      return S.g(o, `translate(${f(dx)} ${f(hipY)}) rotate(${f(a)}) scale(1 ${f(legK)})`);
-    };
-    body += leg(p.legR, 4, true);
-    let torso = '';
-    torso += S.g(drawArm({ shade, dim: true, view: 'side' }), `translate(4 -505) rotate(${f(p.armR)})`);
-    torso += S.path(S.roundedPath([[-88, -512], [-56, -512], [-56, -312], [-88, -312]], 8), outline(C.shirt));
-    const tid = S.uid('st');
-    const td = S.roundedPath([[-62, -535], [70, -535], [70, -305], [-62, -305]], 16);
-    torso += S.clipDef(tid, S.path(td)) + S.path(td, { fill: C.jacket });
-    if (shade) torso += S.g(S.rect(-80, -330, 160, 30, 0, { fill: '#000', opacity: 0.12 }), null, { 'clip-path': `url(#${tid})` });
-    torso += S.path(td, outline('none'));
-    torso += layer('back') + layer('mid');
-    torso += S.g(drawHeadSide(p.face, shade), `translate(0 ${f(p.headY)}) rotate(${f(p.headRot)} 0 -560)`);
-    torso += S.g(drawArm({ shade, view: 'side' }), `translate(4 -505) rotate(${f(p.armL)})`);
-    torso += layer('front');
-    body += leg(p.legL, 4, false);
-    body += S.g(torso, `translate(0 ${f(p.bodyY)}) rotate(${f(p.lean)} 0 -306)`);
-  } else {
-    const back = p.view === 'back';
-    const t = back ? 0 : S.clamp(p.turn, -1, 1);
-    const at = Math.abs(t), dir = t >= 0 ? 1 : -1;
-    // which arm/leg is far (behind) in 3/4
-    const farSide = at > 0.35 ? dir : 0; // +1: screen-right limb is far
-    const toe = dir * 18 * at;
-    const legSvg = (side) => {
-      const ang = side < 0 ? p.legL : p.legR;
-      const far = farSide === side;
-      const hx = side * 48 + (far ? -side * 22 * at : side < 0 ? 8 * at * dir : 8 * at * dir);
-      return S.g(drawLeg({ shade, dim: far, toeShift: toe * side, back }), `translate(${f(hx)} ${f(hipY)}) scale(${side} 1) rotate(${f(-ang)}) scale(1 ${f(legK)})`);
-    };
-    const armSvg = (side) => {
-      const ang = side < 0 ? p.armL : p.armR;
-      const far = farSide === side;
-      const ax = side * 100 + (far ? -side * 30 * at : 8 * at * dir);
-      return S.g(drawArm({ shade, dim: far }), `translate(${f(ax)} -515) scale(${side} 1) rotate(${f(-ang)})`);
-    };
-    // legs: far first
-    const legOrder = farSide ? [farSide, -farSide] : [-1, 1];
-    for (const sd of legOrder) body += legSvg(sd);
-
-    let torso = '';
-    const armUp = (a) => a > 115;
-    const sides = [-1, 1];
-    for (const sd of sides) if (farSide === sd) torso += armSvg(sd);
-    torso += layer('back');
-    torso += drawTorsoFront(t, shade, back);
-    torso += layer('mid');
-    const head = back ? drawHeadBack(shade) : drawHeadFront(p.face, t, shade);
-    const headG = S.g(head, `translate(0 ${f(p.headY)}) rotate(${f(p.headRot)} 0 -560)`);
-    // arms in front of torso; raised arms go over the head
-    let armsBefore = '', armsAfter = '';
-    for (const sd of sides) {
-      if (farSide === sd) continue;
-      const a = sd < 0 ? p.armL : p.armR;
-      if (armUp(a)) armsAfter += armSvg(sd); else armsBefore += armSvg(sd);
-    }
-    if (back) torso += headG + armsBefore + armsAfter;
-    else torso += armsBefore + headG + armsAfter;
-    torso += layer('front');
-    body += S.g(torso, `translate(0 ${f(p.bodyY)}) rotate(${f(p.lean)} 0 -306)`);
-  }
-
-  const fs = p.flip ? -1 : 1;
-  let out = '';
-  if (p.shadow) {
-    const k = Math.max(0.35, 1 - p.lift / 900);
-    out += S.ellipse(p.x, p.y, 175 * p.s * k * Math.max(p.sx, 0.6), 24 * p.s * k, { fill: C.shadow });
-  }
-  const tf = `translate(${f(p.x)} ${f(p.y - p.lift)}) scale(${f(fs * p.s)} ${f(p.s)}) rotate(${f(p.rot)} 0 ${f(p.rotY)}) scale(${f(p.sx)} ${f(p.sy)})`;
-  out += S.g(body + layer('top'), tf);
-  if (p.nametag) {
-    const ny = (-1035 + p.bodyY + p.headY) * p.sy;
-    out += S.g(nametag(p.nametag, ny), `translate(${f(p.x)} ${f(p.y - p.lift)}) scale(${f(p.s)})`);
-  }
-  return out;
+function drawTorsoSide(shade) {
+  let o = S.path(S.roundedPath([[-88, -512], [-56, -512], [-56, -312], [-88, -312]], 8), outline(C.shirt));
+  const tid = S.uid('st');
+  const td = S.roundedPath([[-62, -535], [70, -535], [70, -305], [-62, -305]], 16);
+  o += S.clipDef(tid, S.path(td)) + S.path(td, { fill: C.jacket });
+  if (shade) o += S.g(S.rect(-80, -330, 160, 30, 0, { fill: '#000', opacity: 0.12 }), null, { 'clip-path': `url(#${tid})` });
+  return o + S.path(td, outline('none'));
 }
 
-module.exports = { drawHero, drawHeadFront, drawHeadSide, drawHeadBack, drawArm, drawLeg, drawTorsoFront, nametag, DEFAULTS };
+// ---------------------------------------------------------------- design
+const { drawCharacter, nametag } = require('./body');
+
+const YOU_DESIGN = {
+  leg: drawLeg,
+  legSide: drawLegSide,
+  arm: drawArm,
+  torso: drawTorsoFront,
+  torsoSide: drawTorsoSide,
+  head: drawHeadFront,
+  headSide: drawHeadSide,
+  headBack: (face, shade) => drawHeadBack(shade),
+};
+
+const drawHero = (pose = {}) => drawCharacter(YOU_DESIGN, pose);
+
+module.exports = { drawHero, drawHeadFront, drawHeadSide, drawHeadBack, drawArm, drawLeg, drawTorsoFront, nametag, DEFAULTS, YOU_DESIGN };

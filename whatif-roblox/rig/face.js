@@ -114,7 +114,16 @@ function eye(cx, cy, rx, ry, spec = {}, side = -1, opts = {}) {
   const yAtL = (x) => yL + tL * ((x - cx) / rx) * inner;
   const cid = S.uid('eye');
   const eid = S.uid('eyi');
-  let o = S.clipDef(cid, S.poly([[xa, yAtU(xa)], [xb, yAtU(xb)], [xb, yAtL(xb)], [xa, yAtL(xa)]]));
+  const curve = s.lidCurve || 0; // > 0 bows the upper lid upward (almond eye)
+  const NS = 18;
+  const upperPts = [], lowerPts = [];
+  for (let i = 0; i <= NS; i++) {
+    const x = xa + ((xb - xa) * i) / NS;
+    const u = (x - cx) / rx;
+    upperPts.push([x, yAtU(x) - curve * Math.max(0, 1 - u * u)]);
+    lowerPts.push([x, yAtL(x)]);
+  }
+  let o = S.clipDef(cid, S.poly([...upperPts, ...lowerPts.slice().reverse()]));
   o += S.clipDef(eid, S.ellipse(cx, cy, rx, ry));
   let body = S.ellipse(cx, cy, rx, ry, { fill: C.skin });
 
@@ -145,11 +154,17 @@ function eye(cx, cy, rx, ry, spec = {}, side = -1, opts = {}) {
 
   body += S.g(S.ellipse(cx, cy, rx, ry, { fill: 'none', stroke: LW, 'stroke-width': SW }));
   o += S.g(body, null, { 'clip-path': `url(#${cid})` });
-  // lid lines (kept inside the eye)
+  // lid lines (kept inside the eye); opts.topW thickens the top line (lashes)
+  const topW = opts.topW || SW;
   let lids = '';
-  if (up > 0.01) lids += S.path(`M${f(xa)} ${f(yAtU(xa))} L${f(xb)} ${f(yAtU(xb))}`, stroke(SW));
-  if (lo > 0.01) lids += S.path(`M${f(xa)} ${f(yAtL(xa))} L${f(xb)} ${f(yAtL(xb))}`, stroke(SW));
+  if (up > 0.01) lids += S.pline(upperPts, stroke(topW));
+  if (lo > 0.01) lids += S.pline(lowerPts, stroke(SW));
   if (lids) o += S.g(lids, null, { 'clip-path': `url(#${eid})` });
+  if (up <= 0.01 && topW > SW) {
+    const arc = [];
+    for (let i = 0; i <= 16; i++) { const a = Math.PI * (1.08 + (0.84 * i) / 16); arc.push([cx + Math.cos(a) * rx, cy + Math.sin(a) * ry]); }
+    o += S.g(S.pline(arc, stroke(topW)), null, { 'clip-path': `url(#${cid})` });
+  }
   return o;
 }
 
@@ -271,6 +286,19 @@ function faceFx(list = [], ctx = {}) {
         o += sparkle(-230, -900, 26) + sparkle(235, -960, 34) + sparkle(250, -760, 20);
         break;
       case 'zzz': o += markText('z', 190, -930, 60, -10) + markText('Z', 240, -990, 84, -10); break;
+      case 'redface': // whole lower face flushes red
+        o += S.path(S.roundedPath([[-136 + fx * 0.1, -706], [136 + fx * 0.1, -706], [136 + fx * 0.1, -562], [-136 + fx * 0.1, -562]], 40), { fill: '#FF3D5E', opacity: e.k ?? 0.3 });
+        o += S.ellipse(-82 + fx, -640, 34, 15, { fill: C.blush, opacity: 0.85 }) + S.ellipse(82 + fx, -640, 34, 15, { fill: C.blush, opacity: 0.85 });
+        break;
+      case 'steam':
+        for (const [sx, a] of [[-1, -30], [1, 30]]) {
+          const x = sx * 190, y = -930;
+          o += S.path(`M${x} ${y} q${sx * 20} -20 ${sx * 6} -40 q${-sx * 14} -20 ${sx * 6} -42`, { fill: 'none', stroke: '#fff', 'stroke-width': 16, 'stroke-linecap': 'round', opacity: 0.9, transform: `rotate(${a} ${x} ${y})` });
+        }
+        break;
+      case 'hearts':
+        for (const [hx, hy, hs] of [[-200, -960, 20], [210, -1000, 26], [250, -860, 16]]) o += S.path(heartPath(hx, hy, hs), { fill: C.heart, stroke: LW, 'stroke-width': 4 });
+        break;
       default: break;
     }
   }

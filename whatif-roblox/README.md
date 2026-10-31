@@ -25,17 +25,31 @@
 | `concept/rig.png` | разбор куклы: части, шарниры, плавный поворот, брови |
 | `concept/rig_test.mp4` | 10-секундный тест анимации 1080p60 |
 
+## Концепт Nova
+
+| Файл | Что это |
+|---|---|
+| `concept/nova_turnaround.png` | Nova: спереди, 3/4, профиль, сзади |
+| `concept/nova_expressions.png` | 14 эмоций + 4 положения очков (на носу, сползли, на лбу, сняты) |
+| `concept/nova_poses.png` | позы: idle, peace, бег с тремя яйцами, сальто, «Talk less», шок, смех, цветы |
+| `concept/keyart_flowers.png` | ключевой кадр финала: YOU дарит цветы |
+| `concept/nova_test.mp4` | 6-секундный тест анимации Nova (1080p60) |
+
 ## Как устроено
 
 Герой — «кукла» (cut-out rig) в коде, без покадровой отрисовки:
 
-- `rig/hero.js` — тело. Части на шарнирах (шея, плечи, бёдра), виды `front` / `side` / `back`,
+- `rig/body.js` — общий скелет для всех персонажей: иерархия, шарниры, виды, поворот, тень, ник.
+  Каждый персонаж — это «дизайн» (свои волосы, одежда, лицо) поверх этого скелета.
+- `rig/nova.js` — Nova: полулинзы (`glasses: 'half' | 'up' | 'off'`, `glassesDy`), хвост (`tail` — качание),
+  свои эмоции (`cool`, `smirk`, `teasing`, `wink`, …), остальные берутся из общей библиотеки.
+- `rig/hero.js` — YOU. Части на шарнирах (шея, плечи, бёдра), виды `front` / `side` / `back`,
   параметр `turn` (-1…1) плавно поворачивает до 3/4, squash & stretch, прыжок, наклон, реквизит.
 - `rig/face.js` — глаза (веки, взгляд, зрачки-звёзды/Robux/сердца/спирали), рты, визем-рты,
   эффекты (пот, слёзы, румянец, «?», «!»), 25 готовых эмоций. Брови = V-вырез чёлки.
-- `rig/props.js` — яйца в стиле Steal an Egg (common / rare / epic / legendary / mythic).
+- `rig/props.js` — яйца в стиле Steal an Egg (common / rare / epic / legendary / mythic), букет.
 - `tools/render.js` — SVG → Chromium → PNG → ffmpeg (MP4).
-- `tools/sheets.js` — концепт-листы, `tools/anim_test.js` — тестовая сцена.
+- `tools/sheets.js`, `tools/nova_sheets.js` — концепт-листы; `tools/anim_test.js`, `tools/nova_test.js` — тестовые сцены.
 - `tools/build_vo.js` — сценарий → файл озвучки + тайминг.
 
 Поза — обычный объект:

@@ -54,4 +54,26 @@ function egg({ x = 0, y = 0, size = 200, rarity = 'legendary', rot = 0, glow = t
   return S.g(o, `translate(${f(x)} ${f(y)}) rotate(${f(rot + wobble)})`);
 }
 
-module.exports = { egg, RARITY };
+// Bouquet held at its grip point (x,y); size = overall height.
+function bouquet({ x = 0, y = 0, size = 260, rot = 0 } = {}) {
+  const k = size / 260;
+  let o = '';
+  // stems + leaves
+  o += S.path('M-6 -10 L-30 -150 M2 -10 L4 -160 M8 -10 L40 -146', { fill: 'none', stroke: '#2E8B3E', 'stroke-width': 8, 'stroke-linecap': 'round' });
+  const leaf = (lx, ly, a) => S.ellipse(lx, ly, 26, 11, { fill: '#3FB34F', stroke: C.line, 'stroke-width': 5, transform: `rotate(${a} ${lx} ${ly})` });
+  o += leaf(-58, -150, -35) + leaf(64, -146, 30) + leaf(-20, -205, -70);
+  // flowers
+  const rose = (fx, fy, r, c, dark) =>
+    S.circle(fx, fy, r, { fill: c, stroke: C.line, 'stroke-width': 5 }) +
+    S.path(`M${f(fx - r * 0.45)} ${f(fy)} Q${f(fx)} ${f(fy - r * 0.6)} ${f(fx + r * 0.45)} ${f(fy)} Q${f(fx)} ${f(fy + r * 0.45)} ${f(fx - r * 0.2)} ${f(fy - r * 0.05)}`,
+      { fill: 'none', stroke: dark, 'stroke-width': 4.5, 'stroke-linecap': 'round' });
+  o += rose(-46, -176, 30, '#FF5A7A', '#C2304F') + rose(42, -180, 30, '#FF5A7A', '#C2304F') + rose(0, -214, 34, '#E8243C', '#9E1428');
+  o += rose(-14, -166, 24, '#FFFFFF', '#C9CAD3') + rose(30, -226, 22, '#FFD1DC', '#E58AA0');
+  // wrapping cone
+  o += S.path('M-92 -150 L92 -150 L14 30 L-14 30 Z', { fill: '#FFB3C7', stroke: C.line, 'stroke-width': 6, 'stroke-linejoin': 'round' });
+  o += S.path('M-92 -150 L-40 -110 L0 -150 L40 -110 L92 -150', { fill: 'none', stroke: '#F27FA0', 'stroke-width': 5, 'stroke-linejoin': 'round' });
+  o += S.path('M-30 -20 Q0 -4 30 -20 L22 6 Q0 14 -22 6 Z', { fill: '#E8243C', stroke: C.line, 'stroke-width': 5, 'stroke-linejoin': 'round' });
+  return S.g(o, `translate(${f(x)} ${f(y)}) rotate(${f(rot)}) scale(${f(k)})`);
+}
+
+module.exports = { egg, bouquet, RARITY };
