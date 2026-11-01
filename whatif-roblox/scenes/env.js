@@ -217,7 +217,7 @@ function townLayers(cam, t, opts = {}) {
   const sky = R(-600, -600, 3120, 2280, 0, { fill: 'url(#skyDay)' });
   const far = sun(1500, 200, 130, t);
   let clouds = '';
-  for (const [cx, cy, cs] of [[-300, 140, 0.9], [300, 90, 1.1], [900, 230, 0.7], [1500, 120, 0.85], [2200, 180, 1.0], [2900, 100, 0.8], [3600, 200, 0.9]]) clouds += cloud(cx + t * 18, cy, cs);
+  for (const [cx, cy, cs] of [[-300, 140, 0.9], [300, 90, 1.1], [900, 230, 0.7], [1500, 120, 0.85], [2200, 180, 1.0], [2900, 100, 0.8], [3600, 200, 0.9]]) clouds += cloud((((cx + t * 18 + 600) % 4600) + 4600) % 4600 - 600, cy, cs);
   let sky2 = '';
   sky2 += island(260, 300, 0.55, t, 0) + island(1280, 220, 0.42, t, 1) + island(2400, 300, 0.5, t, 2) + island(3400, 240, 0.45, t, 3);
   sky2 += obby(560, 360, t) + obby(2900, 380, t);
@@ -365,6 +365,7 @@ function portal(P, t, flash = 0) {
   if (P.glitch && Math.sin(t * 23) > 0.6) sw += R(x - w / 2, cy - 30 + Math.sin(t * 50) * 60, w, 18, 0, { fill: '#00F0FF', opacity: 0.6 });
   o += S.g(sw, null, { 'clip-path': `url(#${id})` }) + S.path(arch(w, h), ln(6));
   if (flash) o += S.path(arch(w, h), { fill: '#fff', opacity: flash * 0.6 });
+  if (!P.name) return o;
   // sign
   const sw2 = Math.max(w + 70, P.name.length * 19 + 80), sy = base - h - 120;
   let sign = R(x - sw2 / 2, sy, sw2, 74, 16, ol('#FFFFFF', 6)) + R(x - sw2 / 2 + 6, sy + 6, 62, 62, 12, { fill: col });
@@ -382,7 +383,8 @@ function portal(P, t, flash = 0) {
 function plazaLayers(cam, t, opts = {}) {
   const flash = opts.flash || 0;
   const sky = R(-600, -600, 3120, 2280, 0, { fill: 'url(#skyPlaza)' });
-  const far = sun(1560, 300, 110, t) + cloud(100 + t * 14, 150, 0.9, '#FFF4FF', '#E7D2FF') + cloud(1100 + t * 14, 90, 0.7, '#FFF4FF', '#E7D2FF') + cloud(1800 + t * 14, 220, 0.6, '#FFF4FF', '#E7D2FF');
+  const wrap = (x) => ((((x + 500) % 2900) + 2900) % 2900) - 500;
+  const far = sun(1560, 300, 110, t) + cloud(wrap(100 + t * 14), 150, 0.9, '#FFF4FF', '#E7D2FF') + cloud(wrap(1100 + t * 14), 90, 0.7, '#FFF4FF', '#E7D2FF') + cloud(wrap(1800 + t * 14), 220, 0.6, '#FFF4FF', '#E7D2FF');
   const mid = island(330, 250, 0.45, t, 1) + island(1620, 180, 0.38, t, 2) + skyline(-600, 2600, 600, '#B79BEA', '#EDE2FF', 21) + hills(-600, 2600, 640, '#C9A9F0', '#DBC2FA', 9);
   // bunting
   let bunt = '';
@@ -396,6 +398,10 @@ function plazaLayers(cam, t, opts = {}) {
   floor += S.ellipse(960, 930, 860, 150, ln(22, '#FF8A5B', 0.7)) + S.ellipse(960, 930, 600, 100, ln(14, '#FFC52E', 0.7));
   floor += S.path('M-600 640 L2520 640', ln(5, '#7A6AB0', 0.5));
   let ps = '';
+  if (opts.many) { // a distant crowd of extra portals: "hundreds"
+    const cols = ['#FF5A5A', '#FFB000', '#3BD16F', '#34C3FF', '#B06BFF', '#FF6FB5'];
+    for (let i = 0; i < 18; i++) ps += S.g(portal({ x: -200 + i * 140, base: 640, w: 70, h: 100, col: cols[i % 6], name: '', icon: '' }, t + i), '');
+  }
   for (const P of PORTALS) ps += portal(P, t, flash);
   ps += bush(-40, 720, 0.6, '#2FAE6E') + bush(1960, 720, 0.6, '#2FAE6E');
   return {
@@ -545,4 +551,4 @@ function timerHud(sec, pulse = 0) {
   return S.g(o, `translate(1670 132) scale(${f(s * 0.85)})`);
 }
 
-module.exports = { DEFS, camTf, layer, townLayers, bedroomLayers, bathroomLayers, kitchenLayers, MIRROR, plazaLayers, vaultLayers, vaultHangLayers, beam, vaultLaserFront, timerHud, cloud, sun, car, bird, bush, flowers, PORTALS };
+module.exports = { portal, DEFS, camTf, layer, townLayers, bedroomLayers, bathroomLayers, kitchenLayers, MIRROR, plazaLayers, vaultLayers, vaultHangLayers, beam, vaultLaserFront, timerHud, cloud, sun, car, bird, bush, flowers, PORTALS };

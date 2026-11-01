@@ -13,8 +13,8 @@ const blinkAt = (t, ...cs) => Math.max(0, ...cs.map((c) => 1 - Math.abs(t - c) /
 
 // ---------------------------------------------------------------- lines -> captions / visemes
 // line: [start, end, speaker, text]; *word* marks a highlighted keyword.
-const SPEAKER_COL = { NARRATOR: '#FFFFFF', YOU: '#FFFFFF', NOVA: '#FF8FB0', SYSTEM: '#7CF7FF', MOM: '#FFB3D1', DAD: '#B8F0A0' };
-const HILITE = { NARRATOR: '#FFD21F', YOU: '#FFD21F', NOVA: '#FF5A8A', SYSTEM: '#FFFFFF', MOM: '#FF5A8A', DAD: '#FFD21F' };
+const SPEAKER_COL = { NARRATOR: '#FFFFFF', YOU: '#FFFFFF', NOVA: '#FF8FB0', SYSTEM: '#7CF7FF', MOM: '#FFB3D1', DAD: '#B8F0A0', BANANA: '#FFF3A0', MONSTER: '#D9B8FF', SPEEDY: '#B8F0A0', EGGLORD: '#9CC0FF' };
+const HILITE = { NARRATOR: '#FFD21F', YOU: '#FFD21F', NOVA: '#FF5A8A', SYSTEM: '#FFFFFF', MOM: '#FF5A8A', DAD: '#FFD21F', BANANA: '#FFD21F', MONSTER: '#FF5A8A', SPEEDY: '#FFD21F', EGGLORD: '#FF5A5A' };
 
 function words(text) {
   const out = []; let hi = false;

@@ -62,3 +62,35 @@ function chatBubble(text, x, y, { s = 1, pop = 1, size = 54, color = '#151515' }
 }
 
 module.exports = { chicken, chatBubble };
+
+// ---- extra pets for the grind montage
+const S2 = require('./svg');
+function toastDog({ x = 0, y = 0, s = 1, t = 0, wag = 1 } = {}) {
+  const ol2 = (fill, w = 6) => ({ fill, stroke: '#151515', 'stroke-width': w, 'stroke-linejoin': 'round' });
+  let o = S2.ellipse(0, 4, 110, 14, { fill: 'rgba(0,0,0,0.16)' });
+  for (const lx of [-70, -30, 30, 70]) o += S2.rect(lx - 12, -60, 24, 62, 6, ol2('#D99A4E', 5));
+  o += S2.g(S2.rect(-10, -16, 20, 70, 8, ol2('#D99A4E', 5)), `translate(-110 -120) rotate(${-40 + 20 * Math.sin(t * 14 * wag)})`);
+  o += S2.rect(-120, -170, 240, 120, 30, ol2('#E8B26A', 7)) + S2.rect(-104, -156, 208, 92, 20, { fill: '#F5D49A' });
+  o += S2.rect(50, -270, 140, 130, 34, ol2('#E8B26A', 7)) + S2.rect(64, -256, 112, 102, 24, { fill: '#F5D49A' });
+  o += S2.rect(40, -290, 40, 60, 14, ol2('#C98B48', 5)) + S2.rect(160, -290, 40, 60, 14, ol2('#C98B48', 5));
+  o += S2.circle(100, -214, 9, { fill: '#151515' }) + S2.circle(150, -214, 9, { fill: '#151515' }) + S2.ellipse(176, -186, 12, 9, { fill: '#151515' }) + S2.path('M110 -176 Q125 -164 140 -176', { fill: 'none', stroke: '#151515', 'stroke-width': 5, 'stroke-linecap': 'round' });
+  o += S2.path('M110 -168 q8 22 16 0', { fill: '#FF6F8A', stroke: '#151515', 'stroke-width': 4 });
+  return S2.g(o, `translate(${x} ${y}) scale(${s})`);
+}
+function floatingEye({ x = 0, y = 0, s = 1, t = 0, look = [0, 0] } = {}) {
+  const bob = Math.sin(t * 2) * 14;
+  let o = S2.ellipse(0, 200, 70, 12, { fill: 'rgba(0,0,0,0.12)' });
+  o += S2.circle(0, bob, 110, { fill: '#FFFFFF', stroke: '#151515', 'stroke-width': 8 });
+  o += S2.path(`M-90 ${bob - 30} q20 10 30 0 M80 ${bob + 40} q-14 -6 -24 6`, { fill: 'none', stroke: '#FF5A6A', 'stroke-width': 4 });
+  o += S2.circle(look[0] * 40, bob + look[1] * 30, 52, { fill: '#8A4FD8', stroke: '#151515', 'stroke-width': 6 }) + S2.circle(look[0] * 46, bob + look[1] * 34, 26, { fill: '#151515' }) + S2.circle(look[0] * 46 - 12, bob + look[1] * 34 - 12, 9, { fill: '#FFFFFF' });
+  return S2.g(o, `translate(${x} ${y}) scale(${s})`);
+}
+function chickenShades(opts = {}) {
+  const c = chicken(opts);
+  const sx = opts.x || 0, sy = opts.y || 0, s = opts.s || 1;
+  const shades = S2.path('M-70 -400 L70 -400', { stroke: '#151515', 'stroke-width': 8 }) + S2.rect(-74, -406, 64, 34, 10, { fill: '#151515' }) + S2.rect(10, -406, 64, 34, 10, { fill: '#151515' }) + S2.rect(-64, -400, 22, 8, 3, { fill: '#FFFFFF', opacity: 0.6 });
+  return c + S2.g(shades, `translate(${sx} ${sy}) scale(${s})`);
+}
+module.exports.toastDog = toastDog;
+module.exports.floatingEye = floatingEye;
+module.exports.chickenShades = chickenShades;

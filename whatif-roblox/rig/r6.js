@@ -364,6 +364,11 @@ function frontHair(style, t, brows, shade) {
 function faceLayer(style, fr, t, shade) {
   const { feat, at, dir, fx } = hairMap(t);
   let o = '';
+  if ((fr.fx || []).some((x) => (typeof x === 'string' ? x : x.type) === 'mask')) { // thief mask behind the eyes
+    const a = feat([-150, -790]), b = feat([150, -790]);
+    o += S.path(`M${f(a[0])} ${f(a[1])} L${f(b[0])} ${f(b[1])} L${f(b[0])} ${f(b[1] + 150)} L${f(a[0])} ${f(a[1] + 150)} Z`, { fill: '#1B1B21' });
+    o += S.path(`M${f(b[0])} ${f(b[1] + 40)} q60 10 90 60 M${f(b[0])} ${f(b[1] + 80)} q50 30 70 90`, { fill: 'none', stroke: '#1B1B21', 'stroke-width': 22, 'stroke-linecap': 'round' });
+  }
   {
     // eyes
     const blink = fr.blink || 0;
