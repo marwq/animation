@@ -22,11 +22,11 @@ VIDEO_LEN = 771.0
 VO_TIMING = os.path.join(ROOT, 'scenes', 'vo_timing.json')
 PLACEMENT = os.path.join(ROOT, 'voice', 'placement.json')
 VO_TAKES = os.path.join(OUTD, 'vo_takes')
-VO_LUFS = -16.0          # voice level inside the mix (before the final loudness normalisation)
+VO_LUFS = -10.0          # voice level inside the mix (before the final loudness normalisation): +6 dB over v1
 
 AMB_REF_DB = -22.0      # ambience gain_db 0 -> this RMS level
 MUSIC_BUS_DB = 2.0
-SFX_BUS_DB = 0.0
+SFX_BUS_DB = 2.5
 AMB_BUS_DB = 0.0
 
 _cache = {}
@@ -235,6 +235,22 @@ def duck(music_bus, key, depth_db=-9, thresh_db=-34, att=0.08, rel=0.45):
     return music_bus * gain[:len(music_bus), None]
 
 
+def compress(x, thresh_db=-30.0, ratio=2.6, att=0.006, rel=0.18):
+    """feed-forward RMS compressor (evens out quiet words vs shouts)"""
+    m = mono(x)
+    w = int(0.01 * SR)
+    lvl = 10 * np.log10(np.convolve(m ** 2, np.ones(w) / w, 'same') + 1e-12)
+    gr = np.maximum(0.0, lvl - thresh_db) * (1 - 1 / ratio)
+    a, r_ = np.exp(-64 / (att * SR)), np.exp(-64 / (rel * SR))
+    g = np.empty_like(gr)
+    s_ = 0.0
+    for i in range(0, len(gr), 64):
+        tgt = gr[i:i + 64].max()
+        s_ = tgt + (s_ - tgt) * (a if tgt > s_ else r_)
+        g[i:i + 64] = s_
+    return x * db(-g)[:, None] if x.ndim == 2 else x * db(-g)
+
+
 def limiter(x, ceiling_db=-1.0, look=0.004, rel=0.08):
     c = db(ceiling_db)
     pk = ndimage.maximum_filter1d(np.abs(x).max(1), int(2 * look * SR) + 1)
@@ -346,6 +362,8 @@ def vo_track(n, a0, W):
         tone = np.sin(2 * np.pi * 1000 * np.arange(L) / SR) * max(lvl * 1.2, 0.05)
         buf[i0:i1] = fade(tone.astype(np.float32), 0.004, 0.006)
     vo = hp(buf[:n], 70)
+    vo = compress(vo)
+    vo = peq(vo, 3200, 2.5, 0.8)          # a little presence so the voice cuts through
     return st(vo), bleeps
 
 
