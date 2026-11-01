@@ -8,8 +8,8 @@
 же, музыка — мелодия из звуков нотных блоков (арфа, бас, колокольчик) с эхом,
 своя, поэтому без претензий за чужую музыку на YouTube.
 
-Делает два файла: в той же ориентации, что исходник, и вертикальный 1080×1920
-(исходник лежит на боку: небо слева). Расстановка звуков для каждого видео — свой
+Делает файл в той же ориентации, что исходник, а если исходник лежит на боку
+(шире, чем выше), то ещё и вертикальный 1080×1920. Расстановка звуков для каждого видео — свой
 файл sound/cues/<имя видео>.json (см. load_cues): время в секундах, громкость в дБ.
 """
 import json
@@ -36,7 +36,9 @@ def load_cues(path):
            rise — свист взлёта, sad — грустный тромбон);
     music_db — громкость музыки, music_end — когда она стихает,
     duck — где её прибрать под важные звуки: [начало, конец, доля];
-    transpose — сдвиг мелодии в полутонах, чтобы у роликов она была разной."""
+    transpose — сдвиг мелодии в полутонах, чтобы у роликов она была разной;
+    mood — "spooky": та же мелодия в миноре, для хэллоуина;
+    music_off — где музыку убрать совсем и потом вернуть: [[начало, конец], …]."""
     d = json.load(open(path, encoding='utf-8'))
     cues = []
     for c in d['cues']:
@@ -44,7 +46,8 @@ def load_cues(path):
         length = next((x for x in rest if not isinstance(x, str)), None)
         cues.append((t, name, db, k, pan, length))
     return {'cues': cues, 'music_db': d.get('music_db', -28), 'music_end': d['music_end'],
-            'duck': d.get('duck', []), 'transpose': d.get('transpose', 0)}
+            'duck': d.get('duck', []), 'transpose': d.get('transpose', 0),
+            'mood': d.get('mood', 'calm'), 'music_off': d.get('music_off', [])}
 
 
 # ------------------------------------------------------------------ звуки Minecraft
@@ -157,17 +160,25 @@ def reverb(x, seconds=2.4, wet=0.45):
     return out + y * wet
 
 
-def music(length, end, transpose=0):
-    """Спокойная мелодия на нотных блоках: арпеджио арфы, бас, колокольчик сверху."""
+MOODS = {   # аккорды (бас, ноты арпеджио) и мелодия колокольчика: доля → MIDI
+    'calm': ([(53, [65, 69, 72, 76]), (48, [64, 67, 72, 76]), (45, [64, 69, 72, 76]),
+              (43, [62, 67, 71, 74]), (53, [65, 69, 72, 77])],                  # F C Am G F
+             {0: 81, 3: 79, 4: 76, 6: 77, 8: 76, 11: 74, 12: 72, 14: 74, 16: 77, 19: 76}),
+    'spooky': ([(50, [62, 65, 69, 74]), (46, [62, 65, 70, 74]), (43, [62, 67, 70, 74]),
+                (45, [61, 64, 69, 73]), (50, [62, 65, 69, 74])],                # Dm B♭ Gm A Dm
+               {0: 81, 3: 77, 4: 76, 6: 74, 8: 77, 11: 74, 12: 73, 14: 76, 16: 74, 19: 69}),
+}
+
+
+def music(length, end, transpose=0, mood='calm'):
+    """Тихая мелодия на нотных блоках: арпеджио арфы, бас, колокольчик сверху."""
     harp, bass, bell = load('note/harp'), load('note/bass'), load('note/bell')
     note = lambda base, f: speed(base, f / base_hz[id(base)])
     base_hz = {id(harp): 369.99, id(bass): 92.50, id(bell): 1479.98}   # F#4, F#2, F#6
     hz = lambda n: 440 * 2 ** ((n + transpose - 69) / 12)              # MIDI → Гц
     beat = 60 / 84
-    chords = [(53, [65, 69, 72, 76]), (48, [64, 67, 72, 76]), (45, [64, 69, 72, 76]),
-              (43, [62, 67, 71, 74]), (53, [65, 69, 72, 77])]          # F C Am G F
+    chords, melody = MOODS[mood]
     pattern = [0, 1, 2, 3, 2, 1, 2, 3]
-    melody = {0: 81, 3: 79, 4: 76, 6: 77, 8: 76, 11: 74, 12: 72, 14: 74, 16: 77, 19: 76}
     out = np.zeros((int(length * RATE) + RATE * 3, 2))
 
     def put(t, a, g):
@@ -201,9 +212,11 @@ def mix(length, plan):
         out[i:i + len(a)] += a * [gl, gr]
 
     end = plan['music_end']
-    m = music(length, end, plan['transpose'])[:len(out)]
+    m = music(length, end, plan['transpose'], plan['mood'])[:len(out)]
     t = np.arange(len(m)) / RATE
     g = np.clip(t / 0.6, 0, 1) * np.clip((end - t) / 0.35, 0, 1)
+    for a, b in plan['music_off']:                # пауза в музыке: стихает и возвращается
+        g *= 1 - np.clip(np.minimum(t - a + 0.3, b - t) / 0.3, 0, 1)
     for a, b, k in plan['duck']:                  # мягко прибрать музыку под важные звуки
         inside = np.clip(np.minimum(t - a + 0.15, b + 0.15 - t) / 0.15, 0, 1)
         g *= 1 - (1 - k) * inside
@@ -224,12 +237,18 @@ def main(a):
     plan = load_cues(cues)
     length = float(subprocess.run(['ffprobe', '-v', 'error', '-show_entries', 'format=duration',
                                    '-of', 'csv=p=0', src], capture_output=True, text=True).stdout)
+    w, h = (int(v) for v in subprocess.run(
+        ['ffprobe', '-v', 'error', '-select_streams', 'v:0', '-show_entries', 'stream=width,height',
+         '-of', 'csv=p=0', src], capture_output=True, text=True).stdout.strip().split(','))
     fetch(plan['cues'])
     audio = mix(length, plan)
     os.makedirs(os.path.dirname(out), exist_ok=True)
     wav = out[:-4] + '.f32'
     audio.astype(np.float32).tofile(wav)
-    for path, vf in ((out, None), (out[:-4] + '_vertical.mp4', 'transpose=1')):
+    versions = [(out, None)]
+    if w > h:                                     # лежит на боку — ещё и вертикальная копия
+        versions.append((out[:-4] + '_vertical.mp4', 'transpose=1'))
+    for path, vf in versions:
         subprocess.run(['ffmpeg', '-v', 'error', '-y', '-i', src, '-f', 'f32le', '-ar', str(RATE),
                         '-ac', '2', '-i', wav, '-map', '0:v', '-map', '1:a']
                        + (['-vf', vf] if vf else [])

@@ -180,8 +180,9 @@ Mojang в `sound/minecraft/` — эта папка в `.gitignore`. «Вуш», 
 тихая мелодия на звуках нотных блоков (арфа, бас, колокольчик) с эхом, без чужих треков.
 
 Своя озвучка лежит в `sound/voice/` и ставится в расстановку как `voice/<имя>`.
-`no.wav` — «No!» дедушки: синтезатор речи [Piper](https://github.com/rhasspy/piper),
-голос `en_US-joe-medium` (датасет CC0), тишина по краям обрезана:
+`no.wav` — «No!» дедушки, `trick_or_treat.wav` и `trick_or_treat2.wav` — «Trick or treat!»:
+синтезатор речи [Piper](https://github.com/rhasspy/piper), голоса `en_US-joe-medium` и
+`en_US-bryce-medium` (датасеты CC0 и public domain), тишина по краям обрезана:
 
 ```bash
 echo "No!" | python3 -m piper -m en_US-joe-medium.onnx -f no.wav
@@ -193,3 +194,4 @@ echo "No!" | python3 -m piper -m en_US-joe-medium.onnx -f no.wav
 | `videos/f1f435b4-01_1_sound_vertical.mp4` | то же, повёрнуто в вертикаль 1080×1920 для Shorts |
 | `videos/62e709a6-03_sound.mp4`, `…_vertical.mp4` | второй мультик: редстоун, колдовство, дедушка «No! NO!», посох, скример |
 | `videos/5b7e7fd2-04_sound.mp4`, `…_vertical.mp4` | третий мультик: гора редстоуна, дедушка всё забирает, погоня в дверь |
+| `videos/864b34df-halloween_sound.mp4` | хэллоуин: «Trick or treat!», посох, скример, раздача редстоуна (исходник уже вертикальный — один файл) |
