@@ -1,0 +1,17 @@
+Eleven v4 · Text to Dialogue · language: en · stability 0.5 · MP3 44.1 kHz 128 kbps
+
+Готово: все 16 дублей, take01–take14 (~13:40 звука)
+  take01–take11a — первый аккаунт ElevenLabs, take11b–take14 — второй (голоса те же)
+
+Рядом с каждым takeXX.mp3 лежит takeXX.txt — тайминг каждой реплики внутри дубля.
+
+CAST (готовые голоса ElevenLabs)
+  NARRATOR / YOU  Liam    — Energetic, Social Media Creator
+  NOVA            Sarah   — Mature, Reassuring, Confident
+  SYSTEM          Brian   — Deep, Resonant and Comforting
+  MOM             Bella   — Professional, Bright, Warm
+  DAD             Roger   — Laid-Back, Casual, Resonant
+  BANANA          Charlie — Deep, Confident, Energetic
+  MONSTER         Callum  — Husky Trickster
+  SPEEDY          Jessica — Playful, Bright, Warm
+  EGGLORD         Will    — Relaxed Optimist

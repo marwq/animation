@@ -1,0 +1,12 @@
+TAKE 02 · SC 02 ГЛЮЧЕННОЕ ЯЙЦО — ночь · ~0:22–1:04 · 10 lines · 742 chars
+
+0:00.00 - 0:04.88  NARRATOR: [softly, mysterious] It's two A.M. You should be asleep. [pause] You are not asleep.
+0:04.88 - 0:09.80  NARRATOR: [playful] You're playing Steal an Egg. Just one more round. [pause] That was forty rounds ago.
+0:09.80 - 0:14.20  NARRATOR: [curious] Then, rolling down the egg belt... something you've never seen before.
+0:14.20 - 0:18.90  SYSTEM: [glitchy, robotic] Secret Egg. Price: question mark. Question mark. Question mark.
+0:18.90 - 0:20.88  YOU: [whispers, amazed] Ohhh... what is THAT?
+0:20.88 - 0:25.20  NARRATOR: You tap it. [pause] It's free. [pause] Nothing good is ever free.
+0:25.20 - 0:28.40  SYSTEM: [robotic] Before hatching, please enter your username.
+0:28.40 - 0:31.44  YOU: [sleepy, mumbling] Mm... username... uhh... [yawns] ...you?
+0:31.44 - 0:36.40  NARRATOR: [deadpan] You typed "YOU." In all caps. [pause] Remember that. It's important.
+0:36.40 - 0:42.32  NARRATOR: [excited, building] The egg cracks. Pixels pour out of the screen... and EVERYTHING goes— [shouts] BLOCKY!

@@ -1,0 +1,82 @@
+[
+ {
+  "voice_id": "TX3LPaxmHKxFdv7VOQHJ",
+  "start_time_seconds": 0,
+  "end_time_seconds": 4.881,
+  "character_start_index": 0,
+  "character_end_index": 84,
+  "dialogue_input_index": 0
+ },
+ {
+  "voice_id": "TX3LPaxmHKxFdv7VOQHJ",
+  "start_time_seconds": 4.881,
+  "end_time_seconds": 9.801,
+  "character_start_index": 84,
+  "character_end_index": 178,
+  "dialogue_input_index": 1
+ },
+ {
+  "voice_id": "TX3LPaxmHKxFdv7VOQHJ",
+  "start_time_seconds": 9.801,
+  "end_time_seconds": 14.201000000000002,
+  "character_start_index": 178,
+  "character_end_index": 258,
+  "dialogue_input_index": 2
+ },
+ {
+  "voice_id": "nPczCjzI2devNBz1zQrb",
+  "start_time_seconds": 14.201000000000002,
+  "end_time_seconds": 18.897000000000002,
+  "character_start_index": 258,
+  "character_end_index": 340,
+  "dialogue_input_index": 3
+ },
+ {
+  "voice_id": "TX3LPaxmHKxFdv7VOQHJ",
+  "start_time_seconds": 18.897000000000002,
+  "end_time_seconds": 20.881,
+  "character_start_index": 340,
+  "character_end_index": 380,
+  "dialogue_input_index": 4
+ },
+ {
+  "voice_id": "TX3LPaxmHKxFdv7VOQHJ",
+  "start_time_seconds": 20.881,
+  "end_time_seconds": 25.201,
+  "character_start_index": 380,
+  "character_end_index": 445,
+  "dialogue_input_index": 5
+ },
+ {
+  "voice_id": "nPczCjzI2devNBz1zQrb",
+  "start_time_seconds": 25.201,
+  "end_time_seconds": 28.401,
+  "character_start_index": 445,
+  "character_end_index": 499,
+  "dialogue_input_index": 6
+ },
+ {
+  "voice_id": "TX3LPaxmHKxFdv7VOQHJ",
+  "start_time_seconds": 28.401,
+  "end_time_seconds": 31.441,
+  "character_start_index": 499,
+  "character_end_index": 558,
+  "dialogue_input_index": 7
+ },
+ {
+  "voice_id": "TX3LPaxmHKxFdv7VOQHJ",
+  "start_time_seconds": 31.441,
+  "end_time_seconds": 36.401,
+  "character_start_index": 558,
+  "character_end_index": 636,
+  "dialogue_input_index": 8
+ },
+ {
+  "voice_id": "TX3LPaxmHKxFdv7VOQHJ",
+  "start_time_seconds": 36.401,
+  "end_time_seconds": 42.321,
+  "character_start_index": 636,
+  "character_end_index": 742,
+  "dialogue_input_index": 9
+ }
+]

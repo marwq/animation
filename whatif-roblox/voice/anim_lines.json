@@ -1,0 +1,2843 @@
+[
+ {
+  "mod": "intro",
+  "idx": 0,
+  "a": 0.3,
+  "b": 0.72,
+  "sp": "NARRATOR",
+  "text": "WHAT IF",
+  "cap": true
+ },
+ {
+  "mod": "intro",
+  "idx": 1,
+  "a": 0.72,
+  "b": 0.98,
+  "sp": "NARRATOR",
+  "text": "YOU",
+  "cap": true
+ },
+ {
+  "mod": "intro",
+  "idx": 2,
+  "a": 0.98,
+  "b": 1.72,
+  "sp": "NARRATOR",
+  "text": "WOKE UP...",
+  "cap": true
+ },
+ {
+  "mod": "intro",
+  "idx": 3,
+  "a": 1.98,
+  "b": 2.3,
+  "sp": "NARRATOR",
+  "text": "AND THE",
+  "cap": true
+ },
+ {
+  "mod": "intro",
+  "idx": 4,
+  "a": 2.3,
+  "b": 2.95,
+  "sp": "NARRATOR",
+  "text": "WHOLE WORLD",
+  "cap": true
+ },
+ {
+  "mod": "intro",
+  "idx": 5,
+  "a": 2.95,
+  "b": 3.7,
+  "sp": "NARRATOR",
+  "text": "WAS ROBLOX?!",
+  "cap": true
+ },
+ {
+  "mod": "intro",
+  "idx": 6,
+  "a": 3.76,
+  "b": 4.5,
+  "sp": "NARRATOR",
+  "text": "EVERY STREET.",
+  "cap": true
+ },
+ {
+  "mod": "intro",
+  "idx": 7,
+  "a": 4.56,
+  "b": 5.3,
+  "sp": "NARRATOR",
+  "text": "EVERY PERSON.",
+  "cap": true
+ },
+ {
+  "mod": "intro",
+  "idx": 8,
+  "a": 5.36,
+  "b": 5.86,
+  "sp": "NARRATOR",
+  "text": "EVERY...",
+  "cap": true
+ },
+ {
+  "mod": "intro",
+  "idx": 9,
+  "a": 5.9,
+  "b": 6.48,
+  "sp": "NARRATOR",
+  "text": "CHICKEN.",
+  "cap": true
+ },
+ {
+  "mod": "intro",
+  "idx": 10,
+  "a": 6.56,
+  "b": 7.24,
+  "sp": "NARRATOR",
+  "text": "AND TO SURVIVE,",
+  "cap": true
+ },
+ {
+  "mod": "intro",
+  "idx": 11,
+  "a": 7.24,
+  "b": 7.6,
+  "sp": "NARRATOR",
+  "text": "EVERYONE",
+  "cap": true
+ },
+ {
+  "mod": "intro",
+  "idx": 12,
+  "a": 7.6,
+  "b": 8.02,
+  "sp": "NARRATOR",
+  "text": "HAD TO PICK",
+  "cap": true
+ },
+ {
+  "mod": "intro",
+  "idx": 13,
+  "a": 8.02,
+  "b": 8.6,
+  "sp": "NARRATOR",
+  "text": "ONE GAME.",
+  "cap": true
+ },
+ {
+  "mod": "intro",
+  "idx": 14,
+  "a": 8.74,
+  "b": 9.18,
+  "sp": "NARRATOR",
+  "text": "YOU PICKED",
+  "cap": true
+ },
+ {
+  "mod": "intro",
+  "idx": 15,
+  "a": 9.18,
+  "b": 9.6,
+  "sp": "NARRATOR",
+  "text": "THE HARDEST",
+  "cap": true
+ },
+ {
+  "mod": "intro",
+  "idx": 16,
+  "a": 9.6,
+  "b": 10.1,
+  "sp": "NARRATOR",
+  "text": "ONE.",
+  "cap": true
+ },
+ {
+  "mod": "sc01b",
+  "idx": 0,
+  "a": 11.85,
+  "b": 13.25,
+  "sp": "NOVA",
+  "text": "You coming or what, *noob?!*"
+ },
+ {
+  "mod": "sc01b",
+  "idx": 1,
+  "a": 13.45,
+  "b": 14.35,
+  "sp": "YOU",
+  "text": "I'M COMING!"
+ },
+ {
+  "mod": "sc01b",
+  "idx": 2,
+  "a": 14.4,
+  "b": 15.2,
+  "sp": "YOU",
+  "text": "I'm totally fine, I'm—"
+ },
+ {
+  "mod": "sc01b",
+  "idx": 3,
+  "a": 15.25,
+  "b": 16.1,
+  "sp": "YOU",
+  "text": "*AAAAAH!*"
+ },
+ {
+  "mod": "sc01b",
+  "idx": 4,
+  "a": 17,
+  "b": 19,
+  "sp": "NARRATOR",
+  "text": "Okay. Okay. Let me back up."
+ },
+ {
+  "mod": "sc02",
+  "idx": 0,
+  "a": 20.2,
+  "b": 21.2,
+  "sp": "NARRATOR",
+  "text": "It's *two A.M.*"
+ },
+ {
+  "mod": "sc02",
+  "idx": 1,
+  "a": 21.3,
+  "b": 22.6,
+  "sp": "NARRATOR",
+  "text": "You should be asleep."
+ },
+ {
+  "mod": "sc02",
+  "idx": 2,
+  "a": 23.4,
+  "b": 24.9,
+  "sp": "NARRATOR",
+  "text": "You are *NOT* asleep."
+ },
+ {
+  "mod": "sc02",
+  "idx": 3,
+  "a": 25.1,
+  "b": 26.6,
+  "sp": "NARRATOR",
+  "text": "You're playing *Steal an Egg.*"
+ },
+ {
+  "mod": "sc02",
+  "idx": 4,
+  "a": 26.7,
+  "b": 28,
+  "sp": "NARRATOR",
+  "text": "Just one more round."
+ },
+ {
+  "mod": "sc02",
+  "idx": 5,
+  "a": 28.6,
+  "b": 30.3,
+  "sp": "NARRATOR",
+  "text": "That was *forty* rounds ago."
+ },
+ {
+  "mod": "sc02",
+  "idx": 6,
+  "a": 30.5,
+  "b": 32.4,
+  "sp": "NARRATOR",
+  "text": "Then, rolling down the egg belt..."
+ },
+ {
+  "mod": "sc02",
+  "idx": 7,
+  "a": 32.6,
+  "b": 34.8,
+  "sp": "NARRATOR",
+  "text": "something you've *never* seen before."
+ },
+ {
+  "mod": "sc02",
+  "idx": 8,
+  "a": 35.1,
+  "b": 36.3,
+  "sp": "SYSTEM",
+  "text": "Secret Egg."
+ },
+ {
+  "mod": "sc02",
+  "idx": 9,
+  "a": 36.4,
+  "b": 36.9,
+  "sp": "SYSTEM",
+  "text": "Price:"
+ },
+ {
+  "mod": "sc02",
+  "idx": 10,
+  "a": 36.95,
+  "b": 37.6,
+  "sp": "SYSTEM",
+  "text": "Question mark."
+ },
+ {
+  "mod": "sc02",
+  "idx": 11,
+  "a": 37.65,
+  "b": 38.15,
+  "sp": "SYSTEM",
+  "text": "Question mark."
+ },
+ {
+  "mod": "sc02",
+  "idx": 12,
+  "a": 38.2,
+  "b": 38.7,
+  "sp": "SYSTEM",
+  "text": "Question mark."
+ },
+ {
+  "mod": "sc02",
+  "idx": 13,
+  "a": 39,
+  "b": 41,
+  "sp": "YOU",
+  "text": "Ohhh... what is *THAT?*"
+ },
+ {
+  "mod": "sc02",
+  "idx": 14,
+  "a": 41.3,
+  "b": 42.1,
+  "sp": "NARRATOR",
+  "text": "You tap it."
+ },
+ {
+  "mod": "sc02",
+  "idx": 15,
+  "a": 42.5,
+  "b": 43.3,
+  "sp": "NARRATOR",
+  "text": "It's *free.*"
+ },
+ {
+  "mod": "sc02",
+  "idx": 16,
+  "a": 43.6,
+  "b": 45.4,
+  "sp": "NARRATOR",
+  "text": "Nothing good is ever free."
+ },
+ {
+  "mod": "sc02",
+  "idx": 17,
+  "a": 45.7,
+  "b": 48.3,
+  "sp": "SYSTEM",
+  "text": "Before hatching, please enter your username."
+ },
+ {
+  "mod": "sc02",
+  "idx": 18,
+  "a": 48.6,
+  "b": 49.3,
+  "sp": "YOU",
+  "text": "Mm..."
+ },
+ {
+  "mod": "sc02",
+  "idx": 19,
+  "a": 49.4,
+  "b": 50.2,
+  "sp": "YOU",
+  "text": "username... uhh..."
+ },
+ {
+  "mod": "sc02",
+  "idx": 20,
+  "a": 51.1,
+  "b": 51.8,
+  "sp": "YOU",
+  "text": "...you?"
+ },
+ {
+  "mod": "sc02",
+  "idx": 21,
+  "a": 53.3,
+  "b": 54.4,
+  "sp": "NARRATOR",
+  "text": "You typed *\"YOU.\"*"
+ },
+ {
+  "mod": "sc02",
+  "idx": 22,
+  "a": 54.5,
+  "b": 55.3,
+  "sp": "NARRATOR",
+  "text": "In all caps."
+ },
+ {
+  "mod": "sc02",
+  "idx": 23,
+  "a": 55.7,
+  "b": 56.4,
+  "sp": "NARRATOR",
+  "text": "Remember that."
+ },
+ {
+  "mod": "sc02",
+  "idx": 24,
+  "a": 56.45,
+  "b": 57,
+  "sp": "NARRATOR",
+  "text": "It's *important.*"
+ },
+ {
+  "mod": "sc02",
+  "idx": 25,
+  "a": 57.1,
+  "b": 57.9,
+  "sp": "NARRATOR",
+  "text": "The egg cracks."
+ },
+ {
+  "mod": "sc02",
+  "idx": 26,
+  "a": 58,
+  "b": 59.3,
+  "sp": "NARRATOR",
+  "text": "Pixels pour out of the screen..."
+ },
+ {
+  "mod": "sc02",
+  "idx": 27,
+  "a": 59.3,
+  "b": 60,
+  "sp": "NARRATOR",
+  "text": "and *everything* goes—"
+ },
+ {
+  "mod": "sc02",
+  "idx": 28,
+  "a": 60,
+  "b": 60.9,
+  "sp": "NARRATOR",
+  "text": "*BLOCKY!*"
+ },
+ {
+  "mod": "sc03",
+  "idx": 0,
+  "a": 61.5,
+  "b": 62.3,
+  "sp": "NARRATOR",
+  "text": "*Morning!*"
+ },
+ {
+  "mod": "sc03",
+  "idx": 1,
+  "a": 62.55,
+  "b": 64.1,
+  "sp": "NARRATOR",
+  "text": "Your alarm clock doesn't ring."
+ },
+ {
+  "mod": "sc03",
+  "idx": 2,
+  "a": 64.5,
+  "b": 65.6,
+  "sp": "NARRATOR",
+  "text": "It's... *loading.*"
+ },
+ {
+  "mod": "sc03",
+  "idx": 3,
+  "a": 65.8,
+  "b": 67.4,
+  "sp": "SYSTEM",
+  "text": "Loading... twelve percent."
+ },
+ {
+  "mod": "sc03",
+  "idx": 4,
+  "a": 69.5,
+  "b": 71,
+  "sp": "NARRATOR",
+  "text": "Then you look at your hands."
+ },
+ {
+  "mod": "sc03",
+  "idx": 5,
+  "a": 71.4,
+  "b": 73.3,
+  "sp": "NARRATOR",
+  "text": "Blocks. Shiny plastic *blocks.*"
+ },
+ {
+  "mod": "sc03",
+  "idx": 6,
+  "a": 73.6,
+  "b": 74.4,
+  "sp": "YOU",
+  "text": "*My hands!*"
+ },
+ {
+  "mod": "sc03",
+  "idx": 7,
+  "a": 74.5,
+  "b": 76.1,
+  "sp": "YOU",
+  "text": "Where are my *FINGERS?!*"
+ },
+ {
+  "mod": "sc03",
+  "idx": 8,
+  "a": 76.4,
+  "b": 77.6,
+  "sp": "NARRATOR",
+  "text": "You run to the mirror."
+ },
+ {
+  "mod": "sc03",
+  "idx": 9,
+  "a": 78,
+  "b": 79.3,
+  "sp": "NARRATOR",
+  "text": "Your head is a *cube.*"
+ },
+ {
+  "mod": "sc03",
+  "idx": 10,
+  "a": 79.4,
+  "b": 82.2,
+  "sp": "NARRATOR",
+  "text": "And your hair is one solid piece... of *orange plastic.*"
+ },
+ {
+  "mod": "sc03",
+  "idx": 11,
+  "a": 82.5,
+  "b": 83.5,
+  "sp": "NARRATOR",
+  "text": "You grab it."
+ },
+ {
+  "mod": "sc03",
+  "idx": 12,
+  "a": 83.8,
+  "b": 85.6,
+  "sp": "NARRATOR",
+  "text": "And it just... comes off."
+ },
+ {
+  "mod": "sc03",
+  "idx": 13,
+  "a": 86,
+  "b": 87,
+  "sp": "YOU",
+  "text": "I'm *BALD!*"
+ },
+ {
+  "mod": "sc03",
+  "idx": 14,
+  "a": 87.4,
+  "b": 88.4,
+  "sp": "YOU",
+  "text": "Okay, okay..."
+ },
+ {
+  "mod": "sc03",
+  "idx": 15,
+  "a": 88.5,
+  "b": 89.6,
+  "sp": "YOU",
+  "text": "it clicks back on."
+ },
+ {
+  "mod": "sc03",
+  "idx": 16,
+  "a": 89.7,
+  "b": 91,
+  "sp": "YOU",
+  "text": "Hair is an accessory now."
+ },
+ {
+  "mod": "sc03",
+  "idx": 17,
+  "a": 91.1,
+  "b": 92.5,
+  "sp": "YOU",
+  "text": "That's fine. That's *FINE.*"
+ },
+ {
+  "mod": "sc03",
+  "idx": 18,
+  "a": 92.7,
+  "b": 95.6,
+  "sp": "NARRATOR",
+  "text": "And floating above your head, in big white letters... *\"YOU.\"*"
+ },
+ {
+  "mod": "sc03",
+  "idx": 19,
+  "a": 95.9,
+  "b": 96.4,
+  "sp": "YOU",
+  "text": "Ugh."
+ },
+ {
+  "mod": "sc03",
+  "idx": 20,
+  "a": 96.6,
+  "b": 97.4,
+  "sp": "YOU",
+  "text": "Two A.M. me..."
+ },
+ {
+  "mod": "sc03",
+  "idx": 21,
+  "a": 97.5,
+  "b": 98.5,
+  "sp": "YOU",
+  "text": "you absolute *noob.*"
+ },
+ {
+  "mod": "sc03",
+  "idx": 22,
+  "a": 98.8,
+  "b": 100.9,
+  "sp": "NARRATOR",
+  "text": "Downstairs, Mom calls you for breakfast."
+ },
+ {
+  "mod": "sc03",
+  "idx": 23,
+  "a": 101.1,
+  "b": 103.3,
+  "sp": "NARRATOR",
+  "text": "But now her words pop up in a *chat bubble.*"
+ },
+ {
+  "mod": "sc03",
+  "idx": 24,
+  "a": 103.5,
+  "b": 105.3,
+  "sp": "MOM",
+  "text": "Breakfast is ready, *#####!*"
+ },
+ {
+  "mod": "sc03",
+  "idx": 25,
+  "a": 105.7,
+  "b": 107.8,
+  "sp": "YOU",
+  "text": "Mom... did you just get *filtered?*"
+ },
+ {
+  "mod": "sc03",
+  "idx": 26,
+  "a": 108.1,
+  "b": 109.6,
+  "sp": "MOM",
+  "text": "I said *#####!*"
+ },
+ {
+  "mod": "sc03",
+  "idx": 27,
+  "a": 110,
+  "b": 112,
+  "sp": "NARRATOR",
+  "text": "Roblox thinks \"honey\" is a bad word."
+ },
+ {
+  "mod": "sc03",
+  "idx": 28,
+  "a": 112.2,
+  "b": 114.9,
+  "sp": "NARRATOR",
+  "text": "Mom's been filtered *eleven times* since sunrise."
+ },
+ {
+  "mod": "sc03",
+  "idx": 29,
+  "a": 115.3,
+  "b": 116.6,
+  "sp": "NARRATOR",
+  "text": "Breakfast is a pancake."
+ },
+ {
+  "mod": "sc03",
+  "idx": 30,
+  "a": 116.8,
+  "b": 117.8,
+  "sp": "NARRATOR",
+  "text": "You don't eat it."
+ },
+ {
+  "mod": "sc03",
+  "idx": 31,
+  "a": 118,
+  "b": 119.3,
+  "sp": "NARRATOR",
+  "text": "You *EQUIP* it."
+ },
+ {
+  "mod": "sc03",
+  "idx": 32,
+  "a": 119.8,
+  "b": 120.6,
+  "sp": "YOU",
+  "text": "Mmm..."
+ },
+ {
+  "mod": "sc03",
+  "idx": 33,
+  "a": 121.3,
+  "b": 123.3,
+  "sp": "YOU",
+  "text": "tastes like a plastic *frisbee.*"
+ },
+ {
+  "mod": "sc04",
+  "idx": 0,
+  "a": 124,
+  "b": 124.6,
+  "sp": "NARRATOR",
+  "text": "And Dad?"
+ },
+ {
+  "mod": "sc04",
+  "idx": 1,
+  "a": 125.1,
+  "b": 127,
+  "sp": "NARRATOR",
+  "text": "Dad never customized his avatar."
+ },
+ {
+  "mod": "sc04",
+  "idx": 2,
+  "a": 127.2,
+  "b": 129.6,
+  "sp": "NARRATOR",
+  "text": "*Yellow* head. *Blue* shirt. *Green* pants."
+ },
+ {
+  "mod": "sc04",
+  "idx": 3,
+  "a": 129.8,
+  "b": 130.9,
+  "sp": "NARRATOR",
+  "text": "The classic *noob.*"
+ },
+ {
+  "mod": "sc04",
+  "idx": 4,
+  "a": 131.2,
+  "b": 133.4,
+  "sp": "DAD",
+  "text": "I'm not a noob. I'm *VINTAGE.*"
+ },
+ {
+  "mod": "sc04",
+  "idx": 5,
+  "a": 133.7,
+  "b": 136.1,
+  "sp": "NARRATOR",
+  "text": "He's been trying to sit on the couch for twenty minutes."
+ },
+ {
+  "mod": "sc04",
+  "idx": 6,
+  "a": 136.2,
+  "b": 137.7,
+  "sp": "NARRATOR",
+  "text": "He keeps sitting *INSIDE* it."
+ },
+ {
+  "mod": "sc04",
+  "idx": 7,
+  "a": 138,
+  "b": 139.3,
+  "sp": "DAD",
+  "text": "I'm comfortable."
+ },
+ {
+  "mod": "sc04",
+  "idx": 8,
+  "a": 139.8,
+  "b": 141.4,
+  "sp": "DAD",
+  "text": "I'm part of the *couch* now."
+ },
+ {
+  "mod": "sc04",
+  "idx": 9,
+  "a": 142,
+  "b": 143.3,
+  "sp": "NARRATOR",
+  "text": "You step outside..."
+ },
+ {
+  "mod": "sc04",
+  "idx": 10,
+  "a": 143.5,
+  "b": 144.3,
+  "sp": "NARRATOR",
+  "text": "*WOW.*"
+ },
+ {
+  "mod": "sc04",
+  "idx": 11,
+  "a": 144.6,
+  "b": 146.8,
+  "sp": "NARRATOR",
+  "text": "The street is a giant gray *baseplate.*"
+ },
+ {
+  "mod": "sc04",
+  "idx": 12,
+  "a": 147,
+  "b": 148.6,
+  "sp": "NARRATOR",
+  "text": "The sun is a perfect *square.*"
+ },
+ {
+  "mod": "sc04",
+  "idx": 13,
+  "a": 148.8,
+  "b": 150.7,
+  "sp": "NARRATOR",
+  "text": "The clouds are... also *squares.*"
+ },
+ {
+  "mod": "sc04",
+  "idx": 14,
+  "a": 150.9,
+  "b": 152.4,
+  "sp": "NARRATOR",
+  "text": "Everything is *squares.*"
+ },
+ {
+  "mod": "sc04",
+  "idx": 15,
+  "a": 152.8,
+  "b": 154.6,
+  "sp": "NARRATOR",
+  "text": "Your neighbor is a seven-foot *banana.*"
+ },
+ {
+  "mod": "sc04",
+  "idx": 16,
+  "a": 155.1,
+  "b": 156.8,
+  "sp": "NARRATOR",
+  "text": "Yesterday, he was a *dentist.*"
+ },
+ {
+  "mod": "sc04",
+  "idx": 17,
+  "a": 157,
+  "b": 159,
+  "sp": "BANANA",
+  "text": "Morning, YOU! *Floss daily!*"
+ },
+ {
+  "mod": "sc04",
+  "idx": 18,
+  "a": 159.3,
+  "b": 160.9,
+  "sp": "NARRATOR",
+  "text": "A kid on a *rainbow jetpack.*"
+ },
+ {
+  "mod": "sc04",
+  "idx": 19,
+  "a": 161,
+  "b": 162.6,
+  "sp": "NARRATOR",
+  "text": "A lady in *thirty-seven* hats."
+ },
+ {
+  "mod": "sc04",
+  "idx": 20,
+  "a": 162.7,
+  "b": 165.4,
+  "sp": "NARRATOR",
+  "text": "And a hot dog who hasn't stopped dancing since *six A.M.*"
+ },
+ {
+  "mod": "sc04",
+  "idx": 21,
+  "a": 165.8,
+  "b": 167.3,
+  "sp": "NARRATOR",
+  "text": "And it's not just your street."
+ },
+ {
+  "mod": "sc04",
+  "idx": 22,
+  "a": 167.4,
+  "b": 168.6,
+  "sp": "NARRATOR",
+  "text": "It's *EVERYWHERE.*"
+ },
+ {
+  "mod": "sc04",
+  "idx": 23,
+  "a": 168.9,
+  "b": 170.3,
+  "sp": "NARRATOR",
+  "text": "The Eiffel Tower? An *obby.*"
+ },
+ {
+  "mod": "sc04",
+  "idx": 24,
+  "a": 170.5,
+  "b": 172.4,
+  "sp": "NARRATOR",
+  "text": "The Great Wall? A *REALLY* long obby."
+ },
+ {
+  "mod": "sc04",
+  "idx": 25,
+  "a": 172.6,
+  "b": 173.6,
+  "sp": "NARRATOR",
+  "text": "The ocean?"
+ },
+ {
+  "mod": "sc04",
+  "idx": 26,
+  "a": 174,
+  "b": 174.9,
+  "sp": "NARRATOR",
+  "text": "A *kill brick.*"
+ },
+ {
+  "mod": "sc04",
+  "idx": 27,
+  "a": 175.3,
+  "b": 177.3,
+  "sp": "NARRATOR",
+  "text": "Eight billion people. One *server.*"
+ },
+ {
+  "mod": "sc04",
+  "idx": 28,
+  "a": 177.8,
+  "b": 179.4,
+  "sp": "NARRATOR",
+  "text": "The ping is... *not great.*"
+ },
+ {
+  "mod": "sc04",
+  "idx": 29,
+  "a": 179.8,
+  "b": 182.4,
+  "sp": "NARRATOR",
+  "text": "Then the sky goes dark... and a *GIANT* message appears."
+ },
+ {
+  "mod": "sc04",
+  "idx": 30,
+  "a": 182.8,
+  "b": 185.6,
+  "sp": "SYSTEM",
+  "text": "ATTENTION, PLAYERS. Welcome to *Roblox Earth.*"
+ },
+ {
+  "mod": "sc04",
+  "idx": 31,
+  "a": 185.9,
+  "b": 188.8,
+  "sp": "SYSTEM",
+  "text": "By sunset, every player must enter *ONE* game."
+ },
+ {
+  "mod": "sc04",
+  "idx": 32,
+  "a": 189,
+  "b": 191.3,
+  "sp": "SYSTEM",
+  "text": "Players without a game... will be *kicked.*"
+ },
+ {
+  "mod": "sc04",
+  "idx": 33,
+  "a": 191.7,
+  "b": 193.3,
+  "sp": "YOU",
+  "text": "Kicked... from *EARTH?!*"
+ },
+ {
+  "mod": "sc04",
+  "idx": 34,
+  "a": 193.7,
+  "b": 194.7,
+  "sp": "SYSTEM",
+  "text": "*Have fun!*"
+ },
+ {
+  "mod": "sc05",
+  "idx": 0,
+  "a": 195.8,
+  "b": 197.9,
+  "sp": "NARRATOR",
+  "text": "And then... the *portals* open."
+ },
+ {
+  "mod": "sc05",
+  "idx": 1,
+  "a": 198.2,
+  "b": 200.8,
+  "sp": "NARRATOR",
+  "text": "Hundreds of glowing doorways, right in the middle of town."
+ },
+ {
+  "mod": "sc05",
+  "idx": 2,
+  "a": 201,
+  "b": 203.2,
+  "sp": "NARRATOR",
+  "text": "Every single one is a *different game.*"
+ },
+ {
+  "mod": "sc05",
+  "idx": 3,
+  "a": 203.5,
+  "b": 204.7,
+  "sp": "NARRATOR",
+  "text": "\"Tower of Pain.\""
+ },
+ {
+  "mod": "sc05",
+  "idx": 4,
+  "a": 204.8,
+  "b": 206,
+  "sp": "NARRATOR",
+  "text": "\"Adopt Me Maybe.\""
+ },
+ {
+  "mod": "sc05",
+  "idx": 5,
+  "a": 206.1,
+  "b": 207.2,
+  "sp": "NARRATOR",
+  "text": "\"Brookhaven't.\""
+ },
+ {
+  "mod": "sc05",
+  "idx": 6,
+  "a": 207.3,
+  "b": 209.3,
+  "sp": "NARRATOR",
+  "text": "\"Natural Disasters... but *REAL.*\""
+ },
+ {
+  "mod": "sc05",
+  "idx": 7,
+  "a": 209.6,
+  "b": 211.2,
+  "sp": "NARRATOR",
+  "text": "And everyone has to *choose.*"
+ },
+ {
+  "mod": "sc05",
+  "idx": 8,
+  "a": 211.6,
+  "b": 213.3,
+  "sp": "NARRATOR",
+  "text": "Mom picks *Brookhaven't.*"
+ },
+ {
+  "mod": "sc05",
+  "idx": 9,
+  "a": 213.4,
+  "b": 216.2,
+  "sp": "NARRATOR",
+  "text": "Instantly, she owns a pink mansion, a pink car..."
+ },
+ {
+  "mod": "sc05",
+  "idx": 10,
+  "a": 216.4,
+  "b": 217.8,
+  "sp": "NARRATOR",
+  "text": "and a pink *horse?*"
+ },
+ {
+  "mod": "sc05",
+  "idx": 11,
+  "a": 218.1,
+  "b": 220.4,
+  "sp": "MOM",
+  "text": "I'm finally living my best life, *#####!*"
+ },
+ {
+  "mod": "sc05",
+  "idx": 12,
+  "a": 220.7,
+  "b": 221.8,
+  "sp": "NARRATOR",
+  "text": "Filtered *again.*"
+ },
+ {
+  "mod": "sc05",
+  "idx": 13,
+  "a": 222.2,
+  "b": 224,
+  "sp": "NARRATOR",
+  "text": "Dad picks *Fishing Simulator.*"
+ },
+ {
+  "mod": "sc05",
+  "idx": 14,
+  "a": 224.2,
+  "b": 226,
+  "sp": "NARRATOR",
+  "text": "He sits on a dock. He doesn't move."
+ },
+ {
+  "mod": "sc05",
+  "idx": 15,
+  "a": 226.6,
+  "b": 228.1,
+  "sp": "NARRATOR",
+  "text": "He's never been *happier.*"
+ },
+ {
+  "mod": "sc05",
+  "idx": 16,
+  "a": 228.4,
+  "b": 230.2,
+  "sp": "DAD",
+  "text": "...Peace and *quiet.*"
+ },
+ {
+  "mod": "sc05",
+  "idx": 17,
+  "a": 230.6,
+  "b": 233,
+  "sp": "NARRATOR",
+  "text": "The banana dentist picks *Tower of Pain.*"
+ },
+ {
+  "mod": "sc05",
+  "idx": 18,
+  "a": 233.5,
+  "b": 235,
+  "sp": "NARRATOR",
+  "text": "He falls off the *first step.*"
+ },
+ {
+  "mod": "sc05",
+  "idx": 19,
+  "a": 235.2,
+  "b": 237,
+  "sp": "BANANA",
+  "text": "Ohhhhh *nooooo...*"
+ },
+ {
+  "mod": "sc05",
+  "idx": 20,
+  "a": 237.4,
+  "b": 239,
+  "sp": "NARRATOR",
+  "text": "And Grandma picks *DOORS.*"
+ },
+ {
+  "mod": "sc05",
+  "idx": 21,
+  "a": 239.5,
+  "b": 241.8,
+  "sp": "NARRATOR",
+  "text": "Ten seconds later... the monster runs out *screaming.*"
+ },
+ {
+  "mod": "sc05",
+  "idx": 22,
+  "a": 242,
+  "b": 243.6,
+  "sp": "MONSTER",
+  "text": "*SHE'S TOO FAST!*"
+ },
+ {
+  "mod": "sc05",
+  "idx": 23,
+  "a": 244.2,
+  "b": 246,
+  "sp": "NARRATOR",
+  "text": "And then you see it."
+ },
+ {
+  "mod": "sc05",
+  "idx": 24,
+  "a": 246.2,
+  "b": 248.6,
+  "sp": "NARRATOR",
+  "text": "One portal... flickering. *Glitching.*"
+ },
+ {
+  "mod": "sc05",
+  "idx": 25,
+  "a": 248.8,
+  "b": 250.6,
+  "sp": "NARRATOR",
+  "text": "With a familiar egg on the sign."
+ },
+ {
+  "mod": "sc05",
+  "idx": 26,
+  "a": 251,
+  "b": 252.6,
+  "sp": "NARRATOR",
+  "text": "*\"STEAL AN EGG.\"*"
+ },
+ {
+  "mod": "sc05",
+  "idx": 27,
+  "a": 253,
+  "b": 255,
+  "sp": "NARRATOR",
+  "text": "The game that started all of this."
+ },
+ {
+  "mod": "sc05",
+  "idx": 28,
+  "a": 255.4,
+  "b": 256.6,
+  "sp": "YOU",
+  "text": "Okay. Okay okay okay."
+ },
+ {
+  "mod": "sc05",
+  "idx": 29,
+  "a": 257.2,
+  "b": 258,
+  "sp": "YOU",
+  "text": "Let's *GO!*"
+ },
+ {
+  "mod": "sc05",
+  "idx": 30,
+  "a": 258.4,
+  "b": 259.4,
+  "sp": "NARRATOR",
+  "text": "You jump *in.*"
+ },
+ {
+  "mod": "sc06",
+  "idx": 0,
+  "a": 261.6,
+  "b": 264.6,
+  "sp": "SYSTEM",
+  "text": "Welcome to Steal an Egg! Tip: always lock your base!"
+ },
+ {
+  "mod": "sc06",
+  "idx": 1,
+  "a": 264.9,
+  "b": 265.9,
+  "sp": "NARRATOR",
+  "text": "Remember that tip."
+ },
+ {
+  "mod": "sc06",
+  "idx": 2,
+  "a": 266.4,
+  "b": 267.2,
+  "sp": "NARRATOR",
+  "text": "You *won't.*"
+ },
+ {
+  "mod": "sc06",
+  "idx": 3,
+  "a": 267.6,
+  "b": 270.2,
+  "sp": "NARRATOR",
+  "text": "You spawn in your own empty base."
+ },
+ {
+  "mod": "sc06",
+  "idx": 4,
+  "a": 270.5,
+  "b": 272.8,
+  "sp": "NARRATOR",
+  "text": "And the sign out front says... *\"YOU's Base.\"*"
+ },
+ {
+  "mod": "sc06",
+  "idx": 5,
+  "a": 273.1,
+  "b": 275,
+  "sp": "YOU",
+  "text": "\"YOU's\"? That's not even *grammar!*"
+ },
+ {
+  "mod": "sc06",
+  "idx": 6,
+  "a": 275.4,
+  "b": 278.4,
+  "sp": "NARRATOR",
+  "text": "In the middle of the map, a conveyor belt rolls eggs past every base."
+ },
+ {
+  "mod": "sc06",
+  "idx": 7,
+  "a": 278.6,
+  "b": 279.9,
+  "sp": "NARRATOR",
+  "text": "Dirt Egg: *ten bucks.*"
+ },
+ {
+  "mod": "sc06",
+  "idx": 8,
+  "a": 280.1,
+  "b": 281.6,
+  "sp": "NARRATOR",
+  "text": "Rare Egg: *five thousand.*"
+ },
+ {
+  "mod": "sc06",
+  "idx": 9,
+  "a": 281.8,
+  "b": 283.8,
+  "sp": "NARRATOR",
+  "text": "Legendary Egg: one *MILLION.*"
+ },
+ {
+  "mod": "sc06",
+  "idx": 10,
+  "a": 284.2,
+  "b": 287.4,
+  "sp": "NARRATOR",
+  "text": "And for just one second... a glitchy egg with three question marks rolls by."
+ },
+ {
+  "mod": "sc06",
+  "idx": 11,
+  "a": 287.8,
+  "b": 288.9,
+  "sp": "NARRATOR",
+  "text": "Then it's *gone.*"
+ },
+ {
+  "mod": "sc06",
+  "idx": 12,
+  "a": 289.2,
+  "b": 290.9,
+  "sp": "YOU",
+  "text": "...Did anyone else see that?"
+ },
+ {
+  "mod": "sc06",
+  "idx": 13,
+  "a": 291.3,
+  "b": 292.4,
+  "sp": "NARRATOR",
+  "text": "*Rule one:*"
+ },
+ {
+  "mod": "sc06",
+  "idx": 14,
+  "a": 292.5,
+  "b": 295.6,
+  "sp": "NARRATOR",
+  "text": "eggs hatch into pets. Pets make money. Money buys better eggs."
+ },
+ {
+  "mod": "sc06",
+  "idx": 15,
+  "a": 296,
+  "b": 298,
+  "sp": "NARRATOR",
+  "text": "It's basically a job... with *chickens.*"
+ },
+ {
+  "mod": "sc06",
+  "idx": 16,
+  "a": 298.4,
+  "b": 301.4,
+  "sp": "NARRATOR",
+  "text": "*Rule two:* you can steal *ANY* egg, from *ANY* base."
+ },
+ {
+  "mod": "sc06",
+  "idx": 17,
+  "a": 301.6,
+  "b": 305,
+  "sp": "NARRATOR",
+  "text": "But when you carry one, it sits on top of your head, you run at *half speed...*"
+ },
+ {
+  "mod": "sc06",
+  "idx": 18,
+  "a": 305.5,
+  "b": 307,
+  "sp": "NARRATOR",
+  "text": "and *EVERYONE* can see it."
+ },
+ {
+  "mod": "sc06",
+  "idx": 19,
+  "a": 307.4,
+  "b": 309,
+  "sp": "NARRATOR",
+  "text": "*Rule three:* lock your base."
+ },
+ {
+  "mod": "sc06",
+  "idx": 20,
+  "a": 309.3,
+  "b": 310.5,
+  "sp": "YOU",
+  "text": "Got it. *Easy.*"
+ },
+ {
+  "mod": "sc06",
+  "idx": 21,
+  "a": 310.9,
+  "b": 312.4,
+  "sp": "NARRATOR",
+  "text": "It was *not* easy."
+ },
+ {
+  "mod": "sc06",
+  "idx": 22,
+  "a": 312.8,
+  "b": 314.8,
+  "sp": "NARRATOR",
+  "text": "You have *zero* dollars."
+ },
+ {
+  "mod": "sc06",
+  "idx": 23,
+  "a": 315,
+  "b": 317.6,
+  "sp": "NARRATOR",
+  "text": "So you do the starter quest: *\"Touch Grass.\"*"
+ },
+ {
+  "mod": "sc06",
+  "idx": 24,
+  "a": 318,
+  "b": 319.3,
+  "sp": "NARRATOR",
+  "text": "You touch the grass."
+ },
+ {
+  "mod": "sc06",
+  "idx": 25,
+  "a": 319.8,
+  "b": 320.8,
+  "sp": "NARRATOR",
+  "text": "*Ten dollars.*"
+ },
+ {
+  "mod": "sc06",
+  "idx": 26,
+  "a": 321.2,
+  "b": 324,
+  "sp": "NARRATOR",
+  "text": "Roblox literally paid you to *touch grass.*"
+ },
+ {
+  "mod": "sc06",
+  "idx": 27,
+  "a": 324.4,
+  "b": 325.8,
+  "sp": "NARRATOR",
+  "text": "You buy a Dirt Egg."
+ },
+ {
+  "mod": "sc06",
+  "idx": 28,
+  "a": 326,
+  "b": 327,
+  "sp": "NARRATOR",
+  "text": "It wobbles..."
+ },
+ {
+  "mod": "sc06",
+  "idx": 29,
+  "a": 327.2,
+  "b": 328.2,
+  "sp": "NARRATOR",
+  "text": "it cracks..."
+ },
+ {
+  "mod": "sc06",
+  "idx": 30,
+  "a": 328.4,
+  "b": 329.6,
+  "sp": "NARRATOR",
+  "text": "and out comes—"
+ },
+ {
+  "mod": "sc06",
+  "idx": 31,
+  "a": 330.4,
+  "b": 332.2,
+  "sp": "YOU",
+  "text": "...a rock. With *legs.*"
+ },
+ {
+  "mod": "sc06",
+  "idx": 32,
+  "a": 332.6,
+  "b": 334.2,
+  "sp": "NARRATOR",
+  "text": "*One dollar* per second."
+ },
+ {
+  "mod": "sc06",
+  "idx": 33,
+  "a": 334.6,
+  "b": 336.6,
+  "sp": "YOU",
+  "text": "I'm gonna call you *Rocky.*"
+ },
+ {
+  "mod": "sc06",
+  "idx": 34,
+  "a": 336.8,
+  "b": 338,
+  "sp": "YOU",
+  "text": "You're perfect."
+ },
+ {
+  "mod": "sc06",
+  "idx": 35,
+  "a": 338.2,
+  "b": 340.6,
+  "sp": "YOU",
+  "text": "I would *DIE* for you, Rocky."
+ },
+ {
+  "mod": "sc07",
+  "idx": 0,
+  "a": 341.8,
+  "b": 344.6,
+  "sp": "NARRATOR",
+  "text": "You spend three minutes showing Rocky to... literally *no one.*"
+ },
+ {
+  "mod": "sc07",
+  "idx": 1,
+  "a": 344.9,
+  "b": 346.6,
+  "sp": "NARRATOR",
+  "text": "And you forget *rule three.*"
+ },
+ {
+  "mod": "sc07",
+  "idx": 2,
+  "a": 347,
+  "b": 348.6,
+  "sp": "NARRATOR",
+  "text": "A tiny blur zooms into your base."
+ },
+ {
+  "mod": "sc07",
+  "idx": 3,
+  "a": 348.8,
+  "b": 350.2,
+  "sp": "NARRATOR",
+  "text": "*\"xX_Speedy_Xx.\"*"
+ },
+ {
+  "mod": "sc07",
+  "idx": 4,
+  "a": 350.4,
+  "b": 351.4,
+  "sp": "NARRATOR",
+  "text": "He's *seven.*"
+ },
+ {
+  "mod": "sc07",
+  "idx": 5,
+  "a": 351.6,
+  "b": 353.8,
+  "sp": "NARRATOR",
+  "text": "He's the fastest thief on the server."
+ },
+ {
+  "mod": "sc07",
+  "idx": 6,
+  "a": 354.1,
+  "b": 354.8,
+  "sp": "SPEEDY",
+  "text": "*Yoink!*"
+ },
+ {
+  "mod": "sc07",
+  "idx": 7,
+  "a": 355.1,
+  "b": 356.9,
+  "sp": "YOU",
+  "text": "*ROCKY!* NOOOO!"
+ },
+ {
+  "mod": "sc07",
+  "idx": 8,
+  "a": 357.3,
+  "b": 359,
+  "sp": "NARRATOR",
+  "text": "You chase him. You're fast."
+ },
+ {
+  "mod": "sc07",
+  "idx": 9,
+  "a": 359.2,
+  "b": 360.2,
+  "sp": "NARRATOR",
+  "text": "He's *FASTER.*"
+ },
+ {
+  "mod": "sc07",
+  "idx": 10,
+  "a": 360.6,
+  "b": 363,
+  "sp": "NARRATOR",
+  "text": "He slams his laser door right in your face."
+ },
+ {
+  "mod": "sc07",
+  "idx": 11,
+  "a": 363.4,
+  "b": 366.4,
+  "sp": "NARRATOR",
+  "text": "And behind it... Speedy has *two hundred* rocks."
+ },
+ {
+  "mod": "sc07",
+  "idx": 12,
+  "a": 366.8,
+  "b": 369.8,
+  "sp": "YOU",
+  "text": "Why does a seven-year-old need two hundred *ROCKS?!*"
+ },
+ {
+  "mod": "sc07",
+  "idx": 13,
+  "a": 370.2,
+  "b": 371.2,
+  "sp": "SPEEDY",
+  "text": "*Collection.*"
+ },
+ {
+  "mod": "sc07",
+  "idx": 14,
+  "a": 371.8,
+  "b": 374.4,
+  "sp": "NARRATOR",
+  "text": "Fine. If they can steal... so can *you.*"
+ },
+ {
+  "mod": "sc07",
+  "idx": 15,
+  "a": 374.8,
+  "b": 378.6,
+  "sp": "NARRATOR",
+  "text": "You pick the biggest target on the server. Number one on the leaderboard:"
+ },
+ {
+  "mod": "sc07",
+  "idx": 16,
+  "a": 378.8,
+  "b": 380.2,
+  "sp": "NARRATOR",
+  "text": "*\"xX_EggLord_Xx.\"*"
+ },
+ {
+  "mod": "sc07",
+  "idx": 17,
+  "a": 380.6,
+  "b": 382.2,
+  "sp": "NARRATOR",
+  "text": "His base is *solid gold.*"
+ },
+ {
+  "mod": "sc07",
+  "idx": 18,
+  "a": 382.3,
+  "b": 383.1,
+  "sp": "NARRATOR",
+  "text": "Lasers."
+ },
+ {
+  "mod": "sc07",
+  "idx": 19,
+  "a": 383.3,
+  "b": 385,
+  "sp": "NARRATOR",
+  "text": "Ten *Legendary* eggs."
+ },
+ {
+  "mod": "sc07",
+  "idx": 20,
+  "a": 385.2,
+  "b": 387.6,
+  "sp": "NARRATOR",
+  "text": "And a sign that says... *\"TRY IT.\"*"
+ },
+ {
+  "mod": "sc07",
+  "idx": 21,
+  "a": 388,
+  "b": 390.6,
+  "sp": "YOU",
+  "text": "Sneak... sneak... sneak..."
+ },
+ {
+  "mod": "sc07",
+  "idx": 22,
+  "a": 391,
+  "b": 393,
+  "sp": "NARRATOR",
+  "text": "You grab a Legendary egg."
+ },
+ {
+  "mod": "sc07",
+  "idx": 23,
+  "a": 393.2,
+  "b": 394.6,
+  "sp": "NARRATOR",
+  "text": "It lands on your head."
+ },
+ {
+  "mod": "sc07",
+  "idx": 24,
+  "a": 395,
+  "b": 396.9,
+  "sp": "NARRATOR",
+  "text": "It weighs as much as a *fridge.*"
+ },
+ {
+  "mod": "sc07",
+  "idx": 25,
+  "a": 397.2,
+  "b": 399,
+  "sp": "YOU",
+  "text": "Why is it so *HEAVY?!*"
+ },
+ {
+  "mod": "sc07",
+  "idx": 26,
+  "a": 399.4,
+  "b": 400.4,
+  "sp": "NARRATOR",
+  "text": "Alarms. Sirens."
+ },
+ {
+  "mod": "sc07",
+  "idx": 27,
+  "a": 400.6,
+  "b": 402.4,
+  "sp": "NARRATOR",
+  "text": "And EggLord... slowly turns around."
+ },
+ {
+  "mod": "sc07",
+  "idx": 28,
+  "a": 402.8,
+  "b": 404.4,
+  "sp": "EGGLORD",
+  "text": "...Bro. *Seriously?*"
+ },
+ {
+  "mod": "sc07",
+  "idx": 29,
+  "a": 404.8,
+  "b": 406,
+  "sp": "NARRATOR",
+  "text": "The lasers go *ZAP.*"
+ },
+ {
+  "mod": "sc07",
+  "idx": 30,
+  "a": 406.6,
+  "b": 407.6,
+  "sp": "YOU",
+  "text": "...oof."
+ },
+ {
+  "mod": "sc07",
+  "idx": 31,
+  "a": 408,
+  "b": 410,
+  "sp": "NARRATOR",
+  "text": "You respawn in your empty base."
+ },
+ {
+  "mod": "sc07",
+  "idx": 32,
+  "a": 410.2,
+  "b": 413.4,
+  "sp": "NARRATOR",
+  "text": "*No* Rocky. *No* egg. *No* dignity."
+ },
+ {
+  "mod": "sc08",
+  "idx": 0,
+  "a": 414.6,
+  "b": 416.6,
+  "sp": "NARRATOR",
+  "text": "And that's when you see *her.*"
+ },
+ {
+  "mod": "sc08",
+  "idx": 1,
+  "a": 417,
+  "b": 421.6,
+  "sp": "NARRATOR",
+  "text": "A blur. Running straight through EggLord's lasers... with *THREE* eggs stacked on her head. At *FULL* speed."
+ },
+ {
+  "mod": "sc08",
+  "idx": 2,
+  "a": 421.9,
+  "b": 424.6,
+  "sp": "YOU",
+  "text": "That's... that's impossible! You're supposed to be *SLOW!*"
+ },
+ {
+  "mod": "sc08",
+  "idx": 3,
+  "a": 425,
+  "b": 430.6,
+  "sp": "NARRATOR",
+  "text": "She slides under one laser, wall-jumps over two, backflips over the guard... and lands in her base. *Door locked.* Perfect."
+ },
+ {
+  "mod": "sc08",
+  "idx": 4,
+  "a": 431,
+  "b": 432.6,
+  "sp": "NARRATOR",
+  "text": "Her name tag says *\"Nova.\"*"
+ },
+ {
+  "mod": "sc08",
+  "idx": 5,
+  "a": 433,
+  "b": 434.8,
+  "sp": "NOVA",
+  "text": "Nice name tag... *YOU.*"
+ },
+ {
+  "mod": "sc08",
+  "idx": 6,
+  "a": 435.1,
+  "b": 438.2,
+  "sp": "YOU",
+  "text": "Thanks! It's— uh— it's a long story, I typed it at two A.M., and—"
+ },
+ {
+  "mod": "sc08",
+  "idx": 7,
+  "a": 438.6,
+  "b": 442,
+  "sp": "NOVA",
+  "text": "Tip, noob. Never steal a Legendary egg in *Common shoes.*"
+ },
+ {
+  "mod": "sc08",
+  "idx": 8,
+  "a": 442.4,
+  "b": 443.4,
+  "sp": "NARRATOR",
+  "text": "And she's *gone.*"
+ },
+ {
+  "mod": "sc08",
+  "idx": 9,
+  "a": 443.8,
+  "b": 445.6,
+  "sp": "YOU",
+  "text": "...She called me *noob.*"
+ },
+ {
+  "mod": "sc08",
+  "idx": 10,
+  "a": 446,
+  "b": 448,
+  "sp": "NARRATOR",
+  "text": "That's when you decide two things."
+ },
+ {
+  "mod": "sc08",
+  "idx": 11,
+  "a": 448.1,
+  "b": 450.9,
+  "sp": "NARRATOR",
+  "text": "One: you're gonna become the *greatest egg thief* this world has ever seen."
+ },
+ {
+  "mod": "sc08",
+  "idx": 12,
+  "a": 451.1,
+  "b": 452.6,
+  "sp": "NARRATOR",
+  "text": "Two... you need *better shoes.*"
+ },
+ {
+  "mod": "sc08",
+  "idx": 13,
+  "a": 453,
+  "b": 457,
+  "sp": "NARRATOR",
+  "text": "Oh! Quick thing. Everyone who *subscribes* gets a *FREE* Legendary egg in the new world."
+ },
+ {
+  "mod": "sc08",
+  "idx": 14,
+  "a": 457.4,
+  "b": 459.6,
+  "sp": "NARRATOR",
+  "text": "It's a normal egg. Painted gold. Don't tell anyone."
+ },
+ {
+  "mod": "sc08",
+  "idx": 15,
+  "a": 460,
+  "b": 463.8,
+  "sp": "NARRATOR",
+  "text": "And if you *DON'T* subscribe... your only pet is a rock. Forever. Like me."
+ },
+ {
+  "mod": "sc08",
+  "idx": 16,
+  "a": 464.2,
+  "b": 465.6,
+  "sp": "YOU",
+  "text": "I miss Rocky."
+ },
+ {
+  "mod": "sc10",
+  "idx": 0,
+  "a": 466.8,
+  "b": 468,
+  "sp": "NARRATOR",
+  "text": "So you *grind.*"
+ },
+ {
+  "mod": "sc10",
+  "idx": 1,
+  "a": 468.2,
+  "b": 470.6,
+  "sp": "NARRATOR",
+  "text": "Touch grass. Touch grass. Touch grass."
+ },
+ {
+  "mod": "sc10",
+  "idx": 2,
+  "a": 470.7,
+  "b": 472.1,
+  "sp": "NARRATOR",
+  "text": "Buy egg. Hatch egg."
+ },
+ {
+  "mod": "sc10",
+  "idx": 3,
+  "a": 472.3,
+  "b": 473.8,
+  "sp": "NARRATOR",
+  "text": "A chicken in *sunglasses!*"
+ },
+ {
+  "mod": "sc10",
+  "idx": 4,
+  "a": 474,
+  "b": 475.4,
+  "sp": "NARRATOR",
+  "text": "A dog made of *toast!*"
+ },
+ {
+  "mod": "sc10",
+  "idx": 5,
+  "a": 475.6,
+  "b": 478.4,
+  "sp": "NARRATOR",
+  "text": "A floating eyeball that just... *stares.*"
+ },
+ {
+  "mod": "sc10",
+  "idx": 6,
+  "a": 478.8,
+  "b": 481.6,
+  "sp": "NARRATOR",
+  "text": "One dollar a second. Fifty. A *THOUSAND.*"
+ },
+ {
+  "mod": "sc10",
+  "idx": 7,
+  "a": 481.8,
+  "b": 484,
+  "sp": "NARRATOR",
+  "text": "Your base gets bigger. And *shinier.*"
+ },
+ {
+  "mod": "sc10",
+  "idx": 8,
+  "a": 484.4,
+  "b": 487.4,
+  "sp": "NARRATOR",
+  "text": "You practice stealing. You get zapped. And zapped. And zapped."
+ },
+ {
+  "mod": "sc10",
+  "idx": 9,
+  "a": 487.6,
+  "b": 489.8,
+  "sp": "NARRATOR",
+  "text": "*One thousand and forty-seven* times."
+ },
+ {
+  "mod": "sc10",
+  "idx": 10,
+  "a": 490.2,
+  "b": 492.2,
+  "sp": "NARRATOR",
+  "text": "And finally... you buy the *Speed Coil.*"
+ },
+ {
+  "mod": "sc10",
+  "idx": 11,
+  "a": 492.4,
+  "b": 493.6,
+  "sp": "YOU",
+  "text": "*NEW SHOES!*"
+ },
+ {
+  "mod": "sc10",
+  "idx": 12,
+  "a": 493.9,
+  "b": 496.6,
+  "sp": "NARRATOR",
+  "text": "You zoom. You fly. You run straight into a *wall.*"
+ },
+ {
+  "mod": "sc10",
+  "idx": 13,
+  "a": 497,
+  "b": 498.2,
+  "sp": "YOU",
+  "text": "...worth it."
+ },
+ {
+  "mod": "sc10",
+  "idx": 14,
+  "a": 498.8,
+  "b": 502,
+  "sp": "NARRATOR",
+  "text": "And one night... you go back to Speedy's base."
+ },
+ {
+  "mod": "sc10",
+  "idx": 15,
+  "a": 502.2,
+  "b": 504,
+  "sp": "NARRATOR",
+  "text": "Two hundred rocks. All the same."
+ },
+ {
+  "mod": "sc10",
+  "idx": 16,
+  "a": 504.2,
+  "b": 506.6,
+  "sp": "NARRATOR",
+  "text": "But one of them... *looks back at you.*"
+ },
+ {
+  "mod": "sc10",
+  "idx": 17,
+  "a": 507,
+  "b": 508.4,
+  "sp": "YOU",
+  "text": "*Rocky...?*"
+ },
+ {
+  "mod": "sc10",
+  "idx": 18,
+  "a": 508.8,
+  "b": 509.6,
+  "sp": "NARRATOR",
+  "text": "*Rocky.*"
+ },
+ {
+  "mod": "sc10",
+  "idx": 19,
+  "a": 510,
+  "b": 513.6,
+  "sp": "NARRATOR",
+  "text": "You carry him home on your head, at half speed, crying the whole way."
+ },
+ {
+  "mod": "sc10",
+  "idx": 20,
+  "a": 514,
+  "b": 516.4,
+  "sp": "YOU",
+  "text": "You're home, buddy. You're *HOME.*"
+ },
+ {
+  "mod": "sc10b",
+  "idx": 0,
+  "a": 517.6,
+  "b": 520.8,
+  "sp": "NARRATOR",
+  "text": "You keep running into Nova. Well... mostly, she keeps *stealing from you.*"
+ },
+ {
+  "mod": "sc10b",
+  "idx": 1,
+  "a": 521,
+  "b": 522.6,
+  "sp": "NOVA",
+  "text": "Thanks for the egg, *YOU!*"
+ },
+ {
+  "mod": "sc10b",
+  "idx": 2,
+  "a": 522.8,
+  "b": 524.2,
+  "sp": "YOU",
+  "text": "THAT WAS *MY* EGG!"
+ },
+ {
+  "mod": "sc10b",
+  "idx": 3,
+  "a": 524.5,
+  "b": 525.2,
+  "sp": "NOVA",
+  "text": "*Was.*"
+ },
+ {
+  "mod": "sc10b",
+  "idx": 4,
+  "a": 525.6,
+  "b": 527,
+  "sp": "NARRATOR",
+  "text": "You try stealing from her once."
+ },
+ {
+  "mod": "sc10b",
+  "idx": 5,
+  "a": 527.5,
+  "b": 528.8,
+  "sp": "NARRATOR",
+  "text": "*Banana peel* trap."
+ },
+ {
+  "mod": "sc10b",
+  "idx": 6,
+  "a": 529.1,
+  "b": 529.9,
+  "sp": "NOVA",
+  "text": "*Classic.*"
+ },
+ {
+  "mod": "sc10b",
+  "idx": 7,
+  "a": 530.4,
+  "b": 532.8,
+  "sp": "NARRATOR",
+  "text": "But then, one evening... at the egg belt..."
+ },
+ {
+  "mod": "sc10b",
+  "idx": 8,
+  "a": 533.1,
+  "b": 535.8,
+  "sp": "NOVA",
+  "text": "You saw it too, didn't you? The *question mark egg.*"
+ },
+ {
+  "mod": "sc10b",
+  "idx": 9,
+  "a": 536.1,
+  "b": 537,
+  "sp": "YOU",
+  "text": "You saw it?!"
+ },
+ {
+  "mod": "sc10b",
+  "idx": 10,
+  "a": 537.3,
+  "b": 541.8,
+  "sp": "NOVA",
+  "text": "It's the *Secret Egg.* It's in the *Admin Vault.* The final level. Nobody's ever beaten it."
+ },
+ {
+  "mod": "sc10b",
+  "idx": 11,
+  "a": 542.1,
+  "b": 545.6,
+  "sp": "NOVA",
+  "text": "Some people say... if you hatch it, the world goes back to *normal.*"
+ },
+ {
+  "mod": "sc10b",
+  "idx": 12,
+  "a": 545.9,
+  "b": 547.2,
+  "sp": "YOU",
+  "text": "And what do *YOU* think?"
+ },
+ {
+  "mod": "sc10b",
+  "idx": 13,
+  "a": 547.5,
+  "b": 549.4,
+  "sp": "NOVA",
+  "text": "I think... I'm getting it *first.*"
+ },
+ {
+  "mod": "sc10b",
+  "idx": 14,
+  "a": 549.8,
+  "b": 551,
+  "sp": "YOU",
+  "text": "Wanna... *team up?*"
+ },
+ {
+  "mod": "sc10b",
+  "idx": 15,
+  "a": 551.3,
+  "b": 552.3,
+  "sp": "NOVA",
+  "text": "Ha. *No.*"
+ },
+ {
+  "mod": "sc10b",
+  "idx": 16,
+  "a": 552.6,
+  "b": 553.6,
+  "sp": "NARRATOR",
+  "text": "She walks away."
+ },
+ {
+  "mod": "sc10b",
+  "idx": 17,
+  "a": 554.1,
+  "b": 555,
+  "sp": "NARRATOR",
+  "text": "Then she stops."
+ },
+ {
+  "mod": "sc10b",
+  "idx": 18,
+  "a": 555.3,
+  "b": 557,
+  "sp": "NOVA",
+  "text": "...Keep up, and *maybe.*"
+ },
+ {
+  "mod": "sc10b",
+  "idx": 19,
+  "a": 557.5,
+  "b": 562.4,
+  "sp": "NARRATOR",
+  "text": "So you *KEEP UP.* Leaderboard: number eight billion... fifty thousand... three hundred... number *THREE!*"
+ },
+ {
+  "mod": "sc10b",
+  "idx": 20,
+  "a": 562.6,
+  "b": 565,
+  "sp": "NARRATOR",
+  "text": "Number two: *Nova.* Number one... *EggLord.*"
+ },
+ {
+  "mod": "sc10b",
+  "idx": 21,
+  "a": 565.4,
+  "b": 567.4,
+  "sp": "SYSTEM",
+  "text": "Server event! *EGG RAIN!*"
+ },
+ {
+  "mod": "sc10b",
+  "idx": 22,
+  "a": 567.8,
+  "b": 573.6,
+  "sp": "NARRATOR",
+  "text": "Eggs fall from the sky! The whole server goes crazy. Mom drives through in her *pink car.* And Dad catches one... with his *fishing rod.*"
+ },
+ {
+  "mod": "sc10b",
+  "idx": 23,
+  "a": 574,
+  "b": 576,
+  "sp": "DAD",
+  "text": "Huh. Biggest fish I ever *caught.*"
+ },
+ {
+  "mod": "sc11",
+  "idx": 0,
+  "a": 577.2,
+  "b": 580.8,
+  "sp": "SYSTEM",
+  "text": "The Admin Vault is now *OPEN.* Entry fee: *ONE BILLION* dollars."
+ },
+ {
+  "mod": "sc11",
+  "idx": 1,
+  "a": 581.2,
+  "b": 585.4,
+  "sp": "NARRATOR",
+  "text": "You check your money. Nine hundred ninety-nine million, nine hundred ninety-nine thousand, nine hundred ninety-nine."
+ },
+ {
+  "mod": "sc11",
+  "idx": 2,
+  "a": 585.8,
+  "b": 587.6,
+  "sp": "YOU",
+  "text": "One dollar *SHORT?!* NOOO!"
+ },
+ {
+  "mod": "sc11",
+  "idx": 3,
+  "a": 588.4,
+  "b": 589.8,
+  "sp": "NARRATOR",
+  "text": "And then... *bloop.*"
+ },
+ {
+  "mod": "sc11",
+  "idx": 4,
+  "a": 590.1,
+  "b": 591.1,
+  "sp": "SYSTEM",
+  "text": "*Plus one dollar!*"
+ },
+ {
+  "mod": "sc11",
+  "idx": 5,
+  "a": 591.5,
+  "b": 594,
+  "sp": "NARRATOR",
+  "text": "Rocky. One dollar per second. Right on time."
+ },
+ {
+  "mod": "sc11",
+  "idx": 6,
+  "a": 594.3,
+  "b": 595.9,
+  "sp": "YOU",
+  "text": "ROCKY, I *LOVE* YOU!"
+ },
+ {
+  "mod": "sc11",
+  "idx": 7,
+  "a": 596.3,
+  "b": 601,
+  "sp": "NARRATOR",
+  "text": "The Admin Vault floats above the clouds. Four stages. One egg. And only *three players* brave enough to go in."
+ },
+ {
+  "mod": "sc11",
+  "idx": 8,
+  "a": 601.3,
+  "b": 604.6,
+  "sp": "EGGLORD",
+  "text": "Oh look, the noob and the girl. Good luck. You're gonna *need* it."
+ },
+ {
+  "mod": "sc11",
+  "idx": 9,
+  "a": 604.9,
+  "b": 606.8,
+  "sp": "NOVA",
+  "text": "Talk less, EggLord. *Run more.*"
+ },
+ {
+  "mod": "sc11",
+  "idx": 10,
+  "a": 607.2,
+  "b": 610,
+  "sp": "NARRATOR",
+  "text": "*Stage one:* the Laser Hall. Red beams, sweeping in every direction."
+ },
+ {
+  "mod": "sc11",
+  "idx": 11,
+  "a": 610.3,
+  "b": 612.8,
+  "sp": "NARRATOR",
+  "text": "Nova is fast. But not fast enough. One beam clips her shoe."
+ },
+ {
+  "mod": "sc11",
+  "idx": 12,
+  "a": 613,
+  "b": 613.6,
+  "sp": "NOVA",
+  "text": "*Ah—!*"
+ },
+ {
+  "mod": "sc11",
+  "idx": 13,
+  "a": 614,
+  "b": 617.4,
+  "sp": "NARRATOR",
+  "text": "But you? You've been zapped *one thousand and forty-seven* times. You *KNOW* lasers."
+ },
+ {
+  "mod": "sc11",
+  "idx": 14,
+  "a": 617.7,
+  "b": 620,
+  "sp": "YOU",
+  "text": "Left. Wait... Jump— *NOW!*"
+ },
+ {
+  "mod": "sc11",
+  "idx": 15,
+  "a": 620.4,
+  "b": 622,
+  "sp": "NARRATOR",
+  "text": "She lands perfectly. And she looks at you."
+ },
+ {
+  "mod": "sc11",
+  "idx": 16,
+  "a": 622.3,
+  "b": 623.8,
+  "sp": "NOVA",
+  "text": "...Not bad, *noob.*"
+ },
+ {
+  "mod": "sc11",
+  "idx": 17,
+  "a": 624.3,
+  "b": 627.4,
+  "sp": "NARRATOR",
+  "text": "*Stage two:* the Hatchery. A thousand eggs. One is real. The rest..."
+ },
+ {
+  "mod": "sc11",
+  "idx": 18,
+  "a": 627.7,
+  "b": 628.8,
+  "sp": "NARRATOR",
+  "text": "...have *TEETH.*"
+ },
+ {
+  "mod": "sc11",
+  "idx": 19,
+  "a": 629.1,
+  "b": 630.9,
+  "sp": "YOU",
+  "text": "WHY DO THE EGGS HAVE *TEETH?!*"
+ },
+ {
+  "mod": "sc11",
+  "idx": 20,
+  "a": 631.1,
+  "b": 632.8,
+  "sp": "NOVA",
+  "text": "DON'T TOUCH THE *PURPLE ONES!*"
+ },
+ {
+  "mod": "sc11",
+  "idx": 21,
+  "a": 633.1,
+  "b": 634.3,
+  "sp": "NARRATOR",
+  "text": "You touch a purple one."
+ },
+ {
+  "mod": "sc11",
+  "idx": 22,
+  "a": 634.7,
+  "b": 636.2,
+  "sp": "YOU",
+  "text": "...I touched a purple one."
+ },
+ {
+  "mod": "sc11",
+  "idx": 23,
+  "a": 636.6,
+  "b": 638.8,
+  "sp": "NARRATOR",
+  "text": "Nova grabs your legs and *PULLS.* Pop! You're free."
+ },
+ {
+  "mod": "sc11",
+  "idx": 24,
+  "a": 639.1,
+  "b": 640,
+  "sp": "NOVA",
+  "text": "You owe me."
+ },
+ {
+  "mod": "sc11",
+  "idx": 25,
+  "a": 640.3,
+  "b": 641.4,
+  "sp": "YOU",
+  "text": "Put it on my *tab.*"
+ },
+ {
+  "mod": "sc11b",
+  "idx": 0,
+  "a": 642.4,
+  "b": 645.4,
+  "sp": "NARRATOR",
+  "text": "*Stage three:* the Top. And there it is... the *Secret Egg.*"
+ },
+ {
+  "mod": "sc11b",
+  "idx": 1,
+  "a": 645.7,
+  "b": 647.2,
+  "sp": "NARRATOR",
+  "text": "But EggLord gets there first."
+ },
+ {
+  "mod": "sc11b",
+  "idx": 2,
+  "a": 647.4,
+  "b": 648.2,
+  "sp": "EGGLORD",
+  "text": "*MINE!*"
+ },
+ {
+  "mod": "sc11b",
+  "idx": 3,
+  "a": 648.6,
+  "b": 651,
+  "sp": "NARRATOR",
+  "text": "The Secret Egg lands on his head. And remember *rule two?*"
+ },
+ {
+  "mod": "sc11b",
+  "idx": 4,
+  "a": 651.3,
+  "b": 653.4,
+  "sp": "NARRATOR",
+  "text": "*Half speed.* And *EVERYONE* can see it."
+ },
+ {
+  "mod": "sc11b",
+  "idx": 5,
+  "a": 653.8,
+  "b": 655.4,
+  "sp": "NOVA",
+  "text": "You thinking what I'm thinking?"
+ },
+ {
+  "mod": "sc11b",
+  "idx": 6,
+  "a": 655.7,
+  "b": 656.6,
+  "sp": "YOU",
+  "text": "*Banana peel?*"
+ },
+ {
+  "mod": "sc11b",
+  "idx": 7,
+  "a": 656.9,
+  "b": 657.8,
+  "sp": "NOVA",
+  "text": "*Banana peel.*"
+ },
+ {
+  "mod": "sc11b",
+  "idx": 8,
+  "a": 658.2,
+  "b": 660.6,
+  "sp": "NARRATOR",
+  "text": "Slip! EggLord flies. The Secret Egg flies even higher—"
+ },
+ {
+  "mod": "sc11b",
+  "idx": 9,
+  "a": 660.8,
+  "b": 664.2,
+  "sp": "NARRATOR",
+  "text": "You *JUMP!* You *CATCH* it! And now *YOU* are the one at half speed!"
+ },
+ {
+  "mod": "sc11b",
+  "idx": 10,
+  "a": 664.6,
+  "b": 666.6,
+  "sp": "SYSTEM",
+  "text": "Vault closing in *TEN* seconds!"
+ },
+ {
+  "mod": "sc11b",
+  "idx": 11,
+  "a": 667,
+  "b": 670.6,
+  "sp": "NARRATOR",
+  "text": "Nine. The hatch pad is all the way across the vault. You're too slow. You'll never make it."
+ },
+ {
+  "mod": "sc11b",
+  "idx": 12,
+  "a": 671,
+  "b": 672.2,
+  "sp": "YOU",
+  "text": "*NOVA!* CATCH!"
+ },
+ {
+  "mod": "sc11b",
+  "idx": 13,
+  "a": 672.6,
+  "b": 675.4,
+  "sp": "NARRATOR",
+  "text": "You throw it. She catches it. She runs. Full speed. *Seven. Six.*"
+ },
+ {
+  "mod": "sc11b",
+  "idx": 14,
+  "a": 675.8,
+  "b": 679,
+  "sp": "NARRATOR",
+  "text": "Lasers. Teeth eggs. EggLord, still screaming somewhere. *Five. Four.*"
+ },
+ {
+  "mod": "sc11b",
+  "idx": 15,
+  "a": 679.4,
+  "b": 680.6,
+  "sp": "NOVA",
+  "text": "*YOU!* Your turn!"
+ },
+ {
+  "mod": "sc11b",
+  "idx": 16,
+  "a": 681,
+  "b": 683.8,
+  "sp": "NARRATOR",
+  "text": "She throws it back. *Three.* You dive. *Two.* She dives."
+ },
+ {
+  "mod": "sc11b",
+  "idx": 17,
+  "a": 684.2,
+  "b": 685,
+  "sp": "NARRATOR",
+  "text": "*ONE!*"
+ },
+ {
+  "mod": "sc11b",
+  "idx": 18,
+  "a": 686.2,
+  "b": 689.4,
+  "sp": "NARRATOR",
+  "text": "Two hands. One egg. On the pad. At the exact same time."
+ },
+ {
+  "mod": "sc11b",
+  "idx": 19,
+  "a": 689.8,
+  "b": 692.4,
+  "sp": "SYSTEM",
+  "text": "VAULT COMPLETE! *CO-OP HATCH!*"
+ },
+ {
+  "mod": "sc12",
+  "idx": 0,
+  "a": 694.4,
+  "b": 697.6,
+  "sp": "NARRATOR",
+  "text": "The Secret Egg glows. It cracks. Light everywhere..."
+ },
+ {
+  "mod": "sc12",
+  "idx": 1,
+  "a": 698,
+  "b": 701,
+  "sp": "NARRATOR",
+  "text": "And out pops... a tiny, glitchy... *pixel chick.*"
+ },
+ {
+  "mod": "sc12",
+  "idx": 2,
+  "a": 701.4,
+  "b": 704.4,
+  "sp": "SYSTEM",
+  "text": "Congratulations, YOU and Nova. Reward: *one wish.*"
+ },
+ {
+  "mod": "sc12",
+  "idx": 3,
+  "a": 704.8,
+  "b": 706.2,
+  "sp": "NOVA",
+  "text": "It's your call, noob."
+ },
+ {
+  "mod": "sc12",
+  "idx": 4,
+  "a": 706.6,
+  "b": 709.8,
+  "sp": "YOU",
+  "text": "We could turn the world back to normal... *tomorrow.*"
+ },
+ {
+  "mod": "sc12",
+  "idx": 5,
+  "a": 710.2,
+  "b": 711.4,
+  "sp": "NOVA",
+  "text": "Why tomorrow?"
+ },
+ {
+  "mod": "sc12",
+  "idx": 6,
+  "a": 711.8,
+  "b": 714,
+  "sp": "YOU",
+  "text": "'Cause today... I've got *something to do.*"
+ },
+ {
+  "mod": "sc12",
+  "idx": 7,
+  "a": 714.6,
+  "b": 719.6,
+  "sp": "NARRATOR",
+  "text": "So you go to the shop. Flowers are a game pass. They cost... *every single dollar* you have."
+ },
+ {
+  "mod": "sc12",
+  "idx": 8,
+  "a": 720,
+  "b": 721,
+  "sp": "YOU",
+  "text": "*Worth it.*"
+ },
+ {
+  "mod": "sc12",
+  "idx": 9,
+  "a": 721.5,
+  "b": 724.6,
+  "sp": "NARRATOR",
+  "text": "You find her on the roof of her base, watching the square sun go down."
+ },
+ {
+  "mod": "sc12",
+  "idx": 10,
+  "a": 725,
+  "b": 728.6,
+  "sp": "NARRATOR",
+  "text": "Your face turns red. Like, actually red. There's a *blush texture* now."
+ },
+ {
+  "mod": "sc12",
+  "idx": 11,
+  "a": 729,
+  "b": 731.2,
+  "sp": "YOU",
+  "text": "S-so... uh... these are for you."
+ },
+ {
+  "mod": "sc12",
+  "idx": 12,
+  "a": 731.6,
+  "b": 733.6,
+  "sp": "NOVA",
+  "text": "For me? Or for *YOU?*"
+ },
+ {
+  "mod": "sc12",
+  "idx": 13,
+  "a": 734,
+  "b": 738.6,
+  "sp": "YOU",
+  "text": "For you! Not me-YOU, you-you! You. ...I'm changing my *username.*"
+ },
+ {
+  "mod": "sc12",
+  "idx": 14,
+  "a": 739.2,
+  "b": 742.6,
+  "sp": "NARRATOR",
+  "text": "She looks at the flowers. She looks at you. And she *smirks.*"
+ },
+ {
+  "mod": "sc12",
+  "idx": 15,
+  "a": 743,
+  "b": 745.6,
+  "sp": "NOVA",
+  "text": "Smooth... *YOU.* Real smooth."
+ },
+ {
+  "mod": "sc12",
+  "idx": 16,
+  "a": 746,
+  "b": 747.2,
+  "sp": "NARRATOR",
+  "text": "She takes the flowers."
+ },
+ {
+  "mod": "sc12",
+  "idx": 17,
+  "a": 747.5,
+  "b": 749,
+  "sp": "SYSTEM",
+  "text": "*Nova accepted your gift!*"
+ },
+ {
+  "mod": "sc12",
+  "idx": 18,
+  "a": 749.4,
+  "b": 752,
+  "sp": "NARRATOR",
+  "text": "And for the first time since the world turned into Roblox..."
+ },
+ {
+  "mod": "sc12",
+  "idx": 19,
+  "a": 752.3,
+  "b": 753.8,
+  "sp": "NARRATOR",
+  "text": "you forget how to *walk.*"
+ },
+ {
+  "mod": "sc12",
+  "idx": 20,
+  "a": 754.2,
+  "b": 755.2,
+  "sp": "YOU",
+  "text": "...oof."
+ },
+ {
+  "mod": "sc12",
+  "idx": 21,
+  "a": 755.6,
+  "b": 756.4,
+  "sp": "NOVA",
+  "text": "*Noob.*"
+ },
+ {
+  "mod": "sc12",
+  "idx": 22,
+  "a": 757,
+  "b": 762,
+  "sp": "NARRATOR",
+  "text": "Which portal would *YOU* pick? Tell me in the comments! And comment *\"EGG\"* if you'd pick Steal an Egg too."
+ },
+ {
+  "mod": "sc12",
+  "idx": 23,
+  "a": 762.4,
+  "b": 765.4,
+  "sp": "NARRATOR",
+  "text": "And the wish? Still unused. Because honestly..."
+ },
+ {
+  "mod": "sc12",
+  "idx": 24,
+  "a": 765.8,
+  "b": 768.2,
+  "sp": "NARRATOR",
+  "text": "some things are just better in *Roblox.*"
+ }
+]

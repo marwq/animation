@@ -1,0 +1,58 @@
+[
+ {
+  "voice_id": "TX3LPaxmHKxFdv7VOQHJ",
+  "start_time_seconds": 0,
+  "end_time_seconds": 3.7600000000000002,
+  "character_start_index": 0,
+  "character_end_index": 81,
+  "dialogue_input_index": 0
+ },
+ {
+  "voice_id": "TX3LPaxmHKxFdv7VOQHJ",
+  "start_time_seconds": 3.7600000000000002,
+  "end_time_seconds": 6.96,
+  "character_start_index": 81,
+  "character_end_index": 136,
+  "dialogue_input_index": 1
+ },
+ {
+  "voice_id": "TX3LPaxmHKxFdv7VOQHJ",
+  "start_time_seconds": 6.96,
+  "end_time_seconds": 10.576,
+  "character_start_index": 136,
+  "character_end_index": 201,
+  "dialogue_input_index": 2
+ },
+ {
+  "voice_id": "TX3LPaxmHKxFdv7VOQHJ",
+  "start_time_seconds": 10.576,
+  "end_time_seconds": 12,
+  "character_start_index": 201,
+  "character_end_index": 237,
+  "dialogue_input_index": 3
+ },
+ {
+  "voice_id": "EXAVITQu4vr4xnSDxMaL",
+  "start_time_seconds": 12,
+  "end_time_seconds": 13.84,
+  "character_start_index": 237,
+  "character_end_index": 283,
+  "dialogue_input_index": 4
+ },
+ {
+  "voice_id": "TX3LPaxmHKxFdv7VOQHJ",
+  "start_time_seconds": 13.84,
+  "end_time_seconds": 17.28,
+  "character_start_index": 283,
+  "character_end_index": 354,
+  "dialogue_input_index": 5
+ },
+ {
+  "voice_id": "TX3LPaxmHKxFdv7VOQHJ",
+  "start_time_seconds": 17.28,
+  "end_time_seconds": 21.04,
+  "character_start_index": 354,
+  "character_end_index": 398,
+  "dialogue_input_index": 6
+ }
+]

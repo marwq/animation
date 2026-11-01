@@ -34,9 +34,29 @@ ffmpeg -f concat -safe 0 -i out/concat.txt -c copy -movflags +faststart out/what
 ## Статус
 
 - Все 12 частей анимированы и отрендерены (1920×1080, 60 fps), полный ролик ≈ 12:51.
-- Звук (музыка + SFX + атмосфера) готов: `out/whatif_full_sound.mp4`.
-- Дальше: озвучка ElevenLabs v4 (`script/VOICEOVER_eleven_v4.txt`) → подгоняем тайминги
-  реплик в `TRACK` под реальные дубли, пересчитываем липсинк, сводим с голосом (`--vo`).
+- Звук (музыка + SFX + атмосфера) готов.
+- Озвучка ElevenLabs v4 (16 дублей) встроена: ролик подогнан под голос — 13:47.
+
+## Озвучка
+
+| Файл | Что делает |
+|---|---|
+| `voice/takes/` | дубли takeXX.mp3 + takeXX.txt (тайминг реплик внутри дубля), `voice/segments/` — разметка ElevenLabs |
+| `voice/transcribe.py` | faster-whisper → время каждого слова (`voice/words/`) |
+| `voice/export_lines.js` | все строки субтитров анимации → `voice/anim_lines.json` |
+| `voice/align.py` | реплики анимации ↔ слова голоса; длинные паузы → 0.30 с, темп речи ×1.08 (rubberband); строит растяжку времени (новое → старое) так, что экшен без речи идёт с родной скоростью; пишет `scenes/vo_timing.json` и `voice/placement.json` |
+| `scenes/common.js` | `makeTrack` берёт тайминги слов из `vo_timing.json` → субтитры-караоке и рты по реальному голосу |
+| `scenes/main.js` | рендер идёт по новому таймлайну: `frame(toOld(t))`; время в CLI — новое |
+| `audio/mix.py` | без флагов сам берёт голос: пересчитывает SFX/музыку/шаги через растяжку, кладёт реплики, «бип» поверх honey, дакинг музыки под голос |
+
+```bash
+python3 voice/transcribe.py && node voice/export_lines.js && python3 voice/align.py --write
+python3 audio/mix.py                                   # → out/audio/mix_full.wav
+node scenes/main.js out/vo_part_01.mp4 60 0 66.95      # части — по новым границам (см. ниже)
+```
+
+Новые границы частей (с): 0 · 66.95 · 133.93 · 206.80 · 274.18 · 356.58 · 433.83 · 491.28 · 543.18 · 608.22 · 686.83 · 747.22 · 826.88.
+`NO_VO=1` — старый таймлайн без голоса.
 
 ## Звук
 

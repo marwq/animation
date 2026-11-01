@@ -19,6 +19,10 @@ ROOT = os.path.dirname(HERE)
 LIB = os.path.join(ROOT, 'assets', 'sfx')
 OUTD = os.path.join(ROOT, 'out', 'audio')
 VIDEO_LEN = 771.0
+VO_TIMING = os.path.join(ROOT, 'scenes', 'vo_timing.json')
+PLACEMENT = os.path.join(ROOT, 'voice', 'placement.json')
+VO_TAKES = os.path.join(OUTD, 'vo_takes')
+VO_LUFS = -16.0          # voice level inside the mix (before the final loudness normalisation)
 
 AMB_REF_DB = -22.0      # ambience gain_db 0 -> this RMS level
 MUSIC_BUS_DB = 2.0
@@ -180,14 +184,17 @@ def sfx_track(sfx, steps, a0, a1):
             continue
         name = SURF.get(f.get('surface', 'hard'), 'step')
         vs = lib(name)
-        t, i = f['start'], 0
-        while t < f['end'] - 1e-6:
+        times = f.get('times')
+        if times is None:
+            times, t = [], f['start']
+            while t < f['end'] - 1e-6:
+                times.append(t)
+                t += f['interval']
+        for i, t in enumerate(times):
             x = vs[i % len(vs)]
             x = speed(x, r.uniform(0.94, 1.06))
             g = db(f.get('gain_db', -8) + r.uniform(-2, 1))
             add(buf, balance(x * g, f.get('pan', 0) + (0.05 if i % 2 else -0.05)), t + r.uniform(-0.008, 0.008), a0)
-            t += f['interval']
-            i += 1
     for e in sfx:
         t, name = e[0], e[1]
         if t >= a1 or t < a0 - 8:
@@ -249,47 +256,138 @@ def lufs(path):
 
 
 # ---------------------------------------------------------------- main
-def load_cues():
+def warp():
+    """old (animation) time -> new (voice-fitted) time; identity when there is no voiceover fit"""
+    if os.environ.get('NO_VO') or not os.path.exists(VO_TIMING):
+        return None
+    kn = np.array(json.load(open(VO_TIMING))['knots'])
+    def f(t):
+        t = np.asarray(t, float)
+        return np.where(t > kn[-1, 1], kn[-1, 0] + (t - kn[-1, 1]), np.interp(t, kn[:, 1], kn[:, 0]))
+    return f
+
+
+def load_cues(W=None):
     parts = [json.load(open(p)) for p in sorted(glob.glob(os.path.join(HERE, 'cues', 'part*.json')))]
     segs, beds, steps, sfx = [], [], [], []
     for p in parts:
-        segs += p['music']
-        beds += p.get('ambience', [])
-        steps += p.get('footsteps', [])
-        sfx += p.get('sfx', [])
+        segs += [dict(x) for x in p['music']]
+        beds += [dict(x) for x in p.get('ambience', [])]
+        steps += [dict(x) for x in p.get('footsteps', [])]
+        sfx += [list(x) for x in p.get('sfx', [])]
+    if W is not None:
+        m = lambda t: float(W(t))
+        for x in segs + beds:
+            x['start'], x['end'] = round(m(x['start']), 4), round(m(x['end']), 4)
+        for f in steps:
+            ts, t = [], f['start']
+            while t < f['end'] - 1e-6:
+                ts.append(m(t))
+                t += f['interval']
+            f['times'] = ts
+            f['start'], f['end'] = m(f['start']), m(f['end'])
+        for e in sfx:
+            e[0] = m(e[0])
+        for p in parts:
+            p['start'], p['end'] = m(p['start']), m(p['end'])
     segs.sort(key=lambda s: s['start'])
     return parts, segs, beds, steps, sfx
+
+
+def vo_track(n, a0, W):
+    """the voiceover on the new timeline (mono centre), with the chat-filter bleeps; returns (stereo, bleep spans)"""
+    place = json.load(open(PLACEMENT))
+    timing = json.load(open(VO_TIMING))
+    takes = {}
+    by_take = {}
+    for p in place:
+        by_take.setdefault(p['take'], []).append(p)
+    for v in by_take.values():
+        v.sort(key=lambda p: p['in'])
+    buf = np.zeros(n + SR * 2, np.float32)
+    for p in place:
+        tk = p['take']
+        if tk not in takes:
+            takes[tk] = load(os.path.join(VO_TAKES, tk + '.wav'), stereo=False)
+        x = takes[tk]
+        seq = by_take[tk]
+        k = seq.index(p)
+        pre, post = 0.05, 0.18
+        if k + 1 < len(seq) and seq[k + 1]['in'] > p['out'] - 0.02:
+            post = max(0.02, min(post, seq[k + 1]['in'] - p['out'] - 0.04))
+        if k > 0 and seq[k - 1]['out'] < p['in'] + 0.02:
+            pre = max(0.01, min(pre, p['in'] - seq[k - 1]['out'] - 0.03))
+        i0, i1 = int((p['in'] - pre) * SR), int((p['out'] + post) * SR)
+        clip = fade(x[max(0, i0):i1].copy(), 0.008, 0.03)
+        j = int(round((p['start'] - pre - a0) * SR))
+        if j < 0:
+            clip, j = clip[-j:], 0
+        m = min(len(clip), len(buf) - j)
+        if m > 0:
+            buf[j:j + m] += clip[:m]
+    # bleeps over the filtered word ("#####" in the captions)
+    bleeps = []
+    kn = np.array(timing['knots'])
+    for key, o in timing['lines'].items():
+        toks_ = o['key'].split('|', 2)[2].split()
+        for j, w in enumerate(toks_):
+            if '#' in w and j < len(o['wordsJS']):
+                t0, t1 = [float(W(v)) for v in o['wordsJS'][j]]
+                bleeps.append((t0 - 0.03, t1 + 0.05))
+    for t0, t1 in bleeps:
+        i0, i1 = int((t0 - a0) * SR), int((t1 - a0) * SR)
+        if i1 <= 0 or i0 >= len(buf):
+            continue
+        i0, i1 = max(0, i0), min(len(buf), i1)
+        seg = buf[i0:i1]
+        lvl = np.sqrt((seg ** 2).mean() + 1e-12)
+        buf[i0:i1] = 0
+        L = i1 - i0
+        tone = np.sin(2 * np.pi * 1000 * np.arange(L) / SR) * max(lvl * 1.2, 0.05)
+        buf[i0:i1] = fade(tone.astype(np.float32), 0.004, 0.006)
+    vo = hp(buf[:n], 70)
+    return st(vo), bleeps
 
 
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument('--from', dest='a0', type=float, default=0.0)
-    ap.add_argument('--to', dest='a1', type=float, default=VIDEO_LEN)
+    ap.add_argument('--to', dest='a1', type=float, default=1e9)
     ap.add_argument('--vo', default=None)
     ap.add_argument('--mux', action='store_true')
     ap.add_argument('--target', type=float, default=-13.3, help='integrated LUFS of the final mix')
     ap.add_argument('--name', default=None)
+    ap.add_argument('--video', default=None, help='video to mux with (default out/whatif_full.mp4)')
+    ap.add_argument('--out', default=None)
     a = ap.parse_args()
     os.makedirs(OUTD, exist_ok=True)
-    parts, segs, beds, steps, sfx = load_cues()
-    covered = [(p['start'], p['end']) for p in parts]
-    print('parts with cues:', covered)
-    a0, a1 = a.a0, a.a1
-    n = int((a1 - a0) * SR)
+    W = warp()
+    parts, segs, beds, steps, sfx = load_cues(W)
+    total_len = float(W(VIDEO_LEN)) if W is not None else VIDEO_LEN
+    a0, a1 = a.a0, min(a.a1, total_len)
+    print(f'timeline {total_len:.2f}s ({"voice-fitted" if W is not None else "original"}), mixing {a0}-{a1}')
+    n = int(round((a1 - a0) * SR))
+    vo = None
+    if W is not None:
+        vo, bleeps = vo_track(n, a0, W)
+        # the bleeps now come from the voice itself: drop the cue-sheet censor tones near them
+        sfx = [e for e in sfx if not (e[1] == 'censor_bleep' and any(abs(e[0] - b0) < 2.5 for b0, _ in bleeps))]
+        tmpv = os.path.join(OUTD, 'vo_tmp.wav')
+        save(tmpv, vo, 'f32')
+        vo = vo * db(VO_LUFS - lufs(tmpv))
+        os.remove(tmpv)
     prerender(segs, a0, a1)
     mus = music_track(segs, a0, a1)[:n]
     amb = amb_track(beds, a0, a1)[:n]
     fx = sfx_track(sfx, steps, a0, a1)[:n]
-    if a.vo:
-        vo = load(a.vo)
-        vo = fit(vo[int(a0 * SR):], n)
-        mus = duck(mus, vo, -10)
-        amb = duck(amb, vo, -6)
-        fx_d = fx
-        total = mus + amb + fx_d + vo
+    if vo is not None:
+        mus = duck(mus, vo, -9, thresh_db=-40)
+        amb = duck(amb, vo, -5, thresh_db=-40)
+        fx = duck(fx * db(-4), vo, -3, thresh_db=-40)
+        total = mus + amb + fx + vo
     else:
         total = mus + amb + fx
-    tag = a.name or ('full' if (a0 == 0 and a1 == VIDEO_LEN) else f'{a0:g}-{a1:g}')
+    tag = a.name or ('full' if (a0 == 0 and a1 >= total_len - 1e-6) else f'{a0:g}-{a1:g}')
     tmp = os.path.join(OUTD, f'pre_{tag}.wav')
     save(tmp, np.clip(total, -4, 4), 'f32')
     L = lufs(tmp)
@@ -297,13 +395,13 @@ def main():
     out = limiter(total * g, -1.8)
     path = os.path.join(OUTD, f'mix_{tag}.wav')
     save(path, out)
-    for nm, b in (('music', mus), ('sfx', fx), ('amb', amb)):
+    for nm, b in (('music', mus), ('sfx', fx), ('amb', amb)) + ((('vo', vo),) if vo is not None else ()):
         save(os.path.join(OUTD, f'stem_{nm}_{tag}.wav'), np.clip(b * g, -1, 1))
     os.remove(tmp)
     print(f'mix {path}: pre-gain LUFS {L:.1f} -> target {a.target}, final LUFS {lufs(path):.1f}')
     if a.mux:
-        vid = os.path.join(ROOT, 'out', 'whatif_full.mp4')
-        mp4 = os.path.join(ROOT, 'out', 'whatif_full_sound.mp4' if tag == 'full' else f'preview_{tag}.mp4')
+        vid = a.video or os.path.join(ROOT, 'out', 'whatif_full.mp4')
+        mp4 = a.out or os.path.join(ROOT, 'out', 'whatif_full_sound.mp4' if tag == 'full' else f'preview_{tag}.mp4')
         subprocess.run(['ffmpeg', '-v', 'error', '-y', '-ss', str(a0), '-t', str(a1 - a0), '-i', vid, '-i', path,
                         '-map', '0:v:0', '-map', '1:a:0', '-c:v', 'copy' if a0 == 0 else 'libx264',
                         *([] if a0 == 0 else ['-crf', '18', '-preset', 'fast']),

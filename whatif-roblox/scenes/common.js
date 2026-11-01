@@ -28,12 +28,13 @@ function words(text) {
 }
 
 // split a line into word timings (by letter count) and caption chunks
-function layoutLine([a, b, sp, text]) {
+function layoutLine([a, b, sp, text, wt]) {
   const ws = words(text);
   const weight = (w) => Math.max(2, w.replace(/[^A-Za-z0-9?!]/g, '').length + 1);
   const total = ws.reduce((s, w) => s + weight(w.w), 0);
   let t = a;
-  for (const w of ws) { const d = ((b - a) * weight(w.w)) / total; w.t0 = t; w.t1 = t + d; t += d; }
+  if (wt && wt.length === ws.length) ws.forEach((w, i) => { w.t0 = wt[i][0]; w.t1 = wt[i][1]; });
+  else for (const w of ws) { const d = ((b - a) * weight(w.w)) / total; w.t0 = t; w.t1 = t + d; t += d; }
   const chunks = []; let cur = [];
   const flush = () => { if (cur.length) { chunks.push(cur); cur = []; } };
   for (const w of ws) {
@@ -45,8 +46,19 @@ function layoutLine([a, b, sp, text]) {
   return { a, b, sp, ws, chunks: chunks.map((c) => ({ t0: c[0].t0, t1: c[c.length - 1].t1, text: c.map((x) => x.w).join(' ').toUpperCase(), hi: c.some((x) => x.h), sp })) };
 }
 
+// real voiceover timing (voice/align.py -> scenes/vo_timing.json): lines keyed by their original start|speaker|text
+let VO = null;
+try { if (!process.env.NO_VO) VO = require('./vo_timing.json'); } catch (e) { VO = null; }
+const VO_BY_KEY = {};
+if (VO) for (const k in VO.lines) { const o = VO.lines[k]; if (o.key) VO_BY_KEY[o.key] = o; }
+function voLine(line) {
+  if (!VO) return line;
+  const o = VO_BY_KEY[`${Number(line[0]).toFixed(3)}|${line[2]}|${line[3]}`];
+  return o ? [o.a, o.b, line[2], line[3], o.wordsJS] : line;
+}
+
 function makeTrack(lines) {
-  const L = lines.map(layoutLine);
+  const L = lines.map(voLine).map(layoutLine);
   const caps = [];
   for (const l of L) l.chunks.forEach((c, i) => {
     const next = l.chunks[i + 1];
@@ -215,6 +227,7 @@ function sfx(text, x, y, k, size = 90, rot = -8, col = '#FFE14D') {
 }
 
 module.exports = {
+  VO, voLine,
   W, H, hash, bump, blinkAt, makeTrack, visemeAt, captionAt, captionText, pixelWipe, vignette, nightGrade, vhs, staticNoise,
   whiteFlash, zzz, musicNotes, speedLines, dust, burst, sfx,
 };
