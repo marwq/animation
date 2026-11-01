@@ -80,12 +80,13 @@ ROOM_LIGHT = {'sun': (-0.70, 0.45, -0.42), 'sun_power': 10.5, 'sun_color': (1.0,
 # тёплые фонари и факелы. moon — где луна видна в кадре (азимут от севера к востоку,
 # высота, °), sun — откуда на самом деле светит: подобрано для каждого кадра, чтобы
 # луна была видна, а свет красиво лёг. volume — дымка в комнате для лунных лучей.
-HOME_NIGHT = {'night': True, 'sun_power': 4.0, 'sun_color': (0.55, 0.68, 1.0), 'sky_light': 0.12,
-              'sky_seen': 1.6, 'sky_ambient': (0.30, 0.42, 0.75), 'exposure': -0.2, 'dir': 'home',
+HOME_NIGHT = {'night': True, 'sun_power': 7.0, 'sun_color': (0.62, 0.74, 1.0), 'sky_light': 0.22,
+              'sky_seen': 1.6, 'sky_ambient': (0.34, 0.46, 0.80), 'exposure': 0.35, 'dir': 'home',
               'grade': {**LUSH, 'sat': 1.15, 'bloom': 0.45}}
-HOME_DOOR_MOON = {'moon': (165, 7), 'sun': (-0.224, 0.837, -0.5), 'sun_power': 6.0,   # в южном
-                  'exposure': 0.1, 'volume': 0.06}                                       # окне
-HOME_HOUSE_MOON = {'moon': (25, 25), 'sun': (-0.262, 0.720, -0.643), 'sky_reflect': True}
+HOME_DOOR_MOON = {'moon': (165, 7), 'sun': (-0.224, 0.837, -0.5), 'sun_power': 11.0,  # в южном
+                  'exposure': 0.9, 'volume': 0.06}                                       # окне
+HOME_HOUSE_MOON = {'moon': (25, 25), 'sun': (-0.262, 0.720, -0.643), 'sky_reflect': True,
+                   'exposure': 0.45}
 HOME_ROOM_CAM = {'cam': (0.0, 8.15, 2.62), 'yaw': 180, 'shift': -0.12, 'lens': 18, 'focus': 5.0,
                  'fstop': 2.8}
 HOME_HOUSE_CAM = {'cam': (0.0, -15.5, 2.62), 'yaw': 0, 'shift': 0.07, 'lens': 22, 'focus': 14.5,
@@ -156,10 +157,11 @@ SHOTS = {
                         'door_open': True},
     'home_window':     {'world': 'home', 'cam': (0.0, 0.35, 2.62), 'yaw': 0, 'shift': -0.04,
                         'lens': 18, 'focus': 6.0, 'fstop': 2.8, **HOME_NIGHT,
-                        'moon': (8, 9), 'sun': (-0.15, -0.85, -0.5), 'volume': 0.06},
+                        'moon': (8, 9), 'sun': (-0.15, -0.85, -0.5), 'volume': 0.06,
+                        'exposure': 0.65},
     'home_yard':       {'world': 'home', 'cam': (0.0, -3.2, 2.62), 'yaw': 180, 'shift': -0.06,
                         'lens': 22, 'focus': 9.0, 'fstop': 1.4, **HOME_NIGHT, 'sky_reflect': True,
-                        'moon': (200, 22), 'sun': (0.317, 0.871, -0.375)},
+                        'moon': (200, 22), 'sun': (0.317, 0.871, -0.375), 'exposure': 0.6},
     'home_house':      {'world': 'home', **HOME_HOUSE_CAM, **HOME_NIGHT, **HOME_HOUSE_MOON},
     'home_house_open': {'world': 'home', **HOME_HOUSE_CAM, **HOME_NIGHT, **HOME_HOUSE_MOON,
                         'door_open': True},
@@ -358,6 +360,10 @@ def home_textures(tex, t):
     for k in ('allium', 'blue_orchid', 'lily_of_the_valley'):
         a = opt(k)
         h[k] = a if a is not None else t['poppy']
+    leaves = opt('oak_leaves')                          # осенняя листва для дома
+    if leaves is not None:
+        for name, rgb in AUTUMN.items():
+            h[name] = tint(leaves, rgb)
     moon = opt('moon_phases')
     if moon is not None:
         cell = moon[moon.shape[0] - 32:, :32]               # полнолуние: левая верхняя клетка,
@@ -1252,6 +1258,8 @@ def build_room(opt, view, mats):
 # дорожкой, фонарями, прудом и деревьями. Кадры: комната на дверь (закрыта и открыта),
 # комната ночью на окно, двор, дом со двора (дверь закрыта и открыта).
 HOME_PATH = range(-16, -1)                       # дорожка от двери: y; x = -1 и 0
+AUTUMN = {'autumn_orange_leaves': (0xF0, 0x86, 0x22), 'autumn_red_leaves': (0xE0, 0x4E, 0x22),
+          'autumn_gold_leaves': (0xF2, 0xC2, 0x2E)}   # осень: листва оранжевая, красная, золотая
 HOME_POND = (6.5, -19.5, 3.2)                    # пруд: центр и радиус
 HOME_TREES = [(-9, 15), (8, 14, 'birch'), (10, 4), (11, 10, 'birch'), (-11, 2, 'birch'),
               (-12, 8), (-8, -8), (7, -7, 'birch'), (-13, -17), (13, -14), (-6, -24, 'birch'),
@@ -1474,8 +1482,9 @@ def build_home(opt, view, mats):
         m.box((x0, -1.45, 1.55), (x0 + 2, -1, 1.95), 'spruce_planks')
         for i, plant in enumerate(('poppy', 'dandelion', 'cornflower', 'allium')):
             m.cross_s(x0 + 0.25 + 0.5 * i, -1.22, 1.9, plant, 0.6)
-    bushes = {(x, y, 1): 'oak_leaves' for x, y in ((-6, -2), (5, -2), (-6, -3), (5, -3), (-6, 0), (5, 0))}
-    bushes.update({(x, -2, 2): 'oak_leaves' for x in (-6, 5)})
+    leaf = 'autumn_red_leaves' if 'autumn_red_leaves' in mats else 'oak_leaves'
+    bushes = {(x, y, 1): leaf for x, y in ((-6, -2), (5, -2), (-6, -3), (5, -3), (-6, 0), (5, 0))}
+    bushes.update({(x, -2, 2): leaf for x in (-6, 5)})
     m.blocks(bushes)
 
     lm = Mesh()                                                  # фонари: свои, тени не бросают
@@ -1494,11 +1503,23 @@ def build_home(opt, view, mats):
     # ---- двор
     g = Mesh()
     pond, path = home_ground(g)
-    for x, y, *wood in HOME_TREES + HOME_FAR_TREES:
-        g.blocks(tree_shape(rng, x, y, 0, wood[0] if wood else 'oak'))
+    autumn = [k for k in AUTUMN if k in mats] or ['oak_leaves']
+    fallen = {}
+    for x, y, *wood in HOME_TREES + HOME_FAR_TREES:              # осень: деревья в цвету листвы
+        wood = wood[0] if wood else 'oak'
+        leaf = 'autumn_gold_leaves' if wood == 'birch' and 'autumn_gold_leaves' in mats \
+            else rng.choice(autumn[:2])
+        g.blocks({p: (leaf if t.endswith('_leaves') else t)
+                  for p, t in tree_shape(rng, x, y, 0, wood).items()})
+        for _ in range(7):                                       # опавшие листья под деревом
+            fallen[(x + rng.randint(-3, 3), y + rng.randint(-3, 3))] = leaf
     for x, y, w, h in HOME_BUSHES:                               # кусты из листвы
-        g.blocks({(x + i, y + j, 1 + k): 'oak_leaves' for i in range(w) for j in range(w)
+        leaf = rng.choice(autumn)
+        g.blocks({(x + i, y + j, 1 + k): leaf for i in range(w) for j in range(w)
                   for k in range(h) if not (k == h - 1 and h > 1 and i in (0, w - 1) and j in (0, w - 1))})
+    for (x, y), leaf in fallen.items():
+        if (x, y) not in pond and (x, y) not in path and not (-5 <= x <= 4 and -1 <= y <= 9):
+            g.quad([(x, y, 1.01), (x + 1, y, 1.01), (x + 1, y + 1, 1.01), (x, y + 1, 1.01)], leaf)
     for x in range(-30, 30):                                     # цветы по лужайке
         for y in range(-50, 40):
             if -7 <= x <= 6 and -3 <= y <= 10 or (x, y) in pond or abs(x + 0.5) < 3 and y > -18:
