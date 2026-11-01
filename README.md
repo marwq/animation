@@ -114,6 +114,10 @@ node tools/render.js                     # PNG ×2 (или: node tools/render.js
 | `backgrounds/room/room_door.png` | комната в домике от двери: большое окно с факелами, книжные полки, диван, солнечные пятна на полу |
 | `backgrounds/room/room_bed.png` | та же комната от дальней стены: по центру двойная дверь с факелами и окнами |
 | `backgrounds/room/room_bed_open.png` | то же, но дверь распахнута внутрь, в проёме улица |
+| `backgrounds/home/home_door.png`, `home_door_open.png` | дом: комната на дверь — картины, фонари, цветы в горшках, лучи солнца из окон; дверь закрыта / открыта, остальное одинаково |
+| `backgrounds/home/home_window_night.png` | та же комната ночью, вид на большое окно: луна и звёзды, лунный свет на полу, тёплые фонари |
+| `backgrounds/home/home_yard.png` | двор от двери: дорожка с фонарями, лужайка с цветами, кусты, пруд, деревья, облака |
+| `backgrounds/home/home_house.png`, `home_house_open.png` | дом со двора: дверь закрыта / открыта, остальное одинаково |
 | `backgrounds/coast/coast.png` | поле без деревьев, спускается к пляжу, сзади море до горизонта — цвета как у поляны |
 | `backgrounds/aerial/aerial.png` | вид с большой высоты: земля круглая, внизу поле с рощами и пляж, дальше море с островами, у горизонта полоска суши и свечение атмосферы |
 | `backgrounds/sky/sky.png` | только небо с облаками Minecraft, низ кадра на горизонте — цвета как у поляны |
@@ -134,6 +138,8 @@ blender -b --factory-startup -P tools/mc_scene.py -- --shot nether --style toon
 blender -b --factory-startup -P tools/mc_scene.py -- --shot meadow
 blender -b --factory-startup -P tools/mc_scene.py -- --shot village   # и cottage, grove
 blender -b --factory-startup -P tools/mc_scene.py -- --shot room_door  # и room_bed, room_bed_open
+blender -b --factory-startup -P tools/mc_scene.py -- --shot home_door  # и home_door_open, home_window_night,
+                                                                        # home_yard, home_house, home_house_open
 blender -b --factory-startup -P tools/mc_scene.py -- --shot coast
 blender -b --factory-startup -P tools/mc_scene.py -- --shot sky
 blender -b --factory-startup -P tools/mc_scene.py -- --shot aerial

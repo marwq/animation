@@ -76,6 +76,24 @@ SUNNY = {'sun_power': 9.5, 'sun_color': (1.0, 0.86, 0.62), 'sky_light': 0.45, 'e
 ROOM_LIGHT = {'sun': (-0.70, 0.45, -0.42), 'sun_power': 10.5, 'sun_color': (1.0, 0.86, 0.62),
               'sky_light': 1.0, 'fill': 140, 'exposure': 0.9}
 
+# дом (мир home): одно солнце на все дневные кадры, внутри — дымка для лучей;
+# ночью — луна, звёзды, лунный свет в окна и тёплые фонари и факелы
+HOME_SUN = (-0.70, 0.45, -0.42)
+HOME_DAY_IN = {'sun': HOME_SUN, 'sun_power': 10.5, 'sun_color': (1.0, 0.86, 0.62),
+               'sky_light': 1.0, 'fill': 140, 'exposure': 0.9, 'volume': 0.02, 'dir': 'home',
+               'grade': LUSH}
+HOME_DAY_OUT = {'sun': HOME_SUN, 'sun_power': 9.5, 'sun_color': (1.0, 0.86, 0.62),
+                'sky_light': 0.45, 'exposure': 0.3, 'sky_reflect': True, 'dir': 'home',
+                'grade': LUSH}
+HOME_NIGHT = {'night': True, 'moon': (8, 9), 'sun': (-0.15, -0.85, -0.5), 'sun_power': 4.0,
+              'sun_color': (0.55, 0.68, 1.0), 'sky_light': 0.12, 'sky_seen': 1.6,
+              'sky_ambient': (0.30, 0.42, 0.75), 'exposure': -0.2, 'volume': 0.06, 'dir': 'home',
+              'grade': {**LUSH, 'sat': 1.15, 'bloom': 0.45}}
+HOME_ROOM_CAM = {'cam': (0.0, 8.15, 2.62), 'yaw': 180, 'shift': -0.12, 'lens': 18, 'focus': 5.0,
+                 'fstop': 2.8}
+HOME_HOUSE_CAM = {'cam': (0.0, -15.5, 2.62), 'yaw': 0, 'shift': 0.07, 'lens': 22, 'focus': 14.5,
+                  'fstop': 1.4}
+
 PORTAL = (-1, 20)        # левый блок рамки; рамка 4×5 стоит вдоль оси x
 PORTAL_C = Vector((1.0, 20.5, 3.5))     # центр проёма 2×3
 
@@ -136,6 +154,14 @@ SHOTS = {
     'room_bed_open': {'world': 'room', 'dir': 'room', 'cam': (0.0, 8.15, 2.62), 'yaw': 180,
                       'shift': -0.12, 'lens': 18, 'focus': 5.0, 'fstop': 2.8, 'grade': LUSH,
                       'door_open': True, **ROOM_LIGHT},
+    'home_door':       {'world': 'home', **HOME_ROOM_CAM, **HOME_DAY_IN},
+    'home_door_open':  {'world': 'home', **HOME_ROOM_CAM, **HOME_DAY_IN, 'door_open': True},
+    'home_window_night': {'world': 'home', 'cam': (0.0, 0.35, 2.62), 'yaw': 0, 'shift': -0.04,
+                          'lens': 18, 'focus': 6.0, 'fstop': 2.8, **HOME_NIGHT},
+    'home_yard':       {'world': 'home', 'cam': (0.0, -3.2, 2.62), 'yaw': 180, 'shift': -0.06,
+                        'lens': 22, 'focus': 9.0, 'fstop': 1.4, **HOME_DAY_OUT},
+    'home_house':      {'world': 'home', **HOME_HOUSE_CAM, **HOME_DAY_OUT},
+    'home_house_open': {'world': 'home', **HOME_HOUSE_CAM, **HOME_DAY_OUT, 'door_open': True},
     'swing':  {'world': 'swing', 'dir': 'props', 'cam': (2.0, -10.0, 1.62), 'shift': 0.06,
                'lens': 35, 'focus': 10.0, 'fstop': 0, 'exposure': -0.6, 'grade': {'sat': 1.1}},
 }
@@ -223,7 +249,8 @@ def load_rgba(tex, *names):
             a = np.empty(w * h * 4, np.float32)
             img.pixels.foreach_get(a)
             bpy.data.images.remove(img)
-            return a.reshape(h, w, 4)[h - w:]  # анимированная полоска — верхний кадр
+            a = a.reshape(h, w, 4)
+            return a[h - w:] if h > w and h % w == 0 else a   # анимированная полоска — верхний кадр
     raise FileNotFoundError(f'нет текстуры {names[0]}.png в {tex}')
 
 
@@ -268,6 +295,7 @@ def textures(tex, toon=False):
         t[k][..., :3] = a[..., :3] * a[..., 3:] + sky * (1 - a[..., 3:])
         t[k][..., 3] = 1
     t['torch_flame'] = np.tile(np.array([1.0, 0.78, 0.30, 1.0], np.float32), (2, 2, 1))
+    t.update(home_textures(tex, t))
     inside = t['oak_planks'].copy()             # комната за окном и дверью — темнее
     inside[..., :3] *= 0.5
     for k, f in (('window', 'glass'), ('door_bottom', 'oak_door_bottom'), ('door_top', 'oak_door_top')):
@@ -288,6 +316,56 @@ def textures(tex, toon=False):
         img.pack()
         imgs[k] = img
     return imgs
+
+
+def crop(a, x0, y0, x1, y1):
+    """Кусок текстуры по пикселям как в Minecraft (y сверху вниз); строки массива снизу вверх."""
+    h = a.shape[0]
+    return a[h - y1:h - y0, x0:x1].copy()
+
+
+def home_textures(tex, t):
+    """Текстуры для дома: фонарь, горшок, бочка, дорожка, азалия, цветы, луна, картины.
+    Чего нет в папке текстур (например, в свободном наборе) — заменяется досками или
+    пропускается (картины, луна)."""
+    def opt(*names):
+        try:
+            return load_rgba(tex, *names)
+        except FileNotFoundError:
+            return None
+    planks = t['oak_planks']
+    h = {}
+    lan = opt('lantern')
+    if lan is not None:
+        h['lantern_side'], h['lantern_top'] = crop(lan, 0, 2, 6, 9), crop(lan, 0, 9, 6, 15)
+        h['lantern_cap'], h['lantern_cap_top'] = crop(lan, 1, 0, 5, 2), crop(lan, 1, 10, 5, 14)
+    else:
+        h['lantern_side'] = h['lantern_top'] = h['lantern_cap'] = h['lantern_cap_top'] = t['torch_flame']
+    pot = opt('flower_pot')
+    if pot is not None:
+        h['pot_side'] = crop(pot, 5, 10, 11, 16)
+        top, soil = crop(pot, 5, 5, 11, 11), crop(t['dirt'], 5, 5, 11, 11)
+        top[..., :3] = top[..., :3] * top[..., 3:] + soil[..., :3] * 0.6 * (1 - top[..., 3:])
+        top[..., 3] = 1
+        h['pot_top'] = top
+    else:
+        h['pot_side'] = h['pot_top'] = planks
+    for k in ('barrel_side', 'barrel_top', 'dirt_path_top', 'azalea_top', 'azalea_side'):
+        a = opt(k)
+        h[k] = a if a is not None else planks
+    h['dirt_path_top'] = tint(h['dirt_path_top'], (205, 190, 170))   # на солнце не рыжая
+    for k in ('allium', 'blue_orchid', 'lily_of_the_valley'):
+        a = opt(k)
+        h[k] = a if a is not None else t['poppy']
+    moon = opt('moon_phases')
+    if moon is not None:
+        cell = moon[moon.shape[0] - 32:, :32]               # полнолуние: левая верхняя клетка,
+        h['moon'] = crop(cell, 12, 12, 20, 20)              # сама луна в ней 8×8
+    for k in ('sunset', 'bust', 'sea', 'plant'):
+        a = opt('painting_' + k)
+        if a is not None:
+            h['painting_' + k] = a
+    return h
 
 
 def toon_textures(t, overlay):
@@ -422,11 +500,12 @@ def material(name, img, kind, toon=False, haze=(35, 180, 0.3)):
 
 
 PLANTS = {'short_grass', 'tall_grass_bottom', 'tall_grass_top', 'poppy', 'dandelion',
-          'oxeye_daisy', 'cornflower', 'azure_bluet'}
+          'oxeye_daisy', 'cornflower', 'azure_bluet', 'allium', 'blue_orchid',
+          'lily_of_the_valley'}
 
 
 def kind_of(name):
-    if name in ('chain', 'glass', 'door_bottom_cut', 'door_top_cut'):
+    if name in ('chain', 'glass', 'door_bottom_cut', 'door_top_cut', 'azalea_side'):
         return 'cutout'
     if name.startswith('water'):
         return 'water'
@@ -434,7 +513,8 @@ def kind_of(name):
         return 'leaves'
     if name == 'obsidian':
         return 'glossy'
-    if name in ('nether_portal', 'lava', 'lava_flow', 'magma', 'fire', 'torch_flame'):
+    if name in ('nether_portal', 'lava', 'lava_flow', 'magma', 'fire', 'torch_flame') \
+            or name.startswith('lantern'):
         return 'emit'
     return 'plant' if name in PLANTS else 'block'
 
@@ -465,6 +545,19 @@ class Mesh:
         self.uv += uv
         self.mat.append(mat)
 
+    def box_fit(self, lo, hi, side, top=None, bottom=None, front=None, facing=None):
+        """Коробка, на каждую грань текстура целиком (фонарь, горшок, картина)."""
+        (x0, y0, z0), (x1, y1, z1) = lo, hi
+        for n, c in (((0, 0, 1), [(x0, y0, z1), (x1, y0, z1), (x1, y1, z1), (x0, y1, z1)]),
+                     ((0, 0, -1), [(x0, y1, z0), (x1, y1, z0), (x1, y0, z0), (x0, y0, z0)]),
+                     ((0, -1, 0), [(x0, y0, z0), (x1, y0, z0), (x1, y0, z1), (x0, y0, z1)]),
+                     ((0, 1, 0), [(x1, y1, z0), (x0, y1, z0), (x0, y1, z1), (x1, y1, z1)]),
+                     ((-1, 0, 0), [(x0, y1, z0), (x0, y0, z0), (x0, y0, z1), (x0, y1, z1)]),
+                     ((1, 0, 0), [(x1, y0, z0), (x1, y1, z0), (x1, y1, z1), (x1, y0, z1)])):
+            mat = front if front and n == facing else \
+                (top or side) if n[2] == 1 else (bottom or top or side) if n[2] == -1 else side
+            self.quad(c, mat)
+
     def box(self, lo, hi, mat):
         """Коробка от lo до hi в блоках; текстура по координатам мира, как в игре:
         узкая деталь берёт середину текстуры, длинная — повторяет её."""
@@ -491,6 +584,13 @@ class Mesh:
                 if nb and (solid or not clear(nb) or nb == t == 'glass'):
                     continue                   # за стеклом и листвой грань видна
                 self.face(x, y, z, n, t + '_top' if t.endswith('_log') and n[2] else t)
+
+    def cross_s(self, cx, cy, z, mat, size):
+        """Маленький крест (цветок в горшке или ящике): центр, низ на z, размер в блоках."""
+        h = 0.44 * size
+        for (a, b), (c, d) in (((-h, -h), (h, h)), ((h, -h), (-h, h))):
+            self.quad([(cx + a, cy + b, z), (cx + c, cy + d, z), (cx + c, cy + d, z + size),
+                       (cx + a, cy + b, z + size)], mat)
 
     def cross(self, x, y, z, mat, dx=0.0, dy=0.0):
         lo, hi = 0.06, 0.94
@@ -1145,6 +1245,279 @@ def build_room(opt, view, mats):
     t.build('trees', mats)
 
 
+# ------------------------------------------------------------------ дом
+# Та же комната, что выше, но наряднее, и с улицей: внутри x от -4 до 4, y от 0 до 9,
+# пол — верх на z = 1, потолок на z = 5. Дверь на юге (y = -1), к югу — двор с
+# дорожкой, фонарями, прудом и деревьями. Кадры: комната на дверь (закрыта и открыта),
+# комната ночью на окно, двор, дом со двора (дверь закрыта и открыта).
+HOME_PATH = range(-16, -1)                       # дорожка от двери: y; x = -1 и 0
+HOME_POND = (6.5, -19.5, 3.2)                    # пруд: центр и радиус
+HOME_TREES = [(-9, 15), (8, 14, 'birch'), (10, 4), (11, 10, 'birch'), (-11, 2, 'birch'),
+              (-12, 8), (-8, -8), (7, -7, 'birch'), (-13, -17), (13, -14), (-6, -24, 'birch'),
+              (5, -27), (-11, -29), (14, -27), (-18, -24), (20, -20, 'birch'), (-2, -35),
+              (9, -38, 'birch'), (-14, -39), (19, -36), (2, -46), (-22, -46), (14, -49, 'birch'),
+              (-8, -53), (24, -50), (-28, -36, 'birch'), (27, -30)]
+HOME_BUSHES = [(-8, -12, 2, 1), (6, -12, 2, 1), (-9, -20, 2, 2), (10, -24, 3, 2), (-4, -30, 2, 1),
+               (7, -33, 2, 2), (-15, -12, 2, 1), (-24, -14, 3, 2)]
+HOME_FAR_TREES = [(x, 48 + (x * 7) % 9) for x in range(-48, 49, 7)]   # кромка леса на севере
+
+
+def home_walls():
+    """Стены, пол, потолок и ступенчатая крыша; дверь ставится отдельно."""
+    b = {}
+    for x in range(-5, 5):
+        for y in range(-1, 10):
+            b[(x, y, 0)] = 'oak_planks'
+            b[(x, y, 5)] = 'oak_planks'
+            if x in (-5, 4) or y in (-1, 9):
+                for z in range(1, 5):
+                    corner = x in (-5, 4) and y in (-1, 9)
+                    b[(x, y, z)] = 'oak_log' if corner else 'cobblestone' if z == 1 else \
+                        'stripped_oak' if z == 4 else 'oak_planks'
+    for x in range(-3, 3):                                       # север: большое окно 6×3
+        for z in (2, 3, 4):
+            b[(x, 9, z)] = 'glass'
+    for x in (-4, -3, 2, 3):                                     # юг: окна по бокам двери
+        for z in (2, 3):
+            b[(x, -1, z)] = 'glass'
+    for y in range(3, 6):                                        # запад
+        for z in (2, 3):
+            b[(-5, y, z)] = 'glass'
+    for y in range(1, 7):                                        # восток, сюда солнце
+        for z in (2, 3):
+            b[(4, y, z)] = 'glass'
+    for x in (-1, 0):
+        del b[(x, -1, 1)], b[(x, -1, 2)]                         # проём двери
+    for k in range(3):                                           # крыша из ели, пологими ступенями
+        for x in range(-6 + 2 * k, 6 - 2 * k):
+            for y in range(-2, 11):
+                b[(x, y, 6 + k)] = 'spruce_planks'
+    return b
+
+
+def pot(m, cx, cy, z, plant):
+    """Цветочный горшок на высоте z с цветком или кустиком азалии."""
+    s = 1 / 16
+    m.box_fit((cx - 3 * s, cy - 3 * s, z), (cx + 3 * s, cy + 3 * s, z + 6 * s), 'pot_side', 'pot_top')
+    if plant == 'azalea':
+        m.box_fit((cx - 5 * s, cy - 5 * s, z + 6 * s), (cx + 5 * s, cy + 5 * s, z + 16 * s),
+                  'azalea_side', 'azalea_top')
+    else:
+        m.cross_s(cx, cy, z + 4 * s, plant, 0.8)
+
+
+def lantern(m, x, y, z, hang=None):
+    """Фонарь: низ на высоте z; hang — высота, с которой он свисает на цепи."""
+    s = 1 / 16
+    m.box_fit((x - 3 * s, y - 3 * s, z), (x + 3 * s, y + 3 * s, z + 7 * s), 'lantern_side', 'lantern_top')
+    m.box_fit((x - 2 * s, y - 2 * s, z + 7 * s), (x + 2 * s, y + 2 * s, z + 9 * s), 'lantern_cap',
+              'lantern_cap_top')
+    if hang:
+        w, z0 = 1.5 * s, z + 9 * s
+        for dx, dy in ((0.7071, 0.7071), (0.7071, -0.7071)):
+            m.quad([(x - w * dx, y - w * dy, z0), (x + w * dx, y + w * dy, z0),
+                    (x + w * dx, y + w * dy, hang), (x - w * dx, y - w * dy, hang)],
+                   'chain', [(0, z0), (3 / 16, z0), (3 / 16, hang), (0, hang)])
+    lt = bpy.data.lights.new('lantern_light', 'POINT')
+    lt.energy, lt.color, lt.shadow_soft_size = 28, (1.0, 0.66, 0.32), 0.05
+    lo = bpy.data.objects.new('lantern_light', lt)
+    lo.location = (x, y, z + 3.5 * s)
+    bpy.context.scene.collection.objects.link(lo)
+
+
+def painting(m, name, mats, lo, hi, facing):
+    """Картина: тонкая доска, лицом в сторону facing; без текстуры — не вешаем."""
+    if name in mats:
+        m.box_fit(lo, hi, 'oak_planks', front=name, facing=facing)
+
+
+def home_ground(m):
+    """Трава вокруг дома по клеткам: в ней вырезаны дорожка и пруд."""
+    px, py, pr = HOME_POND
+    pond = {(x, y) for x in range(int(px - pr - 2), int(px + pr + 3))
+            for y in range(int(py - pr - 2), int(py + pr + 3))
+            if math.hypot(x + 0.5 - px, y + 0.5 - py) + 0.6 * noise.noise(Vector((x * 0.4, y * 0.4, 2.2))) < pr}
+    path = {(x, y) for x in (-1, 0) for y in HOME_PATH}
+    for x in range(-45, 45):
+        for y in range(-62, 46):
+            if -5 <= x <= 4 and -1 <= y <= 9:
+                continue                                         # под домом — пол
+            if (x, y) in pond:
+                m.quad([(x, y, 0.875), (x + 1, y, 0.875), (x + 1, y + 1, 0.875), (x, y + 1, 0.875)],
+                       'water', [(x, y), (x + 1, y), (x + 1, y + 1), (x, y + 1)])
+                continue
+            z = 0.9375 if (x, y) in path else 1
+            m.quad([(x, y, z), (x + 1, y, z), (x + 1, y + 1, z), (x, y + 1, z)],
+                   'dirt_path_top' if (x, y) in path else 'grass_top',
+                   [(x, y), (x + 1, y), (x + 1, y + 1), (x, y + 1)])
+            for n in SIDES:                                      # берег пруда и бортик дорожки
+                nb = (x + n[0], y + n[1])
+                if nb in pond or nb in path and (x, y) not in path:
+                    m.face(x, y, 0, n, 'grass_side')
+    far = 400                                                    # дальше — большими кусками
+    for (x0, y0), (x1, y1) in (((-far, -far), (far, -62)), ((-far, 46), (far, far)),
+                               ((-far, -62), (-45, 46)), ((45, -62), (far, 46))):
+        m.quad([(x0, y0, 1), (x1, y0, 1), (x1, y1, 1), (x0, y1, 1)], 'grass_top',
+               [(x0, y0), (x1, y0), (x1, y1), (x0, y1)])
+    return pond, path
+
+
+def home_clouds(mats, cam):
+    m = Mesh()
+    S, H, Z = 12, 4, 120
+    cells = {(cx, cy) for cx in range(-60, 61) for cy in range(-60, 61)
+             if noise.noise(Vector((cx * 0.23, cy * 0.23, 5.1))) > 0.25}
+    for cx, cy in cells:
+        d = math.hypot(cx * S + 6 - cam.x, cy * S + 6 - cam.y)
+        if not 200 < d < 720:
+            continue
+        for n in FACES:
+            if n[2] == 0 and (cx + n[0], cy + n[1]) in cells:
+                continue
+            m.quad([(cx * S + a * S, cy * S + b * S, Z + c * H) for a, b, c in FACES[n]], 'cloud')
+    m.build('clouds', mats).visible_shadow = False
+
+
+def home_moon(view):
+    """Луна из игры: квадрат с текстурой полнолуния, светится сам, ничего не освещает."""
+    az, el = (math.radians(a) for a in view.s['moon'])
+    d = (math.sin(az) * math.cos(el), math.cos(az) * math.cos(el), math.sin(el))
+    c = view.pos + Vector(d) * 300
+    r = Vector((math.cos(az), -math.sin(az), 0))
+    u = Vector((-math.sin(az) * math.sin(el), -math.cos(az) * math.sin(el), math.cos(el)))
+    h = 300 * math.tan(math.radians(2.6))
+    corners = [c - r * h - u * h, c + r * h - u * h, c + r * h + u * h, c - r * h + u * h]
+    mat = bpy.data.materials.new('moon_glow')
+    mat.use_nodes = True
+    N, L = mat.node_tree.nodes, mat.node_tree.links
+    N.clear()
+    tx = N.new('ShaderNodeTexImage')
+    tx.image, tx.interpolation = bpy.data.images['moon'], 'Closest'
+    em = N.new('ShaderNodeEmission')                 # квадратная, как в игре
+    em.inputs['Strength'].default_value = 5
+    L.new(tx.outputs['Color'], em.inputs['Color'])
+    L.new(em.outputs[0], N.new('ShaderNodeOutputMaterial').inputs['Surface'])
+    m = Mesh()
+    m.quad([tuple(v) for v in corners], 'moon')
+    ob = m.build('moon', {'moon': mat})
+    ob.visible_shadow = ob.visible_diffuse = ob.visible_glossy = ob.visible_transmission = False
+    ob.visible_volume_scatter = False
+
+
+def home_volume(density):
+    """Лёгкая дымка в комнате: в ней видны лучи из окон."""
+    me = bpy.data.meshes.new('air')
+    lo, hi = (-3.98, 0.02, 1.01), (3.98, 8.98, 4.98)
+    me.from_pydata([(x, y, z) for x in (lo[0], hi[0]) for y in (lo[1], hi[1]) for z in (lo[2], hi[2])], [],
+                   [(0, 1, 3, 2), (4, 6, 7, 5), (0, 4, 5, 1), (2, 3, 7, 6), (0, 2, 6, 4), (1, 5, 7, 3)])
+    mat = bpy.data.materials.new('air')
+    mat.use_nodes = True
+    N, L = mat.node_tree.nodes, mat.node_tree.links
+    N.clear()
+    v = N.new('ShaderNodeVolumePrincipled')
+    v.inputs['Density'].default_value = density
+    v.inputs['Anisotropy'].default_value = 0.45
+    L.new(v.outputs[0], N.new('ShaderNodeOutputMaterial').inputs['Volume'])
+    me.materials.append(mat)
+    ob = bpy.data.objects.new('air', me)
+    bpy.context.scene.collection.objects.link(ob)
+
+
+def build_home(opt, view, mats):
+    s = view.s
+    rng = random.Random(opt['seed'])
+    m = Mesh()
+    m.blocks(home_walls())
+    if s.get('door_open'):                     # створки распахнуты внутрь, к косякам
+        d = 3 / 16
+        for x0, x1 in ((-1, -1 + d), (1 - d, 1)):
+            m.box((x0, -1, 1), (x1, 0, 2), 'door_bottom_cut')
+            m.box((x0, -1, 2), (x1, 0, 3), 'door_top_cut')
+    else:                                      # снаружи в окошках — комната, изнутри — небо
+        for x in (-1, 0):
+            cube(m, x, -1, 1, 'oak_planks', 'door_bottom_in', 'door_bottom', facing=(0, -1, 0))
+            cube(m, x, -1, 2, 'oak_planks', 'door_top_in', 'door_top', facing=(0, -1, 0))
+
+    # ---- комната
+    cube(m, -4, 0, 1, 'barrel_top', 'barrel_side')               # запад: бочка, верстак, печь
+    cube(m, -4, 1, 1, 'crafting_table_top', 'crafting_table_side', 'crafting_table_front')
+    cube(m, -4, 2, 1, 'furnace_top', 'furnace_side', 'furnace_front')
+    for z in (1, 2):
+        for y in (6, 7):
+            cube(m, -4, y, z, 'oak_planks', 'bookshelf')
+    cube(m, -4, 8, 1, 'oak_planks', 'bookshelf')
+    for y in range(3, 6):                                        # восток: диван и столик
+        m.box((3, y, 1), (4, y + 1, 1.5), 'oak_planks')
+        m.box((3.5, y, 1.5), (4, y + 1, 2), 'oak_planks')
+    m.box((3, 2.8125, 1), (4, 3, 1.8), 'oak_trapdoor')
+    m.box((3, 6, 1), (4, 6.1875, 1.8), 'oak_trapdoor')
+    m.box((1.875, 4.375, 1), (2.125, 4.625, 1.9375), 'oak_planks')
+    m.box((1.5, 4, 1.9375), (2.5, 5, 2), 'oak_planks')
+    m.box((-3, 8.45, 1), (3, 9, 1.5), 'oak_planks')             # подоконник под большим окном
+    for x, plant in ((-2.5, 'poppy'), (-1.5, 'azalea'), (-0.5, 'blue_orchid'), (0.5, 'dandelion'),
+                     (1.5, 'azalea'), (2.5, 'allium')):
+        pot(m, x, 8.72, 1.5, plant)
+    pot(m, -3.5, 0.5, 2, 'poppy')                                # на бочке,
+    pot(m, -3.5, 2.5, 2, 'lily_of_the_valley')                   # на печи,
+    pot(m, 2.0, 4.5, 2, 'allium')                                # на столике
+    pot(m, 3.5, 0.5, 1, 'azalea')                                # и в углах на полу
+    pot(m, 3.5, 7.5, 1, 'azalea')
+    for y in (2.75, 5.75):                                       # балки под потолком
+        m.box((-5, y, 4.65), (4, y + 0.5, 5), 'stripped_oak')
+    painting(m, 'painting_sunset', mats, (-1, 0, 3.02), (1, 1 / 16, 3.98), (0, 1, 0))   # над дверью
+    painting(m, 'painting_bust', mats, (-4, 0.25, 2.1), (-4 + 1 / 16, 2.25, 4.1), (1, 0, 0))
+    painting(m, 'painting_sea', mats, (-4, 6, 3.05), (-4 + 1 / 16, 8, 4.05), (1, 0, 0))
+
+    # ---- снаружи у дома
+    for x0 in (-4, 2):                                           # ящики с цветами под окнами
+        m.box((x0, -1.45, 1.55), (x0 + 2, -1, 1.95), 'spruce_planks')
+        for i, plant in enumerate(('poppy', 'dandelion', 'cornflower', 'allium')):
+            m.cross_s(x0 + 0.25 + 0.5 * i, -1.22, 1.9, plant, 0.6)
+    bushes = {(x, y, 1): 'oak_leaves' for x, y in ((-6, -2), (5, -2), (-6, -3), (5, -3), (-6, 0), (5, 0))}
+    bushes.update({(x, -2, 2): 'oak_leaves' for x in (-6, 5)})
+    m.blocks(bushes)
+
+    lm = Mesh()                                                  # фонари: свои, тени не бросают
+    for x in (-2, 2):                                            # два фонаря посреди комнаты
+        lantern(lm, x, 4.5, 3.9, hang=5)
+    for x, y in ((-1.7, -9), (1.7, -9)):
+        m.box((x - 0.125, y - 0.125, 1), (x + 0.125, y + 0.125, 2.3), 'spruce_planks')   # столбики
+        lantern(lm, x, y, 2.3)
+    if lm.f:
+        lm.build('lanterns', mats).visible_shadow = False
+    m.build('home', mats)
+    for x, y, tilt in ((-1.5, 0.08, -22.5), (1.5, 0.08, -22.5), (-3.5, 8.92, 22.5), (3.0, 8.92, 22.5),
+                       (-1.5, -1.08, 22.5), (1.5, -1.08, 22.5)):
+        torch(mats, x, y, 2.3, tilt)
+
+    # ---- двор
+    g = Mesh()
+    pond, path = home_ground(g)
+    for x, y, *wood in HOME_TREES + HOME_FAR_TREES:
+        g.blocks(tree_shape(rng, x, y, 0, wood[0] if wood else 'oak'))
+    for x, y, w, h in HOME_BUSHES:                               # кусты из листвы
+        g.blocks({(x + i, y + j, 1 + k): 'oak_leaves' for i in range(w) for j in range(w)
+                  for k in range(h) if not (k == h - 1 and h > 1 and i in (0, w - 1) and j in (0, w - 1))})
+    for x in range(-30, 30):                                     # цветы по лужайке
+        for y in range(-50, 40):
+            if -7 <= x <= 6 and -3 <= y <= 10 or (x, y) in pond or abs(x + 0.5) < 3 and y > -18:
+                continue
+            if abs(x + 0.5) < 5 and -21 < y < -12:
+                continue                                         # у камер — не лезут в кадр
+            p = random_plant(rng, x, y, 1)
+            if p and p[3] not in ('short_grass', 'tall_grass'):
+                g.cross(*p[:3], p[3], *p[4:])
+    for x, y in ((-3, -3), (-4, -4), (2, -3), (3, -4)):
+        g.cross(x, y, 1, rng.choice(['poppy', 'dandelion', 'allium', 'oxeye_daisy', 'cornflower']))
+    g.build('yard', mats)
+    if not s.get('night'):
+        home_clouds(mats, view.pos)
+    if s.get('moon') and 'moon' in bpy.data.images:
+        home_moon(view)
+    if s.get('volume'):
+        home_volume(s['volume'])
+
+
 def build_scene(opt, view):
     toon = opt['style'] == 'toon'
     haze = view.s.get('haze', (35, 180, 0.3)) or (1e5, 2e5, 0)
@@ -1152,7 +1525,8 @@ def build_scene(opt, view):
             for k, img in textures(opt['tex'], toon).items()}
     mats['cloud'] = material('cloud', None, 'cloud', toon)
     {'nether': build_nether, 'swing': build_swing, 'coast': build_coast, 'sky': build_sky,
-     'aerial': build_aerial, 'room': build_room}.get(view.s['world'], build_field)(opt, view, mats)
+     'aerial': build_aerial, 'room': build_room,
+     'home': build_home}.get(view.s['world'], build_field)(opt, view, mats)
 
 
 def lights_camera(opt, s):
@@ -1169,6 +1543,56 @@ def lights_camera(opt, s):
     el[1].position, el[1].color = 0.6, (*SKY_ZENITH, 1)
     el.new(0.2).color = (*SKY_MID, 1)
     L.new(sep.outputs['Z'], ramp.inputs[0])
+    sky_out = ramp.outputs[0]
+    if s.get('night'):
+        # ночное небо: тёмно-синее, у горизонта светлее; звёзды — квадратики, как в игре
+        el[0].color, el[1].color = (0.010, 0.022, 0.060, 1), (0.0015, 0.004, 0.016, 1)
+        el[2].color = (0.004, 0.010, 0.032, 1)
+        vor = N.new('ShaderNodeTexVoronoi')
+        vor.voronoi_dimensions, vor.distance, vor.feature = '3D', 'CHEBYCHEV', 'F1'
+        vor.inputs['Scale'].default_value = 95
+        L.new(N['Texture Coordinate'].outputs['Generated'], vor.inputs['Vector'])
+        rnd = N.new('ShaderNodeSeparateColor')
+        L.new(vor.outputs['Color'], rnd.inputs[0])
+        star = N.new('ShaderNodeMath')
+        star.operation = 'LESS_THAN'
+        L.new(vor.outputs['Distance'], star.inputs[0])
+        star.inputs[1].default_value = 0.11
+        some = N.new('ShaderNodeMath')
+        some.operation = 'GREATER_THAN'
+        L.new(rnd.outputs[0], some.inputs[0])
+        some.inputs[1].default_value = 0.8
+        up = N.new('ShaderNodeMath')
+        up.operation = 'GREATER_THAN'
+        L.new(sep.outputs['Z'], up.inputs[0])
+        up.inputs[1].default_value = 0.03
+        k1, k2 = N.new('ShaderNodeMath'), N.new('ShaderNodeMath')
+        k1.operation = k2.operation = 'MULTIPLY'
+        L.new(star.outputs[0], k1.inputs[0])
+        L.new(some.outputs[0], k1.inputs[1])
+        L.new(k1.outputs[0], k2.inputs[0])
+        L.new(up.outputs[0], k2.inputs[1])
+        glow = N.new('ShaderNodeMath')               # звёзды разной яркости
+        glow.operation = 'MULTIPLY_ADD'
+        L.new(rnd.outputs[1], glow.inputs[0])
+        glow.inputs[1].default_value, glow.inputs[2].default_value = 2.5, 0.8
+        k3 = N.new('ShaderNodeMath')
+        k3.operation = 'MULTIPLY'
+        L.new(k2.outputs[0], k3.inputs[0])
+        L.new(glow.outputs[0], k3.inputs[1])
+        add = N.new('ShaderNodeMix')
+        add.data_type, add.blend_type = 'RGBA', 'ADD'
+        add.inputs['Factor'].default_value = 1
+        L.new(ramp.outputs[0], add.inputs['A'])
+        tint_ = N.new('ShaderNodeCombineColor')
+        for i, c in enumerate((0.85, 0.9, 1.0)):
+            mul = N.new('ShaderNodeMath')
+            mul.operation = 'MULTIPLY'
+            L.new(k3.outputs[0], mul.inputs[0])
+            mul.inputs[1].default_value = c
+            L.new(mul.outputs[0], tint_.inputs[i])
+        L.new(tint_.outputs[0], add.inputs['B'])
+        sky_out = add.outputs['Result']
     if s.get('planet'):
         # небо над краем планеты: у края светится атмосфера, выше синее, вверху почти космос
         R, H = s['planet'], s['cam'][2]
@@ -1191,14 +1615,15 @@ def lights_camera(opt, s):
     col = N.new('ShaderNodeMix')              # камера видит синее небо, сцену оно
     col.data_type = 'RGBA'                    # освещает почти белым светом
     L.new(is_cam, col.inputs['Factor'])
-    col.inputs['A'].default_value = (*SKY_AMBIENT, 1)
-    L.new(ramp.outputs[0], col.inputs['B'])
+    col.inputs['A'].default_value = (*s.get('sky_ambient', SKY_AMBIENT), 1)
+    L.new(sky_out, col.inputs['B'])
     L.new(col.outputs['Result'], N['Background'].inputs['Color'])
     k = N.new('ShaderNodeMath')               # и яркость у них разная
     k.operation = 'MULTIPLY_ADD'
     L.new(is_cam, k.inputs[0])
     sky_light = s.get('sky_light', SKY_LIGHT)
-    k.inputs[1].default_value, k.inputs[2].default_value = SKY_SEEN - sky_light, sky_light
+    sky_seen = s.get('sky_seen', SKY_SEEN)
+    k.inputs[1].default_value, k.inputs[2].default_value = sky_seen - sky_light, sky_light
     L.new(k.outputs[0], N['Background'].inputs['Strength'])
 
     sun = bpy.data.lights.new('sun', 'SUN')
