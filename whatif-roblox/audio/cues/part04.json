@@ -1,0 +1,1117 @@
+{
+ "part": 4,
+ "start": 195.4,
+ "end": 261.0,
+ "music": [
+  {
+   "start": 195.4,
+   "end": 198.1,
+   "mood": "wonder",
+   "energy": 0.55,
+   "in": "swell",
+   "out": "cut"
+  },
+  {
+   "start": 198.1,
+   "end": 203.4,
+   "mood": "adventure",
+   "energy": 0.5,
+   "in": "cut",
+   "out": "cut"
+  },
+  {
+   "start": 203.4,
+   "end": 208.3,
+   "mood": "playful",
+   "energy": 0.5,
+   "in": "cut",
+   "out": "sting"
+  },
+  {
+   "start": 208.3,
+   "end": 212.6,
+   "mood": "epic",
+   "energy": 0.55,
+   "in": "cut",
+   "out": "cut"
+  },
+  {
+   "start": 212.6,
+   "end": 216.5,
+   "mood": "romance",
+   "energy": 0.45,
+   "in": "cut",
+   "out": "scratch"
+  },
+  {
+   "start": 216.5,
+   "end": 218.0,
+   "mood": "silence",
+   "energy": 0.0,
+   "in": "cut",
+   "out": "cut"
+  },
+  {
+   "start": 218.0,
+   "end": 220.7,
+   "mood": "romance",
+   "energy": 0.45,
+   "in": "cut",
+   "out": "sting"
+  },
+  {
+   "start": 220.7,
+   "end": 221.9,
+   "mood": "silence",
+   "energy": 0.0,
+   "in": "cut",
+   "out": "cut"
+  },
+  {
+   "start": 221.9,
+   "end": 225.95,
+   "mood": "warm",
+   "energy": 0.35,
+   "in": "fade",
+   "out": "cut"
+  },
+  {
+   "start": 225.95,
+   "end": 226.6,
+   "mood": "silence",
+   "energy": 0.0,
+   "in": "cut",
+   "out": "cut"
+  },
+  {
+   "start": 226.6,
+   "end": 230.4,
+   "mood": "warm",
+   "energy": 0.4,
+   "in": "cut",
+   "out": "cut"
+  },
+  {
+   "start": 230.4,
+   "end": 234.13,
+   "mood": "epic",
+   "energy": 0.6,
+   "in": "cut",
+   "out": "cut"
+  },
+  {
+   "start": 234.13,
+   "end": 235.0,
+   "mood": "silence",
+   "energy": 0.0,
+   "in": "cut",
+   "out": "cut"
+  },
+  {
+   "start": 235.0,
+   "end": 237.2,
+   "mood": "sad",
+   "energy": 0.35,
+   "in": "cut",
+   "out": "cut"
+  },
+  {
+   "start": 237.2,
+   "end": 241.9,
+   "mood": "mystery",
+   "energy": 0.4,
+   "in": "cut",
+   "out": "cut"
+  },
+  {
+   "start": 241.9,
+   "end": 243.8,
+   "mood": "chase",
+   "energy": 0.85,
+   "in": "cut",
+   "out": "tapestop"
+  },
+  {
+   "start": 243.8,
+   "end": 244.6,
+   "mood": "silence",
+   "energy": 0.0,
+   "in": "cut",
+   "out": "cut"
+  },
+  {
+   "start": 244.6,
+   "end": 251.0,
+   "mood": "mystery",
+   "energy": 0.3,
+   "in": "fade",
+   "out": "cut"
+  },
+  {
+   "start": 251.0,
+   "end": 256.6,
+   "mood": "glitch_build",
+   "energy": 0.5,
+   "in": "cut",
+   "out": "cut"
+  },
+  {
+   "start": 256.6,
+   "end": 257.15,
+   "mood": "silence",
+   "energy": 0.0,
+   "in": "cut",
+   "out": "cut"
+  },
+  {
+   "start": 257.15,
+   "end": 261.0,
+   "mood": "action",
+   "energy": 0.9,
+   "in": "cut",
+   "out": "cut"
+  }
+ ],
+ "ambience": [
+  {
+   "start": 195.4,
+   "end": 198.1,
+   "name": "town",
+   "gain_db": -12
+  },
+  {
+   "start": 196.4,
+   "end": 198.1,
+   "name": "portal_hum",
+   "gain_db": -14
+  },
+  {
+   "start": 198.1,
+   "end": 212.6,
+   "name": "portal_hum",
+   "gain_db": -10
+  },
+  {
+   "start": 198.1,
+   "end": 212.6,
+   "name": "crowd",
+   "gain_db": -14
+  },
+  {
+   "start": 207.25,
+   "end": 209.4,
+   "name": "wind",
+   "gain_db": -6
+  },
+  {
+   "start": 212.6,
+   "end": 221.9,
+   "name": "birds",
+   "gain_db": -14
+  },
+  {
+   "start": 221.9,
+   "end": 230.4,
+   "name": "birds",
+   "gain_db": -12
+  },
+  {
+   "start": 221.9,
+   "end": 230.4,
+   "name": "ocean",
+   "gain_db": -20
+  },
+  {
+   "start": 230.4,
+   "end": 237.2,
+   "name": "wind",
+   "gain_db": -8
+  },
+  {
+   "start": 237.2,
+   "end": 243.8,
+   "name": "portal_hum",
+   "gain_db": -12
+  },
+  {
+   "start": 243.8,
+   "end": 259.5,
+   "name": "portal_hum",
+   "gain_db": -10
+  },
+  {
+   "start": 243.8,
+   "end": 255.2,
+   "name": "crowd",
+   "gain_db": -22
+  },
+  {
+   "start": 246.0,
+   "end": 255.2,
+   "name": "static",
+   "gain_db": -24
+  },
+  {
+   "start": 259.5,
+   "end": 261.0,
+   "name": "wind",
+   "gain_db": -8
+  }
+ ],
+ "footsteps": [
+  {
+   "start": 237.45,
+   "end": 239.3,
+   "interval": 0.524,
+   "surface": "hard",
+   "gain_db": -10,
+   "pan": 0.0
+  },
+  {
+   "start": 241.96,
+   "end": 242.62,
+   "interval": 0.121,
+   "surface": "hard",
+   "gain_db": -6,
+   "pan": -0.05
+  },
+  {
+   "start": 242.69,
+   "end": 243.3,
+   "interval": 0.121,
+   "surface": "hard",
+   "gain_db": -9,
+   "pan": -0.5
+  },
+  {
+   "start": 244.1,
+   "end": 251.0,
+   "interval": 0.628,
+   "surface": "hard",
+   "gain_db": -12,
+   "pan": 0.5
+  },
+  {
+   "start": 258.36,
+   "end": 258.95,
+   "interval": 0.121,
+   "surface": "hard",
+   "gain_db": -4,
+   "pan": -0.35
+  }
+ ],
+ "sfx": [
+  [
+   195.4,
+   "swish",
+   -10,
+   0.0,
+   "hard cut to the town street"
+  ],
+  [
+   195.9,
+   "rumble",
+   -2,
+   0.0,
+   "ground starts to shake (shake 196.0-198.0)"
+  ],
+  [
+   196.1,
+   "squeak",
+   -6,
+   0.0,
+   "hero hops in shock"
+  ],
+  [
+   196.2,
+   "portal_open",
+   -4,
+   -0.48,
+   "red portal bursts up out of the street"
+  ],
+  [
+   196.2,
+   "pop",
+   -4,
+   -0.48,
+   "red portal pops up + dust"
+  ],
+  [
+   196.35,
+   "pop",
+   -4,
+   -0.15,
+   "blue portal pops up"
+  ],
+  [
+   196.5,
+   "pop",
+   -4,
+   0.19,
+   "green portal pops up"
+  ],
+  [
+   196.5,
+   "land",
+   -8,
+   0.0,
+   "hero lands from shock hop"
+  ],
+  [
+   196.65,
+   "pop",
+   -4,
+   0.53,
+   "pink portal pops up"
+  ],
+  [
+   196.65,
+   "portal_open",
+   -5,
+   0.53,
+   "pink portal swirl"
+  ],
+  [
+   196.95,
+   "sparkle",
+   -6,
+   0.0,
+   "all four portals glowing"
+  ],
+  [
+   198.05,
+   "whoosh",
+   -4,
+   0.0,
+   "cut to the portal plaza"
+  ],
+  [
+   198.15,
+   "sparkle",
+   -8,
+   0.0,
+   "hundreds of glowing doorways"
+  ],
+  [
+   199.15,
+   "swish",
+   -10,
+   -0.52,
+   "Speedy points at a portal"
+  ],
+  [
+   199.55,
+   "swish",
+   -10,
+   -0.26,
+   "Jet kid points"
+  ],
+  [
+   199.95,
+   "swish",
+   -10,
+   0.27,
+   "Max points"
+  ],
+  [
+   200.35,
+   "swish",
+   -10,
+   0.52,
+   "Hot dog points"
+  ],
+  [
+   202.5,
+   "chime",
+   -10,
+   0.0,
+   "every one a different game"
+  ],
+  [
+   203.4,
+   "zoom_in",
+   -3,
+   0.0,
+   "punch-in: TOWER OF PAIN sign"
+  ],
+  [
+   203.55,
+   "bonk",
+   -10,
+   0.0,
+   "tower-of-pain accent"
+  ],
+  [
+   204.75,
+   "zoom_in",
+   -3,
+   0.0,
+   "punch-in: ADOPT ME MAYBE sign"
+  ],
+  [
+   204.9,
+   "heart_pop",
+   -10,
+   0.0,
+   "adopt-me accent (paw icon)"
+  ],
+  [
+   206.05,
+   "zoom_in",
+   -3,
+   0.0,
+   "punch-in: BROOKHAVEN'T sign"
+  ],
+  [
+   206.2,
+   "door_knock",
+   -12,
+   0.0,
+   "brookhaven house accent"
+  ],
+  [
+   207.25,
+   "zoom_in",
+   -3,
+   0.0,
+   "punch-in: NATURAL DISASTERS sign"
+  ],
+  [
+   207.3,
+   "wind_gust",
+   -8,
+   0.0,
+   "debris and blocks start flying"
+  ],
+  [
+   208.3,
+   "impact",
+   -2,
+   0.36,
+   "REAL! white flash"
+  ],
+  [
+   208.32,
+   "thunder",
+   -8,
+   0.36,
+   "REAL! lightning crack"
+  ],
+  [
+   209.35,
+   "whoosh",
+   -6,
+   0.0,
+   "cut to the family wide shot"
+  ],
+  [
+   210.4,
+   "heartbeat",
+   -8,
+   0.0,
+   "everyone has to choose"
+  ],
+  [
+   211.5,
+   "swish",
+   -8,
+   0.0,
+   "cut in on Mom"
+  ],
+  [
+   211.8,
+   "jump",
+   -4,
+   0.0,
+   "Mom leaps at the pink portal"
+  ],
+  [
+   212.15,
+   "portal_enter",
+   -5,
+   0.0,
+   "Mom dives into Brookhaven't, pink flash"
+  ],
+  [
+   212.6,
+   "sparkle",
+   -5,
+   0.0,
+   "pink mansion appears"
+  ],
+  [
+   212.7,
+   "blush",
+   -6,
+   0.0,
+   "Mom: love eyes + blush"
+  ],
+  [
+   214.5,
+   "engine",
+   -8,
+   -0.6,
+   "pink car drives in from the left"
+  ],
+  [
+   216.0,
+   "car_horn",
+   -6,
+   -0.48,
+   "pink car honk"
+  ],
+  [
+   216.48,
+   "record_scratch",
+   -3,
+   0.0,
+   "pink horse?! music scratch"
+  ],
+  [
+   216.5,
+   "pop",
+   -3,
+   0.44,
+   "pink horse pops in"
+  ],
+  [
+   218.0,
+   "zoom_in",
+   -4,
+   0.0,
+   "cut to Mom close-up"
+  ],
+  [
+   218.1,
+   "chat_pop",
+   -4,
+   0.0,
+   "chat bubble pops"
+  ],
+  [
+   219.65,
+   "beep",
+   -4,
+   0.38,
+   "BEEP! text pops"
+  ],
+  [
+   220.2,
+   "censor_bleep",
+   0,
+   0.0,
+   "censor bleep over the filtered word (#####, ~220.2-220.4)"
+  ],
+  [
+   220.7,
+   "stamp",
+   -2,
+   0.36,
+   "FILTERED x12 stamp slams"
+  ],
+  [
+   220.72,
+   "error",
+   -8,
+   0.36,
+   "filter error buzz"
+  ],
+  [
+   221.72,
+   "whoosh",
+   -2,
+   0.0,
+   "whip-pan to Dad (centre 221.9)"
+  ],
+  [
+   222.3,
+   "splash",
+   -16,
+   0.23,
+   "bobber plops on the lake"
+  ],
+  [
+   224.2,
+   "ui_pop",
+   -6,
+   0.47,
+   "IDLE counter pops up"
+  ],
+  [
+   224.25,
+   "money_counter",
+   -10,
+   0.47,
+   "IDLE minutes rolling up"
+  ],
+  [
+   225.25,
+   "money_counter",
+   -10,
+   0.47,
+   "IDLE minutes rolling up"
+  ],
+  [
+   225.95,
+   "cricket",
+   -6,
+   0.0,
+   "he doesn't move... (pause)"
+  ],
+  [
+   226.0,
+   "ui_close",
+   -12,
+   0.47,
+   "IDLE counter disappears"
+  ],
+  [
+   226.62,
+   "heart_pop",
+   -6,
+   -0.15,
+   "hearts float up from happy Dad"
+  ],
+  [
+   226.65,
+   "chime",
+   -10,
+   0.0,
+   "never been happier"
+  ],
+  [
+   228.2,
+   "swish",
+   -10,
+   0.0,
+   "cut to Dad close-up"
+  ],
+  [
+   228.3,
+   "heart_pop",
+   -12,
+   0.0,
+   "hearts keep floating"
+  ],
+  [
+   230.35,
+   "whoosh",
+   -4,
+   0.0,
+   "cut to Tower of Pain"
+  ],
+  [
+   230.45,
+   "wind_gust",
+   -8,
+   0.0,
+   "high-altitude wind"
+  ],
+  [
+   231.3,
+   "swish",
+   -10,
+   0.0,
+   "Banana points up confidently"
+  ],
+  [
+   232.6,
+   "swish",
+   -12,
+   0.0,
+   "arm back down"
+  ],
+  [
+   233.4,
+   "zoom_in",
+   -6,
+   0.0,
+   "cut closer, STAGE 1"
+  ],
+  [
+   233.5,
+   "ui_pop",
+   -6,
+   -0.48,
+   "STAGE 1 badge"
+  ],
+  [
+   233.5,
+   "jump_game",
+   -2,
+   -0.15,
+   "Banana jumps to the first step"
+  ],
+  [
+   234.1,
+   "land",
+   -4,
+   0.05,
+   "lands on step 1"
+  ],
+  [
+   234.13,
+   "slip",
+   -2,
+   0.1,
+   "*slip* off the first step"
+  ],
+  [
+   234.25,
+   "fall_whistle",
+   -4,
+   0.2,
+   "falls off the tower"
+  ],
+  [
+   235.0,
+   "whoosh_down",
+   -4,
+   0.1,
+   "cut: plummeting into the clouds"
+  ],
+  [
+   237.1,
+   "thud",
+   -14,
+   0.0,
+   "far-away landing"
+  ],
+  [
+   237.15,
+   "swish",
+   -8,
+   0.0,
+   "cut to DOORS"
+  ],
+  [
+   237.7,
+   "metal_clank",
+   -16,
+   0.05,
+   "walker clank"
+  ],
+  [
+   238.75,
+   "metal_clank",
+   -16,
+   -0.05,
+   "walker clank"
+  ],
+  [
+   239.35,
+   "door_close",
+   -4,
+   0.0,
+   "Grandma enters DOORS, door shuts"
+  ],
+  [
+   239.4,
+   "ui_pop",
+   -6,
+   0.0,
+   "SEC timer appears"
+  ],
+  [
+   239.5,
+   "countdown_tick",
+   -10,
+   0.0,
+   "timer 1 SEC"
+  ],
+  [
+   239.73,
+   "countdown_tick",
+   -10,
+   0.0,
+   "timer 2 SEC"
+  ],
+  [
+   239.96,
+   "countdown_tick",
+   -10,
+   0.0,
+   "timer 3 SEC"
+  ],
+  [
+   240.19,
+   "countdown_tick",
+   -10,
+   0.0,
+   "timer 4 SEC"
+  ],
+  [
+   240.42,
+   "countdown_tick",
+   -10,
+   0.0,
+   "timer 5 SEC"
+  ],
+  [
+   240.65,
+   "countdown_tick",
+   -10,
+   0.0,
+   "timer 6 SEC"
+  ],
+  [
+   240.88,
+   "countdown_tick",
+   -10,
+   0.0,
+   "timer 7 SEC"
+  ],
+  [
+   241.0,
+   "bonk",
+   -8,
+   0.0,
+   "*screams inside* - chaos behind the door"
+  ],
+  [
+   241.11,
+   "countdown_tick",
+   -10,
+   0.0,
+   "timer 8 SEC"
+  ],
+  [
+   241.15,
+   "punch",
+   -10,
+   -0.1,
+   "chaos inside"
+  ],
+  [
+   241.3,
+   "metal_hit",
+   -10,
+   0.1,
+   "chaos inside"
+  ],
+  [
+   241.34,
+   "countdown_tick",
+   -10,
+   0.0,
+   "timer 9 SEC"
+  ],
+  [
+   241.45,
+   "slap",
+   -10,
+   0.0,
+   "chaos inside"
+  ],
+  [
+   241.57,
+   "beep",
+   -6,
+   0.0,
+   "timer hits 10 SEC"
+  ],
+  [
+   241.88,
+   "door_open",
+   -2,
+   0.0,
+   "monster bursts out of DOORS"
+  ],
+  [
+   241.9,
+   "thud",
+   0,
+   0.0,
+   "burst-out shake"
+  ],
+  [
+   242.3,
+   "whoosh",
+   -6,
+   -0.3,
+   "monster flees left, speed lines"
+  ],
+  [
+   242.4,
+   "engine",
+   -8,
+   0.4,
+   "Grandma's walker zooms in like a race car"
+  ],
+  [
+   243.3,
+   "whoosh",
+   -6,
+   -0.4,
+   "Grandma blasts past"
+  ],
+  [
+   246.5,
+   "glitch",
+   -10,
+   0.5,
+   "portal flickers"
+  ],
+  [
+   247.95,
+   "glitch",
+   -6,
+   0.5,
+   "Glitching."
+  ],
+  [
+   249.6,
+   "glitch",
+   -12,
+   0.4,
+   "flicker"
+  ],
+  [
+   251.0,
+   "zoom_in",
+   -2,
+   0.0,
+   "close-up on STEAL AN EGG sign"
+  ],
+  [
+   251.02,
+   "sub_drop",
+   -4,
+   0.0,
+   "ominous sign reveal"
+  ],
+  [
+   251.05,
+   "glitch",
+   -6,
+   0.0,
+   "sign glitches"
+  ],
+  [
+   253.0,
+   "glitch",
+   -4,
+   0.0,
+   "flash of the ??? egg"
+  ],
+  [
+   253.15,
+   "heartbeat",
+   -6,
+   0.0,
+   "the egg that started it all"
+  ],
+  [
+   254.4,
+   "glitch",
+   -12,
+   0.0,
+   "sign flicker"
+  ],
+  [
+   255.2,
+   "swish",
+   -8,
+   0.0,
+   "cut to hero close-up"
+  ],
+  [
+   255.25,
+   "gulp",
+   -4,
+   0.0,
+   "nervous gulp, sweat drop"
+  ],
+  [
+   255.65,
+   "reverse_swell",
+   -8,
+   0.0,
+   "deep breath builds to LET'S GO (peak 257.15)"
+  ],
+  [
+   257.15,
+   "zoom_in",
+   -3,
+   0.0,
+   "punch-in: pumped"
+  ],
+  [
+   257.18,
+   "swish",
+   -6,
+   0.1,
+   "fist pump"
+  ],
+  [
+   257.22,
+   "shine",
+   -4,
+   0.25,
+   "burst sparkle"
+  ],
+  [
+   258.3,
+   "whoosh",
+   -6,
+   -0.5,
+   "hero sprints in, speed lines"
+  ],
+  [
+   258.96,
+   "jump",
+   -2,
+   -0.1,
+   "leaps at the portal"
+  ],
+  [
+   259.0,
+   "riser",
+   -2,
+   0.0,
+   "build to the white flash at 261.0"
+  ],
+  [
+   259.05,
+   "whoosh_up",
+   -6,
+   0.0,
+   "arc into the portal"
+  ],
+  [
+   259.3,
+   "portal_enter",
+   0,
+   0.0,
+   "into the portal, purple flash"
+  ],
+  [
+   259.5,
+   "teleport",
+   -2,
+   0.0,
+   "portal tunnel"
+  ],
+  [
+   259.55,
+   "whoosh_long",
+   -2,
+   0.0,
+   "rushing through the cube tunnel"
+  ],
+  [
+   260.2,
+   "whoosh",
+   -6,
+   0.2,
+   "hero spins past"
+  ],
+  [
+   260.65,
+   "sparkle",
+   -6,
+   0.0,
+   "white flash builds"
+  ]
+ ]
+}

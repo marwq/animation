@@ -1,0 +1,1330 @@
+{
+ "part": 1,
+ "start": 0.0,
+ "end": 61.0,
+ "music": [
+  {
+   "start": 0.0,
+   "end": 1.06,
+   "mood": "mystery",
+   "energy": 0.25,
+   "in": "fade",
+   "out": "cut"
+  },
+  {
+   "start": 1.06,
+   "end": 1.95,
+   "mood": "silence",
+   "energy": 0.0,
+   "in": "cut",
+   "out": "cut"
+  },
+  {
+   "start": 1.95,
+   "end": 5.32,
+   "mood": "hook",
+   "energy": 0.65,
+   "in": "cut",
+   "out": "cut"
+  },
+  {
+   "start": 5.32,
+   "end": 6.5,
+   "mood": "silence",
+   "energy": 0.0,
+   "in": "cut",
+   "out": "cut"
+  },
+  {
+   "start": 6.5,
+   "end": 8.02,
+   "mood": "epic",
+   "energy": 0.6,
+   "in": "cut",
+   "out": "sting"
+  },
+  {
+   "start": 8.02,
+   "end": 8.62,
+   "mood": "silence",
+   "energy": 0.0,
+   "in": "cut",
+   "out": "cut"
+  },
+  {
+   "start": 8.62,
+   "end": 10.0,
+   "mood": "climax",
+   "energy": 0.75,
+   "in": "cut",
+   "out": "cut"
+  },
+  {
+   "start": 10.0,
+   "end": 13.4,
+   "mood": "cool",
+   "energy": 0.65,
+   "in": "cut",
+   "out": "cut"
+  },
+  {
+   "start": 13.4,
+   "end": 16.1,
+   "mood": "climax",
+   "energy": 0.7,
+   "in": "cut",
+   "out": "scratch"
+  },
+  {
+   "start": 16.1,
+   "end": 19.2,
+   "mood": "silence",
+   "energy": 0.0,
+   "in": "cut",
+   "out": "cut"
+  },
+  {
+   "start": 19.2,
+   "end": 22.7,
+   "mood": "mystery",
+   "energy": 0.3,
+   "in": "fade",
+   "out": "cut"
+  },
+  {
+   "start": 22.7,
+   "end": 23.3,
+   "mood": "silence",
+   "energy": 0.0,
+   "in": "cut",
+   "out": "cut"
+  },
+  {
+   "start": 23.3,
+   "end": 28.6,
+   "mood": "playful",
+   "energy": 0.45,
+   "in": "cut",
+   "out": "tapestop"
+  },
+  {
+   "start": 28.6,
+   "end": 30.4,
+   "mood": "silence",
+   "energy": 0.0,
+   "in": "cut",
+   "out": "cut"
+  },
+  {
+   "start": 30.4,
+   "end": 38.8,
+   "mood": "mystery",
+   "energy": 0.45,
+   "in": "fade",
+   "out": "cut"
+  },
+  {
+   "start": 38.8,
+   "end": 43.4,
+   "mood": "wonder",
+   "energy": 0.45,
+   "in": "swell",
+   "out": "cut"
+  },
+  {
+   "start": 43.4,
+   "end": 48.5,
+   "mood": "glitch_build",
+   "energy": 0.35,
+   "in": "fade",
+   "out": "cut"
+  },
+  {
+   "start": 48.5,
+   "end": 51.9,
+   "mood": "mystery",
+   "energy": 0.2,
+   "in": "cut",
+   "out": "cut"
+  },
+  {
+   "start": 51.9,
+   "end": 53.2,
+   "mood": "silence",
+   "energy": 0.0,
+   "in": "cut",
+   "out": "cut"
+  },
+  {
+   "start": 53.2,
+   "end": 55.7,
+   "mood": "mystery",
+   "energy": 0.3,
+   "in": "cut",
+   "out": "cut"
+  },
+  {
+   "start": 55.7,
+   "end": 57.0,
+   "mood": "silence",
+   "energy": 0.0,
+   "in": "cut",
+   "out": "cut"
+  },
+  {
+   "start": 57.0,
+   "end": 60.0,
+   "mood": "glitch_build",
+   "energy": 0.85,
+   "in": "swell",
+   "out": "sting"
+  },
+  {
+   "start": 60.0,
+   "end": 61.0,
+   "mood": "silence",
+   "energy": 0.0,
+   "in": "cut",
+   "out": "cut"
+  }
+ ],
+ "ambience": [
+  {
+   "start": 0.0,
+   "end": 1.95,
+   "name": "room",
+   "gain_db": -16
+  },
+  {
+   "start": 0.0,
+   "end": 1.95,
+   "name": "birds",
+   "gain_db": -22
+  },
+  {
+   "start": 1.95,
+   "end": 6.5,
+   "name": "town",
+   "gain_db": -11
+  },
+  {
+   "start": 6.5,
+   "end": 8.62,
+   "name": "crowd",
+   "gain_db": -12
+  },
+  {
+   "start": 6.5,
+   "end": 8.62,
+   "name": "portal_hum",
+   "gain_db": -17
+  },
+  {
+   "start": 8.62,
+   "end": 15.25,
+   "name": "laser_hum",
+   "gain_db": -15
+  },
+  {
+   "start": 8.62,
+   "end": 15.25,
+   "name": "wind",
+   "gain_db": -19
+  },
+  {
+   "start": 15.25,
+   "end": 16.1,
+   "name": "wind",
+   "gain_db": -9
+  },
+  {
+   "start": 15.25,
+   "end": 16.1,
+   "name": "laser_hum",
+   "gain_db": -19
+  },
+  {
+   "start": 16.6,
+   "end": 19.75,
+   "name": "static",
+   "gain_db": -21
+  },
+  {
+   "start": 19.2,
+   "end": 60.0,
+   "name": "night",
+   "gain_db": -13
+  },
+  {
+   "start": 30.4,
+   "end": 35.8,
+   "name": "conveyor",
+   "gain_db": -10
+  }
+ ],
+ "footsteps": [
+  {
+   "start": 3.72,
+   "end": 4.52,
+   "interval": 0.224,
+   "surface": "hard",
+   "gain_db": -15,
+   "pan": 0.45
+  },
+  {
+   "start": 4.7,
+   "end": 5.14,
+   "interval": 0.092,
+   "surface": "hard",
+   "gain_db": -8,
+   "pan": 0.0
+  },
+  {
+   "start": 10.0,
+   "end": 10.45,
+   "interval": 0.105,
+   "surface": "hard",
+   "gain_db": -6,
+   "pan": 0.5
+  },
+  {
+   "start": 14.4,
+   "end": 14.98,
+   "interval": 0.121,
+   "surface": "hard",
+   "gain_db": -6,
+   "pan": -0.1
+  }
+ ],
+ "sfx": [
+  [
+   0.0,
+   "glitch",
+   -6,
+   0,
+   "black screen glitch, picture starts to assemble"
+  ],
+  [
+   0.03,
+   "pixel_wipe",
+   -4,
+   0,
+   "black pixel blocks uncover the bedroom"
+  ],
+  [
+   0.05,
+   "snore",
+   -13,
+   0.11,
+   "YOU snoring under the blanket, zzz"
+  ],
+  [
+   1.06,
+   "alarm_beep",
+   -4,
+   0.47,
+   "alarm clock rings: BEEP!"
+  ],
+  [
+   1.17,
+   "zoom_in",
+   -4,
+   0,
+   "camera punch-in as YOU jolts awake"
+  ],
+  [
+   1.17,
+   "jump",
+   -6,
+   0,
+   "YOU bolts upright in bed, shocked '!'"
+  ],
+  [
+   1.38,
+   "sparkle",
+   -10,
+   0,
+   "amazed sparkles around YOU"
+  ],
+  [
+   1.62,
+   "blink",
+   -12,
+   0,
+   "YOU blinks"
+  ],
+  [
+   1.68,
+   "pixel_wipe",
+   -2,
+   0,
+   "colourful pixel wave: bedroom -> town"
+  ],
+  [
+   1.95,
+   "whoosh_long",
+   -6,
+   0,
+   "camera pulls back to reveal the blocky Roblox town"
+  ],
+  [
+   2.2,
+   "engine",
+   -9,
+   0,
+   "red car drives past behind YOU"
+  ],
+  [
+   2.31,
+   "swish",
+   -10,
+   0,
+   "YOU whips head left/right, amazed"
+  ],
+  [
+   2.93,
+   "jump_game",
+   -2,
+   0,
+   "YOU does a Roblox jump for joy"
+  ],
+  [
+   2.95,
+   "sparkle",
+   -7,
+   0,
+   "star burst around YOU's head"
+  ],
+  [
+   3.37,
+   "land",
+   -4,
+   0,
+   "YOU lands, camera bump"
+  ],
+  [
+   3.86,
+   "whoosh",
+   -4,
+   0,
+   "blue car zooms across the street with speed lines"
+  ],
+  [
+   4.6,
+   "chat_pop",
+   -4,
+   -0.23,
+   "PinkPop's chat bubble 'hiii!! :D'"
+  ],
+  [
+   4.69,
+   "whoosh",
+   -2,
+   0,
+   "Speedy dashes past right->left"
+  ],
+  [
+   5.44,
+   "tap",
+   -13,
+   0,
+   "chicken pecks the grass"
+  ],
+  [
+   5.82,
+   "swish",
+   -6,
+   0,
+   "chicken snaps its head to the camera"
+  ],
+  [
+   5.88,
+   "zoom_in",
+   -4,
+   0,
+   "snap zoom on the chicken"
+  ],
+  [
+   5.92,
+   "chat_pop",
+   -4,
+   0.07,
+   "'bawk.' chat bubble pops"
+  ],
+  [
+   6.0,
+   "chicken",
+   -4,
+   0,
+   "deadpan cluck (bawk.)"
+  ],
+  [
+   6.22,
+   "blink",
+   -8,
+   0,
+   "chicken blinks into the silence"
+  ],
+  [
+   6.3,
+   "whoosh",
+   0,
+   0,
+   "whip-pan to the portal plaza"
+  ],
+  [
+   6.6,
+   "notify",
+   -2,
+   0,
+   "SYSTEM MESSAGE: PICK ONE GAME BEFORE SUNSET!"
+  ],
+  [
+   6.6,
+   "ui_pop",
+   -7,
+   0,
+   "system banner pops in"
+  ],
+  [
+   7.12,
+   "reverse_swell",
+   -4,
+   0,
+   "swell sucking into the vault flash-cut (peaks 8.62)"
+  ],
+  [
+   7.16,
+   "swish",
+   -10,
+   0.52,
+   "MaxBeatz points at a portal"
+  ],
+  [
+   7.21,
+   "swish",
+   -10,
+   -0.26,
+   "PinkPop points at a portal"
+  ],
+  [
+   8.02,
+   "jump",
+   -8,
+   0,
+   "crowd hops on 'ONE GAME', flash"
+  ],
+  [
+   8.62,
+   "impact",
+   2,
+   0,
+   "white flash cut to the Admin Vault"
+  ],
+  [
+   8.64,
+   "alarm",
+   -13,
+   0,
+   "vault alarm, red light pulsing"
+  ],
+  [
+   8.92,
+   "laser_sweep",
+   -6,
+   0.4,
+   "front laser sweeps down over YOU's head"
+  ],
+  [
+   8.98,
+   "squeak",
+   -6,
+   -0.16,
+   "YOU ducks under the laser"
+  ],
+  [
+   9.62,
+   "countdown_tick",
+   -10,
+   0.52,
+   "timer 00:10 -> 00:09"
+  ],
+  [
+   9.8,
+   "zoom_in",
+   -4,
+   0,
+   "camera punch on 'ONE.'"
+  ],
+  [
+   9.84,
+   "glitch",
+   -5,
+   0,
+   "glitch lines on the last beat"
+  ],
+  [
+   10.05,
+   "whoosh",
+   -7,
+   0.6,
+   "Nova sprints in from the right (speed lines)"
+  ],
+  [
+   10.2,
+   "laser_shot",
+   -9,
+   0,
+   "upper laser beam fires on"
+  ],
+  [
+   10.45,
+   "skid",
+   -2,
+   0.3,
+   "Nova slides under the laser, dust"
+  ],
+  [
+   10.62,
+   "laser_shot",
+   -9,
+   0,
+   "low laser beam fires on"
+  ],
+  [
+   10.62,
+   "countdown_tick",
+   -10,
+   0.52,
+   "timer 00:09 -> 00:08"
+  ],
+  [
+   10.8,
+   "whoosh_up",
+   -4,
+   0.1,
+   "Nova springs into a flip"
+  ],
+  [
+   10.88,
+   "whoosh",
+   0,
+   0.2,
+   "WHOOSH! flip over the second laser"
+  ],
+  [
+   11.3,
+   "land",
+   0,
+   0.05,
+   "Nova sticks the landing"
+  ],
+  [
+   11.48,
+   "swish",
+   -9,
+   0.05,
+   "Nova drops her arms, cool pose"
+  ],
+  [
+   11.62,
+   "countdown_tick",
+   -10,
+   0.52,
+   "timer 00:08 -> 00:07"
+  ],
+  [
+   11.7,
+   "shine",
+   -3,
+   0.1,
+   "cut to Nova close-up, sunglasses glint"
+  ],
+  [
+   12.62,
+   "countdown_tick",
+   -11,
+   0.52,
+   "timer 00:07 -> 00:06"
+  ],
+  [
+   13.0,
+   "swish",
+   -6,
+   0.1,
+   "Nova points: 'noob?!'"
+  ],
+  [
+   13.4,
+   "cloth",
+   -6,
+   -0.36,
+   "YOU pops up, determined + sweat"
+  ],
+  [
+   13.62,
+   "countdown_tick",
+   -11,
+   0.52,
+   "timer 00:06 -> 00:05"
+  ],
+  [
+   14.62,
+   "countdown_tick",
+   -11,
+   0.52,
+   "timer 00:05 -> 00:04"
+  ],
+  [
+   14.98,
+   "slip",
+   -2,
+   -0.1,
+   "YOU trips mid-run"
+  ],
+  [
+   15.05,
+   "squeak",
+   -5,
+   0.23,
+   "'!!' pops"
+  ],
+  [
+   15.12,
+   "whoosh_down",
+   -3,
+   0,
+   "YOU tumbles over the edge"
+  ],
+  [
+   15.25,
+   "slap",
+   -2,
+   0.1,
+   "fingers slap onto the platform edge"
+  ],
+  [
+   15.27,
+   "thud",
+   -6,
+   0,
+   "body swings into the wall, camera shake"
+  ],
+  [
+   16.1,
+   "record_scratch",
+   2,
+   0,
+   "FREEZE FRAME"
+  ],
+  [
+   16.15,
+   "pop",
+   -2,
+   -0.36,
+   "'YOU.' arrow label pops in"
+  ],
+  [
+   16.58,
+   "vhs_clunk",
+   -6,
+   -0.4,
+   "REWIND button"
+  ],
+  [
+   16.6,
+   "rewind",
+   -2,
+   0,
+   "VHS rewind starts"
+  ],
+  [
+   17.75,
+   "rewind",
+   -6,
+   0,
+   "rewind keeps going (under 'Okay. Okay.')"
+  ],
+  [
+   18.45,
+   "rewind",
+   -6,
+   0,
+   "rewind speeds back to the start"
+  ],
+  [
+   19.05,
+   "static",
+   -4,
+   0,
+   "tape static burst"
+  ],
+  [
+   19.2,
+   "vhs_clunk",
+   -4,
+   -0.63,
+   "PLAY: VHS play-in"
+  ],
+  [
+   19.5,
+   "typing",
+   -10,
+   0,
+   "'THE NIGHT BEFORE...' types on"
+  ],
+  [
+   22.8,
+   "cricket",
+   -7,
+   -0.4,
+   "quiet... YOU 'asleep'"
+  ],
+  [
+   23.3,
+   "click",
+   0,
+   0.2,
+   "*click* - the tablet switches on"
+  ],
+  [
+   23.31,
+   "swish",
+   -8,
+   0,
+   "tablet pops up from under the blanket"
+  ],
+  [
+   23.33,
+   "tv_on",
+   -8,
+   0,
+   "tablet screen glow on YOU's grinning face"
+  ],
+  [
+   25.143,
+   "tap",
+   -11,
+   -0.23,
+   "'tap' on the tablet"
+  ],
+  [
+   25.429,
+   "tap",
+   -11,
+   0.23,
+   "'tap' on the tablet"
+  ],
+  [
+   25.714,
+   "tap",
+   -11,
+   -0.23,
+   "'tap' on the tablet"
+  ],
+  [
+   26.0,
+   "tap",
+   -11,
+   0.23,
+   "'tap' on the tablet"
+  ],
+  [
+   26.2,
+   "blink",
+   -14,
+   0,
+   "blink"
+  ],
+  [
+   26.286,
+   "tap",
+   -11,
+   -0.23,
+   "'tap' on the tablet"
+  ],
+  [
+   26.571,
+   "tap",
+   -11,
+   0.23,
+   "'tap' on the tablet"
+  ],
+  [
+   26.75,
+   "confirm",
+   -6,
+   0.39,
+   "'+1 ROUND' pops"
+  ],
+  [
+   26.857,
+   "tap",
+   -11,
+   -0.23,
+   "'tap' on the tablet"
+  ],
+  [
+   27.143,
+   "tap",
+   -11,
+   0.23,
+   "'tap' on the tablet"
+  ],
+  [
+   27.429,
+   "tap",
+   -11,
+   -0.23,
+   "'tap' on the tablet"
+  ],
+  [
+   27.714,
+   "tap",
+   -11,
+   0.23,
+   "'tap' on the tablet"
+  ],
+  [
+   27.9,
+   "blink",
+   -14,
+   0,
+   "blink"
+  ],
+  [
+   28.0,
+   "tap",
+   -11,
+   -0.23,
+   "'tap' on the tablet"
+  ],
+  [
+   28.286,
+   "tap",
+   -11,
+   0.23,
+   "'tap' on the tablet"
+  ],
+  [
+   28.571,
+   "tap",
+   -11,
+   -0.23,
+   "'tap' on the tablet"
+  ],
+  [
+   28.6,
+   "boom",
+   -1,
+   0,
+   "ROUND 40: snap zoom on exhausted face (eye bags, sweat)"
+  ],
+  [
+   28.6,
+   "zoom_in",
+   -5,
+   0,
+   "camera punch-in"
+  ],
+  [
+   28.62,
+   "ui_pop",
+   -6,
+   0.35,
+   "ROUND 40 badge"
+  ],
+  [
+   28.857,
+   "tap",
+   -11,
+   0.23,
+   "'tap' on the tablet"
+  ],
+  [
+   29.143,
+   "tap",
+   -11,
+   -0.23,
+   "'tap' on the tablet"
+  ],
+  [
+   29.429,
+   "tap",
+   -11,
+   0.23,
+   "'tap' on the tablet"
+  ],
+  [
+   29.714,
+   "tap",
+   -11,
+   -0.23,
+   "'tap' on the tablet"
+  ],
+  [
+   30.0,
+   "tap",
+   -11,
+   0.23,
+   "'tap' on the tablet"
+  ],
+  [
+   30.286,
+   "tap",
+   -11,
+   -0.23,
+   "'tap' on the tablet"
+  ],
+  [
+   30.4,
+   "zoom_in",
+   -8,
+   0,
+   "cut into the tablet screen"
+  ],
+  [
+   32.45,
+   "glitch",
+   -3,
+   0.6,
+   "Secret Egg glitches onto the belt"
+  ],
+  [
+   32.5,
+   "magic",
+   -11,
+   0.6,
+   "eerie shimmer of the Secret Egg"
+  ],
+  [
+   32.6,
+   "zoom_in",
+   -6,
+   0.3,
+   "camera punch-in, avatar goes amazed"
+  ],
+  [
+   33.6,
+   "glitch",
+   -7,
+   0.55,
+   "second glitch flicker"
+  ],
+  [
+   35.0,
+   "powerdown",
+   -10,
+   0,
+   "conveyor belt grinds to a stop"
+  ],
+  [
+   35.0,
+   "whoosh_long",
+   -10,
+   0.1,
+   "slow push-in on the Secret Egg"
+  ],
+  [
+   35.1,
+   "glitch",
+   -9,
+   0.1,
+   "egg glitch flicker"
+  ],
+  [
+   36.95,
+   "pop",
+   -6,
+   0,
+   "price tag: $?"
+  ],
+  [
+   37.65,
+   "pop",
+   -6,
+   0,
+   "price tag: $??"
+  ],
+  [
+   38.2,
+   "pop",
+   -5,
+   0,
+   "price tag: $???"
+  ],
+  [
+   38.8,
+   "sparkle",
+   -3,
+   0,
+   "YOU's huge sparkly eyes, ??? reflected"
+  ],
+  [
+   41.25,
+   "ui_pop",
+   -3,
+   0,
+   "SECRET EGG buy panel pops"
+  ],
+  [
+   41.95,
+   "tap",
+   -2,
+   -0.12,
+   "finger taps BUY"
+  ],
+  [
+   41.97,
+   "click",
+   -7,
+   -0.12,
+   "BUY button press"
+  ],
+  [
+   42.5,
+   "shine",
+   -4,
+   0,
+   "'FREE!' pulses"
+  ],
+  [
+   43.45,
+   "ka_ching",
+   -4,
+   0,
+   "PURCHASED!"
+  ],
+  [
+   43.9,
+   "ui_close",
+   -8,
+   0,
+   "PURCHASED! banner closes"
+  ],
+  [
+   44.0,
+   "sub_drop",
+   -4,
+   0,
+   "screen darkens, ominous vignette"
+  ],
+  [
+   44.4,
+   "glitch",
+   -7,
+   0,
+   "glitch flicker"
+  ],
+  [
+   45.0,
+   "glitch",
+   -6,
+   0,
+   "glitch flicker"
+  ],
+  [
+   45.65,
+   "ui_pop",
+   -3,
+   0,
+   "ENTER YOUR USERNAME dialog"
+  ],
+  [
+   45.95,
+   "pop",
+   -8,
+   0,
+   "on-screen keyboard appears"
+  ],
+  [
+   51.0,
+   "swish",
+   -10,
+   0,
+   "sleepy head tilt, confused"
+  ],
+  [
+   52.0,
+   "tap",
+   0,
+   0.09,
+   "key Y"
+  ],
+  [
+   52.35,
+   "tap",
+   0,
+   0.62,
+   "key O"
+  ],
+  [
+   52.7,
+   "tap",
+   0,
+   0.27,
+   "key U"
+  ],
+  [
+   55.68,
+   "zoom_in",
+   -2,
+   0,
+   "snap zoom on 'YOU', red '!' marks, shake"
+  ],
+  [
+   55.7,
+   "boom",
+   -1,
+   0,
+   "'Remember that.'"
+  ],
+  [
+   56.55,
+   "tap",
+   -3,
+   0,
+   "taps OK"
+  ],
+  [
+   56.57,
+   "click",
+   -8,
+   0,
+   "OK button press"
+  ],
+  [
+   57.0,
+   "magic",
+   -8,
+   0,
+   "HATCHING... screen, rays spin"
+  ],
+  [
+   57.0,
+   "rumble",
+   -11,
+   0,
+   "egg rattles"
+  ],
+  [
+   57.1,
+   "egg_crack",
+   -3,
+   0,
+   "first crack"
+  ],
+  [
+   57.35,
+   "egg_crack",
+   -7,
+   0,
+   "crack spreads"
+  ],
+  [
+   57.48,
+   "egg_crack",
+   -4,
+   0,
+   "side cracks"
+  ],
+  [
+   57.6,
+   "egg_crack",
+   -7,
+   0,
+   "crack spreads"
+  ],
+  [
+   57.73,
+   "egg_crack",
+   -2,
+   0,
+   "crack splits the egg"
+  ],
+  [
+   58.0,
+   "egg_hatch",
+   -2,
+   0,
+   "egg bursts: pixel fountain erupts from the tablet"
+  ],
+  [
+   58.0,
+   "riser",
+   -5,
+   0,
+   "riser into BLOCKY! (peaks 60.0)"
+  ],
+  [
+   58.05,
+   "glitch_long",
+   -7,
+   0,
+   "room glitches, rainbow light"
+  ],
+  [
+   58.15,
+   "pop",
+   -11,
+   -0.2,
+   "pixels popping out"
+  ],
+  [
+   58.35,
+   "pop",
+   -11,
+   0.25,
+   "pixels popping out"
+  ],
+  [
+   58.4,
+   "rumble",
+   -9,
+   0,
+   "room shakes harder"
+  ],
+  [
+   58.5,
+   "reverse_swell",
+   -3,
+   0,
+   "swell into the white flash (peaks 60.0)"
+  ],
+  [
+   58.55,
+   "pop",
+   -11,
+   -0.1,
+   "pixels popping out"
+  ],
+  [
+   58.8,
+   "pop",
+   -11,
+   0.3,
+   "pixels popping out"
+  ],
+  [
+   59.05,
+   "pop",
+   -11,
+   -0.3,
+   "pixels popping out"
+  ],
+  [
+   59.3,
+   "pixel_wipe",
+   0,
+   0,
+   "everything goes blocky: pixel wave covers the room"
+  ],
+  [
+   60.0,
+   "impact",
+   0,
+   0,
+   "white flash: BLOCKY!"
+  ]
+ ]
+}

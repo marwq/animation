@@ -1,0 +1,721 @@
+{
+ "part": 10,
+ "start": 576.8,
+ "end": 642.0,
+ "music": [
+  {
+   "start": 576.8,
+   "end": 585.5,
+   "mood": "epic",
+   "energy": 0.6,
+   "in": "cut",
+   "out": "tapestop"
+  },
+  {
+   "start": 585.5,
+   "end": 587.8,
+   "mood": "sad",
+   "energy": 0.35,
+   "in": "cut",
+   "out": "cut"
+  },
+  {
+   "start": 587.8,
+   "end": 590.0,
+   "mood": "silence",
+   "energy": 0.0,
+   "in": "cut",
+   "out": "cut"
+  },
+  {
+   "start": 590.0,
+   "end": 596.2,
+   "mood": "playful",
+   "energy": 0.55,
+   "in": "cut",
+   "out": "sting"
+  },
+  {
+   "start": 596.2,
+   "end": 607.1,
+   "mood": "epic",
+   "energy": 0.55,
+   "in": "cut",
+   "out": "sting"
+  },
+  {
+   "start": 607.1,
+   "end": 618.4,
+   "mood": "heist",
+   "energy": 0.5,
+   "in": "cut",
+   "out": "cut"
+  },
+  {
+   "start": 618.4,
+   "end": 619.4,
+   "mood": "silence",
+   "energy": 0.0,
+   "in": "cut",
+   "out": "cut"
+  },
+  {
+   "start": 619.4,
+   "end": 622.2,
+   "mood": "heist",
+   "energy": 0.7,
+   "in": "cut",
+   "out": "cut"
+  },
+  {
+   "start": 622.2,
+   "end": 624.2,
+   "mood": "cool",
+   "energy": 0.45,
+   "in": "cut",
+   "out": "sting"
+  },
+  {
+   "start": 624.2,
+   "end": 627.5,
+   "mood": "heist",
+   "energy": 0.5,
+   "in": "cut",
+   "out": "cut"
+  },
+  {
+   "start": 627.5,
+   "end": 629.0,
+   "mood": "silence",
+   "energy": 0.0,
+   "in": "cut",
+   "out": "cut"
+  },
+  {
+   "start": 629.0,
+   "end": 634.3,
+   "mood": "heist",
+   "energy": 0.7,
+   "in": "cut",
+   "out": "cut"
+  },
+  {
+   "start": 634.3,
+   "end": 636.5,
+   "mood": "silence",
+   "energy": 0.0,
+   "in": "cut",
+   "out": "cut"
+  },
+  {
+   "start": 636.5,
+   "end": 642.0,
+   "mood": "playful",
+   "energy": 0.55,
+   "in": "cut",
+   "out": "sting"
+  }
+ ],
+ "ambience": [
+  {
+   "start": 576.8,
+   "end": 581.1,
+   "name": "birds",
+   "gain_db": -12
+  },
+  {
+   "start": 585.7,
+   "end": 596.2,
+   "name": "birds",
+   "gain_db": -12
+  },
+  {
+   "start": 596.2,
+   "end": 607.1,
+   "name": "wind",
+   "gain_db": -10
+  },
+  {
+   "start": 596.2,
+   "end": 607.1,
+   "name": "laser_hum",
+   "gain_db": -18
+  },
+  {
+   "start": 596.2,
+   "end": 607.1,
+   "name": "vault_hum",
+   "gain_db": -16
+  },
+  {
+   "start": 607.1,
+   "end": 624.2,
+   "name": "laser_hum",
+   "gain_db": -9
+  },
+  {
+   "start": 607.1,
+   "end": 624.2,
+   "name": "vault_hum",
+   "gain_db": -15
+  },
+  {
+   "start": 624.2,
+   "end": 642.0,
+   "name": "vault_hum",
+   "gain_db": -11
+  }
+ ],
+ "footsteps": [
+  {
+   "start": 607.1,
+   "end": 613.9,
+   "interval": 0.1047,
+   "surface": "hard",
+   "gain_db": -11,
+   "pan": -0.13
+  },
+  {
+   "start": 607.1,
+   "end": 613.9,
+   "interval": 0.1122,
+   "surface": "hard",
+   "gain_db": -13,
+   "pan": -0.41
+  }
+ ],
+ "sfx": [
+  [
+   576.8,
+   "impact",
+   1,
+   0.0,
+   "white flash: the Admin Vault event begins"
+  ],
+  [
+   576.9,
+   "whoosh_down",
+   -3,
+   0.1,
+   "the vault drops out of the sky above the map"
+  ],
+  [
+   577.05,
+   "rumble",
+   -9,
+   0.0,
+   "floating fortress settles in the sky"
+  ],
+  [
+   577.32,
+   "ui_pop",
+   -2,
+   0.22,
+   "'FINAL LEVEL' system message pops"
+  ],
+  [
+   581.1,
+   "ui_pop",
+   -4,
+   0.0,
+   "cut: money counter panel"
+  ],
+  [
+   581.4,
+   "money_counter",
+   -8,
+   0.0,
+   "counter starts rolling up"
+  ],
+  [
+   582.4,
+   "money_counter",
+   -8,
+   0.0,
+   "counter rolling"
+  ],
+  [
+   583.4,
+   "money_counter",
+   -8,
+   0.0,
+   "counter rolling"
+  ],
+  [
+   584.4,
+   "money_counter",
+   -9,
+   0.0,
+   "counter slows toward 999,999,999"
+  ],
+  [
+   585.22,
+   "error",
+   -2,
+   0.0,
+   "counter stops at $999,999,999 (one short)"
+  ],
+  [
+   585.7,
+   "zoom_in",
+   -5,
+   0.0,
+   "cut: punch-in on YOU crying"
+  ],
+  [
+   589.0,
+   "pop",
+   0,
+   0.25,
+   "'bloop.' Rocky pops out a dollar"
+  ],
+  [
+   589.2,
+   "coin",
+   -2,
+   0.0,
+   "'+$1' floats up over Rocky"
+  ],
+  [
+   590.0,
+   "ka_ching",
+   1,
+   0.0,
+   "counter hits $1,000,000,000 and turns gold"
+  ],
+  [
+   590.08,
+   "robux",
+   -5,
+   0.0,
+   "gold shimmer on the counter"
+  ],
+  [
+   591.4,
+   "sparkle",
+   -6,
+   0.0,
+   "Rocky sparkles"
+  ],
+  [
+   592.6,
+   "blink",
+   -4,
+   0.0,
+   "Rocky blinks"
+  ],
+  [
+   594.2,
+   "heart_pop",
+   -2,
+   0.0,
+   "cut: YOU overjoyed, hearts float up"
+  ],
+  [
+   594.25,
+   "blush",
+   -5,
+   0.0,
+   "YOU blushing"
+  ],
+  [
+   594.28,
+   "land",
+   -12,
+   0.0,
+   "happy hop"
+  ],
+  [
+   594.81,
+   "land",
+   -13,
+   0.0,
+   "happy hop"
+  ],
+  [
+   595.33,
+   "land",
+   -12,
+   0.0,
+   "happy hop"
+  ],
+  [
+   595.86,
+   "land",
+   -13,
+   0.0,
+   "happy hop"
+  ],
+  [
+   596.2,
+   "impact",
+   0,
+   0.0,
+   "white flash: the vault gate above the clouds"
+  ],
+  [
+   596.3,
+   "wind_gust",
+   -8,
+   0.0,
+   "high-altitude wind as the camera cranes up"
+  ],
+  [
+   599.0,
+   "laser_sweep",
+   -14,
+   0.5,
+   "laser pillars sweep beside the gate"
+  ],
+  [
+   601.2,
+   "zoom_in",
+   -6,
+   -0.05,
+   "cut: EggLord close-up"
+  ],
+  [
+   601.28,
+   "shine",
+   -8,
+   -0.1,
+   "EggLord's gold chain bling"
+  ],
+  [
+   604.8,
+   "swish",
+   -7,
+   0.05,
+   "cut across to Nova close-up"
+  ],
+  [
+   607.1,
+   "laser_sweep",
+   -7,
+   0.3,
+   "cut: Stage 1 Laser Hall, red beams sweeping"
+  ],
+  [
+   609.5,
+   "laser_sweep",
+   -12,
+   -0.4,
+   "beam sweeps past the runners"
+  ],
+  [
+   611.4,
+   "laser_sweep",
+   -12,
+   0.45,
+   "beam sweeps ahead"
+  ],
+  [
+   612.4,
+   "laser_zap",
+   1,
+   -0.12,
+   "ZZT! a beam clips Nova's shoe"
+  ],
+  [
+   612.44,
+   "electric",
+   -5,
+   -0.12,
+   "sparks fly off her shoe"
+  ],
+  [
+   612.6,
+   "squeak",
+   -8,
+   -0.12,
+   "Nova stumbles, sneaker squeak"
+  ],
+  [
+   613.9,
+   "zoom_in",
+   -4,
+   0.0,
+   "cut: punch-in on YOU, lasers in his eyes"
+  ],
+  [
+   614.0,
+   "shine",
+   -6,
+   0.0,
+   "laser reflections glint in his eyes"
+  ],
+  [
+   614.42,
+   "ui_pop",
+   -3,
+   0.44,
+   "'ZAPPED: 1,047' badge pops"
+  ],
+  [
+   615.9,
+   "laser_sweep",
+   -14,
+   -0.3,
+   "beams sweep behind YOU"
+  ],
+  [
+   617.7,
+   "swish",
+   -8,
+   0.1,
+   "Nova sidesteps left ('Left.')"
+  ],
+  [
+   617.9,
+   "reverse_swell",
+   -6,
+   0.0,
+   "tension swell, peaks on 'NOW!' at 619.4"
+  ],
+  [
+   618.25,
+   "step",
+   -8,
+   -0.03,
+   "Nova plants her foot"
+  ],
+  [
+   618.5,
+   "swish",
+   -10,
+   -0.39,
+   "YOU raises a hand: 'Wait...'"
+  ],
+  [
+   618.5,
+   "heartbeat",
+   -6,
+   0.0,
+   "tense pause while she waits"
+  ],
+  [
+   618.8,
+   "cloth",
+   -10,
+   -0.03,
+   "Nova crouches to jump"
+  ],
+  [
+   619.4,
+   "whoosh_up",
+   -2,
+   0.15,
+   "'NOW!' Nova leaps over the beam"
+  ],
+  [
+   619.42,
+   "jump",
+   -6,
+   0.1,
+   "Nova's jump"
+  ],
+  [
+   619.85,
+   "laser_sweep",
+   -10,
+   0.35,
+   "she clears the low beam"
+  ],
+  [
+   620.4,
+   "land",
+   -2,
+   0.31,
+   "Nova lands perfectly"
+  ],
+  [
+   622.2,
+   "zoom_in",
+   -6,
+   0.0,
+   "cut: Nova close-up"
+  ],
+  [
+   622.3,
+   "shine",
+   -8,
+   0.05,
+   "Nova lowers her glasses a little"
+  ],
+  [
+   624.2,
+   "whoosh_long",
+   -9,
+   0.0,
+   "cut: Stage 2 Hatchery, camera pans across the shelves"
+  ],
+  [
+   626.3,
+   "shine",
+   -6,
+   0.1,
+   "the one real egg glows ('One is real.')"
+  ],
+  [
+   627.7,
+   "boom",
+   -2,
+   0.0,
+   "teeth egg close-up pops in: '...have TEETH.'"
+  ],
+  [
+   627.72,
+   "zoom_in",
+   -6,
+   0.0,
+   "egg close-up pops in"
+  ],
+  [
+   627.97,
+   "chomp",
+   -2,
+   0.0,
+   "teeth egg chomps"
+  ],
+  [
+   628.3,
+   "chomp",
+   -12,
+   -0.5,
+   "shelves of purple eggs chomping"
+  ],
+  [
+   628.67,
+   "chomp",
+   -2,
+   0.0,
+   "teeth egg chomps again"
+  ],
+  [
+   629.35,
+   "chomp",
+   -16,
+   -0.45,
+   "background teeth egg"
+  ],
+  [
+   630.7,
+   "chomp",
+   -16,
+   0.5,
+   "background teeth egg"
+  ],
+  [
+   631.0,
+   "swish",
+   -8,
+   0.2,
+   "cut: Nova points at the purple eggs"
+  ],
+  [
+   632.9,
+   "chomp",
+   -16,
+   -0.5,
+   "background teeth egg"
+  ],
+  [
+   633.85,
+   "tap",
+   -4,
+   0.23,
+   "YOU pokes the purple egg"
+  ],
+  [
+   634.3,
+   "chomp",
+   3,
+   0.05,
+   "CHOMP! the egg swallows his head"
+  ],
+  [
+   634.32,
+   "punch",
+   -8,
+   0.05,
+   "weight of the chomp"
+  ],
+  [
+   634.9,
+   "cloth",
+   -10,
+   0.0,
+   "legs and arms flail"
+  ],
+  [
+   635.6,
+   "cloth",
+   -11,
+   0.0,
+   "more flailing"
+  ],
+  [
+   636.51,
+   "squeak",
+   -9,
+   0.2,
+   "Nova tugs his legs (rubbery egg squeak)"
+  ],
+  [
+   636.96,
+   "squeak",
+   -9,
+   0.2,
+   "tug"
+  ],
+  [
+   637.41,
+   "squeak",
+   -8,
+   0.2,
+   "tug"
+  ],
+  [
+   637.8,
+   "pop",
+   3,
+   -0.04,
+   "POP! he's yanked free"
+  ],
+  [
+   637.83,
+   "whoosh",
+   -4,
+   -0.5,
+   "teeth egg flies off"
+  ],
+  [
+   638.25,
+   "land",
+   -4,
+   0.13,
+   "YOU lands upright, dizzy"
+  ],
+  [
+   638.25,
+   "dizzy",
+   -6,
+   0,
+   "YOU dizzy, spiral eyes"
+  ],
+  [
+   639.05,
+   "chomp",
+   -16,
+   -0.6,
+   "background teeth egg"
+  ],
+  [
+   640.2,
+   "swish",
+   -10,
+   -0.1,
+   "camera snaps to YOU"
+  ]
+ ]
+}

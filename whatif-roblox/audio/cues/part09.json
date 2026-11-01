@@ -1,0 +1,658 @@
+{
+ "part": 9,
+ "start": 517.2,
+ "end": 576.8,
+ "music": [
+  {
+   "start": 517.2,
+   "end": 525.4,
+   "mood": "cool",
+   "energy": 0.55,
+   "in": "cut",
+   "out": "sting"
+  },
+  {
+   "start": 525.4,
+   "end": 527.3,
+   "mood": "heist",
+   "energy": 0.45,
+   "in": "cut",
+   "out": "cut"
+  },
+  {
+   "start": 527.3,
+   "end": 530.3,
+   "mood": "silence",
+   "energy": 0,
+   "in": "cut",
+   "out": "cut"
+  },
+  {
+   "start": 530.3,
+   "end": 537.3,
+   "mood": "warm",
+   "energy": 0.35,
+   "in": "swell",
+   "out": "fade"
+  },
+  {
+   "start": 537.3,
+   "end": 545.9,
+   "mood": "mystery",
+   "energy": 0.3,
+   "in": "fade",
+   "out": "fade"
+  },
+  {
+   "start": 545.9,
+   "end": 551.2,
+   "mood": "warm",
+   "energy": 0.3,
+   "in": "fade",
+   "out": "cut"
+  },
+  {
+   "start": 551.2,
+   "end": 552.5,
+   "mood": "silence",
+   "energy": 0,
+   "in": "cut",
+   "out": "cut"
+  },
+  {
+   "start": 552.5,
+   "end": 554.9,
+   "mood": "sad",
+   "energy": 0.2,
+   "in": "fade",
+   "out": "cut"
+  },
+  {
+   "start": 554.9,
+   "end": 557.4,
+   "mood": "romance",
+   "energy": 0.35,
+   "in": "swell",
+   "out": "cut"
+  },
+  {
+   "start": 557.4,
+   "end": 562.5,
+   "mood": "montage",
+   "energy": 0.75,
+   "in": "cut",
+   "out": "cut"
+  },
+  {
+   "start": 562.5,
+   "end": 565.3,
+   "mood": "epic",
+   "energy": 0.5,
+   "in": "cut",
+   "out": "cut"
+  },
+  {
+   "start": 565.3,
+   "end": 573.7,
+   "mood": "chase",
+   "energy": 0.75,
+   "in": "cut",
+   "out": "cut"
+  },
+  {
+   "start": 573.7,
+   "end": 576.8,
+   "mood": "playful",
+   "energy": 0.3,
+   "in": "cut",
+   "out": "sting"
+  }
+ ],
+ "ambience": [
+  {
+   "start": 517.2,
+   "end": 530.3,
+   "name": "birds",
+   "gain_db": -12
+  },
+  {
+   "start": 530.3,
+   "end": 557.4,
+   "name": "birds",
+   "gain_db": -16
+  },
+  {
+   "start": 557.4,
+   "end": 576.8,
+   "name": "birds",
+   "gain_db": -12
+  },
+  {
+   "start": 565.3,
+   "end": 573.7,
+   "name": "crowd",
+   "gain_db": -10
+  },
+  {
+   "start": 573.7,
+   "end": 576.8,
+   "name": "ocean",
+   "gain_db": -12
+  },
+  {
+   "start": 530.0,
+   "end": 557.0,
+   "name": "conveyor",
+   "gain_db": -14
+  }
+ ],
+ "footsteps": [
+  {
+   "start": 520.4,
+   "end": 522.7,
+   "interval": 0.105,
+   "surface": "soft",
+   "gain_db": -10,
+   "pan": 0.12
+  },
+  {
+   "start": 522.75,
+   "end": 524.4,
+   "interval": 0.349,
+   "surface": "hard",
+   "gain_db": -12,
+   "pan": 0.0
+  },
+  {
+   "start": 524.4,
+   "end": 525.4,
+   "interval": 0.105,
+   "surface": "soft",
+   "gain_db": -10,
+   "pan": 0.2
+  },
+  {
+   "start": 525.5,
+   "end": 527.3,
+   "interval": 0.449,
+   "surface": "hard",
+   "gain_db": -16,
+   "pan": 0.45
+  },
+  {
+   "start": 552.6,
+   "end": 554.1,
+   "interval": 0.524,
+   "surface": "hard",
+   "gain_db": -12,
+   "pan": 0.2
+  },
+  {
+   "start": 557.4,
+   "end": 562.5,
+   "interval": 0.098,
+   "surface": "soft",
+   "gain_db": -10,
+   "pan": 0.0
+  },
+  {
+   "start": 567.7,
+   "end": 573.7,
+   "interval": 0.121,
+   "surface": "soft",
+   "gain_db": -12,
+   "pan": -0.2
+  },
+  {
+   "start": 567.76,
+   "end": 573.7,
+   "interval": 0.121,
+   "surface": "soft",
+   "gain_db": -14,
+   "pan": 0.3
+  }
+ ],
+ "sfx": [
+  [
+   517.22,
+   "whoosh",
+   -8,
+   0.0,
+   "cut to day: Nova at YOU's base"
+  ],
+  [
+   519.05,
+   "swish",
+   -8,
+   0.12,
+   "Nova reaches for the egg"
+  ],
+  [
+   519.58,
+   "slide_up",
+   -2,
+   0.12,
+   "YOINK! egg snatched onto her head"
+  ],
+  [
+   519.68,
+   "squeak",
+   -6,
+   -0.58,
+   "YOU startled '!'"
+  ],
+  [
+   520.4,
+   "whoosh",
+   -2,
+   0.12,
+   "Nova bolts with the egg, speed lines"
+  ],
+  [
+   522.7,
+   "zoom_in",
+   -2,
+   0.0,
+   "snap to YOU's angry close-up"
+  ],
+  [
+   524.4,
+   "whoosh",
+   -4,
+   0.2,
+   "Nova runs past, egg on head"
+  ],
+  [
+   525.7,
+   "chomp",
+   -12,
+   0.11,
+   "Nova munches her banana"
+  ],
+  [
+   526.5,
+   "chomp",
+   -12,
+   0.11,
+   "munch"
+  ],
+  [
+   527.3,
+   "slip",
+   0,
+   0.26,
+   "*SLIP* on the banana peel"
+  ],
+  [
+   527.5,
+   "whoosh",
+   -4,
+   0.22,
+   "YOU flips through the air"
+  ],
+  [
+   528.2,
+   "body_fall",
+   2,
+   0.21,
+   "lands flat on his back: OOF!"
+  ],
+  [
+   528.85,
+   "chomp",
+   -10,
+   0.11,
+   "Nova keeps munching"
+  ],
+  [
+   529.95,
+   "rimshot",
+   -3,
+   0.0,
+   "Classic."
+  ],
+  [
+   530.3,
+   "harp_up",
+   -4,
+   0.0,
+   "soft flash into the sunset ledge"
+  ],
+  [
+   533.7,
+   "glitch",
+   -8,
+   -0.29,
+   "??? Secret Egg pops up"
+  ],
+  [
+   533.72,
+   "pop",
+   -6,
+   -0.29,
+   "Secret Egg appears"
+  ],
+  [
+   536.05,
+   "squeak",
+   -6,
+   0.12,
+   "YOU shocked '!'"
+  ],
+  [
+   537.5,
+   "tv_on",
+   -4,
+   -0.29,
+   "Admin Vault hologram flickers on"
+  ],
+  [
+   539.4,
+   "sub_drop",
+   -8,
+   -0.29,
+   "FINAL LEVEL label appears"
+  ],
+  [
+   542.4,
+   "ui_pop",
+   -6,
+   -0.29,
+   "HATCH IT = WORLD FIXED? panel"
+  ],
+  [
+   545.6,
+   "tv_off",
+   -6,
+   -0.29,
+   "hologram switches off"
+  ],
+  [
+   547.45,
+   "shine",
+   -8,
+   -0.12,
+   "Nova's smug glasses glint"
+  ],
+  [
+   549.75,
+   "blush",
+   -6,
+   0.12,
+   "YOU blushes: team up?"
+  ],
+  [
+   554.9,
+   "swish",
+   -8,
+   0.35,
+   "Nova glances back over her shoulder"
+  ],
+  [
+   555.05,
+   "shine",
+   -4,
+   0.35,
+   "smug glasses glint"
+  ],
+  [
+   555.3,
+   "blush",
+   -4,
+   -0.33,
+   "YOU amazed + blush"
+  ],
+  [
+   555.65,
+   "heartbeat",
+   -8,
+   -0.33,
+   "heart flutters"
+  ],
+  [
+   557.4,
+   "whoosh",
+   -2,
+   0.0,
+   "cut: YOU sprints, speed lines"
+  ],
+  [
+   557.9,
+   "ui_pop",
+   -6,
+   0.0,
+   "RANK #8,000,000,000"
+  ],
+  [
+   559.3,
+   "upgrade",
+   -4,
+   0.0,
+   "RANK #50,000"
+  ],
+  [
+   560.5,
+   "upgrade",
+   -2,
+   0.0,
+   "RANK #300"
+  ],
+  [
+   561.4,
+   "level_up",
+   0,
+   0.0,
+   "RANK #3! burst, gold text"
+  ],
+  [
+   562.48,
+   "whoosh",
+   -4,
+   0.0,
+   "cut to the leaderboard"
+  ],
+  [
+   562.52,
+   "ui_pop",
+   -4,
+   0.0,
+   "leaderboard, YOU #3 highlighted"
+  ],
+  [
+   563.0,
+   "click",
+   -6,
+   0.0,
+   "highlight moves to #2 Nova"
+  ],
+  [
+   564.2,
+   "boom",
+   0,
+   0.0,
+   "highlight slams to #1 xX_EggLord_Xx"
+  ],
+  [
+   565.3,
+   "siren",
+   -6,
+   0.0,
+   "SERVER EVENT siren, purple tint"
+  ],
+  [
+   565.5,
+   "whoosh",
+   -3,
+   0.0,
+   "event banner flies in"
+  ],
+  [
+   565.75,
+   "orch_hit",
+   -1,
+   0.0,
+   "EGG RAIN! banner lands"
+  ],
+  [
+   567.05,
+   "whoosh_down",
+   -10,
+   0.0,
+   "first eggs drop from the sky"
+  ],
+  [
+   567.7,
+   "crowd_cheer",
+   -8,
+   0.0,
+   "cut: the whole server goes crazy"
+  ],
+  [
+   568.06,
+   "thud",
+   -6,
+   -0.46,
+   "egg lands THUD"
+  ],
+  [
+   568.24,
+   "thud",
+   -8,
+   -0.68,
+   "egg lands THUD"
+  ],
+  [
+   568.54,
+   "thud",
+   -6,
+   -0.5,
+   "egg lands THUD"
+  ],
+  [
+   569.07,
+   "thud",
+   -7,
+   -0.51,
+   "egg lands THUD"
+  ],
+  [
+   569.25,
+   "land",
+   -9,
+   -0.71,
+   "egg lands"
+  ],
+  [
+   569.36,
+   "thud",
+   -7,
+   -0.49,
+   "egg lands THUD"
+  ],
+  [
+   569.61,
+   "thud",
+   -6,
+   -0.57,
+   "egg lands THUD"
+  ],
+  [
+   569.78,
+   "land",
+   -8,
+   -0.45,
+   "egg lands"
+  ],
+  [
+   569.85,
+   "whoosh",
+   -4,
+   0.0,
+   "Speedy zooms past"
+  ],
+  [
+   570.08,
+   "thud",
+   -8,
+   -0.51,
+   "egg lands THUD"
+  ],
+  [
+   570.32,
+   "thud",
+   -6,
+   -0.55,
+   "egg lands THUD"
+  ],
+  [
+   570.55,
+   "engine",
+   -2,
+   0.0,
+   "Mom's pink car drives through"
+  ],
+  [
+   570.71,
+   "thud",
+   -6,
+   -0.5,
+   "egg lands THUD"
+  ],
+  [
+   570.83,
+   "thud",
+   -8,
+   -0.45,
+   "egg lands THUD"
+  ],
+  [
+   571.3,
+   "car_horn",
+   -3,
+   0.0,
+   "Mom honks"
+  ],
+  [
+   573.7,
+   "whoosh_down",
+   -4,
+   0.2,
+   "cut to the dock: egg drops toward Dad's line"
+  ],
+  [
+   573.9,
+   "boing",
+   -3,
+   0.15,
+   "rod bends, egg hooked"
+  ],
+  [
+   573.95,
+   "achievement",
+   -3,
+   0.24,
+   "LEGENDARY CATCH!"
+  ],
+  [
+   574.2,
+   "splash",
+   -10,
+   0.2,
+   "bobber yanked out of the water"
+  ],
+  [
+   574.35,
+   "sparkle",
+   -8,
+   0.07,
+   "egg sparkles on the line"
+  ],
+  [
+   575.6,
+   "sparkle",
+   -12,
+   0.07,
+   "egg sparkles"
+  ]
+ ]
+}

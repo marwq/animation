@@ -1,0 +1,966 @@
+{
+ "part": 3,
+ "start": 123.6,
+ "end": 195.4,
+ "music": [
+  {
+   "start": 123.6,
+   "end": 132.45,
+   "mood": "playful",
+   "energy": 0.5,
+   "in": "fade",
+   "out": "cut"
+  },
+  {
+   "start": 132.45,
+   "end": 133.6,
+   "mood": "silence",
+   "energy": 0.0,
+   "in": "cut",
+   "out": "cut"
+  },
+  {
+   "start": 133.6,
+   "end": 137.9,
+   "mood": "playful",
+   "energy": 0.45,
+   "in": "cut",
+   "out": "cut"
+  },
+  {
+   "start": 137.9,
+   "end": 141.6,
+   "mood": "warm",
+   "energy": 0.3,
+   "in": "cut",
+   "out": "sting"
+  },
+  {
+   "start": 141.6,
+   "end": 143.5,
+   "mood": "silence",
+   "energy": 0.0,
+   "in": "cut",
+   "out": "cut"
+  },
+  {
+   "start": 143.5,
+   "end": 152.6,
+   "mood": "adventure",
+   "energy": 0.65,
+   "in": "cut",
+   "out": "cut"
+  },
+  {
+   "start": 152.6,
+   "end": 155.05,
+   "mood": "playful",
+   "energy": 0.5,
+   "in": "cut",
+   "out": "cut"
+  },
+  {
+   "start": 155.05,
+   "end": 156.95,
+   "mood": "silence",
+   "energy": 0.0,
+   "in": "cut",
+   "out": "cut"
+  },
+  {
+   "start": 156.95,
+   "end": 165.6,
+   "mood": "playful",
+   "energy": 0.65,
+   "in": "cut",
+   "out": "cut"
+  },
+  {
+   "start": 165.6,
+   "end": 168.8,
+   "mood": "wonder",
+   "energy": 0.55,
+   "in": "swell",
+   "out": "cut"
+  },
+  {
+   "start": 168.8,
+   "end": 173.9,
+   "mood": "commentator",
+   "energy": 0.6,
+   "in": "cut",
+   "out": "cut"
+  },
+  {
+   "start": 173.9,
+   "end": 175.2,
+   "mood": "silence",
+   "energy": 0.0,
+   "in": "cut",
+   "out": "cut"
+  },
+  {
+   "start": 175.2,
+   "end": 178.65,
+   "mood": "wonder",
+   "energy": 0.4,
+   "in": "fade",
+   "out": "tapestop"
+  },
+  {
+   "start": 178.65,
+   "end": 179.7,
+   "mood": "silence",
+   "energy": 0.0,
+   "in": "cut",
+   "out": "cut"
+  },
+  {
+   "start": 179.7,
+   "end": 181.9,
+   "mood": "glitch_build",
+   "energy": 0.45,
+   "in": "fade",
+   "out": "cut"
+  },
+  {
+   "start": 181.9,
+   "end": 191.6,
+   "mood": "epic",
+   "energy": 0.5,
+   "in": "cut",
+   "out": "cut"
+  },
+  {
+   "start": 191.6,
+   "end": 193.5,
+   "mood": "silence",
+   "energy": 0.0,
+   "in": "cut",
+   "out": "cut"
+  },
+  {
+   "start": 193.5,
+   "end": 195.4,
+   "mood": "hook",
+   "energy": 0.7,
+   "in": "cut",
+   "out": "sting"
+  }
+ ],
+ "ambience": [
+  {
+   "start": 123.6,
+   "end": 143.4,
+   "name": "room",
+   "gain_db": -12
+  },
+  {
+   "start": 142.0,
+   "end": 143.5,
+   "name": "birds",
+   "gain_db": -14
+  },
+  {
+   "start": 143.5,
+   "end": 165.6,
+   "name": "town",
+   "gain_db": -8
+  },
+  {
+   "start": 143.5,
+   "end": 165.6,
+   "name": "birds",
+   "gain_db": -12
+  },
+  {
+   "start": 165.6,
+   "end": 167.4,
+   "name": "wind",
+   "gain_db": -8
+  },
+  {
+   "start": 168.8,
+   "end": 172.5,
+   "name": "birds",
+   "gain_db": -13
+  },
+  {
+   "start": 170.45,
+   "end": 172.5,
+   "name": "wind",
+   "gain_db": -15
+  },
+  {
+   "start": 172.5,
+   "end": 175.2,
+   "name": "ocean",
+   "gain_db": -6
+  },
+  {
+   "start": 177.7,
+   "end": 179.7,
+   "name": "static",
+   "gain_db": -20
+  },
+  {
+   "start": 179.7,
+   "end": 181.6,
+   "name": "town",
+   "gain_db": -10
+  },
+  {
+   "start": 180.2,
+   "end": 193.5,
+   "name": "wind",
+   "gain_db": -12
+  },
+  {
+   "start": 193.5,
+   "end": 195.4,
+   "name": "town",
+   "gain_db": -10
+  },
+  {
+   "start": 193.5,
+   "end": 195.4,
+   "name": "birds",
+   "gain_db": -12
+  }
+ ],
+ "footsteps": [
+  {
+   "start": 142.85,
+   "end": 143.45,
+   "interval": 0.314,
+   "surface": "wood",
+   "gain_db": -8,
+   "pan": 0.0
+  },
+  {
+   "start": 160.96,
+   "end": 162.64,
+   "interval": 0.393,
+   "surface": "hard",
+   "gain_db": -10,
+   "pan": 0.0
+  },
+  {
+   "start": 162.97,
+   "end": 165.55,
+   "interval": 0.393,
+   "surface": "hard",
+   "gain_db": -14,
+   "pan": 0.0
+  }
+ ],
+ "sfx": [
+  [
+   123.75,
+   "swish",
+   -8,
+   -0.6,
+   "YOU slides in from the left to peek (123.6-124.4)"
+  ],
+  [
+   125.3,
+   "swish",
+   -8,
+   0.05,
+   "Dad waves (125.2-126.4)"
+  ],
+  [
+   125.6,
+   "ui_pop",
+   -3,
+   0.36,
+   "AVATAR LAST UPDATED: 2006 panel"
+  ],
+  [
+   126.0,
+   "swish",
+   -11,
+   0.05,
+   "wave comes back down"
+  ],
+  [
+   127.2,
+   "zoom_in",
+   -3,
+   0.0,
+   "punch-in: YELLOW HEAD"
+  ],
+  [
+   127.25,
+   "toggle",
+   -5,
+   0.25,
+   "check-mark label"
+  ],
+  [
+   128.0,
+   "zoom_in",
+   -3,
+   0.0,
+   "punch-in: BLUE SHIRT"
+  ],
+  [
+   128.05,
+   "toggle",
+   -5,
+   0.25,
+   "check-mark label"
+  ],
+  [
+   128.8,
+   "zoom_in",
+   -3,
+   0.0,
+   "punch-in: GREEN PANTS"
+  ],
+  [
+   128.85,
+   "toggle",
+   -5,
+   0.25,
+   "check-mark label"
+  ],
+  [
+   129.7,
+   "cloth",
+   -8,
+   0.0,
+   "Dad throws his arms up proudly"
+  ],
+  [
+   129.95,
+   "stamp",
+   -3,
+   0.34,
+   "CLASSIC NOOB stamp slams (129.8-130.0)"
+  ],
+  [
+   132.5,
+   "music_box",
+   -6,
+   0.0,
+   "VINTAGE: sepia old-photo filter + vignette"
+  ],
+  [
+   132.55,
+   "pop",
+   -6,
+   0.36,
+   "VINTAGE check label pops"
+  ],
+  [
+   132.7,
+   "shine",
+   -6,
+   0.16,
+   "sparkle glint"
+  ],
+  [
+   133.6,
+   "ui_pop",
+   -9,
+   0.39,
+   "minutes counter appears"
+  ],
+  [
+   133.7,
+   "money_counter",
+   -16,
+   0.39,
+   "minutes counter ticks 0 -> 20"
+  ],
+  [
+   133.85,
+   "slide_down",
+   -4,
+   0.0,
+   "Dad sinks through the couch"
+  ],
+  [
+   134.65,
+   "glitch",
+   -4,
+   0.26,
+   "*glitch* - pops back out of the couch"
+  ],
+  [
+   134.7,
+   "money_counter",
+   -16,
+   0.39,
+   "minutes counter ticking"
+  ],
+  [
+   135.25,
+   "slide_down",
+   -5,
+   0.0,
+   "sinks through again"
+  ],
+  [
+   135.7,
+   "money_counter",
+   -16,
+   0.39,
+   "minutes counter ticking"
+  ],
+  [
+   136.05,
+   "glitch",
+   -5,
+   0.26,
+   "*glitch* - pops back out"
+  ],
+  [
+   136.65,
+   "slide_down",
+   -5,
+   0.0,
+   "sinks through again"
+  ],
+  [
+   136.7,
+   "money_counter",
+   -17,
+   0.39,
+   "minutes counter reaches 20"
+  ],
+  [
+   137.45,
+   "glitch",
+   -5,
+   0.26,
+   "*glitch* - pops back out"
+  ],
+  [
+   139.7,
+   "blink",
+   -10,
+   0.0,
+   "Dad's eyes close contentedly"
+  ],
+  [
+   140.4,
+   "notify",
+   -6,
+   0.0,
+   "nametag updates: Dad (Couch)"
+  ],
+  [
+   141.48,
+   "whoosh",
+   -2,
+   0.0,
+   "whip-pan to the front door (141.45-141.75)"
+  ],
+  [
+   141.5,
+   "riser",
+   -7,
+   0.0,
+   "build to stepping outside (peaks 143.5)"
+  ],
+  [
+   141.95,
+   "door_open",
+   -2,
+   0.0,
+   "front door swings open (141.9-142.6)"
+  ],
+  [
+   143.3,
+   "whoosh_long",
+   -3,
+   0.0,
+   "white flash, camera pulls back over the town (143.5-144.4)"
+  ],
+  [
+   143.5,
+   "angel",
+   -8,
+   0.0,
+   "WOW - divine reveal of the Roblox world"
+  ],
+  [
+   143.6,
+   "sparkle",
+   -8,
+   0.0,
+   "YOU's sparkly eyes"
+  ],
+  [
+   145.4,
+   "pop",
+   -3,
+   0.0,
+   "BASEPLATE label"
+  ],
+  [
+   145.45,
+   "shine",
+   -7,
+   0.0,
+   "baseplate studs flash"
+  ],
+  [
+   146.9,
+   "zoom_in",
+   -5,
+   0.0,
+   "snap to the square sun"
+  ],
+  [
+   147.6,
+   "pop",
+   -3,
+   0.0,
+   "dashed square + 90 degrees pops on the sun"
+  ],
+  [
+   148.7,
+   "swish",
+   -8,
+   0.0,
+   "cut to the square clouds"
+  ],
+  [
+   149.75,
+   "pop",
+   -5,
+   -0.6,
+   "dashed outline on a square cloud"
+  ],
+  [
+   149.9,
+   "pop",
+   -5,
+   0.38,
+   "second cloud outline"
+  ],
+  [
+   150.8,
+   "pop",
+   0,
+   0.0,
+   "burst of square confetti around YOU"
+  ],
+  [
+   150.82,
+   "sparkle",
+   -6,
+   0.0,
+   "confetti sparkle"
+  ],
+  [
+   151.0,
+   "jump_game",
+   -4,
+   0.0,
+   "YOU hops with joy (151.0-151.5)"
+  ],
+  [
+   151.48,
+   "land",
+   -8,
+   0.0,
+   "lands"
+  ],
+  [
+   152.65,
+   "swish",
+   -12,
+   0.39,
+   "banana neighbor waves"
+  ],
+  [
+   155.0,
+   "blink",
+   -6,
+   -0.35,
+   "YOU's face drops to deadpan"
+  ],
+  [
+   155.05,
+   "harp_up",
+   -8,
+   0.39,
+   "flashback thought bubble"
+  ],
+  [
+   155.1,
+   "pop",
+   -3,
+   0.39,
+   "thought bubble: DR. BOB, DDS"
+  ],
+  [
+   156.9,
+   "poof",
+   -9,
+   0.39,
+   "thought bubble vanishes"
+  ],
+  [
+   157.08,
+   "swish",
+   -12,
+   0.39,
+   "banana flosses"
+  ],
+  [
+   157.43,
+   "swish",
+   -12,
+   0.39,
+   "banana flosses"
+  ],
+  [
+   157.78,
+   "swish",
+   -12,
+   0.39,
+   "banana flosses"
+  ],
+  [
+   158.13,
+   "swish",
+   -12,
+   0.39,
+   "banana flosses"
+  ],
+  [
+   158.48,
+   "swish",
+   -12,
+   0.39,
+   "banana flosses"
+  ],
+  [
+   158.83,
+   "swish",
+   -12,
+   0.39,
+   "banana flosses"
+  ],
+  [
+   159.1,
+   "whoosh",
+   -2,
+   0.0,
+   "whip-pan to the townsfolk (159.05-159.35)"
+  ],
+  [
+   159.35,
+   "jetpack",
+   -6,
+   -0.3,
+   "kid on a rainbow jetpack flies across the sky"
+  ],
+  [
+   159.6,
+   "sparkle",
+   -10,
+   -0.3,
+   "rainbow trail shimmer"
+  ],
+  [
+   159.95,
+   "whoosh",
+   -5,
+   0.05,
+   "jetpack kid passes overhead"
+  ],
+  [
+   161.1,
+   "money_counter",
+   -9,
+   0.47,
+   "HATS counter rolls up"
+  ],
+  [
+   161.75,
+   "money_counter",
+   -10,
+   0.47,
+   "HATS counter continues"
+  ],
+  [
+   162.42,
+   "confirm",
+   -8,
+   0.47,
+   "HATS: 37"
+  ],
+  [
+   163.43,
+   "countdown_tick",
+   -7,
+   0.47,
+   "dance clock jumps to 7:43 AM"
+  ],
+  [
+   164.05,
+   "countdown_tick",
+   -7,
+   0.47,
+   "8:43 AM"
+  ],
+  [
+   164.68,
+   "countdown_tick",
+   -7,
+   0.47,
+   "9:43 AM"
+  ],
+  [
+   165.2,
+   "riser",
+   -6,
+   0.0,
+   "build into the fly-up (peaks 167.2)"
+  ],
+  [
+   165.3,
+   "countdown_tick",
+   -8,
+   0.47,
+   "10:43 AM"
+  ],
+  [
+   166.2,
+   "whoosh_long",
+   -4,
+   0.0,
+   "camera rockets up into the sky (165.6-167.2)"
+  ],
+  [
+   167.2,
+   "impact",
+   -4,
+   0.0,
+   "cube Earth revealed"
+  ],
+  [
+   168.8,
+   "swish",
+   -3,
+   0.0,
+   "postcard: Paris obby"
+  ],
+  [
+   169.2,
+   "jump_game",
+   -13,
+   -0.25,
+   "tiny player hops between Eiffel obby platforms"
+  ],
+  [
+   169.75,
+   "jump_game",
+   -13,
+   0.2,
+   "tiny player hops"
+  ],
+  [
+   170.45,
+   "swish",
+   -3,
+   0.0,
+   "postcard: Great Wall obby"
+  ],
+  [
+   170.9,
+   "jump_game",
+   -13,
+   -0.2,
+   "tiny player hops on the wall"
+  ],
+  [
+   171.55,
+   "jump_game",
+   -13,
+   0.15,
+   "tiny player hops"
+  ],
+  [
+   172.5,
+   "swish",
+   -3,
+   0.0,
+   "postcard: the ocean"
+  ],
+  [
+   172.7,
+   "splash",
+   -12,
+   0.17,
+   "swimmer bobbing in the red ocean"
+  ],
+  [
+   173.9,
+   "explosion_small",
+   -1,
+   0.17,
+   "OOF! swimmer touches the kill brick and breaks into blocks"
+  ],
+  [
+   175.3,
+   "ui_pop",
+   -3,
+   0.31,
+   "SERVER: EARTH panel"
+  ],
+  [
+   175.35,
+   "money_counter",
+   -9,
+   0.31,
+   "player count rolls up to 8 billion"
+  ],
+  [
+   175.95,
+   "money_counter",
+   -13,
+   0.31,
+   "counter slows"
+  ],
+  [
+   176.6,
+   "confirm",
+   -8,
+   0.31,
+   "server full: 8,000,000,000 / 8,000,000,000"
+  ],
+  [
+   177.7,
+   "error",
+   -3,
+   0.31,
+   "PING 9999 pops up red"
+  ],
+  [
+   178.0,
+   "glitch",
+   -10,
+   0.3,
+   "lag glitch lines"
+  ],
+  [
+   178.75,
+   "glitch",
+   -10,
+   -0.2,
+   "lag glitch lines"
+  ],
+  [
+   179.3,
+   "glitch",
+   -11,
+   0.2,
+   "lag glitch lines"
+  ],
+  [
+   179.9,
+   "rumble",
+   -6,
+   0.0,
+   "sky darkens, everyone freezes (179.9-181.4)"
+  ],
+  [
+   179.9,
+   "riser",
+   -7,
+   0.0,
+   "build to the giant message (peaks 181.9)"
+  ],
+  [
+   181.9,
+   "impact",
+   -3,
+   0.0,
+   "giant SYSTEM MESSAGE window appears"
+  ],
+  [
+   181.92,
+   "ui_pop",
+   -5,
+   0.0,
+   "window pops open"
+  ],
+  [
+   182.6,
+   "zoom_in",
+   -8,
+   0.0,
+   "camera pushes in on the message"
+  ],
+  [
+   185.8,
+   "ui_pop",
+   -7,
+   0.0,
+   "message changes: enter ONE game"
+  ],
+  [
+   188.9,
+   "ui_pop",
+   -7,
+   0.0,
+   "message changes: will be KICKED"
+  ],
+  [
+   189.0,
+   "boom",
+   -4,
+   0.0,
+   "KICKED - window shakes"
+  ],
+  [
+   191.6,
+   "zoom_in",
+   -4,
+   0.0,
+   "snap to YOU's terrified face"
+  ],
+  [
+   191.75,
+   "gulp",
+   -1,
+   0.28,
+   "*gulp*"
+  ],
+  [
+   192.1,
+   "heartbeat",
+   -8,
+   0.0,
+   "fear heartbeat"
+  ],
+  [
+   193.5,
+   "ui_pop",
+   -3,
+   0.0,
+   "message turns cheerful green: Have fun! :)"
+  ],
+  [
+   193.55,
+   "sparkle",
+   -8,
+   0.0,
+   "confetti starts falling"
+  ],
+  [
+   194.6,
+   "blink",
+   -4,
+   0.03,
+   "YOU's deadpan blink"
+  ]
+ ]
+}

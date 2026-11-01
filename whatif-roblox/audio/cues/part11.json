@@ -1,0 +1,862 @@
+{
+ "part": 11,
+ "start": 642.0,
+ "end": 694.0,
+ "music": [
+  {
+   "start": 642.0,
+   "end": 645.6,
+   "mood": "epic",
+   "energy": 0.6,
+   "in": "cut",
+   "out": "cut"
+  },
+  {
+   "start": 645.6,
+   "end": 648.5,
+   "mood": "chase",
+   "energy": 0.75,
+   "in": "cut",
+   "out": "tapestop"
+  },
+  {
+   "start": 648.5,
+   "end": 653.7,
+   "mood": "playful",
+   "energy": 0.45,
+   "in": "cut",
+   "out": "cut"
+  },
+  {
+   "start": 653.7,
+   "end": 658.1,
+   "mood": "cool",
+   "energy": 0.5,
+   "in": "cut",
+   "out": "sting"
+  },
+  {
+   "start": 658.1,
+   "end": 660.7,
+   "mood": "chase",
+   "energy": 0.8,
+   "in": "cut",
+   "out": "cut"
+  },
+  {
+   "start": 660.7,
+   "end": 663.0,
+   "mood": "commentator",
+   "energy": 0.75,
+   "in": "cut",
+   "out": "scratch"
+  },
+  {
+   "start": 663.0,
+   "end": 664.5,
+   "mood": "silence",
+   "energy": 0.0,
+   "in": "cut",
+   "out": "cut"
+  },
+  {
+   "start": 664.5,
+   "end": 684.1,
+   "mood": "climax",
+   "energy": 0.65,
+   "in": "cut",
+   "out": "cut"
+  },
+  {
+   "start": 684.1,
+   "end": 687.1,
+   "mood": "silence",
+   "energy": 0.0,
+   "in": "cut",
+   "out": "cut"
+  },
+  {
+   "start": 687.1,
+   "end": 689.7,
+   "mood": "wonder",
+   "energy": 0.5,
+   "in": "swell",
+   "out": "cut"
+  },
+  {
+   "start": 689.7,
+   "end": 694.0,
+   "mood": "hook",
+   "energy": 0.8,
+   "in": "cut",
+   "out": "sting"
+  }
+ ],
+ "ambience": [
+  {
+   "start": 642.0,
+   "end": 686.1,
+   "name": "wind",
+   "gain_db": -12
+  },
+  {
+   "start": 642.0,
+   "end": 686.1,
+   "name": "laser_hum",
+   "gain_db": -14
+  },
+  {
+   "start": 689.7,
+   "end": 694.0,
+   "name": "wind",
+   "gain_db": -16
+  }
+ ],
+ "footsteps": [
+  {
+   "start": 645.6,
+   "end": 646.6,
+   "interval": 0.0982,
+   "surface": "hard",
+   "gain_db": -8,
+   "pan": -0.5
+  },
+  {
+   "start": 648.5,
+   "end": 653.7,
+   "interval": 0.3491,
+   "surface": "hard",
+   "gain_db": -6,
+   "pan": 0.0
+  },
+  {
+   "start": 667.27,
+   "end": 671.0,
+   "interval": 0.3142,
+   "surface": "hard",
+   "gain_db": -9,
+   "pan": -0.35
+  },
+  {
+   "start": 672.6,
+   "end": 679.3,
+   "interval": 0.1047,
+   "surface": "hard",
+   "gain_db": -9,
+   "pan": 0.15
+  },
+  {
+   "start": 672.6,
+   "end": 675.3,
+   "interval": 0.1571,
+   "surface": "hard",
+   "gain_db": -12,
+   "pan": -0.15
+  },
+  {
+   "start": 675.3,
+   "end": 678.0,
+   "interval": 0.1571,
+   "surface": "hard",
+   "gain_db": -14,
+   "pan": -0.55
+  },
+  {
+   "start": 689.94,
+   "end": 694.0,
+   "interval": 0.5236,
+   "surface": "hard",
+   "gain_db": -14,
+   "pan": 0.17
+  },
+  {
+   "start": 690.1,
+   "end": 694.0,
+   "interval": 0.5236,
+   "surface": "hard",
+   "gain_db": -14,
+   "pan": -0.17
+  }
+ ],
+ "sfx": [
+  [
+   640.5,
+   "reverse_swell",
+   -8,
+   0.0,
+   "swell into the Stage 3 flash"
+  ],
+  [
+   642.0,
+   "impact",
+   0,
+   0.0,
+   "white flash: Stage 3, the Top"
+  ],
+  [
+   642.32,
+   "orch_hit",
+   -3,
+   0.0,
+   "'STAGE 3 \u00b7 THE TOP' title pops"
+  ],
+  [
+   642.34,
+   "ui_pop",
+   -5,
+   0.0,
+   "title card"
+  ],
+  [
+   643.1,
+   "reverse_swell",
+   -7,
+   0.0,
+   "camera pushes in on the Secret Egg (peaks 644.6)"
+  ],
+  [
+   643.3,
+   "laser_sweep",
+   -12,
+   -0.5,
+   "laser pillars sweep"
+  ],
+  [
+   644.45,
+   "ui_close",
+   -10,
+   0.0,
+   "title shrinks away"
+  ],
+  [
+   644.6,
+   "angel",
+   -8,
+   0.0,
+   "the Secret Egg revealed"
+  ],
+  [
+   644.7,
+   "shine",
+   -4,
+   0.0,
+   "the Secret Egg glints"
+  ],
+  [
+   645.95,
+   "whoosh",
+   -2,
+   -0.6,
+   "EggLord dashes in front of YOU and Nova"
+  ],
+  [
+   646.6,
+   "jump",
+   -3,
+   -0.2,
+   "EggLord leaps for the pedestal"
+  ],
+  [
+   646.62,
+   "whoosh_up",
+   -4,
+   -0.15,
+   "EggLord's leap"
+  ],
+  [
+   647.4,
+   "land",
+   -3,
+   0.0,
+   "EggLord lands on the pedestal"
+  ],
+  [
+   647.42,
+   "equip",
+   -1,
+   0.0,
+   "the Secret Egg lands on his head"
+  ],
+  [
+   647.45,
+   "orch_hit",
+   -3,
+   0.32,
+   "MINE! stab"
+  ],
+  [
+   649.9,
+   "whoosh",
+   -6,
+   -0.5,
+   "RULE 2 card slides in"
+  ],
+  [
+   650.05,
+   "ui_pop",
+   -3,
+   -0.45,
+   "RULE 2: Carry = HALF SPEED"
+  ],
+  [
+   651.3,
+   "powerdown",
+   -5,
+   0.52,
+   "'0.5x' badge on EggLord"
+  ],
+  [
+   651.42,
+   "pop",
+   -6,
+   0.0,
+   "red arrows point at the egg"
+  ],
+  [
+   653.45,
+   "gulp",
+   -4,
+   0.0,
+   "EggLord gulps, everyone can see it"
+  ],
+  [
+   655.6,
+   "swish",
+   -10,
+   -0.2,
+   "camera snaps to YOU"
+  ],
+  [
+   656.8,
+   "swish",
+   -10,
+   0.2,
+   "camera snaps back to Nova"
+  ],
+  [
+   656.9,
+   "pop",
+   -3,
+   -0.3,
+   "banana peel appears in Nova's hand"
+  ],
+  [
+   656.95,
+   "shine",
+   -5,
+   0.05,
+   "Nova winks"
+  ],
+  [
+   658.15,
+   "whoosh",
+   -3,
+   -0.3,
+   "banana peel slides across the floor"
+  ],
+  [
+   658.8,
+   "slip",
+   1,
+   0.39,
+   "SLIP! EggLord steps on the peel"
+  ],
+  [
+   658.95,
+   "slide_up",
+   -5,
+   0.25,
+   "the Secret Egg flies up off his head"
+  ],
+  [
+   659.1,
+   "whoosh",
+   -5,
+   0.25,
+   "EggLord somersaults"
+  ],
+  [
+   659.7,
+   "riser",
+   -6,
+   0.0,
+   "build to the catch (peaks 661.7)"
+  ],
+  [
+   659.8,
+   "body_fall",
+   -1,
+   0.28,
+   "EggLord lands flat on his back"
+  ],
+  [
+   660.8,
+   "jump",
+   -2,
+   0.0,
+   "YOU jumps (slow motion)"
+  ],
+  [
+   660.82,
+   "whoosh_up",
+   -3,
+   0.0,
+   "YOU rises toward the egg"
+  ],
+  [
+   661.7,
+   "equip",
+   1,
+   0.0,
+   "CATCH! the egg lands on his head"
+  ],
+  [
+   661.72,
+   "orch_hit",
+   -3,
+   0.32,
+   "CATCH! stab"
+  ],
+  [
+   662.2,
+   "whoosh_down",
+   -5,
+   0.0,
+   "camera follows him down"
+  ],
+  [
+   662.65,
+   "land",
+   0,
+   0.0,
+   "heavy landing with the egg"
+  ],
+  [
+   662.68,
+   "thud",
+   -6,
+   0.0,
+   "landing weight"
+  ],
+  [
+   662.98,
+   "record_scratch",
+   -4,
+   0.0,
+   "freeze: now YOU are the slow one"
+  ],
+  [
+   663.1,
+   "powerdown",
+   -6,
+   0.52,
+   "'0.5x' badge on YOU"
+  ],
+  [
+   664.5,
+   "alarm",
+   -8,
+   0.0,
+   "klaxon, red alarm pulses start"
+  ],
+  [
+   664.7,
+   "ui_pop",
+   -2,
+   0.0,
+   "'VAULT CLOSING IN 10 SECONDS' card"
+  ],
+  [
+   664.72,
+   "countdown_tick",
+   -3,
+   0.0,
+   "10"
+  ],
+  [
+   666.6,
+   "alarm",
+   -11,
+   0.0,
+   "klaxon again (background)"
+  ],
+  [
+   667.0,
+   "countdown_tick",
+   -3,
+   0.52,
+   "00:09 (timer HUD appears)"
+  ],
+  [
+   667.05,
+   "whoosh_long",
+   -7,
+   0.0,
+   "camera pulls back to the wide shot"
+  ],
+  [
+   668.9,
+   "error",
+   -3,
+   0.11,
+   "'TOO FAR!' line stretches out"
+  ],
+  [
+   668.92,
+   "swish",
+   -9,
+   0.11,
+   "dashed line extends"
+  ],
+  [
+   669.4,
+   "countdown_tick",
+   -3,
+   0.52,
+   "00:08"
+  ],
+  [
+   671.0,
+   "zoom_in",
+   -6,
+   0.0,
+   "cut: YOU close-up 'NOVA! CATCH!'"
+  ],
+  [
+   671.9,
+   "whoosh",
+   -1,
+   0.35,
+   "YOU throws the egg to Nova"
+  ],
+  [
+   671.92,
+   "cloth",
+   -9,
+   0.0,
+   "throwing arm"
+  ],
+  [
+   672.6,
+   "equip",
+   -3,
+   0.15,
+   "Nova has the egg on her head"
+  ],
+  [
+   672.62,
+   "whoosh",
+   -6,
+   0.15,
+   "speed lines, full speed"
+  ],
+  [
+   673.0,
+   "laser_sweep",
+   -9,
+   0.15,
+   "Nova dashes through the crossed lasers"
+  ],
+  [
+   673.28,
+   "chomp",
+   -10,
+   -0.33,
+   "teeth egg snaps behind her"
+  ],
+  [
+   674.17,
+   "chomp",
+   -6,
+   0.25,
+   "teeth egg snaps right in front of her"
+  ],
+  [
+   674.6,
+   "countdown_tick",
+   -2,
+   0.52,
+   "00:07"
+  ],
+  [
+   675.2,
+   "countdown_tick",
+   -2,
+   0.52,
+   "00:06"
+  ],
+  [
+   675.23,
+   "chomp",
+   -8,
+   0.07,
+   "teeth egg snaps just behind her"
+  ],
+  [
+   675.8,
+   "thud",
+   -8,
+   -0.1,
+   "EggLord sprawled on the floor"
+  ],
+  [
+   676.5,
+   "laser_sweep",
+   -9,
+   0.15,
+   "second laser crossing"
+  ],
+  [
+   678.2,
+   "countdown_tick",
+   -1,
+   0.52,
+   "00:05"
+  ],
+  [
+   678.8,
+   "countdown_tick",
+   -1,
+   0.52,
+   "00:04"
+  ],
+  [
+   679.3,
+   "skid",
+   -2,
+   0.0,
+   "cut: Nova skids to a stop at the pad"
+  ],
+  [
+   680.1,
+   "riser_long",
+   -7,
+   0.0,
+   "build to the dive freeze (peaks 684.1)"
+  ],
+  [
+   680.25,
+   "whoosh",
+   -2,
+   -0.3,
+   "Nova throws the egg back"
+  ],
+  [
+   680.27,
+   "cloth",
+   -9,
+   0.0,
+   "throwing arm"
+  ],
+  [
+   681.0,
+   "equip",
+   -5,
+   -0.6,
+   "YOU has the egg again"
+  ],
+  [
+   681.8,
+   "countdown_tick",
+   0,
+   0.52,
+   "00:03"
+  ],
+  [
+   681.82,
+   "jump",
+   -3,
+   -0.6,
+   "YOU dives"
+  ],
+  [
+   681.85,
+   "whoosh",
+   -3,
+   -0.5,
+   "YOU's dive"
+  ],
+  [
+   682.8,
+   "countdown_tick",
+   0,
+   0.52,
+   "00:02"
+  ],
+  [
+   682.82,
+   "whoosh",
+   -2,
+   0.6,
+   "Nova dives in from the right"
+  ],
+  [
+   683.0,
+   "whoosh_long",
+   -6,
+   0.0,
+   "slow motion kicks in"
+  ],
+  [
+   684.2,
+   "countdown_tick",
+   1,
+   0.52,
+   "00:01 (freeze over the pad)"
+  ],
+  [
+   684.45,
+   "heartbeat",
+   -4,
+   0.0,
+   "slow-motion heartbeat"
+  ],
+  [
+   685.2,
+   "countdown_final",
+   1,
+   0.52,
+   "00:00"
+  ],
+  [
+   685.6,
+   "reverse_swell",
+   -5,
+   0.0,
+   "swell into the hands touching (peaks 687.1)"
+  ],
+  [
+   686.35,
+   "whoosh_long",
+   -9,
+   -0.6,
+   "YOU's hand slides in"
+  ],
+  [
+   686.37,
+   "whoosh_long",
+   -9,
+   0.6,
+   "Nova's hand slides in"
+  ],
+  [
+   687.1,
+   "impact",
+   -3,
+   0.0,
+   "two hands touch the egg, flash"
+  ],
+  [
+   687.12,
+   "magic",
+   -5,
+   0.0,
+   "the egg shimmers"
+  ],
+  [
+   687.4,
+   "sparkle",
+   -4,
+   0.0,
+   "burst of light from the egg"
+  ],
+  [
+   689.7,
+   "cymbal",
+   -4,
+   0.0,
+   "cut: celebration, confetti"
+  ],
+  [
+   689.7,
+   "explosion_small",
+   -11,
+   -0.41,
+   "firework burst"
+  ],
+  [
+   689.7,
+   "confetti",
+   -6,
+   0,
+   "confetti burst"
+  ],
+  [
+   689.8,
+   "achievement",
+   -6,
+   0.0,
+   "'VAULT COMPLETE! CO-OP HATCH' card"
+  ],
+  [
+   690.18,
+   "explosion_small",
+   -13,
+   0.41,
+   "firework burst"
+  ],
+  [
+   690.25,
+   "sparkle",
+   -9,
+   0.0,
+   "confetti glitter"
+  ],
+  [
+   690.65,
+   "explosion_small",
+   -11,
+   0.0,
+   "firework burst"
+  ],
+  [
+   691.13,
+   "explosion_small",
+   -13,
+   -0.41,
+   "firework burst"
+  ],
+  [
+   691.6,
+   "explosion_small",
+   -11,
+   0.41,
+   "firework burst"
+  ],
+  [
+   692.08,
+   "explosion_small",
+   -13,
+   0.0,
+   "firework burst"
+  ],
+  [
+   692.56,
+   "explosion_small",
+   -11,
+   -0.41,
+   "firework burst"
+  ],
+  [
+   693.03,
+   "explosion_small",
+   -13,
+   0.41,
+   "firework burst"
+  ],
+  [
+   693.51,
+   "explosion_small",
+   -11,
+   0.0,
+   "firework burst"
+  ],
+  [
+   693.99,
+   "explosion_small",
+   -13,
+   -0.41,
+   "firework burst"
+  ]
+ ]
+}

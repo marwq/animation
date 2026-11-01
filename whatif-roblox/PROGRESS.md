@@ -34,6 +34,24 @@ ffmpeg -f concat -safe 0 -i out/concat.txt -c copy -movflags +faststart out/what
 ## Статус
 
 - Все 12 частей анимированы и отрендерены (1920×1080, 60 fps), полный ролик ≈ 12:51.
+- Звук (музыка + SFX + атмосфера) готов: `out/whatif_full_sound.mp4`.
 - Дальше: озвучка ElevenLabs v4 (`script/VOICEOVER_eleven_v4.txt`) → подгоняем тайминги
-  реплик в `TRACK` каждой части под реальные дубли, пересчитываем липсинк, сводим звук
-  (голос + музыка + SFX из `C.sfx`) и муксим в финальный файл.
+  реплик в `TRACK` под реальные дубли, пересчитываем липсинк, сводим с голосом (`--vo`).
+
+## Звук
+
+| Файл | Что делает |
+|---|---|
+| `audio/vocab.json` | словарь: ~130 имён SFX, 14 атмосфер, 19 музыкальных настроений |
+| `audio/cues/partNN.json` | звуковые партитуры частей (SFX, шаги, атмосфера, музыкальная карта), формат — `audio/CUES.md` |
+| `audio/build_sfx.py` | собирает библиотеку `assets/sfx/*.ogg` (CC0-записи + синтез + стинги FluidSynth), источники — `audio/fetch_sources.sh`, лицензии — `assets/sfx/CREDITS.md` |
+| `audio/music.py` | оригинальная музыка: главная тема + мотив Nova, 19 стилей → MIDI → FluidSynth (FluidR3 GM), темп подгоняется под длину сцены |
+| `audio/mix.py` | сведение: музыка/SFX/атмосфера, лимитер, громкость −15 LUFS, `--mux` кладёт звук в видео, `--vo` — дакинг музыки под голос |
+| `tools/strip.sh` | раскадровка с таймкодами для синхронизации звука |
+
+```bash
+apt-get install -y fluidsynth fluid-soundfont-gm && pip install scipy mido py7zr
+audio/fetch_sources.sh && python3 audio/build_sfx.py      # библиотека (уже лежит в assets/sfx)
+python3 audio/mix.py --mux                                 # полный микс → out/whatif_full_sound.mp4
+python3 audio/mix.py --vo out/vo.wav --mux                 # когда будет озвучка
+```

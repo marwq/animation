@@ -1,0 +1,750 @@
+{
+ "part": 8,
+ "start": 466.4,
+ "end": 517.2,
+ "music": [
+  {
+   "start": 466.4,
+   "end": 466.6,
+   "mood": "silence",
+   "energy": 0,
+   "in": "cut",
+   "out": "cut"
+  },
+  {
+   "start": 466.6,
+   "end": 476.6,
+   "mood": "montage",
+   "energy": 0.7,
+   "in": "cut",
+   "out": "tapestop"
+  },
+  {
+   "start": 476.6,
+   "end": 478.7,
+   "mood": "silence",
+   "energy": 0,
+   "in": "cut",
+   "out": "cut"
+  },
+  {
+   "start": 478.7,
+   "end": 490.0,
+   "mood": "montage",
+   "energy": 0.75,
+   "in": "cut",
+   "out": "cut"
+  },
+  {
+   "start": 490.0,
+   "end": 492.3,
+   "mood": "wonder",
+   "energy": 0.45,
+   "in": "swell",
+   "out": "cut"
+  },
+  {
+   "start": 492.3,
+   "end": 495.9,
+   "mood": "montage",
+   "energy": 0.9,
+   "in": "cut",
+   "out": "cut"
+  },
+  {
+   "start": 495.9,
+   "end": 498.6,
+   "mood": "silence",
+   "energy": 0,
+   "in": "cut",
+   "out": "cut"
+  },
+  {
+   "start": 498.6,
+   "end": 513.9,
+   "mood": "sad",
+   "energy": 0.35,
+   "in": "fade",
+   "out": "fade"
+  },
+  {
+   "start": 513.9,
+   "end": 517.2,
+   "mood": "warm",
+   "energy": 0.45,
+   "in": "swell",
+   "out": "fade"
+  }
+ ],
+ "ambience": [
+  {
+   "start": 466.4,
+   "end": 490.0,
+   "name": "birds",
+   "gain_db": -12
+  },
+  {
+   "start": 484.3,
+   "end": 490.0,
+   "name": "laser_hum",
+   "gain_db": -8
+  },
+  {
+   "start": 492.3,
+   "end": 498.6,
+   "name": "birds",
+   "gain_db": -12
+  },
+  {
+   "start": 498.6,
+   "end": 517.2,
+   "name": "night",
+   "gain_db": -6
+  }
+ ],
+ "footsteps": [
+  {
+   "start": 478.75,
+   "end": 484.3,
+   "interval": 0.524,
+   "surface": "hard",
+   "gain_db": -14,
+   "pan": 0.35
+  },
+  {
+   "start": 493.85,
+   "end": 494.65,
+   "interval": 0.08,
+   "surface": "soft",
+   "gain_db": -8,
+   "pan": 0.24
+  },
+  {
+   "start": 498.8,
+   "end": 502.1,
+   "interval": 0.449,
+   "surface": "soft",
+   "gain_db": -16,
+   "pan": -0.2
+  },
+  {
+   "start": 509.7,
+   "end": 513.9,
+   "interval": 0.785,
+   "surface": "soft",
+   "gain_db": -10,
+   "pan": 0.0
+  }
+ ],
+ "sfx": [
+  [
+   466.42,
+   "whoosh",
+   -2,
+   0.0,
+   "THE GRIND chapter card flies in"
+  ],
+  [
+   466.6,
+   "orch_hit",
+   1,
+   0.0,
+   "card slams in, montage downbeat"
+  ],
+  [
+   466.66,
+   "sparkle",
+   -8,
+   0.3,
+   "card sparkles + rays"
+  ],
+  [
+   468.17,
+   "swish",
+   -6,
+   -0.47,
+   "cut to triptych: panel 1 fades in"
+  ],
+  [
+   468.5,
+   "step_soft",
+   -4,
+   -0.47,
+   "touch grass #1 (determined)"
+  ],
+  [
+   468.6,
+   "coin",
+   -6,
+   -0.47,
+   "+$10 pops"
+  ],
+  [
+   469.0,
+   "swish",
+   -6,
+   0.0,
+   "panel 2 fades in"
+  ],
+  [
+   469.3,
+   "step_soft",
+   -4,
+   0.0,
+   "touch grass #2 (deadpan)"
+  ],
+  [
+   469.4,
+   "coin",
+   -6,
+   0.0,
+   "+$10 pops"
+  ],
+  [
+   469.8,
+   "swish",
+   -6,
+   0.47,
+   "panel 3 fades in"
+  ],
+  [
+   470.1,
+   "step_soft",
+   -4,
+   0.47,
+   "touch grass #3 (sleepy)"
+  ],
+  [
+   470.2,
+   "coin",
+   -5,
+   0.47,
+   "+$10 pops"
+  ],
+  [
+   470.68,
+   "whoosh",
+   -8,
+   0.0,
+   "cut to the pedestals"
+  ],
+  [
+   470.72,
+   "ka_ching",
+   -3,
+   -0.61,
+   "Buy egg: rare egg appears on pedestal 1"
+  ],
+  [
+   471.42,
+   "egg_crack",
+   -8,
+   -0.61,
+   "egg starts wobbling (hatch egg)"
+  ],
+  [
+   471.8,
+   "egg_crack",
+   -6,
+   -0.61,
+   "egg wobbles harder"
+  ],
+  [
+   472.25,
+   "egg_hatch",
+   -2,
+   -0.61,
+   "chicken in sunglasses pops out"
+  ],
+  [
+   472.45,
+   "chicken",
+   -6,
+   -0.61,
+   "chicken bawk"
+  ],
+  [
+   472.95,
+   "shine",
+   -4,
+   -0.61,
+   "sunglasses glint"
+  ],
+  [
+   473.4,
+   "pop",
+   -6,
+   -0.28,
+   "epic egg appears on pedestal 2"
+  ],
+  [
+   473.6,
+   "egg_crack",
+   -7,
+   -0.28,
+   "epic egg wobbles"
+  ],
+  [
+   473.95,
+   "egg_hatch",
+   -2,
+   -0.28,
+   "toast dog pops out"
+  ],
+  [
+   474.1,
+   "dog_bark",
+   -4,
+   -0.28,
+   "toast dog: arf arf"
+  ],
+  [
+   475.0,
+   "pop",
+   -6,
+   0.04,
+   "mythic egg appears on pedestal 3"
+  ],
+  [
+   475.2,
+   "egg_crack",
+   -7,
+   0.04,
+   "mythic egg wobbles"
+  ],
+  [
+   475.55,
+   "egg_hatch",
+   -2,
+   0.04,
+   "floating eyeball pops out"
+  ],
+  [
+   475.8,
+   "magic",
+   -12,
+   0.04,
+   "eyeball hovers, eerie shimmer"
+  ],
+  [
+   476.6,
+   "blink",
+   -2,
+   0.04,
+   "eyeball snaps to stare at YOU (music tapestops)"
+  ],
+  [
+   477.0,
+   "gulp",
+   -4,
+   0.59,
+   "YOU nervous, sweat drop"
+  ],
+  [
+   478.66,
+   "whoosh",
+   -6,
+   0.0,
+   "cut to money shot"
+  ],
+  [
+   478.9,
+   "ui_pop",
+   -3,
+   0.0,
+   "$1 / SEC HUD pops"
+  ],
+  [
+   479.1,
+   "coin",
+   -9,
+   0.0,
+   "a dollar ticks in"
+  ],
+  [
+   479.5,
+   "coin",
+   -10,
+   0.0,
+   "another dollar ticks in"
+  ],
+  [
+   479.9,
+   "coins",
+   -3,
+   0.0,
+   "$50 / SEC + burst"
+  ],
+  [
+   480.7,
+   "ka_ching",
+   -1,
+   0.0,
+   "$1,000 / SEC + burst"
+  ],
+  [
+   480.75,
+   "robux",
+   -6,
+   0.0,
+   "money shimmer"
+  ],
+  [
+   481.8,
+   "ui_close",
+   -6,
+   0.0,
+   "rate HUD closes, cut wider"
+  ],
+  [
+   481.86,
+   "upgrade",
+   -2,
+   0.0,
+   "BASE UPGRADED! panel, 6 pedestals"
+  ],
+  [
+   481.92,
+   "ui_pop",
+   -6,
+   0.0,
+   "panel pops"
+  ],
+  [
+   482.8,
+   "sparkle",
+   -6,
+   -0.2,
+   "sparkles start across the base"
+  ],
+  [
+   483.2,
+   "shine",
+   -2,
+   0.0,
+   "base turns gold (shinier)"
+  ],
+  [
+   483.45,
+   "sparkle",
+   -8,
+   0.4,
+   "more sparkles"
+  ],
+  [
+   484.32,
+   "laser_sweep",
+   -10,
+   0.0,
+   "cut to PRACTICE laser grid"
+  ],
+  [
+   485.33,
+   "shock",
+   -1,
+   0.0,
+   "ZAP #1: flash, ZAP!"
+  ],
+  [
+   485.36,
+   "ui_pop",
+   -8,
+   0.47,
+   "ZAPPED counter pops (1)"
+  ],
+  [
+   486.13,
+   "laser_zap",
+   0,
+   0.0,
+   "ZAP #2 (counter 2)"
+  ],
+  [
+   486.15,
+   "electric",
+   -6,
+   0.0,
+   "crackle"
+  ],
+  [
+   486.93,
+   "laser_zap",
+   1,
+   0.0,
+   "ZAP #3 (counter 3)"
+  ],
+  [
+   486.95,
+   "electric",
+   -4,
+   0.0,
+   "crackle"
+  ],
+  [
+   487.5,
+   "poof",
+   -8,
+   0.0,
+   "burnt: mask gone, smoke wisps"
+  ],
+  [
+   487.52,
+   "sizzle",
+   -14,
+   0.0,
+   "smouldering"
+  ],
+  [
+   487.65,
+   "money_counter",
+   -6,
+   0.47,
+   "ZAPPED counter starts rolling up"
+  ],
+  [
+   488.4,
+   "money_counter",
+   -4,
+   0.47,
+   "counter accelerates toward 1,047"
+  ],
+  [
+   489.3,
+   "error",
+   -2,
+   0.47,
+   "counter lands on ZAPPED: 1,047"
+  ],
+  [
+   489.96,
+   "whoosh",
+   -6,
+   0.0,
+   "cut to purple SHOP screen"
+  ],
+  [
+   490.3,
+   "ui_pop",
+   -2,
+   0.0,
+   "SHOP panel pops"
+  ],
+  [
+   490.42,
+   "sparkle",
+   -8,
+   0.0,
+   "Speed Coil glows"
+  ],
+  [
+   490.6,
+   "magic",
+   -12,
+   0.0,
+   "coil shimmer"
+  ],
+  [
+   491.6,
+   "click",
+   -2,
+   0.0,
+   "BUY pressed (ring)"
+  ],
+  [
+   491.65,
+   "ka_ching",
+   -1,
+   0.0,
+   "purchase complete"
+  ],
+  [
+   492.3,
+   "equip",
+   -1,
+   0.0,
+   "cut: Speed Coil on his feet, glow"
+  ],
+  [
+   492.42,
+   "sparkle",
+   -6,
+   0.0,
+   "burst"
+  ],
+  [
+   492.78,
+   "squeak",
+   -10,
+   0.0,
+   "excited hop lands on new shoes"
+  ],
+  [
+   493.23,
+   "squeak",
+   -11,
+   0.0,
+   "hop"
+  ],
+  [
+   493.68,
+   "squeak",
+   -10,
+   0.0,
+   "hop"
+  ],
+  [
+   493.82,
+   "whoosh",
+   0,
+   0.24,
+   "ZOOM: takes off, speed lines"
+  ],
+  [
+   494.58,
+   "whoosh_up",
+   -1,
+   0.24,
+   "You fly: launches into the air"
+  ],
+  [
+   495.05,
+   "whoosh_long",
+   -4,
+   0.24,
+   "swooping flight toward Speedy's base"
+  ],
+  [
+   495.9,
+   "splat",
+   2,
+   0.26,
+   "SPLAT! face-first into the brick wall"
+  ],
+  [
+   495.9,
+   "bonk",
+   0,
+   0.26,
+   "head bonk on the wall"
+  ],
+  [
+   496.7,
+   "zoom_in",
+   -6,
+   0.08,
+   "cut to close-up: face in the wall"
+  ],
+  [
+   497.1,
+   "pop",
+   -4,
+   0.1,
+   "thumbs-up pops"
+  ],
+  [
+   498.6,
+   "harp_down",
+   -10,
+   0.0,
+   "night falls"
+  ],
+  [
+   502.1,
+   "stone",
+   -12,
+   0.0,
+   "cut to the 200-rock pile"
+  ],
+  [
+   503.9,
+   "reverse_swell",
+   -10,
+   0.0,
+   "swell into the rock looking back (peaks 505.4)"
+  ],
+  [
+   505.4,
+   "blink",
+   -4,
+   0.0,
+   "Rocky's eyes open: looks back"
+  ],
+  [
+   505.42,
+   "chime",
+   -6,
+   0.0,
+   "soft glow brightens"
+  ],
+  [
+   507.0,
+   "pop",
+   -10,
+   0.39,
+   "tearful YOU inset pops in"
+  ],
+  [
+   507.5,
+   "blink",
+   -10,
+   0.0,
+   "Rocky blinks"
+  ],
+  [
+   508.6,
+   "swish",
+   -14,
+   0.39,
+   "inset vanishes"
+  ],
+  [
+   508.8,
+   "heart_pop",
+   -4,
+   0.0,
+   "Rocky's eyes turn to hearts"
+  ],
+  [
+   508.85,
+   "sparkle",
+   -8,
+   0.0,
+   "Rocky sparkles"
+  ],
+  [
+   509.75,
+   "ui_pop",
+   -10,
+   0.53,
+   "0.5x badge"
+  ],
+  [
+   513.86,
+   "harp_up",
+   -6,
+   0.0,
+   "home: warm glow"
+  ],
+  [
+   513.95,
+   "sparkle",
+   -8,
+   0.0,
+   "Rocky sparkles on his pedestal"
+  ],
+  [
+   514.1,
+   "heart_pop",
+   -8,
+   -0.1,
+   "hearts float up"
+  ],
+  [
+   515.7,
+   "heart_pop",
+   -10,
+   0.1,
+   "more hearts"
+  ]
+ ]
+}

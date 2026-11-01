@@ -1,0 +1,847 @@
+{
+ "part": 2,
+ "start": 61.0,
+ "end": 123.6,
+ "music": [
+  {
+   "start": 61.0,
+   "end": 67.8,
+   "mood": "playful",
+   "energy": 0.5,
+   "in": "swell",
+   "out": "tapestop"
+  },
+  {
+   "start": 67.8,
+   "end": 69.45,
+   "mood": "silence",
+   "energy": 0.0,
+   "in": "cut",
+   "out": "cut"
+  },
+  {
+   "start": 69.45,
+   "end": 73.5,
+   "mood": "playful",
+   "energy": 0.4,
+   "in": "fade",
+   "out": "cut"
+  },
+  {
+   "start": 73.5,
+   "end": 78.0,
+   "mood": "chase",
+   "energy": 0.65,
+   "in": "cut",
+   "out": "cut"
+  },
+  {
+   "start": 78.0,
+   "end": 85.0,
+   "mood": "playful",
+   "energy": 0.45,
+   "in": "cut",
+   "out": "cut"
+  },
+  {
+   "start": 85.0,
+   "end": 87.35,
+   "mood": "silence",
+   "energy": 0.0,
+   "in": "cut",
+   "out": "cut"
+  },
+  {
+   "start": 87.35,
+   "end": 95.85,
+   "mood": "playful",
+   "energy": 0.45,
+   "in": "fade",
+   "out": "cut"
+  },
+  {
+   "start": 95.85,
+   "end": 98.6,
+   "mood": "silence",
+   "energy": 0.0,
+   "in": "cut",
+   "out": "cut"
+  },
+  {
+   "start": 98.6,
+   "end": 108.0,
+   "mood": "playful",
+   "energy": 0.55,
+   "in": "cut",
+   "out": "cut"
+  },
+  {
+   "start": 108.0,
+   "end": 109.9,
+   "mood": "silence",
+   "energy": 0.0,
+   "in": "cut",
+   "out": "cut"
+  },
+  {
+   "start": 109.9,
+   "end": 120.85,
+   "mood": "playful",
+   "energy": 0.5,
+   "in": "cut",
+   "out": "tapestop"
+  },
+  {
+   "start": 120.85,
+   "end": 123.6,
+   "mood": "sad",
+   "energy": 0.3,
+   "in": "cut",
+   "out": "sting"
+  }
+ ],
+ "ambience": [
+  {
+   "start": 61.0,
+   "end": 78.0,
+   "name": "room",
+   "gain_db": -12
+  },
+  {
+   "start": 61.0,
+   "end": 78.0,
+   "name": "birds",
+   "gain_db": -18
+  },
+  {
+   "start": 78.0,
+   "end": 98.6,
+   "name": "room",
+   "gain_db": -13
+  },
+  {
+   "start": 98.6,
+   "end": 123.6,
+   "name": "kitchen",
+   "gain_db": -10
+  },
+  {
+   "start": 98.6,
+   "end": 123.6,
+   "name": "birds",
+   "gain_db": -21
+  }
+ ],
+ "footsteps": [
+  {
+   "start": 76.41,
+   "end": 77.35,
+   "interval": 0.112,
+   "surface": "wood",
+   "gain_db": -8,
+   "pan": 0.25
+  }
+ ],
+ "sfx": [
+  [
+   61.0,
+   "whoosh_long",
+   -2,
+   0.0,
+   "chapter card NEW WORLD / DAY 1 flies in (61.1-61.4)"
+  ],
+  [
+   61.22,
+   "orch_hit",
+   -2,
+   0.0,
+   "card lands with overshoot"
+  ],
+  [
+   61.28,
+   "sparkle",
+   -9,
+   0.4,
+   "card sparkles"
+  ],
+  [
+   62.3,
+   "swish",
+   -6,
+   0.0,
+   "card zooms away (62.3-62.5)"
+  ],
+  [
+   62.5,
+   "zoom_in",
+   -7,
+   0.4,
+   "cut to close-up of the alarm clock"
+  ],
+  [
+   62.62,
+   "loading",
+   -11,
+   0.4,
+   "clock shows LOADING... + spinner instead of digits"
+  ],
+  [
+   63.7,
+   "loading",
+   -12,
+   0.4,
+   "loading bleeps continue"
+  ],
+  [
+   64.5,
+   "zoom_in",
+   -5,
+   0.4,
+   "camera pushes into the clock (64.5-64.9): It's... loading"
+  ],
+  [
+   64.95,
+   "loading",
+   -10,
+   0.4,
+   "loading bleeps"
+  ],
+  [
+   65.78,
+   "beep",
+   -5,
+   0.4,
+   "LOADING -> 12%"
+  ],
+  [
+   68.2,
+   "cricket",
+   -2,
+   -0.32,
+   "*chirp* - awkward deadpan stare at the ceiling"
+  ],
+  [
+   68.6,
+   "blink",
+   -4,
+   0.1,
+   "slow deadpan blink"
+  ],
+  [
+   68.9,
+   "beep",
+   -13,
+   0.39,
+   "clock ticks 12% -> 13%"
+  ],
+  [
+   69.55,
+   "cloth",
+   -7,
+   0.0,
+   "POV: block arms rise into view (69.55-70.0)"
+  ],
+  [
+   71.45,
+   "swish",
+   -6,
+   0.0,
+   "hands flip over (71.45-71.75)"
+  ],
+  [
+   72.0,
+   "swish",
+   -6,
+   0.0,
+   "hands flip back (72.0-72.3)"
+  ],
+  [
+   72.4,
+   "sparkle",
+   -5,
+   0.0,
+   "shiny plastic glints on the hands (72.3-73.2)"
+  ],
+  [
+   72.55,
+   "swish",
+   -7,
+   0.0,
+   "hands flip again (72.55-72.85)"
+  ],
+  [
+   72.75,
+   "shine",
+   -9,
+   0.25,
+   "plastic glint"
+  ],
+  [
+   73.5,
+   "orch_hit",
+   -3,
+   0.0,
+   "cut to shocked face"
+  ],
+  [
+   73.55,
+   "cloth",
+   -9,
+   0.0,
+   "arms flail and shake in panic"
+  ],
+  [
+   74.5,
+   "zoom_in",
+   -3,
+   0.0,
+   "punch-in on the face (74.5-74.62): Where are my FINGERS?!"
+  ],
+  [
+   75.4,
+   "cloth",
+   -11,
+   0.0,
+   "arms keep shaking"
+  ],
+  [
+   76.3,
+   "whoosh",
+   -4,
+   -0.2,
+   "YOU dashes off toward the mirror, speed lines"
+  ],
+  [
+   76.45,
+   "poof",
+   -11,
+   -0.2,
+   "dust puff at take-off"
+  ],
+  [
+   77.88,
+   "whoosh",
+   -2,
+   0.0,
+   "whip-pan to the bathroom (77.8-78.2)"
+  ],
+  [
+   78.25,
+   "swish",
+   -12,
+   0.1,
+   "head turns side to side to inspect the cube"
+  ],
+  [
+   78.92,
+   "pop",
+   -4,
+   0.1,
+   "dashed CUBE outline pops around the head"
+  ],
+  [
+   79.55,
+   "door_knock",
+   -7,
+   -0.1,
+   "tok tok - knocking on the plastic hair"
+  ],
+  [
+   80.25,
+   "door_knock",
+   -8,
+   -0.1,
+   "tok tok"
+  ],
+  [
+   80.95,
+   "door_knock",
+   -8,
+   -0.1,
+   "tok tok"
+  ],
+  [
+   81.65,
+   "door_knock",
+   -9,
+   -0.1,
+   "tok tok"
+  ],
+  [
+   81.75,
+   "shine",
+   -5,
+   0.0,
+   "plastic shine sweep + sparkle on the hair (81.1-82.2)"
+  ],
+  [
+   82.45,
+   "cloth",
+   -6,
+   0.1,
+   "grabs the hair with both hands (82.45-82.7)"
+  ],
+  [
+   83.0,
+   "riser",
+   -8,
+   0.0,
+   "strain builds to the POP at 85.0"
+  ],
+  [
+   83.85,
+   "squeak",
+   -9,
+   0.1,
+   "plastic hair strains"
+  ],
+  [
+   84.35,
+   "squeak",
+   -8,
+   0.1,
+   "strain"
+  ],
+  [
+   84.8,
+   "squeak",
+   -6,
+   0.1,
+   "strain, about to give"
+  ],
+  [
+   85.0,
+   "pop",
+   2,
+   -0.16,
+   "POP! the hair comes off"
+  ],
+  [
+   85.05,
+   "swish",
+   -6,
+   -0.1,
+   "hair arcs into the hand (85.0-85.3)"
+  ],
+  [
+   85.18,
+   "squeak",
+   -8,
+   0.1,
+   "'!' - shocked"
+  ],
+  [
+   86.0,
+   "boom",
+   -4,
+   0.0,
+   "punch-in: I'm BALD!"
+  ],
+  [
+   86.02,
+   "zoom_in",
+   -8,
+   0.0,
+   "punch-in zoom (86.0-86.12)"
+  ],
+  [
+   88.55,
+   "swish",
+   -6,
+   -0.1,
+   "hair swings back onto the head (88.55-88.95)"
+  ],
+  [
+   88.95,
+   "click",
+   0,
+   -0.2,
+   "CLICK! hair snaps back on"
+  ],
+  [
+   89.0,
+   "sparkle",
+   -8,
+   -0.25,
+   "CLICK! sparkles"
+  ],
+  [
+   89.78,
+   "equip",
+   -3,
+   0.44,
+   "toast slides in: ACCESSORY EQUIPPED - Orange Hair"
+  ],
+  [
+   91.15,
+   "blink",
+   -9,
+   0.05,
+   "nervous eye twitch (That's FINE)"
+  ],
+  [
+   91.6,
+   "blink",
+   -10,
+   0.05,
+   "eye twitch"
+  ],
+  [
+   92.05,
+   "blink",
+   -10,
+   0.05,
+   "eye twitch"
+  ],
+  [
+   92.2,
+   "ui_close",
+   -8,
+   0.44,
+   "toast slides away"
+  ],
+  [
+   93.5,
+   "reverse_swell",
+   -6,
+   0.0,
+   "camera tilts up to the nametag; swells into the big YOU (95.0)"
+  ],
+  [
+   95.0,
+   "boom",
+   -4,
+   0.0,
+   "big white YOU slams in above the head"
+  ],
+  [
+   95.05,
+   "sparkle",
+   -7,
+   0.0,
+   "YOU sparkles"
+  ],
+  [
+   95.95,
+   "slap",
+   -2,
+   0.0,
+   "facepalm"
+  ],
+  [
+   96.15,
+   "slide_down",
+   -9,
+   0.31,
+   "*sigh* - deflated"
+  ],
+  [
+   98.48,
+   "whoosh",
+   -2,
+   0.0,
+   "whip-pan to the kitchen (98.45-98.75)"
+  ],
+  [
+   98.65,
+   "sizzle",
+   -12,
+   -0.05,
+   "pancake sizzling in the pan"
+  ],
+  [
+   99.15,
+   "swish",
+   -5,
+   -0.15,
+   "Mom flicks the spatula, pancake launches (99.2)"
+  ],
+  [
+   99.98,
+   "splat",
+   -5,
+   0.0,
+   "*flip* - pancake lands back in the pan"
+  ],
+  [
+   100.02,
+   "sizzle",
+   -9,
+   0.0,
+   "fresh sizzle after the flip"
+  ],
+  [
+   101.1,
+   "swish",
+   -10,
+   -0.25,
+   "Mom turns toward the camera (101.1-101.4)"
+  ],
+  [
+   101.42,
+   "ui_pop",
+   -5,
+   -0.25,
+   "typing bubble '...' pops above Mom"
+  ],
+  [
+   101.6,
+   "typing",
+   -14,
+   -0.25,
+   "typing indicator"
+  ],
+  [
+   102.1,
+   "sizzle",
+   -14,
+   -0.05,
+   "sizzle"
+  ],
+  [
+   102.6,
+   "typing",
+   -15,
+   -0.25,
+   "typing indicator"
+  ],
+  [
+   103.5,
+   "chat_pop",
+   0,
+   0.0,
+   "chat bubble: Breakfast is ready, #####!"
+  ],
+  [
+   104.1,
+   "sizzle",
+   -15,
+   0.2,
+   "sizzle next to Mom"
+  ],
+  [
+   104.75,
+   "censor_bleep",
+   1,
+   0.39,
+   "BEEP! - 'honey' censored"
+  ],
+  [
+   105.65,
+   "squeak",
+   -9,
+   -0.4,
+   "YOU, confused '?'"
+  ],
+  [
+   106.2,
+   "sizzle",
+   -16,
+   0.2,
+   "sizzle"
+  ],
+  [
+   108.02,
+   "boom",
+   -4,
+   -0.2,
+   "Mom snaps angry: screen shake + red flash"
+  ],
+  [
+   108.15,
+   "chat_pop",
+   -2,
+   0.0,
+   "chat bubble: I said #####!"
+  ],
+  [
+   108.7,
+   "censor_bleep",
+   3,
+   0.36,
+   "big BEEP! - censored again"
+  ],
+  [
+   110.0,
+   "pop",
+   -3,
+   0.0,
+   "'honey' word card pops up"
+  ],
+  [
+   110.85,
+   "glitch",
+   -6,
+   0.0,
+   "letters scramble into ##### (110.85-111.13)"
+  ],
+  [
+   111.4,
+   "stamp",
+   -3,
+   0.12,
+   "FILTERED stamp slams onto the card"
+  ],
+  [
+   111.42,
+   "error",
+   -7,
+   0.12,
+   "filter error buzz"
+  ],
+  [
+   112.1,
+   "chat_pop",
+   -8,
+   0.1,
+   "filtered bubble - FILTERED x1"
+  ],
+  [
+   112.52,
+   "chat_pop",
+   -9,
+   0.1,
+   "FILTERED x2"
+  ],
+  [
+   112.74,
+   "chat_pop",
+   -9,
+   0.1,
+   "FILTERED x3"
+  ],
+  [
+   112.95,
+   "chat_pop",
+   -9,
+   0.1,
+   "FILTERED x4"
+  ],
+  [
+   113.17,
+   "chat_pop",
+   -9,
+   0.1,
+   "FILTERED x5"
+  ],
+  [
+   113.39,
+   "chat_pop",
+   -9,
+   0.1,
+   "FILTERED x6"
+  ],
+  [
+   113.61,
+   "chat_pop",
+   -9,
+   0.1,
+   "FILTERED x7"
+  ],
+  [
+   113.83,
+   "chat_pop",
+   -9,
+   0.1,
+   "FILTERED x8"
+  ],
+  [
+   114.05,
+   "chat_pop",
+   -9,
+   0.1,
+   "FILTERED x9"
+  ],
+  [
+   114.26,
+   "chat_pop",
+   -8,
+   0.1,
+   "FILTERED x10"
+  ],
+  [
+   114.48,
+   "chat_pop",
+   -6,
+   0.1,
+   "FILTERED x11"
+  ],
+  [
+   117.0,
+   "ui_pop",
+   -4,
+   -0.46,
+   "hotbar slides up (117.0-117.3)"
+  ],
+  [
+   118.0,
+   "whoosh",
+   -3,
+   -0.3,
+   "pancake flies off the plate into the hotbar (118.0-118.35)"
+  ],
+  [
+   118.02,
+   "sparkle",
+   -6,
+   0.0,
+   "sparkle burst on the plate"
+  ],
+  [
+   118.35,
+   "equip",
+   1,
+   -0.6,
+   "pancake lands in hotbar slot 1"
+  ],
+  [
+   118.37,
+   "pop",
+   -6,
+   0.0,
+   "EQUIPPED! text"
+  ],
+  [
+   118.95,
+   "shine",
+   -9,
+   0.2,
+   "YOU proudly holds up the pancake"
+  ],
+  [
+   119.98,
+   "chomp",
+   -1,
+   0.2,
+   "*clack* - bites the plastic pancake"
+  ],
+  [
+   120.0,
+   "click",
+   -6,
+   0.2,
+   "plastic clack"
+  ],
+  [
+   120.25,
+   "chomp",
+   -8,
+   0.2,
+   "chew"
+  ],
+  [
+   120.5,
+   "chomp",
+   -10,
+   0.2,
+   "chew"
+  ],
+  [
+   120.88,
+   "blink",
+   -6,
+   0.2,
+   "face drops to disappointed deadpan"
+  ]
+ ]
+}

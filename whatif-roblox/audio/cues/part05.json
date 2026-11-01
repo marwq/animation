@@ -1,0 +1,1203 @@
+{
+ "part": 5,
+ "start": 261.0,
+ "end": 341.4,
+ "music": [
+  {
+   "start": 261.0,
+   "end": 265.95,
+   "mood": "game",
+   "energy": 0.55,
+   "in": "cut",
+   "out": "cut"
+  },
+  {
+   "start": 265.95,
+   "end": 267.4,
+   "mood": "silence",
+   "energy": 0.0,
+   "in": "cut",
+   "out": "cut"
+  },
+  {
+   "start": 267.4,
+   "end": 268.4,
+   "mood": "game",
+   "energy": 0.5,
+   "in": "cut",
+   "out": "tapestop"
+  },
+  {
+   "start": 268.4,
+   "end": 270.4,
+   "mood": "silence",
+   "energy": 0.0,
+   "in": "cut",
+   "out": "cut"
+  },
+  {
+   "start": 270.4,
+   "end": 284.2,
+   "mood": "game",
+   "energy": 0.5,
+   "in": "cut",
+   "out": "cut"
+  },
+  {
+   "start": 284.2,
+   "end": 288.3,
+   "mood": "glitch_build",
+   "energy": 0.4,
+   "in": "cut",
+   "out": "cut"
+  },
+  {
+   "start": 288.3,
+   "end": 291.2,
+   "mood": "silence",
+   "energy": 0.0,
+   "in": "cut",
+   "out": "cut"
+  },
+  {
+   "start": 291.2,
+   "end": 298.3,
+   "mood": "playful",
+   "energy": 0.5,
+   "in": "cut",
+   "out": "cut"
+  },
+  {
+   "start": 298.3,
+   "end": 301.6,
+   "mood": "chase",
+   "energy": 0.6,
+   "in": "cut",
+   "out": "tapestop"
+  },
+  {
+   "start": 301.6,
+   "end": 305.45,
+   "mood": "heist",
+   "energy": 0.35,
+   "in": "cut",
+   "out": "cut"
+  },
+  {
+   "start": 305.45,
+   "end": 307.3,
+   "mood": "silence",
+   "energy": 0.0,
+   "in": "cut",
+   "out": "cut"
+  },
+  {
+   "start": 307.3,
+   "end": 310.9,
+   "mood": "playful",
+   "energy": 0.5,
+   "in": "cut",
+   "out": "scratch"
+  },
+  {
+   "start": 310.9,
+   "end": 312.6,
+   "mood": "silence",
+   "energy": 0.0,
+   "in": "cut",
+   "out": "cut"
+  },
+  {
+   "start": 312.6,
+   "end": 315.6,
+   "mood": "sad",
+   "energy": 0.3,
+   "in": "cut",
+   "out": "cut"
+  },
+  {
+   "start": 315.6,
+   "end": 318.9,
+   "mood": "game",
+   "energy": 0.5,
+   "in": "cut",
+   "out": "cut"
+  },
+  {
+   "start": 318.9,
+   "end": 319.75,
+   "mood": "silence",
+   "energy": 0.0,
+   "in": "cut",
+   "out": "cut"
+  },
+  {
+   "start": 319.75,
+   "end": 324.3,
+   "mood": "game",
+   "energy": 0.6,
+   "in": "cut",
+   "out": "cut"
+  },
+  {
+   "start": 324.3,
+   "end": 328.4,
+   "mood": "epic",
+   "energy": 0.5,
+   "in": "cut",
+   "out": "sting"
+  },
+  {
+   "start": 328.4,
+   "end": 330.3,
+   "mood": "silence",
+   "energy": 0.0,
+   "in": "cut",
+   "out": "cut"
+  },
+  {
+   "start": 330.3,
+   "end": 334.5,
+   "mood": "playful",
+   "energy": 0.4,
+   "in": "cut",
+   "out": "fade"
+  },
+  {
+   "start": 334.5,
+   "end": 338.2,
+   "mood": "romance",
+   "energy": 0.5,
+   "in": "swell",
+   "out": "cut"
+  },
+  {
+   "start": 338.2,
+   "end": 341.4,
+   "mood": "romance",
+   "energy": 0.8,
+   "in": "cut",
+   "out": "sting"
+  }
+ ],
+ "ambience": [
+  {
+   "start": 267.4,
+   "end": 291.2,
+   "name": "birds",
+   "gain_db": -14
+  },
+  {
+   "start": 291.2,
+   "end": 298.3,
+   "name": "birds",
+   "gain_db": -20
+  },
+  {
+   "start": 298.3,
+   "end": 338.2,
+   "name": "birds",
+   "gain_db": -14
+  },
+  {
+   "start": 305.5,
+   "end": 307.3,
+   "name": "crowd",
+   "gain_db": -20
+  },
+  {
+   "start": 275.0,
+   "end": 289.0,
+   "name": "conveyor",
+   "gain_db": -10
+  }
+ ],
+ "footsteps": [
+  {
+   "start": 296.39,
+   "end": 298.3,
+   "interval": 0.393,
+   "surface": "soft",
+   "gain_db": -14,
+   "pan": 0.0
+  },
+  {
+   "start": 298.37,
+   "end": 301.6,
+   "interval": 0.143,
+   "surface": "soft",
+   "gain_db": -8,
+   "pan": 0.1
+  },
+  {
+   "start": 301.71,
+   "end": 307.3,
+   "interval": 0.286,
+   "surface": "soft",
+   "gain_db": -8,
+   "pan": 0.1
+  },
+  {
+   "start": 331.44,
+   "end": 334.5,
+   "interval": 0.196,
+   "surface": "hard",
+   "gain_db": -14,
+   "pan": 0.24
+  }
+ ],
+ "sfx": [
+  [
+   261.0,
+   "tv_on",
+   -2,
+   0.0,
+   "white flash -> Steal an Egg loading screen"
+  ],
+  [
+   261.1,
+   "sparkle",
+   -8,
+   0.0,
+   "title shimmer"
+  ],
+  [
+   261.3,
+   "loading",
+   -12,
+   0.0,
+   "loading bar starts"
+  ],
+  [
+   261.8,
+   "ui_pop",
+   -4,
+   0.0,
+   "TIP: Always lock your base! pops"
+  ],
+  [
+   262.4,
+   "loading",
+   -14,
+   0.0,
+   "loading bar"
+  ],
+  [
+   263.4,
+   "loading",
+   -14,
+   0.0,
+   "loading bar"
+  ],
+  [
+   264.6,
+   "confirm",
+   -6,
+   0.0,
+   "LOADING 100%"
+  ],
+  [
+   264.8,
+   "zoom_in",
+   -6,
+   0.0,
+   "push in on the tip"
+  ],
+  [
+   266.45,
+   "explosion_small",
+   -8,
+   0.0,
+   "tip shatters: You won't."
+  ],
+  [
+   266.47,
+   "glass",
+   -6,
+   0.0,
+   "tip pieces"
+  ],
+  [
+   267.4,
+   "respawn",
+   0,
+   0.0,
+   "white flash, hero spawns"
+  ],
+  [
+   267.45,
+   "forcefield",
+   -6,
+   0.0,
+   "spawn forcefield"
+  ],
+  [
+   267.48,
+   "whoosh_down",
+   -8,
+   0.0,
+   "drops in from above"
+  ],
+  [
+   267.95,
+   "land",
+   -6,
+   0.0,
+   "lands on the base"
+  ],
+  [
+   268.3,
+   "wind_gust",
+   -4,
+   0.0,
+   "empty base wind"
+  ],
+  [
+   268.65,
+   "powerdown",
+   -12,
+   0.0,
+   "forcefield fades"
+  ],
+  [
+   268.78,
+   "step_wood",
+   -13,
+   -0.6,
+   "tumbleweed block bounces"
+  ],
+  [
+   269.13,
+   "step_wood",
+   -13,
+   -0.35,
+   "tumbleweed block bounces"
+  ],
+  [
+   269.3,
+   "cricket",
+   -8,
+   0.0,
+   "empty base"
+  ],
+  [
+   269.48,
+   "step_wood",
+   -13,
+   -0.1,
+   "tumbleweed block bounces"
+  ],
+  [
+   269.83,
+   "step_wood",
+   -13,
+   0.15,
+   "tumbleweed block bounces"
+  ],
+  [
+   270.18,
+   "step_wood",
+   -13,
+   0.4,
+   "tumbleweed block bounces"
+  ],
+  [
+   270.45,
+   "whoosh",
+   -4,
+   0.4,
+   "camera swings to the sign"
+  ],
+  [
+   270.53,
+   "step_wood",
+   -13,
+   0.64,
+   "tumbleweed block bounces"
+  ],
+  [
+   271.2,
+   "pop",
+   -8,
+   0.2,
+   "YOU's Base sign framed"
+  ],
+  [
+   272.95,
+   "swish",
+   -8,
+   0.07,
+   "cut: hero points at the sign"
+  ],
+  [
+   273.9,
+   "squeak",
+   -6,
+   0.17,
+   "red-pen correction scribble"
+  ],
+  [
+   274.05,
+   "pop",
+   -6,
+   0.17,
+   "YOUR? pops"
+  ],
+  [
+   275.12,
+   "whoosh",
+   -2,
+   0.0,
+   "whip-pan to the conveyor (centre 275.3)"
+  ],
+  [
+   276.0,
+   "metal_clank",
+   -16,
+   -0.3,
+   "conveyor rattle"
+  ],
+  [
+   277.2,
+   "metal_clank",
+   -18,
+   0.3,
+   "conveyor rattle"
+  ],
+  [
+   278.6,
+   "pop",
+   -4,
+   0.0,
+   "Dirt Egg $10 tags pop bigger"
+  ],
+  [
+   278.65,
+   "coin",
+   -6,
+   0.0,
+   "ten bucks"
+  ],
+  [
+   280.1,
+   "pop",
+   -4,
+   0.0,
+   "Rare Egg $5,000 tags pop"
+  ],
+  [
+   280.15,
+   "coins",
+   -6,
+   0.0,
+   "five thousand"
+  ],
+  [
+   281.8,
+   "zoom_in",
+   -2,
+   0.0,
+   "punch-in on the Legendary egg"
+  ],
+  [
+   281.9,
+   "angel",
+   -8,
+   0.0,
+   "Legendary $1M glows"
+  ],
+  [
+   281.95,
+   "shine",
+   -4,
+   0.0,
+   "gold burst"
+  ],
+  [
+   282.05,
+   "sparkle",
+   -6,
+   -0.18,
+   "sparkles"
+  ],
+  [
+   283.85,
+   "ka_ching",
+   -4,
+   0.0,
+   "one MILLION"
+  ],
+  [
+   284.0,
+   "powerdown",
+   -6,
+   0.0,
+   "belt slows to slow-motion"
+  ],
+  [
+   285.3,
+   "glitch",
+   -6,
+   -0.3,
+   "??? egg glitches into view"
+  ],
+  [
+   286.35,
+   "glitch",
+   -8,
+   0.0,
+   "??? egg glitch"
+  ],
+  [
+   287.2,
+   "glitch",
+   -8,
+   0.3,
+   "??? egg glitch"
+  ],
+  [
+   287.85,
+   "glitch",
+   -2,
+   0.4,
+   "purple flash"
+  ],
+  [
+   287.95,
+   "tv_off",
+   -3,
+   0.4,
+   "??? egg vanishes"
+  ],
+  [
+   289.1,
+   "swish",
+   -10,
+   0.0,
+   "cut to the base"
+  ],
+  [
+   289.41,
+   "blink",
+   -12,
+   0.0,
+   "eyes dart"
+  ],
+  [
+   289.5,
+   "cloth",
+   -14,
+   0.53,
+   "Max flossing"
+  ],
+  [
+   290.04,
+   "blink",
+   -12,
+   0.0,
+   "eyes dart"
+  ],
+  [
+   290.4,
+   "cloth",
+   -14,
+   0.53,
+   "Max flossing"
+  ],
+  [
+   290.67,
+   "blink",
+   -12,
+   0.0,
+   "eyes dart"
+  ],
+  [
+   290.95,
+   "cricket",
+   -6,
+   0.0,
+   "nobody else saw it"
+  ],
+  [
+   291.2,
+   "whoosh",
+   -6,
+   0.0,
+   "cut, background blurs"
+  ],
+  [
+   291.3,
+   "whoosh",
+   -6,
+   -0.6,
+   "RULE 1 card slides in"
+  ],
+  [
+   291.5,
+   "ui_pop",
+   -4,
+   -0.41,
+   "RULE 1 card lands"
+  ],
+  [
+   292.35,
+   "pop",
+   -8,
+   0.0,
+   "diagram opens"
+  ],
+  [
+   292.5,
+   "pop",
+   -4,
+   -0.39,
+   "egg icon"
+  ],
+  [
+   293.3,
+   "chicken",
+   -4,
+   -0.13,
+   "chicken icon (pets)"
+  ],
+  [
+   294.2,
+   "coin",
+   -4,
+   0.13,
+   "$ icon (money)"
+  ],
+  [
+   295.0,
+   "sparkle",
+   -4,
+   0.39,
+   "legendary egg icon (better eggs)"
+  ],
+  [
+   296.0,
+   "poof",
+   -6,
+   -0.19,
+   "chicken with tie + briefcase appears"
+  ],
+  [
+   296.5,
+   "ui_pop",
+   -4,
+   0.36,
+   "9 TO 5 sign"
+  ],
+  [
+   298.05,
+   "chicken",
+   -4,
+   0.15,
+   "bawk (with chickens)"
+  ],
+  [
+   298.3,
+   "whoosh",
+   -4,
+   0.0,
+   "cut: Max runs with an egg"
+  ],
+  [
+   298.4,
+   "whoosh",
+   -6,
+   -0.6,
+   "RULE 2 card slides in"
+  ],
+  [
+   298.55,
+   "ui_pop",
+   -4,
+   -0.41,
+   "RULE 2 card lands"
+  ],
+  [
+   301.6,
+   "powerdown",
+   -5,
+   0.0,
+   "half speed"
+  ],
+  [
+   301.62,
+   "ui_pop",
+   -6,
+   0.53,
+   "0.5x badge"
+  ],
+  [
+   303.2,
+   "heartbeat",
+   -8,
+   0.1,
+   "slow-mo sweating"
+  ],
+  [
+   304.6,
+   "heartbeat",
+   -10,
+   0.1,
+   "slow-mo sweating"
+  ],
+  [
+   305.5,
+   "boom",
+   -2,
+   0.0,
+   "EVERYONE sees it"
+  ],
+  [
+   305.55,
+   "swish",
+   -6,
+   -0.5,
+   "Pinky + Speedy point"
+  ],
+  [
+   305.6,
+   "swish",
+   -6,
+   0.5,
+   "Jet kid + Hot dog point"
+  ],
+  [
+   305.62,
+   "pop",
+   -6,
+   0.1,
+   "red arrows pop around the egg"
+  ],
+  [
+   307.3,
+   "whoosh",
+   -6,
+   0.0,
+   "cut to the hero"
+  ],
+  [
+   307.4,
+   "whoosh",
+   -6,
+   -0.6,
+   "RULE 3 card slides in"
+  ],
+  [
+   307.55,
+   "ui_pop",
+   -4,
+   -0.41,
+   "RULE 3 card lands"
+  ],
+  [
+   307.65,
+   "metal_clank",
+   -4,
+   0.39,
+   "padlock icon slams in"
+  ],
+  [
+   309.3,
+   "swish",
+   -8,
+   0.07,
+   "thumbs up"
+  ],
+  [
+   309.5,
+   "shine",
+   -2,
+   0.07,
+   "thumb glint"
+  ],
+  [
+   310.9,
+   "record_scratch",
+   -2,
+   0.0,
+   "freeze-frame, grey"
+  ],
+  [
+   311.22,
+   "stamp",
+   -2,
+   0.0,
+   "NOT EASY stamp"
+  ],
+  [
+   312.6,
+   "swish",
+   -10,
+   0.0,
+   "cut"
+  ],
+  [
+   312.85,
+   "error",
+   -4,
+   0.53,
+   "$0 HUD flashes red"
+  ],
+  [
+   313.2,
+   "cloth",
+   -8,
+   0.0,
+   "empty-pocket shrug"
+  ],
+  [
+   313.5,
+   "paper",
+   -12,
+   0.07,
+   "moth flutters out of the pockets"
+  ],
+  [
+   314.4,
+   "paper",
+   -14,
+   0.25,
+   "moth flutter"
+  ],
+  [
+   315.6,
+   "notify",
+   -4,
+   0.6,
+   "NEW QUEST: Touch Grass toast"
+  ],
+  [
+   317.9,
+   "swish",
+   -10,
+   0.0,
+   "cut to the grass block"
+  ],
+  [
+   318.25,
+   "cloth",
+   -10,
+   0.0,
+   "bends down"
+  ],
+  [
+   318.88,
+   "step_soft",
+   -2,
+   0.2,
+   "touches the grass"
+  ],
+  [
+   319.6,
+   "coin",
+   -2,
+   0.23,
+   "+$10"
+  ],
+  [
+   319.8,
+   "ka_ching",
+   -4,
+   0.17,
+   "cash in hand, HUD $10"
+  ],
+  [
+   319.85,
+   "jump",
+   -10,
+   0.0,
+   "happy hop"
+  ],
+  [
+   320.05,
+   "sparkle",
+   -10,
+   0.0,
+   "star eyes"
+  ],
+  [
+   320.3,
+   "land",
+   -12,
+   0.0,
+   "lands"
+  ],
+  [
+   321.2,
+   "achievement",
+   -8,
+   0.6,
+   "QUEST COMPLETE toast"
+  ],
+  [
+   324.3,
+   "swish",
+   -10,
+   0.0,
+   "cut"
+  ],
+  [
+   324.6,
+   "whoosh",
+   -6,
+   0.0,
+   "Dirt Egg flies onto the pedestal"
+  ],
+  [
+   325.0,
+   "ka_ching",
+   -6,
+   0.16,
+   "-$10 purchase"
+  ],
+  [
+   325.3,
+   "thud",
+   -8,
+   0.16,
+   "egg lands on the pedestal"
+  ],
+  [
+   326.05,
+   "stone",
+   -10,
+   0.16,
+   "egg wobbles"
+  ],
+  [
+   326.4,
+   "drumroll",
+   -6,
+   0.0,
+   "drumroll to the hatch at 328.4"
+  ],
+  [
+   326.6,
+   "stone",
+   -12,
+   0.16,
+   "egg wobbles harder"
+  ],
+  [
+   327.2,
+   "egg_crack",
+   -2,
+   0.2,
+   "crack 1"
+  ],
+  [
+   327.53,
+   "egg_crack",
+   -2,
+   0.2,
+   "crack 2"
+  ],
+  [
+   327.87,
+   "egg_crack",
+   -1,
+   0.2,
+   "crack 3"
+  ],
+  [
+   328.2,
+   "egg_crack",
+   0,
+   0.2,
+   "crack 4"
+  ],
+  [
+   328.4,
+   "egg_hatch",
+   -1,
+   0.24,
+   "egg pops, white flash"
+  ],
+  [
+   328.42,
+   "poof",
+   -6,
+   0.24,
+   "smoke puff"
+  ],
+  [
+   328.45,
+   "jump",
+   -10,
+   -0.21,
+   "hero jumps in shock"
+  ],
+  [
+   329.0,
+   "sparkle",
+   -4,
+   0.24,
+   "Rocky revealed"
+  ],
+  [
+   329.2,
+   "egg_crack",
+   -12,
+   0.24,
+   "shell halves land"
+  ],
+  [
+   329.7,
+   "blink",
+   -2,
+   0.24,
+   "Rocky blinks"
+  ],
+  [
+   330.1,
+   "blink",
+   -2,
+   0.24,
+   "Rocky blinks again"
+  ],
+  [
+   330.3,
+   "zoom_in",
+   -6,
+   0.0,
+   "closer: amazed hero"
+  ],
+  [
+   330.9,
+   "blink",
+   -6,
+   0.24,
+   "Rocky blinks"
+  ],
+  [
+   331.42,
+   "stone",
+   -6,
+   0.24,
+   "Rocky's legs start walking"
+  ],
+  [
+   332.6,
+   "ui_pop",
+   -4,
+   0.0,
+   "+$1 / SEC badge"
+  ],
+  [
+   332.62,
+   "coin",
+   -4,
+   0.32,
+   "+$1"
+  ],
+  [
+   333.4,
+   "blink",
+   -8,
+   0.24,
+   "Rocky blinks"
+  ],
+  [
+   333.6,
+   "coin",
+   -4,
+   0.32,
+   "+$1, HUD $1"
+  ],
+  [
+   334.5,
+   "swish",
+   -10,
+   0.0,
+   "cut"
+  ],
+  [
+   334.55,
+   "blush",
+   -6,
+   0.0,
+   "heart eyes + blush"
+  ],
+  [
+   334.6,
+   "cloth",
+   -8,
+   0.0,
+   "kneels down"
+  ],
+  [
+   334.65,
+   "heart_pop",
+   -6,
+   -0.05,
+   "hearts float up"
+  ],
+  [
+   334.95,
+   "stone",
+   -10,
+   0.0,
+   "hugs Rocky"
+  ],
+  [
+   335.2,
+   "thud",
+   -12,
+   0.0,
+   "knees down"
+  ],
+  [
+   336.65,
+   "heart_pop",
+   -8,
+   0.0,
+   "Rocky heart eyes"
+  ],
+  [
+   338.18,
+   "zoom_in",
+   -4,
+   0.0,
+   "shoujo close-up"
+  ],
+  [
+   338.25,
+   "sparkle",
+   -6,
+   0.0,
+   "pink sparkle background"
+  ],
+  [
+   338.3,
+   "magic",
+   -10,
+   0.0,
+   "shoujo shimmer"
+  ],
+  [
+   339.6,
+   "sparkle",
+   -10,
+   0.3,
+   "sparkles twinkle"
+  ],
+  [
+   340.7,
+   "heart_pop",
+   -6,
+   0.0,
+   "hearts"
+  ],
+  [
+   340.95,
+   "sparkle",
+   -8,
+   -0.3,
+   "sparkles"
+  ]
+ ]
+}
