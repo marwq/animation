@@ -25,4 +25,15 @@ node scenes/main.js out/part_NN.mp4 60 START END
 | 12 | 11:34–12:51 | SC12 вылупление, SC13 цветы, SC14 аутро | sc12 |
 
 Рендер части: `node scenes/main.js out/part_NN.mp4 60 START END`.
-Склейка: `ffmpeg -f concat -safe 0 -i list.txt -c copy out/whatif_full.mp4`.
+Склейка (список `out/concat.txt`: whatif_1min, whatif_min2, part_03 … part_12):
+
+```bash
+ffmpeg -f concat -safe 0 -i out/concat.txt -c copy -movflags +faststart out/whatif_full.mp4
+```
+
+## Статус
+
+- Все 12 частей анимированы и отрендерены (1920×1080, 60 fps), полный ролик ≈ 12:51.
+- Дальше: озвучка ElevenLabs v4 (`script/VOICEOVER_eleven_v4.txt`) → подгоняем тайминги
+  реплик в `TRACK` каждой части под реальные дубли, пересчитываем липсинк, сводим звук
+  (голос + музыка + SFX из `C.sfx`) и муксим в финальный файл.
