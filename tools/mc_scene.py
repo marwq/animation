@@ -76,19 +76,16 @@ SUNNY = {'sun_power': 9.5, 'sun_color': (1.0, 0.86, 0.62), 'sky_light': 0.45, 'e
 ROOM_LIGHT = {'sun': (-0.70, 0.45, -0.42), 'sun_power': 10.5, 'sun_color': (1.0, 0.86, 0.62),
               'sky_light': 1.0, 'fill': 140, 'exposure': 0.9}
 
-# дом (мир home): одно солнце на все дневные кадры, внутри — дымка для лучей;
-# ночью — луна, звёзды, лунный свет в окна и тёплые фонари и факелы
-HOME_SUN = (-0.70, 0.45, -0.42)
-HOME_DAY_IN = {'sun': HOME_SUN, 'sun_power': 10.5, 'sun_color': (1.0, 0.86, 0.62),
-               'sky_light': 1.0, 'fill': 140, 'exposure': 0.9, 'volume': 0.02, 'dir': 'home',
-               'grade': LUSH}
-HOME_DAY_OUT = {'sun': HOME_SUN, 'sun_power': 9.5, 'sun_color': (1.0, 0.86, 0.62),
-                'sky_light': 0.45, 'exposure': 0.3, 'sky_reflect': True, 'dir': 'home',
-                'grade': LUSH}
-HOME_NIGHT = {'night': True, 'moon': (8, 9), 'sun': (-0.15, -0.85, -0.5), 'sun_power': 4.0,
-              'sun_color': (0.55, 0.68, 1.0), 'sky_light': 0.12, 'sky_seen': 1.6,
-              'sky_ambient': (0.30, 0.42, 0.75), 'exposure': -0.2, 'volume': 0.06, 'dir': 'home',
+# дом (мир home): поздняя ночь — луна и звёзды на небе, голубой лунный свет в окна,
+# тёплые фонари и факелы. moon — где луна видна в кадре (азимут от севера к востоку,
+# высота, °), sun — откуда на самом деле светит: подобрано для каждого кадра, чтобы
+# луна была видна, а свет красиво лёг. volume — дымка в комнате для лунных лучей.
+HOME_NIGHT = {'night': True, 'sun_power': 4.0, 'sun_color': (0.55, 0.68, 1.0), 'sky_light': 0.12,
+              'sky_seen': 1.6, 'sky_ambient': (0.30, 0.42, 0.75), 'exposure': -0.2, 'dir': 'home',
               'grade': {**LUSH, 'sat': 1.15, 'bloom': 0.45}}
+HOME_DOOR_MOON = {'moon': (165, 7), 'sun': (-0.224, 0.837, -0.5), 'sun_power': 6.0,   # в южном
+                  'exposure': 0.1, 'volume': 0.06}                                       # окне
+HOME_HOUSE_MOON = {'moon': (25, 25), 'sun': (-0.262, 0.720, -0.643), 'sky_reflect': True}
 HOME_ROOM_CAM = {'cam': (0.0, 8.15, 2.62), 'yaw': 180, 'shift': -0.12, 'lens': 18, 'focus': 5.0,
                  'fstop': 2.8}
 HOME_HOUSE_CAM = {'cam': (0.0, -15.5, 2.62), 'yaw': 0, 'shift': 0.07, 'lens': 22, 'focus': 14.5,
@@ -154,14 +151,18 @@ SHOTS = {
     'room_bed_open': {'world': 'room', 'dir': 'room', 'cam': (0.0, 8.15, 2.62), 'yaw': 180,
                       'shift': -0.12, 'lens': 18, 'focus': 5.0, 'fstop': 2.8, 'grade': LUSH,
                       'door_open': True, **ROOM_LIGHT},
-    'home_door':       {'world': 'home', **HOME_ROOM_CAM, **HOME_DAY_IN},
-    'home_door_open':  {'world': 'home', **HOME_ROOM_CAM, **HOME_DAY_IN, 'door_open': True},
-    'home_window_night': {'world': 'home', 'cam': (0.0, 0.35, 2.62), 'yaw': 0, 'shift': -0.04,
-                          'lens': 18, 'focus': 6.0, 'fstop': 2.8, **HOME_NIGHT},
+    'home_door':       {'world': 'home', **HOME_ROOM_CAM, **HOME_NIGHT, **HOME_DOOR_MOON},
+    'home_door_open':  {'world': 'home', **HOME_ROOM_CAM, **HOME_NIGHT, **HOME_DOOR_MOON,
+                        'door_open': True},
+    'home_window':     {'world': 'home', 'cam': (0.0, 0.35, 2.62), 'yaw': 0, 'shift': -0.04,
+                        'lens': 18, 'focus': 6.0, 'fstop': 2.8, **HOME_NIGHT,
+                        'moon': (8, 9), 'sun': (-0.15, -0.85, -0.5), 'volume': 0.06},
     'home_yard':       {'world': 'home', 'cam': (0.0, -3.2, 2.62), 'yaw': 180, 'shift': -0.06,
-                        'lens': 22, 'focus': 9.0, 'fstop': 1.4, **HOME_DAY_OUT},
-    'home_house':      {'world': 'home', **HOME_HOUSE_CAM, **HOME_DAY_OUT},
-    'home_house_open': {'world': 'home', **HOME_HOUSE_CAM, **HOME_DAY_OUT, 'door_open': True},
+                        'lens': 22, 'focus': 9.0, 'fstop': 1.4, **HOME_NIGHT, 'sky_reflect': True,
+                        'moon': (200, 22), 'sun': (0.317, 0.871, -0.375)},
+    'home_house':      {'world': 'home', **HOME_HOUSE_CAM, **HOME_NIGHT, **HOME_HOUSE_MOON},
+    'home_house_open': {'world': 'home', **HOME_HOUSE_CAM, **HOME_NIGHT, **HOME_HOUSE_MOON,
+                        'door_open': True},
     'swing':  {'world': 'swing', 'dir': 'props', 'cam': (2.0, -10.0, 1.62), 'shift': 0.06,
                'lens': 35, 'focus': 10.0, 'fstop': 0, 'exposure': -0.6, 'grade': {'sat': 1.1}},
 }
@@ -1306,7 +1307,7 @@ def pot(m, cx, cy, z, plant):
         m.cross_s(cx, cy, z + 4 * s, plant, 0.8)
 
 
-def lantern(m, x, y, z, hang=None):
+def lantern(m, x, y, z, hang=None, power=28):
     """Фонарь: низ на высоте z; hang — высота, с которой он свисает на цепи."""
     s = 1 / 16
     m.box_fit((x - 3 * s, y - 3 * s, z), (x + 3 * s, y + 3 * s, z + 7 * s), 'lantern_side', 'lantern_top')
@@ -1319,7 +1320,7 @@ def lantern(m, x, y, z, hang=None):
                     (x + w * dx, y + w * dy, hang), (x - w * dx, y - w * dy, hang)],
                    'chain', [(0, z0), (3 / 16, z0), (3 / 16, hang), (0, hang)])
     lt = bpy.data.lights.new('lantern_light', 'POINT')
-    lt.energy, lt.color, lt.shadow_soft_size = 28, (1.0, 0.66, 0.32), 0.05
+    lt.energy, lt.color, lt.shadow_soft_size = power, (1.0, 0.66, 0.32), 0.05
     lo = bpy.data.objects.new('lantern_light', lt)
     lo.location = (x, y, z + 3.5 * s)
     bpy.context.scene.collection.objects.link(lo)
@@ -1400,8 +1401,8 @@ def home_moon(view):
     m = Mesh()
     m.quad([tuple(v) for v in corners], 'moon')
     ob = m.build('moon', {'moon': mat})
-    ob.visible_shadow = ob.visible_diffuse = ob.visible_glossy = ob.visible_transmission = False
-    ob.visible_volume_scatter = False
+    ob.visible_shadow = ob.visible_diffuse = ob.visible_transmission = False   # отражается в пруду,
+    ob.visible_volume_scatter = False                                          # но ничего не светит
 
 
 def home_volume(density):
@@ -1482,7 +1483,7 @@ def build_home(opt, view, mats):
         lantern(lm, x, 4.5, 3.9, hang=5)
     for x, y in ((-1.7, -9), (1.7, -9)):
         m.box((x - 0.125, y - 0.125, 1), (x + 0.125, y + 0.125, 2.3), 'spruce_planks')   # столбики
-        lantern(lm, x, y, 2.3)
+        lantern(lm, x, y, 2.3, power=45)
     if lm.f:
         lm.build('lanterns', mats).visible_shadow = False
     m.build('home', mats)
