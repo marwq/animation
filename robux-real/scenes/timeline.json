@@ -1,0 +1,13134 @@
+{
+ "duration": 819.262,
+ "lines": [
+  {
+   "id": "01.0",
+   "take": "01",
+   "scene": "SC 01",
+   "idx": 0,
+   "speaker": "TY",
+   "raw": "[excited, showing off] What if Robux... became REAL money?",
+   "text": "What if Robux... became REAL money?",
+   "clip": [
+    0.0,
+    3.2800000000000002
+   ],
+   "start": 0.35,
+   "end": 3.63,
+   "speechStart": 0.51,
+   "speechEnd": 3.63,
+   "words": [
+    [
+     "What",
+     0.51,
+     0.59
+    ],
+    [
+     "if",
+     0.67,
+     0.83
+    ],
+    [
+     "Robux...",
+     0.99,
+     1.67
+    ],
+    [
+     "became",
+     1.79,
+     2.19
+    ],
+    [
+     "REAL",
+     2.35,
+     2.67
+    ],
+    [
+     "money?",
+     2.75,
+     3.63
+    ]
+   ]
+  },
+  {
+   "id": "01.1",
+   "take": "01",
+   "scene": "SC 01",
+   "idx": 1,
+   "speaker": "TY",
+   "raw": "[proud] Because for exactly one week... I was the richest kid on the planet.",
+   "text": "Because for exactly one week... I was the richest kid on the planet.",
+   "clip": [
+    3.2800000000000002,
+    8.0
+   ],
+   "start": 3.63,
+   "end": 8.35,
+   "speechStart": 3.822,
+   "speechEnd": 8.35,
+   "words": [
+    [
+     "Because",
+     3.822,
+     3.87
+    ],
+    [
+     "for",
+     3.95,
+     4.03
+    ],
+    [
+     "exactly",
+     4.11,
+     4.67
+    ],
+    [
+     "one",
+     4.83,
+     4.99
+    ],
+    [
+     "week...",
+     5.07,
+     5.55
+    ],
+    [
+     "I",
+     5.79,
+     5.95
+    ],
+    [
+     "was",
+     6.03,
+     6.19
+    ],
+    [
+     "the",
+     6.23,
+     6.27
+    ],
+    [
+     "richest",
+     6.43,
+     6.83
+    ],
+    [
+     "kid",
+     6.91,
+     7.07
+    ],
+    [
+     "on",
+     7.11,
+     7.15
+    ],
+    [
+     "the",
+     7.23,
+     7.31
+    ],
+    [
+     "planet.",
+     7.39,
+     8.35
+    ]
+   ]
+  },
+  {
+   "id": "01.2",
+   "take": "01",
+   "scene": "SC 01",
+   "idx": 2,
+   "speaker": "TY",
+   "raw": "[giddy] I had a gold hoverboard. A robot butler. And a swimming pool full of COINS.",
+   "text": "I had a gold hoverboard. A robot butler. And a swimming pool full of COINS.",
+   "clip": [
+    8.0,
+    13.399999999999999
+   ],
+   "start": 8.35,
+   "end": 13.75,
+   "speechStart": 8.414,
+   "speechEnd": 13.75,
+   "words": [
+    [
+     "I",
+     8.414,
+     8.43
+    ],
+    [
+     "had",
+     8.47,
+     8.51
+    ],
+    [
+     "a",
+     8.59,
+     8.67
+    ],
+    [
+     "gold",
+     8.75,
+     8.99
+    ],
+    [
+     "hoverboard.",
+     9.07,
+     9.79
+    ],
+    [
+     "A",
+     9.95,
+     10.03
+    ],
+    [
+     "robot",
+     10.11,
+     10.51
+    ],
+    [
+     "butler.",
+     10.59,
+     11.15
+    ],
+    [
+     "And",
+     11.31,
+     11.39
+    ],
+    [
+     "a",
+     11.47,
+     11.55
+    ],
+    [
+     "swimming",
+     11.63,
+     11.95
+    ],
+    [
+     "pool",
+     12.03,
+     12.27
+    ],
+    [
+     "full",
+     12.51,
+     12.67
+    ],
+    [
+     "of",
+     12.75,
+     12.83
+    ],
+    [
+     "COINS.",
+     12.91,
+     13.75
+    ]
+   ]
+  },
+  {
+   "id": "01.3",
+   "take": "01",
+   "scene": "SC 01",
+   "idx": 3,
+   "speaker": "THIRTY",
+   "raw": "[nasal, fast] Marketplace fee! Thirty percent!",
+   "text": "Marketplace fee! Thirty percent!",
+   "clip": [
+    13.399999999999999,
+    15.399999999999999
+   ],
+   "start": 13.75,
+   "end": 15.75,
+   "speechStart": 14.07,
+   "speechEnd": 15.75,
+   "words": [
+    [
+     "Marketplace",
+     14.07,
+     14.27
+    ],
+    [
+     "fee!",
+     14.43,
+     14.91
+    ],
+    [
+     "Thirty",
+     14.99,
+     15.15
+    ],
+    [
+     "percent!",
+     15.23,
+     15.75
+    ]
+   ]
+  },
+  {
+   "id": "01.4",
+   "take": "01",
+   "scene": "SC 01",
+   "idx": 4,
+   "speaker": "TY",
+   "raw": "[annoyed] Not now, Thirty Percent Guy!",
+   "text": "Not now, Thirty Percent Guy!",
+   "clip": [
+    15.399999999999999,
+    17.56
+   ],
+   "start": 15.75,
+   "end": 17.91,
+   "speechStart": 15.99,
+   "speechEnd": 17.91,
+   "words": [
+    [
+     "Not",
+     15.99,
+     16.03
+    ],
+    [
+     "now,",
+     16.19,
+     16.51
+    ],
+    [
+     "Thirty",
+     16.59,
+     16.75
+    ],
+    [
+     "Percent",
+     16.83,
+     17.07
+    ],
+    [
+     "Guy!",
+     17.23,
+     17.91
+    ]
+   ]
+  },
+  {
+   "id": "01.5",
+   "take": "01",
+   "scene": "SC 01",
+   "idx": 5,
+   "speaker": "SYSTEM",
+   "raw": "[alarm, robotic] Warning. Robux value: minus ninety-nine percent.",
+   "text": "Warning. Robux value: minus ninety-nine percent.",
+   "clip": [
+    17.56,
+    21.36
+   ],
+   "start": 17.91,
+   "end": 21.71,
+   "speechStart": 18.23,
+   "speechEnd": 21.71,
+   "words": [
+    [
+     "Warning.",
+     18.23,
+     18.35
+    ],
+    [
+     "Robux",
+     18.75,
+     19.15
+    ],
+    [
+     "value:",
+     19.23,
+     19.95
+    ],
+    [
+     "minus",
+     20.03,
+     20.35
+    ],
+    [
+     "ninety-nine",
+     20.51,
+     20.91
+    ],
+    [
+     "percent.",
+     21.07,
+     21.71
+    ]
+   ]
+  },
+  {
+   "id": "01.6",
+   "take": "01",
+   "scene": "SC 01",
+   "idx": 6,
+   "speaker": "TY",
+   "raw": "[panicked] No, no, no, no\u2014 [screams] NOOO!",
+   "text": "No, no, no, no\u2014 NOOO!",
+   "clip": [
+    21.36,
+    23.759999999999998
+   ],
+   "start": 21.71,
+   "end": 24.11,
+   "speechStart": 21.79,
+   "speechEnd": 24.11,
+   "words": [
+    [
+     "No,",
+     21.79,
+     22.03
+    ],
+    [
+     "no,",
+     22.11,
+     22.23
+    ],
+    [
+     "no,",
+     22.27,
+     22.43
+    ],
+    [
+     "no\u2014",
+     22.55,
+     22.99
+    ],
+    [
+     "NOOO!",
+     23.07,
+     24.11
+    ]
+   ],
+   "beatAfter": 1.5
+  },
+  {
+   "id": "01.7",
+   "take": "01",
+   "scene": "SC 01",
+   "idx": 7,
+   "speaker": "TY",
+   "raw": "[deadpan] ...Yeah. It went great. [pause] Okay. Rewind. Monday morning.",
+   "text": "...Yeah. It went great. Okay. Rewind. Monday morning.",
+   "clip": [
+    23.759999999999998,
+    29.519999999999996
+   ],
+   "start": 25.61,
+   "end": 31.37,
+   "speechStart": 26.237,
+   "speechEnd": 31.37,
+   "words": [
+    [
+     "...Yeah.",
+     26.237,
+     26.65
+    ],
+    [
+     "It",
+     27.05,
+     27.13
+    ],
+    [
+     "went",
+     27.21,
+     27.37
+    ],
+    [
+     "great.",
+     27.45,
+     27.85
+    ],
+    [
+     "Okay.",
+     28.826,
+     28.97
+    ],
+    [
+     "Rewind.",
+     29.37,
+     30.13
+    ],
+    [
+     "Monday",
+     30.41,
+     30.65
+    ],
+    [
+     "morning.",
+     30.73,
+     31.37
+    ]
+   ]
+  },
+  {
+   "id": "02.0",
+   "take": "02",
+   "scene": "SC 02",
+   "idx": 0,
+   "speaker": "TY",
+   "raw": "[cheerful, storyteller] Hi. I'm Ty. I'm twelve. And I am the cheapest person you will ever meet.",
+   "text": "Hi. I'm Ty. I'm twelve. And I am the cheapest person you will ever meet.",
+   "clip": [
+    0.0,
+    6.16
+   ],
+   "start": 32.27,
+   "end": 38.43,
+   "speechStart": 32.35,
+   "speechEnd": 38.43,
+   "words": [
+    [
+     "Hi.",
+     32.35,
+     32.83
+    ],
+    [
+     "I'm",
+     32.99,
+     33.15
+    ],
+    [
+     "Ty.",
+     33.23,
+     33.75
+    ],
+    [
+     "I'm",
+     33.95,
+     34.11
+    ],
+    [
+     "twelve.",
+     34.19,
+     34.79
+    ],
+    [
+     "And",
+     34.99,
+     35.15
+    ],
+    [
+     "I",
+     35.39,
+     35.47
+    ],
+    [
+     "am",
+     35.55,
+     35.63
+    ],
+    [
+     "the",
+     35.75,
+     35.87
+    ],
+    [
+     "cheapest",
+     35.95,
+     36.35
+    ],
+    [
+     "person",
+     36.59,
+     36.83
+    ],
+    [
+     "you",
+     36.91,
+     36.99
+    ],
+    [
+     "will",
+     37.15,
+     37.31
+    ],
+    [
+     "ever",
+     37.39,
+     37.63
+    ],
+    [
+     "meet.",
+     37.79,
+     38.43
+    ]
+   ]
+  },
+  {
+   "id": "02.1",
+   "take": "02",
+   "scene": "SC 02",
+   "idx": 1,
+   "speaker": "TY",
+   "raw": "I have never spent a single Robux. Not on a hat. Not on a pet. Not even on a game pass.",
+   "text": "I have never spent a single Robux. Not on a hat. Not on a pet. Not even on a game pass.",
+   "clip": [
+    6.16,
+    12.64
+   ],
+   "start": 38.43,
+   "end": 44.91,
+   "speechStart": 38.43,
+   "speechEnd": 44.91,
+   "words": [
+    [
+     "I",
+     38.43,
+     38.59
+    ],
+    [
+     "have",
+     38.697,
+     38.883
+    ],
+    [
+     "never",
+     38.91,
+     39.182
+    ],
+    [
+     "spent",
+     39.23,
+     39.502
+    ],
+    [
+     "a",
+     39.79,
+     39.923
+    ],
+    [
+     "single",
+     40.057,
+     40.19
+    ],
+    [
+     "Robux.",
+     40.31,
+     41.07
+    ],
+    [
+     "Not",
+     41.15,
+     41.23
+    ],
+    [
+     "on",
+     41.27,
+     41.31
+    ],
+    [
+     "a",
+     41.39,
+     41.47
+    ],
+    [
+     "hat.",
+     41.79,
+     42.163
+    ],
+    [
+     "Not",
+     42.217,
+     42.27
+    ],
+    [
+     "on",
+     42.31,
+     42.35
+    ],
+    [
+     "a",
+     42.43,
+     42.51
+    ],
+    [
+     "pet.",
+     42.79,
+     43.11
+    ],
+    [
+     "Not",
+     43.15,
+     43.31
+    ],
+    [
+     "even",
+     43.39,
+     43.47
+    ],
+    [
+     "on",
+     43.55,
+     43.59
+    ],
+    [
+     "a",
+     43.63,
+     43.71
+    ],
+    [
+     "game",
+     43.79,
+     44.03
+    ],
+    [
+     "pass.",
+     44.23,
+     44.91
+    ]
+   ]
+  },
+  {
+   "id": "02.2",
+   "take": "02",
+   "scene": "SC 02",
+   "idx": 2,
+   "speaker": "TY",
+   "raw": "[proud, deadpan] My avatar still wears the free starter shirt. [pause] It's not a look. It's a lifestyle.",
+   "text": "My avatar still wears the free starter shirt. It's not a look. It's a lifestyle.",
+   "clip": [
+    12.64,
+    18.720000000000002
+   ],
+   "start": 44.91,
+   "end": 50.99,
+   "speechStart": 44.99,
+   "speechEnd": 50.99,
+   "words": [
+    [
+     "My",
+     44.99,
+     45.15
+    ],
+    [
+     "avatar",
+     45.23,
+     45.71
+    ],
+    [
+     "still",
+     45.87,
+     46.11
+    ],
+    [
+     "wears",
+     46.217,
+     46.43
+    ],
+    [
+     "the",
+     46.55,
+     46.67
+    ],
+    [
+     "free",
+     46.79,
+     46.91
+    ],
+    [
+     "starter",
+     46.99,
+     47.31
+    ],
+    [
+     "shirt.",
+     47.39,
+     48.11
+    ],
+    [
+     "It's",
+     48.334,
+     48.43
+    ],
+    [
+     "not",
+     48.51,
+     48.59
+    ],
+    [
+     "a",
+     48.63,
+     48.67
+    ],
+    [
+     "look.",
+     48.75,
+     49.31
+    ],
+    [
+     "It's",
+     49.39,
+     49.47
+    ],
+    [
+     "a",
+     49.55,
+     49.63
+    ],
+    [
+     "lifestyle.",
+     49.67,
+     50.99
+    ]
+   ]
+  },
+  {
+   "id": "02.3",
+   "take": "02",
+   "scene": "SC 02",
+   "idx": 3,
+   "speaker": "TY",
+   "raw": "I eat the free samples at the supermarket for lunch. I reuse birthday wrapping paper. I once returned a gift... to my own grandma.",
+   "text": "I eat the free samples at the supermarket for lunch. I reuse birthday wrapping paper. I once returned a gift... to my own grandma.",
+   "clip": [
+    18.720000000000002,
+    26.96
+   ],
+   "start": 50.99,
+   "end": 59.23,
+   "speechStart": 50.99,
+   "speechEnd": 59.23,
+   "words": [
+    [
+     "I",
+     50.99,
+     51.123
+    ],
+    [
+     "eat",
+     51.177,
+     51.23
+    ],
+    [
+     "the",
+     51.31,
+     51.39
+    ],
+    [
+     "free",
+     51.51,
+     51.63
+    ],
+    [
+     "samples",
+     51.83,
+     52.03
+    ],
+    [
+     "at",
+     52.07,
+     52.11
+    ],
+    [
+     "the",
+     52.19,
+     52.27
+    ],
+    [
+     "supermarket",
+     52.35,
+     52.91
+    ],
+    [
+     "for",
+     52.99,
+     53.07
+    ],
+    [
+     "lunch.",
+     53.11,
+     53.91
+    ],
+    [
+     "I",
+     54.03,
+     54.19
+    ],
+    [
+     "reuse",
+     54.35,
+     54.51
+    ],
+    [
+     "birthday",
+     54.71,
+     54.91
+    ],
+    [
+     "wrapping",
+     54.95,
+     55.23
+    ],
+    [
+     "paper.",
+     55.59,
+     56.03
+    ],
+    [
+     "I",
+     56.11,
+     56.163
+    ],
+    [
+     "once",
+     56.217,
+     56.27
+    ],
+    [
+     "returned",
+     56.35,
+     56.67
+    ],
+    [
+     "a",
+     56.83,
+     57.043
+    ],
+    [
+     "gift...",
+     57.257,
+     57.497
+    ],
+    [
+     "to",
+     57.523,
+     57.55
+    ],
+    [
+     "my",
+     57.63,
+     57.87
+    ],
+    [
+     "own",
+     57.95,
+     58.19
+    ],
+    [
+     "grandma.",
+     58.27,
+     59.23
+    ]
+   ]
+  },
+  {
+   "id": "02.4",
+   "take": "02",
+   "scene": "SC 02",
+   "idx": 4,
+   "speaker": "TY",
+   "raw": "[whispers, secretive] Because I had a plan. [pause] The AFK farm.",
+   "text": "Because I had a plan. The AFK farm.",
+   "clip": [
+    26.96,
+    31.039999999999996
+   ],
+   "start": 59.23,
+   "end": 63.31,
+   "speechStart": 59.521,
+   "speechEnd": 63.31,
+   "words": [
+    [
+     "Because",
+     59.521,
+     59.55
+    ],
+    [
+     "I",
+     59.71,
+     59.75
+    ],
+    [
+     "had",
+     59.79,
+     59.87
+    ],
+    [
+     "a",
+     60.03,
+     60.35
+    ],
+    [
+     "plan.",
+     60.67,
+     61.15
+    ],
+    [
+     "The",
+     61.23,
+     61.39
+    ],
+    [
+     "AFK",
+     61.47,
+     62.11
+    ],
+    [
+     "farm.",
+     62.27,
+     63.31
+    ]
+   ]
+  },
+  {
+   "id": "02.5",
+   "take": "02",
+   "scene": "SC 02",
+   "idx": 5,
+   "speaker": "TY",
+   "raw": "In second grade, I taped down my spacebar in a clicker game... [pause] and I never turned it off.",
+   "text": "In second grade, I taped down my spacebar in a clicker game... and I never turned it off.",
+   "clip": [
+    31.039999999999996,
+    36.413
+   ],
+   "start": 63.31,
+   "end": 68.683,
+   "speechStart": 63.31,
+   "speechEnd": 68.683,
+   "words": [
+    [
+     "In",
+     63.31,
+     63.39
+    ],
+    [
+     "second",
+     63.51,
+     63.63
+    ],
+    [
+     "grade,",
+     63.71,
+     64.19
+    ],
+    [
+     "I",
+     64.35,
+     64.377
+    ],
+    [
+     "taped",
+     64.403,
+     64.59
+    ],
+    [
+     "down",
+     64.67,
+     64.83
+    ],
+    [
+     "my",
+     64.91,
+     64.99
+    ],
+    [
+     "spacebar",
+     65.19,
+     65.55
+    ],
+    [
+     "in",
+     65.59,
+     65.63
+    ],
+    [
+     "a",
+     65.67,
+     65.71
+    ],
+    [
+     "clicker",
+     65.79,
+     66.03
+    ],
+    [
+     "game...",
+     66.11,
+     66.75
+    ],
+    [
+     "and",
+     66.883,
+     66.91
+    ],
+    [
+     "I",
+     67.15,
+     67.19
+    ],
+    [
+     "never",
+     67.23,
+     67.55
+    ],
+    [
+     "turned",
+     67.67,
+     67.79
+    ],
+    [
+     "it",
+     67.83,
+     67.87
+    ],
+    [
+     "off.",
+     67.95,
+     68.683
+    ]
+   ]
+  },
+  {
+   "id": "02.6",
+   "take": "02",
+   "scene": "SC 02",
+   "idx": 6,
+   "speaker": "TY",
+   "raw": "[amazed] Four years later, my computer is basically a space heater. [pause] And my balance is... three MILLION Robux.",
+   "text": "Four years later, my computer is basically a space heater. And my balance is... three MILLION Robux.",
+   "clip": [
+    36.413,
+    43.68
+   ],
+   "start": 68.683,
+   "end": 75.95,
+   "speechStart": 68.75,
+   "speechEnd": 75.95,
+   "words": [
+    [
+     "Four",
+     68.75,
+     68.91
+    ],
+    [
+     "years",
+     68.99,
+     69.23
+    ],
+    [
+     "later,",
+     69.39,
+     69.79
+    ],
+    [
+     "my",
+     69.87,
+     69.95
+    ],
+    [
+     "computer",
+     70.03,
+     70.43
+    ],
+    [
+     "is",
+     70.51,
+     70.75
+    ],
+    [
+     "basically",
+     70.87,
+     71.23
+    ],
+    [
+     "a",
+     71.39,
+     71.523
+    ],
+    [
+     "space",
+     71.657,
+     71.79
+    ],
+    [
+     "heater.",
+     71.83,
+     72.43
+    ],
+    [
+     "And",
+     72.563,
+     72.59
+    ],
+    [
+     "my",
+     72.67,
+     72.75
+    ],
+    [
+     "balance",
+     72.99,
+     73.23
+    ],
+    [
+     "is...",
+     73.31,
+     73.95
+    ],
+    [
+     "three",
+     74.15,
+     74.35
+    ],
+    [
+     "MILLION",
+     74.51,
+     74.99
+    ],
+    [
+     "Robux.",
+     75.11,
+     75.95
+    ]
+   ]
+  },
+  {
+   "id": "02.7",
+   "take": "02",
+   "scene": "SC 02",
+   "idx": 7,
+   "speaker": "MIA",
+   "raw": "[sarcastic, bored] Wow. Three million pixels. Can you buy groceries with pixels?",
+   "text": "Wow. Three million pixels. Can you buy groceries with pixels?",
+   "clip": [
+    43.68,
+    49.12
+   ],
+   "start": 75.95,
+   "end": 81.39,
+   "speechStart": 76.03,
+   "speechEnd": 81.39,
+   "words": [
+    [
+     "Wow.",
+     76.03,
+     76.83
+    ],
+    [
+     "Three",
+     76.91,
+     77.23
+    ],
+    [
+     "million",
+     77.47,
+     77.87
+    ],
+    [
+     "pixels.",
+     77.95,
+     78.91
+    ],
+    [
+     "Can",
+     78.99,
+     79.07
+    ],
+    [
+     "you",
+     79.15,
+     79.23
+    ],
+    [
+     "buy",
+     79.35,
+     79.47
+    ],
+    [
+     "groceries",
+     79.55,
+     80.03
+    ],
+    [
+     "with",
+     80.15,
+     80.27
+    ],
+    [
+     "pixels?",
+     80.59,
+     81.39
+    ]
+   ]
+  },
+  {
+   "id": "02.8",
+   "take": "02",
+   "scene": "SC 02",
+   "idx": 8,
+   "speaker": "TY",
+   "raw": "That's my sister, Mia. She spent every Robux she ever had on hats.",
+   "text": "That's my sister, Mia. She spent every Robux she ever had on hats.",
+   "clip": [
+    49.12,
+    54.239999999999995
+   ],
+   "start": 81.39,
+   "end": 86.51,
+   "speechStart": 81.39,
+   "speechEnd": 86.51,
+   "words": [
+    [
+     "That's",
+     81.39,
+     81.55
+    ],
+    [
+     "my",
+     81.63,
+     81.79
+    ],
+    [
+     "sister,",
+     81.83,
+     82.27
+    ],
+    [
+     "Mia.",
+     82.35,
+     82.99
+    ],
+    [
+     "She",
+     83.07,
+     83.15
+    ],
+    [
+     "spent",
+     83.31,
+     83.63
+    ],
+    [
+     "every",
+     83.71,
+     83.95
+    ],
+    [
+     "Robux",
+     84.03,
+     84.43
+    ],
+    [
+     "she",
+     84.55,
+     84.67
+    ],
+    [
+     "ever",
+     84.75,
+     84.99
+    ],
+    [
+     "had",
+     85.07,
+     85.39
+    ],
+    [
+     "on",
+     85.47,
+     85.63
+    ],
+    [
+     "hats.",
+     85.71,
+     86.51
+    ]
+   ]
+  },
+  {
+   "id": "02.9",
+   "take": "02",
+   "scene": "SC 02",
+   "idx": 9,
+   "speaker": "MIA",
+   "raw": "[offended] Four hundred and twelve hats. It's called FASHION.",
+   "text": "Four hundred and twelve hats. It's called FASHION.",
+   "clip": [
+    54.239999999999995,
+    58.16
+   ],
+   "start": 86.51,
+   "end": 90.43,
+   "speechStart": 86.59,
+   "speechEnd": 90.43,
+   "words": [
+    [
+     "Four",
+     86.59,
+     86.75
+    ],
+    [
+     "hundred",
+     86.91,
+     87.23
+    ],
+    [
+     "and",
+     87.35,
+     87.47
+    ],
+    [
+     "twelve",
+     87.59,
+     87.95
+    ],
+    [
+     "hats.",
+     88.03,
+     88.79
+    ],
+    [
+     "It's",
+     88.83,
+     88.99
+    ],
+    [
+     "called",
+     89.07,
+     89.39
+    ],
+    [
+     "FASHION.",
+     89.47,
+     90.43
+    ]
+   ]
+  },
+  {
+   "id": "02.10",
+   "take": "02",
+   "scene": "SC 02",
+   "idx": 10,
+   "speaker": "TY",
+   "raw": "And this is my best friend, Pickle.",
+   "text": "And this is my best friend, Pickle.",
+   "clip": [
+    58.16,
+    60.559999999999995
+   ],
+   "start": 90.43,
+   "end": 92.83,
+   "speechStart": 90.43,
+   "speechEnd": 92.83,
+   "words": [
+    [
+     "And",
+     90.43,
+     90.59
+    ],
+    [
+     "this",
+     90.67,
+     90.91
+    ],
+    [
+     "is",
+     90.99,
+     91.07
+    ],
+    [
+     "my",
+     91.15,
+     91.31
+    ],
+    [
+     "best",
+     91.43,
+     91.55
+    ],
+    [
+     "friend,",
+     91.63,
+     92.03
+    ],
+    [
+     "Pickle.",
+     92.07,
+     92.83
+    ]
+   ]
+  },
+  {
+   "id": "02.11",
+   "take": "02",
+   "scene": "SC 02",
+   "idx": 11,
+   "speaker": "TY",
+   "raw": "[aside] He lives next door. He has never once used a door.",
+   "text": "He lives next door. He has never once used a door.",
+   "clip": [
+    60.559999999999995,
+    64.08
+   ],
+   "start": 92.83,
+   "end": 96.35,
+   "speechStart": 92.963,
+   "speechEnd": 96.35,
+   "words": [
+    [
+     "He",
+     92.963,
+     92.99
+    ],
+    [
+     "lives",
+     93.043,
+     93.15
+    ],
+    [
+     "next",
+     93.23,
+     93.47
+    ],
+    [
+     "door.",
+     93.59,
+     94.11
+    ],
+    [
+     "He",
+     94.19,
+     94.27
+    ],
+    [
+     "has",
+     94.43,
+     94.59
+    ],
+    [
+     "never",
+     94.79,
+     94.99
+    ],
+    [
+     "once",
+     95.07,
+     95.31
+    ],
+    [
+     "used",
+     95.39,
+     95.55
+    ],
+    [
+     "a",
+     95.59,
+     95.63
+    ],
+    [
+     "door.",
+     95.71,
+     96.35
+    ]
+   ]
+  },
+  {
+   "id": "02.12",
+   "take": "02",
+   "scene": "SC 02",
+   "idx": 12,
+   "speaker": "PICKLE",
+   "raw": "[goofy, proud] I have twelve Robux! [pause] I'm saving up for a shoe.",
+   "text": "I have twelve Robux! I'm saving up for a shoe.",
+   "clip": [
+    64.08,
+    68.16000000000001
+   ],
+   "start": 96.35,
+   "end": 100.43,
+   "speechStart": 96.43,
+   "speechEnd": 100.43,
+   "words": [
+    [
+     "I",
+     96.43,
+     96.51
+    ],
+    [
+     "have",
+     96.59,
+     96.83
+    ],
+    [
+     "twelve",
+     96.91,
+     97.47
+    ],
+    [
+     "Robux!",
+     97.55,
+     98.67
+    ],
+    [
+     "I'm",
+     98.75,
+     98.91
+    ],
+    [
+     "saving",
+     99.03,
+     99.15
+    ],
+    [
+     "up",
+     99.23,
+     99.31
+    ],
+    [
+     "for",
+     99.39,
+     99.47
+    ],
+    [
+     "a",
+     99.55,
+     99.63
+    ],
+    [
+     "shoe.",
+     99.71,
+     100.43
+    ]
+   ]
+  },
+  {
+   "id": "03.0",
+   "take": "03",
+   "scene": "SC 03",
+   "idx": 0,
+   "speaker": "ANCHOR",
+   "raw": "[breaking news, urgent] Breaking news! Starting today, Robux are officially REAL money!",
+   "text": "Breaking news! Starting today, Robux are officially REAL money!",
+   "clip": [
+    0.0,
+    4.96
+   ],
+   "start": 101.33,
+   "end": 106.29,
+   "speechStart": 101.41,
+   "speechEnd": 106.29,
+   "words": [
+    [
+     "Breaking",
+     101.41,
+     101.73
+    ],
+    [
+     "news!",
+     101.81,
+     102.41
+    ],
+    [
+     "Starting",
+     102.61,
+     102.93
+    ],
+    [
+     "today,",
+     103.01,
+     103.57
+    ],
+    [
+     "Robux",
+     103.73,
+     104.21
+    ],
+    [
+     "are",
+     104.29,
+     104.37
+    ],
+    [
+     "officially",
+     104.61,
+     105.09
+    ],
+    [
+     "REAL",
+     105.17,
+     105.49
+    ],
+    [
+     "money!",
+     105.57,
+     106.29
+    ]
+   ]
+  },
+  {
+   "id": "03.1",
+   "take": "03",
+   "scene": "SC 03",
+   "idx": 1,
+   "speaker": "ANCHOR",
+   "raw": "One Robux equals one dollar. Effective... right now!",
+   "text": "One Robux equals one dollar. Effective... right now!",
+   "clip": [
+    4.96,
+    9.28
+   ],
+   "start": 106.29,
+   "end": 110.61,
+   "speechStart": 106.29,
+   "speechEnd": 110.61,
+   "words": [
+    [
+     "One",
+     106.29,
+     106.477
+    ],
+    [
+     "Robux",
+     106.61,
+     107.01
+    ],
+    [
+     "equals",
+     107.09,
+     107.41
+    ],
+    [
+     "one",
+     107.57,
+     107.73
+    ],
+    [
+     "dollar.",
+     107.89,
+     108.53
+    ],
+    [
+     "Effective...",
+     108.85,
+     109.49
+    ],
+    [
+     "right",
+     109.61,
+     109.73
+    ],
+    [
+     "now!",
+     109.81,
+     110.61
+    ]
+   ]
+  },
+  {
+   "id": "03.2",
+   "take": "03",
+   "scene": "SC 03",
+   "idx": 2,
+   "speaker": "TY",
+   "raw": "[stunned whisper] One Robux... one dollar. [pause] Three million Robux...",
+   "text": "One Robux... one dollar. Three million Robux...",
+   "clip": [
+    9.28,
+    14.8
+   ],
+   "start": 110.61,
+   "end": 116.13,
+   "speechStart": 110.69,
+   "speechEnd": 116.13,
+   "words": [
+    [
+     "One",
+     110.69,
+     110.93
+    ],
+    [
+     "Robux...",
+     111.01,
+     112.29
+    ],
+    [
+     "one",
+     112.37,
+     112.53
+    ],
+    [
+     "dollar.",
+     112.77,
+     113.33
+    ],
+    [
+     "Three",
+     114.31,
+     114.37
+    ],
+    [
+     "million",
+     114.61,
+     115.01
+    ],
+    [
+     "Robux...",
+     115.09,
+     116.13
+    ]
+   ],
+   "beatAfter": 1.0
+  },
+  {
+   "id": "03.3",
+   "take": "03",
+   "scene": "SC 03",
+   "idx": 3,
+   "speaker": "TY",
+   "raw": "[screams with joy] I'M A MILLIONAIRE!",
+   "text": "I'M A MILLIONAIRE!",
+   "clip": [
+    14.8,
+    16.48
+   ],
+   "start": 117.13,
+   "end": 118.81,
+   "speechStart": 117.29,
+   "speechEnd": 118.81,
+   "words": [
+    [
+     "I'M",
+     117.29,
+     117.45
+    ],
+    [
+     "A",
+     117.53,
+     117.61
+    ],
+    [
+     "MILLIONAIRE!",
+     117.69,
+     118.81
+    ]
+   ]
+  },
+  {
+   "id": "03.4",
+   "take": "03",
+   "scene": "SC 03",
+   "idx": 4,
+   "speaker": "ANCHOR",
+   "raw": "[excited] Across the world, gamers are celebrating! Parents are confused! And one man just found forty thousand Robux in his son's old tablet!",
+   "text": "Across the world, gamers are celebrating! Parents are confused! And one man just found forty thousand Robux in his son's old tablet!",
+   "clip": [
+    16.48,
+    25.76
+   ],
+   "start": 118.81,
+   "end": 128.09,
+   "speechStart": 119.143,
+   "speechEnd": 128.09,
+   "words": [
+    [
+     "Across",
+     119.143,
+     119.21
+    ],
+    [
+     "the",
+     119.29,
+     119.33
+    ],
+    [
+     "world,",
+     119.37,
+     119.93
+    ],
+    [
+     "gamers",
+     120.01,
+     120.41
+    ],
+    [
+     "are",
+     120.49,
+     120.73
+    ],
+    [
+     "celebrating!",
+     120.81,
+     121.85
+    ],
+    [
+     "Parents",
+     122.05,
+     122.25
+    ],
+    [
+     "are",
+     122.29,
+     122.33
+    ],
+    [
+     "confused!",
+     122.53,
+     123.37
+    ],
+    [
+     "And",
+     123.49,
+     123.61
+    ],
+    [
+     "one",
+     123.69,
+     123.85
+    ],
+    [
+     "man",
+     124.01,
+     124.17
+    ],
+    [
+     "just",
+     124.29,
+     124.41
+    ],
+    [
+     "found",
+     124.61,
+     124.81
+    ],
+    [
+     "forty",
+     124.97,
+     125.25
+    ],
+    [
+     "thousand",
+     125.37,
+     125.77
+    ],
+    [
+     "Robux",
+     125.85,
+     126.25
+    ],
+    [
+     "in",
+     126.33,
+     126.41
+    ],
+    [
+     "his",
+     126.53,
+     126.65
+    ],
+    [
+     "son's",
+     126.77,
+     127.05
+    ],
+    [
+     "old",
+     127.13,
+     127.29
+    ],
+    [
+     "tablet!",
+     127.37,
+     128.09
+    ]
+   ]
+  },
+  {
+   "id": "03.5",
+   "take": "03",
+   "scene": "SC 03",
+   "idx": 5,
+   "speaker": "TY",
+   "raw": "[fast, laughing] Kids became richer than their parents overnight. My neighbor's six-year-old bought the ice cream truck. [pause] The whole truck.",
+   "text": "Kids became richer than their parents overnight. My neighbor's six-year-old bought the ice cream truck. The whole truck.",
+   "clip": [
+    25.76,
+    32.4
+   ],
+   "start": 128.09,
+   "end": 134.73,
+   "speechStart": 128.17,
+   "speechEnd": 134.73,
+   "words": [
+    [
+     "Kids",
+     128.17,
+     128.41
+    ],
+    [
+     "became",
+     128.49,
+     128.81
+    ],
+    [
+     "richer",
+     128.89,
+     129.13
+    ],
+    [
+     "than",
+     129.21,
+     129.29
+    ],
+    [
+     "their",
+     129.37,
+     129.45
+    ],
+    [
+     "parents",
+     129.65,
+     129.85
+    ],
+    [
+     "overnight.",
+     130.01,
+     130.81
+    ],
+    [
+     "My",
+     130.89,
+     130.97
+    ],
+    [
+     "neighbor's",
+     131.09,
+     131.37
+    ],
+    [
+     "six-year-old",
+     131.49,
+     131.93
+    ],
+    [
+     "bought",
+     131.97,
+     132.09
+    ],
+    [
+     "the",
+     132.17,
+     132.25
+    ],
+    [
+     "ice",
+     132.33,
+     132.41
+    ],
+    [
+     "cream",
+     132.49,
+     132.65
+    ],
+    [
+     "truck.",
+     132.73,
+     133.37
+    ],
+    [
+     "The",
+     133.45,
+     133.61
+    ],
+    [
+     "whole",
+     133.77,
+     133.93
+    ],
+    [
+     "truck.",
+     134.17,
+     134.73
+    ]
+   ]
+  },
+  {
+   "id": "03.6",
+   "take": "03",
+   "scene": "SC 03",
+   "idx": 6,
+   "speaker": "MIA",
+   "raw": "[horrified] Wait. Then my hats... Can I SELL my hats?!",
+   "text": "Wait. Then my hats... Can I SELL my hats?!",
+   "clip": [
+    32.4,
+    36.16
+   ],
+   "start": 134.73,
+   "end": 138.49,
+   "speechStart": 134.81,
+   "speechEnd": 138.49,
+   "words": [
+    [
+     "Wait.",
+     134.81,
+     135.53
+    ],
+    [
+     "Then",
+     135.61,
+     135.69
+    ],
+    [
+     "my",
+     135.81,
+     135.93
+    ],
+    [
+     "hats...",
+     135.97,
+     136.81
+    ],
+    [
+     "Can",
+     136.85,
+     136.89
+    ],
+    [
+     "I",
+     136.97,
+     137.13
+    ],
+    [
+     "SELL",
+     137.21,
+     137.37
+    ],
+    [
+     "my",
+     137.45,
+     137.61
+    ],
+    [
+     "hats?!",
+     137.69,
+     138.49
+    ]
+   ]
+  },
+  {
+   "id": "03.7",
+   "take": "03",
+   "scene": "SC 03",
+   "idx": 7,
+   "speaker": "SYSTEM",
+   "raw": "[cheerful UI voice] Sorry! All sales are final. No refunds!",
+   "text": "Sorry! All sales are final. No refunds!",
+   "clip": [
+    36.16,
+    39.35999999999999
+   ],
+   "start": 138.49,
+   "end": 141.69,
+   "speechStart": 138.57,
+   "speechEnd": 141.69,
+   "words": [
+    [
+     "Sorry!",
+     138.57,
+     139.29
+    ],
+    [
+     "All",
+     139.37,
+     139.45
+    ],
+    [
+     "sales",
+     139.53,
+     139.77
+    ],
+    [
+     "are",
+     139.85,
+     139.93
+    ],
+    [
+     "final.",
+     140.09,
+     140.65
+    ],
+    [
+     "No",
+     140.73,
+     140.81
+    ],
+    [
+     "refunds!",
+     140.89,
+     141.69
+    ]
+   ]
+  },
+  {
+   "id": "03.8",
+   "take": "03",
+   "scene": "SC 03",
+   "idx": 8,
+   "speaker": "MIA",
+   "raw": "[screams] NOOOOO!",
+   "text": "NOOOOO!",
+   "clip": [
+    39.35999999999999,
+    41.279999999999994
+   ],
+   "start": 141.69,
+   "end": 143.61,
+   "speechStart": 141.85,
+   "speechEnd": 143.61,
+   "words": [
+    [
+     "NOOOOO!",
+     141.85,
+     143.61
+    ]
+   ]
+  },
+  {
+   "id": "03.9",
+   "take": "03",
+   "scene": "SC 03",
+   "idx": 9,
+   "speaker": "DAD",
+   "raw": "[confused] Kids? Why is the ceiling raining money?",
+   "text": "Kids? Why is the ceiling raining money?",
+   "clip": [
+    41.279999999999994,
+    44.31999999999999
+   ],
+   "start": 143.61,
+   "end": 146.65,
+   "speechStart": 143.69,
+   "speechEnd": 146.65,
+   "words": [
+    [
+     "Kids?",
+     143.69,
+     144.57
+    ],
+    [
+     "Why",
+     144.65,
+     144.81
+    ],
+    [
+     "is",
+     144.89,
+     144.97
+    ],
+    [
+     "the",
+     145.05,
+     145.13
+    ],
+    [
+     "ceiling",
+     145.21,
+     145.53
+    ],
+    [
+     "raining",
+     145.57,
+     145.85
+    ],
+    [
+     "money?",
+     145.93,
+     146.65
+    ]
+   ]
+  },
+  {
+   "id": "03.10",
+   "take": "03",
+   "scene": "SC 03",
+   "idx": 10,
+   "speaker": "TY",
+   "raw": "[fast, narrating] Dad never played Roblox in his life. Zero Robux. Mom had five, from a gift card in 2019.",
+   "text": "Dad never played Roblox in his life. Zero Robux. Mom had five, from a gift card in 2019.",
+   "clip": [
+    44.31999999999999,
+    51.12
+   ],
+   "start": 146.65,
+   "end": 153.45,
+   "speechStart": 146.73,
+   "speechEnd": 153.45,
+   "words": [
+    [
+     "Dad",
+     146.73,
+     146.89
+    ],
+    [
+     "never",
+     147.05,
+     147.29
+    ],
+    [
+     "played",
+     147.41,
+     147.53
+    ],
+    [
+     "Roblox",
+     147.65,
+     148.01
+    ],
+    [
+     "in",
+     148.05,
+     148.09
+    ],
+    [
+     "his",
+     148.17,
+     148.33
+    ],
+    [
+     "life.",
+     148.53,
+     149.05
+    ],
+    [
+     "Zero",
+     149.13,
+     149.37
+    ],
+    [
+     "Robux.",
+     149.45,
+     150.33
+    ],
+    [
+     "Mom",
+     150.41,
+     150.57
+    ],
+    [
+     "had",
+     150.69,
+     150.81
+    ],
+    [
+     "five,",
+     150.89,
+     151.37
+    ],
+    [
+     "from",
+     151.45,
+     151.53
+    ],
+    [
+     "a",
+     151.57,
+     151.61
+    ],
+    [
+     "gift",
+     151.73,
+     151.85
+    ],
+    [
+     "card",
+     151.93,
+     152.01
+    ],
+    [
+     "in",
+     152.09,
+     152.17
+    ],
+    [
+     "2019.",
+     152.29,
+     153.45
+    ]
+   ]
+  },
+  {
+   "id": "03.11",
+   "take": "03",
+   "scene": "SC 03",
+   "idx": 11,
+   "speaker": "MOM",
+   "raw": "[calm, pleased] Five dollars. [pause] I'll take it.",
+   "text": "Five dollars. I'll take it.",
+   "clip": [
+    51.12,
+    53.76
+   ],
+   "start": 153.45,
+   "end": 156.09,
+   "speechStart": 153.53,
+   "speechEnd": 156.09,
+   "words": [
+    [
+     "Five",
+     153.53,
+     153.77
+    ],
+    [
+     "dollars.",
+     153.93,
+     155.05
+    ],
+    [
+     "I'll",
+     155.13,
+     155.29
+    ],
+    [
+     "take",
+     155.41,
+     155.53
+    ],
+    [
+     "it.",
+     155.61,
+     156.09
+    ]
+   ]
+  },
+  {
+   "id": "03.12",
+   "take": "03",
+   "scene": "SC 03",
+   "idx": 12,
+   "speaker": "GRANDMA",
+   "raw": "[excited, old lady] Ooh! I've got eight hundred Robux from my obby tournaments!",
+   "text": "Ooh! I've got eight hundred Robux from my obby tournaments!",
+   "clip": [
+    53.76,
+    58.16
+   ],
+   "start": 156.09,
+   "end": 160.49,
+   "speechStart": 156.17,
+   "speechEnd": 160.49,
+   "words": [
+    [
+     "Ooh!",
+     156.17,
+     156.89
+    ],
+    [
+     "I've",
+     156.97,
+     157.13
+    ],
+    [
+     "got",
+     157.21,
+     157.45
+    ],
+    [
+     "eight",
+     157.53,
+     157.69
+    ],
+    [
+     "hundred",
+     157.77,
+     158.09
+    ],
+    [
+     "Robux",
+     158.17,
+     158.65
+    ],
+    [
+     "from",
+     158.73,
+     158.81
+    ],
+    [
+     "my",
+     158.89,
+     159.13
+    ],
+    [
+     "obby",
+     159.29,
+     159.45
+    ],
+    [
+     "tournaments!",
+     159.49,
+     160.49
+    ]
+   ]
+  },
+  {
+   "id": "03.13",
+   "take": "03",
+   "scene": "SC 03",
+   "idx": 13,
+   "speaker": "TY",
+   "raw": "Yeah. Grandma is better at Roblox than all of us.",
+   "text": "Yeah. Grandma is better at Roblox than all of us.",
+   "clip": [
+    58.16,
+    61.6
+   ],
+   "start": 160.49,
+   "end": 163.93,
+   "speechStart": 160.49,
+   "speechEnd": 163.93,
+   "words": [
+    [
+     "Yeah.",
+     160.49,
+     161.13
+    ],
+    [
+     "Grandma",
+     161.25,
+     161.53
+    ],
+    [
+     "is",
+     161.65,
+     161.77
+    ],
+    [
+     "better",
+     161.85,
+     161.93
+    ],
+    [
+     "at",
+     162.01,
+     162.17
+    ],
+    [
+     "Roblox",
+     162.29,
+     162.65
+    ],
+    [
+     "than",
+     162.77,
+     162.89
+    ],
+    [
+     "all",
+     162.97,
+     163.13
+    ],
+    [
+     "of",
+     163.17,
+     163.21
+    ],
+    [
+     "us.",
+     163.29,
+     163.93
+    ]
+   ]
+  },
+  {
+   "id": "04.0",
+   "take": "04",
+   "scene": "SC 04",
+   "idx": 0,
+   "speaker": "TY",
+   "raw": "[excited, building] And just like that... the whole world switched to Robux.",
+   "text": "And just like that... the whole world switched to Robux.",
+   "clip": [
+    0.0,
+    4.32
+   ],
+   "start": 164.83,
+   "end": 169.15,
+   "speechStart": 164.91,
+   "speechEnd": 169.15,
+   "words": [
+    [
+     "And",
+     164.91,
+     165.15
+    ],
+    [
+     "just",
+     165.23,
+     165.39
+    ],
+    [
+     "like",
+     165.47,
+     165.71
+    ],
+    [
+     "that...",
+     165.79,
+     166.43
+    ],
+    [
+     "the",
+     166.51,
+     166.67
+    ],
+    [
+     "whole",
+     166.75,
+     167.07
+    ],
+    [
+     "world",
+     167.15,
+     167.55
+    ],
+    [
+     "switched",
+     167.67,
+     167.87
+    ],
+    [
+     "to",
+     167.95,
+     168.03
+    ],
+    [
+     "Robux.",
+     168.11,
+     169.15
+    ]
+   ]
+  },
+  {
+   "id": "04.1",
+   "take": "04",
+   "scene": "SC 04",
+   "idx": 1,
+   "speaker": "TY",
+   "raw": "The bus wanted Robux. The cafeteria wanted Robux. Even the ice cream truck had a Robux price tag.",
+   "text": "The bus wanted Robux. The cafeteria wanted Robux. Even the ice cream truck had a Robux price tag.",
+   "clip": [
+    4.32,
+    10.493
+   ],
+   "start": 169.15,
+   "end": 175.323,
+   "speechStart": 169.15,
+   "speechEnd": 175.323,
+   "words": [
+    [
+     "The",
+     169.15,
+     169.31
+    ],
+    [
+     "bus",
+     169.43,
+     169.55
+    ],
+    [
+     "wanted",
+     169.63,
+     169.87
+    ],
+    [
+     "Robux.",
+     169.99,
+     170.51
+    ],
+    [
+     "The",
+     170.59,
+     170.63
+    ],
+    [
+     "cafeteria",
+     170.67,
+     171.39
+    ],
+    [
+     "wanted",
+     171.51,
+     171.63
+    ],
+    [
+     "Robux.",
+     171.71,
+     172.43
+    ],
+    [
+     "Even",
+     172.51,
+     172.67
+    ],
+    [
+     "the",
+     172.75,
+     172.83
+    ],
+    [
+     "ice",
+     172.91,
+     173.07
+    ],
+    [
+     "cream",
+     173.15,
+     173.31
+    ],
+    [
+     "truck",
+     173.39,
+     173.55
+    ],
+    [
+     "had",
+     173.63,
+     173.71
+    ],
+    [
+     "a",
+     173.75,
+     173.79
+    ],
+    [
+     "Robux",
+     173.87,
+     174.19
+    ],
+    [
+     "price",
+     174.27,
+     174.51
+    ],
+    [
+     "tag.",
+     174.59,
+     175.323
+    ]
+   ]
+  },
+  {
+   "id": "04.2",
+   "take": "04",
+   "scene": "SC 04",
+   "idx": 2,
+   "speaker": "TY",
+   "raw": "[disbelief] And then... everything got GAME PASSES.",
+   "text": "And then... everything got GAME PASSES.",
+   "clip": [
+    10.493,
+    13.68
+   ],
+   "start": 175.323,
+   "end": 178.51,
+   "speechStart": 175.39,
+   "speechEnd": 178.51,
+   "words": [
+    [
+     "And",
+     175.39,
+     175.47
+    ],
+    [
+     "then...",
+     175.55,
+     176.35
+    ],
+    [
+     "everything",
+     176.63,
+     176.91
+    ],
+    [
+     "got",
+     176.99,
+     177.23
+    ],
+    [
+     "GAME",
+     177.31,
+     177.55
+    ],
+    [
+     "PASSES.",
+     177.63,
+     178.51
+    ]
+   ]
+  },
+  {
+   "id": "04.3",
+   "take": "04",
+   "scene": "SC 04",
+   "idx": 3,
+   "speaker": "SYSTEM",
+   "raw": "[chirpy] Supermarket VIP! Double cart speed! Ninety-nine Robux!",
+   "text": "Supermarket VIP! Double cart speed! Ninety-nine Robux!",
+   "clip": [
+    13.68,
+    18.72
+   ],
+   "start": 178.51,
+   "end": 183.55,
+   "speechStart": 178.67,
+   "speechEnd": 183.55,
+   "words": [
+    [
+     "Supermarket",
+     178.67,
+     179.31
+    ],
+    [
+     "VIP!",
+     179.39,
+     180.51
+    ],
+    [
+     "Double",
+     180.59,
+     180.75
+    ],
+    [
+     "cart",
+     180.91,
+     181.15
+    ],
+    [
+     "speed!",
+     181.35,
+     181.87
+    ],
+    [
+     "Ninety-nine",
+     182.03,
+     182.51
+    ],
+    [
+     "Robux!",
+     182.67,
+     183.55
+    ]
+   ]
+  },
+  {
+   "id": "04.4",
+   "take": "04",
+   "scene": "SC 04",
+   "idx": 4,
+   "speaker": "TY",
+   "raw": "[fast, like a sports commentator] Want the short checkout line? Game pass. Want extra fries? Game pass. Want to skip math class?",
+   "text": "Want the short checkout line? Game pass. Want extra fries? Game pass. Want to skip math class?",
+   "clip": [
+    18.72,
+    24.241999999999997
+   ],
+   "start": 183.55,
+   "end": 189.072,
+   "speechStart": 183.632,
+   "speechEnd": 189.072,
+   "words": [
+    [
+     "Want",
+     183.632,
+     183.712
+    ],
+    [
+     "the",
+     183.752,
+     183.792
+    ],
+    [
+     "short",
+     183.872,
+     184.032
+    ],
+    [
+     "checkout",
+     184.112,
+     184.352
+    ],
+    [
+     "line?",
+     184.432,
+     184.832
+    ],
+    [
+     "Game",
+     184.992,
+     185.152
+    ],
+    [
+     "pass.",
+     185.232,
+     185.672
+    ],
+    [
+     "Want",
+     185.792,
+     185.952
+    ],
+    [
+     "extra",
+     186.072,
+     186.192
+    ],
+    [
+     "fries?",
+     186.272,
+     186.792
+    ],
+    [
+     "Game",
+     186.912,
+     187.072
+    ],
+    [
+     "pass.",
+     187.152,
+     187.632
+    ],
+    [
+     "Want",
+     187.792,
+     187.872
+    ],
+    [
+     "to",
+     187.912,
+     187.952
+    ],
+    [
+     "skip",
+     188.032,
+     188.192
+    ],
+    [
+     "math",
+     188.272,
+     188.432
+    ],
+    [
+     "class?",
+     188.512,
+     189.072
+    ]
+   ]
+  },
+  {
+   "id": "04.5",
+   "take": "04",
+   "scene": "SC 04",
+   "idx": 5,
+   "speaker": "SYSTEM",
+   "raw": "[chirpy] Skip Math! Nine hundred ninety-nine Robux!",
+   "text": "Skip Math! Nine hundred ninety-nine Robux!",
+   "clip": [
+    24.241999999999997,
+    27.281999999999996
+   ],
+   "start": 189.072,
+   "end": 192.112,
+   "speechStart": 189.152,
+   "speechEnd": 192.112,
+   "words": [
+    [
+     "Skip",
+     189.152,
+     189.392
+    ],
+    [
+     "Math!",
+     189.472,
+     190.032
+    ],
+    [
+     "Nine",
+     190.192,
+     190.352
+    ],
+    [
+     "hundred",
+     190.432,
+     190.592
+    ],
+    [
+     "ninety-nine",
+     190.832,
+     191.232
+    ],
+    [
+     "Robux!",
+     191.312,
+     192.112
+    ]
+   ]
+  },
+  {
+   "id": "04.6",
+   "take": "04",
+   "scene": "SC 04",
+   "idx": 6,
+   "speaker": "PICKLE",
+   "raw": "[gasps] I would literally sell my shoe for that.",
+   "text": "I would literally sell my shoe for that.",
+   "clip": [
+    27.281999999999996,
+    30.881999999999998
+   ],
+   "start": 192.112,
+   "end": 195.712,
+   "speechStart": 192.752,
+   "speechEnd": 195.712,
+   "words": [
+    [
+     "I",
+     192.752,
+     192.832
+    ],
+    [
+     "would",
+     192.952,
+     193.072
+    ],
+    [
+     "literally",
+     193.232,
+     193.712
+    ],
+    [
+     "sell",
+     193.872,
+     194.032
+    ],
+    [
+     "my",
+     194.112,
+     194.272
+    ],
+    [
+     "shoe",
+     194.512,
+     194.752
+    ],
+    [
+     "for",
+     194.832,
+     194.912
+    ],
+    [
+     "that.",
+     194.992,
+     195.712
+    ]
+   ]
+  },
+  {
+   "id": "04.7",
+   "take": "04",
+   "scene": "SC 04",
+   "idx": 7,
+   "speaker": "TY",
+   "raw": "You don't HAVE a shoe.",
+   "text": "You don't HAVE a shoe.",
+   "clip": [
+    30.881999999999998,
+    32.402
+   ],
+   "start": 195.712,
+   "end": 197.232,
+   "speechStart": 195.712,
+   "speechEnd": 197.232,
+   "words": [
+    [
+     "You",
+     195.712,
+     195.872
+    ],
+    [
+     "don't",
+     195.912,
+     196.112
+    ],
+    [
+     "HAVE",
+     196.272,
+     196.432
+    ],
+    [
+     "a",
+     196.512,
+     196.592
+    ],
+    [
+     "shoe.",
+     196.672,
+     197.232
+    ]
+   ]
+  },
+  {
+   "id": "04.8",
+   "take": "04",
+   "scene": "SC 04",
+   "idx": 8,
+   "speaker": "PICKLE",
+   "raw": "[sad] ...I'm saving up for one.",
+   "text": "...I'm saving up for one.",
+   "clip": [
+    32.402,
+    34.242
+   ],
+   "start": 197.232,
+   "end": 199.072,
+   "speechStart": 197.296,
+   "speechEnd": 199.072,
+   "words": [
+    [
+     "...I'm",
+     197.296,
+     197.472
+    ],
+    [
+     "saving",
+     197.552,
+     197.872
+    ],
+    [
+     "up",
+     197.952,
+     198.112
+    ],
+    [
+     "for",
+     198.192,
+     198.272
+    ],
+    [
+     "one.",
+     198.352,
+     199.072
+    ]
+   ]
+  },
+  {
+   "id": "04.9",
+   "take": "04",
+   "scene": "SC 04",
+   "idx": 9,
+   "speaker": "TY",
+   "raw": "[fast] The elevator had a \"skip floors\" pass. The dentist sold a \"no drill\" pass. My teacher sold a \"delete homework\" button.",
+   "text": "The elevator had a \"skip floors\" pass. The dentist sold a \"no drill\" pass. My teacher sold a \"delete homework\" button.",
+   "clip": [
+    34.242,
+    41.12199999999999
+   ],
+   "start": 199.072,
+   "end": 205.952,
+   "speechStart": 199.152,
+   "speechEnd": 205.952,
+   "words": [
+    [
+     "The",
+     199.152,
+     199.192
+    ],
+    [
+     "elevator",
+     199.232,
+     199.632
+    ],
+    [
+     "had",
+     199.712,
+     199.792
+    ],
+    [
+     "a",
+     199.872,
+     199.952
+    ],
+    [
+     "\"skip",
+     200.032,
+     200.192
+    ],
+    [
+     "floors\"",
+     200.272,
+     200.632
+    ],
+    [
+     "pass.",
+     200.672,
+     201.232
+    ],
+    [
+     "The",
+     201.272,
+     201.312
+    ],
+    [
+     "dentist",
+     201.392,
+     201.792
+    ],
+    [
+     "sold",
+     201.872,
+     202.032
+    ],
+    [
+     "a",
+     202.112,
+     202.192
+    ],
+    [
+     "\"no",
+     202.232,
+     202.432
+    ],
+    [
+     "drill\"",
+     202.512,
+     202.832
+    ],
+    [
+     "pass.",
+     202.992,
+     203.472
+    ],
+    [
+     "My",
+     203.512,
+     203.552
+    ],
+    [
+     "teacher",
+     203.632,
+     203.952
+    ],
+    [
+     "sold",
+     204.032,
+     204.272
+    ],
+    [
+     "a",
+     204.312,
+     204.352
+    ],
+    [
+     "\"delete",
+     204.485,
+     204.752
+    ],
+    [
+     "homework\"",
+     204.832,
+     205.272
+    ],
+    [
+     "button.",
+     205.312,
+     205.952
+    ]
+   ]
+  },
+  {
+   "id": "04.10",
+   "take": "04",
+   "scene": "SC 04",
+   "idx": 10,
+   "speaker": "TY",
+   "raw": "[mock-horror] And Mom found a game pass called \"free shipping.\" [pause] She bought it. For EVERYTHING.",
+   "text": "And Mom found a game pass called \"free shipping.\" She bought it. For EVERYTHING.",
+   "clip": [
+    41.12199999999999,
+    46.56199999999999
+   ],
+   "start": 205.952,
+   "end": 211.392,
+   "speechStart": 206.094,
+   "speechEnd": 211.392,
+   "words": [
+    [
+     "And",
+     206.094,
+     206.112
+    ],
+    [
+     "Mom",
+     206.192,
+     206.432
+    ],
+    [
+     "found",
+     206.512,
+     206.672
+    ],
+    [
+     "a",
+     206.752,
+     206.792
+    ],
+    [
+     "game",
+     206.832,
+     207.072
+    ],
+    [
+     "pass",
+     207.232,
+     207.392
+    ],
+    [
+     "called",
+     207.512,
+     207.632
+    ],
+    [
+     "\"free",
+     207.792,
+     208.032
+    ],
+    [
+     "shipping.\"",
+     208.192,
+     209.152
+    ],
+    [
+     "She",
+     209.232,
+     209.312
+    ],
+    [
+     "bought",
+     209.472,
+     209.632
+    ],
+    [
+     "it.",
+     209.712,
+     210.072
+    ],
+    [
+     "For",
+     210.272,
+     210.352
+    ],
+    [
+     "EVERYTHING.",
+     210.592,
+     211.392
+    ]
+   ]
+  },
+  {
+   "id": "04.11",
+   "take": "04",
+   "scene": "SC 04",
+   "idx": 11,
+   "speaker": "MOM",
+   "raw": "[satisfied] Even the groceries come by drone now.",
+   "text": "Even the groceries come by drone now.",
+   "clip": [
+    46.56199999999999,
+    49.361999999999995
+   ],
+   "start": 211.392,
+   "end": 214.192,
+   "speechStart": 211.632,
+   "speechEnd": 214.192,
+   "words": [
+    [
+     "Even",
+     211.632,
+     211.872
+    ],
+    [
+     "the",
+     211.952,
+     212.032
+    ],
+    [
+     "groceries",
+     212.152,
+     212.672
+    ],
+    [
+     "come",
+     212.752,
+     212.832
+    ],
+    [
+     "by",
+     212.912,
+     213.072
+    ],
+    [
+     "drone",
+     213.152,
+     213.552
+    ],
+    [
+     "now.",
+     213.712,
+     214.192
+    ]
+   ]
+  },
+  {
+   "id": "04.12",
+   "take": "04",
+   "scene": "SC 04",
+   "idx": 12,
+   "speaker": "DAD",
+   "raw": "[tired] My boss pays me in Robux now. And the coffee machine is a PREMIUM game pass.",
+   "text": "My boss pays me in Robux now. And the coffee machine is a PREMIUM game pass.",
+   "clip": [
+    49.361999999999995,
+    54.721999999999994
+   ],
+   "start": 214.192,
+   "end": 219.552,
+   "speechStart": 214.392,
+   "speechEnd": 219.552,
+   "words": [
+    [
+     "My",
+     214.392,
+     214.432
+    ],
+    [
+     "boss",
+     214.512,
+     214.832
+    ],
+    [
+     "pays",
+     214.912,
+     215.072
+    ],
+    [
+     "me",
+     215.112,
+     215.152
+    ],
+    [
+     "in",
+     215.232,
+     215.312
+    ],
+    [
+     "Robux",
+     215.392,
+     215.872
+    ],
+    [
+     "now.",
+     215.952,
+     216.592
+    ],
+    [
+     "And",
+     216.632,
+     216.672
+    ],
+    [
+     "the",
+     216.752,
+     216.832
+    ],
+    [
+     "coffee",
+     216.992,
+     217.152
+    ],
+    [
+     "machine",
+     217.232,
+     217.552
+    ],
+    [
+     "is",
+     217.592,
+     217.632
+    ],
+    [
+     "a",
+     217.872,
+     217.912
+    ],
+    [
+     "PREMIUM",
+     217.952,
+     218.432
+    ],
+    [
+     "game",
+     218.512,
+     218.752
+    ],
+    [
+     "pass.",
+     218.832,
+     219.552
+    ]
+   ]
+  },
+  {
+   "id": "04.13",
+   "take": "04",
+   "scene": "SC 04",
+   "idx": 13,
+   "speaker": "DAD",
+   "raw": "[outraged] And a promotion costs five thousand Robux! It's a \"Manager\" rank!",
+   "text": "And a promotion costs five thousand Robux! It's a \"Manager\" rank!",
+   "clip": [
+    54.721999999999994,
+    58.961999999999996
+   ],
+   "start": 219.552,
+   "end": 223.792,
+   "speechStart": 219.622,
+   "speechEnd": 223.792,
+   "words": [
+    [
+     "And",
+     219.622,
+     219.632
+    ],
+    [
+     "a",
+     219.712,
+     219.752
+    ],
+    [
+     "promotion",
+     219.792,
+     220.272
+    ],
+    [
+     "costs",
+     220.392,
+     220.672
+    ],
+    [
+     "five",
+     220.792,
+     220.912
+    ],
+    [
+     "thousand",
+     221.072,
+     221.472
+    ],
+    [
+     "Robux!",
+     221.592,
+     222.272
+    ],
+    [
+     "It's",
+     222.312,
+     222.432
+    ],
+    [
+     "a",
+     222.592,
+     222.692
+    ],
+    [
+     "\"Manager\"",
+     222.792,
+     223.072
+    ],
+    [
+     "rank!",
+     223.152,
+     223.792
+    ]
+   ]
+  },
+  {
+   "id": "04.14",
+   "take": "04",
+   "scene": "SC 04",
+   "idx": 14,
+   "speaker": "TY",
+   "raw": "[mysterious, lower voice] And every time anyone paid for anything... HE showed up.",
+   "text": "And every time anyone paid for anything... HE showed up.",
+   "clip": [
+    58.961999999999996,
+    63.602
+   ],
+   "start": 223.792,
+   "end": 228.432,
+   "speechStart": 223.872,
+   "speechEnd": 228.432,
+   "words": [
+    [
+     "And",
+     223.872,
+     224.032
+    ],
+    [
+     "every",
+     224.112,
+     224.432
+    ],
+    [
+     "time",
+     224.632,
+     224.832
+    ],
+    [
+     "anyone",
+     224.912,
+     225.392
+    ],
+    [
+     "paid",
+     225.552,
+     225.712
+    ],
+    [
+     "for",
+     225.832,
+     225.952
+    ],
+    [
+     "anything...",
+     226.032,
+     227.192
+    ],
+    [
+     "HE",
+     227.232,
+     227.552
+    ],
+    [
+     "showed",
+     227.632,
+     227.792
+    ],
+    [
+     "up.",
+     227.872,
+     228.432
+    ]
+   ]
+  },
+  {
+   "id": "04.15",
+   "take": "04",
+   "scene": "SC 04",
+   "idx": 15,
+   "speaker": "THIRTY",
+   "raw": "[nasal, fast, gleeful] Marketplace fee! Thirty percent! Thank you, come again!",
+   "text": "Marketplace fee! Thirty percent! Thank you, come again!",
+   "clip": [
+    63.602,
+    67.60199999999999
+   ],
+   "start": 228.432,
+   "end": 232.432,
+   "speechStart": 228.512,
+   "speechEnd": 232.432,
+   "words": [
+    [
+     "Marketplace",
+     228.512,
+     229.152
+    ],
+    [
+     "fee!",
+     229.232,
+     229.712
+    ],
+    [
+     "Thirty",
+     229.792,
+     229.952
+    ],
+    [
+     "percent!",
+     230.112,
+     230.832
+    ],
+    [
+     "Thank",
+     230.952,
+     231.072
+    ],
+    [
+     "you,",
+     231.152,
+     231.392
+    ],
+    [
+     "come",
+     231.472,
+     231.632
+    ],
+    [
+     "again!",
+     231.832,
+     232.432
+    ]
+   ]
+  },
+  {
+   "id": "04.16",
+   "take": "04",
+   "scene": "SC 04",
+   "idx": 16,
+   "speaker": "TY",
+   "raw": "Nobody knew where he came from. Nobody knew where he went. He just... took thirty percent.",
+   "text": "Nobody knew where he came from. Nobody knew where he went. He just... took thirty percent.",
+   "clip": [
+    67.60199999999999,
+    73.762
+   ],
+   "start": 232.432,
+   "end": 238.592,
+   "speechStart": 232.432,
+   "speechEnd": 238.592,
+   "words": [
+    [
+     "Nobody",
+     232.432,
+     232.832
+    ],
+    [
+     "knew",
+     232.912,
+     232.992
+    ],
+    [
+     "where",
+     233.072,
+     233.152
+    ],
+    [
+     "he",
+     233.232,
+     233.392
+    ],
+    [
+     "came",
+     233.512,
+     233.632
+    ],
+    [
+     "from.",
+     233.712,
+     234.432
+    ],
+    [
+     "Nobody",
+     234.512,
+     234.832
+    ],
+    [
+     "knew",
+     234.912,
+     234.992
+    ],
+    [
+     "where",
+     235.072,
+     235.152
+    ],
+    [
+     "he",
+     235.232,
+     235.312
+    ],
+    [
+     "went.",
+     235.392,
+     236.192
+    ],
+    [
+     "He",
+     236.272,
+     236.352
+    ],
+    [
+     "just...",
+     236.432,
+     237.072
+    ],
+    [
+     "took",
+     237.232,
+     237.392
+    ],
+    [
+     "thirty",
+     237.472,
+     237.632
+    ],
+    [
+     "percent.",
+     237.792,
+     238.592
+    ]
+   ]
+  },
+  {
+   "id": "04.17",
+   "take": "04",
+   "scene": "SC 04",
+   "idx": 17,
+   "speaker": "DAD",
+   "raw": "[outraged] He took thirty percent of my SANDWICH!",
+   "text": "He took thirty percent of my SANDWICH!",
+   "clip": [
+    73.762,
+    76.162
+   ],
+   "start": 238.592,
+   "end": 240.992,
+   "speechStart": 238.672,
+   "speechEnd": 240.992,
+   "words": [
+    [
+     "He",
+     238.672,
+     238.752
+    ],
+    [
+     "took",
+     238.832,
+     238.992
+    ],
+    [
+     "thirty",
+     239.072,
+     239.232
+    ],
+    [
+     "percent",
+     239.392,
+     239.632
+    ],
+    [
+     "of",
+     239.672,
+     239.712
+    ],
+    [
+     "my",
+     239.792,
+     240.032
+    ],
+    [
+     "SANDWICH!",
+     240.072,
+     240.992
+    ]
+   ]
+  },
+  {
+   "id": "04.18",
+   "take": "04",
+   "scene": "SC 04",
+   "idx": 18,
+   "speaker": "THIRTY",
+   "raw": "[chewing, muffled] Marketplace fee.",
+   "text": "Marketplace fee.",
+   "clip": [
+    76.162,
+    78.48200000000001
+   ],
+   "start": 240.992,
+   "end": 243.312,
+   "speechStart": 242.192,
+   "speechEnd": 243.312,
+   "words": [
+    [
+     "Marketplace",
+     242.192,
+     242.592
+    ],
+    [
+     "fee.",
+     242.672,
+     243.312
+    ]
+   ]
+  },
+  {
+   "id": "05.0",
+   "take": "05",
+   "scene": "SC 05",
+   "idx": 0,
+   "speaker": "TY",
+   "raw": "[mischievous] So, obviously... I did the responsible thing.",
+   "text": "So, obviously... I did the responsible thing.",
+   "clip": [
+    0.0,
+    4.08
+   ],
+   "start": 244.212,
+   "end": 248.292,
+   "speechStart": 244.532,
+   "speechEnd": 248.292,
+   "words": [
+    [
+     "So,",
+     244.532,
+     244.932
+    ],
+    [
+     "obviously...",
+     245.172,
+     246.532
+    ],
+    [
+     "I",
+     246.572,
+     246.612
+    ],
+    [
+     "did",
+     246.772,
+     246.932
+    ],
+    [
+     "the",
+     246.972,
+     247.012
+    ],
+    [
+     "responsible",
+     247.172,
+     247.812
+    ],
+    [
+     "thing.",
+     247.892,
+     248.292
+    ]
+   ]
+  },
+  {
+   "id": "05.1",
+   "take": "05",
+   "scene": "SC 05",
+   "idx": 1,
+   "speaker": "TY",
+   "raw": "[yells joyfully] I BOUGHT EVERYTHING!",
+   "text": "I BOUGHT EVERYTHING!",
+   "clip": [
+    4.08,
+    6.08
+   ],
+   "start": 248.292,
+   "end": 250.292,
+   "speechStart": 248.692,
+   "speechEnd": 250.292,
+   "words": [
+    [
+     "I",
+     248.692,
+     248.772
+    ],
+    [
+     "BOUGHT",
+     248.932,
+     249.172
+    ],
+    [
+     "EVERYTHING!",
+     249.332,
+     250.292
+    ]
+   ]
+  },
+  {
+   "id": "05.2",
+   "take": "05",
+   "scene": "SC 05",
+   "idx": 2,
+   "speaker": "TY",
+   "raw": "[fast, giddy] A gold hoverboard. Gold sneakers. A gold toothbrush \u2014 which tastes terrible, by the way.",
+   "text": "A gold hoverboard. Gold sneakers. A gold toothbrush \u2014 which tastes terrible, by the way.",
+   "clip": [
+    6.08,
+    11.040000000000001
+   ],
+   "start": 250.292,
+   "end": 255.252,
+   "speechStart": 250.523,
+   "speechEnd": 255.252,
+   "words": [
+    [
+     "A",
+     250.523,
+     250.532
+    ],
+    [
+     "gold",
+     250.612,
+     250.852
+    ],
+    [
+     "hoverboard.",
+     250.932,
+     251.532
+    ],
+    [
+     "Gold",
+     251.652,
+     251.892
+    ],
+    [
+     "sneakers.",
+     251.972,
+     252.532
+    ],
+    [
+     "A",
+     252.612,
+     252.692
+    ],
+    [
+     "gold",
+     252.772,
+     253.012
+    ],
+    [
+     "toothbrush",
+     253.092,
+     253.572
+    ],
+    [
+     "which",
+     253.892,
+     253.972
+    ],
+    [
+     "tastes",
+     254.079,
+     254.292
+    ],
+    [
+     "terrible,",
+     254.372,
+     254.772
+    ],
+    [
+     "by",
+     254.852,
+     254.932
+    ],
+    [
+     "the",
+     254.972,
+     255.012
+    ],
+    [
+     "way.",
+     255.092,
+     255.252
+    ]
+   ]
+  },
+  {
+   "id": "05.3",
+   "take": "05",
+   "scene": "SC 05",
+   "idx": 3,
+   "speaker": "TY",
+   "raw": "A limo with a ball pit. A robot butler named Jeeves Three Thousand.",
+   "text": "A limo with a ball pit. A robot butler named Jeeves Three Thousand.",
+   "clip": [
+    11.040000000000001,
+    15.4
+   ],
+   "start": 255.252,
+   "end": 259.612,
+   "speechStart": 255.252,
+   "speechEnd": 259.612,
+   "words": [
+    [
+     "A",
+     255.252,
+     255.652
+    ],
+    [
+     "limo",
+     255.732,
+     255.972
+    ],
+    [
+     "with",
+     256.052,
+     256.132
+    ],
+    [
+     "a",
+     256.212,
+     256.292
+    ],
+    [
+     "ball",
+     256.372,
+     256.532
+    ],
+    [
+     "pit.",
+     256.612,
+     256.972
+    ],
+    [
+     "A",
+     257.092,
+     257.172
+    ],
+    [
+     "robot",
+     257.252,
+     257.572
+    ],
+    [
+     "butler",
+     257.652,
+     257.892
+    ],
+    [
+     "named",
+     257.972,
+     258.132
+    ],
+    [
+     "Jeeves",
+     258.292,
+     258.612
+    ],
+    [
+     "Three",
+     258.692,
+     258.772
+    ],
+    [
+     "Thousand.",
+     259.012,
+     259.612
+    ]
+   ]
+  },
+  {
+   "id": "05.4",
+   "take": "05",
+   "scene": "SC 05",
+   "idx": 4,
+   "speaker": "BUTLER",
+   "raw": "[robotic, polite, British] Your golden cereal is served, sir.",
+   "text": "Your golden cereal is served, sir.",
+   "clip": [
+    15.4,
+    17.92
+   ],
+   "start": 259.612,
+   "end": 262.132,
+   "speechStart": 259.992,
+   "speechEnd": 262.132,
+   "words": [
+    [
+     "Your",
+     259.992,
+     260.052
+    ],
+    [
+     "golden",
+     260.252,
+     260.452
+    ],
+    [
+     "cereal",
+     260.532,
+     260.932
+    ],
+    [
+     "is",
+     261.012,
+     261.172
+    ],
+    [
+     "served,",
+     261.252,
+     261.652
+    ],
+    [
+     "sir.",
+     261.732,
+     262.132
+    ]
+   ]
+  },
+  {
+   "id": "05.5",
+   "take": "05",
+   "scene": "SC 05",
+   "idx": 5,
+   "speaker": "TY",
+   "raw": "[proud] And a mansion... with an OBBY in the backyard.",
+   "text": "And a mansion... with an OBBY in the backyard.",
+   "clip": [
+    17.92,
+    20.8
+   ],
+   "start": 262.132,
+   "end": 265.012,
+   "speechStart": 262.412,
+   "speechEnd": 265.012,
+   "words": [
+    [
+     "And",
+     262.412,
+     262.452
+    ],
+    [
+     "a",
+     262.532,
+     262.612
+    ],
+    [
+     "mansion...",
+     262.692,
+     263.412
+    ],
+    [
+     "with",
+     263.452,
+     263.492
+    ],
+    [
+     "an",
+     263.572,
+     263.732
+    ],
+    [
+     "OBBY",
+     263.812,
+     264.132
+    ],
+    [
+     "in",
+     264.172,
+     264.212
+    ],
+    [
+     "the",
+     264.252,
+     264.292
+    ],
+    [
+     "backyard.",
+     264.372,
+     265.012
+    ]
+   ]
+  },
+  {
+   "id": "05.6",
+   "take": "05",
+   "scene": "SC 05",
+   "idx": 6,
+   "speaker": "TY",
+   "raw": "[giddy, faster] A solid gold statue of myself. Four hundred pizzas. I paid a guy to stand in line for me. [pause] Then I paid another guy to stand in line for HIM.",
+   "text": "A solid gold statue of myself. Four hundred pizzas. I paid a guy to stand in line for me. Then I paid another guy to stand in line for HIM.",
+   "clip": [
+    20.8,
+    29.36
+   ],
+   "start": 265.012,
+   "end": 273.572,
+   "speechStart": 265.474,
+   "speechEnd": 273.572,
+   "words": [
+    [
+     "A",
+     265.474,
+     265.492
+    ],
+    [
+     "solid",
+     265.572,
+     265.892
+    ],
+    [
+     "gold",
+     266.012,
+     266.132
+    ],
+    [
+     "statue",
+     266.212,
+     266.532
+    ],
+    [
+     "of",
+     266.612,
+     266.692
+    ],
+    [
+     "myself.",
+     266.852,
+     267.572
+    ],
+    [
+     "Four",
+     267.652,
+     267.812
+    ],
+    [
+     "hundred",
+     267.972,
+     268.292
+    ],
+    [
+     "pizzas.",
+     268.372,
+     269.172
+    ],
+    [
+     "I",
+     269.252,
+     269.332
+    ],
+    [
+     "paid",
+     269.412,
+     269.492
+    ],
+    [
+     "a",
+     269.532,
+     269.572
+    ],
+    [
+     "guy",
+     269.612,
+     269.732
+    ],
+    [
+     "to",
+     269.772,
+     269.812
+    ],
+    [
+     "stand",
+     269.892,
+     270.052
+    ],
+    [
+     "in",
+     270.132,
+     270.212
+    ],
+    [
+     "line",
+     270.332,
+     270.452
+    ],
+    [
+     "for",
+     270.532,
+     270.612
+    ],
+    [
+     "me.",
+     270.692,
+     271.172
+    ],
+    [
+     "Then",
+     271.252,
+     271.332
+    ],
+    [
+     "I",
+     271.492,
+     271.545
+    ],
+    [
+     "paid",
+     271.599,
+     271.652
+    ],
+    [
+     "another",
+     271.812,
+     271.972
+    ],
+    [
+     "guy",
+     272.025,
+     272.132
+    ],
+    [
+     "to",
+     272.172,
+     272.212
+    ],
+    [
+     "stand",
+     272.292,
+     272.452
+    ],
+    [
+     "in",
+     272.492,
+     272.532
+    ],
+    [
+     "line",
+     272.612,
+     272.772
+    ],
+    [
+     "for",
+     272.852,
+     272.932
+    ],
+    [
+     "HIM.",
+     273.012,
+     273.572
+    ]
+   ]
+  },
+  {
+   "id": "05.7",
+   "take": "05",
+   "scene": "SC 05",
+   "idx": 7,
+   "speaker": "TY",
+   "raw": "[laughing] And suddenly... I had a LOT of friends.",
+   "text": "And suddenly... I had a LOT of friends.",
+   "clip": [
+    29.36,
+    32.480000000000004
+   ],
+   "start": 273.572,
+   "end": 276.692,
+   "speechStart": 273.932,
+   "speechEnd": 276.692,
+   "words": [
+    [
+     "And",
+     273.932,
+     273.972
+    ],
+    [
+     "suddenly...",
+     274.012,
+     274.812
+    ],
+    [
+     "I",
+     274.932,
+     274.972
+    ],
+    [
+     "had",
+     275.012,
+     275.172
+    ],
+    [
+     "a",
+     275.412,
+     275.452
+    ],
+    [
+     "LOT",
+     275.492,
+     275.732
+    ],
+    [
+     "of",
+     275.812,
+     275.892
+    ],
+    [
+     "friends.",
+     276.132,
+     276.692
+    ]
+   ]
+  },
+  {
+   "id": "05.8",
+   "take": "05",
+   "scene": "SC 05",
+   "idx": 8,
+   "speaker": "TY",
+   "raw": "Kids I'd never met. Kids from other schools. One guy who said he was my cousin from Brazil.",
+   "text": "Kids I'd never met. Kids from other schools. One guy who said he was my cousin from Brazil.",
+   "clip": [
+    32.480000000000004,
+    37.68
+   ],
+   "start": 276.692,
+   "end": 281.892,
+   "speechStart": 276.692,
+   "speechEnd": 281.892,
+   "words": [
+    [
+     "Kids",
+     276.692,
+     276.932
+    ],
+    [
+     "I'd",
+     277.012,
+     277.172
+    ],
+    [
+     "never",
+     277.292,
+     277.412
+    ],
+    [
+     "met.",
+     277.532,
+     277.972
+    ],
+    [
+     "Kids",
+     278.092,
+     278.212
+    ],
+    [
+     "from",
+     278.292,
+     278.372
+    ],
+    [
+     "other",
+     278.452,
+     278.532
+    ],
+    [
+     "schools.",
+     278.612,
+     279.412
+    ],
+    [
+     "One",
+     279.532,
+     279.652
+    ],
+    [
+     "guy",
+     279.692,
+     279.812
+    ],
+    [
+     "who",
+     279.892,
+     279.972
+    ],
+    [
+     "said",
+     280.052,
+     280.132
+    ],
+    [
+     "he",
+     280.172,
+     280.212
+    ],
+    [
+     "was",
+     280.292,
+     280.372
+    ],
+    [
+     "my",
+     280.452,
+     280.532
+    ],
+    [
+     "cousin",
+     280.612,
+     280.932
+    ],
+    [
+     "from",
+     281.012,
+     281.092
+    ],
+    [
+     "Brazil.",
+     281.372,
+     281.892
+    ]
+   ]
+  },
+  {
+   "id": "05.9",
+   "take": "05",
+   "scene": "SC 05",
+   "idx": 9,
+   "speaker": "TY",
+   "raw": "[laughing] They laughed at all my jokes. Even the bad ones. [pause] ESPECIALLY the bad ones.",
+   "text": "They laughed at all my jokes. Even the bad ones. ESPECIALLY the bad ones.",
+   "clip": [
+    37.68,
+    43.28
+   ],
+   "start": 281.892,
+   "end": 287.492,
+   "speechStart": 282.772,
+   "speechEnd": 287.492,
+   "words": [
+    [
+     "They",
+     282.772,
+     282.852
+    ],
+    [
+     "laughed",
+     282.892,
+     283.092
+    ],
+    [
+     "at",
+     283.172,
+     283.252
+    ],
+    [
+     "all",
+     283.332,
+     283.492
+    ],
+    [
+     "my",
+     283.572,
+     283.732
+    ],
+    [
+     "jokes.",
+     283.772,
+     284.372
+    ],
+    [
+     "Even",
+     284.492,
+     284.612
+    ],
+    [
+     "the",
+     284.692,
+     284.772
+    ],
+    [
+     "bad",
+     284.892,
+     285.012
+    ],
+    [
+     "ones.",
+     285.092,
+     285.732
+    ],
+    [
+     "ESPECIALLY",
+     285.812,
+     286.532
+    ],
+    [
+     "the",
+     286.612,
+     286.692
+    ],
+    [
+     "bad",
+     286.772,
+     286.852
+    ],
+    [
+     "ones.",
+     286.932,
+     287.492
+    ]
+   ]
+  },
+  {
+   "id": "05.10",
+   "take": "05",
+   "scene": "SC 05",
+   "idx": 10,
+   "speaker": "TY",
+   "raw": "[guilty, slower] Pickle came too. [pause] But my butler had a VIP list.",
+   "text": "Pickle came too. But my butler had a VIP list.",
+   "clip": [
+    43.28,
+    47.68
+   ],
+   "start": 287.492,
+   "end": 291.892,
+   "speechStart": 287.812,
+   "speechEnd": 291.892,
+   "words": [
+    [
+     "Pickle",
+     287.812,
+     288.132
+    ],
+    [
+     "came",
+     288.212,
+     288.452
+    ],
+    [
+     "too.",
+     288.532,
+     289.412
+    ],
+    [
+     "But",
+     289.492,
+     289.572
+    ],
+    [
+     "my",
+     289.692,
+     289.812
+    ],
+    [
+     "butler",
+     289.892,
+     290.212
+    ],
+    [
+     "had",
+     290.292,
+     290.372
+    ],
+    [
+     "a",
+     290.452,
+     290.532
+    ],
+    [
+     "VIP",
+     290.612,
+     291.172
+    ],
+    [
+     "list.",
+     291.252,
+     291.892
+    ]
+   ]
+  },
+  {
+   "id": "05.11",
+   "take": "05",
+   "scene": "SC 05",
+   "idx": 11,
+   "speaker": "BUTLER",
+   "raw": "[robotic, cold] Twelve Robux is below the minimum, sir.",
+   "text": "Twelve Robux is below the minimum, sir.",
+   "clip": [
+    47.68,
+    50.5
+   ],
+   "start": 291.892,
+   "end": 294.712,
+   "speechStart": 292.034,
+   "speechEnd": 294.712,
+   "words": [
+    [
+     "Twelve",
+     292.034,
+     292.212
+    ],
+    [
+     "Robux",
+     292.292,
+     292.772
+    ],
+    [
+     "is",
+     292.852,
+     293.012
+    ],
+    [
+     "below",
+     293.172,
+     293.332
+    ],
+    [
+     "the",
+     293.412,
+     293.492
+    ],
+    [
+     "minimum,",
+     293.572,
+     293.972
+    ],
+    [
+     "sir.",
+     294.052,
+     294.712
+    ]
+   ]
+  },
+  {
+   "id": "05.12",
+   "take": "05",
+   "scene": "SC 05",
+   "idx": 12,
+   "speaker": "PICKLE",
+   "raw": "[small, sad] Oh. [pause] That's okay. I'll just... wait out here.",
+   "text": "Oh. That's okay. I'll just... wait out here.",
+   "clip": [
+    50.5,
+    55.28
+   ],
+   "start": 294.712,
+   "end": 299.492,
+   "speechStart": 294.852,
+   "speechEnd": 299.492,
+   "words": [
+    [
+     "Oh.",
+     294.852,
+     295.252
+    ],
+    [
+     "That's",
+     296.292,
+     296.452
+    ],
+    [
+     "okay.",
+     296.652,
+     297.332
+    ],
+    [
+     "I'll",
+     297.372,
+     297.492
+    ],
+    [
+     "just...",
+     297.572,
+     298.372
+    ],
+    [
+     "wait",
+     298.452,
+     298.532
+    ],
+    [
+     "out",
+     298.612,
+     298.692
+    ],
+    [
+     "here.",
+     298.772,
+     299.492
+    ]
+   ]
+  },
+  {
+   "id": "05.13",
+   "take": "05",
+   "scene": "SC 05",
+   "idx": 13,
+   "speaker": "TY",
+   "raw": "[quiet, regretful] I should have gone outside. [pause] I didn't.",
+   "text": "I should have gone outside. I didn't.",
+   "clip": [
+    55.28,
+    58.36
+   ],
+   "start": 299.492,
+   "end": 302.572,
+   "speechStart": 299.652,
+   "speechEnd": 302.572,
+   "words": [
+    [
+     "I",
+     299.652,
+     299.732
+    ],
+    [
+     "should",
+     299.812,
+     299.972
+    ],
+    [
+     "have",
+     300.012,
+     300.052
+    ],
+    [
+     "gone",
+     300.132,
+     300.292
+    ],
+    [
+     "outside.",
+     300.612,
+     301.172
+    ],
+    [
+     "I",
+     301.732,
+     301.812
+    ],
+    [
+     "didn't.",
+     301.892,
+     302.572
+    ]
+   ]
+  },
+  {
+   "id": "05.14",
+   "take": "05",
+   "scene": "SC 05",
+   "idx": 14,
+   "speaker": "TY",
+   "raw": "[uneasy] And every time I bought something... the Thirty Percent Guy got a little... bigger.",
+   "text": "And every time I bought something... the Thirty Percent Guy got a little... bigger.",
+   "clip": [
+    58.36,
+    63.99999999999999
+   ],
+   "start": 302.572,
+   "end": 308.212,
+   "speechStart": 302.985,
+   "speechEnd": 308.212,
+   "words": [
+    [
+     "And",
+     302.985,
+     303.012
+    ],
+    [
+     "every",
+     303.092,
+     303.332
+    ],
+    [
+     "time",
+     303.412,
+     303.572
+    ],
+    [
+     "I",
+     303.652,
+     303.812
+    ],
+    [
+     "bought",
+     303.892,
+     304.052
+    ],
+    [
+     "something...",
+     304.132,
+     305.012
+    ],
+    [
+     "the",
+     305.092,
+     305.172
+    ],
+    [
+     "Thirty",
+     305.292,
+     305.412
+    ],
+    [
+     "Percent",
+     305.492,
+     305.812
+    ],
+    [
+     "Guy",
+     305.972,
+     306.132
+    ],
+    [
+     "got",
+     306.212,
+     306.372
+    ],
+    [
+     "a",
+     306.452,
+     306.532
+    ],
+    [
+     "little...",
+     306.612,
+     307.412
+    ],
+    [
+     "bigger.",
+     307.452,
+     308.212
+    ]
+   ]
+  },
+  {
+   "id": "05.15",
+   "take": "05",
+   "scene": "SC 05",
+   "idx": 15,
+   "speaker": "THIRTY",
+   "raw": "[voice a bit deeper] Marketplace fee! [burps] Thirty percent!",
+   "text": "Marketplace fee! Thirty percent!",
+   "clip": [
+    63.99999999999999,
+    67.28
+   ],
+   "start": 308.212,
+   "end": 311.492,
+   "speechStart": 308.292,
+   "speechEnd": 311.492,
+   "words": [
+    [
+     "Marketplace",
+     308.292,
+     308.932
+    ],
+    [
+     "fee!",
+     309.012,
+     309.532
+    ],
+    [
+     "Thirty",
+     310.372,
+     310.612
+    ],
+    [
+     "percent!",
+     310.692,
+     311.492
+    ]
+   ]
+  },
+  {
+   "id": "06.0",
+   "take": "06",
+   "scene": "SC 06",
+   "idx": 0,
+   "speaker": "MIA",
+   "raw": "[gasps, then evil grin] Wait. \"Sparkle Time Fedora.\" [pause] LIMITED edition.",
+   "text": "Wait. \"Sparkle Time Fedora.\" LIMITED edition.",
+   "clip": [
+    0.0,
+    5.5200000000000005
+   ],
+   "start": 312.392,
+   "end": 317.912,
+   "speechStart": 313.761,
+   "speechEnd": 317.912,
+   "words": [
+    [
+     "Wait.",
+     313.761,
+     314.072
+    ],
+    [
+     "\"Sparkle",
+     314.312,
+     314.872
+    ],
+    [
+     "Time",
+     314.952,
+     315.272
+    ],
+    [
+     "Fedora.\"",
+     315.352,
+     316.232
+    ],
+    [
+     "LIMITED",
+     316.872,
+     317.192
+    ],
+    [
+     "edition.",
+     317.272,
+     317.912
+    ]
+   ]
+  },
+  {
+   "id": "06.1",
+   "take": "06",
+   "scene": "SC 06",
+   "idx": 1,
+   "speaker": "TY",
+   "raw": "[narrating, fast] Turns out, rare hats were now the most valuable thing on Earth. And Mia had a LOT of hats.",
+   "text": "Turns out, rare hats were now the most valuable thing on Earth. And Mia had a LOT of hats.",
+   "clip": [
+    5.5200000000000005,
+    12.103
+   ],
+   "start": 317.912,
+   "end": 324.495,
+   "speechStart": 318.442,
+   "speechEnd": 324.495,
+   "words": [
+    [
+     "Turns",
+     318.442,
+     318.512
+    ],
+    [
+     "out,",
+     318.552,
+     318.912
+    ],
+    [
+     "rare",
+     319.032,
+     319.272
+    ],
+    [
+     "hats",
+     319.352,
+     319.672
+    ],
+    [
+     "were",
+     319.752,
+     319.832
+    ],
+    [
+     "now",
+     319.912,
+     319.992
+    ],
+    [
+     "the",
+     320.032,
+     320.072
+    ],
+    [
+     "most",
+     320.192,
+     320.312
+    ],
+    [
+     "valuable",
+     320.472,
+     320.872
+    ],
+    [
+     "thing",
+     320.952,
+     321.112
+    ],
+    [
+     "on",
+     321.192,
+     321.272
+    ],
+    [
+     "Earth.",
+     321.352,
+     321.872
+    ],
+    [
+     "And",
+     322.072,
+     322.232
+    ],
+    [
+     "Mia",
+     322.312,
+     322.632
+    ],
+    [
+     "had",
+     322.712,
+     322.872
+    ],
+    [
+     "a",
+     322.952,
+     323.032
+    ],
+    [
+     "LOT",
+     323.272,
+     323.592
+    ],
+    [
+     "of",
+     323.672,
+     323.752
+    ],
+    [
+     "hats.",
+     323.992,
+     324.495
+    ]
+   ]
+  },
+  {
+   "id": "06.2",
+   "take": "06",
+   "scene": "SC 06",
+   "idx": 2,
+   "speaker": "MIA",
+   "raw": "[smug] Who's broke now, little brother?",
+   "text": "Who's broke now, little brother?",
+   "clip": [
+    12.103,
+    14.0
+   ],
+   "start": 324.495,
+   "end": 326.392,
+   "speechStart": 324.609,
+   "speechEnd": 326.392,
+   "words": [
+    [
+     "Who's",
+     324.609,
+     324.712
+    ],
+    [
+     "broke",
+     324.792,
+     325.032
+    ],
+    [
+     "now,",
+     325.192,
+     325.512
+    ],
+    [
+     "little",
+     325.592,
+     325.752
+    ],
+    [
+     "brother?",
+     325.912,
+     326.392
+    ]
+   ]
+  },
+  {
+   "id": "06.3",
+   "take": "06",
+   "scene": "SC 06",
+   "idx": 3,
+   "speaker": "TY",
+   "raw": "[defensive] I'm not broke! I'm a MILLIONAIRE!",
+   "text": "I'm not broke! I'm a MILLIONAIRE!",
+   "clip": [
+    14.0,
+    16.48
+   ],
+   "start": 326.392,
+   "end": 328.872,
+   "speechStart": 326.712,
+   "speechEnd": 328.872,
+   "words": [
+    [
+     "I'm",
+     326.712,
+     326.792
+    ],
+    [
+     "not",
+     326.912,
+     327.032
+    ],
+    [
+     "broke!",
+     327.072,
+     327.752
+    ],
+    [
+     "I'm",
+     327.779,
+     327.832
+    ],
+    [
+     "a",
+     327.912,
+     327.992
+    ],
+    [
+     "MILLIONAIRE!",
+     328.072,
+     328.872
+    ]
+   ]
+  },
+  {
+   "id": "06.4",
+   "take": "06",
+   "scene": "SC 06",
+   "idx": 4,
+   "speaker": "MIA",
+   "raw": "[smug] I'm a TWO-millionaire.",
+   "text": "I'm a TWO-millionaire.",
+   "clip": [
+    16.48,
+    18.400000000000002
+   ],
+   "start": 328.872,
+   "end": 330.792,
+   "speechStart": 328.952,
+   "speechEnd": 330.792,
+   "words": [
+    [
+     "I'm",
+     328.952,
+     329.192
+    ],
+    [
+     "a",
+     329.352,
+     329.512
+    ],
+    [
+     "TWO-millionaire.",
+     329.592,
+     330.792
+    ]
+   ]
+  },
+  {
+   "id": "06.5",
+   "take": "06",
+   "scene": "SC 06",
+   "idx": 5,
+   "speaker": "TY",
+   "raw": "[competitive, fast] So I bought a hoverboard. She bought a helicopter. I bought a mansion. She bought the mansion next door. One floor taller.",
+   "text": "So I bought a hoverboard. She bought a helicopter. I bought a mansion. She bought the mansion next door. One floor taller.",
+   "clip": [
+    18.400000000000002,
+    25.44
+   ],
+   "start": 330.792,
+   "end": 337.832,
+   "speechStart": 330.872,
+   "speechEnd": 337.832,
+   "words": [
+    [
+     "So",
+     330.872,
+     331.032
+    ],
+    [
+     "I",
+     331.192,
+     331.232
+    ],
+    [
+     "bought",
+     331.272,
+     331.352
+    ],
+    [
+     "a",
+     331.432,
+     331.472
+    ],
+    [
+     "hoverboard.",
+     331.512,
+     332.192
+    ],
+    [
+     "She",
+     332.312,
+     332.472
+    ],
+    [
+     "bought",
+     332.632,
+     332.712
+    ],
+    [
+     "a",
+     332.792,
+     332.832
+    ],
+    [
+     "helicopter.",
+     332.872,
+     333.752
+    ],
+    [
+     "I",
+     333.832,
+     333.912
+    ],
+    [
+     "bought",
+     333.992,
+     334.072
+    ],
+    [
+     "a",
+     334.152,
+     334.192
+    ],
+    [
+     "mansion.",
+     334.232,
+     334.952
+    ],
+    [
+     "She",
+     335.032,
+     335.192
+    ],
+    [
+     "bought",
+     335.245,
+     335.352
+    ],
+    [
+     "the",
+     335.392,
+     335.432
+    ],
+    [
+     "mansion",
+     335.512,
+     335.752
+    ],
+    [
+     "next",
+     335.832,
+     336.072
+    ],
+    [
+     "door.",
+     336.232,
+     336.632
+    ],
+    [
+     "One",
+     336.712,
+     336.792
+    ],
+    [
+     "floor",
+     336.872,
+     337.112
+    ],
+    [
+     "taller.",
+     337.192,
+     337.832
+    ]
+   ]
+  },
+  {
+   "id": "06.6",
+   "take": "06",
+   "scene": "SC 06",
+   "idx": 6,
+   "speaker": "MIA",
+   "raw": "[deadpan] I also bought the moon.",
+   "text": "I also bought the moon.",
+   "clip": [
+    25.44,
+    27.36
+   ],
+   "start": 337.832,
+   "end": 339.752,
+   "speechStart": 337.912,
+   "speechEnd": 339.752,
+   "words": [
+    [
+     "I",
+     337.912,
+     338.072
+    ],
+    [
+     "also",
+     338.232,
+     338.552
+    ],
+    [
+     "bought",
+     338.712,
+     338.872
+    ],
+    [
+     "the",
+     338.952,
+     339.032
+    ],
+    [
+     "moon.",
+     339.112,
+     339.752
+    ]
+   ]
+  },
+  {
+   "id": "06.7",
+   "take": "06",
+   "scene": "SC 06",
+   "idx": 7,
+   "speaker": "TY",
+   "raw": "[stunned] ...You can't BUY the moon.",
+   "text": "...You can't BUY the moon.",
+   "clip": [
+    27.36,
+    29.12
+   ],
+   "start": 339.752,
+   "end": 341.512,
+   "speechStart": 339.866,
+   "speechEnd": 341.512,
+   "words": [
+    [
+     "...You",
+     339.866,
+     339.912
+    ],
+    [
+     "can't",
+     339.992,
+     340.312
+    ],
+    [
+     "BUY",
+     340.392,
+     340.632
+    ],
+    [
+     "the",
+     340.672,
+     340.712
+    ],
+    [
+     "moon.",
+     340.872,
+     341.512
+    ]
+   ]
+  },
+  {
+   "id": "06.8",
+   "take": "06",
+   "scene": "SC 06",
+   "idx": 8,
+   "speaker": "SYSTEM",
+   "raw": "[chirpy] Moon purchased! Thirty percent fee applied.",
+   "text": "Moon purchased! Thirty percent fee applied.",
+   "clip": [
+    29.12,
+    32.08
+   ],
+   "start": 341.512,
+   "end": 344.472,
+   "speechStart": 341.592,
+   "speechEnd": 344.472,
+   "words": [
+    [
+     "Moon",
+     341.592,
+     341.832
+    ],
+    [
+     "purchased!",
+     341.912,
+     342.792
+    ],
+    [
+     "Thirty",
+     342.872,
+     343.032
+    ],
+    [
+     "percent",
+     343.112,
+     343.432
+    ],
+    [
+     "fee",
+     343.512,
+     343.672
+    ],
+    [
+     "applied.",
+     343.712,
+     344.472
+    ]
+   ]
+  },
+  {
+   "id": "06b.0",
+   "take": "06b",
+   "scene": "SC 06b",
+   "idx": 0,
+   "speaker": "TY",
+   "raw": "[narrating] Meanwhile, Dad had a brilliant idea.",
+   "text": "Meanwhile, Dad had a brilliant idea.",
+   "clip": [
+    0.0,
+    2.76
+   ],
+   "start": 345.372,
+   "end": 348.132,
+   "speechStart": 345.452,
+   "speechEnd": 348.132,
+   "words": [
+    [
+     "Meanwhile,",
+     345.452,
+     346.332
+    ],
+    [
+     "Dad",
+     346.412,
+     346.652
+    ],
+    [
+     "had",
+     346.732,
+     346.812
+    ],
+    [
+     "a",
+     346.892,
+     347.052
+    ],
+    [
+     "brilliant",
+     347.132,
+     347.532
+    ],
+    [
+     "idea.",
+     347.612,
+     348.132
+    ]
+   ]
+  },
+  {
+   "id": "06b.1",
+   "take": "06b",
+   "scene": "SC 06b",
+   "idx": 1,
+   "speaker": "DAD",
+   "raw": "[dramatic] If playing games makes money now... I'm quitting my job. I'm going PRO.",
+   "text": "If playing games makes money now... I'm quitting my job. I'm going PRO.",
+   "clip": [
+    2.76,
+    8.4
+   ],
+   "start": 348.132,
+   "end": 353.772,
+   "speechStart": 348.652,
+   "speechEnd": 353.772,
+   "words": [
+    [
+     "If",
+     348.652,
+     348.732
+    ],
+    [
+     "playing",
+     348.812,
+     349.052
+    ],
+    [
+     "games",
+     349.212,
+     349.452
+    ],
+    [
+     "makes",
+     349.532,
+     349.692
+    ],
+    [
+     "money",
+     349.772,
+     349.932
+    ],
+    [
+     "now...",
+     350.092,
+     351.132
+    ],
+    [
+     "I'm",
+     351.212,
+     351.372
+    ],
+    [
+     "quitting",
+     351.452,
+     351.692
+    ],
+    [
+     "my",
+     351.772,
+     351.852
+    ],
+    [
+     "job.",
+     351.932,
+     352.572
+    ],
+    [
+     "I'm",
+     352.652,
+     352.812
+    ],
+    [
+     "going",
+     352.892,
+     353.212
+    ],
+    [
+     "PRO.",
+     353.292,
+     353.772
+    ]
+   ]
+  },
+  {
+   "id": "06b.2",
+   "take": "06b",
+   "scene": "SC 06b",
+   "idx": 2,
+   "speaker": "TY",
+   "raw": "[fast] He bought an RGB gaming chair. An RGB headset. And RGB socks.",
+   "text": "He bought an RGB gaming chair. An RGB headset. And RGB socks.",
+   "clip": [
+    8.4,
+    13.440000000000001
+   ],
+   "start": 353.772,
+   "end": 358.812,
+   "speechStart": 354.212,
+   "speechEnd": 358.812,
+   "words": [
+    [
+     "He",
+     354.212,
+     354.252
+    ],
+    [
+     "bought",
+     354.292,
+     354.412
+    ],
+    [
+     "an",
+     354.492,
+     354.572
+    ],
+    [
+     "RGB",
+     354.652,
+     355.052
+    ],
+    [
+     "gaming",
+     355.132,
+     355.452
+    ],
+    [
+     "chair.",
+     355.532,
+     356.012
+    ],
+    [
+     "An",
+     356.052,
+     356.092
+    ],
+    [
+     "RGB",
+     356.172,
+     356.572
+    ],
+    [
+     "headset.",
+     356.652,
+     357.292
+    ],
+    [
+     "And",
+     357.452,
+     357.612
+    ],
+    [
+     "RGB",
+     357.692,
+     358.172
+    ],
+    [
+     "socks.",
+     358.332,
+     358.812
+    ]
+   ]
+  },
+  {
+   "id": "06b.3",
+   "take": "06b",
+   "scene": "SC 06b",
+   "idx": 3,
+   "speaker": "DAD",
+   "raw": "[focused, tense] Okay. Jump... jump... JUMP!",
+   "text": "Okay. Jump... jump... JUMP!",
+   "clip": [
+    13.440000000000001,
+    17.200000000000003
+   ],
+   "start": 358.812,
+   "end": 362.572,
+   "speechStart": 359.212,
+   "speechEnd": 362.572,
+   "words": [
+    [
+     "Okay.",
+     359.212,
+     359.852
+    ],
+    [
+     "Jump...",
+     360.092,
+     360.972
+    ],
+    [
+     "jump...",
+     361.132,
+     361.772
+    ],
+    [
+     "JUMP!",
+     361.852,
+     362.572
+    ]
+   ]
+  },
+  {
+   "id": "06b.4",
+   "take": "06b",
+   "scene": "SC 06b",
+   "idx": 4,
+   "speaker": "SYSTEM",
+   "raw": "[chirpy] Oof! You died. Attempt three hundred and twelve.",
+   "text": "Oof! You died. Attempt three hundred and twelve.",
+   "clip": [
+    17.200000000000003,
+    20.96
+   ],
+   "start": 362.572,
+   "end": 366.332,
+   "speechStart": 362.652,
+   "speechEnd": 366.332,
+   "words": [
+    [
+     "Oof!",
+     362.652,
+     363.052
+    ],
+    [
+     "You",
+     363.372,
+     363.452
+    ],
+    [
+     "died.",
+     363.612,
+     364.292
+    ],
+    [
+     "Attempt",
+     364.492,
+     364.892
+    ],
+    [
+     "three",
+     365.052,
+     365.212
+    ],
+    [
+     "hundred",
+     365.292,
+     365.452
+    ],
+    [
+     "and",
+     365.532,
+     365.612
+    ],
+    [
+     "twelve.",
+     365.692,
+     366.332
+    ]
+   ]
+  },
+  {
+   "id": "06b.5",
+   "take": "06b",
+   "scene": "SC 06b",
+   "idx": 5,
+   "speaker": "DAD",
+   "raw": "[screams] The lava is RIGGED!",
+   "text": "The lava is RIGGED!",
+   "clip": [
+    20.96,
+    23.44
+   ],
+   "start": 366.332,
+   "end": 368.812,
+   "speechStart": 367.172,
+   "speechEnd": 368.812,
+   "words": [
+    [
+     "The",
+     367.172,
+     367.212
+    ],
+    [
+     "lava",
+     367.292,
+     367.612
+    ],
+    [
+     "is",
+     367.732,
+     367.852
+    ],
+    [
+     "RIGGED!",
+     367.892,
+     368.812
+    ]
+   ]
+  },
+  {
+   "id": "06b.6",
+   "take": "06b",
+   "scene": "SC 06b",
+   "idx": 6,
+   "speaker": "TY",
+   "raw": "Dad was terrible. [pause] But Grandma...",
+   "text": "Dad was terrible. But Grandma...",
+   "clip": [
+    23.44,
+    26.720000000000002
+   ],
+   "start": 368.812,
+   "end": 372.092,
+   "speechStart": 368.812,
+   "speechEnd": 372.092,
+   "words": [
+    [
+     "Dad",
+     368.812,
+     369.052
+    ],
+    [
+     "was",
+     369.132,
+     369.372
+    ],
+    [
+     "terrible.",
+     369.452,
+     370.172
+    ],
+    [
+     "But",
+     370.892,
+     370.972
+    ],
+    [
+     "Grandma...",
+     371.132,
+     372.092
+    ]
+   ]
+  },
+  {
+   "id": "06b.7",
+   "take": "06b",
+   "scene": "SC 06b",
+   "idx": 7,
+   "speaker": "GRANDMA",
+   "raw": "[hyped, streamer voice] What's up, chat! NanaBea here! Speedrun, no jumps, eyes closed! Let's GO!",
+   "text": "What's up, chat! NanaBea here! Speedrun, no jumps, eyes closed! Let's GO!",
+   "clip": [
+    26.720000000000002,
+    33.12
+   ],
+   "start": 372.092,
+   "end": 378.492,
+   "speechStart": 372.172,
+   "speechEnd": 378.492,
+   "words": [
+    [
+     "What's",
+     372.172,
+     372.492
+    ],
+    [
+     "up,",
+     372.572,
+     372.692
+    ],
+    [
+     "chat!",
+     372.732,
+     373.212
+    ],
+    [
+     "NanaBea",
+     373.372,
+     373.932
+    ],
+    [
+     "here!",
+     374.012,
+     374.492
+    ],
+    [
+     "Speedrun,",
+     374.652,
+     375.372
+    ],
+    [
+     "no",
+     375.452,
+     375.612
+    ],
+    [
+     "jumps,",
+     375.692,
+     376.252
+    ],
+    [
+     "eyes",
+     376.412,
+     376.572
+    ],
+    [
+     "closed!",
+     376.852,
+     377.292
+    ],
+    [
+     "Let's",
+     377.452,
+     377.772
+    ],
+    [
+     "GO!",
+     378.012,
+     378.492
+    ]
+   ]
+  },
+  {
+   "id": "06b.8",
+   "take": "06b",
+   "scene": "SC 06b",
+   "idx": 8,
+   "speaker": "TY",
+   "raw": "[impressed] Grandma was the most famous obby streamer in the world. Two million viewers. [pause] She made more in one stream than Dad made in a year.",
+   "text": "Grandma was the most famous obby streamer in the world. Two million viewers. She made more in one stream than Dad made in a year.",
+   "clip": [
+    33.12,
+    42.2
+   ],
+   "start": 378.492,
+   "end": 387.572,
+   "speechStart": 378.652,
+   "speechEnd": 387.572,
+   "words": [
+    [
+     "Grandma",
+     378.652,
+     379.052
+    ],
+    [
+     "was",
+     379.132,
+     379.212
+    ],
+    [
+     "the",
+     379.292,
+     379.372
+    ],
+    [
+     "most",
+     379.532,
+     379.692
+    ],
+    [
+     "famous",
+     379.772,
+     380.092
+    ],
+    [
+     "obby",
+     380.172,
+     380.492
+    ],
+    [
+     "streamer",
+     380.572,
+     380.892
+    ],
+    [
+     "in",
+     380.972,
+     381.052
+    ],
+    [
+     "the",
+     381.092,
+     381.132
+    ],
+    [
+     "world.",
+     381.292,
+     382.172
+    ],
+    [
+     "Two",
+     382.292,
+     382.412
+    ],
+    [
+     "million",
+     382.652,
+     382.972
+    ],
+    [
+     "viewers.",
+     383.052,
+     383.892
+    ],
+    [
+     "She",
+     384.3,
+     384.332
+    ],
+    [
+     "made",
+     384.412,
+     384.572
+    ],
+    [
+     "more",
+     384.652,
+     384.812
+    ],
+    [
+     "in",
+     384.892,
+     385.052
+    ],
+    [
+     "one",
+     385.132,
+     385.292
+    ],
+    [
+     "stream",
+     385.372,
+     385.772
+    ],
+    [
+     "than",
+     385.932,
+     386.012
+    ],
+    [
+     "Dad",
+     386.172,
+     386.412
+    ],
+    [
+     "made",
+     386.492,
+     386.652
+    ],
+    [
+     "in",
+     386.692,
+     386.732
+    ],
+    [
+     "a",
+     386.812,
+     386.932
+    ],
+    [
+     "year.",
+     387.052,
+     387.572
+    ]
+   ]
+  },
+  {
+   "id": "06b.9",
+   "take": "06b",
+   "scene": "SC 06b",
+   "idx": 9,
+   "speaker": "DAD",
+   "raw": "[sulking] ...I'm going back to my job.",
+   "text": "...I'm going back to my job.",
+   "clip": [
+    42.2,
+    44.56
+   ],
+   "start": 387.572,
+   "end": 389.932,
+   "speechStart": 388.028,
+   "speechEnd": 389.932,
+   "words": [
+    [
+     "...I'm",
+     388.028,
+     388.252
+    ],
+    [
+     "going",
+     388.332,
+     388.572
+    ],
+    [
+     "back",
+     388.692,
+     388.812
+    ],
+    [
+     "to",
+     388.852,
+     388.892
+    ],
+    [
+     "my",
+     389.012,
+     389.132
+    ],
+    [
+     "job.",
+     389.212,
+     389.932
+    ]
+   ]
+  },
+  {
+   "id": "06b.10",
+   "take": "06b",
+   "scene": "SC 06b",
+   "idx": 10,
+   "speaker": "GRANDMA",
+   "raw": "[sweet] Bye, sweetie! Like and subscribe!",
+   "text": "Bye, sweetie! Like and subscribe!",
+   "clip": [
+    44.56,
+    47.28
+   ],
+   "start": 389.932,
+   "end": 392.652,
+   "speechStart": 390.012,
+   "speechEnd": 392.652,
+   "words": [
+    [
+     "Bye,",
+     390.012,
+     390.292
+    ],
+    [
+     "sweetie!",
+     390.332,
+     391.092
+    ],
+    [
+     "Like",
+     391.292,
+     391.452
+    ],
+    [
+     "and",
+     391.532,
+     391.612
+    ],
+    [
+     "subscribe!",
+     391.972,
+     392.652
+    ]
+   ]
+  },
+  {
+   "id": "07.0",
+   "take": "07",
+   "scene": "SC 07",
+   "idx": 0,
+   "speaker": "TY",
+   "raw": "[dramatic] But real money... brought real problems.",
+   "text": "But real money... brought real problems.",
+   "clip": [
+    0.0,
+    3.08
+   ],
+   "start": 393.552,
+   "end": 396.632,
+   "speechStart": 393.632,
+   "speechEnd": 396.632,
+   "words": [
+    [
+     "But",
+     393.632,
+     393.792
+    ],
+    [
+     "real",
+     393.952,
+     394.192
+    ],
+    [
+     "money...",
+     394.272,
+     395.072
+    ],
+    [
+     "brought",
+     395.152,
+     395.312
+    ],
+    [
+     "real",
+     395.472,
+     395.792
+    ],
+    [
+     "problems.",
+     395.952,
+     396.632
+    ]
+   ]
+  },
+  {
+   "id": "07.1",
+   "take": "07",
+   "scene": "SC 07",
+   "idx": 1,
+   "speaker": "SCAMMER",
+   "raw": "[smooth, oily] Good evening, ma'am! FREE ROBUX! Just tell me your password, and I'll DOUBLE your Robux!",
+   "text": "Good evening, ma'am! FREE ROBUX! Just tell me your password, and I'll DOUBLE your Robux!",
+   "clip": [
+    3.08,
+    8.56
+   ],
+   "start": 396.632,
+   "end": 402.112,
+   "speechStart": 396.992,
+   "speechEnd": 402.112,
+   "words": [
+    [
+     "Good",
+     396.992,
+     397.072
+    ],
+    [
+     "evening,",
+     397.152,
+     397.392
+    ],
+    [
+     "ma'am!",
+     397.472,
+     397.792
+    ],
+    [
+     "FREE",
+     398.112,
+     398.352
+    ],
+    [
+     "ROBUX!",
+     398.512,
+     399.232
+    ],
+    [
+     "Just",
+     399.392,
+     399.552
+    ],
+    [
+     "tell",
+     399.632,
+     399.712
+    ],
+    [
+     "me",
+     399.752,
+     399.792
+    ],
+    [
+     "your",
+     399.872,
+     399.952
+    ],
+    [
+     "password,",
+     400.032,
+     400.512
+    ],
+    [
+     "and",
+     400.592,
+     400.672
+    ],
+    [
+     "I'll",
+     400.712,
+     400.992
+    ],
+    [
+     "DOUBLE",
+     401.152,
+     401.312
+    ],
+    [
+     "your",
+     401.392,
+     401.472
+    ],
+    [
+     "Robux!",
+     401.552,
+     402.112
+    ]
+   ]
+  },
+  {
+   "id": "07.2",
+   "take": "07",
+   "scene": "SC 07",
+   "idx": 2,
+   "speaker": "GRANDMA",
+   "raw": "[delighted] Ooh, double! [pause] Well, my password is \"password\"...",
+   "text": "Ooh, double! Well, my password is \"password\"...",
+   "clip": [
+    8.56,
+    14.32
+   ],
+   "start": 402.112,
+   "end": 407.872,
+   "speechStart": 402.432,
+   "speechEnd": 407.872,
+   "words": [
+    [
+     "Ooh,",
+     402.432,
+     403.072
+    ],
+    [
+     "double!",
+     403.152,
+     403.819
+    ],
+    [
+     "Well,",
+     404.592,
+     405.072
+    ],
+    [
+     "my",
+     405.152,
+     405.392
+    ],
+    [
+     "password",
+     405.752,
+     406.112
+    ],
+    [
+     "is",
+     406.352,
+     406.672
+    ],
+    [
+     "\"password\"...",
+     406.912,
+     407.872
+    ]
+   ]
+  },
+  {
+   "id": "07.3",
+   "take": "07",
+   "scene": "SC 07",
+   "idx": 3,
+   "speaker": "TY",
+   "raw": "[shouts] GRANDMA, NO!",
+   "text": "GRANDMA, NO!",
+   "clip": [
+    14.32,
+    15.440000000000001
+   ],
+   "start": 407.872,
+   "end": 408.992,
+   "speechStart": 407.939,
+   "speechEnd": 408.992,
+   "words": [
+    [
+     "GRANDMA,",
+     407.939,
+     408.432
+    ],
+    [
+     "NO!",
+     408.512,
+     408.992
+    ]
+   ]
+  },
+  {
+   "id": "07.4",
+   "take": "07",
+   "scene": "SC 07",
+   "idx": 4,
+   "speaker": "TY",
+   "raw": "[running, fast] I KNEW that guy! He's the \"free Robux\" scam from every game chat EVER!",
+   "text": "I KNEW that guy! He's the \"free Robux\" scam from every game chat EVER!",
+   "clip": [
+    15.440000000000001,
+    20.080000000000002
+   ],
+   "start": 408.992,
+   "end": 413.632,
+   "speechStart": 409.382,
+   "speechEnd": 413.632,
+   "words": [
+    [
+     "I",
+     409.382,
+     409.392
+    ],
+    [
+     "KNEW",
+     409.552,
+     409.712
+    ],
+    [
+     "that",
+     409.792,
+     409.952
+    ],
+    [
+     "guy!",
+     410.032,
+     410.352
+    ],
+    [
+     "He's",
+     410.512,
+     410.672
+    ],
+    [
+     "the",
+     410.752,
+     410.912
+    ],
+    [
+     "\"free",
+     410.992,
+     411.152
+    ],
+    [
+     "Robux\"",
+     411.232,
+     411.685
+    ],
+    [
+     "scam",
+     411.739,
+     411.872
+    ],
+    [
+     "from",
+     411.952,
+     412.032
+    ],
+    [
+     "every",
+     412.192,
+     412.432
+    ],
+    [
+     "game",
+     412.512,
+     412.672
+    ],
+    [
+     "chat",
+     412.752,
+     412.992
+    ],
+    [
+     "EVER!",
+     413.152,
+     413.632
+    ]
+   ]
+  },
+  {
+   "id": "07.5",
+   "take": "07",
+   "scene": "SC 07",
+   "idx": 5,
+   "speaker": "SCAMMER",
+   "raw": "[panicked] Free Robux! Free Robux! Click my link!",
+   "text": "Free Robux! Free Robux! Click my link!",
+   "clip": [
+    20.080000000000002,
+    23.040000000000003
+   ],
+   "start": 413.632,
+   "end": 416.592,
+   "speechStart": 414.0,
+   "speechEnd": 416.592,
+   "words": [
+    [
+     "Free",
+     414.0,
+     414.032
+    ],
+    [
+     "Robux!",
+     414.112,
+     414.632
+    ],
+    [
+     "Free",
+     414.752,
+     414.912
+    ],
+    [
+     "Robux!",
+     414.992,
+     415.512
+    ],
+    [
+     "Click",
+     415.632,
+     415.792
+    ],
+    [
+     "my",
+     415.872,
+     415.952
+    ],
+    [
+     "link!",
+     416.032,
+     416.592
+    ]
+   ]
+  },
+  {
+   "id": "07.6",
+   "take": "07",
+   "scene": "SC 07",
+   "idx": 6,
+   "speaker": "TY",
+   "raw": "[dodging, fast] \"Robux generator, one hundred percent real!\" \"You won a free hat!\" \"Verify your account!\" [pause] Nope! Nope! NOPE!",
+   "text": "\"Robux generator, one hundred percent real!\" \"You won a free hat!\" \"Verify your account!\" Nope! Nope! NOPE!",
+   "clip": [
+    23.040000000000003,
+    29.44
+   ],
+   "start": 416.592,
+   "end": 422.992,
+   "speechStart": 416.663,
+   "speechEnd": 422.992,
+   "words": [
+    [
+     "\"Robux",
+     416.663,
+     416.992
+    ],
+    [
+     "generator,",
+     417.192,
+     417.552
+    ],
+    [
+     "one",
+     417.632,
+     417.712
+    ],
+    [
+     "hundred",
+     417.792,
+     417.872
+    ],
+    [
+     "percent",
+     417.952,
+     418.272
+    ],
+    [
+     "real!\"",
+     418.352,
+     418.672
+    ],
+    [
+     "\"You",
+     418.912,
+     418.992
+    ],
+    [
+     "won",
+     419.072,
+     419.152
+    ],
+    [
+     "a",
+     419.232,
+     419.272
+    ],
+    [
+     "free",
+     419.312,
+     419.472
+    ],
+    [
+     "hat!\"",
+     419.552,
+     419.872
+    ],
+    [
+     "\"Verify",
+     420.112,
+     420.512
+    ],
+    [
+     "your",
+     420.592,
+     420.672
+    ],
+    [
+     "account!\"",
+     420.872,
+     421.152
+    ],
+    [
+     "Nope!",
+     421.52,
+     421.832
+    ],
+    [
+     "Nope!",
+     421.952,
+     422.432
+    ],
+    [
+     "NOPE!",
+     422.592,
+     422.992
+    ]
+   ]
+  },
+  {
+   "id": "07.7",
+   "take": "07",
+   "scene": "SC 07",
+   "idx": 7,
+   "speaker": "TY",
+   "raw": "[panting] If Robux are real money... then scamming is a REAL crime!",
+   "text": "If Robux are real money... then scamming is a REAL crime!",
+   "clip": [
+    29.44,
+    34.16
+   ],
+   "start": 422.992,
+   "end": 427.712,
+   "speechStart": 424.032,
+   "speechEnd": 427.712,
+   "words": [
+    [
+     "If",
+     424.032,
+     424.112
+    ],
+    [
+     "Robux",
+     424.192,
+     424.592
+    ],
+    [
+     "are",
+     424.632,
+     424.672
+    ],
+    [
+     "real",
+     424.832,
+     424.992
+    ],
+    [
+     "money...",
+     425.072,
+     425.712
+    ],
+    [
+     "then",
+     425.792,
+     425.872
+    ],
+    [
+     "scamming",
+     425.952,
+     426.432
+    ],
+    [
+     "is",
+     426.512,
+     426.592
+    ],
+    [
+     "a",
+     426.672,
+     426.792
+    ],
+    [
+     "REAL",
+     426.912,
+     427.152
+    ],
+    [
+     "crime!",
+     427.232,
+     427.712
+    ]
+   ]
+  },
+  {
+   "id": "07.8",
+   "take": "07",
+   "scene": "SC 07",
+   "idx": 8,
+   "speaker": "SYSTEM",
+   "raw": "[booming] User reported. [pause] BANNED.",
+   "text": "User reported. BANNED.",
+   "clip": [
+    34.16,
+    36.72
+   ],
+   "start": 427.712,
+   "end": 430.272,
+   "speechStart": 428.112,
+   "speechEnd": 430.272,
+   "words": [
+    [
+     "User",
+     428.112,
+     428.432
+    ],
+    [
+     "reported.",
+     428.512,
+     429.152
+    ],
+    [
+     "BANNED.",
+     429.696,
+     430.272
+    ]
+   ]
+  },
+  {
+   "id": "07.9",
+   "take": "07",
+   "scene": "SC 07",
+   "idx": 9,
+   "speaker": "SCAMMER",
+   "raw": "[being dragged away] I'll be back! With a better link!",
+   "text": "I'll be back! With a better link!",
+   "clip": [
+    36.72,
+    39.199999999999996
+   ],
+   "start": 430.272,
+   "end": 432.752,
+   "speechStart": 430.592,
+   "speechEnd": 432.752,
+   "words": [
+    [
+     "I'll",
+     430.592,
+     430.752
+    ],
+    [
+     "be",
+     430.792,
+     430.832
+    ],
+    [
+     "back!",
+     430.912,
+     431.392
+    ],
+    [
+     "With",
+     431.632,
+     431.712
+    ],
+    [
+     "a",
+     431.792,
+     431.872
+    ],
+    [
+     "better",
+     431.952,
+     432.192
+    ],
+    [
+     "link!",
+     432.272,
+     432.752
+    ]
+   ]
+  },
+  {
+   "id": "07.10",
+   "take": "07",
+   "scene": "SC 07",
+   "idx": 10,
+   "speaker": "GRANDMA",
+   "raw": "[sheepish] I just wanted a cool hat for my obby stream.",
+   "text": "I just wanted a cool hat for my obby stream.",
+   "clip": [
+    39.199999999999996,
+    42.48
+   ],
+   "start": 432.752,
+   "end": 436.032,
+   "speechStart": 433.205,
+   "speechEnd": 436.032,
+   "words": [
+    [
+     "I",
+     433.205,
+     433.232
+    ],
+    [
+     "just",
+     433.312,
+     433.472
+    ],
+    [
+     "wanted",
+     433.552,
+     433.792
+    ],
+    [
+     "a",
+     433.872,
+     433.952
+    ],
+    [
+     "cool",
+     434.032,
+     434.272
+    ],
+    [
+     "hat",
+     434.352,
+     434.672
+    ],
+    [
+     "for",
+     434.752,
+     434.832
+    ],
+    [
+     "my",
+     434.912,
+     434.992
+    ],
+    [
+     "obby",
+     435.072,
+     435.392
+    ],
+    [
+     "stream.",
+     435.472,
+     436.032
+    ]
+   ]
+  },
+  {
+   "id": "07.11",
+   "take": "07",
+   "scene": "SC 07",
+   "idx": 11,
+   "speaker": "TY",
+   "raw": "[warm, firm] Grandma. Never. Share. Your password.",
+   "text": "Grandma. Never. Share. Your password.",
+   "clip": [
+    42.48,
+    46.160000000000004
+   ],
+   "start": 436.032,
+   "end": 439.712,
+   "speechStart": 436.558,
+   "speechEnd": 439.712,
+   "words": [
+    [
+     "Grandma.",
+     436.558,
+     437.112
+    ],
+    [
+     "Never.",
+     437.392,
+     437.992
+    ],
+    [
+     "Share.",
+     438.192,
+     438.712
+    ],
+    [
+     "Your",
+     438.832,
+     438.912
+    ],
+    [
+     "password.",
+     439.072,
+     439.712
+    ]
+   ]
+  },
+  {
+   "id": "07.12",
+   "take": "07",
+   "scene": "SC 07",
+   "idx": 12,
+   "speaker": "GRANDMA",
+   "raw": "[nods] Okay, sweetie. [pause] It's \"password two\" now.",
+   "text": "Okay, sweetie. It's \"password two\" now.",
+   "clip": [
+    46.160000000000004,
+    50.480000000000004
+   ],
+   "start": 439.712,
+   "end": 444.032,
+   "speechStart": 440.352,
+   "speechEnd": 444.032,
+   "words": [
+    [
+     "Okay,",
+     440.352,
+     440.752
+    ],
+    [
+     "sweetie.",
+     440.912,
+     441.312
+    ],
+    [
+     "It's",
+     442.144,
+     442.352
+    ],
+    [
+     "\"password",
+     442.512,
+     443.072
+    ],
+    [
+     "two\"",
+     443.232,
+     443.552
+    ],
+    [
+     "now.",
+     443.712,
+     444.032
+    ]
+   ]
+  },
+  {
+   "id": "07.13",
+   "take": "07",
+   "scene": "SC 07",
+   "idx": 13,
+   "speaker": "TY",
+   "raw": "[facepalm] ...Grandma.",
+   "text": "...Grandma.",
+   "clip": [
+    50.480000000000004,
+    52.24000000000001
+   ],
+   "start": 444.032,
+   "end": 445.792,
+   "speechStart": 444.912,
+   "speechEnd": 445.792,
+   "words": [
+    [
+     "...Grandma.",
+     444.912,
+     445.792
+    ]
+   ]
+  },
+  {
+   "id": "08a.0",
+   "take": "08a",
+   "scene": "SC 08",
+   "idx": 0,
+   "speaker": "TY",
+   "raw": "[cheerful, then slowing down] Everything was perfect. Until... Wednesday.",
+   "text": "Everything was perfect. Until... Wednesday.",
+   "clip": [
+    0.0,
+    4.48
+   ],
+   "start": 446.692,
+   "end": 451.172,
+   "speechStart": 446.852,
+   "speechEnd": 451.172,
+   "words": [
+    [
+     "Everything",
+     446.852,
+     447.492
+    ],
+    [
+     "was",
+     447.572,
+     447.892
+    ],
+    [
+     "perfect.",
+     447.972,
+     448.932
+    ],
+    [
+     "Until...",
+     449.252,
+     450.452
+    ],
+    [
+     "Wednesday.",
+     450.532,
+     451.172
+    ]
+   ]
+  },
+  {
+   "id": "08a.1",
+   "take": "08a",
+   "scene": "SC 08",
+   "idx": 1,
+   "speaker": "TY",
+   "raw": "[confused] On Monday, bread cost five Robux. On Tuesday... fifty.",
+   "text": "On Monday, bread cost five Robux. On Tuesday... fifty.",
+   "clip": [
+    4.48,
+    10.0
+   ],
+   "start": 451.172,
+   "end": 456.692,
+   "speechStart": 451.865,
+   "speechEnd": 456.692,
+   "words": [
+    [
+     "On",
+     451.865,
+     451.892
+    ],
+    [
+     "Monday,",
+     451.972,
+     452.612
+    ],
+    [
+     "bread",
+     452.732,
+     452.852
+    ],
+    [
+     "cost",
+     452.932,
+     453.172
+    ],
+    [
+     "five",
+     453.332,
+     453.572
+    ],
+    [
+     "Robux.",
+     453.652,
+     454.412
+    ],
+    [
+     "On",
+     454.612,
+     454.692
+    ],
+    [
+     "Tuesday...",
+     454.852,
+     455.812
+    ],
+    [
+     "fifty.",
+     455.852,
+     456.692
+    ]
+   ]
+  },
+  {
+   "id": "08a.2",
+   "take": "08a",
+   "scene": "SC 08",
+   "idx": 2,
+   "speaker": "TY",
+   "raw": "[alarmed] On Wednesday... five THOUSAND.",
+   "text": "On Wednesday... five THOUSAND.",
+   "clip": [
+    10.0,
+    12.64
+   ],
+   "start": 456.692,
+   "end": 459.332,
+   "speechStart": 456.772,
+   "speechEnd": 459.332,
+   "words": [
+    [
+     "On",
+     456.772,
+     456.852
+    ],
+    [
+     "Wednesday...",
+     457.012,
+     457.972
+    ],
+    [
+     "five",
+     458.092,
+     458.212
+    ],
+    [
+     "THOUSAND.",
+     458.452,
+     459.332
+    ]
+   ]
+  },
+  {
+   "id": "08a.3",
+   "take": "08a",
+   "scene": "SC 08",
+   "idx": 3,
+   "speaker": "MOM",
+   "raw": "[shocked] Five thousand Robux? For BREAD?!",
+   "text": "Five thousand Robux? For BREAD?!",
+   "clip": [
+    12.64,
+    15.680000000000001
+   ],
+   "start": 459.332,
+   "end": 462.372,
+   "speechStart": 459.492,
+   "speechEnd": 462.372,
+   "words": [
+    [
+     "Five",
+     459.492,
+     459.732
+    ],
+    [
+     "thousand",
+     459.972,
+     460.372
+    ],
+    [
+     "Robux?",
+     460.532,
+     461.412
+    ],
+    [
+     "For",
+     461.492,
+     461.572
+    ],
+    [
+     "BREAD?!",
+     461.732,
+     462.372
+    ]
+   ]
+  },
+  {
+   "id": "08a.4",
+   "take": "08a",
+   "scene": "SC 08",
+   "idx": 4,
+   "speaker": "TY",
+   "raw": "[clear, explaining] Here's what happened. Every day, eight billion people claimed their free daily rewards. And every reward printed brand-new Robux.",
+   "text": "Here's what happened. Every day, eight billion people claimed their free daily rewards. And every reward printed brand-new Robux.",
+   "clip": [
+    15.680000000000001,
+    24.24
+   ],
+   "start": 462.372,
+   "end": 470.932,
+   "speechStart": 462.612,
+   "speechEnd": 470.932,
+   "words": [
+    [
+     "Here's",
+     462.612,
+     462.852
+    ],
+    [
+     "what",
+     462.932,
+     463.012
+    ],
+    [
+     "happened.",
+     463.092,
+     463.892
+    ],
+    [
+     "Every",
+     464.052,
+     464.212
+    ],
+    [
+     "day,",
+     464.332,
+     464.692
+    ],
+    [
+     "eight",
+     464.772,
+     464.852
+    ],
+    [
+     "billion",
+     465.092,
+     465.412
+    ],
+    [
+     "people",
+     465.492,
+     465.892
+    ],
+    [
+     "claimed",
+     465.972,
+     466.212
+    ],
+    [
+     "their",
+     466.332,
+     466.452
+    ],
+    [
+     "free",
+     466.532,
+     466.692
+    ],
+    [
+     "daily",
+     466.772,
+     467.092
+    ],
+    [
+     "rewards.",
+     467.172,
+     468.052
+    ],
+    [
+     "And",
+     468.132,
+     468.212
+    ],
+    [
+     "every",
+     468.292,
+     468.532
+    ],
+    [
+     "reward",
+     468.772,
+     469.012
+    ],
+    [
+     "printed",
+     469.212,
+     469.412
+    ],
+    [
+     "brand-new",
+     469.572,
+     469.972
+    ],
+    [
+     "Robux.",
+     470.092,
+     470.932
+    ]
+   ]
+  },
+  {
+   "id": "08a.5",
+   "take": "08a",
+   "scene": "SC 08",
+   "idx": 5,
+   "speaker": "TY",
+   "raw": "So everyone had way more money... but there was still the same amount of bread.",
+   "text": "So everyone had way more money... but there was still the same amount of bread.",
+   "clip": [
+    24.24,
+    28.799999999999997
+   ],
+   "start": 470.932,
+   "end": 475.492,
+   "speechStart": 470.932,
+   "speechEnd": 475.492,
+   "words": [
+    [
+     "So",
+     470.932,
+     471.172
+    ],
+    [
+     "everyone",
+     471.252,
+     471.652
+    ],
+    [
+     "had",
+     471.812,
+     471.972
+    ],
+    [
+     "way",
+     472.092,
+     472.212
+    ],
+    [
+     "more",
+     472.292,
+     472.452
+    ],
+    [
+     "money...",
+     472.532,
+     473.092
+    ],
+    [
+     "but",
+     473.172,
+     473.252
+    ],
+    [
+     "there",
+     473.292,
+     473.332
+    ],
+    [
+     "was",
+     473.412,
+     473.492
+    ],
+    [
+     "still",
+     473.572,
+     473.812
+    ],
+    [
+     "the",
+     473.892,
+     474.052
+    ],
+    [
+     "same",
+     474.172,
+     474.292
+    ],
+    [
+     "amount",
+     474.412,
+     474.532
+    ],
+    [
+     "of",
+     474.612,
+     474.692
+    ],
+    [
+     "bread.",
+     474.892,
+     475.492
+    ]
+   ]
+  },
+  {
+   "id": "08a.6",
+   "take": "08a",
+   "scene": "SC 08",
+   "idx": 6,
+   "speaker": "TY",
+   "raw": "And when everyone has more money, but there's the same amount of stuff... [pause] the stuff just gets more expensive.",
+   "text": "And when everyone has more money, but there's the same amount of stuff... the stuff just gets more expensive.",
+   "clip": [
+    28.799999999999997,
+    35.03999999999999
+   ],
+   "start": 475.492,
+   "end": 481.732,
+   "speechStart": 475.492,
+   "speechEnd": 481.732,
+   "words": [
+    [
+     "And",
+     475.492,
+     475.652
+    ],
+    [
+     "when",
+     475.732,
+     475.812
+    ],
+    [
+     "everyone",
+     475.892,
+     476.212
+    ],
+    [
+     "has",
+     476.292,
+     476.452
+    ],
+    [
+     "more",
+     476.572,
+     476.692
+    ],
+    [
+     "money,",
+     476.772,
+     477.172
+    ],
+    [
+     "but",
+     477.252,
+     477.332
+    ],
+    [
+     "there's",
+     477.372,
+     477.492
+    ],
+    [
+     "the",
+     477.572,
+     477.732
+    ],
+    [
+     "same",
+     477.812,
+     477.892
+    ],
+    [
+     "amount",
+     477.972,
+     478.132
+    ],
+    [
+     "of",
+     478.212,
+     478.372
+    ],
+    [
+     "stuff...",
+     478.612,
+     479.412
+    ],
+    [
+     "the",
+     479.545,
+     479.572
+    ],
+    [
+     "stuff",
+     479.772,
+     479.972
+    ],
+    [
+     "just",
+     480.132,
+     480.292
+    ],
+    [
+     "gets",
+     480.372,
+     480.532
+    ],
+    [
+     "more",
+     480.612,
+     480.692
+    ],
+    [
+     "expensive.",
+     480.772,
+     481.732
+    ]
+   ]
+  },
+  {
+   "id": "08a.7",
+   "take": "08a",
+   "scene": "SC 08",
+   "idx": 7,
+   "speaker": "MIA",
+   "raw": "[flat, smug] That's called inflation. [pause] We learned it in school. You'd know if you didn't buy \"Skip Math.\"",
+   "text": "That's called inflation. We learned it in school. You'd know if you didn't buy \"Skip Math.\"",
+   "clip": [
+    35.03999999999999,
+    41.359999999999985
+   ],
+   "start": 481.732,
+   "end": 488.052,
+   "speechStart": 481.812,
+   "speechEnd": 488.052,
+   "words": [
+    [
+     "That's",
+     481.812,
+     482.052
+    ],
+    [
+     "called",
+     482.132,
+     482.372
+    ],
+    [
+     "inflation.",
+     482.452,
+     483.492
+    ],
+    [
+     "We",
+     483.86,
+     483.892
+    ],
+    [
+     "learned",
+     483.972,
+     484.092
+    ],
+    [
+     "it",
+     484.132,
+     484.212
+    ],
+    [
+     "in",
+     484.292,
+     484.372
+    ],
+    [
+     "school.",
+     484.572,
+     485.172
+    ],
+    [
+     "You'd",
+     485.252,
+     485.492
+    ],
+    [
+     "know",
+     485.572,
+     485.812
+    ],
+    [
+     "if",
+     485.892,
+     485.972
+    ],
+    [
+     "you",
+     486.052,
+     486.132
+    ],
+    [
+     "didn't",
+     486.212,
+     486.372
+    ],
+    [
+     "buy",
+     486.492,
+     486.612
+    ],
+    [
+     "\"Skip",
+     486.772,
+     487.092
+    ],
+    [
+     "Math.\"",
+     487.172,
+     488.052
+    ]
+   ]
+  },
+  {
+   "id": "08a.8",
+   "take": "08a",
+   "scene": "SC 08",
+   "idx": 8,
+   "speaker": "TY",
+   "raw": "[groans] Ugh. She's right.",
+   "text": "Ugh. She's right.",
+   "clip": [
+    41.359999999999985,
+    43.59999999999999
+   ],
+   "start": 488.052,
+   "end": 490.292,
+   "speechStart": 488.324,
+   "speechEnd": 490.292,
+   "words": [
+    [
+     "Ugh.",
+     488.324,
+     488.932
+    ],
+    [
+     "She's",
+     489.012,
+     489.252
+    ],
+    [
+     "right.",
+     489.332,
+     490.292
+    ]
+   ]
+  },
+  {
+   "id": "08a.9",
+   "take": "08a",
+   "scene": "SC 08",
+   "idx": 9,
+   "speaker": "TY",
+   "raw": "[panicking, fast] By Thursday, a pack of gum cost a MILLION Robux. People pushed wheelbarrows full of coins to the store.",
+   "text": "By Thursday, a pack of gum cost a MILLION Robux. People pushed wheelbarrows full of coins to the store.",
+   "clip": [
+    43.59999999999999,
+    50.23999999999999
+   ],
+   "start": 490.292,
+   "end": 496.932,
+   "speechStart": 490.434,
+   "speechEnd": 496.932,
+   "words": [
+    [
+     "By",
+     490.434,
+     490.452
+    ],
+    [
+     "Thursday,",
+     490.532,
+     491.172
+    ],
+    [
+     "a",
+     491.252,
+     491.332
+    ],
+    [
+     "pack",
+     491.412,
+     491.492
+    ],
+    [
+     "of",
+     491.572,
+     491.652
+    ],
+    [
+     "gum",
+     491.732,
+     491.892
+    ],
+    [
+     "cost",
+     491.972,
+     492.212
+    ],
+    [
+     "a",
+     492.292,
+     492.452
+    ],
+    [
+     "MILLION",
+     492.532,
+     492.932
+    ],
+    [
+     "Robux.",
+     493.012,
+     493.892
+    ],
+    [
+     "People",
+     494.052,
+     494.212
+    ],
+    [
+     "pushed",
+     494.292,
+     494.452
+    ],
+    [
+     "wheelbarrows",
+     494.612,
+     495.172
+    ],
+    [
+     "full",
+     495.252,
+     495.412
+    ],
+    [
+     "of",
+     495.492,
+     495.572
+    ],
+    [
+     "coins",
+     495.652,
+     495.972
+    ],
+    [
+     "to",
+     496.012,
+     496.052
+    ],
+    [
+     "the",
+     496.132,
+     496.172
+    ],
+    [
+     "store.",
+     496.212,
+     496.932
+    ]
+   ]
+  },
+  {
+   "id": "08a.10",
+   "take": "08a",
+   "scene": "SC 08",
+   "idx": 10,
+   "speaker": "TY",
+   "raw": "The news anchor's tie was worth more than his car. Dad's whole paycheck bought one coffee. [pause] With thirty percent missing.",
+   "text": "The news anchor's tie was worth more than his car. Dad's whole paycheck bought one coffee. With thirty percent missing.",
+   "clip": [
+    50.23999999999999,
+    57.759999999999984
+   ],
+   "start": 496.932,
+   "end": 504.452,
+   "speechStart": 496.932,
+   "speechEnd": 504.452,
+   "words": [
+    [
+     "The",
+     496.932,
+     497.012
+    ],
+    [
+     "news",
+     497.092,
+     497.332
+    ],
+    [
+     "anchor's",
+     497.452,
+     497.652
+    ],
+    [
+     "tie",
+     497.732,
+     497.972
+    ],
+    [
+     "was",
+     498.052,
+     498.212
+    ],
+    [
+     "worth",
+     498.332,
+     498.452
+    ],
+    [
+     "more",
+     498.532,
+     498.612
+    ],
+    [
+     "than",
+     498.692,
+     498.772
+    ],
+    [
+     "his",
+     498.852,
+     498.932
+    ],
+    [
+     "car.",
+     499.012,
+     499.812
+    ],
+    [
+     "Dad's",
+     499.852,
+     500.212
+    ],
+    [
+     "whole",
+     500.332,
+     500.452
+    ],
+    [
+     "paycheck",
+     500.532,
+     501.012
+    ],
+    [
+     "bought",
+     501.092,
+     501.252
+    ],
+    [
+     "one",
+     501.492,
+     501.652
+    ],
+    [
+     "coffee.",
+     501.812,
+     502.612
+    ],
+    [
+     "With",
+     502.812,
+     502.852
+    ],
+    [
+     "thirty",
+     502.932,
+     503.172
+    ],
+    [
+     "percent",
+     503.252,
+     503.732
+    ],
+    [
+     "missing.",
+     503.812,
+     504.452
+    ]
+   ]
+  },
+  {
+   "id": "08a.11",
+   "take": "08a",
+   "scene": "SC 08",
+   "idx": 11,
+   "speaker": "DAD",
+   "raw": "[crying, sipping] It's the best coffee I've ever had.",
+   "text": "It's the best coffee I've ever had.",
+   "clip": [
+    57.759999999999984,
+    61.71999999999999
+   ],
+   "start": 504.452,
+   "end": 508.412,
+   "speechStart": 506.292,
+   "speechEnd": 508.412,
+   "words": [
+    [
+     "It's",
+     506.292,
+     506.532
+    ],
+    [
+     "the",
+     506.612,
+     506.692
+    ],
+    [
+     "best",
+     506.772,
+     507.012
+    ],
+    [
+     "coffee",
+     507.092,
+     507.412
+    ],
+    [
+     "I've",
+     507.452,
+     507.572
+    ],
+    [
+     "ever",
+     507.652,
+     507.812
+    ],
+    [
+     "had.",
+     507.972,
+     508.412
+    ]
+   ]
+  },
+  {
+   "id": "08a.12",
+   "take": "08a",
+   "scene": "SC 08",
+   "idx": 12,
+   "speaker": "ANCHOR",
+   "raw": "[panicking] Breaking news! Prices are going up so fast, this news is already more expensive than when I started reading it!",
+   "text": "Breaking news! Prices are going up so fast, this news is already more expensive than when I started reading it!",
+   "clip": [
+    61.71999999999999,
+    68.63999999999999
+   ],
+   "start": 508.412,
+   "end": 515.332,
+   "speechStart": 508.932,
+   "speechEnd": 515.332,
+   "words": [
+    [
+     "Breaking",
+     508.932,
+     509.012
+    ],
+    [
+     "news!",
+     509.092,
+     509.572
+    ],
+    [
+     "Prices",
+     509.892,
+     510.292
+    ],
+    [
+     "are",
+     510.332,
+     510.372
+    ],
+    [
+     "going",
+     510.452,
+     510.612
+    ],
+    [
+     "up",
+     510.692,
+     510.772
+    ],
+    [
+     "so",
+     510.932,
+     511.092
+    ],
+    [
+     "fast,",
+     511.252,
+     511.812
+    ],
+    [
+     "this",
+     511.892,
+     511.972
+    ],
+    [
+     "news",
+     512.052,
+     512.292
+    ],
+    [
+     "is",
+     512.372,
+     512.452
+    ],
+    [
+     "already",
+     512.692,
+     512.932
+    ],
+    [
+     "more",
+     513.012,
+     513.092
+    ],
+    [
+     "expensive",
+     513.172,
+     513.652
+    ],
+    [
+     "than",
+     513.732,
+     513.812
+    ],
+    [
+     "when",
+     513.852,
+     513.892
+    ],
+    [
+     "I",
+     514.012,
+     514.132
+    ],
+    [
+     "started",
+     514.332,
+     514.532
+    ],
+    [
+     "reading",
+     514.612,
+     514.932
+    ],
+    [
+     "it!",
+     515.052,
+     515.332
+    ]
+   ]
+  },
+  {
+   "id": "08a.13",
+   "take": "08a",
+   "scene": "SC 08",
+   "idx": 13,
+   "speaker": "MIA",
+   "raw": "[screams] My fedora is worth ZERO! Who wants a MOON?!",
+   "text": "My fedora is worth ZERO! Who wants a MOON?!",
+   "clip": [
+    68.63999999999999,
+    73.39999999999999
+   ],
+   "start": 515.332,
+   "end": 520.092,
+   "speechStart": 516.372,
+   "speechEnd": 520.092,
+   "words": [
+    [
+     "My",
+     516.372,
+     516.452
+    ],
+    [
+     "fedora",
+     516.532,
+     517.092
+    ],
+    [
+     "is",
+     517.172,
+     517.252
+    ],
+    [
+     "worth",
+     517.332,
+     517.572
+    ],
+    [
+     "ZERO!",
+     517.732,
+     518.492
+    ],
+    [
+     "Who",
+     518.692,
+     518.772
+    ],
+    [
+     "wants",
+     518.852,
+     519.092
+    ],
+    [
+     "a",
+     519.172,
+     519.252
+    ],
+    [
+     "MOON?!",
+     519.332,
+     520.092
+    ]
+   ]
+  },
+  {
+   "id": "08a.14",
+   "take": "08a",
+   "scene": "SC 08",
+   "idx": 14,
+   "speaker": "TY",
+   "raw": "[devastated] And my three million Robux? [pause] They bought me... one sandwich.",
+   "text": "And my three million Robux? They bought me... one sandwich.",
+   "clip": [
+    73.39999999999999,
+    78.39999999999999
+   ],
+   "start": 520.092,
+   "end": 525.092,
+   "speechStart": 520.425,
+   "speechEnd": 525.092,
+   "words": [
+    [
+     "And",
+     520.425,
+     520.452
+    ],
+    [
+     "my",
+     520.572,
+     520.692
+    ],
+    [
+     "three",
+     520.772,
+     521.012
+    ],
+    [
+     "million",
+     521.172,
+     521.492
+    ],
+    [
+     "Robux?",
+     521.652,
+     522.532
+    ],
+    [
+     "They",
+     522.932,
+     523.092
+    ],
+    [
+     "bought",
+     523.132,
+     523.332
+    ],
+    [
+     "me...",
+     523.452,
+     524.052
+    ],
+    [
+     "one",
+     524.172,
+     524.292
+    ],
+    [
+     "sandwich.",
+     524.452,
+     525.092
+    ]
+   ]
+  },
+  {
+   "id": "08a.15",
+   "take": "08a",
+   "scene": "SC 08",
+   "idx": 15,
+   "speaker": "TY",
+   "raw": "[desperate] I tried to sell the gold toothbrush. [pause] Nobody wanted a used gold toothbrush.",
+   "text": "I tried to sell the gold toothbrush. Nobody wanted a used gold toothbrush.",
+   "clip": [
+    78.39999999999999,
+    84.16
+   ],
+   "start": 525.092,
+   "end": 530.852,
+   "speechStart": 525.785,
+   "speechEnd": 530.852,
+   "words": [
+    [
+     "I",
+     525.785,
+     525.812
+    ],
+    [
+     "tried",
+     525.892,
+     526.132
+    ],
+    [
+     "to",
+     526.212,
+     526.292
+    ],
+    [
+     "sell",
+     526.372,
+     526.452
+    ],
+    [
+     "the",
+     526.492,
+     526.532
+    ],
+    [
+     "gold",
+     526.612,
+     526.852
+    ],
+    [
+     "toothbrush.",
+     526.892,
+     528.052
+    ],
+    [
+     "Nobody",
+     528.132,
+     528.532
+    ],
+    [
+     "wanted",
+     528.692,
+     528.932
+    ],
+    [
+     "a",
+     528.972,
+     529.012
+    ],
+    [
+     "used",
+     529.172,
+     529.412
+    ],
+    [
+     "gold",
+     529.492,
+     529.732
+    ],
+    [
+     "toothbrush.",
+     529.812,
+     530.852
+    ]
+   ]
+  },
+  {
+   "id": "08a.16",
+   "take": "08a",
+   "scene": "SC 08",
+   "idx": 16,
+   "speaker": "THIRTY",
+   "raw": "[huge, booming] MARKETPLACE FEE!",
+   "text": "MARKETPLACE FEE!",
+   "clip": [
+    84.16,
+    86.4
+   ],
+   "start": 530.852,
+   "end": 533.092,
+   "speechStart": 530.932,
+   "speechEnd": 533.092,
+   "words": [
+    [
+     "MARKETPLACE",
+     530.932,
+     531.892
+    ],
+    [
+     "FEE!",
+     532.052,
+     533.092
+    ]
+   ]
+  },
+  {
+   "id": "08a.17",
+   "take": "08a",
+   "scene": "SC 08",
+   "idx": 17,
+   "speaker": "TY",
+   "raw": "[screams] HALF a sandwich!",
+   "text": "HALF a sandwich!",
+   "clip": [
+    86.4,
+    88.48
+   ],
+   "start": 533.092,
+   "end": 535.172,
+   "speechStart": 533.732,
+   "speechEnd": 535.172,
+   "words": [
+    [
+     "HALF",
+     533.732,
+     534.012
+    ],
+    [
+     "a",
+     534.052,
+     534.132
+    ],
+    [
+     "sandwich!",
+     534.212,
+     535.172
+    ]
+   ]
+  },
+  {
+   "id": "08a.18",
+   "take": "08a",
+   "scene": "SC 08",
+   "idx": 18,
+   "speaker": "BUTLER",
+   "raw": "[robotic, cold] Sir, your payment has failed. I now work for your neighbor.",
+   "text": "Sir, your payment has failed. I now work for your neighbor.",
+   "clip": [
+    88.48,
+    92.55999999999999
+   ],
+   "start": 535.172,
+   "end": 539.252,
+   "speechStart": 535.252,
+   "speechEnd": 539.252,
+   "words": [
+    [
+     "Sir,",
+     535.252,
+     535.812
+    ],
+    [
+     "your",
+     535.892,
+     536.052
+    ],
+    [
+     "payment",
+     536.252,
+     536.452
+    ],
+    [
+     "has",
+     536.532,
+     536.612
+    ],
+    [
+     "failed.",
+     536.692,
+     537.492
+    ],
+    [
+     "I",
+     537.572,
+     537.652
+    ],
+    [
+     "now",
+     537.732,
+     537.892
+    ],
+    [
+     "work",
+     537.972,
+     538.212
+    ],
+    [
+     "for",
+     538.252,
+     538.292
+    ],
+    [
+     "your",
+     538.372,
+     538.532
+    ],
+    [
+     "neighbor.",
+     538.732,
+     539.252
+    ]
+   ]
+  },
+  {
+   "id": "08a.19",
+   "take": "08a",
+   "scene": "SC 08",
+   "idx": 19,
+   "speaker": "TY",
+   "raw": "[defeated, narrating] My butler quit. My limo got taken away. And my mansion...",
+   "text": "My butler quit. My limo got taken away. And my mansion...",
+   "clip": [
+    92.55999999999999,
+    97.36
+   ],
+   "start": 539.252,
+   "end": 544.052,
+   "speechStart": 539.412,
+   "speechEnd": 544.052,
+   "words": [
+    [
+     "My",
+     539.412,
+     539.572
+    ],
+    [
+     "butler",
+     539.652,
+     539.972
+    ],
+    [
+     "quit.",
+     540.052,
+     540.772
+    ],
+    [
+     "My",
+     540.852,
+     541.012
+    ],
+    [
+     "limo",
+     541.132,
+     541.332
+    ],
+    [
+     "got",
+     541.412,
+     541.572
+    ],
+    [
+     "taken",
+     541.732,
+     541.892
+    ],
+    [
+     "away.",
+     541.972,
+     542.772
+    ],
+    [
+     "And",
+     542.852,
+     542.932
+    ],
+    [
+     "my",
+     543.052,
+     543.172
+    ],
+    [
+     "mansion...",
+     543.359,
+     544.052
+    ]
+   ]
+  },
+  {
+   "id": "08a.20",
+   "take": "08a",
+   "scene": "SC 08",
+   "idx": 20,
+   "speaker": "THIRTY",
+   "raw": "[giant, booming, gleeful] Belongs to ME! Thirty percent of EVERYTHING is MINE!",
+   "text": "Belongs to ME! Thirty percent of EVERYTHING is MINE!",
+   "clip": [
+    97.36,
+    102.88
+   ],
+   "start": 544.052,
+   "end": 549.572,
+   "speechStart": 544.274,
+   "speechEnd": 549.572,
+   "words": [
+    [
+     "Belongs",
+     544.274,
+     544.692
+    ],
+    [
+     "to",
+     544.772,
+     544.932
+    ],
+    [
+     "ME!",
+     545.012,
+     545.812
+    ],
+    [
+     "Thirty",
+     546.052,
+     546.292
+    ],
+    [
+     "percent",
+     546.452,
+     546.852
+    ],
+    [
+     "of",
+     546.932,
+     547.172
+    ],
+    [
+     "EVERYTHING",
+     547.332,
+     547.972
+    ],
+    [
+     "is",
+     548.132,
+     548.452
+    ],
+    [
+     "MINE!",
+     548.532,
+     549.572
+    ]
+   ]
+  },
+  {
+   "id": "08b.0",
+   "take": "08b",
+   "scene": "SC 08",
+   "idx": 21,
+   "speaker": "TY",
+   "raw": "[narrating, grim] He'd been taking thirty percent of every purchase on Earth. [pause] Now he owned the tallest building in the city.",
+   "text": "He'd been taking thirty percent of every purchase on Earth. Now he owned the tallest building in the city.",
+   "clip": [
+    0.0,
+    6.96
+   ],
+   "start": 549.922,
+   "end": 556.882,
+   "speechStart": 550.002,
+   "speechEnd": 556.882,
+   "words": [
+    [
+     "He'd",
+     550.002,
+     550.162
+    ],
+    [
+     "been",
+     550.242,
+     550.322
+    ],
+    [
+     "taking",
+     550.562,
+     550.802
+    ],
+    [
+     "thirty",
+     550.882,
+     551.042
+    ],
+    [
+     "percent",
+     551.202,
+     551.602
+    ],
+    [
+     "of",
+     551.682,
+     551.922
+    ],
+    [
+     "every",
+     552.002,
+     552.322
+    ],
+    [
+     "purchase",
+     552.402,
+     552.802
+    ],
+    [
+     "on",
+     552.882,
+     553.042
+    ],
+    [
+     "Earth.",
+     553.122,
+     553.762
+    ],
+    [
+     "Now",
+     554.162,
+     554.402
+    ],
+    [
+     "he",
+     554.562,
+     554.722
+    ],
+    [
+     "owned",
+     554.802,
+     554.882
+    ],
+    [
+     "the",
+     554.962,
+     555.042
+    ],
+    [
+     "tallest",
+     555.122,
+     555.522
+    ],
+    [
+     "building",
+     555.602,
+     555.922
+    ],
+    [
+     "in",
+     555.962,
+     556.002
+    ],
+    [
+     "the",
+     556.082,
+     556.162
+    ],
+    [
+     "city.",
+     556.242,
+     556.882
+    ]
+   ],
+   "beatAfter": 2.0
+  },
+  {
+   "id": "08b.1",
+   "take": "08b",
+   "scene": "SC 08",
+   "idx": 22,
+   "speaker": "TY",
+   "raw": "[quiet] ...And that's how I ended up in a box.",
+   "text": "...And that's how I ended up in a box.",
+   "clip": [
+    6.96,
+    9.712
+   ],
+   "start": 558.882,
+   "end": 561.634,
+   "speechStart": 559.266,
+   "speechEnd": 561.634,
+   "words": [
+    [
+     "...And",
+     559.266,
+     559.522
+    ],
+    [
+     "that's",
+     559.602,
+     559.842
+    ],
+    [
+     "how",
+     559.922,
+     560.002
+    ],
+    [
+     "I",
+     560.082,
+     560.122
+    ],
+    [
+     "ended",
+     560.162,
+     560.322
+    ],
+    [
+     "up",
+     560.402,
+     560.482
+    ],
+    [
+     "in",
+     560.522,
+     560.562
+    ],
+    [
+     "a",
+     560.722,
+     561.015
+    ],
+    [
+     "box.",
+     561.309,
+     561.634
+    ]
+   ]
+  },
+  {
+   "id": "08b.2",
+   "take": "08b",
+   "scene": "SC 08",
+   "idx": 23,
+   "speaker": "PICKLE",
+   "raw": "[warm] Hey, Ty. [pause] Want to share my umbrella?",
+   "text": "Hey, Ty. Want to share my umbrella?",
+   "clip": [
+    9.712,
+    12.569
+   ],
+   "start": 561.634,
+   "end": 564.491,
+   "speechStart": 561.762,
+   "speechEnd": 564.491,
+   "words": [
+    [
+     "Hey,",
+     561.762,
+     561.962
+    ],
+    [
+     "Ty.",
+     562.002,
+     562.642
+    ],
+    [
+     "Want",
+     563.09,
+     563.122
+    ],
+    [
+     "to",
+     563.162,
+     563.202
+    ],
+    [
+     "share",
+     563.282,
+     563.442
+    ],
+    [
+     "my",
+     563.482,
+     563.522
+    ],
+    [
+     "umbrella?",
+     563.602,
+     564.491
+    ]
+   ]
+  },
+  {
+   "id": "08b.3",
+   "take": "08b",
+   "scene": "SC 08",
+   "idx": 24,
+   "speaker": "TY",
+   "raw": "[ashamed, soft] Pickle... I didn't even let you into my party.",
+   "text": "Pickle... I didn't even let you into my party.",
+   "clip": [
+    12.569,
+    15.52
+   ],
+   "start": 564.491,
+   "end": 567.442,
+   "speechStart": 564.562,
+   "speechEnd": 567.442,
+   "words": [
+    [
+     "Pickle...",
+     564.562,
+     565.522
+    ],
+    [
+     "I",
+     565.602,
+     565.682
+    ],
+    [
+     "didn't",
+     565.762,
+     565.922
+    ],
+    [
+     "even",
+     566.002,
+     566.082
+    ],
+    [
+     "let",
+     566.162,
+     566.322
+    ],
+    [
+     "you",
+     566.402,
+     566.482
+    ],
+    [
+     "into",
+     566.602,
+     566.722
+    ],
+    [
+     "my",
+     566.802,
+     566.882
+    ],
+    [
+     "party.",
+     566.962,
+     567.442
+    ]
+   ]
+  },
+  {
+   "id": "08b.4",
+   "take": "08b",
+   "scene": "SC 08",
+   "idx": 25,
+   "speaker": "PICKLE",
+   "raw": "[simple, sincere] Yeah. [pause] But you're still my best friend.",
+   "text": "Yeah. But you're still my best friend.",
+   "clip": [
+    15.52,
+    18.889
+   ],
+   "start": 567.442,
+   "end": 570.811,
+   "speechStart": 567.602,
+   "speechEnd": 570.811,
+   "words": [
+    [
+     "Yeah.",
+     567.602,
+     568.202
+    ],
+    [
+     "But",
+     568.562,
+     568.722
+    ],
+    [
+     "you're",
+     569.042,
+     569.202
+    ],
+    [
+     "still",
+     569.282,
+     569.442
+    ],
+    [
+     "my",
+     569.522,
+     569.602
+    ],
+    [
+     "best",
+     569.682,
+     569.842
+    ],
+    [
+     "friend.",
+     569.922,
+     570.811
+    ]
+   ]
+  },
+  {
+   "id": "08b.5",
+   "take": "08b",
+   "scene": "SC 08",
+   "idx": 26,
+   "speaker": "TY",
+   "raw": "[voice cracking] ...I'm sorry, Pickle.",
+   "text": "...I'm sorry, Pickle.",
+   "clip": [
+    18.889,
+    20.159999999999997
+   ],
+   "start": 570.811,
+   "end": 572.082,
+   "speechStart": 570.873,
+   "speechEnd": 572.082,
+   "words": [
+    [
+     "...I'm",
+     570.873,
+     571.042
+    ],
+    [
+     "sorry,",
+     571.202,
+     571.602
+    ],
+    [
+     "Pickle.",
+     571.642,
+     572.082
+    ]
+   ]
+  },
+  {
+   "id": "08b.6",
+   "take": "08b",
+   "scene": "SC 08",
+   "idx": 27,
+   "speaker": "PICKLE",
+   "raw": "[cheerful] I know. [pause] Also, my sock is wet. Can we sit somewhere drier?",
+   "text": "I know. Also, my sock is wet. Can we sit somewhere drier?",
+   "clip": [
+    20.159999999999997,
+    24.799999999999997
+   ],
+   "start": 572.082,
+   "end": 576.722,
+   "speechStart": 572.242,
+   "speechEnd": 576.722,
+   "words": [
+    [
+     "I",
+     572.242,
+     572.322
+    ],
+    [
+     "know.",
+     572.482,
+     572.802
+    ],
+    [
+     "Also,",
+     573.538,
+     573.842
+    ],
+    [
+     "my",
+     573.922,
+     574.082
+    ],
+    [
+     "sock",
+     574.242,
+     574.482
+    ],
+    [
+     "is",
+     574.562,
+     574.642
+    ],
+    [
+     "wet.",
+     574.682,
+     575.122
+    ],
+    [
+     "Can",
+     575.282,
+     575.362
+    ],
+    [
+     "we",
+     575.442,
+     575.522
+    ],
+    [
+     "sit",
+     575.602,
+     575.682
+    ],
+    [
+     "somewhere",
+     575.722,
+     575.922
+    ],
+    [
+     "drier?",
+     576.002,
+     576.722
+    ]
+   ]
+  },
+  {
+   "id": "09.0",
+   "take": "09",
+   "scene": "SC 09",
+   "idx": 0,
+   "speaker": "MIA",
+   "raw": "[determined] Okay, losers. We've got a problem. [pause] Look at this.",
+   "text": "Okay, losers. We've got a problem. Look at this.",
+   "clip": [
+    0.0,
+    4.08
+   ],
+   "start": 577.622,
+   "end": 581.702,
+   "speechStart": 577.782,
+   "speechEnd": 581.702,
+   "words": [
+    [
+     "Okay,",
+     577.782,
+     578.142
+    ],
+    [
+     "losers.",
+     578.182,
+     578.942
+    ],
+    [
+     "We've",
+     579.142,
+     579.302
+    ],
+    [
+     "got",
+     579.382,
+     579.462
+    ],
+    [
+     "a",
+     579.502,
+     579.542
+    ],
+    [
+     "problem.",
+     579.622,
+     580.182
+    ],
+    [
+     "Look",
+     580.982,
+     581.062
+    ],
+    [
+     "at",
+     581.142,
+     581.222
+    ],
+    [
+     "this.",
+     581.302,
+     581.702
+    ]
+   ]
+  },
+  {
+   "id": "09.1",
+   "take": "09",
+   "scene": "SC 09",
+   "idx": 1,
+   "speaker": "MIA",
+   "raw": "The Robux Printer. Every daily reward in the world comes out of this one machine. And it's running at a thousand percent.",
+   "text": "The Robux Printer. Every daily reward in the world comes out of this one machine. And it's running at a thousand percent.",
+   "clip": [
+    4.08,
+    12.08
+   ],
+   "start": 581.702,
+   "end": 589.702,
+   "speechStart": 581.702,
+   "speechEnd": 589.702,
+   "words": [
+    [
+     "The",
+     581.702,
+     582.182
+    ],
+    [
+     "Robux",
+     582.262,
+     582.742
+    ],
+    [
+     "Printer.",
+     582.822,
+     583.462
+    ],
+    [
+     "Every",
+     583.702,
+     584.022
+    ],
+    [
+     "daily",
+     584.102,
+     584.342
+    ],
+    [
+     "reward",
+     584.422,
+     584.742
+    ],
+    [
+     "in",
+     584.822,
+     584.902
+    ],
+    [
+     "the",
+     584.982,
+     585.102
+    ],
+    [
+     "world",
+     585.222,
+     585.542
+    ],
+    [
+     "comes",
+     585.622,
+     585.782
+    ],
+    [
+     "out",
+     585.862,
+     585.942
+    ],
+    [
+     "of",
+     585.982,
+     586.022
+    ],
+    [
+     "this",
+     586.102,
+     586.262
+    ],
+    [
+     "one",
+     586.422,
+     586.582
+    ],
+    [
+     "machine.",
+     586.862,
+     587.342
+    ],
+    [
+     "And",
+     587.542,
+     587.622
+    ],
+    [
+     "it's",
+     587.702,
+     587.862
+    ],
+    [
+     "running",
+     587.942,
+     588.182
+    ],
+    [
+     "at",
+     588.262,
+     588.342
+    ],
+    [
+     "a",
+     588.462,
+     588.582
+    ],
+    [
+     "thousand",
+     588.622,
+     588.982
+    ],
+    [
+     "percent.",
+     589.062,
+     589.702
+    ]
+   ]
+  },
+  {
+   "id": "09.2",
+   "take": "09",
+   "scene": "SC 09",
+   "idx": 2,
+   "speaker": "TY",
+   "raw": "[realizing] So if we turn it off... prices stop going up!",
+   "text": "So if we turn it off... prices stop going up!",
+   "clip": [
+    12.08,
+    16.0
+   ],
+   "start": 589.702,
+   "end": 593.622,
+   "speechStart": 590.182,
+   "speechEnd": 593.622,
+   "words": [
+    [
+     "So",
+     590.182,
+     590.262
+    ],
+    [
+     "if",
+     590.342,
+     590.422
+    ],
+    [
+     "we",
+     590.502,
+     590.582
+    ],
+    [
+     "turn",
+     590.662,
+     590.822
+    ],
+    [
+     "it",
+     590.902,
+     590.982
+    ],
+    [
+     "off...",
+     591.062,
+     591.942
+    ],
+    [
+     "prices",
+     592.182,
+     592.422
+    ],
+    [
+     "stop",
+     592.582,
+     592.742
+    ],
+    [
+     "going",
+     592.862,
+     592.982
+    ],
+    [
+     "up!",
+     593.062,
+     593.622
+    ]
+   ]
+  },
+  {
+   "id": "09.3",
+   "take": "09",
+   "scene": "SC 09",
+   "idx": 3,
+   "speaker": "PICKLE",
+   "raw": "[nervous] And the Thirty Percent Guy? He's been taking thirty percent of EVERYTHING.",
+   "text": "And the Thirty Percent Guy? He's been taking thirty percent of EVERYTHING.",
+   "clip": [
+    16.0,
+    21.04
+   ],
+   "start": 593.622,
+   "end": 598.662,
+   "speechStart": 593.702,
+   "speechEnd": 598.662,
+   "words": [
+    [
+     "And",
+     593.702,
+     593.942
+    ],
+    [
+     "the",
+     594.022,
+     594.102
+    ],
+    [
+     "Thirty",
+     594.182,
+     594.342
+    ],
+    [
+     "Percent",
+     594.422,
+     594.742
+    ],
+    [
+     "Guy?",
+     594.902,
+     595.622
+    ],
+    [
+     "He's",
+     595.702,
+     595.862
+    ],
+    [
+     "been",
+     595.942,
+     596.022
+    ],
+    [
+     "taking",
+     596.222,
+     596.422
+    ],
+    [
+     "thirty",
+     596.502,
+     596.742
+    ],
+    [
+     "percent",
+     596.822,
+     597.142
+    ],
+    [
+     "of",
+     597.222,
+     597.542
+    ],
+    [
+     "EVERYTHING.",
+     597.622,
+     598.662
+    ]
+   ]
+  },
+  {
+   "id": "09.4",
+   "take": "09",
+   "scene": "SC 09",
+   "idx": 4,
+   "speaker": "TY",
+   "raw": "[grim] That's why he's the size of a building.",
+   "text": "That's why he's the size of a building.",
+   "clip": [
+    21.04,
+    23.359999999999996
+   ],
+   "start": 598.662,
+   "end": 600.982,
+   "speechStart": 598.742,
+   "speechEnd": 600.982,
+   "words": [
+    [
+     "That's",
+     598.742,
+     598.942
+    ],
+    [
+     "why",
+     598.982,
+     599.142
+    ],
+    [
+     "he's",
+     599.182,
+     599.302
+    ],
+    [
+     "the",
+     599.382,
+     599.542
+    ],
+    [
+     "size",
+     599.662,
+     599.782
+    ],
+    [
+     "of",
+     599.822,
+     599.862
+    ],
+    [
+     "a",
+     599.942,
+     600.102
+    ],
+    [
+     "building.",
+     600.342,
+     600.982
+    ]
+   ]
+  },
+  {
+   "id": "09.5",
+   "take": "09",
+   "scene": "SC 09",
+   "idx": 5,
+   "speaker": "MIA",
+   "raw": "[smirks] So... who wants to rob a bank?",
+   "text": "So... who wants to rob a bank?",
+   "clip": [
+    23.359999999999996,
+    26.479999999999997
+   ],
+   "start": 600.982,
+   "end": 604.102,
+   "speechStart": 601.942,
+   "speechEnd": 604.102,
+   "words": [
+    [
+     "So...",
+     601.942,
+     602.582
+    ],
+    [
+     "who",
+     602.662,
+     602.742
+    ],
+    [
+     "wants",
+     602.782,
+     602.982
+    ],
+    [
+     "to",
+     603.062,
+     603.102
+    ],
+    [
+     "rob",
+     603.142,
+     603.302
+    ],
+    [
+     "a",
+     603.342,
+     603.382
+    ],
+    [
+     "bank?",
+     603.462,
+     604.102
+    ]
+   ]
+  },
+  {
+   "id": "09.6",
+   "take": "09",
+   "scene": "SC 09",
+   "idx": 6,
+   "speaker": "TY",
+   "raw": "[determined] Technically, we're UN-robbing it. [pause] Let's go.",
+   "text": "Technically, we're UN-robbing it. Let's go.",
+   "clip": [
+    26.479999999999997,
+    29.759999999999998
+   ],
+   "start": 604.102,
+   "end": 607.382,
+   "speechStart": 604.182,
+   "speechEnd": 607.382,
+   "words": [
+    [
+     "Technically,",
+     604.182,
+     604.982
+    ],
+    [
+     "we're",
+     605.062,
+     605.382
+    ],
+    [
+     "UN-robbing",
+     605.462,
+     606.022
+    ],
+    [
+     "it.",
+     606.102,
+     606.262
+    ],
+    [
+     "Let's",
+     606.95,
+     607.062
+    ],
+    [
+     "go.",
+     607.182,
+     607.382
+    ]
+   ]
+  },
+  {
+   "id": "09.7",
+   "take": "09",
+   "scene": "SC 09",
+   "idx": 7,
+   "speaker": "GRANDMA",
+   "raw": "[hyped] You need a distraction? Leave that to me, sweetie. [pause] Chat! We're going LIVE in front of the bank!",
+   "text": "You need a distraction? Leave that to me, sweetie. Chat! We're going LIVE in front of the bank!",
+   "clip": [
+    29.759999999999998,
+    36.31999999999999
+   ],
+   "start": 607.382,
+   "end": 613.942,
+   "speechStart": 607.782,
+   "speechEnd": 613.942,
+   "words": [
+    [
+     "You",
+     607.782,
+     607.862
+    ],
+    [
+     "need",
+     607.942,
+     608.022
+    ],
+    [
+     "a",
+     608.062,
+     608.102
+    ],
+    [
+     "distraction?",
+     608.222,
+     609.022
+    ],
+    [
+     "Leave",
+     609.222,
+     609.462
+    ],
+    [
+     "that",
+     609.542,
+     609.622
+    ],
+    [
+     "to",
+     609.702,
+     609.782
+    ],
+    [
+     "me,",
+     609.862,
+     610.102
+    ],
+    [
+     "sweetie.",
+     610.182,
+     610.662
+    ],
+    [
+     "Chat!",
+     611.462,
+     611.662
+    ],
+    [
+     "We're",
+     611.782,
+     611.942
+    ],
+    [
+     "going",
+     612.102,
+     612.262
+    ],
+    [
+     "LIVE",
+     612.422,
+     612.822
+    ],
+    [
+     "in",
+     612.902,
+     612.982
+    ],
+    [
+     "front",
+     613.062,
+     613.222
+    ],
+    [
+     "of",
+     613.302,
+     613.342
+    ],
+    [
+     "the",
+     613.382,
+     613.462
+    ],
+    [
+     "bank!",
+     613.542,
+     613.942
+    ]
+   ]
+  },
+  {
+   "id": "09.8",
+   "take": "09",
+   "scene": "SC 09",
+   "idx": 8,
+   "speaker": "DAD",
+   "raw": "[proud] And I'll drive the getaway car! [pause] Very carefully. Under the speed limit.",
+   "text": "And I'll drive the getaway car! Very carefully. Under the speed limit.",
+   "clip": [
+    36.31999999999999,
+    41.35999999999999
+   ],
+   "start": 613.942,
+   "end": 618.982,
+   "speechStart": 614.262,
+   "speechEnd": 618.982,
+   "words": [
+    [
+     "And",
+     614.262,
+     614.342
+    ],
+    [
+     "I'll",
+     614.422,
+     614.662
+    ],
+    [
+     "drive",
+     614.742,
+     614.902
+    ],
+    [
+     "the",
+     614.982,
+     615.062
+    ],
+    [
+     "getaway",
+     615.142,
+     615.462
+    ],
+    [
+     "car!",
+     615.542,
+     615.942
+    ],
+    [
+     "Very",
+     616.502,
+     616.742
+    ],
+    [
+     "carefully.",
+     616.822,
+     617.502
+    ],
+    [
+     "Under",
+     617.702,
+     617.942
+    ],
+    [
+     "the",
+     618.022,
+     618.062
+    ],
+    [
+     "speed",
+     618.102,
+     618.342
+    ],
+    [
+     "limit.",
+     618.422,
+     618.982
+    ]
+   ]
+  },
+  {
+   "id": "10.0",
+   "take": "10",
+   "scene": "SC 10",
+   "idx": 0,
+   "speaker": "TY",
+   "raw": "[epic, building] The Central Bank of Robux was one giant obby.",
+   "text": "The Central Bank of Robux was one giant obby.",
+   "clip": [
+    0.0,
+    3.68
+   ],
+   "start": 619.882,
+   "end": 623.562,
+   "speechStart": 619.962,
+   "speechEnd": 623.562,
+   "words": [
+    [
+     "The",
+     619.962,
+     620.122
+    ],
+    [
+     "Central",
+     620.202,
+     620.522
+    ],
+    [
+     "Bank",
+     620.602,
+     620.762
+    ],
+    [
+     "of",
+     620.842,
+     620.922
+    ],
+    [
+     "Robux",
+     621.002,
+     621.482
+    ],
+    [
+     "was",
+     621.562,
+     621.802
+    ],
+    [
+     "one",
+     621.882,
+     622.122
+    ],
+    [
+     "giant",
+     622.362,
+     622.762
+    ],
+    [
+     "obby.",
+     622.922,
+     623.562
+    ]
+   ]
+  },
+  {
+   "id": "10.1",
+   "take": "10",
+   "scene": "SC 10",
+   "idx": 1,
+   "speaker": "TY",
+   "raw": "[fast, commentator] Coin avalanches! Floors made of price tags that went UP while you stood on them! Laser scanners that charged you a fee just for LOOKING at them!",
+   "text": "Coin avalanches! Floors made of price tags that went UP while you stood on them! Laser scanners that charged you a fee just for LOOKING at them!",
+   "clip": [
+    3.68,
+    11.76
+   ],
+   "start": 623.562,
+   "end": 631.642,
+   "speechStart": 624.006,
+   "speechEnd": 631.642,
+   "words": [
+    [
+     "Coin",
+     624.006,
+     624.042
+    ],
+    [
+     "avalanches!",
+     624.122,
+     624.922
+    ],
+    [
+     "Floors",
+     625.082,
+     625.402
+    ],
+    [
+     "made",
+     625.482,
+     625.562
+    ],
+    [
+     "of",
+     625.642,
+     625.722
+    ],
+    [
+     "price",
+     625.802,
+     626.042
+    ],
+    [
+     "tags",
+     626.122,
+     626.282
+    ],
+    [
+     "that",
+     626.362,
+     626.442
+    ],
+    [
+     "went",
+     626.602,
+     626.762
+    ],
+    [
+     "UP",
+     626.842,
+     627.002
+    ],
+    [
+     "while",
+     627.082,
+     627.162
+    ],
+    [
+     "you",
+     627.242,
+     627.322
+    ],
+    [
+     "stood",
+     627.402,
+     627.562
+    ],
+    [
+     "on",
+     627.642,
+     627.722
+    ],
+    [
+     "them!",
+     627.802,
+     628.282
+    ],
+    [
+     "Laser",
+     628.362,
+     628.682
+    ],
+    [
+     "scanners",
+     628.762,
+     629.082
+    ],
+    [
+     "that",
+     629.162,
+     629.242
+    ],
+    [
+     "charged",
+     629.322,
+     629.562
+    ],
+    [
+     "you",
+     629.642,
+     629.722
+    ],
+    [
+     "a",
+     629.882,
+     629.989
+    ],
+    [
+     "fee",
+     630.095,
+     630.202
+    ],
+    [
+     "just",
+     630.282,
+     630.442
+    ],
+    [
+     "for",
+     630.562,
+     630.682
+    ],
+    [
+     "LOOKING",
+     630.762,
+     631.002
+    ],
+    [
+     "at",
+     631.082,
+     631.162
+    ],
+    [
+     "them!",
+     631.242,
+     631.642
+    ]
+   ]
+  },
+  {
+   "id": "10.2",
+   "take": "10",
+   "scene": "SC 10",
+   "idx": 2,
+   "speaker": "SYSTEM",
+   "raw": "[chirpy] Scan complete! Fee: one hat.",
+   "text": "Scan complete! Fee: one hat.",
+   "clip": [
+    11.76,
+    14.4
+   ],
+   "start": 631.642,
+   "end": 634.282,
+   "speechStart": 631.802,
+   "speechEnd": 634.282,
+   "words": [
+    [
+     "Scan",
+     631.802,
+     632.042
+    ],
+    [
+     "complete!",
+     632.122,
+     632.842
+    ],
+    [
+     "Fee:",
+     632.922,
+     633.482
+    ],
+    [
+     "one",
+     633.562,
+     633.642
+    ],
+    [
+     "hat.",
+     633.722,
+     634.282
+    ]
+   ]
+  },
+  {
+   "id": "10.3",
+   "take": "10",
+   "scene": "SC 10",
+   "idx": 3,
+   "speaker": "MIA",
+   "raw": "[outraged] NOT THE BERET!",
+   "text": "NOT THE BERET!",
+   "clip": [
+    14.4,
+    15.840000000000002
+   ],
+   "start": 634.282,
+   "end": 635.722,
+   "speechStart": 634.362,
+   "speechEnd": 635.722,
+   "words": [
+    [
+     "NOT",
+     634.362,
+     634.602
+    ],
+    [
+     "THE",
+     634.642,
+     634.682
+    ],
+    [
+     "BERET!",
+     634.762,
+     635.722
+    ]
+   ]
+  },
+  {
+   "id": "10.4",
+   "take": "10",
+   "scene": "SC 10",
+   "idx": 4,
+   "speaker": "TY",
+   "raw": "[straining] A wall of bills! A conveyor belt of debt! And a coin avalanche right on top of\u2014",
+   "text": "A wall of bills! A conveyor belt of debt! And a coin avalanche right on top of\u2014",
+   "clip": [
+    15.840000000000002,
+    21.44
+   ],
+   "start": 635.722,
+   "end": 641.322,
+   "speechStart": 635.786,
+   "speechEnd": 641.322,
+   "words": [
+    [
+     "A",
+     635.786,
+     635.802
+    ],
+    [
+     "wall",
+     635.962,
+     636.202
+    ],
+    [
+     "of",
+     636.282,
+     636.522
+    ],
+    [
+     "bills!",
+     636.562,
+     637.322
+    ],
+    [
+     "A",
+     637.362,
+     637.402
+    ],
+    [
+     "conveyor",
+     637.482,
+     637.882
+    ],
+    [
+     "belt",
+     637.962,
+     638.122
+    ],
+    [
+     "of",
+     638.202,
+     638.362
+    ],
+    [
+     "debt!",
+     638.442,
+     639.082
+    ],
+    [
+     "And",
+     639.122,
+     639.162
+    ],
+    [
+     "a",
+     639.242,
+     639.322
+    ],
+    [
+     "coin",
+     639.402,
+     639.642
+    ],
+    [
+     "avalanche",
+     639.722,
+     640.122
+    ],
+    [
+     "right",
+     640.282,
+     640.442
+    ],
+    [
+     "on",
+     640.522,
+     640.602
+    ],
+    [
+     "top",
+     640.722,
+     640.842
+    ],
+    [
+     "of\u2014",
+     640.922,
+     641.322
+    ]
+   ]
+  },
+  {
+   "id": "10.5",
+   "take": "10",
+   "scene": "SC 10",
+   "idx": 5,
+   "speaker": "TY",
+   "raw": "[shouts] MIA! Grab my hand!",
+   "text": "MIA! Grab my hand!",
+   "clip": [
+    21.44,
+    23.6
+   ],
+   "start": 641.322,
+   "end": 643.482,
+   "speechStart": 641.482,
+   "speechEnd": 643.482,
+   "words": [
+    [
+     "MIA!",
+     641.482,
+     642.362
+    ],
+    [
+     "Grab",
+     642.482,
+     642.602
+    ],
+    [
+     "my",
+     642.682,
+     642.762
+    ],
+    [
+     "hand!",
+     642.962,
+     643.482
+    ]
+   ]
+  },
+  {
+   "id": "10.6",
+   "take": "10",
+   "scene": "SC 10",
+   "idx": 6,
+   "speaker": "MIA",
+   "raw": "[coughing, then quietly] ...Thanks. [pause] Don't tell anyone I said that.",
+   "text": "...Thanks. Don't tell anyone I said that.",
+   "clip": [
+    23.6,
+    28.000000000000004
+   ],
+   "start": 643.482,
+   "end": 647.882,
+   "speechStart": 644.882,
+   "speechEnd": 647.882,
+   "words": [
+    [
+     "...Thanks.",
+     644.882,
+     645.722
+    ],
+    [
+     "Don't",
+     646.122,
+     646.282
+    ],
+    [
+     "tell",
+     646.362,
+     646.522
+    ],
+    [
+     "anyone",
+     646.642,
+     646.842
+    ],
+    [
+     "I",
+     646.922,
+     647.002
+    ],
+    [
+     "said",
+     647.082,
+     647.162
+    ],
+    [
+     "that.",
+     647.242,
+     647.882
+    ]
+   ]
+  },
+  {
+   "id": "10.7",
+   "take": "10",
+   "scene": "SC 10",
+   "idx": 7,
+   "speaker": "TY",
+   "raw": "[fast, panicked] And then... the Thirty Percent Guy's interns showed up. Hundreds of tiny Thirty Percent Guys!",
+   "text": "And then... the Thirty Percent Guy's interns showed up. Hundreds of tiny Thirty Percent Guys!",
+   "clip": [
+    28.000000000000004,
+    33.68000000000001
+   ],
+   "start": 647.882,
+   "end": 653.562,
+   "speechStart": 648.024,
+   "speechEnd": 653.562,
+   "words": [
+    [
+     "And",
+     648.024,
+     648.042
+    ],
+    [
+     "then...",
+     648.362,
+     648.722
+    ],
+    [
+     "the",
+     648.762,
+     648.842
+    ],
+    [
+     "Thirty",
+     648.922,
+     649.082
+    ],
+    [
+     "Percent",
+     649.162,
+     649.482
+    ],
+    [
+     "Guy's",
+     649.562,
+     649.802
+    ],
+    [
+     "interns",
+     649.882,
+     650.282
+    ],
+    [
+     "showed",
+     650.362,
+     650.522
+    ],
+    [
+     "up.",
+     650.602,
+     651.082
+    ],
+    [
+     "Hundreds",
+     651.162,
+     651.562
+    ],
+    [
+     "of",
+     651.642,
+     651.802
+    ],
+    [
+     "tiny",
+     652.002,
+     652.202
+    ],
+    [
+     "Thirty",
+     652.282,
+     652.362
+    ],
+    [
+     "Percent",
+     652.522,
+     652.842
+    ],
+    [
+     "Guys!",
+     652.922,
+     653.562
+    ]
+   ]
+  },
+  {
+   "id": "10.8",
+   "take": "10",
+   "scene": "SC 10",
+   "idx": 8,
+   "speaker": "THIRTY",
+   "raw": "[tiny, many voices, chaotic] Fee! Fee! Fee! Fee! Fee!",
+   "text": "Fee! Fee! Fee! Fee! Fee!",
+   "clip": [
+    33.68000000000001,
+    36.32000000000001
+   ],
+   "start": 653.562,
+   "end": 656.202,
+   "speechStart": 653.642,
+   "speechEnd": 656.202,
+   "words": [
+    [
+     "Fee!",
+     653.642,
+     654.042
+    ],
+    [
+     "Fee!",
+     654.122,
+     654.522
+    ],
+    [
+     "Fee!",
+     654.602,
+     655.002
+    ],
+    [
+     "Fee!",
+     655.082,
+     655.562
+    ],
+    [
+     "Fee!",
+     655.762,
+     656.202
+    ]
+   ]
+  },
+  {
+   "id": "10.9",
+   "take": "10",
+   "scene": "SC 10",
+   "idx": 9,
+   "speaker": "PICKLE",
+   "raw": "[panicked] They're taking thirty percent of my SOCK!",
+   "text": "They're taking thirty percent of my SOCK!",
+   "clip": [
+    36.32000000000001,
+    38.64000000000001
+   ],
+   "start": 656.202,
+   "end": 658.522,
+   "speechStart": 656.269,
+   "speechEnd": 658.522,
+   "words": [
+    [
+     "They're",
+     656.269,
+     656.362
+    ],
+    [
+     "taking",
+     656.522,
+     656.682
+    ],
+    [
+     "thirty",
+     656.842,
+     657.002
+    ],
+    [
+     "percent",
+     657.082,
+     657.402
+    ],
+    [
+     "of",
+     657.442,
+     657.482
+    ],
+    [
+     "my",
+     657.602,
+     657.722
+    ],
+    [
+     "SOCK!",
+     657.802,
+     658.522
+    ]
+   ]
+  },
+  {
+   "id": "10.10",
+   "take": "10",
+   "scene": "SC 10",
+   "idx": 10,
+   "speaker": "TY",
+   "raw": "[awed] At the very top... the Robux Printer. [pause] And guarding it...",
+   "text": "At the very top... the Robux Printer. And guarding it...",
+   "clip": [
+    38.64000000000001,
+    43.120000000000005
+   ],
+   "start": 658.522,
+   "end": 663.002,
+   "speechStart": 658.655,
+   "speechEnd": 663.002,
+   "words": [
+    [
+     "At",
+     658.655,
+     658.682
+    ],
+    [
+     "the",
+     658.762,
+     658.842
+    ],
+    [
+     "very",
+     659.002,
+     659.162
+    ],
+    [
+     "top...",
+     659.362,
+     660.042
+    ],
+    [
+     "the",
+     660.082,
+     660.122
+    ],
+    [
+     "Robux",
+     660.282,
+     660.762
+    ],
+    [
+     "Printer.",
+     660.842,
+     661.802
+    ],
+    [
+     "And",
+     661.882,
+     661.962
+    ],
+    [
+     "guarding",
+     662.042,
+     662.362
+    ],
+    [
+     "it...",
+     662.442,
+     663.002
+    ]
+   ]
+  },
+  {
+   "id": "10.11",
+   "take": "10",
+   "scene": "SC 10",
+   "idx": 11,
+   "speaker": "THIRTY",
+   "raw": "[giant, booming] Every coin! Every trade! Every SANDWICH! Thirty percent belongs to ME!",
+   "text": "Every coin! Every trade! Every SANDWICH! Thirty percent belongs to ME!",
+   "clip": [
+    43.120000000000005,
+    49.28000000000001
+   ],
+   "start": 663.002,
+   "end": 669.162,
+   "speechStart": 663.286,
+   "speechEnd": 669.162,
+   "words": [
+    [
+     "Every",
+     663.286,
+     663.322
+    ],
+    [
+     "coin!",
+     663.482,
+     664.202
+    ],
+    [
+     "Every",
+     664.362,
+     664.522
+    ],
+    [
+     "trade!",
+     664.682,
+     665.402
+    ],
+    [
+     "Every",
+     665.602,
+     665.802
+    ],
+    [
+     "SANDWICH!",
+     666.042,
+     666.922
+    ],
+    [
+     "Thirty",
+     667.002,
+     667.162
+    ],
+    [
+     "percent",
+     667.322,
+     667.722
+    ],
+    [
+     "belongs",
+     667.882,
+     668.362
+    ],
+    [
+     "to",
+     668.442,
+     668.522
+    ],
+    [
+     "ME!",
+     668.682,
+     669.162
+    ]
+   ]
+  },
+  {
+   "id": "10.12",
+   "take": "10",
+   "scene": "SC 10",
+   "idx": 12,
+   "speaker": "TY",
+   "raw": "[scared] He's too big! We can't beat him!",
+   "text": "He's too big! We can't beat him!",
+   "clip": [
+    49.28000000000001,
+    52.080000000000005
+   ],
+   "start": 669.162,
+   "end": 671.962,
+   "speechStart": 669.53,
+   "speechEnd": 671.962,
+   "words": [
+    [
+     "He's",
+     669.53,
+     669.722
+    ],
+    [
+     "too",
+     669.842,
+     669.962
+    ],
+    [
+     "big!",
+     670.042,
+     670.682
+    ],
+    [
+     "We",
+     670.762,
+     670.842
+    ],
+    [
+     "can't",
+     670.922,
+     671.162
+    ],
+    [
+     "beat",
+     671.282,
+     671.402
+    ],
+    [
+     "him!",
+     671.522,
+     671.962
+    ]
+   ]
+  },
+  {
+   "id": "10.13",
+   "take": "10",
+   "scene": "SC 10",
+   "idx": 13,
+   "speaker": "PICKLE",
+   "raw": "[suddenly brave] Wait. [pause] I have an idea.",
+   "text": "Wait. I have an idea.",
+   "clip": [
+    52.080000000000005,
+    54.64000000000001
+   ],
+   "start": 671.962,
+   "end": 674.522,
+   "speechStart": 672.042,
+   "speechEnd": 674.522,
+   "words": [
+    [
+     "Wait.",
+     672.042,
+     672.722
+    ],
+    [
+     "I",
+     673.146,
+     673.162
+    ],
+    [
+     "have",
+     673.242,
+     673.322
+    ],
+    [
+     "an",
+     673.362,
+     673.402
+    ],
+    [
+     "idea.",
+     673.602,
+     674.522
+    ]
+   ]
+  },
+  {
+   "id": "10.14",
+   "take": "10",
+   "scene": "SC 10",
+   "idx": 14,
+   "speaker": "PICKLE",
+   "raw": "Hey, Mister Thirty. I want to buy something. [pause] For twelve Robux.",
+   "text": "Hey, Mister Thirty. I want to buy something. For twelve Robux.",
+   "clip": [
+    54.64000000000001,
+    59.360000000000014
+   ],
+   "start": 674.522,
+   "end": 679.242,
+   "speechStart": 674.522,
+   "speechEnd": 679.242,
+   "words": [
+    [
+     "Hey,",
+     674.522,
+     674.922
+    ],
+    [
+     "Mister",
+     674.962,
+     675.162
+    ],
+    [
+     "Thirty.",
+     675.322,
+     676.042
+    ],
+    [
+     "I",
+     676.082,
+     676.122
+    ],
+    [
+     "want",
+     676.202,
+     676.282
+    ],
+    [
+     "to",
+     676.322,
+     676.362
+    ],
+    [
+     "buy",
+     676.442,
+     676.522
+    ],
+    [
+     "something.",
+     676.602,
+     677.162
+    ],
+    [
+     "For",
+     677.69,
+     677.722
+    ],
+    [
+     "twelve",
+     677.882,
+     678.202
+    ],
+    [
+     "Robux.",
+     678.282,
+     679.242
+    ]
+   ]
+  },
+  {
+   "id": "10.15",
+   "take": "10",
+   "scene": "SC 10",
+   "idx": 15,
+   "speaker": "THIRTY",
+   "raw": "[greedy, booming] A purchase?! Marketplace fee! Thirty percent of twelve is...",
+   "text": "A purchase?! Marketplace fee! Thirty percent of twelve is...",
+   "clip": [
+    59.360000000000014,
+    64.24000000000001
+   ],
+   "start": 679.242,
+   "end": 684.122,
+   "speechStart": 679.386,
+   "speechEnd": 684.122,
+   "words": [
+    [
+     "A",
+     679.386,
+     679.402
+    ],
+    [
+     "purchase?!",
+     679.482,
+     680.522
+    ],
+    [
+     "Marketplace",
+     680.722,
+     681.242
+    ],
+    [
+     "fee!",
+     681.322,
+     681.962
+    ],
+    [
+     "Thirty",
+     682.042,
+     682.202
+    ],
+    [
+     "percent",
+     682.362,
+     682.602
+    ],
+    [
+     "of",
+     682.682,
+     682.762
+    ],
+    [
+     "twelve",
+     682.842,
+     683.242
+    ],
+    [
+     "is...",
+     683.402,
+     684.122
+    ]
+   ]
+  },
+  {
+   "id": "10.16",
+   "take": "10",
+   "scene": "SC 10",
+   "idx": 16,
+   "speaker": "THIRTY",
+   "raw": "[calculating, slowing down] Three... point... six.",
+   "text": "Three... point... six.",
+   "clip": [
+    64.24000000000001,
+    66.813
+   ],
+   "start": 684.122,
+   "end": 686.695,
+   "speechStart": 684.202,
+   "speechEnd": 686.695,
+   "words": [
+    [
+     "Three...",
+     684.202,
+     685.002
+    ],
+    [
+     "point...",
+     685.202,
+     685.802
+    ],
+    [
+     "six.",
+     686.002,
+     686.695
+    ]
+   ]
+  },
+  {
+   "id": "10.17",
+   "take": "10",
+   "scene": "SC 10",
+   "idx": 17,
+   "speaker": "THIRTY",
+   "raw": "[panicking] Three point SIX?! But Robux don't have DECIMALS!",
+   "text": "Three point SIX?! But Robux don't have DECIMALS!",
+   "clip": [
+    66.813,
+    70.24
+   ],
+   "start": 686.695,
+   "end": 690.122,
+   "speechStart": 686.762,
+   "speechEnd": 690.122,
+   "words": [
+    [
+     "Three",
+     686.762,
+     686.842
+    ],
+    [
+     "point",
+     687.002,
+     687.162
+    ],
+    [
+     "SIX?!",
+     687.322,
+     688.122
+    ],
+    [
+     "But",
+     688.162,
+     688.202
+    ],
+    [
+     "Robux",
+     688.362,
+     688.762
+    ],
+    [
+     "don't",
+     688.802,
+     688.922
+    ],
+    [
+     "have",
+     689.002,
+     689.162
+    ],
+    [
+     "DECIMALS!",
+     689.282,
+     690.122
+    ]
+   ]
+  },
+  {
+   "id": "10.18",
+   "take": "10",
+   "scene": "SC 10",
+   "idx": 18,
+   "speaker": "THIRTY",
+   "raw": "[glitching, robotic stutter] Does not compute... does not COMPUTE!",
+   "text": "Does not compute... does not COMPUTE!",
+   "clip": [
+    70.24,
+    72.64
+   ],
+   "start": 690.122,
+   "end": 692.522,
+   "speechStart": 690.202,
+   "speechEnd": 692.522,
+   "words": [
+    [
+     "Does",
+     690.202,
+     690.362
+    ],
+    [
+     "not",
+     690.442,
+     690.522
+    ],
+    [
+     "compute...",
+     690.602,
+     691.242
+    ],
+    [
+     "does",
+     691.362,
+     691.482
+    ],
+    [
+     "not",
+     691.602,
+     691.722
+    ],
+    [
+     "COMPUTE!",
+     691.802,
+     692.522
+    ]
+   ]
+  },
+  {
+   "id": "10.19",
+   "take": "10",
+   "scene": "SC 10",
+   "idx": 19,
+   "speaker": "TY",
+   "raw": "[laughing, disbelief] Pickle... you beat him with MATH!",
+   "text": "Pickle... you beat him with MATH!",
+   "clip": [
+    72.64,
+    75.44000000000001
+   ],
+   "start": 692.522,
+   "end": 695.322,
+   "speechStart": 692.922,
+   "speechEnd": 695.322,
+   "words": [
+    [
+     "Pickle...",
+     692.922,
+     693.722
+    ],
+    [
+     "you",
+     693.842,
+     693.962
+    ],
+    [
+     "beat",
+     694.042,
+     694.122
+    ],
+    [
+     "him",
+     694.202,
+     694.282
+    ],
+    [
+     "with",
+     694.402,
+     694.522
+    ],
+    [
+     "MATH!",
+     694.602,
+     695.322
+    ]
+   ]
+  },
+  {
+   "id": "10.20",
+   "take": "10",
+   "scene": "SC 10",
+   "idx": 20,
+   "speaker": "PICKLE",
+   "raw": "[proud] I never skipped math class.",
+   "text": "I never skipped math class.",
+   "clip": [
+    75.44000000000001,
+    77.52
+   ],
+   "start": 695.322,
+   "end": 697.402,
+   "speechStart": 695.402,
+   "speechEnd": 697.402,
+   "words": [
+    [
+     "I",
+     695.402,
+     695.642
+    ],
+    [
+     "never",
+     695.722,
+     695.962
+    ],
+    [
+     "skipped",
+     696.042,
+     696.282
+    ],
+    [
+     "math",
+     696.362,
+     696.602
+    ],
+    [
+     "class.",
+     696.842,
+     697.402
+    ]
+   ]
+  },
+  {
+   "id": "10.21",
+   "take": "10",
+   "scene": "SC 10",
+   "idx": 21,
+   "speaker": "MIA",
+   "raw": "[snorts] Burn.",
+   "text": "Burn.",
+   "clip": [
+    77.52,
+    79.03999999999999
+   ],
+   "start": 697.402,
+   "end": 698.922,
+   "speechStart": 698.122,
+   "speechEnd": 698.922,
+   "words": [
+    [
+     "Burn.",
+     698.122,
+     698.922
+    ]
+   ]
+  },
+  {
+   "id": "11.0",
+   "take": "11",
+   "scene": "SC 11",
+   "idx": 0,
+   "speaker": "SYSTEM",
+   "raw": "[calm, serious] Reset economy? [pause] All Robux will turn back into game currency. [pause] Your three million Robux will become... just Robux.",
+   "text": "Reset economy? All Robux will turn back into game currency. Your three million Robux will become... just Robux.",
+   "clip": [
+    0.0,
+    8.44
+   ],
+   "start": 699.822,
+   "end": 708.262,
+   "speechStart": 699.982,
+   "speechEnd": 708.262,
+   "words": [
+    [
+     "Reset",
+     699.982,
+     700.382
+    ],
+    [
+     "economy?",
+     700.422,
+     700.982
+    ],
+    [
+     "All",
+     701.902,
+     701.982
+    ],
+    [
+     "Robux",
+     702.062,
+     702.462
+    ],
+    [
+     "will",
+     702.542,
+     702.622
+    ],
+    [
+     "turn",
+     702.702,
+     702.862
+    ],
+    [
+     "back",
+     703.022,
+     703.182
+    ],
+    [
+     "into",
+     703.262,
+     703.422
+    ],
+    [
+     "game",
+     703.502,
+     703.662
+    ],
+    [
+     "currency.",
+     703.742,
+     704.382
+    ],
+    [
+     "Your",
+     705.102,
+     705.182
+    ],
+    [
+     "three",
+     705.262,
+     705.422
+    ],
+    [
+     "million",
+     705.582,
+     705.822
+    ],
+    [
+     "Robux",
+     705.902,
+     706.302
+    ],
+    [
+     "will",
+     706.382,
+     706.462
+    ],
+    [
+     "become...",
+     706.542,
+     707.422
+    ],
+    [
+     "just",
+     707.502,
+     707.662
+    ],
+    [
+     "Robux.",
+     707.742,
+     708.262
+    ]
+   ]
+  },
+  {
+   "id": "11.1",
+   "take": "11",
+   "scene": "SC 11",
+   "idx": 1,
+   "speaker": "TY",
+   "raw": "[hesitating, soft] Three million...",
+   "text": "Three million...",
+   "clip": [
+    8.44,
+    11.200000000000001
+   ],
+   "start": 708.262,
+   "end": 711.022,
+   "speechStart": 709.242,
+   "speechEnd": 711.022,
+   "words": [
+    [
+     "Three",
+     709.242,
+     709.342
+    ],
+    [
+     "million...",
+     709.582,
+     711.022
+    ]
+   ]
+  },
+  {
+   "id": "11.2",
+   "take": "11",
+   "scene": "SC 11",
+   "idx": 2,
+   "speaker": "TY",
+   "raw": "[reflective] I thought about the mansion. The gold toothbrush. The hundred friends who vanished as soon as the money did.",
+   "text": "I thought about the mansion. The gold toothbrush. The hundred friends who vanished as soon as the money did.",
+   "clip": [
+    11.200000000000001,
+    17.76
+   ],
+   "start": 711.022,
+   "end": 717.582,
+   "speechStart": 711.102,
+   "speechEnd": 717.582,
+   "words": [
+    [
+     "I",
+     711.102,
+     711.182
+    ],
+    [
+     "thought",
+     711.262,
+     711.422
+    ],
+    [
+     "about",
+     711.542,
+     711.662
+    ],
+    [
+     "the",
+     711.702,
+     711.742
+    ],
+    [
+     "mansion.",
+     711.822,
+     712.382
+    ],
+    [
+     "The",
+     712.862,
+     712.942
+    ],
+    [
+     "gold",
+     713.022,
+     713.262
+    ],
+    [
+     "toothbrush.",
+     713.342,
+     714.062
+    ],
+    [
+     "The",
+     714.622,
+     714.702
+    ],
+    [
+     "hundred",
+     714.862,
+     715.182
+    ],
+    [
+     "friends",
+     715.262,
+     715.662
+    ],
+    [
+     "who",
+     715.742,
+     715.822
+    ],
+    [
+     "vanished",
+     715.902,
+     716.302
+    ],
+    [
+     "as",
+     716.382,
+     716.462
+    ],
+    [
+     "soon",
+     716.542,
+     716.702
+    ],
+    [
+     "as",
+     716.742,
+     716.782
+    ],
+    [
+     "the",
+     716.862,
+     716.942
+    ],
+    [
+     "money",
+     717.022,
+     717.182
+    ],
+    [
+     "did.",
+     717.262,
+     717.582
+    ]
+   ]
+  },
+  {
+   "id": "11.3",
+   "take": "11",
+   "scene": "SC 11",
+   "idx": 3,
+   "speaker": "TY",
+   "raw": "[pause] And then I looked at the two people who stayed.",
+   "text": "And then I looked at the two people who stayed.",
+   "clip": [
+    17.76,
+    20.8
+   ],
+   "start": 717.582,
+   "end": 720.622,
+   "speechStart": 718.526,
+   "speechEnd": 720.622,
+   "words": [
+    [
+     "And",
+     718.526,
+     718.542
+    ],
+    [
+     "then",
+     718.622,
+     718.702
+    ],
+    [
+     "I",
+     718.782,
+     718.862
+    ],
+    [
+     "looked",
+     718.942,
+     719.102
+    ],
+    [
+     "at",
+     719.142,
+     719.182
+    ],
+    [
+     "the",
+     719.262,
+     719.342
+    ],
+    [
+     "two",
+     719.422,
+     719.502
+    ],
+    [
+     "people",
+     719.662,
+     719.902
+    ],
+    [
+     "who",
+     719.982,
+     720.062
+    ],
+    [
+     "stayed.",
+     720.142,
+     720.622
+    ]
+   ]
+  },
+  {
+   "id": "11.4",
+   "take": "11",
+   "scene": "SC 11",
+   "idx": 4,
+   "speaker": "TY",
+   "raw": "[soft] The friend who waited outside my party in one shoe. [pause] And the sister who came back for me in the rain.",
+   "text": "The friend who waited outside my party in one shoe. And the sister who came back for me in the rain.",
+   "clip": [
+    20.8,
+    27.04
+   ],
+   "start": 720.622,
+   "end": 726.862,
+   "speechStart": 721.326,
+   "speechEnd": 726.862,
+   "words": [
+    [
+     "The",
+     721.326,
+     721.342
+    ],
+    [
+     "friend",
+     721.422,
+     721.662
+    ],
+    [
+     "who",
+     721.742,
+     721.822
+    ],
+    [
+     "waited",
+     721.902,
+     722.142
+    ],
+    [
+     "outside",
+     722.342,
+     722.542
+    ],
+    [
+     "my",
+     722.662,
+     722.782
+    ],
+    [
+     "party",
+     722.942,
+     723.102
+    ],
+    [
+     "in",
+     723.182,
+     723.262
+    ],
+    [
+     "one",
+     723.342,
+     723.502
+    ],
+    [
+     "shoe.",
+     723.582,
+     723.982
+    ],
+    [
+     "And",
+     724.686,
+     724.702
+    ],
+    [
+     "the",
+     724.782,
+     724.862
+    ],
+    [
+     "sister",
+     724.942,
+     725.262
+    ],
+    [
+     "who",
+     725.342,
+     725.422
+    ],
+    [
+     "came",
+     725.502,
+     725.662
+    ],
+    [
+     "back",
+     725.742,
+     725.902
+    ],
+    [
+     "for",
+     725.982,
+     726.062
+    ],
+    [
+     "me",
+     726.102,
+     726.142
+    ],
+    [
+     "in",
+     726.222,
+     726.302
+    ],
+    [
+     "the",
+     726.342,
+     726.382
+    ],
+    [
+     "rain.",
+     726.462,
+     726.862
+    ]
+   ]
+  },
+  {
+   "id": "11.5",
+   "take": "11",
+   "scene": "SC 11",
+   "idx": 5,
+   "speaker": "PICKLE",
+   "raw": "[encouraging] Whatever you pick, Ty... I'll still share my umbrella with you.",
+   "text": "Whatever you pick, Ty... I'll still share my umbrella with you.",
+   "clip": [
+    27.04,
+    31.439999999999998
+   ],
+   "start": 726.862,
+   "end": 731.262,
+   "speechStart": 727.342,
+   "speechEnd": 731.262,
+   "words": [
+    [
+     "Whatever",
+     727.342,
+     727.662
+    ],
+    [
+     "you",
+     727.742,
+     727.822
+    ],
+    [
+     "pick,",
+     727.902,
+     728.142
+    ],
+    [
+     "Ty...",
+     728.342,
+     729.182
+    ],
+    [
+     "I'll",
+     729.222,
+     729.422
+    ],
+    [
+     "still",
+     729.542,
+     729.662
+    ],
+    [
+     "share",
+     729.742,
+     729.902
+    ],
+    [
+     "my",
+     729.982,
+     730.062
+    ],
+    [
+     "umbrella",
+     730.142,
+     730.382
+    ],
+    [
+     "with",
+     730.462,
+     730.622
+    ],
+    [
+     "you.",
+     730.702,
+     731.262
+    ]
+   ]
+  },
+  {
+   "id": "11.6",
+   "take": "11",
+   "scene": "SC 11",
+   "idx": 6,
+   "speaker": "MIA",
+   "raw": "[softer than usual] ...Yeah. Me too. [pause] Don't make it weird.",
+   "text": "...Yeah. Me too. Don't make it weird.",
+   "clip": [
+    31.439999999999998,
+    34.672
+   ],
+   "start": 731.262,
+   "end": 734.494,
+   "speechStart": 731.342,
+   "speechEnd": 734.494,
+   "words": [
+    [
+     "...Yeah.",
+     731.342,
+     731.902
+    ],
+    [
+     "Me",
+     732.142,
+     732.222
+    ],
+    [
+     "too.",
+     732.302,
+     732.822
+    ],
+    [
+     "Don't",
+     733.23,
+     733.342
+    ],
+    [
+     "make",
+     733.422,
+     733.502
+    ],
+    [
+     "it",
+     733.582,
+     733.662
+    ],
+    [
+     "weird.",
+     733.702,
+     734.494
+    ]
+   ]
+  },
+  {
+   "id": "11.7",
+   "take": "11",
+   "scene": "SC 11",
+   "idx": 7,
+   "speaker": "TY",
+   "raw": "[determined, shouts] RESET!",
+   "text": "RESET!",
+   "clip": [
+    34.672,
+    35.68
+   ],
+   "start": 734.494,
+   "end": 735.502,
+   "speechStart": 735.134,
+   "speechEnd": 735.502,
+   "words": [
+    [
+     "RESET!",
+     735.134,
+     735.502
+    ]
+   ]
+  },
+  {
+   "id": "12.0",
+   "take": "12",
+   "scene": "SC 12",
+   "idx": 0,
+   "speaker": "TY",
+   "raw": "[warm] The next morning, everything was normal again.",
+   "text": "The next morning, everything was normal again.",
+   "clip": [
+    0.0,
+    2.96
+   ],
+   "start": 736.402,
+   "end": 739.362,
+   "speechStart": 736.562,
+   "speechEnd": 739.362,
+   "words": [
+    [
+     "The",
+     736.562,
+     736.602
+    ],
+    [
+     "next",
+     736.642,
+     736.882
+    ],
+    [
+     "morning,",
+     736.962,
+     737.562
+    ],
+    [
+     "everything",
+     737.762,
+     738.322
+    ],
+    [
+     "was",
+     738.402,
+     738.562
+    ],
+    [
+     "normal",
+     738.722,
+     738.882
+    ],
+    [
+     "again.",
+     739.082,
+     739.362
+    ]
+   ]
+  },
+  {
+   "id": "12.1",
+   "take": "12",
+   "scene": "SC 12",
+   "idx": 1,
+   "speaker": "ANCHOR",
+   "raw": "[cheerful] Good news, everyone! Robux are once again just a fun game currency. And bread is back to two dollars!",
+   "text": "Good news, everyone! Robux are once again just a fun game currency. And bread is back to two dollars!",
+   "clip": [
+    2.96,
+    11.440000000000001
+   ],
+   "start": 739.362,
+   "end": 747.842,
+   "speechStart": 739.762,
+   "speechEnd": 747.842,
+   "words": [
+    [
+     "Good",
+     739.762,
+     739.922
+    ],
+    [
+     "news,",
+     740.002,
+     740.362
+    ],
+    [
+     "everyone!",
+     740.402,
+     740.962
+    ],
+    [
+     "Robux",
+     741.442,
+     741.922
+    ],
+    [
+     "are",
+     742.002,
+     742.082
+    ],
+    [
+     "once",
+     742.162,
+     742.322
+    ],
+    [
+     "again",
+     742.402,
+     742.722
+    ],
+    [
+     "just",
+     742.882,
+     743.042
+    ],
+    [
+     "a",
+     743.082,
+     743.122
+    ],
+    [
+     "fun",
+     743.362,
+     743.682
+    ],
+    [
+     "game",
+     743.762,
+     744.082
+    ],
+    [
+     "currency.",
+     744.162,
+     744.802
+    ],
+    [
+     "And",
+     745.202,
+     745.362
+    ],
+    [
+     "bread",
+     745.442,
+     745.762
+    ],
+    [
+     "is",
+     745.922,
+     746.082
+    ],
+    [
+     "back",
+     746.202,
+     746.322
+    ],
+    [
+     "to",
+     746.442,
+     746.562
+    ],
+    [
+     "two",
+     746.682,
+     746.802
+    ],
+    [
+     "dollars!",
+     746.882,
+     747.842
+    ]
+   ]
+  },
+  {
+   "id": "12.2",
+   "take": "12",
+   "scene": "SC 12",
+   "idx": 2,
+   "speaker": "TY",
+   "raw": "Dad got paid in real dollars. Mom used her coupons. And Grandma changed her password. [pause] For real this time.",
+   "text": "Dad got paid in real dollars. Mom used her coupons. And Grandma changed her password. For real this time.",
+   "clip": [
+    11.440000000000001,
+    18.8
+   ],
+   "start": 747.842,
+   "end": 755.202,
+   "speechStart": 747.842,
+   "speechEnd": 755.202,
+   "words": [
+    [
+     "Dad",
+     747.842,
+     748.082
+    ],
+    [
+     "got",
+     748.162,
+     748.402
+    ],
+    [
+     "paid",
+     748.522,
+     748.642
+    ],
+    [
+     "in",
+     748.722,
+     748.802
+    ],
+    [
+     "real",
+     748.882,
+     749.122
+    ],
+    [
+     "dollars.",
+     749.202,
+     749.882
+    ],
+    [
+     "Mom",
+     750.082,
+     750.322
+    ],
+    [
+     "used",
+     750.402,
+     750.562
+    ],
+    [
+     "her",
+     750.642,
+     750.722
+    ],
+    [
+     "coupons.",
+     750.802,
+     751.522
+    ],
+    [
+     "And",
+     751.562,
+     751.602
+    ],
+    [
+     "Grandma",
+     751.682,
+     752.162
+    ],
+    [
+     "changed",
+     752.242,
+     752.482
+    ],
+    [
+     "her",
+     752.562,
+     752.642
+    ],
+    [
+     "password.",
+     752.722,
+     753.482
+    ],
+    [
+     "For",
+     753.842,
+     753.922
+    ],
+    [
+     "real",
+     754.002,
+     754.242
+    ],
+    [
+     "this",
+     754.322,
+     754.402
+    ],
+    [
+     "time.",
+     754.482,
+     755.202
+    ]
+   ]
+  },
+  {
+   "id": "12.3",
+   "take": "12",
+   "scene": "SC 12",
+   "idx": 3,
+   "speaker": "DAD",
+   "raw": "[joyful, sipping] The coffee machine is FREE again!",
+   "text": "The coffee machine is FREE again!",
+   "clip": [
+    18.8,
+    21.84
+   ],
+   "start": 755.202,
+   "end": 758.242,
+   "speechStart": 756.002,
+   "speechEnd": 758.242,
+   "words": [
+    [
+     "The",
+     756.002,
+     756.082
+    ],
+    [
+     "coffee",
+     756.162,
+     756.482
+    ],
+    [
+     "machine",
+     756.562,
+     756.882
+    ],
+    [
+     "is",
+     757.002,
+     757.122
+    ],
+    [
+     "FREE",
+     757.202,
+     757.442
+    ],
+    [
+     "again!",
+     757.522,
+     758.242
+    ]
+   ]
+  },
+  {
+   "id": "12.4",
+   "take": "12",
+   "scene": "SC 12",
+   "idx": 4,
+   "speaker": "TY",
+   "raw": "And Grandma's stream still gets two million viewers. [pause] She does charity streams now.",
+   "text": "And Grandma's stream still gets two million viewers. She does charity streams now.",
+   "clip": [
+    21.84,
+    27.28
+   ],
+   "start": 758.242,
+   "end": 763.682,
+   "speechStart": 758.242,
+   "speechEnd": 763.682,
+   "words": [
+    [
+     "And",
+     758.242,
+     758.402
+    ],
+    [
+     "Grandma's",
+     758.522,
+     758.882
+    ],
+    [
+     "stream",
+     759.082,
+     759.282
+    ],
+    [
+     "still",
+     759.442,
+     759.762
+    ],
+    [
+     "gets",
+     759.962,
+     760.162
+    ],
+    [
+     "two",
+     760.242,
+     760.322
+    ],
+    [
+     "million",
+     760.482,
+     760.802
+    ],
+    [
+     "viewers.",
+     760.882,
+     761.922
+    ],
+    [
+     "She",
+     762.002,
+     762.082
+    ],
+    [
+     "does",
+     762.202,
+     762.322
+    ],
+    [
+     "charity",
+     762.402,
+     762.642
+    ],
+    [
+     "streams",
+     762.722,
+     763.042
+    ],
+    [
+     "now.",
+     763.122,
+     763.682
+    ]
+   ]
+  },
+  {
+   "id": "12.5",
+   "take": "12",
+   "scene": "SC 12",
+   "idx": 5,
+   "speaker": "GRANDMA",
+   "raw": "[proud] It's \"password three\"!",
+   "text": "It's \"password three\"!",
+   "clip": [
+    27.28,
+    29.36
+   ],
+   "start": 763.682,
+   "end": 765.762,
+   "speechStart": 763.762,
+   "speechEnd": 765.762,
+   "words": [
+    [
+     "It's",
+     763.762,
+     764.082
+    ],
+    [
+     "\"password",
+     764.295,
+     764.722
+    ],
+    [
+     "three\"!",
+     764.962,
+     765.762
+    ]
+   ]
+  },
+  {
+   "id": "12.6",
+   "take": "12",
+   "scene": "SC 12",
+   "idx": 6,
+   "speaker": "TY",
+   "raw": "[sighs] ...We're working on it.",
+   "text": "...We're working on it.",
+   "clip": [
+    29.36,
+    31.68
+   ],
+   "start": 765.762,
+   "end": 768.082,
+   "speechStart": 766.669,
+   "speechEnd": 768.082,
+   "words": [
+    [
+     "...We're",
+     766.669,
+     766.882
+    ],
+    [
+     "working",
+     767.042,
+     767.202
+    ],
+    [
+     "on",
+     767.282,
+     767.362
+    ],
+    [
+     "it.",
+     767.442,
+     768.082
+    ]
+   ]
+  },
+  {
+   "id": "12.7",
+   "take": "12",
+   "scene": "SC 12",
+   "idx": 7,
+   "speaker": "MIA",
+   "raw": "[content] And my four hundred and twelve hats are worth exactly nothing again. [pause] I've never been happier.",
+   "text": "And my four hundred and twelve hats are worth exactly nothing again. I've never been happier.",
+   "clip": [
+    31.68,
+    37.99999999999999
+   ],
+   "start": 768.082,
+   "end": 774.402,
+   "speechStart": 768.21,
+   "speechEnd": 774.402,
+   "words": [
+    [
+     "And",
+     768.21,
+     768.242
+    ],
+    [
+     "my",
+     768.362,
+     768.482
+    ],
+    [
+     "four",
+     768.562,
+     768.722
+    ],
+    [
+     "hundred",
+     768.802,
+     769.042
+    ],
+    [
+     "and",
+     769.122,
+     769.202
+    ],
+    [
+     "twelve",
+     769.282,
+     769.442
+    ],
+    [
+     "hats",
+     769.522,
+     769.922
+    ],
+    [
+     "are",
+     770.002,
+     770.082
+    ],
+    [
+     "worth",
+     770.162,
+     770.402
+    ],
+    [
+     "exactly",
+     770.562,
+     771.122
+    ],
+    [
+     "nothing",
+     771.282,
+     771.602
+    ],
+    [
+     "again.",
+     771.682,
+     772.562
+    ],
+    [
+     "I've",
+     772.642,
+     772.962
+    ],
+    [
+     "never",
+     773.042,
+     773.282
+    ],
+    [
+     "been",
+     773.362,
+     773.442
+    ],
+    [
+     "happier.",
+     773.522,
+     774.402
+    ]
+   ]
+  },
+  {
+   "id": "12.8",
+   "take": "12",
+   "scene": "SC 12",
+   "idx": 8,
+   "speaker": "TY",
+   "raw": "And me? [pause] I'm broke again. [laughs] Totally, completely broke.",
+   "text": "And me? I'm broke again. Totally, completely broke.",
+   "clip": [
+    37.99999999999999,
+    43.519999999999996
+   ],
+   "start": 774.402,
+   "end": 779.922,
+   "speechStart": 774.402,
+   "speechEnd": 779.922,
+   "words": [
+    [
+     "And",
+     774.402,
+     774.562
+    ],
+    [
+     "me?",
+     774.722,
+     775.522
+    ],
+    [
+     "I'm",
+     775.602,
+     775.762
+    ],
+    [
+     "broke",
+     775.802,
+     776.002
+    ],
+    [
+     "again.",
+     776.082,
+     776.882
+    ],
+    [
+     "Totally,",
+     777.722,
+     778.322
+    ],
+    [
+     "completely",
+     778.442,
+     779.042
+    ],
+    [
+     "broke.",
+     779.122,
+     779.922
+    ]
+   ]
+  },
+  {
+   "id": "12.9",
+   "take": "12",
+   "scene": "SC 12",
+   "idx": 9,
+   "speaker": "PICKLE",
+   "raw": "[warm] Here. One Robux. For your next mansion.",
+   "text": "Here. One Robux. For your next mansion.",
+   "clip": [
+    43.519999999999996,
+    46.879999999999995
+   ],
+   "start": 779.922,
+   "end": 783.282,
+   "speechStart": 780.002,
+   "speechEnd": 783.282,
+   "words": [
+    [
+     "Here.",
+     780.002,
+     780.722
+    ],
+    [
+     "One",
+     780.802,
+     780.882
+    ],
+    [
+     "Robux.",
+     780.962,
+     781.922
+    ],
+    [
+     "For",
+     781.962,
+     782.002
+    ],
+    [
+     "your",
+     782.082,
+     782.162
+    ],
+    [
+     "next",
+     782.242,
+     782.402
+    ],
+    [
+     "mansion.",
+     782.482,
+     783.282
+    ]
+   ]
+  },
+  {
+   "id": "12.10",
+   "take": "12",
+   "scene": "SC 12",
+   "idx": 10,
+   "speaker": "TY",
+   "raw": "[touched] ...Thanks, Pickle. [pause] I'm spending it on a shoe. For you.",
+   "text": "...Thanks, Pickle. I'm spending it on a shoe. For you.",
+   "clip": [
+    46.879999999999995,
+    50.8
+   ],
+   "start": 783.282,
+   "end": 787.202,
+   "speechStart": 783.346,
+   "speechEnd": 787.202,
+   "words": [
+    [
+     "...Thanks,",
+     783.346,
+     783.682
+    ],
+    [
+     "Pickle.",
+     783.722,
+     784.162
+    ],
+    [
+     "I'm",
+     784.786,
+     784.882
+    ],
+    [
+     "spending",
+     784.962,
+     785.202
+    ],
+    [
+     "it",
+     785.282,
+     785.362
+    ],
+    [
+     "on",
+     785.402,
+     785.442
+    ],
+    [
+     "a",
+     785.522,
+     785.602
+    ],
+    [
+     "shoe.",
+     785.682,
+     786.402
+    ],
+    [
+     "For",
+     786.482,
+     786.562
+    ],
+    [
+     "you.",
+     786.722,
+     787.202
+    ]
+   ]
+  },
+  {
+   "id": "12.11",
+   "take": "12",
+   "scene": "SC 12",
+   "idx": 11,
+   "speaker": "PICKLE",
+   "raw": "[gasps happily] A SHOE?!",
+   "text": "A SHOE?!",
+   "clip": [
+    50.8,
+    52.72
+   ],
+   "start": 787.202,
+   "end": 789.122,
+   "speechStart": 787.895,
+   "speechEnd": 789.122,
+   "words": [
+    [
+     "A",
+     787.895,
+     787.922
+    ],
+    [
+     "SHOE?!",
+     788.162,
+     789.122
+    ]
+   ]
+  },
+  {
+   "id": "12.12",
+   "take": "12",
+   "scene": "SC 12",
+   "idx": 12,
+   "speaker": "MIA",
+   "raw": "[grudging] For the record... you were a pretty okay millionaire. [pause] For like a day.",
+   "text": "For the record... you were a pretty okay millionaire. For like a day.",
+   "clip": [
+    52.72,
+    57.919999999999995
+   ],
+   "start": 789.122,
+   "end": 794.322,
+   "speechStart": 789.202,
+   "speechEnd": 794.322,
+   "words": [
+    [
+     "For",
+     789.202,
+     789.282
+    ],
+    [
+     "the",
+     789.362,
+     789.442
+    ],
+    [
+     "record...",
+     789.522,
+     790.562
+    ],
+    [
+     "you",
+     790.642,
+     790.722
+    ],
+    [
+     "were",
+     790.802,
+     790.882
+    ],
+    [
+     "a",
+     790.962,
+     791.042
+    ],
+    [
+     "pretty",
+     791.122,
+     791.442
+    ],
+    [
+     "okay",
+     791.522,
+     791.762
+    ],
+    [
+     "millionaire.",
+     791.842,
+     792.882
+    ],
+    [
+     "For",
+     792.962,
+     793.042
+    ],
+    [
+     "like",
+     793.122,
+     793.282
+    ],
+    [
+     "a",
+     793.442,
+     793.522
+    ],
+    [
+     "day.",
+     793.602,
+     794.322
+    ]
+   ]
+  },
+  {
+   "id": "12.13",
+   "take": "12",
+   "scene": "SC 12",
+   "idx": 13,
+   "speaker": "TY",
+   "raw": "[smiling] Thanks, Mia.",
+   "text": "Thanks, Mia.",
+   "clip": [
+    57.919999999999995,
+    59.199999999999996
+   ],
+   "start": 794.322,
+   "end": 795.602,
+   "speechStart": 794.562,
+   "speechEnd": 795.602,
+   "words": [
+    [
+     "Thanks,",
+     794.562,
+     794.882
+    ],
+    [
+     "Mia.",
+     794.922,
+     795.602
+    ]
+   ]
+  },
+  {
+   "id": "12.14",
+   "take": "12",
+   "scene": "SC 12",
+   "idx": 14,
+   "speaker": "ANCHOR",
+   "raw": "[breaking news] This just in! Starting tomorrow... EVERY video game coin becomes real money!",
+   "text": "This just in! Starting tomorrow... EVERY video game coin becomes real money!",
+   "clip": [
+    59.199999999999996,
+    65.2
+   ],
+   "start": 795.602,
+   "end": 801.602,
+   "speechStart": 795.682,
+   "speechEnd": 801.602,
+   "words": [
+    [
+     "This",
+     795.682,
+     795.922
+    ],
+    [
+     "just",
+     796.082,
+     796.242
+    ],
+    [
+     "in!",
+     796.402,
+     796.762
+    ],
+    [
+     "Starting",
+     796.962,
+     797.362
+    ],
+    [
+     "tomorrow...",
+     797.442,
+     798.322
+    ],
+    [
+     "EVERY",
+     798.482,
+     798.722
+    ],
+    [
+     "video",
+     798.802,
+     799.122
+    ],
+    [
+     "game",
+     799.282,
+     799.442
+    ],
+    [
+     "coin",
+     799.602,
+     799.842
+    ],
+    [
+     "becomes",
+     799.922,
+     800.322
+    ],
+    [
+     "real",
+     800.562,
+     800.802
+    ],
+    [
+     "money!",
+     800.962,
+     801.602
+    ]
+   ],
+   "beatAfter": 1.0
+  },
+  {
+   "id": "12.15",
+   "take": "12",
+   "scene": "SC 12",
+   "idx": 15,
+   "speaker": "PICKLE",
+   "raw": "[excited] I have twelve of those too!",
+   "text": "I have twelve of those too!",
+   "clip": [
+    65.2,
+    67.27999999999999
+   ],
+   "start": 802.602,
+   "end": 804.682,
+   "speechStart": 802.682,
+   "speechEnd": 804.682,
+   "words": [
+    [
+     "I",
+     802.682,
+     802.762
+    ],
+    [
+     "have",
+     802.842,
+     802.922
+    ],
+    [
+     "twelve",
+     803.002,
+     803.322
+    ],
+    [
+     "of",
+     803.362,
+     803.402
+    ],
+    [
+     "those",
+     803.482,
+     803.722
+    ],
+    [
+     "too!",
+     803.802,
+     804.682
+    ]
+   ]
+  },
+  {
+   "id": "12.16",
+   "take": "12",
+   "scene": "SC 12",
+   "idx": 16,
+   "speaker": "TY",
+   "raw": "[deadpan, to camera] ...Oh no.",
+   "text": "...Oh no.",
+   "clip": [
+    67.27999999999999,
+    68.63999999999999
+   ],
+   "start": 804.682,
+   "end": 806.042,
+   "speechStart": 804.755,
+   "speechEnd": 806.042,
+   "words": [
+    [
+     "...Oh",
+     804.755,
+     804.922
+    ],
+    [
+     "no.",
+     805.162,
+     806.042
+    ]
+   ]
+  },
+  {
+   "id": "13.0",
+   "take": "13",
+   "scene": "SC 13",
+   "idx": 0,
+   "speaker": "TY",
+   "raw": "[to camera, upbeat] So... what would YOU buy if Robux became real money? Tell me in the comments!",
+   "text": "So... what would YOU buy if Robux became real money? Tell me in the comments!",
+   "clip": [
+    0.0,
+    5.48
+   ],
+   "start": 806.942,
+   "end": 812.422,
+   "speechStart": 807.182,
+   "speechEnd": 812.422,
+   "words": [
+    [
+     "So...",
+     807.182,
+     807.982
+    ],
+    [
+     "what",
+     808.062,
+     808.142
+    ],
+    [
+     "would",
+     808.302,
+     808.462
+    ],
+    [
+     "YOU",
+     808.542,
+     808.702
+    ],
+    [
+     "buy",
+     808.782,
+     808.942
+    ],
+    [
+     "if",
+     809.022,
+     809.182
+    ],
+    [
+     "Robux",
+     809.262,
+     809.582
+    ],
+    [
+     "became",
+     809.662,
+     809.902
+    ],
+    [
+     "real",
+     810.062,
+     810.302
+    ],
+    [
+     "money?",
+     810.382,
+     811.022
+    ],
+    [
+     "Tell",
+     811.102,
+     811.182
+    ],
+    [
+     "me",
+     811.262,
+     811.342
+    ],
+    [
+     "in",
+     811.382,
+     811.422
+    ],
+    [
+     "the",
+     811.462,
+     811.502
+    ],
+    [
+     "comments!",
+     811.582,
+     812.422
+    ]
+   ]
+  },
+  {
+   "id": "13.1",
+   "take": "13",
+   "scene": "SC 13",
+   "idx": 1,
+   "speaker": "TY",
+   "raw": "And remember: never share your password. [pause] Not even \"password three.\"",
+   "text": "And remember: never share your password. Not even \"password three.\"",
+   "clip": [
+    5.48,
+    10.719999999999999
+   ],
+   "start": 812.422,
+   "end": 817.662,
+   "speechStart": 812.422,
+   "speechEnd": 817.662,
+   "words": [
+    [
+     "And",
+     812.422,
+     812.462
+    ],
+    [
+     "remember:",
+     812.542,
+     813.422
+    ],
+    [
+     "never",
+     813.502,
+     813.822
+    ],
+    [
+     "share",
+     813.982,
+     814.142
+    ],
+    [
+     "your",
+     814.222,
+     814.302
+    ],
+    [
+     "password.",
+     814.382,
+     814.889
+    ],
+    [
+     "Not",
+     815.622,
+     815.742
+    ],
+    [
+     "even",
+     815.902,
+     816.062
+    ],
+    [
+     "\"password",
+     816.222,
+     816.702
+    ],
+    [
+     "three.\"",
+     816.862,
+     817.662
+    ]
+   ]
+  }
+ ],
+ "takes": [
+  {
+   "id": "01",
+   "scene": "SC 01",
+   "start": 0.35,
+   "end": 31.37,
+   "file": "voice/takes/take01.mp3"
+  },
+  {
+   "id": "02",
+   "scene": "SC 02",
+   "start": 32.27,
+   "end": 100.43,
+   "file": "voice/takes/take02.mp3"
+  },
+  {
+   "id": "03",
+   "scene": "SC 03",
+   "start": 101.33,
+   "end": 163.93,
+   "file": "voice/takes/take03.mp3"
+  },
+  {
+   "id": "04",
+   "scene": "SC 04",
+   "start": 164.83,
+   "end": 243.312,
+   "file": "voice/takes/take04.mp3"
+  },
+  {
+   "id": "05",
+   "scene": "SC 05",
+   "start": 244.212,
+   "end": 311.492,
+   "file": "voice/takes/take05.mp3"
+  },
+  {
+   "id": "06",
+   "scene": "SC 06",
+   "start": 312.392,
+   "end": 344.472,
+   "file": "voice/takes/take06.mp3"
+  },
+  {
+   "id": "06b",
+   "scene": "SC 06b",
+   "start": 345.372,
+   "end": 392.652,
+   "file": "voice/takes/take06b.mp3"
+  },
+  {
+   "id": "07",
+   "scene": "SC 07",
+   "start": 393.552,
+   "end": 445.792,
+   "file": "voice/takes/take07.mp3"
+  },
+  {
+   "id": "08a",
+   "scene": "SC 08",
+   "start": 446.692,
+   "end": 549.572,
+   "file": "voice/takes/take08a.mp3"
+  },
+  {
+   "id": "08b",
+   "scene": "SC 08",
+   "start": 549.922,
+   "end": 576.722,
+   "file": "voice/takes/take08b.mp3"
+  },
+  {
+   "id": "09",
+   "scene": "SC 09",
+   "start": 577.622,
+   "end": 618.982,
+   "file": "voice/takes/take09.mp3"
+  },
+  {
+   "id": "10",
+   "scene": "SC 10",
+   "start": 619.882,
+   "end": 698.922,
+   "file": "voice/takes/take10.mp3"
+  },
+  {
+   "id": "11",
+   "scene": "SC 11",
+   "start": 699.822,
+   "end": 735.502,
+   "file": "voice/takes/take11.mp3"
+  },
+  {
+   "id": "12",
+   "scene": "SC 12",
+   "start": 736.402,
+   "end": 806.042,
+   "file": "voice/takes/take12.mp3"
+  },
+  {
+   "id": "13",
+   "scene": "SC 13",
+   "start": 806.942,
+   "end": 817.662,
+   "file": "voice/takes/take13.mp3"
+  }
+ ],
+ "scenes": {
+  "SC 01": {
+   "start": 0.35,
+   "end": 31.37
+  },
+  "SC 02": {
+   "start": 32.27,
+   "end": 100.43
+  },
+  "SC 03": {
+   "start": 101.33,
+   "end": 163.93
+  },
+  "SC 04": {
+   "start": 164.83,
+   "end": 243.312
+  },
+  "SC 05": {
+   "start": 244.212,
+   "end": 311.492
+  },
+  "SC 06": {
+   "start": 312.392,
+   "end": 344.472
+  },
+  "SC 06b": {
+   "start": 345.372,
+   "end": 392.652
+  },
+  "SC 07": {
+   "start": 393.552,
+   "end": 445.792
+  },
+  "SC 08": {
+   "start": 446.692,
+   "end": 576.722
+  },
+  "SC 09": {
+   "start": 577.622,
+   "end": 618.982
+  },
+  "SC 10": {
+   "start": 619.882,
+   "end": 698.922
+  },
+  "SC 11": {
+   "start": 699.822,
+   "end": 735.502
+  },
+  "SC 12": {
+   "start": 736.402,
+   "end": 806.042
+  },
+  "SC 13": {
+   "start": 806.942,
+   "end": 817.662
+  }
+ }
+}
