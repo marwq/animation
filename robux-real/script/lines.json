@@ -1,0 +1,1332 @@
+[
+ {
+  "scene": "SC 01",
+  "speaker": "TY",
+  "text": "[excited, showing off] What if Robux... became REAL money?",
+  "estStart": 0,
+  "estDur": 2.78
+ },
+ {
+  "scene": "SC 01",
+  "speaker": "TY",
+  "text": "[proud] Because for exactly one week... I was the richest kid on the planet.",
+  "estStart": 2.78,
+  "estDur": 5.33
+ },
+ {
+  "scene": "SC 01",
+  "speaker": "TY",
+  "text": "[giddy] I had a gold hoverboard. A robot butler. And a swimming pool full of COINS.",
+  "estStart": 8.11,
+  "estDur": 5.75
+ },
+ {
+  "scene": "SC 01",
+  "speaker": "THIRTY",
+  "text": "[nasal, fast] Marketplace fee! Thirty percent!",
+  "estStart": 13.86,
+  "estDur": 1.75
+ },
+ {
+  "scene": "SC 01",
+  "speaker": "TY",
+  "text": "[annoyed] Not now, Thirty Percent Guy!",
+  "estStart": 15.62,
+  "estDur": 2.12
+ },
+ {
+  "scene": "SC 01",
+  "speaker": "SYSTEM",
+  "text": "[alarm, robotic] Warning. Robux value: minus ninety-nine percent.",
+  "estStart": 17.74,
+  "estDur": 2.48
+ },
+ {
+  "scene": "SC 01",
+  "speaker": "TY",
+  "text": "[panicked] No, no, no, no— [screams] NOOO!",
+  "estStart": 20.22,
+  "estDur": 2.12
+ },
+ {
+  "scene": "SC 01",
+  "speaker": "TY",
+  "text": "[deadpan] ...Yeah. It went great. [pause] Okay. Rewind. Monday morning.",
+  "estStart": 22.34,
+  "estDur": 4.01
+ },
+ {
+  "scene": "SC 02",
+  "speaker": "TY",
+  "text": "[cheerful, storyteller] Hi. I'm Ty. I'm twelve. And I am the cheapest person you will ever meet.",
+  "estStart": 27.85,
+  "estDur": 5.75
+ },
+ {
+  "scene": "SC 02",
+  "speaker": "TY",
+  "text": "I have never spent a single Robux. Not on a hat. Not on a pet. Not even on a game pass.",
+  "estStart": 33.6,
+  "estDur": 7.94
+ },
+ {
+  "scene": "SC 02",
+  "speaker": "TY",
+  "text": "[proud, deadpan] My avatar still wears the free starter shirt. [pause] It's not a look. It's a lifestyle.",
+  "estStart": 41.54,
+  "estDur": 6.25
+ },
+ {
+  "scene": "SC 02",
+  "speaker": "TY",
+  "text": "I eat the free samples at the supermarket for lunch. I reuse birthday wrapping paper. I once returned a gift... to my own grandma.",
+  "estStart": 47.79,
+  "estDur": 9.33
+ },
+ {
+  "scene": "SC 02",
+  "speaker": "TY",
+  "text": "[whispers, secretive] Because I had a plan. [pause] The AFK farm.",
+  "estStart": 57.12,
+  "estDur": 3.71
+ },
+ {
+  "scene": "SC 02",
+  "speaker": "TY",
+  "text": "In second grade, I taped down my spacebar in a clicker game... [pause] and I never turned it off.",
+  "estStart": 60.83,
+  "estDur": 7.65
+ },
+ {
+  "scene": "SC 02",
+  "speaker": "TY",
+  "text": "[amazed] Four years later, my computer is basically a space heater. [pause] And my balance is... three MILLION Robux.",
+  "estStart": 68.47,
+  "estDur": 7.28
+ },
+ {
+  "scene": "SC 02",
+  "speaker": "MIA",
+  "text": "[sarcastic, bored] Wow. Three million pixels. Can you buy groceries with pixels?",
+  "estStart": 75.75,
+  "estDur": 3.94
+ },
+ {
+  "scene": "SC 02",
+  "speaker": "TY",
+  "text": "That's my sister, Mia. She spent every Robux she ever had on hats.",
+  "estStart": 79.69,
+  "estDur": 5.03
+ },
+ {
+  "scene": "SC 02",
+  "speaker": "MIA",
+  "text": "[offended] Four hundred and twelve hats. It's called FASHION.",
+  "estStart": 84.72,
+  "estDur": 3.21
+ },
+ {
+  "scene": "SC 02",
+  "speaker": "TY",
+  "text": "And this is my best friend, Pickle.",
+  "estStart": 87.93,
+  "estDur": 2.85
+ },
+ {
+  "scene": "SC 02",
+  "speaker": "TY",
+  "text": "[aside] He lives next door. He has never once used a door.",
+  "estStart": 90.77,
+  "estDur": 4.3
+ },
+ {
+  "scene": "SC 02",
+  "speaker": "PICKLE",
+  "text": "[goofy, proud] I have twelve Robux! [pause] I'm saving up for a shoe.",
+  "estStart": 95.07,
+  "estDur": 4.44
+ },
+ {
+  "scene": "SC 03",
+  "speaker": "ANCHOR",
+  "text": "[breaking news, urgent] Breaking news! Starting today, Robux are officially REAL money!",
+  "estStart": 99.51,
+  "estDur": 3.57
+ },
+ {
+  "scene": "SC 03",
+  "speaker": "ANCHOR",
+  "text": "One Robux equals one dollar. Effective... right now!",
+  "estStart": 103.08,
+  "estDur": 3.51
+ },
+ {
+  "scene": "SC 03",
+  "speaker": "TY",
+  "text": "[stunned whisper] One Robux... one dollar. [pause] Three million Robux...",
+  "estStart": 106.59,
+  "estDur": 3.95
+ },
+ {
+  "scene": "SC 03",
+  "speaker": "TY",
+  "text": "[screams with joy] I'M A MILLIONAIRE!",
+  "estStart": 110.54,
+  "estDur": 1.39
+ },
+ {
+  "scene": "SC 03",
+  "speaker": "ANCHOR",
+  "text": "[excited] Across the world, gamers are celebrating! Parents are confused! And one man just found forty thousand Robux in his son's old tablet!",
+  "estStart": 111.93,
+  "estDur": 8.3
+ },
+ {
+  "scene": "SC 03",
+  "speaker": "TY",
+  "text": "[fast, laughing] Kids became richer than their parents overnight. My neighbor's six-year-old bought the ice cream truck. [pause] The whole truck.",
+  "estStart": 120.23,
+  "estDur": 7.35
+ },
+ {
+  "scene": "SC 03",
+  "speaker": "MIA",
+  "text": "[horrified] Wait. Then my hats... Can I SELL my hats?!",
+  "estStart": 127.57,
+  "estDur": 3.87
+ },
+ {
+  "scene": "SC 03",
+  "speaker": "SYSTEM",
+  "text": "[cheerful UI voice] Sorry! All sales are final. No refunds!",
+  "estStart": 131.45,
+  "estDur": 2.85
+ },
+ {
+  "scene": "SC 03",
+  "speaker": "MIA",
+  "text": "[screams] NOOOOO!",
+  "estStart": 134.29,
+  "estDur": 0.66
+ },
+ {
+  "scene": "SC 03",
+  "speaker": "DAD",
+  "text": "[confused] Kids? Why is the ceiling raining money?",
+  "estStart": 134.95,
+  "estDur": 2.85
+ },
+ {
+  "scene": "SC 03",
+  "speaker": "TY",
+  "text": "[fast, narrating] Dad never played Roblox in his life. Zero Robux. Mom had five, from a gift card in 2019.",
+  "estStart": 137.8,
+  "estDur": 6.85
+ },
+ {
+  "scene": "SC 03",
+  "speaker": "MOM",
+  "text": "[calm, pleased] Five dollars. [pause] I'll take it.",
+  "estStart": 144.65,
+  "estDur": 2.62
+ },
+ {
+  "scene": "SC 03",
+  "speaker": "GRANDMA",
+  "text": "[excited, old lady] Ooh! I've got eight hundred Robux from my obby tournaments!",
+  "estStart": 147.26,
+  "estDur": 3.94
+ },
+ {
+  "scene": "SC 03",
+  "speaker": "TY",
+  "text": "Yeah. Grandma is better at Roblox than all of us.",
+  "estStart": 151.2,
+  "estDur": 3.94
+ },
+ {
+  "scene": "SC 04",
+  "speaker": "TY",
+  "text": "[excited, building] And just like that... the whole world switched to Robux.",
+  "estStart": 156.14,
+  "estDur": 4.24
+ },
+ {
+  "scene": "SC 04",
+  "speaker": "TY",
+  "text": "The bus wanted Robux. The cafeteria wanted Robux. Even the ice cream truck had a Robux price tag.",
+  "estStart": 160.37,
+  "estDur": 6.85
+ },
+ {
+  "scene": "SC 04",
+  "speaker": "TY",
+  "text": "[disbelief] And then... everything got GAME PASSES.",
+  "estStart": 167.22,
+  "estDur": 2.78
+ },
+ {
+  "scene": "SC 04",
+  "speaker": "SYSTEM",
+  "text": "[chirpy] Supermarket VIP! Double cart speed! Ninety-nine Robux!",
+  "estStart": 170,
+  "estDur": 2.85
+ },
+ {
+  "scene": "SC 04",
+  "speaker": "TY",
+  "text": "[fast, like a sports commentator] Want the short checkout line? Game pass. Want extra fries? Game pass. Want to skip math class?",
+  "estStart": 172.85,
+  "estDur": 6.48
+ },
+ {
+  "scene": "SC 04",
+  "speaker": "SYSTEM",
+  "text": "[chirpy] Skip Math! Nine hundred ninety-nine Robux!",
+  "estStart": 179.33,
+  "estDur": 2.48
+ },
+ {
+  "scene": "SC 04",
+  "speaker": "PICKLE",
+  "text": "[gasps] I would literally sell my shoe for that.",
+  "estStart": 181.81,
+  "estDur": 3.21
+ },
+ {
+  "scene": "SC 04",
+  "speaker": "TY",
+  "text": "You don't HAVE a shoe.",
+  "estStart": 185.02,
+  "estDur": 2.12
+ },
+ {
+  "scene": "SC 04",
+  "speaker": "PICKLE",
+  "text": "[sad] ...I'm saving up for one.",
+  "estStart": 187.14,
+  "estDur": 2.42
+ },
+ {
+  "scene": "SC 04",
+  "speaker": "TY",
+  "text": "[fast] The elevator had a \"skip floors\" pass. The dentist sold a \"no drill\" pass. My teacher sold a \"delete homework\" button.",
+  "estStart": 189.55,
+  "estDur": 7.94
+ },
+ {
+  "scene": "SC 04",
+  "speaker": "TY",
+  "text": "[mock-horror] And Mom found a game pass called \"free shipping.\" [pause] She bought it. For EVERYTHING.",
+  "estStart": 197.49,
+  "estDur": 5.89
+ },
+ {
+  "scene": "SC 04",
+  "speaker": "MOM",
+  "text": "[satisfied] Even the groceries come by drone now.",
+  "estStart": 203.38,
+  "estDur": 2.85
+ },
+ {
+  "scene": "SC 04",
+  "speaker": "DAD",
+  "text": "[tired] My boss pays me in Robux now. And the coffee machine is a PREMIUM game pass.",
+  "estStart": 206.23,
+  "estDur": 6.12
+ },
+ {
+  "scene": "SC 04",
+  "speaker": "DAD",
+  "text": "[outraged] And a promotion costs five thousand Robux! It's a \"Manager\" rank!",
+  "estStart": 212.35,
+  "estDur": 4.3
+ },
+ {
+  "scene": "SC 04",
+  "speaker": "TY",
+  "text": "[mysterious, lower voice] And every time anyone paid for anything... HE showed up.",
+  "estStart": 216.65,
+  "estDur": 4.24
+ },
+ {
+  "scene": "SC 04",
+  "speaker": "THIRTY",
+  "text": "[nasal, fast, gleeful] Marketplace fee! Thirty percent! Thank you, come again!",
+  "estStart": 220.88,
+  "estDur": 3.21
+ },
+ {
+  "scene": "SC 04",
+  "speaker": "TY",
+  "text": "Nobody knew where he came from. Nobody knew where he went. He just... took thirty percent.",
+  "estStart": 224.09,
+  "estDur": 6.42
+ },
+ {
+  "scene": "SC 04",
+  "speaker": "DAD",
+  "text": "[outraged] He took thirty percent of my SANDWICH!",
+  "estStart": 230.51,
+  "estDur": 2.85
+ },
+ {
+  "scene": "SC 04",
+  "speaker": "THIRTY",
+  "text": "[chewing, muffled] Marketplace fee.",
+  "estStart": 233.35,
+  "estDur": 1.03
+ },
+ {
+  "scene": "SC 05",
+  "speaker": "TY",
+  "text": "[mischievous] So, obviously... I did the responsible thing.",
+  "estStart": 234.38,
+  "estDur": 3.15
+ },
+ {
+  "scene": "SC 05",
+  "speaker": "TY",
+  "text": "[yells joyfully] I BOUGHT EVERYTHING!",
+  "estStart": 237.53,
+  "estDur": 1.39
+ },
+ {
+  "scene": "SC 05",
+  "speaker": "TY",
+  "text": "[fast, giddy] A gold hoverboard. Gold sneakers. A gold toothbrush — which tastes terrible, by the way.",
+  "estStart": 238.92,
+  "estDur": 5.39
+ },
+ {
+  "scene": "SC 05",
+  "speaker": "TY",
+  "text": "A limo with a ball pit. A robot butler named Jeeves Three Thousand.",
+  "estStart": 244.31,
+  "estDur": 5.03
+ },
+ {
+  "scene": "SC 05",
+  "speaker": "BUTLER",
+  "text": "[robotic, polite, British] Your golden cereal is served, sir.",
+  "estStart": 249.34,
+  "estDur": 2.48
+ },
+ {
+  "scene": "SC 05",
+  "speaker": "TY",
+  "text": "[proud] And a mansion... with an OBBY in the backyard.",
+  "estStart": 251.82,
+  "estDur": 3.87
+ },
+ {
+  "scene": "SC 05",
+  "speaker": "TY",
+  "text": "[giddy, faster] A solid gold statue of myself. Four hundred pizzas. I paid a guy to stand in line for me. [pause] Then I paid another guy to stand in line for HIM.",
+  "estStart": 255.69,
+  "estDur": 11.71
+ },
+ {
+  "scene": "SC 05",
+  "speaker": "TY",
+  "text": "[laughing] And suddenly... I had a LOT of friends.",
+  "estStart": 267.4,
+  "estDur": 3.51
+ },
+ {
+  "scene": "SC 05",
+  "speaker": "TY",
+  "text": "Kids I'd never met. Kids from other schools. One guy who said he was my cousin from Brazil.",
+  "estStart": 270.91,
+  "estDur": 6.85
+ },
+ {
+  "scene": "SC 05",
+  "speaker": "TY",
+  "text": "[laughing] They laughed at all my jokes. Even the bad ones. [pause] ESPECIALLY the bad ones.",
+  "estStart": 277.75,
+  "estDur": 5.89
+ },
+ {
+  "scene": "SC 05",
+  "speaker": "TY",
+  "text": "[guilty, slower] Pickle came too. [pause] But my butler had a VIP list.",
+  "estStart": 283.65,
+  "estDur": 4.44
+ },
+ {
+  "scene": "SC 05",
+  "speaker": "BUTLER",
+  "text": "[robotic, cold] Twelve Robux is below the minimum, sir.",
+  "estStart": 288.08,
+  "estDur": 2.85
+ },
+ {
+  "scene": "SC 05",
+  "speaker": "PICKLE",
+  "text": "[small, sad] Oh. [pause] That's okay. I'll just... wait out here.",
+  "estStart": 290.93,
+  "estDur": 4.01
+ },
+ {
+  "scene": "SC 05",
+  "speaker": "TY",
+  "text": "[quiet, regretful] I should have gone outside. [pause] I didn't.",
+  "estStart": 294.94,
+  "estDur": 3.35
+ },
+ {
+  "scene": "SC 05",
+  "speaker": "TY",
+  "text": "[uneasy] And every time I bought something... the Thirty Percent Guy got a little... bigger.",
+  "estStart": 298.28,
+  "estDur": 5.99
+ },
+ {
+  "scene": "SC 05",
+  "speaker": "THIRTY",
+  "text": "[voice a bit deeper] Marketplace fee! [burps] Thirty percent!",
+  "estStart": 304.27,
+  "estDur": 1.75
+ },
+ {
+  "scene": "SC 06",
+  "speaker": "MIA",
+  "text": "[gasps, then evil grin] Wait. \"Sparkle Time Fedora.\" [pause] LIMITED edition.",
+  "estStart": 306.03,
+  "estDur": 2.98
+ },
+ {
+  "scene": "SC 06",
+  "speaker": "TY",
+  "text": "[narrating, fast] Turns out, rare hats were now the most valuable thing on Earth. And Mia had a LOT of hats.",
+  "estStart": 309.01,
+  "estDur": 7.21
+ },
+ {
+  "scene": "SC 06",
+  "speaker": "MIA",
+  "text": "[smug] Who's broke now, little brother?",
+  "estStart": 316.22,
+  "estDur": 2.12
+ },
+ {
+  "scene": "SC 06",
+  "speaker": "TY",
+  "text": "[defensive] I'm not broke! I'm a MILLIONAIRE!",
+  "estStart": 318.34,
+  "estDur": 2.48
+ },
+ {
+  "scene": "SC 06",
+  "speaker": "MIA",
+  "text": "[smug] I'm a TWO-millionaire.",
+  "estStart": 320.82,
+  "estDur": 1.39
+ },
+ {
+  "scene": "SC 06",
+  "speaker": "TY",
+  "text": "[competitive, fast] So I bought a hoverboard. She bought a helicopter. I bought a mansion. She bought the mansion next door. One floor taller.",
+  "estStart": 322.21,
+  "estDur": 8.3
+ },
+ {
+  "scene": "SC 06",
+  "speaker": "MIA",
+  "text": "[deadpan] I also bought the moon.",
+  "estStart": 330.51,
+  "estDur": 2.12
+ },
+ {
+  "scene": "SC 06",
+  "speaker": "TY",
+  "text": "[stunned] ...You can't BUY the moon.",
+  "estStart": 332.63,
+  "estDur": 2.42
+ },
+ {
+  "scene": "SC 06",
+  "speaker": "SYSTEM",
+  "text": "[chirpy] Moon purchased! Thirty percent fee applied.",
+  "estStart": 335.05,
+  "estDur": 2.48
+ },
+ {
+  "scene": "SC 06b",
+  "speaker": "TY",
+  "text": "[narrating] Meanwhile, Dad had a brilliant idea.",
+  "estStart": 337.53,
+  "estDur": 2.48
+ },
+ {
+  "scene": "SC 06b",
+  "speaker": "DAD",
+  "text": "[dramatic] If playing games makes money now... I'm quitting my job. I'm going PRO.",
+  "estStart": 340.01,
+  "estDur": 5.33
+ },
+ {
+  "scene": "SC 06b",
+  "speaker": "TY",
+  "text": "[fast] He bought an RGB gaming chair. An RGB headset. And RGB socks.",
+  "estStart": 345.34,
+  "estDur": 4.66
+ },
+ {
+  "scene": "SC 06b",
+  "speaker": "DAD",
+  "text": "[focused, tense] Okay. Jump... jump... JUMP!",
+  "estStart": 350,
+  "estDur": 2.35
+ },
+ {
+  "scene": "SC 06b",
+  "speaker": "SYSTEM",
+  "text": "[chirpy] Oof! You died. Attempt three hundred and twelve.",
+  "estStart": 352.35,
+  "estDur": 3.21
+ },
+ {
+  "scene": "SC 06b",
+  "speaker": "DAD",
+  "text": "[screams] The lava is RIGGED!",
+  "estStart": 355.56,
+  "estDur": 1.75
+ },
+ {
+  "scene": "SC 06b",
+  "speaker": "TY",
+  "text": "Dad was terrible. [pause] But Grandma...",
+  "estStart": 357.32,
+  "estDur": 2.92
+ },
+ {
+  "scene": "SC 06b",
+  "speaker": "GRANDMA",
+  "text": "[hyped, streamer voice] What's up, chat! NanaBea here! Speedrun, no jumps, eyes closed! Let's GO!",
+  "estStart": 360.24,
+  "estDur": 4.66
+ },
+ {
+  "scene": "SC 06b",
+  "speaker": "TY",
+  "text": "[impressed] Grandma was the most famous obby streamer in the world. Two million viewers. [pause] She made more in one stream than Dad made in a year.",
+  "estStart": 364.9,
+  "estDur": 9.89
+ },
+ {
+  "scene": "SC 06b",
+  "speaker": "DAD",
+  "text": "[sulking] ...I'm going back to my job.",
+  "estStart": 374.79,
+  "estDur": 2.78
+ },
+ {
+  "scene": "SC 06b",
+  "speaker": "GRANDMA",
+  "text": "[sweet] Bye, sweetie! Like and subscribe!",
+  "estStart": 377.57,
+  "estDur": 2.12
+ },
+ {
+  "scene": "SC 07",
+  "speaker": "TY",
+  "text": "[dramatic] But real money... brought real problems.",
+  "estStart": 379.69,
+  "estDur": 2.78
+ },
+ {
+  "scene": "SC 07",
+  "speaker": "SCAMMER",
+  "text": "[smooth, oily] Good evening, ma'am! FREE ROBUX! Just tell me your password, and I'll DOUBLE your Robux!",
+  "estStart": 382.47,
+  "estDur": 5.75
+ },
+ {
+  "scene": "SC 07",
+  "speaker": "GRANDMA",
+  "text": "[delighted] Ooh, double! [pause] Well, my password is \"password\"...",
+  "estStart": 388.23,
+  "estDur": 3.65
+ },
+ {
+  "scene": "SC 07",
+  "speaker": "TY",
+  "text": "[shouts] GRANDMA, NO!",
+  "estStart": 391.87,
+  "estDur": 1.03
+ },
+ {
+  "scene": "SC 07",
+  "speaker": "TY",
+  "text": "[running, fast] I KNEW that guy! He's the \"free Robux\" scam from every game chat EVER!",
+  "estStart": 392.9,
+  "estDur": 5.39
+ },
+ {
+  "scene": "SC 07",
+  "speaker": "SCAMMER",
+  "text": "[panicked] Free Robux! Free Robux! Click my link!",
+  "estStart": 398.29,
+  "estDur": 2.85
+ },
+ {
+  "scene": "SC 07",
+  "speaker": "TY",
+  "text": "[dodging, fast] \"Robux generator, one hundred percent real!\" \"You won a free hat!\" \"Verify your account!\" [pause] Nope! Nope! NOPE!",
+  "estStart": 401.14,
+  "estDur": 6.98
+ },
+ {
+  "scene": "SC 07",
+  "speaker": "TY",
+  "text": "[panting] If Robux are real money... then scamming is a REAL crime!",
+  "estStart": 408.12,
+  "estDur": 4.6
+ },
+ {
+  "scene": "SC 07",
+  "speaker": "SYSTEM",
+  "text": "[booming] User reported. [pause] BANNED.",
+  "estStart": 412.72,
+  "estDur": 1.89
+ },
+ {
+  "scene": "SC 07",
+  "speaker": "SCAMMER",
+  "text": "[being dragged away] I'll be back! With a better link!",
+  "estStart": 414.61,
+  "estDur": 2.85
+ },
+ {
+  "scene": "SC 07",
+  "speaker": "GRANDMA",
+  "text": "[sheepish] I just wanted a cool hat for my obby stream.",
+  "estStart": 417.45,
+  "estDur": 3.94
+ },
+ {
+  "scene": "SC 07",
+  "speaker": "TY",
+  "text": "[warm, firm] Grandma. Never. Share. Your password.",
+  "estStart": 421.39,
+  "estDur": 2.12
+ },
+ {
+  "scene": "SC 07",
+  "speaker": "GRANDMA",
+  "text": "[nods] Okay, sweetie. [pause] It's \"password two\" now.",
+  "estStart": 423.51,
+  "estDur": 2.98
+ },
+ {
+  "scene": "SC 07",
+  "speaker": "TY",
+  "text": "[facepalm] ...Grandma.",
+  "estStart": 426.49,
+  "estDur": 0.96
+ },
+ {
+  "scene": "SC 08",
+  "speaker": "TY",
+  "text": "[cheerful, then slowing down] Everything was perfect. Until... Wednesday.",
+  "estStart": 427.45,
+  "estDur": 2.42
+ },
+ {
+  "scene": "SC 08",
+  "speaker": "TY",
+  "text": "[confused] On Monday, bread cost five Robux. On Tuesday... fifty.",
+  "estStart": 429.87,
+  "estDur": 3.87
+ },
+ {
+  "scene": "SC 08",
+  "speaker": "TY",
+  "text": "[alarmed] On Wednesday... five THOUSAND.",
+  "estStart": 433.75,
+  "estDur": 2.05
+ },
+ {
+  "scene": "SC 08",
+  "speaker": "MOM",
+  "text": "[shocked] Five thousand Robux? For BREAD?!",
+  "estStart": 435.8,
+  "estDur": 2.12
+ },
+ {
+  "scene": "SC 08",
+  "speaker": "TY",
+  "text": "[clear, explaining] Here's what happened. Every day, eight billion people claimed their free daily rewards. And every reward printed brand-new Robux.",
+  "estStart": 437.92,
+  "estDur": 7.21
+ },
+ {
+  "scene": "SC 08",
+  "speaker": "TY",
+  "text": "So everyone had way more money... but there was still the same amount of bread.",
+  "estStart": 445.13,
+  "estDur": 6.05
+ },
+ {
+  "scene": "SC 08",
+  "speaker": "TY",
+  "text": "And when everyone has more money, but there's the same amount of stuff... [pause] the stuff just gets more expensive.",
+  "estStart": 451.18,
+  "estDur": 8.01
+ },
+ {
+  "scene": "SC 08",
+  "speaker": "MIA",
+  "text": "[flat, smug] That's called inflation. [pause] We learned it in school. You'd know if you didn't buy \"Skip Math.\"",
+  "estStart": 459.19,
+  "estDur": 6.62
+ },
+ {
+  "scene": "SC 08",
+  "speaker": "TY",
+  "text": "[groans] Ugh. She's right.",
+  "estStart": 465.81,
+  "estDur": 1.39
+ },
+ {
+  "scene": "SC 08",
+  "speaker": "TY",
+  "text": "[panicking, fast] By Thursday, a pack of gum cost a MILLION Robux. People pushed wheelbarrows full of coins to the store.",
+  "estStart": 467.2,
+  "estDur": 7.21
+ },
+ {
+  "scene": "SC 08",
+  "speaker": "TY",
+  "text": "The news anchor's tie was worth more than his car. Dad's whole paycheck bought one coffee. [pause] With thirty percent missing.",
+  "estStart": 474.41,
+  "estDur": 8.07
+ },
+ {
+  "scene": "SC 08",
+  "speaker": "DAD",
+  "text": "[crying, sipping] It's the best coffee I've ever had.",
+  "estStart": 482.48,
+  "estDur": 2.85
+ },
+ {
+  "scene": "SC 08",
+  "speaker": "ANCHOR",
+  "text": "[panicking] Breaking news! Prices are going up so fast, this news is already more expensive than when I started reading it!",
+  "estStart": 485.33,
+  "estDur": 7.57
+ },
+ {
+  "scene": "SC 08",
+  "speaker": "MIA",
+  "text": "[screams] My fedora is worth ZERO! Who wants a MOON?!",
+  "estStart": 492.9,
+  "estDur": 3.57
+ },
+ {
+  "scene": "SC 08",
+  "speaker": "TY",
+  "text": "[devastated] And my three million Robux? [pause] They bought me... one sandwich.",
+  "estStart": 496.47,
+  "estDur": 4.74
+ },
+ {
+  "scene": "SC 08",
+  "speaker": "TY",
+  "text": "[desperate] I tried to sell the gold toothbrush. [pause] Nobody wanted a used gold toothbrush.",
+  "estStart": 501.21,
+  "estDur": 5.53
+ },
+ {
+  "scene": "SC 08",
+  "speaker": "THIRTY",
+  "text": "[huge, booming] MARKETPLACE FEE!",
+  "estStart": 506.74,
+  "estDur": 1.03
+ },
+ {
+  "scene": "SC 08",
+  "speaker": "TY",
+  "text": "[screams] HALF a sandwich!",
+  "estStart": 507.76,
+  "estDur": 1.39
+ },
+ {
+  "scene": "SC 08",
+  "speaker": "BUTLER",
+  "text": "[robotic, cold] Sir, your payment has failed. I now work for your neighbor.",
+  "estStart": 509.15,
+  "estDur": 4.3
+ },
+ {
+  "scene": "SC 08",
+  "speaker": "TY",
+  "text": "[defeated, narrating] My butler quit. My limo got taken away. And my mansion...",
+  "estStart": 513.45,
+  "estDur": 4.6
+ },
+ {
+  "scene": "SC 08",
+  "speaker": "THIRTY",
+  "text": "[giant, booming, gleeful] Belongs to ME! Thirty percent of EVERYTHING is MINE!",
+  "estStart": 518.05,
+  "estDur": 3.57
+ },
+ {
+  "scene": "SC 08",
+  "speaker": "TY",
+  "text": "[narrating, grim] He'd been taking thirty percent of every purchase on Earth. [pause] Now he owned the tallest building in the city.",
+  "estStart": 521.63,
+  "estDur": 7.71
+ },
+ {
+  "scene": "SC 08",
+  "speaker": "TY",
+  "text": "[quiet] ...And that's how I ended up in a box.",
+  "estStart": 529.34,
+  "estDur": 3.87
+ },
+ {
+  "scene": "SC 08",
+  "speaker": "PICKLE",
+  "text": "[warm] Hey, Ty. [pause] Want to share my umbrella?",
+  "estStart": 533.21,
+  "estDur": 3.35
+ },
+ {
+  "scene": "SC 08",
+  "speaker": "TY",
+  "text": "[ashamed, soft] Pickle... I didn't even let you into my party.",
+  "estStart": 536.55,
+  "estDur": 3.87
+ },
+ {
+  "scene": "SC 08",
+  "speaker": "PICKLE",
+  "text": "[simple, sincere] Yeah. [pause] But you're still my best friend.",
+  "estStart": 540.43,
+  "estDur": 3.35
+ },
+ {
+  "scene": "SC 08",
+  "speaker": "TY",
+  "text": "[voice cracking] ...I'm sorry, Pickle.",
+  "estStart": 543.77,
+  "estDur": 1.69
+ },
+ {
+  "scene": "SC 08",
+  "speaker": "PICKLE",
+  "text": "[cheerful] I know. [pause] Also, my sock is wet. Can we sit somewhere drier?",
+  "estStart": 545.46,
+  "estDur": 5.16
+ },
+ {
+  "scene": "SC 09",
+  "speaker": "MIA",
+  "text": "[determined] Okay, losers. We've got a problem. [pause] Look at this.",
+  "estStart": 552.63,
+  "estDur": 4.07
+ },
+ {
+  "scene": "SC 09",
+  "speaker": "MIA",
+  "text": "The Robux Printer. Every daily reward in the world comes out of this one machine. And it's running at a thousand percent.",
+  "estStart": 556.7,
+  "estDur": 8.3
+ },
+ {
+  "scene": "SC 09",
+  "speaker": "TY",
+  "text": "[realizing] So if we turn it off... prices stop going up!",
+  "estStart": 565,
+  "estDur": 4.24
+ },
+ {
+  "scene": "SC 09",
+  "speaker": "PICKLE",
+  "text": "[nervous] And the Thirty Percent Guy? He's been taking thirty percent of EVERYTHING.",
+  "estStart": 569.24,
+  "estDur": 4.66
+ },
+ {
+  "scene": "SC 09",
+  "speaker": "TY",
+  "text": "[grim] That's why he's the size of a building.",
+  "estStart": 573.9,
+  "estDur": 3.21
+ },
+ {
+  "scene": "SC 09",
+  "speaker": "MIA",
+  "text": "[smirks] So... who wants to rob a bank?",
+  "estStart": 577.11,
+  "estDur": 3.15
+ },
+ {
+  "scene": "SC 09",
+  "speaker": "TY",
+  "text": "[determined] Technically, we're UN-robbing it. [pause] Let's go.",
+  "estStart": 580.25,
+  "estDur": 2.98
+ },
+ {
+  "scene": "SC 09",
+  "speaker": "GRANDMA",
+  "text": "[hyped] You need a distraction? Leave that to me, sweetie. [pause] Chat! We're going LIVE in front of the bank!",
+  "estStart": 583.24,
+  "estDur": 7.35
+ },
+ {
+  "scene": "SC 09",
+  "speaker": "DAD",
+  "text": "[proud] And I'll drive the getaway car! [pause] Very carefully. Under the speed limit.",
+  "estStart": 590.58,
+  "estDur": 5.16
+ },
+ {
+  "scene": "SC 10",
+  "speaker": "TY",
+  "text": "[epic, building] The Central Bank of Robux was one giant obby.",
+  "estStart": 595.75,
+  "estDur": 3.57
+ },
+ {
+  "scene": "SC 10",
+  "speaker": "TY",
+  "text": "[fast, commentator] Coin avalanches! Floors made of price tags that went UP while you stood on them! Laser scanners that charged you a fee just for LOOKING at them!",
+  "estStart": 599.32,
+  "estDur": 10.12
+ },
+ {
+  "scene": "SC 10",
+  "speaker": "SYSTEM",
+  "text": "[chirpy] Scan complete! Fee: one hat.",
+  "estStart": 609.44,
+  "estDur": 2.12
+ },
+ {
+  "scene": "SC 10",
+  "speaker": "MIA",
+  "text": "[outraged] NOT THE BERET!",
+  "estStart": 611.55,
+  "estDur": 1.39
+ },
+ {
+  "scene": "SC 10",
+  "speaker": "TY",
+  "text": "[straining] A wall of bills! A conveyor belt of debt! And a coin avalanche right on top of—",
+  "estStart": 612.95,
+  "estDur": 6.48
+ },
+ {
+  "scene": "SC 10",
+  "speaker": "TY",
+  "text": "[shouts] MIA! Grab my hand!",
+  "estStart": 619.43,
+  "estDur": 1.75
+ },
+ {
+  "scene": "SC 10",
+  "speaker": "MIA",
+  "text": "[coughing, then quietly] ...Thanks. [pause] Don't tell anyone I said that.",
+  "estStart": 621.18,
+  "estDur": 3.65
+ },
+ {
+  "scene": "SC 10",
+  "speaker": "TY",
+  "text": "[fast, panicked] And then... the Thirty Percent Guy's interns showed up. Hundreds of tiny Thirty Percent Guys!",
+  "estStart": 624.83,
+  "estDur": 6.05
+ },
+ {
+  "scene": "SC 10",
+  "speaker": "THIRTY",
+  "text": "[tiny, many voices, chaotic] Fee! Fee! Fee! Fee! Fee!",
+  "estStart": 630.88,
+  "estDur": 2.12
+ },
+ {
+  "scene": "SC 10",
+  "speaker": "PICKLE",
+  "text": "[panicked] They're taking thirty percent of my SOCK!",
+  "estStart": 633,
+  "estDur": 2.85
+ },
+ {
+  "scene": "SC 10",
+  "speaker": "TY",
+  "text": "[awed] At the very top... the Robux Printer. [pause] And guarding it...",
+  "estStart": 635.85,
+  "estDur": 5.04
+ },
+ {
+  "scene": "SC 10",
+  "speaker": "THIRTY",
+  "text": "[giant, booming] Every coin! Every trade! Every SANDWICH! Thirty percent belongs to ME!",
+  "estStart": 640.88,
+  "estDur": 4.3
+ },
+ {
+  "scene": "SC 10",
+  "speaker": "TY",
+  "text": "[scared] He's too big! We can't beat him!",
+  "estStart": 645.18,
+  "estDur": 2.85
+ },
+ {
+  "scene": "SC 10",
+  "speaker": "PICKLE",
+  "text": "[suddenly brave] Wait. [pause] I have an idea.",
+  "estStart": 648.03,
+  "estDur": 2.62
+ },
+ {
+  "scene": "SC 10",
+  "speaker": "PICKLE",
+  "text": "Hey, Mister Thirty. I want to buy something. [pause] For twelve Robux.",
+  "estStart": 650.65,
+  "estDur": 4.8
+ },
+ {
+  "scene": "SC 10",
+  "speaker": "THIRTY",
+  "text": "[greedy, booming] A purchase?! Marketplace fee! Thirty percent of twelve is...",
+  "estStart": 655.45,
+  "estDur": 3.87
+ },
+ {
+  "scene": "SC 10",
+  "speaker": "THIRTY",
+  "text": "[calculating, slowing down] Three... point... six.",
+  "estStart": 659.32,
+  "estDur": 1.99
+ },
+ {
+  "scene": "SC 10",
+  "speaker": "THIRTY",
+  "text": "[panicking] Three point SIX?! But Robux don't have DECIMALS!",
+  "estStart": 661.31,
+  "estDur": 3.21
+ },
+ {
+  "scene": "SC 10",
+  "speaker": "THIRTY",
+  "text": "[glitching, robotic stutter] Does not compute... does not COMPUTE!",
+  "estStart": 664.52,
+  "estDur": 2.78
+ },
+ {
+  "scene": "SC 10",
+  "speaker": "TY",
+  "text": "[laughing, disbelief] Pickle... you beat him with MATH!",
+  "estStart": 667.3,
+  "estDur": 2.78
+ },
+ {
+  "scene": "SC 10",
+  "speaker": "PICKLE",
+  "text": "[proud] I never skipped math class.",
+  "estStart": 670.08,
+  "estDur": 2.12
+ },
+ {
+  "scene": "SC 10",
+  "speaker": "MIA",
+  "text": "[snorts] Burn.",
+  "estStart": 672.2,
+  "estDur": 0.66
+ },
+ {
+  "scene": "SC 11",
+  "speaker": "SYSTEM",
+  "text": "[calm, serious] Reset economy? [pause] All Robux will turn back into game currency. [pause] Your three million Robux will become... just Robux.",
+  "estStart": 672.86,
+  "estDur": 8.15
+ },
+ {
+  "scene": "SC 11",
+  "speaker": "TY",
+  "text": "[hesitating, soft] Three million...",
+  "estStart": 681.01,
+  "estDur": 1.33
+ },
+ {
+  "scene": "SC 11",
+  "speaker": "TY",
+  "text": "[reflective] I thought about the mansion. The gold toothbrush. The hundred friends who vanished as soon as the money did.",
+  "estStart": 682.34,
+  "estDur": 7.21
+ },
+ {
+  "scene": "SC 11",
+  "speaker": "TY",
+  "text": "[pause] And then I looked at the two people who stayed.",
+  "estStart": 689.55,
+  "estDur": 4.44
+ },
+ {
+  "scene": "SC 11",
+  "speaker": "TY",
+  "text": "[soft] The friend who waited outside my party in one shoe. [pause] And the sister who came back for me in the rain.",
+  "estStart": 693.98,
+  "estDur": 8.44
+ },
+ {
+  "scene": "SC 11",
+  "speaker": "PICKLE",
+  "text": "[encouraging] Whatever you pick, Ty... I'll still share my umbrella with you.",
+  "estStart": 702.42,
+  "estDur": 4.6
+ },
+ {
+  "scene": "SC 11",
+  "speaker": "MIA",
+  "text": "[softer than usual] ...Yeah. Me too. [pause] Don't make it weird.",
+  "estStart": 707.02,
+  "estDur": 3.65
+ },
+ {
+  "scene": "SC 11",
+  "speaker": "TY",
+  "text": "[determined, shouts] RESET!",
+  "estStart": 710.66,
+  "estDur": 0.66
+ },
+ {
+  "scene": "SC 12",
+  "speaker": "TY",
+  "text": "[warm] The next morning, everything was normal again.",
+  "estStart": 711.33,
+  "estDur": 2.85
+ },
+ {
+  "scene": "SC 12",
+  "speaker": "ANCHOR",
+  "text": "[cheerful] Good news, everyone! Robux are once again just a fun game currency. And bread is back to two dollars!",
+  "estStart": 714.17,
+  "estDur": 7.21
+ },
+ {
+  "scene": "SC 12",
+  "speaker": "TY",
+  "text": "Dad got paid in real dollars. Mom used her coupons. And Grandma changed her password. [pause] For real this time.",
+  "estStart": 721.38,
+  "estDur": 7.71
+ },
+ {
+  "scene": "SC 12",
+  "speaker": "DAD",
+  "text": "[joyful, sipping] The coffee machine is FREE again!",
+  "estStart": 729.09,
+  "estDur": 2.48
+ },
+ {
+  "scene": "SC 12",
+  "speaker": "TY",
+  "text": "And Grandma's stream still gets two million viewers. [pause] She does charity streams now.",
+  "estStart": 731.57,
+  "estDur": 5.53
+ },
+ {
+  "scene": "SC 12",
+  "speaker": "GRANDMA",
+  "text": "[proud] It's \"password three\"!",
+  "estStart": 737.1,
+  "estDur": 1.39
+ },
+ {
+  "scene": "SC 12",
+  "speaker": "TY",
+  "text": "[sighs] ...We're working on it.",
+  "estStart": 738.49,
+  "estDur": 2.05
+ },
+ {
+  "scene": "SC 12",
+  "speaker": "MIA",
+  "text": "[content] And my four hundred and twelve hats are worth exactly nothing again. [pause] I've never been happier.",
+  "estStart": 740.55,
+  "estDur": 6.62
+ },
+ {
+  "scene": "SC 12",
+  "speaker": "TY",
+  "text": "And me? [pause] I'm broke again. [laughs] Totally, completely broke.",
+  "estStart": 747.16,
+  "estDur": 3.71
+ },
+ {
+  "scene": "SC 12",
+  "speaker": "PICKLE",
+  "text": "[warm] Here. One Robux. For your next mansion.",
+  "estStart": 750.87,
+  "estDur": 2.85
+ },
+ {
+  "scene": "SC 12",
+  "speaker": "TY",
+  "text": "[touched] ...Thanks, Pickle. [pause] I'm spending it on a shoe. For you.",
+  "estStart": 753.72,
+  "estDur": 4.74
+ },
+ {
+  "scene": "SC 12",
+  "speaker": "PICKLE",
+  "text": "[gasps happily] A SHOE?!",
+  "estStart": 758.45,
+  "estDur": 1.03
+ },
+ {
+  "scene": "SC 12",
+  "speaker": "MIA",
+  "text": "[grudging] For the record... you were a pretty okay millionaire. [pause] For like a day.",
+  "estStart": 759.48,
+  "estDur": 5.83
+ },
+ {
+  "scene": "SC 12",
+  "speaker": "TY",
+  "text": "[smiling] Thanks, Mia.",
+  "estStart": 765.31,
+  "estDur": 1.03
+ },
+ {
+  "scene": "SC 12",
+  "speaker": "ANCHOR",
+  "text": "[breaking news] This just in! Starting tomorrow... EVERY video game coin becomes real money!",
+  "estStart": 766.34,
+  "estDur": 4.96
+ },
+ {
+  "scene": "SC 12",
+  "speaker": "PICKLE",
+  "text": "[excited] I have twelve of those too!",
+  "estStart": 771.3,
+  "estDur": 2.48
+ },
+ {
+  "scene": "SC 12",
+  "speaker": "TY",
+  "text": "[deadpan, to camera] ...Oh no.",
+  "estStart": 773.78,
+  "estDur": 1.33
+ },
+ {
+  "scene": "SC 13",
+  "speaker": "TY",
+  "text": "[to camera, upbeat] So... what would YOU buy if Robux became real money? Tell me in the comments!",
+  "estStart": 776.11,
+  "estDur": 6.05
+ },
+ {
+  "scene": "SC 13",
+  "speaker": "TY",
+  "text": "And remember: never share your password. [pause] Not even \"password three.\"",
+  "estStart": 782.16,
+  "estDur": 4.44
+ }
+]

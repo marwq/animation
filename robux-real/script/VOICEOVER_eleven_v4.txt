@@ -1,0 +1,266 @@
+WHAT IF ROBUX BECAME REAL MONEY?
+ElevenLabs Eleven v4 · Text to Dialogue · voice-over script
+Generated from script/SCRIPT.md — edit the script, then run: node tools/build_vo.js
+Spoken words: 1870 · estimated runtime: ~13:07 (incl. silent visual beats)
+==============================================================================
+
+HOW TO USE (по-русски)
+- Модель: Eleven v4. Режим Text to Dialogue: каждая строка "SPEAKER: текст" = отдельный блок
+  с выбранным голосом. Имя спикера и двоеточие НЕ вставлять, только текст.
+- Теги в [квадратных скобках] оставляем — это интонация, они не произносятся.
+  КАПС = ударение, "..." и [pause] = паузы, тире "—" = оборванная фраза.
+- TY — рассказчик и герой (от первого лица): один голос на весь ролик.
+- Генерируйте по дублям (TAKE), файлы называйте take01.mp3, take05a.mp3 ... и кладите рядом .txt/JSON,
+  как в прошлый раз, — так я разложу всё по таймлайну автоматически.
+
+CAST
+  TY        (100 lines)  narrator & hero, 12 — energetic young voice, fast, funny, self-ironic (NEW voice, not last video's)
+  THIRTY    (12 lines)  Thirty Percent Guy — nasal, fast-talking goblin accountant; later huge and booming
+  SYSTEM    ( 9 lines)  bright game-UI voice; booming for BANNED / alarm lines
+  MIA       (19 lines)  sister, 16 — sarcastic, dry, bored teen; eye-roll in the voice
+  PICKLE    (16 lines)  best friend, 12 — goofy, high, super sincere and sweet
+  ANCHOR    ( 6 lines)  classic over-the-top TV news anchor
+  DAD       (11 lines)  tired, dramatic dad
+  MOM       ( 3 lines)  calm, practical mom, dry humour
+  GRANDMA   ( 8 lines)  lively, cheeky gamer grandma
+  BUTLER    ( 3 lines)  polite British robot butler
+  SCAMMER   ( 3 lines)  smooth, oily, too-friendly salesman
+
+==============================================================================
+
+=== TAKE 01 · SC 01 COLD OPEN — бассейн из Robux → обвал · ~0:00–0:28 · 8 lines · 479 chars ===
+
+TY: [excited, showing off] What if Robux... became REAL money?
+TY: [proud] Because for exactly one week... I was the richest kid on the planet.
+TY: [giddy] I had a gold hoverboard. A robot butler. And a swimming pool full of COINS.
+THIRTY: [nasal, fast] Marketplace fee! Thirty percent!
+TY: [annoyed] Not now, Thirty Percent Guy!
+SYSTEM: [alarm, robotic] Warning. Robux value: minus ninety-nine percent.
+TY: [panicked] No, no, no, no— [screams] NOOO!
+TY: [deadpan] ...Yeah. It went great. [pause] Okay. Rewind. Monday morning.
+
+=== TAKE 02 · SC 02 САМЫЙ ЖАДНЫЙ РЕБЁНОК · ~0:28–1:40 · 13 lines · 1066 chars ===
+
+TY: [cheerful, storyteller] Hi. I'm Ty. I'm twelve. And I am the cheapest person you will ever meet.
+TY: I have never spent a single Robux. Not on a hat. Not on a pet. Not even on a game pass.
+TY: [proud, deadpan] My avatar still wears the free starter shirt. [pause] It's not a look. It's a lifestyle.
+TY: I eat the free samples at the supermarket for lunch. I reuse birthday wrapping paper. I once returned a gift... to my own grandma.
+TY: [whispers, secretive] Because I had a plan. [pause] The AFK farm.
+TY: In second grade, I taped down my spacebar in a clicker game... [pause] and I never turned it off.
+TY: [amazed] Four years later, my computer is basically a space heater. [pause] And my balance is... three MILLION Robux.
+MIA: [sarcastic, bored] Wow. Three million pixels. Can you buy groceries with pixels?
+TY: That's my sister, Mia. She spent every Robux she ever had on hats.
+MIA: [offended] Four hundred and twelve hats. It's called FASHION.
+TY: And this is my best friend, Pickle.
+TY: [aside] He lives next door. He has never once used a door.
+PICKLE: [goofy, proud] I have twelve Robux! [pause] I'm saving up for a shoe.
+
+=== TAKE 03 · SC 03 НОВОСТЬ · ~1:40–2:36 · 14 lines · 1001 chars ===
+
+ANCHOR: [breaking news, urgent] Breaking news! Starting today, Robux are officially REAL money!
+ANCHOR: One Robux equals one dollar. Effective... right now!
+TY: [stunned whisper] One Robux... one dollar. [pause] Three million Robux...
+TY: [screams with joy] I'M A MILLIONAIRE!
+ANCHOR: [excited] Across the world, gamers are celebrating! Parents are confused! And one man just found forty thousand Robux in his son's old tablet!
+TY: [fast, laughing] Kids became richer than their parents overnight. My neighbor's six-year-old bought the ice cream truck. [pause] The whole truck.
+MIA: [horrified] Wait. Then my hats... Can I SELL my hats?!
+SYSTEM: [cheerful UI voice] Sorry! All sales are final. No refunds!
+MIA: [screams] NOOOOO!
+DAD: [confused] Kids? Why is the ceiling raining money?
+TY: [fast, narrating] Dad never played Roblox in his life. Zero Robux. Mom had five, from a gift card in 2019.
+MOM: [calm, pleased] Five dollars. [pause] I'll take it.
+GRANDMA: [excited, old lady] Ooh! I've got eight hundred Robux from my obby tournaments!
+TY: Yeah. Grandma is better at Roblox than all of us.
+
+=== TAKE 04 · SC 04 МИР ПЕРЕХОДИТ НА ROBUX · ~2:36–3:54 · 19 lines · 1337 chars ===
+
+TY: [excited, building] And just like that... the whole world switched to Robux.
+TY: The bus wanted Robux. The cafeteria wanted Robux. Even the ice cream truck had a Robux price tag.
+TY: [disbelief] And then... everything got GAME PASSES.
+SYSTEM: [chirpy] Supermarket VIP! Double cart speed! Ninety-nine Robux!
+TY: [fast, like a sports commentator] Want the short checkout line? Game pass. Want extra fries? Game pass. Want to skip math class?
+SYSTEM: [chirpy] Skip Math! Nine hundred ninety-nine Robux!
+PICKLE: [gasps] I would literally sell my shoe for that.
+TY: You don't HAVE a shoe.
+PICKLE: [sad] ...I'm saving up for one.
+TY: [fast] The elevator had a "skip floors" pass. The dentist sold a "no drill" pass. My teacher sold a "delete homework" button.
+TY: [mock-horror] And Mom found a game pass called "free shipping." [pause] She bought it. For EVERYTHING.
+MOM: [satisfied] Even the groceries come by drone now.
+DAD: [tired] My boss pays me in Robux now. And the coffee machine is a PREMIUM game pass.
+DAD: [outraged] And a promotion costs five thousand Robux! It's a "Manager" rank!
+TY: [mysterious, lower voice] And every time anyone paid for anything... HE showed up.
+THIRTY: [nasal, fast, gleeful] Marketplace fee! Thirty percent! Thank you, come again!
+TY: Nobody knew where he came from. Nobody knew where he went. He just... took thirty percent.
+DAD: [outraged] He took thirty percent of my SANDWICH!
+THIRTY: [chewing, muffled] Marketplace fee.
+
+=== TAKE 05 · SC 05 ТАЙ ТРАТИТ ВСЁ · ~3:54–5:06 · 16 lines · 1184 chars ===
+
+TY: [mischievous] So, obviously... I did the responsible thing.
+TY: [yells joyfully] I BOUGHT EVERYTHING!
+TY: [fast, giddy] A gold hoverboard. Gold sneakers. A gold toothbrush — which tastes terrible, by the way.
+TY: A limo with a ball pit. A robot butler named Jeeves Three Thousand.
+BUTLER: [robotic, polite, British] Your golden cereal is served, sir.
+TY: [proud] And a mansion... with an OBBY in the backyard.
+TY: [giddy, faster] A solid gold statue of myself. Four hundred pizzas. I paid a guy to stand in line for me. [pause] Then I paid another guy to stand in line for HIM.
+TY: [laughing] And suddenly... I had a LOT of friends.
+TY: Kids I'd never met. Kids from other schools. One guy who said he was my cousin from Brazil.
+TY: [laughing] They laughed at all my jokes. Even the bad ones. [pause] ESPECIALLY the bad ones.
+TY: [guilty, slower] Pickle came too. [pause] But my butler had a VIP list.
+BUTLER: [robotic, cold] Twelve Robux is below the minimum, sir.
+PICKLE: [small, sad] Oh. [pause] That's okay. I'll just... wait out here.
+TY: [quiet, regretful] I should have gone outside. [pause] I didn't.
+TY: [uneasy] And every time I bought something... the Thirty Percent Guy got a little... bigger.
+THIRTY: [voice a bit deeper] Marketplace fee! [burps] Thirty percent!
+
+=== TAKE 06 · SC 06 ШЛЯПНАЯ ИМПЕРИЯ МИИ · ~5:06–5:38 · 9 lines · 561 chars ===
+
+MIA: [gasps, then evil grin] Wait. "Sparkle Time Fedora." [pause] LIMITED edition.
+TY: [narrating, fast] Turns out, rare hats were now the most valuable thing on Earth. And Mia had a LOT of hats.
+MIA: [smug] Who's broke now, little brother?
+TY: [defensive] I'm not broke! I'm a MILLIONAIRE!
+MIA: [smug] I'm a TWO-millionaire.
+TY: [competitive, fast] So I bought a hoverboard. She bought a helicopter. I bought a mansion. She bought the mansion next door. One floor taller.
+MIA: [deadpan] I also bought the moon.
+TY: [stunned] ...You can't BUY the moon.
+SYSTEM: [chirpy] Moon purchased! Thirty percent fee applied.
+
+=== TAKE 06b · SC 06b ПАПА ИДЁТ В ПРОФИ · ~5:38–6:20 · 11 lines · 693 chars ===
+
+TY: [narrating] Meanwhile, Dad had a brilliant idea.
+DAD: [dramatic] If playing games makes money now... I'm quitting my job. I'm going PRO.
+TY: [fast] He bought an RGB gaming chair. An RGB headset. And RGB socks.
+DAD: [focused, tense] Okay. Jump... jump... JUMP!
+SYSTEM: [chirpy] Oof! You died. Attempt three hundred and twelve.
+DAD: [screams] The lava is RIGGED!
+TY: Dad was terrible. [pause] But Grandma...
+GRANDMA: [hyped, streamer voice] What's up, chat! NanaBea here! Speedrun, no jumps, eyes closed! Let's GO!
+TY: [impressed] Grandma was the most famous obby streamer in the world. Two million viewers. [pause] She made more in one stream than Dad made in a year.
+DAD: [sulking] ...I'm going back to my job.
+GRANDMA: [sweet] Bye, sweetie! Like and subscribe!
+
+=== TAKE 07 · SC 07 FREE ROBUX · ~6:20–7:07 · 14 lines · 850 chars ===
+
+TY: [dramatic] But real money... brought real problems.
+SCAMMER: [smooth, oily] Good evening, ma'am! FREE ROBUX! Just tell me your password, and I'll DOUBLE your Robux!
+GRANDMA: [delighted] Ooh, double! [pause] Well, my password is "password"...
+TY: [shouts] GRANDMA, NO!
+TY: [running, fast] I KNEW that guy! He's the "free Robux" scam from every game chat EVER!
+SCAMMER: [panicked] Free Robux! Free Robux! Click my link!
+TY: [dodging, fast] "Robux generator, one hundred percent real!" "You won a free hat!" "Verify your account!" [pause] Nope! Nope! NOPE!
+TY: [panting] If Robux are real money... then scamming is a REAL crime!
+SYSTEM: [booming] User reported. [pause] BANNED.
+SCAMMER: [being dragged away] I'll be back! With a better link!
+GRANDMA: [sheepish] I just wanted a cool hat for my obby stream.
+TY: [warm, firm] Grandma. Never. Share. Your password.
+GRANDMA: [nods] Okay, sweetie. [pause] It's "password two" now.
+TY: [facepalm] ...Grandma.
+
+=== TAKE 08a · SC 08 ИНФЛЯЦИЯ · ~7:07–9:13 · 21 lines · 1644 chars ===
+
+TY: [cheerful, then slowing down] Everything was perfect. Until... Wednesday.
+TY: [confused] On Monday, bread cost five Robux. On Tuesday... fifty.
+TY: [alarmed] On Wednesday... five THOUSAND.
+MOM: [shocked] Five thousand Robux? For BREAD?!
+TY: [clear, explaining] Here's what happened. Every day, eight billion people claimed their free daily rewards. And every reward printed brand-new Robux.
+TY: So everyone had way more money... but there was still the same amount of bread.
+TY: And when everyone has more money, but there's the same amount of stuff... [pause] the stuff just gets more expensive.
+MIA: [flat, smug] That's called inflation. [pause] We learned it in school. You'd know if you didn't buy "Skip Math."
+TY: [groans] Ugh. She's right.
+TY: [panicking, fast] By Thursday, a pack of gum cost a MILLION Robux. People pushed wheelbarrows full of coins to the store.
+TY: The news anchor's tie was worth more than his car. Dad's whole paycheck bought one coffee. [pause] With thirty percent missing.
+DAD: [crying, sipping] It's the best coffee I've ever had.
+ANCHOR: [panicking] Breaking news! Prices are going up so fast, this news is already more expensive than when I started reading it!
+MIA: [screams] My fedora is worth ZERO! Who wants a MOON?!
+TY: [devastated] And my three million Robux? [pause] They bought me... one sandwich.
+TY: [desperate] I tried to sell the gold toothbrush. [pause] Nobody wanted a used gold toothbrush.
+THIRTY: [huge, booming] MARKETPLACE FEE!
+TY: [screams] HALF a sandwich!
+BUTLER: [robotic, cold] Sir, your payment has failed. I now work for your neighbor.
+TY: [defeated, narrating] My butler quit. My limo got taken away. And my mansion...
+THIRTY: [giant, booming, gleeful] Belongs to ME! Thirty percent of EVERYTHING is MINE!
+
+=== TAKE 08b · SC 08 ИНФЛЯЦИЯ · ~7:07–9:13 · 7 lines · 468 chars ===
+
+TY: [narrating, grim] He'd been taking thirty percent of every purchase on Earth. [pause] Now he owned the tallest building in the city.
+TY: [quiet] ...And that's how I ended up in a box.
+PICKLE: [warm] Hey, Ty. [pause] Want to share my umbrella?
+TY: [ashamed, soft] Pickle... I didn't even let you into my party.
+PICKLE: [simple, sincere] Yeah. [pause] But you're still my best friend.
+TY: [voice cracking] ...I'm sorry, Pickle.
+PICKLE: [cheerful] I know. [pause] Also, my sock is wet. Can we sit somewhere drier?
+
+=== TAKE 09 · SC 09 ПЛАН · ~9:13–9:56 · 9 lines · 677 chars ===
+
+MIA: [determined] Okay, losers. We've got a problem. [pause] Look at this.
+MIA: The Robux Printer. Every daily reward in the world comes out of this one machine. And it's running at a thousand percent.
+TY: [realizing] So if we turn it off... prices stop going up!
+PICKLE: [nervous] And the Thirty Percent Guy? He's been taking thirty percent of EVERYTHING.
+TY: [grim] That's why he's the size of a building.
+MIA: [smirks] So... who wants to rob a bank?
+TY: [determined] Technically, we're UN-robbing it. [pause] Let's go.
+GRANDMA: [hyped] You need a distraction? Leave that to me, sweetie. [pause] Chat! We're going LIVE in front of the bank!
+DAD: [proud] And I'll drive the getaway car! [pause] Very carefully. Under the speed limit.
+
+=== TAKE 10 · SC 10 БАНК-ОББИ · ~9:56–11:13 · 22 lines · 1368 chars ===
+
+TY: [epic, building] The Central Bank of Robux was one giant obby.
+TY: [fast, commentator] Coin avalanches! Floors made of price tags that went UP while you stood on them! Laser scanners that charged you a fee just for LOOKING at them!
+SYSTEM: [chirpy] Scan complete! Fee: one hat.
+MIA: [outraged] NOT THE BERET!
+TY: [straining] A wall of bills! A conveyor belt of debt! And a coin avalanche right on top of—
+TY: [shouts] MIA! Grab my hand!
+MIA: [coughing, then quietly] ...Thanks. [pause] Don't tell anyone I said that.
+TY: [fast, panicked] And then... the Thirty Percent Guy's interns showed up. Hundreds of tiny Thirty Percent Guys!
+THIRTY: [tiny, many voices, chaotic] Fee! Fee! Fee! Fee! Fee!
+PICKLE: [panicked] They're taking thirty percent of my SOCK!
+TY: [awed] At the very top... the Robux Printer. [pause] And guarding it...
+THIRTY: [giant, booming] Every coin! Every trade! Every SANDWICH! Thirty percent belongs to ME!
+TY: [scared] He's too big! We can't beat him!
+PICKLE: [suddenly brave] Wait. [pause] I have an idea.
+PICKLE: Hey, Mister Thirty. I want to buy something. [pause] For twelve Robux.
+THIRTY: [greedy, booming] A purchase?! Marketplace fee! Thirty percent of twelve is...
+THIRTY: [calculating, slowing down] Three... point... six.
+THIRTY: [panicking] Three point SIX?! But Robux don't have DECIMALS!
+THIRTY: [glitching, robotic stutter] Does not compute... does not COMPUTE!
+TY: [laughing, disbelief] Pickle... you beat him with MATH!
+PICKLE: [proud] I never skipped math class.
+MIA: [snorts] Burn.
+
+=== TAKE 11 · SC 11 КНОПКА · ~11:13–11:51 · 8 lines · 638 chars ===
+
+SYSTEM: [calm, serious] Reset economy? [pause] All Robux will turn back into game currency. [pause] Your three million Robux will become... just Robux.
+TY: [hesitating, soft] Three million...
+TY: [reflective] I thought about the mansion. The gold toothbrush. The hundred friends who vanished as soon as the money did.
+TY: [pause] And then I looked at the two people who stayed.
+TY: [soft] The friend who waited outside my party in one shoe. [pause] And the sister who came back for me in the rain.
+PICKLE: [encouraging] Whatever you pick, Ty... I'll still share my umbrella with you.
+MIA: [softer than usual] ...Yeah. Me too. [pause] Don't make it weird.
+TY: [determined, shouts] RESET!
+
+=== TAKE 12 · SC 12 ФИНАЛ · ~11:51–12:56 · 17 lines · 1070 chars ===
+
+TY: [warm] The next morning, everything was normal again.
+ANCHOR: [cheerful] Good news, everyone! Robux are once again just a fun game currency. And bread is back to two dollars!
+TY: Dad got paid in real dollars. Mom used her coupons. And Grandma changed her password. [pause] For real this time.
+DAD: [joyful, sipping] The coffee machine is FREE again!
+TY: And Grandma's stream still gets two million viewers. [pause] She does charity streams now.
+GRANDMA: [proud] It's "password three"!
+TY: [sighs] ...We're working on it.
+MIA: [content] And my four hundred and twelve hats are worth exactly nothing again. [pause] I've never been happier.
+TY: And me? [pause] I'm broke again. [laughs] Totally, completely broke.
+PICKLE: [warm] Here. One Robux. For your next mansion.
+TY: [touched] ...Thanks, Pickle. [pause] I'm spending it on a shoe. For you.
+PICKLE: [gasps happily] A SHOE?!
+MIA: [grudging] For the record... you were a pretty okay millionaire. [pause] For like a day.
+TY: [smiling] Thanks, Mia.
+ANCHOR: [breaking news] This just in! Starting tomorrow... EVERY video game coin becomes real money!
+PICKLE: [excited] I have twelve of those too!
+TY: [deadpan, to camera] ...Oh no.
+
+=== TAKE 13 · SC 13 АУТРО · ~12:56–13:07 · 2 lines · 172 chars ===
+
+TY: [to camera, upbeat] So... what would YOU buy if Robux became real money? Tell me in the comments!
+TY: And remember: never share your password. [pause] Not even "password three."
+
+=== END ===
