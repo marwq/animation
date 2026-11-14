@@ -1,11 +1,11 @@
 [
  {
   "role": "TY",
-  "voice_id": "loY1uopAz31XyhAEhNSa",
-  "name": "Valf - Young, Playful & Sarcastic",
-  "source": "library",
-  "preview": "https://storage.googleapis.com/eleven-public-prod/database/workspace/10ab341b15a24f9aa118a90e43463bab/voices/loY1uopAz31XyhAEhNSa/ZPipDXt0PC09nhVJRVPU.mp3",
-  "public_owner_id": "edb29bf3ecacd3634096c4bc62c0537e04cbfb94cf27cd2babced5c1709800d6"
+  "voice_id": "bIHbv24MWmeRgasZH58o",
+  "name": "Will - Relaxed Optimist",
+  "source": "premade",
+  "preview": null,
+  "public_owner_id": null
  },
  {
   "role": "MIA",
@@ -17,11 +17,11 @@
  },
  {
   "role": "PICKLE",
-  "voice_id": "wGkprrTXgBM5EC3Znt6U",
-  "name": "Gus - Natural Goofy Best Friend",
-  "source": "library",
-  "preview": "https://storage.googleapis.com/eleven-public-prod/database/workspace/c2cd03713a1548febe5cef83cadc0303/voices/wGkprrTXgBM5EC3Znt6U/JwHWvoTx8GcRf3tWwhhI.mp3",
-  "public_owner_id": "107dfe05a48663a1f414120c8d74ae4536e91c7143f18853a80133e5a8d23e21"
+  "voice_id": "cgSgspJ2msm6clMCkdW9",
+  "name": "Jessica - Playful, Bright, Warm",
+  "source": "premade",
+  "preview": null,
+  "public_owner_id": null
  },
  {
   "role": "DAD",
@@ -41,19 +41,19 @@
  },
  {
   "role": "GRANDMA",
-  "voice_id": "vFLqXa8bgbofGarf6fZh",
-  "name": "Grandma Oxley",
-  "source": "library",
-  "preview": "https://api.us.elevenlabs.io/v1/voices/vFLqXa8bgbofGarf6fZh/previews/audio?payload=eyJ2b2ljZV9zb3VyY2UiOiJjdXN0b20iLCJ3b3Jrc3BhY2VfaWQiOiI2NDk3MTI5OGJmYzI0MDg2YjY5MDI2OTcwYTIxZjFmOSIsImZpbGVuYW1lIjoiRXVEVnBPRmRRVzNOVWRySWhEVUgubXAzIiwidGltZXN0YW1wIjoxNzk0Njc1NjAwMDAwMDAwfQ%3D%3D",
-  "public_owner_id": "ae23ca715ed6b339e4ad22f2d45dd40b36a6449e031b4f8970bfe29524bd1bbc"
+  "voice_id": "pFZP5JQG7iQjIQuC4Bku",
+  "name": "Lily - Velvety Actress",
+  "source": "premade",
+  "preview": null,
+  "public_owner_id": null
  },
  {
   "role": "THIRTY",
-  "voice_id": "BRruTxiLM2nszrcCIpz1",
-  "name": "Goofy - Nasal, Fast-Paced and Energetic",
-  "source": "library",
-  "preview": "https://storage.googleapis.com/eleven-public-prod/database/user/IRg5QTQNm6SfSozVvMmFieR8Q7m1/voices/BRruTxiLM2nszrcCIpz1/JqhbzTpefslqnP2tFdI2.mp3",
-  "public_owner_id": "0554972bf2eea2cee9b6ccc9493be9ab1d74fe095af765c8e32813071e92f6d5"
+  "voice_id": "N2lVS1w4EtoT3dr4eOWO",
+  "name": "Callum - Husky Trickster",
+  "source": "premade",
+  "preview": null,
+  "public_owner_id": null
  },
  {
   "role": "ANCHOR",
