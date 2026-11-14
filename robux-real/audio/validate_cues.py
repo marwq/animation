@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
-"""Validate a sound cue sheet (audio/cues/partNN.json) against audio/vocab.json.
+"""Validate a sound cue sheet (audio/cues/scNN.json) against audio/vocab.json.
 
-usage: python3 audio/validate_cues.py audio/cues/part05.json [...]
+usage: python3 audio/validate_cues.py audio/cues/sc05.json [...]
 """
 import json, os, sys
 

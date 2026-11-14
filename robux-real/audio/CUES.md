@@ -1,11 +1,11 @@
 # Sound cue sheets
 
-One JSON file per video part: `audio/cues/partNN.json`. Times are ABSOLUTE video seconds
+One JSON file per scene: `audio/cues/scNN.json` (`sc01.json` … `sc06b.json` … `sc13.json`). Times are ABSOLUTE video seconds
 (the same global seconds the scene modules use, e.g. `inv(347.1, 347.25, t)`).
 
 ```json
 {
-  "part": 6,
+  "scene": "SC 06",
   "start": 341.4,
   "end": 414.0,
   "music": [
@@ -47,4 +47,14 @@ One JSON file per video part: `audio/cues/partNN.json`. Times are ABSOLUTE video
   - `pan` runs −1 (left) to +1 (right); derive it from screen x: `(x − 960) / 960 × 0.7`.
   - `note` is free text describing what happens.
 
-Validate with `python3 audio/validate_cues.py audio/cues/partNN.json`.
+Validate with `python3 audio/validate_cues.py audio/cues/scNN.json`.
+
+## Robux video specifics
+
+- The voice is LOUD in the final mix and the music ducks under it automatically. Still keep music `energy`
+  around 0.35–0.6 under dense dialogue and save 0.8–1 for montages, title cards and wordless action.
+- Moods written for this video: `hook` (funky main theme), `luxury` (rich-kid lounge funk), `news` (TV news
+  jingle), `explainer` (light bouncy). Use the other moods from `vocab.json` too, for variety.
+- Every visual hit in the scene code (bang(), shake, flash, coin bursts, pops, stamps, whip-pans, smash-zooms)
+  should get a sound. Coins and Robux: `coin`, `coins`, `ka_ching`, `robux`, `money_counter`.
+- A scene sheet covers exactly the scene's range from `scenes/main.js` RANGES (`start` = a, `end` = b).
