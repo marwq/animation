@@ -236,8 +236,8 @@ function shotToothbrush(t) {
   const brush = S.g(S.rect(-330, -16, 330, 32, 14, ol('url(#s04gold)', 6)) + S.rect(-390, -30, 70, 34, 6, ol('#FFFFFF', 5)) + K.F.sparkle(-160, -30, 14 * Math.abs(Math.sin(t * 5))), `translate(${f(hx)} ${f(hy + 20)}) rotate(${f(yuck ? 20 : 4)})`);
   let foam = '';
   if (brushing && t > tBr + 0.3) for (let i = 0; i < 6; i++) foam += S.circle(-60 + i * 26 + Math.sin(t * 9 + i) * 6, -592 + (i % 2) * 14, 14 + (i % 3) * 5, ol('#FFFFFF', 4));
-  w += ty(t, 960, 1500, 1.15, { ...pose, props: [{ svg: brush, layer: 'front' }, ...(foam ? [headProp(foam, pose)] : [])] }, { arms: false });
-  if (yuck) for (let i = 0; i < 3; i++) w += S.path(`M${640 + i * 50} ${430 - i * 30} q30 -20 0 -40 q-30 -20 0 -40`, ln(8, '#7FD36B', 0.9));
+  w += ty(t, 960, 1390, 1.15, { ...pose, props: [{ svg: brush, layer: 'front' }, ...(foam ? [headProp(foam, pose)] : [])] }, { arms: false });
+  if (yuck) for (let i = 0; i < 3; i++) w += S.path(`M${640 + i * 50} ${330 - i * 30} q30 -20 0 -40 q-30 -20 0 -40`, ln(8, '#7FD36B', 0.9));
   // he pops out of the toothbrush cup
   w += S.path('M1460 820 L1600 820 L1580 1000 L1480 1000 Z', ol('#B9F0D2', 6));
   w += feeVisit(t, tBrW + 0.25, 0.6, 1530, 900, 0.62);
@@ -438,11 +438,11 @@ function shotLine(t) {
   const g1in = ease.out(seg(t, tGuy1 - 0.3, tGuy1));
   const g1x = lerp(1200, 850, g1in);
   const g1sit = two && t > tGuy2 + 0.2;
-  w += kidIn(4, t, { x: g1x, y: GY + 80, s: 0.44, view: g1sit ? 'front' : 'side', face: g1sit ? { name: 'smug' } : { name: 'happy' }, armR: g1sit ? 20 : 70, props: g1sit ? [] : [{ svg: S.g(sign('SAVING SPOT', 'FOR TY'), 'translate(-300 -820) scale(1.7)'), layer: 'front' }] });
+  w += kidIn(4, t, { x: g1x, y: GY + 80, s: 0.44, volume: false, view: g1sit ? 'front' : 'side', face: g1sit ? { name: 'smug' } : { name: 'happy' }, armR: g1sit ? 20 : 70, props: g1sit ? [] : [{ svg: S.g(sign('SAVING SPOT', 'FOR TY'), 'translate(-300 -820) scale(1.7)'), layer: 'front' }] });
   // guy #2 holds guy #1's spot
   if (two) {
     const g2in = ease.out(seg(t, tGuy2 - 0.3, tGuy2));
-    w += kidIn(15, t, { x: lerp(1500, 1020, g2in), y: GY + 90, s: 0.44, view: 'side', face: { name: 'happy' }, armL: 70, props: [{ svg: S.g(sign('SAVING SPOT', 'FOR HIM →'), 'translate(-300 -820) scale(1.7)'), layer: 'front' }] });
+    w += kidIn(15, t, { x: lerp(1500, 1020, g2in), y: GY + 90, s: 0.44, volume: false, view: 'side', face: { name: 'happy' }, armL: 70, props: [{ svg: S.g(sign('SAVING SPOT', 'FOR HIM →'), 'translate(-300 -820) scale(1.7)'), layer: 'front' }] });
     // the endless chain revealed on HIM
     if (zoomOut > 0) for (let i = 0; i < 9; i++) w += kidIn((i * 7 + 2) % 18, t, { x: 1180 + i * 170, y: GY + 100 + i * 4, s: 0.42, view: 'side', face: 'happy', armL: 70, volume: false, props: [{ svg: S.g(sign('FOR HIM →', '', 260), 'translate(-300 -820) scale(1.5)'), layer: 'front' }] });
   }
@@ -472,9 +472,11 @@ function shotGates(t) {
   // Ty on the balcony waving like a celebrity
   w += ty(t, 960, 470, 0.22, { armR: 150 + 20 * Math.sin(t * 8), armL: 20, face: { name: 'joy' }, shadow: false }, { arms: false });
   // the crowd outside (rows behind each other, front = closer)
-  w += crowdRow(t, 18, 1060, 0.34, -1500, 200, 1, () => ({ name: 'love' }), { armsUp: true });
-  w += crowdRow(t, 16, 1180, 0.42, -1400, 230, 6, (i) => ({ name: i % 2 ? 'joy' : 'excited' }), { armsUp: true });
-  w += crowdRow(t, 13, 1340, 0.5, -1300, 290, 11, (i) => ({ name: i % 3 ? 'excited' : 'love' }), { armsUp: true });
+  w += crowdRow(t, 13, 1060, 0.34, -1300, 270, 1, () => ({ name: 'love' }), { armsUp: true });
+  w += crowdRow(t, 11, 1180, 0.42, -1250, 330, 6, (i) => ({ name: i % 2 ? 'joy' : 'excited' }), { armsUp: true });
+  w += crowdRow(t, 9, 1340, 0.5, -1150, 420, 11, (i) => ({ name: i % 3 ? 'excited' : 'love' }), { armsUp: true });
+  // beyond the zoom-out: a line of tiny heads to the horizon
+  for (let i = 0; i < 26; i++) w += S.circle(-1700 + i * 60 + (i % 2) * 20, 1010 - i * 4, 16, ol(['#FF6B6B', '#4ECDC4', '#FFD166', '#9B5DE5', '#00BBF9'][i % 5], 4)) + S.circle(2300 + i * 60, 1010 - i * 4, 16, ol(['#FF924C', '#8AC926', '#F15BB5', '#1982C4'][i % 4], 4));
   o += view(cam, w, 1);
   o += kaching(1500, 220, t - tLot, 0.6, 'POPULAR!');
   return o;
@@ -507,7 +509,7 @@ function shotSchools(t) {
     const x = 500 + Math.min(age * 900, 400 + i * 190), wk = age * 900 < 400 + i * 190;
     const pen = P[i % 3];
     const flag = S.g(S.path('M0 0 L0 -200', ln(8, '#8A5A34')) + S.path('M0 -200 L170 -160 L0 -120 Z', ol(pen[1], 5)) + S.el('text', { x: 10, y: -150, 'font-family': 'Fredoka, sans-serif', 'font-weight': 700, 'font-size': 20, fill: '#FFFFFF' }, pen[0].split(' ')[0]), `translate(${f(A.hand(150, 1)[0])} ${f(A.hand(150, 1)[1])})`);
-    w += kidIn((i * 3 + 5) % 19, t, { x, y: GY + 200, s: 0.44, ...(wk ? A.walkFront(t * 9 + i) : {}), armR: 150, face: { name: 'joy' }, props: [{ svg: flag, layer: 'front' }] });
+    w += kidIn((i * 3 + 5) % 19, t, { x, y: GY + 200, s: 0.44, ...(wk ? A.walkFront(t * 9 + i) : {}), armR: 150, face: { name: 'joy' }, volume: false, props: [{ svg: flag, layer: 'front' }] });
   }
   return c.bg + view(cam, w, 1);
 }
@@ -546,7 +548,7 @@ function shotJokes(t) {
     const x = 1060 + (i % 3) * 300 + (i >= 3 ? 150 : 0), y = i >= 3 ? 1180 : 1000, s = i >= 3 ? 0.56 : 0.46;
     const laugh = Math.abs(Math.sin(t * 12 + i));
     const rolling = roll > 0 && i % 2 === 0;
-    w += kidIn((i * 4 + 1) % 19, t, { x, y: y - laugh * 14, s, face: ph === 2 && i % 3 === 1 ? { name: 'crying', mouth: 'bigGrin' } : { name: 'joy' }, armL: 30 + 40 * laugh, armR: 150 * (i % 2), headRot: 10 * Math.sin(t * 14 + i), rot: rolling ? -80 * roll : 0, rotY: -300, lean: -10 * laugh });
+    w += kidIn((i * 4 + 1) % 19, t, { x, y: y - laugh * 14, s, face: ph === 2 && i % 3 === 1 ? { name: 'crying', mouth: 'bigGrin' } : { name: 'joy' }, armL: 30 + 40 * laugh, armR: 150 * (i % 2), headRot: 10 * Math.sin(t * 14 + i), rot: rolling ? -80 * roll : 0, rotY: -300, lean: -10 * laugh, volume: false });
   }
   let o = view(cam, w, 1);
   o += bang('HA HA HA!', 1500, 230, bump(t, tJoke + 0.6, tBad) * 1.2, 100, -6, '#FFE14D');
@@ -695,49 +697,53 @@ function shotGrow(t) {
   return o;
 }
 function shotChart(t) {
-  // the growth chart on the hall door frame: his height marks labelled with Ty's purchases
-  const cam = camKeys(t, [[tChart, { zoom: 1.0, x: 0, y: 0 }], [tBigger - 0.05, { zoom: 1.08, x: 40, y: 20 }], [tBigger + 0.2, { zoom: 1.25, x: 60, y: 40 }], [tBurp0, { zoom: 1.28, x: 60, y: 40 }]]);
+  // a growth chart on the hall door frame: his height marks, labelled with Ty's purchases; Ty stands beside for scale
+  const cam = camKeys(t, [[tChart, { zoom: 1.08, x: 60, y: 50 }], [tBigger - 0.05, { zoom: 1.12, x: 60, y: 60 }], [tBigger + 0.2, { zoom: 1.2, x: 40, y: 80 }], [tBurp0, { zoom: 1.22, x: 40, y: 80 }]]);
   const sh = K.shake(t, tBigger, 0.4, 12); cam.sx = sh.sx; cam.sy = sh.sy;
   let w = hall(t, { noChandelier: true });
-  // door frame with pencil marks
-  const fx = 1180, base = 1000, tyS = 0.62;
-  w += S.rect(fx - 40, 160, 540, 860, 10, ol('#F6EFE3', 10)) + S.rect(fx, 200, 460, 820, 0, { fill: '#8A5A34' }) + S.rect(fx, 200, 460, 820, 0, { fill: 'url(#planks)', opacity: 0.5 });
-  const MARKS = [[0.25, 'DAY 1'], [0.29, 'HOVERBOARD'], [0.33, 'LIMO'], [0.37, 'MANSION'], [0.41, '400 PIZZAS'], [0.47, 'TODAY?!']];
+  const fx = 820, base = 1060, tyS = 0.9;
+  w += S.rect(fx - 40, 100, 560, 980, 10, ol('#F6EFE3', 10)) + S.rect(fx + 10, 140, 460, 940, 0, { fill: '#8A5A34' }) + S.rect(fx + 10, 140, 460, 940, 0, { fill: 'url(#planks)', opacity: 0.5 }) + S.circle(fx + 420, 640, 16, ol('#FFC93C', 5));
+  const MARKS = [[0.25, 'DAY 1'], [0.3, 'LIMO'], [0.35, '400 PIZZAS'], [0.41, 'THIS MORNING'], [0.47, 'NOW?!']];
   MARKS.forEach(([h, txt], i) => {
     const y = base - h * 980 * tyS;
-    const show = i < 5 || t > tBigger + 0.2;
-    if (show) w += S.path(`M${fx - 40} ${f(y)} L${fx + 40} ${f(y)}`, ln(6, '#2A1640')) + S.el('text', { x: fx - 52, y: f(y + 10), 'font-family': 'Fredoka, sans-serif', 'font-weight': 700, 'font-size': 28, fill: i === 5 ? '#E2233B' : '#2A1640', 'text-anchor': 'end' }, txt);
+    const show = i < 4 || t > tBigger + 0.25;
+    if (show) w += S.path(`M${fx - 40} ${f(y)} L${fx + 40} ${f(y)}`, ln(7, i === 4 ? '#E2233B' : '#2A1640')) + S.el('text', { x: fx - 56, y: f(y + 12), 'font-family': 'Fredoka, sans-serif', 'font-weight': 700, 'font-size': 34, fill: i === 4 ? '#E2233B' : '#2A1640', 'text-anchor': 'end', stroke: '#FFF4E0', 'stroke-width': 8, 'paint-order': 'stroke' }, txt);
   });
-  // Ty for scale, getting nervous
-  w += ty(t, 640, base, tyS, { turn: 0.4, face: t > tBigger ? { name: 'shocked' } : { name: 'nervous', eyes: { look: [0.8, 0.3] } }, armL: t > tBigger ? 120 : 20, armR: t > tBigger ? 120 : 20 }, { arms: false });
-  // him, against the chart
+  // him, against the frame
   const s = thirtyS(t, tyS);
-  const sq = bump(t, tBigger, tBigger + 0.4);
-  w += thirty(t, fx + 30, base, s, { armL: 20, armR: 40, face: t > tBigger ? { name: 'smug' } : { name: 'happy' }, sy: 1 + 0.25 * sq, sx: 1 - 0.1 * sq }, { calc: true });
-  if (t > tBigger) w += S.path(`M${fx - 60} ${f(base - 0.7 * 980 * s)} L${fx + 100} ${f(base - 0.7 * 980 * s)}`, ln(8, '#E2233B'));
+  const sq = Math.max(bump(t, tBigger, tBigger + 0.4), 0.5 * bump(t, l14.word('got').t0, l14.word('got').t0 + 0.3), 0.5 * bump(t, l14.word('little').t0, l14.word('little').t0 + 0.3));
+  w += thirty(t, fx + 140, base, s, { armL: 20, armR: 40, face: t > tBigger ? { name: 'smug' } : { name: 'happy' }, sy: 1 + 0.25 * sq, sx: 1 - 0.1 * sq, turn: 0.2 }, { calc: true });
+  if (t > tBigger + 0.1) w += S.path(`M${fx - 40} ${f(base - 0.7 * 980 * s)} L${fx + 240} ${f(base - 0.7 * 980 * s)}`, ln(6, '#E2233B', 0.8));
+  // Ty, getting nervous
+  w += ty(t, fx + 680, base, tyS, { turn: -0.5, face: t > tBigger ? { name: 'shocked' } : { name: 'nervous', eyes: { look: [-0.8, 0.5] } }, armL: t > tBigger ? 120 : 20, armR: t > tBigger ? 120 : 20, lean: t > tBigger ? 4 : 0 }, { arms: false });
   let o = view(cam, w, 1);
-  o += bang('BIGGER?!', 520, 220, seg(t, tBigger + 0.1, tBigger + 0.25), 110, -8, '#FF5A5A');
+  o += bang('BIGGER?!', 520, 180, seg(t, tBigger + 0.1, tBigger + 0.25), 110, -8, '#FF5A5A');
   return o;
 }
 function shotBurp(t) {
   // waist-high now: Marketplace fee! *BURP* Thirty percent!
-  const cam = camKeys(t, [[tBurp0, { zoom: 1.15, x: 60, y: 60 }], [tBurp, { zoom: 1.2, x: 80, y: 60 }], [tBurp + 0.1, { zoom: 1.45, x: 140, y: 40 }], [t30, { zoom: 1.4, x: 120, y: 40 }], [END, { zoom: 1.5, x: 120, y: 40 }]]);
+  const cam = camKeys(t, [[tBurp0, { zoom: 1.0, x: 0, y: 60 }], [tBurp, { zoom: 1.03, x: 0, y: 60 }], [tBurp + 0.1, { zoom: 1.16, x: 40, y: 80 }], [t30, { zoom: 1.12, x: 30, y: 80 }], [END, { zoom: 1.2, x: 30, y: 90 }]]);
   const sh = K.shake(t, tBurp, 0.5, 20); cam.sx = sh.sx; cam.sy = sh.sy;
   let w = hall(t);
-  const tyS = 0.62, s = thirtyS(t, tyS);
-  const blown = bump(t, tBurp, tBurp + 0.7);
-  // Ty, hair-blown by the burp; his coin sack gets yanked
-  const yank = ease.out(seg(t, tFee - 0.1, tFee + 0.25));
-  const [hx, hy] = A.hand(60, 1);
-  const sack = S.g(S.path('M-70 0 Q-90 -110 -30 -130 L30 -130 Q90 -110 70 0 Z', ol('#C9945A', 6)) + K.coin(0, -60, 34, 0, 0) + S.path('M-30 -130 L30 -130', ln(10, '#8A5A34')), '');
-  w += ty(t, 700, 1010, tyS, { turn: 0.4, lean: -10 * blown, face: blown > 0.1 ? { name: 'oof', mouth: 'O' } : { name: 'shocked' }, armL: 20, armR: yank > 0.5 ? 70 : 60, headRot: -8 * blown }, { arms: false });
-  if (blown > 0) for (let i = 0; i < 8; i++) w += S.rect(560 + hash(i) * 300 - (t - tBurp) * 900 * hash(i * 2), 420 + i * 40, 160, 10, 5, { fill: '#B6F06B', opacity: f(0.8 * blown) });
-  const sackX = lerp(700 + hx * tyS, 1180 - 120, yank), sackY = lerp(1010 + hy * tyS + 60, 1010 - 0.7 * 980 * s * 0.45, yank);
-  w += thirty(t, 1180, 1010, s, { turn: -0.35, armL: 70, armR: 50, face: blown > 0.2 ? { name: 'joy', mouth: 'O' } : { name: 'smug' }, sy: 1 + 0.15 * blown, lean: -8 * blown }, { calc: true });
-  w += S.g(sack, `translate(${f(sackX)} ${f(sackY)}) scale(${f(lerp(0.8, 1, yank))})`);
+  const tyS = 0.8, s = thirtyS(t, tyS), base = 1000;
+  const blown = bump(t, tBurp + 0.05, tBurp + 0.8);
+  // the coin sack moves from Ty's hand to his
+  const yank = ease.out(seg(t, tFee - 0.15, tFee + 0.2));
+  const [tx, tyy] = A.hand(55, 1), [gx, gy] = A.hand(65, -1);
+  const sackX = lerp(640 + tx * tyS, 1240 + gx * s * 0.7, yank), sackY = lerp(base + tyy * tyS + 70, base + gy * s * 0.7 + 60, yank);
+  const sack = S.path('M-70 0 Q-90 -110 -30 -130 L30 -130 Q90 -110 70 0 Z', ol('#C9945A', 6)) + K.coin(0, -60, 34, 0, 0) + S.path('M-30 -130 L30 -130', ln(10, '#8A5A34'));
+  w += ty(t, 640, base, tyS, { turn: 0.4, lean: -10 * blown, face: blown > 0.1 ? { name: 'oof', mouth: 'O' } : t > tFee ? { name: 'shocked' } : { name: 'nervous' }, armL: 20, armR: 55, headRot: -8 * blown }, { arms: false });
+  w += thirty(t, 1240, base, s, { turn: -0.35, armL: 65, armR: 50, face: blown > 0.2 ? { name: 'joy', mouth: 'O' } : { name: 'smug' }, sy: 1 + 0.12 * blown, lean: -6 * blown }, { calc: true });
+  w += S.g(sack, `translate(${f(sackX)} ${f(sackY)}) scale(${f(lerp(0.75, 0.9, yank))})`);
+  // the burp: a green gust rolling over Ty
+  if (blown > 0) {
+    const a = t - tBurp;
+    for (let i = 0; i < 6; i++) w += S.circle(1180 - a * 700 - i * 50, 720 + Math.sin(i * 2 + a * 6) * 30, (30 + 20 * i) * Math.min(1, a * 3), { fill: '#B6F06B', opacity: f(0.55 * blown), stroke: '#151515', 'stroke-width': 4 });
+    for (let i = 0; i < 6; i++) w += S.rect(520 + hash(i) * 300 - a * 700 * hash(i * 2), 520 + i * 40, 160, 10, 5, { fill: '#B6F06B', opacity: f(0.8 * blown) });
+  }
   let o = view(cam, w, 1);
-  o += bang('*BURP!*', 1280, 300, seg(t, tBurp, tBurp + 0.12) * (1 - seg(t, tBurp + 0.9, tBurp + 1.1)), 140, 8, '#B6F06B');
-  o += stamp30(1540, 560, seg(t, tPct, tPct + 0.15), 1.1);
+  o += bang('*BURP!*', 1300, 240, seg(t, tBurp, tBurp + 0.12) * (1 - seg(t, tBurp + 0.9, tBurp + 1.1)), 140, 8, '#B6F06B');
+  o += stamp30(1500, 500, seg(t, tPct, tPct + 0.15), 1.1);
   o += C.whiteFlash(seg(t, END - 0.16, END));
   return o;
 }
@@ -755,6 +761,7 @@ function scene(t) {
   while (i > 0 && t < SHOTS[i][0]) i--;
   let o = SHOTS[i][1](t);
   for (const tc of FLASH) if (Math.abs(t - tc) < 0.12) o += whip(t, tc, 0.6);
+  o += C.whiteFlash(0.7 * (1 - seg(t, T0, T0 + 0.18)));
   return o;
 }
 function look(t) {

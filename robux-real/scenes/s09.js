@@ -355,7 +355,7 @@ function shotKerb(t) {
   // phone glow on "Look at this"
   const g = seg(t, tLook, tLook + 0.4);
   if (g > 0) o += view(cam, S.circle(1080, 560, 260 * g, { fill: 'url(#s09glow)' }), 1);
-  o += S.rect(0, 0, 1920, 1080, 0, { fill: '#000', opacity: f(1 - seg(t, START, START + 0.4)) });
+  o += S.rect(0, 0, 1920, 1080, 0, { fill: '#000', opacity: f(1 - seg(t, START, START + 0.3)) });
   return o;
 }
 

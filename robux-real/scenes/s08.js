@@ -127,7 +127,7 @@ ${stationTile('s08st0a', false, 0)}${stationTile('s08st1a', true, 0)}${stationTi
 <radialGradient id="s08warm" cx="0.5" cy="0.5" r="0.5"><stop offset="0" stop-color="#FFD98A" stop-opacity="0.5"/><stop offset="1" stop-color="#FFD98A" stop-opacity="0"/></radialGradient>
 <radialGradient id="s08neon" cx="0.5" cy="0.5" r="0.5"><stop offset="0" stop-color="#7CFF6B" stop-opacity="0.6"/><stop offset="1" stop-color="#7CFF6B" stop-opacity="0"/></radialGradient>
 <linearGradient id="s08shadow" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#140C2A" stop-opacity="0"/><stop offset="0.12" stop-color="#140C2A" stop-opacity="0.55"/><stop offset="1" stop-color="#140C2A" stop-opacity="0.6"/></linearGradient>
-<linearGradient id="s08topShadow" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#140C2A" stop-opacity="0.75"/><stop offset="1" stop-color="#140C2A" stop-opacity="0.15"/></linearGradient>
+<linearGradient id="s08edge" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#140C2A" stop-opacity="0.4"/><stop offset="1" stop-color="#140C2A" stop-opacity="0"/></linearGradient>
 </defs>`;
 
 // ---------------------------------------------------------------- props
@@ -269,20 +269,34 @@ function umbrellaGeo(hx, hy, px, py) {
   const dx = px - hx, dy = py - hy;
   return { Lh: Math.hypot(dx, dy), ang: (Math.atan2(dx, -dy) * 180) / Math.PI };
 }
-function umbrella(hx, hy, px, py, wd, open, col = '#FFD21F', col2 = '#FFFFFF') {
+function umbrella(hx, hy, px, py, wd, open, t = 0) {
+  // Pickle's umbrella (same look as in SC 09): green panels, red crook, a little pickle on top
   const { Lh, ang } = umbrellaGeo(hx, hy, px, py);
   const k = clamp(open, 0, 1.2);
   const w = lerp(24, wd, k), h = lerp(Lh * 0.75, wd * 0.46, clamp(open, 0, 1));
   const rim = -Lh, top = rim - h;
-  const shaft = `M0 ${f(top + 6)} L0 0 Q0 34 -26 34 Q-46 34 -46 14`;
-  let o = S.path(shaft, ln(16, '#151515')) + S.path(shaft, ln(8, '#7A4A2A'));
+  let o = S.path(`M0 ${f(top + 6)} L0 0`, ln(16, '#151515')) + S.path(`M0 ${f(top + 6)} L0 0`, ln(8, '#8A5A34'));
+  const crook = 'M0 0 L0 22 Q0 52 -26 52 Q-48 52 -48 30';
+  o += S.path(crook, ln(20, '#151515')) + S.path(crook, ln(11, '#C2452D'));
   let d = `M${f(-w)} ${f(rim)} C${f(-w)} ${f(top - h * 0.28)} ${f(w)} ${f(top - h * 0.28)} ${f(w)} ${f(rim)}`;
-  const n = 6;
-  for (let i = n - 1; i >= 0; i--) d += ` Q${f(-w + (i + 0.5) * ((2 * w) / n))} ${f(rim - 34 * k)} ${f(-w + i * ((2 * w) / n))} ${f(rim)}`;
-  o += S.path(d + ' Z', ol(col, 7));
-  for (let i = 1; i < n; i++) if (i % 2) { const rx = -w + i * ((2 * w) / n); o += S.path(`M0 ${f(top + 4)} Q${f(rx * 0.55)} ${f(top + h * 0.2)} ${f(rx)} ${f(rim)}`, ln(5, '#151515', 0.45)); }
-  o += S.path(`M${f(-w * 0.72)} ${f(rim - h * 0.5)} Q${f(-w * 0.45)} ${f(top + h * 0.08)} ${f(-w * 0.05)} ${f(top + h * 0.04)}`, ln(10, col2, 0.45));
-  o += S.circle(0, top - 10, 10, ol('#151515', 3));
+  const n = 6, xs = (i) => -w + i * ((2 * w) / n), rib = (x) => `Q${f(x * 0.55)} ${f(top + h * 0.2)} 0 ${f(top + 4)}`;
+  for (let i = n - 1; i >= 0; i--) d += ` Q${f((xs(i) + xs(i + 1)) / 2)} ${f(rim - 34 * k)} ${f(xs(i))} ${f(rim)}`;
+  o += S.path(d + ' Z', ol('#58B947', 7));
+  for (let i = 1; i < n; i += 2) {
+    const xa = xs(i), xb = xs(i + 1);
+    o += S.path(`M${f(xa)} ${f(rim)} ${rib(xa)} Q${f(xb * 0.55)} ${f(top + h * 0.2)} ${f(xb)} ${f(rim)} Q${f((xa + xb) / 2)} ${f(rim - 34 * k)} ${f(xa)} ${f(rim)} Z`, FILL('#449A36'));
+  }
+  for (let i = 1; i < n; i++) o += S.path(`M${f(xs(i))} ${f(rim)} ${rib(xs(i))}`, ln(5, '#151515', 0.6));
+  o += S.path(`M${f(-w * 0.72)} ${f(rim - h * 0.5)} Q${f(-w * 0.45)} ${f(top + h * 0.08)} ${f(-w * 0.05)} ${f(top + h * 0.04)}`, ln(10, '#A6F08A', 0.7));
+  o += S.path(`M0 ${f(top + 4)} L0 ${f(top - 30)}`, ln(12));
+  o += S.g(S.ellipse(0, 0, 40, 20, ol('#2F7A26', 4)) + S.circle(-14, -4, 4, FILL('#A6F08A')) + S.circle(10, 4, 4, FILL('#A6F08A')), `translate(${f(w * 0.35)} ${f(rim - h * 0.5)}) rotate(-20) scale(${f(clamp(open, 0, 1))} 1)`);
+  // rain splashing on the canopy
+  if (open > 0.8) for (let i = 0; i < 6; i++) {
+    const ph = frac(t * 3 + hash(i) * 3);
+    const u = hash(i * 5 + Math.floor(t * 3 + hash(i) * 3)) * 1.6 - 0.8;
+    const sx = u * w, sy = rim - h * Math.sqrt(Math.max(0, 1 - u * u)) * 0.92;
+    o += S.path(`M${f(sx - 10 - ph * 16)} ${f(sy - 4 - ph * 14)} L${f(sx - 4)} ${f(sy - 2)} M${f(sx + 10 + ph * 16)} ${f(sy - 4 - ph * 14)} L${f(sx + 4)} ${f(sy - 2)}`, ln(4, '#CFE4FF', 1 - ph));
+  }
   return S.g(o, `translate(${f(hx)} ${f(hy)}) rotate(${f(ang)})`);
 }
 // one giant arm of the Thirty Percent Guy, reaching down; (x, y) = bottom of the hand
@@ -1246,7 +1260,7 @@ function lowCity(t, base, grey = 1, h0 = 260, h1 = 500) {
   return o;
 }
 function shotLoom(t) {
-  const cam = camKeys(t, [[c30, { zoom: 1.0, x: 0, y: 0 }], [c31, { zoom: 1.1, x: 0, y: -30 }]]);
+  const cam = camKeys(t, [[c30, at(940, 560, 1.0)], [c31, at(900, 520, 1.1)]]);
   shakeAll(cam, t, [[A[16].a, 0.35, 14], [A[16].a + 0.45, 0.35, 14]]);
   const u = seg(t, c30, c31);
   let o = S.rect(-400, -400, 2720, 1880, 0, FILL('url(#s08dusk)'));
@@ -1255,10 +1269,11 @@ function shotLoom(t) {
   wld += lowCity(t, 980, 1, 180, 360);
   wld += S.rect(-400, 980, 2720, 400, 0, FILL('#4A4560'));
   const [hx, hy] = AC.hand(120, 1);
-  wld += ty(t, 900, 1040, 0.38, { armR: 120, armL: 10, headRot: -8, face: { name: 'scared', eyes: { look: [0.2, -1] } }, props: [{ svg: sandwich(hx + 30, hy - 30, 0.55, -10), layer: 'front' }] }, { arms: false });
+  wld += ty(t, 640, 1040, 0.38, { armR: 120, armL: 10, headRot: -8, face: { name: 'scared', eyes: { look: [0.2, -1] } }, props: [{ svg: sandwich(hx + 30, hy - 30, 0.55, -10), layer: 'front' }] }, { arms: false });
   o += view(cam, wld, 1);
   // the shadow sweeps over
-  o += S.rect(0, -1200 + 1700 * ease.out(seg(t, c30 - 0.1, c30 + 0.6)), W, 1200, 0, FILL('url(#s08topShadow)'));
+  const sy = lerp(-200, 1250, ease.out(seg(t, c30 - 0.1, c30 + 0.7)));
+  o += S.rect(0, -20, W, sy + 20, 0, FILL('#140C2A', 0.4)) + S.rect(0, sy, W, 220, 0, FILL('url(#s08edge)'));
   o += bang('MARKETPLACE...', 1420, 300, seg(t, A[16].a, A[16].a + 0.15), 96, -6, '#7CFF6B');
   return o;
 }
@@ -1535,7 +1550,7 @@ function rainWorld(t, o2 = {}) {
       const fx = o2.pickleX - 150, fy = 1030 - 80;
       for (let i = 0; i < 5; i++) { const a = frac(t * 2.2 + i / 5); wld += S.ellipse(fx + (i - 2) * 8, fy + 20 + a * 110, 7, 11, FILL('#9FD8FF', 1 - a)); }
     }
-    wld += umbrella(U.hx, U.hy, U.px, U.py, U.wd, o2.umb, '#FFD21F');
+    wld += umbrella(U.hx, U.hy, U.px, U.py, U.wd, o2.umb, t);
     // drips off the canopy edge
     if (o2.umb > 0.8) for (let i = 0; i < 6; i++) { const a = frac(t * 1.7 + i / 6); const ex = i % 2 ? U.r1 : U.r0; wld += S.ellipse(ex[0] + (i % 3 - 1) * 10, ex[1] + 10 + a * 260, 6, 12, FILL('#9FD8FF', 0.8 * (1 - a))); }
   }
@@ -1574,7 +1589,7 @@ function shotUmbrella(t) {
   const look = ease.inOut(seg(t, c42 + 0.3, c42 + 0.9));
   let o = view(cam, rainWorld(t, { ...st, tyFace: { name: look > 0.5 ? 'amazed' : 'deadpan', eyes: { look: [-0.6 * look, -0.6 * look] }, mouth: 'line' }, tyHead: -4 * look }), 1);
   o += rainAvoid(t, 160, 0.5, shelterFor(cam, st, t));
-  if (st.umb > 0.2 && st.umb < 1.3) o += bang('FWUMP!', 700, 220, pop(t, c42 + 0.1, 0.2) * (1 - seg(t, c42 + 0.9, c42 + 1.1)), 70, -6, '#FFD21F');
+  if (st.umb > 0.2 && st.umb < 1.3) o += bang('FWUMP!', 700, 220, pop(t, c42 + 0.1, 0.2) * (1 - seg(t, c42 + 0.9, c42 + 1.1)), 70, -6, '#A6F08A');
   return o;
 }
 function shotTyAshamed(t) {
@@ -1588,7 +1603,7 @@ function shotPickleClose(t) {
   const st = umbState(t);
   const cam = camKeys(t, [[c44, at(720, 560, 2.0)], [c45, at(720, 555, 2.12)]]);
   const warm = seg(t, wb(4, 'best') - 0.2, wb(4, 'best') + 0.6);
-  let o = view(cam, rainWorld(t, { ...st, pickleFace: { name: 'happy', fx: warm > 0.5 ? ['blush'] : [] } }), 1);
+  let o = view(cam, rainWorld(t, { ...st, pickleFace: { name: 'happy', fx: warm > 0.5 ? ['blush'] : [] }, tyFace: { name: 'sad', eyes: { look: [-0.7, -0.1] }, mouth: warm > 0.5 ? 'wavy' : 'frown', fx: warm > 0.7 ? ['tears'] : [] }, tyHead: -3 }), 1);
   o += rainAvoid(t, 120, 0.4, shelterFor(cam, st, t));
   if (warm > 0) o += S.circle(820, 460, 420, FILL('url(#s08warm)', 0.55 * warm));
   return o;

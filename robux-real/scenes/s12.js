@@ -61,7 +61,7 @@ const tNews = l14.word('Starting').t0 - 0.15;
 const tEvery = l14.word('EVERY').t0, tMoneyW = l14.word('real').t0;
 const tBeat = l14.b + 0.08;                         // the 1 s silence
 const tTurnPk = tBeat + 0.25;                       // Pickle slowly turns to camera
-const tTyNo = l15.b + 0.12;                         // Ty, deadpan, to camera
+const tTyNo = l16.a - 0.1;                          // Ty, deadpan, to camera (his eyes slide over)
 const tOhNo = l16.a;
 
 // ---------------------------------------------------------------- defs
@@ -271,7 +271,7 @@ function newsScreen(t, mode, small = false) {
   o += rays(-380, -40, 18, 1100, '#FFFFFF', 0.05, t * 8);
   for (let i = 0; i < 14; i++) o += S.rect(-800 + i * 120, 60 - hash(i * 3) * 240, 100, 500, 4, { fill: red ? '#3A0A1E' : '#152466', opacity: 0.7 });
   // Chip
-  const face = mode === 'every' ? { name: 'excited' } : { name: 'happy' };
+  const face = mode === 'every' ? { name: 'excited' } : { name: 'talkHappy' };
   o += actor('anchor', t, { x: -400, y: 600, s: 0.82, turn: 0.2, face, armL: 20, armR: mode === 'bread' ? 120 : 20, volume: !small }, { energy: 1.2, arms: mode !== 'bread' });
   o += S.path('M-800 230 Q-400 180 20 230 L20 450 L-800 450 Z', ol('#E8EEF8', 8)) + T('CHIP NEWS', -400, 330, 70, red ? '#C8243F' : '#2E5BD8');
   // graphic panel
@@ -418,10 +418,12 @@ function shotDadPay(t) {
   let w = office(t);
   const env = S.g(S.rect(-110, -70, 220, 140, 10, ol('#FFFFFF', 6)) + S.path('M-110 -70 L0 10 L110 -70', ln(6)) + TF('PAYCHECK', 0, 50, 30, '#2E5BD8'), 'translate(-230 -520)');
   let fan = '';
-  if (open > 0) for (let i = 0; i < 5; i++) fan += bill(-230 + (i - 2) * 50 * open, -600 - 60 * open, 0.9, (i - 2) * 16 * open);
-  w += actor('dad', t, { x: 960, y: 1000, s: 0.62, armL: 70, armR: 70, face: { name: open > 0.5 ? 'joy' : 'excited' }, props: [{ svg: open > 0.5 ? fan : env, layer: 'top' }], bodyY: -10 * bump(t, tDollars, tDollars + 0.4) }, { arms: false });
+  const armL = lerp(70, 150, open);
+  const [fx, fy] = A.hand(armL, -1);
+  if (open > 0) for (let i = 0; i < 5; i++) fan += bill(fx - 40 + (i - 2) * 46 * open, fy - 70 - 30 * open, 0.9, -20 + (i - 2) * 16 * open);
+  w += actor('dad', t, { x: 960, y: 1000, s: 0.62, armL, armR: 70, face: { name: open > 0.5 ? 'joy' : 'excited' }, props: [{ svg: open > 0.5 ? fan : env, layer: 'top' }], bodyY: -10 * bump(t, tDollars, tDollars + 0.4) }, { arms: false });
   let o = W(cam, w);
-  if (open > 0) o += K.confetti(t, tDollars, 30, 2) + bang('PAYDAY!', 1450, 300, seg(t, tDollars, tDollars + 0.12), 100, -8, '#3BD16F');
+  if (open > 0) o += bang('PAYDAY!', 1450, 300, seg(t, tDollars, tDollars + 0.12), 100, -8, '#3BD16F');
   for (let i = 0; i < 8; i++) { const age = t - tDollars - i * 0.08; if (age > 0) o += bill(300 + hash(i) * 1300, -100 + age * 600, 0.7, age * 200 + i * 40); }
   return o + flashCut(t, tDad);
 }
@@ -631,9 +633,10 @@ function hallway(t) {
 function shotWork(t) {
   // Ty in the hallway, deadpan to camera; a slow facepalm
   const cam = camKeys(t, [[tWork, at(900, 560, 1.5)], [tMiaRoom, at(900, 520, 1.75)]]);
-  const palm = ease.inOut(seg(t, l6.word('on').t0, l6.b + 0.2));
+  const palm = ease.inOut(seg(t, l6.word('working').t0, l6.word('on').t0 + 0.1));
   let w = hallway(t);
-  w += actor('ty', t, { x: 900, y: 1010, s: 0.6, armR: lerp(10, 150, palm), armL: 8, face: { name: 'deadpan' }, headRot: -4 * palm }, { arms: false, energy: 0.3 });
+  const hand = palm > 0.85 ? [{ svg: S.g(S.rect(-120, -60, 260, 112, 34, ol('#E9B38B', 8)) + S.path('M-96 -24 L110 -24 M-96 8 L110 8', ln(6, '#C98E6A')), `translate(20 ${f(-690 + 20 * Math.sin(t * 3))}) rotate(-8)`), layer: 'top' }] : [];
+  w += actor('ty', t, { x: 900, y: 1010, s: 0.6, armR: lerp(10, 158, palm), armL: 8, face: { name: 'deadpan' }, headRot: -6 * palm, props: hand }, { arms: false, energy: 0.3 });
   return W(cam, w) + flashCut(t, tWork);
 }
 
@@ -738,9 +741,10 @@ function shotBroke(t) {
   let w = livingRoom(t, trio(t, { ty: { armR: lerp(12, 40, pull), armL: lerp(12, 40, pull), face: { name: 'deadpan' }, props: pull > 0 ? [{ svg: pocket, layer: 'top' }] : [] }, tyAct: { arms: false } }));
   const age = t - tBroke - 0.5;
   if (age > 0) {
-    const mx = tyAt + 105 + Math.sin(age * 8) * 30, my = couchHead('ty') + 260 - age * 300;
+    const mx = tyAt + 10 + Math.sin(age * 8) * 40, my = couchHead('ty') + 330 - age * 430;
     const fl = Math.sin(t * 40);
-    w += S.g(S.path(`M0 0 Q-30 ${f(-30 * fl)} -46 ${f(-4 * fl)} Q-30 10 0 0 Z M0 0 Q30 ${f(-30 * fl)} 46 ${f(-4 * fl)} Q30 10 0 0 Z`, ol('#C9C2B4', 4)) + S.ellipse(0, 0, 8, 16, ol('#8A7F6E', 3)) + S.circle(-4, -14, 3, { fill: '#151515' }) + S.circle(4, -14, 3, { fill: '#151515' }), `translate(${f(mx)} ${f(my)}) scale(1.6)`);
+    const wing = (sx) => S.path(`M0 -4 Q${sx * 30} ${f(-46 * fl)} ${sx * 54} ${f(-18 * fl)} Q${sx * 44} 14 0 6 Z`, { fill: '#EFE7D6', stroke: '#6B604E', 'stroke-width': 3 }) + S.circle(sx * 30, f(-14 * fl), 6, { fill: '#C4B79C' });
+    w += S.g(wing(-1) + wing(1) + S.ellipse(0, 4, 7, 17, { fill: '#9A8E78', stroke: '#4A4234', 'stroke-width': 3 }) + S.path('M-3 -12 Q-10 -30 -18 -32 M3 -12 Q10 -30 18 -32', ln(3, '#4A4234')), `translate(${f(mx)} ${f(my)}) scale(1.7)`);
     w += C.dust(tyAt + 40, couchHead('ty') + 260, tBroke + 0.5, t);
   }
   let o = W(cam, w);
@@ -867,17 +871,20 @@ function shotBreaking(t) {
   if (t > tMoneyW) for (let i = 0; i < 16; i++) { const y = ((t - tMoneyW) * (500 + hash(i) * 300) + hash(i * 3.3) * 300) - 200; if (y < 1150) o += gameCoin(i % 5, 80 + hash(i * 7.1) * 1760, y, 0.9, t * 120 + i * 40); }
   return o;
 }
+// Pickle's twelve (non-Robux) game coins, held up in his raised screen-right hand (body space)
+function twelveCoins(show) {
+  if (show <= 0) return '';
+  const [hx, hy] = A.hand(150, 1);
+  let o = '';
+  for (let i = 0; i < 12; i++) o += gameCoin(0, (i % 4) * 66 - 99, -Math.floor(i / 4) * 62, 0.85, (i % 2 ? 8 : -8));
+  return S.g(o, `translate(${f(hx + 60)} ${f(hy - 90)}) scale(${f(show)})`);
+}
 function shotBeat(t) {
   // the silent beat: the three stare at the TV. Then Pickle turns — slowly — to camera: "I have twelve of those too!"
   const cam = camKeys(t, [[tBeat, at(1000, 600, 1.38)], [tTurnPk + 0.4, at(1080, 580, 1.55)], [tTyNo, at(pkAt + 30, couchHead('pickle') + 10, 2.25)]]);
   const turn = ease.inOut(seg(t, tTurnPk, tTurnPk + 0.7));
   const show = ob(seg(t, l15.word('twelve').t0 - 0.2, l15.word('twelve').t0 + 0.1));
-  let pouch = '';
-  if (show > 0) {
-    const [hx, hy] = A.hand(150, 1);
-    for (let i = 0; i < 12; i++) pouch += gameCoin(0, (i % 4) * 66 - 99, -Math.floor(i / 4) * 62, 0.85, (i % 2 ? 8 : -8));
-    pouch = S.g(pouch, `translate(${f(hx + 60)} ${f(hy - 90)}) scale(${f(show)})`);
-  }
+  const pouch = twelveCoins(show);
   const cast = trio(t, {
     watch: 1,
     ty: { face: { name: 'shocked', eyes: { look: [0.9, 0] } } },
@@ -892,8 +899,13 @@ function shotOhNo(t) {
   // Ty: slowly turns to camera, deadpan. "...Oh no." Hold. Slow zoom. (Smash cut to the outro.)
   const z = lerp(2.75, 3.7, ease.inOut(seg(t, tTyNo, S13)));
   const cam = at(tyAt, couchHead('ty') + 10, z);
-  const turn = ease.inOut(seg(t, tTyNo + 0.1, tOhNo - 0.15));
-  const cast = trio(t, { watch: 1, ty: { turn: lerp(0.65, 0, turn), face: { name: 'deadpan', eyes: { look: [lerp(0.9, 0, turn), 0] }, fx: t > l16.b ? ['sweat'] : [] } }, tyAct: { energy: 0.2 } });
+  const slide = ease.inOut(seg(t, tOhNo - 0.05, tOhNo + 0.3));  // the deadpan eye-slide from the TV to us
+  const cast = trio(t, {
+    watch: 1,
+    ty: { turn: 0.05, face: { name: 'deadpan', eyes: { upper: 0.5, look: [lerp(0.9, 0, slide), 0] }, fx: t > l16.b + 0.3 ? ['sweat'] : [] } }, tyAct: { energy: 0.15 },
+    pickle: { turn: 0, armR: 150, face: { name: 'excited', mouth: 'bigGrin' }, props: [{ svg: twelveCoins(1), layer: 'top' }] }, pkAct: { arms: false },
+    mia: { face: { name: 'deadpan', eyes: { look: [0.9, 0] } } },
+  });
   let o = W(cam, livingRoom(t, cast, { tvInner: newsScreen(t, 'every', true), tvGlow: 0.8 }));
   o += soft(1900, 500, 900, 's12tvGlow', 0.45);
   return o;

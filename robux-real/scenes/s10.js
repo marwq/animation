@@ -63,7 +63,7 @@ const whiteAt = (t, tc, k = 0.6) => C.whiteFlash(k * bump(t, tc - 0.04, tc + 0.1
 function runner(name, t, x, y, s, o = {}) {
   const r = A.run(o.ph ?? t * 15 + name.length, o.amp ?? 1);
   const head = name === 'mia' && hasBeret(t) ? [beret('side', 0)] : [];
-  return who(name, t, { x, y, s, view: 'side', flip: true, ...r, lean: -8, shadow: true, ...(o.pose || {}) }, { arms: false, ...(o.act || {}) }, head);
+  return who(name, t, { x, y, s, view: 'side', flip: true, ...r, lean: 8, shadow: true, ...(o.pose || {}) }, { arms: false, ...(o.act || {}) }, head);
 }
 // front-view "running at the camera"
 const runFront = (ph, a = 1) => ({ armL: 30 + 50 * Math.max(0, Math.sin(ph)) * a, armR: 30 + 50 * Math.max(0, -Math.sin(ph)) * a, legL: 6 * Math.sin(ph), legR: -6 * Math.sin(ph), bodyY: 14 * Math.abs(Math.sin(ph)) * a, lift: 18 * Math.abs(Math.cos(ph)) * a });
@@ -295,11 +295,11 @@ function shotLasers(t) {
   // horizontal beams to dodge
   const hb = [[640, 'ty', 640 + 0.12], [520, 'pickle', 0], [600, 'mia', 0]];
   // runners: Ty limbos, Pickle hops, Mia flips
-  const tyx = cx + 160, px = cx - 160, mx = cx;
+  const tyx = cx + 250, px = cx - 250, mx = cx;
   const limbo = bump(t, d5 + 0.3, d5 + 1.3), hopP = bump(t, d5 + 0.7, d5 + 1.25), flip = seg(t, d5 + 1.0, d5 + 1.6);
   w += runner('pickle', t, px, 820, 0.4, { amp: 0.6, pose: { lift: 200 * hopP, legL: hopP > 0.3 ? 70 : undefined, kneeL: hopP > 0.3 ? 110 : undefined, legR: hopP > 0.3 ? 50 : undefined, kneeR: hopP > 0.3 ? 100 : undefined }, act: { face: 'scared' } });
   w += runner('mia', t, mx, 820, 0.4, { amp: 0.6, pose: { lift: 170 * Math.sin(flip * Math.PI), rot: 360 * ease.inOut(flip), rotY: -400, legL: flip > 0 && flip < 1 ? 80 : undefined, kneeL: flip > 0 && flip < 1 ? 120 : undefined }, act: { face: 'determined' } });
-  w += runner('ty', t, tyx, 820, 0.4, { amp: 0.5 * (1 - limbo), pose: { lean: lerp(-8, 48, limbo), bodyY: 40 * limbo, legL: limbo > 0.2 ? -30 : undefined, kneeL: limbo > 0.2 ? 70 : undefined }, act: { face: limbo > 0.3 ? 'determined' : 'scared' } });
+  w += runner('ty', t, tyx, 820, 0.4, { amp: 0.5 * (1 - limbo), pose: { lean: lerp(8, -42, limbo), bodyY: 40 * limbo, legL: limbo > 0.2 ? -30 : undefined, kneeL: limbo > 0.2 ? 70 : undefined }, act: { face: limbo > 0.3 ? 'determined' : 'scared' } });
   // the sweeping beams, drawn over (they pass through everything)
   let lz = '';
   for (const [a, b, c, d] of beams) lz += E.laser(a, b, c, d, 0.9);
@@ -434,9 +434,9 @@ function shotDebt(t) {
   w += S.rect(560, 120, 800, 200, 40, ol('#2A0A14', 10)) + T('DEBT', 960, 270, 170, flash ? '#FFFFFF' : '#FF3B5C', { stroke: '#151515', 'stroke-width': 14, 'paint-order': 'stroke' });
   w += S.circle(960, 220, 520, { fill: 'url(#s10red)', opacity: flash ? 0.6 : 0.3 });
   const slip = bump(t, tDebt - 0.2, tDebt + 0.6);
-  w += runner('pickle', t, 700 - 160 * slip, 772, 0.42, { ph: t * 22, amp: 1.3, pose: { lean: -18 + 40 * slip }, act: { face: slip > 0.3 ? 'scream' : 'scared' } });
-  w += runner('mia', t, 1000, 772, 0.42, { ph: t * 22 + 2, amp: 1.3, pose: { lean: -20 }, act: { face: 'angry' } });
-  w += runner('ty', t, 1280, 772, 0.42, { ph: t * 22 + 4, amp: 1.3, pose: { lean: -22 }, act: { face: 'determined' } });
+  w += runner('pickle', t, 700 - 160 * slip, 772, 0.42, { ph: t * 22, amp: 1.3, pose: { lean: 18 - 40 * slip }, act: { face: slip > 0.3 ? 'scream' : 'scared' } });
+  w += runner('mia', t, 1000, 772, 0.42, { ph: t * 22 + 2, amp: 1.3, pose: { lean: 20 }, act: { face: 'angry' } });
+  w += runner('ty', t, 1280, 772, 0.42, { ph: t * 22 + 4, amp: 1.3, pose: { lean: 22 }, act: { face: 'determined' } });
   for (let i = 0; i < 8; i++) w += S.path(`M${200 + i * 260 - ((t * 900) % 260)} 740 l-60 0`, ln(6, '#FFFFFF', 0.5));
   let o = view(cam, bg, 0.7) + view(cam, w, 1);
   o += stageHud(t, 6, d10);
@@ -657,8 +657,8 @@ function shotSockPanic(t) {
   w += front('pickle', t, { x: 1000, y: 1060, s: 0.72, armL: 150, armR: 120, legL: 58 + pull * 0.3, kneeL: 0, legR: -4, face: 'scream', lean: 8 }, { arms: false });
   // interns tugging his sock foot (screen-left): a tug-of-war chain
   const fx = 1000 - 278 * 0.684 - 10 + pull, fy = 1060 - 173 * 0.684;
-  w += S.path(`M${f(fx)} ${f(fy)} L${f(fx - 60)} ${f(fy + 20)}`, ln(18, '#FFFFFF')) + S.path(`M${f(fx)} ${f(fy)} L${f(fx - 60)} ${f(fy + 20)}`, ln(6, '#D7DCE6'));
-  for (let i = 0; i < 4; i++) w += E.intern(fx - 70 - i * 75, 1050 - i * 4, 1.0, t, { ph: t * 24 + i, flip: false, rot: -22 + Math.sin(t * 20 + i) * 4, run: 0.5, arm: 1 });
+  w += S.path(`M${f(fx)} ${f(fy)} Q${f(fx - 30)} ${f(fy + 10)} ${f(fx - 50)} ${f(fy + 30)}`, ln(22, '#151515')) + S.path(`M${f(fx)} ${f(fy)} Q${f(fx - 30)} ${f(fy + 10)} ${f(fx - 50)} ${f(fy + 30)}`, ln(12, '#FFFFFF'));
+  for (let i = 0; i < 4; i++) w += E.intern(i === 0 ? fx - 46 : fx - 46 - i * 95, i === 0 ? fy + 81 : 1050 - i * 4, 1.35, t, { ph: t * 24 + i, flip: false, rot: -22 + Math.sin(t * 20 + i) * 4, run: 0.5, arm: 1 });
   for (let i = 0; i < 10; i++) w += E.intern((hash(i) * 2000 + t * 300 * (i % 2 ? 1 : -1)) % 2000, 1010, 0.7, t, { ph: t * 20 + i, flip: i % 2 });
   let o = view(cam, bg, 0.8) + view(cam, w, 1);
   o += stageHud(t, 8, d16);
@@ -739,13 +739,11 @@ function card(x, y, s, rotd) {
 }
 function sandwich(bite = 0) {
   let o = S.path('M-160 30 Q0 -140 160 30 Z', ol('#E8B060', 8)) + S.rect(-170, 26, 340, 26, 8, ol('#5BD15B', 6)) + S.rect(-170, 50, 340, 26, 8, ol('#E2533B', 6)) + S.rect(-170, 74, 340, 22, 8, ol('#FFD84D', 6)) + S.rect(-160, 94, 320, 44, 16, ol('#E8B060', 8));
-  if (bite > 0) {
-    // the 30% bite: bite marks over the right end
-    let b = '';
-    for (let i = 0; i < 4; i++) b += S.circle(170, -60 + i * 60, 62, { fill: '#2A1A00' });
-    o += S.g(b, '', { opacity: 1 });
-  }
-  return o;
+  if (bite <= 0) return o;
+  // the 30% bite: keep only what is left of a scalloped bite line
+  const id = S.uid('s10bite');
+  const edge = 'M-300 -200 L80 -200 Q20 -130 80 -60 Q20 0 80 50 Q20 100 80 160 L-300 160 Z';
+  return S.clipDef(id, S.path(edge)) + S.g(o, null, { 'clip-path': `url(#${id})` }) + S.path('M80 -200 Q20 -130 80 -60 Q20 0 80 50 Q20 100 80 160', { fill: 'none', stroke: '#151515', 'stroke-width': 6, opacity: 0 });
 }
 function shotRise(t) {
   const rise = ease.out(seg(t, d23 - 0.1, d23 + 0.7));
@@ -754,18 +752,18 @@ function shotRise(t) {
   let o = topFloor(t, cam, { pile: 0, py: 1000, ps: 0.9 });
   let w = '';
   const coinUp = seg(t, tCoin - 0.1, tCoin + 0.6), tradeK = seg(t, tTrade - 0.2, tTrade + 0.1);
-  const pose = { x: 960, y: lerp(2100, 1230, rise), s: 1.5, armL: lerp(20, 60, rise) + 60 * tradeK, armR: lerp(20, 130, coinUp), face: rise < 1 ? 'angry' : 'smug' };
+  const pose = { x: 960, y: lerp(2400, 1480, rise), s: 2.0, armL: lerp(20, 60, rise) + 60 * tradeK, armR: lerp(20, 130, coinUp), face: rise < 1 ? 'angry' : 'smug' };
   w += E.boss(t, pose, { display: '30%' });
   w += S.g(E.coinMound(950, 280, t), 'translate(960 1320)');
   // the flipped coin
-  if (coinUp > 0) { const h = A.hand(pose.armR, 1); w += coin(960 + h[0] * 1.05, pose.y + h[1] * 1.05 - 40 - Math.sin(coinUp * Math.PI) * 300, 70, 0, t * 14); }
-  if (tradeK > 0) { const h = A.hand(pose.armL, -1); w += card(960 + h[0] * 1.05, pose.y + h[1] * 1.05 - 60, 1, -10); }
+  if (coinUp > 0) { const h = A.hand(pose.armR, 1); w += coin(960 + h[0] * 1.4, pose.y + h[1] * 1.4 - 50 - Math.sin(coinUp * Math.PI) * 320, 80, 0, t * 14); }
+  if (tradeK > 0) { const h = A.hand(pose.armL, -1); w += card(960 + h[0] * 1.4, pose.y + h[1] * 1.4 - 70, 1.2, -10); }
   // coins cascading off him as he rises
   w += K.coinBurst(960, 900, t - d23, 26, 900, 28, 5);
   // tiny trio silhouettes (low angle foreground)
   let fg = '';
-  [['pickle', 520], ['ty', 760], ['mia', 1400]].forEach(([n, x]) => { fg += who(n, t, { x, y: 1200, s: 0.4, view: 'back', armL: 40, armR: 40 }, { arms: false }); });
-  o += view(cam, w, 1) + view(cam, fg, 1.3);
+  [['pickle', 560], ['ty', 700], ['mia', 1360]].forEach(([n, x]) => { fg += who(n, t, { x, y: 1150, s: 0.26, view: 'back', armL: 40, armR: 40 }, { arms: false }); });
+  o += view(cam, w, 1) + view(cam, fg, 1.1);
   o += K.bang('EVERY COIN!', 520, 220, bump(t, tCoin, tCoin + 1.0), 80, -8, E.GOLD);
   o += K.bang('EVERY TRADE!', 1420, 260, bump(t, tTrade, tTrade + 0.9), 80, 6, '#B06BFF');
   return o;
@@ -792,11 +790,11 @@ function shotMe(t) {
   let o = topFloor(t, cam, { pile: 0, py: 1000, ps: 0.9 });
   const spread = ease.outBack(seg(t, d25, d25 + 0.6));
   let w = K.rays(960, 380, 20, 1600, '#FFE98A', 0.18 + 0.15 * bump(t, tMe, tMe + 0.6), t * 25);
-  w += E.boss(t, { x: 960, y: 1250, s: 1.5, armL: lerp(20, 135, spread), armR: lerp(20, 135, spread), face: t > tMe - 0.1 ? { name: 'angry', mouth: 'scream' } : 'smug' }, { display: '30%', orbit: 1 });
+  w += E.boss(t, { x: 960, y: 1420, s: 1.9, armL: lerp(20, 135, spread), armR: lerp(20, 135, spread), face: t > tMe - 0.1 ? { name: 'angry', mouth: 'scream' } : 'smug' }, { display: '30%', orbit: 1 });
   w += S.g(E.coinMound(950, 260, t), 'translate(960 1330)');
   let fg = '';
-  [['pickle', 600], ['ty', 820], ['mia', 1040]].forEach(([n, x]) => { fg += who(n, t, { x, y: 1260, s: 0.42, view: 'back', armL: 70, armR: 70, bodyY: 20 }, { arms: false }); });
-  o += view(cam, w, 1) + view(cam, fg, 1.25);
+  [['pickle', 700], ['ty', 840], ['mia', 980]].forEach(([n, x]) => { fg += who(n, t, { x, y: 1190, s: 0.28, view: 'back', armL: 70, armR: 70, bodyY: 20 }, { arms: false }); });
+  o += view(cam, w, 1) + view(cam, fg, 1.1);
   o += K.coinRain(t, 26, { speed: 700, r: 26, seed: 8 });
   o += C.whiteFlash(0.5 * bump(t, tMe - 0.02, tMe + 0.14));
   o += K.bang('ME!', 960, 200, seg(t, tMe, tMe + 0.12), 200, -6, '#7CFF6B');
@@ -849,12 +847,12 @@ function shotWalkUp(t) {
   let o = topFloor(t, cam, { pile: 0, py: 1000, ps: 0.9 });
   let w = '';
   const lean = ease.inOut(seg(t, d28 + 0.4, d28 + 1.6));
-  w += E.boss(t, { x: 1340, y: 1150, s: 1.3, lean: 14 * lean, headRot: 10 * lean, armL: 20, armR: 30, face: { name: 'confused', eyes: { look: [-0.7, 0.7] } } }, { orbit: 0.7 });
-  w += S.g(E.coinMound(600, 220, t), 'translate(1340 1040)');
+  w += E.boss(t, { x: 1380, y: 1360, s: 1.85, lean: 14 * lean, headRot: 10 * lean, armL: 20, armR: 30, face: { name: 'confused', eyes: { look: [-0.7, 0.7] } } }, { orbit: 0.7 });
+  w += S.g(E.coinMound(640, 220, t), 'translate(1380 1060)');
   const px = lerp(260, 760, ease.out(u));
   const wave = t < M[14].word('Thirty').t0 + 0.4;
-  w += who('pickle', t, { x: px, y: 1000, s: 0.36, view: 'side', flip: true, ...(u < 0.9 ? A.walk(t * 9) : {}), armL: wave ? 160 + 20 * Math.sin(t * 14) : -20, shadow: true, face: 'happy' }, { arms: false });
-  [['ty', 120], ['mia', 0]].forEach(([n, x]) => { w += front(n, t, { x, y: 1000, s: 0.36, turn: 0.6, armL: 20, armR: 20, face: 'scared' }, { arms: false }); });
+  w += who('pickle', t, { x: px, y: 1000, s: 0.3, view: 'side', flip: true, ...(u < 0.9 ? A.walk(t * 9) : {}), armL: wave ? 160 + 20 * Math.sin(t * 14) : -20, shadow: true, face: 'happy' }, { arms: false });
+  [['ty', 140], ['mia', 20]].forEach(([n, x]) => { w += front(n, t, { x, y: 1000, s: 0.3, turn: 0.6, armL: 20, armR: 20, face: 'scared' }, { arms: false }); });
   o += view(cam, w, 1);
   return o;
 }
@@ -936,7 +934,7 @@ function shotThreePointSix(t) {
   const conf = seg(t, tPoint, tSix);
   w += E.boss(t, { x: 960, y: 1240, s: 1.75, headRot: lerp(0, 12, conf), armL: 30, armR: 30, face: { name: conf > 0.5 ? 'confused' : 'neutral', eyes: { look: [0, 0.9] }, fx: conf > 0.5 ? ['sweat'] : [] } }, { display: disp, orbit: 0.5, calcCol: t > tSix ? '#FFE98A' : '#BFF5B0' });
   o += view(cam, w, 1);
-  for (const [tt, s] of [[tThree, '3'], [tPoint, '.'], [tSix, '6']]) o += K.bang(s === '.' ? 'point...' : s, 1500, 300, bump(t, tt, tt + 0.6), 90, 6, '#BFF5B0');
+  for (const [tt, s, x] of [[tThree, '3...', 1450], [tPoint, 'POINT...', 1500], [tSix, '6!', 1450]]) o += K.bang(s, x, 380, bump(t, tt, tt + 0.7), 130, 6, '#BFF5B0');
   return o;
 }
 function glitchBoss(t, pose, o, g, crack = 0) {
@@ -985,8 +983,8 @@ function shotCompute(t) {
   const boom = t >= tBoom;
   if (!boom) {
     const crack = ease.in(seg(t, d34 + 0.2, tBoom - 0.1));
-    const inflate = ease.in(seg(t, tCompute2, tBoom));
-    const wob = 1 + 0.25 * inflate + 0.04 * Math.sin(t * 40) * inflate;
+    const inflate = ease.out(seg(t, tCompute2 - 0.2, tBoom));
+    const wob = 1 + 0.35 * inflate + 0.05 * Math.sin(t * 40) * inflate;
     const pose = { x: 960, y: 1130, s: 1.4 * wob, armL: 150 + 20 * Math.sin(t * 25), armR: 150 + 20 * Math.cos(t * 23), face: 'dizzy' };
     const g = 0.4 + 0.6 * crack;
     o += view(cam, glitchBoss(t, pose, { display: Math.floor(t * 10) % 3 ? 'ERR' : '3.6', calcCol: '#FF8A9A', orbit: 1 - crack }, g, crack), 1);
@@ -995,8 +993,11 @@ function shotCompute(t) {
     errs.forEach(([x, y, s], i) => { o += errBox(x + Math.sin(t * 20 + i) * 4 * crack, y, 0.9, s, seg(t, d34 + 0.2 + i * 0.3, d34 + 0.35 + i * 0.3)); });
   } else {
     const age = t - tBoom;
-    o += E.pixelBurst(960, 640, age, 70, 1, 3);
-    o += K.coinBurst(960, 640, age, 30, 1300, 30, 4);
+    const ring = ease.out(clamp(age / 0.5, 0, 1));
+    if (ring < 1) o += S.circle(960, 600, 100 + 1100 * ring, { fill: 'none', stroke: '#FFFFFF', 'stroke-width': 60 * (1 - ring), opacity: f(1 - ring) });
+    for (let i = 0; i < 8; i++) { const a = (i / 8) * Math.PI * 2, d = 200 + 500 * ring; if (age < 0.9) o += S.circle(960 + Math.cos(a) * d, 600 + Math.sin(a) * d * 0.7, 90 * (1 - age), { fill: '#DDF6FF', opacity: f(0.7 * (1 - age / 0.9)), stroke: '#151515', 'stroke-width': 5 }); }
+    o += E.pixelBurst(960, 600, age, 80, 1.5, 3);
+    o += K.coinBurst(960, 600, age, 36, 1500, 34, 4);
     o += K.confetti(t, tBoom, 70, 11);
     o += K.bang('POP!', 960, 460, bump(t, tBoom, tBoom + 0.5), 220, -6, '#FFFFFF');
   }
@@ -1012,9 +1013,9 @@ function shotCoins(t) {
   const math = seg(t, tMath - 0.1, tMath + 0.15);
   w += front('ty', t, { x: 520, y: 1050, s: 0.55, turn: 0.3, armL: lerp(40, 165, ease.outBack(math)), armR: lerp(40, 160, ease.outBack(math)), lift: 30 * bump(t, tMath, tMath + 0.4), face: 'joy' }, { arms: false });
   w += front('mia', t, { x: 1420, y: 1050, s: 0.55, turn: -0.3, armL: 16, armR: 16, face: { name: 'deadpan', eyes: { look: [-0.6, -0.4] } } }, { arms: false });
-  w += front('pickle', t, { x: 960, y: 1060, s: 0.6, armL: 62, armR: 62, face: { name: 'amazed', eyes: { look: [0, -0.8] } } }, { arms: false });
-  // exactly 3.6 coins fall into Pickle's hands
-  const hx = 960, hy = 1060 - 400 * 0.6 * 0.95;
+  w += front('pickle', t, { x: 960, y: 1060, s: 0.6, armL: -24, armR: -24, face: { name: 'amazed', eyes: { look: [0, -0.8] } } }, { arms: false });
+  // exactly 3.6 coins fall into Pickle's cupped hands
+  const hx = 960, hy = 1060 - 300 * 0.6 * 0.95;
   const drops = [d35 + 0.1, d35 + 0.35, d35 + 0.6];
   drops.forEach((td, i) => {
     const u = seg(t, td, td + 0.45);

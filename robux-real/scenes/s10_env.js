@@ -34,6 +34,7 @@ const DEFS = `<defs>${coinTile('s10coins')}
 <radialGradient id="s10red" cx="0.5" cy="0.5" r="0.5"><stop offset="0" stop-color="#FF3B5C" stop-opacity="0.6"/><stop offset="1" stop-color="#FF3B5C" stop-opacity="0"/></radialGradient>
 <radialGradient id="s10green" cx="0.5" cy="0.5" r="0.5"><stop offset="0" stop-color="#7CFF6B" stop-opacity="0.7"/><stop offset="1" stop-color="#7CFF6B" stop-opacity="0"/></radialGradient>
 <linearGradient id="s10shaft" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#FFE98A" stop-opacity="0.35"/><stop offset="1" stop-color="#FFE98A" stop-opacity="0"/></linearGradient>
+<linearGradient id="s10vinyl" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#FFFFFF" stop-opacity="0.28"/><stop offset="0.35" stop-color="#FFFFFF" stop-opacity="0"/><stop offset="0.7" stop-color="#2A1640" stop-opacity="0"/><stop offset="1" stop-color="#2A1640" stop-opacity="0.3"/></linearGradient>
 <linearGradient id="s10floor" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#0E3A42"/><stop offset="1" stop-color="#05191E"/></linearGradient>
 <pattern id="s10paper" patternUnits="userSpaceOnUse" width="20" height="20"><rect width="20" height="20" fill="#FFFDF4"/><rect y="17" width="20" height="2" fill="#D7E4F2"/></pattern>
 </defs>`;
@@ -282,7 +283,13 @@ function boss(t, pose, o = {}) {
     props.push({ svg: S.g(back, null, { opacity: f(orbit) }), layer: 'back' }, { svg: S.g(front, null, { opacity: f(orbit) }), layer: 'top' });
   }
   if (mound) props.push({ svg: coinMound(260, 360, t), layer: 'top' });
-  return actor('thirty', t, { shadow: false, ...pose, props: [...props, ...(pose.props || [])] });
+  // at giant sizes the per-part volume filter is too slow: draw flat and fake the vinyl shading on the head
+  const big = pose.s * 0.7 > 0.95;
+  if (big) {
+    const hp = { ...K.V.perform('THIRTY', t, { seed: 6 * 3.7 }), ...pose };
+    props.push({ svg: S.g(S.path(S.roundedPath([[-140, -890], [140, -890], [140, -559], [-140, -559]], 46), { fill: 'url(#s10vinyl)' }), `translate(0 ${f(hp.headY || 0)}) rotate(${f(hp.headRot || 0)} 0 -560)`), layer: 'front' });
+  }
+  return actor('thirty', t, { shadow: false, ...(big ? { volume: false } : {}), ...pose, props: [...props, ...(pose.props || [])] });
 }
 // flat silhouette of the boss (for RGB-split ghosts) in screen space, matching boss() at pose x,y,s
 function bossGhost(pose, col, dx, dy, op = 0.6) {

@@ -192,9 +192,19 @@ function scene(t) {
   o += endSlots(t, seg(t, tCard + 0.1, tCard + 1.0));
   o += padlock(t, seg(t, tPwd - 0.25, tPwd + 0.05) * (1 - seg(t, tNot + 0.2, tNot + 0.45)));
   o += stickyNo(t);
-  if (t > tWave) o += K.confetti(t, tWave, 50, 13);
+  if (t > tWave) {
+    // confetti raining from the top (kept off the faces' burst point)
+    const cols = ['#FF5A5A', '#FFFFFF', '#3BD16F', '#34C3FF', '#B06BFF', '#FF6FB5'];
+    for (let i = 0; i < 44; i++) {
+      const age = t - tWave - hash(i * 2.3) * 0.8;
+      if (age < 0) continue;
+      const x = hash(i * 7.7) * 1920 + Math.sin(t * 3 + i) * 30, y = -40 + age * (380 + hash(i) * 260);
+      if (y > 1100) continue;
+      o += S.rect(x, y, 16, 26, 4, { fill: cols[i % 6], transform: `rotate(${f(age * 400 + i * 40)} ${f(x + 8)} ${f(y + 13)})` });
+    }
+  }
   // the smash-cut entry
-  o += C.whiteFlash(0.85 * (1 - seg(t, S13, S13 + 0.12)));
+  o += C.whiteFlash(0.75 * (1 - seg(t, S13, S13 + 0.08)));
   return o;
 }
 const look = () => ({ grade: 'warm', vignette: 0.35 });

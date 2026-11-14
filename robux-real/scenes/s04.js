@@ -411,7 +411,7 @@ function shotShoe(t) {
   if (phase === 0) cam = camKeys(t, [[tShoe, { zoom: 1.5, x: 200, y: 60 }], [tHave, { zoom: 1.65, x: 220, y: 40 }]]);
   else if (phase === 1) cam = camKeys(t, [[tHave, { zoom: 1.7, x: -260, y: 60 }], [tHaveW, { zoom: 1.75, x: -250, y: 60 }]]);
   else if (phase === 2) cam = { zoom: 1.0, x: 0, y: 0 };
-  else cam = camKeys(t, [[tSave, { zoom: 1.5, x: 210, y: -20 }], [tElev, { zoom: 1.62, x: 210, y: -30 }]]);
+  else cam = camKeys(t, [[tSave, { zoom: 1.5, x: 210, y: 60 }], [tElev, { zoom: 1.6, x: 210, y: 60 }]]);
   // Pickle standing on his chair, lifting the sock foot (screen-left leg)
   const raise = phase === 3 ? 0 : ease.outBack(seg(t, tShoe + 0.6, tShoe + 1.0));
   const wig = phase === 2 ? Math.sin(t * 22) * 6 : 0;
@@ -916,7 +916,7 @@ function shotSandwich(t) {
   return o;
 }
 function shotDadMad(t) {
-  const cam = camKeys(t, [[tDadMad, { zoom: 1.0, x: 0, y: 0 }], [tSandW - 0.05, { zoom: 1.06, x: 0, y: 0 }], [tSandW + 0.1, { zoom: 1.35, x: 0, y: -60 }], [tChew, { zoom: 1.4, x: 0, y: -60 }]]);
+  const cam = camKeys(t, [[tDadMad, { zoom: 1.0, x: 0, y: 40 }], [tSandW - 0.05, { zoom: 1.06, x: 0, y: 60 }], [tSandW + 0.1, { zoom: 1.3, x: 0, y: 140 }], [tChew, { zoom: 1.34, x: 0, y: 140 }]]);
   const sh = K.shake(t, tSandW, 0.7, 18); cam.sx = sh.sx; cam.sy = sh.sy;
   let w = office(t) + cubicle(-300, 680, 900, 300) + cubicle(1400, 680, 900, 300);
   const wob = Math.sin(t * 30) * 3;
