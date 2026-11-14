@@ -89,7 +89,7 @@
     [337.362,"pop",-6,0.45,"+1 FLOOR tag"],
     [337.802,"whoosh",-6,0,"cut (flash): night on Mia's taller roof"],
     [339.032,"whoosh",-7,0.16,"the SOLD sign plummets toward the moon"],
-    [339.232,"thud",0,0.16,"THUNK! sign slams into the moon (shake, dust)"],
+    [339.232,"thud",-1,0.16,"THUNK! sign slams into the moon (shake, dust)"],
     [339.362,"boing",-11,0.16,"the sign wobbles"],
     [339.806,"swish",-6,0,"cut (flash): Ty on his shorter balcony"],
     [340.362,"zoom_in",-3,0,"smash-zoom on BUY"],
@@ -97,11 +97,11 @@
     [341.522,"whoosh",-4,0,"cut (flash): out in space"],
     [341.602,"ui_pop",-3,0.36,"MOON PURCHASED! toast drops in"],
     [342.522,"whoosh_up",-6,0.2,"the Thirty Percent Guy rises from behind the moon"],
-    [342.892,"error",-2,0.36,"30% FEE APPLIED toast"],
+    [342.892,"error",-5,0.36,"30% FEE APPLIED toast"],
     [343.492,"egg_crack",0,0.03,"SNAP! a third of the moon breaks off"],
     [343.512,"impact",2,0,"shake"],
     [343.562,"rock_drop",-8,0.04,"moon crumbs scatter"],
-    [343.732,"stamp",-1,-0.29,"-30% stamp"],
+    [343.732,"stamp",-4,-0.29,"-30% stamp"],
     [344.552,"slide_up",-8,0.5,"Thirty floats away with the wedge over his head"],
     [345.192,"whoosh",-3,0.3,"whip-pan out (to SC 06b)"]
   ]
