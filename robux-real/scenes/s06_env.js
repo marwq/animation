@@ -100,14 +100,14 @@ function sparkleFedora(t, glow = 1) {
 function hatTile(id) {
   const Wt = 420, Ht = 260;
   let o = '';
-  for (let i = 0; i < 16; i++) {
-    const x = hash(i * 3.1 + 7) * Wt, y = hash(i * 5.7 + 3) * Ht, r = (hash(i * 1.3) - 0.5) * 70, s = 0.42 + hash(i * 2.2) * 0.22;
+  for (let i = 0; i < 20; i++) {
+    const x = hash(i * 3.1 + 7) * Wt, y = hash(i * 5.7 + 3) * Ht, r = (hash(i * 1.3) - 0.5) * 70, s = 0.34 + hash(i * 2.2) * 0.16;
     for (const dx of [-Wt, 0, Wt]) for (const dy of [-Ht, 0, Ht]) {
       if (x + dx < -90 || x + dx > Wt + 90 || y + dy < -90 || y + dy > Ht + 90) continue;
       o += placeHat(randHat(i + 30), x + dx, y + dy + 30, s, r);
     }
   }
-  return `<pattern id="${id}" patternUnits="userSpaceOnUse" width="${Wt}" height="${Ht}"><rect width="${Wt}" height="${Ht}" fill="#7A4FA8"/>${o}</pattern>`;
+  return `<pattern id="${id}" patternUnits="userSpaceOnUse" width="${Wt}" height="${Ht}"><rect width="${Wt}" height="${Ht}" fill="#5A3A86"/>${o}</pattern>`;
 }
 
 // a mound of hats: base y, from x0 to x1, peak height h; silhouette hats on top

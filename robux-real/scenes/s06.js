@@ -93,7 +93,7 @@ function miaRoomBack(t) {
   for (let x = -500; x < 2400; x += 180) o += S.path(`M${x} 756 L${x - 140} 1300`, ln(3, '#B98A6A', 0.6));
   o += S.ellipse(980, 900, 520, 90, ol('#FF9CCB', 6)) + S.ellipse(980, 900, 420, 60, { fill: 'none', stroke: '#FFC2DF', 'stroke-width': 10 });
   // background hat mountains
-  o += hatMound(-420, 640, 800, 430, 2, t) + hatMound(1150, 2340, 810, 330, 5, t);
+  o += hatMound(-420, 560, 800, 320, 2, t) + hatMound(1300, 2340, 810, 260, 5, t);
   return o;
 }
 // hats Mia throws over her shoulders while digging
@@ -126,7 +126,7 @@ function shotDig(t) {
   mid += mia(t, 960, 930, 0.5, pose, { arms: false });
   if (digging) mid += flyingHats(t, START - 0.5, tWait, 960, 760, 12, 3);
   // foreground heap in front of her legs
-  mid += hatMound(560, 1380, 1000, 230, 9, t);
+  mid += hatMound(600, 1340, 1060, 200, 9, t);
   if (glow > 0) mid += S.g(sparkleFedora(t, 0.4 * glow), 'translate(1090 930) scale(0.5) rotate(-14)') + K.sparkles([[1020, 820, 24], [1170, 860, 18], [1110, 760, 28]], t);
   let o = K.view(cam, mid, 1);
   o += S.rect(0, 0, 1920, 1080, 0, { fill: '#000', opacity: f(1 - seg(t, START, START + 0.35)) });
@@ -144,13 +144,13 @@ function shotReveal(t) {
   const armR = lerp(10, 150, lift);
   const [hx, hy] = A.hand(armR, 1);
   const fed = { svg: placeHat(sparkleFedora(t, 1), hx + 60, hy - 30 + (1 - lift) * 200, 1.25, -8), layer: 'front' };
-  let mid = mia(t, 760, 1560, 1.42, { armR, armL: 12, turn: 0.15, headRot: -4, face: { name: 'amazed', eyes: { look: [0.8, -0.3], type: lift > 0.8 ? 'star' : undefined }, fx: ['sparkles'] }, props: [fed] }, { arms: false, energy: 0.6 });
+  let mid = mia(t, 640, 1580, 1.42, { armR, armL: 12, turn: 0.15, headRot: -4, face: { name: 'amazed', eyes: { look: [0.8, -0.3], type: lift > 0.8 ? 'star' : undefined }, fx: ['sparkles'] }, props: [fed] }, { arms: false, energy: 0.6 });
   let o = bg + K.view(cam, mid, 1);
   // name card: SPARKLE · TIME · FEDORA
-  const words = [['SPARKLE', tFind + 0.18, 1340, 150], ['TIME', tTime, 1520, 250], ['FEDORA', tFedora, 1440, 350]];
+  const words = [['SPARKLE', tFind + 0.18, 1460, 170], ['TIME', tTime, 1620, 290], ['FEDORA', tFedora, 1500, 410]];
   for (const [w, tw, x, y] of words) {
     const k = seg(t, tw, tw + 0.2);
-    if (k > 0) o += S.g(T(w, 0, 0, 110, '#FFFFFF', { stroke: '#5B2A9A', 'stroke-width': 18, 'paint-order': 'stroke' }), `translate(${x} ${f(y - 120)}) rotate(-6) scale(${f(ease.outBack(k))})`);
+    if (k > 0) o += S.g(T(w, 0, 0, 110, '#FFFFFF', { stroke: '#5B2A9A', 'stroke-width': 18, 'paint-order': 'stroke' }), `translate(${x} ${y}) rotate(-6) scale(${f(ease.outBack(k))})`);
   }
   o += K.sparkles([[260, 200, 30], [1820, 640, 36], [1180, 820, 22], [420, 760, 26]], t);
   o += flashAt(t, tFind, 0.7);
@@ -159,7 +159,7 @@ function shotReveal(t) {
 
 function shotLimited(t) {
   // C: smash-zoom on Mia's evil grin, fedora on her head; LIMITED badge stamps, the 2,000,000 price tag swings in
-  const z = camKeys(t, [[tLim, { zoom: 1.55, x: 0, y: -200 }], [tLim + 0.18, { zoom: 1.25, x: 0, y: -170 }], [tEx, { zoom: 1.32, x: -20, y: -180 }]]);
+  const z = camKeys(t, [[tLim, { zoom: 1.7, x: 0, y: 10 }], [tLim + 0.18, { zoom: 1.3, x: -40, y: 20 }], [tEx, { zoom: 1.38, x: -50, y: 20 }]]);
   z.rot = -5;
   const sh = K.shake(t, tLim, 0.35, 16); z.sx = sh.sx; z.sy = sh.sy;
   let o = S.rect(0, 0, 1920, 1080, 0, { fill: 'url(#s06evil)' }) + rays(960, 300, 20, 1500, '#B98CFF', 0.2, -t * 15);
@@ -179,10 +179,9 @@ function shotLimited(t) {
   const kP = seg(t, tEd, tEd + 0.35);
   if (kP > 0) {
     const sw = Math.sin((t - tEd) * 9) * 18 * Math.exp(-(t - tEd) * 2.2);
-    let tag = S.path('M0 -360 L0 -60', ln(6, '#FFFFFF')) + S.rect(-280, -70, 560, 150, 30, ol('#FFE14D', 9)) + S.circle(-240, 5, 14, ol('#FFFFFF', 5));
+    let tag = S.path('M0 -560 L0 -60', ln(6, '#FFFFFF')) + S.rect(-280, -70, 560, 150, 30, ol('#FFE14D', 9)) + S.circle(-240, 5, 14, ol('#FFFFFF', 5));
     tag += K.robuxText(20, 40, '2,000,000', 86, '#2A1640');
-    o += S.g(tag, `translate(1430 ${f(lerp(-300, 330, ease.outBack(kP)))}) rotate(${f(sw)} 0 -360)`);
-    o += coinBurst(1430, 420, t - tEd - 0.2, 18, 800, 26, 61);
+    o += S.g(tag, `translate(1450 ${f(lerp(-300, 500, ease.outBack(kP)))}) rotate(${f(sw)} 0 -560)`);
   }
   o += flashAt(t, tLim, 0.8, 0.06);
   return o;
@@ -287,7 +286,7 @@ function shotMountain(t) {
   // E: tight on the upstairs window — hats spill out — then on "LOT" the camera blasts out: a hat MOUNTAIN through the roof
   const out = ease.out(seg(t, tLot - 0.05, tLot + 0.55));
   const cam = camKeys(t, [[tAnd, { zoom: 2.3, x: -200, y: 30 }], [tLot - 0.05, { zoom: 2.5, x: -200, y: 30 }]]);
-  const wide = { zoom: 0.62, x: 0, y: -330 };
+  const wide = { zoom: 0.6, x: 0, y: -400 };
   const cm = out > 0 ? { zoom: lerp(cam.zoom, wide.zoom, out), x: lerp(cam.x, wide.x, out), y: lerp(cam.y, wide.y, out) } : cam;
   const sh = K.shake(t, tLot, 0.7, 20); cm.sx = sh.sx; cm.sy = sh.sy;
   let w = suburbBack(t);
@@ -297,8 +296,8 @@ function shotMountain(t) {
     // the mountain rises through the roof
     const up = ease.outBack(seg(t, tLot - 0.05, tLot + 0.45));
     const peak = lerp(700, -720, up);
-    mid += hatMound(560, 1360, 760, 760 - peak, 14, t);
-    mid += mia(t, 960, peak + 60, 0.2, { face: { name: 'smug' }, armR: 30 }, {}, { hat: true, phone: true });
+    mid += hatMound(610, 1310, 640, 640 - peak, 14, t);
+    mid += mia(t, 960, peak + 70, 0.27, { face: { name: 'smug' }, armR: 30 }, {}, { hat: true, phone: true });
     mid += K.sparkles([[900, peak - 120, 30], [1040, peak - 60, 24]], t);
   }
   mid += tyHouse(960, 920, 0.8, t, { hole: burst ? 1 : 0, winHats: seg(t, tAnd, tAnd + 0.8) });
@@ -340,6 +339,7 @@ function shotBroke(t) {
   o += K.view(cam, bang('THUD!', 1640, 520, seg(t, tBroke + 0.28, tBroke + 0.4) * (1 - seg(t, tBroke + 1.1, tBroke + 1.3)), 80, 8, '#FF9CCB'), 1);
   return o;
 }
+const yellBurst = (t) => (t >= tMil ? coinBurst(900, 700, t - tMil, 30, 1400, 34, 17) : '');
 function shotMillionaire(t) {
   // G: Ty, close: "I'm not broke! I'm a MILLIONAIRE!" — leaps on the word, coins + balance HUD
   const cam = camKeys(t, [[tTy, { zoom: 1.0, x: 0, y: 0 }], [tMil, { zoom: 1.08, x: 0, y: 20 }], [tMil + 0.12, { zoom: 0.92, x: 0, y: -40 }], [tTwo0, { zoom: 0.95, x: 0, y: -40 }]]);
@@ -348,11 +348,11 @@ function shotMillionaire(t) {
   o += S.rect(0, 0, 1920, 1080, 0, { fill: '#FFFFFF', opacity: 0.12 });
   const jump = bump(t, tMil, tMil + 0.65);
   const yell = t >= tMil;
-  let mid = S01.tyIn(t, 900, 1540, 1.12, { turn: 0.3, lift: 160 * jump, armL: yell ? 160 : 30, armR: yell ? 160 : 70, face: yell ? { name: 'excited', fx: ['sparkles'] } : { name: 'angry', eyes: { look: [0.6, 0] } }, sy: 1 + 0.06 * jump, sx: 1 - 0.04 * jump }, { arms: false, energy: 1.4 }, false);
+  let mid = yellBurst(t);
+  mid += S01.tyIn(t, 900, 1480, 1.12, { turn: 0.3, lift: 160 * jump, armL: yell ? 160 : 30, armR: yell ? 160 : 70, face: yell ? { name: 'excited', fx: ['sparkles'] } : { name: 'angry', eyes: { look: [0.6, 0] } }, sy: 1 + 0.06 * jump, sx: 1 - 0.04 * jump }, { arms: false, energy: 1.4 }, false);
   o += K.view(cam, mid, 1);
   if (yell) {
     o += rays(900, 300, 18, 1400, '#FFE14D', 0.22 * (1 - seg(t, tMil + 0.5, tTwo0)), t * 40);
-    o += coinBurst(900, 520, t - tMil, 30, 1300, 34, 17);
     o += S.g(K.counter(0, 0, lerp(0, 3000000, ease.out(seg(t, tMil, tMil + 0.5))), 1.3), `translate(960 ${f(lerp(-120, 120, ease.outBack(seg(t, tMil, tMil + 0.3))))})`);
   }
   return o;
@@ -418,9 +418,9 @@ function pTyHover(t, k) {
 function pMiaHeli(t, k) {
   let o = S.rect(-800, -400, 3520, 1900, 0, { fill: 'url(#s06pink)' });
   for (let i = 0; i < 4; i++) o += K.E.cloud(((i * 600 + t * 120) % 2600) - 400, 160 + (i % 2) * 380, 0.9, '#FFE6F2', '#F7C2DA');
-  const y = lerp(300, 560, ease.out(k)) + Math.sin(t * 3) * 14;
-  const inner = mia(t, 0, 380, 0.32, { armR: 30, face: { name: 'smug', eyes: { look: [-0.6, 0] } } }, {}, { hat: true });
-  o += S.g(helicopter(t, 1, S.g(inner, 'translate(-110 -160)')), `translate(960 ${f(y)}) rotate(${f(-4 + Math.sin(t * 2) * 2)}) scale(0.85)`);
+  const y = lerp(250, 520, ease.out(k)) + Math.sin(t * 3) * 14;
+  const inner = mia(t, 0, 330, 0.4, { armR: 30, face: { name: 'smug', eyes: { look: [-0.6, 0] } } }, {}, { hat: true });
+  o += S.g(helicopter(t, 1, S.g(inner, 'translate(-100 -150)')), `translate(1000 ${f(y)}) rotate(${f(-4 + Math.sin(t * 2) * 2)}) scale(1.05)`);
   for (let i = 0; i < 6; i++) o += S.path(`M${700 + i * 100} ${f(y + 260 + ((t * 300 + i * 40) % 160))} l0 50`, ln(8, '#FFFFFF', 0.6));
   o += K.priceTag(960, 900, '500K', 1, 6, '#FF9CCB');
   return o;
@@ -477,7 +477,7 @@ function shotSplit(t) {
   if (t < tHeli) R_ = panel(pIdle(t, 'mia'), RP, 460, 1);
   else if (t < tMan2) R_ = panel(pMiaHeli(t, seg(t, tHeli, tHeli + 0.6)), RP, 460, seg(t, tHeli, tHeli + 0.25));
   else R_ = panel(pMiaMansion(t, 1), RP, 460, seg(t, tMan2, tMan2 + 0.25));
-  let o = S.g(L_, `translate(${f(-1100 * (1 - open))} 0)`) + S.g(R_, `translate(${f(1100 * (1 - open))} 0)`);
+  let o = S.rect(0, 0, 1920, 1080, 0, { fill: '#1A1030' }) + S.g(L_, `translate(${f(-1100 * (1 - open))} 0)`) + S.g(R_, `translate(${f(1100 * (1 - open))} 0)`);
   // per-panel flashes on each purchase
   for (const [tc, P] of [[tHover, LP], [tHeli, RP], [tMan1, LP], [tMan2, RP]]) {
     const k = bump(t, tc - 0.02, tc + 0.16);
@@ -497,17 +497,17 @@ function shotTaller(t) {
   const sh = K.shake(t, tTaller, 0.4, 12); cam.sx = sh.sx; cam.sy = sh.sy;
   let w = S.rect(-800, -800, 3520, 2680, 0, { fill: 'url(#s06pink)' });
   for (let i = 0; i < 4; i++) w += K.E.cloud(((i * 600 + t * 30) % 2600) - 400, 80 + (i % 2) * 140, 0.8, '#FFE6F2', '#F7C2DA');
-  let mid = S.g(S01.villa(t), 'translate(500 860) scale(0.6) translate(-960 -760)');
-  mid += S.g(miaMansion(t, grow), 'translate(1420 860) scale(0.6) translate(-960 -760)');
-  mid += S.rect(-800, 856, 3520, 400, 0, { fill: '#6FBF5A' }) + S.rect(-800, 856, 3520, 12, 0, { fill: '#8FE07E' });
-  mid += S.path('M960 860 L960 760', ln(10, '#FFFFFF')) + S.rect(940, 700, 40, 70, 6, { fill: 'none' });
-  mid += S01.tyIn(t, 760, 1010, 0.32, { turn: 0.6, armL: 20, armR: 20, face: t > tTaller ? { name: 'shocked', eyes: { look: [0.8, -0.8] } } : { name: 'smug' } }, { arms: false });
-  mid += mia(t, 1160, 1010, 0.32, { turn: -0.4, armR: 40, face: { name: 'smug' } }, {}, { hat: true, phone: true });
+  let mid = S.g(S01.villa(t), 'translate(500 790) scale(0.6) translate(-960 -760)');
+  mid += S.g(miaMansion(t, grow), 'translate(1420 790) scale(0.6) translate(-960 -760)');
+  mid += S.rect(-800, 786, 3520, 500, 0, { fill: '#6FBF5A' }) + S.rect(-800, 786, 3520, 12, 0, { fill: '#8FE07E' });
+  for (let x = 900; x < 1030; x += 34) mid += S.path(`M${x} 800 L${x} 730 L${x + 12} 716 L${x + 24} 730 L${x + 24} 800 Z`, ol('#FFFFFF', 4));
+  mid += S01.tyIn(t, 760, 920, 0.3, { turn: 0.6, armL: 20, armR: 20, face: t > tTaller ? { name: 'shocked', eyes: { look: [0.8, -0.8] } } : { name: 'smug' } }, { arms: false });
+  mid += mia(t, 1160, 920, 0.3, { turn: -0.4, armR: 40, face: { name: 'smug' } }, {}, { hat: true, phone: true });
   let o = w + K.view(cam, mid, 1);
   if (grow > 0) {
     const k = seg(t, tTaller + 0.1, tTaller + 0.3);
-    o += K.view(cam, S.g(S.rect(-130, -46, 260, 92, 24, ol('#FF6FB5', 7)) + T('+1 FLOOR', 0, 22, 56, '#FFFFFF', { stroke: '#151515', 'stroke-width': 8, 'paint-order': 'stroke' }), `translate(1760 330) rotate(10) scale(${f(ease.outBack(k))})`), 1);
-    o += K.view(cam, bang('BOING!', 1140, 280, k * (1 - seg(t, tTaller + 0.8, tTaller + 0.95)), 80, -10, '#FFE14D'), 1);
+    o += K.view(cam, S.g(S.rect(-130, -46, 260, 92, 24, ol('#FF6FB5', 7)) + T('+1 FLOOR', 0, 22, 56, '#FFFFFF', { stroke: '#151515', 'stroke-width': 8, 'paint-order': 'stroke' }), `translate(1760 260) rotate(10) scale(${f(ease.outBack(k))})`), 1);
+    o += K.view(cam, bang('BOING!', 1140, 210, k * (1 - seg(t, tTaller + 0.8, tTaller + 0.95)), 80, -10, '#FFE14D'), 1);
   }
   o += flashAt(t, tOne, 0.6);
   return o;
@@ -574,7 +574,7 @@ function moonScreen(t) {
 function shotCant(t) {
   // K: Ty on his (shorter) balcony at night — stunned, then "BUY" smash-zoom
   const smash = t >= tBuy;
-  const cam = smash ? camKeys(t, [[tBuy, { zoom: 1.5, x: 0, y: -170 }], [tSys, { zoom: 1.58, x: 0, y: -180 }]]) : camKeys(t, [[tCant, { zoom: 1.0, x: 0, y: -60 }], [tBuy, { zoom: 1.08, x: 0, y: -80 }]]);
+  const cam = smash ? camKeys(t, [[tBuy, { zoom: 1.65, x: 0, y: 10 }], [tSys, { zoom: 1.75, x: 0, y: 10 }]]) : camKeys(t, [[tCant, { zoom: 1.0, x: 0, y: -60 }], [tBuy, { zoom: 1.08, x: 0, y: -80 }]]);
   const sh = K.shake(t, tBuy, 0.4, 16); cam.sx = sh.sx; cam.sy = sh.sy;
   let o = nightSky(t);
   o += K.view(cam, S.g(moon(t, 0, '', 1), 'translate(1600 180) scale(0.45)'), 0.5);
@@ -589,44 +589,47 @@ function shotCant(t) {
 }
 function shotFee(t) {
   // L: space — MOON PURCHASED toast; the Thirty Percent Guy pops up, snaps off a third, and floats away with it
-  const cam = camKeys(t, [[tSys, { zoom: 1.0, x: 0, y: 0 }], [tThirty, { zoom: 1.08, x: 60, y: 0 }], [tFee + 0.1, { zoom: 1.0, x: 120, y: 0 }], [END, { zoom: 0.95, x: 200, y: 0 }]]);
+  const cam = camKeys(t, [[tSys, { zoom: 1.0, x: 0, y: 0 }], [tThirty, { zoom: 1.08, x: 60, y: 0 }], [tFee + 0.1, { zoom: 1.0, x: 120, y: -20 }], [END, { zoom: 0.92, x: 220, y: -40 }]]);
   const sh = K.shake(t, tFee, 0.4, 16); cam.sx = sh.sx; cam.sy = sh.sy;
   let o = nightSky(t);
   // Earth far below for scale
   o += K.view(cam, S.circle(300, 1500, 700, ol('#3B8BFF', 8)) + S.path('M-100 980 Q100 900 300 960 Q420 1010 560 900 L600 1100 L-100 1100 Z', { fill: '#3BD16F', opacity: 0.9 }), 0.4);
   const broken = t >= tFee;
-  const u = seg(t, tFee, END);
-  const wx = 200 * u + 50 * ease.out(seg(t, tFee, tFee + 0.2)), wy = -60 * u, wr = 25 * u;
-  // Thirty: rises behind the moon, grabs the wedge, then floats away with it
-  const up = ease.outBack(seg(t, tThirty - 0.3, tThirty + 0.15));
+  const mx = 820, my = 580;
+  // Thirty: rises from behind the moon's edge, grabs the wedge, yanks it, floats away with it over his head
+  const up = ease.outBack(seg(t, tThirty - 0.35, tThirty + 0.15));
   const grab = seg(t, tPct, tFee);
-  const mx = 960, my = 560;
+  const away = ease.inOut(seg(t, tFee + 0.25, END + 0.3));
+  const yank = ease.out(seg(t, tFee, tFee + 0.25));
+  const ts = 0.6, Z = 0.7;
+  const tx = 1230 + 80 * yank + 380 * away, ty = lerp(1250, 900, up) - 60 * yank - 260 * away;
+  const thirty = up > 0 ? actor('thirty', t, { x: tx, y: ty, s: ts, rot: broken ? 6 * Math.sin((t - tFee) * 5) : 0, rotY: -400, turn: -0.4, armL: broken ? 165 : lerp(70, 125, grab), armR: broken ? 165 : 40, lean: broken ? 0 : -6 * grab, face: { name: broken ? 'joy' : 'smug' }, shadow: false }) : '';
+  // wedge centroid (175, 43) relative to the moon → carried over his head after the snap
+  const head = [tx, ty - ts * Z * 1050];
+  const wx = lerp(0, head[0] - (mx + 175), yank), wy = lerp(0, head[1] - (my + 43), yank), wr = lerp(0, -30, yank) + 6 * Math.sin(t * 4) * yank;
   let mid = '';
-  const tx = 1220 + wx * 1.6, ty = lerp(980, 700, up) + wy * 1.6;
-  const thirty = up > 0 ? actor('thirty', t, { x: tx, y: ty, s: 0.42, rot: broken ? 8 + wr * 0.5 : 0, rotY: -400, turn: -0.4, armL: broken ? 150 : lerp(60, 130, grab), armR: broken ? 160 : 40, face: { name: broken ? 'joy' : 'smug' }, shadow: false }) : '';
-  if (!broken) mid += thirty;
-  mid += S.g(moon(t, broken ? 1 : 0, `translate(${f(wx)} ${f(wy)}) rotate(${f(wr)})`, 1), `translate(${mx} ${my})`);
-  if (broken) mid += thirty;
+  mid += S.g(moon(t, broken ? 1 : 0, `translate(${f(175 + wx)} ${f(43 + wy)}) rotate(${f(wr)}) scale(${f(lerp(1, 0.8, yank))}) translate(-175 -43)`, 1), `translate(${mx} ${my})`);
+  mid += thirty;
   o += K.view(cam, mid, 1);
   if (broken) {
-    o += K.view(cam, bang('SNAP!', 1260, 300, seg(t, tFee, tFee + 0.12) * (1 - seg(t, tFee + 0.9, tFee + 1.05)), 110, 10, '#FFE14D'), 1);
-    o += K.view(cam, stamp('-30%', 640, 820, seg(t, tFee + 0.1, tFee + 0.3), 120, '#E2233B', -12), 1);
+    o += K.view(cam, bang('SNAP!', 1180, 260, seg(t, tFee, tFee + 0.12) * (1 - seg(t, tFee + 0.9, tFee + 1.05)), 120, 10, '#FFE14D'), 1);
+    o += K.view(cam, stamp('-30%', 560, 840, seg(t, tFee + 0.1, tFee + 0.3), 120, '#E2233B', -12), 1);
     for (let i = 0; i < 10; i++) {
       const age = t - tFee, a = hash(i) * Math.PI * 2;
-      if (age < 0.8) o += K.view(cam, S.rect(mx + 180 + Math.cos(a) * age * 500, my - 60 + Math.sin(a) * age * 500, 18, 18, 4, ol('#FFF1C4', 4)), 1);
+      if (age < 0.8) o += K.view(cam, S.rect(mx + 200 + Math.cos(a) * age * 500, my + Math.sin(a) * age * 500, 18, 18, 4, ol('#FFF1C4', 4)), 1);
     }
   }
-  // system toast
+  // system toasts (top right, clear of the SOLD sign)
   const kT = seg(t, tSys, tSys + 0.3) * (1 - seg(t, tThirty - 0.1, tThirty + 0.2));
   if (kT > 0) {
     let b = S.rect(-360, -70, 720, 140, 30, ol('#1F2233', 8)) + S.circle(-280, 0, 44, ol('#3BD16F', 6)) + S.path('M-302 0 L-286 18 L-256 -18', ln(10, '#FFFFFF'));
     b += T('MOON PURCHASED!', 30, 20, 60, '#7CF7FF');
-    o += S.g(b, `translate(960 ${f(lerp(-120, 140, ease.outBack(kT)))})`);
+    o += S.g(b, `translate(1450 ${f(lerp(-120, 120, ease.outBack(kT)))})`);
   }
   const kF = seg(t, tThirty, tThirty + 0.25);
   if (kF > 0) {
     let b = S.rect(-330, -60, 660, 120, 30, ol('#2A0610', 8)) + T('30% FEE APPLIED', 0, 20, 56, '#FF6B7A');
-    o += S.g(b, `translate(960 ${f(lerp(-120, 120, ease.outBack(kF)))})`);
+    o += S.g(b, `translate(1450 ${f(lerp(-120, 110, ease.outBack(kF)))})`);
   }
   o += flashAt(t, tSys, 0.6);
   o += whip(seg(t, END - 0.18, END), 1);
