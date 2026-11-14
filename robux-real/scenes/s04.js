@@ -951,7 +951,7 @@ function shotChew(t) {
     const a = t - tPoof;
     w += S.g(S.rect(-90, -130, 180, 260, 4, ol('#FFFFFF', 5)) + TF('RECEIPT', 0, -90, 30, '#2A1640') + TF('1/3 SANDWICH', 0, -40, 22, '#2A1640') + TF('FEE: 30%', 0, 0, 26, '#E2233B') + TF('THANK YOU!', 0, 60, 24, '#2A1640'), `translate(${f(1100 + Math.sin(a * 5) * 60)} ${f(380 + a * 160)}) rotate(${f(Math.sin(a * 5) * 18)})`);
   }
-  return view(cam, w, 1);
+  return view(cam, w, 1) + stamp30(1450, 330, seg(t, l18.word('fee').t0, l18.word('fee').t0 + 0.15) * (1 - seg(t, l18.b + 0.3, l18.b + 0.5)), 0.85);
 }
 
 // ---------------------------------------------------------------- router

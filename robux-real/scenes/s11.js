@@ -235,15 +235,15 @@ const LS = 1; // light soft overlays
 function soft(x, y, r, id = 's11warm', op = 1) { return S.circle(x, y, r, { fill: `url(#${id})`, opacity: f(op) }); }
 // Mia's phone in body space (held at chest height)
 const miaPhone = (a = 40, side = -1) => { const [hx, hy] = A.hand(a, side); return { svg: S.g(K.phone(0, 0, 0.32, side * -8, S.rect(-150, -280, 300, 560, 0, { fill: '#B79BE8' }) + S.circle(0, -60, 60, { fill: '#FFFFFF', opacity: 0.6 })), `translate(${f(hx)} ${f(hy - 40)})`), layer: 'front' }; };
-// a small yellow umbrella, world space: shaft foot at (x, y), canopy radius r
+// Pickle's umbrella (green panels, red crook, as in SC 08/09), world space: shaft foot at (x, y), canopy radius r
 function umbrella(x, y, r, k, tilt = 0, sl = r * 0.62) {
   if (k <= 0) return '';
   const s = ease.outBack(clamp(k, 0, 1));
-  let can = S.path(`M${-r} 0 Q${-r} ${-r * 0.9} 0 ${-r * 0.92} Q${r} ${-r * 0.9} ${r} 0 Q${r * 0.75} ${-r * 0.16} ${r * 0.5} 0 Q${r * 0.25} ${-r * 0.16} 0 0 Q${-r * 0.25} ${-r * 0.16} ${-r * 0.5} 0 Q${-r * 0.75} ${-r * 0.16} ${-r} 0 Z`, ol('#FFD21F', 6));
+  let can = S.path(`M${-r} 0 Q${-r} ${-r * 0.9} 0 ${-r * 0.92} Q${r} ${-r * 0.9} ${r} 0 Q${r * 0.75} ${-r * 0.16} ${r * 0.5} 0 Q${r * 0.25} ${-r * 0.16} 0 0 Q${-r * 0.25} ${-r * 0.16} ${-r * 0.5} 0 Q${-r * 0.75} ${-r * 0.16} ${-r} 0 Z`, ol('#58B947', 6));
   can += S.path(`M0 ${-r * 0.92} Q${-r * 0.3} ${-r * 0.5} ${-r * 0.5} 0 M0 ${-r * 0.92} Q${r * 0.3} ${-r * 0.5} ${r * 0.5} 0`, ln(4));
-  can += S.circle(-r * 0.62, -r * 0.42, r * 0.08, { fill: '#58B947' }) + S.circle(r * 0.2, -r * 0.6, r * 0.08, { fill: '#58B947' }) + S.circle(r * 0.6, -r * 0.3, r * 0.08, { fill: '#58B947' });
+  can += S.path(`M${-r * 0.7} ${-r * 0.42} Q${-r * 0.45} ${-r * 0.82} ${-r * 0.05} ${-r * 0.86}`, ln(r * 0.07, '#A6F08A', 0.7));
   can += S.path(`M0 ${-r * 0.92} L0 ${-r * 1.05}`, ln(6));
-  const shaft = S.path(`M0 0 L0 ${f(-sl)}`, ln(7, '#5A3B26')) + S.path('M0 0 q0 26 -20 26', ln(7, '#5A3B26'));
+  const shaft = S.path(`M0 0 L0 ${f(-sl)}`, ln(7, '#8A5A34')) + S.path('M0 0 q0 26 -20 26', ln(9, '#C2452D'));
   return S.g(shaft + S.g(can, `translate(0 ${f(-sl)}) scale(${f(s)} ${f(lerp(0.3, 1, s))})`), `translate(${f(x)} ${f(y)}) rotate(${f(tilt)})`);
 }
 // memory flash look: warm wash, dreamy white edges, dust motes, white flashes at both ends

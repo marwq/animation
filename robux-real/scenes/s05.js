@@ -304,7 +304,7 @@ function shotButler(t) {
   const open = seg(t, tBotW - 0.05, tBotW + 0.3);
   const on = t > tBotOn;
   // the butler inside, powered off until "butler"
-  const pose = { x: 900, y: 980, s: 0.62, face: { name: 'happy' }, armL: on ? 10 + 30 * bump(t, tBotOn, tBotOn + 0.6) : 8, armR: on ? 70 : 8, bodyY: on ? undefined : 0 };
+  const pose = { x: 900, y: 980, s: 0.62, face: { name: 'happy' }, armL: on ? 10 + 30 * bump(t, tBotOn, tBotOn + 0.6) : 8, armR: on ? 70 : 8, ...(on ? {} : { bodyY: 0 }) };
   const offEyes = on ? [] : [headProp(S.rect(-118, -850, 236, 228, 36, ol('#0B0E16', 7)), {})];
   w += actor('butler', t, { ...pose, props: offEyes });
   if (on) w += poof(900, 520, t - tBotOn, 0.9, '#E6EAF2');
@@ -733,7 +733,7 @@ function shotBurp(t) {
   const sackX = lerp(640 + tx * tyS, 1240 + gx * s * 0.7, yank), sackY = lerp(base + tyy * tyS + 70, base + gy * s * 0.7 + 60, yank);
   const sack = S.path('M-70 0 Q-90 -110 -30 -130 L30 -130 Q90 -110 70 0 Z', ol('#C9945A', 6)) + K.coin(0, -60, 34, 0, 0) + S.path('M-30 -130 L30 -130', ln(10, '#8A5A34'));
   w += ty(t, 640, base, tyS, { turn: 0.4, lean: -10 * blown, face: blown > 0.1 ? { name: 'oof', mouth: 'O' } : t > tFee ? { name: 'shocked' } : { name: 'nervous' }, armL: 20, armR: 55, headRot: -8 * blown }, { arms: false });
-  w += thirty(t, 1240, base, s, { turn: -0.35, armL: 65, armR: 50, face: blown > 0.2 ? { name: 'joy', mouth: 'O' } : { name: 'smug' }, sy: 1 + 0.12 * blown, lean: -6 * blown }, { calc: true });
+  w += thirtyPop(t, tBurp0 + 0.05, 0, 1240, base, s, { turn: -0.35, armL: 65, armR: 50, face: blown > 0.2 ? { name: 'joy', mouth: 'O' } : { name: 'smug' }, ...(blown > 0 ? { sy: 1 + 0.12 * blown, sx: 1 } : {}), lean: -6 * blown, shadow: true }, { calc: true });
   w += S.g(sack, `translate(${f(sackX)} ${f(sackY)}) scale(${f(lerp(0.75, 0.9, yank))})`);
   // the burp: a green gust rolling over Ty
   if (blown > 0) {

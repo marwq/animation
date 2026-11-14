@@ -188,6 +188,9 @@ function street(t, o = {}) {
   s += S.rect(-700, wallB, 3400, 110, 0, { fill: '#2E2556' });
   for (let x = -700; x < 2700; x += 260) s += S.path(`M${x} ${wallB} L${x - 40} ${top}`, ln(4, '#241C46'));
   s += S.rect(-700, wallB + 4, 3400, 8, 0, { fill: '#3E3470' });
+  // Ty's cardboard box from the end of SC 08, left on the sidewalk
+  s += S.path(`M250 ${wallB + 70} L250 ${wallB - 70} L450 ${wallB - 70} L450 ${wallB + 70} Z`, ol('#C9945A', 6)) + S.path(`M250 ${wallB - 70} L215 ${wallB - 112} M450 ${wallB - 70} L488 ${wallB - 108}`, ln(9, '#B07A42')) +
+    TF('THIS SIDE UP ↑', 350, wallB + 10, 22, '#7A4A1E');
   s += S.rect(-700, top, 3400, 48, 0, { fill: '#4B4180' }) + S.rect(-700, top - 6, 3400, 14, 0, { fill: '#8A7FD0' }) + S.rect(-700, top + 40, 3400, 10, 0, { fill: '#2A2050' });
   s += S.rect(-700, top + 48, 3400, 900, 0, { fill: '#1A1433' });
   s += S.rect(-700, top + 48, 3400, 40, 0, { fill: '#221A42' });
