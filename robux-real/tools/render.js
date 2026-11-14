@@ -54,7 +54,7 @@ async function renderVideo(frameFn, { w = 1920, h = 1080, fps = 60, duration, ou
   const args = ['-y', '-v', 'error', '-f', 'image2pipe', '-framerate', String(fps), '-c:v', 'mjpeg', '-i', '-'];
   if (audio) args.push('-i', audio);
   if (vf) args.push('-vf', vf);
-  args.push('-c:v', 'libx264', '-preset', 'slow', '-crf', String(crf), '-pix_fmt', 'yuv420p', '-movflags', '+faststart');
+  args.push('-c:v', 'libx264', '-preset', process.env.X264_PRESET || 'medium', '-crf', String(crf), '-pix_fmt', 'yuv420p', '-movflags', '+faststart');
   if (audio) args.push('-c:a', 'aac', '-b:a', '192k', '-shortest');
   args.push(out);
   const ff = spawn('ffmpeg', args, { stdio: ['pipe', 'inherit', 'inherit'] });
