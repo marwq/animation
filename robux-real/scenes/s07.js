@@ -576,12 +576,14 @@ function shotCornered(t) {
   if (t < tH + 0.5) mid += C.dust(sxp - 100, ROOF_Y - 40, tH + 0.1, t);
   // Ty
   const land = seg(t, tH, tH + 0.8);
+  const hop = seg(t, tH + 0.8, tH + 1.1);                 // Ty hops off the parked board
   const leap = seg(t, tRealC - 0.15, tI);
-  if (land < 1) mid += tyBoard(t, lerp(-200, 520, ease.out(land)), lerp(400, ROOF_Y - 140, ease.out(land)), 0.42);
+  if (land < 1) mid += tyBoard(t, lerp(-200, 360, ease.out(land)), lerp(400, ROOF_Y - 21, ease.out(land)), 0.42);
   else {
-    mid += hoverboard(360, ROOF_Y - 10, 0.8, t);
-    const ly = -Math.sin(Math.min(1, leap * 1.2) * Math.PI * 0.6) * 340 * (leap > 0 ? 1 : 0);
-    mid += ty(t, lerp(520, 830, ease.out(leap)), ROOF_Y - 30 + ly, 0.44, { turn: 0.4, armR: leap > 0 ? 170 : 40, armL: leap > 0 ? 150 : 20, legL: leap > 0 ? 30 : 0, kneeL: leap > 0 ? 60 : undefined, face: { name: 'determined' } }, { arms: leap > 0 ? false : undefined, energy: 1.2 });
+    mid += hoverboard(360, ROOF_Y - 10, 0.84, t);
+    const ly = -Math.sin(Math.min(1, leap * 1.2) * Math.PI * 0.6) * 340 * (leap > 0 ? 1 : 0) - Math.sin(hop * Math.PI) * 90 + 9 * (1 - hop);
+    const tx = hop < 1 ? lerp(370, 520, ease.inOut(hop)) : lerp(520, 830, ease.out(leap));
+    mid += ty(t, tx, ROOF_Y - 30 + ly, lerp(0.42, 0.44, hop), { turn: 0.4, armR: leap > 0 ? 170 : 40, armL: leap > 0 ? 150 : 20, legL: leap > 0 ? 30 : 0, kneeL: leap > 0 ? 60 : undefined, face: { name: 'determined' } }, { arms: leap > 0 ? false : undefined, energy: 1.2 });
   }
   // the REPORT button rises out of the roof
   const ku = seg(t, tThen - 0.05, tThen + 0.45), up = ease.outBack(ku);
@@ -645,7 +647,7 @@ function shotDrag(t) {
   const drop = seg(t, tLink + 0.25, tLink + 0.6);
   const hx = lerp(480, 1560, drag), hy = lerp(470, 430, drag) - Math.sin(drag * Math.PI) * 90 + drop * 380;
   // the bin
-  const lid = bump(t, tLink, tLink + 1.0) > 0 ? (t < tLink + 0.6 ? seg(t, tLink - 0.2, tLink + 0.1) : 1 - seg(t, tLink + 0.6, tLink + 0.8)) : 0;
+  const lid = t < tLink - 0.2 || t > tLink + 1.0 ? 0 : (t < tLink + 0.6 ? seg(t, tLink - 0.2, tLink + 0.1) : 1 - seg(t, tLink + 0.6, tLink + 0.8));
   o += S.g(trashBin(lid), 'translate(1560 900) scale(1.1)');
   // the scammer dangling from the cursor by his sign
   const swing = Math.sin(t * 9) * 18 * (drag > 0 && drag < 1 ? 1 : 0.3);

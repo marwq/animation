@@ -24,9 +24,7 @@
     {"start":336.652,"end":337.832,"name":"birds","gain_db":-12},
     {"start":337.832,"end":341.552,"name":"night","gain_db":-6}
   ],
-  "footsteps": [
-
-  ],
+  "footsteps": [],
   "sfx": [
     [312.412,"cloth",-10,0,"fade in: Mia rummaging through her hat mountain"],
     [312.565,"swish",-10,-0.3,"a hat tossed over her shoulder"],
