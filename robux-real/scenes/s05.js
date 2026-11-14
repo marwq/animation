@@ -447,7 +447,7 @@ function shotLine(t) {
     if (zoomOut > 0) for (let i = 0; i < 9; i++) w += kidIn((i * 7 + 2) % 18, t, { x: 1180 + i * 170, y: GY + 100 + i * 4, s: 0.42, view: 'side', face: 'happy', armL: 70, volume: false, props: [{ svg: S.g(sign('FOR HIM →', '', 260), 'translate(-300 -820) scale(1.5)'), layer: 'front' }] });
   }
   // Ty lounging on a deck chair with a juice box
-  const tx = two ? 1500 + 0 : 1450;
+  const tx = 1450 + 50 * ease.inOut(seg(t, tLine2 - 0.2, tLine2 + 0.3));   // the chair scoots back as the line grows
   w += S.path(`M${tx - 160} ${GY + 190} L${tx + 160} ${GY + 120} M${tx - 120} ${GY + 200} L${tx - 120} ${GY + 130} M${tx + 120} ${GY + 200} L${tx + 120} ${GY + 120}`, ln(10, '#8A5A34'));
   w += ty(t, tx, GY + 190, 0.46, { rot: -60, rotY: -300, armL: 30, armR: 120, face: { name: 'smug' }, shadow: false, props: [headProp(shades(), {}), { svg: S.g(S.rect(-30, -50, 60, 90, 8, ol('#FF8FC8', 5)) + S.path('M10 -50 L30 -100', ln(6, '#FFFFFF')), `translate(${f(A.hand(120, 1)[0])} ${f(A.hand(120, 1)[1])})`), layer: 'front' }] }, { arms: false });
   let o = c.bg + view(cam, w, 1);
