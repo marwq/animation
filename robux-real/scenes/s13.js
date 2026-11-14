@@ -136,7 +136,7 @@ function cast(t) {
   for (const [name, x, s, t0, turn, face] of who) {
     const k = popIn(t, t0);
     if (k <= 0) continue;
-    const lift = (1 - k) * -300 + Math.abs(Math.sin(t * 5 + x)) * 10 * waveK;
+    const lift = (1 - k) * 300 + Math.abs(Math.sin(t * 5 + x)) * 10 * waveK;
     const armUp = waveK * (150 + 18 * wave);
     o += actor(name, t, { x, y: FLOOR + 10, s, turn, sy: lerp(0.6, 1, k), lift: Math.max(0, lift), armR: name === 'mia' ? 12 + armUp : 12 + armUp, armL: 12 + (name === 'pickle' ? armUp : 0), face: { name: face, eyes: { look: lookTy } } }, { arms: false });
   }

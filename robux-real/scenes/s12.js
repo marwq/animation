@@ -590,13 +590,14 @@ function shotStream(t) {
 function shotCharity(t) {
   let o = streamUI(t, { viewers: 2000000 + (t - tCharity) * 3000, title: '♥ CHARITY STREAM for the Kitten Shelter ♥' });
   o += facecam(t, 60, 560, 420, 290, 0.62, { face: { name: 'joy' }, armL: 150, armR: 150, act: { arms: false } });
-  const fill = ease.inOut(seg(t, tCharity + 0.3, l4.b + 0.1));
+  const tFull = Math.max(tCharity + 1.2, l4.b - 0.5);   // goal reached while the shot is still on screen
+  const fill = ease.inOut(seg(t, tCharity + 0.3, tFull));
   let bar = S.rect(-600, -60, 1200, 120, 30, ol('#2A2246', 7)) + S.rect(-588, -48, 1176 * fill, 96, 24, { fill: '#FF6FB5' });
   bar += T(fill >= 1 ? 'GOAL REACHED! 🐱' : `RAISED: $${Math.round(50000 * fill).toLocaleString('en-US')} / $50,000`, 0, 20, 52, '#FFFFFF', { stroke: '#151515', 'stroke-width': 8, 'paint-order': 'stroke' });
   // kitten icon
   bar += S.g(S.circle(0, 0, 54, ol('#FFC08A', 6)) + S.path('M-46 -24 L-40 -74 L-10 -48 Z M46 -24 L40 -74 L10 -48 Z', ol('#FFC08A', 6)) + S.circle(-18, -6, 7, { fill: '#151515' }) + S.circle(18, -6, 7, { fill: '#151515' }) + S.path('M-10 16 Q0 26 10 16', ln(5)), 'translate(-660 0)');
   o += S.g(bar, `translate(780 ${f(lerp(1200, 790, ob(seg(t, tCharity, tCharity + 0.35))))})`);
-  if (fill >= 1) o += K.confetti(t, l4.b + 0.1, 40, 6);
+  if (fill >= 1) o += K.confetti(t, tFull, 40, 6);
   for (let i = 0; i < 6; i++) { const ph = ((t - tCharity) * 0.7 + i / 6) % 1; o += S.g(S.path(K.F.heartPath(0, 0, 22), ol('#FF5A7A', 4)), `translate(${f(1500 + Math.sin(i * 2 + ph * 6) * 120)} ${f(860 - ph * 600)})`, { opacity: f(1 - ph) }); }
   return o;
 }
