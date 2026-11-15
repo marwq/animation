@@ -148,7 +148,7 @@ function bloxy(x, y, s, i, t, o = {}) {
   let out = S.g(b, `translate(0 ${f(-bob)}) rotate(${f(rot)} 0 -60)`);
   if (o.shadow !== false) out = S.ellipse(0, 2, 28, 7, { fill: '#000', opacity: 0.18 }) + out;
   if (pose === 'sleep' && o.zzz !== false) out += K.F.markText('z', 26 + ((t * 30) % 20), -130 - ((t * 40) % 40), 26, -10, '#FFFFFF');
-  return S.g(out, tf(x, y, s * (o.flip ? -1 : 1) === s ? s : s, 0) + (o.flip ? ' scale(-1 1)' : ''));
+  return S.g(out, tf(x, y, s) + (o.flip ? ' scale(-1 1)' : ''));
 }
 
 // ---------------------------------------------------------------- simple rooms (montage sets)
@@ -252,15 +252,15 @@ function cursor(x, y, s = 1, press = 0) {
 }
 // the obby: floating coloured platforms over a sky, start arch at x0. Returns world svg (no camera)
 function obbyWorld(t, o = {}) {
-  let w = S.rect(-1200, -800, 5200, 2600, 0, { fill: 'url(#s04obbySky)' });
+  let w = S.rect(-2600, -900, 7800, 3000, 0, { fill: 'url(#s04obbySky)' });
   for (const [cx, cy, s] of [[200, 180, 1.2], [1100, 120, 0.9], [2100, 220, 1.4], [3100, 140, 1], [-500, 260, 1.1]]) w += K.E.cloud(cx + ((t * 12) % 300), cy, s);
   // far obby tower
   const cols = ['#FF5A5A', '#FFD21F', '#3BD16F', '#3FA9FF', '#B06BFF'];
   for (let i = 0; i < 14; i++) w += S.rect(1400 + i * 120 + Math.sin(i) * 40, 640 - i * 36, 110, 26, 6, ol(cols[i % 5], 4));
   // ground
-  w += S.rect(-1200, 820, 5200, 900, 0, { fill: '#5FCB5E' }) + S.rect(-1200, 820, 5200, 18, 0, { fill: '#A2EC8E' }) + S.rect(-1200, 838, 5200, 4, 0, { fill: LINE, opacity: 0.4 });
+  w += S.rect(-2600, 820, 7800, 1300, 0, { fill: '#5FCB5E' }) + S.rect(-2600, 820, 7800, 18, 0, { fill: '#A2EC8E' }) + S.rect(-2600, 838, 7800, 4, 0, { fill: LINE, opacity: 0.4 });
   let chk = '';
-  for (let x = -1200; x < 4000; x += 120) chk += `M${x} 880h60v60h-60Z M${x + 60} 940h60v60h-60Z `;
+  for (let x = -2600; x < 4600; x += 120) chk += `M${x} 880h60v60h-60Z M${x + 60} 940h60v60h-60Z `;
   w += S.path(chk, { fill: '#4FB84F', opacity: 0.6 });
   // start arch
   const ax = o.archX ?? 2300;
@@ -323,7 +323,7 @@ function fishGame(w, h, t, o = {}) {
   s += S.circle(w * 0.05, -h * 0.05 + bob, h * 0.025, ol('#FF3B4E', Math.max(2, w * 0.005)));
   if (fish > 0) {
     const jy = -h * 0.02 - Math.sin(clamp(jump, 0, 1) * Math.PI) * h * 0.3;
-    s += goldFish(w * 0.12, h * 0.2 + jy, (h / 400) * fish, t, wink);
+    s += goldFish(w * 0.12, h * 0.2 + jy, (h / 560) * fish, t, wink);
   }
   // HUD
   const fz = Math.max(12, h * 0.07);
@@ -351,7 +351,7 @@ function tycoon(w, h, t, money, done = 0) {
   o += S.rect(-w * 0.45, h * 0.25, w * 0.9, h * 0.06, 4, ol('#3A3F4E', 3));
   for (let i = 0; i < 6; i++) { const x = -w * 0.45 + (((t * 120 + i * 90) % (w * 0.9))); o += K.coin(x, h * 0.24, h * 0.03, 0, t * 4 + i); }
   o += S.rect(-w * 0.3, -h * 0.47, w * 0.6, h * 0.14, h * 0.04, { fill: '#10203A', opacity: 0.8 }) + T('$ ' + Math.floor(money).toLocaleString('en-US'), 0, -h * 0.36, h * 0.1, done > 0 ? '#FFD21F' : '#7CFF6B');
-  if (done > 0) o += S.g(S.rect(-w * 0.38, -h * 0.14, w * 0.76, h * 0.28, h * 0.06, ol('#FFD21F', 6)) + T('TYCOON COMPLETE!', 0, h * 0.04, h * 0.1, '#2A2246'), `scale(${f(ease.outBack(clamp(done, 0, 1)))})`);
+  if (done > 0) o += S.g(S.rect(-w * 0.4, -h * 0.13, w * 0.8, h * 0.26, h * 0.06, ol('#FFD21F', 6)) + T('TYCOON', 0, -h * 0.02, h * 0.085, '#2A2246') + T('COMPLETE!', 0, h * 0.08, h * 0.085, '#E8243C'), `scale(${f(ease.outBack(clamp(done, 0, 1)))})`);
   return o;
 }
 // in-game map backgrounds for Dex's search montage (full 1920x1080 world)

@@ -200,12 +200,12 @@ function respawn(x, y, h, k, t) {
   return o;
 }
 // "DING!" elevator-bell sparkle burst (Pip's recurring gag); k 0..1
-function dingFx(x, y, k, s = 1) {
+function dingFx(x, y, k, s = 1, text = true) {
   if (k <= 0 || k >= 1) return '';
   const a = Math.sin(clamp(k * 1.4, 0, 1) * Math.PI * 0.5) * (1 - clamp((k - 0.6) / 0.4, 0, 1));
   let o = K.rays(0, 0, 12, 230 * pop(k * 2), '#FFF3A8', 0.35 * a, k * 90);
   o += S.g(S.path('M-30 22 Q-30 -26 0 -28 Q30 -26 30 22 Z', ol('#FFD34D', 6)) + S.rect(-38, 20, 76, 12, 6, ol('#FFD34D', 5)) + S.circle(0, 40, 9, ol('#FFD34D', 4)) + S.path('M-14 -12 Q-10 -20 -2 -20', ln(5, '#FFF6C8')), `translate(0 -40) rotate(${f(Math.sin(k * 40) * 16 * (1 - k))})`);
-  o += K.F.markText('DING!', 0, 70, 70, -6, '#FFE14D');
+  if (text) o += K.F.markText('DING!', 0, 70, 70, -6, '#FFE14D');
   o += K.F.sparkle(-120, -60, 30 * a) + K.F.sparkle(118, -90, 24 * a) + K.F.sparkle(96, 60, 18 * a);
   return S.g(o, `translate(${f(x)} ${f(y)}) scale(${f(s * pop(k * 2.5))})`, { opacity: f(clamp(a * 1.5, 0, 1)) });
 }

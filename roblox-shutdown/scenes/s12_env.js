@@ -72,10 +72,13 @@ function robeBody() {
 }
 function robeSleeve(side, ang) {
   // over the arm: pivot at the shoulder (side*100, -515), the arm hangs along +y, rotated by -ang mirrored by side
-  const s = R(-56, -30, 112, 190, 34, ol(ROBE, 7)) + R(-56, 128, 112, 40, 16, ol(ROBE_L, 6));
+  const s = R(-58, -30, 116, 220, 34, ol(ROBE, 7)) + P('M-30 40 L-24 150 M22 60 L26 160', ln(5, ROBE_D)) + R(-60, 168, 120, 44, 18, ol(ROBE_L, 6));
   return G(s, `translate(${side * 100} -515) scale(${side} 1) rotate(${f(-ang)})`);
 }
 function turban() {
+  return G(turban0(), 'translate(0 -36)');
+}
+function turban0() {
   let o = P('M-210 -840 Q-250 -1050 -60 -1110 Q120 -1150 210 -1020 Q250 -930 200 -840 Q0 -880 -210 -840 Z', ol('#FFFFFF', 8));
   o += P('M-180 -930 Q-40 -1010 160 -960 M-120 -1050 Q20 -1090 170 -1020', ln(7, '#C9D8EA'));
   o += P('M40 -1110 Q90 -1210 170 -1180 Q140 -1120 120 -1060 Z', ol('#FFFFFF', 7));
@@ -85,13 +88,20 @@ function turban() {
 function wrinkles(k = 1) {
   if (k <= 0) return '';
   const w = ln(5, '#9A5A40', f(0.75 * k));
-  let o = P('M-90 -900 Q-45 -912 0 -900 Q45 -888 90 -900 M-76 -876 Q-30 -888 10 -876 Q50 -864 80 -876 M-60 -852 Q-20 -862 20 -852', w);
-  for (const sx of [-1, 1]) o += P(`M${sx * 118} -720 q${sx * 12} 16 0 32 q${sx * -12} 16 0 32 M${sx * 140} -700 q${sx * 10} 14 0 28`, w);
+  let o = '';
+  for (const sx of [-1, 1]) o += P(`M${sx * 112} -716 q${sx * 12} 16 0 32 q${sx * -12} 16 0 32 M${sx * 136} -700 q${sx * 10} 14 0 28 M${sx * 30} -622 q${sx * 24} 10 ${sx * 50} 0 q${sx * 24} -10 ${sx * 50} 0`, w);
   return o;
 }
 // wrinkly "prune" hand overlay at a hand tip (body space)
 function pruneHand(x, y, s = 1) {
   return G(EL(0, 0, 48, 54, ol('#D69A78', 6)) + P('M-30 -26 q10 8 0 16 q-10 8 0 16 M-8 -36 q10 8 0 16 q-10 8 0 16 q10 8 0 16 M16 -30 q10 8 0 16 q-10 8 0 16 M30 -12 q8 8 0 16', ln(5, '#8A5238')), tr(x, y, s));
+}
+
+// Dad's glasses turn into two loading spinners (body space; lens centres at (+-61, -714))
+function spinnerSpecs(t, k = 1) {
+  let o = '';
+  for (const sx of [-1, 1]) o += R(sx * 61 - 50, -748, 100, 70, 12, { fill: '#2A2E3A', opacity: f(0.85 * k) }) + ST.spinner(sx * 61, -713, 24, t + (sx > 0 ? 0.3 : 0), '#FFFFFF', 8, 6.5);
+  return o;
 }
 
 // ---------------------------------------------------------------- small props
@@ -199,39 +209,107 @@ function crowdUp(x0, x1, base, n, t, seed = 1, cols = ['#FF6B6B', '#4ECDC4', '#F
 }
 
 // ---------------------------------------------------------------- Dex's front stoop (morning)
-// 4 steps down to the sidewalk at the right of the door. Stand line: top landing y STOOP.top, sidewalk y STOOP.ground.
-// Step i (0 = top landing) at feet y STOOP.steps[i] (x centre STOOP.x).
-const STOOP = { x: 900, top: 700, ground: 1010, steps: [700, 778, 856, 934, 1010], railX: 1130 };
+// Front view of Dex's house: the door at the top of a short stoop whose steps come DOWN TOWARD the camera.
+// Feet y per level (0 = landing at the door .. 4 = sidewalk): STOOP.y[i], a fitting rig scale STOOP.s[i].
+// Above the roof (y < 120) a big morning sky continues up to y -900 for the tilt-up "graphics" shot.
+const STOOP = { x: 960, y: [652, 732, 812, 892, 1000], s: [0.46, 0.49, 0.52, 0.55, 0.6] };
 function stoop(t, opts = {}) {
-  let o = R(-800, -600, 3520, 2280, 0, { fill: 'url(#s12morn)' });
-  // sky things
-  o += CI(1640, 170, 150, { fill: '#FFF6C8', opacity: 0.45 }) + CI(1640, 170, 86, ol('#FFE14D', 7));
-  for (const [x0, y, s, sp] of [[200, 140, 0.9, 14], [900, 90, 1.2, 9], [1300, 260, 0.7, 18]]) o += K.E.cloud(((x0 + t * sp) % 2400) - 200, y, s);
-  // street trees + house across
-  o += R(-800, 760, 3520, 400, 0, { fill: '#8FD86A' });
-  // the house wall (left), siding
-  o += R(-400, -100, 1200, 1000, 0, { fill: '#BFE3F5' }) + R(-400, -100, 1200, 1000, 0, { fill: 'url(#setsSiding)' });
-  // door + frame
-  o += R(330, 260, 260, 470, 10, ol('#FFFFFF', 8)) + R(350, 280, 220, 450, 6, ol('#E8603C', 6)) + R(380, 310, 160, 160, 8, { fill: 'none', stroke: '#B8452A', 'stroke-width': 5 }) + R(380, 500, 160, 200, 8, { fill: 'none', stroke: '#B8452A', 'stroke-width': 5 }) + CI(540, 520, 11, ol('#FFD34D', 4));
-  if (opts.doorOpen) { const k = clamp(opts.doorOpen, 0, 1); o += R(350, 280, 220, 450, 6, { fill: '#2A1E2E' }) + P(`M350 280 L${f(350 + 220 * (1 - k * 0.8))} ${f(280 - 20 * k)} L${f(350 + 220 * (1 - k * 0.8))} ${f(730 + 20 * k)} L350 730 Z`, ol('#E8603C', 6)); }
-  o += R(610, 380, 90, 56, 8, ol('#2EA39A', 4)) + T('12', 655, 422, 36, '#FFFFFF');
-  o += R(-200, 320, 380, 260, 10, ol('#FFFFFF', 7)) + R(-184, 336, 348, 228, 4, { fill: '#BFF0FF' }) + R(-20, 336, 12, 228, 2, { fill: '#FFFFFF' });
-  // landing + steps (going down to the right)
-  o += R(200, 700, 820, 30, 6, ol('#C9CED8', 6)) + R(200, 730, 820, 40, 0, ol('#AEB5C2', 6));
-  for (let i = 1; i <= 3; i++) {
-    const y = STOOP.steps[i], x0 = 700 + i * 0, w = 360;
-    o += R(x0, y - 8, w + i * 60, 26, 5, ol('#D6DBE4', 6)) + R(x0, y + 18, w + i * 60, 60, 0, ol('#B9C0CC', 6));
+  let o = R(-800, -1200, 3520, 2600, 0, { fill: 'url(#s12morn)' });
+  // the sky (big: the camera tilts up into it)
+  o += CI(1500, -420, 300, { fill: 'url(#s12warm)' }) + CI(1500, -420, 120, ol('#FFE14D', 9));
+  o += K.rays(1500, -420, 16, 900, '#FFF6C8', 0.18, t * 8);
+  for (const [x0, y, s, sp] of [[100, -700, 1.4, 16], [800, -560, 1.0, 10], [1300, -160, 0.9, 20], [-200, -260, 1.1, 12], [700, -60, 0.8, 14]]) o += K.E.cloud(((x0 + t * sp) % 2600) - 400, y, s);
+  // rainbow
+  const rb = ['#FF5A5A', '#FFB13B', '#FFE14D', '#5DCB6A', '#3FA9FF', '#9B6BFF'];
+  rb.forEach((c, i) => { o += P(`M${-100 + i * 26} 140 A${880 - i * 26} ${760 - i * 26} 0 0 1 ${1660 - i * 26} 140`, ln(26, c, 0.55)); });
+  // birds
+  for (let i = 0; i < 5; i++) { const bx = ((t * 120 + i * 300) % 2600) - 400, by = -520 + i * 70 + Math.sin(t * 2 + i) * 14, fl = Math.sin(t * 14 + i) * 16; o += P(`M${f(bx - 30)} ${f(by - fl)} Q${f(bx - 14)} ${f(by - 16)} ${f(bx)} ${f(by)} Q${f(bx + 14)} ${f(by - 16)} ${f(bx + 30)} ${f(by - fl)}`, ln(7)); }
+  // house: roof + wall
+  o += P('M-200 130 L960 -60 L2120 130 L2120 170 L-200 170 Z', ol('#E8604A', 9)) + P('M-200 170 L2120 170', ln(10, '#B8452A'));
+  o += R(-200, 170, 2320, 900, 0, { fill: '#BFE3F5' }) + R(-200, 170, 2320, 900, 0, { fill: 'url(#setsSiding)' });
+  // windows with flower boxes
+  for (const wx of [330, 1590]) {
+    o += R(wx - 170, 260, 340, 260, 10, ol('#FFFFFF', 8)) + R(wx - 152, 278, 304, 224, 4, { fill: '#BFF0FF' }) + R(wx - 6, 278, 12, 224, 2, { fill: '#FFFFFF' }) + P(`M${wx - 120} 480 L${wx - 30} 300 L${wx} 300 L${wx - 90} 480 Z`, { fill: '#FFFFFF', opacity: 0.4 });
+    o += R(wx - 190, 520, 380, 56, 10, ol('#C98A52', 6));
+    for (let i = 0; i < 6; i++) o += CI(wx - 150 + i * 60, 512, 20, ol(['#FF6FA8', '#FFD34D', '#FF8A4C'][i % 3], 4)) + CI(wx - 150 + i * 60, 512, 6, { fill: '#FFF6C8' });
   }
-  // sidewalk + curb + grass
-  o += R(-800, 1010, 3520, 300, 0, { fill: '#D9DEE7' }) + P('M-800 1010 L2720 1010', ln(6, '#9AA3B2'));
-  for (let x = -760; x < 2720; x += 260) o += P(`M${x} 1010 L${x - 30} 1100`, ln(4, '#B9C0CC'));
-  // flower pots + mailbox
-  o += G(P('M-40 0 L-34 -70 L34 -70 L40 0 Z', ol('#E8603C', 5)) + CI(-14, -96, 20, ol('#FF6FA8', 4)) + CI(18, -110, 18, ol('#FFD34D', 4)) + P('M0 -70 L0 -96', ln(5, '#3FA05A')), tr(270, 700));
-  o += R(1560, 760, 18, 250, 4, ol('#8A5530', 4)) + R(1490, 690, 160, 84, 30, ol('#3F72C0', 6)) + R(1640, 650, 10, 60, 2, ol('#E8243C', 3)) + R(1640, 650, 40, 24, 3, ol('#E8243C', 3));
-  // handrail (behind the walker is fine: it is at the far edge)
-  o += P(`M760 ${STOOP.top - 150} L1160 ${STOOP.steps[4] - 160}`, ln(20, LINE)) + P(`M760 ${STOOP.top - 150} L1160 ${STOOP.steps[4] - 160}`, ln(11, '#2C303C'));
-  for (const [x, y] of [[770, STOOP.top], [960, STOOP.steps[2]], [1150, STOOP.steps[4]]]) o += R(x - 8, y - 160 - (x - 770) * 0 , 16, 160, 4, ol('#2C303C', 4));
+  // door (opts.doorOpen 0..1)
+  const k = clamp(opts.doorOpen || 0, 0, 1);
+  o += R(830, 210, 260, 450, 12, ol('#FFFFFF', 9));
+  o += R(850, 230, 220, 430, 6, { fill: '#2A1E2E' });
+  o += P(`M850 230 L${f(1070 - 200 * k)} ${f(230 - 26 * k)} L${f(1070 - 200 * k)} ${f(660 + 26 * k)} L850 660 Z`, ol('#2E7BD6', 7));
+  if (k < 0.6) o += R(880, 270, 160, 150, 8, { fill: 'none', stroke: '#1E5FA8', 'stroke-width': 6, opacity: f(1 - k / 0.6) }) + CI(1040 - 180 * k, 460, 11, ol('#FFD34D', 4));
+  o += R(910, 150, 100, 46, 8, ol('#2EA39A', 4)) + T('12', 960, 186, 34, '#FFFFFF');
+  // stoop: landing + three steps toward the camera (each wider), side walls, rails
+  const lv = [[760, 1160, 652], [720, 1200, 732], [680, 1240, 812], [640, 1280, 892]];
+  for (let i = 0; i < lv.length; i++) {
+    const [x0, x1, y] = lv[i];
+    o += R(x0, y - 22, x1 - x0, 30, 6, ol(i ? '#E3E7EE' : '#D6DBE4', 6)) + R(x0, y + 8, x1 - x0, 72, 0, ol('#B9C0CC', 6));
+    o += P(`M${x0 + 20} ${y + 30} L${x1 - 20} ${y + 30}`, ln(4, '#A3AAB7', 0.6));
+  }
+  // sidewalk + lawn strips
+  o += R(-800, 970, 3520, 400, 0, { fill: '#D9DEE7' }) + P('M-800 972 L2720 972', ln(6, '#9AA3B2'));
+  o += R(-800, 940, 1440, 34, 0, { fill: '#7ED36A' }) + R(1280, 940, 1440, 34, 0, { fill: '#7ED36A' }) + P('M-800 940 L640 940 M1280 940 L2720 940', ln(5, '#4FA84A'));
+  for (let x = -760; x < 2720; x += 300) o += P(`M${x} 972 L${x - 40} 1100`, ln(4, '#B9C0CC'));
+  // bushes either side of the stoop
+  for (const [bx, by, br] of [[560, 900, 110], [1360, 900, 110], [120, 930, 150], [1800, 930, 150]]) o += CI(bx, by, br, ol('#4FB86A', 7)) + CI(bx - br * 0.3, by - br * 0.4, br * 0.3, { fill: '#7FDB8E' }) + CI(bx + br * 0.35, by - br * 0.05, br * 0.12, { fill: '#FF8FB8' });
+  // rails (left and right), from the landing down to the sidewalk
+  for (const sd of [-1, 1]) {
+    const xa = 960 + sd * 160, xb = 960 + sd * 290;
+    const d = `M${xa} 470 L${xb} 860`;
+    o += P(d, ln(22, LINE)) + P(d, ln(12, '#3A3F4E')) + P(d, ln(4, '#8A93A6'));
+    o += R(xa - 9, 470, 18, 190, 4, ol('#3A3F4E', 4));
+  }
+  // mailbox
+  o += R(1690, 760, 18, 220, 4, ol('#8A5530', 4)) + R(1620, 690, 160, 84, 30, ol('#3F72C0', 6)) + R(1770, 650, 10, 60, 2, ol('#E8243C', 3)) + R(1770, 650, 40, 24, 3, ol('#E8243C', 3)) + TF('DEX', 1700, 744, 28, '#FFFFFF');
   return o;
+}
+// railing parts that go IN FRONT of a character standing between the rails (posts at the bottom)
+function stoopFront() {
+  let o = '';
+  for (const sd of [-1, 1]) { const xb = 960 + sd * 290; o += R(xb - 10, 860, 20, 130, 4, ol('#3A3F4E', 4)) + CI(xb, 860, 14, ol('#5A6070', 4)); }
+  return o;
+}
+
+// ---------------------------------------------------------------- the porch step seen from above (phones insert)
+function stepTop(t, k = 1) {
+  let o = R(-800, -600, 3520, 2280, 0, { fill: '#C98A5A' });
+  for (let y = -40; y < 1200; y += 150) o += R(-800, y, 3520, 146, 0, { fill: y % 300 ? '#D9A066' : '#CF965E' }) + P(`M-800 ${y + 146} L2720 ${y + 146}`, ln(6, '#9A6A40'));
+  for (let i = 0; i < 9; i++) o += P(`M${f(hash(i) * 1900)} ${f(-40 + (i % 8) * 150 + 40)} q60 -10 120 0 q60 10 120 0`, ln(4, '#B8804E', 0.6));
+  // long golden light + shadows of the family's legs
+  o += R(-800, -600, 3520, 2280, 0, { fill: '#FF9A4D', opacity: 0.18 });
+  for (let i = 0; i < 5; i++) o += P(`M${-200 + i * 420} -100 L${-60 + i * 420} -100 L${400 + i * 420} 1200 L${200 + i * 420} 1200 Z`, { fill: '#5A2A20', opacity: 0.08 });
+  o += R(-800, -600, 3520, 2280, 0, { fill: 'url(#s12warm)', opacity: 0.4 * k });
+  return o;
+}
+// a hand + sleeve reaching in from (x0, y0) toward (x, y); col = sleeve colour; skin
+function reachHand(x0, y0, x, y, col, skin = '#F2C9A0') {
+  const a = Math.atan2(y - y0, x - x0) * 180 / Math.PI;
+  const len = Math.hypot(x - x0, y - y0);
+  let o = R(-40, -66, len - 60, 132, 46, ol(col, 8)) + R(len - 110, -60, 40, 120, 14, ol(col, 7));
+  o += EL(len + 30, 22, 30, 22, { ...ol(skin, 6), transform: `rotate(40 ${f(len + 30)} 22)` });
+  o += R(len - 76, -52, 150, 104, 46, ol(skin, 7)) + P(`M${f(len + 20)} -30 L${f(len + 64)} -30 M${f(len + 20)} -4 L${f(len + 70)} -4 M${f(len + 20)} 22 L${f(len + 62)} 22`, ln(5, '#C98E6A', 0.7));
+  return G(o, `translate(${f(x0)} ${f(y0)}) rotate(${f(a)})`);
+}
+// a big phone lying on the step: flip 0 = screen up (lit) .. 1 = face down
+function bigPhone(x, y, s, rot, flip, col, t) {
+  const sy = Math.cos(clamp(flip, 0, 1) * Math.PI);
+  const face = sy > 0;
+  let o = R(-110, -210, 220, 420, 34, ol(face ? '#20232E' : col, 8));
+  if (face) o += R(-94, -186, 188, 372, 20, { fill: '#5BC0EB' }) + CI(0, -20, 50, { fill: '#FFFFFF', opacity: 0.6 }) + R(-60, 80, 120, 24, 10, { fill: '#FFFFFF', opacity: 0.5 });
+  else o += R(-60, -170, 56, 56, 16, ol('#2C303C', 5)) + CI(-46, -156, 10, { fill: '#5A6070' }) + CI(-18, -128, 8, { fill: '#5A6070' }) + P('M-30 60 Q0 40 30 60', ln(6, '#FFFFFF', 0.3));
+  return G(o, `translate(${f(x)} ${f(y)}) rotate(${f(rot)}) scale(${f(s)} ${f(s * Math.max(0.05, Math.abs(sy)))})`);
+}
+
+// ---------------------------------------------------------------- fallback rack hall (only if farm.rackHall ever fails)
+function simpleHall(t, cam, dist = 0) {
+  let w = R(-900, -700, 3720, 2480, 0, { fill: '#0B1433' }) + R(-900, 900, 3720, 600, 0, { fill: '#101C46' });
+  for (let i = -6; i < 16; i++) {
+    const x = i * 210 - (dist % 210);
+    w += R(x, 270, 180, 630, 8, ol('#1C2D63', 6));
+    for (let j = 0; j < 9; j++) w += R(x + 18, 300 + j * 64, 144, 40, 4, { fill: '#13204A' }) + CI(x + 140, 320 + j * 64, 5, { fill: Math.floor(t * 2 + i + j) % 3 ? '#46F58C' : '#5CE1FF' });
+  }
+  return { bg: G(w, K.E.camTf(cam, 1)), mid: '', fg: '' };
 }
 
 // ---------------------------------------------------------------- end card bits (SC 13)
@@ -258,6 +336,6 @@ const DEFS = `<defs>
 </defs>`;
 
 module.exports = {
-  DEFS, auto, onHead, knee, helmet, kneePad, dexGear, robeBody, robeSleeve, turban, wrinkles, pruneHand,
-  dadLaptop, tablet, frozenScreen, fishGame, clipboard, phoneDown, stamp, livePanel, crowdUp, stoop, STOOP, island, bubble, ob,
+  DEFS, auto, onHead, knee, helmet, kneePad, dexGear, robeBody, robeSleeve, turban, wrinkles, pruneHand, spinnerSpecs, simpleHall,
+  dadLaptop, tablet, frozenScreen, fishGame, clipboard, phoneDown, stamp, livePanel, crowdUp, stoop, stoopFront, STOOP, stepTop, reachHand, bigPhone, island, bubble, ob,
 };
