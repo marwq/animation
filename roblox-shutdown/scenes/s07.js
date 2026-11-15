@@ -311,7 +311,7 @@ function shotM2(t) {
   const gx = 3000 + (t - tM2) * v;
   const cam = at(gx - 120, 560, 1.0);
   cam.sy = Math.sin(t * 22) * 4;
-  const Lh = FM.rackHall(t, cam, { alarm: 1 });
+  const Lh = FM.rackHall(t, cam, { alarm: 1, fgRacks: false });
   const ph = t * 16;
   let w = '';
   for (let i = 0; i < 3; i++) w += mb(t, gx - 900 - i * 260 + Math.sin(t * 3 + i) * 30, 900 + i * 6, 0.48 - i * 0.03, { alarm: 1, flip: false, roll: gx * 3, face: '!', lean: 8 });
@@ -492,7 +492,7 @@ function shotS(t) {
   const u = seg(t, tS, END);
   const cam = at(1110, lerp(620, 610, u), lerp(2.2, 2.35, u));
   const dg = bump(t, W(15, 'Ding') - 0.05, W(15, 'Ding') + 1.0);
-  return liftIn(t, cam, { flat: ['gp', 'juno', 'dex'], gp: { x: 900, armR: 58, face: { name: 'happy' } }, gpAct: { arms: false }, pip: { x: 1110, face: { name: 'cute', fx: ['blush'] } }, juno: { x: 600 }, extra: E.dingFx(1180, 440, dg, t, 0.36, '') });
+  return liftIn(t, cam, { flat: ['gp', 'juno', 'dex'], gp: { x: 900, armR: 58, face: { name: 'happy' } }, gpAct: { arms: false }, pip: { x: 1110, face: { name: 'cute', fx: ['blush'] } }, juno: { x: 600 }, extra: E.dingFx(1195, 520, dg, t, 0.36, '') });
 }
 
 // ================================================================ dispatch
