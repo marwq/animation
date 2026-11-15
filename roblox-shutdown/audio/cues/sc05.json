@@ -148,6 +148,7 @@
     [351.314, "whoosh", -3, 0, "whip-pan to the locker"],
     [351.414, "door_open", -4, -0.1, "locker door swings open"],
     [351.614, "poof", -6, 0, "green stink cloud puffs out"],
+    [351.774, "splat", -8, 0, "the 1998 sandwich: moldy squelch"],
     [352.727, "pop", -7, 0.07, "1998 sticky note"],
     [352.827, "boom", -6, 0, "nineteen ninety-eight (shake)"],
     [354.335, "harp_up", -6, 0, "white flash into the sepia flashback"],
