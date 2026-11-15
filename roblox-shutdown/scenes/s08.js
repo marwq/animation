@@ -625,7 +625,7 @@ function shotArchiveWalk(t) {
 }
 // D3: close on the tiny bubble — "Even mine."
 function shotEvenMine(t) {
-  const cam = camKeys(t, [[cD3, at(950, 672, 2.6)], [cD4, at(960, 676, 2.85)]], ease.linear);
+  const cam = camKeys(t, [[cD3, at(950, 680, 2.3)], [cD4, at(958, 678, 2.42)]], ease.linear);
   const Ly = FM.archive(t, cam, { glow: 1 });
   const fl = FM.FLOOR.archive;
   const reach = seg(t, tMine - 0.35, tMine + 0.25);
@@ -666,7 +666,7 @@ function shotEspecially(t) {
 }
 // D5: Juno close — "I always thought my game didn't matter. Three visits. ... But somebody kept it anyway."
 function shotJunoQuiet(t) {
-  const cam = camKeys(t, [[cD5, at(912, 662, 2.6)], [cD6, at(905, 655, 2.95)]], ease.linear);
+  const cam = camKeys(t, [[cD5, at(912, 676, 2.3)], [cD6, at(905, 674, 2.48)]], ease.linear);
   const Ly = FM.archive(t, cam, { glow: 0.7, juno: false });
   const smile = seg(t, tKept - 0.3, tKept + 0.4);
   const face = smile > 0.3 ? { name: 'happy', mouth: K.V.talking('JUNO', t) ? undefined : 'smile', fx: ['tears', 'blush'], eyes: { look: [0.2, 0.6] } } : { name: 'sad', eyes: { look: [0.1, 0.8] } };
