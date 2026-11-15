@@ -1,0 +1,68 @@
+[
+ {
+  "role": "JUNO",
+  "voice_id": "cgSgspJ2msm6clMCkdW9",
+  "name": "Jessica - Playful, Bright, Warm",
+  "source": "premade"
+ },
+ {
+  "role": "DEX",
+  "voice_id": "TX3LPaxmHKxFdv7VOQHJ",
+  "name": "Liam - Energetic, Social Media Creator",
+  "source": "premade"
+ },
+ {
+  "role": "PIP",
+  "voice_id": "FGY2WhTYpPnrIDTdsKH5",
+  "name": "Laura - Enthusiast, Quirky Attitude",
+  "source": "premade"
+ },
+ {
+  "role": "GRANDPA",
+  "voice_id": "pqHfZKP75CvOlQylNhV4",
+  "name": "Bill - Wise, Mature, Balanced",
+  "source": "premade"
+ },
+ {
+  "role": "DAD",
+  "voice_id": "CwhRBWXzGAHq8TQ4Fs17",
+  "name": "Roger - Laid-Back, Casual, Resonant",
+  "source": "premade"
+ },
+ {
+  "role": "LAG",
+  "voice_id": "pNInz6obpgDQGcFmaJgB",
+  "name": "Adam - Dominant, Firm",
+  "source": "premade"
+ },
+ {
+  "role": "SYSTEM",
+  "voice_id": "SAz9YHcvj6GT2YYXdXww",
+  "name": "River - Relaxed, Neutral, Informative",
+  "source": "premade"
+ },
+ {
+  "role": "ANCHOR",
+  "voice_id": "EXAVITQu4vr4xnSDxMaL",
+  "name": "Sarah - Mature, Reassuring, Confident",
+  "source": "premade"
+ },
+ {
+  "role": "STREAMER",
+  "voice_id": "IKne3meq5aSn9XLyUdCD",
+  "name": "Charlie - Deep, Confident, Energetic",
+  "source": "premade"
+ },
+ {
+  "role": "CASHIER",
+  "voice_id": "bIHbv24MWmeRgasZH58o",
+  "name": "Will - Relaxed Optimist",
+  "source": "premade"
+ },
+ {
+  "role": "MODBOT",
+  "voice_id": "onwK4e9ZLuTAKqWW03F9",
+  "name": "Daniel - Steady Broadcaster",
+  "source": "premade"
+ }
+]
