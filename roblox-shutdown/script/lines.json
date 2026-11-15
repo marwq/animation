@@ -1,0 +1,1423 @@
+[
+ {
+  "scene": "SC 01",
+  "speaker": "JUNO",
+  "text": "[breathless, dramatic] What if Roblox... shut down... FOREVER?",
+  "estStart": 0,
+  "estDur": 3.08
+ },
+ {
+  "scene": "SC 01",
+  "speaker": "LAG",
+  "text": "[slow, deep, glitchy] One... min... min... minute... left.",
+  "estStart": 3.08,
+  "estDur": 3.32
+ },
+ {
+  "scene": "SC 01",
+  "speaker": "DEX",
+  "text": "[panicking] Juno! There's no respawn in real life! I checked!",
+  "estStart": 6.4,
+  "estDur": 3.57
+ },
+ {
+  "scene": "SC 01",
+  "speaker": "GRANDPA",
+  "text": "[shouting] Hold on to your helmets!",
+  "estStart": 9.97,
+  "estDur": 2.12
+ },
+ {
+  "scene": "SC 01",
+  "speaker": "JUNO",
+  "text": "[determined, shouting] Pip! Press the button!",
+  "estStart": 12.09,
+  "estDur": 1.75
+ },
+ {
+  "scene": "SC 01",
+  "speaker": "PIP",
+  "text": "[cheerful, tiny] Ding!",
+  "estStart": 13.85,
+  "estDur": 0.66
+ },
+ {
+  "scene": "SC 01",
+  "speaker": "JUNO",
+  "text": "[calm, to camera] Okay. You're probably wondering how a girl in a hard hat ended up running from a giant lag monster.",
+  "estStart": 14.51,
+  "estDur": 7.21
+ },
+ {
+  "scene": "SC 01",
+  "speaker": "JUNO",
+  "text": "[storyteller] Let's go back twenty-four hours.",
+  "estStart": 21.72,
+  "estDur": 2.12
+ },
+ {
+  "scene": "SC 02",
+  "speaker": "JUNO",
+  "text": "[cheerful] Hi! I'm Juno. I'm eleven. And I'm a builder.",
+  "estStart": 24.84,
+  "estDur": 3.57
+ },
+ {
+  "scene": "SC 02",
+  "speaker": "JUNO",
+  "text": "[proud] That's why I wear the hard hat. [pause] Builders wear hard hats. [pause] Also, I fall off my chair a lot.",
+  "estStart": 28.41,
+  "estDur": 8.21
+ },
+ {
+  "scene": "SC 02",
+  "speaker": "JUNO",
+  "text": "Not houses. Games. For three years, I've been building my own Roblox game.",
+  "estStart": 36.62,
+  "estDur": 5.03
+ },
+ {
+  "scene": "SC 02",
+  "speaker": "JUNO",
+  "text": "[proud, dreamy] It's called Bubble Island. Islands... inside bubbles. You float from one to the next. [pause] It's a masterpiece.",
+  "estStart": 41.65,
+  "estDur": 7.28
+ },
+ {
+  "scene": "SC 02",
+  "speaker": "JUNO",
+  "text": "[deadpan] It has three visits.",
+  "estStart": 48.93,
+  "estDur": 1.75
+ },
+ {
+  "scene": "SC 02",
+  "speaker": "JUNO",
+  "text": "One is me. One is my cat. And one is Grandpa, by accident. He thought it was the weather app.",
+  "estStart": 50.68,
+  "estDur": 7.57
+ },
+ {
+  "scene": "SC 02",
+  "speaker": "GRANDPA",
+  "text": "[confused, warm] Juno, why is tomorrow's weather... soap?",
+  "estStart": 58.25,
+  "estDur": 2.78
+ },
+ {
+  "scene": "SC 02",
+  "speaker": "JUNO",
+  "text": "That's Grandpa Otto. He lives with us. He carries one hundred keys... and he won't tell anyone what they open.",
+  "estStart": 61.04,
+  "estDur": 7.87
+ },
+ {
+  "scene": "SC 02",
+  "speaker": "GRANDPA",
+  "text": "[mysterious, whispering] Some doors... are better left closed.",
+  "estStart": 68.91,
+  "estDur": 2.78
+ },
+ {
+  "scene": "SC 02",
+  "speaker": "JUNO",
+  "text": "[aside] He also uses a mop as a walking stick. Nobody knows why.",
+  "estStart": 71.69,
+  "estDur": 4.66
+ },
+ {
+  "scene": "SC 02",
+  "speaker": "JUNO",
+  "text": "Mom and Dad don't play. [pause] Dad says video games rot your brain.",
+  "estStart": 76.35,
+  "estDur": 5.16
+ },
+ {
+  "scene": "SC 02",
+  "speaker": "JUNO",
+  "text": "And this is my best friend, Dex.",
+  "estStart": 81.52,
+  "estDur": 2.85
+ },
+ {
+  "scene": "SC 02",
+  "speaker": "DEX",
+  "text": "[cocky, fast] Twelve thousand hours. Every obby. Every boss. Every badge. I have NEVER fallen. Not once.",
+  "estStart": 84.36,
+  "estDur": 5.75
+ },
+ {
+  "scene": "SC 02",
+  "speaker": "JUNO",
+  "text": "[aside, deadpan] In the game. In real life... he's scared of stairs.",
+  "estStart": 90.12,
+  "estDur": 4.24
+ },
+ {
+  "scene": "SC 02",
+  "speaker": "DEX",
+  "text": "[nervous] Stairs don't have checkpoints, Juno! If I fall, where do I spawn?!",
+  "estStart": 94.35,
+  "estDur": 4.66
+ },
+ {
+  "scene": "SC 02",
+  "speaker": "JUNO",
+  "text": "[deadpan] On the floor, Dex. You spawn on the floor.",
+  "estStart": 99.02,
+  "estDur": 3.57
+ },
+ {
+  "scene": "SC 02",
+  "speaker": "JUNO",
+  "text": "And this is my little brother, Pip. He's six. He plays exactly one game.",
+  "estStart": 102.59,
+  "estDur": 5.39
+ },
+ {
+  "scene": "SC 02",
+  "speaker": "PIP",
+  "text": "[excited, tiny] Elevator Simulator!",
+  "estStart": 107.98,
+  "estDur": 1.03
+ },
+ {
+  "scene": "SC 02",
+  "speaker": "PIP",
+  "text": "[happy] Ding!",
+  "estStart": 109.01,
+  "estDur": 0.66
+ },
+ {
+  "scene": "SC 02",
+  "speaker": "JUNO",
+  "text": "He has ridden the same elevator... forty-one thousand times. He knows every button in every elevator in the game.",
+  "estStart": 109.67,
+  "estDur": 7.51
+ },
+ {
+  "scene": "SC 02",
+  "speaker": "PIP",
+  "text": "[proud] Ding!",
+  "estStart": 117.18,
+  "estDur": 0.66
+ },
+ {
+  "scene": "SC 02",
+  "speaker": "JUNO",
+  "text": "[sighs] It's the only word he's said since Christmas.",
+  "estStart": 117.85,
+  "estDur": 3.21
+ },
+ {
+  "scene": "SC 03",
+  "speaker": "JUNO",
+  "text": "[storyteller] It was a normal Tuesday. Six p.m. Peak gaming hour.",
+  "estStart": 121.05,
+  "estDur": 3.94
+ },
+ {
+  "scene": "SC 03",
+  "speaker": "JUNO",
+  "text": "And then... every screen in the world... showed the same message.",
+  "estStart": 124.99,
+  "estDur": 4.9
+ },
+ {
+  "scene": "SC 03",
+  "speaker": "SYSTEM",
+  "text": "[calm, polite, robotic] Attention, players. Roblox will shut down forever... in twenty-four hours.",
+  "estStart": 129.89,
+  "estDur": 4.24
+ },
+ {
+  "scene": "SC 03",
+  "speaker": "SYSTEM",
+  "text": "[cheerful] Thanks for playing! Smiley face.",
+  "estStart": 134.13,
+  "estDur": 2.12
+ },
+ {
+  "scene": "SC 03",
+  "speaker": "DEX",
+  "text": "[devastated, screaming] FOREVER?! Like... FOREVER forever?!",
+  "estStart": 136.25,
+  "estDur": 2.05
+ },
+ {
+  "scene": "SC 03",
+  "speaker": "DEX",
+  "text": "[sobbing] I have a nine-hundred-day login streak!",
+  "estStart": 138.3,
+  "estDur": 2.48
+ },
+ {
+  "scene": "SC 03",
+  "speaker": "PIP",
+  "text": "[small, sad] ...Even the elevator?",
+  "estStart": 140.78,
+  "estDur": 1.69
+ },
+ {
+  "scene": "SC 03",
+  "speaker": "DAD",
+  "text": "[nervous, whispering] It's fine. It's just a game. [pause] ...Not my fish. Please, not my fish.",
+  "estStart": 142.47,
+  "estDur": 5.83
+ },
+ {
+  "scene": "SC 03",
+  "speaker": "JUNO",
+  "text": "[panicked] My game isn't finished! Bubble Island has no ending! The bubbles don't even POP yet!",
+  "estStart": 148.3,
+  "estDur": 5.75
+ },
+ {
+  "scene": "SC 03",
+  "speaker": "ANCHOR",
+  "text": "[dramatic, news] Breaking news! The world has entered... the Final Twenty-Four Hours!",
+  "estStart": 154.05,
+  "estDur": 4.24
+ },
+ {
+  "scene": "SC 03",
+  "speaker": "ANCHOR",
+  "text": "Schools are closed. Parents are confused. And one kid has already fainted. [pause] Twice.",
+  "estStart": 158.29,
+  "estDur": 5.53
+ },
+ {
+  "scene": "SC 03",
+  "speaker": "ANCHOR",
+  "text": "[dramatic] Ten thousand players are trying to beat the same obby at the same time. [pause] And a dog has learned to say \"oof.\"",
+  "estStart": 163.82,
+  "estDur": 8.8
+ },
+ {
+  "scene": "SC 03",
+  "speaker": "ANCHOR",
+  "text": "[serious] Experts say the shutdown cannot be stopped. [pause] Experts also say they're going to go play now. Goodbye!",
+  "estStart": 172.62,
+  "estDur": 6.98
+ },
+ {
+  "scene": "SC 03",
+  "speaker": "JUNO",
+  "text": "The countdown started. And the whole world... went a little bit crazy.",
+  "estStart": 179.6,
+  "estDur": 4.96
+ },
+ {
+  "scene": "SC 04",
+  "speaker": "JUNO",
+  "text": "Everybody made a list. The \"last day\" list.",
+  "estStart": 186.06,
+  "estDur": 3.21
+ },
+ {
+  "scene": "SC 04",
+  "speaker": "JUNO",
+  "text": "Kids spent the Robux they'd been saving for years.",
+  "estStart": 189.27,
+  "estDur": 3.57
+ },
+ {
+  "scene": "SC 04",
+  "speaker": "JUNO",
+  "text": "Every server was full. Every obby had a line. One obby had a line... for the line.",
+  "estStart": 192.85,
+  "estDur": 6.78
+ },
+ {
+  "scene": "SC 04",
+  "speaker": "JUNO",
+  "text": "One guy finally read the Terms of Service. All of them. [pause] It took eleven hours. He said the ending was disappointing.",
+  "estStart": 199.63,
+  "estDur": 8.44
+ },
+ {
+  "scene": "SC 04",
+  "speaker": "JUNO",
+  "text": "Even our math teacher canceled the test... so he could finish his tycoon.",
+  "estStart": 208.06,
+  "estDur": 5.33
+ },
+ {
+  "scene": "SC 04",
+  "speaker": "STREAMER",
+  "text": "[hyped, screaming] Chat! This is the last stream EVER! I will not blink! I will not sleep! [pause] I will not... [yawns] ...okay, maybe one nap.",
+  "estStart": 213.39,
+  "estDur": 9.4
+ },
+ {
+  "scene": "SC 04",
+  "speaker": "DAD",
+  "text": "[serious, emotional] Kids. Sit down. I need to tell you something.",
+  "estStart": 222.79,
+  "estDur": 3.57
+ },
+ {
+  "scene": "SC 04",
+  "speaker": "DAD",
+  "text": "[ashamed] I'm level nine hundred... in a fishing game.",
+  "estStart": 226.36,
+  "estDur": 3.51
+ },
+ {
+  "scene": "SC 04",
+  "speaker": "JUNO",
+  "text": "[shocked] Dad! You said video games rot your brain!",
+  "estStart": 229.87,
+  "estDur": 3.21
+ },
+ {
+  "scene": "SC 04",
+  "speaker": "DAD",
+  "text": "[defensive] It's not a game! It's RELAXING! [voice cracking] And tonight... I was finally going to catch the Golden Fish!",
+  "estStart": 233.08,
+  "estDur": 6.78
+ },
+ {
+  "scene": "SC 04",
+  "speaker": "JUNO",
+  "text": "Even Mom had a list.",
+  "estStart": 239.86,
+  "estDur": 2.12
+ },
+ {
+  "scene": "SC 04",
+  "speaker": "JUNO",
+  "text": "[deadpan] She said she was taking a bath. [pause] For six hours.",
+  "estStart": 241.98,
+  "estDur": 4.44
+ },
+ {
+  "scene": "SC 04",
+  "speaker": "DEX",
+  "text": "[stressed] I have every badge in Roblox... except one. The secret one. The \"Touch Grass\" badge.",
+  "estStart": 246.42,
+  "estDur": 6.05
+ },
+ {
+  "scene": "SC 04",
+  "speaker": "DEX",
+  "text": "[frustrated] Nobody knows how to get it! I searched every map! Every cave! Every... grass texture!",
+  "estStart": 252.47,
+  "estDur": 6.05
+ },
+ {
+  "scene": "SC 04",
+  "speaker": "PIP",
+  "text": "[sad, tiny] Goodbye, Mister Elevator Man. You were the best elevator man.",
+  "estStart": 258.53,
+  "estDur": 3.94
+ },
+ {
+  "scene": "SC 04",
+  "speaker": "PIP",
+  "text": "[sad, small] Ding. [pause] Ding. [pause] ...Ding.",
+  "estStart": 262.46,
+  "estDur": 2.69
+ },
+ {
+  "scene": "SC 04",
+  "speaker": "JUNO",
+  "text": "[determined] And me? I had one thing on my list. Finish Bubble Island. Before the world forgot it ever existed.",
+  "estStart": 265.15,
+  "estDur": 7.21
+ },
+ {
+  "scene": "SC 04",
+  "speaker": "DEX",
+  "text": "[confused] Juno... I just fell through the whole world.",
+  "estStart": 272.36,
+  "estDur": 3.51
+ },
+ {
+  "scene": "SC 04",
+  "speaker": "JUNO",
+  "text": "[quickly] That's not a bug. That's... the secret underwater level.",
+  "estStart": 275.87,
+  "estDur": 3.87
+ },
+ {
+  "scene": "SC 04",
+  "speaker": "DEX",
+  "text": "[deadpan] There's no water. It's just grey. Forever.",
+  "estStart": 279.75,
+  "estDur": 2.85
+ },
+ {
+  "scene": "SC 04",
+  "speaker": "JUNO",
+  "text": "[defeated] ...It's a very secret level.",
+  "estStart": 282.59,
+  "estDur": 2.42
+ },
+ {
+  "scene": "SC 05",
+  "speaker": "JUNO",
+  "text": "[tired] At midnight, I was almost done. Twelve islands. Three hundred bubbles. One very tired builder.",
+  "estStart": 285.01,
+  "estDur": 5.75
+ },
+ {
+  "scene": "SC 05",
+  "speaker": "JUNO",
+  "text": "[uneasy] Then my game started... lagging.",
+  "estStart": 290.76,
+  "estDur": 2.42
+ },
+ {
+  "scene": "SC 05",
+  "speaker": "LAG",
+  "text": "[slow, deep, glitchy] Mmm... bub... bub... bubbles.",
+  "estStart": 293.18,
+  "estDur": 2.65
+ },
+ {
+  "scene": "SC 05",
+  "speaker": "JUNO",
+  "text": "[startled] Who said that?!",
+  "estStart": 295.84,
+  "estDur": 1.39
+ },
+ {
+  "scene": "SC 05",
+  "speaker": "LAG",
+  "text": "[slow, deep, glitchy] I... am... [long pause] ...the LAAAG.",
+  "estStart": 297.23,
+  "estDur": 3.75
+ },
+ {
+  "scene": "SC 05",
+  "speaker": "LAG",
+  "text": "[hungry, slow] More players... more... rushing... more... FOOD.",
+  "estStart": 300.98,
+  "estDur": 3.68
+ },
+ {
+  "scene": "SC 05",
+  "speaker": "JUNO",
+  "text": "[brave, shaky] Get out of my game! This is MY game!",
+  "estStart": 304.66,
+  "estDur": 3.57
+ },
+ {
+  "scene": "SC 05",
+  "speaker": "LAG",
+  "text": "[slow, mocking] Your... game... has... three... visits. [pause] Nobody... will... miss... it.",
+  "estStart": 308.24,
+  "estDur": 6.17
+ },
+ {
+  "scene": "SC 05",
+  "speaker": "JUNO",
+  "text": "[hurt, quiet] ...Rude.",
+  "estStart": 314.41,
+  "estDur": 0.96
+ },
+ {
+  "scene": "SC 05",
+  "speaker": "JUNO",
+  "text": "[whispering, scared] And then my cat... lagged. In REAL LIFE.",
+  "estStart": 315.37,
+  "estDur": 3.51
+ },
+ {
+  "scene": "SC 05",
+  "speaker": "GRANDPA",
+  "text": "[grave, quiet] So. He's back.",
+  "estStart": 318.88,
+  "estDur": 1.39
+ },
+ {
+  "scene": "SC 05",
+  "speaker": "JUNO",
+  "text": "[shocked] Grandpa?! You KNOW about the lag monster?!",
+  "estStart": 320.27,
+  "estDur": 2.85
+ },
+ {
+  "scene": "SC 05",
+  "speaker": "GRANDPA",
+  "text": "[serious] Juno... for thirty years, I was the night janitor... at the Server Farm.",
+  "estStart": 323.12,
+  "estDur": 5.63
+ },
+ {
+  "scene": "SC 05",
+  "speaker": "GRANDPA",
+  "text": "[proud, mysterious] The place where all of Roblox lives.",
+  "estStart": 328.75,
+  "estDur": 2.85
+ },
+ {
+  "scene": "SC 05",
+  "speaker": "JUNO",
+  "text": "[stunned] So the hundred keys...",
+  "estStart": 331.59,
+  "estDur": 2.05
+ },
+ {
+  "scene": "SC 05",
+  "speaker": "GRANDPA",
+  "text": "[proud] Ninety-nine of them open the Server Farm. [pause] One opens my locker. There's a sandwich in there from nineteen ninety-eight.",
+  "estStart": 333.65,
+  "estDur": 7.71
+ },
+ {
+  "scene": "SC 05",
+  "speaker": "GRANDPA",
+  "text": "Back then, the Lag was tiny. I'd shoo him away with my mop. But he feeds on traffic. The more everyone rushes at once... the bigger he gets.",
+  "estStart": 341.35,
+  "estDur": 10.78
+ },
+ {
+  "scene": "SC 05",
+  "speaker": "JUNO",
+  "text": "[realizing] And today... the whole world is rushing at once.",
+  "estStart": 352.14,
+  "estDur": 3.87
+ },
+ {
+  "scene": "SC 05",
+  "speaker": "GRANDPA",
+  "text": "That's why they're shutting it all down. To starve him. Forever.",
+  "estStart": 356.01,
+  "estDur": 4.3
+ },
+ {
+  "scene": "SC 05",
+  "speaker": "JUNO",
+  "text": "[determined] So if we stop the Lag... Roblox doesn't have to shut down?",
+  "estStart": 360.31,
+  "estDur": 4.96
+ },
+ {
+  "scene": "SC 05",
+  "speaker": "GRANDPA",
+  "text": "[grinning] Get your helmet, builder.",
+  "estStart": 365.27,
+  "estDur": 1.75
+ },
+ {
+  "scene": "SC 06",
+  "speaker": "JUNO",
+  "text": "At six a.m., we had a van, a key... and a team.",
+  "estStart": 367.03,
+  "estDur": 4.96
+ },
+ {
+  "scene": "SC 06",
+  "speaker": "DEX",
+  "text": "[scared] No way. Real life has no respawn, no checkpoints, and no mini-map!",
+  "estStart": 371.99,
+  "estDur": 4.66
+ },
+ {
+  "scene": "SC 06",
+  "speaker": "JUNO",
+  "text": "[calm] It has snacks.",
+  "estStart": 376.65,
+  "estDur": 1.39
+ },
+ {
+  "scene": "SC 06",
+  "speaker": "DEX",
+  "text": "[pause] ...I'm in.",
+  "estStart": 378.05,
+  "estDur": 1.83
+ },
+ {
+  "scene": "SC 06",
+  "speaker": "PIP",
+  "text": "[cheerful] Ding!",
+  "estStart": 379.87,
+  "estDur": 0.66
+ },
+ {
+  "scene": "SC 06",
+  "speaker": "JUNO",
+  "text": "[sighs] And a stowaway.",
+  "estStart": 380.54,
+  "estDur": 1.39
+ },
+ {
+  "scene": "SC 06",
+  "speaker": "JUNO",
+  "text": "The closer we got to the Server Farm... the laggier the world became.",
+  "estStart": 381.93,
+  "estDur": 5.33
+ },
+ {
+  "scene": "SC 06",
+  "speaker": "DEX",
+  "text": "[nervous, whispering] Juno. That cow is... loading.",
+  "estStart": 387.25,
+  "estDur": 2.42
+ },
+ {
+  "scene": "SC 06",
+  "speaker": "GRANDPA",
+  "text": "[cheerful] Don't worry! Betsy hasn't gone over forty miles an hour since nineteen ninety-eight!",
+  "estStart": 389.67,
+  "estDur": 5.03
+ },
+ {
+  "scene": "SC 06",
+  "speaker": "DEX",
+  "text": "[deadpan] Did we just... lag backwards?",
+  "estStart": 394.7,
+  "estDur": 2.42
+ },
+ {
+  "scene": "SC 06",
+  "speaker": "SYSTEM",
+  "text": "[robotic, glitchy] Recalculating. Recalculating. Re... re... recalculating.",
+  "estStart": 397.12,
+  "estDur": 2.72
+ },
+ {
+  "scene": "SC 06",
+  "speaker": "JUNO",
+  "text": "[laughs] Twelve hours left. And we were going backwards.",
+  "estStart": 399.84,
+  "estDur": 3.21
+ },
+ {
+  "scene": "SC 06",
+  "speaker": "GRANDPA",
+  "text": "[serious] The Lag lives in the Core. The very bottom floor. Nobody's been down there in years.",
+  "estStart": 403.05,
+  "estDur": 6.12
+ },
+ {
+  "scene": "SC 06",
+  "speaker": "JUNO",
+  "text": "And when we get there... what's the plan?",
+  "estStart": 409.16,
+  "estDur": 3.51
+ },
+ {
+  "scene": "SC 06",
+  "speaker": "GRANDPA",
+  "text": "[cheerful] I was hoping you had one. You're the builder.",
+  "estStart": 412.67,
+  "estDur": 3.57
+ },
+ {
+  "scene": "SC 06",
+  "speaker": "JUNO",
+  "text": "[deadpan] Great. Great plan, Grandpa.",
+  "estStart": 416.25,
+  "estDur": 1.75
+ },
+ {
+  "scene": "SC 06",
+  "speaker": "JUNO",
+  "text": "We stopped for gas. [pause] The cashier was... buffering.",
+  "estStart": 418,
+  "estDur": 4.01
+ },
+ {
+  "scene": "SC 06",
+  "speaker": "GRANDPA",
+  "text": "[polite] One coffee, please.",
+  "estStart": 422.01,
+  "estDur": 1.39
+ },
+ {
+  "scene": "SC 06",
+  "speaker": "DEX",
+  "text": "[whispering] Is he okay?",
+  "estStart": 423.4,
+  "estDur": 1.39
+ },
+ {
+  "scene": "SC 06",
+  "speaker": "CASHIER",
+  "text": "[fast, glitchy] That'll-be-two-dollars-have-a-nice-day-have-a-nice-day-have-a-nice-day.",
+  "estStart": 424.79,
+  "estDur": 0.66
+ },
+ {
+  "scene": "SC 06",
+  "speaker": "PIP",
+  "text": "[whiny, tiny] Are we there yet? [pause] Ding?",
+  "estStart": 425.45,
+  "estDur": 2.62
+ },
+ {
+  "scene": "SC 06",
+  "speaker": "GRANDPA",
+  "text": "[chuckles, warm] Not yet, little elevator.",
+  "estStart": 428.07,
+  "estDur": 1.75
+ },
+ {
+  "scene": "SC 06",
+  "speaker": "DEX",
+  "text": "[quiet, surprised] Huh. The graphics out here are... actually really good.",
+  "estStart": 429.83,
+  "estDur": 3.87
+ },
+ {
+  "scene": "SC 07",
+  "speaker": "JUNO",
+  "text": "[awed] The Server Farm. Every game. Every avatar. Every obby ever made. All in one building.",
+  "estStart": 435.2,
+  "estDur": 5.75
+ },
+ {
+  "scene": "SC 07",
+  "speaker": "GRANDPA",
+  "text": "[nostalgic, warm] Thirty years... and she hasn't changed a bit.",
+  "estStart": 440.95,
+  "estDur": 3.51
+ },
+ {
+  "scene": "SC 07",
+  "speaker": "GRANDPA",
+  "text": "[offended] Expired?! I mopped these floors for thirty years!",
+  "estStart": 444.46,
+  "estDur": 3.21
+ },
+ {
+  "scene": "SC 07",
+  "speaker": "MODBOT",
+  "text": "[robotic, stern] Intruders detected! Leave now, or you will be... beep beep beep beep!",
+  "estStart": 447.67,
+  "estDur": 4.96
+ },
+ {
+  "scene": "SC 07",
+  "speaker": "DEX",
+  "text": "[scared] Did that robot just get chat-filtered?!",
+  "estStart": 452.64,
+  "estDur": 2.48
+ },
+ {
+  "scene": "SC 07",
+  "speaker": "GRANDPA",
+  "text": "[fake robot voice, badly] Beep. Boop. I am... also a robot. Nothing to see here.",
+  "estStart": 455.12,
+  "estDur": 4.6
+ },
+ {
+  "scene": "SC 07",
+  "speaker": "MODBOT",
+  "text": "[robotic, suspicious] ...Welcome, colleague.",
+  "estStart": 459.72,
+  "estDur": 1.33
+ },
+ {
+  "scene": "SC 07",
+  "speaker": "DEX",
+  "text": "[whispering, amazed] That should NOT have worked.",
+  "estStart": 461.05,
+  "estDur": 2.12
+ },
+ {
+  "scene": "SC 07",
+  "speaker": "DEX",
+  "text": "[sneezing] Ah... ah... ACHOO!",
+  "estStart": 463.16,
+  "estDur": 1.99
+ },
+ {
+  "scene": "SC 07",
+  "speaker": "MODBOT",
+  "text": "[robotic, alarmed] Intruders! Intruders! Beep beep beep!",
+  "estStart": 465.15,
+  "estDur": 2.12
+ },
+ {
+  "scene": "SC 07",
+  "speaker": "JUNO",
+  "text": "[panicked] A service elevator with four hundred buttons! Nobody knows which one—",
+  "estStart": 467.27,
+  "estDur": 4.3
+ },
+ {
+  "scene": "SC 07",
+  "speaker": "PIP",
+  "text": "[calm, expert] Basement nine. Then up two. Then hold \"close door\" for three seconds.",
+  "estStart": 471.57,
+  "estDur": 4.66
+ },
+ {
+  "scene": "SC 07",
+  "speaker": "PIP",
+  "text": "[proud] Ding!",
+  "estStart": 476.24,
+  "estDur": 0.66
+ },
+ {
+  "scene": "SC 07",
+  "speaker": "JUNO",
+  "text": "[amazed] Forty-one thousand elevator rides... and they finally paid off.",
+  "estStart": 476.9,
+  "estDur": 3.87
+ },
+ {
+  "scene": "SC 07",
+  "speaker": "GRANDPA",
+  "text": "[impressed, warm] That's my grandson.",
+  "estStart": 480.77,
+  "estDur": 1.39
+ },
+ {
+  "scene": "SC 07",
+  "speaker": "PIP",
+  "text": "[whispering] Ding.",
+  "estStart": 482.16,
+  "estDur": 0.66
+ },
+ {
+  "scene": "SC 08",
+  "speaker": "JUNO",
+  "text": "Floor one. The Cooling Room. Where the servers chill out.",
+  "estStart": 482.83,
+  "estDur": 3.94
+ },
+ {
+  "scene": "SC 08",
+  "speaker": "DEX",
+  "text": "[screaming] No respawn! No respawn! NO RESPAWN!",
+  "estStart": 486.76,
+  "estDur": 2.48
+ },
+ {
+  "scene": "SC 08",
+  "speaker": "GRANDPA",
+  "text": "[cheerful] Thirty years of mopping, kid! Bend your knees!",
+  "estStart": 489.25,
+  "estDur": 3.21
+ },
+ {
+  "scene": "SC 08",
+  "speaker": "PIP",
+  "text": "[giggling] Ding!",
+  "estStart": 492.45,
+  "estDur": 0.66
+ },
+ {
+  "scene": "SC 08",
+  "speaker": "JUNO",
+  "text": "Floor two. The Cable Jungle.",
+  "estStart": 493.12,
+  "estDur": 2.12
+ },
+ {
+  "scene": "SC 08",
+  "speaker": "DEX",
+  "text": "[scared] Juno, I can't. That's a real gap. With real... falling.",
+  "estStart": 495.24,
+  "estDur": 4.24
+ },
+ {
+  "scene": "SC 08",
+  "speaker": "JUNO",
+  "text": "[warm] Dex. Look at it. Platforms. Swinging ropes. A gap. [pause] What does that look like?",
+  "estStart": 499.47,
+  "estDur": 5.89
+ },
+ {
+  "scene": "SC 08",
+  "speaker": "DEX",
+  "text": "[slowly realizing] ...It's an obby. [excited] It's just an OBBY!",
+  "estStart": 505.36,
+  "estDur": 3.15
+ },
+ {
+  "scene": "SC 08",
+  "speaker": "DEX",
+  "text": "[hyped] Twelve thousand hours of practice, BABY!",
+  "estStart": 508.51,
+  "estDur": 2.48
+ },
+ {
+  "scene": "SC 08",
+  "speaker": "JUNO",
+  "text": "Floor two and a half. The Lost and Found. Every item anyone ever lost in a game.",
+  "estStart": 510.99,
+  "estDur": 6.48
+ },
+ {
+  "scene": "SC 08",
+  "speaker": "DEX",
+  "text": "[gasps, excited] My first sword! I lost it in third grade!",
+  "estStart": 517.47,
+  "estDur": 3.57
+ },
+ {
+  "scene": "SC 08",
+  "speaker": "PIP",
+  "text": "[happy] Ding!",
+  "estStart": 521.05,
+  "estDur": 0.66
+ },
+ {
+  "scene": "SC 08",
+  "speaker": "JUNO",
+  "text": "[awed, whispering] Floor three. The Archive.",
+  "estStart": 521.71,
+  "estDur": 1.75
+ },
+ {
+  "scene": "SC 08",
+  "speaker": "GRANDPA",
+  "text": "[warm] Every game anyone ever made... is kept here. Every single one.",
+  "estStart": 523.46,
+  "estDur": 4.6
+ },
+ {
+  "scene": "SC 08",
+  "speaker": "JUNO",
+  "text": "[touched] Even mine.",
+  "estStart": 528.06,
+  "estDur": 1.03
+ },
+ {
+  "scene": "SC 08",
+  "speaker": "GRANDPA",
+  "text": "[gentle] Especially yours. Every world someone builds with love... gets a shelf.",
+  "estStart": 529.09,
+  "estDur": 4.6
+ },
+ {
+  "scene": "SC 08",
+  "speaker": "JUNO",
+  "text": "[quiet] I always thought my game didn't matter. Three visits. [pause] But somebody kept it anyway.",
+  "estStart": 533.69,
+  "estDur": 5.89
+ },
+ {
+  "scene": "SC 08",
+  "speaker": "GRANDPA",
+  "text": "[warm] A game doesn't need a million visits to matter, Juno. It just needs someone who made it.",
+  "estStart": 539.58,
+  "estDur": 6.48
+ },
+ {
+  "scene": "SC 08",
+  "speaker": "JUNO",
+  "text": "[scared] But at the end of the hall... the bubbles were turning grey.",
+  "estStart": 546.06,
+  "estDur": 4.96
+ },
+ {
+  "scene": "SC 09",
+  "speaker": "LAG",
+  "text": "[booming, slow, glitchy] More... players... more... rushing... MORE... FOOD.",
+  "estStart": 551.03,
+  "estDur": 3.98
+ },
+ {
+  "scene": "SC 09",
+  "speaker": "JUNO",
+  "text": "[whispering] Every player on Earth was rushing to play one last game. And every one of them... was feeding him.",
+  "estStart": 555.01,
+  "estDur": 7.51
+ },
+ {
+  "scene": "SC 09",
+  "speaker": "DEX",
+  "text": "[cocky] Stand back. I've beaten every boss in Roblox.",
+  "estStart": 562.52,
+  "estDur": 3.21
+ },
+ {
+  "scene": "SC 09",
+  "speaker": "JUNO",
+  "text": "Dex, wait—",
+  "estStart": 565.73,
+  "estDur": 1.03
+ },
+ {
+  "scene": "SC 09",
+  "speaker": "DEX",
+  "text": "[muffled, groans] ...Real life is SO badly designed.",
+  "estStart": 566.75,
+  "estDur": 2.78
+ },
+ {
+  "scene": "SC 09",
+  "speaker": "LAG",
+  "text": "[laughing slowly, glitchy] Ha. [pause] Ha. [pause] Ha. [pause] Ha.",
+  "estStart": 569.54,
+  "estDur": 3.25
+ },
+ {
+  "scene": "SC 09",
+  "speaker": "LAG",
+  "text": "[slow, booming] Tomorrow... no more... games. No more... obbies. No more... elevators.",
+  "estStart": 572.79,
+  "estDur": 5.14
+ },
+ {
+  "scene": "SC 09",
+  "speaker": "PIP",
+  "text": "[angry, tiny] ...Not the elevator.",
+  "estStart": 577.93,
+  "estDur": 1.69
+ },
+ {
+  "scene": "SC 09",
+  "speaker": "JUNO",
+  "text": "[determined] My turn. I'm a BUILDER!",
+  "estStart": 579.62,
+  "estDur": 2.12
+ },
+ {
+  "scene": "SC 09",
+  "speaker": "LAG",
+  "text": "[slow, mocking] Wall... not... loaded.",
+  "estStart": 581.74,
+  "estDur": 1.99
+ },
+ {
+  "scene": "SC 09",
+  "speaker": "JUNO",
+  "text": "[annoyed] Oh, come ON!",
+  "estStart": 583.73,
+  "estDur": 1.39
+ },
+ {
+  "scene": "SC 09",
+  "speaker": "SYSTEM",
+  "text": "[calm, robotic] Shutdown in five minutes. Thanks for playing! Smiley face.",
+  "estStart": 585.12,
+  "estDur": 3.57
+ },
+ {
+  "scene": "SC 09",
+  "speaker": "GRANDPA",
+  "text": "[shocked] My mop! He ate my MOP!",
+  "estStart": 588.69,
+  "estDur": 2.48
+ },
+ {
+  "scene": "SC 09",
+  "speaker": "JUNO",
+  "text": "[thinking out loud] Grandpa... you said he eats traffic. Everybody rushing at once.",
+  "estStart": 591.17,
+  "estDur": 4.24
+ },
+ {
+  "scene": "SC 09",
+  "speaker": "JUNO",
+  "text": "[slowly, realizing] What if there was NO traffic? Not forever. Just for... ten seconds?",
+  "estStart": 595.41,
+  "estDur": 4.96
+ },
+ {
+  "scene": "SC 09",
+  "speaker": "GRANDPA",
+  "text": "[realizing] If every single player logged off at the same time... he'd have nothing to eat.",
+  "estStart": 600.37,
+  "estDur": 6.05
+ },
+ {
+  "scene": "SC 09",
+  "speaker": "DEX",
+  "text": "[disbelief] Juno! Nobody logs off! Not on the LAST DAY!",
+  "estStart": 606.43,
+  "estDur": 3.57
+ },
+ {
+  "scene": "SC 09",
+  "speaker": "JUNO",
+  "text": "[determined] Then we ask. Everyone. At once.",
+  "estStart": 610,
+  "estDur": 2.48
+ },
+ {
+  "scene": "SC 10",
+  "speaker": "LAG",
+  "text": "[slow, deep, glitchy] One... min... min... minute... left.",
+  "estStart": 613.48,
+  "estDur": 3.32
+ },
+ {
+  "scene": "SC 10",
+  "speaker": "JUNO",
+  "text": "[shouting] Pip! Press the button!",
+  "estStart": 616.8,
+  "estDur": 1.75
+ },
+ {
+  "scene": "SC 10",
+  "speaker": "PIP",
+  "text": "[cheerful, tiny] Ding!",
+  "estStart": 618.55,
+  "estDur": 0.66
+ },
+ {
+  "scene": "SC 10",
+  "speaker": "JUNO",
+  "text": "[nervous, then sincere] Um. Hi. I'm Juno. I'm eleven. I'm... a builder.",
+  "estStart": 619.22,
+  "estDur": 3.87
+ },
+ {
+  "scene": "SC 10",
+  "speaker": "JUNO",
+  "text": "I know it's the last day. I know you want to play every single second. Me too.",
+  "estStart": 623.09,
+  "estDur": 6.48
+ },
+ {
+  "scene": "SC 10",
+  "speaker": "JUNO",
+  "text": "But there's a monster eating our servers. And he eats when we all rush.",
+  "estStart": 629.57,
+  "estDur": 5.39
+ },
+ {
+  "scene": "SC 10",
+  "speaker": "JUNO",
+  "text": "[sincere] We can play tomorrow. And the day after. But only if we stop... right now.",
+  "estStart": 634.96,
+  "estDur": 6.05
+ },
+ {
+  "scene": "SC 10",
+  "speaker": "JUNO",
+  "text": "[softly, sincere] So please... just for ten seconds... put down your phone. Log off. [pause] And look up.",
+  "estStart": 641.02,
+  "estDur": 6.85
+ },
+ {
+  "scene": "SC 10",
+  "speaker": "STREAMER",
+  "text": "[quiet, sincere] Chat... I'll be right back.",
+  "estStart": 647.87,
+  "estDur": 2.42
+ },
+ {
+  "scene": "SC 10",
+  "speaker": "JUNO",
+  "text": "[softly] And then... one by one... the world logged off.",
+  "estStart": 650.29,
+  "estDur": 4.17
+ },
+ {
+  "scene": "SC 10",
+  "speaker": "SYSTEM",
+  "text": "[robotic] Players online: eight hundred million...",
+  "estStart": 654.46,
+  "estDur": 2.42
+ },
+ {
+  "scene": "SC 10",
+  "speaker": "SYSTEM",
+  "text": "[robotic] Ten million... ten thousand... ten...",
+  "estStart": 656.88,
+  "estDur": 3.02
+ },
+ {
+  "scene": "SC 10",
+  "speaker": "LAG",
+  "text": "[panicking, slow] No... no... come... back... play... one... more...",
+  "estStart": 659.9,
+  "estDur": 4.95
+ },
+ {
+  "scene": "SC 10",
+  "speaker": "SYSTEM",
+  "text": "[quiet] Players online... zero.",
+  "estStart": 664.85,
+  "estDur": 1.69
+ },
+ {
+  "scene": "SC 10",
+  "speaker": "DEX",
+  "text": "[whispering, amazed] ...The Touch Grass badge.",
+  "estStart": 666.54,
+  "estDur": 2.05
+ },
+ {
+  "scene": "SC 11",
+  "speaker": "LAG",
+  "text": "[tiny, cute, high-pitched] ...hi.",
+  "estStart": 673.59,
+  "estDur": 0.96
+ },
+ {
+  "scene": "SC 11",
+  "speaker": "SYSTEM",
+  "text": "[surprised, robotic] Lag... not found. [pause] Shutdown... canceled!",
+  "estStart": 674.55,
+  "estDur": 3.22
+ },
+ {
+  "scene": "SC 11",
+  "speaker": "SYSTEM",
+  "text": "[cheerful] Thanks for playing! Smiley face.",
+  "estStart": 677.77,
+  "estDur": 2.12
+ },
+ {
+  "scene": "SC 11",
+  "speaker": "JUNO",
+  "text": "[laughing, crying] We did it! We actually DID it!",
+  "estStart": 679.89,
+  "estDur": 2.85
+ },
+ {
+  "scene": "SC 11",
+  "speaker": "GRANDPA",
+  "text": "[proud, warm] Ten seconds. That's all the world needed.",
+  "estStart": 682.74,
+  "estDur": 2.85
+ },
+ {
+  "scene": "SC 11",
+  "speaker": "DEX",
+  "text": "[running, excited] Juno! I touched grass! I TOUCHED GRASS!",
+  "estStart": 685.58,
+  "estDur": 2.85
+ },
+ {
+  "scene": "SC 11",
+  "speaker": "JUNO",
+  "text": "[laughing] We know, Dex. We know.",
+  "estStart": 688.43,
+  "estDur": 2.12
+ },
+ {
+  "scene": "SC 11",
+  "speaker": "PIP",
+  "text": "[whispering] Can I keep him?",
+  "estStart": 690.55,
+  "estDur": 1.75
+ },
+ {
+  "scene": "SC 11",
+  "speaker": "JUNO",
+  "text": "[pause] ...Fine. But you're feeding him.",
+  "estStart": 692.3,
+  "estDur": 2.92
+ },
+ {
+  "scene": "SC 12",
+  "speaker": "ANCHOR",
+  "text": "[cheerful] Good morning! Roblox is staying! Scientists are calling it \"The Great AFK\": the first time in history... the whole world went outside at the same time.",
+  "estStart": 697.22,
+  "estDur": 10.05
+ },
+ {
+  "scene": "SC 12",
+  "speaker": "ANCHOR",
+  "text": "[pause] Everyone agrees it was weird. [pause] And kind of nice.",
+  "estStart": 707.27,
+  "estDur": 4.57
+ },
+ {
+  "scene": "SC 12",
+  "speaker": "DAD",
+  "text": "[crying happily] It was worth the wait!",
+  "estStart": 711.85,
+  "estDur": 2.12
+ },
+ {
+  "scene": "SC 12",
+  "speaker": "DEX",
+  "text": "[proud] Ten minutes of real life a day. [pause] Still no respawn. But the graphics are amazing.",
+  "estStart": 713.96,
+  "estDur": 6.25
+ },
+ {
+  "scene": "SC 12",
+  "speaker": "JUNO",
+  "text": "[happy, amazed] And Bubble Island? Three visits... became three MILLION.",
+  "estStart": 720.22,
+  "estDur": 3.51
+ },
+ {
+  "scene": "SC 12",
+  "speaker": "JUNO",
+  "text": "[proud] Oh, and I finally finished it. Now the bubbles pop.",
+  "estStart": 723.73,
+  "estDur": 3.94
+ },
+ {
+  "scene": "SC 12",
+  "speaker": "JUNO",
+  "text": "Pip rode a real elevator for the first time. [pause] He gave it two stars. Too slow.",
+  "estStart": 727.66,
+  "estDur": 6.62
+ },
+ {
+  "scene": "SC 12",
+  "speaker": "PIP",
+  "text": "[disappointed] ...Ding.",
+  "estStart": 734.28,
+  "estDur": 0.96
+ },
+ {
+  "scene": "SC 12",
+  "speaker": "JUNO",
+  "text": "And Mom finally finished her bath. [pause] She was a little wrinkly.",
+  "estStart": 735.25,
+  "estDur": 4.8
+ },
+ {
+  "scene": "SC 12",
+  "speaker": "GRANDPA",
+  "text": "[cheerful] They gave me my old job back! Night janitor! [pause] Best job in the world.",
+  "estStart": 740.05,
+  "estDur": 5.89
+ },
+ {
+  "scene": "SC 12",
+  "speaker": "JUNO",
+  "text": "[warm] And now, every year, on the same day... we all log off for ten seconds. [pause] Just to say hi to the real world.",
+  "estStart": 745.94,
+  "estDur": 9.46
+ },
+ {
+  "scene": "SC 12",
+  "speaker": "PIP",
+  "text": "[proud] His name is Buffer.",
+  "estStart": 755.4,
+  "estDur": 1.75
+ },
+ {
+  "scene": "SC 12",
+  "speaker": "DAD",
+  "text": "[annoyed, glitchy] Juno... why... is... the... Wi... Wi... Wi-Fi...",
+  "estStart": 757.15,
+  "estDur": 4.95
+ },
+ {
+  "scene": "SC 12",
+  "speaker": "JUNO",
+  "text": "[to camera, deadpan] ...Here we go again.",
+  "estStart": 762.1,
+  "estDur": 2.05
+ },
+ {
+  "scene": "SC 13",
+  "speaker": "JUNO",
+  "text": "[warm, to camera] So... what would YOU do if Roblox had only twenty-four hours left? Tell me in the comments!",
+  "estStart": 765.65,
+  "estDur": 6.78
+ },
+ {
+  "scene": "SC 13",
+  "speaker": "JUNO",
+  "text": "And hey... maybe log off for ten seconds today. Look up. [pause] Then come right back and watch another video!",
+  "estStart": 772.44,
+  "estDur": 8.01
+ },
+ {
+  "scene": "SC 13",
+  "speaker": "PIP",
+  "text": "[cheerful] Ding!",
+  "estStart": 780.45,
+  "estDur": 0.66
+ }
+]

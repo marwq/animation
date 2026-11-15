@@ -1,0 +1,273 @@
+WHAT IF ROBUX BECAME REAL MONEY?
+ElevenLabs Eleven v4 · Text to Dialogue · voice-over script
+Generated from script/SCRIPT.md — edit the script, then run: node tools/build_vo.js
+Spoken words: 1779 · estimated runtime: ~13:01 (incl. silent visual beats)
+==============================================================================
+
+HOW TO USE (по-русски)
+- Модель: Eleven v4. Режим Text to Dialogue: каждая строка "SPEAKER: текст" = отдельный блок
+  с выбранным голосом. Имя спикера и двоеточие НЕ вставлять, только текст.
+- Теги в [квадратных скобках] оставляем — это интонация, они не произносятся.
+  КАПС = ударение, "..." и [pause] = паузы, тире "—" = оборванная фраза.
+- TY — рассказчик и герой (от первого лица): один голос на весь ролик.
+- Генерируйте по дублям (TAKE), файлы называйте take01.mp3, take05a.mp3 ... и кладите рядом .txt/JSON,
+  как в прошлый раз, — так я разложу всё по таймлайну автоматически.
+
+CAST
+  JUNO      (88 lines)  
+  LAG       (12 lines)  
+  DEX       (29 lines)  
+  GRANDPA   (27 lines)  
+  PIP       (20 lines)  
+  SYSTEM    ( 9 lines)  bright game-UI voice; booming for BANNED / alarm lines
+  DAD       ( 6 lines)  tired, dramatic dad
+  ANCHOR    ( 6 lines)  classic over-the-top TV news anchor
+  STREAMER  ( 2 lines)  
+  CASHIER   ( 1 lines)  
+  MODBOT    ( 3 lines)  
+
+==============================================================================
+
+=== TAKE 01 · SC 01 COLD OPEN — минута до отключения · ~0:00–0:25 · 8 lines · 446 chars ===
+
+JUNO: [breathless, dramatic] What if Roblox... shut down... FOREVER?
+LAG: [slow, deep, glitchy] One... min... min... minute... left.
+DEX: [panicking] Juno! There's no respawn in real life! I checked!
+GRANDPA: [shouting] Hold on to your helmets!
+JUNO: [determined, shouting] Pip! Press the button!
+PIP: [cheerful, tiny] Ding!
+JUNO: [calm, to camera] Okay. You're probably wondering how a girl in a hard hat ended up running from a giant lag monster.
+JUNO: [storyteller] Let's go back twenty-four hours.
+
+=== TAKE 02 · SC 02 СТРОИТЕЛЬНИЦА · ~0:25–2:01 · 22 lines · 1486 chars ===
+
+JUNO: [cheerful] Hi! I'm Juno. I'm eleven. And I'm a builder.
+JUNO: [proud] That's why I wear the hard hat. [pause] Builders wear hard hats. [pause] Also, I fall off my chair a lot.
+JUNO: Not houses. Games. For three years, I've been building my own Roblox game.
+JUNO: [proud, dreamy] It's called Bubble Island. Islands... inside bubbles. You float from one to the next. [pause] It's a masterpiece.
+JUNO: [deadpan] It has three visits.
+JUNO: One is me. One is my cat. And one is Grandpa, by accident. He thought it was the weather app.
+GRANDPA: [confused, warm] Juno, why is tomorrow's weather... soap?
+JUNO: That's Grandpa Otto. He lives with us. He carries one hundred keys... and he won't tell anyone what they open.
+GRANDPA: [mysterious, whispering] Some doors... are better left closed.
+JUNO: [aside] He also uses a mop as a walking stick. Nobody knows why.
+JUNO: Mom and Dad don't play. [pause] Dad says video games rot your brain.
+JUNO: And this is my best friend, Dex.
+DEX: [cocky, fast] Twelve thousand hours. Every obby. Every boss. Every badge. I have NEVER fallen. Not once.
+JUNO: [aside, deadpan] In the game. In real life... he's scared of stairs.
+DEX: [nervous] Stairs don't have checkpoints, Juno! If I fall, where do I spawn?!
+JUNO: [deadpan] On the floor, Dex. You spawn on the floor.
+JUNO: And this is my little brother, Pip. He's six. He plays exactly one game.
+PIP: [excited, tiny] Elevator Simulator!
+PIP: [happy] Ding!
+JUNO: He has ridden the same elevator... forty-one thousand times. He knows every button in every elevator in the game.
+PIP: [proud] Ding!
+JUNO: [sighs] It's the only word he's said since Christmas.
+
+=== TAKE 03 · SC 03 ВСПЛЫВАЮЩЕЕ ОКНО · ~2:01–3:06 · 14 lines · 1090 chars ===
+
+JUNO: [storyteller] It was a normal Tuesday. Six p.m. Peak gaming hour.
+JUNO: And then... every screen in the world... showed the same message.
+SYSTEM: [calm, polite, robotic] Attention, players. Roblox will shut down forever... in twenty-four hours.
+SYSTEM: [cheerful] Thanks for playing! Smiley face.
+DEX: [devastated, screaming] FOREVER?! Like... FOREVER forever?!
+DEX: [sobbing] I have a nine-hundred-day login streak!
+PIP: [small, sad] ...Even the elevator?
+DAD: [nervous, whispering] It's fine. It's just a game. [pause] ...Not my fish. Please, not my fish.
+JUNO: [panicked] My game isn't finished! Bubble Island has no ending! The bubbles don't even POP yet!
+ANCHOR: [dramatic, news] Breaking news! The world has entered... the Final Twenty-Four Hours!
+ANCHOR: Schools are closed. Parents are confused. And one kid has already fainted. [pause] Twice.
+ANCHOR: [dramatic] Ten thousand players are trying to beat the same obby at the same time. [pause] And a dog has learned to say "oof."
+ANCHOR: [serious] Experts say the shutdown cannot be stopped. [pause] Experts also say they're going to go play now. Goodbye!
+JUNO: The countdown started. And the whole world... went a little bit crazy.
+
+=== TAKE 04 · SC 04 ПОСЛЕДНИЙ ДЕНЬ · ~3:06–4:45 · 21 lines · 1529 chars ===
+
+JUNO: Everybody made a list. The "last day" list.
+JUNO: Kids spent the Robux they'd been saving for years.
+JUNO: Every server was full. Every obby had a line. One obby had a line... for the line.
+JUNO: One guy finally read the Terms of Service. All of them. [pause] It took eleven hours. He said the ending was disappointing.
+JUNO: Even our math teacher canceled the test... so he could finish his tycoon.
+STREAMER: [hyped, screaming] Chat! This is the last stream EVER! I will not blink! I will not sleep! [pause] I will not... [yawns] ...okay, maybe one nap.
+DAD: [serious, emotional] Kids. Sit down. I need to tell you something.
+DAD: [ashamed] I'm level nine hundred... in a fishing game.
+JUNO: [shocked] Dad! You said video games rot your brain!
+DAD: [defensive] It's not a game! It's RELAXING! [voice cracking] And tonight... I was finally going to catch the Golden Fish!
+JUNO: Even Mom had a list.
+JUNO: [deadpan] She said she was taking a bath. [pause] For six hours.
+DEX: [stressed] I have every badge in Roblox... except one. The secret one. The "Touch Grass" badge.
+DEX: [frustrated] Nobody knows how to get it! I searched every map! Every cave! Every... grass texture!
+PIP: [sad, tiny] Goodbye, Mister Elevator Man. You were the best elevator man.
+PIP: [sad, small] Ding. [pause] Ding. [pause] ...Ding.
+JUNO: [determined] And me? I had one thing on my list. Finish Bubble Island. Before the world forgot it ever existed.
+DEX: [confused] Juno... I just fell through the whole world.
+JUNO: [quickly] That's not a bug. That's... the secret underwater level.
+DEX: [deadpan] There's no water. It's just grey. Forever.
+JUNO: [defeated] ...It's a very secret level.
+
+=== TAKE 05 · SC 05 ГЛЮК · ~4:45–6:07 · 21 lines · 1325 chars ===
+
+JUNO: [tired] At midnight, I was almost done. Twelve islands. Three hundred bubbles. One very tired builder.
+JUNO: [uneasy] Then my game started... lagging.
+LAG: [slow, deep, glitchy] Mmm... bub... bub... bubbles.
+JUNO: [startled] Who said that?!
+LAG: [slow, deep, glitchy] I... am... [long pause] ...the LAAAG.
+LAG: [hungry, slow] More players... more... rushing... more... FOOD.
+JUNO: [brave, shaky] Get out of my game! This is MY game!
+LAG: [slow, mocking] Your... game... has... three... visits. [pause] Nobody... will... miss... it.
+JUNO: [hurt, quiet] ...Rude.
+JUNO: [whispering, scared] And then my cat... lagged. In REAL LIFE.
+GRANDPA: [grave, quiet] So. He's back.
+JUNO: [shocked] Grandpa?! You KNOW about the lag monster?!
+GRANDPA: [serious] Juno... for thirty years, I was the night janitor... at the Server Farm.
+GRANDPA: [proud, mysterious] The place where all of Roblox lives.
+JUNO: [stunned] So the hundred keys...
+GRANDPA: [proud] Ninety-nine of them open the Server Farm. [pause] One opens my locker. There's a sandwich in there from nineteen ninety-eight.
+GRANDPA: Back then, the Lag was tiny. I'd shoo him away with my mop. But he feeds on traffic. The more everyone rushes at once... the bigger he gets.
+JUNO: [realizing] And today... the whole world is rushing at once.
+GRANDPA: That's why they're shutting it all down. To starve him. Forever.
+JUNO: [determined] So if we stop the Lag... Roblox doesn't have to shut down?
+GRANDPA: [grinning] Get your helmet, builder.
+
+=== TAKE 06 · SC 06 ДОРОГА · ~6:07–7:15 · 23 lines · 1170 chars ===
+
+JUNO: At six a.m., we had a van, a key... and a team.
+DEX: [scared] No way. Real life has no respawn, no checkpoints, and no mini-map!
+JUNO: [calm] It has snacks.
+DEX: [pause] ...I'm in.
+PIP: [cheerful] Ding!
+JUNO: [sighs] And a stowaway.
+JUNO: The closer we got to the Server Farm... the laggier the world became.
+DEX: [nervous, whispering] Juno. That cow is... loading.
+GRANDPA: [cheerful] Don't worry! Betsy hasn't gone over forty miles an hour since nineteen ninety-eight!
+DEX: [deadpan] Did we just... lag backwards?
+SYSTEM: [robotic, glitchy] Recalculating. Recalculating. Re... re... recalculating.
+JUNO: [laughs] Twelve hours left. And we were going backwards.
+GRANDPA: [serious] The Lag lives in the Core. The very bottom floor. Nobody's been down there in years.
+JUNO: And when we get there... what's the plan?
+GRANDPA: [cheerful] I was hoping you had one. You're the builder.
+JUNO: [deadpan] Great. Great plan, Grandpa.
+JUNO: We stopped for gas. [pause] The cashier was... buffering.
+GRANDPA: [polite] One coffee, please.
+DEX: [whispering] Is he okay?
+CASHIER: [fast, glitchy] That'll-be-two-dollars-have-a-nice-day-have-a-nice-day-have-a-nice-day.
+PIP: [whiny, tiny] Are we there yet? [pause] Ding?
+GRANDPA: [chuckles, warm] Not yet, little elevator.
+DEX: [quiet, surprised] Huh. The graphics out here are... actually really good.
+
+=== TAKE 07 · SC 07 СЕРВЕРНАЯ ФЕРМА · ~7:15–8:03 · 16 lines · 911 chars ===
+
+JUNO: [awed] The Server Farm. Every game. Every avatar. Every obby ever made. All in one building.
+GRANDPA: [nostalgic, warm] Thirty years... and she hasn't changed a bit.
+GRANDPA: [offended] Expired?! I mopped these floors for thirty years!
+MODBOT: [robotic, stern] Intruders detected! Leave now, or you will be... beep beep beep beep!
+DEX: [scared] Did that robot just get chat-filtered?!
+GRANDPA: [fake robot voice, badly] Beep. Boop. I am... also a robot. Nothing to see here.
+MODBOT: [robotic, suspicious] ...Welcome, colleague.
+DEX: [whispering, amazed] That should NOT have worked.
+DEX: [sneezing] Ah... ah... ACHOO!
+MODBOT: [robotic, alarmed] Intruders! Intruders! Beep beep beep!
+JUNO: [panicked] A service elevator with four hundred buttons! Nobody knows which one—
+PIP: [calm, expert] Basement nine. Then up two. Then hold "close door" for three seconds.
+PIP: [proud] Ding!
+JUNO: [amazed] Forty-one thousand elevator rides... and they finally paid off.
+GRANDPA: [impressed, warm] That's my grandson.
+PIP: [whispering] Ding.
+
+=== TAKE 08 · SC 08 ВНУТРИ · ~8:03–9:11 · 19 lines · 1098 chars ===
+
+JUNO: Floor one. The Cooling Room. Where the servers chill out.
+DEX: [screaming] No respawn! No respawn! NO RESPAWN!
+GRANDPA: [cheerful] Thirty years of mopping, kid! Bend your knees!
+PIP: [giggling] Ding!
+JUNO: Floor two. The Cable Jungle.
+DEX: [scared] Juno, I can't. That's a real gap. With real... falling.
+JUNO: [warm] Dex. Look at it. Platforms. Swinging ropes. A gap. [pause] What does that look like?
+DEX: [slowly realizing] ...It's an obby. [excited] It's just an OBBY!
+DEX: [hyped] Twelve thousand hours of practice, BABY!
+JUNO: Floor two and a half. The Lost and Found. Every item anyone ever lost in a game.
+DEX: [gasps, excited] My first sword! I lost it in third grade!
+PIP: [happy] Ding!
+JUNO: [awed, whispering] Floor three. The Archive.
+GRANDPA: [warm] Every game anyone ever made... is kept here. Every single one.
+JUNO: [touched] Even mine.
+GRANDPA: [gentle] Especially yours. Every world someone builds with love... gets a shelf.
+JUNO: [quiet] I always thought my game didn't matter. Three visits. [pause] But somebody kept it anyway.
+GRANDPA: [warm] A game doesn't need a million visits to matter, Juno. It just needs someone who made it.
+JUNO: [scared] But at the end of the hall... the bubbles were turning grey.
+
+=== TAKE 09 · SC 09 ЛАГ · ~9:11–10:13 · 18 lines · 1050 chars ===
+
+LAG: [booming, slow, glitchy] More... players... more... rushing... MORE... FOOD.
+JUNO: [whispering] Every player on Earth was rushing to play one last game. And every one of them... was feeding him.
+DEX: [cocky] Stand back. I've beaten every boss in Roblox.
+JUNO: Dex, wait—
+DEX: [muffled, groans] ...Real life is SO badly designed.
+LAG: [laughing slowly, glitchy] Ha. [pause] Ha. [pause] Ha. [pause] Ha.
+LAG: [slow, booming] Tomorrow... no more... games. No more... obbies. No more... elevators.
+PIP: [angry, tiny] ...Not the elevator.
+JUNO: [determined] My turn. I'm a BUILDER!
+LAG: [slow, mocking] Wall... not... loaded.
+JUNO: [annoyed] Oh, come ON!
+SYSTEM: [calm, robotic] Shutdown in five minutes. Thanks for playing! Smiley face.
+GRANDPA: [shocked] My mop! He ate my MOP!
+JUNO: [thinking out loud] Grandpa... you said he eats traffic. Everybody rushing at once.
+JUNO: [slowly, realizing] What if there was NO traffic? Not forever. Just for... ten seconds?
+GRANDPA: [realizing] If every single player logged off at the same time... he'd have nothing to eat.
+DEX: [disbelief] Juno! Nobody logs off! Not on the LAST DAY!
+JUNO: [determined] Then we ask. Everyone. At once.
+
+=== TAKE 10 · SC 10 ПОСЛАНИЕ · ~10:13–11:14 · 15 lines · 864 chars ===
+
+LAG: [slow, deep, glitchy] One... min... min... minute... left.
+JUNO: [shouting] Pip! Press the button!
+PIP: [cheerful, tiny] Ding!
+JUNO: [nervous, then sincere] Um. Hi. I'm Juno. I'm eleven. I'm... a builder.
+JUNO: I know it's the last day. I know you want to play every single second. Me too.
+JUNO: But there's a monster eating our servers. And he eats when we all rush.
+JUNO: [sincere] We can play tomorrow. And the day after. But only if we stop... right now.
+JUNO: [softly, sincere] So please... just for ten seconds... put down your phone. Log off. [pause] And look up.
+STREAMER: [quiet, sincere] Chat... I'll be right back.
+JUNO: [softly] And then... one by one... the world logged off.
+SYSTEM: [robotic] Players online: eight hundred million...
+SYSTEM: [robotic] Ten million... ten thousand... ten...
+LAG: [panicking, slow] No... no... come... back... play... one... more...
+SYSTEM: [quiet] Players online... zero.
+DEX: [whispering, amazed] ...The Touch Grass badge.
+
+=== TAKE 11 · SC 11 ДЕСЯТЬ СЕКУНД · ~11:14–11:37 · 9 lines · 407 chars ===
+
+LAG: [tiny, cute, high-pitched] ...hi.
+SYSTEM: [surprised, robotic] Lag... not found. [pause] Shutdown... canceled!
+SYSTEM: [cheerful] Thanks for playing! Smiley face.
+JUNO: [laughing, crying] We did it! We actually DID it!
+GRANDPA: [proud, warm] Ten seconds. That's all the world needed.
+DEX: [running, excited] Juno! I touched grass! I TOUCHED GRASS!
+JUNO: [laughing] We know, Dex. We know.
+PIP: [whispering] Can I keep him?
+JUNO: [pause] ...Fine. But you're feeding him.
+
+=== TAKE 12 · SC 12 ПОСЛЕ · ~11:37–12:46 · 14 lines · 1006 chars ===
+
+ANCHOR: [cheerful] Good morning! Roblox is staying! Scientists are calling it "The Great AFK": the first time in history... the whole world went outside at the same time.
+ANCHOR: [pause] Everyone agrees it was weird. [pause] And kind of nice.
+DAD: [crying happily] It was worth the wait!
+DEX: [proud] Ten minutes of real life a day. [pause] Still no respawn. But the graphics are amazing.
+JUNO: [happy, amazed] And Bubble Island? Three visits... became three MILLION.
+JUNO: [proud] Oh, and I finally finished it. Now the bubbles pop.
+JUNO: Pip rode a real elevator for the first time. [pause] He gave it two stars. Too slow.
+PIP: [disappointed] ...Ding.
+JUNO: And Mom finally finished her bath. [pause] She was a little wrinkly.
+GRANDPA: [cheerful] They gave me my old job back! Night janitor! [pause] Best job in the world.
+JUNO: [warm] And now, every year, on the same day... we all log off for ten seconds. [pause] Just to say hi to the real world.
+PIP: [proud] His name is Buffer.
+DAD: [annoyed, glitchy] Juno... why... is... the... Wi... Wi... Wi-Fi...
+JUNO: [to camera, deadpan] ...Here we go again.
+
+=== TAKE 13 · SC 13 АУТРО · ~12:46–13:01 · 3 lines · 235 chars ===
+
+JUNO: [warm, to camera] So... what would YOU do if Roblox had only twenty-four hours left? Tell me in the comments!
+JUNO: And hey... maybe log off for ten seconds today. Look up. [pause] Then come right back and watch another video!
+PIP: [cheerful] Ding!
+
+=== END ===
