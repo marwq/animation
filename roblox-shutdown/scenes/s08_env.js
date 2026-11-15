@@ -22,6 +22,9 @@ function shakeAll(cam, t, list) {
 // rotate + slightly overscale the whole frame (dutch angle) so no corner shows
 const dutch = (svg, deg, cx = 960, cy = 540) => (Math.abs(deg) < 0.01 ? svg : S.g(svg, `translate(${cx} ${cy}) rotate(${f(deg)}) scale(${f(1 + Math.abs(deg) * 0.012)}) translate(${-cx} ${-cy})`));
 const glow = (x, y, r, id, op = 1) => (op > 0.003 ? S.circle(x, y, r, { fill: `url(#${id})`, opacity: f(clamp(op, 0, 1)) }) : '');
+// cheap soft light: three flat translucent discs (large radial gradients are slow to rasterise)
+const GLOW_COL = { s08warm: '#FFD98A', s08cyan: '#7CF0FF', s08gold: '#FFE27A', s08neon: '#FF9BE0' };
+const soft = (x, y, r, id, op = 1) => (op > 0.003 ? [1, 0.68, 0.4].map((k) => S.circle(x, y, r * k, { fill: GLOW_COL[id] || id, opacity: f(clamp(op, 0, 1) * 0.13) })).join('') : '');
 
 // ---------------------------------------------------------------- defs
 const DEFS = `<defs>
@@ -118,7 +121,6 @@ function liftFront(t, o = {}) {
   let back = S.rect(x0, y0, x1 - x0, floor - y0 + 20, 0, { fill: 'url(#farmWoodPanel)' }) + S.rect(x0, y0, x1 - x0, 70, 0, { fill: '#FFF4C8', opacity: 0.95 });
   back += S.rect(x0 + 60, y0 + 120, x1 - x0 - 120, 210, 10, ol('#BFE3F2', 5)) + S.path(`M${x0 + 160} ${y0 + 330} L${x0 + 260} ${y0 + 120} L${x0 + 310} ${y0 + 120} L${x0 + 210} ${y0 + 330} Z`, { fill: '#FFFFFF', opacity: 0.35 });
   back += S.rect(x0, y0 + 380, x1 - x0, 16, 6, ol('#E0B84A', 4)) + S.rect(x0, floor - 40, x1 - x0, 60, 0, { fill: 'url(#farmCheck)' });
-  back += S.circle(960, y0 + 120, 380, { fill: 'url(#s08warm)', opacity: 0.6 });
   // icy wall around the opening (evenodd hole)
   let front = '';
   const cid = S.uid('s08lf');
@@ -224,7 +226,6 @@ function shaftDown(t, o = {}) {
     const bx = vx + (px - vx) * fz / z, by = vy + (py - vy) * fz / z, r = 30 * fz / z;
     if (r > 1.2) o2 += S.g(S.path('M-10 -17 L10 -17 L20 0 L10 17 L-10 17 L-20 0 Z', ol('#C9D2E0', 5)) + S.circle(0, 0, 7, { fill: LINE }), `translate(${f(bx)} ${f(by)}) rotate(${f(bolt * 720)}) scale(${f(r / 20)})`);
   }
-  o2 += S.rect(-200, -200, 2320, 1480, 0, { fill: 'url(#s08dark)', opacity: 0 });
   // near edge: the ledge lip with hazard stripes + Dex's toes over it
   let near = S.path('M-200 820 L2120 820 L2120 1300 L-200 1300 Z', { fill: '#5A6A9A', stroke: LINE, 'stroke-width': 8 }) + S.rect(-200, 820, 2320, 34, 0, { fill: 'url(#farmHazard)' }) + S.path('M-200 820 L2120 820', ln(8)) + S.rect(-200, 880, 2320, 420, 0, { fill: 'url(#farmRack)', opacity: 0.5 });
   if (toes > 0) {
@@ -507,7 +508,7 @@ function visitIcons(x, y, t, times, s = 1) {
 }
 // one bubble draining to grey: colour version under a grey version with opacity k, crack growing
 function drainingBubble(x, y, r, t, k, kind = 'castle', seed = 2, crack = 0) {
-  let o = FM.gameBubble(x, y, r, t, { kind, glow: 0.8 * (1 - k), seed, bob: false });
+  let o = FM.gameBubble(x, y, r, t, { kind, glow: 0, seed, bob: false });
   if (k > 0) o += S.g(FM.gameBubble(x, y, r, t, { kind, grey: 1, crack: 0, seed, bob: false }), null, { opacity: f(clamp(k, 0, 1)) });
   if (crack > 0) {
     const g = clamp(crack, 0, 1);
@@ -518,7 +519,7 @@ function drainingBubble(x, y, r, t, k, kind = 'castle', seed = 2, crack = 0) {
 }
 
 module.exports = {
-  DEFS, tf, TS, TFS, pop, at, shakeAll, dutch, glow, ding, liftPOV, POV, liftFront, LF, shaftDown,
+  DEFS, tf, TS, TFS, pop, at, shakeAll, dutch, glow, soft, ding, liftPOV, POV, liftFront, LF, shaftDown,
   SIM, dexAt, dexSwingPose, makeWarp, DS, HANDY, RUN, chalk, chalkEllipse, chalkLabel, chalkArrowHead, obbyHud, iceGlass, lowAngleSky,
   swordHeld, visitIcons, drainingBubble,
 };

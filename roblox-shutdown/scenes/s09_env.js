@@ -128,7 +128,7 @@ function lagAura(t, x, y, size, k = 1, seed = 0, n = 9) {
     const rr = size * (330 + hash(i * 5.3 + seed) * 150);
     const wx = x + Math.cos(a) * rr * 1.25, wy = y + Math.sin(a) * rr * 0.75;
     const r = size * (12 + hash(i * 2.2 + seed) * 18);
-    o += CI(wx, wy, r * 1.5, { fill: '#2A2F3C', opacity: 0.35 }) + K.loadingWheel(wx, wy, r, st + i * 0.13, '#D6DBE4', 8, null, 1.3);
+    o += CI(wx, wy, r * 1.5, { fill: '#2A2F3C', opacity: f(0.35 * k) }) + K.loadingWheel(wx, wy, r, st + i * 0.13, k < 1 ? mix('#2A2F3C', '#D6DBE4', k) : '#D6DBE4', 8, null, 1.3);
   }
   let blocks = '';
   const step = Math.floor(t * 7);
@@ -137,8 +137,8 @@ function lagAura(t, x, y, size, k = 1, seed = 0, n = 9) {
     const bs = size * (18 + hash(i + step) * 30);
     blocks += `M${f(bx)} ${f(by)}h${f(bs)}v${f(bs)}h${f(-bs)}Z`;
   }
-  o += P(blocks, { fill: '#8A93A6', opacity: 0.55 });
-  return G(o, null, k < 1 ? { opacity: f(k) } : {});
+  o += P(blocks, { fill: '#8A93A6', opacity: f(0.55 * k) });
+  return o;
 }
 // cubic bezier sample
 function bez(p0, p1, p2, p3, u) {
@@ -473,8 +473,6 @@ function shotMinute(t, id, o = {}) {
   const gl = 0.2 + 0.6 * (bump(t, w1, w1 + 0.3) + bump(t, w2, w2 + 0.3) + bump(t, w3, w3 + 0.3));
   mid += lagSprite(tt, { x: 960, y: LY, size: LS, mood: t > w4 ? 'angry' : 'hungry', glitch: clamp(gl, 0, 1), look: [0, 0.55], mouth: V.viseme('LAG', t) });
   let out = la.bg + K.view(cam, mid, 1) + la.fg;
-  // ghosted RGB echo on the stutters
-  if (bump(t, w2, w2 + 0.2) > 0.1) out = K.ghost(out, 14 * bump(t, w2, w2 + 0.2), 0.3);
   out += flashAt(t, l.a - 0.08, 0.5);
   return out;
 }

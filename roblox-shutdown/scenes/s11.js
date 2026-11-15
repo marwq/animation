@@ -34,7 +34,7 @@ const b6 = b5 + 1.15;                               // the Archive: colour comes
 const b7 = M[3].a - 0.1;                            // "We did it!"
 const b8 = M[4].a - 0.15;                           // Grandpa: "Ten seconds."
 const b9 = M[5].a - 0.1;                            // Dex runs in with grass
-const tTouched = M[5].word('TOUCHED').t0;
+const tTouched = M[5].word('TOUCHED', 1).t0;
 const b10 = M[6].a - 0.25;                          // "We know, Dex."
 const b11 = M[7].a - 0.1;                           // Pip: "Can I keep him?"
 const b12 = M[8].a - 0.1;                           // "...Fine. But you're feeding him."
@@ -104,7 +104,7 @@ function shotHall(t) {
 // B6: the Archive — the grey bubbles get their colour back; Bubble Island shines
 function shotArchive(t) {
   const u = seg(t, b6, b7);
-  const cam = { zoom: lerp(1.1, 1.3, ease.inOut(u)), x: lerp(200, 30, ease.inOut(u)), y: 120 };
+  const cam = { zoom: lerp(1.15, 1.4, ease.inOut(u)), x: lerp(220, 30, ease.inOut(u)), y: lerp(10, 70, ease.inOut(u)) };
   const Ly = F.archive(t, cam, { greyFrom: lerp(0.33, 1.05, ease.inOut(seg(t, b6, b7 - 0.2))), glow: 1 });
   let o = Ly.bg + Ly.mid + Ly.fg + (Ly.light || '');
   const J = F.ARCHIVE.juno;
@@ -174,7 +174,7 @@ function shotKeep(t) {
   for (let i = 0; i < 9; i++) o += CI(hash(i * 3.7) * 1920, hash(i * 5.1) * 900, 40 + hash(i) * 70, { fill: '#46F58C', opacity: f(0.08 + 0.06 * Math.sin(t * 1.5 + i)) });
   const z = lerp(1, 1.06, u);
   let g = who('pip', t, { x: 960, y: 1186, s: 1.6, turn: 0, armL: -22, armR: -22, face: { name: 'cute', eyes: { look: [0, 0.6] } }, shadow: false }, { arms: false, energy: 0.3 });
-  g += LG.buffer({ x: 960, y: 868, s: 1.45, t, mood: t > M[7].word('keep').t0 ? 'love' : 'happy', look: [0, -1], blink: bump(t, b11 + 0.4, b11 + 0.55) });
+  g += LG.buffer({ x: 960, y: 880, s: 1.8, t, mood: t > M[7].word('keep').t0 ? 'love' : 'happy', look: [0, -1], blink: bump(t, b11 + 0.4, b11 + 0.55) });
   o += G(g, `translate(960 540) scale(${f(z)}) translate(-960 -540)`);
   return o;
 }

@@ -17,7 +17,7 @@ const LAG = require('../rig/lag');
 
 const START = K.V.TL.scenes['SC 08'].start, END = K.V.TL.scenes['SC 09'].start;
 const l = (i) => L('08.' + i);
-const { at, pop, shakeAll, dutch, glow, ding } = E;
+const { at, pop, shakeAll, dutch, glow, soft, ding } = E;
 const J = FM.JUNGLE;
 
 // ---------------------------------------------------------------- beats (all from the voice)
@@ -310,19 +310,19 @@ function shotJungleOpen(t) {
 // B2: Dex close-up at the edge, dutch angle — "Juno, I can't."
 function shotDexScared(t) {
   const cam = camKeys(t, [[cB2, at(275, 505, 2.3)], [cB3, at(290, 510, 2.45)]]);
+  cam.sx = 6 * Math.sin(t * 2.1); cam.sy = 4 * Math.sin(t * 2.9);
   const Ly = FM.cableJungle(t, cam, {});
   let w = '';
   const no = t > tCant ? Math.sin((t - tCant) * 16) * 9 * (1 - seg(t, tCant, tCant + 0.8)) : 0;
   w += actor('juno', t, { x: -40, y: J.start.y, s: 0.42, turn: 0.6, armL: 14, armR: 40, face: { name: 'neutral', eyes: { look: [0.9, 0.1] } } }, { arms: false });
   w += actor('dex', t, { x: 280 + shiver(t, 0.8, 1), y: J.start.y, s: 0.42, turn: -0.35, armL: 148, armR: 152, headRot: no, bodyY: 6 * Math.abs(Math.sin(t * 25)), face: { name: 'scared', eyes: { look: [-0.7, 0.3] } } }, { arms: false, energy: 0.6 });
   let o = Ly.bg + Ly.mid + view(cam, w, 1) + Ly.fg + Ly.light;
-  return dutch(o, lerp(-8, -5, seg(t, cB2, cB3)));
+  return o;
 }
 // B3: POV straight down the shaft, dolly zoom, a bolt falls — "That's a real gap. With real... falling."
 function shotShaft(t) {
   const fz = lerp(1, 1.75, ease.inOut(seg(t, cB3 + 0.05, tGap1 + 0.6))) + 0.12 * seg(t, tFalling, cB4);
   let o = E.shaftDown(t, { fz, bolt: t - (tReal2 + 0.05), toes: 1, tremble: 1 });
-  o += S.rect(0, 0, 1920, 1080, 0, { fill: 'url(#s08vigCold)' });
   o += K.bang('...tink', 1180, 520, bump(t, tFalling + 0.62, cB4 + 0.1), 34, 6, '#9FB6E0');
   o += flash(t, cB3, 0.3);
   return dutch(o, 5 * Math.sin(t * 1.3));
@@ -365,7 +365,7 @@ function shotJunoAsk(t) {
   let w = '';
   w += actor('juno', t, { x: 60, y: J.start.y, s: 0.42, turn: 0.35, armR: 55, armL: 18, headRot: 6, face: { name: 'happy', brows: { L: [-34, -20], R: [-10, -2] }, eyes: { look: [0.8, 0] } } }, { arms: false, energy: 0.5 });
   w += actor('dex', t, { x: 330, y: J.start.y, s: 0.42, view: 'side', flip: false, armL: -8, armR: -8, face: { name: 'nervous' } }, { arms: false });
-  let o = Ly.bg + glow(700, 520, 900, 's08warm', 0.45) + Ly.mid + view(cam, w, 1) + Ly.fg + Ly.light;
+  let o = Ly.bg + soft(760, 470, 520, 's08warm', 0.8) + Ly.mid + view(cam, w, 1) + Ly.fg + Ly.light;
   o += K.F.sparkle(820, 380, 26 * bump(t, cB6 - 0.7, cB6 - 0.2));
   return o;
 }
@@ -392,7 +392,7 @@ function shotRealize(t) {
   }
   // neon light on his face (no foreground cables over the close-up)
   let o = Ly.bg + Ly.mid + view(cam, w, 1) + (pull < 0.5 ? '' : Ly.fg) + Ly.light;
-  if (obbyK > 0 && pull < 0.5) o += glow(1200, 520, 700, 's08neon', 0.35 * obbyK);
+  if (obbyK > 0 && pull < 0.5) o += soft(1250, 470, 520, 's08neon', 0.9 * obbyK);
   // the transform wave: a ring of pixels sweeping out from his eyes
   const wk = seg(t, tObby - 0.05, tObby + 0.5);
   if (wk > 0 && wk < 1) {
@@ -473,7 +473,6 @@ function shotLand(t) {
   w += actor('dex', t, { x: lx, y: J.end.y, s: E.DS, turn: 0.25, bodyY: 200 * crouch * (1 - up), legL: 26, legR: 22, armL: lerp(60, 165, up), armR: lerp(18, 168, up), sy: 1 - 0.1 * crouch, sx: 1 + 0.08 * crouch, face: { name: 'excited' }, headRot: -6 * up }, { arms: false });
   let o = Ly.bg + Ly.mid + view(cam, w, 1) + Ly.light;
   o += K.confetti(t, cB9 + 0.1, 50, 4);
-  o = dutch(o, -6);
   o += E.obbyHud(t, 1, { clear: seg(t, cB9 + 0.15, cB9 + 0.45) });
   o += flash(t, cB9, 0.5);
   return o;
@@ -544,7 +543,7 @@ function shotSword(t) {
   const raise = ob(seg(t, tSword - 0.25, tSword + 0.05));
   const hug = seg(t, tThird - 0.4, tThird - 0.1);
   let w = '';
-  w += S.circle(720, 520, 520, { fill: 'url(#s08gold)', opacity: f(0.6 * raise) });
+  w += soft(740, 560, 420, 's08gold', 1.2 * raise);
   const armR = hug > 0 ? lerp(170, -30, hug) : lerp(30, 170, raise);
   const armL = hug > 0 ? lerp(40, -24, hug) : lerp(30, 40, raise);
   const hp = A.hand(armR, 1);
@@ -631,7 +630,7 @@ function shotEvenMine(t) {
   const reach = seg(t, tMine - 0.35, tMine + 0.25);
   let w = actor('juno', t, { x: 835, y: fl, s: 0.42, turn: 0.62, bodyY: 160, armR: lerp(20, 88, reach), armL: 16, face: { name: 'happy', eyes: { look: [0.9, 0.5], pupil: 1.5 }, fx: t > tMine ? ['blush'] : [] } }, { arms: false, energy: 0.3 });
   let o = Ly.bg + Ly.mid + view(cam, w, 1) + Ly.fg + Ly.light;
-  o += glow(1060, 700, 520, 's08cyan', 0.45) + glow(700, 470, 420, 's08warm', 0.22);
+  o += soft(1060, 700, 380, 's08cyan', 0.9);
   return o;
 }
 // the label card that stays on the shelf when Juno holds her bubble (world space)
@@ -661,7 +660,6 @@ function shotEspecially(t) {
   const lookUp = seg(t, cD4 + 0.6, cD4 + 1.0);
   w += junoHolding(t, 900, { face: { name: 'happy', mouth: 'smallSmile', eyes: { look: [lerp(0, 0.8, lookUp), lerp(0.7, -0.2, lookUp)] } } });
   let o = Ly.bg + Ly.mid + view(cam, w, 1) + Ly.fg + Ly.light;
-  o += glow(760, 640, 560, 's08warm', 0.2);
   return o;
 }
 // D5: Juno close — "I always thought my game didn't matter. Three visits. ... But somebody kept it anyway."
@@ -672,7 +670,7 @@ function shotJunoQuiet(t) {
   const face = smile > 0.3 ? { name: 'happy', mouth: K.V.talking('JUNO', t) ? undefined : 'smile', fx: ['tears', 'blush'], eyes: { look: [0.2, 0.6] } } : { name: 'sad', eyes: { look: [0.1, 0.8] } };
   let w = junoHolding(t, 900, { face, turn: 0.15, headRot: -4 + 3 * Math.sin(t * 0.8) });
   let o = Ly.bg + Ly.mid + view(cam, w, 1) + Ly.fg + Ly.light;
-  o += glow(900, 870, 520, 's08cyan', 0.25 + 0.2 * smile);
+  o += soft(900, 820, 420, 's08cyan', 0.6 + 0.5 * smile);
   o += E.visitIcons(1450, 400, t, [tThree, tThree + 0.2, tVisits + 0.1], 1.25);
   return o;
 }
@@ -686,7 +684,7 @@ function shotSomeone(t) {
   let w = junoHolding(t, 900, { face: { name: 'happy', mouth: 'smallSmile', fx: pat > 0.5 ? ['blush'] : [], eyes: { look: [0.8, -0.6] } }, turn: 0.35, bodyY: 150 - tap * 2 });
   w += actor('grandpa', t, { x: 1050, y: fl, s, turn: -0.55, bodyY: 80, armL: lerp(30, 150, pat), armR: 20, keysSwing: 3 * Math.sin(t * 2), face: { name: 'happy', eyes: { look: [-0.8, 0.2] } } }, { arms: false, energy: 0.5 });
   let o = Ly.bg + Ly.mid + view(cam, w, 1) + Ly.fg + Ly.light;
-  o += glow(1150, 400, 700, 's08warm', 0.25);
+  o += soft(1150, 420, 520, 's08warm', 0.7);
   const sk = bump(t, tSomeone, tSomeone + 0.8);
   if (sk > 0) o += K.F.sparkle(740, 330, 30 * sk) + K.F.sparkle(820, 260, 18 * sk);
   return o;
@@ -707,7 +705,7 @@ function shotGreyHall(t) {
   const gang = [['dex', 760 - 40 * back, 0], ['pip', 1080 + 60 * back, -0.02], ['juno', 960, 0], ['grandpa', 1180, 0]];
   for (const [n, x, dz] of gang) w += actor(n, t, { x, y: 1060 + (n === 'pip' ? 10 : 0), s: 0.44 + dz, view: 'back', headRot: n === 'juno' ? -6 * back : 4 * Math.sin(t + x), bodyY: n === 'dex' ? 20 * back : 0, armL: n === 'pip' ? 12 + 50 * back : 12, armR: n === 'grandpa' ? 25 : 12, props: n === 'grandpa' ? [grandpaMop()] : [], shadow: false }, { arms: false });
   o += w;
-  o += S.rect(0, 0, 1920, 1080, 0, { fill: 'url(#s08greyCreep)', opacity: f(0.15 + 0.4 * u) });
+  o += S.rect(0, 0, 1920, 1080, 0, { fill: '#7C8494', opacity: f(0.08 + 0.2 * u) });
   return o;
 }
 // D8: one bubble on the shelf drains to grey and cracks — "...the bubbles were turning grey."
@@ -720,7 +718,7 @@ function shotGreyBubble(t) {
   const drain = ease.inOut(seg(t, tGrey - 0.7, tGrey + 0.25));
   const crack = seg(t, tGrey + 0.05, tGrey + 0.35);
   const lift = Math.max(0, t - tGrey - 0.5);
-  o += glow(960, 560, 400, 's08cyan', 0.5 * (1 - drain));
+  o += soft(960, 560, 330, 's08cyan', 1.2 * (1 - drain));
   o += S.ellipse(960, 762, 150, 30, ol(drain > 0.5 ? '#9AA3B2' : '#E0B84A', 6));
   o += S.g(E.drainingBubble(960, 560 - lift * 110, 190, t, drain, 'castle', 2, crack), `rotate(${f(lift * 14)} 960 560)`);
   o += S.rect(0, 0, 1920, 1080, 0, { fill: '#5A6070', opacity: f(0.18 * drain) });

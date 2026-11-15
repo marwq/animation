@@ -122,7 +122,7 @@ function shotWall(t) {
   // the broadcast ripple from the centre
   const rk = seg(t, tLand + 0.3, tLand + 1.2);
   if (rk > 0 && rk < 1) o += CI(960, 540, 100 + rk * 1400, { fill: 'none', stroke: '#FFE14D', 'stroke-width': 30 * (1 - rk), opacity: f(1 - rk) });
-  if (n === 4) o += G(T('EVERY SCREEN IN THE WORLD', 0, 0, 64, '#FFE14D', OUT(10)), 'translate(960 120) rotate(-3)', { opacity: f(seg(t, tHi + 0.1, tHi + 0.3)) });
+  if (n === 4) o += G(R(-560, -62, 1120, 96, 30, { fill: '#14101E', opacity: 0.8 }) + T('EVERY SCREEN IN THE WORLD', 0, 8, 64, '#FFE14D', OUT(10)), `translate(960 540) rotate(-3) scale(${f(pop(seg(t, tHi + 0.1, tHi + 0.35)))})`);
   void u;
   return o;
 }
@@ -274,8 +274,8 @@ function shotClass(t) {
   const cam = camAt(1150, 600, 1.4);
   const look = seg(t, tCls + 0.7, tCls + 1.0);
   const fig = K.actor('teacher', t, { ...SETS.SPOTS.classroom.teacher, turn: lerp(0.3, -0.6, look), armL: off ? 20 : 40, armR: off ? 20 : 30, face: look > 0.5 ? { name: 'happy', eyes: { look: [-1, -0.5] } } : { name: 'sad', eyes: { look: [0.3, 0.8] } }, shadow: false });
-  const lid = 1 - ease.inOut(seg(t, tCls + 0.25, tCls + 0.6));
-  const lap = E.laptop2(1060, 745, 0.36, (w, h) => E.junoFeed(t, w, h, { tag: false }), lid, t);
+  const lid = 1 - ease.inOut(seg(t, tCls + 0.3, tCls + 0.65));
+  const lap = E.laptop2(1250, 760, 0.5, (w, h) => E.junoFeed(t, w, h, { tag: false }), lid, t);
   return K.view(cam, (CL.bg || '') + CL.mid + fig + CL.fg + lap + (CL.light || ''), 1);
 }
 function shotBus(t) {
@@ -294,8 +294,8 @@ function shotGran(t) {
   o += R(470, 380, 800, 760, 110, ol('#C04A6A', 8)) + R(520, 430, 700, 600, 90, { fill: '#D85A7A' });
   const close = seg(t, tGran + 0.45, tGran + 0.9);
   const look = seg(t, tGran + 0.95, tGran + 1.3);
-  const tab = G(R(-110, -150, 220, 150, 14, ol('#2A2F3C', 6)) + (close < 0.5 ? G(E.junoFeed(t, 196, 128, { tag: false }), 'translate(0 -75)') : R(-98, -139, 196, 128, 6, { fill: '#C04A6A' })), `translate(${f(870)} ${f(1010)}) scale(1.5 ${f(1.5 * (1 - close * 0.5))})`);
-  o += K.draw.adult(76, { x: 870, y: 1500, s: 0.85, turn: lerp(0, 0.5, look), armL: 60, armR: 60, headRot: -6 * look, face: look > 0.5 ? { name: 'happy', eyes: { look: [1, -0.6] } } : { name: 'happy', eyes: { look: [0, 0.8] } }, shadow: false });
+  const tab = G(R(-110, -150, 220, 150, 14, ol('#2A2F3C', 6)) + (close < 0.5 ? G(E.junoFeed(t, 196, 128, { tag: false }), 'translate(0 -75)') : R(-98, -139, 196, 128, 6, { fill: '#C04A6A' })), `translate(${f(870)} ${f(950)}) scale(1.5 ${f(1.5 * (1 - close * 0.5))})`);
+  o += K.draw.adult(76, { x: 870, y: 1250, s: 0.85, turn: lerp(0, 0.5, look), armL: 60, armR: 60, headRot: -6 * look, face: look > 0.5 ? { name: 'happy', eyes: { look: [1, -0.6] } } : { name: 'happy', eyes: { look: [0, 0.8] } }, shadow: false });
   o += tab;
   o += K.draw.cat ? '' : '';
   o += SETS.cat ? SETS.cat(1500, 860, 0.8, t, { pose: 'sit' }) : '';
