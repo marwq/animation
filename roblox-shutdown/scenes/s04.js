@@ -502,7 +502,7 @@ function shDad4(t) {
   return living(t, cam, sitJuno(t) + sitPip(t), standing);
 }
 function shFish(t) {
-  const cam = camKeys(t, [[c23, at(960, 540, 1.0)], [tFishW, at(1040, 560, 1.1)], [c24, at(1050, 560, 1.13)]]);
+  const cam = camKeys(t, [[c23, at(960, 540, 1.0)], [tFishW, at(980, 550, 1.05)], [c24, at(985, 550, 1.07)]]);
   const jump = seg(t, tGolden - 0.15, tFishW + 0.55);
   let o = view(cam, S.g(X.fishGame(1920, 1080, t, { fish: 1, jump, wink: t > tFishW && t < tFishW + 0.35 ? 1 : 0 }), 'translate(960 540)'), 1);
   o += slideIn(t, c23 + 0.25, listCard(330, 600, 0.55, [{ txt: 'catch the' }, { txt: 'GOLDEN FISH' }], { who: 'DAD', rot: -5 }), -700);
@@ -642,9 +642,10 @@ function pipInBox(t, face, opts = {}) {
   return o;
 }
 function livingNight(t, cam, inner, glow = 1) {
+  // Pip + his box are lit by the tablet: drawn after the night overlay, with a cool tint + glow
   const Ll = SETS.livingRoom.layers(t, { time: 'night', lamp: false, tvOff: true });
-  let o = view(cam, Ll.bg, 0.5) + view(cam, Ll.mid + inner, 1) + view(cam, Ll.light, 1);
-  o += view(cam, S.circle(PIPBOX.x, PIPBOX.y - 400, 300, { fill: 'url(#s04glowBlue)', opacity: f(0.75 * glow) }), 1);
+  let o = view(cam, Ll.bg, 0.5) + view(cam, Ll.mid, 1) + view(cam, Ll.light, 1);
+  o += view(cam, S.circle(PIPBOX.x, PIPBOX.y - 380, 420, { fill: 'url(#s04glowBlue)', opacity: f(0.6 * glow) }) + inner + S.rect(PIPBOX.x - 400, 300, 800, 760, 0, { fill: '#1A2450', opacity: 0.18 }), 1);
   return o;
 }
 function shPip1(t) {

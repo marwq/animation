@@ -149,7 +149,7 @@ function mic(x, y, s, onAir = 1) {
 }
 const LINE = '#151515';
 function junoCU(t, o = {}) {
-  const { s = 1.3, x = 860, headY = 500, face, look, push = [1, 1], warm = 0 } = o;
+  const { s = 1.3, x = 860, headY = 580, face, look, push = [1, 1], warm = 0 } = o;
   let out = micBg(t, warm);
   const fy = headY + 0.95 * 700 * s;
   const z = push[0];
@@ -182,7 +182,7 @@ function shotCU2(t) {
 function shotECU(t) {
   const z = lerp(1.0, 1.1, seg(t, tECU, tDad2));
   const please = M[7].word('please').t0;
-  const face = t > M[7].word('phone').t0 ? { name: 'happy', eyes: { type: 'happy' } } : { name: 'happy', fx: t > please ? ['tears'] : [] };
+  const face = t > M[7].word('phone').t0 ? { name: 'happy', eyes: { type: 'happy' }, fx: ['blush'] } : { name: 'happy', fx: t > please ? ['blush'] : [] };
   return junoCU(t, { s: 1.95, headY: 560, x: 930, face, push: [z, 1], energy: 0.3, warm: 0.6, turn: 0.05 });
 }
 // medium: Juno at the mic, the Lag looming behind the control wall, Grandpa and Pip at the side
@@ -191,11 +191,12 @@ function shotMonster(t) {
   const cam = E.shakes(K.camKeys(t, [[tMon, camAt(3040, 520, 1.15)], [tDad1, camAt(3060, 540, 1.25)]]), t, [[tMonster, 0.5, 8]]);
   const ls = lagSize(t) * 1.15;
   const growl = bump(t, tMonster - 0.1, tMonster + 0.8);
-  const back = lagAura(t, 2600, 260, ls, 1, 5, 8) + lagSprite(t, { x: 2600 + 40 * growl, y: 260, size: ls, mood: growl > 0.2 ? 'angry' : 'hungry', glitch: 0.3 + 0.4 * growl, speak: false, look: [1, 0.6] });
-  let chars = who('grandpa', t, { x: 3360, y: FL, s: 0.46, turn: -0.3, armL: 12, armR: 20, face: 'sad', keys: true }, { arms: false });
+  const lagX = 2330 + 60 * growl + 30 * Math.sin(t * 1.3);
+  let chars = lagAura(t, lagX, 380, ls * 0.9, 1, 5, 8) + lagSprite(t, { x: lagX, y: 380, size: ls * 0.9, mood: growl > 0.2 ? 'angry' : 'hungry', glitch: 0.3 + 0.4 * growl, speak: false, look: [1, 0.3] });
+  chars += who('grandpa', t, { x: 3360, y: FL, s: 0.46, turn: -0.3, armL: 12, armR: 20, face: 'sad', keys: true }, { arms: false });
   chars += who('pip', t, { x: CORE.button.x + 40, y: CORE.button.top - 4, s: 0.42, turn: -0.4, armL: 20, armR: 20, face: { name: 'happy', eyes: { look: [-0.8, 0] } } }, { arms: false });
   chars += who('juno', t, { x: CORE.mic.x - 130, y: FL + 10, s: 0.55, turn: 0.6, armL: 14, armR: 40 + 10 * Math.sin(t * 2) }, { energy: 0.7 }, SOOT);
-  return coreShot(t, cam, { alarm: 1, timer: K.clock(secAt(t)), broadcast: 1 }, chars, { back, backK: 0.8 });
+  return coreShot(t, cam, { alarm: 1, timer: K.clock(secAt(t)), broadcast: 1 }, chars);
 }
 // cutaway: the city watching the billboard
 function shotCity(t) {
@@ -269,11 +270,13 @@ function shotStreamer(t) {
 // ---------------------------------------------------------------- one by one: classroom, bus, grandma
 function shotClass(t) {
   const off = t > tCls + 0.55;
-  const CL = SETS.classroom.layers(t, { laptop: (w, h) => E.junoFeed(t, w, h, { tag: false }), laptopOff: off });
+  const CL = SETS.classroom.layers(t, { laptopOff: true });
   const cam = camAt(1150, 600, 1.4);
   const look = seg(t, tCls + 0.7, tCls + 1.0);
-  const fig = K.actor('teacher', t, { ...SETS.SPOTS.classroom.teacher, turn: lerp(0.3, -0.6, look), armL: off ? 20 : 70, armR: off ? 20 : 60, face: look > 0.5 ? { name: 'happy', eyes: { look: [-1, -0.5] } } : { name: 'sad', eyes: { look: [0.3, 0.8] } }, shadow: false });
-  return K.view(cam, (CL.bg || '') + CL.mid + fig + CL.fg + (CL.light || ''), 1);
+  const fig = K.actor('teacher', t, { ...SETS.SPOTS.classroom.teacher, turn: lerp(0.3, -0.6, look), armL: off ? 20 : 40, armR: off ? 20 : 30, face: look > 0.5 ? { name: 'happy', eyes: { look: [-1, -0.5] } } : { name: 'sad', eyes: { look: [0.3, 0.8] } }, shadow: false });
+  const lid = 1 - ease.inOut(seg(t, tCls + 0.25, tCls + 0.6));
+  const lap = E.laptop2(1060, 745, 0.36, (w, h) => E.junoFeed(t, w, h, { tag: false }), lid, t);
+  return K.view(cam, (CL.bg || '') + CL.mid + fig + CL.fg + lap + (CL.light || ''), 1);
 }
 function shotBus(t) {
   const u = seg(t, tBus, tGran);
@@ -288,11 +291,11 @@ function shotGran(t) {
   o += R(1160, 140, 560, 480, 14, ol('#FFFDF4', 10)) + R(1180, 160, 520, 440, 6, { fill: '#FFB86B' }) + CI(1440, 520, 90, { fill: '#FFF1C4' }) + R(1180, 470, 520, 130, 0, { fill: '#E8805A', opacity: 0.6 }) + P('M1440 160 L1440 600 M1180 380 L1700 380', ln(10, '#FFFDF4'));
   o += R(0, 820, 1920, 260, 0, { fill: '#B87A44' }) + R(0, 820, 1920, 16, 0, { fill: '#8A5530' });
   // armchair back
-  o += R(560, 520, 620, 420, 80, ol('#C04A6A', 8)) + R(600, 560, 540, 300, 60, { fill: '#D85A7A' });
+  o += R(470, 380, 800, 760, 110, ol('#C04A6A', 8)) + R(520, 430, 700, 600, 90, { fill: '#D85A7A' });
   const close = seg(t, tGran + 0.45, tGran + 0.9);
   const look = seg(t, tGran + 0.95, tGran + 1.3);
-  const tab = G(R(-110, -150, 220, 150, 14, ol('#2A2F3C', 6)) + (close < 0.5 ? G(E.junoFeed(t, 196, 128, { tag: false }), 'translate(0 -75)') : R(-98, -139, 196, 128, 6, { fill: '#C04A6A' })), `translate(${f(870)} ${f(860)}) scale(1 ${f(1 - close * 0.5)})`);
-  o += K.draw.adult(76, { x: 870, y: 1240, s: 0.62, turn: lerp(0, 0.5, look), armL: 60, armR: 60, headRot: -6 * look, face: look > 0.5 ? { name: 'happy', eyes: { look: [1, -0.6] } } : { name: 'happy', eyes: { look: [0, 0.8] } }, shadow: false });
+  const tab = G(R(-110, -150, 220, 150, 14, ol('#2A2F3C', 6)) + (close < 0.5 ? G(E.junoFeed(t, 196, 128, { tag: false }), 'translate(0 -75)') : R(-98, -139, 196, 128, 6, { fill: '#C04A6A' })), `translate(${f(870)} ${f(1010)}) scale(1.5 ${f(1.5 * (1 - close * 0.5))})`);
+  o += K.draw.adult(76, { x: 870, y: 1500, s: 0.85, turn: lerp(0, 0.5, look), armL: 60, armR: 60, headRot: -6 * look, face: look > 0.5 ? { name: 'happy', eyes: { look: [1, -0.6] } } : { name: 'happy', eyes: { look: [0, 0.8] } }, shadow: false });
   o += tab;
   o += K.draw.cat ? '' : '';
   o += SETS.cat ? SETS.cat(1500, 860, 0.8, t, { pose: 'sit' }) : '';
@@ -321,7 +324,7 @@ function shotAstro(t) {
   inside += K.draw.adult(5, { x: 40, y: 280, s: 0.36, rot: 14 + 6 * Math.sin(t * 1.5), turn: -0.4, armL: 70, armR: 80, face: close > 0.6 ? { name: 'happy', eyes: { look: [1, -0.5] } } : { name: 'neutral', eyes: { look: [-0.5, 0.5] } }, shadow: false });
   if (close < 0.9) inside += CI(-20, 60, 120, { fill: '#7CF7FF', opacity: f(0.15 * (1 - close)) });
   st += CI(0, 0, 160, ol('#C9D1DD', 12)) + S.clipDef(id, CI(0, 0, 140)) + G(inside, null, { 'clip-path': `url(#${id})` }) + CI(0, 0, 140, { fill: 'none', stroke: LINE, 'stroke-width': 8 }) + P('M-90 -80 Q-60 -110 -20 -116', ln(10, '#FFFFFF', 0.5));
-  o += G(st, `translate(${f(960 + 30 * Math.sin(t * 0.6))} ${f(470 + 12 * Math.sin(t * 0.8))}) rotate(${f(-4 + 2 * u)}) scale(1.05)`);
+  o += G(st, `translate(${f(960 + 30 * Math.sin(t * 0.6))} ${f(470 + 12 * Math.sin(t * 0.8))}) rotate(${f(-4 + 2 * u)}) scale(1.45)`);
   return o;
 }
 function shotEarth(t) {
@@ -375,7 +378,7 @@ function shotWatch(t) {
   const n = online(t);
   const back = lagSprite(t, { x: 300, y: 380, size: lagSize(t), mood: 'scared', glitch: 0.5, look: [1, 0.2], fps: 6 }) + lagAura(t, 300, 380, lagSize(t), 0.7, 2, 6);
   let chars = who('juno', t, { x: 1150, y: FL, s: 0.5, view: 'back', turn: 0, armL: 10, armR: 10 }, { arms: false }) + who('grandpa', t, { x: 1430, y: FL, s: 0.5, view: 'back', armL: 10, armR: 12 }, { arms: false }) + who('pip', t, { x: 1290, y: FL, s: 0.5, view: 'back', armL: 15, armR: 15 }, { arms: false });
-  return coreShot(t, cam, { alarm: 1, timer: K.clock(secAt(t)), dots: clamp(n / 812e6 * 3, 0.02, 1), spam: false, broadcast: 1 }, chars, { back, backK: 0.7 });
+  return coreShot(t, cam, { alarm: 1, timer: K.clock(secAt(t)), dots: 0.02, spam: false, broadcast: 1 }, chars, { back, backK: 0.7, count: fmt(n) });
 }
 function shotBeg(t) {
   const u = seg(t, tBeg, tLast);
@@ -385,7 +388,7 @@ function shotBeg(t) {
   const reach = Math.sin(t * 3) * 10;
   let back = '';
   let chars = lagAura(t, lx, ly, sz, 0.8, 7, 6) + lagSprite(t, { x: lx, y: ly + reach, size: sz, mood: 'scared', glitch: 0.6, look: [-1, -0.5], fps: 5 });
-  return coreShot(t, cam, { alarm: 1, timer: K.clock(secAt(t)), dots: 0.03, spam: ['play...', 'one...', 'more...'], broadcast: 1 }, chars, { back });
+  return coreShot(t, cam, { alarm: 1, timer: K.clock(secAt(t)), dots: 0.02, spam: ['play...', 'one...', 'more...'], broadcast: 1 }, chars, { back, count: fmt(online(t)) });
 }
 function shotLast(t) {
   const n = online(t);
@@ -434,10 +437,10 @@ function shotWindows(t) {
 }
 function shotFarmOut(t) {
   const u = seg(t, tSil3, tStep);
-  const cam = { zoom: lerp(1.5, 1.7, u), x: 200, y: 250 };
+  const cam = { zoom: lerp(1.12, 1.25, u), x: 160, y: 120 };
   const Ly = F.farmExterior(t, { cam, sunset: 1, storm: 0, grass: 0.6, doorOpen: 1 });
   const dx = lerp(980, 1180, ease.out(u));
-  const dex = runSide('dex', t, dx, F.FARM.floor, 0.2, { rate: 8, amp: 0.4, lean: 0, act: { face: { name: 'amazed' } } });
+  const dex = runSide('dex', t, dx, F.FARM.floor, 0.22, { rate: 8, amp: 0.4, lean: 0, act: { face: { name: 'amazed' } } });
   return Ly.bg + Ly.mid + K.view(cam, dex, 1) + Ly.fg + Ly.light;
 }
 // ---------------------------------------------------------------- Dex: real grass → the badge
@@ -467,16 +470,17 @@ function shotBadge(t) {
   const u = seg(t, tBadge, tDefl);
   let o = R(0, 0, 1920, 1080, 0, { fill: 'url(#farmSkySunset)' }) + CI(1520, 620, 360, { fill: 'url(#farmSunGlow)', opacity: 0.9 });
   o += P('M0 900 Q500 860 960 880 Q1400 860 1920 900 L1920 1080 L0 1080 Z', { fill: '#C98A50' });
-  o += who('dex', t, { x: 960, y: 1640, s: 1.25, turn: 0.1, armL: 20 + 30 * u, armR: 20 + 30 * u, face: { name: 'amazed', eyes: { type: 'star' }, fx: ['sparkles'] }, shadow: false }, { arms: false, energy: 0.3 });
+  o += who('dex', t, { x: 960, y: 1420, s: 1.0, turn: 0.1, armL: 20 + 30 * u, armR: 20 + 30 * u, face: { name: 'amazed', eyes: { type: 'star' }, fx: ['sparkles'] }, shadow: false }, { arms: false, energy: 0.3 });
   o += R(0, 0, 1920, 1080, 0, { fill: '#FF9A4D', opacity: 0.12 });
   const bk = seg(t, M[14].word('badge').t0 - 0.35, M[14].word('badge').t0 + 0.05);
-  o += K.badge(960, 200, 'TOUCH GRASS', 'BADGE EARNED!', bk, t);
+  o += K.badge(960, 170, 'TOUCH GRASS', 'BADGE EARNED!', bk, t);
   if (bk > 0) o += K.confetti(t, M[14].word('badge').t0 - 0.2, 40, 4);
   return o;
 }
 
 // ---------------------------------------------------------------- router
 function scene(t) {
+  E.STATE.wall = false;
   if (t < tP) return E.shotMinute(t, '10.0');
   if (t < tG) return E.shotPress(t, '10.1', { timer: K.clock(secAt(t)) });
   if (t < tWall) return E.shotDing(t, '10.2', { timer: K.clock(secAt(t)) });
@@ -515,10 +519,13 @@ function scene(t) {
 }
 
 function timer(t) {
+  if (E.STATE.wall) return null;
   if (t < tP) return { sec: secAt(t), glitch: t < tMinute ? 0.6 : 0.3 };
   if (t < tWall) return { sec: secAt(t), glitch: 0.25 };
   if (t >= tSil && t < tDefl) return null;                  // the silence + Dex's badge: nothing on screen but the world
   if (t >= tDefl) return null;                              // the wall timer is in shot
+  if (t >= tCU2 && t < tDad2) return null;                   // the most intimate close-ups: just her
+  if (t >= tWatch && t < tLast) return null;                 // the wall timer is in shot
   return { sec: secAt(t), glitch: t >= tPanic ? 0.5 : 0 };
 }
 const look = (t) => {

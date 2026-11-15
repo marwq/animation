@@ -75,7 +75,7 @@ function who(name, t, pose = {}, act = {}, head = '') {
   return actor(name, t, pose, act);
 }
 // soot smudge on Juno's cheek (front view, body units)
-const SOOT = P('M-128 -664 Q-118 -690 -90 -686 Q-62 -680 -66 -656 Q-72 -632 -100 -636 Q-126 -640 -128 -664 Z', { fill: '#3A2C34', opacity: 0.45 }) +
+const SOOT = P('M-128 -664 Q-118 -690 -90 -686 Q-62 -680 -66 -656 Q-72 -632 -100 -636 Q-126 -640 -128 -664 Z', { fill: '#3A2C34', opacity: 0.62 }) +
   P('M-112 -668 Q-100 -678 -84 -672', ln(5, '#2A2026', 0.5)) + CI(-58, -626, 7, { fill: '#3A2C34', opacity: 0.4 });
 const SOOT_SIDE = P('M20 -664 Q30 -690 58 -686 Q84 -680 80 -656 Q74 -632 46 -636 Q20 -640 20 -664 Z', { fill: '#3A2C34', opacity: 0.45 });
 // side-view running (faces right by default)
@@ -311,9 +311,19 @@ function catwalkDeep(t, o = {}) {
 // ---------------------------------------------------------------- the Core composite
 // layers in order: core bg, `back` (world svg at parallax o.backK, e.g. the Lag behind the catwalk), core mid,
 // characters (k 1), core fg, `over` (k 1), core light
+// STATE.wall: set when a core shot drawn this frame shows the wall timer (scenes hide the HUD then; main.js calls
+// scene(t) before timer(t)). Scenes reset it at the start of scene(t).
+const STATE = { wall: false };
 function coreShot(t, cam, opts, chars = '', o = {}) {
   const Ly = F.core(t, cam, opts);
-  return Ly.bg + (o.back ? K.view(cam, o.back, o.backK ?? 0.75) : '') + Ly.mid + K.view(cam, chars, 1) + Ly.fg + (o.over ? K.view(cam, o.over, 1) : '') + Ly.light;
+  if (wallTimerVisible(cam)) STATE.wall = true;
+  return Ly.bg + (o.count ? mapCount(cam, o.count, o.countCol) : '') + (o.back ? K.view(cam, o.back, o.backK ?? 0.75) : '') + Ly.mid + K.view(cam, chars, 1) + Ly.fg + (o.over ? K.view(cam, o.over, 1) : '') + Ly.light;
+}
+// the Core's world-map screens show dots × 812 M; overlay the real SYSTEM count on their headers (k .6 layer)
+function mapCount(cam, txt, col = '#46F58C') {
+  let o = '';
+  for (const sx of [-120, 1490]) o += R(sx + 250, 263, 300, 32, 4, { fill: '#0A1A30' }) + T(txt, sx + 546, 289, 27, col, { 'text-anchor': 'end' });
+  return K.view(cam, o, 0.6);
 }
 // is the wall timer visible with this camera? (it hangs on the tower at k .45)
 function wallTimerVisible(cam) {
@@ -554,7 +564,7 @@ function shotDing(t, id, o = {}) {
 // ================================================================= SHARED: the Lag deflates (end of SC 10 → start of SC 11)
 // t0 = start, the balloon zips around and shrinks; at t0 + DEFLATE.dur a tiny loading wheel (Buffer) lands on the
 // catwalk at DEFLATE.land. Juno, Grandpa and Pip watch from the right.
-const DEFLATE = { dur: 0.9, from: [2560, 470], land: [2760, FL], cam: camAt(2860, 560, 1.12) };
+const DEFLATE = { dur: 0.75, from: [2560, 470], land: [2760, FL], cam: camAt(2860, 560, 1.12) };
 function deflateState(t, t0) {
   const u = clamp((t - t0) / DEFLATE.dur, 0, 1);
   const e = ease.in(u);
@@ -590,11 +600,11 @@ function shotDeflate(t, t0, o = {}) {
 }
 
 module.exports = {
-  DEFLATE, deflateState, shotDeflate,
+  DEFLATE, deflateState, shotDeflate, STATE,
   LINE, CORE, FL, R, P, CI, EL, G, tr, OUT, TS, TFS, camAt, pop, FULL, SCREEN, RED, GREEN, CYAN, mix,
   shakeCam, shakes, flashAt, whip, lagHold,
   who, SOOT, SOOT_SIDE, runSide, runFront, sideHand, mopInArm, mopProp, ding,
-  lagSprite, lagAura, slurp, traffic, bez, lowAngle, coreShot, wallTimerVisible, catwalkDeep, deepS, DEEP,
+  lagSprite, lagAura, slurp, traffic, bez, lowAngle, coreShot, wallTimerVisible, mapCount, catwalkDeep, deepS, DEEP,
   junoFeed, popToJuno, pixelBand, laptop2, fishGame, goldFish, pip, phoneHeld, bus, greenPill, bigClock,
   shotMinute, shotPress, shotDing, dingState, dingTimes, PRESS, DING,
 };

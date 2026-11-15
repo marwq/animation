@@ -220,19 +220,19 @@ function shaftDown(t, o = {}) {
   // the falling bolt
   if (bolt >= 0) {
     const z = 1.15 + bolt * bolt * 7;
-    const px = 960 + (960 - vx) * 0, py = 980;
+    const px = 960, py = 800;
     const bx = vx + (px - vx) * fz / z, by = vy + (py - vy) * fz / z, r = 30 * fz / z;
     if (r > 1.2) o2 += S.g(S.path('M-10 -17 L10 -17 L20 0 L10 17 L-10 17 L-20 0 Z', ol('#C9D2E0', 5)) + S.circle(0, 0, 7, { fill: LINE }), `translate(${f(bx)} ${f(by)}) rotate(${f(bolt * 720)}) scale(${f(r / 20)})`);
   }
   o2 += S.rect(-200, -200, 2320, 1480, 0, { fill: 'url(#s08dark)', opacity: 0 });
   // near edge: the ledge lip with hazard stripes + Dex's toes over it
-  let near = S.path('M-200 930 L2120 930 L2120 1300 L-200 1300 Z', { fill: '#5A6A9A', stroke: LINE, 'stroke-width': 8 }) + S.rect(-200, 930, 2320, 34, 0, { fill: 'url(#farmHazard)' }) + S.path('M-200 930 L2120 930', ln(8));
+  let near = S.path('M-200 820 L2120 820 L2120 1300 L-200 1300 Z', { fill: '#5A6A9A', stroke: LINE, 'stroke-width': 8 }) + S.rect(-200, 820, 2320, 34, 0, { fill: 'url(#farmHazard)' }) + S.path('M-200 820 L2120 820', ln(8)) + S.rect(-200, 880, 2320, 420, 0, { fill: 'url(#farmRack)', opacity: 0.5 });
   if (toes > 0) {
     const tr = Math.sin(t * 38) * 4 * tremble;
     for (const [sx, rot] of [[-1, -6], [1, 6]]) {
       let sh = S.path('M-70 120 L-70 -10 Q-70 -70 0 -76 Q70 -70 70 -10 L70 120 Z', ol('#1E8BFF', 8)) + S.path('M-70 -6 Q0 -24 70 -6 L70 18 Q0 0 -70 18 Z', ol('#FFFFFF', 6));
       sh += S.path('M-30 40 L30 40 M-30 66 L30 66 M-30 92 L30 92', ln(7, '#FFFFFF')) + S.path('M-40 -50 Q0 -66 40 -50', ln(6, '#8BE0FF'));
-      near += S.g(sh, `translate(${f(960 + sx * 120 + tr)} ${f(1000 - toes * 40)}) rotate(${rot})`);
+      near += S.g(sh, `translate(${f(960 + sx * 120 + tr)} ${f(880 - toes * 50)}) rotate(${rot}) scale(1.15)`);
     }
   }
   return o2 + near;
@@ -421,14 +421,14 @@ function obbyHud(t, k, o = {}) {
   // jump button (bottom-right)
   const press = bump(t, o.jumpAt ?? -9, (o.jumpAt ?? -9) + 0.25);
   g += S.g(S.circle(0, 0, 74, { fill: '#10131C', opacity: 0.6, stroke: '#FFFFFF', 'stroke-width': 6 }) + S.path('M-30 18 L0 -22 L30 18', ln(14, '#FFFFFF')), `translate(${f(1760 + (1 - sc) * 400)} 820) scale(${f(1 - 0.15 * press)})`);
-  if (clear > 0) g += S.g(K.rays(0, 0, 14, 420, '#FFF1A8', 0.18, t * 30) + S.rect(-330, -78, 660, 156, 40, ol('#10131C', 9)) + S.rect(-318, -66, 636, 132, 32, { fill: 'none', stroke: '#46F58C', 'stroke-width': 6 }) + TS('STAGE CLEAR!', 0, 30, 92, '#46F58C'), `translate(960 330) rotate(-3) scale(${f(ease.outBack(clamp(clear, 0, 1)))})`);
+  if (clear > 0) g += S.g(K.rays(0, 0, 14, 420, '#FFF1A8', 0.18, t * 30) + S.rect(-330, -78, 660, 156, 40, ol('#10131C', 9)) + S.rect(-318, -66, 636, 132, 32, { fill: 'none', stroke: '#46F58C', 'stroke-width': 6 }) + TS('STAGE CLEAR!', 0, 30, 92, '#46F58C'), `translate(560 300) rotate(-4) scale(${f(0.82 * ease.outBack(clamp(clear, 0, 1)))})`);
   return g;
 }
 
 // ---------------------------------------------------------------- the ice "glass" Dex smacks into (cracks spread from the impact)
 function iceGlass(x, y, k, t) {
   if (k <= 0) return '';
-  let o = S.rect(-100, -100, 2120, 1280, 0, { fill: 'url(#s08iceGlass)', opacity: f(clamp(k * 2, 0, 1)) });
+  let o = S.rect(-100, -100, 2120, 1280, 0, { fill: 'url(#s08iceGlass)', opacity: f(0.38 * clamp(k * 2, 0, 1)) });
   o += S.path('M140 -100 L-100 300 M420 -100 L-100 780 M1700 1180 L2020 700', ln(30, '#FFFFFF', 0.25 * clamp(k * 2, 0, 1)));
   const n = 9, grow = ease.out(clamp(k * 1.6, 0, 1));
   let d = '';
@@ -450,7 +450,7 @@ function iceGlass(x, y, k, t) {
   }
   o += S.path(d, ln(9, '#FFFFFF', 0.9)) + S.path(d, ln(3, '#7FB8E0', 0.9));
   // frost creeping in from the corners
-  for (const [cx, cy] of [[0, 0], [1920, 0], [0, 1080], [1920, 1080]]) o += S.circle(cx, cy, 260 * grow, { fill: '#FFFFFF', opacity: f(0.35 * grow) });
+  for (const [cx, cy] of [[0, 0], [1920, 0], [0, 1080], [1920, 1080]]) o += S.circle(cx, cy, 240 * grow, { fill: '#FFFFFF', opacity: f(0.25 * grow) });
   return o;
 }
 

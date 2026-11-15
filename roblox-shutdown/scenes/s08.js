@@ -73,8 +73,14 @@ const headY = (y, s, z = 1) => y - 725 * s * z;           // head centre of a st
 const mouthY = (y, s, z = 1) => y - 640 * s * z;
 const ZS = { juno: 0.95, dex: 1, pip: 0.72, grandpa: 1.06 };
 const grandpaMop = (armR = 25, extra = {}) => ({ svg: mop({ x: A.hand(armR, 1)[0], y: 0, ...extra }), layer: 'front' });
-// Grandpa's mop lying flat under his feet (he skates on it), body space of a side-view pose
-const flatMop = () => S.g(mop({ x: 0, y: 0, len: 720 }), 'translate(-300 -6) rotate(90)');
+// Grandpa's mop lying flat on the ice (he skates on it): head (front) at x, handle trailing behind; world space
+function flatMop(x, y, len = 400, dir = 1) {
+  let o = S.rect(dir > 0 ? x - len : x, y - 18, len, 13, 6, ol('#B07A45', 4)) + S.path(`M${f(x - dir * len + dir * 10)} ${f(y - 14)} L${f(x - dir * 20)} ${f(y - 14)}`, ln(3, '#D9A36A'));
+  o += S.rect(x - 16, y - 30, 32, 26, 7, ol('#5B8DEF', 4));
+  let st = '';
+  for (let i = 0; i < 7; i++) st += `M${f(x + dir * 12)} ${f(y - 22 + i * 3)} Q${f(x + dir * (36 + i * 4))} ${f(y - 20 + i * 3)} ${f(x + dir * (58 + i * 5))} ${f(y - 6 + i * 1.2)} `;
+  return o + S.path(st, ln(10)) + S.path(st, ln(6, '#EDE6D6'));
+}
 const shiver = (t, k = 1, seed = 0) => Math.sin(t * 47 + seed) * 3 * k;
 const snowPuffs = (x, y, t0, t, n = 6, dir = 1) => {
   const age = t - t0;
@@ -99,7 +105,7 @@ function gangLedge(t, o = {}) {
 // ================================================================ FLOOR 1 · THE COOLING ROOM
 // A1: the doors open from the outside; the gang inside the warm car gets hit by the cold
 function shotDoors1(t) {
-  const cam = camKeys(t, [[START, at(960, 560, 1.0)], [cA2, at(960, 590, 1.1)]]);
+  const cam = camKeys(t, [[START, at(960, 520, 1.0)], [cA2, at(960, 545, 1.08)]]);
   const open = ease.inOut(seg(t, START + 0.12, START + 0.62));
   const blast = seg(t, START + 0.3, START + 0.55);
   const lf = E.liftFront(t, { open });
@@ -108,13 +114,13 @@ function shotDoors1(t) {
   const lean = -6 * bump(t, START + 0.3, START + 0.9);
   const cold = blast > 0 ? 1 : 0;
   const hug = lerp(14, -24, blast);
-  ch += actor('grandpa', t, { x: 690 + shiver(t, 0.4 * cold, 1), y: fl, s, turn: 0.25, lean, armL: lerp(14, -10, blast), armR: 25, props: [grandpaMop()], face: blast > 0 ? { name: 'happy', eyes: { upper: 0.3 } } : 'happy', keysSwing: 8 * Math.sin(t * 30) * cold }, { arms: false });
-  ch += actor('dex', t, { x: 1185 + shiver(t, cold, 2), y: fl, s, turn: -0.2, lean, armL: hug, armR: hug, face: blast > 0 ? { name: 'scared', mouth: 'teeth' } : 'neutral', headY: 4 * Math.sin(t * 50) * cold }, { arms: false });
-  ch += actor('juno', t, { x: 935 + shiver(t, cold * 0.8, 3), y: fl, s, lean, armL: lerp(14, -18, blast), armR: lerp(14, -18, blast), face: blast > 0 ? { name: 'happy', eyes: { upper: 0.2 } } : 'neutral', ...A.walkFront(t * 12, bump(t, START + 0.75, cA2 + 0.2) * 0.6) }, { arms: false, energy: 0.5 });
-  ch += actor('pip', t, { x: 1055, y: fl + 18, s, turn: -0.1, armL: 30 + 40 * blast, armR: 30 + 40 * blast, face: blast > 0 ? { name: 'excited' } : 'cute', bodyY: 8 * Math.abs(Math.sin(t * 9)) * blast }, { arms: false });
+  ch += actor('grandpa', t, { x: 650 + shiver(t, 0.4 * cold, 1), y: fl, s, turn: 0.25, lean, armL: lerp(14, -10, blast), armR: 25, props: [grandpaMop()], face: blast > 0 ? { name: 'happy', eyes: { upper: 0.3 } } : 'happy', keysSwing: 8 * Math.sin(t * 30) * cold }, { arms: false });
+  ch += actor('dex', t, { x: 1235 + shiver(t, cold, 2), y: fl, s, turn: -0.2, lean, armL: hug, armR: hug, face: blast > 0 ? { name: 'scared', mouth: 'teeth' } : 'neutral', headY: 4 * Math.sin(t * 50) * cold }, { arms: false });
+  ch += actor('juno', t, { x: 880 + shiver(t, cold * 0.8, 3), y: fl, s, lean, armL: lerp(14, -18, blast), armR: lerp(14, -18, blast), face: blast > 0 ? { name: 'happy', eyes: { upper: 0.2 } } : 'neutral', ...A.walkFront(t * 12, bump(t, START + 0.75, cA2 + 0.2) * 0.6) }, { arms: false, energy: 0.5 });
+  ch += actor('pip', t, { x: 1065, y: fl + 22, s, turn: -0.1, armL: 30 + 40 * blast, armR: 30 + 40 * blast, face: blast > 0 ? { name: 'excited' } : 'cute', bodyY: 8 * Math.abs(Math.sin(t * 9)) * blast }, { arms: false });
   // breath puffs in the cold
   let br = '';
-  if (blast > 0) for (const [x, sc, z, sd] of [[690, s, ZS.grandpa, 1], [935, s, ZS.juno, 2], [1185, s, ZS.dex, 3], [1055, s, ZS.pip, 4]]) br += FM.breath(x + 30, mouthY(fl, sc, z), t, blast, 1, sd * 0.3);
+  if (blast > 0) for (const [x, sc, z, sd] of [[650, s, ZS.grandpa, 1], [880, s, ZS.juno, 2], [1235, s, ZS.dex, 3], [1065, s, ZS.pip, 4]]) br += FM.breath(x + 30, mouthY(fl, sc, z), t, blast, 1, sd * 0.3);
   let w = lf.back + ch + br + lf.front + lf.snow;
   let o = view(cam, w, 1);
   o += ding(1330, 260, seg(t, START, START + 0.95), 0.75, { text: '' });
@@ -123,26 +129,26 @@ function shotDoors1(t) {
 // A2: wide of the Cooling Room, the gang waddles out; push in for Juno's pun; Dex slips
 function shotCoolWide(t) {
   const push = seg(t, tWhere - 0.35, tWhere + 0.15);
-  const cam = camKeys(t, [[cA2, { zoom: 0.86, x: -380, y: 30 }], [tWhere - 0.35, { zoom: 0.94, x: -230, y: 20 }], [tWhere + 0.15, at(330, 692, 1.85)], [cA3, at(360, 700, 1.95)]]);
+  const cam = camKeys(t, [[cA2, { zoom: 0.98, x: -330, y: 30 }], [tWhere - 0.35, { zoom: 1.02, x: -220, y: 25 }], [tWhere + 0.15, at(300, 650, 1.7)], [cA3, at(315, 652, 1.76)]]);
   shakeAll(cam, t, [[tSlip + 0.12, 0.3, 6]]);
   const Ly = FM.coolingRoom(t, cam, { snow: 34 });
   const s = 0.42, fl = FM.FLOOR.cooling;
   const walkU = seg(t, cA2, tWhere - 0.1);
   let w = '';
   // Grandpa strides out confidently, Pip waddles and slides around behind
-  const gx = lerp(-520, -40, walkU) + 120 * seg(t, tWhere, cA3);
+  const gx = lerp(-330, -40, walkU) + 120 * seg(t, tWhere, cA3);
   w += actor('grandpa', t, { x: gx, y: fl, s, view: 'side', flip: true, ...A.walk(t * 9, 0.8), armR: 30, props: [{ svg: mop({ x: 40, y: 0, rot: -14 }), layer: 'front' }], face: 'happy', keysSwing: 6 * Math.sin(t * 9) }, { arms: false });
-  const px = lerp(-700, -160, walkU) + 60 * Math.sin(t * 2.5);
+  const px = lerp(-480, -160, walkU) + 60 * Math.sin(t * 2.5);
   w += actor('pip', t, { x: px, y: fl, s, view: 'side', flip: Math.sin(t * 2.5) > -0.6, ...A.walk(t * 14, 0.7), armL: 70, armR: 70, lean: 8, face: 'excited' }, { arms: false });
   // Juno walks out, stops, turns to camera for the pun
-  const jx = lerp(-260, 200, walkU);
+  const jx = lerp(-120, 200, walkU);
   const jFront = t > tWhere - 0.15;
   const wink = t > tChill - 0.05;
   w += actor('juno', t, jFront ?
     { x: jx, y: fl, s, turn: 0.15, armR: wink ? lerp(20, 95, ob(seg(t, tChill - 0.05, tChill + 0.15))) : 30, armL: wink ? 60 : 16, face: wink ? { name: 'smug', eyeR: { type: 'closed' } } : { name: 'talkHappy' } } :
     { x: jx, y: fl, s, view: 'side', flip: true, ...A.walk(t * 10, 0.75), face: 'happy' }, { arms: false, energy: 0.8 });
   // Dex: tiptoes out shivering, then the slip
-  const dx0 = lerp(-60, 430, walkU);
+  const dx0 = lerp(80, 430, walkU);
   if (t < tSlip) {
     w += actor('dex', t, { x: dx0 + shiver(t, 0.6, 4), y: fl, s, turn: walkU < 1 ? 0 : -0.3, view: walkU < 1 ? 'side' : 'front', flip: true, ...(walkU < 1 ? A.walk(t * 10, 0.5) : {}), armL: -24, armR: -24, face: { name: 'nervous', mouth: 'teeth', eyes: { look: [0, 0.6] } } }, { arms: false });
   } else {
@@ -155,7 +161,7 @@ function shotCoolWide(t) {
   w += FM.breath(jx + (jFront ? 30 : 40), mouthY(fl, s, ZS.juno), t, 0.8, 1, 0.2);
   let o = Ly.bg + Ly.mid + view(cam, w, 1) + Ly.fg + Ly.light;
   const pk = seg(t, tChill + 0.1, tChill + 0.9);
-  if (pk > 0 && pk < 1) o += K.sparkles([[630, 330, 34], [700, 260, 22], [560, 250, 18]], t) + K.bang('*chill*', 650, 220, bump(t, tChill + 0.05, tChill + 0.95), 56, -10, '#BFEFFF');
+  if (pk > 0 && pk < 1) o += K.sparkles([[1010, 260, 30], [940, 210, 18], [1080, 200, 14]], t) + K.bang('*chill*', 1000, 185, bump(t, tChill + 0.05, tChill + 0.95), 52, -8, '#BFEFFF');
   o += K.bang('WHOA!', 1500, 300, bump(t, tSlip + 0.05, tSlip + 0.5), 90, 8, '#FFFFFF');
   return o;
 }
@@ -163,16 +169,21 @@ function shotCoolWide(t) {
 function shotSlide(t) {
   const k = t - cA3;
   const dist = 1500 * k + 300 * Math.sin(k * 2);
-  const cam = { zoom: 1.28, x: -40 + 20 * Math.sin(t * 7), y: 70 + 10 * Math.sin(t * 9) };
+  const cam = { zoom: 1.5, x: -40 + 16 * Math.sin(t * 7), y: 130 + 8 * Math.sin(t * 9) };
   const Ly = FM.coolingRoom(t, cam, { dist, snow: 30, fanSpeed: 1.4 });
   const s = 0.42, fl = FM.FLOOR.cooling;
-  const x = 880 + 60 * Math.sin(k * 3.1);
+  const x = 900 + 50 * Math.sin(k * 3.1);
   // spin on the second "No": side → front → side(other way) → back → side
-  const sp = seg(t, tSpin - 0.05, tSpin + 0.5);
+  const sp = seg(t, tSpin - 0.05, tSpin + 0.45);
   const step = sp > 0 && sp < 1 ? Math.floor(sp * 4) : -1;
   const vw = step === 0 ? { view: 'front', turn: 0.6 } : step === 1 ? { view: 'side', flip: false } : step === 2 ? { view: 'back' } : step === 3 ? { view: 'front', turn: -0.6 } : { view: 'side', flip: true };
-  const wind = t * 1100;
-  const dex = actor('dex', t, { x, y: fl, s, ...vw, legL: 48 + 8 * Math.sin(t * 13), legR: vw.view === 'side' ? -42 : 42, kneeL: 6, kneeR: 6, armL: vw.view === 'side' ? wind % 360 : 150 + 30 * Math.sin(t * 25), armR: vw.view === 'side' ? (wind + 180) % 360 : 150 + 30 * Math.cos(t * 23), rot: 10 * Math.sin(t * 6), lean: -10, face: 'scream' }, { arms: false });
+  const side = vw.view === 'side';
+  const dex = actor('dex', t, {
+    x, y: fl, s, ...vw, lift: 6 * Math.abs(Math.sin(t * 9)),
+    legL: side ? 58 + 8 * Math.sin(t * 13) : 40, legR: side ? -34 + 6 * Math.sin(t * 11) : 40, kneeL: 4, kneeR: 8,
+    armL: side ? 150 + 75 * Math.sin(t * 17) : 150 + 30 * Math.sin(t * 25), armR: side ? 160 + 75 * Math.sin(t * 17 + 2.4) : 150 + 30 * Math.cos(t * 23),
+    rot: 7 * Math.sin(t * 6), lean: side ? 14 : 0, face: 'scream',
+  }, { arms: false });
   // ice shavings spraying back from his shoes
   let spray = '';
   for (let i = 0; i < 22; i++) {
@@ -180,10 +191,11 @@ function shotSlide(t) {
     const sx = x - 30 - age * (420 + hash(i) * 300), sy = fl - 12 - Math.sin(age * Math.PI) * (60 + hash(i * 3) * 90);
     spray += S.circle(sx, sy, 5 + hash(i * 7) * 7, { fill: '#FFFFFF', opacity: f(0.9 * (1 - age)), stroke: '#9FCBEA', 'stroke-width': 2 });
   }
+  spray += S.path(`M${f(x - 60)} ${fl + 8} L${f(x - 900)} ${fl + 14}`, ln(10, '#FFFFFF', 0.7)) + S.path(`M${f(x - 40)} ${fl + 24} L${f(x - 700)} ${fl + 34}`, ln(5, '#FFFFFF', 0.5));
   let o = Ly.bg + Ly.mid;
-  o += S.g(C.speedLines(-200, 1900, 560, 14, 7, '#FFFFFF', 700), null, { opacity: 0.35 });
+  o += S.g(C.speedLines(-200, 1900, 600, 16, 7, '#FFFFFF', 760), null, { opacity: 0.4 });
   o += view(cam, spray + dex, 1) + Ly.fg + Ly.light;
-  o += K.bang('NO RESPAWN!', 1430, 300, bump(t, tSpin - 0.2, tSpin + 0.6), 74, 8, '#FF5A6E');
+  o += K.bang('NO RESPAWN!', 1420, 430, bump(t, tSpin - 0.2, tSpin + 0.6), 74, 8, '#FF5A6E');
   return o;
 }
 // A4: head-on — he slides at the lens and smacks into the ice
@@ -238,18 +250,19 @@ function shotSkate(t) {
   const spin = seg(t, tKid - 0.08, tKid + 0.42);
   let gpose;
   if (spin > 0 && spin < 1) {
-    const st = Math.floor(spin * 5) % 4;
-    const vw = [{ view: 'front', turn: 0.5 }, { view: 'side', flip: false }, { view: 'back' }, { view: 'front', turn: -0.5 }][st];
-    gpose = { ...vw, armL: 165, armR: 165, legL: 0, legR: 0, kneeR: vw.view === 'side' ? 40 : 0, face: { name: 'joy' } };
+    const st = Math.floor(spin * 6) % 4;
+    const vw = [{ view: 'front', turn: 0.7 }, { view: 'back', turn: 0 }, { view: 'front', turn: -0.7 }, { view: 'back', turn: 0 }][st];
+    gpose = { ...vw, armL: 170, armR: 170, legL: 4, legR: 4, sx: 0.92 + 0.08 * Math.abs(Math.cos(spin * Math.PI * 3)), face: { name: 'joy' } };
   } else if (t < tBend) {
-    gpose = { view: 'side', flip: true, armL: 95, armR: -70, legL: 0, legR: -72, kneeR: 0, lean: 18, headRot: -6, face: { name: 'happy', eyes: { type: 'closed' } }, props: [{ svg: flatMop(), layer: 'back' }] };
+    const sway = Math.sin(t * 3);
+    gpose = { view: 'side', flip: true, armL: 118 + 8 * sway, armR: -105, legL: 0, kneeL: 6, legR: -96 + 6 * sway, kneeR: 0, lean: -26, headRot: -8, face: { name: 'happy', eyes: { type: 'closed' } } };
   } else {
     const dip = bump(t, tBend, tKnees + 0.5);
     gpose = { view: 'front', turn: 0.45, bodyY: 90 * dip, legL: 14, legR: 14, armL: 70 + 10 * dip, armR: 150 + 20 * Math.sin(t * 14), face: { name: 'talkHappy' }, keysSwing: 10 * Math.sin(t * 12) };
   }
-  const glideBob = 4 * Math.sin(t * 5);
-  w += actor('grandpa', t, { x: gx, y: fl, s, lift: 12 + glideBob, ...gpose }, { arms: false, energy: 0.6 });
-  if (gpose.view !== 'side' || !gpose.props) w += S.g(mop({ x: 0, y: 0, len: 720 }), `translate(${f(gx - 140)} ${fl - 2}) rotate(90) scale(${f(s * ZS.grandpa)})`);
+  const glideBob = 3 * Math.sin(t * 5);
+  w += flatMop(gx + 80, fl + 4, 400);
+  w += actor('grandpa', t, { x: gx, y: fl, s, lift: 10 + glideBob, ...gpose }, { arms: false, energy: 0.6 });
   w += FM.breath(gx + 40, mouthY(fl - 12, s, ZS.grandpa), t, 0.7, 1, 0.5) + FM.breath(dexX - 30, mouthY(fl, s, 1), t, 0.9, -1, 0.1);
   let o = Ly.bg + Ly.mid + view(cam, w, 1) + Ly.fg + Ly.light;
   o += K.bang('BEND!', 600, 300, bump(t, tBend, tBend + 0.5), 80, -8, '#FFD21F');
@@ -259,25 +272,23 @@ function shotSkate(t) {
 // A6: Pip belly-slides past like a penguin — "Ding!"
 function shotPenguin(t) {
   const u = seg(t, cA6, cB1);
-  const px = lerp(2150, -260, u);
-  const cam = { zoom: 1.6, x: lerp(220, -120, u), y: 190 };
+  const px = lerp(1520, -120, u);
+  const cam = { zoom: 2.0, x: lerp(160, -80, u), y: 215 };
   const Ly = FM.coolingRoom(t, cam, { snow: 24 });
-  const fl = FM.FLOOR.cooling, s = 0.42;
+  const fl = FM.FLOOR.cooling, ps = 0.5, Z = ZS.pip;
   let w = '';
-  // background: Dex sprawled, Grandpa gliding the other way
-  w += actor('grandpa', t, { x: lerp(-300, 900, seg(t, cA6, cB1 + 0.5)), y: fl - 30, s: 0.34, view: 'side', flip: true, armL: 95, armR: -70, legR: -72, lean: 18, lift: 10, face: 'happy', props: [{ svg: flatMop(), layer: 'back' }] }, { arms: false });
   // Pip on his belly: side view rotated -90 (head first, belly down), flippers along the body
   const flap = 18 * Math.sin(t * 22);
-  const ps = s, Z = ZS.pip;
-  const pip = actor('pip', t, { x: px, y: fl + 300 * ps * Z, s: ps, view: 'side', rot: -90, rotY: -420, armL: -12 + flap, armR: -18 - flap, legL: -4, legR: 4, kneeL: 0, kneeR: 0, shadow: false, face: { name: 'joy' } }, { arms: false });
-  w += S.ellipse(px - 120 * ps, fl + 6, 300 * ps, 22 * ps, { fill: '#2A5A8A', opacity: 0.25 });
+  const pip = actor('pip', t, { x: px, y: fl + 300 * ps * Z, s: ps, view: 'side', rot: -90, rotY: -420, armL: -12 + flap, armR: -18 - flap, legL: -4, legR: 4, kneeL: 0, kneeR: 0, shadow: false, headRot: -10 + 6 * Math.sin(t * 9), face: { name: 'joy' } }, { arms: false });
+  w += S.ellipse(px - 60, fl + 6, 330 * ps, 22 * ps, { fill: '#2A5A8A', opacity: 0.25 });
   // snow spray in front of him + a glittery wake
-  for (let i = 0; i < 16; i++) { const a = ((t * 3 + hash(i)) % 1); w += S.circle(px - 360 * ps - a * 160, fl - Math.sin(a * Math.PI) * (40 + hash(i * 2) * 50), 4 + hash(i * 3) * 6, { fill: '#FFFFFF', opacity: f(1 - a) }); }
+  for (let i = 0; i < 16; i++) { const a = ((t * 3 + hash(i)) % 1); w += S.circle(px - 380 * ps - a * 180, fl - Math.sin(a * Math.PI) * (40 + hash(i * 2) * 60), 4 + hash(i * 3) * 7, { fill: '#FFFFFF', opacity: f(1 - a), stroke: '#9FCBEA', 'stroke-width': 2 }); }
   w += S.path(`M${f(px + 60)} ${fl + 12} L${f(Math.min(2400, px + 900))} ${fl + 22}`, ln(10, '#FFFFFF', 0.7)) + S.path(`M${f(px + 60)} ${fl + 26} L${f(Math.min(2400, px + 700))} ${fl + 40}`, ln(5, '#FFFFFF', 0.5));
+  w += K.sparkles([[px + 220, fl - 20, 14], [px + 420, fl - 10, 10], [px + 640, fl - 16, 8]], t);
   w += pip;
   let o = Ly.bg + Ly.mid + view(cam, w, 1) + Ly.fg + Ly.light;
   // the Ding! — over Pip, synced to the word
-  const scrX = 960 + (px - 960 - cam.x) * cam.zoom, scrY = 540 + (fl - 260 - 540 - cam.y) * cam.zoom;
+  const scrX = 960 + (px - 960 - cam.x) * cam.zoom, scrY = 540 + (fl - 230 - 540 - cam.y) * cam.zoom;
   o += ding(clamp(scrX + 40, 260, 1660), clamp(scrY, 200, 700), seg(t, tDing1 - 0.04, tDing1 + 0.9), 1.0);
   return o;
 }
@@ -298,11 +309,11 @@ function shotJungleOpen(t) {
 }
 // B2: Dex close-up at the edge, dutch angle — "Juno, I can't."
 function shotDexScared(t) {
-  const cam = camKeys(t, [[cB2, at(270, 552, 2.55)], [cB3, at(285, 560, 2.75)]]);
+  const cam = camKeys(t, [[cB2, at(275, 505, 2.3)], [cB3, at(290, 510, 2.45)]]);
   const Ly = FM.cableJungle(t, cam, {});
   let w = '';
   const no = t > tCant ? Math.sin((t - tCant) * 16) * 9 * (1 - seg(t, tCant, tCant + 0.8)) : 0;
-  w += actor('juno', t, { x: 30, y: J.start.y, s: 0.42, turn: 0.6, armL: 14, armR: 40, face: { name: 'neutral', eyes: { look: [0.9, 0.1] } } }, { arms: false });
+  w += actor('juno', t, { x: -40, y: J.start.y, s: 0.42, turn: 0.6, armL: 14, armR: 40, face: { name: 'neutral', eyes: { look: [0.9, 0.1] } } }, { arms: false });
   w += actor('dex', t, { x: 280 + shiver(t, 0.8, 1), y: J.start.y, s: 0.42, turn: -0.35, armL: 148, armR: 152, headRot: no, bodyY: 6 * Math.abs(Math.sin(t * 25)), face: { name: 'scared', eyes: { look: [-0.7, 0.3] } } }, { arms: false, energy: 0.6 });
   let o = Ly.bg + Ly.mid + view(cam, w, 1) + Ly.fg + Ly.light;
   return dutch(o, lerp(-8, -5, seg(t, cB2, cB3)));
@@ -319,7 +330,7 @@ function shotShaft(t) {
 // B4: Juno turns Dex to face it; the camera sweeps the course while she names the parts (chalk notes)
 function shotLookAtIt(t) {
   const tPan = tPlat - 0.35;
-  const cam = camKeys(t, [[cB4, at(165, 560, 2.0)], [tPan, at(190, 560, 2.05)], [tPlat + 0.25, at(760, 560, 1.12)], [tRopes + 0.5, at(1260, 470, 1.0)], [tGap2 - 0.1, at(1220, 560, 0.98)], [cB5, at(980, 520, 0.8)]]);
+  const cam = camKeys(t, [[cB4, at(165, 530, 2.0)], [tPan, at(190, 532, 2.05)], [tPlat + 0.25, at(760, 560, 1.12)], [tRopes + 0.5, at(1260, 470, 1.0)], [tGap2 - 0.1, at(1220, 560, 0.98)], [cB5, at(980, 520, 0.8)]]);
   const Ly = FM.cableJungle(t, cam, {});
   const s = 0.42;
   const turn = seg(t, tIt - 0.2, tIt + 0.25);
@@ -349,7 +360,7 @@ function shotLookAtIt(t) {
 }
 // B5: Juno close-up, warm — "What does that look like?"
 function shotJunoAsk(t) {
-  const cam = camKeys(t, [[cB5, at(70, 565, 2.6)], [cB6, at(76, 560, 2.8)]]);
+  const cam = camKeys(t, [[cB5, at(70, 528, 2.6)], [cB6, at(76, 526, 2.8)]]);
   const Ly = FM.cableJungle(t, cam, {});
   let w = '';
   w += actor('juno', t, { x: 60, y: J.start.y, s: 0.42, turn: 0.35, armR: 55, armL: 18, headRot: 6, face: { name: 'happy', brows: { L: [-34, -20], R: [-10, -2] }, eyes: { look: [0.8, 0] } } }, { arms: false, energy: 0.5 });
@@ -362,7 +373,7 @@ function shotJunoAsk(t) {
 function shotRealize(t) {
   const obbyK = ease.out(seg(t, tObby - 0.05, tObby + 0.45));
   const pull = seg(t, tJust - 0.3, tJust + 0.1);
-  const cam = camKeys(t, [[cB6, at(200, 545, 2.7)], [tObby, at(200, 540, 2.95)], [tJust - 0.3, at(205, 545, 3.0)], [tJust + 0.1, at(420, 560, 1.15)], [cB7, at(520, 540, 1.05)]]);
+  const cam = camKeys(t, [[cB6, at(200, 505, 2.6)], [tObby, at(200, 508, 2.8)], [tJust - 0.3, at(205, 510, 2.85)], [tJust + 0.1, at(420, 540, 1.15)], [cB7, at(520, 530, 1.05)]]);
   shakeAll(cam, t, [[tObby, 0.35, 10]]);
   const Ly = FM.cableJungle(t, cam, { obby: obbyK });
   const tt = tau(t);
@@ -379,8 +390,8 @@ function shotRealize(t) {
     w += actor('dex', t, { ...pose, x: isRun ? st.feetX : st.hx, y: isRun ? st.feetY : st.hy + E.HANDY, s: E.DS, face: { name: 'determined', mouth: t > tOBBY ? 'scream' : 'bigGrin' } }, { arms: false });
     if (st.phase === 'leap') w += C.dust(E.RUN.x1 - 30, J.start.y - 10, tLeap, t);
   }
-  // neon light on his face
-  let o = Ly.bg + Ly.mid + view(cam, w, 1) + Ly.fg + Ly.light;
+  // neon light on his face (no foreground cables over the close-up)
+  let o = Ly.bg + Ly.mid + view(cam, w, 1) + (pull < 0.5 ? '' : Ly.fg) + Ly.light;
   if (obbyK > 0 && pull < 0.5) o += glow(1200, 520, 700, 's08neon', 0.35 * obbyK);
   // the transform wave: a ring of pixels sweeping out from his eyes
   const wk = seg(t, tObby - 0.05, tObby + 0.5);
@@ -399,8 +410,8 @@ function shotLeap(t) {
   const st = E.dexAt(tt);
   const Z = 1.75;
   // camera follows his hands with a lag; screen = (p - c) * Z + anchor
-  const cx = lerp(st.hx, 640, 0.15) - 60, cy = 300;
-  const toS = (x, y) => [960 + (x - cx) * Z, 470 + (y - cy) * Z];
+  const cx = lerp(st.hx, 640, 0.15) - 60, cy = lerp(st.hy, 420, 0.35);
+  const toS = (x, y) => [960 + (x - cx) * Z, 400 + (y - cy) * Z];
   let o = E.lowAngleSky(t, 1, { pan: cx * 1.6 });
   // vine 0 in the same mapping
   const v = J.vines[0], a0 = st.a0 * Math.PI / 180;
@@ -451,7 +462,7 @@ function shotSwing(t) {
 function shotLand(t) {
   const k = t - cB9;
   const lx = E.SIM.landX;
-  const cam = at(lx + 40, 430, 1.7);
+  const cam = at(lx - 150, 390, 1.7);
   shakeAll(cam, t, [[cB9, 0.4, 22]]);
   const Ly = FM.cableJungle(t, cam, { obby: 1 - 0.0 * seg(t, END, END) });
   const crouch = Math.exp(-k * 7);
@@ -460,7 +471,7 @@ function shotLand(t) {
   // dust ring
   if (k < 0.6) w += S.ellipse(lx, J.end.y + 6, 120 + 520 * ease.out(k / 0.6), 26 + 40 * ease.out(k / 0.6), { fill: 'none', stroke: '#FFFFFF', 'stroke-width': 16 * (1 - k / 0.6), opacity: f(1 - k / 0.6) });
   w += actor('dex', t, { x: lx, y: J.end.y, s: E.DS, turn: 0.25, bodyY: 200 * crouch * (1 - up), legL: 26, legR: 22, armL: lerp(60, 165, up), armR: lerp(18, 168, up), sy: 1 - 0.1 * crouch, sx: 1 + 0.08 * crouch, face: { name: 'excited' }, headRot: -6 * up }, { arms: false });
-  let o = Ly.bg + Ly.mid + view(cam, w, 1) + Ly.fg + Ly.light;
+  let o = Ly.bg + Ly.mid + view(cam, w, 1) + Ly.light;
   o += K.confetti(t, cB9 + 0.1, 50, 4);
   o = dutch(o, -6);
   o += E.obbyHud(t, 1, { clear: seg(t, cB9 + 0.15, cB9 + 0.45) });
@@ -513,8 +524,8 @@ function shotLost(t) {
   // Dex: head-first in a heap, legs kicking
   const dxx = X(3700);
   if (dxx > -500 && dxx < 2400) {
-    w += actor('dex', t, { x: dxx, y: fl - 140, s, rot: 180, rotY: -480, legL: 20 + 22 * Math.sin(t * 14), legR: 20 + 22 * Math.cos(t * 14), armL: 20, armR: 20, shadow: false, face: 'neutral' }, { arms: false });
-    w += mound(dxx, fl, 300, 300);
+    w += actor('dex', t, { x: dxx, y: fl - 60, s, rot: 180, rotY: -480, legL: 20 + 22 * Math.sin(t * 14), legR: 20 + 22 * Math.cos(t * 14), armL: 20, armR: 20, shadow: false, face: 'neutral' }, { arms: false });
+    w += mound(dxx, fl, 320, 350);
     if (Math.sin(t * 9) > 0.3) w += K.bang('rummage', dxx + 260, fl - 420, 1, 40, 8, '#FFE9A8');
   }
   let o = Ly.bg + Ly.mid + view(cam, w, 1) + Ly.fg + Ly.light;
@@ -525,7 +536,7 @@ function shotLost(t) {
 // C2: Dex bursts out of the heap with his first sword
 function shotSword(t) {
   const dist = 2600;
-  const cam = camKeys(t, [[cC2, at(760, 700, 1.6)], [tSword, at(760, 690, 1.68)], [cC3, at(770, 700, 1.78)]]);
+  const cam = camKeys(t, [[cC2, at(740, 690, 1.85)], [tSword, at(745, 684, 1.92)], [cC3, at(750, 690, 2.02)]]);
   shakeAll(cam, t, [[cC2 + 0.15, 0.3, 12]]);
   const Ly = FM.lostAndFound(t, cam, { dist });
   const fl = FM.FLOOR.lost, s = 0.42;
@@ -540,7 +551,7 @@ function shotSword(t) {
   const swordRot = hug > 0 ? lerp(0, -150, hug) : lerp(30, 0, raise);
   const face = hug > 0.5 ? { name: 'joy', fx: ['tears', 'blush'] } : raise > 0.5 ? { name: 'amazed', fx: ['sparkles'] } : { name: 'shocked' };
   w += actor('dex', t, { x: 720, y: fl, s, lift: 160 * (1 - pop1), turn: 0.15, armR, armL, headRot: hug > 0 ? 8 * Math.sin(t * 7) : 0, props: [{ svg: S.g(E.swordHeld(1.4, swordRot), `translate(${f(hp[0])} ${f(hp[1])})`), layer: hug > 0.5 ? 'front' : 'front' }], face }, { arms: false });
-  w += mound(720, fl, 380, 190);
+  w += mound(720, fl + 30, 420, 150);
   // junk falling off him as he pops out
   for (let i = 0; i < 5; i++) { const a = t - cC2 - 0.08; if (a < 0 || a > 0.9) continue; w += FM.lostItem(['cap', 'balloon', 'egg', 'headphones', 'crown'][i], 720 + (i - 2) * 90 + a * (i - 2) * 160, fl - 420 + a * -500 + 0.5 * 2600 * a * a, 0.5, a * 300); }
   let o = Ly.bg + Ly.mid + view(cam, w, 1) + Ly.fg + Ly.light;
@@ -614,13 +625,13 @@ function shotArchiveWalk(t) {
 }
 // D3: close on the tiny bubble — "Even mine."
 function shotEvenMine(t) {
-  const cam = camKeys(t, [[cD3, at(950, 705, 2.9)], [cD4, at(960, 712, 3.15)]], ease.linear);
+  const cam = camKeys(t, [[cD3, at(950, 672, 2.6)], [cD4, at(960, 676, 2.85)]], ease.linear);
   const Ly = FM.archive(t, cam, { glow: 1 });
   const fl = FM.FLOOR.archive;
-  const reach = seg(t, tMine - 0.3, tMine + 0.3);
-  let w = actor('juno', t, { x: 880, y: fl, s: 0.42, turn: 0.62, bodyY: 160, armR: lerp(20, 62, reach), armL: 16, face: { name: 'happy', eyes: { look: [0.9, 0.5], pupil: 1.5 }, fx: t > tMine ? ['blush'] : [] } }, { arms: false, energy: 0.3 });
+  const reach = seg(t, tMine - 0.35, tMine + 0.25);
+  let w = actor('juno', t, { x: 835, y: fl, s: 0.42, turn: 0.62, bodyY: 160, armR: lerp(20, 88, reach), armL: 16, face: { name: 'happy', eyes: { look: [0.9, 0.5], pupil: 1.5 }, fx: t > tMine ? ['blush'] : [] } }, { arms: false, energy: 0.3 });
   let o = Ly.bg + Ly.mid + view(cam, w, 1) + Ly.fg + Ly.light;
-  o += glow(1120, 640, 520, 's08cyan', 0.45) + glow(760, 460, 420, 's08warm', 0.22);
+  o += glow(1060, 700, 520, 's08cyan', 0.45) + glow(700, 470, 420, 's08warm', 0.22);
   return o;
 }
 // the label card that stays on the shelf when Juno holds her bubble (world space)
@@ -634,9 +645,9 @@ function shelfLabel(lit = 0) {
 function junoHolding(t, x, o = {}) {
   const { bodyY = 150, face, turn = 0.3, headRot = 0 } = o;
   const s = 0.42, Z = ZS.juno;
-  const by = FM.FLOOR.archive + (-430 + bodyY) * s * Z;
+  const by = FM.FLOOR.archive + (-468 + bodyY) * s * Z + Math.sin(t * 1.6) * 2;
   const bub = glow(x, by, 150, 's08cyan', 0.75) + FM.gameBubble(x, by, 52, t, { kind: 'island', glow: 1, seed: 3, bob: false });
-  return actor('juno', t, { x, y: FM.FLOOR.archive, s, turn, bodyY, armL: -14, armR: -14, headRot, face }, { arms: false }) + bub;
+  return actor('juno', t, { x, y: FM.FLOOR.archive, s, turn, bodyY, armL: -74, armR: -74, headRot, face }, { arms: false }) + bub;
 }
 // D4: two-shot, Grandpa crouches beside her — "Especially yours ... gets a shelf."
 function shotEspecially(t) {
@@ -655,15 +666,14 @@ function shotEspecially(t) {
 }
 // D5: Juno close — "I always thought my game didn't matter. Three visits. ... But somebody kept it anyway."
 function shotJunoQuiet(t) {
-  const cam = camKeys(t, [[cD5, at(915, 700, 2.75)], [cD6, at(905, 690, 3.2)]], ease.linear);
+  const cam = camKeys(t, [[cD5, at(912, 662, 2.6)], [cD6, at(905, 655, 2.95)]], ease.linear);
   const Ly = FM.archive(t, cam, { glow: 0.7, juno: false });
   const smile = seg(t, tKept - 0.3, tKept + 0.4);
   const face = smile > 0.3 ? { name: 'happy', mouth: K.V.talking('JUNO', t) ? undefined : 'smile', fx: ['tears', 'blush'], eyes: { look: [0.2, 0.6] } } : { name: 'sad', eyes: { look: [0.1, 0.8] } };
-  let w = shelfLabel(1);
-  w += junoHolding(t, 900, { face, turn: 0.15, headRot: -4 + 3 * Math.sin(t * 0.8) });
+  let w = junoHolding(t, 900, { face, turn: 0.15, headRot: -4 + 3 * Math.sin(t * 0.8) });
   let o = Ly.bg + Ly.mid + view(cam, w, 1) + Ly.fg + Ly.light;
   o += glow(900, 870, 520, 's08cyan', 0.25 + 0.2 * smile);
-  o += E.visitIcons(1380, 360, t, [tThree, tThree + 0.2, tVisits + 0.1], 0.95);
+  o += E.visitIcons(1450, 400, t, [tThree, tThree + 0.2, tVisits + 0.1], 1.25);
   return o;
 }
 // D6: Grandpa, reverse angle — "A game doesn't need a million visits to matter, Juno. It just needs someone who made it."
@@ -673,8 +683,7 @@ function shotSomeone(t) {
   const fl = FM.FLOOR.archive, s = 0.42;
   const pat = seg(t, tJuno - 0.2, tJuno + 0.3) * (1 - seg(t, tSomeone + 1.2, cD7));
   const tap = pat > 0.9 ? 4 * Math.max(0, Math.sin((t - tJuno) * 14)) : 0;
-  let w = shelfLabel(1);
-  w += junoHolding(t, 900, { face: { name: 'happy', mouth: 'smallSmile', fx: pat > 0.5 ? ['blush'] : [], eyes: { look: [0.8, -0.6] } }, turn: 0.35, bodyY: 150 - tap * 2 });
+  let w = junoHolding(t, 900, { face: { name: 'happy', mouth: 'smallSmile', fx: pat > 0.5 ? ['blush'] : [], eyes: { look: [0.8, -0.6] } }, turn: 0.35, bodyY: 150 - tap * 2 });
   w += actor('grandpa', t, { x: 1050, y: fl, s, turn: -0.55, bodyY: 80, armL: lerp(30, 150, pat), armR: 20, keysSwing: 3 * Math.sin(t * 2), face: { name: 'happy', eyes: { look: [-0.8, 0.2] } } }, { arms: false, energy: 0.5 });
   let o = Ly.bg + Ly.mid + view(cam, w, 1) + Ly.fg + Ly.light;
   o += glow(1150, 400, 700, 's08warm', 0.25);
@@ -686,7 +695,7 @@ function shotSomeone(t) {
 function shotGreyHall(t) {
   const u = seg(t, cD7, cD8);
   const cam = { zoom: lerp(1.0, 1.12, u), x: 0, y: lerp(0, -40, u) };
-  const greyFrom = lerp(0.98, 0.5, ease.inOut(seg(t, tEnd - 0.2, cD8)));
+  const greyFrom = lerp(0.98, 0.3, ease.inOut(seg(t, tEnd - 0.3, cD8 + 0.2)));
   const Ly = FM.archive(t, cam, { view: 'deep', greyFrom, glow: lerp(0.8, 0.55, u) });
   let o = Ly.bg;
   // the Lag: only a far shadow with two spinning eyes in the darkness
@@ -694,10 +703,11 @@ function shotGreyHall(t) {
   if (lk > 0) o += view(cam, S.g(LAG.lag({ x: 960, y: 400, size: 0.42, t: K.stutterT(t, 6), mood: 'hungry', glitch: 0.2 }), null, { opacity: f(0.22 * lk) }), 1);
   o += Ly.fg;
   let w = '';
-  const gang = [['dex', 760], ['pip', 880], ['juno', 1000], ['grandpa', 1160]];
-  for (const [n, x] of gang) w += actor(n, t, { x, y: 1060, s: 0.44, view: 'back', headRot: n === 'juno' ? 0 : 4 * Math.sin(t + x), armL: 12, armR: n === 'grandpa' ? 25 : 12, props: n === 'grandpa' ? [grandpaMop()] : [], shadow: false }, { arms: false });
+  const back = seg(t, tEnd, tEnd + 0.6);
+  const gang = [['dex', 760 - 40 * back, 0], ['pip', 1080 + 60 * back, -0.02], ['juno', 960, 0], ['grandpa', 1180, 0]];
+  for (const [n, x, dz] of gang) w += actor(n, t, { x, y: 1060 + (n === 'pip' ? 10 : 0), s: 0.44 + dz, view: 'back', headRot: n === 'juno' ? -6 * back : 4 * Math.sin(t + x), bodyY: n === 'dex' ? 20 * back : 0, armL: n === 'pip' ? 12 + 50 * back : 12, armR: n === 'grandpa' ? 25 : 12, props: n === 'grandpa' ? [grandpaMop()] : [], shadow: false }, { arms: false });
   o += w;
-  o += S.rect(0, 0, 1920, 1080, 0, { fill: 'url(#s08greyCreep)', opacity: f(0.12 + 0.25 * u) });
+  o += S.rect(0, 0, 1920, 1080, 0, { fill: 'url(#s08greyCreep)', opacity: f(0.15 + 0.4 * u) });
   return o;
 }
 // D8: one bubble on the shelf drains to grey and cracks — "...the bubbles were turning grey."
@@ -711,7 +721,8 @@ function shotGreyBubble(t) {
   const crack = seg(t, tGrey + 0.05, tGrey + 0.35);
   const lift = Math.max(0, t - tGrey - 0.5);
   o += glow(960, 560, 400, 's08cyan', 0.5 * (1 - drain));
-  o += S.g(E.drainingBubble(960, 560 - lift * 60, 190, t, drain, 'castle', 2, crack), `rotate(${f(lift * 12)} 960 560)`);
+  o += S.ellipse(960, 762, 150, 30, ol(drain > 0.5 ? '#9AA3B2' : '#E0B84A', 6));
+  o += S.g(E.drainingBubble(960, 560 - lift * 110, 190, t, drain, 'castle', 2, crack), `rotate(${f(lift * 14)} 960 560)`);
   o += S.rect(0, 0, 1920, 1080, 0, { fill: '#5A6070', opacity: f(0.18 * drain) });
   o += K.bang('crk', 1150, 330, bump(t, tGrey + 0.05, tGrey + 0.5), 48, 10, '#C8CED8');
   return o;

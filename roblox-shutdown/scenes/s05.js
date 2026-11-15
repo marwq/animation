@@ -116,10 +116,14 @@ function goldKey(x, y, s = 1, rot = 0, glow = 1, t = 0) {
   return S.g(o, tf(x, y, s, rot));
 }
 // the main attic angle at night
-function attic(t, cam, opts, chars, post = '') {
+function attic(t, cam, opts, chars, post = '', lit = '') {
   const La = SETS.attic.layers(t, { night: true, juice: 12, ...opts });
-  return view(cam, La.bg, 0.5) + view(cam, La.mid + chars, 1) + view(cam, La.fg, 1.2) + view(cam, La.light, 1) + post;
+  return view(cam, La.bg, 0.5) + view(cam, La.mid + chars, 1) + view(cam, La.fg, 1.2) + view(cam, La.light, 1) + (lit ? view(cam, lit, 1) : '') + post;
 }
+// warm pool of light behind a character (hatch light / flashlight bounce), drawn before them
+const warmPool = (x, y, rx = 340, ry = 420, op = 0.5) => S.ellipse(x, y, rx, ry, { fill: 'url(#s05warm)', opacity: f(op) });
+// characters standing on the attic floor in front of the hatch lip are clipped above the lip line
+const aboveLip = (svg) => clipTo(-1000, -2000, 4000, 2942, svg);
 // reverse angle: from behind the laptop, looking at whoever sits at the desk. World space; content between bg and fg.
 function reverseBg(t, lagK = 0) {
   let o = S.rect(-800, -600, 3520, 2280, 0, { fill: '#3A2A3A' });
@@ -272,9 +276,8 @@ function shBubbles(t) {
     wd += K.loadingWheel(lerp(960 + Math.cos(a) * 900, lx, gather), lerp(260 + Math.sin(a) * 500, ly, gather), 26, t + i * 0.2, '#9AA3B5', 8);
   }
   if (gather > 0.6) wd += S.g(lag({ x: lx, y: ly, size: size * clamp((gather - 0.6) / 0.4, 0.2, 1), t: tt, mouth: lagMouth(t), mood: 'hungry', glitch: 0.15, look: [-0.3, 0.6] }), null);
-  let o = view(cam, wd, 1);
-  for (const tb of [tBub1, tBub2, tBubbles]) o += K.bang('CHOMP', 1500, 820, seg(t, tb, tb + 0.08) * (1 - seg(t, tb + 0.3, tb + 0.4)), 90, -8, '#FFFFFF');
-  return o;
+  for (const tb of [tBub1, tBub2, tBubbles]) wd += K.bang('CHOMP!', lx - 230, ly + 40, seg(t, tb, tb + 0.08) * (1 - seg(t, tb + 0.3, tb + 0.4)), 80, -8, '#FFFFFF');
+  return view(cam, wd, 1);
 }
 // ---- 6. who said that?!
 function shWho(t) {
@@ -329,7 +332,8 @@ function shFood(t) {
   const cam = camKeys(t, [[d10, at(960, 540, 1.0)], [tFood + 0.1, at(960, 640, 1.3)], [d11, at(960, 650, 1.35)]]);
   shakeAll(cam, t, [[tFood, 0.8, 34]]);
   let wd = S.rect(-800, -600, 3520, 2280, 0, { fill: '#7A8090' });
-  wd += lag({ x: 960, y: 140, size: 5.4, t, mouth: lagMouth(t) || 'D', mood: 'hungry', glitch: 0.5, look: [0, 0.6] });
+  const fm = t >= tFood - 0.05 && t < B[5].b ? 'O' : lagMouth(t);
+  wd += lag({ x: 960, y: 140, size: 5.4, t, mouth: fm, mood: 'hungry', glitch: 0.5, look: [0, 0.6] });
   let o = view(cam, wd, 1);
   o += smash(t, tFood, 0.14, 0.7);
   return o;
@@ -386,7 +390,8 @@ function shMiss(t) {
   const grey = 0.6 + 0.35 * seg(tt, tNobody, tIt);
   const chomp = seg(tt, tIt, tIt + 0.2);
   let wd = game(tt, { bites: 4 + 2 * chomp, grey, hud: false });
-  wd += lag({ x: 1180, y: 300, size: 1.7, t: tt, mouth: lagMouth(t) || (chomp > 0 && chomp < 1 ? 'D' : null), mood: tt > tIt + 0.2 ? 'laugh' : 'hungry', glitch: 0.3, look: [-0.8, 0.6] });
+  const lunge = bump(t, tIt - 0.12, tIt + 0.5);
+  wd += lag({ x: lerp(1330, 1150, lunge), y: lerp(360, 470, lunge), size: 1.45, t: tt, mouth: lunge > 0.2 ? 'O' : lagMouth(t), mood: t > tIt + 0.4 ? 'laugh' : 'hungry', glitch: 0.3, look: [-0.8, 0.6] });
   let o = view(cam, wd, 1);
   if (tt !== t) o += K.loadingWheel(1800, 980, 28, t, '#FFFFFF', 8);
   o += smash(t, tIt, 0.1, 0.4);
@@ -413,8 +418,8 @@ function shPencil(t) {
   const tp = d15 + 0.35;
   const cam = camKeys(t, [[d15, at(1000, 720, 2.3)], [tCat - 0.05, at(1000, 740, 2.3)], [d16, at(1110, 780, 2.1)]], ease.inOut);
   let chars = '';
-  if (t < tp) chars += pencilProp(1000, 700, 170, 0.75) + K.loadingWheel(1060, 650, 18, t, '#FFFFFF', 8);
-  else chars += pencilProp(990, 912, 8, 0.75) + (t < tp + 0.15 ? S.circle(1000, 905, 40 * seg(t, tp, tp + 0.15), { fill: 'none', stroke: '#9FE2FF', 'stroke-width': 6 }) : '');
+  if (t < tp) chars += pencilProp(940, 690, 160, 1.05) + K.loadingWheel(1030, 610, 26, t, '#FFFFFF', 8) + S.rect(900, 640, 230, 110, 8, { fill: 'none', stroke: '#9FE2FF', 'stroke-width': 3, 'stroke-dasharray': '10 8' });
+  else chars += pencilProp(950, 912, 8, 1.05) + (t < tp + 0.15 ? S.circle(1010, 905, 50 * seg(t, tp, tp + 0.15), { fill: 'none', stroke: '#9FE2FF', 'stroke-width': 6 }) : '');
   const look = t < tp ? [-0.2, -1] : [-0.6, 0.6];
   chars += SETS.attic.cat(CAT.x, CAT.y, 0.8, t, { pose: 'sit' });
   let o = attic(t, cam, { lag: 0.35, cat: false }, chars);
@@ -442,21 +447,23 @@ function shRealLife(t) {
   return attic(t, cam, { lag: lagK, cat: false }, j + cat);
 }
 // ---- 18-19. Grandpa comes up the hatch
-const GP = { x: 1300 };
+const GP = { x: 1360 };
 function shHatch(t) {
   const open = ease.inOut(seg(t, d18, d18 + 0.45));
   const rise = ease.out(seg(t, d18 + 0.35, tBack - 0.3));
   const cam = camKeys(t, [[d18, at(1150, 640, 1.25)], [tBack, at(1220, 620, 1.45)], [d19, at(1230, 620, 1.5)]]);
   const fy = lerp(1500, 1170, rise);
   const point = seg(t, tBack - 0.3, tBack);
-  const g = gpa(t, { x: GP.x, y: fy, s: 0.62, turn: -0.3, armL: 20, armR: lerp(50, 90, point), props: [flashlightProp(lerp(50, 90, point), 1, lerp(-40, -80, point))], face: { name: 'determined', blink: blinkK(t, 2) } }, { arms: false, energy: 0.5 });
+  const armL = lerp(60, 95, point);
+  const g = gpa(t, { x: GP.x, y: fy, s: 0.62, turn: -0.3, armL, armR: 20, props: [flashlightProp(armL, -1, lerp(-20, -70, point))], face: { name: 'determined', blink: blinkK(t, 2) } }, { arms: false, energy: 0.5 });
   const La = SETS.attic.layers(t, { night: true, juice: 12, lag: 0.6, hatchOpen: open, cat: false });
-  let o = view(cam, La.bg, 0.5) + view(cam, La.mid + g + SETS.attic.hatchFront(t, { hatchOpen: open }), 1) + view(cam, La.fg, 1.2) + view(cam, La.light, 1);
-  // hatch light + flashlight beam
-  if (open > 0) o += view(cam, S.ellipse(1300, 900, 230 * open, 60 * open, { fill: '#FFE2A0', opacity: 0.35 }), 1);
+  let o = view(cam, La.bg, 0.5) + view(cam, La.mid + SETS.attic.hatchFront(t, { hatchOpen: open }), 1) + view(cam, La.fg, 1.2) + view(cam, La.light, 1);
+  // hatch light, Grandpa (lit from below), flashlight beam
+  if (open > 0) o += view(cam, S.ellipse(1300, 900, 230 * open, 60 * open, { fill: '#FFE2A0', opacity: 0.35 }) + warmPool(GP.x, 760, 320, 360, 0.5 * open), 1);
+  o += view(cam, aboveLip(g), 1);
   if (rise > 0.2) {
-    const [hx, hy] = AC.hand(lerp(50, 90, point), 1);
-    o += view(cam, beam(GP.x + hx * 0.62, fy + hy * 0.62 - 30, lerp(-90, -165, point), 900, 14, rise), 1);
+    const [hx, hy] = AC.hand(armL, -1);
+    o += view(cam, beam(GP.x + hx * 0.62, fy + hy * 0.62 - 40, lerp(-110, -168, point), 1000, 14, rise), 1);
   }
   return o;
 }
@@ -467,10 +474,10 @@ function shYouKnow(t) {
   const La = SETS.attic.layers(t, { night: true, juice: 12, lag: 0.5, hatchOpen: 1, screen: scr, cat: 'bed' });
   const jump = bump(t, d19, d19 + 0.4);
   let chars = juno(t, { x: 820, y: 1000, s: 0.62, turn: 0.35, armL: 95, armR: 30, lift: 30 * jump }, { arms: false, energy: 1.4 });
-  chars += gpa(t, { x: 1420, y: 1000, s: 0.64, turn: -0.35, armL: 20, armR: 40, props: [flashlightProp(40, 1, -60)], face: { name: 'neutral', mouth: 'line', blink: blinkK(t, 2) } }, { arms: false });
-  let o = view(cam, La.bg, 0.5) + view(cam, La.mid + SETS.attic.hatchFront(t, { hatchOpen: 1 }) + chars, 1) + view(cam, La.fg, 1.2) + view(cam, La.light, 1);
-  const [hx, hy] = AC.hand(40, 1);
-  o += view(cam, beam(1420 + hx * 0.64, 1000 + hy * 0.64 - 40, -150, 700, 12, 0.8), 1);
+  chars += gpa(t, { x: 1420, y: 1000, s: 0.64, turn: -0.35, armL: 45, armR: 20, props: [flashlightProp(45, -1, -60)], face: { name: 'neutral', mouth: 'line', blink: blinkK(t, 2) } }, { arms: false });
+  let o = view(cam, La.bg, 0.5) + view(cam, La.mid + SETS.attic.hatchFront(t, { hatchOpen: 1 }), 1) + view(cam, La.fg, 1.2) + view(cam, La.light, 1) + view(cam, warmPool(1420, 640) + chars, 1);
+  const [hx, hy] = AC.hand(45, -1);
+  o += view(cam, beam(1420 + hx * 0.64, 1000 + hy * 0.64 - 40, -172, 700, 12, 0.8), 1);
   return o;
 }
 // ---- 20-21. thirty years, night janitor at the Server Farm
@@ -537,9 +544,9 @@ function shKeys(t) {
   let left = reverseBg(t, 0.1) + juno(t, { x: 560, y: 1500, s: 1.05, turn: 0.35, armL: 10, armR: 10, face: { name: 'amazed', eyes: { look: [0.7, 0.9] }, mouth: K.V.viseme('JUNO', t) || 'O' } }, { arms: false, energy: 0.5 });
   left += S.rect(-200, -200, 2320, 1480, 0, { fill: 'url(#s05dark2)', opacity: 0.6 }) + S.ellipse(560, 600, 520, 500, { fill: 'url(#s05glowBlue)', opacity: 0.4 });
   const swing = 22 * Math.sin((t - d23) * 9) * Math.exp(-(t - d23) * 0.8);
-  let right = S.rect(800, 0, 1200, 1080, 0, { fill: '#C48A26' }) + S.rect(800, 0, 1200, 1080, 0, { fill: 'url(#s05knit)' }) + S.rect(800, 820, 1200, 260, 0, { fill: '#7A553A' });
-  right += S.rect(800, 760, 1200, 70, 0, ol('#5A3B26', 6)) + S.rect(1360, 750, 120, 90, 14, ol('#C9A262', 6));
-  right += S.g(keyCloseUp(t, swing), tf(1420, 790, 4.2));
+  let right = S.rect(800, 0, 1200, 1080, 0, { fill: '#C48A26' }) + S.rect(800, 0, 1200, 1080, 0, { fill: 'url(#s05knit)' }) + S.rect(800, 660, 1200, 420, 0, { fill: '#7A553A' });
+  right += S.rect(800, 600, 1200, 70, 0, ol('#5A3B26', 6)) + S.rect(1360, 590, 120, 90, 14, ol('#C9A262', 6));
+  right += S.g(keyCloseUp(t, swing), tf(1420, 640, 3.6));
   right += K.F.sparkle(1640, 720, 30 * Math.abs(Math.sin(t * 5))) + K.F.sparkle(1300, 1000, 22 * Math.abs(Math.sin(t * 6 + 1)));
   let o = clipTo(0, 0, 1920, 1080, S.g(right, `translate(${f(700 * (1 - sl))} 0)`));
   const id = S.uid('s05lp');
@@ -555,8 +562,7 @@ function shNinetyNine(t) {
   const swing = 14 * Math.sin(t * 7);
   const ring = { svg: S.g(keyRing({ x: 0, y: 0, s: 1, swing, gold: true, n: 9 }), `translate(${f(hx)} ${f(hy - 10)}) scale(2.4)`), layer: 'front' };
   let chars = gpa(t, { x: 1180, y: 1000, s: 0.64, turn: -0.15, armL: 20, armR: arm, keys: false, props: [ring], face: { name: 'smug' } }, { arms: false, energy: 0.6 });
-  let o = attic(t, cam, { lag: 0.25, hatchOpen: 1, cat: 'bed' }, SETS.attic.hatchFront(t, { hatchOpen: 1 }) + chars);
-  o += S.ellipse(1180, 520, 600, 520, { fill: 'url(#s05warm)', opacity: 0.35 });
+  let o = attic(t, cam, { lag: 0.25, hatchOpen: 1, cat: 'bed' }, SETS.attic.hatchFront(t, { hatchOpen: 1 }), '', warmPool(1180, 640, 420, 460, 0.55) + chars);
   const k = pop(t, tNinety + 0.1, 0.35);
   if (k > 0) o += S.g(K.rays(0, 0, 14, 260, '#FFF4A8', 0.25, t * 30) + TS('99', 0, 60, 220, '#FFD21F') + TFS('KEYS', 0, 130, 60, '#FFFFFF'), tf(560, 430, k, -8));
   o += K.bang('SERVER FARM', 560, 680, pop(t, tOpen, 0.3), 70, -6, '#7CF7FF');
@@ -567,10 +573,10 @@ function shLockerKey(t) {
   let wd = S.rect(-800, -600, 3520, 2280, 0, { fill: '#2A1E2E' }) + S.circle(960, 520, 520, { fill: 'url(#s05warm)', opacity: 0.6 });
   // fingers pinch one small key with a heart tag
   const pick = ease.outBack(seg(t, d25, d25 + 0.4));
-  wd += S.g(S.rect(-170, -60, 260, 120, 60, ol('#EDC1A0', 8)) + S.rect(-20, -150, 120, 260, 56, ol('#EDC1A0', 8)), tf(1100, 700 - 80 * pick, 1, -20));
+  wd += S.g(S.rect(-170, -60, 260, 120, 60, ol('#EDC1A0', 8)) + S.rect(-20, -150, 120, 260, 56, ol('#EDC1A0', 8)), tf(1080, 840 - 80 * pick, 1.2, -20));
   let key = S.circle(0, -150, 46, ol('#C9CED8', 7)) + S.circle(0, -150, 16, { fill: '#2A1E2E', stroke: LINE, 'stroke-width': 5 }) + S.rect(-14, -110, 28, 220, 6, ol('#C9CED8', 6)) + S.rect(14, 60, 40, 20, 4, ol('#C9CED8', 5)) + S.rect(14, 90, 30, 18, 4, ol('#C9CED8', 5));
-  key += S.path('M0 -196 L-80 -280', ln(6, '#E8243C')) + S.g(S.rect(-80, -40, 160, 80, 12, ol('#FFF4E6', 5)) + TF('LOCKER', 0, -2, 34, '#2A2246') + S.path(K.F.heartPath(0, 22, 9), { fill: '#FF4D7A' }), 'translate(-120 -320) rotate(-14)');
-  wd += S.g(key, tf(980, 560 - 60 * pick, 1.1, 10 * Math.sin(t * 3)));
+  key += S.path('M-30 -170 L-200 -190', ln(6, '#E8243C')) + S.g(S.rect(-90, -46, 180, 92, 12, ol('#FFF4E6', 5)) + TF('LOCKER', 0, -2, 38, '#2A2246') + S.path(K.F.heartPath(0, 26, 10), { fill: '#FF4D7A' }), 'translate(-290 -190) rotate(-10)');
+  wd += S.g(key, tf(980, 700 - 60 * pick, 1.3, 10 * Math.sin(t * 3)));
   return view(cam, wd, 1) + K.F.sparkle(1060, 380, 26 * Math.abs(Math.sin(t * 6)));
 }
 // ---- 26. the 1998 sandwich
@@ -641,9 +647,8 @@ function shTiny(t) {
   const cam = camKeys(t, [[d27, at(1000, 560, 1.0)], [tTiny, at(1250, 640, 1.5)], [d28, at(1260, 650, 1.55)]], ease.inOut);
   const peek = ease.outBack(seg(t, tTiny - 0.6, tTiny));
   let wd = sepiaAisle(t, cam);
-  wd += youngOtto({ x: 600, y: 990, s: 0.62, turn: 0.3, armL: 40, armR: 40, face: { name: 'happy', blink: blinkK(t, 3) }, props: [{ svg: mop({ x: 300, y: 0, rot: -14 + 6 * Math.sin(t * 4) }), layer: 'front' }] });
-  wd += S.rect(1300, 140, 200, 680, 10, ol('#8A7450', 6)); // a rack he hides behind
-  wd += tinyLag(lerp(1420, 1300, peek), 760, 0.22, t, 'neutral');
+  wd += youngOtto({ x: 600, y: 990, s: 0.62, turn: 0.3, armL: 40, armR: 40, face: { name: 'happy', blink: blinkK(t, 3) }, props: [{ svg: mop({ x: 150 + 30 * Math.sin(t * 4), y: 0, rot: 12 + 5 * Math.sin(t * 4), len: 600 }), layer: 'front' }] });
+  wd += tinyLag(lerp(1430, 1290, peek), 760, 0.3, t, 'neutral');
   wd += S.rect(1360, 140, 200, 680, 10, ol('#8A7450', 6)) + S.rect(1376, 160, 168, 640, 6, { fill: '#6E5A3A' });
   let o = view(cam, wd, 1) + filmLook(t);
   o += C.whiteFlash(0.8 * (1 - seg(t, d27, d27 + 0.3)));
@@ -654,15 +659,15 @@ function shShoo(t) {
   const sw = bump(t, tShoo - 0.15, tShoo + 0.35);
   const arm = 40 + 70 * sw;
   const [hx, hy] = AC.hand(arm, 1);
-  const rot = lerp(-14, -70, sw), d = 330;
-  const mx = hx + d * Math.sin((rot * Math.PI) / 180), my = hy + d * Math.cos((rot * Math.PI) / 180);
+  const rot = lerp(12, -70, sw), d = lerp(330, 520, sw);
+  const mx = hx - d * Math.sin((rot * Math.PI) / 180), my = hy + d * Math.cos((rot * Math.PI) / 180);
   let wd = sepiaAisle(t, cam);
-  wd += youngOtto({ x: 760, y: 990, s: 0.62, turn: 0.4, armL: 30, armR: arm, lean: 4 * sw, face: { name: sw > 0.3 ? 'determined' : 'happy', blink: blinkK(t, 3) }, props: [{ svg: mop({ x: mx, y: my, rot }), layer: 'front' }] });
+  wd += youngOtto({ x: 760, y: 990, s: 0.62, turn: 0.4, armL: 30, armR: arm, lean: 4 * sw, face: { name: sw > 0.3 ? 'determined' : 'happy', blink: blinkK(t, 3) }, props: [{ svg: mop({ x: mx, y: my, rot, len: 600 }), layer: 'front' }] });
   // the tiny Lag hops away (3 hops)
   const hu = seg(t, tShoo + 0.05, tMopW + 0.6);
   const hops = hu * 3, hi = Math.floor(Math.min(hops, 2.999)), hf = hops - hi;
   const lx = lerp(1150, 1750, hu), hop = hu > 0 && hu < 1 ? Math.sin(hf * Math.PI) * 110 : 0;
-  wd += tinyLag(lx, 900, 0.22, t, hu > 0 ? 'scared' : 'neutral', hop);
+  wd += tinyLag(lx, 890, 0.3, t, hu > 0 ? 'scared' : 'neutral', hop);
   if (hu > 0) wd += C.dust(1150, 960, tShoo + 0.05, t);
   let o = view(cam, wd, 1) + filmLook(t);
   o += K.bang('SHOO!', 1100, 360, seg(t, tShoo, tShoo + 0.1) * (1 - seg(t, tShoo + 0.8, tShoo + 0.9)), 120, -8, '#F4E6C8');
@@ -697,7 +702,7 @@ function shTraffic(t) {
 }
 // ---- 30. the more everyone rushes... the bigger he gets (Earth)
 function shBigger(t) {
-  const cam = camKeys(t, [[d30, at(960, 560, 0.95)], [tBigger, at(960, 520, 1.0)], [d31, at(960, 500, 1.06)]]);
+  const cam = camKeys(t, [[d30, at(960, 470, 0.84)], [tBigger, at(960, 420, 0.9)], [d31, at(960, 400, 0.95)]]);
   shakeAll(cam, t, [[tBigger, 1.0, 18]]);
   let wd = SETS.earth(t, { night: 0.8 });
   const E_ = SPOTS.earth;
@@ -740,7 +745,7 @@ function shWorld(t) {
     }
     o += clipTo(px + 8, 8, 624, 1064, S.g(pan, `translate(${f(px)} ${f((1 - k) * -1080)})`));
   });
-  o += K.bang('RUSH HOUR', 960, 900, pop(t, tWhole, 0.3), 110, -4, '#FF5A5A');
+  o += K.bang('RUSH HOUR', 960, 760, pop(t, tWhole, 0.3), 110, -4, '#FF5A5A');
   return o;
 }
 // ---- 33-34. to starve him. Forever.
@@ -760,11 +765,11 @@ function shPlate(t) {
   wd += S.rect(200, 760, 1520, 60, 14, ol('#C98A52', 7)) + S.rect(240, 820, 40, 300, 8, ol('#A86B3C', 6)) + S.rect(1640, 820, 40, 300, 8, ol('#A86B3C', 6));
   wd += S.ellipse(960, 760, 300, 60, ol('#FFFFFF', 7)) + S.ellipse(960, 756, 200, 36, { fill: '#EEF1F6' });
   wd += S.rect(560, 640, 22, 140, 8, ol('#C9CED8', 5)) + S.path('M550 640 L550 600 M571 640 L571 590 M592 640 L592 600', ln(8, '#C9CED8')) + S.rect(1340, 600, 26, 180, 10, ol('#C9CED8', 5));
-  wd += S.path('M860 560 L1060 560 L1000 680 L920 680 Z', ol('#FFFFFF', 6)); // napkin bib
+  wd += S.path('M900 640 L1020 640 L960 730 Z', ol('#FFFFFF', 6)) + S.path('M915 652 L1005 652', ln(5, '#E8243C')); // napkin, tucked in
   wd += S.g(S.rect(-120, -50, 240, 100, 12, ol('#E8243C', 6)) + T('CLOSED', 0, 22, 54, '#FFFFFF'), tf(1500, 420, 1, -6 + 6 * Math.sin(t * 2)));
   if (t > tStarve) wd += S.circle(1000, 748, 6, { fill: '#B8A060', stroke: LINE, 'stroke-width': 2 }); // one crumb
   let o = view(cam, wd, 1);
-  o += K.bang('FOREVER.', 960, 220, pop(t, tForever, 0.3), 120, 0, '#FFFFFF');
+  o += K.bang('FOREVER.', 470, 330, pop(t, tForever, 0.3), 120, -8, '#FFFFFF');
   return o;
 }
 // ---- 35. so if we stop the Lag...?
@@ -774,8 +779,7 @@ function shStop(t) {
   const fist = bump(t, tStop - 0.1, tStop + 0.6);
   const hope = seg(t, tShut - 0.3, tShut + 0.2);
   let chars = juno(t, { x: 820, y: 1000, s: 0.62, turn: lerp(0, 0.35, hope), bodyY: 40 * (1 - stand), armL: 25 + 20 * fist, armR: 25 + 20 * fist, headRot: 8 * hope, face: hope > 0.5 ? { name: 'happy', eyes: { look: [0.8, -0.2] } } : undefined }, { arms: false, energy: 1.2 });
-  let o = attic(t, cam, { lag: 0.2, hatchOpen: 1, cat: 'bed' }, SETS.attic.hatchFront(t, { hatchOpen: 1 }) + chars);
-  o += S.ellipse(820, 600, 500, 600, { fill: 'url(#s05warm)', opacity: 0.25 });
+  let o = attic(t, cam, { lag: 0.2, hatchOpen: 1, cat: 'bed' }, SETS.attic.hatchFront(t, { hatchOpen: 1 }), '', warmPool(820, 640, 380, 460, 0.35) + chars);
   return o;
 }
 // ---- 36. the golden key: "Get your helmet, builder."
@@ -789,11 +793,11 @@ function shGoldKey(t) {
   const tap = bump(t, tHelmet - 0.1, tHelmet + 0.45);
   let chars = juno(t, { x: 760, y: 1000, s: 0.62, turn: 0.3, armL: 15, armR: 15 + 160 * tap, face: { name: t > tHelmet ? 'determined' : 'amazed', blink: blinkK(t, 1) } }, { arms: false });
   chars += gpa(t, { x: 1300, y: 1000, s: 0.64, turn: -0.3, armL: 20, armR: arm, goldKey: unhook < 0.3, props: unhook > 0.3 ? [key] : [], keysSwing: 20 * Math.sin(t * 9) * (1 - unhook) }, { arms: false, energy: 0.5 });
-  let o = attic(t, cam, { lag: 0.1, hatchOpen: 1, cat: 'bed' }, SETS.attic.hatchFront(t, { hatchOpen: 1 }) + chars);
+  let o = attic(t, cam, { lag: 0.1, hatchOpen: 1, cat: 'bed' }, SETS.attic.hatchFront(t, { hatchOpen: 1 }), '', warmPool(1300, 640, 380, 460, 0.45) + chars);
   // the key's glow over the darkness
   if (glow > 0) {
     const kx = 1300 + hx * 0.64, ky = 1000 + (hy - 150) * 0.64;
-    o += view(cam, S.circle(kx, ky + 20, 320, { fill: 'url(#s05goldGlow)', opacity: f(0.8 * glow) }) + K.rays(kx, ky + 20, 14, 360, '#FFF4C8', 0.22 * glow, t * 30) + goldKey(kx, ky, 0.58, 10, 0, t) + K.F.sparkle(kx + 50, ky - 40, 18 * glow * Math.abs(Math.sin(t * 7))), 1);
+    o += view(cam, S.circle(kx, ky + 20, 260, { fill: 'url(#s05goldGlow)', opacity: f(0.7 * glow) }) + K.rays(kx, ky + 20, 14, 260, '#FFF4C8', 0.12 * glow, t * 30) + goldKey(kx, ky, 0.58, 10, 0, t) + K.F.sparkle(kx + 50, ky - 40, 18 * glow * Math.abs(Math.sin(t * 7))), 1);
   }
   if (tap > 0.4) o += view(cam, K.F.sparkle(760, 380, 34), 1);
   o += C.whiteFlash(seg(t, END - 0.18, END));

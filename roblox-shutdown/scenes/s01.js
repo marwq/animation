@@ -231,6 +231,7 @@ const DAY = [
 ];
 
 function scene(t) {
+  E.STATE.wall = false;
   if (t < tFreeze) {
     let o = live(t);
     return o;
@@ -256,6 +257,7 @@ function scene(t) {
 }
 
 function timer(t) {
+  if (E.STATE.wall) return null;
   if (t < tB) return null;                                  // the wall timer is in shot
   if (t < tC && E.wallTimerVisible(camB(t))) return null;
   if (t >= tE && t < tF && E.wallTimerVisible(camE(t))) return null;
