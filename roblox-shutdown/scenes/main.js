@@ -32,7 +32,8 @@ function placeholder(id, t) {
     `<text x="960" y="600" font-family="Fredoka" font-weight="600" font-size="40" fill="#FFFFFF" text-anchor="middle">${t.toFixed(2)}s</text>`;
 }
 
-const STATIC_DEFS = ST.DEFS + ST.FRAME_DEFS + (require('./env').DEFS || '') + ORDER.map((id) => (mod(id) && mod(id).DEFS) || '').join('');
+const optDefs = (m) => { try { return require(m).DEFS || ''; } catch (e) { if (e.code === 'MODULE_NOT_FOUND') return ''; throw e; } };
+const STATIC_DEFS = ST.DEFS + ST.FRAME_DEFS + (require('./env').DEFS || '') + optDefs('./sets') + optDefs('./farm') + optDefs('../rig/lag') + ORDER.map((id) => (mod(id) && mod(id).DEFS) || '').join('');
 
 function frame(t) {
   const r = RANGES.find((x) => t >= x.a && t < x.b) || RANGES[RANGES.length - 1];
