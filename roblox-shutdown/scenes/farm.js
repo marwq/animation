@@ -1,17 +1,42 @@
-// Shared ROAD (SC 06) and SERVER FARM (SC 01, SC 07–SC 11) background sets.
+// Shared ROAD (SC 06) and SERVER FARM (SC 01, SC 07–SC 11, also SC 10/12 exteriors) background sets.
+// Contact sheet: `node tools/farm_sheet.js` → concept/sets_farm.png (filter by name, `--dir` for full-size tiles, `--time`).
 //
-// Conventions
-// - World space = the 1920x1080 frame at the default camera ({zoom:1, x:0, y:0}).
-// - Every set takes `t` (absolute seconds; only idle motion: LEDs, fans, cables, clouds) and an `opts` object.
-// - Panning sets take a camera: `desertRoad(t, cam, opts)`, `rackHall`, `coolingRoom`, `cableJungle`, `lostAndFound`,
-//   `archive`, `core`; the static sets accept `opts.cam`. They return a Layers object { bg, mid, fg } that is ALREADY
-//   seen through that camera (every sub-layer has its own parallax inside). Compose a frame like this:
+// CONVENTIONS
+// - World space = the 1920x1080 frame at the default camera ({zoom:1, x:0, y:0}). `t` = absolute seconds (idle motion only).
+// - Panning sets take a camera: desertRoad / rackHall / coolingRoom / cableJungle / lostAndFound / archive / core (t, cam, opts);
+//   the other sets accept `opts.cam`. All sets return a Layers object { bg, mid, fg } that is ALREADY seen through the camera
+//   (sub-layers carry their own parallax). Characters standing on the floor go through K.view(cam, chars, 1):
 //       const L = F.rackHall(t, cam, { alarm: 1 });
-//       return L.bg + L.mid + K.view(cam, myCharacters, 1) + L.fg;
-//   (`'' + L` or `${L}` also works: bg + mid + fg.) Characters on the floor use parallax k = 1.
-// - Props (`van`, `truck`, `cow`, `gameBubble`, `worldMap`, `lostItem`, `slushie`, …) return a plain SVG string.
-// - Static <defs> live in DEFS (ids prefixed `farm`); main.js includes them for every frame.
-// - Floor lines / slots are exported in FLOOR, VAN, VANIN, GAS, DOOR, LIFT, JUNGLE, CORE (see the bottom of this file).
+//       return L.bg + L.mid + K.view(cam, myCharacters, 1) + L.fg + L.light;   // ('' + L) = bg + mid + fg + light
+//   `light` holds the colour washes (alarm red, green glow, lag grey, sunset) so characters get tinted too — draw it last.
+//   Without a cam the layers are plain world space. Infinite sets (road, hall, cooling, jungle, lost, archive) also take
+//   opts.dist = px scrolled (parallax handled inside) so a stationary camera can fake travel.
+// - Props return a plain SVG string: van, truck, cow, slushie, gameBubble, worldMap, lostItem, rack, beacon, cable,
+//   steeringWheel, cactus, tumbleweed, roadDust, breath, wheelStorm.
+// - Static <defs> in DEFS (ids `farm*`) are already included by main.js. No filters/masks/blend modes; a few clipPaths.
+//
+// FLOORS (feet y, k = 1):  FLOOR = { road 955 (near lane; far lane ROAD.far 845, far shoulder ROAD.shoulderFar 772),
+//   gas 905, farm 950 (exterior wide), door 940 (farmDoor close-up), lift 930 (service corridor), liftInside 900,
+//   hall 900, cooling 900 (ice), lost 920, archive 900, core 860 (catwalk) }.
+//   cableJungle: standing tops JUNGLE.start {x0:-900, x1:380, y:800}, JUNGLE.platforms [{x, w, y}], JUNGLE.end {x0:2060, y:680};
+//   swing vines JUNGLE.vines, vineEnd(i, t, opts) → hanging point (override angles with opts.swing = [deg, deg]).
+//   gasStationInside: counter top GASIN.counterTop 770, cashier GASIN.cashier {x:960, y:990, s:.62} between bg and fg.
+//   gasStation: cashier through the window GAS.cashier {x:1330, y:880, s:.3} → pass him in opts.inside (world coords).
+//
+// VAN "Betsy" (van-local, s = 1, origin = ground under the middle; ~960 x 640, side view faces RIGHT):
+//   VAN.slots[i] = { name, win:{x,y,w,h}, x, y, s }: 0 driver (front window x 190..362), 1 middle (-95..145),
+//   2 rear (-440..-125); all windows y -535..-350. opts.windows[i] is drawn with its feet anchor at (slot.x, slot.y):
+//   draw your actor at {x:0, y:0, s:.36} (front view + turn reads best); it is clipped to the cabin. opts.inside = extra
+//   van-local svg. Front view (opts.front): VAN.frontSlots 0 driver (screen-right pane), 1 passenger (screen-left).
+//   opts.flip mirrors the whole van incl. occupants (texts stay readable).
+//   vanInterior: VANIN.fwd (from the back seat: driver/passenger seen from behind, Pip 'middle' pops up between seats;
+//   seat tops y 790) and VANIN.rear (from the dashboard: bg + [Dex, Pip on the rear bench] + mid + [Grandpa screen-right,
+//   Juno screen-left] + fg (steering wheel)).
+//
+// SERVER FARM KEY POINTS: FARM.door / FARM.keySlot / FARM.grass (the only real grass, SC 10), DOOR.key / DOOR.screen,
+//   LIFT.panel + liftButton(i) (400 buttons, 400 = CLOSE DOOR, 401 = OPEN; LIFT.B9 = 351), ARCHIVE.juno (Juno's bubble),
+//   CORE.grid (20x20 buttons, x 2520…3280), CORE.mic, CORE.button {x, top} (BROADCAST), CORE.timer (wall timer).
+//   serviceElevator layering: bg + [characters INSIDE the car] + mid (doors/frame/panel) + [corridor characters] + fg.
 'use strict';
 
 const K = require('./kit');
@@ -51,9 +76,10 @@ function vis(cam, k = 1) {
   return { x0: fx + x - (fx + sx) / z, x1: fx + x + (1920 - fx - sx) / z, y0: fy + y - (fy + sy) / z, y1: fy + y + (1080 - fy - sy) / z, z };
 }
 const V = (cam, svg, k) => (svg ? S.g(svg, E.camTf(cam || {}, k)) : '');
-function layers(bg = '', mid = '', fg = '') {
-  const o = { bg, mid, fg };
-  Object.defineProperty(o, 'toString', { value() { return this.bg + this.mid + this.fg; }, enumerable: false });
+// { bg, mid, fg, light }: light = colour washes (alarm red, green glow, lag grey, sunset), drawn LAST over characters
+function layers(bg = '', mid = '', fg = '', light = '') {
+  const o = { bg, mid, fg, light };
+  Object.defineProperty(o, 'toString', { value() { return this.bg + this.mid + this.fg + this.light; }, enumerable: false });
   return o;
 }
 // infinite strip: fn(i, x) draws slot i at layer-x; the strip scrolls by dist*k (via a transform so patterns stay glued)
@@ -84,11 +110,21 @@ function ledTile(id, w, h, cols, rows, cw, ch, palette, seed, density) {
   }
   return `<pattern id="${id}" patternUnits="userSpaceOnUse" width="${w}" height="${h}">${o}</pattern>`;
 }
-function wheelTile(id) {
+// rack face (units or blades) + one LED set baked into a single 480x180 tile: one pattern fill per rack
+const RACK_UNIT = '<rect width="160" height="36" fill="#121A3A"/><rect x="5" y="3" width="150" height="30" rx="4" fill="#22305E"/><rect x="5" y="3" width="150" height="6" rx="3" fill="#2E3F78"/><rect x="12" y="11" width="56" height="15" rx="3" fill="#141D40"/><path d="M18 13 v11 M25 13 v11 M32 13 v11 M39 13 v11 M46 13 v11 M53 13 v11 M60 13 v11" stroke="#34457E" stroke-width="3"/><rect x="74" y="13" width="26" height="11" rx="2" fill="#0D1430"/><circle cx="114" cy="18" r="4" fill="#0D1430"/><circle cx="127" cy="18" r="4" fill="#0D1430"/><circle cx="140" cy="18" r="4" fill="#0D1430"/>';
+const BLADE_UNIT = '<rect width="160" height="72" fill="#121A3A"/><rect x="4" y="4" width="152" height="64" rx="4" fill="#1C2850"/>' + [0, 1, 2, 3, 4, 5, 6, 7, 8].map((i) => `<rect x="${10 + i * 16}" y="10" width="12" height="54" rx="3" fill="#2E3F78"/>`).join('');
+function rackTile(id, blade, palette, seed, density) {
   let o = '';
-  const wh = (cx, cy, r, op0) => { let s = ''; for (let i = 0; i < 8; i++) { const a = (i / 8) * Math.PI * 2; s += `<circle cx="${f(cx + Math.cos(a) * r)}" cy="${f(cy + Math.sin(a) * r)}" r="${f(r * 0.24 * (1 - i * 0.05))}" fill="#D8DEE8" opacity="${f(op0 * (1 - i * 0.1))}"/>`; } return s; };
-  o += wh(50, 50, 30, 0.9) + wh(140, 120, 22, 0.7) + wh(30, 150, 16, 0.6) + wh(150, 30, 14, 0.5);
-  return `<pattern id="${id}" patternUnits="userSpaceOnUse" width="190" height="190">${o}</pattern>`;
+  for (let r = 0; r < (blade ? 3 : 5); r++) for (let c = 0; c < 3; c++) o += `<g transform="translate(${c * 160} ${r * (blade ? 72 : 36)})">${blade ? BLADE_UNIT : RACK_UNIT}</g>`;
+  if (blade) {
+    for (let r = 0; r < 3; r++) for (let c = 0; c < 3; c++) for (let j = 0; j < 9; j++) {
+      if (rnd(r * 31 + c * 7 + j, seed) > density) continue;
+      const x = c * 160 + 16 + j * 16, y = r * 72 + 18, col = palette[Math.floor(rnd(j + c * 5 + r, seed + 1) * palette.length)];
+      o += `<circle cx="${x}" cy="${y}" r="7" fill="${col}" opacity="0.3"/><circle cx="${x}" cy="${y}" r="3.5" fill="${col}"/>`;
+    }
+    return `<pattern id="${id}" patternUnits="userSpaceOnUse" width="480" height="216">${o}</pattern>`;
+  }
+  return `<pattern id="${id}" patternUnits="userSpaceOnUse" width="480" height="180">${o}${ledTile('x', 480, 180, 3, 5, 160, 36, palette, seed, density).replace(/^<pattern[^>]*>/, '').replace(/<\/pattern>$/, '')}</pattern>`;
 }
 function bubbleTile(id, w, h, grey, small, kinds) {
   const n = kinds.length, r = h * 0.26;
@@ -160,7 +196,6 @@ const DEFS = `<defs>
 <linearGradient id="farmFadeUp" x1="0" y1="1" x2="0" y2="0"><stop offset="0" stop-color="#03060F" stop-opacity="0"/><stop offset="1" stop-color="#03060F" stop-opacity="0.95"/></linearGradient>
 <linearGradient id="farmReflect" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#5CE1FF" stop-opacity="0.32"/><stop offset="1" stop-color="#5CE1FF" stop-opacity="0"/></linearGradient>
 <linearGradient id="farmReflectG" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#46F58C" stop-opacity="0.4"/><stop offset="1" stop-color="#46F58C" stop-opacity="0"/></linearGradient>
-<linearGradient id="farmReflectDark" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#0A1028" stop-opacity="0.75"/><stop offset="1" stop-color="#0A1028" stop-opacity="0"/></linearGradient>
 <linearGradient id="farmHall" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#050916"/><stop offset="0.6" stop-color="#0E1A42"/><stop offset="1" stop-color="#16285C"/></linearGradient>
 <linearGradient id="farmIceWall" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#5E8FC8"/><stop offset="0.6" stop-color="#9CCBF0"/><stop offset="1" stop-color="#D8F2FF"/></linearGradient>
 <linearGradient id="farmIceFloor" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#BFEFFF"/><stop offset="1" stop-color="#7FC4EC"/></linearGradient>
@@ -169,26 +204,26 @@ const DEFS = `<defs>
 <linearGradient id="farmGlass" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#E6F8FF"/><stop offset="0.55" stop-color="#A9DDF5"/><stop offset="1" stop-color="#78B4DC"/></linearGradient>
 <linearGradient id="farmSteel" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#8E9AB0"/><stop offset="0.45" stop-color="#D5DCE8"/><stop offset="1" stop-color="#9AA6BC"/></linearGradient>
 <linearGradient id="farmSteelV" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#C9D2E0"/><stop offset="1" stop-color="#7D889E"/></linearGradient>
-<linearGradient id="farmChrome" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#FFFFFF"/><stop offset="0.5" stop-color="#C9D1DE"/><stop offset="1" stop-color="#8E99AC"/></linearGradient>
-<linearGradient id="farmWood" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#B97A48"/><stop offset="1" stop-color="#8E5532"/></linearGradient>
 <linearGradient id="farmScreen" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#0B2A4A"/><stop offset="1" stop-color="#06162C"/></linearGradient>
 <pattern id="farmStrata" patternUnits="userSpaceOnUse" width="400" height="150"><path d="M0 26 Q100 16 200 28 T400 26 L400 44 Q300 52 200 42 T0 44 Z" fill="#000" opacity="0.10"/><path d="M0 86 Q100 78 200 90 T400 86 L400 96 Q300 101 200 98 T0 96 Z" fill="#FFF" opacity="0.16"/><path d="M0 118 Q100 112 200 122 T400 118 L400 134 Q300 140 200 132 T0 134 Z" fill="#000" opacity="0.07"/></pattern>
 <pattern id="farmSandRip" patternUnits="userSpaceOnUse" width="260" height="90"><path d="M20 30 q24 -10 48 0 M150 70 q24 -10 48 0 M200 18 q16 -7 32 0 M60 78 q16 -7 32 0" fill="none" stroke="#7A3A1A" stroke-opacity="0.13" stroke-width="5" stroke-linecap="round"/><circle cx="120" cy="40" r="3" fill="#7A3A1A" opacity="0.15"/><circle cx="240" cy="60" r="2.5" fill="#7A3A1A" opacity="0.15"/></pattern>
 <pattern id="farmAsphalt" patternUnits="userSpaceOnUse" width="180" height="70"><circle cx="20" cy="14" r="2.5" fill="#FFF" opacity="0.10"/><circle cx="90" cy="50" r="2" fill="#FFF" opacity="0.10"/><circle cx="150" cy="22" r="3" fill="#000" opacity="0.12"/><circle cx="60" cy="40" r="2" fill="#000" opacity="0.12"/><circle cx="130" cy="62" r="2" fill="#FFF" opacity="0.08"/></pattern>
 <pattern id="farmLowRes" patternUnits="userSpaceOnUse" width="240" height="240"><rect x="0" y="0" width="58" height="58" rx="4" fill="#8A93A6" opacity="0.85"/><rect x="60" y="0" width="58" height="58" rx="4" fill="#A2AABB" opacity="0.6"/><rect x="180" y="0" width="58" height="58" rx="4" fill="#6E7689" opacity="0.8"/><rect x="0" y="60" width="58" height="58" rx="4" fill="#B5BCCA" opacity="0.55"/><rect x="120" y="60" width="58" height="58" rx="4" fill="#8A93A6" opacity="0.9"/><rect x="60" y="120" width="58" height="58" rx="4" fill="#6E7689" opacity="0.75"/><rect x="180" y="120" width="58" height="58" rx="4" fill="#A2AABB" opacity="0.7"/><rect x="0" y="180" width="58" height="58" rx="4" fill="#9AA2B2" opacity="0.65"/><rect x="120" y="180" width="58" height="58" rx="4" fill="#7A8296" opacity="0.85"/><rect x="180" y="180" width="58" height="58" rx="4" fill="#B5BCCA" opacity="0.5"/></pattern>
 <pattern id="farmRack" patternUnits="userSpaceOnUse" width="160" height="36"><rect width="160" height="36" fill="#121A3A"/><rect x="5" y="3" width="150" height="30" rx="4" fill="#22305E"/><rect x="5" y="3" width="150" height="6" rx="3" fill="#2E3F78"/><rect x="12" y="11" width="56" height="15" rx="3" fill="#141D40"/><path d="M18 13 v11 M25 13 v11 M32 13 v11 M39 13 v11 M46 13 v11 M53 13 v11 M60 13 v11" stroke="#34457E" stroke-width="3"/><rect x="74" y="13" width="26" height="11" rx="2" fill="#0D1430"/><circle cx="114" cy="18" r="4" fill="#0D1430"/><circle cx="127" cy="18" r="4" fill="#0D1430"/><circle cx="140" cy="18" r="4" fill="#0D1430"/></pattern>
-<pattern id="farmBlade" patternUnits="userSpaceOnUse" width="160" height="72"><rect width="160" height="72" fill="#121A3A"/><rect x="4" y="4" width="152" height="64" rx="4" fill="#1C2850"/><rect x="10" y="10" width="12" height="54" rx="3" fill="#2E3F78"/><rect x="26" y="10" width="12" height="54" rx="3" fill="#2E3F78"/><rect x="42" y="10" width="12" height="54" rx="3" fill="#2E3F78"/><rect x="58" y="10" width="12" height="54" rx="3" fill="#2E3F78"/><rect x="74" y="10" width="12" height="54" rx="3" fill="#2E3F78"/><rect x="90" y="10" width="12" height="54" rx="3" fill="#2E3F78"/><rect x="106" y="10" width="12" height="54" rx="3" fill="#2E3F78"/><rect x="122" y="10" width="12" height="54" rx="3" fill="#2E3F78"/><rect x="138" y="10" width="12" height="54" rx="3" fill="#2E3F78"/></pattern>
-<pattern id="farmLedBlade" patternUnits="userSpaceOnUse" width="480" height="144"><circle cx="16" cy="18" r="3.5" fill="#5CE1FF"/><circle cx="48" cy="18" r="3.5" fill="#46F58C"/><circle cx="96" cy="18" r="3.5" fill="#5CE1FF"/><circle cx="128" cy="18" r="3.5" fill="#2E8BFF"/><circle cx="192" cy="90" r="3.5" fill="#5CE1FF"/><circle cx="240" cy="90" r="3.5" fill="#B5F6FF"/><circle cx="288" cy="18" r="3.5" fill="#46F58C"/><circle cx="352" cy="90" r="3.5" fill="#5CE1FF"/><circle cx="400" cy="18" r="3.5" fill="#2E8BFF"/><circle cx="448" cy="90" r="3.5" fill="#5CE1FF"/><circle cx="64" cy="90" r="3.5" fill="#5CE1FF"/><circle cx="112" cy="90" r="3.5" fill="#46F58C"/></pattern>
 <pattern id="farmReflTile" patternUnits="userSpaceOnUse" width="210" height="400"><rect x="6" y="0" width="168" height="240" fill="url(#farmReflect)"/><rect x="20" y="0" width="20" height="140" fill="#FFFFFF" fill-opacity="0.05"/></pattern>
 <linearGradient id="farmCyl" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#000" stop-opacity="0.7"/><stop offset="0.25" stop-color="#000" stop-opacity="0.15"/><stop offset="0.4" stop-color="#FFF" stop-opacity="0.06"/><stop offset="0.7" stop-color="#000" stop-opacity="0.2"/><stop offset="1" stop-color="#000" stop-opacity="0.75"/></linearGradient>
 <linearGradient id="farmHeapShade" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#FFFFFF" stop-opacity="0.1"/><stop offset="0.45" stop-color="#1A1440" stop-opacity="0"/><stop offset="1" stop-color="#1A1440" stop-opacity="0.6"/></linearGradient>
 <pattern id="farmBoxes" patternUnits="userSpaceOnUse" width="175" height="160"><rect width="175" height="160" fill="#241E54"/><rect x="12" y="20" width="150" height="112" rx="8" fill="#7A5A44" stroke="#120E30" stroke-width="4"/><rect x="12" y="20" width="150" height="16" rx="6" fill="#8E6A50"/><rect x="40" y="52" width="94" height="34" rx="4" fill="#E9D8B8"/><rect x="0" y="134" width="175" height="18" fill="#3A3270"/><rect x="0" y="134" width="175" height="5" fill="#5A4A9A"/></pattern>
 <pattern id="farmRackFar" patternUnits="userSpaceOnUse" width="70" height="24"><rect width="70" height="24" fill="#0E1636"/><rect x="3" y="2" width="64" height="20" rx="3" fill="#18244E"/><circle cx="52" cy="12" r="2.6" fill="#5CE1FF"/><circle cx="60" cy="12" r="2.6" fill="#2E8BFF" opacity="0.7"/></pattern>
-${ledTile('farmLedA', 480, 180, 3, 5, 160, 36, ['#5CE1FF', '#2E8BFF', '#7CF7FF', '#46F58C'], 3, 0.55)}
-${ledTile('farmLedB', 480, 180, 3, 5, 160, 36, ['#5CE1FF', '#2E8BFF', '#B5F6FF'], 9, 0.5)}
-${ledTile('farmLedGA', 480, 180, 3, 5, 160, 36, ['#46F58C', '#9CFF7A', '#C8FFD8'], 5, 0.85)}
-${ledTile('farmLedGB', 480, 180, 3, 5, 160, 36, ['#46F58C', '#2FD86E'], 11, 0.8)}
-${ledTile('farmLedR', 480, 180, 3, 5, 160, 36, ['#FF2E4D', '#FF7A5A'], 13, 0.45)}
+${rackTile('farmRackA', false, ['#5CE1FF', '#2E8BFF', '#7CF7FF', '#46F58C'], 3, 0.55)}
+${rackTile('farmRackB', false, ['#5CE1FF', '#2E8BFF', '#B5F6FF'], 9, 0.5)}
+${rackTile('farmRackGA', false, ['#46F58C', '#9CFF7A', '#C8FFD8'], 5, 0.85)}
+${rackTile('farmRackGB', false, ['#46F58C', '#2FD86E'], 11, 0.8)}
+${rackTile('farmRackR', false, ['#FF2E4D', '#FF7A5A', '#5CE1FF'], 13, 0.6)}
+${rackTile('farmBladeA', true, ['#5CE1FF', '#46F58C', '#2E8BFF'], 21, 0.45)}
+${rackTile('farmBladeB', true, ['#5CE1FF', '#B5F6FF'], 23, 0.35)}
+${rackTile('farmBladeG', true, ['#46F58C', '#9CFF7A'], 25, 0.7)}
+${rackTile('farmBladeR', true, ['#FF2E4D', '#FF7A5A'], 27, 0.5)}
 <pattern id="farmFloorTile" patternUnits="userSpaceOnUse" width="240" height="60"><rect width="240" height="60" fill="none" stroke="#2A3F82" stroke-opacity="0.55" stroke-width="3"/></pattern>
 <pattern id="farmGrate" patternUnits="userSpaceOnUse" width="36" height="20"><rect width="36" height="20" fill="#2A2E3E"/><rect x="3" y="3" width="30" height="5" rx="2" fill="#4A5068"/><rect x="3" y="12" width="30" height="5" rx="2" fill="#3A4058"/></pattern>
 <pattern id="farmTruss" patternUnits="userSpaceOnUse" width="160" height="120"><path d="M0 0 L160 0 M0 120 L160 120 M0 0 L80 120 L160 0" fill="none" stroke="#2A3048" stroke-width="12"/><circle cx="80" cy="118" r="7" fill="#3A4260"/></pattern>
@@ -197,7 +232,6 @@ ${ledTile('farmLedR', 480, 180, 3, 5, 160, 36, ['#FF2E4D', '#FF7A5A'], 13, 0.45)
 <pattern id="farmWin" patternUnits="userSpaceOnUse" width="72" height="64"><rect x="12" y="12" width="48" height="36" rx="5" fill="#59D7FF"/><rect x="12" y="12" width="48" height="12" rx="5" fill="#B5F6FF"/><rect x="12" y="42" width="48" height="6" fill="#2E8BFF"/><rect x="18" y="28" width="10" height="16" fill="#1C4FA8" opacity="0.6"/><rect x="34" y="28" width="10" height="16" fill="#1C4FA8" opacity="0.6"/></pattern>
 <pattern id="farmWinB" patternUnits="userSpaceOnUse" width="216" height="192"><rect x="12" y="12" width="48" height="36" rx="5" fill="#0E2450"/><rect x="156" y="76" width="48" height="36" rx="5" fill="#0E2450"/><rect x="84" y="140" width="48" height="36" rx="5" fill="#E8FDFF"/><rect x="156" y="12" width="48" height="36" rx="5" fill="#E8FDFF" opacity="0.7"/></pattern>
 <pattern id="farmWinG" patternUnits="userSpaceOnUse" width="72" height="64"><rect x="12" y="12" width="48" height="36" rx="5" fill="#6BFFA0"/><rect x="12" y="12" width="48" height="12" rx="5" fill="#D8FFE4"/><rect x="12" y="42" width="48" height="6" fill="#22B860"/></pattern>
-${wheelTile('farmWheels')}
 <pattern id="farmBtn" patternUnits="userSpaceOnUse" width="20" height="28"><rect width="20" height="28" fill="#B9C2D0"/><rect x="5" y="3" width="10" height="3" rx="1.5" fill="#5A6478"/><circle cx="10" cy="17" r="7" fill="#E9EDF3" stroke="#5A6478" stroke-width="2"/><circle cx="9" cy="16" r="3" fill="#FFFFFF"/></pattern>
 <pattern id="farmBtnBig" patternUnits="userSpaceOnUse" width="38" height="30"><rect width="38" height="30" fill="#2A3048"/><rect x="5" y="3" width="28" height="22" rx="7" fill="#3E4766" stroke="#11131C" stroke-width="2"/><rect x="9" y="6" width="20" height="7" rx="3" fill="#5A6690"/><circle cx="32" cy="27" r="1.6" fill="#7CF7FF" opacity="0.6"/></pattern>
 <pattern id="farmBtnBigG" patternUnits="userSpaceOnUse" width="38" height="30"><rect width="38" height="30" fill="#1E3A2E"/><rect x="5" y="3" width="28" height="22" rx="7" fill="#2FD86E" stroke="#11131C" stroke-width="2"/><rect x="9" y="6" width="20" height="7" rx="3" fill="#B8FFC8"/></pattern>
@@ -861,7 +895,7 @@ function gasStation(t, opts = {}) {
 // The cashier stands behind the counter at GASIN.cashier {x, y, s} (feet hidden): draw him between bg and fg.
 // Customers stand in front of the counter (draw after fg), feet off-frame (y ≈ 1250 at s .62).
 // opts: register ('$2.00' / '...'), slushJerk 0..1, coffee 0..1 (cup on the counter), lag 0..1 (clock + register stutter)
-const GASIN = { counterTop: 770, cashier: { x: 960, y: 1025, s: 0.62 }, coffee: { x: 1240, y: 770 } };
+const GASIN = { counterTop: 770, cashier: { x: 960, y: 990, s: 0.62 }, coffee: { x: 1240, y: 770 } };
 function gasStationInside(t, opts = {}) {
   const { register = '$2.00', slushJerk = 0, coffee = 0, lag = 0, cam = null } = opts;
   let bg = R(-400, -300, 2720, 1700, 0, { fill: '#FFE6B8' }) + R(-400, -300, 2720, 260, 0, { fill: '#F2C98A' }) + R(-400, -40, 2720, 20, 0, { fill: '#E8504A' });
@@ -878,8 +912,8 @@ function gasStationInside(t, opts = {}) {
   const ct = lag > 0 ? K.stutterT(t, 0.8) : t;
   bg += Ci(1490, 170, 60, ol('#FFFFFF', 7)) + P(`M1490 170 L${f(1490 + 42 * Math.sin(ct * 2))} ${f(170 - 42 * Math.cos(ct * 2))}`, ln(5, '#E8504A')) + P('M1490 170 L1490 136', ln(7)) + P('M1490 170 L1514 178', ln(7)) + Ci(1490, 170, 6, { fill: '#151515' });
   // coffee station + slushie
-  bg += R(1380, 420, 220, 160, 14, ol('#3A3F55', 6)) + R(1400, 380, 70, 50, 8, ol('#3A3F55', 5)) + P('M1420 470 L1470 470 L1476 560 L1414 560 Z', ol('#BDEBFF', 5)) + R(1418, 520, 54, 38, 6, { fill: '#6B3A1E' }) + T('COFFEE', 1520, 520, 34, '#FFE14D');
-  bg += R(1390, 568, 200, 18, 0, { fill: blink(t, 1.5) ? '#FF5A3A' : '#B53A2A' });
+  bg += R(1360, 430, 180, 150, 14, ol('#3A3F55', 6)) + R(1376, 392, 70, 48, 8, ol('#3A3F55', 5)) + P('M1386 474 L1436 474 L1442 560 L1380 560 Z', ol('#BDEBFF', 5)) + R(1384, 520, 54, 38, 6, { fill: '#6B3A1E' }) + T('COFFEE', 1450, 378, 36, '#3A3F55');
+  bg += R(1460, 470, 64, 70, 8, ol('#E9EDF3', 4)) + R(1368, 568, 164, 16, 0, { fill: blink(t, 1.5) ? '#FF5A3A' : '#B53A2A' });
   bg += slushie(1700, 760, 0.95, t, { jerk: slushJerk, cup: 0.7 });
   bg += R(1580, 270, 250, 64, 12, ol('#FFE14D', 6)) + T('SLUSH 99¢', 1705, 318, 42, '#E8504A');
   // ceiling fan
@@ -1080,21 +1114,19 @@ function rackLocal(h, t, o = {}) {
   const face = o.face ?? (rnd(seed, 9) < 0.3 ? 1 : 0);
   const ih = h - 34;
   let s = R(0, -h, 180, h, 12, ol(frost > 0 ? mix('#151D3E', '#6E8FB8', frost * 0.6) : '#151D3E', lw));
-  const col = Math.floor(rnd(seed, 1) * 3) * 160, row = Math.floor(rnd(seed, 2) * 5) * 36;
-  let u = R(0, 0, 160, ih, 0, { fill: face ? 'url(#farmBlade)' : 'url(#farmRack)' });
+  const col = Math.floor(rnd(seed, 1) * 3) * 160, row = Math.floor(rnd(seed, 2) * 5) * (face ? 72 : 36);
   const ph = Math.floor(t * 2.6 + rnd(seed, 3) * 2) % 2;
-  const blue = (1 - green) * (1 - dim * 0.7);
-  const led = (id, a) => (a > 0.02 ? G(R(col, row, 160, ih, 0, { fill: `url(#${id})`, opacity: a < 0.98 ? f(a) : undefined }), `translate(${-col} ${-row})`) : '');
-  if (face) u += led('farmLedBlade', blue * (ph ? 1 : 0.45)) + led('farmLedGB', green * (ph ? 1 : 0.6));
-  else u += led(ph ? 'farmLedA' : 'farmLedB', blue) + led(ph ? 'farmLedGA' : 'farmLedGB', green);
-  if (alarm > 0.02) u += led('farmLedR', alarm * (Math.floor(t * 4 + seed) % 2 ? 1 : 0.3));
-  s += G(u, `translate(10 ${-h + 20})`);
+  const red = alarm > 0.5 && Math.floor(t * 4 + seed) % 2 === 1;
+  const id = face ? (red ? 'farmBladeR' : green > 0.5 ? 'farmBladeG' : ph ? 'farmBladeA' : 'farmBladeB') : (red ? 'farmRackR' : green > 0.5 ? (ph ? 'farmRackGA' : 'farmRackGB') : (ph ? 'farmRackA' : 'farmRackB'));
+  s += G(G(R(col, row, 160, ih, 0, { fill: `url(#${id})` }), `translate(${-col} ${-row})`), `translate(10 ${-h + 20})`);
+  if (dim > 0) s += R(10, -h + 20, 160, ih, 0, { fill: '#0A1028', 'fill-opacity': f(dim * 0.5) });
+  if (green > 0.05 && green < 0.95) s += R(10, -h + 20, 160, ih, 4, { fill: GREEN, 'fill-opacity': f(0.12 * green) });
   // top light bar, glass streak, handle
-  const bar = green > 0.5 ? '#7CFFAE' : alarm > 0.5 && Math.floor(t * 4 + seed) % 2 ? '#FF5A6E' : '#7CF7FF';
+  const bar = green > 0.5 ? '#7CFFAE' : red ? '#FF5A6E' : '#7CF7FF';
   s += R(8, -h + 5, 164, 9, 4, { fill: dim > 0.5 ? '#2A3A70' : bar }) + P(`M24 -16 L96 ${-h + 24} L130 ${-h + 24} L58 -16 Z`, { fill: '#FFFFFF', 'fill-opacity': 0.07 });
   s += R(160, -h * 0.58, 8, 70, 4, { fill: '#9AA6C0' });
   if (frost > 0) {
-    s += R(4, -h + 4, 172, h - 8, 10, { fill: 'url(#farmFrost)', opacity: f(frost) });
+    s += R(4, -h + 4, 172, h - 8, 10, { fill: 'url(#farmFrost)', 'fill-opacity': f(frost) });
     s += P(`M-6 ${-h + 6} Q20 ${-h - 34} 60 ${-h - 22} Q100 ${-h - 44} 140 ${-h - 24} Q178 ${-h - 30} 188 ${-h + 8} Z`, { fill: '#FFFFFF', stroke: '#B9E2F5', 'stroke-width': 4, opacity: f(frost) });
     let ic = '';
     for (let i = 0; i < 6; i++) { const ix = 14 + i * 30 + rnd(i, seed) * 10, il = 16 + rnd(i, seed + 3) * 34; ic += `M${f(ix - 6)} ${-h + 8} L${f(ix)} ${f(-h + 8 + il)} L${f(ix + 6)} ${-h + 8} Z `; }
@@ -1140,7 +1172,7 @@ function wheelStorm(x, y, r, t, k) {
   for (const p of puffs) {
     const front = Math.sin(p.a);
     o += Ci(p.x, p.y, p.pr, { fill: mix('#5E6678', '#B4BBC8', 0.5 + 0.5 * front), stroke: '#2A2F3C', 'stroke-width': 5, opacity: f(k) });
-    if (p.i % 3 === 0 && front > -0.3) o += K.loadingWheel(p.x, p.y, p.pr * 0.55, t + p.i * 0.13, '#F2F5FA', 8, p.pr * 0.13, 1.4);
+    if (p.i % 4 === 0 && front > -0.3) o += K.loadingWheel(p.x, p.y, p.pr * 0.55, t + p.i * 0.13, '#F2F5FA', 8, p.pr * 0.13, 1.4);
   }
   // swirl streaks (show the rotation)
   for (let j = 0; j < 4; j++) {
@@ -1243,8 +1275,7 @@ function farmExterior(t, opts = {}) {
   // foreground rocks (canyon mouth)
   let fg = P(rp([[-400, 1200], [-400, 700], [-100, 740, 40], [80, 860, 30], [140, 1200]]), ol(c.rock, 7)) + P(rp([[2320, 1200], [2320, 680], [2020, 720, 40], [1820, 860, 30], [1760, 1200]]), ol(c.rock, 7));
   fg += P('M-100 750 L60 860', ln(10, c.rockHi)) + P('M2020 730 L1840 860', ln(10, c.rockHi));
-  if (sunset > 0) fg += fullRect(cam, 1, { fill: '#FF9A4D', 'fill-opacity': f(sunset * 0.16) });
-  return layers(bg, '', V(cam, fg, 1.2));
+  return layers(bg, '', V(cam, fg, 1.2), sunset > 0 ? fullRect(cam, 1, { fill: '#FF9A4D', 'fill-opacity': f(sunset * 0.16) }) : '');
 }
 // farmDoor(t, opts) — close-up of the heavy entrance door for the key gag + Modbot stand-off.
 // Floor DOOR.floor = 940. Key slot DOOR.key {x, y}, screen DOOR.screen. opts: doorScreen, screenCol, open 0..1, alarm 0..1, cam
@@ -1287,7 +1318,7 @@ function farmDoor(t, opts = {}) {
   bg += R(-400, DOOR.floor + 70, 2720, 14, 0, { fill: '#FFC21F', opacity: 0.8 });
   if (alarm > 0) bg += beacon(x0 - 140, top - 120, t, alarm) + beacon(x1 + 140, top - 120, t + 0.4, alarm);
   else bg += beacon(x0 - 140, top - 120, t, 0) + beacon(x1 + 140, top - 120, t, 0);
-  return layers(V(cam, bg, 1), '', alarm > 0 ? fullRect(cam, 1, { fill: RED, opacity: f(alarm * 0.12 * (0.6 + 0.4 * Math.sin(t * 11))) }) : '');
+  return layers(V(cam, bg, 1), '', '', alarm > 0 ? fullRect(cam, 1, { fill: RED, 'fill-opacity': f(alarm * 0.12 * (0.6 + 0.4 * Math.sin(t * 11))) }) : '');
 }
 
 // ---------------------------------------------------------------- rackHall(t, cam, opts)
@@ -1308,7 +1339,7 @@ function rackHall(t, cam, opts = {}) {
   const i0 = Math.floor((v5.x0 + off5) / 150) - 2, i1 = Math.ceil((v5.x1 + off5) / 150) + 2;
   for (let i = i0; i <= i1; i++) { const x = i * 150 - off5; gaps += ((i % 8) + 8) % 8 === 3 ? `M${f(x - 10)} 380 h160 v460 h-160 Z ` : `M${f(x - 10)} 380 h20 v460 h-20 Z `; }
   mr += P(gaps, { fill: '#0B1538' }) + band(cam, 0.5, 384, 398, { fill: green > 0.5 ? '#2FD86E' : '#2A6AA8' }) + band(cam, 0.5, 820, 1400, { fill: '#0B1538' });
-  if (alarm > 0) mr += band(cam, 0.5, 380, 820, { fill: 'url(#farmLedR)', opacity: f(alarm * blink(t, 3)) });
+  if (alarm > 0) mr += band(cam, 0.5, 380, 820, { fill: RED, 'fill-opacity': f(alarm * 0.12 * (1 + blink(t, 3))) });
   if (green > 0) mr += band(cam, 0.5, 380, 820, { fill: GREEN, 'fill-opacity': f(0.14 * green * greenWave) });
   if (lowRes > 0) mr += band(cam, 0.5, 380, 820, { fill: 'url(#farmLowRes)', opacity: f(lowRes) });
   mr += band(cam, 0.5, 380, 840, { fill: '#050916', 'fill-opacity': 0.35 }) + band(cam, 0.5, -400, 300, { fill: '#050916', 'fill-opacity': 0.85 });
@@ -1326,8 +1357,8 @@ function rackHall(t, cam, opts = {}) {
     if (g > 0.05) o += Ci(x + 90, 560, 300, { fill: 'url(#farmGlowGreen)', opacity: f(0.5 * g) });
     o += rack(x, FLOOR.hall, 1, 630, t, { seed: i, green: g, alarm, lowRes, lw: 6 });
     const cc = CABLE_COLS[((i % 5) + 5) % 5];
-    const d = `M${x + 40} 182 Q${x + 30} 232 ${x + 52} 262 `;
-    const d2 = ((i % 3) + 3) % 3 === 1 ? `M${x + 110} 182 Q${f(x + 160 + Math.sin(t + i) * 6)} 330 ${x + 210} 182 ` : `M${x + 140} 182 Q${x + 160} 236 ${x + 128} 262 `;
+    const d = `M${x + 44} 182 C${x + 44} 226 ${x + 64} 226 ${x + 64} 266 M${x + 62} 182 C${x + 62} 216 ${x + 84} 230 ${x + 84} 266 `;
+    const d2 = ((i % 3) + 3) % 3 === 1 ? `M${x + 120} 182 Q${f(x + 165 + Math.sin(t + i) * 6)} 340 ${x + 230} 182 ` : `M${x + 136} 182 C${x + 136} 226 ${x + 116} 226 ${x + 116} 266 `;
     cOut += d + d2; cCol[cc] = (cCol[cc] || '') + d + d2;
     return o;
   });
@@ -1349,14 +1380,15 @@ function rackHall(t, cam, opts = {}) {
     o += P(`M${x + 700} -60 Q${f(x + 820 + Math.sin(t * 0.8 + i) * 10)} 150 ${x + 960} -60`, ln(34)) + P(`M${x + 700} -60 Q${f(x + 820 + Math.sin(t * 0.8 + i) * 10)} 150 ${x + 960} -60`, ln(22, CABLE_COLS[((i % 7) + 7) % 7]));
     return o;
   }), 1.5);
+  let lt = '';
   if (alarm > 0) {
-    fg += fullRect(cam, 1, { fill: RED, 'fill-opacity': f(alarm * (0.17 + 0.08 * Math.sin(t * 11))) });
+    lt += fullRect(cam, 1, { fill: RED, 'fill-opacity': f(alarm * (0.17 + 0.08 * Math.sin(t * 11))) });
     const v = vis(cam, 1);
-    for (let j = 0; j < 2; j++) { const sx = v.x0 + (v.x1 - v.x0) * (0.5 + 0.55 * Math.sin(t * 2.2 + j * Math.PI)); fg += V(cam, Ell(sx, 420, 520, 420, { fill: 'url(#farmGlowRed)', opacity: f(alarm * 0.55) }), 1); }
+    for (let j = 0; j < 2; j++) { const sx = v.x0 + (v.x1 - v.x0) * (0.5 + 0.55 * Math.sin(t * 2.2 + j * Math.PI)); lt += V(cam, Ell(sx, 420, 520, 420, { fill: 'url(#farmGlowRed)', opacity: f(alarm * 0.55) }), 1); }
   }
-  if (green > 0) fg += fullRect(cam, 1, { fill: GREEN, 'fill-opacity': f(green * greenWave * 0.07) });
-  if (lowRes > 0) fg += fullRect(cam, 1, { fill: '#8A93A6', 'fill-opacity': f(lowRes * 0.2) });
-  return layers(bg, mid, fg);
+  if (green > 0) lt += fullRect(cam, 1, { fill: GREEN, 'fill-opacity': f(green * greenWave * 0.07) });
+  if (lowRes > 0) lt += fullRect(cam, 1, { fill: '#8A93A6', 'fill-opacity': f(lowRes * 0.2) });
+  return layers(bg, mid, fg, lt);
 }
 
 // ---------------------------------------------------------------- coolingRoom(t, cam, opts)
@@ -1434,8 +1466,7 @@ function coolingRoom(t, cam, opts = {}) {
     o += P(ic, { fill: '#E8FAFF', stroke: '#7FB8E0', 'stroke-width': 4, 'stroke-linejoin': 'round' });
     return o;
   }), 1.4);
-  if (alarm > 0) fg += fullRect(cam, 1, { fill: RED, opacity: f(alarm * 0.12) });
-  return layers(bg, mid, fg);
+  return layers(bg, mid, fg, alarm > 0 ? fullRect(cam, 1, { fill: RED, 'fill-opacity': f(alarm * 0.12) }) : '');
 }
 
 // ---------------------------------------------------------------- cableJungle(t, cam, opts)
@@ -1560,8 +1591,8 @@ const LOST_KINDS = ['tophat', 'crown', 'sword', 'wings', 'dog', 'cap', 'shield',
 function heap(x, base, w, h, t, seed, nItems = 6, dark = 0) {
   const d = `M${f(x - w)} ${f(base + 30)} Q${f(x - w * 0.8)} ${f(base - h * 0.55)} ${f(x - w * 0.35)} ${f(base - h * 0.85)} Q${f(x)} ${f(base - h * 1.08)} ${f(x + w * 0.35)} ${f(base - h * 0.85)} Q${f(x + w * 0.8)} ${f(base - h * 0.55)} ${f(x + w)} ${f(base + 30)} Z`;
   let o = P(d, { fill: 'url(#farmJunk)', stroke: LINE, 'stroke-width': 7 });
-  o += P(d, { fill: 'url(#farmHeapShade)' });
   if (dark > 0) o += P(d, { fill: '#0B1030', 'fill-opacity': f(dark) });
+  else o += P(d, { fill: 'url(#farmHeapShade)' });
   for (let i = 0; i < nItems; i++) {
     const u = (i + 0.5) / nItems * 2 - 1;
     const ix = x + u * w * 0.8, iy = base - h * (1 - u * u * 0.75) * 0.95 + 20;
@@ -1577,7 +1608,7 @@ function lostAndFound(t, cam, opts = {}) {
   const v2 = vis(cam, 0.2), off2 = dist * 0.2;
   let sh = G(R(v2.x0 + off2 - 300, 150, v2.x1 - v2.x0 + 600, 640, 0, { fill: 'url(#farmBoxes)' }), `translate(${f(-off2)} 0)`);
   const labels = ['HATS', 'PETS', 'SWORDS', 'WINGS', 'TOOLS', '???', 'SOCKS', 'KEYS'];
-  sh += strip(cam, 0.2, dist, 525, (i, x) => TF(labels[((i % 8) + 8) % 8], x + 87, 197, 20, '#3A2A20') + TF(labels[((i * 3 + 2) % 8 + 8) % 8], x + 437, 357, 20, '#3A2A20'));
+  sh += strip(cam, 0.2, dist, 525, (i, x) => TF(labels[((i % 8) + 8) % 8], x + 87, 227, 22, '#3A2A20') + TF(labels[((i * 3 + 2) % 8 + 8) % 8], x + 437, 387, 22, '#3A2A20') + TF(labels[((i * 5 + 4) % 8 + 8) % 8], x + 262, 547, 22, '#3A2A20'));
   bg += V(cam, sh + band(cam, 0.2, 790, 1400, { fill: '#120E30' }) + band(cam, 0.2, 100, 150, { fill: '#120E30' }), 0.2);
   // hanging sign (k .5)
   bg += V(cam, strip(cam, 0.5, dist, 2600, (i, x) => P(`M${x + 700} -100 L${x + 700} 120 M${x + 1200} -100 L${x + 1200} 120`, ln(6, '#5A5A8A')) + R(x + 620, 110, 660, 170, 24, ol('#FFD21F', 8)) + outT('LOST & FOUND', x + 950, 205, 82, '#FFFFFF', 10) + TF('FLOOR 2½', x + 950, 256, 34, '#3A2A20')), 0.5);
@@ -1690,23 +1721,24 @@ function archive(t, cam, opts = {}) {
   for (let i = 0; i < 26; i++) mo += Ci(rnd(i, 111) * 2200 - 140, rnd(i, 112) * 900 + Math.sin(t * 0.5 + i) * 20, 2 + rnd(i, 113) * 3, { fill: '#9FF3FF', 'fill-opacity': f(0.3 + 0.4 * Math.abs(Math.sin(t + i))) });
   bg += V(cam, mo, 0.05);
   // a tier of shelved bubbles: tile band aligned so the plank sits at y; split grey/colour at gx (layer x)
-  const tier = (cam2, k, y, gx, big, alt = false) => {
+  const tier = (cam2, k, y, gx, big, alt = false, fo = 1) => {
     const v = vis(cam2, k), h = big ? 200 : 100, left = v.x0 - 300, right = v.x1 + 300, split = clamp(gx, left, right);
     const pat = big ? (alt ? 'farmShelfB' : 'farmShelf') : 'farmShelfSm';
     let o = '';
-    if (split > left) o += G(R(left, 0, split - left, h, 0, { fill: `url(#${pat})` }), `translate(0 ${f(y - h * 0.88)})`);
-    if (right > split) o += G(R(split, 0, right - split, h, 0, { fill: `url(#${big ? 'farmShelfGrey' : 'farmShelfSmGrey'})` }), `translate(0 ${f(y - h * 0.88)})`);
+    const a = fo < 1 ? { 'fill-opacity': f(fo) } : {};
+    if (split > left) o += G(R(left, 0, split - left, h, 0, { fill: `url(#${pat})`, ...a }), `translate(0 ${f(y - h * 0.88)})`);
+    if (right > split) o += G(R(split, 0, right - split, h, 0, { fill: `url(#${big ? 'farmShelfGrey' : 'farmShelfSmGrey'})`, ...a }), `translate(0 ${f(y - h * 0.88)})`);
     return o;
   };
   const gl = (k) => greyX * k + (1 - k) * 960;
   // far shelves (k .25): many small tiers climbing into the dark
   let far = '';
-  for (let i = 0; i < 7; i++) far += tier(cam, 0.25, 760 - i * 120, gl(0.25), false);
-  bg += V(cam, far + band(cam, 0.25, -400, 1400, { fill: '#05081A', 'fill-opacity': 0.55 }) + band(cam, 0.25, -400, 500, { fill: 'url(#farmFadeUp)' }) + band(cam, 0.25, 770, 1400, { fill: '#05081A' }), 0.25);
+  for (let i = 0; i < 4; i++) far += tier(cam, 0.25, 760 - i * 120, gl(0.25), false, false, 0.45 - i * 0.08);
+  bg += V(cam, far + band(cam, 0.25, 770, 1400, { fill: '#05081A' }), 0.25);
   // mid shelves (k .55)
   let md = '';
-  for (let i = 0; i < 4; i++) md += tier(cam, 0.55, 780 - i * 230, gl(0.55), true, i % 2 === 1);
-  bg += V(cam, md + band(cam, 0.55, -400, 1400, { fill: '#070B22', 'fill-opacity': 0.45 }) + band(cam, 0.55, -400, 260, { fill: 'url(#farmFadeUp)' }) + band(cam, 0.55, 800, 1400, { fill: '#070B22' }) + strip(cam, 0.55, dist, 880, (i, x) => R(x, -300, 18, 1100, 4, { fill: '#2A2050' })), 0.55);
+  for (let i = 0; i < 3; i++) md += tier(cam, 0.55, 780 - i * 230, gl(0.55), true, i % 2 === 1, 0.6 - i * 0.15);
+  bg += V(cam, md + band(cam, 0.55, 800, 1400, { fill: '#070B22' }) + strip(cam, 0.55, dist, 880, (i, x) => R(x, -300, 18, 1100, 4, { fill: '#2A2050' })), 0.55);
   // main shelving unit (k 1): planks at ARCHIVE.tiers
   let m = band(cam, 1, 120, 820, { fill: '#0B0A26' });
   ARCHIVE.tiers.forEach((ty, i) => { m += tier(cam, 1, ty, greyX, true, i % 2 === 0) + band(cam, 1, ty + 24, ty + 34, { fill: '#1A1440' }); });
@@ -1740,13 +1772,13 @@ function archive(t, cam, opts = {}) {
   let fgb = '';
   for (let i = 0; i < 3; i++) {
     const x = ((rnd(i, 131) * 2600 + t * 30 * (i + 1) - dist * 1.4) % 2600 + 2600) % 2600 - 300, y = 200 + rnd(i, 132) * 500 + Math.sin(t * 0.8 + i) * 30;
-    fgb += Ci(x, y, 70 + i * 30, { fill: 'url(#farmBubble)', stroke: '#C9FBFF', 'stroke-width': 4, opacity: 0.7 }) + P(`M${f(x - 40 - i * 10)} ${f(y - 20)} Q${f(x - 30)} ${f(y - 60 - i * 10)} ${f(x)} ${f(y - 66 - i * 18)}`, ln(6, '#FFFFFF', 0.6));
+    fgb += Ci(x, y, 70 + i * 30, { fill: '#C9FBFF', 'fill-opacity': 0.08, stroke: '#C9FBFF', 'stroke-width': 4, 'stroke-opacity': 0.6 }) + P(`M${f(x - 40 - i * 10)} ${f(y - 20)} Q${f(x - 30)} ${f(y - 60 - i * 10)} ${f(x)} ${f(y - 66 - i * 18)}`, { ...ln(6, '#FFFFFF'), 'stroke-opacity': 0.6 });
   }
   return layers(bg, mid, V(cam, fgb, 1.4));
 }
 function archiveDeep(t, cam, opts = {}) {
   const { greyFrom = 1, glow = 0.8 } = opts;
-  const vx = 960, vy = 430, N = 14, WALL = 1150, EYE = 640;
+  const vx = 960, vy = 430, N = 12, WALL = 1150, EYE = 640;
   const proj = (X, Y, z) => [vx + X / z, vy + (EYE - Y) / z];
   const quad = (pts, a) => P(poly(pts), a);
   let o = R(-400, -400, 2720, 1900, 0, { fill: '#05081A' });
@@ -1871,9 +1903,8 @@ function serviceElevator(t, opts = {}) {
   mid += R(900, top - 230, 120, 40, 10, ol('#FFC21F', 5)) + TF('SERVICE', 960, top - 202, 22, '#1D1D24');
   mid += Ci(1130, top - 120, 22, ol(doors > 0.05 && doors < 0.95 ? '#FFE14D' : '#C9D2E0', 5));
   mid += liftPanel(t, pressed);
-  let fg = '';
-  if (alarm > 0) fg += beacon(300, 160, t, alarm) + beacon(1760, 160, t + 0.5, alarm) + fullRect(cam, 1, { fill: RED, opacity: f(alarm * (0.1 + 0.06 * Math.sin(t * 11))) });
-  return layers(V(cam, bg, 1), V(cam, mid, 1), fg ? V(cam, fg, 1) : '');
+  const fg = alarm > 0 ? V(cam, beacon(300, 160, t, alarm) + beacon(1760, 160, t + 0.5, alarm), 1) : '';
+  return layers(V(cam, bg, 1), V(cam, mid, 1), fg, alarm > 0 ? fullRect(cam, 1, { fill: RED, 'fill-opacity': f(alarm * (0.1 + 0.06 * Math.sin(t * 11))) }) : '');
 }
 // elevatorInside(t, opts) — inside the car, looking at the back wall (characters face camera).
 // Floor y where feet go: LIFTIN.floor = 900 (back wall base 820, the floor runs to the bottom of the frame).
@@ -1899,7 +1930,7 @@ function elevatorInside(t, opts = {}) {
   let notes = '';
   if (muzak > 0) for (let i = 0; i < 6; i++) {
     const a = ((t * 0.22 + i / 6) % 1);
-    const x = 1420 - a * 1100 + Math.sin(t * 2 + i) * 50, y = 150 + a * 300 + Math.sin(t * 3 + i * 2) * 40;
+    const x = 1400 - a * 1100 + Math.sin(t * 2 + i) * 50, y = 230 + a * 260 + Math.sin(t * 3 + i * 2) * 30;
     const col = ['#FF6FB5', '#5CB8FF', '#FFD84D', '#46D17A', '#B06BFF', '#FF9F1C'][i];
     const dbl = i % 2 === 1;
     const stem = dbl ? 'M0 0 L0 -54 L34 -64 L34 -10' : 'M0 0 L0 -58 Q14 -46 22 -30';
@@ -1914,7 +1945,7 @@ function elevatorInside(t, opts = {}) {
   o += G(liftPanel(t, pressed, pan), `translate(${pan.x0} 0) skewY(-30) translate(${-pan.x0} 0) translate(0 ${f(0)})`);
   o += R(380, 150, 1160, 670, 0, { fill: 'none', stroke: LINE, 'stroke-width': 7 });
   // the DING bell above the mirror
-  o += G(P('M-26 14 Q-26 -22 0 -24 Q26 -22 26 14 Z', ol('#FFD21F', 5)) + R(-32, 12, 64, 10, 5, ol('#E0B84A', 4)) + Ci(0, -28, 6, ol('#FFD21F', 3)), 'translate(1180 194)');
+  o += G(P('M-26 14 Q-26 -22 0 -24 Q26 -22 26 14 Z', ol('#FFD21F', 5)) + R(-32, 12, 64, 10, 5, ol('#E0B84A', 4)) + Ci(0, -28, 6, ol('#FFD21F', 3)), 'translate(700 194)');
   return layers(V(cam, G(o, `translate(${f(sh)} 0)`), 1), '', notes ? V(cam, notes, 1) : '');
 }
 
@@ -1967,15 +1998,15 @@ function worldMap(x, y, w, h, t, opts = {}) {
 // ---------------------------------------------------------------- core(t, cam, opts)
 // The Core: a tower of servers rising into darkness, a long metal catwalk and the control wall.
 // Catwalk floor CORE.floor = 860 (k = 1) from x CORE.walk.x0 to the control platform; the control wall stands at
-// x 2500…3700: button grid CORE.grid (20 x 20 = 400 buttons), mic stand CORE.mic, big button CORE.button (Pip presses
+// x 2400…3860: button grid CORE.grid (20 x 20 = 400 buttons), mic stand CORE.mic, big button CORE.button (Pip presses
 // its top at CORE.button.top). Tower centre x 960 (k .35); wall timer above it (k .45).
 // opts: alarm 0..1 (default 1), timer ('00:01:00'), broadcast 0..1 (big button lit), green 0..1, greenWave 0..1
 //       (green climbing the tower bottom→top), pressed [grid indices], screens (default true), dots, spam,
 //       frontRail (default true), lowRes 0..1 (lag eats the lamps: pixel blocks), towerEaten 0..1 (gap in the tower)
 const CORE = {
-  floor: 860, walk: { x0: -2400, x1: 2500 },
-  grid: { x0: 2560, y0: 180, cols: 20, rows: 20, cw: 38, ch: 30 },
-  mic: { x: 3020, y: 860, top: 540 }, button: { x: 3480, y: 860, top: 650, r: 78 },
+  floor: 860, walk: { x0: -2400, x1: 3900 }, wallX: 2400,
+  grid: { x0: 2520, y0: 180, cols: 20, rows: 20, cw: 38, ch: 30 },
+  mic: { x: 3000, y: 860, top: 540 }, button: { x: 3560, y: 860, top: 650, r: 78 },
   timer: { x: 960, y: 170 },
 };
 function core(t, cam, opts = {}) {
@@ -2028,7 +2059,7 @@ function core(t, cam, opts = {}) {
   const W0 = CORE.walk.x0, W1 = 3900;
   // control wall
   const gx = CORE.grid;
-  m += R(2440, -300, 1400, CORE.floor + 300, 16, ol('#1A2040', 8)) + R(2440, -300, 1400, CORE.floor + 300, 16, { fill: 'url(#farmPanel)' });
+  m += R(2400, -300, 1460, CORE.floor + 300, 16, ol('#1A2040', 8)) + R(2400, -300, 1460, CORE.floor + 300, 16, { fill: 'url(#farmPanel)' });
   m += R(gx.x0 - 30, gx.y0 - 80, gx.cols * gx.cw + 60, gx.rows * gx.ch + 110, 16, ol('#2A3048', 7)) + TF('MAIN CONTROL · DO NOT TOUCH', gx.x0 + gx.cols * gx.cw / 2, gx.y0 - 36, 30, '#9AB8E8');
   m += G(R(0, 0, gx.cols * gx.cw, gx.rows * gx.ch, 0, { fill: 'url(#farmBtnBig)' }) + (green > 0 ? R(0, 0, gx.cols * gx.cw, gx.rows * gx.ch, 0, { fill: 'url(#farmBtnBigG)', opacity: f(green) }) : ''), `translate(${gx.x0} ${gx.y0})`);
   // random blinking + pressed buttons
@@ -2038,15 +2069,15 @@ function core(t, cam, opts = {}) {
   }
   for (const bi of pressed) { const bx = gx.x0 + (bi % 20) * gx.cw + 5, by = gx.y0 + Math.floor(bi / 20) * gx.ch + 3; m += Ci(bx + 14, by + 11, 30, { fill: 'url(#farmGlowWarm)' }) + R(bx, by, 28, 22, 7, { fill: '#FFE14D', stroke: LINE, 'stroke-width': 2 }); }
   // levers
-  for (let i = 0; i < 3; i++) m += R(2470, 300 + i * 120, 40, 90, 8, ol('#3A3F55', 5)) + P(`M2490 ${330 + i * 120} L${2490 + 30 * Math.sin(t * 0.7 + i)} ${270 + i * 120}`, ln(10)) + Ci(2490 + 30 * Math.sin(t * 0.7 + i), 270 + i * 120, 14, ol(['#FF5A5A', '#FFD21F', '#46F58C'][i], 4));
+  for (let i = 0; i < 3; i++) m += R(2422, 300 + i * 120, 34, 90, 8, ol('#3A3F55', 5)) + P(`M2439 ${330 + i * 120} L${f(2439 + 20 * Math.sin(t * 0.7 + i))} ${270 + i * 120}`, ln(10)) + Ci(2439 + 20 * Math.sin(t * 0.7 + i), 270 + i * 120, 13, ol(['#FF5A5A', '#FFD21F', '#46F58C'][i], 4));
   // BROADCAST station: sign, pedestal, big button
   const B = CORE.button;
   const lit = clamp(broadcast, 0, 1);
   m += R(B.x - 250, 220, 500, 230, 24, ol(lit > 0.5 ? '#FFE14D' : '#FFFFFF', 8)) + T('BROADCAST', B.x, 300, 72, '#E8233B') + TF('TO ALL SCREENS', B.x, 362, 42, '#1D1D24') + R(B.x - 110, 386, 220, 44, 12, { fill: lit > 0.5 ? '#FF2E4D' : '#3A2A2A', stroke: LINE, 'stroke-width': 5 }) + TF('ON AIR', B.x, 418, 28, lit > 0.5 ? '#FFFFFF' : '#7A5A5A');
-  m += P(`M${B.x - 60} ${B.y} L${B.x - 46} ${B.top + 30} L${B.x + 46} ${B.top + 30} L${B.x + 60} ${B.y} Z`, ol('#3A4260', 7)) + R(B.x - 90, B.top + 10, 180, 36, 12, ol('#5A6478', 6));
   if (lit > 0) m += Ci(B.x, B.top - 10, 260, { fill: 'url(#farmGlowWarm)', opacity: f(lit) }) + K.rays(B.x, B.top - 10, 14, 360, '#FFF4C8', 0.25 * lit, t * 30);
+  m += P(`M${B.x - 60} ${B.y} L${B.x - 46} ${B.top + 30} L${B.x + 46} ${B.top + 30} L${B.x + 60} ${B.y} Z`, ol('#3A4260', 7)) + R(B.x - 90, B.top + 10, 180, 36, 12, ol('#5A6478', 6)) + R(B.x - 30, B.top + 80, 60, 40, 6, ol('#FFC21F', 4)) + T('!', B.x, B.top + 112, 30, '#1D1D24');
   const press = lit > 0.5 ? 12 : 0;
-  m += Ell(B.x, B.top + 12, B.r + 6, 26, { fill: '#22252F', stroke: LINE, 'stroke-width': 6 }) + P(`M${B.x - B.r} ${B.top + 10} L${B.x - B.r} ${B.top - 22 + press} A${B.r} 30 0 0 1 ${B.x + B.r} ${B.top - 22 + press} L${B.x + B.r} ${B.top + 10} A${B.r} 26 0 0 1 ${B.x - B.r} ${B.top + 10} Z`, ol(lit > 0.5 ? '#FF6A7A' : '#E8233B', 6)) + Ell(B.x, B.top - 22 + press, B.r, 30, ol(lit > 0.5 ? '#FFC8D0' : '#FF4D63', 6)) + Ell(B.x - 24, B.top - 30 + press, 24, 9, { fill: '#FFFFFF', opacity: 0.7 });
+  m += Ell(B.x, B.top + 12, B.r + 6, 26, { fill: '#22252F', stroke: LINE, 'stroke-width': 6 }) + P(`M${B.x - B.r} ${B.top + 10} L${B.x - B.r} ${B.top - 22 + press} A${B.r} 30 0 0 1 ${B.x + B.r} ${B.top - 22 + press} L${B.x + B.r} ${B.top + 10} A${B.r} 26 0 0 1 ${B.x - B.r} ${B.top + 10} Z`, ol(lit > 0.5 ? '#FF4D63' : '#E8233B', 6)) + Ell(B.x, B.top - 22 + press, B.r, 30, ol(lit > 0.5 ? '#FF9AA6' : '#FF4D63', 6)) + Ell(B.x - 24, B.top - 30 + press, 24, 9, { fill: '#FFFFFF', opacity: 0.7 });
   // mic stand
   const M0 = CORE.mic;
   m += Ell(M0.x, M0.y - 4, 60, 12, ol('#3A3F55', 5)) + P(`M${M0.x} ${M0.y - 6} L${M0.x} ${M0.top + 60}`, ln(14)) + P(`M${M0.x} ${M0.y - 6} L${M0.x} ${M0.top + 60}`, ln(7, '#9AA6C0')) + P(`M${M0.x} ${M0.top + 60} Q${M0.x} ${M0.top} ${M0.x - 60} ${M0.top}`, ln(12)) + P(`M${M0.x} ${M0.top + 60} Q${M0.x} ${M0.top} ${M0.x - 60} ${M0.top}`, ln(6, '#9AA6C0'));
@@ -2055,10 +2086,10 @@ function core(t, cam, opts = {}) {
   m += band(cam, 1, CORE.floor + 40, 1700, { fill: 'url(#farmTruss)', opacity: 0.9 });
   m += R(W0, CORE.floor + 40, W1 - W0, 900, 0, { fill: 'url(#farmFadeDown)', opacity: 0.5 });
   let rail = '';
-  for (let x = Math.floor(vis(cam, 1).x0 / 200) * 200; x < Math.min(vis(cam, 1).x1 + 200, 2440); x += 200) rail += R(x - 7, 650, 14, CORE.floor - 650, 4, ol('#3A4260', 4));
-  m += rail + R(W0, 640, 2440 - W0, 18, 8, ol('#4A5478', 5)) + R(W0, 750, 2440 - W0, 12, 6, ol('#3A4260', 4));
+  for (let x = Math.floor(vis(cam, 1).x0 / 200) * 200; x < Math.min(vis(cam, 1).x1 + 200, 2400); x += 200) rail += R(x - 7, 650, 14, CORE.floor - 650, 4, ol('#3A4260', 4));
+  m += rail + R(W0, 640, 2400 - W0, 18, 8, ol('#4A5478', 5)) + R(W0, 750, 2400 - W0, 12, 6, ol('#3A4260', 4));
   // alarm beacons on the rail posts
-  for (let x = Math.floor(vis(cam, 1).x0 / 800) * 800 + 200; x < Math.min(vis(cam, 1).x1 + 300, 2440); x += 800) m += beacon(x, 640, t + x * 0.001, green > 0.5 ? green : al, green > 0.5 ? 'green' : 'red', 520);
+  for (let x = Math.floor(vis(cam, 1).x0 / 800) * 800 + 200; x < Math.min(vis(cam, 1).x1 + 300, 2400); x += 800) m += beacon(x, 640, t + x * 0.001, green > 0.5 ? green : al, green > 0.5 ? 'green' : 'red', 520);
   m += R(W0, CORE.floor - 14, W1 - W0, 28, 0, { fill: 'url(#farmGrate)' }) + R(W0, CORE.floor - 16, W1 - W0, 6, 0, { fill: '#7A86A8' });
   m += R(W0, CORE.floor + 12, W1 - W0, 36, 0, { fill: '#2A3048', stroke: LINE, 'stroke-width': 5 }) + R(W0, CORE.floor + 18, W1 - W0, 18, 0, { fill: 'url(#farmHazard)', opacity: 0.9 });
   m += R(W0, CORE.floor + 46, W1 - W0, 8, 0, { fill: al > 0 ? RED : green > 0.5 ? GREEN : CYAN, opacity: f(0.6 + 0.3 * Math.sin(t * 8)) });
@@ -2068,15 +2099,16 @@ function core(t, cam, opts = {}) {
   let fg = '';
   if (frontRail) {
     let fr = '';
-    for (let x = Math.floor(vis(cam, 1).x0 / 260) * 260 + 130; x < Math.min(vis(cam, 1).x1 + 260, 2440); x += 260) fr += R(x - 6, CORE.floor + 10, 12, 140, 4, ol('#3A4260', 4));
-    fr += R(W0, CORE.floor + 120, 2440 - W0, 16, 8, ol('#4A5478', 5));
+    for (let x = Math.floor(vis(cam, 1).x0 / 260) * 260 + 130; x < Math.min(vis(cam, 1).x1 + 260, 2400); x += 260) fr += R(x - 6, CORE.floor + 10, 12, 140, 4, ol('#3A4260', 4));
+    fr += R(W0, CORE.floor + 120, 2400 - W0, 16, 8, ol('#4A5478', 5));
     fg += V(cam, fr, 1);
   }
   fg += V(cam, strip(cam, 1.6, 0, 2600, (i, x) => i > 0 ? '' : R(x + 2040, -400, 130, 1900, 0, { fill: '#05060C', stroke: '#1A1A28', 'stroke-width': 6 }) + P(`M${x + 2170} 40 Q${x + 2420} ${f(300 + Math.sin(t * 0.5 + i) * 20)} ${x + 2640} 0`, ln(40, '#05060C'))), 1.6);
-  if (al > 0) fg += fullRect(cam, 1, { fill: RED, opacity: f(al * (0.09 + 0.06 * Math.sin(t * 9))) });
-  if (green > 0) fg += fullRect(cam, 1, { fill: GREEN, opacity: f(green * 0.06) });
-  if (lowRes > 0) fg += fullRect(cam, 1, { fill: '#8A93A6', opacity: f(lowRes * 0.18) });
-  return layers(bg, mid, fg);
+  let lt = '';
+  if (al > 0) lt += fullRect(cam, 1, { fill: RED, 'fill-opacity': f(al * (0.09 + 0.06 * Math.sin(t * 9))) });
+  if (green > 0) lt += fullRect(cam, 1, { fill: GREEN, 'fill-opacity': f(green * 0.06) });
+  if (lowRes > 0) lt += fullRect(cam, 1, { fill: '#8A93A6', 'fill-opacity': f(lowRes * 0.18) });
+  return layers(bg, mid, fg, lt);
 }
 
 const FLOOR = { hall: 900, cooling: 900, lost: 920, archive: 900, core: CORE.floor, farm: FARM.floor, door: DOOR.floor, lift: LIFT.floor, liftInside: LIFTIN.floor, gas: GAS.floor, road: ROAD.near };
