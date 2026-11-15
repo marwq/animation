@@ -1,0 +1,63 @@
+{
+  "scene": "SC 11",
+  "start": 725.508,
+  "end": 752.522,
+  "music": [
+    {"start": 725.508, "end": 729.665, "mood": "silence", "energy": 0.0, "in": "cut", "out": "cut"},
+    {"start": 729.665, "end": 732.924, "mood": "hook", "energy": 0.8, "in": "cut", "out": "cut"},
+    {"start": 732.924, "end": 735.22, "mood": "climax", "energy": 0.95, "in": "cut", "out": "sting"},
+    {"start": 735.22, "end": 747.8, "mood": "warm", "energy": 0.5, "in": "fade", "out": "cut"},
+    {"start": 747.8, "end": 752.522, "mood": "playful", "energy": 0.4, "in": "cut", "out": "sting"}
+  ],
+  "ambience": [
+    {"start": 725.508, "end": 752.522, "name": "vault_hum", "gain_db": -8}
+  ],
+  "footsteps": [
+    {"start": 735.58, "end": 738.3, "interval": 0.898, "surface": "hard", "gain_db": -13, "pan": -0.14},
+    {"start": 735.37, "end": 738.1, "interval": 0.898, "surface": "hard", "gain_db": -15, "pan": 0.08},
+    {"start": 741.84, "end": 743.62, "interval": 0.196, "surface": "hard", "gain_db": -6, "pan": -0.1}
+  ],
+  "sfx": [
+    [725.51, "countdown_tick", -4, 0, "timer 00:00:03"],
+    [725.6, "pop", -3, -0.08, "Buffer lands on the grate (tiny shake, dust)"],
+    [725.62, "squeak", -10, -0.08, "tiny squeak"],
+    [726.51, "countdown_tick", -5, 0, "00:00:02"],
+    [726.66, "zoom_in", -6, 0, "cut up to the wall timer"],
+    [727.51, "countdown_final", -4, 0, "00:00:01 — the clock stops dead (jitter flash)"],
+    [727.94, "error", -4, 0, "SYSTEM pop-up: Lag... not found."],
+    [728.17, "reverse_swell", -2, 0, "swell into 'canceled!'"],
+    [729.47, "ui_close", -10, 0, "pop-up out"],
+    [729.66, "stamp", 3, 0, "CANCELED! stamp slams (flash + shake)"],
+    [729.67, "orch_hit", 1, 0, "the alarm palette flips to green"],
+    [729.75, "upgrade", -4, 0, "everything powers back up green"],
+    [730.51, "whoosh_up", -4, 0, "cut: low angle — the green wave climbs the tower"],
+    [730.55, "ui_pop", -6, 0, "SYSTEM: Thanks for playing! :)"],
+    [730.92, "riser", -6, 0, "the green wave rises to the top (peaks at the cut)"],
+    [731.0, "level_up", -4, 0, "green wave"],
+    [731.7, "pop", -4, 0.29, "smiley face pops"],
+    [732.1, "sparkle", -8, 0.3, "sparkles rising with the wave"],
+    [732.92, "whoosh", -2, 0, "cut: the rack hall"],
+    [732.95, "upgrade", -4, -0.3, "the rack hall lights up green"],
+    [733.15, "toggle", -10, -0.4, "rack after rack"],
+    [733.4, "toggle", -10, -0.1, "rack"],
+    [733.65, "toggle", -10, 0.2, "rack"],
+    [733.85, "toggle", -10, 0.45, "rack"],
+    [734.07, "magic", -2, 0, "the Archive: the bubbles get their colour back"],
+    [734.1, "harp_up", -6, 0, "colour flows back"],
+    [734.6, "sparkle", -8, -0.2, "Bubble Island shines"],
+    [735.22, "confetti", -2, 0, "We did it! confetti"],
+    [738.53, "swish", -10, 0, "cut: Grandpa — 'Ten seconds.'"],
+    [741.84, "whoosh", 0, -0.3, "whip-pan: Dex runs in with a blade of grass"],
+    [743.63, "skid", -4, -0.02, "Dex skids to a stop"],
+    [743.98, "jump", -8, 0.1, "he hops: I TOUCHED GRASS!"],
+    [744.0, "sparkle", -4, 0.16, "green burst + sparkles around the grass blade"],
+    [745.53, "swish", -10, 0, "cut: 'We know, Dex.'"],
+    [747.8, "swish", -12, 0, "cut: Pip cups Buffer in his hands"],
+    [748.2, "blink", -8, 0, "Buffer blinks"],
+    [748.3, "heart_pop", -6, 0, "heart eyes on 'keep'"],
+    [749.29, "swish", -10, 0, "cut: '...Fine.'"],
+    [751.02, "boing", -4, 0.15, "Buffer hops onto Dex's blade of grass"],
+    [751.47, "chomp", -2, 0.3, "nom! he eats the grass"],
+    [751.8, "gulp", -8, 0.3, "gulp"]
+  ]
+}

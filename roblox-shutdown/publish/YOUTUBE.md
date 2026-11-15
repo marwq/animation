@@ -15,7 +15,7 @@ The video runs **13:58**. Thumbnails: `thumbs/thumb_1…4.jpg` (1280×720, under
 | A | What If ROBLOX Shut Down FOREVER? ⏳ | `thumb_1`: 24 HOURS LEFT?! |
 | B | Roblox Has 24 HOURS Left… and a LAG MONSTER Is Eating It 😱 | `thumb_2`: THE LAG IS REAL?! |
 | C | My Grandpa Was the SECRET Janitor of Roblox 🔑 | `thumb_3`: GRANDPA KNEW?! |
-| D | The Whole World Logged Off for 10 SECONDS… 🌍 | `thumb_4`: 0 PLAYERS ONLINE |
+| D | The Whole World Logged Off for 10 SECONDS… 🌍 | `thumb_4`: 0 PLAYERS ONLINE?! |
 
 ---
 

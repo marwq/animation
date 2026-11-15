@@ -1,0 +1,48 @@
+{
+  "scene": "SC 13",
+  "start": 822.173,
+  "end": 837.812,
+  "music": [
+    {"start": 822.173, "end": 837.812, "mood": "outro", "energy": 0.55, "in": "cut", "out": "fade"}
+  ],
+  "ambience": [
+    {"start": 822.173, "end": 837.812, "name": "birds", "gain_db": -14}
+  ],
+  "footsteps": [
+  ],
+  "sfx": [
+    [822.17, "pixel_wipe", -2, 0, "the frozen frame finishes loading into the end card"],
+    [822.25, "respawn", -6, 0, "the world reloads"],
+    [823.82, "zoom_in", -2, 0, "snap zoom on 'YOU?' (shake)"],
+    [823.84, "pop", -4, 0.29, "YOU?"],
+    [825.3, "swish", -10, 0, "camera swings right; Juno shrugs"],
+    [825.5, "ui_pop", -4, 0.26, "the old countdown pops up: 24:00:00"],
+    [826.88, "countdown_tick", -8, 0.26, "23:59:59"],
+    [827.12, "ui_close", -10, 0.26, "countdown out"],
+    [827.15, "whoosh_up", -6, 0.39, "comment card slides up"],
+    [827.35, "boing", -10, 0.39, "bouncing arrow to the comments"],
+    [827.4, "chat_pop", -4, 0.39, "comment box"],
+    [827.7, "typing", -8, 0.39, "'With 24 hours left I would...'"],
+    [828.45, "whoosh_long", -4, 0, "camera pulls back: the end card"],
+    [828.6, "whoosh_down", -8, -0.3, "the family drops onto the island"],
+    [828.8, "ui_pop", -6, 0.4, "WATCH NEXT frame"],
+    [828.98, "land", -6, -0.53, "Dex lands"],
+    [828.99, "ui_pop", -6, 0.4, "MORE VIDEOS frame"],
+    [829.04, "land", -6, -0.06, "Pip lands"],
+    [829.1, "land", -8, -0.63, "Dad lands"],
+    [829.15, "pop", -6, 0.07, "SUBSCRIBE circle"],
+    [829.16, "land", -6, -0.16, "Grandpa lands"],
+    [829.22, "land", -8, -0.4, "Mom lands"],
+    [829.3, "swish", -10, -0.28, "Juno holds her phone up"],
+    [830.1, "swish", -8, -0.3, "flips it face-down"],
+    [830.19, "click", -2, -0.37, "click"],
+    [831.8, "harp_up", -8, 0, "'Look up.' — birds cross the sky"],
+    [832.92, "shine", -6, 0.4, "the video frames glow"],
+    [833.12, "ui_pop", -6, 0.07, "arrow: watch another video"],
+    [835.51, "jump", -8, -0.06, "Pip jumps"],
+    [835.56, "sparkle", -2, -0.15, "Pip's DING! (bell icon + sparkles)"],
+    [835.6, "confetti", -2, -0.2, "confetti rains"],
+    [835.62, "pop", -6, -0.23, "DING!"],
+    [836.3, "heart_pop", -10, -0.06, "Buffer: heart eyes"]
+  ]
+}
