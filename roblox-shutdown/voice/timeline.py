@@ -11,11 +11,11 @@ import json, os, re
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 ROOT = os.path.dirname(HERE)
-TAKES = ['01', '02', '03', '04', '05', '06', '06b', '07', '08a', '08b', '09', '10', '11', '12', '13']
-SCENE_OF = {'01': 'SC 01', '02': 'SC 02', '03': 'SC 03', '04': 'SC 04', '05': 'SC 05', '06': 'SC 06', '06b': 'SC 06b', '07': 'SC 07',
-            '08a': 'SC 08', '08b': 'SC 08', '09': 'SC 09', '10': 'SC 10', '11': 'SC 11', '12': 'SC 12', '13': 'SC 13'}
+TAKES = ['01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11', '12', '13']
+SCENE_OF = {t: 'SC ' + t for t in TAKES}
 LEAD_IN = 0.35          # silence before the first line
-TAKE_GAP = 0.9          # pause between takes (scene transitions)
+TAKE_GAP = 0.7          # pause between takes (scene transitions)
+SPEED = 1.02            # voice played 2% faster (pitch kept, atempo in vo_track.py) to land the cut at ~14:00
 SAME_SCENE_GAP = 0.35   # 08a -> 08b continue the same scene
 TAIL = 1.6              # after the last line
 # extra animation room: {line_id: seconds} added AFTER that line (on top of the script's ⏱ beats)
@@ -82,6 +82,11 @@ def main():
     prev_scene = None
     for k, tk in enumerate(TAKES):
         meta = json.load(open(os.path.join(HERE, 'takes', f'take{tk}.json')))
+        for vs in meta['voice_segments']:
+            vs['start_time_seconds'] /= SPEED
+            vs['end_time_seconds'] /= SPEED
+        for k2 in ('character_start_times_seconds', 'character_end_times_seconds'):
+            meta['alignment'][k2] = [x / SPEED for x in meta['alignment'][k2]]
         sc = SCENE_OF[tk]
         if k > 0:
             t += SAME_SCENE_GAP if sc == prev_scene else TAKE_GAP
@@ -114,7 +119,7 @@ def main():
         s['end'] = round(t, 3)
         prev_scene = sc
     total = t + TAIL
-    out = {'duration': round(total, 3), 'lines': lines, 'takes': takes, 'scenes': scenes}
+    out = {'duration': round(total, 3), 'speed': SPEED, 'lines': lines, 'takes': takes, 'scenes': scenes}
     json.dump(out, open(os.path.join(ROOT, 'scenes', 'timeline.json'), 'w'), indent=1)
     mm = lambda x: f'{int(x // 60)}:{x % 60:05.2f}'
     print(f'duration {mm(total)} · {len(lines)} lines · beats {sum(beats.values()):.1f}s')
