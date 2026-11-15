@@ -27,17 +27,17 @@ def chord_notes(root, mode, d, seven=False, inv=0):
 
 
 # main theme: (degree, beats); degree 0 = tonic in the lead octave; None = rest. 8 bars over I V vi IV I V IV V
-THEME = [   # "money funk" theme of the Robux video (8 bars over I vi ii V)
-    [(4, .5), (4, .25), (5, .25), (4, .5), (2, .5), (0, .5), (2, .5), (4, 1)],
-    [(5, .75), (4, .25), (2, .5), (0, .5), (-2, 1), (None, 1)],
-    [(1, .5), (3, .5), (5, .5), (3, .5), (1, .5), (3, .5), (5, 1)],
-    [(4, 1.5), (3, .5), (2, .5), (1, .5), (None, 1)],
-    [(7, .5), (7, .25), (8, .25), (7, .5), (5, .5), (4, .5), (5, .5), (7, 1)],
-    [(9, .75), (7, .25), (5, .5), (4, .5), (2, 1), (None, 1)],
-    [(3, .5), (4, .5), (5, .5), (6, .5), (7, .5), (6, .5), (5, 1)],
-    [(4, 1), (2, .5), (1, .5), (4, 1.5), (None, .5)],
+THEME = [   # "last day" theme of the Shutdown video (8 bars over vi IV I V): hopeful, a little bittersweet
+    [(2, .5), (4, .5), (5, 1), (4, .5), (2, .5), (0, 1)],
+    [(3, .5), (2, .5), (0, .5), (-2, .5), (0, 2)],
+    [(4, .5), (4, .5), (5, .5), (7, .5), (6, 1), (4, 1)],
+    [(4, 1.5), (1, .5), (2, 1), (None, 1)],
+    [(9, .5), (7, .5), (5, 1), (4, .5), (5, .5), (7, 1)],
+    [(8, .75), (7, .25), (5, .5), (3, .5), (5, 2)],
+    [(4, .5), (5, .5), (7, 1), (9, 1), (7, 1)],
+    [(8, 2), (7, 1), (None, 1)],
 ]
-THEME_PROG = [0, 5, 1, 4, 0, 5, 1, 4]
+THEME_PROG = [5, 3, 0, 4, 5, 3, 0, 4]
 # Nova's motif (dorian), 4 bars over i7 IV9 i7 IV9
 NOVA = [
     [(0, .75), (2, .75), (3, .5), (4, .5), (6, .25), (4, .25), (3, 1)],
@@ -146,7 +146,7 @@ def _(s, nb, e, r):
                 s.n(b * 4 + 2 + i * 0.5, 0.5, deg(84, mode, d), 60, 5)
     if e > 0.5:
         crash_phrases(s, nb, 8, 85)
-    return {0: 61, 1: 4, 2: 33, 3: 89, 5: 9}
+    return {0: 81, 1: 4, 2: 38, 3: 89, 5: 9}
 
 
 @style('outro', 122)
@@ -585,6 +585,68 @@ def _(s, nb, e, r):
     return {0: 78, 1: 24, 2: 33, 4: 12}
 
 
+@style('countdown', 100)
+def _(s, nb, e, r):
+    root, mode = 57, 'minor'  # A minor, ticking tension
+    prog = [0, 5, 2, 6]
+    for b, d in enumerate(prog_loop(prog, nb)):
+        for nn in chord_notes(57, mode, d):
+            s.n(b * 4, 4, nn - 12, 52 + 20 * e, 3)
+        bass = deg(33, mode, d)
+        for i in range(8):
+            s.n(b * 4 + i * 0.5, 0.3, bass, 80 + (10 if i % 2 == 0 else 0), 2)
+        s.drums(b, 'x.x.x.x.x.x.x.x.', 76, 55 + 20 * e)          # clock tick (woodblock)
+        s.drums(b, '....o.......o...', 37, 60)                    # side stick
+        if e > 0.55:
+            s.drums(b, 'X.......X..X....', 36, 95)
+        if e > 0.75:
+            s.drums(b, '............X.X.', 45, 85)
+        if e > 0.6 and b % 2 == 1:
+            for i, dd in enumerate((0, 2, 4, 7)):
+                s.n(b * 4 + 2 + i * 0.5, 0.45, deg(69, mode, d + dd), 72, 0)
+    crash_phrases(s, nb, 8, 70)
+    return {0: 11, 2: 38, 3: 48}
+
+
+@style('roadtrip', 112)
+def _(s, nb, e, r):
+    root, mode = 55, 'major'  # G major, open road
+    prog = [0, 4, 5, 3]
+    pat = [(0, 'd'), (1, 'd'), (1.5, 'u'), (2.5, 'u'), (3, 'd'), (3.5, 'u')]
+    for b, d in enumerate(prog_loop(prog, nb)):
+        ch = chord_notes(55, mode, d) + [chord_notes(55, mode, d)[0] + 12]
+        for (t, dirn) in pat:
+            notes = ch if dirn == 'd' else list(reversed(ch))
+            for k, nn in enumerate(notes):
+                s.n(b * 4 + t + k * 0.018, 0.45, nn, (78 if dirn == 'd' else 62) + 8 * e, 1)
+        s.n(b * 4, 1.6, deg(43, mode, d), 88, 2)
+        s.n(b * 4 + 2, 1.6, deg(43, mode, d) + 7, 80, 2)
+        s.drums(b, 'xoxoxoxoxoxoxoxo', 82, 48)                    # shaker
+        if e > 0.45:
+            s.drums(b, '....x.......x...', 54, 70)                # tambourine
+            s.drums(b, 'X.......X.x.....', 36, 85)
+    if e > 0.6:
+        melody(s, THEME, 0, nb, 67, mode, 0, 80, 0, 0.85, 3, 31)
+    return {0: 22, 1: 25, 2: 33}
+
+
+@style('tender', 72)
+def _(s, nb, e, r):
+    root, mode = 60, 'major'  # C major, piano + strings
+    prog = THEME_PROG
+    for b, d in enumerate(prog_loop(prog, nb)):
+        ch = chord_notes(48, mode, d)
+        arp = [ch[0], ch[1], ch[2], ch[1] + 12, ch[2] + 12, ch[1] + 12, ch[2], ch[1]]
+        for i, nn in enumerate(arp):
+            s.n(b * 4 + i * 0.5, 0.9, nn + 12, 58 + 12 * e, 1)
+        s.n(b * 4, 4, deg(36, mode, d), 70, 2)
+        for nn in chord_notes(60, mode, d):
+            s.n(b * 4, 4, nn, 38 + 25 * e, 3)
+    if e > 0.45:
+        melody(s, THEME, 0, nb, 72, mode, 0, 62 + 20 * e, 0, 0.95, 2, 41)
+    return {0: 0, 1: 0, 2: 42, 3: 48}
+
+
 # ---------------------------------------------------------------- render a segment
 STING_PROGS = {}
 
@@ -665,7 +727,7 @@ def render_segment(mood, dur, energy=0.6, sting=False, seed=0):
         mode_root = {'cool': (57, 'dorian'), 'mystery': (62, 'minor'), 'epic': (60, 'minor'), 'heist': (64, 'minor'),
                      'climax': (62, 'minor'), 'action': (57, 'minor'), 'chase': (64, 'minor'), 'glitch_build': (53, 'minor'),
                      'playful': (65, 'major'), 'romance': (65, 'major'), 'adventure': (62, 'major'), 'commentator': (67, 'major'),
-                     'montage': (67, 'major'), 'warm': (67, 'major'), 'wonder': (64, 'major'), 'sad': (60, 'major'), 'luxury': (62, 'dorian'), 'news': (60, 'major'), 'explainer': (65, 'major')}.get(mood, (60, 'major'))
+                     'montage': (67, 'major'), 'warm': (67, 'major'), 'wonder': (64, 'major'), 'sad': (60, 'major'), 'luxury': (62, 'dorian'), 'news': (60, 'major'), 'explainer': (65, 'major'), 'countdown': (57, 'minor'), 'roadtrip': (55, 'major'), 'tender': (60, 'major')}.get(mood, (60, 'major'))
         rt, md = mode_root
         b = end_beat
         for chn in [c for c in lastprog if c != 9][:3]:

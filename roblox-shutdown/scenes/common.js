@@ -13,8 +13,8 @@ const blinkAt = (t, ...cs) => Math.max(0, ...cs.map((c) => 1 - Math.abs(t - c) /
 
 // ---------------------------------------------------------------- lines -> captions / visemes
 // line: [start, end, speaker, text]; *word* marks a highlighted keyword.
-const SPEAKER_COL = { TY: '#FFFFFF', MIA: '#E4D2FF', PICKLE: '#C9F7A8', DAD: '#BFE0FF', MOM: '#B8F2EA', GRANDMA: '#FFC7E0', THIRTY: '#D8FF8A', ANCHOR: '#FFFFFF', SYSTEM: '#7CF7FF', SCAMMER: '#FFE98A', BUTLER: '#DDE6F2' };
-const HILITE = { TY: '#FFD21F', MIA: '#C49BFF', PICKLE: '#7EE05A', DAD: '#FFD21F', MOM: '#FFD21F', GRANDMA: '#FF6FB0', THIRTY: '#7CFF6B', ANCHOR: '#FFD21F', SYSTEM: '#FFFFFF', SCAMMER: '#FFD21F', BUTLER: '#5CF2FF' };
+const SPEAKER_COL = { JUNO: '#FFFFFF', DEX: '#BFE3FF', PIP: '#C9F7A8', GRANDPA: '#FFE7B0', DAD: '#D7E6FF', LAG: '#D0D4DC', SYSTEM: '#E8EEF6', ANCHOR: '#FFD2EC', STREAMER: '#C8FF9A', CASHIER: '#FFD0C4', MODBOT: '#FFB0B0' };
+const HILITE = { JUNO: '#FFD21F', DEX: '#3FA9FF', PIP: '#7EE05A', GRANDPA: '#FFB13B', DAD: '#FFD21F', LAG: '#9AA3B5', SYSTEM: '#7CF7FF', ANCHOR: '#FF6FB0', STREAMER: '#7CFF6B', CASHIER: '#FF7A5A', MODBOT: '#FF4D5E' };
 
 function words(text) {
   const out = []; let hi = false;

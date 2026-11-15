@@ -4,10 +4,10 @@
 usage:
   python3 audio/mix.py                     # whole video -> out/audio/{music,sfx,amb,mix}.wav
   python3 audio/mix.py --from 0 --to 61    # a range (preview)
-  python3 audio/mix.py --mux               # also mux into out/robux_full_sound.mp4 (video stream copied)
+  python3 audio/mix.py --mux               # also mux into out/shutdown_full_sound.mp4 (video stream copied)
   NO_VO=1 python3 audio/mix.py             # music + effects only
 
-The voiceover is out/audio/robux_vo.wav (voice/vo_track.py), already on the video timeline.
+The voiceover is out/audio/vo.wav (voice/vo_track.py), already on the video timeline.
 """
 import argparse, glob, json, os, subprocess, sys, zlib
 import numpy as np
@@ -21,7 +21,7 @@ ROOT = os.path.dirname(HERE)
 LIB = os.path.join(os.path.dirname(ROOT), 'whatif-roblox', 'assets', 'sfx')   # shared CC0 library
 OUTD = os.path.join(ROOT, 'out', 'audio')
 VIDEO_LEN = json.load(open(os.path.join(ROOT, 'scenes', 'timeline.json')))['duration']
-VO_WAV = os.path.join(OUTD, 'robux_vo.wav')
+VO_WAV = os.path.join(OUTD, 'vo.wav')
 VO_LUFS = -10.0          # voice level inside the mix (before the final loudness normalisation): +6 dB over v1
 
 AMB_REF_DB = -22.0      # ambience gain_db 0 -> this RMS level
@@ -304,7 +304,7 @@ def main():
     ap.add_argument('--mux', action='store_true')
     ap.add_argument('--target', type=float, default=-13.3, help='integrated LUFS of the final mix')
     ap.add_argument('--name', default=None)
-    ap.add_argument('--video', default=None, help='video to mux with (default out/robux_full.mp4)')
+    ap.add_argument('--video', default=None, help='video to mux with (default out/shutdown_full.mp4)')
     ap.add_argument('--out', default=None)
     a = ap.parse_args()
     os.makedirs(OUTD, exist_ok=True)
@@ -344,8 +344,8 @@ def main():
     os.remove(tmp)
     print(f'mix {path}: pre-gain LUFS {L:.1f} -> target {a.target}, final LUFS {lufs(path):.1f}')
     if a.mux:
-        vid = a.video or os.path.join(ROOT, 'out', 'robux_full.mp4')
-        mp4 = a.out or os.path.join(ROOT, 'out', 'robux_full_sound.mp4' if tag == 'full' else f'preview_{tag}.mp4')
+        vid = a.video or os.path.join(ROOT, 'out', 'shutdown_full.mp4')
+        mp4 = a.out or os.path.join(ROOT, 'out', 'shutdown_full_sound.mp4' if tag == 'full' else f'preview_{tag}.mp4')
         subprocess.run(['ffmpeg', '-v', 'error', '-y', '-ss', str(a0), '-t', str(a1 - a0), '-i', vid, '-i', path,
                         '-map', '0:v:0', '-map', '1:a:0', '-c:v', 'copy' if a0 == 0 else 'libx264',
                         *([] if a0 == 0 else ['-crf', '18', '-preset', 'fast']),

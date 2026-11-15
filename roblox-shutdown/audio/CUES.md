@@ -49,12 +49,14 @@ One JSON file per scene: `audio/cues/scNN.json` (`sc01.json` … `sc06b.json` �
 
 Validate with `python3 audio/validate_cues.py audio/cues/scNN.json`.
 
-## Robux video specifics
+## Shutdown video specifics
 
-- The voice is LOUD in the final mix and the music ducks under it automatically. Still keep music `energy`
-  around 0.35–0.6 under dense dialogue and save 0.8–1 for montages, title cards and wordless action.
-- Moods written for this video: `hook` (funky main theme), `luxury` (rich-kid lounge funk), `news` (TV news
-  jingle), `explainer` (light bouncy). Use the other moods from `vocab.json` too, for variety.
-- Every visual hit in the scene code (bang(), shake, flash, coin bursts, pops, stamps, whip-pans, smash-zooms)
-  should get a sound. Coins and Robux: `coin`, `coins`, `ka_ching`, `robux`, `money_counter`.
+- The voice is LOUD in the final mix and the music ducks under it automatically. Keep music `energy`
+  around 0.35–0.6 under dense dialogue and save 0.8–1 for montages, title moments and wordless action.
+- Moods written for this video: `hook` (main "last day" theme: hopeful, bittersweet), `countdown` (ticking
+  tension), `roadtrip` (acoustic strum), `tender` (piano + strings). Use the other moods from `vocab.json` too.
+- Every visual hit in the scene code (bang(), shake, flash, pops, stamps, whip-pans, smash-zooms, lag
+  glitches) should get a sound. Lag/glitch: `glitch`, `glitch_long`, `static`, `error`, `loading`, `powerdown`,
+  `reverse_swell`; the countdown: `countdown_tick`, `countdown_final`, `alarm`, `alarm_beep`; Pip's "Ding!":
+  `bell` or `chime` only where the visual shows an elevator; system pop-ups: `notify`, `ui_pop`, `error`.
 - A scene sheet covers exactly the scene's range from `scenes/main.js` RANGES (`start` = a, `end` = b).

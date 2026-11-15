@@ -51,18 +51,18 @@ function talking(speaker, t) {
 
 // ---------------------------------------------------------------- emotion from the line's [tags]
 const TAG_FACE = [
-  [/screams with joy|yells joyfully|giddy|hyped|excited|joy/, 'excited'],
-  [/laugh/, 'joy'],
-  [/proud|showing off|smug|evil grin|grudging/, 'smug'],
-  [/annoyed|outraged|offended|angry/, 'angry'],
-  [/panick|scared|alarm|nervous|uneasy|hesitat|whimper/, 'scared'],
-  [/stunned|shocked|horrified|gasps|disbelief|awed/, 'shocked'],
-  [/devastat|defeated|ashamed|regret|sad|crying|small|voice cracking|quiet|sulking|tired|groans/, 'sad'],
-  [/deadpan|flat|bored|sarcastic|calm/, 'deadpan'],
-  [/whisper|secretive|mysterious|mischievous|dramatic|greedy/, 'sneaky'],
-  [/determined|grim|firm|brave|competitive|focused/, 'determined'],
-  [/confused|calculating/, 'confused'],
-  [/warm|sincere|touched|encouraging|cheerful|content|sweet|simple|soft|delighted|pleased|happy|smiling|impressed|reflective/, 'happy'],
+  [/screams with joy|yells joyfully|giddy|hyped|excited|joy|giggl|crying happily/, 'excited'],
+  [/laugh|chuckles/, 'joy'],
+  [/proud|showing off|smug|evil grin|grudging|cocky|grinning|mocking|expert/, 'smug'],
+  [/annoyed|outraged|offended|angry|frustrated|defensive/, 'angry'],
+  [/panick|scared|alarm|nervous|uneasy|hesitat|whimper|startled|stressed|shaky|breathless|sneez/, 'scared'],
+  [/stunned|shocked|horrified|gasps|disbelief|awed|surprised|amazed/, 'shocked'],
+  [/devastat|defeated|ashamed|regret|sad|crying|sobbing|small|voice cracking|quiet|sulking|tired|groans|hurt|disappointed|whiny/, 'sad'],
+  [/deadpan|flat|bored|sarcastic|calm|muffled/, 'deadpan'],
+  [/whisper|secretive|mysterious|mischievous|dramatic|greedy|hungry|grave|suspicious/, 'sneaky'],
+  [/determined|grim|firm|brave|competitive|focused|serious|stern|shouting/, 'determined'],
+  [/confused|calculating|thinking|realizing/, 'confused'],
+  [/warm|sincere|touched|encouraging|cheerful|content|sweet|simple|soft|delighted|pleased|happy|smiling|impressed|reflective|dreamy|gentle|nostalgic|polite|storyteller/, 'happy'],
 ];
 function faceForLine(l) {
   if (!l) return null;

@@ -1,4 +1,4 @@
-// Shared toolkit for the Robux scenes: camera keys, actors with auto-acting, Robux props, particles, UI cards.
+// Shared toolkit for the Shutdown scenes: camera keys, actors with auto-acting, Robux props, particles, UI cards.
 'use strict';
 
 const S = require('../rig/svg');
@@ -45,7 +45,7 @@ const shaken = (t, a, inner, dur, amp) => { const s = shake(t, a, dur, amp); ret
 
 // ---------------------------------------------------------------- actors
 // actor('ty', t, { x, y, s, ...pose }, { face, energy, arms }) — auto lip-sync/blinks/gestures from the voice timeline
-const SPEAKER = { ty: 'TY', mia: 'MIA', pickle: 'PICKLE', dad: 'DAD', mom: 'MOM', grandma: 'GRANDMA', thirty: 'THIRTY', anchor: 'ANCHOR', scammer: 'SCAMMER', butler: 'BUTLER' };
+const SPEAKER = { juno: 'JUNO', dex: 'DEX', pip: 'PIP', grandpa: 'GRANDPA', dad: 'DAD', anchor: 'ANCHOR', streamer: 'STREAMER', cashier: 'CASHIER' };
 function actor(name, t, pose = {}, act = {}) {
   const sp = SPEAKER[name];
   const auto = sp ? V.perform(sp, t, { seed: name.length * 3.7 + (act.seed || 0), ...act }) : {};
@@ -57,7 +57,6 @@ function actor(name, t, pose = {}, act = {}) {
     if (auto.face.blink && fo.blink === undefined) fo.blink = auto.face.blink;
     p.face = fo;
   }
-  if (name === 'scammer') p.face = { ...(p.face || {}), signOn: Math.floor(t * 5) % 3 !== 0 ? 1 : 0 };
   return draw[name](p);
 }
 const nameTag = (txt, x, y, col = '#FFFFFF') => S.g(S.rect(-110, -30, 220, 50, 14, { fill: '#000', opacity: 0.35 }) + TF(txt, 0, 8, 30, col), `translate(${f(x)} ${f(y)})`);
@@ -210,8 +209,88 @@ function bang(txt, x, y, k, size = 120, rot = -6, col = '#FFD21F') {
   return C.sfx(txt, x, y, k, size, rot, col);
 }
 
+// ---------------------------------------------------------------- Shutdown video: countdown HUD, loading wheels, pop-ups, lag effects
+const pad2 = (n) => String(Math.max(0, Math.floor(n))).padStart(2, '0');
+// "HH:MM:SS" from seconds left
+function clock(sec) {
+  const s = Math.max(0, Math.ceil(sec - 1e-6));
+  return `${pad2(s / 3600)}:${pad2((s % 3600) / 60)}:${pad2(s % 60)}`;
+}
+// the countdown pill at the top of the frame (main.js draws it when a scene exports timer(t))
+// opts: { y, s, label, glitch 0..1, t }
+function timerHUD(sec, opts = {}) {
+  const { y = 64, s = 1, label = 'SHUTDOWN IN', glitch = 0, t = 0 } = opts;
+  const urgent = sec < 60;
+  const pulse = urgent ? 0.5 + 0.5 * Math.sin(t * 12) : 0;
+  const col = urgent ? '#FF3B4E' : '#FFFFFF';
+  let o = S.rect(-210, -44, 420, 88, 44, { fill: '#10131C', opacity: 0.82, stroke: urgent ? '#FF3B4E' : '#3A4560', 'stroke-width': 5 });
+  if (urgent) o += S.rect(-210, -44, 420, 88, 44, { fill: '#FF3B4E', opacity: f(0.18 * pulse) });
+  o += TF(label, 0, -14, 20, '#9AA6C0', { 'letter-spacing': 3 });
+  const txt = clock(sec);
+  if (glitch > 0) {
+    const gx = (hash(Math.floor(t * 20)) - 0.5) * 16 * glitch;
+    o += T(txt, gx - 4, 30, 50, '#FF2E63', { opacity: f(0.6 * glitch) }) + T(txt, -gx + 4, 30, 50, '#2EE6FF', { opacity: f(0.6 * glitch) });
+  }
+  o += T(txt, 0, 30, 50, col, { 'letter-spacing': 2 });
+  for (const sx of [-1, 1]) o += loadingWheel(sx * 172, 0, 15, t, urgent ? '#FF3B4E' : '#7CF7FF', 8, 5);
+  return S.g(o, `translate(960 ${f(y)}) scale(${f(s)})`);
+}
+// the classic spinner: n dots around a ring, fading behind the head
+function loadingWheel(x, y, r, t, col = '#B9C0CC', n = 8, dot = null, speed = 1.6) {
+  const d = dot || r * 0.22;
+  const head = Math.floor(t * speed * n) % n;
+  let o = '';
+  for (let i = 0; i < n; i++) {
+    const a = (i / n) * Math.PI * 2 - Math.PI / 2;
+    const age = (head - i + n) % n;
+    o += S.circle(x + Math.cos(a) * r, y + Math.sin(a) * r, d * (1 - age * 0.05), { fill: col, opacity: f(1 - age / n * 0.85) });
+  }
+  return o;
+}
+// grey system pop-up window (the shutdown notice); k = pop-in 0..1
+function popup(x, y, w, h, title, lines = [], k = 1, opts = {}) {
+  const sc = ease.outBack(clamp(k, 0, 1));
+  if (sc < 0.01) return '';
+  const { size = 40, accent = '#5A6478', icon = '!' } = opts;
+  let o = S.rect(-w / 2 + 10, -h / 2 + 14, w, h, 26, { fill: '#000', opacity: 0.25 });
+  o += S.rect(-w / 2, -h / 2, w, h, 26, ol('#E9EDF3', 7)) + S.rect(-w / 2, -h / 2, w, 64, 26, { fill: accent }) + S.rect(-w / 2, -h / 2 + 34, w, 30, 0, { fill: accent });
+  o += TF(title, 0, -h / 2 + 44, 30, '#FFFFFF');
+  o += S.circle(w / 2 - 36, -h / 2 + 32, 15, { fill: '#FF5A5A', stroke: '#151515', 'stroke-width': 4 });
+  if (icon) o += S.circle(-w / 2 + 70, 14 - (lines.length - 1) * size * 0.6, 36, ol('#FFD21F', 6)) + T(icon, -w / 2 + 70, 34 - (lines.length - 1) * size * 0.6, 54, '#151515');
+  lines.forEach((ln_, i) => { o += TF(ln_, icon ? 50 : 0, 26 + (i - (lines.length - 1) / 2) * size * 1.25, size, '#2A3140'); });
+  return S.g(o, `translate(${f(x)} ${f(y)}) scale(${f(sc)})`);
+}
+// golden "badge earned" toast; k = pop-in 0..1
+function badge(x, y, title, sub = 'BADGE EARNED!', k = 1, t = 0) {
+  const sc = ease.outBack(clamp(k, 0, 1));
+  if (sc < 0.01) return '';
+  let o = rays(0, 0, 14, 230, '#FFE88A', 0.22, t * 20);
+  o += S.rect(-300, -80, 600, 160, 40, ol('#2A2246', 8)) + S.rect(-290, -70, 580, 140, 34, { fill: 'none', stroke: '#FFD21F', 'stroke-width': 5 });
+  o += S.circle(-215, 0, 56, ol('#FFD21F', 7)) + S.path('M-235 0 L-220 16 L-192 -16', ln(10, '#151515'));
+  o += TF(sub, 55, -18, 30, '#FFD21F') + T(title, 55, 40, 58, '#FFFFFF');
+  return S.g(o, `translate(${f(x)} ${f(y)}) scale(${f(sc)})`);
+}
+// lag helpers
+const stutterT = (t, fps = 5) => Math.floor(t * fps) / fps;                 // choppy time: animate with stutterT(t) to "lag"
+function rubber(t, t0, dur = 0.8, amp = 120, n = 3) {                        // rubber-band x offset: snaps back and forth n times
+  const u = (t - t0) / dur;
+  if (u < 0 || u > 1) return 0;
+  const step = Math.floor(u * n * 2);
+  return step % 2 ? -amp * (1 - u) : amp * 0.4 * (1 - u);
+}
+function pixelBlocks(x, y, w, h, t, k = 1, col = '#8A93A6', size = 60, seed = 1) {   // grey squares: "texture still loading"
+  let o = '';
+  for (let yy = 0; yy < h; yy += size) for (let xx = 0; xx < w; xx += size) {
+    const r = hash(seed + xx * 0.13 + yy * 0.71 + Math.floor(t * 3) * 0.37);
+    if (r < k * 0.85) o += S.rect(x + xx, y + yy, size - 2, size - 2, 4, { fill: col, opacity: f(0.35 + 0.5 * r) });
+  }
+  return o;
+}
+const ghost = (inner, dx, k = 0.35) => (k > 0 ? S.g(inner, `translate(${f(dx)} 0)`, { opacity: f(k) }) + S.g(inner, `translate(${f(-dx)} 0)`, { opacity: f(k * 0.8) }) : '') + inner;
+
 module.exports = {
   W, H, LINE, ol, ln, T, TF, hash, bump, seg, camKeys, view, shake, shaken, actor, nameTag, NAMES,
+  clock, timerHUD, loadingWheel, popup, badge, stutterT, rubber, pixelBlocks, ghost,
   coin, grayCoin, robuxText, priceTag, gamePass, phone, tv, chart, counter, coinRain, coinBurst, rain, confetti, sparkles, sky, rays, bang,
   E, C, V, S, F, f, clamp, lerp, inv, ease, draw,
 };

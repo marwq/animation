@@ -164,7 +164,7 @@
     "conveyor": "conveyor belt motor hum + soft rattle"
   },
   "moods": {
-    "hook": "upbeat funky main theme (cold open, title, outro)",
+    "hook": "main theme of this video: hopeful, a little bittersweet (cold open, title, outro, big uplifting moments)",
     "action": "fast energetic parkour / action",
     "mystery": "night, curious, music box + soft pad",
     "glitch_build": "tense glitchy build-up that rises",
@@ -183,8 +183,10 @@
     "romance": "cute romantic, harp + strings + glockenspiel",
     "outro": "upbeat reprise of the main theme",
     "silence": "no music",
-    "luxury": "rich-kid lounge funk (spending, mansion, money montage)",
     "news": "TV news jingle energy (breaking news, announcements)",
-    "explainer": "light bouncy educational (explaining how something works)"
+    "explainer": "light bouncy educational (explaining how something works)",
+    "countdown": "ticking-clock tension (the shutdown countdown, deadlines, the core)",
+    "roadtrip": "bright acoustic road-trip strum (the van ride, travelling)",
+    "tender": "soft piano + strings, emotional (the Archive, the message to the world, the happy ending)"
   }
 }

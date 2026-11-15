@@ -1,4 +1,4 @@
-// Master timeline of "What If Robux Became Real Money?": routes time to the scene modules, adds captions + frame finish.
+// Master timeline of "What If Roblox Shut Down FOREVER?": routes time to the scene modules, adds captions + frame finish.
 // Usage: node scenes/main.js out.mp4 [fps=60] [from=0] [to=end]
 'use strict';
 
@@ -10,8 +10,8 @@ const { renderVideo } = require('../tools/render');
 
 // scene modules register by id; missing ones show a placeholder card so the whole timeline always renders
 const MODS = {
-  'SC 01': 's01', 'SC 02': 's02', 'SC 03': 's03', 'SC 04': 's04', 'SC 05': 's05', 'SC 06': 's06', 'SC 06b': 's06b',
-  'SC 07': 's07', 'SC 08': 's08', 'SC 09': 's09', 'SC 10': 's10', 'SC 11': 's11', 'SC 12': 's12', 'SC 13': 's13',
+  'SC 01': 's01', 'SC 02': 's02', 'SC 03': 's03', 'SC 04': 's04', 'SC 05': 's05', 'SC 06': 's06', 'SC 07': 's07',
+  'SC 08': 's08', 'SC 09': 's09', 'SC 10': 's10', 'SC 11': 's11', 'SC 12': 's12', 'SC 13': 's13',
 };
 const ORDER = Object.keys(MODS);
 const RANGES = ORDER.map((id, i) => ({ id, a: i === 0 ? 0 : V.TL.scenes[id].start, b: i + 1 < ORDER.length ? V.TL.scenes[ORDER[i + 1]].start : V.DURATION }));
@@ -40,13 +40,14 @@ function frame(t) {
   let o = m ? m.scene(t) : placeholder(r.id, t);
   const look = m && m.look ? m.look(t) : {};
   o += ST.finish(t, look);
+  if (m && m.timer) { const v = m.timer(t); if (v !== null && v !== undefined) o += require('./kit').timerHUD(typeof v === 'number' ? v : v.sec, { t, ...(typeof v === 'number' ? {} : v) }); }
   if (!(m && m.noCaptions && m.noCaptions(t))) o += C.captionAt(V.TRACK.caps, t, m && m.captionY ? m.captionY(t) : 1010);
   if (m && m.overlay) o += m.overlay(t);
   return o;
 }
 
 if (require.main === module) {
-  const out = process.argv[2] || path.join(__dirname, '..', 'out', 'robux_full.mp4');
+  const out = process.argv[2] || path.join(__dirname, '..', 'out', 'shutdown_full.mp4');
   const fps = Number(process.argv[3] || 60);
   const from = Number(process.argv[4] || 0), to = Number(process.argv[5] || V.DURATION);
   renderVideo(frame, { w: 1920, h: 1080, fps, duration: to - from, start: from, out, crf: 16, staticDefs: STATIC_DEFS })
