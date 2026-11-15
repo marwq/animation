@@ -15,3 +15,5 @@ robux-real/out/*.mp4
 robux-real/out/audio/
 roblox-shutdown/out/*.mp4
 roblox-shutdown/out/audio/
+roblox-shutdown/out/*.log
+roblox-shutdown/out/*.txt
