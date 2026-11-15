@@ -47,7 +47,7 @@
     [734.6, "sparkle", -8, -0.2, "Bubble Island shines"],
     [735.22, "confetti", -2, 0, "We did it! confetti"],
     [738.53, "swish", -10, 0, "cut: Grandpa — 'Ten seconds.'"],
-    [741.84, "whoosh", 0, -0.3, "whip-pan: Dex runs in with a blade of grass"],
+    [741.84, "whoosh", -2, -0.3, "whip-pan: Dex runs in with a blade of grass"],
     [743.63, "skid", -4, -0.02, "Dex skids to a stop"],
     [743.98, "jump", -8, 0.1, "he hops: I TOUCHED GRASS!"],
     [744.0, "sparkle", -4, 0.16, "green burst + sparkles around the grass blade"],
@@ -57,7 +57,7 @@
     [748.3, "heart_pop", -6, 0, "heart eyes on 'keep'"],
     [749.29, "swish", -10, 0, "cut: '...Fine.'"],
     [751.02, "boing", -4, 0.15, "Buffer hops onto Dex's blade of grass"],
-    [751.47, "chomp", -2, 0.3, "nom! he eats the grass"],
+    [751.47, "chomp", -4, 0.3, "nom! he eats the grass"],
     [751.8, "gulp", -8, 0.3, "gulp"]
   ]
 }

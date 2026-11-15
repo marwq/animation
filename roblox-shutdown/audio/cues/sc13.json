@@ -11,7 +11,7 @@
   "footsteps": [
   ],
   "sfx": [
-    [822.17, "pixel_wipe", -2, 0, "the frozen frame finishes loading into the end card"],
+    [822.18, "pixel_wipe", -2, 0, "the frozen frame finishes loading into the end card"],
     [822.25, "respawn", -6, 0, "the world reloads"],
     [823.82, "zoom_in", -2, 0, "snap zoom on 'YOU?' (shake)"],
     [823.84, "pop", -4, 0.29, "YOU?"],
@@ -40,8 +40,8 @@
     [832.92, "shine", -6, 0.4, "the video frames glow"],
     [833.12, "ui_pop", -6, 0.07, "arrow: watch another video"],
     [835.51, "jump", -8, -0.06, "Pip jumps"],
-    [835.56, "sparkle", -2, -0.15, "Pip's DING! (bell icon + sparkles)"],
-    [835.6, "confetti", -2, -0.2, "confetti rains"],
+    [835.56, "sparkle", -4, -0.15, "Pip's DING! (bell icon + sparkles)"],
+    [835.6, "confetti", -4, -0.2, "confetti rains"],
     [835.62, "pop", -6, -0.23, "DING!"],
     [836.3, "heart_pop", -10, -0.06, "Buffer: heart eyes"]
   ]
