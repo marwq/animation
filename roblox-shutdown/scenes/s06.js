@@ -75,16 +75,21 @@ const VR = FM.VANIN.rear;
 function vanRear(t, cam, o = {}) {
   const Lv = FM.vanInterior(t, { view: 'rear', cam, time: o.time ?? 0.2, lag: o.lag ?? lagAt(t), bounce: o.bounce ?? 0.35, steer: o.steer ?? 0 });
   const by = (o.bounce ?? 0.35) * (3 * Math.sin(t * 15) + 2 * Math.sin(t * 6.1));
+  const nv = o.novol || [];
+  const vis = (x, hw) => onScreen(cam, x, hw);
+  const V0 = (n) => (nv.includes(n) ? { volume: false } : {});
   let bench = o.benchBack || '';
-  if (o.dex !== false) bench += dex(t, { x: VR.dex.x, y: VR.dex.y + by, s: VR.dex.s, ...(o.dex || {}) }, o.dexAct || {});
-  if (o.pip !== false) bench += actor('pip', t, { x: VR.pip.x, y: VR.pip.y + by, s: VR.pip.s, ...(o.pip || {}) }, o.pipAct || {});
+  if (o.dex !== false && vis(VR.dex.x, 260)) bench += dex(t, { x: VR.dex.x, y: VR.dex.y + by, s: VR.dex.s, ...V0('dex'), ...(o.dex || {}) }, o.dexAct || {});
+  if (o.pip !== false && vis(VR.pip.x, 200)) bench += actor('pip', t, { x: VR.pip.x, y: VR.pip.y + by, s: VR.pip.s, ...V0('pip'), ...(o.pip || {}) }, o.pipAct || {});
   bench += o.bench || '';
   let front = '';
-  if (o.juno !== false) front += actor('juno', t, { x: VR.passenger.x, y: VR.passenger.y + by * 1.2, s: VR.passenger.s, turn: 0.25, ...(o.juno || {}) }, o.junoAct || {});
-  if (o.grandpa !== false) front += actor('grandpa', t, { x: VR.driver.x, y: VR.driver.y + by * 1.2, s: VR.driver.s, turn: -0.25, armL: 48, armR: 48, ...(o.grandpa || {}) }, { arms: false, ...(o.gpAct || {}) });
+  if (o.juno !== false && vis(VR.passenger.x, 330)) front += actor('juno', t, { x: VR.passenger.x, y: VR.passenger.y + by * 1.2, s: VR.passenger.s, turn: 0.25, ...V0('juno'), ...(o.juno || {}) }, o.junoAct || {});
+  if (o.grandpa !== false && vis(VR.driver.x, 330)) front += actor('grandpa', t, { x: VR.driver.x, y: VR.driver.y + by * 1.2, s: VR.driver.s, turn: -0.25, armL: 48, armR: 48, ...V0('grandpa'), ...(o.grandpa || {}) }, { arms: false, ...(o.gpAct || {}) });
   front += o.front || '';
   return Lv.bg + view(cam, bench, 1) + Lv.mid + view(cam, front, 1) + Lv.fg + (o.dark ? E.wash('#14183A', o.dark) : '');
 }
+// is a character (world x, half-width in world px) inside the frame of cam?
+function onScreen(cam, x, hw) { const z = cam.zoom ?? 1, sx = 960 + (x - 960 - (cam.x || 0)) * z + (cam.sx || 0); return sx + hw * z > -40 && sx - hw * z < 1960; }
 // camera helper: centre on world point (x, y) at zoom z
 const JX = 1040; // Juno's mark on the sidewalk (left of Betsy)
 const at = (x, y, zoom, extra = {}) => ({ zoom, x: x - 960, y: y - 540, ...extra });
@@ -203,7 +208,7 @@ function shotG(t) {
   const dexP = { s: VR.dex.s, lift: 50 * jump, armL: 30 + 120 * jump, armR: 30 + 120 * jump, face: { name: jump > 0.2 ? 'shocked' : 'happy' }, turn: 0.4 };
   const sigh = seg(t, l[5].a - 0.1, l[5].a + 0.3);
   const sg = bump(t, l[5].a + 0.1, l[5].b + 0.3);
-  let o = vanRear(t, cam, { pip: false, bench, dex: { ...dexP, x: 760 }, dexAct: { arms: false }, juno: { turn: lerp(0.5, 0, sigh), armR: 12, armL: 12, bodyY: 10 * sg, headRot: -9 * sigh, face: { name: sigh > 0.3 ? 'deadpan' : 'shocked', eyes: sigh > 0.3 ? { upper: 0.62 } : undefined } }, junoAct: { arms: false } });
+  let o = vanRear(t, cam, { novol: t < tG2 ? ['juno', 'grandpa'] : ['grandpa', 'dex'], pip: false, bench, dex: { ...dexP, x: 760 }, dexAct: { arms: false }, juno: { turn: lerp(0.5, 0, sigh), armR: 12, armL: 12, bodyY: 10 * sg, headRot: -9 * sigh, face: { name: sigh > 0.3 ? 'deadpan' : 'shocked', eyes: sigh > 0.3 ? { upper: 0.62 } : undefined } }, junoAct: { arms: false } });
   const fly = seg(t, tDing + 0.05, tDing + 0.9);
   o += view(cam, E.dingFx(bx + 60, by0 - 330, bump(t, tDing - 0.02, tDing + 0.9), t, 0.9) + (fly > 0 && fly < 1 ? E.snacks(740 - 160 * fly, 560 - 420 * fly + 500 * fly * fly, 0.35, fly * 720, t) : '') + (sg > 0 ? FM.breath(VR.passenger.x + 40, 560, t, sg, 1) : ''), 1);
   return o + flash(t, tG, 0.08, 0.5);
@@ -234,7 +239,7 @@ function vanClose(t, cam, o = {}) {
 function shotI1(t) {
   const cam = camKeys(t, [[tI1, at(860, 700, 3.1)], [tI2, at(880, 700, 3.25)]]);
   const turn = seg(t, W(7, 'Juno') + 0.1, W(7, 'Juno') + 0.4);
-  return vanClose(t, cam, { occ: { dex: { turn: -0.35, x: -40, face: { name: 'nervous' }, armL: 70, armR: 20 }, juno: { turn: lerp(0.4, -0.6, turn), face: { name: turn > 0.5 ? 'confused' : 'neutral' } }, pip: { turn: 0, face: { name: 'neutral' } } } });
+  return vanClose(t, cam, { occ: { vol: false, dex: { volume: true, turn: -0.35, x: -40, face: { name: 'nervous' }, armL: 70, armR: 20 }, juno: { turn: lerp(0.4, -0.6, turn), face: { name: turn > 0.5 ? 'confused' : 'neutral' } }, pip: { turn: 0, face: { name: 'neutral' } } } });
 }
 // I2 — the cow on the roadside, still loading (four grey cubes → mosaic → almost)
 const cowLoad = (t) => {
@@ -256,7 +261,7 @@ function shotI3(t) {
   const cam = at(935, 700, lerp(2.85, 3.0, u));
   const look = { face: { name: 'deadpan', eyes: { look: [0, 0.6] } } };
   const tn = -0.2 * Math.sin(u * 2.4);
-  return vanClose(t, cam, { speed: 15, occ: { grandpa: { turn: tn, ...look }, juno: { turn: tn, ...look }, dex: { turn: tn, x: -60, ...look }, pip: { turn: tn, ...look } } });
+  return vanClose(t, cam, { speed: 15, occ: { vol: false, grandpa: { turn: tn, ...look }, juno: { turn: tn, ...look }, dex: { volume: true, turn: tn, x: -60, ...look }, pip: { turn: tn, ...look } } });
 }
 // I4 — the cow finishes loading … and moos, late
 function shotI4(t) {
@@ -272,7 +277,7 @@ function shotI4(t) {
 function shotJ1(t) {
   const cam = camKeys(t, [[tJ1, at(1290, 760, 1.55)], [tJ2, at(1310, 750, 1.65)]]);
   const pat = Math.max(0, Math.sin(t * 9)) * bump(t, tJ1 + 0.2, tJ2);
-  return vanRear(t, cam, { grandpa: { turn: -0.15, armR: 48 + 30 * pat, face: { name: 'joy' } }, gpAct: { energy: 1.3 }, juno: { turn: 0.5, face: { name: 'neutral' } } });
+  return vanRear(t, cam, { novol: ['juno', 'dex', 'pip'], grandpa: { turn: -0.15, armR: 48 + 30 * pat, face: { name: 'joy' } }, gpAct: { energy: 1.3 }, juno: { turn: 0.5, face: { name: 'neutral' } } });
 }
 // J2 — insert: Betsy's speedometer ends at 40
 function shotJ2(t) {
@@ -334,7 +339,7 @@ function shotK1(t) {
 function shotK2(t) {
   const cam = camKeys(t, [[tK2, at(850, 650, 2.8)], [tL1, at(860, 650, 2.9)]]);
   const cact = E.landmarkCactus(cactusX(t), FM.ROAD.shoulderFar + 4, 0.85, t, deserty(0.3));
-  return roadShot(t, cam, { time: 0.3, dist: distJK(t), lag: 0.55, vx: 960, vs: 0.6, bounce: 0.15, behind: cact, truck: false, birds: 1, fg: false, occ: { vol: true, dex: { turn: 0, x: -50, face: { name: 'deadpan', eyes: { upper: 0.55, look: [0.3, 0] } } }, juno: { turn: 0.6, face: { name: 'confused' } }, pip: { turn: -0.3, face: { name: 'happy' } } } });
+  return roadShot(t, cam, { time: 0.3, dist: distJK(t), lag: 0.55, vx: 960, vs: 0.6, bounce: 0.15, behind: cact, truck: false, birds: 1, fg: false, occ: { vol: false, dex: { volume: true, turn: 0, x: -50, face: { name: 'deadpan', eyes: { upper: 0.55, look: [0.3, 0] } } }, juno: { turn: 0.6, face: { name: 'confused' } }, pip: { turn: -0.3, face: { name: 'happy' } } } });
 }
 // L1 — the GPS: "Recalculating. Recalculating."
 function gpsText(t) {
@@ -362,7 +367,7 @@ function shotL2(t) {
   const V2 = FM.VANIN.fwd;
   const slump = seg(t, tRe[2], tRe[2] + 0.6);
   let ch = actor('grandpa', t, { x: V2.driver.x, y: V2.driver.y, s: V2.driver.s, view: 'back', armL: 30, armR: 40, headRot: 6 * hit }, { arms: false });
-  ch += actor('juno', t, { x: V2.passenger.x, y: V2.passenger.y + 40 * slump, s: V2.passenger.s, view: 'back', armL: 10, armR: 10, headRot: -10 * slump });
+  ch += actor('juno', t, { x: V2.passenger.x, y: V2.passenger.y + 40 * slump, s: V2.passenger.s, view: 'back', armL: 10, armR: 10, headRot: -10 * slump, volume: false });
   // Grandpa's tapping arm (mustard sleeve + hand) reaching for the GPS
   const ex = lerp(860, 905, hit), ey = lerp(580, 520, hit);
   const arm = P(`M690 800 Q760 640 ${f(ex)} ${f(ey)}`, ln(70)) + P(`M690 800 Q760 640 ${f(ex)} ${f(ey)}`, ln(56, '#E0A53A')) + Ci(ex + 10, ey - 6, 34, ol('#EDC1A0', 6));
@@ -381,7 +386,7 @@ function shotM(t) {
 function shotN1(t) {
   const u = seg(t, tN1, tN2);
   const cam = at(lerp(1310, 1330, u), 740, lerp(1.6, 1.85, ease.inOut(u)));
-  return vanRear(t, cam, { grandpa: { turn: -0.1, face: { name: 'determined' } }, gpAct: { energy: 0.6 }, juno: { turn: 0.55, face: { name: 'nervous' } }, dark: 0.22 * seg(t, tN1, tN1 + 0.6) + 0.1, lag: 0.7 });
+  return vanRear(t, cam, { novol: ['juno', 'dex', 'pip'], grandpa: { turn: -0.1, face: { name: 'determined' } }, gpAct: { energy: 0.6 }, juno: { turn: 0.55, face: { name: 'nervous' } }, dark: 0.22 * seg(t, tN1, tN1 + 0.6) + 0.1, lag: 0.7 });
 }
 // N2 — insert: Juno's blueprint of the farm, tilt down to the very bottom: the Core (red circle, cobwebs)
 function shotN2(t) {
@@ -394,22 +399,23 @@ function shotN3(t) {
   const u = seg(t, tN3, tO);
   const cam = at(1000, 660, lerp(1.8, 1.9, u));
   const hide = seg(t, W(12, 'years') - 0.1, W(12, 'years') + 0.3);
-  return vanRear(t, cam, { dex: { turn: 0.2, y: VR.dex.y + 30 * hide, face: { name: 'scared', fx: ['sweat', 'sweat2'] }, armL: 40, armR: 40 }, dexAct: { arms: false }, pip: { turn: -0.2, face: { name: 'amazed', eyes: { type: 'star' } }, armL: 120, armR: 120, lift: 10 * Math.abs(Math.sin(t * 9)) }, pipAct: { arms: false }, dark: 0.2, lag: 0.7 });
+  return vanRear(t, cam, { novol: ['juno', 'grandpa'], dex: { turn: 0.2, y: VR.dex.y + 30 * hide, face: { name: 'scared', fx: ['sweat', 'sweat2'] }, armL: 40, armR: 40 }, dexAct: { arms: false }, pip: { turn: -0.2, face: { name: 'amazed', eyes: { type: 'star' } }, armL: 120, armR: 120, lift: 10 * Math.abs(Math.sin(t * 9)) }, pipAct: { arms: false }, dark: 0.2, lag: 0.7 });
 }
 // O — Juno asks for the plan; the camera pans to Grandpa: "I was hoping you had one. You're the builder."
 function shotO(t) {
   const cam = t < tP ? camKeys(t, [[tO, at(640, 760, 1.6)], [tP, at(660, 760, 1.66)]]) : camKeys(t, [[tP, at(660, 760, 1.66)], [tP + 0.35, at(1250, 750, 1.62)], [tQ, at(1270, 750, 1.7)]]);
   const point = seg(t, W(14, "You're") - 0.15, W(14, "You're") + 0.1);
-  const roll = { svg: blueRoll(...A.hand(60, -1), 1, -10), layer: 'front' };
   const raise = seg(t, W(13, "what's") - 0.2, W(13, 'plan') + 0.1);
-  return vanRear(t, cam, { juno: { turn: 0.55, armL: lerp(60, 128, raise) * (t < tP ? 1 : 0.5), armR: 20, props: [roll], face: t < tP ? undefined : { name: 'confused' } }, junoAct: { arms: false }, grandpa: { turn: lerp(-0.2, -0.6, point), armL: lerp(48, 95, point), face: { name: t > W(14, "You're") ? 'smug' : 'happy' } }, gpAct: { energy: 1 }, dark: 0.12, lag: 0.7 });
+  const aL = lerp(60, 128, raise) * (t < tP ? 1 : 0.5);
+  const roll = { svg: blueRoll(...A.hand(aL, -1), 1, -10 - aL * 0.5), layer: 'front' };
+  return vanRear(t, cam, { novol: t < tP ? ['grandpa', 'dex', 'pip'] : ['juno', 'dex', 'pip'], juno: { turn: 0.55, armL: aL, armR: 20, props: [roll], face: t < tP ? undefined : { name: 'confused' } }, junoAct: { arms: false }, grandpa: { turn: lerp(-0.2, -0.6, point), armL: lerp(48, 95, point), face: { name: t > W(14, "You're") ? 'smug' : 'happy' } }, gpAct: { energy: 1 }, dark: 0.12, lag: 0.7 });
 }
 // Q — Juno, to camera: "Great." … smash zoom: "Great plan, Grandpa."
 function shotQ(t) {
   const sm = W(15, 'Great', 1);
   const cam = t < sm ? at(560, 720, lerp(2.0, 2.1, seg(t, tQ, sm))) : at(530, 770, 2.75);
   cam.x += E.whipX(t, tR1, 1);
-  return vanRear(t, cam, { juno: { turn: 0, armL: 10, armR: 10, face: { name: 'deadpan', eyes: { upper: 0.45 } } }, junoAct: { arms: false, energy: 0.3 }, dark: 0.1, lag: 0.7 }) + flash(t, sm, 0.08, 0.35) + E.whipFx(t, tR1);
+  return vanRear(t, cam, { novol: ['grandpa', 'dex', 'pip'], juno: { turn: 0, armL: 10, armR: 10, face: { name: 'deadpan', eyes: { upper: 0.45 } } }, junoAct: { arms: false, energy: 0.3 }, dark: 0.1, lag: 0.7 }) + flash(t, sm, 0.08, 0.35) + E.whipFx(t, tR1);
 }
 // R1 — the gas station: Betsy pulls in (and rubber-bands to a stop)
 function shotR1(t) {
@@ -476,19 +482,19 @@ function shotV(t) {
   const knock = K.V.talking('PIP', t) && t < W(20, 'Ding') - 0.3 ? 1 : 0;
   const dq = bump(t, W(20, 'Ding') - 0.05, W(20, 'Ding') + 0.9);
   const pip = { turn: -0.1, armR: 70 + 40 * Math.max(0, Math.sin(t * 16)) * knock, armL: 20 + 100 * dq, headRot: -12 * dq, face: { name: dq > 0.2 ? 'cute' : 'sad' } };
-  let o = vanRear(t, cam, { pip: { ...pip, y: 835 }, pipAct: { arms: false }, dex: { turn: 0.2, headRot: 18, face: { name: 'sleepy' }, armL: 10, armR: 10 }, dexAct: { arms: false }, lag: 0.3 });
-  o += view(cam, E.dingFx(1235, 470, dq, t, 0.45, 'DING?') + C.zzz(t, 840, 470), 1);
+  let o = vanRear(t, cam, { novol: ['grandpa', 'dex', 'juno'], pip: { ...pip, y: 835 }, pipAct: { arms: false }, dex: { turn: 0.2, headRot: 18, face: { name: 'sleepy' }, armL: 10, armR: 10 }, dexAct: { arms: false }, lag: 0.3 });
+  o += view(cam, E.dingFx(1230, 640, dq, t, 0.42, 'DING?') + C.zzz(t, 840, 500), 1);
   return o;
 }
 // W — Grandpa, warm: "Not yet, little elevator."
 function shotW(t) {
   const cam = camKeys(t, [[tW, at(1300, 750, 1.65)], [tX1, at(1290, 750, 1.72)]]);
-  return vanRear(t, cam, { grandpa: { turn: -0.55, face: { name: 'joy' } }, gpAct: { energy: 0.9 }, juno: { turn: 0.1, face: { name: 'happy' } }, lag: 0.2, time: 0.15 });
+  return vanRear(t, cam, { novol: ['juno', 'dex', 'pip'], grandpa: { turn: -0.55, face: { name: 'joy' } }, gpAct: { energy: 0.9 }, juno: { turn: 0.1, face: { name: 'happy' } }, lag: 0.2, time: 0.15 });
 }
 // X1 — Dex at the window, golden light on his face: "Huh."
 function shotX1(t) {
   const cam = camKeys(t, [[tX1, at(830, 690, 3.2)], [tX2, at(820, 690, 3.35)]]);
-  return roadShot(t, cam, { time: 0.1, dist: 30000 + (t - tX1) * 200, lag: 0, vx: 960, vs: 0.6, bounce: 0.1, truck: false, birds: 3, fg: false, sunX: 1500, sunY: 560, occ: { vol: true, dex: { turn: -0.2, x: -50, face: { name: 'amazed', eyes: { look: [-0.2, -0.3] } } }, juno: { turn: -0.2, face: { name: 'happy' } }, pip: { turn: -0.2, face: { name: 'happy', eyes: { type: 'happy' } } } }, after: E.wash('#FFB04A', 0.12) + K.rays(1700, 200, 12, 1400, '#FFE6A0', 0.08, t * 6) });
+  return roadShot(t, cam, { time: 0.1, dist: 30000 + (t - tX1) * 200, lag: 0, vx: 960, vs: 0.6, bounce: 0.1, truck: false, birds: 3, fg: false, sunX: 1500, sunY: 560, occ: { vol: false, dex: { volume: true, turn: -0.2, x: -50, face: { name: 'amazed', eyes: { look: [-0.2, -0.3] } } }, juno: { turn: -0.2, face: { name: 'happy' } }, pip: { turn: -0.2, face: { name: 'happy', eyes: { type: 'happy' } } } }, after: E.wash('#FFB04A', 0.12) + K.rays(1700, 200, 12, 1400, '#FFE6A0', 0.08, t * 6) });
 }
 // X2 — the canyon sunrise, wide. Graphics quality: MAX.
 function shotX2(t) {

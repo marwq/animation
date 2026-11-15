@@ -56,8 +56,8 @@ function shotHi(t) {
   const talk = K.V.viseme('LAG', t);
   const open = talk && talk !== 'X' && talk !== 'A';
   const blink = bump(t, M[0].b + 0.05, M[0].b + 0.2);
-  let chars = who('juno', t, { x: 2540, y: FL + 20, s: 0.5, turn: 0.4, armL: 10, armR: 10, face: 'shocked' }, { arms: false });
-  chars += who('pip', t, { x: 2990, y: FL + 25, s: 0.5, turn: -0.4, armL: 10, armR: 10, face: 'amazed' }, { arms: false });
+  let chars = who('juno', t, { x: 2540, y: FL + 20, s: 0.5, turn: 0.4, armL: 10, armR: 10, face: 'shocked', volume: false }, { arms: false });
+  chars += who('pip', t, { x: 2990, y: FL + 25, s: 0.5, turn: -0.4, armL: 10, armR: 10, face: 'amazed', volume: false }, { arms: false });
   chars += LG.buffer({ x: E.DEFLATE.land[0], y: FL, s: 0.75, t, mood: open ? 'surprised' : 'happy', blink, hop: 0, look: [0.2, -0.5] });
   return coreShot(t, cam, coreOpts(t), chars);
 }
@@ -160,9 +160,9 @@ function shotDex(t) {
 function shotKnow(t) {
   const cam = K.camKeys(t, [[b10, camAt(3060, 520, 1.25)], [b11, camAt(3060, 520, 1.3)]]);
   const hold = A.hand(150, 1);
-  let chars = who('grandpa', t, { x: 3360, y: FL - 10, s: 0.48, turn: -0.4, armL: 20, armR: 30, face: 'joy' }, { arms: false });
+  let chars = who('grandpa', t, { x: 3360, y: FL - 10, s: 0.48, turn: -0.4, armL: 20, armR: 30, face: 'joy', volume: false }, { arms: false });
   chars += who('dex', t, { x: 2820, y: FL, s: 0.55, turn: 0.4, armR: 150, armL: 30, face: { name: 'excited', eyes: { type: 'star' } }, props: [{ svg: grassBlade(hold[0], hold[1] + 20, 1.1, 0), layer: 'front' }] }, { arms: false });
-  chars += who('pip', t, { x: 3200, y: FL + 20, s: 0.5, turn: -0.2, armL: -25, armR: -25, face: 'happy' }, { arms: false });
+  chars += who('pip', t, { x: 3200, y: FL + 20, s: 0.5, turn: -0.2, armL: -25, armR: -25, face: 'happy', volume: false }, { arms: false });
   chars += LG.buffer({ x: 3200, y: FL - 245, s: 0.45, t, mood: 'happy' });
   chars += who('juno', t, { x: 3050, y: FL + 30, s: 0.55, turn: -0.3, armL: 20, armR: 60 + 20 * Math.sin(t * 6), face: 'joy' }, { arms: false, energy: 1.0 }, SOOT);
   return coreShot(t, cam, coreOpts(t), chars);
@@ -187,9 +187,9 @@ function shotFine(t) {
   const hold = A.hand(120, -1);
   const dexX = 3330;
   const bx = lerp(3150, dexX + hold[0] * 0.55, ease.inOut(jump)), by = lerp(FL - 260, FL + (hold[1] - 30) * 0.55, ease.inOut(jump)) - Math.sin(jump * Math.PI) * 120;
-  let chars = who('grandpa', t, { x: 3500, y: FL - 10, s: 0.46, turn: -0.4, armL: 20, armR: 20, face: 'joy' }, { arms: false });
+  let chars = who('grandpa', t, { x: 3500, y: FL - 10, s: 0.46, turn: -0.4, armL: 20, armR: 20, face: 'joy', volume: false }, { arms: false });
   chars += who('dex', t, { x: dexX, y: FL, s: 0.55, turn: -0.4, armL: 120, armR: 20, face: chomp > 0 ? 'shocked' : 'happy', props: chomp < 1 ? [{ svg: G(grassBlade(hold[0], hold[1] + 20, 1.1, 0), null, {}), layer: 'front' }] : [] }, { arms: false });
-  chars += who('pip', t, { x: 3150, y: FL + 20, s: 0.5, turn: 0.1, armL: -22, armR: -22, face: jump > 0 ? 'amazed' : 'happy' }, { arms: false });
+  chars += who('pip', t, { x: 3150, y: FL + 20, s: 0.5, turn: 0.1, armL: -22, armR: -22, face: jump > 0 ? 'amazed' : 'happy', volume: false }, { arms: false });
   chars += who('juno', t, { x: 2870, y: FL + 30, s: 0.56, turn: 0.4, armL: 20, armR: jump > 0 ? 70 : 20, bodyY: 12 * sigh, face: t < M[8].word('But').t0 ? { name: 'deadpan', eyes: { type: 'closed' } } : 'smug' }, { arms: false, energy: 0.6 }, SOOT);
   chars += LG.buffer({ x: bx, y: by, s: 0.45, t, mood: chomp > 0 ? 'love' : 'happy', hop: jump > 0 && jump < 1 ? 0.5 : 0 });
   let o = coreShot(t, cam, coreOpts(t), chars);

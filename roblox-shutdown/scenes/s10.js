@@ -193,8 +193,8 @@ function shotMonster(t) {
   const growl = bump(t, tMonster - 0.1, tMonster + 0.8);
   const lagX = 2330 + 60 * growl + 30 * Math.sin(t * 1.3);
   let chars = lagAura(t, lagX, 380, ls * 0.9, 1, 5, 8) + lagSprite(t, { x: lagX, y: 380, size: ls * 0.9, mood: growl > 0.2 ? 'angry' : 'hungry', glitch: 0.3 + 0.4 * growl, speak: false, look: [1, 0.3] });
-  chars += who('grandpa', t, { x: 3360, y: FL, s: 0.46, turn: -0.3, armL: 12, armR: 20, face: 'sad', keys: true }, { arms: false });
-  chars += who('pip', t, { x: CORE.button.x + 40, y: CORE.button.top - 4, s: 0.42, turn: -0.4, armL: 20, armR: 20, face: { name: 'happy', eyes: { look: [-0.8, 0] } } }, { arms: false });
+  chars += who('grandpa', t, { x: 3360, y: FL, s: 0.46, turn: -0.3, armL: 12, armR: 20, face: 'sad', keys: true, volume: false }, { arms: false });
+  chars += who('pip', t, { x: CORE.button.x + 40, y: CORE.button.top - 4, s: 0.42, turn: -0.4, volume: false, armL: 20, armR: 20, face: { name: 'happy', eyes: { look: [-0.8, 0] } } }, { arms: false });
   chars += who('juno', t, { x: CORE.mic.x - 130, y: FL + 10, s: 0.55, turn: 0.6, armL: 14, armR: 40 + 10 * Math.sin(t * 2) }, { energy: 0.7 }, SOOT);
   return coreShot(t, cam, { alarm: 1, timer: K.clock(secAt(t)), broadcast: 1 }, chars);
 }
@@ -208,7 +208,7 @@ function shotCity(t) {
   let crowd = '';
   for (let i = 0; i < 6; i++) {
     const x = 380 + i * 230, up = seg(t, tCity + 0.3 + i * 0.25, tCity + 0.6 + i * 0.25);
-    const d = (i % 2 ? K.draw.kid : K.draw.adult)(i + 30, { x, y: 1010 + (i % 2) * 20, s: 0.3, view: 'back', shade: false, armL: lerp(60, 10, up), armR: lerp(50, 10, up), headRot: lerp(8, -4, up) });
+    const d = (i % 2 ? K.draw.kid : K.draw.adult)(i + 30, { x, y: 1010 + (i % 2) * 20, s: 0.3, view: 'back', volume: false, armL: lerp(60, 10, up), armR: lerp(50, 10, up), headRot: lerp(8, -4, up) });
     crowd += d + (up < 0.5 ? CI(x, 1010 - 0.3 * 600, 24, { fill: '#7CF7FF', opacity: 0.35 }) : '');
   }
   o += K.view(cam, crowd, 1.2);
@@ -426,8 +426,8 @@ function shotWindows(t) {
   W.forEach(([x, y], i) => {
     const id = S.uid('s10win');
     let inside = R(x, y, 380, 420, 0, { fill: '#FFD9A0' }) + R(x, y, 380, 420, 0, { fill: '#5A3A6A', opacity: 0.35 });
-    inside += K.draw.adult(i * 3 + 40, { x: x + 120, y: y + 560, s: 0.4, shade: false, headRot: -10, face: { name: 'happy', eyes: { look: [0.3, -1] } }, shadow: false });
-    inside += K.draw.kid(i * 5 + 41, { x: x + 270, y: y + 560, s: 0.36, shade: false, headRot: -10, armL: i === 1 ? 60 : 10, armR: 10, face: { name: 'happy', eyes: { look: [-0.3, -1] } }, shadow: false });
+    inside += K.draw.adult(i * 3 + 40, { x: x + 120, y: y + 560, s: 0.4, volume: false, headRot: -10, face: { name: 'happy', eyes: { look: [0.3, -1] } }, shadow: false });
+    inside += K.draw.kid(i * 5 + 41, { x: x + 270, y: y + 560, s: 0.36, volume: false, headRot: -10, armL: i === 1 ? 60 : 10, armR: 10, face: { name: 'happy', eyes: { look: [-0.3, -1] } }, shadow: false });
     if (i === 1) inside += G(EL(0, 0, 70, 46, ol('#C98A52', 6)) + CI(-60, -30, 40, ol('#C98A52', 6)) + EL(-86, -50, 14, 24, ol('#8A5530', 5)) + CI(-74, -36, 6, { fill: LINE }) + P('M-96 -18 Q-86 -10 -78 -16', ln(4)), tr(x + 230, y + 330, 0.9));
     o += S.clipDef(id, R(x, y, 380, 420)) + G(inside, null, { 'clip-path': `url(#${id})` }) + R(x - 14, y - 14, 408, 448, 10, { fill: 'none', stroke: '#FFFDF4', 'stroke-width': 24 }) + R(x - 14, y - 14, 408, 448, 10, { fill: 'none', stroke: LINE, 'stroke-width': 5 }) + R(x - 30, y + 430, 440, 30, 6, ol('#FFFDF4', 5));
   });
@@ -460,7 +460,7 @@ function shotStep(t) {
   o += grassBlades(t, 1080, 30, 260, 2, '#3FAE55') + R(0, 1000, 1920, 80, 0, { fill: '#2E8A45' });
   // the sneaker comes down onto the grass
   const down = ease.out(seg(t, tStep, tStep + 0.45));
-  const dex = K.actor('dex', t, { x: 1000, y: lerp(820, 1010, down), s: 2.6, view: 'side', flip: true, legL: lerp(30, 0, down), kneeL: lerp(40, 4, down), legR: -10, kneeR: 10, shade: false, shadow: false, face: 'amazed' }, { arms: false });
+  const dex = K.actor('dex', t, { x: 1000, y: lerp(820, 1010, down), s: 2.6, view: 'side', flip: true, legL: lerp(30, 0, down), kneeL: lerp(40, 4, down), legR: -10, kneeR: 10, volume: false, shadow: false, face: 'amazed' }, { arms: false });
   o += G(dex, null);
   o += grassBlades(t, 1090, 24, 200, 7, '#58CC62');
   if (down > 0.95) o += K.sparkles([[880, 960, 30], [1180, 940, 24], [1040, 880, 18]], t);

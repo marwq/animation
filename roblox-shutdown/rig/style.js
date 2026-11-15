@@ -37,9 +37,12 @@ const FRAME_DEFS = `<defs>
 function finish(t, { grade = 'warm', vignette = 0.85, W = 1920, H = 1080 } = {}) {
   let o = '';
   if (grade) o += `<rect x="0" y="0" width="${W}" height="${H}" fill="url(#grade${grade[0].toUpperCase()}${grade.slice(1)})"/>`;
-  if (vignette) o += `<rect x="0" y="0" width="${W}" height="${H}" fill="url(#vignette)" opacity="${vignette}"/>`;
+  if (vignette) o += VIG_IMG ? `<use href="#vigImg" opacity="${vignette}"/>` : `<rect x="0" y="0" width="${W}" height="${H}" fill="url(#vignette)" opacity="${vignette}"/>`;
   return o;
 }
 
-module.exports.FRAME_DEFS = FRAME_DEFS;
+// the vignette as a pre-rendered PNG (assets/vignette.png = the same radial gradient): a bitmap blit is cheaper than a full-frame gradient
+const VIG_PATH = require('path').join(__dirname, '..', 'assets', 'vignette.png');
+const VIG_IMG = require('fs').existsSync(VIG_PATH) ? `<defs><image id="vigImg" x="0" y="0" width="1920" height="1080" href="data:image/png;base64,${require('fs').readFileSync(VIG_PATH).toString('base64')}"/></defs>` : '';
+module.exports.FRAME_DEFS = FRAME_DEFS + VIG_IMG;
 module.exports.finish = finish;

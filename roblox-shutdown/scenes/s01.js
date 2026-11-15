@@ -44,9 +44,10 @@ function runners(t, x0, speed, s, o = {}) {
   const x = x0 + (t - (o.t0 ?? 0)) * speed;
   const gap = o.gap ?? 210 * s / 0.5;
   let c = '';
-  c += runSide('grandpa', t, x - gap * 3, FL, s, { rate: 13, act: { face: 'scared' }, pose: { props: [{ svg: E.mopInArm(70, -80), layer: 'front' }] } });
-  c += runSide('pip', t, x - gap * 1.95, FL, s, { rate: 18, act: { face: 'scared' } });
-  c += runSide('dex', t, x - gap, FL, s, { rate: 15, act: { face: 'scream' } });
+  const flat = s > 0.45 ? { volume: false } : {};
+  c += runSide('grandpa', t, x - gap * 3, FL, s, { rate: 13, act: { face: 'scared' }, pose: { ...flat, props: [{ svg: E.mopInArm(70, -80), layer: 'front' }] } });
+  c += runSide('pip', t, x - gap * 1.95, FL, s, { rate: 18, act: { face: 'scared' }, pose: flat });
+  c += runSide('dex', t, x - gap, FL, s, { rate: 15, act: { face: 'scream' }, pose: flat });
   c += runSide('juno', t, x, FL, s, { rate: 15, head: SOOT_SIDE });
   return c;
 }
@@ -71,7 +72,7 @@ function shotB(t) {
   const cam = camB(t);
   const lunge = bump(t, tForever - 0.1, tForever + 0.7);
   const lagX = jx - 1250 + 160 * lunge + K.rubber(t, tForever + 0.4, 0.5, 60, 3);
-  const lagSvg = lagSprite(t, { x: lagX, y: 520, size: 1.9, mood: t > tForever - 0.1 ? 'angry' : 'hungry', glitch: 0.25 + 0.5 * lunge, speak: false, look: [1, 0.2], mouth: lunge > 0.3 ? 'scream' : null }) + lagAura(t, lagX, 520, 1.7, 1, 4, 8);
+  const lagSvg = lagSprite(t, { x: lagX, y: 520, size: 1.9, mood: t > tForever - 0.1 ? 'angry' : 'hungry', glitch: 0.2 + 0.25 * lunge, speak: false, look: [1, 0.2], mouth: lunge > 0.3 ? 'scream' : null }) + lagAura(t, lagX, 520, 1.7, 1, 4, 8);
   let chars = lagSvg;
   chars += runners(t, runX(tB), 420, 0.5, { t0: tB, gap: 230 });
   let o = coreShot(t, cam, { alarm: 1, timer: K.clock(secAt(t)) }, chars);
@@ -137,9 +138,9 @@ function shotFreeze(t) {
   // re-draw the frozen frame with the moving camera: shotDing uses its own camera, so rebuild it here
   const Ly = F.core(tFreeze, cam, { alarm: 1, timer: K.clock(secAt(tFreeze)), broadcast: 0 });
   const back = lagSprite(tFreeze, { ...st.lag, mood: 'angry', glitch: 0.4, speak: false }) + lagAura(tFreeze, st.lag.x, st.lag.y, 2.2, 1, 9, 8);
-  let chars = runSide('grandpa', tFreeze, st.gx, FL - 6, 0.42, { ph: tFreeze * 13, pose: { armL: 100, armR: 30 }, act: { face: 'scared' } });
-  chars += runSide('dex', tFreeze, st.dx, FL, 0.42, { ph: tFreeze * 15 + 1, act: { face: 'scream' } });
-  chars += who('pip', tFreeze, st.pipPose, { arms: false });
+  let chars = runSide('grandpa', tFreeze, st.gx, FL - 6, 0.42, { ph: tFreeze * 13, pose: { armL: 100, armR: 30, volume: false }, act: { face: 'scared' } });
+  chars += runSide('dex', tFreeze, st.dx, FL, 0.42, { ph: tFreeze * 15 + 1, pose: { volume: false }, act: { face: 'scream' } });
+  chars += who('pip', tFreeze, { ...st.pipPose, volume: false }, { arms: false });
   let o = Ly.bg + K.view(cam, back, 0.85) + Ly.mid + K.view(cam, chars, 1) + Ly.fg + Ly.light;
   o += K.view(cam, E.ding(st.pipPose.x + 70, st.pipPose.y - 360, seg(tFreeze, T0.d, T0.d + 0.9), 0.9), 1);
   // freeze tint (the frozen world is a little desaturated and blue)
@@ -191,7 +192,7 @@ function shotGrab(t) {
   const cam = K.camKeys(t, [[tJ, camAt(jx - 40, jy - 420, 1.95)], [tRw, camAt(jx - 40, jy - 440, 2.1)]]);
   const Ly = F.core(tFreeze, cam, { alarm: 1, timer: K.clock(secAt(tFreeze)), broadcast: 0 });
   const back = lagSprite(tFreeze, { ...st.lag, mood: 'angry', glitch: 0.4, speak: false });
-  let chars = who('pip', tFreeze, st.pipPose, { arms: false });
+  let chars = who('pip', tFreeze, { ...st.pipPose, volume: false }, { arms: false });
   let o = Ly.bg + K.view(cam, back, 0.85) + Ly.mid + K.view(cam, chars, 1) + Ly.fg + Ly.light;
   o += S.rect(0, 0, 1920, 1080, 0, { fill: '#9AA6C8', opacity: 0.32 });
   const reach = seg(t, tBack - 0.3, tBack + 0.05);

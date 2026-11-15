@@ -116,7 +116,8 @@ function lagSprite(t, o = {}) {
   const { x = 960, y = 540, size = 1, mood = 'hungry', glitch = 0.15, speak = true, look = [0, 0.2], fps = 10, blink = 0 } = o;
   const tt = fps ? K.stutterT(t, fps) : t;
   const mouth = o.mouth !== undefined ? o.mouth : speak ? V.viseme('LAG', t) : null;
-  return LG.lag({ x, y, size, t: tt, mouth, mood, glitch, look, blink });
+  // big Lags: cap the glitch (every extra slice re-renders the whole cloud)
+  return LG.lag({ x, y, size, t: tt, mouth, mood, glitch: size > 1.2 ? Math.min(glitch, 0.45) : glitch, look, blink });
 }
 // drifting loading wheels + grey pixel blocks around a Lag at (x, y)
 function lagAura(t, x, y, size, k = 1, seed = 0, n = 9) {
@@ -339,7 +340,7 @@ function junoFeed(t, w, h, o = {}) {
   for (let i = 0; i < 7; i++) s += CI(-w / 2 + hash(i * 3.1) * w, -h / 2 + hash(i * 5.7) * h * 0.7, h * (0.05 + hash(i) * 0.07), { fill: i % 3 ? '#FF4D63' : '#FFB13B', opacity: f(0.18 + 0.12 * Math.sin(t * 3 + i)) });
   const sc = (0.92 * h) / 600;
   const fy = -h / 2 + 0.06 * h + 1015 * sc;
-  s += who('juno', t, { x: o.x ?? 0, y: fy, s: sc, shade: o.shade ?? false, shadow: false, armL: 6, armR: 6, ...(o.pose || {}) }, { arms: false, energy: 0.5, ...(o.act || {}) }, SOOT);
+  s += who('juno', t, { x: o.x ?? 0, y: fy, s: sc, volume: o.volume ?? false, shadow: false, armL: 6, armR: 6, ...(o.pose || {}) }, { arms: false, energy: 0.5, ...(o.act || {}) }, SOOT);
   // the mic in the corner
   s += G(R(-26, -40, 52, 80, 26, ol('#3A3F55', 5)) + P('M-14 -20 L14 -20 M-14 0 L14 0 M-14 20 L14 20', ln(3, '#7A8296')) + P('M0 40 L0 140', ln(12)), `translate(${f(w * 0.3)} ${f(h * 0.36)}) scale(${f(h / 400)}) rotate(-12)`);
   if (o.tag !== false) {
@@ -423,7 +424,7 @@ function bus(t, x, y, s, phonesOff = 0, o = {}) {
     const wx = -520 + i * 150, id = S.uid('s09bus');
     const off = phonesOff * n > i + 0.5;
     let inside = R(wx, -290, 130, 150, 0, { fill: off ? '#FFD9A0' : '#2A3050' });
-    const kid = i % 2 ? K.draw.kid(i + 20, { x: wx + 65, y: -40, s: 0.17, shade: false, shadow: false, face: off ? 'happy' : 'neutral', turn: off ? 0.6 : 0, headRot: off ? -8 : 10, armR: off ? 10 : 70, armL: off ? 10 : 50 }) : K.draw.adult(i + 7, { x: wx + 65, y: -32, s: 0.15, shade: false, shadow: false, face: off ? 'happy' : 'neutral', turn: off ? 0.6 : 0, headRot: off ? -8 : 10, armR: off ? 10 : 70, armL: off ? 10 : 50 });
+    const kid = i % 2 ? K.draw.kid(i + 20, { x: wx + 65, y: -40, s: 0.17, volume: false, shadow: false, face: off ? 'happy' : 'neutral', turn: off ? 0.6 : 0, headRot: off ? -8 : 10, armR: off ? 10 : 70, armL: off ? 10 : 50 }) : K.draw.adult(i + 7, { x: wx + 65, y: -32, s: 0.15, volume: false, shadow: false, face: off ? 'happy' : 'neutral', turn: off ? 0.6 : 0, headRot: off ? -8 : 10, armR: off ? 10 : 70, armL: off ? 10 : 50 });
     inside += kid;
     if (!off) inside += CI(wx + 65, -160, 40, { fill: '#7CF7FF', opacity: 0.28 });
     b += S.clipDef(id, R(wx, -290, 130, 150, 12)) + G(inside, null, { 'clip-path': `url(#${id})` }) + R(wx, -290, 130, 150, 12, { fill: 'none', stroke: LINE, 'stroke-width': 6 });
@@ -577,9 +578,9 @@ function shotDeflate(t, t0, o = {}) {
   const cam = shakes(DEFLATE.cam, t, [[t0 + DEFLATE.dur, 0.25, 8]]);
   let back = '', chars = '';
   const look = [clamp((st.x - 3100) / 600, -1, 1), clamp((st.y - 500) / 400, -1, 1)];
-  chars += who('grandpa', t, { x: 3300, y: FL, s: 0.46, turn: -0.4, armL: 30, armR: 40, face: { name: 'shocked', eyes: { look } }, keysSwing: 8 * Math.sin(t * 5) }, { arms: false });
+  chars += who('grandpa', t, { x: 3300, y: FL, s: 0.46, turn: -0.4, armL: 30, armR: 40, volume: false, face: { name: 'shocked', eyes: { look } }, keysSwing: 8 * Math.sin(t * 5) }, { arms: false });
   chars += who('juno', t, { x: 3080, y: FL + 30, s: 0.5, turn: -0.5, armL: 20, armR: 60, face: { name: 'shocked', eyes: { look } } }, { arms: false }, SOOT);
-  chars += who('pip', t, { x: 3460, y: FL + 40, s: 0.5, turn: -0.6, armL: 20, armR: 20, face: { name: 'amazed', eyes: { look } } }, { arms: false });
+  chars += who('pip', t, { x: 3460, y: FL + 40, s: 0.5, turn: -0.6, armL: 20, armR: 20, volume: false, face: { name: 'amazed', eyes: { look } } }, { arms: false });
   if (!landed) {
     let lg = lagSprite(t, { x: 0, y: 0, size: st.size, mood: 'scared', glitch: 0.3, speak: false, fps: 0, mouth: 'O' });
     chars += G(lg, `translate(${f(st.x)} ${f(st.y)}) rotate(${f(st.rot)})`);

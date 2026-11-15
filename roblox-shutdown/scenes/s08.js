@@ -138,8 +138,10 @@ function shotCoolWide(t) {
   // Grandpa strides out confidently, Pip waddles and slides around behind
   const gx = lerp(-330, -40, walkU) + 120 * seg(t, tWhere, cA3);
   w += actor('grandpa', t, { x: gx, y: fl, s, view: 'side', flip: true, ...A.walk(t * 9, 0.8), armR: 30, props: [{ svg: mop({ x: 40, y: 0, rot: -14 }), layer: 'front' }], face: 'happy', keysSwing: 6 * Math.sin(t * 9) }, { arms: false });
-  const px = lerp(-480, -160, walkU) + 60 * Math.sin(t * 2.5);
-  w += actor('pip', t, { x: px, y: fl, s, view: 'side', flip: Math.sin(t * 2.5) > -0.6, ...A.walk(t * 14, 0.7), armL: 70, armR: 70, lean: 8, face: 'excited' }, { arms: false });
+  // Pip skids around, then slides off to the left before the push-in
+  const away = Math.max(0, t - (tWhere - 0.5));
+  const px = lerp(-480, -160, walkU) + 60 * Math.sin(t * 2.5) - 1500 * away * away;
+  if (px > -900) w += actor('pip', t, { x: px, y: fl, s, view: 'side', flip: away > 0 ? false : Math.sin(t * 2.5) > -0.6, ...(away > 0 ? { legL: 30, legR: -30, armL: 120, armR: 120, lean: -10 } : A.walk(t * 14, 0.7)), armL: 70, armR: 70, lean: 8, face: 'excited' }, { arms: false });
   // Juno walks out, stops, turns to camera for the pun
   const jx = lerp(-120, 200, walkU);
   const jFront = t > tWhere - 0.15;
@@ -272,7 +274,7 @@ function shotSkate(t) {
 // A6: Pip belly-slides past like a penguin — "Ding!"
 function shotPenguin(t) {
   const u = seg(t, cA6, cB1);
-  const px = lerp(1520, -120, u);
+  const px = lerp(1560, 60, u);
   const cam = { zoom: 2.0, x: lerp(160, -80, u), y: 215 };
   const Ly = FM.coolingRoom(t, cam, { snow: 24 });
   const fl = FM.FLOOR.cooling, ps = 0.5, Z = ZS.pip;
@@ -391,7 +393,7 @@ function shotRealize(t) {
     if (st.phase === 'leap') w += C.dust(E.RUN.x1 - 30, J.start.y - 10, tLeap, t);
   }
   // neon light on his face (no foreground cables over the close-up)
-  let o = Ly.bg + Ly.mid + view(cam, w, 1) + (pull < 0.5 ? '' : Ly.fg) + Ly.light;
+  let o = Ly.bg + Ly.mid + view(cam, w, 1) + Ly.light;
   if (obbyK > 0 && pull < 0.5) o += soft(1250, 470, 520, 's08neon', 0.9 * obbyK);
   // the transform wave: a ring of pixels sweeping out from his eyes
   const wk = seg(t, tObby - 0.05, tObby + 0.5);
@@ -554,7 +556,7 @@ function shotSword(t) {
   // junk falling off him as he pops out
   for (let i = 0; i < 5; i++) { const a = t - cC2 - 0.08; if (a < 0 || a > 0.9) continue; w += FM.lostItem(['cap', 'balloon', 'egg', 'headphones', 'crown'][i], 720 + (i - 2) * 90 + a * (i - 2) * 160, fl - 420 + a * -500 + 0.5 * 2600 * a * a, 0.5, a * 300); }
   let o = Ly.bg + Ly.mid + view(cam, w, 1) + Ly.fg + Ly.light;
-  if (raise > 0) o += K.rays(820, 140, 18, 1400, '#FFE88A', 0.12 * raise, t * 15) + K.sparkles([[900, 120, 40], [760, 230, 26], [1050, 260, 22]], t);
+  if (raise > 0) o += K.rays(820, 160, 14, 1000, '#FFE88A', 0.12 * raise, t * 15) + K.sparkles([[900, 120, 40], [760, 230, 26], [1050, 260, 22]], t);
   o += K.bang('*shing*', 1340, 250, bump(t, tSword, tSword + 0.6), 70, 8, '#FFF1A8');
   return o;
 }
@@ -629,7 +631,7 @@ function shotEvenMine(t) {
   const fl = FM.FLOOR.archive;
   const reach = seg(t, tMine - 0.35, tMine + 0.25);
   let w = actor('juno', t, { x: 835, y: fl, s: 0.42, turn: 0.62, bodyY: 160, armR: lerp(20, 88, reach), armL: 16, face: { name: 'happy', eyes: { look: [0.9, 0.5], pupil: 1.5 }, fx: t > tMine ? ['blush'] : [] } }, { arms: false, energy: 0.3 });
-  let o = Ly.bg + Ly.mid + view(cam, w, 1) + Ly.fg + Ly.light;
+  let o = Ly.bg + Ly.mid + view(cam, w, 1) + Ly.light;
   o += soft(1060, 700, 380, 's08cyan', 0.9);
   return o;
 }
@@ -650,7 +652,7 @@ function junoHolding(t, x, o = {}) {
 }
 // D4: two-shot, Grandpa crouches beside her — "Especially yours ... gets a shelf."
 function shotEspecially(t) {
-  const cam = camKeys(t, [[cD4, at(1010, 640, 1.85)], [cD5, at(1000, 650, 2.05)]], ease.linear);
+  const cam = camKeys(t, [[cD4, at(1010, 668, 1.85)], [cD5, at(1000, 672, 2.02)]], ease.linear);
   const Ly = FM.archive(t, cam, { glow: 0.85, juno: false });
   const fl = FM.FLOOR.archive, s = 0.42;
   const lit = seg(t, tShelf - 0.1, tShelf + 0.3);
@@ -659,7 +661,7 @@ function shotEspecially(t) {
   w += actor('grandpa', t, { x: 1130, y: fl, s, turn: -0.5, bodyY: 110, armL: 62, armR: lerp(20, 115, sweep), keysSwing: 3 * Math.sin(t * 2), face: { name: 'happy', eyes: { look: [-0.8, 0.3] } } }, { arms: false, energy: 0.4 });
   const lookUp = seg(t, cD4 + 0.6, cD4 + 1.0);
   w += junoHolding(t, 900, { face: { name: 'happy', mouth: 'smallSmile', eyes: { look: [lerp(0, 0.8, lookUp), lerp(0.7, -0.2, lookUp)] } } });
-  let o = Ly.bg + Ly.mid + view(cam, w, 1) + Ly.fg + Ly.light;
+  let o = Ly.bg + Ly.mid + view(cam, w, 1) + Ly.light;
   return o;
 }
 // D5: Juno close — "I always thought my game didn't matter. Three visits. ... But somebody kept it anyway."
@@ -669,7 +671,7 @@ function shotJunoQuiet(t) {
   const smile = seg(t, tKept - 0.3, tKept + 0.4);
   const face = smile > 0.3 ? { name: 'happy', mouth: K.V.talking('JUNO', t) ? undefined : 'smile', fx: ['tears', 'blush'], eyes: { look: [0.2, 0.6] } } : { name: 'sad', eyes: { look: [0.1, 0.8] } };
   let w = junoHolding(t, 900, { face, turn: 0.15, headRot: -4 + 3 * Math.sin(t * 0.8) });
-  let o = Ly.bg + Ly.mid + view(cam, w, 1) + Ly.fg + Ly.light;
+  let o = Ly.bg + Ly.mid + view(cam, w, 1) + Ly.light;
   o += soft(900, 820, 420, 's08cyan', 0.6 + 0.5 * smile);
   o += E.visitIcons(1450, 400, t, [tThree, tThree + 0.2, tVisits + 0.1], 1.25);
   return o;
@@ -683,7 +685,7 @@ function shotSomeone(t) {
   const tap = pat > 0.9 ? 4 * Math.max(0, Math.sin((t - tJuno) * 14)) : 0;
   let w = junoHolding(t, 900, { face: { name: 'happy', mouth: 'smallSmile', fx: pat > 0.5 ? ['blush'] : [], eyes: { look: [0.8, -0.6] } }, turn: 0.35, bodyY: 150 - tap * 2 });
   w += actor('grandpa', t, { x: 1050, y: fl, s, turn: -0.55, bodyY: 80, armL: lerp(30, 150, pat), armR: 20, keysSwing: 3 * Math.sin(t * 2), face: { name: 'happy', eyes: { look: [-0.8, 0.2] } } }, { arms: false, energy: 0.5 });
-  let o = Ly.bg + Ly.mid + view(cam, w, 1) + Ly.fg + Ly.light;
+  let o = Ly.bg + Ly.mid + view(cam, w, 1) + Ly.light;
   o += soft(1150, 420, 520, 's08warm', 0.7);
   const sk = bump(t, tSomeone, tSomeone + 0.8);
   if (sk > 0) o += K.F.sparkle(740, 330, 30 * sk) + K.F.sparkle(820, 260, 18 * sk);
@@ -754,4 +756,4 @@ function timer(t) {
   return { sec, glitch: t >= cD7 ? 0.15 + 0.35 * seg(t, cD8, END) : 0 };
 }
 
-module.exports = { scene, look, timer, DEFS: E.DEFS, _T: { cA2, cA3, cA4, cA5, cA6, cB1, cB2, cB3, cB4, cB5, cB6, cB7, cB8, cB9, cC1, cC2, cC3, cD1, cD2, cD3, cD4, cD5, cD6, cD7, cD8, tSmack, tRunStart, tLeap, tCatch0, tRel0, tCatch1, tRel1, tLand, SLOW0, SLOW1 } };
+module.exports = { scene, look, timer, DEFS: E.DEFS };

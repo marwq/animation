@@ -89,7 +89,7 @@ function shot2(t) {
   const lx = 760, ly = 120, ls = 3.3;
   let back = lagAura(t, lx, ly, ls, 1, 2, 10) + lagSprite(t, { x: lx, y: ly, size: ls, mood: 'hungry', glitch: 0.25, look: [0.6, 0.6] }) + E.slurp(t, [[960, 900], [1250, 760], [700, 1100]], lx, ly + 92 * 0.76 * ls + 40, { w: 60, speed: 0.4 });
   let chars = '';
-  ['juno', 'dex', 'pip', 'grandpa'].forEach((n, i) => { chars += who(n, t, { x: 1600 + i * 110, y: FL, s: 0.3, turn: -0.5, armL: 10, armR: 10, face: 'scared', shade: false }, { arms: false }); });
+  ['juno', 'dex', 'pip', 'grandpa'].forEach((n, i) => { chars += who(n, t, { x: 1600 + i * 110, y: FL, s: 0.3, turn: -0.5, armL: 10, armR: 10, face: 'scared', volume: false }, { arms: false }); });
   return coreShot(t, cam, { alarm: 1, timer: clockAt(t) }, chars, { back, backK: 0.7 });
 }
 // S3: smash on the mouth — MORE... FOOD.
@@ -120,9 +120,9 @@ function shot5(t) {
   const cam = { zoom: lerp(1.1, 1.18, u), x: 40, y: 80 };
   const back = lagSprite(t, { x: 900, y: 130, size: 2.0, mood: 'hungry', glitch: 0.2, speak: false, look: [0, 0.8] }) + lagAura(t, 900, 130, 2, 0.7, 4, 6);
   let chars = '';
-  chars += who('grandpa', t, { x: 520, y: FL + 120, s: 0.6, turn: 0.3, face: { name: 'scared', eyes: { look: [0.2, -1] } }, armL: 10, armR: 10 }, { arms: false });
-  chars += who('dex', t, { x: 1430, y: FL + 140, s: 0.58, turn: -0.3, face: { name: 'scared', eyes: { look: [-0.3, -1] } }, armL: 10, armR: 10 }, { arms: false });
-  chars += who('pip', t, { x: 1170, y: FL + 70, s: 0.6, turn: -0.2, face: { name: 'scared', eyes: { look: [0, -1] } }, armL: 10, armR: 10 }, { arms: false });
+  chars += who('grandpa', t, { x: 520, y: FL + 120, s: 0.6, turn: 0.3, volume: false, face: { name: 'scared', eyes: { look: [0.2, -1] } }, armL: 10, armR: 10 }, { arms: false });
+  chars += who('dex', t, { x: 1430, y: FL + 140, s: 0.58, turn: -0.3, volume: false, face: { name: 'scared', eyes: { look: [-0.3, -1] } }, armL: 10, armR: 10 }, { arms: false });
+  chars += who('pip', t, { x: 1170, y: FL + 70, s: 0.6, turn: -0.2, volume: false, face: { name: 'scared', eyes: { look: [0, -1] } }, armL: 10, armR: 10 }, { arms: false });
   chars += who('juno', t, { x: 860, y: FL + 140, s: 0.62, turn: 0.1, armL: 10, armR: 10, face: t < M[1].b ? undefined : 'sad' }, { energy: 0.4, arms: false }, SOOT);
   // a row of racks in front (they hide behind it)
   let racks = '';
@@ -137,7 +137,7 @@ function shot6(t) {
   const back = lagSprite(t, { x: 260, y: 200, size: 2.2, mood: 'hungry', glitch: 0.2, speak: false, look: [1, 0.6] }) + lagAura(t, 260, 200, 2.2, 0.7, 5, 6);
   const step = ease.out(seg(t, s6, s6 + 0.5));
   const crack = bump(t, M[2].word('back').t0, M[2].word('back').t0 + 0.4);
-  let chars = who('juno', t, { x: 1150, y: FL, s: 0.5, turn: -0.5, armL: 10, armR: 30, face: { name: 'nervous', eyes: { look: [-1, 0] } } }, { arms: false }, SOOT);
+  let chars = who('juno', t, { x: 1150, y: FL, s: 0.5, turn: -0.5, armL: 10, armR: 30, volume: false, face: { name: 'nervous', eyes: { look: [-1, 0] } } }, { arms: false }, SOOT);
   chars += who('dex', t, { x: lerp(900, 760, step), y: FL + 30, s: 0.58, turn: 0.15, armL: 30 + 40 * crack, armR: 30 + 40 * crack, face: 'smug', lean: -3 }, { energy: 1.2, arms: crack < 0.05 });
   let o = coreShot(t, cam, { alarm: 1, timer: clockAt(t) }, chars, { back, backK: 0.75 });
   if (crack > 0.2) o += K.bang('CRACK!', 1100, 560, crack, 60, -8, '#FFFFFF');

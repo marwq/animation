@@ -24,19 +24,13 @@ const dutch = (svg, deg, cx = 960, cy = 540) => (Math.abs(deg) < 0.01 ? svg : S.
 const glow = (x, y, r, id, op = 1) => (op > 0.003 ? S.circle(x, y, r, { fill: `url(#${id})`, opacity: f(clamp(op, 0, 1)) }) : '');
 // cheap soft light: three flat translucent discs (large radial gradients are slow to rasterise)
 const GLOW_COL = { s08warm: '#FFD98A', s08cyan: '#7CF0FF', s08gold: '#FFE27A', s08neon: '#FF9BE0' };
-const soft = (x, y, r, id, op = 1) => (op > 0.003 ? [1, 0.68, 0.4].map((k) => S.circle(x, y, r * k, { fill: GLOW_COL[id] || id, opacity: f(clamp(op, 0, 1) * 0.13) })).join('') : '');
+const soft = (x, y, r, id, op = 1) => (op > 0.003 ? [1, 0.8, 0.62, 0.45, 0.3].map((k) => S.circle(x, y, r * k, { fill: GLOW_COL[id] || id, opacity: f(clamp(op, 0, 1) * 0.075) })).join('') : '');
 
 // ---------------------------------------------------------------- defs
 const DEFS = `<defs>
-<radialGradient id="s08warm"><stop offset="0" stop-color="#FFE9B0" stop-opacity="0.85"/><stop offset="0.5" stop-color="#FFC266" stop-opacity="0.28"/><stop offset="1" stop-color="#FFB040" stop-opacity="0"/></radialGradient>
 <radialGradient id="s08cyan"><stop offset="0" stop-color="#C9FBFF" stop-opacity="0.85"/><stop offset="0.45" stop-color="#5CE1FF" stop-opacity="0.3"/><stop offset="1" stop-color="#2E8BFF" stop-opacity="0"/></radialGradient>
-<radialGradient id="s08gold"><stop offset="0" stop-color="#FFF6C8" stop-opacity="1"/><stop offset="0.4" stop-color="#FFD34D" stop-opacity="0.45"/><stop offset="1" stop-color="#FFB000" stop-opacity="0"/></radialGradient>
-<radialGradient id="s08dark"><stop offset="0" stop-color="#000000" stop-opacity="0.9"/><stop offset="0.6" stop-color="#05060C" stop-opacity="0.55"/><stop offset="1" stop-color="#05060C" stop-opacity="0"/></radialGradient>
-<radialGradient id="s08greyCreep" cx="0.5" cy="0.4" r="0.7"><stop offset="0" stop-color="#7C8494" stop-opacity="0.95"/><stop offset="0.35" stop-color="#7C8494" stop-opacity="0.5"/><stop offset="1" stop-color="#7C8494" stop-opacity="0.08"/></radialGradient>
-<radialGradient id="s08vigCold" cx="0.5" cy="0.45" r="0.75"><stop offset="0.5" stop-color="#0A0E1A" stop-opacity="0"/><stop offset="1" stop-color="#0A0E1A" stop-opacity="0.75"/></radialGradient>
 <radialGradient id="s08neon"><stop offset="0" stop-color="#FFFFFF" stop-opacity="0.95"/><stop offset="0.3" stop-color="#FFE14D" stop-opacity="0.5"/><stop offset="1" stop-color="#FF5AC8" stop-opacity="0"/></radialGradient>
 <linearGradient id="s08spill" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#FFFFFF" stop-opacity="0.5"/><stop offset="1" stop-color="#FFFFFF" stop-opacity="0"/></linearGradient>
-<linearGradient id="s08fogDown" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#02040C" stop-opacity="0"/><stop offset="1" stop-color="#02040C" stop-opacity="0.92"/></linearGradient>
 <linearGradient id="s08iceGlass" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#E8FBFF" stop-opacity="0.55"/><stop offset="0.5" stop-color="#BDEBFF" stop-opacity="0.18"/><stop offset="1" stop-color="#8FD0F0" stop-opacity="0.45"/></linearGradient>
 </defs>`;
 

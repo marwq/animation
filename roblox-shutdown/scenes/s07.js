@@ -147,7 +147,7 @@ function shotF(t) {
   const wave = Math.sin(t * 6) * 10 * mop;
   const gp = grandpa(t, { x: TEAMD.gp, y: 1010, s: 0.58, turn: lerp(-0.1, -0.25, mop), armR: lerp(110 + 20 * shakeFist, 165 + wave, mop), armL: 30 + 10 * shakeFist, keysSwing: 30 * shakeFist, headRot: 4 * shakeFist, face: { name: 'angry', fx: ['steam', 'anger'] }, props: mop > 0 ? [{ svg: CAST.mop({ x: A.hand(165 + wave, 1)[0], y: A.hand(165 + wave, 1)[1] + 200, rot: 160 + wave * 0.5, len: 700 }), layer: 'front' }] : [] }, { arms: false, energy: 1.6 });
   const look = seg(t, W(2, 'floors'), W(2, 'floors') + 0.3);
-  const kids = doorKids(t, { dex: { turn: lerp(0.4, 0.8, look), face: { name: 'nervous' } }, juno: { turn: lerp(0.4, -0.4, look), face: { name: 'nervous', eyes: { look: [-0.8, 0] } } }, pip: { face: { name: 'happy' } } });
+  const kids = doorKids(t, { dex: { turn: lerp(0.4, 0.8, look), volume: false, face: { name: 'nervous' } }, juno: { turn: lerp(0.4, -0.4, look), face: { name: 'nervous', eyes: { look: [-0.8, 0] } } }, pip: { volume: false, face: { name: 'happy' } } });
   return Ld.bg + view(cam, (wide ? kids : '') + gp, 1) + Ld.light + flash(t, tExp, 0.08, 0.5);
 }
 // G1 — the door slides up, red light: two Modbots roll out. "Intruders detected! Leave now,"
@@ -165,8 +165,8 @@ function shotG1(t) {
   let w = mb(t, M.a.x, M.a.y, M.a.s, { alarm: open, roll: M.a.x * 2, talk: 0 }) + mb(t, M.b.x, M.b.y, M.b.s, { alarm: open, roll: -M.b.x * 2, talk: talkMB(t) });
   const kids = actor('dex', t, { x: 330 - 40 * back, y: 1060, s: 0.58, turn: 0.5, lean: -8 * back, armL: 60, armR: 60, face: { name: 'scared' } }, { arms: false }) +
     actor('juno', t, { x: 520 - 30 * back, y: 1065, s: 0.58, turn: 0.4, armL: 70 * back, face: { name: 'shocked' } }, { arms: false }) +
-    actor('pip', t, { x: 1450, y: 1070, s: 0.6, turn: -0.5, face: { name: 'amazed' } }) +
-    grandpa(t, { x: 1660 + 30 * back, y: 1060, s: 0.58, turn: -0.5, armL: 30, face: { name: 'shocked' } });
+    actor('pip', t, { x: 1450, y: 1070, s: 0.6, turn: -0.5, volume: false, face: { name: 'amazed' } }) +
+    grandpa(t, { x: 1660 + 30 * back, y: 1060, s: 0.58, turn: -0.5, armL: 30, volume: false, face: { name: 'shocked' } });
   return Ld.bg + view(cam, w + kids, 1) + E.wash('#FF2E4D', open * (0.08 + 0.05 * Math.sin(t * 11)));
 }
 // G2 — Modbot close-up: "…or you will be… beep beep beep beep!" — its own face gets filtered (#), chat bubble ####
@@ -205,12 +205,12 @@ function shotI1(t) {
 }
 // I2 — the kids behind the spare racks: Juno facepalms, Dex can't watch, Pip is thrilled. "…also a robot."
 function shotI2(t) {
-  const cam = at(400, 600, 1.7);
+  const cam = at(420, 610, 1.55);
   const Ld = FM.farmDoor(t, { cam, open: 1, alarm: 0.4, doorScreen: 'KEY EXPIRED: 1998', screenCol: '#FF5A5A' });
   const pk = ease.outBack(seg(t, tI2 - 0.05, tI2 + 0.25));
   let w = actor('juno', t, { x: 230, y: 980 - 50 * pk, s: 0.55, turn: 0.45, armR: 12, armL: 12, headRot: -6, face: { name: 'deadpan', eyes: { upper: 0.62 } } }, { arms: false });
   w += actor('dex', t, { x: 560, y: 990 - 40 * pk, s: 0.55, turn: 0.3, armL: 20, armR: 20, headRot: 6 * Math.sin(t * 20), face: { name: 'scared', fx: ['sweat', 'sweat2'] } }, { arms: false });
-  w += actor('pip', t, { x: 400, y: 900 - 60 * pk, s: 0.5, turn: 0.5, armR: 150 + 10 * Math.sin(t * 12), armL: 14, face: { name: 'excited' } }, { arms: false });
+  w += actor('pip', t, { x: 400, y: 900 - 60 * pk, s: 0.5, turn: 0.5, armR: 150 + 10 * Math.sin(t * 12), armL: 14, volume: false, face: { name: 'excited' } }, { arms: false });
   for (let i = 0; i < 4; i++) w += FM.rack(40 + i * 170, 1120, 0.9, 520 - (i % 2) * 40, t, { seed: i * 5 + 2, dim: 0.35 });
   return Ld.bg + view(cam, w, 1) + E.wash('#FF2E4D', 0.05);
 }
@@ -249,11 +249,12 @@ function sneakWorld(t, o = {}) {
   const ph = t * 7;
   let w = '';
   const tip = (ph2) => ({ ...A.walk(ph2, 0.7), bodyY: 40 + 6 * Math.abs(Math.sin(ph2)), lean: 12 });
-  w += actor('pip', t, { x: gx - 380, y: 905, s: 0.42, view: 'side', flip: true, ...tip(ph + 1.4), face: { name: 'happy' } }, { arms: false });
+  const fl = o.flat ? { volume: false } : {};
+  w += actor('pip', t, { x: gx - 380, y: 905, s: 0.42, view: 'side', flip: true, ...tip(ph + 1.4), face: { name: 'happy' }, volume: false }, { arms: false });
   const dx = actor('dex', t, { x: gx - 260, y: 905, s: 0.48, view: 'side', flip: true, ...tip(ph + 0.7), ...(o.dex || {}) }, { arms: false, ...(o.dexAct || {}) });
-  const jn = actor('juno', t, { x: gx - 120, y: 905, s: 0.48, view: 'side', flip: true, ...tip(ph), ...(o.juno || {}) }, { arms: false });
+  const jn = actor('juno', t, { x: gx - 120, y: 905, s: 0.48, view: 'side', flip: true, ...tip(ph), ...fl, ...(o.juno || {}) }, { arms: false });
   w += o.dexFront ? jn + dx : dx + jn;
-  w += cartRider(t, gx + 160, 905, 0.6, { bucket: o.bucket ?? 1, pose: o.gp || {} });
+  w += cartRider(t, gx + 160, 905, 0.6, { bucket: o.bucket ?? 1, pose: { ...fl, ...(o.gp || {}) } });
   if (o.mb !== false) w += mb(t, gx + 560, 900, 0.5, { face: o.mbFace || 'ok', roll: gx * 2, alarm: o.alarm || 0, flip: o.mbFlip ?? false, talk: talkMB(t) });
   return w;
 }
@@ -262,20 +263,20 @@ function shotK(t) {
   const cam = at(gx + 40, 560, 1.12);
   const Lh = FM.rackHall(t, cam, {});
   const whisper = K.V.talking('DEX', t);
-  return Lh.bg + Lh.mid + view(cam, sneakWorld(t, { dex: { headRot: whisper ? -6 : 0, face: { name: 'shocked' } }, juno: { face: { name: 'nervous' } } }), 1) + Lh.fg + Lh.light;
+  return Lh.bg + Lh.mid + view(cam, sneakWorld(t, { dex: { headRot: whisper ? -6 : 0, face: { name: 'shocked' } }, juno: { face: { name: 'nervous' } }, gp: { volume: false } }), 1) + Lh.fg + Lh.light;
 }
 // L — Dex's sneeze: server dust drifts onto his nose. "Ah… ah… ACHOO!"
 function shotL(t) {
   const gx = sneakX(t);
   const dexX = gx - 260;
   const ach = t >= tAchoo;
-  const cam = ach ? at(dexX + 60, 640, 1.65) : at(dexX + 30, 600, lerp(2.2, 2.45, seg(t, tL, tAchoo)));
+  const cam = ach ? at(dexX + 60, 640, 1.6) : at(dexX + 30, 610, lerp(1.95, 2.15, seg(t, tL, tAchoo)));
   const sh = K.shake(t, tAchoo, 0.6, 22); cam.sx = sh.sx; cam.sy = sh.sy;
   const Lh = FM.rackHall(t, cam, {});
   const wind = clamp(seg(t, W(8, 'Ah'), W(8, 'ACHOO')), 0, 1);
   const snap = bump(t, tAchoo - 0.02, tAchoo + 0.4);
   const dexPose = { headRot: -22 * wind * (ach ? 0 : 1) + 18 * snap, lean: -8 * wind * (ach ? 0 : 1) + 16 * snap, face: ach ? { name: 'scream', eyes: { type: 'closed' } } : { name: 'scared', mouth: 'O', eyes: { type: wind > 0.5 ? 'closed' : undefined, upper: 0.4 } } };
-  let w = sneakWorld(t, { dex: dexPose, dexAct: { energy: 0 }, mb: false, dexFront: true });
+  let w = sneakWorld(t, { dex: dexPose, dexAct: { energy: 0 }, mb: false, dexFront: true, flat: true });
   // a dust bunny drifts down from the rack onto his nose
   const du = ease.inOut(seg(t, tL, W(8, 'Ah') + 0.25));
   if (!ach) w += G(Ci(0, 0, 26, { fill: '#C9CED8', opacity: 0.85, stroke: '#8A93A6', 'stroke-width': 3 }) + Ci(-16, 8, 14, { fill: '#C9CED8', opacity: 0.8 }) + Ci(16, 10, 12, { fill: '#C9CED8', opacity: 0.8 }), tr(lerp(dexX + 160, dexX + 70, du) + 16 * Math.sin(t * 4) * (1 - du), lerp(300, 560, du), 0.7));
@@ -465,9 +466,10 @@ function shotP(t) {
 function liftIn(t, cam, o = {}) {
   const Li = FM.elevatorInside(t, { cam, muzak: 1, floor: o.floor || 'B7', pressed: [FM.LIFT.B9, FM.LIFT.B9 - 40] });
   let w = E.mopCart(520, 930, 0.6, t, { mop: false });
-  w += grandpa(t, { x: 620, y: 905, s: 0.55, turn: 0.35, ...(o.gp || {}) }, o.gpAct || {});
-  w += actor('juno', t, { x: 860, y: 905, s: 0.55, turn: 0.2, ...(o.juno || {}) }, o.junoAct || {});
-  w += actor('dex', t, { x: 1370, y: 905, s: 0.55, turn: -0.3, ...(o.dex || {}) }, o.dexAct || {});
+  const fl = (n) => ((o.flat || []).includes(n) ? { volume: false } : {});
+  w += grandpa(t, { x: 620, y: 905, s: 0.55, turn: 0.35, ...fl('gp'), ...(o.gp || {}) }, o.gpAct || {});
+  w += actor('juno', t, { x: 860, y: 905, s: 0.55, turn: 0.2, ...fl('juno'), ...(o.juno || {}) }, o.junoAct || {});
+  w += actor('dex', t, { x: 1370, y: 905, s: 0.55, turn: -0.3, ...fl('dex'), ...(o.dex || {}) }, o.dexAct || {});
   w += actor('pip', t, { x: 1110, y: 935, s: 0.6, turn: 0, ...(o.pip || {}) }, o.pipAct || {});
   return Li.bg + view(cam, w + (o.extra || ''), 1) + Li.fg;
 }
@@ -481,16 +483,16 @@ function shotQ(t) {
 }
 // R — Grandpa, warm, hand on Pip's hood: "That's my grandson."
 function shotR(t) {
-  const cam = camKeys(t, [[tR, at(880, 600, 1.55)], [tS, at(900, 610, 1.62)]]);
+  const cam = camKeys(t, [[tR, at(900, 600, 1.4)], [tS, at(915, 610, 1.47)]]);
   const pat = seg(t, tR + 0.1, tR + 0.4);
-  return liftIn(t, cam, { gp: { x: 900, turn: 0.45, armR: lerp(10, 58, pat), face: { name: 'happy', eyes: { type: 'happy' }, fx: ['blush'] } }, gpAct: { arms: false, energy: 0.6 }, pip: { x: 1110, face: { name: 'joy', fx: ['blush'] }, bodyY: -6 * Math.abs(Math.sin(t * 5)) }, juno: { x: 600 }, dex: { face: { name: 'happy' } } });
+  return liftIn(t, cam, { flat: ['juno', 'dex'], gp: { x: 900, turn: 0.45, armR: lerp(10, 58, pat), face: { name: 'happy', eyes: { type: 'happy' }, fx: ['blush'] } }, gpAct: { arms: false, energy: 0.6 }, pip: { x: 1110, face: { name: 'joy', fx: ['blush'] }, bodyY: -6 * Math.abs(Math.sin(t * 5)) }, juno: { x: 600 }, dex: { face: { name: 'happy' } } });
 }
 // S — Pip, close, whispering: "Ding." (one tiny sparkle; the muzak plays on)
 function shotS(t) {
   const u = seg(t, tS, END);
   const cam = at(1110, lerp(620, 610, u), lerp(2.2, 2.35, u));
   const dg = bump(t, W(15, 'Ding') - 0.05, W(15, 'Ding') + 1.0);
-  return liftIn(t, cam, { gp: { x: 900, armR: 58, face: { name: 'happy' } }, gpAct: { arms: false }, pip: { x: 1110, face: { name: 'cute', fx: ['blush'] } }, juno: { x: 600 }, extra: E.dingFx(1180, 440, dg, t, 0.36, '') });
+  return liftIn(t, cam, { flat: ['gp', 'juno', 'dex'], gp: { x: 900, armR: 58, face: { name: 'happy' } }, gpAct: { arms: false }, pip: { x: 1110, face: { name: 'cute', fx: ['blush'] } }, juno: { x: 600 }, extra: E.dingFx(1180, 440, dg, t, 0.36, '') });
 }
 
 // ================================================================ dispatch
