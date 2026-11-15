@@ -117,3 +117,9 @@ node tools/stills.js /tmp/<scratch>/check.png 61.0 62.5 64.0 …   # 3-column co
 ```
 
 Render stills densely: at least one every ~1.5 s across your whole range, plus every important beat. Fix anything off-frame, overlapping the captions, or broken. A scene module must not throw for any `t` inside its range.
+
+## Shared sets
+
+- **Home + world:** `scenes/sets.js` (index at the top of the file; contact sheet `concept/sets_home.png`). Room sets take `(t, opts)` and draw the full frame; most also have `.layers(t, opts)` → `{ bg, mid, fg, light }`: draw `bg` with parallax k ≈ 0.4–0.6, then `mid`, then your characters, then `fg` (occluders, k ≈ 1.15–1.3), then `light` (night/evening overlay, so characters get darkened too). Floors (`FLOOR`) and anchor points (`SPOTS`: laptop, router, couch seats, desks, hatch, …) are exported — use them so every scene stands characters in the same place.
+- **Road + Server Farm:** `scenes/farm.js` (contact sheet `concept/sets_farm.png`), same conventions.
+- Screens accept an SVG centred on the screen box or a function `(w, h) => svg`; `frameIn(svg, w, h)` puts a full 1920×1080 frame (e.g. `bubbleIsland(t)`) on a screen.

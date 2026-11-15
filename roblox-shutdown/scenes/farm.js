@@ -90,44 +90,39 @@ function wheelTile(id) {
   o += wh(50, 50, 30, 0.9) + wh(140, 120, 22, 0.7) + wh(30, 150, 16, 0.6) + wh(150, 30, 14, 0.5);
   return `<pattern id="${id}" patternUnits="userSpaceOnUse" width="190" height="190">${o}</pattern>`;
 }
-function bubbleTile(id, w, h, grey, small) {
-  // a shelf plank + two game bubbles with tiny worlds inside
-  const cols = grey ? [['#8D96A8', '#6F7789'], ['#9AA2B2', '#7A8294']] : [['#46D17A', '#FFB238'], ['#FF6FB5', '#5CB8FF'], ['#FFD84D', '#B06BFF']];
-  const sc = small ? 0.5 : 1;
+function bubbleTile(id, w, h, grey, small, kinds) {
+  const n = kinds.length, r = h * 0.26;
   let o = '';
-  const b = (cx, cy, r, ci) => {
-    const [g, acc] = cols[ci % cols.length];
-    let s = `<circle cx="${cx}" cy="${cy}" r="${r + 10}" fill="${grey ? '#8C95A6' : '#7CF7FF'}" opacity="${grey ? 0.08 : 0.16}"/>`;
-    s += `<circle cx="${cx}" cy="${cy}" r="${r}" fill="${grey ? '#3A4152' : '#1D3C7A'}" opacity="0.55"/>`;
-    s += `<rect x="${cx - r * 0.62}" y="${cy + r * 0.12}" width="${r * 1.24}" height="${r * 0.36}" rx="${r * 0.14}" fill="${g}"/>`;
-    s += `<rect x="${cx - r * 0.5}" y="${cy + r * 0.4}" width="${r}" height="${r * 0.22}" rx="${r * 0.08}" fill="${grey ? '#5A6272' : '#A0643A'}"/>`;
-    s += `<rect x="${cx + r * 0.06}" y="${cy - r * 0.42}" width="${r * 0.36}" height="${r * 0.5}" rx="${r * 0.08}" fill="${acc}"/>`;
-    s += `<rect x="${cx - r * 0.42}" y="${cy - r * 0.2}" width="${r * 0.3}" height="${r * 0.3}" rx="${r * 0.12}" fill="${grey ? '#7A8294' : '#2FAE6E'}"/>`;
-    s += `<circle cx="${cx}" cy="${cy}" r="${r}" fill="none" stroke="${grey ? '#B4BBC8' : '#C9FBFF'}" stroke-width="${f(4 * sc + 1)}"/>`;
-    s += `<path d="M${f(cx - r * 0.62)} ${f(cy - r * 0.3)} Q${f(cx - r * 0.5)} ${f(cy - r * 0.7)} ${f(cx - r * 0.1)} ${f(cy - r * 0.78)}" fill="none" stroke="#FFFFFF" stroke-width="${f(5 * sc + 1)}" stroke-linecap="round" opacity="0.8"/>`;
-    if (grey) s += `<path d="M${f(cx + r * 0.2)} ${f(cy - r)} L${f(cx + r * 0.05)} ${f(cy - r * 0.45)} L${f(cx + r * 0.35)} ${f(cy - r * 0.2)} L${f(cx + r * 0.15)} ${f(cy + r * 0.2)}" fill="none" stroke="#2A2F3A" stroke-width="${f(3 * sc + 1)}" stroke-linejoin="round"/>`;
-    return s;
-  };
-  o += b(w * 0.25, h * 0.5, h * 0.3, 0) + b(w * 0.72, h * 0.44, h * 0.34, grey ? 1 : 1);
-  o += `<rect x="0" y="${h - h * 0.12}" width="${w}" height="${h * 0.12}" fill="${grey ? '#2C313D' : '#3A2C5A'}"/><rect x="0" y="${h - h * 0.12}" width="${w}" height="${f(h * 0.03)}" fill="${grey ? '#5A6070' : '#8E6BD8'}"/>`;
-  o += `<rect x="${w * 0.12}" y="${h - h * 0.1}" width="${w * 0.26}" height="${h * 0.07}" rx="3" fill="${grey ? '#6A7080' : '#FFE9B0'}"/>`;
+  kinds.forEach((k, i) => {
+    const cx = (w / n) * (i + 0.5), cy = h * 0.88 - r - 3 - (i % 2) * h * 0.04;
+    o += Ci(cx, cy, r + h * 0.07, { fill: grey ? '#8C95A6' : '#7CF7FF', 'fill-opacity': grey ? 0.06 : 0.16 });
+    o += G(bubbleWorld(k, r, 0, grey) + Ci(0, 0, r, { fill: 'url(#farmBubble)', stroke: grey ? '#6A7080' : '#151515', 'stroke-width': small ? 2.5 : 4 }) + Ci(0, 0, r * 0.88, { fill: 'none', stroke: grey ? '#B4BBC8' : '#C9FBFF', 'stroke-width': small ? 1.5 : 3 }) + P(`M${f(-r * 0.62)} ${f(-r * 0.3)} Q${f(-r * 0.5)} ${f(-r * 0.7)} ${f(-r * 0.08)} ${f(-r * 0.78)}`, ln(small ? 2.5 : 5, '#FFFFFF', 0.85)) + (grey ? P(`M${f(r * 0.2)} ${f(-r)} L${f(r * 0.05)} ${f(-r * 0.45)} L${f(r * 0.35)} ${f(-r * 0.2)} L${f(r * 0.15)} ${f(r * 0.2)}`, ln(small ? 2 : 3.5, '#2A2F3A')) : ''), `translate(${f(cx)} ${f(cy)})`);
+  });
+  o += R(0, h * 0.88, w, h * 0.12, 0, { fill: grey ? '#2C313D' : '#3A2C5A' }) + R(0, h * 0.88, w, h * 0.03, 0, { fill: grey ? '#5A6070' : '#8E6BD8' }) + R(w * 0.08, h * 0.915, w * 0.16, h * 0.06, 2, { fill: grey ? '#6A7080' : '#FFE9B0' });
   return `<pattern id="${id}" patternUnits="userSpaceOnUse" width="${w}" height="${h}">${o}</pattern>`;
 }
 function junkTile(id) {
-  // lost & found heap texture: a jumble of tiny hats, swords, wings, coins and toys on a warm base
-  const items = [
-    `<rect x="10" y="20" width="44" height="30" rx="6" fill="#2A2A38"/><rect x="2" y="44" width="60" height="9" rx="4" fill="#2A2A38"/><rect x="10" y="36" width="44" height="7" fill="#E8504A"/>`,
-    `<path d="M80 70 L140 10" stroke="#C9D6E8" stroke-width="10" stroke-linecap="round"/><path d="M74 62 L92 80" stroke="#8A5A33" stroke-width="10" stroke-linecap="round"/>`,
-    `<path d="M160 40 Q190 10 222 30 Q200 36 196 52 Q178 44 160 40 Z" fill="#FFFFFF" stroke="#BFD3E8" stroke-width="4"/>`,
-    `<circle cx="40" cy="110" r="16" fill="#FFC93C" stroke="#D99A1A" stroke-width="4"/>`,
-    `<rect x="80" y="96" width="46" height="36" rx="10" fill="#FF9F1C"/><rect x="86" y="88" width="12" height="12" rx="3" fill="#FF9F1C"/><rect x="108" y="88" width="12" height="12" rx="3" fill="#FF9F1C"/><circle cx="96" cy="112" r="3.5" fill="#151515"/><circle cx="112" cy="112" r="3.5" fill="#151515"/>`,
-    `<path d="M150 130 L170 96 L190 130 Z" fill="#FFD84D" stroke="#D9A21A" stroke-width="4"/><path d="M146 132 L194 132" stroke="#D9A21A" stroke-width="6"/>`,
-    `<rect x="200" y="96" width="30" height="40" rx="6" fill="#46D17A"/><rect x="196" y="90" width="38" height="10" rx="4" fill="#2E9C57"/>`,
-    `<path d="M10 180 L60 150" stroke="#9AA6B8" stroke-width="12" stroke-linecap="round"/><rect x="52" y="140" width="22" height="18" rx="4" fill="#5A6478"/>`,
-    `<path d="M90 190 Q110 150 140 170 Q120 176 118 196 Z" fill="#B06BFF" stroke="#7A3FD0" stroke-width="4"/>`,
-    `<rect x="160" y="160" width="60" height="22" rx="10" fill="#5CB8FF"/><circle cx="170" cy="171" r="6" fill="#FFFFFF"/>`,
+  // lost & found heap texture: a dense jumble of tiny lost items on a dark purple base
+  const it = [
+    (x, y, r) => `<g transform="translate(${x} ${y}) rotate(${r})"><rect x="-22" y="-26" width="44" height="30" rx="6" fill="#2A2A38"/><rect x="-30" y="0" width="60" height="9" rx="4" fill="#2A2A38"/><rect x="-22" y="-10" width="44" height="7" fill="#E8504A"/></g>`,
+    (x, y, r) => `<g transform="translate(${x} ${y}) rotate(${r})"><path d="M-30 30 L30 -30" stroke="#C9D6E8" stroke-width="10" stroke-linecap="round"/><path d="M-34 22 L-22 34" stroke="#8A5A33" stroke-width="10" stroke-linecap="round"/></g>`,
+    (x, y, r) => `<g transform="translate(${x} ${y}) rotate(${r})"><path d="M-30 10 Q0 -30 34 -10 Q12 -4 8 12 Q-10 4 -30 10 Z" fill="#FFFFFF" stroke="#BFD3E8" stroke-width="4"/></g>`,
+    (x, y, r) => `<circle cx="${x}" cy="${y}" r="15" fill="#FFC93C" stroke="#D99A1A" stroke-width="4"/>`,
+    (x, y, r) => `<g transform="translate(${x} ${y}) rotate(${r})"><rect x="-22" y="-16" width="44" height="32" rx="10" fill="#FF9F1C"/><rect x="-16" y="-24" width="10" height="12" rx="3" fill="#FF9F1C"/><rect x="6" y="-24" width="10" height="12" rx="3" fill="#FF9F1C"/><circle cx="-7" cy="-2" r="3.5" fill="#151515"/><circle cx="7" cy="-2" r="3.5" fill="#151515"/></g>`,
+    (x, y, r) => `<g transform="translate(${x} ${y}) rotate(${r})"><path d="M-24 14 L-24 -12 L-12 2 L0 -18 L12 2 L24 -12 L24 14 Z" fill="#FFD84D" stroke="#D9A21A" stroke-width="4"/></g>`,
+    (x, y, r) => `<g transform="translate(${x} ${y}) rotate(${r})"><rect x="-14" y="-20" width="28" height="38" rx="6" fill="#46D17A"/><rect x="-18" y="-26" width="36" height="10" rx="4" fill="#2E9C57"/></g>`,
+    (x, y, r) => `<g transform="translate(${x} ${y}) rotate(${r})"><path d="M-30 0 L22 0" stroke="#9AA6B8" stroke-width="12" stroke-linecap="round"/><rect x="18" y="-12" width="22" height="24" rx="4" fill="#5A6478"/></g>`,
+    (x, y, r) => `<g transform="translate(${x} ${y}) rotate(${r})"><path d="M-26 16 Q-6 -26 26 -6 Q6 0 4 20 Z" fill="#B06BFF" stroke="#7A3FD0" stroke-width="4"/></g>`,
+    (x, y, r) => `<g transform="translate(${x} ${y}) rotate(${r})"><rect x="-30" y="-11" width="60" height="22" rx="10" fill="#5CB8FF"/><circle cx="-18" cy="0" r="6" fill="#FFFFFF"/></g>`,
+    (x, y, r) => `<g transform="translate(${x} ${y}) rotate(${r})"><path d="M-22 -22 L22 -22 L20 6 Q12 24 0 30 Q-12 24 -20 6 Z" fill="#3B8BFF" stroke="#2A5ACC" stroke-width="4"/><path d="M0 -16 L0 22 M-14 -2 L14 -2" stroke="#FFD21F" stroke-width="5"/></g>`,
+    (x, y, r) => `<ellipse cx="${x}" cy="${y}" rx="16" ry="21" fill="#FF6FB5" stroke="#C94A8A" stroke-width="4"/>`,
   ];
-  return `<pattern id="${id}" patternUnits="userSpaceOnUse" width="240" height="210"><rect width="240" height="210" fill="#4A4A7A"/>${items.join('')}<path d="M0 205 L240 205" stroke="#3A3A66" stroke-width="10"/></pattern>`;
+  let o = '<rect width="380" height="320" fill="#3A2E66"/>';
+  for (let i = 0; i < 26; i++) {
+    const x = Math.round(25 + rnd(i, 501) * 330), y = Math.round(25 + rnd(i, 502) * 270), r = Math.round((rnd(i, 503) - 0.5) * 120);
+    o += it[i % it.length](x, y, r);
+  }
+  return `<pattern id="${id}" patternUnits="userSpaceOnUse" width="380" height="320">${o}</pattern>`;
 }
 function snackTile(id) {
   const c = ['#FF5A5A', '#FFD21F', '#3BD16F', '#34C3FF', '#B06BFF', '#FF9F1C', '#FF6FB5'];
@@ -186,6 +181,8 @@ const DEFS = `<defs>
 <pattern id="farmLedBlade" patternUnits="userSpaceOnUse" width="480" height="144"><circle cx="16" cy="18" r="3.5" fill="#5CE1FF"/><circle cx="48" cy="18" r="3.5" fill="#46F58C"/><circle cx="96" cy="18" r="3.5" fill="#5CE1FF"/><circle cx="128" cy="18" r="3.5" fill="#2E8BFF"/><circle cx="192" cy="90" r="3.5" fill="#5CE1FF"/><circle cx="240" cy="90" r="3.5" fill="#B5F6FF"/><circle cx="288" cy="18" r="3.5" fill="#46F58C"/><circle cx="352" cy="90" r="3.5" fill="#5CE1FF"/><circle cx="400" cy="18" r="3.5" fill="#2E8BFF"/><circle cx="448" cy="90" r="3.5" fill="#5CE1FF"/><circle cx="64" cy="90" r="3.5" fill="#5CE1FF"/><circle cx="112" cy="90" r="3.5" fill="#46F58C"/></pattern>
 <pattern id="farmReflTile" patternUnits="userSpaceOnUse" width="210" height="400"><rect x="6" y="0" width="168" height="240" fill="url(#farmReflect)"/><rect x="20" y="0" width="20" height="140" fill="#FFFFFF" fill-opacity="0.05"/></pattern>
 <linearGradient id="farmCyl" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#000" stop-opacity="0.7"/><stop offset="0.25" stop-color="#000" stop-opacity="0.15"/><stop offset="0.4" stop-color="#FFF" stop-opacity="0.06"/><stop offset="0.7" stop-color="#000" stop-opacity="0.2"/><stop offset="1" stop-color="#000" stop-opacity="0.75"/></linearGradient>
+<linearGradient id="farmHeapShade" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#FFFFFF" stop-opacity="0.1"/><stop offset="0.45" stop-color="#1A1440" stop-opacity="0"/><stop offset="1" stop-color="#1A1440" stop-opacity="0.6"/></linearGradient>
+<pattern id="farmBoxes" patternUnits="userSpaceOnUse" width="175" height="160"><rect width="175" height="160" fill="#241E54"/><rect x="12" y="20" width="150" height="112" rx="8" fill="#7A5A44" stroke="#120E30" stroke-width="4"/><rect x="12" y="20" width="150" height="16" rx="6" fill="#8E6A50"/><rect x="40" y="52" width="94" height="34" rx="4" fill="#E9D8B8"/><rect x="0" y="134" width="175" height="18" fill="#3A3270"/><rect x="0" y="134" width="175" height="5" fill="#5A4A9A"/></pattern>
 <pattern id="farmRackFar" patternUnits="userSpaceOnUse" width="70" height="24"><rect width="70" height="24" fill="#0E1636"/><rect x="3" y="2" width="64" height="20" rx="3" fill="#18244E"/><circle cx="52" cy="12" r="2.6" fill="#5CE1FF"/><circle cx="60" cy="12" r="2.6" fill="#2E8BFF" opacity="0.7"/></pattern>
 ${ledTile('farmLedA', 480, 180, 3, 5, 160, 36, ['#5CE1FF', '#2E8BFF', '#7CF7FF', '#46F58C'], 3, 0.55)}
 ${ledTile('farmLedB', 480, 180, 3, 5, 160, 36, ['#5CE1FF', '#2E8BFF', '#B5F6FF'], 9, 0.5)}
@@ -204,10 +201,11 @@ ${wheelTile('farmWheels')}
 <pattern id="farmBtn" patternUnits="userSpaceOnUse" width="20" height="28"><rect width="20" height="28" fill="#B9C2D0"/><rect x="5" y="3" width="10" height="3" rx="1.5" fill="#5A6478"/><circle cx="10" cy="17" r="7" fill="#E9EDF3" stroke="#5A6478" stroke-width="2"/><circle cx="9" cy="16" r="3" fill="#FFFFFF"/></pattern>
 <pattern id="farmBtnBig" patternUnits="userSpaceOnUse" width="38" height="30"><rect width="38" height="30" fill="#2A3048"/><rect x="5" y="3" width="28" height="22" rx="7" fill="#3E4766" stroke="#11131C" stroke-width="2"/><rect x="9" y="6" width="20" height="7" rx="3" fill="#5A6690"/><circle cx="32" cy="27" r="1.6" fill="#7CF7FF" opacity="0.6"/></pattern>
 <pattern id="farmBtnBigG" patternUnits="userSpaceOnUse" width="38" height="30"><rect width="38" height="30" fill="#1E3A2E"/><rect x="5" y="3" width="28" height="22" rx="7" fill="#2FD86E" stroke="#11131C" stroke-width="2"/><rect x="9" y="6" width="20" height="7" rx="3" fill="#B8FFC8"/></pattern>
-${bubbleTile('farmShelf', 220, 190, false, false)}
-${bubbleTile('farmShelfGrey', 220, 190, true, false)}
-${bubbleTile('farmShelfSm', 110, 95, false, true)}
-${bubbleTile('farmShelfSmGrey', 110, 95, true, true)}
+${bubbleTile('farmShelf', 330, 200, false, false, ['island', 'obby', 'city'])}
+${bubbleTile('farmShelfB', 330, 200, false, false, ['space', 'castle', 'pet'])}
+${bubbleTile('farmShelfGrey', 330, 200, true, false, ['tycoon', 'race', 'farm'])}
+${bubbleTile('farmShelfSm', 165, 100, false, true, ['castle', 'island', 'space'])}
+${bubbleTile('farmShelfSmGrey', 165, 100, true, true, ['obby', 'city', 'pet'])}
 ${junkTile('farmJunk')}
 ${snackTile('farmSnacks')}
 <pattern id="farmFrost" patternUnits="userSpaceOnUse" width="160" height="140"><path d="M20 20 l12 0 M26 14 l0 12 M21.5 15.5 l9 9 M30.5 15.5 l-9 9" stroke="#FFFFFF" stroke-width="2.5" opacity="0.8"/><path d="M110 70 l16 0 M118 62 l0 16 M112 64 l12 12 M124 64 l-12 12" stroke="#FFFFFF" stroke-width="3" opacity="0.7"/><circle cx="70" cy="110" r="4" fill="#FFFFFF" opacity="0.7"/><circle cx="140" cy="20" r="3" fill="#FFFFFF" opacity="0.6"/><circle cx="40" cy="80" r="2.5" fill="#FFFFFF" opacity="0.6"/></pattern>
@@ -1128,23 +1126,32 @@ const CABLE_COLS = ['#3BD16F', '#34C3FF', '#FF9F1C', '#B06BFF', '#FF5A6E', '#FFD
 // big rotating "storm" made of loading wheels; (x, y) centre, r radius, k 0..1
 function wheelStorm(x, y, r, t, k) {
   if (k <= 0) return '';
-  let o = '';
-  const a = t * 14;
-  o += Ell(x, y, r * 1.15, r * 0.42, { fill: '#5A6274', opacity: f(0.55 * k) });
-  for (let i = 0; i < 4; i++) {
-    const rr = r * (1 - i * 0.2), sp = (i % 2 ? -1 : 1) * (10 + i * 6);
-    o += G(Ell(0, 0, rr, rr * 0.36, { fill: i % 2 ? '#7A8296' : '#9AA2B2', stroke: '#3A4152', 'stroke-width': 5, opacity: f(k * (0.75 - i * 0.08)) }) + Ell(0, 0, rr, rr * 0.36, { fill: 'url(#farmWheels)', opacity: f(k * 0.9) }), `translate(${f(x)} ${f(y - i * r * 0.07)}) rotate(${f(Math.sin(t * 0.5 + i) * 4)}) translate(0 0)`, {});
-    void sp;
+  let o = Ell(x, y + r * 0.1, r * 1.12, r * 0.42, { fill: '#2E3444', 'fill-opacity': f(0.45 * k) });
+  // three bands of grey cloud puffs swirling at different speeds (sorted back → front)
+  const puffs = [];
+  for (let b = 0; b < 3; b++) {
+    const rr = r * (1 - b * 0.27), n = 18 - b * 4, sp = 0.18 + b * 0.1;
+    for (let i = 0; i < n; i++) {
+      const a = t * sp + (i / n) * Math.PI * 2 + b * 0.7;
+      puffs.push({ a, b, i, x: x + Math.cos(a) * rr, y: y + Math.sin(a) * rr * 0.3 - b * r * 0.06, pr: r * (0.135 - b * 0.02) * (0.8 + 0.45 * rnd(i, b + 3)) });
+    }
   }
-  // big wheels orbiting the eye
-  for (let i = 0; i < 6; i++) {
-    const b = a * 0.05 + (i / 6) * Math.PI * 2;
-    const px = x + Math.cos(b) * r * 0.75, py = y + Math.sin(b) * r * 0.24;
-    o += K.loadingWheel(px, py, 22 + 8 * (1 + Math.sin(b)), t + i * 0.3, '#E9EDF3', 8, null, 1.2);
+  puffs.sort((p, q) => Math.sin(p.a) - Math.sin(q.a));
+  for (const p of puffs) {
+    const front = Math.sin(p.a);
+    o += Ci(p.x, p.y, p.pr, { fill: mix('#5E6678', '#B4BBC8', 0.5 + 0.5 * front), stroke: '#2A2F3C', 'stroke-width': 5, opacity: f(k) });
+    if (p.i % 3 === 0 && front > -0.3) o += K.loadingWheel(p.x, p.y, p.pr * 0.55, t + p.i * 0.13, '#F2F5FA', 8, p.pr * 0.13, 1.4);
   }
-  o += K.loadingWheel(x, y - r * 0.12, r * 0.16, t, '#FFFFFF', 10, null, 1);
-  // grey lightning
-  if (Math.floor(t * 2.3) % 7 === 0) o += P(`M${f(x - r * 0.3)} ${f(y + r * 0.2)} l40 60 l-30 10 l50 90`, ln(10, '#E9EDF3', k));
+  // swirl streaks (show the rotation)
+  for (let j = 0; j < 4; j++) {
+    const a0 = t * 0.5 + j * Math.PI / 2;
+    let d = '';
+    for (let s2 = 0; s2 <= 6; s2++) { const a = a0 + s2 * 0.22, rr = r * (0.35 + s2 * 0.09); d += (s2 ? ' L' : 'M') + `${f(x + Math.cos(a) * rr)} ${f(y + Math.sin(a) * rr * 0.3 - r * 0.05)}`; }
+    o += P(d, ln(7, '#FFFFFF', 0.45 * k));
+  }
+  // the eye: a giant spinning loading wheel
+  o += Ci(x, y - r * 0.05, r * 0.15, { fill: '#1A1E28', stroke: '#2A2F3C', 'stroke-width': 6, opacity: f(k) }) + K.loadingWheel(x, y - r * 0.05, r * 0.1, t, '#FFFFFF', 10, r * 0.022, 1);
+  if (Math.floor(t * 2.3) % 7 === 0) o += P(`M${f(x - r * 0.35)} ${f(y + r * 0.2)} l40 60 l-34 12 l56 96`, ln(12, '#F2F5FA', k));
   return o;
 }
 
@@ -1155,12 +1162,12 @@ function wheelStorm(x, y, r, t, k) {
 // opts: storm 0..1 (rotating grey loading-wheel storm above the roof), doorScreen ('KEY EXPIRED: 1998'),
 //       sunset 0..1 (golden hour for SC 10/12), green 0..1 (windows turn green), grass 0..1 (the patch of real grass
 //       next to the door glows/sparkles; drawn always), lag 0..1, doorOpen 0..1
-const FARM = { floor: 950, door: { x: 960, y: 950, w: 150, h: 190 }, keySlot: { x: 1066, y: 866 }, grass: { x: 760, y: 952 } };
+const FARM = { floor: 950, door: { x: 960, y: 950, w: 150, h: 190 }, keySlot: { x: 1066, y: 866 }, grass: { x: 1250, y: 952 } };
 function farmExterior(t, opts = {}) {
   const { storm = 0.6, doorScreen = 'KEY EXPIRED: 1998', sunset = 0, green = 0, grass = 0, lag = 0, doorOpen = 0, cam = null } = opts;
   const c = desertCols(0.9 - sunset * 0.4);
   let bg = V(cam, skyDesert(cam, 0.95, t, { sunset, storm: storm * 0.8, sunX: 1650, sunY: 300 + sunset * 260 }), 0);
-  bg += V(cam, wheelStorm(960, 120, 640, t, storm), 0.12);
+  bg += V(cam, wheelStorm(960, 110, 560, t, storm), 0.12);
   bg += V(cam, R(-800, 640, 3600, 900, 0, { fill: c.sandFar }) + mesaShape(-500, 650, 700, 200, c) + mesaShape(1700, 650, 800, 230, c), 0.2);
   // canyon walls behind (both sides, leaning in)
   let cw = '';
@@ -1175,7 +1182,7 @@ function farmExterior(t, opts = {}) {
   b += R(400, 250, 1120, 100, 10, ol('#3A4A7A', 7)) + R(400, 250, 1120, 100, 10, { fill: 'url(#farmPanel)' });
   b += R(520, 170, 120, 90, 10, ol('#5A6890', 6)) + R(560, 120, 40, 60, 6, ol('#5A6890', 5));
   for (let i = 0; i < 3; i++) { const a = (t * 0.6 + i / 3) % 1; b += Ci(580 + Math.sin(t + i) * 10, 110 - a * 120, 20 + a * 40, op('#E9EDF3', 0.5 * (1 - a))); }
-  b += P('M1300 250 L1320 140', ln(8)) + Ell(1320, 140, 70, 30, ol('#DCE2EA', 6)) + Ci(1320, 140, 10, { fill: '#3A3F55' });
+  b += P('M1300 250 L1310 180', ln(10)) + G(P('M-74 0 Q0 64 74 0 Z', ol('#DCE2EA', 6)) + P('M0 26 L0 -40', ln(5)) + Ci(0, -44, 8, ol('#3A3F55', 3)), 'translate(1316 170) rotate(-28)');
   b += P('M1450 250 L1450 60', ln(8)) + Ci(1450, 56, 12, { fill: blink(t, 1.2) ? '#FF2E4D' : '#5A2A34', stroke: LINE, 'stroke-width': 4 });
   if (blink(t, 1.2)) b += Ci(1450, 56, 40, { fill: 'url(#farmGlowRed)' });
   // main block
@@ -1214,12 +1221,12 @@ function farmExterior(t, opts = {}) {
   const cables = [
     [`M300 ${top - 10} C320 520 ${f(420 + sway(0))} 600 380 960`, 0], [`M360 ${top - 10} C420 460 ${f(600 + sway(1))} 520 ${f(640 + sway(1))} 700 S700 900 760 960`, 1],
     [`M1560 ${top - 10} C1520 500 ${f(1400 + sway(2))} 640 1420 960`, 2], [`M1620 ${top - 10} C1660 460 ${f(1560 + sway(3))} 760 1640 960`, 3],
-    [`M600 ${top - 10} Q${f(780 + sway(4))} 560 860 700`, 4], [`M1340 ${top - 10} Q${f(1180 + sway(5))} 560 1080 700`, 5],
-    [`M1000 ${top - 10} Q${f(1080 + sway(6))} 420 1180 ${top - 8}`, 6],
+    [`M540 ${top - 10} Q${f(610 + sway(4))} 640 690 ${top - 10}`, 4], [`M1230 ${top - 10} Q${f(1310 + sway(5))} 700 1390 ${top - 10}`, 5],
+    [`M1000 ${top - 10} Q${f(1090 + sway(6))} ${top + 70} 1180 ${top - 10}`, 6],
   ];
   for (const [d, i] of cables) b += cable(d, CABLE_COLS[i % CABLE_COLS.length], 18);
   // little leaves + zip ties on the vines
-  for (const [x, y, r] of [[408, 560, -30], [600, 560, 20], [1420, 640, 30], [1600, 700, -20], [760, 590, 40], [1210, 560, -40]]) b += G(P('M0 0 Q14 -22 34 -14 Q20 4 0 0 Z', ol('#5CD66E', 4)) + P('M2 -2 L26 -12', ln(2.5, '#2E9C47')), `translate(${x} ${y}) rotate(${r})`);
+  for (const [x, y, r] of [[408, 560, -30], [596, 470, 20], [1420, 640, 30], [1600, 700, -20], [640, 430, 40], [1330, 500, -40]]) b += G(P('M0 0 Q14 -22 34 -14 Q20 4 0 0 Z', ol('#5CD66E', 4)) + P('M2 -2 L26 -12', ln(2.5, '#2E9C47')), `translate(${x} ${y}) rotate(${r})`);
   // grass patch by the door (the only real grass for miles)
   const gx = FARM.grass.x, gy = FARM.grass.y;
   let gr = Ell(gx, gy + 4, 70, 12, { fill: '#2E9C47', opacity: 0.4 });
@@ -1228,7 +1235,7 @@ function farmExterior(t, opts = {}) {
   if (grass > 0) gr += Ci(gx, gy - 20, 120, { fill: 'url(#farmGlowGreen)', opacity: f(grass) }) + K.sparkles([[gx - 70, gy - 70, 18], [gx + 60, gy - 60, 14], [gx, gy - 90, 22]], t);
   b += gr;
   // fence + sign posts + rocks on the ground
-  b += boulder(180, 960, 0.8, c) + boulder(1760, 970, 0.9, c) + sageBush(1240, 966, 0.6, c);
+  b += boulder(180, 960, 0.8, c) + boulder(1760, 970, 0.9, c) + sageBush(700, 966, 0.6, c);
   for (let i = 0; i < 6; i++) b += R(330 + i * 70, 900, 10, 60, 3, ol('#9AA3B2', 3)) + R(1390 + i * 70, 900, 10, 60, 3, ol('#9AA3B2', 3));
   b += P('M330 916 L690 916 M1390 916 L1750 916', ln(3, '#9AA3B2'));
   if (lag > 0) b += R(bx0, top, 480, 240, 0, { fill: 'url(#farmLowRes)', opacity: f(lag) });
@@ -1236,22 +1243,22 @@ function farmExterior(t, opts = {}) {
   // foreground rocks (canyon mouth)
   let fg = P(rp([[-400, 1200], [-400, 700], [-100, 740, 40], [80, 860, 30], [140, 1200]]), ol(c.rock, 7)) + P(rp([[2320, 1200], [2320, 680], [2020, 720, 40], [1820, 860, 30], [1760, 1200]]), ol(c.rock, 7));
   fg += P('M-100 750 L60 860', ln(10, c.rockHi)) + P('M2020 730 L1840 860', ln(10, c.rockHi));
-  if (sunset > 0) fg += fullRect(cam, 1, { fill: '#FF9A4D', opacity: f(sunset * 0.12) });
+  if (sunset > 0) fg += fullRect(cam, 1, { fill: '#FF9A4D', 'fill-opacity': f(sunset * 0.16) });
   return layers(bg, '', V(cam, fg, 1.2));
 }
 // farmDoor(t, opts) — close-up of the heavy entrance door for the key gag + Modbot stand-off.
 // Floor DOOR.floor = 940. Key slot DOOR.key {x, y}, screen DOOR.screen. opts: doorScreen, screenCol, open 0..1, alarm 0..1, cam
-const DOOR = { floor: 940, key: { x: 1500, y: 640 }, screen: { x: 1500, y: 470 }, door: { x0: 560, x1: 1360, top: 200 } };
+const DOOR = { floor: 940, key: { x: 1580, y: 640 }, screen: { x: 1580, y: 470 }, door: { x0: 560, x1: 1360, top: 200 } };
 function farmDoor(t, opts = {}) {
   const { doorScreen = 'INSERT KEY', screenCol = '#FF5A5A', open = 0, alarm = 0, green = 0, cam = null } = opts;
   let bg = R(-400, -300, 2720, 1700, 0, { fill: '#2A3866' }) + R(-400, -300, 2720, 1700, 0, { fill: 'url(#farmPanel)' });
   // windows strips on both sides
-  for (const x0 of [-300, 1640]) bg += G(R(0, 0, 560, 640, 0, { fill: green > 0.5 ? 'url(#farmWinG)' : 'url(#farmWin)' }), `translate(${x0} 40)`) + R(x0, 40, 560, 640, 0, { fill: '#0B1433', opacity: 0.25 });
+  for (const x0 of [-380, 1720]) bg += G(R(0, 0, 560, 640, 0, { fill: green > 0.5 ? 'url(#farmWinG)' : 'url(#farmWin)' }), `translate(${x0} 40)`) + R(x0, 40, 560, 640, 0, { fill: '#0B1433', opacity: 0.25 });
   bg += cable('M-100 -40 C80 300 -40 600 140 1000', '#3BD16F', 26) + cable('M2000 -40 C1820 260 1980 640 1780 1000', '#B06BFF', 26) + cable('M1700 -40 Q1640 200 1760 420', '#FF9F1C', 22);
   // the door frame (hazard) + sign
   const { x0, x1, top } = DOOR.door;
   bg += R(x0 - 70, top - 70, x1 - x0 + 140, DOOR.floor - top + 70, 18, ol('#3A4A7A', 8)) + R(x0 - 50, top - 50, x1 - x0 + 100, DOOR.floor - top + 50, 10, { fill: 'url(#farmHazard)', stroke: LINE, 'stroke-width': 6 });
-  bg += R(x0 + 40, top - 190, x1 - x0 - 80, 100, 14, ol('#FFC21F', 7)) + T('AUTHORIZED PERSONNEL ONLY', 960, top - 124, 56, '#1D1D24');
+  bg += R(x0 + 40, top - 190, x1 - x0 - 80, 100, 14, ol('#FFC21F', 7)) + T('AUTHORIZED PERSONNEL ONLY', 960, top - 124, 50, '#1D1D24');
   // opening + interior glow
   bg += R(x0, top, x1 - x0, DOOR.floor - top, 6, { fill: '#050916' });
   if (open > 0) {
@@ -1279,7 +1286,7 @@ function farmDoor(t, opts = {}) {
   bg += R(-400, DOOR.floor, 2720, 500, 0, { fill: '#C9B48A' }) + R(-400, DOOR.floor, 2720, 500, 0, { fill: 'url(#farmSandRip)' }) + R(x0 - 120, DOOR.floor - 6, x1 - x0 + 240, 40, 8, ol('#8E9AB0', 6)) + R(x0 - 120, DOOR.floor + 30, x1 - x0 + 240, 12, 0, { fill: '#000', opacity: 0.15 });
   bg += R(-400, DOOR.floor + 70, 2720, 14, 0, { fill: '#FFC21F', opacity: 0.8 });
   if (alarm > 0) bg += beacon(x0 - 140, top - 120, t, alarm) + beacon(x1 + 140, top - 120, t + 0.4, alarm);
-  else bg += R(x0 - 166, top - 124, 52, 14, 5, ol('#3A3F55', 4)) + R(x1 + 114, top - 124, 52, 14, 5, ol('#3A3F55', 4));
+  else bg += beacon(x0 - 140, top - 120, t, 0) + beacon(x1 + 140, top - 120, t, 0);
   return layers(V(cam, bg, 1), '', alarm > 0 ? fullRect(cam, 1, { fill: RED, opacity: f(alarm * 0.12 * (0.6 + 0.4 * Math.sin(t * 11))) }) : '');
 }
 
@@ -1296,8 +1303,7 @@ function rackHall(t, cam, opts = {}) {
   bg += V(cam, band(cam, 0.15, 380, 760, { fill: 'url(#farmRackFar)', opacity: 0.45 }) + band(cam, 0.15, 360, 380, { fill: '#1C2D63' }) + band(cam, 0.15, 760, 1400, { fill: '#0A1230' }) + strip(cam, 0.15, dist, 1500, (i, x) => T('SECTOR ' + (7 + (i % 9 + 9) % 9), x + 600, 300, 120, '#1C2D63') + R(x + 1200, 100, 40, 700, 0, { fill: '#0E1A42' })), 0.15);
   // mid row (k .5): one band of small racks + gaps as a single path
   const v5 = vis(cam, 0.5), off5 = dist * 0.5;
-  let mr = G(R(v5.x0 + off5 - 300, 0, v5.x1 - v5.x0 + 600, 430, 0, { fill: 'url(#farmRackFar)' }), `translate(${f(-off5)} 0)`, {});
-  mr = G(G(R(0, 0, (v5.x1 - v5.x0 + 900) / 1.4, 310, 0, { fill: 'url(#farmRackFar)' }), `translate(${f(v5.x0 - 300 - ((v5.x0 - 300 + off5) % 98))} 400) scale(1.4)`), null);
+  let mr = G(G(R(0, 0, (v5.x1 - v5.x0 + 900) / 1.4, 310, 0, { fill: 'url(#farmRackFar)' }), `translate(${f(v5.x0 - 300 - ((v5.x0 - 300 + off5) % 98))} 400) scale(1.4)`), null);
   let gaps = '';
   const i0 = Math.floor((v5.x0 + off5) / 150) - 2, i1 = Math.ceil((v5.x1 + off5) / 150) + 2;
   for (let i = i0; i <= i1; i++) { const x = i * 150 - off5; gaps += ((i % 8) + 8) % 8 === 3 ? `M${f(x - 10)} 380 h160 v460 h-160 Z ` : `M${f(x - 10)} 380 h20 v460 h-20 Z `; }
@@ -1336,14 +1342,18 @@ function rackHall(t, cam, opts = {}) {
   const mid = V(cam, m + fl, 1);
   // foreground: dark pillars with a few LEDs + a hanging cable loop
   let fg = '';
-  if (fgRacks) fg += V(cam, strip(cam, 1.5, dist, 2100, (i, x) => {
-    const px = x + 1500;
+  if (fgRacks) fg += V(cam, strip(cam, 1.5, dist, 2400, (i, x) => {
+    const px = x + 2000;
     let o = R(px, -200, 230, 1500, 14, { fill: '#03060F', stroke: '#141C3A', 'stroke-width': 8 });
     for (let j = 0; j < 7; j++) o += Ci(px + 190, 120 + j * 120, 6, { fill: blink(t, 2, j + i) ? (green > 0.5 ? GREEN : alarm > 0.5 ? RED : CYAN) : '#14305A' });
-    o += P(`M${x + 300} -60 Q${f(x + 420 + Math.sin(t * 0.8 + i) * 10)} 170 ${x + 560} -60`, ln(34)) + P(`M${x + 300} -60 Q${f(x + 420 + Math.sin(t * 0.8 + i) * 10)} 170 ${x + 560} -60`, ln(22, CABLE_COLS[((i % 7) + 7) % 7]));
+    o += P(`M${x + 700} -60 Q${f(x + 820 + Math.sin(t * 0.8 + i) * 10)} 150 ${x + 960} -60`, ln(34)) + P(`M${x + 700} -60 Q${f(x + 820 + Math.sin(t * 0.8 + i) * 10)} 150 ${x + 960} -60`, ln(22, CABLE_COLS[((i % 7) + 7) % 7]));
     return o;
   }), 1.5);
-  if (alarm > 0) fg += fullRect(cam, 1, { fill: RED, 'fill-opacity': f(alarm * (0.16 + 0.08 * Math.sin(t * 11))) });
+  if (alarm > 0) {
+    fg += fullRect(cam, 1, { fill: RED, 'fill-opacity': f(alarm * (0.17 + 0.08 * Math.sin(t * 11))) });
+    const v = vis(cam, 1);
+    for (let j = 0; j < 2; j++) { const sx = v.x0 + (v.x1 - v.x0) * (0.5 + 0.55 * Math.sin(t * 2.2 + j * Math.PI)); fg += V(cam, Ell(sx, 420, 520, 420, { fill: 'url(#farmGlowRed)', opacity: f(alarm * 0.55) }), 1); }
+  }
   if (green > 0) fg += fullRect(cam, 1, { fill: GREEN, 'fill-opacity': f(green * greenWave * 0.07) });
   if (lowRes > 0) fg += fullRect(cam, 1, { fill: '#8A93A6', 'fill-opacity': f(lowRes * 0.2) });
   return layers(bg, mid, fg);
@@ -1357,12 +1367,12 @@ function breath(x, y, t, k = 1, dir = 1, seed = 0) {
   let o = '';
   for (let i = 0; i < 3; i++) {
     const a = ((t * 0.9 + i / 3 + seed) % 1);
-    o += Ci(x + dir * (20 + a * 90), y - a * 30 + Math.sin(t * 3 + i) * 4, 12 + a * 30, op('#FFFFFF', k * 0.55 * (1 - a)));
+    o += Ci(x + dir * (20 + a * 90), y - a * 30 + Math.sin(t * 3 + i) * 4, 12 + a * 30, { fill: '#FFFFFF', 'fill-opacity': f(k * 0.7 * (1 - a)), stroke: '#9FCBEA', 'stroke-width': 3, 'stroke-opacity': f(k * 0.8 * (1 - a)) });
   }
   return o;
 }
 function coolingRoom(t, cam, opts = {}) {
-  const { dist = 0, fanSpeed = 1, snow = 40, skateMarks = true, alarm = 0, green = 0 } = opts;
+  const { dist = 0, fanSpeed = 1, snow = 30, skateMarks = true, alarm = 0, green = 0 } = opts;
   let bg = fullRect(cam, 0, { fill: 'url(#farmIceWall)' });
   // back wall: giant wall fans + frost + sign
   bg += V(cam, band(cam, 0.2, -400, 1400, { fill: 'url(#farmFrost)', opacity: 0.6 }) + strip(cam, 0.2, dist, 900, (i, x) => {
@@ -1373,8 +1383,6 @@ function coolingRoom(t, cam, opts = {}) {
     o += G(bl, `translate(${cx} ${cy}) rotate(${f(t * 200 * fanSpeed + i * 40)})`) + Ci(cx, cy, 30, ol('#E8F8FF', 5));
     for (let j = -3; j <= 3; j++) o += P(`M${cx - r} ${cy + j * r / 3.6} L${cx + r} ${cy + j * r / 3.6}`, ln(3, '#E8F8FF', 0.4));
     o += P(`M${cx - r - 40} ${cy - r - 34} Q${cx} ${cy - r - 70} ${cx + r + 40} ${cy - r - 34}`, { fill: '#FFFFFF', stroke: '#B9E2F5', 'stroke-width': 4 });
-    if (i % 3 === 0) o += R(x + 20, 590, 360, 90, 16, ol('#E8F8FF', 6)) + T('COOLING ROOM', x + 200, 642, 44, '#2E6FA8') + TF('FLOOR 1  ·  -40°', x + 200, 672, 24, '#5A8AC0');
-    else if (i % 3 === 1) o += R(x + 60, 560, 60, 200, 30, ol('#FFFFFF', 6)) + R(x + 78, 600, 24, 140, 12, { fill: '#5CE1FF' }) + Ci(x + 90, 740, 24, ol('#5CE1FF', 5)) + TF('-40°', x + 160, 650, 34, '#2E6FA8');
     return o;
   }) + band(cam, 0.2, 760, 1400, { fill: '#C8E8FA' }), 0.2);
   // frosted rack row (k .6)
@@ -1391,6 +1399,10 @@ function coolingRoom(t, cam, opts = {}) {
       bl += P(`M${cx} ${cy} L${f(ex - ss * 18)} ${f(ey - 26)} L${f(ex + ss * 18)} ${f(ey + 6)} Z`, { fill: ss > 0 ? '#C8E2F8' : '#9CC0E8', stroke: LINE, 'stroke-width': 5, 'stroke-linejoin': 'round' });
     }
     o += bl + Ell(cx, cy, 60, 28, ol('#E8F8FF', 6)) + P(`M${cx - 50} ${cy + 26} L${cx - 54} ${cy + 60} M${cx + 10} ${cy + 28} L${cx + 6} ${cy + 74} M${cx + 44} ${cy + 24} L${cx + 46} ${cy + 52}`, ln(8, '#E8FAFF'));
+    // hanging sign / thermometer between the fans
+    const sx = x + 1000, sw = Math.sin(t * 1.1 + i) * 2;
+    if (i % 2 === 0) o += G(P('M-150 -200 L-150 0 M150 -200 L150 0', ln(5, '#7FA8D8')) + R(-200, 0, 400, 120, 18, ol('#E8F8FF', 7)) + T('COOLING ROOM', 0, 62, 50, '#2E6FA8') + TF('FLOOR 1', 0, 100, 28, '#5A8AC0') + P('M-196 4 Q-120 -16 -40 2 Q40 -14 120 4 Q170 -10 196 4 Z', { fill: '#FFFFFF', stroke: '#B9E2F5', 'stroke-width': 3 }), `translate(${sx} 230) rotate(${f(sw)})`);
+    else o += G(P('M0 -200 L0 0', ln(5, '#7FA8D8')) + R(-46, 0, 92, 250, 40, ol('#FFFFFF', 7)) + R(-14, 30, 28, 160, 14, { fill: '#D8F2FF', stroke: LINE, 'stroke-width': 3 }) + R(-14, 150, 28, 40, 10, { fill: '#5CE1FF' }) + Ci(0, 205, 26, ol('#5CE1FF', 5)) + TF('-40°', 90, 120, 40, '#2E6FA8'), `translate(${sx} 230) rotate(${f(sw)})`);
     return o;
   }), 0.85);
   // ice floor (k 1)
@@ -1409,7 +1421,7 @@ function coolingRoom(t, cam, opts = {}) {
     const x = v.x0 + ((rnd(i, 81) * 2200 + Math.sin(t * 0.7 + i) * 40 - dist * 0.9) % 2200 + 2200) % 2200 - 140;
     const y = ((rnd(i, 82) * 1100 + t * (40 + rnd(i, 83) * 50)) % 1100) - 40;
     const r = 3 + rnd(i, 84) * 5;
-    sn += R(x - r, y - r, r * 2, r * 2, r * 0.4, { fill: '#FFFFFF', opacity: f(0.7), transform: `rotate(45 ${f(x)} ${f(y)})` });
+    sn += Ci(x, y, r, { fill: '#FFFFFF', 'fill-opacity': 0.8 });
   }
   let mist = '';
   for (let i = 0; i < 6; i++) { const x = vis(cam, 1).x0 + ((rnd(i, 85) * 2400 + t * 30) % 2400) - 200; mist += Ell(x, FLOOR.cooling + 10 - rnd(i, 86) * 30, 260, 40, op('#FFFFFF', 0.22)); }
@@ -1451,7 +1463,7 @@ function platformShape(x, y, w, t, obby, i, hang = true) {
   let o = '';
   if (hang) o += P(`M${x + 20} ${y} L${x + 40} -80 M${x + w - 20} ${y} L${x + w - 40} -80`, ln(6, '#3A4260'));
   const h = 70;
-  o += R(x, y, w, h, 12, ol('#22305E', 6)) + R(x + 10, y + 22, w - 20, h - 30, 6, { fill: 'url(#farmRack)' }) + R(x, y, w, 18, 8, ol('#5A6A9A', 5));
+  o += R(x, y, w, h, 12, ol('#22305E', 6)) + G(R(0, 0, w - 20, h - 30, 0, { fill: 'url(#farmRack)' }), `translate(${x + 10} ${y + 22})`) + R(x, y, w, 18, 8, ol('#8FA2D8', 5)) + R(x + 6, y + h - 6, w - 12, 6, 3, { fill: CYAN, 'fill-opacity': 0.7 });
   o += R(x + 8, y + 3, w - 16, 5, 2, { fill: '#9FB2E8' }) + Ci(x + w - 20, y + 44, 5, { fill: blink(t, 2, i) ? '#5CE1FF' : '#1A2A5A' });
   if (obby > 0) {
     const c = OB[i % OB.length];
@@ -1470,7 +1482,11 @@ function cableJungle(t, cam, opts = {}) {
   const { obby = 0, dist = 0, depthGlow = 1 } = opts;
   let bg = fullRect(cam, 0, { fill: 'url(#farmShaft)' });
   // far shaft walls with tiny lights
-  bg += V(cam, strip(cam, 0.12, dist, 700, (i, x) => R(x, -400, 300, 2000, 0, { fill: 'url(#farmRackFar)', opacity: 0.35 }) + R(x + 300, -400, 400, 2000, 0, { fill: '#0A1232', opacity: 0.6 })) + band(cam, 0.12, 700, 1600, { fill: 'url(#farmFadeDown)' }) + Ci(960, 1300, 900, { fill: 'url(#farmGlowBlue)', opacity: f(0.5 * depthGlow) }), 0.12);
+  bg += V(cam, strip(cam, 0.12, dist, 700, (i, x) => R(x, -400, 300, 2000, 0, { fill: 'url(#farmRackFar)', opacity: 0.35 }) + R(x + 300, -400, 400, 2000, 0, { fill: '#0A1232', 'fill-opacity': 0.6 })) + band(cam, 0.12, 700, 1600, { fill: 'url(#farmFadeDown)' }), 0.12);
+  // the bottomless shaft: nested light rings shrinking toward a glow far below
+  let pit = Ell(960, 1260, 1300, 420, { fill: 'url(#farmGlowBlue)', opacity: f(0.6 * depthGlow) });
+  pit += strip(cam, 0.25, dist, 380, (i, x) => R(x + rnd(i, 97) * 200, 900 + rnd(i, 98) * 140, 70 + rnd(i, 99) * 60, 16, 5, { fill: '#2A4A8A', 'fill-opacity': 0.7 }) + Ci(x + 150, 1000 + rnd(i, 96) * 60, 3, { fill: CYAN }));
+  bg += V(cam, pit, 0.25);
   // distant cables + small platforms
   bg += V(cam, strip(cam, 0.4, dist, 260, (i, x) => {
     const len = 500 + rnd(i, 91) * 700, sw = Math.sin(t * 0.6 + i) * 10;
@@ -1498,11 +1514,12 @@ function cableJungle(t, cam, opts = {}) {
   // ledges + platforms
   const J = JUNGLE;
   m += ledge(J.start.x0, J.start.x1, J.start.y, t, obby, 0) + ledge(J.end.x0, J.end.x1, J.end.y, t, obby, 1);
+  m += G(R(-100, 0, 200, 92, 12, ol('#FFC21F', 6)) + TF('MIND', 0, 38, 30, '#1D1D24') + TF('THE GAP', 0, 74, 30, '#1D1D24') + P('M-70 -6 L-70 -30 M70 -6 L70 -30', ln(6, '#3A4260')), `translate(${J.start.x1 - 130} ${J.start.y + 70})`);
   J.platforms.forEach((p, i) => { m += platformShape(p.x, p.y, p.w, t, obby, i); });
   if (obby > 0) {
     const ex = J.end.x0 + 160, ey = J.end.y;
     m += G(R(-70, -10, 140, 16, 6, { fill: '#46F58C', stroke: LINE, 'stroke-width': 5 }) + Ci(0, -20, 90, { fill: 'url(#farmGlowGreen)' }) + P('M-50 -10 L-50 -190', ln(8)) + P('M-50 -190 L30 -165 L-50 -140 Z', ol('#46F58C', 5)), `translate(${ex} ${ey})`, { opacity: f(obby) });
-    m += G(R(-170, -60, 340, 110, 22, ol('#FFD21F', 7)) + T('OBBY', 0, -6, 56, '#151515') + TF('STAGE 1', 0, 36, 32, '#E8504A'), `translate(${J.start.x1 - 220} ${J.start.y - 360}) rotate(-4) scale(${f(ease.outBack(clamp(obby, 0, 1)))})`);
+    m += G(R(-170, -60, 340, 110, 22, ol('#FFD21F', 7)) + T('OBBY', 0, -6, 56, '#151515') + TF('STAGE 1', 0, 36, 32, '#E8504A'), `translate(${J.platforms[0].x + 110} ${J.platforms[0].y - 330}) rotate(-4) scale(${f(ease.outBack(clamp(obby, 0, 1)))})`);
   }
   const mid = V(cam, m, 1);
   // the drop below + foreground vines
@@ -1543,7 +1560,8 @@ const LOST_KINDS = ['tophat', 'crown', 'sword', 'wings', 'dog', 'cap', 'shield',
 function heap(x, base, w, h, t, seed, nItems = 6, dark = 0) {
   const d = `M${f(x - w)} ${f(base + 30)} Q${f(x - w * 0.8)} ${f(base - h * 0.55)} ${f(x - w * 0.35)} ${f(base - h * 0.85)} Q${f(x)} ${f(base - h * 1.08)} ${f(x + w * 0.35)} ${f(base - h * 0.85)} Q${f(x + w * 0.8)} ${f(base - h * 0.55)} ${f(x + w)} ${f(base + 30)} Z`;
   let o = P(d, { fill: 'url(#farmJunk)', stroke: LINE, 'stroke-width': 7 });
-  if (dark > 0) o += P(d, { fill: '#0B1030', opacity: f(dark) });
+  o += P(d, { fill: 'url(#farmHeapShade)' });
+  if (dark > 0) o += P(d, { fill: '#0B1030', 'fill-opacity': f(dark) });
   for (let i = 0; i < nItems; i++) {
     const u = (i + 0.5) / nItems * 2 - 1;
     const ix = x + u * w * 0.8, iy = base - h * (1 - u * u * 0.75) * 0.95 + 20;
@@ -1555,38 +1573,28 @@ function heap(x, base, w, h, t, seed, nItems = 6, dark = 0) {
 function lostAndFound(t, cam, opts = {}) {
   const { dist = 0, lamp = 1 } = opts;
   let bg = fullRect(cam, 0, { fill: '#1A1640' });
-  // back wall shelves with labelled boxes
-  bg += V(cam, strip(cam, 0.2, dist, 600, (i, x) => {
-    let o = R(x + 20, 120, 560, 700, 10, { fill: '#241E54', stroke: '#120E30', 'stroke-width': 6 });
-    const labels = ['HATS', 'PETS', 'SWORDS', 'WINGS', 'TOOLS', '???', 'SOCKS', 'KEYS'];
-    for (let r = 0; r < 4; r++) {
-      o += R(x + 20, 280 + r * 160, 560, 14, 4, { fill: '#3A3270' });
-      for (let c = 0; c < 3; c++) {
-        const bi = ((i * 12 + r * 3 + c) % 8 + 8) % 8;
-        o += R(x + 50 + c * 175, 170 + r * 160, 150, 110, 8, { fill: '#7A5A44', stroke: '#120E30', 'stroke-width': 4 }) + R(x + 80 + c * 175, 200 + r * 160, 90, 34, 4, { fill: '#E9D8B8' }) + TF(labels[bi], x + 125 + c * 175, 226 + r * 160, 20, '#3A2A20');
-      }
-    }
-    return o;
-  }) + band(cam, 0.2, 820, 1400, { fill: '#120E30' }), 0.2);
+  // back wall: shelves of labelled boxes (pattern) + a few readable labels
+  const v2 = vis(cam, 0.2), off2 = dist * 0.2;
+  let sh = G(R(v2.x0 + off2 - 300, 150, v2.x1 - v2.x0 + 600, 640, 0, { fill: 'url(#farmBoxes)' }), `translate(${f(-off2)} 0)`);
+  const labels = ['HATS', 'PETS', 'SWORDS', 'WINGS', 'TOOLS', '???', 'SOCKS', 'KEYS'];
+  sh += strip(cam, 0.2, dist, 525, (i, x) => TF(labels[((i % 8) + 8) % 8], x + 87, 197, 20, '#3A2A20') + TF(labels[((i * 3 + 2) % 8 + 8) % 8], x + 437, 357, 20, '#3A2A20'));
+  bg += V(cam, sh + band(cam, 0.2, 790, 1400, { fill: '#120E30' }) + band(cam, 0.2, 100, 150, { fill: '#120E30' }), 0.2);
   // hanging sign (k .5)
   bg += V(cam, strip(cam, 0.5, dist, 2600, (i, x) => P(`M${x + 700} -100 L${x + 700} 120 M${x + 1200} -100 L${x + 1200} 120`, ln(6, '#5A5A8A')) + R(x + 620, 110, 660, 170, 24, ol('#FFD21F', 8)) + outT('LOST & FOUND', x + 950, 205, 82, '#FFFFFF', 10) + TF('FLOOR 2½', x + 950, 256, 34, '#3A2A20')), 0.5);
   // far + mid heaps
-  bg += V(cam, strip(cam, 0.45, dist, 900, (i, x) => heap(x + 450, 860, 420 + rnd(i, 101) * 200, 380 + rnd(i, 102) * 200, t, i + 7, 4, 0.55)), 0.45);
-  bg += V(cam, band(cam, 0.7, 880, 1400, { fill: '#2A2460' }) + strip(cam, 0.7, dist, 1300, (i, x) => heap(x + 400, 900, 380 + rnd(i, 103) * 140, 330 + rnd(i, 104) * 160, t, i + 30, 6, 0.25)), 0.7);
+  bg += V(cam, strip(cam, 0.45, dist, 900, (i, x) => heap(x + 450, 860, 420 + rnd(i, 101) * 200, 380 + rnd(i, 102) * 200, t, i + 7, 0, 0.5)), 0.45);
+  bg += V(cam, band(cam, 0.7, 880, 1400, { fill: '#2A2460' }) + strip(cam, 0.7, dist, 1300, (i, x) => heap(x + 400, 900, 380 + rnd(i, 103) * 140, 330 + rnd(i, 104) * 160, t, i + 30, 3, 0.2)), 0.7);
   // floor + near heaps + counter (k 1)
   let m = band(cam, 1, FLOOR.lost, 1600, { fill: '#5A4A7A' }) + band(cam, 1, FLOOR.lost, FLOOR.lost + 10, { fill: '#7A6A9A' }) + band(cam, 1, FLOOR.lost, 1600, { fill: 'url(#farmFloorTile)', opacity: 0.6 });
   m += strip(cam, 1, dist, 2000, (i, x) => {
-    let o = heap(x + 200, FLOOR.lost + 20, 360, 300, t, i + 60, 7);
-    // service counter with a bell
+    let o = heap(x + 200, FLOOR.lost + 20, 360, 300, t, i + 60, 5);
     o += R(x + 900, FLOOR.lost - 200, 420, 200, 10, ol('#C98B4A', 7)) + R(x + 880, FLOOR.lost - 220, 460, 30, 8, ol('#E8B37A', 6)) + R(x + 960, FLOOR.lost - 160, 300, 80, 10, ol('#FFF4DC', 5)) + TF('RING FOR', x + 1110, FLOOR.lost - 128, 28, '#3A2A20') + TF('SERVICE', x + 1110, FLOOR.lost - 96, 28, '#E8504A');
     o += Ell(x + 1260, FLOOR.lost - 220, 32, 7, { fill: '#9AA3B2' }) + P(`M${x + 1232} ${FLOOR.lost - 222} Q${x + 1232} ${FLOOR.lost - 262} ${x + 1260} ${FLOOR.lost - 264} Q${x + 1288} ${FLOOR.lost - 262} ${x + 1288} ${FLOOR.lost - 222} Z`, ol('#FFD21F', 5));
-    o += lostItem('balloon', x + 1000, FLOOR.lost - 380, 1, 0, t) + lostItem('boombox', x + 1500, FLOOR.lost - 50, 0.9, -6, t);
+    o += lostItem('balloon', x + 1000, FLOOR.lost - 380, 1, 0, t) + lostItem('boombox', x + 1500, FLOOR.lost - 50, 0.9, -6, t) + heap(x + 1800, FLOOR.lost + 20, 260, 200, t, i + 90, 3);
     return o;
   });
-  // pendant lamps (k 1)
-  if (lamp > 0) m += strip(cam, 1, dist, 1000, (i, x) => P(`M${x + 500} -100 L${x + 500} 120`, ln(5, '#5A5A8A')) + P(`M${x + 450} 160 Q${x + 500} 100 ${x + 550} 160 Z`, ol('#FFB238', 5)) + P(`M${x + 455} 160 L${x + 545} 160 L${x + 700} ${FLOOR.lost} L${x + 300} ${FLOOR.lost} Z`, { fill: 'url(#farmConeDown)', opacity: 0.18 * lamp }) + Ell(x + 500, FLOOR.lost + 20, 220, 30, { fill: '#FFE9A8', opacity: 0.15 * lamp }));
+  if (lamp > 0) m += strip(cam, 1, dist, 1000, (i, x) => P(`M${x + 500} -100 L${x + 500} 120`, ln(5, '#5A5A8A')) + P(`M${x + 450} 160 Q${x + 500} 100 ${x + 550} 160 Z`, ol('#FFB238', 5)) + P(`M${x + 455} 160 L${x + 545} 160 L${x + 700} ${FLOOR.lost} L${x + 300} ${FLOOR.lost} Z`, { fill: 'url(#farmConeDown)', opacity: f(0.18 * lamp) }) + Ell(x + 500, FLOOR.lost + 20, 220, 30, { fill: '#FFE9A8', 'fill-opacity': f(0.15 * lamp) }));
   const mid = V(cam, m, 1);
-  // foreground items
   const fg = V(cam, strip(cam, 1.4, dist, 1100, (i, x) => lostItem(LOST_KINDS[(((i * 5) % 16) + 16) % 16], x + 200, 1070, 1.5, (rnd(i, 105) - 0.5) * 50, t) + (rnd(i, 106) > 0.5 ? lostItem(LOST_KINDS[(((i * 3 + 7) % 16) + 16) % 16], x + 700, 1100, 1.3, (rnd(i, 107) - 0.5) * 60, t) : '')), 1.4);
   return layers(bg, mid, fg);
 }
@@ -1594,121 +1602,138 @@ function lostAndFound(t, cam, opts = {}) {
 // ---------------------------------------------------------------- game bubbles
 // gameBubble(x, y, r, t, opts) — a glowing bubble with a tiny game world inside.
 // opts: label ('Bubble Island — 3 visits'), grey 0..1 (grey + cracks), glow 0..1, kind
-//   ('island' (default; has mini bubbles = Bubble Island), 'obby', 'city', 'tycoon', 'race', 'space', 'farm'), crack 0..1, seed
-const BUBBLE_KINDS = ['island', 'obby', 'city', 'tycoon', 'race', 'space', 'farm'];
+//   ('island' (default; has mini bubbles = Bubble Island), 'obby', 'city', 'tycoon', 'race', 'space', 'farm', 'castle', 'pet'), crack 0..1, seed
+const BUBBLE_KINDS = ['island', 'obby', 'city', 'tycoon', 'race', 'space', 'farm', 'castle', 'pet'];
 function bubbleWorld(kind, r, t, grey) {
   const g = (c) => (grey ? mix(c, '#8A93A6', 0.85) : c);
-  let o = '';
-  const sky = { space: '#1A1446', city: '#7CC8FF', race: '#9FE0FF' }[kind] || '#8FD8FF';
-  o += Ci(0, 0, r, { fill: g(sky) });
-  if (kind === 'space') {
-    for (let i = 0; i < 6; i++) o += Ci((rnd(i, 3) - 0.5) * r * 1.4, (rnd(i, 4) - 0.5) * r * 1.4, r * 0.03, { fill: '#FFFFFF' });
-    o += Ci(-r * 0.2, r * 0.1, r * 0.34, ol(g('#FF9F1C'), r * 0.05)) + Ell(-r * 0.2, r * 0.1, r * 0.55, r * 0.1, { fill: 'none', stroke: g('#FFD21F'), 'stroke-width': r * 0.05 }) + Ci(r * 0.4, -r * 0.35, r * 0.12, { fill: g('#B06BFF') });
-    return o;
+  const sw = Math.max(1.5, r * 0.035);
+  const sk = { space: '#1A1446', castle: '#B8A8FF', pet: '#FFD6E8' }[kind] || '#8FD8FF';
+  let o = Ci(0, 0, r * 0.97, { fill: g(sk) });
+  const seg = (y0, col) => { const x0 = Math.sqrt(Math.max(0, r * r * 0.94 - y0 * y0)); return P(`M${f(-x0)} ${f(y0)} A${f(r * 0.97)} ${f(r * 0.97)} 0 0 0 ${f(x0)} ${f(y0)} Z`, { fill: g(col) }); };
+  const blk = (x, y, w, h, c, rr = 0.06) => R(x * r, y * r, w * r, h * r, r * rr, { fill: g(c), stroke: LINE, 'stroke-width': sw });
+  switch (kind) {
+    case 'space':
+      for (let i = 0; i < 6; i++) o += Ci((rnd(i, 3) - 0.5) * r * 1.2, (rnd(i, 4) - 0.5) * r * 1.2, r * 0.035, { fill: '#FFFFFF' });
+      o += Ci(-r * 0.15, r * 0.1, r * 0.32, { fill: g('#FF9F1C'), stroke: LINE, 'stroke-width': sw }) + Ell(-r * 0.15, r * 0.1, r * 0.55, r * 0.11, { fill: 'none', stroke: g('#FFD21F'), 'stroke-width': r * 0.06 }) + Ci(r * 0.42, -r * 0.4, r * 0.12, { fill: g('#B06BFF') });
+      return o;
+    case 'island':
+      o += seg(r * 0.28, '#3BA7E0') + Ell(0, r * 0.3, r * 0.55, r * 0.16, { fill: g('#46D17A'), stroke: LINE, 'stroke-width': sw }) + Ell(0, r * 0.24, r * 0.3, r * 0.07, { fill: g('#F4D98A') });
+      o += P(`M${f(-r * 0.02)} ${f(r * 0.26)} Q${f(r * 0.06)} ${f(-r * 0.05)} ${f(-r * 0.04)} ${f(-r * 0.3)}`, ln(r * 0.08, g('#8A5A33'))) + Ci(-r * 0.04, -r * 0.36, r * 0.2, { fill: g('#2FAE6E'), stroke: LINE, 'stroke-width': sw });
+      for (const [bx, by, br] of [[-0.55, -0.3, 0.14], [0.5, -0.15, 0.12], [0.32, -0.6, 0.09]]) o += Ci(bx * r, by * r, br * r, { fill: '#FFFFFF', 'fill-opacity': 0.25, stroke: g('#E8FDFF'), 'stroke-width': r * 0.025 }) + Ell(bx * r, (by + br * 0.35) * r, br * r * 0.5, br * r * 0.2, { fill: g('#46D17A') });
+      return o;
+    case 'obby':
+      o += seg(r * 0.55, '#FF5A5A');
+      ['#FF5A5A', '#FFB000', '#3BD16F', '#3B8BFF'].forEach((c, i) => { o += blk(-0.7 + i * 0.36, 0.22 - i * 0.2, 0.28, 0.12, c); });
+      o += P(`M${f(r * 0.48)} ${f(-r * 0.4)} L${f(r * 0.48)} ${f(-r * 0.72)}`, ln(sw * 1.4)) + P(`M${f(r * 0.48)} ${f(-r * 0.72)} L${f(r * 0.7)} ${f(-r * 0.62)} L${f(r * 0.48)} ${f(-r * 0.52)} Z`, { fill: g('#46F58C') });
+      return o;
+    case 'city':
+      o += seg(r * 0.5, '#5A5466');
+      ['#FFB4C8', '#FFE38A', '#C9D6FF', '#B9F0D2'].forEach((c, i) => { const hh = 0.5 + rnd(i, 9) * 0.35; o += blk(-0.62 + i * 0.31, 0.5 - hh, 0.27, hh, c, 0.04) + R((-0.56 + i * 0.31) * r, (0.58 - hh) * r, r * 0.07, r * 0.07, 1, { fill: g('#FFF6C8') }); });
+      return o;
+    case 'tycoon':
+      o += seg(r * 0.45, '#7BCB3A') + blk(-0.5, -0.05, 0.75, 0.5, '#9AA6C0') + blk(0.05, -0.45, 0.16, 0.42, '#E8504A', 0.03) + Ci(r * 0.13, -r * 0.62, r * 0.1, { fill: '#FFFFFF', 'fill-opacity': 0.8 }) + Ci(r * 0.45, r * 0.05, r * 0.15, { fill: g('#FFC93C'), stroke: LINE, 'stroke-width': sw });
+      return o;
+    case 'race':
+      o += seg(r * 0.2, '#5A5466') + R(-r, r * 0.38, r * 2, r * 0.05, 0, { fill: g('#FFFFFF') }) + blk(-0.35, -0.05, 0.6, 0.2, '#E8504A', 0.08) + Ci(-r * 0.2, r * 0.17, r * 0.09, { fill: '#151515' }) + Ci(r * 0.12, r * 0.17, r * 0.09, { fill: '#151515' });
+      o += R(r * 0.5, -r * 0.5, r * 0.2, r * 0.2, 0, { fill: '#FFFFFF', stroke: LINE, 'stroke-width': sw }) + R(r * 0.5, -r * 0.5, r * 0.1, r * 0.1, 0, { fill: '#151515' }) + R(r * 0.6, -r * 0.4, r * 0.1, r * 0.1, 0, { fill: '#151515' });
+      return o;
+    case 'farm':
+      o += seg(r * 0.3, '#7BCB3A') + blk(-0.4, -0.15, 0.42, 0.45, '#E8504A', 0.03) + P(`M${f(-r * 0.46)} ${f(-r * 0.15)} L${f(-r * 0.19)} ${f(-r * 0.44)} L${f(r * 0.08)} ${f(-r * 0.15)} Z`, { fill: g('#FFFFFF'), stroke: LINE, 'stroke-width': sw }) + Ci(r * 0.4, r * 0.1, r * 0.13, { fill: g('#FFFFFF'), stroke: LINE, 'stroke-width': sw });
+      return o;
+    case 'castle':
+      o += seg(r * 0.45, '#46D17A') + blk(-0.45, -0.15, 0.9, 0.6, '#C9CED8', 0.02) + blk(-0.55, -0.45, 0.25, 0.9, '#AEB6C2', 0.02) + blk(0.3, -0.45, 0.25, 0.9, '#AEB6C2', 0.02) + blk(-0.1, 0.1, 0.2, 0.35, '#8A5A33', 0.08);
+      o += P(`M${f(r * 0.42)} ${f(-r * 0.45)} L${f(r * 0.42)} ${f(-r * 0.75)}`, ln(sw * 1.3)) + P(`M${f(r * 0.42)} ${f(-r * 0.75)} L${f(r * 0.62)} ${f(-r * 0.67)} L${f(r * 0.42)} ${f(-r * 0.59)} Z`, { fill: g('#FF5A5A') });
+      return o;
+    case 'pet':
+      o += seg(r * 0.45, '#FF9FC8') + blk(-0.42, -0.35, 0.84, 0.72, '#FF9F1C', 0.18) + blk(-0.42, -0.55, 0.22, 0.26, '#FF9F1C', 0.06) + blk(0.2, -0.55, 0.22, 0.26, '#FF9F1C', 0.06);
+      o += Ci(-r * 0.17, -r * 0.05, r * 0.08, { fill: '#151515' }) + Ci(r * 0.17, -r * 0.05, r * 0.08, { fill: '#151515' }) + P(`M${f(-r * 0.1)} ${f(r * 0.14)} Q0 ${f(r * 0.22)} ${f(r * 0.1)} ${f(r * 0.14)}`, ln(sw * 1.2));
+      return o;
+    default:
+      return o + seg(r * 0.3, '#3BA7E0');
   }
-  // water/ground + island
-  o += P(`M${-r} ${r * 0.3} L${r} ${r * 0.3} L${r} ${r} L${-r} ${r} Z`, { fill: g(kind === 'race' ? '#5A5466' : '#3BA7E0') });
-  if (kind === 'island') {
-    o += Ell(0, r * 0.32, r * 0.62, r * 0.18, ol(g('#46D17A'), r * 0.04)) + R(-r * 0.05, -r * 0.3, r * 0.1, r * 0.55, r * 0.03, { fill: g('#8A5A33') }) + Ci(0, -r * 0.36, r * 0.24, ol(g('#2FAE6E'), r * 0.04));
-    for (const [bx, by, br] of [[-0.55, -0.35, 0.16], [0.5, -0.2, 0.13], [0.3, -0.62, 0.1]]) o += Ci(bx * r, by * r, br * r, { fill: '#FFFFFF', opacity: 0.2, stroke: g('#C9FBFF'), 'stroke-width': r * 0.025 }) + Ci(bx * r, by * r + br * r * 0.3, br * r * 0.45, { fill: g('#46D17A') });
-  } else if (kind === 'obby') {
-    const cs = ['#FF5A5A', '#FFB000', '#3BD16F', '#3B8BFF'];
-    cs.forEach((c, i) => { o += R(-r * 0.7 + i * r * 0.36, r * 0.15 - i * r * 0.2, r * 0.28, r * 0.12, r * 0.03, ol(g(c), r * 0.03)); });
-  } else if (kind === 'city') {
-    for (let i = 0; i < 4; i++) o += R(-r * 0.62 + i * r * 0.32, -r * (0.1 + rnd(i, 9) * 0.4), r * 0.26, r * 0.8, r * 0.03, { fill: g(['#FFB4C8', '#FFE38A', '#C9D6FF', '#B9F0D2'][i]), stroke: LINE, 'stroke-width': r * 0.025 });
-  } else if (kind === 'tycoon') {
-    o += R(-r * 0.4, -r * 0.2, r * 0.8, r * 0.5, r * 0.04, ol(g('#FFD21F'), r * 0.03)) + R(-r * 0.15, -r * 0.5, r * 0.3, r * 0.32, r * 0.04, ol(g('#E8504A'), r * 0.03));
-  } else if (kind === 'race') {
-    o += R(-r, r * 0.3, r * 2, r * 0.06, 0, { fill: g('#FFFFFF') }) + R(-r * 0.4, r * 0.05, r * 0.5, r * 0.22, r * 0.06, ol(g('#E8504A'), r * 0.03));
-  } else if (kind === 'farm') {
-    o += Ell(0, r * 0.35, r * 0.9, r * 0.25, { fill: g('#7BCB3A') }) + R(-r * 0.35, -r * 0.15, r * 0.4, r * 0.4, r * 0.03, ol(g('#E8504A'), r * 0.03)) + P(`M${-r * 0.4} ${-r * 0.15} L${-r * 0.15} ${-r * 0.4} L${r * 0.1} ${-r * 0.15} Z`, ol(g('#FFFFFF'), r * 0.03));
-  }
-  return o;
 }
 function gameBubble(x, y, r, t, opts = {}) {
   const { label = '', grey = 0, glow = 0, kind = 'island', crack = grey > 0.5 ? 1 : 0, seed = 0, bob = true } = opts;
   const by = bob ? Math.sin(t * 1.6 + seed * 1.7) * r * 0.06 : 0;
+  const gr = grey > 0.5;
   let o = '';
-  if (glow > 0) o += Ci(0, 0, r * 1.7, { fill: `url(#${grey > 0.5 ? 'farmGlowWhite' : 'farmGlowBlue'})`, opacity: f(glow * (0.7 + 0.3 * Math.sin(t * 3 + seed))) });
-  const id = S.uid('farmBb');
-  o += S.clipDef(id, Ci(0, 0, r * 0.97)) + G(bubbleWorld(kind, r, t + seed, grey > 0.5), null, { 'clip-path': `url(#${id})` });
-  o += Ci(0, 0, r, { fill: `url(#${grey > 0.5 ? 'farmBubbleGrey' : 'farmBubble'})`, stroke: grey > 0.5 ? '#6A7080' : '#151515', 'stroke-width': Math.max(3, r * 0.06) });
-  o += Ci(0, 0, r * 0.9, { fill: 'none', stroke: grey > 0.5 ? '#B4BBC8' : '#C9FBFF', 'stroke-width': Math.max(2, r * 0.04), opacity: 0.8 });
-  o += P(`M${f(-r * 0.62)} ${f(-r * 0.3)} Q${f(-r * 0.5)} ${f(-r * 0.7)} ${f(-r * 0.08)} ${f(-r * 0.78)}`, ln(Math.max(3, r * 0.1), '#FFFFFF', 0.85)) + Ci(r * 0.48, -r * 0.5, r * 0.07, { fill: '#FFFFFF', opacity: 0.8 });
+  if (glow > 0) o += Ci(0, 0, r * 1.7, { fill: `url(#${gr ? 'farmGlowWhite' : 'farmGlowBlue'})`, opacity: f(glow * (0.7 + 0.3 * Math.sin(t * 3 + seed))) });
+  o += bubbleWorld(kind, r, t + seed, gr);
+  o += Ci(0, 0, r, { fill: `url(#${gr ? 'farmBubbleGrey' : 'farmBubble'})`, stroke: gr ? '#6A7080' : '#151515', 'stroke-width': Math.max(3, r * 0.06) });
+  o += Ci(0, 0, r * 0.9, { fill: 'none', stroke: gr ? '#B4BBC8' : '#C9FBFF', 'stroke-width': Math.max(2, r * 0.04), 'stroke-opacity': 0.8 });
+  o += P(`M${f(-r * 0.62)} ${f(-r * 0.3)} Q${f(-r * 0.5)} ${f(-r * 0.7)} ${f(-r * 0.08)} ${f(-r * 0.78)}`, ln(Math.max(3, r * 0.1), '#FFFFFF', 0.85)) + Ci(r * 0.48, -r * 0.5, r * 0.07, { fill: '#FFFFFF', 'fill-opacity': 0.8 });
   if (crack > 0) o += P(`M${f(r * 0.15)} ${f(-r)} L${f(r * 0.02)} ${f(-r * 0.45)} L${f(r * 0.32)} ${f(-r * 0.2)} L${f(r * 0.1)} ${f(r * 0.25)} M${f(r * 0.02)} ${f(-r * 0.45)} L${f(-r * 0.3)} ${f(-r * 0.3)}`, { ...ln(Math.max(3, r * 0.06), '#151515'), opacity: f(crack) });
   let out = G(o, `translate(${f(x)} ${f(y + by)})`);
   if (label) {
-    const w = Math.max(r * 2.2, label.length * r * 0.13 + r * 0.4), fs = r * 0.24;
-    out += R(x - w / 2, y + r * 1.12, w, r * 0.42, r * 0.1, ol(grey > 0.5 ? '#C8CED8' : '#FFF4DC', Math.max(3, r * 0.05))) + TF(label, x, y + r * 1.42, fs, grey > 0.5 ? '#5A6070' : '#3A2A20');
+    const fs = Math.max(16, r * 0.3), w = label.length * fs * 0.52 + fs * 1.4;
+    out += R(x - w / 2, y + r * 1.12, w, fs * 1.6, fs * 0.4, ol(gr ? '#C8CED8' : '#FFF4DC', Math.max(3, r * 0.05))) + TF(label, x, y + r * 1.12 + fs * 1.15, fs, gr ? '#5A6070' : '#3A2A20');
   }
   return out;
 }
 
 // ---------------------------------------------------------------- archive(t, cam, opts)
 // Floor 3: an endless hall of shelves where every game floats in a bubble.
-// view 'side' (default, pans): floor FLOOR.archive = 900; shelf tiers (bubbles sit on) y 300 / 500 / 700.
-//   ARCHIVE.juno = {x: 1180, y: 690, r: 46} is Juno's tiny 'Bubble Island — 3 visits' bubble on the bottom shelf (k 1).
+// view 'side' (default, pans): floor FLOOR.archive = 900; shelf planks (bubbles sit on) ARCHIVE.tiers y 330 / 560 / 790.
+//   ARCHIVE.juno = {x: 990, y: 738, r: 44} is Juno's tiny 'Bubble Island — 3 visits' bubble on the bottom shelf (k 1).
 //   opts.greyFrom 0..1: world x from which bubbles are grey and cracked = lerp(ARCHIVE.x0, ARCHIVE.x1, greyFrom)
 //   (default 1 = none); opts.greyX overrides in px. Cracked grey bubbles float up into the dark at the far end.
 // view 'deep': one-point perspective down the endless hall (vanishing point 960, 430); greyFrom = depth fraction
 //   beyond which bubbles are grey; a loading wheel spins in the darkness at the end. Floor at the near edge ≈ 1000.
 // opts: glow 0..1 (default .8), dist, juno (default true: draw Juno's labelled bubble), label (override)
-const ARCHIVE = { x0: -800, x1: 3600, tiers: [300, 500, 700], juno: { x: 1180, y: 640, r: 46 } };
+const ARCHIVE = { x0: -800, x1: 3600, tiers: [330, 560, 790], juno: { x: 990, y: 738, r: 44 } };
 function archive(t, cam, opts = {}) {
   if (opts.view === 'deep') return archiveDeep(t, cam, opts);
   const { greyFrom = 1, glow = 0.8, dist = 0, juno = true, label = 'Bubble Island — 3 visits' } = opts;
   const greyX = opts.greyX ?? lerp(ARCHIVE.x0, ARCHIVE.x1, greyFrom);
   let bg = fullRect(cam, 0, { fill: '#05081A' });
-  // floating motes
   let mo = '';
-  for (let i = 0; i < 30; i++) mo += Ci(rnd(i, 111) * 2200 - 140, rnd(i, 112) * 900 + Math.sin(t * 0.5 + i) * 20, 2 + rnd(i, 113) * 3, op('#9FF3FF', 0.3 + 0.4 * Math.abs(Math.sin(t + i))));
+  for (let i = 0; i < 26; i++) mo += Ci(rnd(i, 111) * 2200 - 140, rnd(i, 112) * 900 + Math.sin(t * 0.5 + i) * 20, 2 + rnd(i, 113) * 3, { fill: '#9FF3FF', 'fill-opacity': f(0.3 + 0.4 * Math.abs(Math.sin(t + i))) });
   bg += V(cam, mo, 0.05);
-  // far + mid shelf walls (pattern tiles, fading up into the dark)
-  const shelfWall = (k, y0, y1, pat, patGrey, gx) => {
-    const v = vis(cam, k), gxl = gx; // gx in layer x
+  // a tier of shelved bubbles: tile band aligned so the plank sits at y; split grey/colour at gx (layer x)
+  const tier = (cam2, k, y, gx, big, alt = false) => {
+    const v = vis(cam2, k), h = big ? 200 : 100, left = v.x0 - 300, right = v.x1 + 300, split = clamp(gx, left, right);
+    const pat = big ? (alt ? 'farmShelfB' : 'farmShelf') : 'farmShelfSm';
     let o = '';
-    const left = v.x0 - 300, right = v.x1 + 300;
-    const split = clamp(gxl, left, right);
-    if (split > left) o += G(R(left, y0, split - left, y1 - y0, 0, { fill: `url(#${pat})` }), null);
-    if (right > split) o += R(split, y0, right - split, y1 - y0, 0, { fill: `url(#${patGrey})` });
+    if (split > left) o += G(R(left, 0, split - left, h, 0, { fill: `url(#${pat})` }), `translate(0 ${f(y - h * 0.88)})`);
+    if (right > split) o += G(R(split, 0, right - split, h, 0, { fill: `url(#${big ? 'farmShelfGrey' : 'farmShelfSmGrey'})` }), `translate(0 ${f(y - h * 0.88)})`);
     return o;
   };
-  bg += V(cam, shelfWall(0.25, -200, 860, 'farmShelfSm', 'farmShelfSmGrey', greyX * 0.25 + 960 * 0.75 - 0) + band(cam, 0.25, -200, 500, { fill: 'url(#farmFadeUp)' }) + band(cam, 0.25, 760, 1400, { fill: '#05081A' }) + band(cam, 0.25, -400, 1400, { fill: '#05081A', opacity: 0.5 }), 0.25);
-  bg += V(cam, shelfWall(0.55, -400, 800, 'farmShelf', 'farmShelfGrey', greyX * 0.55 + 960 * 0.45) + band(cam, 0.55, -400, 300, { fill: 'url(#farmFadeUp)' }) + band(cam, 0.55, -400, 1400, { fill: '#05081A', opacity: 0.35 }) + band(cam, 0.55, 790, 1400, { fill: '#070B22' }), 0.55);
-  // main shelving unit (k 1)
-  let m = '';
-  const v1 = vis(cam, 1);
-  const left = v1.x0 - 300, right = v1.x1 + 300, split = clamp(greyX, left, right);
-  for (const ty of [-100, 100, ...ARCHIVE.tiers]) {
-    if (split > left) m += G(R(0, 0, split - left, 190, 0, { fill: 'url(#farmShelf)' }), `translate(${f(left)} ${ty - 160})`);
-    if (right > split) m += G(R(0, 0, right - split, 190, 0, { fill: 'url(#farmShelfGrey)' }), `translate(${f(split)} ${ty - 160})`);
-  }
-  m += band(cam, 1, -400, 160, { fill: 'url(#farmFadeUp)' });
-  m += strip(cam, 1, dist, 660, (i, x) => R(x, -300, 26, 1200, 6, ol('#3A2C5A', 5)) + R(x + 4, -300, 6, 1200, 3, { fill: '#8E6BD8', opacity: 0.6 }) + R(x + 80, 660, 160, 34, 6, ol('#FFF4DC', 4)) + TF(['OBBY · A–Z', 'TYCOONS', 'SIMULATORS', 'ISLANDS', 'RACING', 'HANGOUTS'][((i % 6) + 6) % 6], x + 160, 684, 18, '#3A2A20'));
-  // individual bubbles at eye level
-  m += strip(cam, 1, dist, 660, (i, x) => {
-    let o = '';
-    for (let j = 0; j < 2; j++) {
-      const bx = x + 200 + j * 280, by = j ? 440 : 250, g = bx > greyX ? 1 : 0;
-      o += gameBubble(bx, by, 58, t, { kind: BUBBLE_KINDS[(((i * 2 + j) % 7) + 7) % 7], grey: g, glow: g ? 0 : glow * 0.6, seed: i * 2 + j });
-    }
-    return o;
-  });
-  if (juno) m += gameBubble(ARCHIVE.juno.x, ARCHIVE.juno.y, ARCHIVE.juno.r, t, { label, kind: 'island', glow: ARCHIVE.juno.x > greyX ? 0 : glow, grey: ARCHIVE.juno.x > greyX ? 1 : 0, seed: 3 });
+  const gl = (k) => greyX * k + (1 - k) * 960;
+  // far shelves (k .25): many small tiers climbing into the dark
+  let far = '';
+  for (let i = 0; i < 7; i++) far += tier(cam, 0.25, 760 - i * 120, gl(0.25), false);
+  bg += V(cam, far + band(cam, 0.25, -400, 1400, { fill: '#05081A', 'fill-opacity': 0.55 }) + band(cam, 0.25, -400, 500, { fill: 'url(#farmFadeUp)' }) + band(cam, 0.25, 770, 1400, { fill: '#05081A' }), 0.25);
+  // mid shelves (k .55)
+  let md = '';
+  for (let i = 0; i < 4; i++) md += tier(cam, 0.55, 780 - i * 230, gl(0.55), true, i % 2 === 1);
+  bg += V(cam, md + band(cam, 0.55, -400, 1400, { fill: '#070B22', 'fill-opacity': 0.45 }) + band(cam, 0.55, -400, 260, { fill: 'url(#farmFadeUp)' }) + band(cam, 0.55, 800, 1400, { fill: '#070B22' }) + strip(cam, 0.55, dist, 880, (i, x) => R(x, -300, 18, 1100, 4, { fill: '#2A2050' })), 0.55);
+  // main shelving unit (k 1): planks at ARCHIVE.tiers
+  let m = band(cam, 1, 120, 820, { fill: '#0B0A26' });
+  ARCHIVE.tiers.forEach((ty, i) => { m += tier(cam, 1, ty, greyX, true, i % 2 === 0) + band(cam, 1, ty + 24, ty + 34, { fill: '#1A1440' }); });
+  m += band(cam, 1, -400, 250, { fill: 'url(#farmFadeUp)' });
+  m += strip(cam, 1, dist, 660, (i, x) => R(x, -300, 26, 1130, 6, ol('#3A2C5A', 5)) + R(x + 5, -300, 6, 1130, 3, { fill: '#8E6BD8', 'fill-opacity': 0.6 }) + R(x - 74, 726, 174, 34, 8, ol('#FFF4DC', 4)) + TF(['OBBIES A–Z', 'TYCOONS', 'SIMULATORS', 'ISLANDS', 'RACING', 'HANGOUTS'][((i % 6) + 6) % 6], x + 13, 750, 19, '#3A2A20'));
   // floor
-  m += band(cam, 1, FLOOR.archive, 1600, { fill: '#0E1238' }) + band(cam, 1, FLOOR.archive, FLOOR.archive + 8, { fill: '#8E6BD8', opacity: 0.6 });
-  m += band(cam, 1, FLOOR.archive + 8, 1100, { fill: 'url(#farmReflect)', opacity: 0.35 });
-  m += band(cam, 1, 820, FLOOR.archive, { fill: '#1A1440' }) + band(cam, 1, 812, 826, { fill: '#3A2C5A' });
+  m += band(cam, 1, 820, FLOOR.archive, { fill: '#160F38' }) + band(cam, 1, 812, 826, { fill: '#3A2C5A' });
+  m += band(cam, 1, FLOOR.archive, 1600, { fill: '#0E1238' }) + band(cam, 1, FLOOR.archive, FLOOR.archive + 8, { fill: '#8E6BD8', 'fill-opacity': 0.6 }) + band(cam, 1, FLOOR.archive + 8, 1150, { fill: 'url(#farmReflect)', opacity: 0.3 });
+  if (juno) {
+    const J = ARCHIVE.juno, g = J.x > greyX ? 1 : 0;
+    if (!g) m += P(`M${J.x - 50} -100 L${J.x + 50} -100 L${J.x + 150} ${J.y + J.r} L${J.x - 150} ${J.y + J.r} Z`, { fill: 'url(#farmConeDown)', opacity: f(0.35 * glow) });
+    m += Ell(J.x, J.y + J.r + 6, 54, 12, ol('#E0B84A', 4)) + gameBubble(J.x, J.y, J.r, t, { kind: 'island', glow: g ? 0 : Math.max(glow, 0.9), grey: g, seed: 3, bob: false });
+    if (label) { const w = label.length * 13 + 40; m += R(J.x - w / 2, J.y + J.r + 22, w, 40, 10, ol(g ? '#C8CED8' : '#FFF4DC', 4)) + TF(label, J.x, J.y + J.r + 50, 24, g ? '#5A6070' : '#3A2A20'); }
+  }
   // greying end: cracked bubbles drifting up into a loading wheel in the dark
+  const v1 = vis(cam, 1);
   let gr = '';
   if (greyX < v1.x1 + 400) {
+    const gx0 = Math.max(greyX, v1.x0 - 200);
+    gr += R(gx0, -400, v1.x1 - gx0 + 400, 1300, 0, { fill: '#9AA3B2', 'fill-opacity': 0.08 });
     for (let i = 0; i < 6; i++) {
       const a = ((t * 0.08 + i / 6) % 1);
-      const bx = Math.max(greyX, v1.x0) + 120 + rnd(i, 121) * 700 + a * 200, by = 700 - a * 900;
-      gr += G(gameBubble(bx, by, 40 + rnd(i, 122) * 20, t, { grey: 1, kind: BUBBLE_KINDS[i % 7], seed: i, bob: false }), null, { opacity: f(1 - a) });
+      const bx = gx0 + 140 + rnd(i, 121) * 700 + a * 220, by = 760 - a * 960;
+      gr += G(gameBubble(bx, by, 36 + rnd(i, 122) * 22, t, { grey: 1, kind: BUBBLE_KINDS[i % 7], seed: i, bob: false }), `rotate(${f(a * 40 * (i % 2 ? 1 : -1))} ${f(bx)} ${f(by)})`, { opacity: f(1 - a * a) });
     }
-    const wx = Math.max(greyX + 500, v1.x1 - 300);
-    gr += Ci(wx, 120, 170, { fill: '#000', opacity: 0.6 }) + K.loadingWheel(wx, 120, 90, t, '#9AA3B2', 10, 22, 0.8);
+    const wx = Math.max(greyX + 520, v1.x1 - 320);
+    gr += Ci(wx, 110, 190, { fill: '#000', 'fill-opacity': 0.55 }) + K.loadingWheel(wx, 110, 92, t, '#9AA3B2', 10, 22, 0.8);
   }
   const mid = V(cam, m + gr, 1);
   // foreground drifting bubbles
@@ -1721,50 +1746,58 @@ function archive(t, cam, opts = {}) {
 }
 function archiveDeep(t, cam, opts = {}) {
   const { greyFrom = 1, glow = 0.8 } = opts;
-  const vx = 960, vy = 430, N = 16;
+  const vx = 960, vy = 430, N = 14, WALL = 1150, EYE = 640;
+  const proj = (X, Y, z) => [vx + X / z, vy + (EYE - Y) / z];
+  const quad = (pts, a) => P(poly(pts), a);
   let o = R(-400, -400, 2720, 1900, 0, { fill: '#05081A' });
   // floor + aisle runner
-  o += P(`M${vx} ${vy} L2400 1300 L-480 1300 Z`, { fill: '#0E1238' }) + P(`M${vx - 4} ${vy} L${vx + 4} ${vy} L1180 1300 L740 1300 Z`, { fill: '#8E6BD8', opacity: 0.35 });
-  o += P(`M${vx} ${vy} L-480 1300 M${vx} ${vy} L2400 1300`, ln(6, '#3A2C5A'));
-  // the dark end with the loading wheel
-  if (greyFrom < 1) o += Ci(vx, vy, 120, { fill: '#000' }) + K.loadingWheel(vx, vy - 10, 40, t, '#9AA3B2', 10, 9, 0.8);
-  // shelves on both walls, far → near
-  const proj = (X, Y, z) => [vx + X / z, vy + (640 - Y) / z];
+  o += P(`M${vx} ${vy} L2400 1300 L-480 1300 Z`, { fill: '#0E1238' }) + P(`M${vx - 4} ${vy} L${vx + 4} ${vy} L1180 1300 L740 1300 Z`, { fill: '#8E6BD8', 'fill-opacity': 0.35 });
+  // side walls (back panels of the shelving)
+  for (const side of [-1, 1]) {
+    const [a1, b1] = proj(side * (WALL + 260), 1500, 0.9), [a2, b2] = proj(side * (WALL + 260), 1500, 60), [a3, b3] = proj(side * (WALL + 260), -60, 60), [a4, b4] = proj(side * (WALL + 260), -60, 0.9);
+    o += quad([[a1, b1], [a2, b2], [a3, b3], [a4, b4]], { fill: '#0B0A26' });
+  }
+  // the dark end: grey haze + loading wheel
+  if (greyFrom < 1) o += Ci(vx, vy, 260, { fill: 'url(#farmGlowWhite)', opacity: f(0.18 * (1 - greyFrom)) }) + Ci(vx, vy, 46, { fill: '#000' }) + K.loadingWheel(vx, vy, 30, t, '#C8CED8', 10, 7, 0.8);
+  const TIERS = [120, 470, 820];
   for (let zi = N; zi >= 1; zi--) {
-    const z = zi * 0.9 - (t * 0.05) % 0.9 * 0;
-    const dep = zi / N;
+    const z = 0.6 + (zi - 1) * 0.9, z2 = z + 0.9;
+    const dep = (zi - 1) / (N - 1);
     const isGrey = dep > greyFrom;
-    const fade = clamp(1 - dep * 0.9, 0.08, 1);
+    const fade = clamp(1.1 - dep, 0.12, 1);
     for (const side of [-1, 1]) {
-      const X = side * 1150;
-      // shelf planks (tier lines) between this bay and the next one
-      for (const Y of [140, 470, 800]) {
-        const [x1, y1] = proj(X, Y, z), [x2, y2] = proj(X, Y, z + 0.9);
-        o += P(`M${f(x1)} ${f(y1)} L${f(x2)} ${f(y2)}`, ln(Math.max(2, 18 / z), isGrey ? '#4A4F5E' : '#5A3A9A', fade));
+      const X = side * WALL, Xb = side * (WALL + 260);
+      // planks: top face quad between depth z and z2, from the wall (Xb) to the front edge (X)
+      for (const Y of TIERS) {
+        const p1 = proj(X, Y, z), p2 = proj(X, Y, z2), p3 = proj(Xb, Y, z2), p4 = proj(Xb, Y, z);
+        const q1 = proj(X, Y - 26, z), q2 = proj(X, Y - 26, z2);
+        o += quad([p1, p2, q2, q1], { fill: isGrey ? '#3A3F4E' : '#5A3A9A', 'fill-opacity': f(fade) });
+        o += quad([p1, p2, p3, p4], { fill: isGrey ? '#2A2E3A' : '#3A2770', 'fill-opacity': f(fade) });
       }
-      const [px, py0] = proj(X, 1300, z), [, py1] = proj(X, -100, z);
-      o += P(`M${f(px)} ${f(py0)} L${f(px)} ${f(py1)}`, ln(Math.max(2, 26 / z), '#3A2C5A', fade));
-      for (const [j, Y] of [140, 470, 800].entries()) {
-        const [bx, by] = proj(X + side * -170, Y + 160, z + 0.45);
-        const r = 150 / (z + 0.45);
+      const [px, py0] = proj(X, 1300, z), [, py1] = proj(X, -60, z);
+      o += P(`M${f(px)} ${f(py0)} L${f(px)} ${f(py1)}`, ln(Math.max(2, 26 / z), '#2A2050', fade));
+      // bubbles sitting on each plank
+      for (const [j, Y] of TIERS.entries()) {
+        const r = 125 / (z + 0.45);
+        const [bx, by] = proj(X + side * 130, Y + 125, z + 0.45);
         const kind = BUBBLE_KINDS[(zi * 3 + j + (side > 0 ? 2 : 0)) % 7];
-        if (z < 2.2) o += G(gameBubble(bx, by, r, t, { kind, grey: isGrey ? 1 : 0, glow: isGrey ? 0 : glow * 0.7, seed: zi * 7 + j }), null, { opacity: f(fade) });
+        if (z < 2.6) o += G(gameBubble(bx, by, r, t, { kind, grey: isGrey ? 1 : 0, glow: isGrey ? 0 : glow * 0.7, seed: zi * 7 + j }), null, fade < 0.99 ? { opacity: f(fade) } : {});
         else {
           const c = isGrey ? '#8A93A6' : ['#46D17A', '#FF6FB5', '#5CB8FF', '#FFD84D', '#B06BFF'][(zi + j) % 5];
-          if (!isGrey && glow > 0) o += Ci(bx, by, r * 1.6, { fill: 'url(#farmGlowBlue)', opacity: f(glow * fade * 0.6) });
-          o += Ci(bx, by, r, { fill: c, opacity: f(fade * 0.9), stroke: isGrey ? '#5A6070' : '#C9FBFF', 'stroke-width': Math.max(1.5, r * 0.08) }) + Ci(bx - r * 0.35, by - r * 0.35, r * 0.22, op('#FFFFFF', fade * 0.7));
+          if (!isGrey && glow > 0 && zi % 2 === 0) o += Ci(bx, by, r * 1.7, { fill: 'url(#farmGlowBlue)', opacity: f(glow * fade * 0.5) });
+          o += Ci(bx, by, r, { fill: '#1D3C7A', 'fill-opacity': f(fade), stroke: isGrey ? '#5A6070' : '#C9FBFF', 'stroke-width': Math.max(1.5, r * 0.08), 'stroke-opacity': f(fade) }) + Ci(bx, by + r * 0.25, r * 0.5, { fill: c, 'fill-opacity': f(fade * 0.9) }) + Ci(bx - r * 0.35, by - r * 0.38, r * 0.2, { fill: '#FFFFFF', 'fill-opacity': f(fade * 0.7) });
           if (isGrey) o += P(`M${f(bx)} ${f(by - r)} L${f(bx - r * 0.2)} ${f(by - r * 0.3)} L${f(bx + r * 0.2)} ${f(by)}`, ln(Math.max(1.5, r * 0.08), '#2A2F3A', fade));
         }
       }
     }
   }
   // grey bubbles drifting into the dark
-  if (greyFrom < 1) for (let i = 0; i < 5; i++) {
-    const a = ((t * 0.1 + i / 5) % 1), sx = (i % 2 ? 1 : -1) * (300 + rnd(i, 141) * 300);
-    const x = lerp(vx + sx, vx, a), y = lerp(vy - 200 + rnd(i, 142) * 300, vy, a), r = lerp(40, 4, a);
-    o += Ci(x, y, r, { fill: '#8A93A6', stroke: '#5A6070', 'stroke-width': 3, opacity: f(1 - a) });
+  if (greyFrom < 1) for (let i = 0; i < 6; i++) {
+    const a = ((t * 0.1 + i / 6) % 1), sx = (i % 2 ? 1 : -1) * (260 + rnd(i, 141) * 320);
+    const x = lerp(vx + sx, vx, a * a), y = lerp(vy - 240 + rnd(i, 142) * 360, vy, a * a), r = lerp(36, 4, a);
+    o += Ci(x, y, r, { fill: '#8A93A6', stroke: '#5A6070', 'stroke-width': 3, opacity: f(1 - a) }) + P(`M${f(x)} ${f(y - r)} L${f(x - r * 0.2)} ${f(y - r * 0.2)} L${f(x + r * 0.25)} ${f(y + r * 0.1)}`, ln(2.5, '#2A2F3A', 1 - a));
   }
-  o += R(-400, -400, 2720, 600, 0, { fill: 'url(#farmFadeUp)' });
+  o += R(-400, -400, 2720, 560, 0, { fill: 'url(#farmFadeUp)' });
   return layers(V(cam, o, 1), '', '');
 }
 
@@ -1818,7 +1851,8 @@ function serviceElevator(t, opts = {}) {
   // signs + extinguisher + mop bucket on the back wall
   bg += R(330, 300, 250, 120, 14, ol('#FFC21F', 6)) + T('DEAD END', 455, 372, 46, '#1D1D24') + TF('(sorry)', 455, 404, 22, '#1D1D24');
   bg += R(420, 600, 60, 150, 26, ol('#E8504A', 6)) + R(436, 560, 28, 50, 6, ol('#3A3F55', 4)) + P('M464 580 Q500 590 494 640', ln(6));
-  bg += P('M500 930 L520 830 L620 830 L640 930 Z', ol('#FFD21F', 6)) + P('M520 830 Q570 790 620 830', ln(5)) + P('M600 940 L700 500', ln(14)) + P('M600 940 L700 500', ln(8, '#D59A5C')) + mopStrings(700, 500, t, 4, -50, 3, 1);
+  bg += P('M560 520 L640 900', ln(14)) + P('M560 520 L640 900', ln(8, '#D59A5C')) + R(612, 880, 64, 26, 8, ol('#8E99AC', 4)) + mopStrings(616, 902, t, 7, 30, 3, 1);
+  bg += P('M440 930 L460 830 L560 830 L580 930 Z', ol('#FFD21F', 6)) + P('M460 830 Q510 790 560 830', ln(5)) + R(470, 860, 80, 26, 6, { fill: '#FFFFFF', 'fill-opacity': 0.35 });
   // elevator car interior (visible when the doors open)
   bg += R(x0, top, x1 - x0, LIFT.floor - top, 0, { fill: 'url(#farmWoodPanel)' }) + R(x0, top, x1 - x0, 60, 0, { fill: '#FFF4C8', opacity: 0.9 }) + R(x0, top + 360, x1 - x0, 18, 6, ol('#E0B84A', 4)) + R(x0, LIFT.floor - 40, x1 - x0, 40, 0, { fill: '#5A4A40' });
   bg += P(`M${x0} ${top + 60} L${x0 + 160} ${LIFT.floor} M${x0 + 80} ${top + 60} L${x0 + 260} ${LIFT.floor}`, ln(30, '#FFFFFF', 0.06));
@@ -1862,11 +1896,16 @@ function elevatorInside(t, opts = {}) {
   // speaker grille + notes
   o += Ci(1450, 70, 50, ol('#C9C1B4', 5));
   for (let i = 0; i < 4; i++) o += P(`M1418 ${52 + i * 12} L1482 ${52 + i * 12}`, ln(4, '#8E8678'));
+  let notes = '';
   if (muzak > 0) for (let i = 0; i < 6; i++) {
-    const a = ((t * 0.25 + i / 6) % 1);
-    const x = 1450 - a * 900 + Math.sin(t * 2 + i) * 40, y = 120 + a * 260 + Math.sin(t * 3 + i * 2) * 30;
-    const note = i % 2 ? 'M0 0 L0 -40 L24 -48 L24 -8' : 'M0 0 L0 -44';
-    o += G(P(note, ln(6)) + Ell(-8, 0, 12, 9, { fill: '#151515', transform: 'rotate(-20 -8 0)' }) + (i % 2 ? Ell(16, -8, 12, 9, { fill: '#151515', transform: 'rotate(-20 16 -8)' }) : ''), `translate(${f(x)} ${f(y)}) rotate(${f(Math.sin(t * 2 + i) * 15)})`, { opacity: f(muzak * Math.sin(a * Math.PI)) });
+    const a = ((t * 0.22 + i / 6) % 1);
+    const x = 1420 - a * 1100 + Math.sin(t * 2 + i) * 50, y = 150 + a * 300 + Math.sin(t * 3 + i * 2) * 40;
+    const col = ['#FF6FB5', '#5CB8FF', '#FFD84D', '#46D17A', '#B06BFF', '#FF9F1C'][i];
+    const dbl = i % 2 === 1;
+    const stem = dbl ? 'M0 0 L0 -54 L34 -64 L34 -10' : 'M0 0 L0 -58 Q14 -46 22 -30';
+    let n = P(stem, ln(13)) + P(stem, ln(6, col)) + Ell(-10, 0, 16, 12, { fill: col, stroke: LINE, 'stroke-width': 5, transform: 'rotate(-20 -10 0)' });
+    if (dbl) n += Ell(24, -10, 16, 12, { fill: col, stroke: LINE, 'stroke-width': 5, transform: 'rotate(-20 24 -10)' });
+    notes += G(n, `translate(${f(x)} ${f(y)}) rotate(${f(Math.sin(t * 2 + i) * 15)}) scale(${f(0.8 + 0.3 * Math.sin(a * Math.PI))})`, { opacity: f(muzak * clamp(Math.sin(a * Math.PI) * 1.6, 0, 1)) });
   }
   // floor display + DING bell on the back wall
   o += R(860, 160, 200, 54, 10, ol('#22252F', 5)) + T(floor, 960, 203, 42, '#FF8A3D');
@@ -1874,7 +1913,9 @@ function elevatorInside(t, opts = {}) {
   const pan = LIFTIN.panel;
   o += G(liftPanel(t, pressed, pan), `translate(${pan.x0} 0) skewY(-30) translate(${-pan.x0} 0) translate(0 ${f(0)})`);
   o += R(380, 150, 1160, 670, 0, { fill: 'none', stroke: LINE, 'stroke-width': 7 });
-  return layers(V(cam, G(o, `translate(${f(sh)} 0)`), 1), '', '');
+  // the DING bell above the mirror
+  o += G(P('M-26 14 Q-26 -22 0 -24 Q26 -22 26 14 Z', ol('#FFD21F', 5)) + R(-32, 12, 64, 10, 5, ol('#E0B84A', 4)) + Ci(0, -28, 6, ol('#FFD21F', 3)), 'translate(1180 194)');
+  return layers(V(cam, G(o, `translate(${f(sh)} 0)`), 1), '', notes ? V(cam, notes, 1) : '');
 }
 
 // ---------------------------------------------------------------- world map screen
@@ -1945,22 +1986,23 @@ function core(t, cam, opts = {}) {
   bg += V(cam, Ci(960, 1300, 1100, { fill: green > 0.5 ? 'url(#farmGlowGreen)' : al > 0 ? 'url(#farmGlowRed)' : 'url(#farmGlowBlue)', opacity: f(0.35 + 0.25 * al * Math.sin(t * 5)) }), 0.05);
   // distant structure
   bg += V(cam, strip(cam, 0.12, 0, 520, (i, x) => R(x + 200, -400, 60, 2000, 0, { fill: '#0A0E22' }) + R(x, 300 + rnd(i, 171) * 200, 520, 30, 0, { fill: '#0A0E22' })), 0.12);
-  // the tower (k .35)
+  // the tower (k .35): a cylinder of servers, rings curve with the eye level (≈ y 520)
   let tw = '';
-  const TX = 960, TW = 820, tiers = 18;
+  const TX = 960, TW = 820, tiers = 18, EYE = 520;
   for (let i = 0; i < tiers; i++) {
     const ty = 1500 - i * 170;
     const hgt = (i + 0.5) / tiers;
     const gk = green * clamp((greenWave * 1.15 - hgt) * 5, 0, 1);
     const eaten = towerEaten > 0 && i >= 5 && i <= 7 && rnd(i, 172) < towerEaten;
-    if (eaten) { tw += R(TX - TW / 2, ty - 150, TW, 150, 0, { fill: '#03050C' }); continue; }
-    tw += R(TX - TW / 2, ty - 150, TW, 150, 0, { fill: '#121A3A', stroke: LINE, 'stroke-width': 5 });
-    tw += G(R(0, 0, TW - 60, 110, 0, { fill: 'url(#farmRackFar)' }), `translate(${TX - TW / 2 + 30} ${ty - 130}) scale(1 1)`);
+    if (eaten) { tw += R(TX - TW / 2, ty - 170, TW, 170, 0, { fill: '#03050C' }); continue; }
+    const bend = clamp((EYE - ty) / 900, -1, 1) * 46;
+    tw += P(`M${TX - TW / 2} ${ty} Q${TX} ${f(ty - bend * 2)} ${TX + TW / 2} ${ty} L${TX + TW / 2} ${ty - 170} Q${TX} ${f(ty - 170 - bend * 2)} ${TX - TW / 2} ${ty - 170} Z`, { fill: '#121A3A', stroke: LINE, 'stroke-width': 5 });
+    tw += G(R(0, 0, TW - 80, 120, 0, { fill: 'url(#farmRackFar)' }), `translate(${TX - TW / 2 + 40} ${f(ty - 145 - bend * 0.9)})`);
     const ring = gk > 0.5 ? GREEN : al > 0 ? (Math.floor(t * 6 + i) % 2 ? RED : '#7A1A2A') : CYAN;
-    tw += R(TX - TW / 2 - 20, ty - 14, TW + 40, 14, 6, { fill: ring, stroke: LINE, 'stroke-width': 4 });
-    if (gk > 0.05) tw += R(TX - TW / 2, ty - 150, TW, 150, 0, { fill: GREEN, opacity: f(0.18 * gk) });
+    tw += P(`M${TX - TW / 2 - 20} ${ty - 6} Q${TX} ${f(ty - 6 - bend * 2.1)} ${TX + TW / 2 + 20} ${ty - 6}`, ln(20)) + P(`M${TX - TW / 2 - 20} ${ty - 6} Q${TX} ${f(ty - 6 - bend * 2.1)} ${TX + TW / 2 + 20} ${ty - 6}`, ln(11, ring));
+    if (gk > 0.05) tw += R(TX - TW / 2, ty - 170, TW, 170, 0, { fill: GREEN, 'fill-opacity': f(0.16 * gk) });
   }
-  tw += R(TX - TW / 2, -1600, 160, 3100, 0, { fill: '#000', opacity: 0.35 }) + R(TX + TW / 2 - 160, -1600, 160, 3100, 0, { fill: '#000', opacity: 0.35 }) + R(TX - TW / 2 + 180, -1600, 50, 3100, 0, { fill: '#FFFFFF', opacity: 0.05 });
+  tw += R(TX - TW / 2, -1600, TW, 3100, 0, { fill: 'url(#farmCyl)' });
   tw += R(TX - 1000, -1600, 2000, 1500, 0, { fill: 'url(#farmFadeDown)', transform: `rotate(180 ${TX} -850)` });
   bg += V(cam, tw, 0.35);
   // wall timer (k .45)
@@ -1968,7 +2010,7 @@ function core(t, cam, opts = {}) {
   let tm = P(`M${CORE.timer.x - 300} -400 L${CORE.timer.x - 300} 60 M${CORE.timer.x + 300} -400 L${CORE.timer.x + 300} 60`, ln(12, '#2A3048'));
   tm += R(CORE.timer.x - 440, 50, 880, 250, 30, ol('#14182A', 10)) + R(CORE.timer.x - 410, 76, 820, 198, 18, { fill: '#05070F' });
   tm += Ci(CORE.timer.x, 175, 420, { fill: green > 0.5 ? 'url(#farmGlowGreen)' : 'url(#farmGlowRed)', opacity: f(0.35 * Math.max(al, green)) });
-  tm += T('88:88:88', CORE.timer.x, 250, 180, '#1A0A10', { 'letter-spacing': 6 }) + T(timer, CORE.timer.x, 250, 180, tc, { 'letter-spacing': 6 });
+  tm += T(timer, CORE.timer.x + 6, 256, 180, '#000', { 'letter-spacing': 6, opacity: 0.5 }) + T(timer, CORE.timer.x, 250, 180, tc, { 'letter-spacing': 6 }) + R(CORE.timer.x - 410, 76, 820, 198, 18, { fill: 'url(#farmScan)' });
   bg += V(cam, tm, 0.45);
   // big screens with the world map (k .6)
   if (screens) {
@@ -2000,7 +2042,7 @@ function core(t, cam, opts = {}) {
   // BROADCAST station: sign, pedestal, big button
   const B = CORE.button;
   const lit = clamp(broadcast, 0, 1);
-  m += R(B.x - 200, 230, 400, 210, 24, ol(lit > 0.5 ? '#FFE14D' : '#FFFFFF', 8)) + T('BROADCAST', B.x, 310, 70, '#E8233B') + TF('TO ALL SCREENS', B.x, 370, 40, '#1D1D24') + R(B.x - 150, 392, 300, 30, 8, { fill: lit > 0.5 ? '#FF2E4D' : '#3A2A2A', stroke: LINE, 'stroke-width': 4 }) + TF('ON AIR', B.x, 415, 24, lit > 0.5 ? '#FFFFFF' : '#7A5A5A');
+  m += R(B.x - 250, 220, 500, 230, 24, ol(lit > 0.5 ? '#FFE14D' : '#FFFFFF', 8)) + T('BROADCAST', B.x, 300, 72, '#E8233B') + TF('TO ALL SCREENS', B.x, 362, 42, '#1D1D24') + R(B.x - 110, 386, 220, 44, 12, { fill: lit > 0.5 ? '#FF2E4D' : '#3A2A2A', stroke: LINE, 'stroke-width': 5 }) + TF('ON AIR', B.x, 418, 28, lit > 0.5 ? '#FFFFFF' : '#7A5A5A');
   m += P(`M${B.x - 60} ${B.y} L${B.x - 46} ${B.top + 30} L${B.x + 46} ${B.top + 30} L${B.x + 60} ${B.y} Z`, ol('#3A4260', 7)) + R(B.x - 90, B.top + 10, 180, 36, 12, ol('#5A6478', 6));
   if (lit > 0) m += Ci(B.x, B.top - 10, 260, { fill: 'url(#farmGlowWarm)', opacity: f(lit) }) + K.rays(B.x, B.top - 10, 14, 360, '#FFF4C8', 0.25 * lit, t * 30);
   const press = lit > 0.5 ? 12 : 0;
@@ -2030,7 +2072,7 @@ function core(t, cam, opts = {}) {
     fr += R(W0, CORE.floor + 120, 2440 - W0, 16, 8, ol('#4A5478', 5));
     fg += V(cam, fr, 1);
   }
-  fg += V(cam, strip(cam, 1.6, 0, 2300, (i, x) => R(x + 300, -400, 120, 1900, 0, { fill: '#05060C', stroke: '#1A1A28', 'stroke-width': 6 }) + P(`M${x + 420} 100 Q${x + 700} ${f(400 + Math.sin(t * 0.5 + i) * 20)} ${x + 1000} 60`, ln(40, '#05060C'))), 1.6);
+  fg += V(cam, strip(cam, 1.6, 0, 2600, (i, x) => i > 0 ? '' : R(x + 2040, -400, 130, 1900, 0, { fill: '#05060C', stroke: '#1A1A28', 'stroke-width': 6 }) + P(`M${x + 2170} 40 Q${x + 2420} ${f(300 + Math.sin(t * 0.5 + i) * 20)} ${x + 2640} 0`, ln(40, '#05060C'))), 1.6);
   if (al > 0) fg += fullRect(cam, 1, { fill: RED, opacity: f(al * (0.09 + 0.06 * Math.sin(t * 9))) });
   if (green > 0) fg += fullRect(cam, 1, { fill: GREEN, opacity: f(green * 0.06) });
   if (lowRes > 0) fg += fullRect(cam, 1, { fill: '#8A93A6', opacity: f(lowRes * 0.18) });
