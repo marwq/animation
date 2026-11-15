@@ -43,9 +43,29 @@ SC01 00:01:00 → ~00:00:35 · SC02 none (or 24:00:00 frozen during the rewind) 
 
 ## Drawing characters
 
-`actor(name, t, pose, act)` with `name` one of the rig cast (see `rig/cast.js` exports and `concept/cast_lineup.png`): `juno dex pip grandpa dad mom anchor streamer cashier teacher` (+ `K.draw.kid(i, pose)` / `K.draw.adult(i, pose)` for crowds). Speaking characters lip-sync automatically: juno, dex, pip, grandpa, dad, anchor, streamer, cashier.
+`actor(name, t, pose, act)` with `name` one of the rig cast (look at `concept/cast_lineup.png`, `cast_expressions.png`, `cast_turnaround.png`): speaking characters lip-sync automatically.
 
-Non-rig characters from `rig/lag.js`: `lag({...})` (the villain), `buffer({...})` (tiny Lag at the end), `modbot({...})` (security robots). For the Lag's lip-sync use `K.V.viseme('LAG', t)` as its `mouth`; for Modbot lines use `K.V.talking('MODBOT', t)`; SYSTEM / CASHIER / STREAMER lines may be screens or characters.
+| Key | Look | Height (rig units × pose `s` = px) |
+|---|---|---|
+| `juno` | yellow hard hat with stickers, auburn pigtails, round glasses, denim overalls, red/white stripes, pencil behind her ear | ≈1015; pigtails make her ≈600 wide — leave room in two-shots |
+| `dex` | electric-blue spikes, gamer headset, "PRO 1" jersey, fingerless gloves | ≈1130 |
+| `pip` | tiny (size 0.72), green dino hood with a tail, missing front tooth, light-up shoes | ≈780 |
+| `grandpa` | bald, flat cap, big white beard, mustard cardigan; key ring on the belt (`keys:false` hides it, `keysSwing` deg jingles it, `goldKey:false` after he uses the gold key) | ≈1056 |
+| `dad` | bucket hat, brown beard, glasses, navy polo (`hat:false` = no hat) | ≈1147 |
+| `mom` | dark messy bun with a pencil, teal knit (no lines) | ≈1190 |
+| `anchor` | Brenda: huge blonde bouffant, magenta blazer, pearls | ≈1240 |
+| `streamer` | backwards purple cap, white headset, neon green tee | ≈1080 |
+| `cashier` | red cap, sleepy eyes, red vest | ≈1094 |
+| `teacher` | Mr. Fig: bald with fluffy sides, bow tie, argyle vest (no lines) | ≈980 |
+
+Crowds: `K.draw.kid(i, pose)`, `K.draw.adult(i, pose)`. Props from `rig/cast.js`: `keyRing({x, y, s, swing, gold, n})`, `mop({x, y, s, rot, len, bow})` (body-space, e.g. `props: [{ svg: mop({ x: hand(25, 1)[0] }), layer: 'front' }]`).
+
+Non-rig characters (`require('../rig/lag')` or `K.draw.lag` etc.; they take these params, not rig poses):
+- `lag({ x, y, size, t, mouth, mood, glitch, look, blink })` — centre at (x, y); height ≈ 380 × size px, width ≈ 560 × size (0.4 ≈ 150 px, 3 fills the frame). `mood`: neutral | hungry | angry | laugh | scared. Lip-sync: `mouth: K.V.viseme('LAG', t)` (null = closed). `glitch` 0..1 = RGB split + pixel slices. Use `t` (or `K.stutterT(t)`) to spin its wheels.
+- `buffer({ x, y, s, t, mood, blink, hop, look })` — the shrunk Lag (feet at x, y; ≈120 px tall at s 1; next to kids at s 0.5 use s 0.5). Moods: happy | sad | surprised | sleepy | love | scared.
+- `modbot({ x, y, s, t, face, roll, alarm, lean, talk, flip })` — wheel at (x, y), ≈880 px tall at s 1; `face` '!' | '?' | '#' | 'ok'; `roll` px spins the wheel; `alarm` 0..1 siren + beams; for its lines `talk: K.V.talking('MODBOT', t) ? 1 : 0`, `face: '#'` when "chat-filtered".
+
+Performance: one character ≈ 20 ms at s 0.5, ≈ 35 ms at s 0.85 (mostly the volume filter). Lag size 3 ≈ 19 ms (32 ms with full glitch), Modbot ≈ 13 ms. Crowds of more than ~8 rig characters per frame get expensive: use `shade: false` or flat silhouettes for far crowds.
 
 Pose fields (rig characters):
 
