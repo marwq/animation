@@ -229,7 +229,7 @@ function shotH2(t) {
 }
 // I1 — close on the van's rear window: Dex whispers "Juno."
 function vanClose(t, cam, o = {}) {
-  return roadShot(t, cam, { time: o.time ?? 0.3, dist: o.dist ?? 9000 + (t - tI1) * (o.speed ?? 60), lag: o.lag ?? 0.6, vx: 960, vs: 0.6, bounce: 0.15, occ: { vol: true, ...(o.occ || {}) }, truck: false, birds: 2, after: o.after, front: o.front, fg: o.fg });
+  return roadShot(t, cam, { time: o.time ?? 0.3, dist: o.dist ?? 9000 + (t - tI1) * (o.speed ?? 60), lag: o.lag ?? 0.6, vx: 960, vs: 0.6, bounce: 0.15, occ: { vol: true, ...(o.occ || {}) }, truck: false, birds: 2, after: o.after, front: o.front, fg: o.fg ?? false });
 }
 function shotI1(t) {
   const cam = camKeys(t, [[tI1, at(860, 700, 3.1)], [tI2, at(880, 700, 3.25)]]);
@@ -304,7 +304,8 @@ function shotJ3(t) {
   const cam = { zoom: 1.02, x: 40, y: -10 };
   const tw = lerp(-300, 2300, seg(t, tJ3 + 0.1, tK1));
   const cact = E.landmarkCactus(cactusX(t), FM.ROAD.shoulderFar + 4, 0.85, t, deserty(0.3));
-  const weed = FM.tumbleweed(tw, FM.ROAD.far - 50 - Math.abs(Math.sin(t * 6)) * 160, 60, t * 600);
+  const wy = FM.ROAD.far - 70 - Math.abs(Math.sin(t * 6)) * 170;
+  const weed = FM.tumbleweed(tw, wy, 95, t * 600) + FM.roadDust(tw - 40, FM.ROAD.far - 10, t, 0.8, -1);
   return roadShot(t, cam, { time: 0.3, dist: distJK(t), lag: 0.5, vx: 900, vs: 0.6, bounce: 0.7, smoke: 1, behind: cact + C.speedLines(tw - 640, tw - 140, FM.ROAD.far - 90, 5, 7, '#FFFFFF', 90) + weed, truck: false });
 }
 // desert colours (copy of the set's palette for our own cactus)
@@ -333,7 +334,7 @@ function shotK1(t) {
 function shotK2(t) {
   const cam = camKeys(t, [[tK2, at(850, 650, 2.8)], [tL1, at(860, 650, 2.9)]]);
   const cact = E.landmarkCactus(cactusX(t), FM.ROAD.shoulderFar + 4, 0.85, t, deserty(0.3));
-  return roadShot(t, cam, { time: 0.3, dist: distJK(t), lag: 0.55, vx: 960, vs: 0.6, bounce: 0.15, behind: cact, truck: false, birds: 1, occ: { vol: true, dex: { turn: 0, x: -50, face: { name: 'deadpan', eyes: { upper: 0.55, look: [0.3, 0] } } }, juno: { turn: 0.6, face: { name: 'confused' } }, pip: { turn: -0.3, face: { name: 'happy' } } } });
+  return roadShot(t, cam, { time: 0.3, dist: distJK(t), lag: 0.55, vx: 960, vs: 0.6, bounce: 0.15, behind: cact, truck: false, birds: 1, fg: false, occ: { vol: true, dex: { turn: 0, x: -50, face: { name: 'deadpan', eyes: { upper: 0.55, look: [0.3, 0] } } }, juno: { turn: 0.6, face: { name: 'confused' } }, pip: { turn: -0.3, face: { name: 'happy' } } } });
 }
 // L1 — the GPS: "Recalculating. Recalculating."
 function gpsText(t) {
@@ -391,7 +392,7 @@ function shotN2(t) {
 // N3 — the back bench: Dex gulps under his blanket; Pip's eyes are stars ("bottom floor!")
 function shotN3(t) {
   const u = seg(t, tN3, tO);
-  const cam = at(960, 760, lerp(1.85, 1.95, u));
+  const cam = at(1000, 660, lerp(1.8, 1.9, u));
   const hide = seg(t, W(12, 'years') - 0.1, W(12, 'years') + 0.3);
   return vanRear(t, cam, { dex: { turn: 0.2, y: VR.dex.y + 30 * hide, face: { name: 'scared', fx: ['sweat', 'sweat2'] }, armL: 40, armR: 40 }, dexAct: { arms: false }, pip: { turn: -0.2, face: { name: 'amazed', eyes: { type: 'star' } }, armL: 120, armR: 120, lift: 10 * Math.abs(Math.sin(t * 9)) }, pipAct: { arms: false }, dark: 0.2, lag: 0.7 });
 }
@@ -400,12 +401,13 @@ function shotO(t) {
   const cam = t < tP ? camKeys(t, [[tO, at(640, 760, 1.6)], [tP, at(660, 760, 1.66)]]) : camKeys(t, [[tP, at(660, 760, 1.66)], [tP + 0.35, at(1250, 750, 1.62)], [tQ, at(1270, 750, 1.7)]]);
   const point = seg(t, W(14, "You're") - 0.15, W(14, "You're") + 0.1);
   const roll = { svg: blueRoll(...A.hand(60, -1), 1, -10), layer: 'front' };
-  return vanRear(t, cam, { juno: { turn: 0.55, armL: 60, armR: 20, props: [roll], face: t < tP ? undefined : { name: 'confused' } }, junoAct: { arms: false }, grandpa: { turn: lerp(-0.2, -0.6, point), armL: lerp(48, 95, point), face: { name: t > W(14, "You're") ? 'smug' : 'happy' } }, gpAct: { energy: 1 }, dark: 0.12, lag: 0.7 });
+  const raise = seg(t, W(13, "what's") - 0.2, W(13, 'plan') + 0.1);
+  return vanRear(t, cam, { juno: { turn: 0.55, armL: lerp(60, 128, raise) * (t < tP ? 1 : 0.5), armR: 20, props: [roll], face: t < tP ? undefined : { name: 'confused' } }, junoAct: { arms: false }, grandpa: { turn: lerp(-0.2, -0.6, point), armL: lerp(48, 95, point), face: { name: t > W(14, "You're") ? 'smug' : 'happy' } }, gpAct: { energy: 1 }, dark: 0.12, lag: 0.7 });
 }
 // Q — Juno, to camera: "Great." … smash zoom: "Great plan, Grandpa."
 function shotQ(t) {
   const sm = W(15, 'Great', 1);
-  const cam = t < sm ? at(560, 690, lerp(2.1, 2.2, seg(t, tQ, sm))) : at(545, 650, 2.9);
+  const cam = t < sm ? at(560, 720, lerp(2.0, 2.1, seg(t, tQ, sm))) : at(530, 770, 2.75);
   cam.x += E.whipX(t, tR1, 1);
   return vanRear(t, cam, { juno: { turn: 0, armL: 10, armR: 10, face: { name: 'deadpan', eyes: { upper: 0.45 } } }, junoAct: { arms: false, energy: 0.3 }, dark: 0.1, lag: 0.7 }) + flash(t, sm, 0.08, 0.35) + E.whipFx(t, tR1);
 }
@@ -431,7 +433,7 @@ function cashierPose(t) {
 }
 function gasIn(t, cam, o = {}) {
   const thaw = t >= l[19].a;
-  const Lg = FM.gasStationInside(t, { cam, register: thaw ? '$2.00' : '...', slushJerk: 1, coffee: seg(t, l[19].a + 0.15, l[19].a + 0.35), lag: thaw ? 0.3 : 1 });
+  const Lg = FM.gasStationInside(t, { cam, register: thaw ? '$2.00' : '...', slushJerk: 1, coffee: seg(t, l[19].a + 0.15, l[19].a + 0.35), lag: thaw ? 0 : 1 });
   const cash = actor('cashier', t, cashierPose(t), { arms: false, energy: 1.5 });
   const ck = thaw ? cash : cash;
   let o2 = Lg.bg + view(cam, ck, 1) + Lg.fg;
@@ -452,8 +454,8 @@ function shotST(t) {
   const lean = seg(t, l[18].a - 0.3, l[18].a + 0.1);
   const cam = t < l[18].a - 0.3 ? at(900, 620, 1.1) : camKeys(t, [[l[18].a - 0.3, at(900, 620, 1.1)], [l[18].a, at(1060, 600, 1.2)], [tU, at(1060, 600, 1.22)]]);
   const wave = Math.sin(t * 14) * 25 * lean;
-  const front = actor('grandpa', t, { x: 470, y: 1300, s: 0.66, turn: 0.55, armL: 10, armR: 25 }, { energy: 0.8 }) +
-    dex(t, { x: lerp(1560, 1380, ease.out(lean)), y: 1310, s: 0.64, turn: -0.5, lean: -8 * lean, armL: 20, armR: 20 + (120 + wave) * lean, face: { name: 'nervous', eyes: { look: [-0.6, -0.2] } }, cap: false, props: [] }, { arms: false });
+  const front = actor('grandpa', t, { x: 470, y: 1215, s: 0.66, turn: 0.55, armL: 10, armR: 25 }, { energy: 0.8 }) +
+    dex(t, { x: lerp(1560, 1380, ease.out(lean)), y: 1225, s: 0.64, turn: -0.5, lean: -8 * lean, armL: 20, armR: 20 + (120 + wave) * lean, face: { name: 'nervous', eyes: { look: [-0.6, -0.2] } }, cap: false, props: [] }, { arms: false });
   return gasIn(t, cam, { front });
 }
 // U — the cashier unfreezes: "That'll-be-two-dollars-have-a-nice-day×3" (smash zoom, then stuck on a loop)
@@ -462,20 +464,20 @@ function shotU(t) {
   const cam = lerpCam(at(960, 470, 1.9), at(960, 600, 1.08), ease.inOut(pull));
   cam.sx = (hash(Math.floor(t * 24)) - 0.5) * 10 * (1 - pull);
   const back = seg(t, l[19].a + 2.0, tV);
-  const front = actor('grandpa', t, { x: 470 - 140 * back, y: 1300, s: 0.66, turn: 0.4, armR: 70, face: { name: 'shocked' }, props: [{ svg: G(P('M-30 0 L30 0 L36 -76 L-36 -76 Z', ol('#FFFFFF', 6)) + R(-38, -84, 76, 14, 6, ol('#E8504A', 5)), tr(...A.hand(70, 1), 1)), layer: 'front' }] }, { arms: false }) +
-    dex(t, { x: 1380 + 140 * back, y: 1310, s: 0.64, turn: -0.4, armL: 30, armR: 40, lean: 6 * back, face: { name: 'scared' }, cap: false, props: [] }, { arms: false });
+  const front = actor('grandpa', t, { x: 470 - 140 * back, y: 1215, s: 0.66, turn: 0.4, armR: 70, face: { name: 'shocked' }, props: [{ svg: G(P('M-30 0 L30 0 L36 -76 L-36 -76 Z', ol('#FFFFFF', 6)) + R(-38, -84, 76, 14, 6, ol('#E8504A', 5)), tr(...A.hand(70, 1), 1)), layer: 'front' }] }, { arms: false }) +
+    dex(t, { x: 1380 + 140 * back, y: 1225, s: 0.64, turn: -0.4, armL: 30, armR: 40, lean: 6 * back, face: { name: 'scared' }, cap: false, props: [] }, { arms: false });
   let o = gasIn(t, cam, { front: pull > 0 ? front : '' });
   o += flash(t, tU, 0.1, 0.6);
   return o;
 }
 // V — back bench: Pip knocks on the seat back: "Are we there yet? … Ding?"
 function shotV(t) {
-  const cam = camKeys(t, [[tV, at(1080, 760, 2.0)], [tW, at(1100, 760, 2.15)]]);
+  const cam = camKeys(t, [[tV, at(1110, 700, 2.5)], [tW, at(1120, 700, 2.65)]]);
   const knock = K.V.talking('PIP', t) && t < W(20, 'Ding') - 0.3 ? 1 : 0;
   const dq = bump(t, W(20, 'Ding') - 0.05, W(20, 'Ding') + 0.9);
   const pip = { turn: -0.1, armR: 70 + 40 * Math.max(0, Math.sin(t * 16)) * knock, armL: 20 + 100 * dq, headRot: -12 * dq, face: { name: dq > 0.2 ? 'cute' : 'sad' } };
-  let o = vanRear(t, cam, { pip, pipAct: { arms: false }, dex: { turn: 0.2, headRot: 18, face: { name: 'sleepy' }, armL: 10, armR: 10 }, dexAct: { arms: false }, lag: 0.3 });
-  o += view(cam, E.dingFx(1215, 520, dq, t, 0.5, 'DING?') + C.zzz(t, 840, 470), 1);
+  let o = vanRear(t, cam, { pip: { ...pip, y: 835 }, pipAct: { arms: false }, dex: { turn: 0.2, headRot: 18, face: { name: 'sleepy' }, armL: 10, armR: 10 }, dexAct: { arms: false }, lag: 0.3 });
+  o += view(cam, E.dingFx(1235, 470, dq, t, 0.45, 'DING?') + C.zzz(t, 840, 470), 1);
   return o;
 }
 // W — Grandpa, warm: "Not yet, little elevator."
@@ -486,15 +488,15 @@ function shotW(t) {
 // X1 — Dex at the window, golden light on his face: "Huh."
 function shotX1(t) {
   const cam = camKeys(t, [[tX1, at(830, 690, 3.2)], [tX2, at(820, 690, 3.35)]]);
-  return roadShot(t, cam, { time: 0.1, dist: 30000 + (t - tX1) * 200, lag: 0, vx: 960, vs: 0.6, bounce: 0.1, truck: false, birds: 3, sunX: 1500, sunY: 560, occ: { vol: true, dex: { turn: -0.2, x: -50, face: { name: 'amazed', eyes: { look: [-0.2, -0.3] } } }, juno: { turn: -0.2, face: { name: 'happy' } }, pip: { turn: -0.2, face: { name: 'happy', eyes: { type: 'happy' } } } }, after: E.wash('#FFB04A', 0.12) + K.rays(1700, 200, 12, 1400, '#FFE6A0', 0.08, t * 6) });
+  return roadShot(t, cam, { time: 0.1, dist: 30000 + (t - tX1) * 200, lag: 0, vx: 960, vs: 0.6, bounce: 0.1, truck: false, birds: 3, fg: false, sunX: 1500, sunY: 560, occ: { vol: true, dex: { turn: -0.2, x: -50, face: { name: 'amazed', eyes: { look: [-0.2, -0.3] } } }, juno: { turn: -0.2, face: { name: 'happy' } }, pip: { turn: -0.2, face: { name: 'happy', eyes: { type: 'happy' } } } }, after: E.wash('#FFB04A', 0.12) + K.rays(1700, 200, 12, 1400, '#FFE6A0', 0.08, t * 6) });
 }
 // X2 — the canyon sunrise, wide. Graphics quality: MAX.
 function shotX2(t) {
   const u = seg(t, tX2, END);
   const cam = { zoom: lerp(1.0, 0.86, ease.out(u)), x: lerp(-60, 0, u), y: lerp(-40, -100, u) };
-  let o = roadShot(t, cam, { time: 0.1, dist: 30500 + (t - tX2) * 260, lag: 0, vx: 760 + (t - tX2) * 40, vs: 0.42, truck: false, birds: 5, clouds: 4, sunX: 1450, sunY: 600, smoke: 0.3, dust: 0.2, bounce: 0.25 });
+  let o = roadShot(t, cam, { time: 0.1, dist: 32000 + (t - tX2) * 260, lag: 0, vx: 760 + (t - tX2) * 40, vs: 0.42, truck: false, birds: 5, clouds: 4, sunX: 1450, sunY: 600, smoke: 0.3, dust: 0.2, bounce: 0.25 });
   o += K.rays(1450, 600, 16, 1600, '#FFE6A0', 0.1, t * 4) + E.wash('#FF9A4D', 0.06);
-  const g = seg(t, W(22, 'actually') - 0.1, W(22, 'good') + 0.2);
+  const g = seg(t, W(22, 'actually') - 0.1, W(22, 'good'));
   o += E.gfxBar(1590, 200, 0.3 + 0.7 * g, t, seg(t, tX2 + 0.3, tX2 + 0.6));
   return o;
 }

@@ -245,7 +245,7 @@ function shaftDown(t, o = {}) {
 const J = FM.JUNGLE;
 const DS = 0.42, HANDY = 755 * DS;       // pivot (hands) height above the feet
 const GRAV = 3300;                        // px/s^2
-const RUN = { x0: 120, x1: J.start.x1 - 6, dur: 0.3 };
+const RUN = { x0: 200, x1: J.start.x1 - 6, dur: 0.3 };
 function simulate() {
   const dt = 1 / 600, A0 = J.vines[0], A1 = J.vines[1];
   const L0 = A0.len, L1 = A1.len, LE0 = L0 + 80, LE1 = L1 + 80;
