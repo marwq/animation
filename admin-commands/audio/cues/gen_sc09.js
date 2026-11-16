@@ -142,6 +142,7 @@ add(tAre - 0.1, 'zoom_in', -5, PW(HX, 1195, 2.4), "push-in + small shake on 'ARE
   WANT_T.forEach((w, i) => {
     const pan = P(i % 2 ? 1420 : 500), cmd = [';fly me', ';speed me', ';size me 50', ';win everything'][i];
     add(w - 0.18, 'tv_on', -9, pan, `CRT ${i + 1} on (${['1873', '1911', '1958', '1999'][i]})`);
+    add(w - 0.18 + 0.58 * 0.15, 'typing', -16, pan, `the replay types '${cmd}'`);   // chatCommand progress (k - 0.15) * 3
     add(w + 0.12, FX[i][0], -9, pan, `${FX[i][1]} ('${cmd}' replay)`);
   });
 }
