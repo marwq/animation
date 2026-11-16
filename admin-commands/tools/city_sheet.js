@@ -37,15 +37,18 @@ const TILES = [
     const hr = C.toScreen(cam, A.heroRoof);
     return all(L) + hero(hr.x, hr.y, 0.5 * 0.2) + m;
   }],
-  ['usage: giant cats on CITY.tower / stadium + cage on craneHook (cam zoom 1.15)', (t) => {
+  ['usage: cats on CITY.tower / inStadium / CITY.roofs[3] + cage on craneHook', (t) => {
     const cats = require('../rig/cats');
-    const cam = { zoom: 1.15, x: -120, y: -60 }, o = { time: 0.85, popups: 0.4 }, L = C.city(t, cam, o);
+    const cam = { zoom: 1.15, x: -120, y: -60 }, o = { time: 0.85, popups: 0.4 };
     const T = C.CITY.tower, St = C.CITY.stadium, h = C.craneHook(t, o);
-    // everything that sits ON a mid-layer landmark is drawn with that landmark's parallax k, between L.mid and L.fg
-    let onMid = cats.pancake({ x: T.x, y: T.y, s: 1.05, t, pose: 'sit', mood: 'smug' }) + cats.cat({ x: St.x, y: St.y + 10, s: 0.9, t, pose: 'sleep', coat: 'grey' });
+    // things ON a mid-layer landmark: draw them with its parallax k between L.mid and L.fg; opts.inStadium sits inside the bowl
+    const L = C.city(t, cam, { ...o, inStadium: cats.cat({ x: St.x, y: St.y + 26, s: 0.9, t, pose: 'sleep', coat: 'grey' }) });
+    let onMid = cats.pancake({ x: T.x, y: T.y, s: 1.05, t, pose: 'sit', mood: 'smug' });
+    const R0 = C.CITY.roofs[3];
+    const onNear = cats.cat({ x: (R0.x0 + R0.x1) / 2 + 60, y: R0.y, s: 0.55, t, pose: 'lie', coat: 'calico' });
     const cage = S.g(S.path('M-34 0V-2Q-34 -10 0 -10Q34 -10 34 -2V0M-30 0V70M-15 0V70M0 0V70M15 0V70M30 0V70', { fill: 'none', stroke: '#151515', 'stroke-width': 4 }) + S.rect(-38, 66, 76, 10, 3, { fill: '#5A6070', stroke: '#151515', 'stroke-width': 3 }) + S.circle(0, -14, 6, { fill: 'none', stroke: '#151515', 'stroke-width': 4 }), `translate(${h.x} ${h.y + 4}) rotate(${h.rot})`);
     onMid += cage;
-    return L.bg + L.mid + K.view(cam, onMid, C.CITY.tower.k) + L.fg + L.light;
+    return L.bg + L.mid + K.view(cam, onMid, C.CITY.tower.k) + L.fg + K.view(cam, onNear, R0.k) + L.light;
   }],
   ['city · night · crack .35 (cam zoom 1.25 pan up)', (t) => all(C.city(t, { zoom: 1.25, x: 0, y: -160 }, { time: 1, popups: 1, crack: 0.35 }))],
   ['city · night · crack 1 + skyChat (Admin)', (t) => {

@@ -725,7 +725,7 @@ function cityOpts(opts = {}) {
   return {
     time: 0, dawn: 0, flying: 0, popups: 0, crack: 0, crackR: CITY.crack.r, admin: 0, blimp: false,
     waterTip: 0, waterFall: 0, hookLen: CRANE.len, hookSwing: 4, hookX: CRANE.trolley, street: true, flyNear: true, flyMid: true,
-    onSky: '', onMid: '', onNear: '', ...opts, crackAt: { x: CITY.crack.x, y: CITY.crack.y, ...(opts.crackAt || {}) },
+    onSky: '', onMid: '', onNear: '', inStadium: '', ...opts, crackAt: { x: CITY.crack.x, y: CITY.crack.y, ...(opts.crackAt || {}) },
   };
 }
 // the crane hook point (mid layer, k .4) incl. the sway: { x, y, k, rot }. Same opts as city() (hookLen, hookSwing, hookX).
@@ -984,7 +984,7 @@ function tvStation(p, t, A) {
   A.deco += s;
 }
 const STAD = { cx: 1690, rim: 610, rx: 215, ry: 64 };
-function stadium(p, t) {
+function stadium(p, t, inside = '') {
   const { cx, rim, rx, ry } = STAD;
   const wall = bc('#D6DCEB', p), stand = bc('#4A3E7A', p), field = bc('#4CC46A', p), lamp = p.lit > 0.3 ? '#FFF8D8' : bc('#E8EEF8', p);
   let s = '';
@@ -995,7 +995,7 @@ function stadium(p, t) {
   }
   const back = `M${cx - rx} ${rim}A${rx} ${ry} 0 0 1 ${cx + rx} ${rim}Z`;
   s += P(back, { fill: stand }) + P(back, { fill: 'url(#cityCrowd)', opacity: f(0.85 - 0.3 * p.tintK) });
-  s += Ell(cx, rim + 6, rx * 0.68, ry * 0.36, { fill: field, stroke: LINE, 'stroke-width': 3 }) + P(`M${cx} ${f(rim + 6 - ry * 0.36)}V${f(rim + 6 + ry * 0.36)}`, ln(3, '#FFFFFF', 0.7));
+  s += Ell(cx, rim + 6, rx * 0.68, ry * 0.36, { fill: field, stroke: LINE, 'stroke-width': 3 }) + P(`M${cx} ${f(rim + 6 - ry * 0.36)}V${f(rim + 6 + ry * 0.36)}`, ln(3, '#FFFFFF', 0.7)) + (inside || '');
   s += P(`M${cx - rx} ${rim}A${rx} ${ry} 0 0 0 ${cx + rx} ${rim}L${cx + rx + 12} ${MID_BASE}H${cx - rx - 12}Z`, olw(wall, 5));
   let ribs = '';
   for (let i = -5; i <= 5; i++) { const x = cx + i * rx * 0.18, yy = rim + ry * Math.sqrt(Math.max(0, 1 - Math.pow(i * 0.18, 2))); ribs += `M${f(x)} ${f(yy + 4)}V${MID_BASE}`; }
@@ -1013,7 +1013,7 @@ function midPart(t, cam, p, o, dy = 0) {
   if (see(570, 870)) tallTower(p, t, A);
   for (const b of MID_B) if (see(b.x, b.x + b.w)) midBldg(b, p, t, A);
   if (see(1210, 1450)) tvStation(p, t, A);
-  if (see(1440, 1940)) A.body += stadium(p, t);
+  if (see(1440, 1940)) A.body += stadium(p, t, o.inStadium);
   for (const b of MID_R) if (see(b.x, b.x + b.w)) midBldg(b, p, t, A);
   fillSlots(cam, KF.mid, -704, 2848, 256, (i, x) => { midBldg(genMid(i, x), p, t, A); return ''; });
   if (see(20, 620)) A.deco += crane(p, t, o);
@@ -1583,6 +1583,10 @@ function serverRoom(t, cam, opts = {}) {
 }
 
 // ================================================================ exports
+// every flat roof in the wide city, for parking giant cats / people on them: { x0, x1, y (standing y), k }
+CITY.roofs = NEAR.map((b) => ({ x0: b.x, x1: b.x + b.w, y: b.top - 16, k: KF.near }));
+CITY.midRoofs = [...MID, MID_A, ...MID_B, ...MID_R].filter((b) => b.kind === 'box').map((b) => ({ x0: b.x, x1: b.x + b.w, y: b.top - 10, k: KF.mid }))
+  .concat([{ x0: 1216, x1: 1440, y: 470, k: KF.mid, name: 'tv' }, { x0: 616, x1: 824, y: 222, k: KF.mid, name: 'tower' }]);
 const FLOOR = { street: CITY.street.y, heroRoof: CITY.heroRoof.y, rooftop: ROOF.floor, giant: GIANT.ground, desert: DESERT.floor, island: ISLAND.floor, mountain: MOUNTAIN.floor, server: SERVER.floor };
 module.exports = {
   DEFS, CITY, ROOF, GIANT, DESERT, ISLAND, MOUNTAIN, SERVER, FLOOR, KF,
