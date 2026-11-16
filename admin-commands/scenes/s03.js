@@ -146,7 +146,7 @@ function cobweb(x, y, s) {
 function shOld2(t) {
   const tW = w(2, 'waiting');
   const cam = camKeys(t, [[d07, camAt(OM.x, 540, 2.4)], [d08, camAt(OM.x, 530, 2.65)]]);
-  const om = oldman(t, { face: { name: 'happy', eyes: { look: [-0.6, 0] } }, armL: 10, armR: 10 });
+  const om = oldman(t, { face: { name: 'happy', eyes: { look: [-0.6, 0] } }, armL: 10, armR: 10, volume: false });
   const pct = Math.min(100, Math.round(lerp(97, 100, seg(t, d07, tW))));
   const wheel = t < tW ? K.loadingWheel(OM.x, 420, 24, t, '#E6D2FF', 8) : S.circle(OM.x, 420, 24, ol('#3DFF9A', 4)) + S.path(`M${OM.x - 12} 420 l8 9 l16 -18`, ln(5, '#0E241A'));
   const label = TF(t < tW ? `WAITING... ${pct}%` : 'DONE WAITING', OM.x, 384, 20, t < tW ? '#E6D2FF' : '#3DFF9A', OUT(5));
@@ -174,7 +174,7 @@ function shLaptop(t) {
 function shDidnt(t) {
   const tA = w(4, 'anything');
   const cam = camKeys(t, [[d10, camAt(GS.hero.x + 40, 680, 2.3)], [d11, camAt(GS.hero.x + 40, 670, 2.45)]]);
-  const hero = you(t, { ...GS.hero, turn: 0.35, armR: 40, armL: lerp(10, 50, seg(t, d10, d10 + 0.3)), headRot: 6, face: { name: 'confused', fx: t > tA ? ['question'] : [] } }, { arms: false });
+  const hero = you(t, { ...GS.hero, turn: 0.35, volume: false, armR: 40, armL: lerp(10, 50, seg(t, d10, d10 + 0.3)), headRot: 6, face: { name: 'confused', fx: t > tA ? ['question'] : [] } }, { arms: false });
   return sale(t, cam, { glow: 0.6 }, { chars: hero });
 }
 function shDollar(t) {
@@ -204,13 +204,13 @@ function shQuestions(t) {
   const tQ = w(5, 'questions');
   const cam = camKeys(t, [[d13, camAt(OM.x - 20, 560, 2.4)], [d14, camAt(OM.x - 20, 550, 2.6)]]);
   const wag = Math.sin(t * 14) * 14;
-  const om = oldman(t, { armR: 160 + wag * (t > tQ - 0.3 ? 1 : 0), armL: 10, headRot: -4, face: 'sneaky' });
+  const om = oldman(t, { volume: false, armR: 160 + wag * (t > tQ - 0.3 ? 1 : 0), armL: 10, headRot: -4, face: 'sneaky' });
   return sale(t, cam, { glow: 0.4, laptop: false }, { behind: om });
 }
 function shWhy(t) {
   const tD = w(6, 'do');
   const cam = camKeys(t, [[d14, camAt(GS.hero.x + 10, 690, 2.2)], [tD - 0.1, camAt(GS.hero.x + 10, 700, 2.3)], [d15, camAt(GS.hero.x, 820, 3.6)]]);
-  const hero = you(t, { ...GS.hero, turn: 0.25, armL: 34, armR: 34, face: { name: 'confused', eyes: { look: [0, 0.8] } }, props: [heldLaptop()] }, { arms: false });
+  const hero = you(t, { ...GS.hero, turn: 0.25, armL: 34, armR: 34, volume: false, face: { name: 'confused', eyes: { look: [0, 0.8] } }, props: [heldLaptop()] }, { arms: false });
   let o = sale(t, cam, { glow: 0.4, laptop: false }, { chars: hero });
   const k = seg(t, tD, tD + 0.3);
   if (k > 0) o += view(cam, S.circle(GS.hero.x - 37, 803, 64, { fill: 'none', stroke: '#FF2E4E', 'stroke-width': 5, 'stroke-dasharray': `${f(410 * k)} 900` }), 1);
@@ -219,7 +219,7 @@ function shWhy(t) {
 function shQuestion(t) {
   const tQ = w(7, 'question');
   const cam = shakeCam(camKeys(t, [[d15, camAt(OM.x, 560, 2.6)], [d16, camAt(OM.x, 550, 2.7)]]), t, tQ, 0.35, 12);
-  const om = oldman(t, { armR: 10, armL: 10, face: 'smug' });
+  const om = oldman(t, { armR: 10, armL: 10, volume: false, face: 'smug' });
   let o = sale(t, cam, { glow: 0.4, laptop: false }, { behind: om });
   const k = seg(t, tQ, tQ + 0.15);
   if (k > 0) {
@@ -232,7 +232,7 @@ function shQuestion(t) {
 function shOneMore(t) {
   const cam = camKeys(t, [[d16, camAt(OM.x, 560, 2.4)], [d17, camAt(OM.x, 555, 3.6)]], ease.in);
   const dark = seg(t, d16, d17);
-  const om = oldman(t, { armL: 10, armR: 120, lean: 6, face: { name: 'sneaky', eyes: { look: [0, 0.2] } } });
+  const om = oldman(t, { armL: 10, armR: 120, lean: 6, volume: false, face: { name: 'sneaky', eyes: { look: [0, 0.2] } } });
   return sale(t, cam, { glow: 0.3, laptop: false }, { behind: om, over: S.rect(-2000, -2000, 6000, 5000, 0, { fill: '#0A0620', opacity: f(0.45 * dark) }) });
 }
 function shGame(t) {
@@ -241,7 +241,7 @@ function shGame(t) {
   const wide = t >= tG - 0.04;
   const cam = wide ? shakeCam(camKeys(t, [[tG - 0.04, camAt(1020, 470, 1.55)], [d18, camAt(1020, 480, 1.45)]]), t, tG, 0.4, 10)
     : camKeys(t, [[d17, camAt(OM.x, 555, 3.8)], [tG, camAt(OM.x, 558, 4.4)]]);
-  const om = oldman(t, { armL: 10, armR: 10, face: { name: wide ? 'smug' : 'neutral', eyes: { look: [0, 0] } } });
+  const om = oldman(t, { armL: 10, armR: 10, volume: wide ? undefined : false, face: { name: wide ? 'smug' : 'neutral', eyes: { look: [0, 0] } } });
   const fl = wide ? (hash(Math.floor(t * 14)) > 0.12 ? 1 : 0.35) : 0;
   const wall = fl > 0 ? S.rect(420, 350, 840, 380, 0, { fill: '#FFD27A', opacity: f(0.42 * fl) }) + X.adminShadow(OM.x - 90, 735, 0.6, 0.85 * fl) : '';
   const glint = K.F.sparkle(OM.x - 22, 556, 14 * bump(t, tG - 0.6, tG)) + K.F.sparkle(OM.x + 22, 556, 14 * bump(t, tG - 0.6, tG), '#FFD21F');
@@ -276,7 +276,7 @@ function shCool(t) {
   const ws = [w(10, 'Cool'), w(10, 'Cool', 1), w(10, 'cool', 2), w(10, 'cool', 3)];
   const cam = camKeys(t, [[d20, camAt(900, 660, 2.3)], [d21, camAt(900, 650, 2.5)]]);
   const nod = Math.max(...ws.map((x, i) => bump(t, x, x + 0.25 - i * 0.03)));
-  const hero = you(t, { x: 900, y: 1000, s: 0.5, turn: 0.1, armL: 12, armR: 150, headY: 18 * nod, bodyY: 4 * nod, props: [{ svg: X.dollar(240, -820, 1.1, -10, 1), layer: 'top' }], face: { name: 'nervous', mouth: 'smile', fx: ['sweat', 'sweat2'], eyes: { look: [Math.sin(t * 7) > 0 ? 0.8 : -0.8, 0] } } });
+  const hero = you(t, { x: 900, y: 1000, s: 0.5, turn: 0.1, armL: 12, armR: 150, volume: false, headY: 18 * nod, bodyY: 4 * nod, props: [{ svg: X.dollar(240, -820, 1.1, -10, 1), layer: 'top' }], face: { name: 'nervous', mouth: 'smile', fx: ['sweat', 'sweat2'], eyes: { look: [Math.sin(t * 7) > 0 ? 0.8 : -0.8, 0] } } });
   return sale(t, cam, { glow: 0, laptop: false, gone: 1, tumble: seg(t, d20 - 1.5, d21 + 1) }, { chars: hero });
 }
 function shRun(t) {
@@ -299,7 +299,8 @@ const LX = 1390;                // laptop / hero x on the bed
 const SIT = { x: LX, y: 846, s: 0.5 };
 function bedroom(t, cam, p = {}, opts = {}) {
   const glowK = p.glow ?? 1;
-  const night = nightLight(LX, 560, 160, 1150, 0.62) + (glowK > 0 ? SETS.glowSpot(LX, 560, 300, 'setsGlowGreen', 0.38 * glowK * (0.9 + 0.1 * Math.sin(t * 3.1))) : '');
+  const gr = Math.min(300, 420 / (cam.zoom || 1));   // keep the gradient small on screen (cost ~ its screen area)
+  const night = nightLight(LX, 560, 160, 1150, 0.62) + (glowK > 0 ? SETS.glowSpot(LX, 560, gr, 'setsGlowGreen', 0.38 * glowK * (0.9 + 0.1 * Math.sin(t * 3.1))) : '');
   return room(SETS.heroRoom, t, cam, { time: 'night', laptopAt: false, ...opts }, { behind: p.behind || '', chars: p.chars || '', light: false, night, over: p.over || '' });
 }
 const lapBack = (t, g = 1, y = 760) => SETS.laptop(LX, y, 0.34, '', { back: true, glow: g, t });
@@ -353,7 +354,7 @@ function shLoaded(t) {
 }
 function shUser(t) {
   const cam = camKeys(t, [[d26, camAt(LX, 520, 2.6)], [d27, camAt(LX, 510, 2.8)]]);
-  const hero = you(t, { ...SIT, armL: 26, armR: 26, face: { name: 'shocked', eyes: { look: [0, 0.5] } } }, { arms: false, energy: 0.4 });
+  const hero = you(t, { ...SIT, armL: 26, armR: 26, volume: false, face: { name: 'shocked', eyes: { look: [0, 0.5] } } }, { arms: false, energy: 0.4 });
   const chip = K.chatCommand(LX + 250, 400, '', 1, { t, user: 'you', s: 0.5 * pop(seg(t, d26 + 0.3, d26 + 0.6)), cursor: true });
   return bedroom(t, cam, { behind: hero, chars: lapBack(t), over: chip });
 }

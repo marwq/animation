@@ -173,10 +173,10 @@ function pickedKid(t, i, tp, x0, side) {
   if (u >= 1) return '';
   const x = x0 + side * 1300 * ease.in(u);
   const pose = u <= 0 ? { x, y: 828, s: 0.42, armL: 8, armR: 8, face: 'neutral' } : { x, y: 828, s: 0.42, lift: 70 * Math.sin(Math.min(1, u * 3) * Math.PI), view: u > 0.15 ? 'side' : 'front', flip: side > 0, ...(u > 0.15 ? AC.run(u * 30) : { armL: 160, armR: 160 }), face: 'excited' };
-  return K.draw.kid(KIDS[i], pose);
+  return K.draw.kid(KIDS[i], { ...pose, volume: false });
 }
-function captain(t, x, i, point = 0, flip = false) {
-  return K.draw.kid(i, { x, y: 990, s: 0.5, view: 'back', armR: lerp(10, 100, point), armL: 10, bodyY: 3 * Math.sin(t * 4 + i) });
+function captain(t, x, i, point = 0, flip = false, vol = true) {
+  return K.draw.kid(i, { x, y: 990, s: 0.5, view: 'back', armR: lerp(10, 100, point), armL: 10, bodyY: 3 * Math.sin(t * 4 + i), ...(vol ? {} : { volume: false }) });
 }
 function shGym(t) {
   const tLast = w(1, 'last');
@@ -184,7 +184,7 @@ function shGym(t) {
   let chars = '';
   const order = [0, 5, 1, 4, 2, 3];
   order.forEach((i, j) => { const tp = lerp(c04 + 0.15, tLast - 0.25, j / 5); chars += pickedKid(t, i, tp, PL[i].x, j % 2 ? 1 : -1); });
-  chars += X.castKid(t, { x: PL[6].x, y: 828, s: 0.42, face: 'nervous' });
+  chars += X.castKid(t, { x: PL[6].x, y: 828, s: 0.42, volume: false, face: 'nervous' });
   const left = 6 - order.filter((i, j) => t > lerp(c04 + 0.15, tLast - 0.25, j / 5)).length;
   const hope = clamp(left / 6, 0, 1);
   chars += you(t, { x: PL[7].x, y: 828, s: 0.42, armR: hope > 0.2 ? 160 + 18 * Math.sin(t * 16) : 20, armL: 10, lift: hope > 0.2 ? 10 * Math.abs(Math.sin(t * 8)) : 0, face: hope > 0.5 ? 'excited' : hope > 0.2 ? 'nervous' : 'sad' });
@@ -200,7 +200,7 @@ function shEvery(t) {
   const tT = w(1, 'time');
   const comp = (seed, face) => {
     const cam = camAt(1000, 640, 1);
-    return gymLayers(t, cam, captain(t, 640, 20 + seed, 0) + captain(t, 1240, 21 + seed, 0), you(t, { x: PL[7].x, y: 828, s: 0.42, face, headRot: -6, bodyY: 6 }));
+    return gymLayers(t, cam, captain(t, 640, 20 + seed, 0, false, false) + captain(t, 1240, 21 + seed, 0, false, false), you(t, { x: PL[7].x, y: 828, s: 0.42, face, headRot: -6, bodyY: 6, volume: false }));
   };
   let o = S.rect(0, 0, 1920, 1080, 0, { fill: '#2A3A6A' }) + K.rays(960, 540, 16, 1400, '#3A4E8A', 0.6, t * 8);
   const days = [['MON', 'sad', c05 - 0.02], ['TUE', 'crying', tT - 0.05], ['WED', { name: 'sad', fx: ['tears'] }, tT + 0.3]];
@@ -316,7 +316,7 @@ function shDad(t) {
   const tD = w(5, 'Dad'), tW = w(5, 'works'), tH = w(5, 'home', 1);
   const cam = camKeys(t, [[c14, camAt(DADX, 560, 2.5)], [tW - 0.1, camAt(DADX, 590, 2.4)], [tH + 0.1, camAt(DADX, 880, 2.1)], [c15, camAt(DADX, 860, 2.0)]]);
   const talk = Math.sin(t * 3) * 10;
-  const dad = actor('dad', t, { x: DADX, y: 990, s: 0.5, turn: -0.2, armL: 40 + talk, armR: 120 + 10 * Math.sin(t * 4), headRot: 3 * Math.sin(t * 2.5), face: { name: 'talkHappy', mouth: Math.sin(t * 13) > 0 ? 'O' : 'smile' } }, { arms: false });
+  const dad = actor('dad', t, { x: DADX, y: 990, s: 0.5, turn: -0.2, volume: false, armL: 40 + talk, armR: 120 + 10 * Math.sin(t * 4), headRot: 3 * Math.sin(t * 2.5), face: { name: 'talkHappy', mouth: Math.sin(t * 13) > 0 ? 'O' : 'smile' } }, { arms: false });
   let o = room(SETS.livingRoom, t, cam, { call: true }, { chars: dad });
   o += view(cam, tag('WORK', DADX + 210, 600, seg(t, tW, tW + 0.2), '#5AB0FF', -6, 40) + tag('HOME', DADX + 220, 890, seg(t, tH, tH + 0.2), '#FF9EC4', 6, 40), 1);
   o += playerCard('dad', 'works from home', seg(t, tD - 0.1, tD + 0.25), seg(t, c15 - 0.3, c15), t, 70, 110, '#5AB0FF', 'ONLINE?');
@@ -345,7 +345,7 @@ function shCan2(t) {
   const tNow = w(6, 'now', 1);
   const cam = shakeCam(camKeys(t, [[c17, camAt(DADX, 640, 2.6)], [c18, camAt(DADX, 620, 3.0)]]), t, tNow, 0.3, 8);
   const tap = Math.max(0, Math.sin((t - c17) * 9));
-  const dad = actor('dad', t, { x: DADX, y: 990, s: 0.5, turn: 0.3, armR: 160 - 10 * tap, armL: 30, headRot: 10, lean: -4, face: 'confused' }, { arms: false, energy: 1.3 });
+  const dad = actor('dad', t, { x: DADX, y: 990, s: 0.5, turn: 0.3, volume: false, armR: 160 - 10 * tap, armL: 30, headRot: 10, lean: -4, face: 'confused' }, { arms: false, energy: 1.3 });
   return room(SETS.livingRoom, t, cam, { call: true }, { chars: dad });
 }
 function shCan3(t) {
@@ -414,7 +414,7 @@ function shOfficial(t) {
   const sk = seg(t, tO - 0.05, tO + 0.2);
   // stamp comes in from the left and slams on the forehead note at "official"
   const reach = ease.inOut(seg(t, tS, tO - 0.05)) * (1 - ease.in(seg(t, tO + 0.35, tO + 0.8)));
-  const hero = you(t, { x: 1150, y: 990, s: 0.5, turn: -0.15, armL: 10, armR: 10, sy: 1 - 0.05 * bump(t, tO - 0.02, tO + 0.2), face: { name: 'deadpan', eyes: { look: [0, -0.8] }, fx: ['sweat'] }, props: heroNotes(3, sk) }, { arms: false, energy: 0.3 });
+  const hero = you(t, { x: 1150, y: 990, s: 0.5, turn: -0.15, volume: false, armL: 10, armR: 10, sy: 1 - 0.05 * bump(t, tO - 0.02, tO + 0.2), face: { name: 'deadpan', eyes: { look: [0, -0.8] }, fx: ['sweat'] }, props: heroNotes(3, sk) }, { arms: false, energy: 0.3 });
   const hold = S.g(S.rect(-30, -120, 60, 120, 20, ol('#8A5A33', 6)) + S.ellipse(0, -126, 46, 22, ol('#8A5A33', 6)) + S.rect(-70, 0, 140, 50, 10, ol('#3A3F4E', 6)) + S.rect(-180, 10, 120, 40, 14, ol('#F27A6B', 6)), tr(lerp(700, 1150, reach), 570 - 40 * bump(t, tO - 0.12, tO + 0.05), 0.6, 0));
   let o = room(SETS.kitchen, t, cam, { notes: 1 }, { chars: hero + (reach > 0.02 ? hold : '') });
   o += K.bang('KA-CHUNK!', 1460, 280, seg(t, tO, tO + 0.1) * (1 - seg(t, c23 - 0.2, c23)), 100, 8, '#FFE14D');
@@ -722,7 +722,7 @@ function dreamPicked(t) {
   const Ls = SETS.schoolyard.layers(t, { time: 'day' });
   let o = Ls.bg + Ls.mid + (Ls.front || '');
   const fy = 330 + 20 * Math.sin(t * 3);
-  for (let i = 0; i < 5; i++) o += K.draw.kid([2, 5, 8, 11, 14][i], { x: 300 + i * 330, y: 990, s: 0.42, armL: 150 + 15 * Math.sin(t * 10 + i), armR: 160 + 15 * Math.sin(t * 9 + i * 2), lift: 20 * Math.abs(Math.sin(t * 7 + i)), face: 'excited', view: 'back' });
+  for (let i = 0; i < 5; i++) o += K.draw.kid([2, 5, 8, 11, 14][i], { volume: false, x: 300 + i * 330, y: 990, s: 0.42, armL: 150 + 15 * Math.sin(t * 10 + i), armR: 160 + 15 * Math.sin(t * 9 + i * 2), lift: 20 * Math.abs(Math.sin(t * 7 + i)), face: 'excited', view: 'back' });
   o += you(t, { x: 960 + 60 * Math.sin(t * 1.3), y: fy + 480, s: 0.42, armL: 160, armR: 100, legL: 10, legR: -14, lean: 10, face: 'joy', props: [{ svg: X.crown(0, -1010, 1.2, -6), layer: 'top' }] });
   return o;
 }

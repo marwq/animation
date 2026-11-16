@@ -90,7 +90,7 @@ const roofHero = (t, pose = {}, act = {}, lap = {}) => E.heroLap(t, { x: 960, y:
 // ---------------------------------------------------------------- shots
 // 0. "So you go back." — flash; the hero lands on his roof at dawn; giant cats, a bus still floating
 function shotArrive(t) {
-  const cam = drift(K.camKeys(t, [[START, at(960, 540, 1.02)], [c1, at(960, 590, 1.18)]]), t, 4);
+  const cam = drift(K.camKeys(t, [[START, at(880, 545, 1.02)], [c1, at(900, 590, 1.18)]]), t, 4);
   const L0 = CS.rooftop(t, cam, DAWN(0.65, { onMid: giants(t), inStadium: CATS.cat({ x: 1690, y: 614, s: 0.9, pose: 'lie', coat: 'calico', t }) }));
   const tp = E.teleIn(t, START + 0.12, 960, 905, 0.5);
   const h = tp.show ? roofHero(t, { lift: tp.lift, sx: tp.sx, sy: tp.sy, face: { name: 'determined', eyes: { look: [0.2, -0.3] } } }, {}, { battery: 1 }) : '';
@@ -124,7 +124,6 @@ function shotSizeCats(t) {
   const L0 = CS.rooftop(t, cam, DAWN(0.55, { onMid: giants(t), inStadium: CATS.cat({ x: 1690, y: 614, s: 0.9, pose: 'lie', coat: 'calico', t }) }));
   const back = K.actor('you', t, { x: 470, y: 1290, s: 0.95, view: 'back', armL: 22, armR: 22, headRot: Math.sin(t * 2) * 2, volume: false });
   let o = L0.bg + L0.mid + L0.fg + K.view(cam, back, 1) + L0.light;
-  o += R(250, 640, 440, 220, 60, { fill: '#7DFFB8', opacity: 0.12 });
   const enter = seg(t, M[1].b - 0.02, M[1].b + 0.35);
   o += K.chatCommand(1180, 140, ';size all cats 1', K.typeProgress(t, M[1]), { t, enter, s: 1.25 });
   if (t > M[1].b - 0.05) {
@@ -132,31 +131,42 @@ function shotSizeCats(t) {
   }
   return o;
 }
-// 3. the cats shrink into their owners' arms (+ ";unfly the bus" typed meanwhile)
-const OWNERS = [{ who: 'kid', i: 4, x: 560, cat: { coat: 'grey', seed: 2 } }, { who: 'adult', i: 27, x: 1380, cat: { coat: 'calico', seed: 5 } }];
+// 3. the giant cats on the shop roofs shrink, one by one, into their owners' arms (+ ";unfly the bus" typed meanwhile)
+const STREET_K = 0.72;
+const ROOF_CATS = [
+  { x: -620, coat: 'black', seed: 7, t0: 0.0 },
+  { x: 380, coat: 'grey', seed: 2, t0: 0.12, owner: { who: 'kid', i: 4, x: 560 } },
+  { x: 1560, coat: 'calico', seed: 5, t0: 0.48, owner: { who: 'adult', i: 27, x: 1380 } },
+  { x: 2520, coat: 'tabby', seed: 9, t0: 0.78 },
+];
 function shotOwners(t) {
-  const dx = Math.sin(t * 0.6) * 10;
-  let o = G(E.catStreet(t), `translate(${f(dx)} 0)`);
-  OWNERS.forEach((ow, i) => {
-    const t0 = c3 + 0.02 + i * 0.36, u = seg(t, t0, t0 + 0.55);
-    const caught = u >= 1;
-    const hug = seg(t, t0 + 0.55, t0 + 0.8);
-    const arm = caught ? lerp(55, 22, hug) : 55;
-    const s = ow.who === 'kid' ? 0.5 : 0.5;
-    const bodyH = ow.who === 'kid' ? 0.88 : 1.06;
-    const hy = 990 - (515 - 252 * Math.cos((arm * Math.PI) / 180)) * s * bodyH;
-    const face = caught ? { name: 'joy' } : { name: 'amazed', fx: [], eyes: { look: [0, -1] } };
-    const catProp = caught ? [{ svg: CATS.cat({ x: 0, y: -330 + 40 * hug, s: 0.62, pose: 'sit', mood: 'happy', t, ...ow.cat }), layer: 'front' }] : [];
-    o += K.draw[ow.who](ow.i, { x: ow.x + dx, y: 990, s, armL: arm, armR: arm, face, bodyY: caught ? 8 * bump(hug, 0, 0.5) : 0, props: catProp });
-    if (!caught && u > 0) {
-      // falling + shrinking from giant to normal
-      const cs = lerp(3.2, 0.33, eo(u)), cy = lerp(-260, hy + 10, io(u)), cx = ow.x + dx + Math.sin(u * Math.PI) * 120 * (i ? -1 : 1);
-      o += CATS.cat({ x: cx, y: cy, s: cs, pose: 'paw', mood: 'surprised', t, ...ow.cat }) + poof(cx, cy - 120 * cs, seg(u, 0, 0.6), 200 * Math.min(cs, 1.4));
-    } else if (u <= 0) {
-      o += CATS.cat({ x: ow.x + dx + (i ? -40 : 40), y: -60, s: 3.2, pose: 'sit', mood: 'lazy', t, ...ow.cat });
+  const dx = Math.sin(t * 0.6) * 12 - 40 * seg(t, c3, c4);
+  let w = E.catStreet(t);
+  let fx = '';
+  ROOF_CATS.forEach((rc, i) => {
+    const t0 = c3 + rc.t0, u = seg(t, t0, t0 + 0.55);
+    const ow = rc.owner;
+    if (!ow) {
+      // no owner in frame: the giant just shrinks away with a poof
+      if (u < 1) w += CATS.cat({ x: rc.x, y: 120, s: 2.2 * (1 - eo(u) * 0.95), pose: 'sit', mood: u > 0 ? 'surprised' : 'lazy', t: t + i, coat: rc.coat, seed: rc.seed });
+      fx += poof(rc.x, 120 - 200, seg(u, 0, 0.7), 300);
+      return;
     }
-    if (caught && hug < 1) o += K.F.heartPath ? P(K.F.heartPath(ow.x + dx + 90, hy - 150 - 60 * hug, 26), { fill: '#FF5A8A', stroke: E.LINE, 'stroke-width': 4, opacity: f(1 - hug * 0.6) }) : '';
+    const caught = u >= 1, hug = seg(t, t0 + 0.55, t0 + 0.8);
+    const arm = caught ? lerp(55, 22, hug) : 55;
+    const bodyH = ow.who === 'kid' ? 0.88 : 1.06;
+    const hy = 990 - (515 - 252 * Math.cos((arm * Math.PI) / 180)) * 0.5 * bodyH;
+    const face = caught ? { name: 'joy' } : { name: 'amazed', fx: [], eyes: { look: [ow.x < rc.x ? 0.4 : -0.4, -1] } };
+    const catProp = caught ? [{ svg: CATS.cat({ x: 0, y: -330 + 40 * hug, s: 0.62, pose: 'sit', mood: 'happy', t, coat: rc.coat, seed: rc.seed }), layer: 'front' }] : [];
+    w += K.draw[ow.who](ow.i, { x: ow.x, y: 990, s: 0.5, armL: arm, armR: arm, face, bodyY: caught ? 8 * bump(hug, 0, 0.5) : 0, props: catProp });
+    if (u <= 0) w += CATS.cat({ x: rc.x, y: 120, s: 2.2, pose: 'sit', mood: 'lazy', t: t + i, coat: rc.coat, seed: rc.seed });
+    else if (!caught) {
+      const cs = lerp(2.2, 0.33, eo(u)), cy = lerp(120, hy + 10, io(u)), cx = lerp(rc.x, ow.x, io(u));
+      fx += CATS.cat({ x: cx, y: cy, s: cs, pose: 'paw', mood: 'surprised', t, coat: rc.coat, seed: rc.seed }) + poof(rc.x, 120 - 200, seg(u, 0, 0.6), 300);
+    }
+    if (caught && hug < 1) fx += P(K.F.heartPath(ow.x + 90, hy - 150 - 60 * hug, 26), { fill: '#FF5A8A', stroke: E.LINE, 'stroke-width': 4, opacity: f(1 - hug * 0.6) });
   });
+  let o = G(w + fx, `translate(${f(960 + dx)} 1000) scale(${STREET_K}) translate(-960 -1000)`);
   // the next command is already being typed
   const kc = seg(t, M[2].a - 0.25, M[2].a);
   if (kc > 0) o += K.chatCommand(460, 110, ';unfly the bus', K.typeProgress(t, M[2]), { t, enter: seg(t, M[2].b, c4), s: 1.05 });
@@ -182,7 +192,7 @@ function shotBus(t) {
 // 5. the bath guy drops back into his own bathroom
 function shotTub(t) {
   const u = seg(t, c5, c5 + 0.42);
-  const y = lerp(-200, 930, ease.in(u));
+  const y = lerp(-260, 930, u * u);
   const sq = bump(t, c5 + 0.4, c5 + 0.7);
   let o = E.bathroom(t, 1);
   o += CS.bathtubGuy(960, y + 10 * sq, 0.62 * (1 + 0.04 * sq), 0, { t, face: u >= 1 ? 'happy' : 'shock' });
@@ -266,7 +276,7 @@ function dadFrame(t) {
   const talk = Math.floor(t * 7) % 3 === 0 ? 'O' : 'smile';
   const dad = K.actor('dad', t, { x: ch.x, y: ch.feet, s: ch.s, view: 'side', legL: 82, kneeL: 86, legR: 72, kneeR: 82, lift: (1 - ease.in(drop)) * 700, sy: 1 - 0.1 * sq, sx: 1 + 0.06 * sq, armL: 40, face: { name: drop < 1 ? 'shocked' : 'happy', mouth: drop < 1 ? 'O' : talk } }, { arms: false });
   let o = K.view(cam, Ld.bg, 0.7) + K.view(cam, Ld.mid + dad + Ld.front, 1) + K.view(cam, Ld.fg || '', 1.2) + K.view(cam, Ld.light || '', 1);
-  if (sq > 0) o += K.bang('PLOP', 760, 300, seg(t, c9 + 0.3, c9 + 0.4), 80, -8, '#FFFFFF');
+  if (sq > 0) o += K.bang('PLOP', 1240, 260, seg(t, c9 + 0.3, c9 + 0.4), 80, -8, '#FFFFFF');
   return o;
 }
 function momPose(t, extra = {}) {
@@ -339,7 +349,7 @@ function yard(t, cam, chars) {
   return K.view(cam, Ly.bg, 0.6) + K.view(cam, Ly.mid + Ly.front + ST.laptop(560, 962, 0.32, '', { lid: 0, t, dust: 0.2 }) + chars, 1) + K.view(cam, Ly.light || '', 1);
 }
 function shotTwo(t) {
-  const cam = K.camKeys(t, [[c12, at(965, 600, 1.25)], [c13, at(975, 585, 1.48)]], ease.linear);
+  const cam = K.camKeys(t, [[c12, at(965, 560, 1.15)], [c13, at(975, 548, 1.34)]], ease.linear);
   const listening = t < M[9].a - 0.1;
   const h = K.actor('you', t, { x: HXY, y: 960, s: 0.5, turn: 0.45, armL: 10, armR: 10, face: listening ? { name: 'happy', eyes: { look: [1, 0] } } : { name: 'sad', fx: [], eyes: { look: [1, 0] } } }, { energy: 0.45 });
   const b = K.actor('brick', t, { x: BRX, y: 960, s: 0.5, turn: -0.35, armL: 6, armR: -14, headRot: 6, face: brickSad({ eyes: { look: listening ? [-0.8, 0.6] : [-0.3, 0.8] } }) }, { arms: false, energy: 0.35 });
@@ -355,13 +365,13 @@ function shotBrickClose(t) {
 function shotHeroClose(t) {
   const cam = K.camKeys(t, [[c14, at(HXY + 10, 595, 2.25)], [c15, at(HXY + 15, 590, 2.45)]], ease.linear);
   const soft = io(seg(t, M[10].a, M[11].a));
-  const face = t < M[11].a - 0.05 ? { name: 'amazed', fx: [], eyes: { look: [1, 0.2] } } : { name: 'happy', eyes: { look: [1, 0] }, fx: ['blush'] };
+  const face = t < M[11].a - 0.05 ? { name: 'amazed', fx: [], eyes: { look: [1, 0.2] } } : { name: 'happy', eyes: { look: [1, 0], lower: 0.22, pupil: 1.1 }, fx: ['blush'] };
   const h = K.actor('you', t, { x: HXY, y: 960, s: 0.5, turn: 0.4, headRot: -4 * soft, face, volume: false }, { energy: 0.5 });
   return yard(t, cam, h);
 }
 // 15. "...Can I still have the cookie?" — "HALF the cookie." — "...Deal."
 function shotCookie(t) {
-  const cam = K.camKeys(t, [[c15, at(965, 600, 1.5)], [tHalf - 0.1, at(965, 600, 1.55)], [c16, at(970, 590, 1.72)]]);
+  const cam = K.camKeys(t, [[c15, at(965, 560, 1.3)], [tHalf - 0.1, at(965, 560, 1.36)], [c16, at(975, 548, 1.5)]]);
   const out = io(seg(t, M[12].b - 0.1, tHalf - 0.05));
   const snap = t >= M[13].word('HALF').t0 + 0.15;
   const give = io(seg(t, tHalf + 0.5, M[13].b + 0.1));
@@ -379,7 +389,7 @@ function shotCookie(t) {
   const reach = take ? io(seg(t, tDeal - 0.15, tDeal + 0.2)) : 0;
   const bp = take ? [{ svg: E.cookie(A.hand(lerp(10, 40, reach), -1)[0] - 20, A.hand(lerp(10, 40, reach), -1)[1] + 20, 1.25, 1, -20), layer: 'front' }] : [];
   const smile = take;
-  const b = K.actor('brick', t, { x: BRX, y: 960, s: 0.5, turn: -0.35, armL: take ? lerp(10, 40, reach) : 8 + fid, armR: take ? 10 : 8 - fid, headRot: smile ? -4 : 4, props: bp, face: smile ? { name: 'happy', fx: ['blush'], eyes: { look: [-0.8, 0] } } : { name: 'happy', mouth: 'smallSmile', fx: ['blush', 'sweat'], eyes: { look: [-0.8, -0.3], upper: 0.1 } } }, { arms: false, energy: 0.4 });
+  const b = K.actor('brick', t, { x: BRX, y: 960, s: 0.5, turn: -0.35, armL: take ? lerp(10, 40, reach) : 8 + fid, armR: take ? 10 : 8 - fid, headRot: smile ? -4 : 4, props: bp, face: smile ? { name: 'happy', fx: ['blush'], eyes: { look: [-0.8, 0] } } : { name: 'sad', mouth: 'smallSmile', fx: ['blush'], eyes: { look: [-0.8, -0.4], upper: 0.05 } } }, { arms: false, energy: 0.4 });
   let o = yard(t, cam, h + b);
   if (snap && t < M[13].b + 0.4) o += K.bang('SNAP!', 760, 260, seg(t, M[13].word('HALF').t0 + 0.15, M[13].word('HALF').t0 + 0.25), 80, -8, '#E8B060');
   if (smile) o += K.view(cam, K.rays(1300, 230, 12, 800, '#FFF2C0', 0.1 * seg(t, tDeal, tDeal + 0.3), t * 8), 1) + K.sparkles([[1200, 300, 26 * seg(t, tDeal, tDeal + 0.2)], [1500, 380, 18]], t);
@@ -401,7 +411,7 @@ function shotKeep(t) {
   const chips = t > tAny - 0.3;
   const h = E.heroLap(t, { x: HX, y: 960, s: HS, turn: -0.3, armL: chips ? 30 : 12, armR: chips ? 30 : 12, face: chips ? { name: 'amazed', fx: [], eyes: { look: [0, 0.8] } } : { name: 'happy', eyes: { look: [-0.8, -0.2] } } }, {}, { open: chips, s: chips ? 0.62 : 0.5, screen: chips ? ST.adminScreen(t, { commands: true, battery: 100 }) : null, battery: 100, glow: 0.6 });
   let o = E.room(t, cam, {}, o2, h);
-  o += K.view(cam, G(keepSlot(t, seg(t, tKeep - 0.1, tKeep + 0.25) * (1 - seg(t, tAny, tAny + 0.3))), tr(HX - 120, 290)), 1);
+  o += K.view(cam, G(keepSlot(t, seg(t, tKeep - 0.1, tKeep + 0.25) * (1 - seg(t, tAny, tAny + 0.3))), tr(HX - 160, 372)), 1);
   if (t > tForever) o += K.view(cam, K.sparkles([[HX + 140, 180, 24], [HX - 380, 200, 18], [HX + 200, 330, 14]], t), 1);
   return o;
 }
@@ -449,8 +459,8 @@ function shotThink(t) {
 // 18. the silent beat — Mom, Dad, Granny, Zoe, Brick on the wall monitors
 function shotFamily(t) {
   const u = io(seg(t, c18, c19));
-  const pan = lerp(-60, 2620 - 1920 + 400, u);
-  const look = Math.min(4, Math.floor(u * 5));
+  const pan = lerp(-520, 2330, u);
+  const look = Math.min(4, Math.round(u * 4));
   return E.familyWall(t, pan, look) + R(0, 0, 1920, 1080, 0, { fill: '#FFB347', opacity: 0.06 });
 }
 // 19. ";unadmin me" — slowly. Enter.

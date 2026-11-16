@@ -215,8 +215,8 @@ function sh05(t) {
   const ty = t < tSpeedE + 0.05;
   const p = { ...HK, turn: -0.55, ...typing(t, ty), face: t > tSpeedE ? fc('smug', t, 2) : undefined, props: [heldLaptop(t)] };
   let o = room(SETS.kitchen, t, { panCake: true }, cam, { chars: SETS.glowSpot(HK.x, 760, 260, 'setsGlowGreen', 0.6) + you(t, p, { arms: false }) });
-  o += cmd(t, 560, 290, ';speed Granny', K.typeProgress(t, A[2]), tSpeedE, { s: 1.5 });
-  o += enterPop(t, tSpeedE, 560, 440, 1.2);
+  o += cmd(t, 500, 250, ';speed Granny', K.typeProgress(t, A[2]), tSpeedE, { s: 1.5 });
+  o += enterPop(t, tSpeedE, 500, 400, 1.2);
   return o;
 }
 // ---- 6. SPEED: the blur, wind, pancakes everywhere
@@ -318,17 +318,17 @@ function sh09(t) {
 const CAR = { x: 1000, y: 1062, s: 0.9 };
 function carDriver(t, face, fast = true) {
   // Granny (side view facing right) drawn in car-local units: her head sits in the window
-  return actor('granny', t, { x: 70, y: 72, s: 0.32, turn: 0.6, fast, armL: 40, armR: 40, face, shadow: false }, { arms: false });
+  return actor('granny', t, { x: 66, y: 22, s: 0.32, turn: 0.6, fast, armL: 40, armR: 40, face, shadow: false }, { arms: false });
 }
 function sh10(t) {
-  const cam = camKeys(t, [[c10, at(1080, 880, 1.45)], [c11, at(1060, 900, 1.7)]], ease.inOut);
+  const cam = camKeys(t, [[c10, at(1140, 860, 1.7)], [c11, at(1080, 880, 2.05)]], ease.inOut);
   shakeAll(cam, t, [[c10, 2.5, 4]]);
   const Ly = SETS.houseExterior.layers(t, { time: 'morning' });
   const rev = 0.5 + 0.5 * Math.sin(t * 9);
   const drv = carDriver(t, { name: 'determined', mouth: 'grin' });
   let w_ = Ly.mid + Ly.front;
   w_ += X.grannyCar(CAR.x, CAR.y, CAR.s, { t, driver: drv, smoke: 0.4 + 0.4 * rev, shake: 1 });
-  w_ += you(t, { x: 1560, y: 945, s: 0.3, face: { name: 'scared', fx: ['sweat'] }, turn: -0.5, armL: 28, armR: 28, props: [heldLaptop(t)] }, { arms: false });
+  w_ += you(t, { x: 1430, y: 945, s: 0.3, face: { name: 'scared', fx: ['sweat'] }, turn: -0.5, armL: 28, armR: 28, props: [heldLaptop(t)] }, { arms: false });
   let o = view(cam, Ly.bg, 0.6) + view(cam, w_, 1);
   o += bangAt(t, 'VRRRM!', 640, 300, c10 + 0.2, 1.0, 110, -8, '#FF8A1F') + bangAt(t, 'VRRRRRM!!', 1300, 240, c10 + 1.0, 1.0, 120, 6, '#FF5A3D');
   return o;
@@ -367,8 +367,8 @@ function sh12(t) {
   w_ += X.grannyCar(CAR.x - 330, CAR.y, CAR.s, { t, driver: carDriver(t, { name: 'joy' }), smoke: 1, flames: 0.6, shake: 1.5, spin: t * 30 });
   w_ += you(t, { ...HX, turn: -0.3, ...typing(t, 1), face: { name: 'scared', fx: ['sweat2'] }, props: [heldLaptop(t)] }, { arms: false, energy: 1.6 });
   let o = view(cam, Ly.bg, 0.6) + view(cam, w_, 1);
-  o += cmd(t, 1240, 230, ';unspeed Granny', K.typeProgress(t, A[5], 0, 1), w1(5, 'granny'), { s: 1.5, extraE: [e2, tUnspeedE - 0.1] });
-  o += enterPop(t, w1(5, 'granny'), 1250, 390, 1) + enterPop(t, e2, 1500, 400, 1.1) + enterPop(t, tUnspeedE - 0.1, 1000, 410, 1.2);
+  o += cmd(t, 620, 200, ';unspeed Granny', K.typeProgress(t, A[5], 0, 1), w1(5, 'granny'), { s: 1.5, extraE: [e2, tUnspeedE - 0.1] });
+  o += enterPop(t, w1(5, 'granny'), 620, 360, 1) + enterPop(t, e2, 900, 380, 1.1) + enterPop(t, tUnspeedE - 0.1, 450, 390, 1.2);
   return o;
 }
 // ---- 13. the car stops dead
@@ -490,8 +490,8 @@ function sh19(t) {
   let w_ = Ly.mid + giant(t, { s: 3.0, mood: 'smug' });
   w_ += you(t, { ...HX, turn: -0.3, ...typing(t, 1), face: { name: 'scared', fx: ['sweat2'] }, props: [heldLaptop(t)] }, { arms: false, energy: 1.6 });
   let o = view(cam, Ly.bg, 0.6) + view(cam, w_, 1);
-  o += cmd(t, 1240, 230, ';size Pancake 1', K.typeProgress(t, A[9], 'Size', 'ONE'), tOneE, { s: 1.5, extraE: [w(9, 'ONE', 1)] });
-  o += enterPop(t, tOneE, 1300, 390, 1.2);
+  o += cmd(t, 620, 200, ';size Pancake 1', K.typeProgress(t, A[9], 'Size', 'ONE'), tOneE, { s: 1.5, extraE: [w(9, 'ONE', 1)] });
+  o += enterPop(t, tOneE, 640, 360, 1.2);
   return o;
 }
 // ---- 20. poof — normal size; the house drops back into its hole
@@ -705,7 +705,7 @@ const DSKY = { x: 300, y: 150, s: 0.24 };      // Dad above the big front-yard t
 function sh30(t) {
   const tTree = w(16, 'tree');
   const left = S.rect(-20, 0, 1000, 1080, 0, { fill: '#22293D' }) + SETS.videoCall(470, 470, 900, 600, t, callO(t, { bossFace: 'confused', selfSky: true }));
-  const cam = camKeys(t, [[c30, atS(300, 230, 1.6, 1440, 560)], [tTree - 0.1, atS(300, 210, 1.75, 1440, 560)], [tTree + 0.12, atS(300, 120, 2.6, 1440, 520)], [c31, atS(300, 120, 2.7, 1440, 520)]], ease.inOut);
+  const cam = camKeys(t, [[c30, atS(300, 230, 1.6, 1440, 560)], [tTree - 0.1, atS(300, 210, 1.75, 1440, 560)], [tTree + 0.12, atS(300, 70, 2.3, 1440, 560)], [c31, atS(300, 70, 2.38, 1440, 560)]], ease.inOut);
   const Ly = SETS.houseExterior.layers(t, { time: 'day' });
   const bob = Math.sin(t * 2) * 8;
   const dad = dadFloat(t, DSKY.x + Math.sin(t * 0.7) * 10, DSKY.y + bob, DSKY.s, { face: { name: 'scared', eyes: { look: [0, 0.8] }, fx: ['sweat'] }, rot: 4 * Math.sin(t * 1.3) });
@@ -831,7 +831,7 @@ function sh36(t) {
   const k = ease.out(seg(t, tGodE, tGodE + 0.35));
   const ps = popStretch(t, tGodE + 0.03, 0.32);
   const hp = { ...HL, ...ps, ...(k > 0 ? { armL: 40, armR: 40 } : typing(t, 1)), face: k > 0 ? { name: 'smug', fx: ['sparkles'] } : undefined, props: [heldLaptop(t)], lift: 20 * k };
-  const chars = aura(t, HL.x, HL.y - 280, k) + you(t, hp, { arms: false });
+  const chars = aura(t, HL.x, HL.y - 280, k) + you(t, hp, { arms: false }) + K.commandBurst(HL.x, HL.y - 280, t - tGodE, GOLD, 280);
   let o = room(SETS.livingRoom, t, { callOpts: callO(t) }, cam, { patch: deskPatch(t, SETS.livingRoom.layers(t, {})), chars, bgK: 1 });
   // a note flies in from the right and pings off
   const t1 = A[20].a + 0.05;
@@ -943,7 +943,7 @@ function couchPair(t, opts = {}) {
 const TABLE_LAP = (t, extra = {}) => SETS.laptop(1010, 922, 0.34, SETS.adminScreen(t, { lines: extra.lines || ['Admin panel loaded.', 'Welcome... you.', ';god me', 'Command accepted.'] }), { t, dust: 0, glow: 0.7 });
 function sh42(t) {
   const tR = w(22, 'REAL', 1);
-  const cam = camKeys(t, [[c42, at(1000, 660, 1.3)], [tR - 0.06, at(990, 650, 1.4)], [tR + 0.04, at(830, 560, 2.5)], [c43, at(840, 570, 2.35)]], ease.out);
+  const cam = camKeys(t, [[c42, at(1000, 660, 1.3)], [tR - 0.06, at(990, 650, 1.4)], [tR + 0.04, at(830, 560, 2.5)], [w(22, 'For') - 0.1, at(840, 570, 2.35)], [w(22, 'For') + 0.4, at(1000, 640, 1.55)], [c43, at(1000, 630, 1.6)]], ease.out);
   shakeAll(cam, t, [[tR, 0.3, 10]]);
   let o = room(SETS.livingRoom, t, { callOpts: callO(t) }, cam, { patch: deskPatch(t, SETS.livingRoom.layers(t, {})), bgK: 1, behind: couchPair(t, { yFace: { name: 'nervous', eyes: { look: [-1, 0] } } }), chars: TABLE_LAP(t) });
   o += smash(t, tR, 0.12, 0.6) + (t > tR ? zoomLines(960, 540, 1 - seg(t, tR + 0.05, tR + 0.5), '#FFFFFF', 22, 11) : '');

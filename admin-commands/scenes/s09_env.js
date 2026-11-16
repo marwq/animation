@@ -438,11 +438,12 @@ function cable(x0, y0, x1, y1, sag = 120) {
   const d = `M${f(x0)} ${f(y0)} C${f(x0 + 60)} ${f(y0 + sag)} ${f(x1 - 40)} ${f(y1 + sag)} ${f(x1)} ${f(y1)}`;
   return P(d, { ...ln(14), fill: 'none' }) + P(d, { ...ln(7, '#F2EEE6'), fill: 'none' });
 }
-// little dawn street front (for the cats landing in their owners' arms): screen space, sidewalk at y 980
+// little dawn street front (for the cats landing in their owners' arms): x -1040..2980, roofline y 120, sidewalk y 990
+const dRect = (x, y, w, h) => `M${f(x)} ${f(y)}h${f(w)}v${f(h)}h${f(-w)}Z`;
 function catStreet(t) {
   let o = `<defs><linearGradient id="s10dawnSky" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#9AA6EC"/><stop offset="0.6" stop-color="#F4AFC8"/><stop offset="1" stop-color="#FFE2B8"/></linearGradient></defs>`;
-  o += R(-300, -300, 2520, 1700, 0, { fill: 'url(#s10dawnSky)' });
-  o += P('M-300 300 H160 V140 H420 V260 H700 V60 H980 V200 H1320 V110 H1600 V240 H2220 V1200 H-300 Z', { fill: '#C9A6D8', opacity: 0.55 });
+  o += R(-1300, -900, 4500, 2500, 0, { fill: 'url(#s10dawnSky)' });
+  o += P('M-1300 200 H-700 V-40 H-300 V100 H160 V-20 H420 V80 H700 V-120 H980 V40 H1320 V-60 H1600 V60 H2220 V-10 H3200 V1200 H-1300 Z', { fill: '#C9A6D8', opacity: 0.55 });
   // two shop fronts
   const shop = (x, w, col, sign, awn) => {
     let s = R(x, 120, w, 880, 0, ol(col, 7)) + R(x + 40, 560, w - 80, 230, 10, ol('#FFE6B8', 6)) + R(x + 40, 560, w - 80, 230, 10, { fill: '#FFFFFF', opacity: 0.25 });
@@ -450,13 +451,13 @@ function catStreet(t) {
     let aw = `M${x + 20} 470 H${x + w - 20} V520`;
     const n = 8, sw = (w - 40) / n;
     for (let i = 0; i < n; i++) aw += `q${f(-sw / 2)} 26 ${f(-sw)} 0`;
-    s += P(aw + 'Z', ol(awn, 6)) + P(Array.from({ length: n / 2 }, (_, i) => `M${f(x + 20 + (2 * i + 1) * sw)} 470 v50`).join(''), ln(sw * 0.9, '#FFFFFF', 0.45));
-    s += R(x + w / 2 - 170, 410, 340, 54, 10, ol('#2A2246', 5)) + TF(sign, x + w / 2, 450, 38, '#FF8AD8');
+    s += P(aw + 'Z', ol(awn, 6)) + P(Array.from({ length: n / 2 }, (_, i) => dRect(x + 20 + (2 * i + 1) * sw, 472, sw, 46)).join(''), { fill: '#FFFFFF', opacity: 0.4 });
+    s += R(x + w / 2 - 170, 404, 340, 54, 10, ol('#2A2246', 5)) + TF(sign, x + w / 2, 444, 38, '#FF8AD8');
     return s;
   };
-  o += shop(-60, 1000, '#E58FB0', 'CAT CAFE', '#7A4FC8') + shop(940, 1060, '#7FC6A4', 'MEOW MART', '#E8453C');
-  o += R(-300, 990, 2520, 400, 0, ol('#D4B8C8', 6)) + R(-300, 1040, 2520, 400, 0, { fill: '#9A82A8' });
-  o += R(-300, 0, 2520, 1200, 0, { fill: '#FFB08A', opacity: 0.07 });
+  o += shop(-1040, 980, '#9B7ED0', 'DONUTS', '#2E9C6A') + shop(-60, 1000, '#E58FB0', 'CAT CAFE', '#7A4FC8') + shop(940, 1060, '#7FC6A4', 'MEOW MART', '#E8453C') + shop(2000, 980, '#F2C26B', 'ARCADE', '#3A7BD5');
+  o += R(-1300, 990, 4500, 600, 0, ol('#D4B8C8', 6)) + R(-1300, 1040, 4500, 600, 0, { fill: '#9A82A8' });
+  o += R(-1300, -600, 4500, 2200, 0, { fill: '#FFB08A', opacity: 0.07 });
   return o;
 }
 // the bathtub guy's bathroom (screen space): tiles, window, towel, a hole in the ceiling (hole 0..1)
@@ -469,8 +470,13 @@ function bathroom(t, hole = 1) {
   o += R(1160, 420, 160, 12, 6, ol('#C9CED8', 4)) + P('M1180 432 H1300 V640 Q1240 660 1180 640 Z', ol('#FF8FC0', 5)) + P('M1180 600 H1300', ln(5, '#FFFFFF', 0.7));
   if (hole > 0) {
     const k = clamp(hole, 0, 1);
-    o += P(`M${f(960 - 330 * k)} 140 L${f(960 - 260 * k)} ${f(140 - 120 * k)} L${f(960 - 90 * k)} ${f(140 - 150 * k)} L${f(960 + 120 * k)} ${f(140 - 140 * k)} L${f(960 + 300 * k)} ${f(140 - 90 * k)} L${f(960 + 340 * k)} 140 Z`, { fill: '#F7C2C8', stroke: LINE, 'stroke-width': 7, 'stroke-linejoin': 'round' });
-    o += P(`M${f(960 - 320 * k)} 140 L${f(960 - 380 * k)} 170 M${f(960 + 330 * k)} 140 L${f(960 + 400 * k)} 176 M${f(960 + 60 * k)} 140 L${f(960 + 40 * k)} 180`, ln(5));
+    const hd = `M${f(960 - 420 * k)} 140 L${f(960 - 380 * k)} 60 L${f(960 - 300 * k)} 96 L${f(960 - 250 * k)} -20 L${f(960 - 120 * k)} 30 L${f(960 - 40 * k)} -40 L${f(960 + 90 * k)} 20 L${f(960 + 200 * k)} -30 L${f(960 + 290 * k)} 70 L${f(960 + 370 * k)} 40 L${f(960 + 430 * k)} 140 Z`;
+    o += P(hd, { fill: '#A9B4F0', stroke: LINE, 'stroke-width': 8, 'stroke-linejoin': 'round' }) + P(`M${f(960 - 300 * k)} 120 Q${f(960)} ${f(30)} ${f(960 + 300 * k)} 120 Z`, { fill: '#F4AFC8', opacity: 0.8 });
+    o += P(`M${f(960 - 140 * k)} 60 a40 22 0 1 0 80 0 a40 22 0 1 0 -80 0 Z M${f(960 + 120 * k)} 40 a50 24 0 1 0 100 0 a50 24 0 1 0 -100 0 Z`, { fill: '#FFFFFF', opacity: 0.85 });
+    o += P(`M${f(960 - 430 * k)} 140 L${f(960 - 470 * k)} 196 M${f(960 + 430 * k)} 140 L${f(960 + 480 * k)} 190 M${f(960 + 40 * k)} 140 L${f(960 + 20 * k)} 200 M${f(960 - 230 * k)} 140 l-20 46`, ln(6));
+    let deb = '';
+    for (let i = 0; i < 7; i++) { const u = (t * 0.7 + hash(i * 2.1)) % 1; deb += `M${f(960 + (hash(i * 5.3) - 0.5) * 700 * k)} ${f(150 + u * 760)} l14 6 l-6 12 l-12 -4 Z`; }
+    o += P(deb, { fill: '#F4F0EA', stroke: LINE, 'stroke-width': 3 });
   }
   return o;
 }
@@ -501,9 +507,9 @@ function familyFeed(name, w, h, t) {
 }
 function familyWall(t, pan, look = -1) {
   let o = R(-200, -200, 2400, 1500, 0, { fill: '#2A1E26' }) + G(R(-1000, -100, 5000, 1300, 0, { fill: 'url(#cityMonA)' }), `translate(${f(-pan * 0.6)} 0)`) + R(-200, -200, 2400, 1500, 0, { fill: '#1A0C10', opacity: 0.4 });
-  const W = 560, H = 420;
+  const W = 620, H = 460;
   FAMILY.forEach((name, i) => {
-    const x = 160 + i * 640 - pan, y = 300;
+    const x = 160 + i * 700 - pan, y = 250;
     if (x > 1960 || x + W < -40) return;
     const hl = look === i ? 1 : 0;
     o += CS.crt(x, y, W, H, ['cream', 'grey', 'wood', 'beige', 'dark'][i], familyFeed(name, W - 24, H - 40, t + i), 0);

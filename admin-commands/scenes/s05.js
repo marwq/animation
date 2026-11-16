@@ -115,7 +115,7 @@ function shYard(t) {
 // ---- cafeteria cast placement
 const CAFE = { kidB: 1720, brick: 1380, hero0: 1120, hero1: 900, back1: 720, back2: 540, lady: 1800 };
 const cafeLayers = (t) => SETS.cafeteria.layers(t, {});
-function lady(t, pose = {}) { return X.lunchLady(t, { x: CAFE.lady, y: 890, s: 0.5, turn: -0.3, armR: 40, ...breathe(t, 1), ...pose }); }
+function lady(t, pose = {}) { return X.lunchLady(t, { x: CAFE.lady, y: 890, s: 0.5, turn: -0.3, armR: 40, volume: false, ...breathe(t, 1), ...pose }); }
 const brickCage = (t, part, drop = 1, x = CAFE.brick) => SETS.cage(x, 990, 1.25, t, { drop, part });
 
 // ---- 2. the lunch line: Brick barges in ("Move, noob.")
@@ -128,9 +128,9 @@ function shLine(t) {
   const hx = lerp(CAFE.hero0, CAFE.hero1, ease.out(shove));
   const cam = shakeAll(camKeys(t, [[CUT.line, { zoom: 1.18, x: 160, y: 60 }], [CUT.low, { zoom: 1.26, x: 200, y: 70 }]]), t, [[tMove, 0.3, 14]]);
   let ch = '';
-  ch += kid(1, { x: CAFE.back2, y: 990, s: 0.42, view: 'side', flip: true, ...breathe(t, 2), face: 'neutral' });
-  ch += kid(13, { x: CAFE.back1, y: 990, s: 0.42, view: 'side', flip: true, ...breathe(t, 3), face: bu > 0.5 ? 'shocked' : 'neutral' });
-  ch += kid(4, { x: CAFE.kidB, y: 990, s: 0.42, view: 'side', flip: true, ...breathe(t, 4), face: 'happy' });
+  ch += kid(1, { volume: false, x: CAFE.back2, y: 990, s: 0.42, view: 'side', flip: true, ...breathe(t, 2), face: 'neutral' });
+  ch += kid(13, { volume: false, x: CAFE.back1, y: 990, s: 0.42, view: 'side', flip: true, ...breathe(t, 3), face: bu > 0.5 ? 'shocked' : 'neutral' });
+  ch += kid(4, { volume: false, x: CAFE.kidB, y: 990, s: 0.42, view: 'side', flip: true, ...breathe(t, 4), face: 'happy' });
   const hit = t >= tMove - 0.1;
   ch += hero(t, { x: hx, y: 990, s: 0.5, view: 'side', flip: true, lean: hit ? -10 * (1 - seg(t, tMove + 0.2, tMove + 0.7)) : 0, ...boing(t, tMove - 0.05, 0.18), face: hit ? 'scared' : 'happy' }, {}, { mode: 'under', glow: 0.3 });
   const walking = t < tMove;
@@ -160,7 +160,7 @@ function shJail(t) {
   const Lc = cafeLayers(t);
   const u = seg(t, CUT.jail, CUT.cage);
   const camBg = { zoom: 1.9, x: 330, y: 10 };
-  let o = view(camBg, Lc.bg, 0.9) + view(camBg, Lc.mid + Lc.front + actor('brick', t, { x: 1360, y: 990, s: 0.5, view: 'side', face: 'smug' }), 1);
+  let o = view(camBg, Lc.bg, 0.9) + view(camBg, Lc.mid + Lc.front + actor('brick', t, { x: 1360, y: 990, s: 0.5, view: 'side', face: 'smug', volume: false }), 1);
   o += S.rect(0, 0, 1920, 1080, 0, { fill: '#0B2A1C', opacity: 0.25 });
   const z = 1 + 0.08 * ease.inOut(u) + 0.05 * bump(t, tJail, tJail + 0.25);
   let h = hero(t, { x: 960, y: faceAt(500, 1.15), s: 1.15, volume: false, ...typing(t, t < tJail, 14), face: { name: 'smug', eyes: { look: [-0.3, 0.2] } } }, {}, { mode: 'back', glow: 1, y: -300, s: 0.62 });
@@ -181,9 +181,9 @@ function shCage(t) {
   const cam = shakeAll(camKeys(t, [[CUT.cage, wide], [tCage - 0.07, { ...wide, zoom: 1.12 }], [tCage, close], [CUT.stare, { ...close, zoom: 2.55 }]]), t, [[tLand, 0.45, 26], [tCage, 0.35, 12]]);
   const landed = t >= tLand;
   let ch = '';
-  ch += kid(1, { x: CAFE.back2, y: 990, s: 0.42, view: 'side', flip: true, face: landed ? 'shocked' : 'neutral', lift: 40 * bump(t, tLand, tLand + 0.35) });
-  ch += kid(13, { x: CAFE.back1, y: 990, s: 0.42, turn: 0.3, face: landed ? 'amazed' : 'neutral', ...breathe(t, 3) });
-  ch += kid(4, { x: CAFE.kidB + 30 * ease.out(seg(t, tLand, tLand + 0.3)), y: 990, s: 0.42, turn: -0.4, face: landed ? 'scared' : 'happy', lift: 70 * bump(t, tLand, tLand + 0.4), armL: landed ? 120 : 9, armR: landed ? 120 : 9 });
+  ch += kid(1, { volume: false, x: CAFE.back2, y: 990, s: 0.42, view: 'side', flip: true, face: landed ? 'shocked' : 'neutral', lift: 40 * bump(t, tLand, tLand + 0.35) });
+  ch += kid(13, { volume: false, x: CAFE.back1, y: 990, s: 0.42, turn: 0.3, face: landed ? 'amazed' : 'neutral', ...breathe(t, 3) });
+  ch += kid(4, { volume: false, x: CAFE.kidB + 30 * ease.out(seg(t, tLand, tLand + 0.3)), y: 990, s: 0.42, turn: -0.4, face: landed ? 'scared' : 'happy', lift: 70 * bump(t, tLand, tLand + 0.4), armL: landed ? 120 : 9, armR: landed ? 120 : 9 });
   ch += hero(t, { x: CAFE.hero1, y: 990, s: 0.5, turn: 0.4, ...breathe(t), face: landed ? { name: 'smug', eyes: { look: [0.7, 0] } } : 'sneaky' }, {}, { mode: 'back', glow: 0.8 });
   // Brick in the cage
   let bp;
@@ -193,7 +193,7 @@ function shCage(t) {
     const shakeB = grab ? Math.sin(t * 40) * 7 : 0;
     bp = { turn: 0, lift: 90 * bump(t, tHey - 0.05, tHey + 0.35), armL: grab ? 150 : 120, armR: grab ? 150 : 120, x: CAFE.brick + shakeB, face: t >= tCage - 0.1 ? 'angry' : 'shocked' };
   }
-  const brick = actor('brick', t, { x: CAFE.brick, y: 990, s: 0.5, ...bp }, { arms: false, energy: 1.4 });
+  const brick = actor('brick', t, { x: CAFE.brick, y: 990, s: 0.5, ...bp, ...(landed ? { volume: false } : {}) }, { arms: false, energy: 1.4 });
   ch += brickCage(t, 'back', drop) + brick + brickCage(t, 'front', drop);
   let fx = K.commandBurst(CAFE.brick, 560, t - tJail, '#3DFF9A', 260);
   fx += bang('SLAM!', CAFE.brick + 260, 300, pop(t, tLand, 0.2) * (1 - seg(t, tLand + 0.7, tLand + 0.9)), 110, 8, '#7DFFB8');
@@ -208,15 +208,15 @@ function shStare(t) {
   const cam = shakeAll(camKeys(t, [[CUT.stare, med], [tCouldnt - 0.07, { ...med, zoom: 1.45, x: 360 }], [tCouldnt, close], [CUT.tp, { ...close, zoom: 2.85 }]]), t, [[tCouldnt, 0.3, 10]]);
   let ch = '';
   const laugh = Math.abs(Math.sin(t * 9));
-  ch += kid(5, { x: 780, y: 990, s: 0.44, turn: 0.5, armR: 70, armL: 60, props: [{ svg: X.phoneProp(-30, -440, 1.2, 0, Math.max(bump(t, tFirst, tFirst + 0.18), bump(t, tEver, tEver + 0.18))), layer: 'front' }], face: 'happy', ...breathe(t, 5) });
-  ch += kid(3, { x: 950, y: 990, s: 0.44, turn: 0.4, armR: 80 + 6 * Math.sin(t * 12), armL: 20, bodyY: 6 * laugh, face: 'joy' });
-  ch += kid(4, { x: 1760, y: 990, s: 0.42, turn: -0.5, face: 'joy', bodyY: 5 * laugh, armL: 30, armR: 40 });
+  ch += kid(5, { volume: false, x: 780, y: 990, s: 0.44, turn: 0.5, armR: 70, armL: 60, props: [{ svg: X.phoneProp(-30, -440, 1.2, 0, Math.max(bump(t, tFirst, tFirst + 0.18), bump(t, tEver, tEver + 0.18))), layer: 'front' }], face: 'happy', ...breathe(t, 5) });
+  ch += kid(3, { volume: false, x: 950, y: 990, s: 0.44, turn: 0.4, armR: 80 + 6 * Math.sin(t * 12), armL: 20, bodyY: 6 * laugh, face: 'joy' });
+  ch += kid(4, { volume: false, x: 1760, y: 990, s: 0.42, turn: -0.5, face: 'joy', bodyY: 5 * laugh, armL: 30, armR: 40 });
   const strain = t >= tCouldnt;
   const give = seg(t, tMove + 0.15, tMove + 0.5);
   const bp = strain
     ? { armL: lerp(120, 40, give), armR: lerp(120, 40, give), bodyY: give > 0 ? 18 * give : 8 * Math.abs(Math.sin(t * 30)), x: CAFE.brick + (give > 0 ? 0 : Math.sin(t * 50) * 5), face: give > 0 ? { name: 'sad', fx: ['sweat'] } : { name: 'angry', fx: ['redface', 'sweat'], mouth: 'teeth' } }
     : { armL: -24, armR: -24, face: { name: 'angry', eyes: { look: [-0.5, 0.2] } }, ...breathe(t, 7) };
-  ch += brickCage(t, 'back') + actor('brick', t, { x: CAFE.brick, y: 990, s: 0.5, ...bp }) + brickCage(t, 'front');
+  ch += brickCage(t, 'back') + actor('brick', t, { x: CAFE.brick, y: 990, s: 0.5, ...bp, volume: false }) + brickCage(t, 'front');
   const fx = strain && give === 0 ? bang('NNNGH!', CAFE.brick + 170, 360, pop(t, tCouldnt + 0.05, 0.2), 64, 10, '#FFFFFF') : '';
   return room(Lc, cam, lady(t, { face: 'happy', armL: 30 }), ch + fx) + smash(t, tCouldnt, 0.12, 0.6);
 }
@@ -229,15 +229,15 @@ function shTp(t) {
   shakeAll(cam, t, [[tTp + 0.05, 0.4, 14]]);
   const gone = t >= tTp;
   let ch = '';
-  ch += kid(13, { x: CAFE.back1, y: 990, s: 0.42, view: 'side', flip: true, ...breathe(t, 3) });
+  ch += kid(13, { volume: false, x: CAFE.back1, y: 990, s: 0.42, view: 'side', flip: true, ...breathe(t, 3) });
   const typingNow = t < tTp;
   if (!gone) ch += hero(t, { x: CAFE.hero1, y: 990, s: 0.5, turn: 0.25, ...typing(t, typingNow, 12), face: 'smug' }, {}, { mode: 'back', glow: 1 });
   else {
     const k = seg(t, tTp, tTp + 0.15);
     if (k < 1) ch += S.g(hero(t, { x: CAFE.hero1, y: 990, s: 0.5, sx: 1 - k, sy: 1 + k * 0.6, face: 'smug' }, {}, { mode: 'back', glow: 1 }), null, { opacity: f(1 - k) });
   }
-  ch += brickCage(t, 'back') + actor('brick', t, { x: CAFE.brick, y: 990, s: 0.5, armL: -24, armR: -24, face: { name: 'angry', eyes: { look: [lerp(-0.6, 0.7, seg(t, tMe, tLine)), 0] } }, ...breathe(t, 7) }) + brickCage(t, 'front');
-  ch += kid(4, { x: CAFE.kidB, y: 990, s: 0.42, view: gone ? 'front' : 'side', flip: true, turn: 0.4, face: gone ? 'shocked' : 'happy', ...breathe(t, 4) });
+  ch += brickCage(t, 'back') + actor('brick', t, { x: CAFE.brick, y: 990, s: 0.5, volume: false, armL: -24, armR: -24, face: { name: 'angry', eyes: { look: [lerp(-0.6, 0.7, seg(t, tMe, tLine)), 0] } }, ...breathe(t, 7) }) + brickCage(t, 'front');
+  ch += kid(4, { volume: false, x: CAFE.kidB, y: 990, s: 0.42, view: gone ? 'front' : 'side', flip: true, turn: 0.4, face: gone ? 'shocked' : 'happy', ...breathe(t, 4) });
   // arrival at the front
   const ax = 1880;
   if (t >= tTp + 0.06) {
@@ -288,8 +288,8 @@ function shGym(t) {
 function shSpeed(t) {
   const Lg = gymL(t);
   const cam = camKeys(t, [[CUT.speed, { zoom: 2.3, x: GYM.hero - 960 + 60, y: 740 - 540 }], [CUT.boom, { zoom: 2.45, x: GYM.hero - 960 + 70, y: 740 - 540 }]]);
-  let ch = kid(8, { x: GYM.hero + 210, y: GYM.lane, s: 0.4, view: 'side', flip: true, bodyY: 34, lean: 22, armL: -30, armR: 40, legL: 30, legR: -20, kneeL: 60, kneeR: 40, face: 'determined' });
-  ch += hero(t, { x: GYM.hero, y: GYM.lane, s: 0.42, view: 'side', flip: true, bodyY: 34, lean: 26, armL: -40, armR: 70 + Math.sin(t * 40) * 6, legL: 30, legR: -20, kneeL: 60, kneeR: 40, face: { name: 'sneaky', eyes: { look: [0.8, 0.5] } } });
+  let ch = kid(8, { x: GYM.hero + 210, y: GYM.lane, s: 0.4, volume: false, view: 'side', flip: true, bodyY: 34, lean: 22, armL: -30, armR: 40, legL: 30, legR: -20, kneeL: 60, kneeR: 40, face: 'determined' });
+  ch += hero(t, { x: GYM.hero, y: GYM.lane, s: 0.42, volume: false, view: 'side', flip: true, bodyY: 34, lean: 26, armL: -40, armR: 70 + Math.sin(t * 40) * 6, legL: 30, legR: -20, kneeL: 60, kneeR: 40, face: { name: 'sneaky', eyes: { look: [0.8, 0.5] } } });
   ch += SETS.laptop(GYM.hero + 120, GYM.lane + 4, 0.22, SETS.adminScreen(t, { typed: ';speed me'.slice(0, Math.round(K.typeProgress(t, A[7], 'Speed', 'me') * 9)) }), { glow: 1, t });
   let o = room(Lg, cam, '', ch);
   o += zoomLines(960, 540, 0.7 * bump(t, tSpeed, tSpeed + 0.25), t, '#FFE7A0');
@@ -336,10 +336,10 @@ function shBoom(t) {
   const stopX = 1560;
   if (!done) {
     const p = trackPt(th);
-    const ghostN = 4;
+    const ghostN = 2;
     for (let g = ghostN; g >= 0; g--) {
-      const q = trackPt(th + g * 0.09);
-      ch += S.g(hero(t, { x: q[0], y: q[1], s: 0.42, view: 'side', flip: Math.cos(th) > 0 ? false : true, ...AC.run(t * 60, 1.2), lean: 20, face: 'excited' }), null, { opacity: f(g === 0 ? 1 : 0.18) });
+      const q = trackPt(th + g * 0.14);
+      ch += S.g(hero(t, { x: q[0], y: q[1], s: 0.42, volume: g === 0 ? undefined : false, view: 'side', flip: Math.cos(th) > 0 ? false : true, ...AC.run(t * 60, 1.2), lean: 20, face: 'excited' }), null, { opacity: f(g === 0 ? 1 : 0.18) });
     }
     ch += K.C.speedLines(p[0] - 300, p[0] + 300, p[1] - 160, 4, 7, '#FFFFFF', 200);
   } else {
@@ -447,9 +447,9 @@ function shSocks(t) {
   const look = t >= tShoes;
   let ch = '';
   ch += X.burntSole(1310, 965, 0.9, t, 1) + X.burntSole(1440, 975, 0.9, t + 0.4, 2);
-  ch += actor('coach', t, { x: 660, y: 990, s: 0.55, turn: 0.6, lean: 10, headRot: 8, armL: 20, armR: 40, face: { name: 'confused', eyes: { look: [0.5, 0.7] } }, props: [{ svg: X.meltWhistle(-30, -604, 1.2, 1, t), layer: 'top' }] });
+  ch += actor('coach', t, { x: 660, y: 990, s: 0.55, volume: false, turn: 0.6, lean: 10, headRot: 8, armL: 20, armR: 40, face: { name: 'confused', eyes: { look: [0.5, 0.7] } }, props: [{ svg: X.meltWhistle(-30, -604, 1.2, 1, t), layer: 'top' }] });
   const wig = look ? Math.abs(Math.sin((t - tShoes) * 10)) : 0;
-  ch += heroSocks(t, { x: 1080, y: 990, s: 0.5, turn: -0.3, bodyY: 6 * wig, headRot: look ? 10 * (1 - seg(t, tShoes + 0.6, tShoes + 1.0)) : 0, face: look ? { name: 'nervous', fx: ['sweat'], eyes: { look: t < tShoes + 0.6 ? [0, 0.9] : [-0.5, 0] } } : { name: 'happy', fx: ['sparkles'] } }, {}, { mode: 'under', glow: 0.3 });
+  ch += heroSocks(t, { x: 1080, y: 990, s: 0.5, volume: false, turn: -0.3, bodyY: 6 * wig, headRot: look ? 10 * (1 - seg(t, tShoes + 0.6, tShoes + 1.0)) : 0, face: look ? { name: 'nervous', fx: ['sweat'], eyes: { look: t < tShoes + 0.6 ? [0, 0.9] : [-0.5, 0] } } : { name: 'happy', fx: ['sparkles'] } }, {}, { mode: 'under', glow: 0.3 });
   ch += smoke(1060, 985, t, { n: 4, s: 0.6, seed: 9, rise: 160, op: 0.5 }) + smoke(1110, 985, t + 0.4, { n: 4, s: 0.6, seed: 11, rise: 160, op: 0.5 });
   return room(Lg, cam, '', ch);
 }
@@ -461,7 +461,7 @@ function classKids(t, mode = 0, heroX = 940) {
   for (const [x, y, s, i] of SEATS) {
     const watch = mode > 0;
     const lookX = clamp((heroX - x) / 500, -1, 1);
-    o += kid(i, { x, y, s, turn: watch ? clamp((heroX - x) / 900, -0.7, 0.7) : 0, armL: watch ? 9 : 34 + 3 * Math.sin(t * 13 + i), armR: watch ? 9 : 30 + 4 * Math.sin(t * 11 + i), headRot: watch ? 0 : 6, face: watch ? { name: mode > 1 ? 'shocked' : 'amazed', eyes: { look: [lookX, -0.2] } } : { name: 'determined', eyes: { look: [0, 0.8] } }, volume: y < 900 ? false : undefined, ...breathe(t, i) });
+    o += kid(i, { x, y, s, turn: watch ? clamp((heroX - x) / 900, -0.7, 0.7) : 0, armL: watch ? 9 : 34 + 3 * Math.sin(t * 13 + i), armR: watch ? 9 : 30 + 4 * Math.sin(t * 11 + i), headRot: watch ? 0 : 6, face: watch ? { name: mode > 1 ? 'shocked' : 'amazed', eyes: { look: [lookX, -0.2] } } : { name: 'determined', eyes: { look: [0, 0.8] } }, volume: false, ...breathe(t, i) });
   }
   return o;
 }
@@ -481,7 +481,7 @@ function shNoclip(t) {
   const Lr = SETS.classroom.layers(t, {});
   const cam = camKeys(t, [[CUT.nclip, { zoom: 2.35, x: -20, y: 100 }], [CUT.walk, { zoom: 2.5, x: -20, y: 100 }]]);
   const gk = seg(t, tNoclip, tNoclip + 0.3);
-  let h = hero(t, { x: 940, y: 960, s: 0.48, ...typing(t, t < tNoclip, 12), headRot: 4, face: gk > 0 ? { name: 'amazed', eyes: { look: [0, 0.4] } } : { name: 'sneaky', eyes: { look: [0.6, 0.1] } } }, {}, { mode: 'back', glow: 1, y: -330, s: 0.5 });
+  let h = hero(t, { x: 940, y: 960, s: 0.48, volume: false, ...typing(t, t < tNoclip, 12), headRot: 4, face: gk > 0 ? { name: 'amazed', eyes: { look: [0, 0.4] } } : { name: 'sneaky', eyes: { look: [0.6, 0.1] } } }, {}, { mode: 'back', glow: 1, y: -330, s: 0.5 });
   const lap = '';
   h = X.ghost(h, gk, t, 14);
   let o = view(cam, Lr.bg, 0.92) + view(cam, Lr.mid + classKids(t) + h + lap + Lr.front + X.scanShimmer(800, 520, 280, 440, t, gk) + K.commandBurst(940, 700, t - tNoclip, '#7CF7FF', 140), 1);
@@ -501,7 +501,7 @@ function shWalk(t) {
   let h = '';
   if (into < 1) {
     const p = u > 0 ? { view: 'back', ...AC.walkFront((t - t0) * 9, 1) } : { view: 'front', armL: 20, armR: 20 };
-    h = hero(t, { x: hx, y: hy, s: hs, lift: 40 * rise * (1 - u), sx: 1 - 0.5 * into, sy: 1 + 0.1 * into, ...p, face: 'happy' }, {}, u > 0 ? null : { mode: 'back', glow: 0.8 });
+    h = hero(t, { x: hx, y: hy, s: hs, volume: false, lift: 40 * rise * (1 - u), sx: 1 - 0.5 * into, sy: 1 + 0.1 * into, ...p, face: 'happy' }, {}, u > 0 ? null : { mode: 'back', glow: 0.8 });
     h = S.g(X.ghost(h, 1, t, 12), null, { opacity: f(1 - into) });
   }
   // ripples on the board
@@ -514,7 +514,7 @@ function shWalk(t) {
 }
 // ---- 18. "It does NOT let you choose which wall." — Principal Pratt's office: the wall cracks, out steps the hero
 const OFF = { hx: 1360, wallY: 792, floorY: 940 };
-function pratt(t, pose = {}, act = {}) { return actor('principal', t, { x: 700, y: 900, s: 0.5, t, steam: 1, ...pose }, act); }
+function pratt(t, pose = {}, act = {}) { return actor('principal', t, { x: 700, y: 900, s: 0.5, t, steam: 1, volume: false, ...pose }, act); }
 function shOffice(t) {
   const tDoes = w(12, 'does'), tNot = w(12, 'NOT'), tChoose = w(12, 'choose'), tWhich = w(12, 'which'), tWall = w(12, 'wall');
   const hole = t < tNot ? 0.25 * seg(t, tDoes, tNot) : 0.25 + 0.75 * seg(t, tNot, tNot + 0.3);
@@ -526,7 +526,7 @@ function shOffice(t) {
   if (hole > 0.3) {
     const flick = gk > 0 && gk < 1 ? (Math.floor(t * 24) % 2 ? 1 : 0.2) : gk;
     const p = step > 0 && step < 1 ? AC.walkFront((t - tChoose) * 10, 1) : { armL: 14, armR: 14 };
-    h = hero(t, { x: OFF.hx, y: lerp(OFF.wallY, OFF.floorY, step), s: lerp(0.44, 0.5, step), ...p, face: step >= 1 ? { name: 'nervous', eyes: { look: [-0.8, 0] } } : 'happy' }, {}, { mode: 'back', glow: 0.7 });
+    h = hero(t, { x: OFF.hx, y: lerp(OFF.wallY, OFF.floorY, step), s: lerp(0.44, 0.5, step), ...(flick > 0 ? { volume: false } : {}), ...p, face: step >= 1 ? { name: 'nervous', eyes: { look: [-0.8, 0] } } : 'happy' }, {}, { mode: 'back', glow: 0.7 });
     h = X.ghost(h, flick, t, 10);
   }
   const up = seg(t, tWall - 0.3, tWall + 0.2);
@@ -549,7 +549,7 @@ function shTwo(t) {
   const cam = camKeys(t, [[CUT.two, { zoom: 1.12, x: 70, y: 40 }], [tWall - 0.1, { zoom: 1.2, x: 110, y: 40 }], [tWall + 0.12, { zoom: 1.75, x: OFF.hx - 960, y: 600 - 540 }], [CUT.no, { zoom: 1.8, x: OFF.hx - 960, y: 600 - 540 }]]);
   const pt = ease.outBack(seg(t, w(13, 'Did'), w(13, 'Did') + 0.4));
   const pr = pratt(t, { armL: 60, armR: lerp(9, 80, pt), turn: 0.25, face: { name: 'deadpan', eyes: { look: [0.8, 0], upper: 0.3 } } }, { arms: false, energy: 0.4 });
-  const h = hero(t, { x: OFF.hx, y: OFF.floorY, s: 0.5, turn: -0.4, ...breathe(t), bodyY: 4 + 3 * Math.sin(t * 30), face: { name: 'scared', fx: ['sweat2'], eyes: { look: [-0.7, 0] } } }, {}, { mode: 'back', glow: 0.6 });
+  const h = hero(t, { x: OFF.hx, y: OFF.floorY, s: 0.5, volume: false, turn: -0.4, ...breathe(t), bodyY: 4 + 3 * Math.sin(t * 30), face: { name: 'scared', fx: ['sweat2'], eyes: { look: [-0.7, 0] } } }, {}, { mode: 'back', glow: 0.6 });
   return view(cam, Lo.bg, 0.92) + view(cam, Lo.mid + pr + Lo.front + h, 1) + smash(t, tWall + 0.02, 0.1, 0.4);
 }
 // ---- 21. "...No? Noclip... me... AWAY!"
@@ -577,7 +577,7 @@ function shFall(t) {
   const u = seg(t, tAway + 0.02, tAway + 0.28);
   let h = '';
   if (u < 1) {
-    const hh = hero(t, { x: OFF.hx, y: OFF.floorY + 900 * ease.in(u), s: 0.5, sx: 1 - 0.25 * u, sy: 1 + 0.45 * u, armL: 170, armR: 170, face: 'scream' }, {}, { mode: 'back', glow: 1 });
+    const hh = hero(t, { x: OFF.hx, y: OFF.floorY + 900 * ease.in(u), s: 0.5, volume: false, sx: 1 - 0.25 * u, sy: 1 + 0.45 * u, armL: 170, armR: 170, face: 'scream' }, {}, { mode: 'back', glow: 1 });
     h = clipTo(-800, -800, 3600, 800 + OFF.floorY, X.ghost(hh, 0.6, t, 10));
   }
   const hole = X.floorHeroHole(OFF.hx, OFF.floorY + 4, 0.44, seg(t, tAway + 0.04, tAway + 0.2), 0.36);
@@ -600,12 +600,12 @@ function shPop(t) {
   CROWD.forEach(([x, y, s, i, far], j) => {
     if (y > 960) return;
     const hop = Math.abs(Math.sin(t * 7 + j * 1.3));
-    ch += kid(i, { x, y, s, turn: clamp((960 - x) / 700, -0.7, 0.7), lift: 30 * hop, armL: 140 + 20 * Math.sin(t * 9 + j), armR: 150 + 20 * Math.sin(t * 8 + j), face: j % 2 ? 'excited' : 'joy', volume: far ? false : undefined });
+    ch += kid(i, { x, y, s, turn: clamp((960 - x) / 700, -0.7, 0.7), lift: 30 * hop, armL: 140 + 20 * Math.sin(t * 9 + j), armR: 150 + 20 * Math.sin(t * 8 + j), face: j % 2 ? 'excited' : 'joy', volume: false });
   });
   ch += hero(t, { x: 960, y: 960, s: 0.5, armR: 150 + 15 * Math.sin(t * 10), armL: 14, lift: 10 * bump(t, tPop, tPop + 0.3), face: { name: 'joy', fx: ['sparkles'] } }, {}, { mode: 'under', glow: 0.5 });
   CROWD.forEach(([x, y, s, i], j) => {
     if (y <= 960) return;
-    ch += kid(i, { x, y, s, view: 'back', lift: 20 * Math.abs(Math.sin(t * 7 + j)), armL: 150 + 20 * Math.sin(t * 9 + j), armR: 150 });
+    ch += kid(i, { x, y, s, volume: false, view: 'back', lift: 20 * Math.abs(Math.sin(t * 7 + j)), armL: 150 + 20 * Math.sin(t * 9 + j), armR: 150 });
   });
   ch += bubble(560, 450, 'MAKE ME FLY!', pop(t, CUT.pop + 0.3, 0.25), { size: 34, tx: 0, ty: 120 });
   ch += bubble(1380, 460, 'JAIL MY BROTHER!', pop(t, tKid - 0.2, 0.25), { size: 34, tx: -20, ty: 120 });
@@ -673,17 +673,17 @@ function shSplit(t) {
   let left = hall(t, camL, '');
   const bonk = Math.abs(Math.sin((t - CUT.split) * 7));
   const kx = 700, ky = 1010;
-  const body = kid(5, { x: kx, y: ky, s: 0.62, turn: 0.3, armL: 40, armR: 60, rot: -6 * bonk, face: { name: 'dizzy' } });
+  const body = kid(5, { x: kx, y: ky, s: 0.62, volume: false, turn: 0.3, armL: 40, armR: 60, rot: -6 * bonk, face: { name: 'dizzy' } });
   const big = 1.9;
   // the head: the same kid scaled up, clipped to the head (body y < -560)
-  const head = clipTo(kx - 900, -1000, 1800, ky - 560 * 0.62 * 0.88 + 30 + 1000, S.g(kid(5, { x: kx, y: ky, s: 0.62, turn: 0.3, rot: -6 * bonk, face: { name: 'dizzy', fx: ['sparkles'] }, shadow: false }), `translate(${f(kx)} ${f(ky - 520 * 0.62 * 0.88)}) scale(${f(big)}) translate(${f(-kx)} ${f(-(ky - 520 * 0.62 * 0.88))})`));
+  const head = clipTo(kx - 900, -1000, 1800, ky - 560 * 0.62 * 0.88 + 30 + 1000, S.g(kid(5, { x: kx, y: ky, s: 0.62, volume: false, turn: 0.3, rot: -6 * bonk, face: { name: 'dizzy', fx: ['sparkles'] }, shadow: false }), `translate(${f(kx)} ${f(ky - 520 * 0.62 * 0.88)}) scale(${f(big)}) translate(${f(-kx)} ${f(-(ky - 520 * 0.62 * 0.88))})`));
   left += body + head + bang('BONK!', 260, 360, pop(t, CUT.split + 0.15, 0.2), 80, -10, '#FFFFFF');
   // right: mini cage
   const camR = { zoom: 1.75, x: 1460 - 960 - 60, y: 820 - 540 };
   let right = hall(t, camR, '');
   const cx = 1460, cy = 1000;
-  right += kid(10, { x: 1180, y: cy, s: 0.55, turn: 0.4, armR: 150, armL: 20, face: { name: 'smug', fx: ['sparkles'] } });
-  right += SETS.cage(cx, cy, 0.6, t, { part: 'back', drop: clamp(0.62 + u * 3, 0, 1) }) + kid(0, { x: cx, y: cy, s: 0.32, armL: 130, armR: 130, bodyY: 4 * Math.sin(t * 30), face: { name: 'angry', fx: ['anger'] } }) + SETS.cage(cx, cy, 0.6, t, { part: 'front', drop: clamp(0.62 + u * 3, 0, 1) });
+  right += kid(10, { x: 1180, y: cy, s: 0.55, volume: false, turn: 0.4, armR: 150, armL: 20, face: { name: 'smug', fx: ['sparkles'] } });
+  right += SETS.cage(cx, cy, 0.6, t, { part: 'back', drop: clamp(0.62 + u * 3, 0, 1) }) + kid(0, { x: cx, y: cy, s: 0.32, volume: false, armL: 130, armR: 130, bodyY: 4 * Math.sin(t * 30), face: { name: 'angry', fx: ['anger'] } }) + SETS.cage(cx, cy, 0.6, t, { part: 'front', drop: clamp(0.62 + u * 3, 0, 1) });
   let o = clipTo(-10, -10, 970, 1100, left) + clipTo(960, -10, 980, 1100, right);
   o += S.path('M955 -20 L965 -20 L965 1100 L955 1100 Z', { fill: '#FFFFFF' }) + S.path('M940 -20 L980 -20 L980 1100 L940 1100 Z', { fill: 'none', stroke: LINE_, 'stroke-width': 8 });
   return o + whip(t, CUT.split, -1);
@@ -716,7 +716,7 @@ function shKid2(t) {
   const no = t < w(17, 'make', 1);
   const wave = no ? Math.sin(t * 16) : 0;
   let ch = '';
-  ch += theKid(t, { x: 720, y: 980, s, lift: lift + 10 * Math.sin(t * 3), sy: sq, sx: 1 + (1 - sq) * 0.6, armL: no ? 110 + 30 * wave : 160, armR: no ? 110 - 30 * wave : 160, headRot: no ? 10 * wave : 0, face: g > 0.2 ? { name: 'excited' } : undefined }, { energy: 1.5, arms: false });
+  ch += theKid(t, { x: 720, y: 980, s, volume: g > 0.05 ? false : undefined, lift: lift + 10 * Math.sin(t * 3), sy: sq, sx: 1 + (1 - sq) * 0.6, armL: no ? 110 + 30 * wave : 160, armR: no ? 110 - 30 * wave : 160, headRot: no ? 10 * wave : 0, face: g > 0.2 ? { name: 'excited' } : undefined }, { energy: 1.5, arms: false });
   ch += hero(t, { x: 1230, y: 980, s: 0.52, turn: -0.3, ...typing(t, t > w(17, 'make', 1) && t < tGiant, 14), face: g > 0.1 ? { name: 'shocked', eyes: { look: [-0.4, -0.8] } } : { name: 'smug', eyes: { look: [-0.6, -0.6] } } }, {}, { mode: 'back', glow: 1 });
   ch += K.commandBurst(720, 400, t - tGiant, '#3DFF9A', 320);
   if (g > 0.6) ch += X.debris(720, 70, t, tGiant + 0.3, 8, 1.2, 5) + bang('BONK!', 1060, 160, pop(t, tGiant + 0.3, 0.2), 110, 8, '#FFFFFF');
@@ -733,7 +733,7 @@ function shKid3(t) {
   const no = t < w(17, 'BOTH');
   const wave = no ? Math.sin(t * 16) : 0;
   let ch = '';
-  if (up < 1) ch += theKid(t, { x: 720, y: 980, s, lift: 1700 * up, sy: sq, sx: up > 0 ? 0.9 : 1 + (1 - sq) * 0.6, armL: no ? 100 + 30 * wave : 175, armR: no ? 100 - 30 * wave : 175, headRot: no ? 8 * wave : 0 }, { energy: 1.4, arms: false });
+  if (up < 1) ch += theKid(t, { x: 720, y: 980, s, volume: false, lift: 1700 * up, sy: sq, sx: up > 0 ? 0.9 : 1 + (1 - sq) * 0.6, armL: no ? 100 + 30 * wave : 175, armR: no ? 100 - 30 * wave : 175, headRot: no ? 8 * wave : 0 }, { energy: 1.4, arms: false });
   ch += hero(t, { x: 1240, y: 980, s: 0.52, turn: -0.3, ...typing(t, t > w(17, 'BOTH') - 0.1 && t < tBoth, 14), face: up > 0 ? { name: 'scream' } : { name: 'nervous', fx: ['sweat'], eyes: { look: [-0.4, -0.8] } } }, {}, { mode: 'back', glow: 1 });
   // the hole in the ceiling
   if (up > 0.3) ch += S.path('M420 -200 L470 40 L560 10 L620 60 L700 20 L800 70 L880 30 L990 50 L1010 -200 Z', { fill: '#7FC4FF', stroke: LINE_, 'stroke-width': 8 }) + SETS.cloud(560, -120, 0.6);
@@ -756,7 +756,7 @@ const LOG = [';fly me', ';speed Granny', ';size Pancake 10', ';fly Dad', ';god m
 function shLogs(t) {
   const u = seg(t, CUT.logs, CUT.zoe2);
   const n = Math.round(lerp(10, LOG.length, ease.out(u)));
-  const scr = SETS.adminScreen(t, { lines: LOG.slice(0, n), title: 'ADMIN LOG — all commands saved', cursor: true });
+  const scr = SETS.adminScreen(t, { lines: LOG.slice(0, n), title: 'ADMIN LOG', cursor: true });
   let o = S.rect(0, 0, 1920, 1080, 0, { fill: '#2A2722' });
   o += SETS.laptop(960, 1490, 3.25 + 0.12 * u, scr, { glow: 0.6, t });
   // Zoe's finger tapping the screen
@@ -767,12 +767,12 @@ function shLogs(t) {
 }
 // ---- 33. "Somebody is going to notice." (two-shot; the giant kid's sneakers kick from the ceiling hole)
 function shZoe2(t) {
-  const cam = camKeys(t, [[CUT.zoe2, { zoom: 1.06, x: -10, y: -16 }], [CUT.relax, { zoom: 1.16, x: -10, y: -10 }]]);
+  const cam = camKeys(t, [[CUT.zoe2, { zoom: 1.0, x: -10, y: -50 }], [CUT.relax, { zoom: 1.08, x: -10, y: -40 }]]);
   let ch = '';
   // the ceiling hole + dangling sneakers
   ch += S.path('M640 -300 L680 50 L760 20 L820 60 L900 30 L980 70 L1060 40 L1110 -300 Z', { fill: '#7FC4FF', stroke: LINE_, 'stroke-width': 8 });
   const kick = Math.sin(t * 9);
-  for (const [lx, ph] of [[820, 0], [960, 2]]) ch += S.g(S.rect(-50, -260, 100, 300, 20, ol('#3A6A9A', 8)) + S.rect(-70, 30, 150, 70, 26, ol('#FFFFFF', 8)) + S.rect(-70, 70, 150, 30, 12, ol('#FF5A5A', 6)), tf(lx, 30, 1, 10 * Math.sin(t * 9 + ph)));
+  for (const [lx, ph] of [[820, 0], [960, 2]]) ch += S.g(S.rect(-50, -260, 100, 380, 20, ol('#3A6A9A', 8)) + S.rect(-70, 110, 150, 70, 26, ol('#FFFFFF', 8)) + S.rect(-70, 150, 150, 30, 12, ol('#FF5A5A', 6)), tf(lx, 30, 1, 10 * Math.sin(t * 9 + ph)));
   ch += X.debris(880, 60, t, CUT.zoe2 - 0.4, 5, 0.8, 21);
   ch += actor('zoe', t, { x: 700, y: 980, s: 0.58, turn: 0.4, laptop: 'closed', face: { name: 'scared', eyes: { look: [0.8, 0] } } }, { arms: false });
   ch += hero(t, { x: 1230, y: 980, s: 0.55, turn: -0.4, armL: 30 + 10 * kick * 0, armR: 50, headRot: 6, face: { name: 'smug', eyes: { look: [-0.8, 0] } } }, {}, { mode: 'under', glow: 0.4 });
@@ -783,9 +783,9 @@ function shRelax(t) {
   const tNobody = w(19, 'Nobody'), tLogs = w(19, 'logs');
   const cam = camKeys(t, [[CUT.relax, { zoom: 1.6, x: 60, y: 90 }], [tNobody - 0.05, { zoom: 1.65, x: 80, y: 90 }], [tNobody + 0.3, { zoom: 2.3, x: 230, y: 30 }], [CUT.dark, { zoom: 2.45, x: 230, y: 20 }]]);
   let ch = '';
-  ch += actor('zoe', t, { x: 660, y: 980, s: 0.58, turn: 0.5, armL: -20, armR: -20, face: { name: 'deadpan', eyes: { look: [0.8, 0], upper: 0.4 } } }, { arms: false });
+  ch += actor('zoe', t, { x: 660, y: 980, s: 0.58, volume: false, turn: 0.5, armL: -20, armR: -20, face: { name: 'deadpan', eyes: { look: [0.8, 0], upper: 0.4 } } }, { arms: false });
   const laughing = t < tNobody;
-  ch += hero(t, { x: 1180, y: 980, s: 0.58, lean: -8, turn: -0.2, armR: laughing ? 60 + 20 * Math.sin(t * 10) : 120, armL: 14, bodyY: laughing ? 6 * Math.abs(Math.sin(t * 12)) : 0, face: laughing ? { name: 'joy' } : { name: 'smug', fx: t > tLogs ? ['sparkles'] : [] } }, { arms: false }, { mode: 'under', glow: 0.5 });
+  ch += hero(t, { x: 1180, y: 980, s: 0.58, volume: false, lean: -8, turn: -0.2, armR: laughing ? 60 + 20 * Math.sin(t * 10) : 120, armL: 14, bodyY: laughing ? 6 * Math.abs(Math.sin(t * 12)) : 0, face: laughing ? { name: 'joy' } : { name: 'smug', fx: t > tLogs ? ['sparkles'] : [] } }, { arms: false }, { mode: 'under', glow: 0.5 });
   return hall(t, cam, ch);
 }
 // ---- 35. the dark room: the log scrolls, a wrinkled hand stops it; then the eyes glint
@@ -811,7 +811,7 @@ function shDark(t) {
   }
   // the hand: enters on "reads", stops the scroll
   const hk = ease.out(seg(t, tReads - 0.15, stopT));
-  if (hk > 0) o += X.oldHand(lerp(2200, 1200, hk), lerp(1400, 760, hk), 1.7, 212, seg(t, stopT, stopT + 0.4));
+  if (hk > 0) o += X.oldHand(lerp(2150, 1120, hk), lerp(1350, 700, hk), 1.6, 212, seg(t, stopT, stopT + 0.4));
   return o + S.rect(0, 0, 1920, 1080, 0, { fill: '#000', opacity: f(0.25 * seg(t, CUT.eyes - 0.15, CUT.eyes)) });
 }
 function shEyes(t) {

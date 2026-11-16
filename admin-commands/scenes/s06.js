@@ -19,7 +19,7 @@ const CATS = require('../rig/cats');
 const AC = require('./acting');
 const E = require('./s06_env');
 const { CITY, KF, ROOF } = CS;
-const { pop, camOn, scr, withShake, whip, flash, punch, zoomAt, outT, outTF } = E;
+const { pop, act, camOn, scr, withShake, whip, flash, punch, zoomAt, outT, outTF } = E;
 
 const START = K.V.scene('SC 06').start, END = K.V.scene('SC 07').start;
 const m = Array.from({ length: 13 }, (_, i) => L('06.' + i));
@@ -95,7 +95,7 @@ function heroRoof(t, x, y, s, o = {}) {
   const lap = SETS.laptop(0, -300, 0.42, SETS.adminScreen(t, o.screen || {}), { t, glow: 0.7, dust: 0 });
   const pose = { x, y, s, armL: o.armL ?? 22, armR: o.armR ?? 22, turn: o.turn || 0, headRot: o.headRot, props: o.noLap ? [] : [{ svg: lap, layer: 'front' }], volume: o.volume, lean: o.lean || 0 };
   if (o.face) pose.face = o.face;
-  return actor('you', t, pose, { arms: false, energy: o.energy ?? 1 });
+  return act('you', t, pose, { arms: false, energy: o.energy ?? 1 });
 }
 
 // ---------------------------------------------------------------- 1. "Saturday." — the calm city at sunset
@@ -378,7 +378,7 @@ function shot16(t) {
 // ---------------------------------------------------------------- 17. "I'm the king of the city!" — the rooftop
 function kingPose(t, x, y, s, spread = 1) {
   const lap = SETS.laptop(-330, -820, 0.36, SETS.adminScreen(t, { lines: [';fly all', ';size all cats 100'] }), { t, glow: 0.6, dust: 0, rot: -20 });
-  return actor('you', t, { x, y, s, armL: lerp(20, 150, spread) + 6 * Math.sin(t * 5), armR: lerp(20, 150, spread) + 6 * Math.sin(t * 5 + 1), legL: 6, legR: -6, face: 'joy', props: [{ svg: lap, layer: 'back' }] }, { arms: false, energy: 1.4 });
+  return act('you', t, { x, y, s, armL: lerp(20, 150, spread) + 6 * Math.sin(t * 5), armR: lerp(20, 150, spread) + 6 * Math.sin(t * 5 + 1), legL: 6, legR: -6, face: 'joy', props: [{ svg: lap, layer: 'back' }] }, { arms: false, energy: 1.4 });
 }
 function shot17(t) {
   const u = seg(t, t17, t18);
@@ -420,7 +420,7 @@ function zoeScreen(t) {
 }
 function zoeFly(t, x, y, s, o = {}) {
   const sw = Math.sin(t * 1.9);
-  return actor('zoe', t, { x, y: y + Math.sin(t * 2.3) * 10, s, laptop: 'screen', laptopScreen: zoeScreen(t), legL: 8 + 6 * sw, kneeL: 30, legR: -10 - 6 * sw, kneeR: 40, shadow: false, turn: o.turn ?? -0.3, ...(o.pose || {}), volume: o.volume }, { energy: 1.3, ...(o.act || {}) });
+  return act('zoe', t, { x, y: y + Math.sin(t * 2.3) * 10, s, laptop: 'screen', laptopScreen: zoeScreen(t), legL: 8 + 6 * sw, kneeL: 30, legR: -10 - 6 * sw, kneeR: 40, shadow: false, turn: o.turn ?? -0.3, ...(o.pose || {}), volume: o.volume }, { energy: 1.3, ...(o.act || {}) });
 }
 function shot19(t) {
   const u = seg(t, t19, t20);
@@ -449,10 +449,10 @@ function shot20(t) {
 // ---------------------------------------------------------------- 21, 23, 25, 26. Breaking news in the studio
 const TICKER = 'THE CITY IS FLYING  •  GRANDMAS BREAK THE SOUND BARRIER  •  GIANT CAT SITS ON MAYOR  •  WHO IS DOING THIS?';
 function studio(t, cam, chaos, o = {}) {
-  const Ls = SETS.newsStudio.layers(t, { chaos, logo: 'NEWS 7' });
+  const Ls = SETS.newsStudio.layers(t, { chaos, ticker: TICKER });   // a ticker hides the desk logo; we draw the ticker screen-fixed
   const A = SETS.SPOTS.newsStudio.anchor;
   const flinch = o.flinch || 0;
-  const anchor = actor('anchor', t, { x: A.x + (o.dx || 0), y: A.y, s: A.s, lean: -8 * flinch, turn: o.turn || 0, face: o.face, volume: o.volume, headRot: o.headRot }, { energy: o.energy ?? 1.2 });
+  const anchor = act('anchor', t, { x: A.x + (o.dx || 0), y: A.y, s: A.s, lean: -8 * flinch, turn: o.turn || 0, face: o.face, volume: o.volume, headRot: o.headRot }, { energy: o.energy ?? 1.2 });
   let out = K.view(cam, Ls.bg + Ls.mid + anchor + Ls.front, 1);
   if (o.ticker !== false) out += SETS.newsStudio.ticker(t, TICKER, { y: 870 });
   return out;

@@ -20,6 +20,8 @@ const { CITY, KF } = CS;
 
 const W = 1920, H = 1080, LINE = '#151515';
 const pop = (k) => ease.outBack(clamp(k, 0, 1));
+// actor() with undefined pose fields dropped (an explicit undefined would override the auto-acting face / head tilt)
+const act = (name, t, pose, a) => actor(name, t, Object.fromEntries(Object.entries(pose).filter(([, v]) => v !== undefined)), a);
 const esc = (s) => String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
 const outT = (txt, x, y, size, fill, sw = 10, extra = {}) => T(esc(txt), x, y, size, fill, { stroke: LINE, 'stroke-width': sw, 'paint-order': 'stroke', 'stroke-linejoin': 'round', ...extra });
 const outTF = (txt, x, y, size, fill, sw = 8, extra = {}) => TF(esc(txt), x, y, size, fill, { stroke: LINE, 'stroke-width': sw, 'paint-order': 'stroke', 'stroke-linejoin': 'round', ...extra });
@@ -117,7 +119,7 @@ function heroLap(t, o = {}) {
     shadow: false, props: [lap], volume: o.volume, headRot: o.headRot,
   };
   if (o.face) pose.face = o.face;
-  return actor('you', t, pose, { arms: false, energy: o.energy ?? 0.9 });
+  return act('you', t, pose, { arms: false, energy: o.energy ?? 0.9 });
 }
 
 // ---------------------------------------------------------------- chat → spinner → denied, as one stack near the hero
@@ -173,7 +175,7 @@ function grannyRun(t, x, y, s, o = {}) {
   const dir = o.dir ?? -1, ph = t * 22;
   const rn = AC.run(ph, 1.15);
   let g = CAST.fireTrail({ x: x - dir * 60 * s / 0.4, y: y - 200 * s / 0.4, len: (o.len || 900) * s / 0.4, angle: dir < 0 ? 0 : 180, w: 120 * s / 0.4, t });
-  g += actor('granny', t, { x, y, s, fast: true, view: 'side', flip: dir > 0, ...rn, lift: rn.lift, lean: -16, face: o.face || 'excited', shadow: false, armL: 60 + rn.armL * 0.4, armR: -50 + rn.armR * 0.4 }, { arms: false });
+  g += act('granny', t, { x, y, s, fast: true, view: 'side', flip: dir > 0, ...rn, lift: rn.lift, lean: -16, face: o.face || 'excited', shadow: false, armL: 60 + rn.armL * 0.4, armR: -50 + rn.armR * 0.4 }, { arms: false });
   const b = o.boom || 0;
   if (b > 0 && b < 1) {
     const k = s / 0.4, hx = x + dir * 90 * k, hy = y - 300 * k, u = ease.out(b);
@@ -193,7 +195,7 @@ function hangingCage(t, x, y, s, o = {}) {
   let o2 = S.path(`M${f(x)} ${f(y)}V${f(y + ch + 20 * s)}`, { ...ln(9 * s / 0.5 + 3, '#9AA0AE'), 'stroke-dasharray': `${f(14 * s / 0.5)} ${f(6 * s / 0.5)}` }) + S.path(`M${f(x)} ${f(y)}V${f(y + ch + 20 * s)}`, ln(2, LINE, 0.5));
   let cage = SETS.cage(x, cy, s, t, { part: 'back', glow: o.glow ?? 1 });
   const bs = s * 0.45, look = o.brickPose || {};
-  cage += actor('brick', t, { x: x - 10 * s, y: cy - 30 * s, s: bs, turn: 0.15 * Math.sin(t * 0.8), armL: 150, armR: 150, legL: 6, legR: -6, shadow: false, face: o.face || { name: 'angry', fx: ['anger'] }, ...look, volume: o.volume }, { arms: false });
+  cage += act('brick', t, { x: x - 10 * s, y: cy - 30 * s, s: bs, turn: 0.15 * Math.sin(t * 0.8), armL: 150, armR: 150, legL: 6, legR: -6, shadow: false, face: o.face || { name: 'angry', fx: ['anger'] }, ...look, volume: o.volume }, { arms: false });
   cage += SETS.cage(x, cy, s, t, { part: 'front', glow: o.glow ?? 1, plate: 'JAILED' });
   o2 += spin ? S.g(cage, `translate(${f(x)} 0) scale(${f(Math.cos(spin))} 1) translate(${f(-x)} 0)`) : cage;
   return S.g(o2, `rotate(${f(sw)} ${f(x)} ${f(y)})`);
@@ -203,7 +205,7 @@ function hangingCage(t, x, y, s, o = {}) {
 function dadAtMoon(t, s = 0.075, o = {}) {
   const M = CITY.moon, u = ((t * 0.035) + (o.ph || 0.15)) % 1;
   const x = lerp(M.x - 260, M.x + 260, u), y = M.y + 40 - Math.sin(u * Math.PI) * 50;
-  return actor('dad', t, { x, y, s, rot: t * 25, armL: 110, armR: 150, legL: 25, legR: -30, kneeL: 30, kneeR: 50, face: 'scared', shadow: false, volume: false }, { arms: false });
+  return act('dad', t, { x, y, s, rot: t * 25, armL: 110, armR: 150, legL: 25, legR: -30, kneeL: 30, kneeR: 50, face: 'scared', shadow: false, volume: false }, { arms: false });
 }
 // Granny's fire loop round the skyline in the wides (drawn at parallax k .3, behind the mid towers)
 function grannyLoop(t, o = {}) {
@@ -214,7 +216,7 @@ function grannyLoop(t, o = {}) {
   for (let i = 0; i <= 10; i++) pts.push(at(a - i * 0.14));
   let g = CAST.fireTrail({ pts, w: 34, t });
   const [gx, gy] = at(a), dirx = -Math.sin(a);
-  g += actor('granny', t, { x: gx, y: gy + 40, s: 0.085, fast: true, view: 'side', flip: dirx > 0, ...AC.run(t * 22, 1), lean: -16, face: 'excited', shadow: false, volume: false }, { arms: false });
+  g += act('granny', t, { x: gx, y: gy + 40, s: 0.085, fast: true, view: 'side', flip: dirx > 0, ...AC.run(t * 22, 1), lean: -16, face: 'excited', shadow: false, volume: false }, { arms: false });
   return g;
 }
 
@@ -290,7 +292,7 @@ function lowerThird(title, sub, k = 1, y = 760) {
 }
 
 module.exports = {
-  W, H, LINE, pop, esc, outT, outTF, camOn, scr, withShake, whip, flash, punch, zoomAt, tilt, letterbox,
+  W, H, LINE, pop, act, esc, outT, outTF, camOn, scr, withShake, whip, flash, punch, zoomAt, tilt, letterbox,
   lickCat, pushCat, capsule, pawBlob, catLw, heroLap, cmdStack, redHit, reviewWin, floatShot, grannyRun, hangingCage,
   dadAtMoon, grannyLoop, midExtras, chaosWide, silhouette, liveBug, lowerThird,
 };

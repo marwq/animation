@@ -17,7 +17,7 @@ const SETS = require('./sets');
 const CAST = require('../rig/cast');
 const E = require('./s06_env');
 const { CITY, KF } = CS;
-const { pop, camOn, scr, withShake, whip, flash, punch, zoomAt, outT, outTF } = E;
+const { pop, act, camOn, scr, withShake, whip, flash, punch, zoomAt, outT, outTF } = E;
 
 const END = K.V.scene('SC 02').start;
 const l0 = L('01.0'), l1 = L('01.1'), l2 = L('01.2'), l3 = L('01.3'), l4 = L('01.4'), l5 = L('01.5'), l6 = L('01.6');
@@ -144,7 +144,7 @@ function shotE(t) {
   o += S.path(lights, { fill: '#FFD98A' });
   // Dad drifts across, slowly tumbling, tie floating, still on his call
   const dx = lerp(560, 1060, u), dy = 520 + Math.sin(t * 1.3) * 18;
-  o += actor('dad', t, { x: dx, y: dy, s: 0.42, rot: lerp(-18, 34, u), armL: 120 + 15 * Math.sin(t * 2), armR: 150, legL: 30, kneeL: 40, legR: -26, kneeR: 50, face: { name: 'scared', mouth: 'O' }, shadow: false }, { arms: false });
+  o += act('dad', t, { x: dx, y: dy, s: 0.42, rot: lerp(-18, 34, u), armL: 120 + 15 * Math.sin(t * 2), armR: 150, legL: 30, kneeL: 40, legR: -26, kneeR: 50, face: { name: 'scared', mouth: 'O' }, shadow: false }, { arms: false });
   const bk = seg(t, l2.word('orbit').t0 - 0.2, l2.word('orbit').t0);
   if (bk > 0) {
     const bx = dx + 420, by = dy - 330;
@@ -266,7 +266,7 @@ function shotM(t) {
   const cam = camM(t);
   let o = shotL(t, ft);
   // frozen: cool desaturated tint + scanlines
-  o += S.rect(0, 0, 1920, 1080, 0, { fill: '#7F90C8', opacity: 0.16 }) + S.rect(0, 0, 1920, 1080, 0, { fill: 'url(#setsScan)', opacity: 0.35 });
+  o += S.rect(0, 0, 1920, 1080, 0, { fill: '#7F90C8', opacity: 0.2 });
   const ws = [['Things', 0], ['got', 0], ['little', 0], ['out', 0], ['hand', 0]].map(([w]) => l6.word(w).t0);
   const pin = (a) => scr(cam, a);
   const moon = pin({ x: CITY.moon.x - 60, y: CITY.moon.y + 30, k: KF.sun });

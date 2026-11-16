@@ -113,7 +113,9 @@ function drips(x, y, s, t, k = 1) {
 function icicles(x, y, s, k = 1) {
   if (!(k > 0.01)) return '';
   let d = '';
-  for (let i = 0; i < 7; i++) { const ix = x + (-150 + i * 50) * s, iy = y - 700 * s, len = (30 + hash(i * 3) * 40) * s * k; d += `M${f(ix - 9 * s)} ${f(iy)}L${f(ix + 9 * s)} ${f(iy)}L${f(ix)} ${f(iy + len)}Z`; }
+  // along the sides of the bowl cut and the laptop's bottom edge
+  const spots = [[-196, -640], [-176, -632], [-156, -626], [156, -626], [176, -632], [196, -640], [-110, -100], [-40, -100], [40, -100], [110, -100]];
+  spots.forEach(([bx, by], i) => { const ix = x + bx * s, iy = y + by * s, len = (34 + hash(i * 3) * 46) * s * k; d += `M${f(ix - 10 * s)} ${f(iy)}L${f(ix + 10 * s)} ${f(iy)}L${f(ix)} ${f(iy + len)}Z`; });
   return P(d, { fill: '#DDF6FF', stroke: '#2E6E96', 'stroke-width': 3 });
 }
 
@@ -254,7 +256,12 @@ function shotF2(t) {
   let water = '';
   if (reveal) {
     const [hx2, hy2] = E.A.hand(70, 1);
-    water += adm(t, { x: 1560, y: 1060 + Math.sin(t * 2) * 6, s: 0.44, glow: 0.4, armR: 70, armL: 12, turn: -0.4, face: { name: 'deadpan', eyes: { look: [-0.8, 0] } }, props: [{ svg: E.coconut(hx2 + 10, hy2 - 40, 1.6, 8), layer: 'front' }], shadow: false }, { arms: false });
+    water += adm(t, { x: 1560, y: 1090 + Math.sin(t * 2) * 6, s: 0.44, glow: 0.4, armR: 70, armL: 12, turn: -0.4, face: { name: 'deadpan', eyes: { look: [-0.8, 0] } }, props: [{ svg: E.coconut(hx2 + 10, hy2 - 40, 1.6, 8), layer: 'front' }], shadow: false }, { arms: false });
+  }
+  if (reveal) {
+    const w = Math.sin(t * 2.2) * 8;
+    water += P(`M-600 1500V${f(930 + w)}Q-300 ${f(908 + w)} 0 ${f(930 + w)}T600 ${f(930 + w)}T1200 ${f(930 + w)}T1800 ${f(930 + w)}T2400 ${f(930 + w)}V1500Z`, { fill: '#2C8FE0' }) + P(`M-600 ${f(930 + w)}Q-300 ${f(908 + w)} 0 ${f(930 + w)}T600 ${f(930 + w)}T1200 ${f(930 + w)}T1800 ${f(930 + w)}T2400 ${f(930 + w)}`, ln(8, '#FFFFFF', 0.85));
+    water += El(1560, 934, 200 + 20 * Math.sin(t * 3), 24, { fill: 'none', stroke: '#FFFFFF', 'stroke-width': 7, opacity: 0.8 });
   }
   const over = locCard('OCEAN', t, d8, '#2E9BF0') + (t < d9 ? flash(t, d8, 0.2, '#FFFFFF', 0.9) : '') + (reveal ? whip(t, d9, 1, 0.12) : '');
   return Ly.bg + K.view(cam, water, 1) + Ly.mid + K.view(cam, chars, 1) + Ly.fg + Ly.light + over;
@@ -263,7 +270,7 @@ function shotF2(t) {
 function shotF3(t) {
   const reveal = t >= d11;
   const tp = tpState(t, d10, 0);
-  const cam = reveal ? at(1000, 430, lerp(1.32, 1.42, seg(t, d11, d12))) : K.camKeys(t, [[d10, at(960, 560, 0.86)], [d11, at(940, 470, 1.1)]]);
+  const cam = reveal ? at(1000, 400, lerp(1.3, 1.4, seg(t, d11, d12))) : K.camKeys(t, [[d10, at(960, 560, 0.86)], [d11, at(940, 470, 1.1)]]);
   const Ly = CS.mountain(t, cam, { flash: 1 - seg(t, d10, d10 + 0.3), snow: 0.8 });
   const fy = FLOOR.mountain, hx = 820, s = 0.4;
   const pant = Math.sin(t * 9) * 4;
@@ -271,9 +278,9 @@ function shotF3(t) {
   if (reveal) {
     const lift = ease.inOut(seg(t, tChomp - 0.45, tChomp - 0.05));
     const bite = t >= tChomp ? 1 : 0;
-    const a = lerp(40, 158, lift);
+    const a = lerp(40, 124, lift);
     const [hx2, hy2] = E.A.hand(a, 1);
-    chars += adm(t, { x: 1110, y: fy, s: 0.42, glow: 0.4, armR: a, armL: 14, turn: -0.3, face: { name: 'deadpan', eyes: { look: [-0.7, 0.2], upper: 0.3 } }, props: [{ svg: E.sandwich(hx2 - 20, hy2 - 30 - 60 * lift, 0.9, -8, bite), layer: 'front' }] }, { arms: false });
+    chars += adm(t, { x: 1110, y: fy, s: 0.42, glow: 0.4, armR: a, armL: 14, turn: -0.3, face: { name: 'deadpan', eyes: { look: [-0.7, 0.2], upper: 0.3 } }, props: [{ svg: E.sandwich(hx2 - 20 - 150 * lift, hy2 - 30 + 30 * lift, 0.9, -8, bite), layer: 'front' }] }, { arms: false });
     if (bite) chars += K.bang('CHOMP', 1260, 120, seg(t, tChomp, tChomp + 0.15), 70, 8, '#FFE14D');
   }
   chars += E.hero(t, { x: hx, y: fy, s, laptop: 'back', ...tp.squash, bodyY: reveal ? 0 : 4 + pant, turn: reveal ? 0.6 : 0, face: reveal ? (t > tChomp + 0.2 ? { name: 'deadpan', eyes: { look: [1, 0], upper: 0.55 }, fx: ['anger'] } : { name: 'shocked', eyes: { look: [1, 0], pupil: 0.45 } }) : { name: 'happy', eyes: { type: 'closed' }, fx: ['sweat'] } }, { arms: false });
@@ -344,19 +351,19 @@ const landShakes = () => [...ADMIN_CAGES, ...HERO_CAGES].map(([a]) => [a + 0.3, 
 // H — "Jail... Admin!"
 function shotH(t) {
   const cam = shook(at(970, 420, 1.12), t, landShakes());
-  return summit(t, cam) + E.chatFeed(1540, 1000 - 90, 640, FEED, t, { n: 3, s: 0.8 });
+  return summit(t, cam) + E.chatFeed(420, 380, 640, FEED, t, { n: 3, s: 0.95 });
 }
 // I — "Un-jail me." (on him) → I2 "Jail YOU." (on you)
 function shotI(t) {
   const on = t < d14b ? AX : HX;
   const cam = shook(at(on, 380, 1.55), t, landShakes());
-  return summit(t, cam) + E.chatFeed(t < d14b ? 400 : 1520, 900, 640, FEED, t, { n: 3, s: 0.8 }) + (t >= d14b ? whip(t, d14b, -1, 0.12) : '');
+  return summit(t, cam) + E.chatFeed(t < d14b ? 400 : 1520, 380, 640, FEED, t, { n: 3, s: 0.95 }) + (t >= d14b ? whip(t, d14b, -1, 0.12) : '');
 }
 // J — the ping-pong: the camera snaps to whoever just got caged
 function shotJ(t) {
   const keys = [[d15, at(970, 430, 1.1)], [e4, at(970, 430, 1.1)], [e4 + 0.1, at(800, 420, 1.3)], [e5, at(800, 420, 1.3)], [e5 + 0.1, at(1150, 400, 1.3)], [e7, at(1150, 400, 1.3)], [e7 + 0.1, at(820, 440, 1.45)], [d16, at(860, 440, 1.6)]];
   const cam = shook(K.camKeys(t, keys, ease.out), t, landShakes());
-  return summit(t, cam) + E.chatFeed(1540, 940, 640, FEED, t, { n: 4, s: 0.78 }) + flash(t, e5, 0.1, '#FFFFFF', 0.4) + flash(t, e7, 0.1, '#FFFFFF', 0.4);
+  return summit(t, cam) + E.chatFeed(400, 410, 640, FEED, t, { n: 4, s: 0.95 }) + flash(t, e5, 0.1, '#FFFFFF', 0.4) + flash(t, e7, 0.1, '#FFFFFF', 0.4);
 }
 // K — "This went on for eleven minutes." — time-lapse through every location, cages strobing, a spinning clock
 function shotK(t) {
@@ -410,9 +417,9 @@ function giantHero(t, x, s, pose = {}, act = {}) {
 // L2 — you grow over the city (grin); the Admin, now tiny, types ;size me 1000 next to you
 function shotL2(t) {
   const g = ease.outBack(seg(t, d17b, d17b + 0.5));
-  const cam = shook(K.camKeys(t, [[d17b, at(960, 760, 1.4)], [d17b + 0.5, at(960, 560, 1.0)], [d18, at(1000, 540, 1.04)]]), t, [[d17b + 0.4, 0.35, 16]]);
+  const cam = shook(K.camKeys(t, [[d17b, at(960, 760, 1.4)], [d17b + 0.5, at(960, 520, 1.0)], [d18, at(1000, 510, 1.04)]]), t, [[d17b + 0.4, 0.35, 16]]);
   const { Ly } = nightSky(t, cam);
-  const hs = lerp(0.18, 1.0, g);
+  const hs = lerp(0.18, 0.92, g);
   let mid = giantHero(t, 760, hs, { face: g > 0.8 ? { name: 'smug', eyes: { look: [0.8, 0.5] } } : { name: 'amazed', eyes: { look: [0, -0.5] } }, armL: 26, armR: 26 });
   const ax = 1420, ay = 760 + Math.sin(t * 2) * 10;
   mid += adm(t, { x: ax, y: ay, s: 0.24, glow: 0.8, armR: 110 + 10 * Math.sin(t * 25), armL: 20, turn: -0.3, face: { name: 'deadpan', eyes: { upper: 0.5, look: [-0.5, -0.5] } }, shadow: false }, { arms: false });
@@ -420,39 +427,55 @@ function shotL2(t) {
   mid += sky(ax, ay - 520, 560, 170, t, { text: ';size me 1000', progress: prog, glow: 0.8, size: 60 });
   return Ly.bg + K.view(cam, mid, 1) + Ly.fg + Ly.light + flash(t, d17b, 0.2, '#FFFFFF', 0.6);
 }
+// the Admin's giant boot + robe hem (side view, toe to the left); origin = ground under the boot. ~940 x 560 boot at s 1
+function giantBoot(x, y, s, t) {
+  let o = '';
+  // robe skirt above the boot, with scrolling code and a gold hem
+  o += R(-760, -3400, 1560, 2930, 0, ol('#FBFAF4', 10)) + R(380, -3400, 420, 2930, 0, { fill: '#E9E6F2' });
+  let code = '';
+  for (let r = 0; r < 26; r++) for (let i = 0; i < 6; i++) { const xx = -700 + i * 250 + ((t * 120 + r * 90) % 250), w = 60 + hash(r * 7 + i) * 120; code += `M${f(Math.min(760, xx))} ${f(-3300 + r * 110)}h${f(Math.max(0, Math.min(w, 760 - xx)))}`; }
+  o += P(code, ln(16, '#9FD8C0', 0.75));
+  o += R(-780, -520, 1600, 80, 16, ol('#FFC93C', 9)) + P('M-760 -500H800', ln(6, '#FFF0B0'));
+  // the boot
+  o += P('M-600 -30Q-640 -250 -380 -290L-90 -310L-60 -470L380 -470L400 -30Z', ol('#FFFFFF', 11));
+  o += P('M-600 -30Q-640 -250 -380 -290L-250 -300L-250 -30Z', ol('#FFC93C', 9)) + P('M-560 -230Q-480 -270 -380 -270', ln(10, '#FFF0B0'));
+  o += R(-90, -480, 490, 70, 18, ol('#FFC93C', 9)) + R(-640, -40, 1060, 50, 22, ol('#D9D6E4', 9));
+  o += P('M-40 -400H340M-30 -340H330M-20 -280H320', ln(10, '#E3E0EC'));
+  return G(o, tr(x, y, s));
+}
 // N1 — BOOM: a giant boot lands next to you
 function shotN1(t) {
   const fall = ease.in(seg(t, d18, tBoot));
   const cam = shook(at(960, 560, 1.0), t, [[tBoot, 0.6, 30]]);
   const { Ly } = nightSky(t, cam, 0, { shadow: 0.35 });
-  let mid = giantHero(t, 620, 1.0, { lift: 40 * bump(t, tBoot, tBoot + 0.35), face: t > tBoot ? { name: 'shocked', eyes: { look: [0.8, -0.3], pupil: 0.45 }, fx: ['exclaim'] } : { name: 'smug', eyes: { look: [0.8, 0.5] } }, armL: t > tBoot ? 60 : 26, armR: t > tBoot ? 60 : 26 });
-  mid += adm(t, { x: 1500, y: CS.GIANT.ground - lerp(2200, 0, fall), s: 8, glow: 0, armL: 8, armR: 8, shadow: false }, { arms: false, energy: 0 });
+  let mid = giantHero(t, 420, 0.92, { lift: 40 * bump(t, tBoot, tBoot + 0.35), face: t > tBoot ? { name: 'shocked', eyes: { look: [0.8, -0.3], pupil: 0.45 }, fx: ['exclaim'] } : { name: 'smug', eyes: { look: [0.8, 0.5] } }, armL: t > tBoot ? 60 : 26, armR: t > tBoot ? 60 : 26 });
+  mid = El(1440, CS.GIANT.ground, 700 * (0.4 + 0.6 * fall), 60 * (0.4 + 0.6 * fall), { fill: '#0A0618', opacity: f(0.5 * fall) }) + giantBoot(1460, CS.GIANT.ground - lerp(2400, 0, fall), 1.25, t) + mid;
   // dust ring
   const dk = seg(t, tBoot, tBoot + 0.6);
-  if (dk > 0 && dk < 1) for (let i = 0; i < 7; i++) mid += Ci(1500 + (i - 3) * 160 * (0.6 + dk), 990 - 30 * dk - (i % 2) * 20, 70 + 60 * dk, { fill: '#E8E4F2', opacity: f(0.85 * (1 - dk)), stroke: '#151515', 'stroke-width': 5 });
+  if (dk > 0 && dk < 1) for (let i = 0; i < 7; i++) mid += Ci(1300 + (i - 3) * 200 * (0.6 + dk), 990 - 30 * dk - (i % 2) * 20, 70 + 60 * dk, { fill: '#E8E4F2', opacity: f(0.85 * (1 - dk)), stroke: '#151515', 'stroke-width': 5 });
   return Ly.bg + K.view(cam, mid, 1) + Ly.fg + Ly.light + (t > tBoot ? K.bang('BOOM', 1500, 260, seg(t, tBoot, tBoot + 0.15), 130, -6, '#FFE14D') : '');
 }
 // N2 — "He always had a bigger number." tilt up the boot... the robe... up to his face, high above the clouds
 function shotN2(t) {
   const u = ease.inOut(seg(t, d18b, d18c - 0.35));
-  const cam = at(1500, lerp(560, -8900, u), lerp(1.0, 0.3, u));
+  const cam = at(lerp(1100, 1450, u), lerp(420, -8900, u), lerp(1.0, 0.3, u));
   const { Ly } = nightSky(t, cam, 0, { shadow: 0.3 });
-  let mid = giantHero(t, 620, 1.0, { face: { name: 'scared', eyes: { look: [0.6, -1], pupil: 0.45 }, fx: ['sweat'] }, armL: 22, armR: 22 });
-  mid += adm(t, { x: 1500, y: CS.GIANT.ground, s: 8, glow: 0.5, armL: 10, armR: 10, face: { name: 'deadpan', eyes: { look: [-0.5, 1], upper: 0.35 } }, shadow: false }, { arms: false, energy: 0 });
+  let mid = adm(t, { x: 1450, y: CS.GIANT.ground, s: 8, glow: 0.5, armL: 10, armR: 10, face: { name: 'deadpan', eyes: { look: [-0.5, 1], upper: 0.35 } }, shadow: false }, { arms: false, energy: 0 });
   // cloud band around his knees/waist
   let cl = '';
   for (let i = 0; i < 9; i++) cl += Ci(-200 + i * 420 + Math.sin(t + i) * 30, -3200 + (i % 3) * 120, 260 + (i % 2) * 90, { fill: '#6A5EA8', opacity: 0.85 });
-  const nums = G(outT('100', 0, 0, 160, '#FF6A3D', 16), tr(620, 120, 1.6)) + G(outT('1000', 0, 0, 160, '#FFD45A', 16), tr(1500, -9400, 5));
+  mid += giantHero(t, 420, 0.92, { face: { name: 'scared', eyes: { look: [0.6, -1], pupil: 0.45 }, fx: ['sweat'] }, armL: 22, armR: 22 });
+  const nums = G(outT('100', 0, 0, 160, '#FF6A3D', 16), tr(420, -60, 1.3)) + G(outT('1000', 0, 0, 160, '#FFD45A', 16), tr(2900, -9400, 4.5));
   return Ly.bg + K.view(cam, mid + cl + nums, 1) + Ly.fg + Ly.light;
 }
 // N3 — the beat: you look up as his shadow slowly swallows you
 function shotN3(t) {
   const u = seg(t, d18c, d19);
-  const cam = at(640, 300, lerp(1.9, 2.05, u));
+  const cam = at(440, 330, lerp(1.9, 2.05, u));
   const sh = ease.inOut(u);
   const { Ly } = nightSky(t, cam, 0, { shadow: 0.4 + 0.6 * sh });
   const gulp = bump(t, d18c + 0.5, d18c + 0.8);
-  let mid = giantHero(t, 620, 1.0, { headY: 6 * gulp, face: { name: 'scared', eyes: { look: [0.5, -1], pupil: 0.4 }, fx: ['sweat'], mouth: gulp > 0.3 ? 'o' : 'wavy' }, armL: 22, armR: 22 });
+  let mid = giantHero(t, 420, 0.92, { headY: 6 * gulp, face: { name: 'scared', eyes: { look: [0.5, -1], pupil: 0.4 }, fx: ['sweat'], mouth: gulp > 0.3 ? 'o' : 'wavy' }, armL: 22, armR: 22 });
   mid += R(-500, -900, 3000, 3000, 0, { fill: '#0A0618', opacity: f(0.45 * sh) });
   return Ly.bg + K.view(cam, mid, 1) + Ly.fg + Ly.light;
 }
