@@ -51,7 +51,7 @@ if (require.main === module) {
   const out = process.argv[2] || path.join(__dirname, '..', 'out', 'admin_full.mp4');
   const fps = Number(process.argv[3] || 60);
   const from = Number(process.argv[4] || 0), to = Number(process.argv[5] || V.DURATION);
-  renderVideo(frame, { w: 1920, h: 1080, fps, duration: to - from, start: from, out, crf: 16, staticDefs: STATIC_DEFS })
+  renderVideo(frame, { w: 1920, h: 1080, fps, duration: to - from, start: from, out, crf: 19, staticDefs: STATIC_DEFS })
     .catch((e) => { console.error(e); process.exit(1); });
 }
 
