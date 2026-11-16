@@ -422,7 +422,7 @@ function shTypeHelp(t) {
 }
 const CMDS = ['fly', 'speed', 'size', 'jail', 'tp', 'god', 'noclip', 'freeze', 'kick'];
 const CMD_WORD = [['Fly'], ['Speed'], ['Size'], ['Jail'], ['Teleport'], ['God'], ['Noclip'], ['Freeze'], ['Kick']];
-const CHIP_POS = [[1010, 330], [1160, 230], [1330, 200], [1510, 215], [1700, 290], [940, 490], [1820, 470], [1010, 660], [1770, 650]];
+const CHIP_POS = [[1010, 330], [1160, 230], [1330, 200], [1510, 215], [1700, 290], [940, 490], [1820, 470], [1000, 610], [1780, 600]];
 const chipT = (i) => w(16, CMD_WORD[i][0]) - 0.05;
 // chips fly from the laptop to their spots and then bob (world space around the bed)
 function chips(t, scale = 0.85, only = null) {

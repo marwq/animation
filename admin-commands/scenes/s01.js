@@ -14,7 +14,6 @@ const { L } = K.V;
 const C = K.C;
 const CS = require('./city');
 const SETS = require('./sets');
-const CAST = require('../rig/cast');
 const E = require('./s06_env');
 const { CITY, KF } = CS;
 const { pop, act, camOn, scr, withShake, whip, flash, punch, zoomAt, outT, outTF } = E;

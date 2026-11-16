@@ -175,8 +175,8 @@ function riseBg(t, t0, t1, tilt = 260) {
 }
 function shot5(t) {
   const { cam, L: L0 } = riseBg(t, t5, t6);
-  const r = ease.out(seg(t, t5, t5 + 1.1));
-  const x = 960 + Math.sin(t * 1.3) * 30, y = lerp(1700, 900, r) + Math.sin(t * 2.2) * 12;
+  const r = ease.out(seg(t, t5, t5 + 0.75));
+  const x = 960 + Math.sin(t * 1.3) * 30, y = lerp(1320, 880, r) + Math.sin(t * 2.2) * 12;
   let o = L0.bg;
   o += CS.dog(1500, lerp(1300, 520, ease.out(seg(t, t5 + 0.3, t6))), 1.3, -12 + Math.sin(t * 3) * 8, { t, col: '#F2F2F2' });
   o += CS.mailman(x, y, 0.5, { t, rot: Math.sin(t * 1.7) * 8 - 6, letters: 1, face: 'shock' });
@@ -186,8 +186,8 @@ function shot5(t) {
 }
 function shot6(t) {
   const { cam, L: L0 } = riseBg(t, t6, t7, 200);
-  const r = ease.out(seg(t, t6, t6 + 1.3));
-  const x = lerp(600, 980, r), y = lerp(1500, 760, r);
+  const r = ease.out(seg(t, t6, t6 + 0.95));
+  const x = lerp(700, 980, r), y = lerp(1250, 760, r);
   let o = L0.bg;
   o += CS.flyer(320, lerp(1250, 420, ease.out(seg(t, t6 + 0.2, t7))), 1.6, 18, { t, seed: 3 }) + CS.flyer(1650, lerp(1300, 300, ease.out(seg(t, t6, t7))), 1.4, -12, { t, seed: 6 });
   o += CS.bus(x, y, 1.05, -8 + Math.sin(t * 1.6) * 4, { t, wave: 1, lights: 0.4 });
@@ -198,8 +198,8 @@ function shot6(t) {
 }
 function shot7(t) {
   const { cam, L: L0 } = riseBg(t, t7, t8, 160);
-  const r = ease.out(seg(t, t7, t7 + 1.4));
-  const x = 980 + Math.sin(t * 0.9) * 20, y = lerp(1700, 860, r) + Math.sin(t * 1.8) * 10;
+  const r = ease.out(seg(t, t7, t7 + 0.95));
+  const x = 980 + Math.sin(t * 0.9) * 20, y = lerp(1330, 860, r) + Math.sin(t * 1.8) * 10;
   const calm = t >= tBath;
   let o = L0.bg;
   o += CS.bathtubGuy(x, y, 0.62, Math.sin(t * 1.1) * 4, { t, face: calm ? 'happy' : 'shock' });

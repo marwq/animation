@@ -47,6 +47,7 @@ const shaken = (t, a, inner, dur, amp) => { const s = shake(t, a, dur, amp); ret
 // actor('ty', t, { x, y, s, ...pose }, { face, energy, arms }) — auto lip-sync/blinks/gestures from the voice timeline
 const SPEAKER = { you: 'YOU', zoe: 'ZOE', brick: 'BRICK', dad: 'DAD', mom: 'MOM', granny: 'GRANNY', oldman: 'OLDMAN', admin: 'ADMIN', anchor: 'ANCHOR', boss: 'BOSS', principal: 'PRINCIPAL', coach: 'COACH', kid: 'KID' };
 function actor(name, t, pose = {}, act = {}) {
+  pose = Object.fromEntries(Object.entries(pose).filter(([, v]) => v !== undefined));   // an explicit undefined must not override auto-acting
   const sp = SPEAKER[name];
   const auto = sp ? V.perform(sp, t, { seed: name.length * 3.7 + (act.seed || 0), ...act }) : {};
   const p = { shade: true, shadow: true, ...auto, ...pose };

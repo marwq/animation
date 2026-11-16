@@ -94,7 +94,7 @@ function dadFly(t, x, y, s, o = {}) {
 }
 // night sky with drifting clouds (for the high-up shots), speed = cloud drift px/s
 function nightSky(t, cam, speed = 0, o = {}) {
-  const Ly = CS.giantScale(t, cam, { time: 0.95, admin: o.admin ?? 0.3, shadow: o.shadow || 0 });
+  const Ly = CS.giantScale(t, cam, { time: 1, admin: o.admin ?? 0.3, shadow: o.shadow || 0 });
   let cl = '';
   for (let i = 0; i < 6; i++) {
     const x = ((hash(i * 3.1) * 2600 - t * speed * (0.6 + hash(i) * 0.8)) % 2600 + 2600) % 2600 - 340, y = 120 + hash(i * 7.3) * 820, sc = 0.7 + hash(i * 1.7) * 0.9;
@@ -357,7 +357,7 @@ function shotH(t) {
 function shotI(t) {
   const on = t < d14b ? AX : HX;
   const cam = shook(at(on, 380, 1.55), t, landShakes());
-  return summit(t, cam) + E.chatFeed(t < d14b ? 400 : 1520, 380, 640, FEED, t, { n: 3, s: 0.95 }) + (t >= d14b ? whip(t, d14b, -1, 0.12) : '');
+  return summit(t, cam) + E.chatFeed(400, 380, 640, FEED, t, { n: 3, s: 0.95 }) + (t >= d14b ? whip(t, d14b, -1, 0.12) : '');
 }
 // J — the ping-pong: the camera snaps to whoever just got caged
 function shotJ(t) {
@@ -446,7 +446,7 @@ function giantBoot(x, y, s, t) {
 // N1 — BOOM: a giant boot lands next to you
 function shotN1(t) {
   const fall = ease.in(seg(t, d18, tBoot));
-  const cam = shook(at(960, 560, 1.0), t, [[tBoot, 0.6, 30]]);
+  const cam = shook(at(960, 500, 1.0), t, [[tBoot, 0.6, 30]]);
   const { Ly } = nightSky(t, cam, 0, { shadow: 0.35 });
   let mid = giantHero(t, 420, 0.92, { lift: 40 * bump(t, tBoot, tBoot + 0.35), face: t > tBoot ? { name: 'shocked', eyes: { look: [0.8, -0.3], pupil: 0.45 }, fx: ['exclaim'] } : { name: 'smug', eyes: { look: [0.8, 0.5] } }, armL: t > tBoot ? 60 : 26, armR: t > tBoot ? 60 : 26 });
   mid = El(1440, CS.GIANT.ground, 700 * (0.4 + 0.6 * fall), 60 * (0.4 + 0.6 * fall), { fill: '#0A0618', opacity: f(0.5 * fall) }) + giantBoot(1460, CS.GIANT.ground - lerp(2400, 0, fall), 1.25, t) + mid;
@@ -458,15 +458,17 @@ function shotN1(t) {
 // N2 — "He always had a bigger number." tilt up the boot... the robe... up to his face, high above the clouds
 function shotN2(t) {
   const u = ease.inOut(seg(t, d18b, d18c - 0.35));
-  const cam = at(lerp(1100, 1450, u), lerp(420, -8900, u), lerp(1.0, 0.3, u));
+  const cam = at(lerp(1100, 1450, u), lerp(420, -7700, u), lerp(1.0, 0.19, u));
   const { Ly } = nightSky(t, cam, 0, { shadow: 0.3 });
   let mid = adm(t, { x: 1450, y: CS.GIANT.ground, s: 8, glow: 0.5, armL: 10, armR: 10, face: { name: 'deadpan', eyes: { look: [-0.5, 1], upper: 0.35 } }, shadow: false }, { arms: false, energy: 0 });
   // cloud band around his knees/waist
   let cl = '';
-  for (let i = 0; i < 9; i++) cl += Ci(-200 + i * 420 + Math.sin(t + i) * 30, -3200 + (i % 3) * 120, 260 + (i % 2) * 90, { fill: '#6A5EA8', opacity: 0.85 });
+  let cd = '';
+  for (let i = 0; i < 16; i++) { const cx = -1400 + i * 340 + Math.sin(t * 0.6 + i) * 40, r = 230 + (i % 3) * 90; cd += `M${f(cx - r)} -3150a${f(r)} ${f(r * 0.8)} 0 0 1 ${f(2 * r)} 0Z`; }
+  cl += P(cd, { fill: '#E6E0FA', opacity: 0.55 }) + R(-1600, -3150, 6200, 160, 80, { fill: '#E6E0FA', opacity: 0.55 });
   mid += giantHero(t, 420, 0.92, { face: { name: 'scared', eyes: { look: [0.6, -1], pupil: 0.45 }, fx: ['sweat'] }, armL: 22, armR: 22 });
-  const nums = G(outT('100', 0, 0, 160, '#FF6A3D', 16), tr(420, -60, 1.3)) + G(outT('1000', 0, 0, 160, '#FFD45A', 16), tr(2900, -9400, 4.5));
-  return Ly.bg + K.view(cam, mid + cl + nums, 1) + Ly.fg + Ly.light;
+  const nums = G(outT('100', 0, 0, 160, '#FF6A3D', 16), tr(420, -60, 1.3)) + G(outT('1000', 0, 0, 160, '#FFD45A', 16), tr(3900, -7300, 5.5));
+  return Ly.bg + K.view(cam, mid + cl + nums, 1) + (cam.zoom > 0.6 ? Ly.fg : '') + Ly.light;
 }
 // N3 — the beat: you look up as his shadow slowly swallows you
 function shotN3(t) {
@@ -487,13 +489,14 @@ function shotO1(t) {
   const cam = at(960, 540, 1.0);
   const { Ly, clouds } = nightSky(t, at(960, -2600, 1.0), 900 * (1 - ease.out(u)));
   const arrive = ease.out(seg(t, d19, d19 + 0.8));
-  const x = lerp(2400, 1060, arrive), y = 700 + Math.sin(t * 2.5) * 12;
+  const x = lerp(2600, 1150, arrive), y = 820 + Math.sin(t * 2.5) * 12;
   let o = Ly.bg + clouds;
   // speed lines while flying in
   if (arrive < 1) o += K.C.speedLines(x + 300, x + 1200, y - 200, 10, 7, '#FFFFFF', 400);
-  o += K.view(cam, dadFly(t, x, y, 0.62, { headRot: -40 }), 1);
-  // the giant hero's face in the corner (looking at Dad)
-  o += Ly.light + K.bang('HERO!', 420, 260, seg(t, Wd(13, 'kid') - 0.1, Wd(13, 'kid') + 0.1), 80, -8, '#5AB0FF');
+  o += K.view(cam, dadFly(t, x, y, 0.64, { headRot: -40 }), 1);
+  const pk = seg(t, Wd(13, 'kid') - 0.1, Wd(13, 'kid') + 0.2);
+  if (pk > 0) o += K.sparkles([[x - 420, y - 420, 34 * pk], [x - 300, y - 520, 22 * pk], [x + 80, y - 480, 26 * pk]], t);
+  o += Ly.light;
   return o + whip(t, d19, -1, 0.15);
 }
 // O2 — "Can you hear me now?!" — in front of the Admin's giant face of light
@@ -516,8 +519,8 @@ function shotP1(t) {
   let o = Ly.bg;
   o += K.view(cam, adm(t, { x: 820, y: 3420, s: 3.0, glow: 0.8, armL: 8, armR: 8, face: { name: 'angry', eyes: { upper: 0.3 }, fx: ['anger'] }, shadow: false }, { arms: false, energy: 0.6 }), 1);
   const blow = ease.out(seg(t, Wd(14, 'Yes'), Wd(14, 'Yes') + 0.6));
-  const dx = lerp(1500, 1720, blow), dy = 800 - 60 * blow;
-  o += E.soundRings(1000, 700, t, Wd(14, 'Yes'), 0, '#FFE38A', 4, 700, 18);
+  const dx = lerp(1240, 1420, blow), dy = 800 - 60 * blow;
+  o += E.soundRings(1000, 640, t, Wd(14, 'Yes'), 0, '#FFE38A', 4, 760, 26);
   o += K.view(cam, actor('dad', t, { x: dx, y: dy, s: 0.42, view: 'side', rot: 25 * blow, armL: 150, armR: 170, legL: 30, kneeL: 40, legR: -20, kneeR: 50, face: { name: 'oof', eyes: { type: 'swirl' } }, shadow: false }, { arms: false }) + actor('zoe', t, { x: dx + 110, y: dy - 240, s: 0.3, view: 'side', rot: 25 * blow, legL: 90, kneeL: 90, legR: 80, kneeR: 85, laptop: true, face: 'shocked', shadow: false }, { arms: false }), 1);
   return o + Ly.light;
 }
@@ -525,12 +528,12 @@ function shotP1(t) {
 function shotP2(t) {
   const cam = shook(at(960, 560, 1.0), t, [[Wd(14, 'Everybody'), 0.6, 16], [tPounce + 0.3, 0.3, 14]]);
   const { Ly } = nightSky(t, cam, 0, { admin: 0.5 });
-  let mid = giantHero(t, 520, 1.0, { armL: 150, armR: 150, face: { name: 'oof', eyes: { type: 'closed' } } });
-  mid += adm(t, { x: 1600, y: CS.GIANT.ground, s: 8, glow: 0, armL: 8, armR: 8, shadow: false }, { arms: false, energy: 0 });
+  let mid = giantBoot(1500, CS.GIANT.ground, 1.2, t);
+  mid += giantHero(t, 400, 0.92, { armL: 150, armR: 150, bodyY: 10, face: { name: 'oof', eyes: { type: 'closed' } } });
   // Pancake: pounce → cling to the hem
   const pk = seg(t, tPounce - 0.45, tPounce);
   const cling = t >= tPounce;
-  const px = cling ? 1260 : lerp(-300, 1260, ease.out(pk)), py = cling ? 760 + Math.sin(t * 8) * 6 : lerp(1100, 760, Math.sin(pk * Math.PI / 2)) - 260 * Math.sin(pk * Math.PI);
+  const px = cling ? 1180 : lerp(-300, 1180, ease.out(pk)), py = cling ? 700 + Math.sin(t * 8) * 6 : lerp(1100, 700, Math.sin(pk * Math.PI / 2)) - 260 * Math.sin(pk * Math.PI);
   if (pk > 0) mid += CATS.pancake({ x: px, y: py, s: 2.2, t, pose: 'pounce', mood: cling ? 'angry' : 'happy', flip: true, rot: cling ? -30 : -10, shadow: false });
   if (cling) mid += K.bang('MROW!', 1100, 360, seg(t, tPounce, tPounce + 0.15), 80, -6, '#FFB13B');
   mid += E.soundRings(1700, -200, t, Wd(14, 'Everybody'), 120, '#FFE38A', 4, 1300, 22);
@@ -538,12 +541,10 @@ function shotP2(t) {
 }
 // Q1 — "I'm in his logs! He's not a program..." — Zoe types on Dad's back
 function shotQ1(t) {
-  const cam = at(900, 500, 1.65);
+  const cam = at(1000, 430, 1.42);
   const { Ly, clouds } = nightSky(t, at(960, -2600, 1.0), 600);
   let o = Ly.bg + clouds;
   o += K.view(cam, dadFly(t, 1060, 760, 0.6, { headRot: -40, trail: false, zoeFace: { name: 'determined', eyes: { look: [-0.7, 0.7] } } }), 1);
-  // screen glow on her face
-  o += K.view(cam, El(1000, 410, 120, 90, { fill: '#7DFFB8', opacity: 0.18 }), 1);
   o += K.C.speedLines(-200, 2000, 540, 8, 3, '#FFFFFF', 900);
   return o + Ly.light;
 }

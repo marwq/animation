@@ -264,7 +264,7 @@ function runners(t, opts = {}) {
     const ki = RUN_KIDS[i];
     if (ki < 0) return;
     const blown = opts.blown ? opts.blown : 0;
-    const p = { x: x + 40 * blown, y: GYM.lane, s: 0.4, view: 'side', flip: true, bodyY: 34 * (1 - blown), lean: 22 * (1 - blown) - 50 * blown, armL: -30, armR: 40, legL: 30, legR: -20, kneeL: 60, kneeR: 40, lift: 120 * bump(blown, 0, 1), rot: -40 * blown, face: blown > 0 ? 'dizzy' : 'determined', volume: i % 2 ? false : undefined };
+    const p = { x: x + 40 * blown, y: GYM.lane, s: 0.4, volume: blown > 0 ? false : (i % 2 ? false : undefined), view: 'side', flip: true, bodyY: 34 * (1 - blown), lean: 22 * (1 - blown) - 50 * blown, armL: -30, armR: 40, legL: 30, legR: -20, kneeL: 60, kneeR: 40, lift: 120 * bump(blown, 0, 1), rot: -40 * blown, face: blown > 0 ? 'dizzy' : 'determined' };
     o += kid(ki, p);
   });
   return o;
@@ -351,7 +351,7 @@ function shBoom(t) {
   // the coach: stunned, his whistle melts
   const melt = seg(t, tSpeed + 0.1, tSpeed + 1.0);
   const hy = -604;
-  ch += coachP(t, { face: { name: 'shocked', mouth: 'o' }, lean: -10 * blown, armL: 30 + 40 * blown, armR: 30 + 40 * blown, props: [{ svg: X.meltWhistle(-30, hy, 1.2, melt, t), layer: 'top' }] });
+  ch += coachP(t, { volume: false, face: { name: 'shocked', mouth: 'o' }, lean: -10 * blown, armL: 30 + 40 * blown, armR: 30 + 40 * blown, props: [{ svg: X.meltWhistle(-30, hy, 1.2, melt, t), layer: 'top' }] });
   // shockwave ring + BOOM
   let fx = '';
   if (age < 0.7) { const u = age / 0.7; fx += S.ellipse(GYM.hero, 820, 1600 * ease.out(u), 380 * ease.out(u), { fill: 'none', stroke: '#FFFFFF', 'stroke-width': f(40 * (1 - u)), opacity: f(1 - u) }); }

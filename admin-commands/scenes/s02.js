@@ -712,7 +712,7 @@ function shLegend(t) {
 // ================================================================= 45. the night + the dream
 function bedNight(t, cam, heroFace, over = '') {
   const hero = you(t, { ...HR.bed.lie, face: heroFace });
-  return room(SETS.heroRoom, t, cam, { time: 'night', laptopAt: false }, { behind: hero, light: false, night: nightLight(1300, 560, 160, 1100, 0.6) + SETS.glowSpot(1560, 640, 300, 'setsGlowBlue', 0.35), over });
+  return room(SETS.heroRoom, t, cam, { time: 'night', laptopAt: false }, { behind: hero, light: false, night: nightLight(1560, 640, 90, 760, 0.74) + SETS.glowSpot(1560, 640, Math.min(300, 420 / cam.zoom), 'setsGlowBlue', 0.3), over });
 }
 function dreamSky(t) {
   return S.rect(-400, -400, 2720, 1880, 0, { fill: 'url(#s02dream)' }) + SETS.cloud(300 + ((t * 30) % 300), 260, 1.4, '#FFFFFF', '#FFD3EC') + SETS.cloud(1500 - ((t * 24) % 300), 180, 1.1, '#FFFFFF', '#FFD3EC') + SETS.cloud(1100, 820, 1.8, '#FFFFFF', '#FFD3EC');
@@ -816,8 +816,8 @@ function scene(t) {
 }
 function look(t) {
   if (t >= c08 && t < c14 && !(t >= c10 && t < c11)) return { grade: null, vignette: 0.4 };
-  if (t >= c45 && t < c46) return { grade: null, vignette: 0.9 };
-  if (t >= c49 && t < c50) return { grade: null, vignette: 0.9 };
+  if (t >= c45 && t < c46) return { grade: 'cool', vignette: 0.9 };
+  if (t >= c49 && t < c50) return { grade: 'cool', vignette: 0.9 };
   if (t >= c46 && t < c49) return { grade: 'warm', vignette: 0.3 };
   if (t >= c50) return { grade: 'night', vignette: 1 };
   if (t >= c04 && t < c07) return { grade: 'cool', vignette: 0.7 };

@@ -494,14 +494,14 @@ function familyFeed(name, w, h, t) {
     o += R(w * 0.06, h * 0.16, w * 0.3, h * 0.44, 8, ol('#FFFFFF', 4)) + P(`M${w * 0.21} ${h * 0.16} V${h * 0.6} M${w * 0.06} ${h * 0.38} H${w * 0.36}`, ln(4));
     o += K.actor('dad', t, { x: bx + 40, y: h + 360, s: 0.6, turn: -0.3, face: { name: 'talkHappy', mouth: Math.floor(t * 7) % 2 ? 'O' : 'smile' }, armR: 40, volume: false, shadow: false });
   } else if (name === 'granny') {
-    const zx = ((t * 600) % (w + 700)) - 350;
-    o += CS.thumb('day', 0, 0, w, h * 0.8) + R(0, h * 0.78, w, h * 0.22, 0, { fill: '#7ED957' });
-    o += CAST.fireTrail({ x: zx + 60, y: h * 0.7, len: 420, angle: 180, w: 60, t }) + K.actor('granny', t, { x: zx, y: h * 0.95, s: 0.32, fast: true, view: 'side', flip: true, ...A.run(t * 30), face: 'joy', volume: false, shadow: false });
+    const zx = w * 0.56 + Math.sin(t * 1.3) * 30;
+    o += CS.thumb('day', 0, 0, w, h * 0.8) + R(0, h * 0.78, w, h * 0.22, 0, { fill: '#7ED957' }) + K.C.speedLines(-100, w, h * 0.5, 7, Math.floor(t * 12), '#FFFFFF', h * 0.7);
+    o += CAST.fireTrail({ x: zx - 40, y: h * 0.72, len: 360, angle: 180, w: 70, t }) + K.actor('granny', t, { x: zx, y: h * 0.97, s: 0.34, fast: true, view: 'side', flip: true, ...A.run(t * 30), face: 'joy', volume: false, shadow: false });
   } else if (name === 'zoe') {
     o += K.actor('zoe', t, { x: bx, y: h + 320, s: 0.6, laptop: true, armL: 24, armR: 24, face: { name: 'smug' }, volume: false, shadow: false });
   } else {
     o += R(0, h * 0.5, w, h * 0.5, 0, { fill: '#6E7488' });
-    o += K.actor('brick', t, { x: bx, y: h + 430, s: 0.48, armR: 60, face: { name: 'happy', fx: ['blush'] }, volume: false, shadow: false, props: [{ svg: cookie(A.hand(60, 1)[0], A.hand(60, 1)[1] - 20, 1.4, 1, 10), layer: 'front' }] });
+    o += K.actor('brick', t, { x: bx, y: h + 290, s: 0.44, armR: 150, face: { name: 'happy', fx: ['blush'] }, volume: false, shadow: false, props: [{ svg: cookie(A.hand(150, 1)[0] + 10, A.hand(150, 1)[1] - 30, 1.5, 1, 10), layer: 'front' }] });
   }
   return o;
 }

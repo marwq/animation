@@ -126,10 +126,10 @@ function shPoint(t) {
   const cam = camKeys(t, [[CUT.point, { zoom: 1.6, x: 400 - 960, y: 650 - 540 }], [tYou - 0.1, { zoom: 1.6, x: 430 - 960, y: 650 - 540 }], [tYou + 0.08, { zoom: 1.9, x: 1220 - 960, y: 630 - 540 }], [CUT.dad, { zoom: 2.0, x: 1220 - 960, y: 620 - 540 }]]);
   const pt = ease.outBack(seg(t, tPicks - 0.2, tPicks + 0.15));
   let ch = '';
-  ch += actor('brick', t, { x: 420, y: 990, s: 0.5, turn: 0.5, armR: lerp(-20, 88, pt), armL: -20, face: { name: 'sad', eyes: { look: [0.8, 0.1] }, fx: ['blush'], mouth: 'smallSmile' }, props: [sash()] }, { arms: false });
+  ch += actor('brick', t, { x: 420, y: 990, s: 0.5, volume: false, turn: 0.5, armR: lerp(-20, 88, pt), armL: -20, face: { name: 'sad', eyes: { look: [0.8, 0.1] }, fx: ['blush'], mouth: 'smallSmile' }, props: [sash()] }, { arms: false });
   const joy = t >= tFirst;
-  ch += hero(t, { x: 1220, y: 990, s: 0.5, turn: -0.3, lift: joy ? 70 * Math.abs(Math.sin((t - tFirst) * 9)) : 0, armL: joy ? 160 : 20, armR: joy ? 160 : 20, ...boing(t, tFirst, 0.2), face: joy ? { name: 'excited' } : t > tYou ? { name: 'shocked' } : { name: 'sad', eyes: { look: [-0.6, 0] } } });
-  ch += kid(6, { x: 1540, y: 990, s: 0.46, turn: -0.5, face: t > tYou ? 'shocked' : 'neutral', volume: false });
+  ch += hero(t, { x: 1220, y: 990, s: 0.5, volume: false, turn: -0.3, lift: joy ? 70 * Math.abs(Math.sin((t - tFirst) * 9)) : 0, armL: joy ? 160 : 20, armR: joy ? 160 : 20, ...boing(t, tFirst, 0.2), face: joy ? { name: 'excited' } : t > tYou ? { name: 'shocked' } : { name: 'sad', eyes: { look: [-0.6, 0] } } });
+  ch += kid(6, { x: 1540, y: 990, s: 0.46, volume: false, turn: -0.5, face: t > tYou ? 'shocked' : 'neutral', volume: false });
   let o = room(Lg, cam, '', ch);
   if (joy) o += K.confetti(t, tFirst, 40, 7);
   return o + whip(t, tYou, 1, 0.08);
@@ -137,7 +137,7 @@ function shPoint(t) {
 
 // ---- Dad: "Can you hear me now?" (muted, of course)
 function dadPose(t, extra = {}) {
-  return actor('dad', t, { x: 640, y: 812, s: 0.5, view: 'side', legL: 85, legR: 80, kneeL: 88, kneeR: 84, armL: 60, armR: 40, lean: 8, ...extra });
+  return actor('dad', t, { x: 640, y: 812, s: 0.5, volume: false, view: 'side', legL: 85, legR: 80, kneeL: 88, kneeR: 84, armL: 60, armR: 40, lean: 8, ...extra });
 }
 function shDad(t) {
   const Lr = SETS.livingRoom.layers(t, { call: true, callOpts: { muted: 1 } });
@@ -181,7 +181,7 @@ function shGranny(t) {
   // blurred arms: ghost copies
   for (let k = 0; k < 3; k++) {
     const a = 60 + 80 * Math.sin(t * 40 + k * 2.1);
-    const pose = { x: st.x, y: st.y, s: st.s, fast: true, armL: a, armR: 140 - a * 0.6, turn: wink ? 0.3 : 0, face: wink ? { name: 'smug', eyes: { type: 'happy' } } : { name: 'determined' } };
+    const pose = { x: st.x, y: st.y, s: st.s, volume: false, fast: true, armL: a, armR: 140 - a * 0.6, turn: wink ? 0.3 : 0, face: wink ? { name: 'smug', eyes: { type: 'happy' } } : { name: 'determined' } };
     g += k === 0 ? actor('granny', t, pose, { arms: false }) : S.g(actor('granny', t, { ...pose, shadow: false, volume: false }), null, { opacity: 0.25 });
   }
   // pancakes flying from the pan to the stack
@@ -237,16 +237,16 @@ function shWalk(t) {
   const carV = t < tFaster ? 1500 : lerp(1500, 700, seg(t, tFaster, tFaster + 0.5));
   const carX = 380 + (Math.min(t, tFaster) - t0) * 1500 + Math.max(0, t - tFaster) * carV * 0.85;
   const storeX = 400 + (t1 - t0) * 1500 + 420;
-  const cam = { zoom: 1.15, x: gx - 960 + 140, y: 150 };
+  const cam = { zoom: 1.32, x: gx - 960 + 160, y: 190 };
   const Ls = SETS.street.layers(t, cam, { time: 'morning', pigeon: false });
   let ch = grocery(storeX, 945);
   ch += fireTrail({ pts: [[gx - 30, 935], [gx - 300, 938], [gx - 700, 934], [gx - 1100, 937]], w: 46, t });
   const waving = t > tFaster;
   ch += actor('granny', t, { x: gx, y: 940, s: 0.42, fast: true, view: 'side', flip: true, ...AC.walk(t * 30, 1.1), armL: waving ? 150 + 20 * Math.sin(t * 14) : AC.walk(t * 30).armL, lean: 6, face: waving ? { name: 'happy', eyes: { look: [0.9, 0.4] } } : { name: 'happy' } }, { arms: false });
   ch += K.C.speedLines(gx - 700, gx - 250, 760, 6, 5, '#FFFFFF', 260);
-  const car = X.CS && X.CS.car ? X.CS.car(carX, 1040, 3.3, { col: '#5A8BFF' }) : S.g(S.rect(-60, -60, 124, 50, 14, ol('#5A8BFF', 4)), tf(carX, 1035, 2.6));
+  const car = X.CS && X.CS.car ? X.CS.car(carX, 1062, 2.9, { col: '#5A8BFF' }) : S.g(S.rect(-60, -60, 124, 50, 14, ol('#5A8BFF', 4)), tf(carX, 1035, 2.6));
   ch += car;
-  if (t > tFaster) ch += bubble(carX + 60, 760, '?!', pop(t, tFaster + 0.3, 0.2), { size: 50, w: 110, tx: -10, ty: 90 });
+  if (t > tFaster) ch += bubble(carX + 60, 800, '?!', pop(t, tFaster + 0.3, 0.2), { size: 50, w: 110, tx: -10, ty: 90 });
   return Ls.bg + Ls.mid + view(cam, ch, 1) + Ls.fg + bang('WHOOSH', 1500, 260, pop(t, tCar, 0.2), 80, 8, '#FF8A2E');
 }
 
@@ -257,8 +257,8 @@ function shZoe(t) {
   const Lr = roomL(t);
   const cam = camKeys(t, [[CUT.zoe, { zoom: 1.5, x: 930 - 960, y: 650 - 540 }], [CUT.zoe2, { zoom: 1.62, x: 900 - 960, y: 640 - 540 }]]);
   let ch = '';
-  ch += actor('zoe', t, { x: 1030, y: 990, s: 0.56, view: 'side', lean: 16, headRot: 6, armL: 60, armR: 50, face: { name: 'confused', eyes: { look: [-0.8, 0.2], upper: 0.35 } } }, { arms: false });
-  ch += hero(t, { x: 1380, y: 990, s: 0.55, turn: -0.4, armL: -24, armR: -24, ...breathe(t), face: { name: 'smug', eyes: { look: [-0.7, 0] } } });
+  ch += actor('zoe', t, { x: 1030, y: 990, s: 0.56, volume: false, view: 'side', lean: 16, headRot: 6, armL: 60, armR: 50, face: { name: 'confused', eyes: { look: [-0.8, 0.2], upper: 0.35 } } }, { arms: false });
+  ch += hero(t, { x: 1380, y: 990, s: 0.55, volume: false, turn: -0.4, armL: -24, armR: -24, ...breathe(t), face: { name: 'smug', eyes: { look: [-0.7, 0] } } });
   return room(Lr, cam, '', ch);
 }
 function shZoe2(t) {
@@ -363,7 +363,7 @@ function shPanel(t) {
   const u = seg(t, CUT.panel, CUT.crown);
   const cam = { zoom: lerp(1.45, 1.6, ease.inOut(u)), x: 1300 - 960, y: 620 - 540 };
   let ch = S.g(pancake({ x: 0, y: 0, s: 0.62, t, pose: 'sit', mood: 'smug', blink: bump(t, CUT.panel + 1.4, CUT.panel + 1.6) }), `translate(${LAP.x} ${LAP.y - 30})`);
-  ch += hero(t, { x: 1020, y: 990, s: 0.52, turn: 0.4, armL: 9, armR: 9, ...breathe(t), face: { name: 'shocked', eyes: { look: [0.8, -0.2] } } });
+  ch += hero(t, { x: 1020, y: 990, s: 0.52, volume: false, turn: 0.4, armL: 9, armR: 9, ...breathe(t), face: { name: 'shocked', eyes: { look: [0.8, -0.2] } } });
   return room(Lr, cam, '', ch);
 }
 // ---- "It kept one admin." — the tiny golden ADMIN crown; slow push-in on the crown until the end
