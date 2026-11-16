@@ -120,7 +120,7 @@ function enter(t, g, pan, note) {
       add(t0 + 0.6, 'heart_pop', -9, PS(owner), 'hug: a heart pops');
     }
   });
-  add(M[2].a - 0.25, 'chat_pop', -8, P(460), "next chat bar pops");
+  add(Math.max(c3 + 0.02, M[2].a - 0.25), 'chat_pop', -8, P(460), "next chat bar pops: ';unfly the bus'");
   typing(M[2].a, M[2].b, -4, P(460), "typing ';unfly the bus'");
   enter(M[2].b, -3, P(460), ';unfly the bus');
 }
