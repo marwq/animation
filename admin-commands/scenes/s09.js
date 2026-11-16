@@ -141,7 +141,7 @@ function shotSold(t) {
 }
 // 7. "Every hundred years, I give the panel to one person." — the panel holders on the main screen
 function shotHistory(t) {
-  const cam = drift(K.camKeys(t, [[b6, at(900, 520, 1.3)], [b7, at(930, 500, 1.4)]]), t, 4);
+  const cam = drift(K.camKeys(t, [[b6, at(960, 520, 1.3)], [b7, at(985, 505, 1.38)]]), t, 4);
   const k = seg(t, M[4].word('hundred').t0, M[4].word('see').t0);
   const main = E.historyScreen(556, 350, t, k);
   const gest = io(seg(t, M[4].word('panel').t0 - 0.3, M[4].word('panel').t0)) * (1 - io(seg(t, M[4].b - 0.2, M[4].b + 0.2)));
@@ -245,11 +245,11 @@ function shotExactly(t) {
 // 15. "I know. I read the logs. Every single one." — the log fills the screens, the room turns green
 function shotLogs(t) {
   const gk = io(seg(t, tSingle - 0.1, tSingle + 0.6));
-  const cam = drift(K.camKeys(t, [[b14, at(760, 520, 1.55)], [tSingle - 0.1, at(780, 510, 1.5)], [b15, at(900, 500, 1.18)]]), t, 3);
+  const cam = drift(K.camKeys(t, [[b14, at(760, 520, 1.55)], [tSingle - 0.1, at(780, 510, 1.5)], [b15, at(920, 500, 1.15)]]), t, 3);
   const n = Math.max(1, Math.floor(lerp(1, E.HERO_LOG.length, seg(t, tLogs - 0.2, tSingle + 0.4))));
   const turnK = io(seg(t, b14, b14 + 0.5));
   const o2 = old(t, { headRot: 8 * turnK, face: { name: 'happy', eyes: { look: [lerp(0.4, 1, turnK), -0.5 * turnK] } } });
-  const h = hero(t, { x: 1490, turn: -0.3, face: { name: 'shocked', fx: [], eyes: { look: [-0.6, -0.7] } } });
+  const h = hero(t, { x: 1460, turn: -0.3, face: { name: 'shocked', fx: [], eyes: { look: [-0.6, -0.7] } } });
   return E.room(t, cam, { logs: E.HERO_LOG.slice(0, n), green: gk }, o2, h);
 }
 // 16. "And you never once typed a command..." — FIND: help → 0 RESULTS

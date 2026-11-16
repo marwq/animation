@@ -42,7 +42,7 @@ const d17 = n[10].a - 0.1;                  // L1 ;size me 100
 const d17b = n[10].b - 0.05;                // L2 you grow; ;size me 1000
 const d18 = n[11].b + 0.05;                 // N1 the boot
 const d18b = Wd(12, 'had') + 0.1;           // N2 tilt up the giant
-const d18c = n[12].b + 0.55;                // N3 the shadow (the beat)
+const d18c = Math.min(n[12].b + 0.55, n[13].a - 0.75);   // N3 the shadow (the beat)
 const d19 = n[13].a - 0.15;                 // O1 Dad flies in
 const d20 = Wd(13, 'Can') - 0.1;            // O2 "Can you hear me now?!"
 const d21 = n[14].a - 0.1;                  // P1 "Yes! I can hear you!"
@@ -146,13 +146,13 @@ function shotB(t) {
   const cam = shook(at(980, 640, lerp(1.55, 1.68, u)), t, [[d1 + 0.05, 0.3, 12]]);
   let chars = frozenHero(t, 980, 0);
   const crk = seg(t, d1 + 0.05, d1 + 0.3);
-  return roofFrame(t, cam, { admin: 0.6 }, { chars: K.view(cam, chars, 1), over: (crk > 0 ? K.bang('CRACKLE!', 1500, 260, crk, 80, 8, '#DDF6FF') : '') + flash(t, d1, 0.2, '#DDF6FF', 0.6) });
+  return roofFrame(t, cam, { admin: 0.3 }, { chars: K.view(cam, chars, 1), over: (crk > 0 ? K.bang('CRACKLE!', 1500, 260, crk, 80, 8, '#DDF6FF') : '') + flash(t, d1, 0.2, '#DDF6FF', 0.6) });
 }
 // Granny with the hair dryer (front, turned to screen-right); dryer on 0..1
 function grannyDryer(t, x, y, s, on, o = {}) {
   const [hx, hy] = E.A.hand(100, 1);
   const dry = E.hairDryer(hx, hy, 1.3, -4 + Math.sin(t * 30) * 2 * on, t, on);
-  let out = actor('granny', t, { x, y, s, fast: true, turn: 0.5, armR: 100, armL: 30 + 20 * Math.sin(t * 9), face: 'excited', props: [{ svg: dry, layer: 'front' }], ...o }, { arms: false, energy: 1.6 });
+  let out = actor('granny', t, { x, y, s, fast: true, turn: 0.5, armR: 100, armL: 30 + 20 * Math.sin(t * 9), face: 'excited', volume: false, props: [{ svg: dry, layer: 'front' }], ...o }, { arms: false, energy: 1.6 });
   if (on > 0.3) out += CAST.fireTrail({ x: x + (hx + 330 * 1.3) * s * 0.86, y: y + (hy - 112 * 1.3) * s * 0.86, len: 240, angle: 0, w: 70, t, alpha: on });
   return out;
 }
@@ -166,7 +166,7 @@ function shotC1(t) {
   if (run < 1) {
     chars += CAST.fireTrail({ x: gx - 60, y: gy - 200, len: 900 * (1 - run * 0.7), angle: 180, w: 120, t });
     const [hx, hy] = [4 - 250, -505];
-    chars += actor('granny', t, { x: gx, y: gy, s: 0.42, fast: true, view: 'side', flip: true, armL: 90, armR: -30, legL: 50, kneeL: 30, legR: -40, kneeR: 70, lean: lerp(14, -10, run), face: 'excited', props: [{ svg: G(E.hairDryer(0, 0, 1.3, 0, t, 0), `translate(${hx} ${hy}) scale(-1 1)`), layer: 'front' }] }, { arms: false });
+    chars += actor('granny', t, { x: gx, y: gy, s: 0.42, fast: true, view: 'side', flip: true, volume: false, armL: 90, armR: -30, legL: 50, kneeL: 30, legR: -40, kneeR: 70, lean: lerp(14, -10, run), face: 'excited', props: [{ svg: G(E.hairDryer(0, 0, 1.3, 0, t, 0), `translate(${hx} ${hy}) scale(-1 1)`), layer: 'front' }] }, { arms: false });
     if (run > 0.6) chars += K.C.dust(gx - 120, gy - 20, d2 + 0.35, t);
   } else {
     chars += grannyDryer(t, gx, gy, 0.42, seg(t, d3 - 0.4, d3));
@@ -174,7 +174,7 @@ function shotC1(t) {
   // skid marks
   chars += P(`M${f(Math.max(-400, gx - 700))} ${gy - 6}H${f(gx - 40)}`, ln(10, '#1A1630', 0.5 * seg(t, d2 + 0.2, d2 + 0.4)));
   void u;
-  return roofFrame(t, cam, { admin: 0.5 }, { chars: K.view(cam, chars, 1) }) + whip(t, d2, 1, 0.16);
+  return roofFrame(t, cam, { admin: 0 }, { chars: K.view(cam, chars, 1) }) + whip(t, d2, 1, 0.16);
 }
 // C2 — "Granny's got a hair dryer!" — the ice melts in a second
 function shotC2(t) {
@@ -186,7 +186,7 @@ function shotC2(t) {
   // steam
   let st = '';
   for (let i = 0; i < 6; i++) { const ph = (t * 1.2 + i / 6) % 1; st += Ci(1050 + i * 40 + Math.sin(t * 3 + i) * 20, 700 - ph * 400, 30 + ph * 40, { fill: '#FFFFFF', opacity: f(0.5 * (1 - ph) * Math.min(1, melt * 4) * (1 - seg(t, tMelt1, d4))) }); }
-  return roofFrame(t, cam, { admin: 0.45 }, { chars: K.view(cam, chars + st, 1), over: K.bang('FWOOOSH', 860, 250, seg(t, d3 + 0.1, d3 + 0.3), 80, -6, '#FF8A3D') });
+  return roofFrame(t, cam, { admin: 0 }, { chars: K.view(cam, chars + st, 1), over: K.bang('FWOOOSH', 860, 250, seg(t, d3 + 0.1, d3 + 0.3), 80, -6, '#FF8A3D') });
 }
 // D — "Th-thanks, Granny!" — soaked, icicles, teeth chattering
 function shotD(t) {
@@ -198,7 +198,7 @@ function shotD(t) {
   chars += grannyDryer(t, 640, fy, 0.42, 0.6);
   chars += E.hero(t, { x, y: fy, s, laptop: 'back', armL: 20, armR: 20, headRot: Math.sin(t * 50) * 2, face: { name: 'nervous', eyes: { look: [-0.6, 0] }, fx: ['sweat', 'blush'] } }, { arms: false, energy: 0.3 });
   chars += icicles(x, fy, s) + drips(x, fy, s, t);
-  return roofFrame(t, cam, { admin: 0.45 }, { chars: K.view(cam, chars, 1) + T('brrr', 1300, 330, 60, '#DDF6FF', { ...E.OUT(8), transform: `rotate(${f(Math.sin(t * 40) * 4)} 1300 330)` }) });
+  return roofFrame(t, cam, { admin: 0 }, { chars: K.view(cam, chars, 1) + T('brrr', 1300, 330, 60, '#DDF6FF', { ...E.OUT(8), transform: `rotate(${f(Math.sin(t * 40) * 4)} 1300 330)` }) });
 }
 // E — "Teleport... me... away!" — ;tp me away → beam → gone
 function shotE(t) {
@@ -211,7 +211,7 @@ function shotE(t) {
   chars += E.tpBeam(x, fy, s, bump(t, tTp - 0.05, tTp + 0.4), t);
   const prog = K.typeProgress(t, n[3], 'Teleport', 'away');
   const over = K.chatCommand(1000, 150, ';tp me away', prog, { t, enter: t >= tTp ? clamp((t - tTp) / 0.35, 0, 1) : 0, s: 1.25 }) + flash(t, tTp + 0.05, 0.2, '#DDFBFF', 0.6);
-  return roofFrame(t, cam, { admin: 0.45 }, { chars: K.view(cam, chars, 1), over });
+  return roofFrame(t, cam, { admin: 0 }, { chars: K.view(cam, chars, 1), over });
 }
 // arrival + departure for the chase legs: returns squash/beam values
 function tpState(t, tin, tout) {
@@ -309,8 +309,9 @@ const e2 = We(7, 'me');                               // ADMIN: ;unjail me
 const e3 = n[7].b;                                    // ADMIN: ;jail you
 const e4 = We(8, 'me');                               // you: ;unjail me
 const e5 = We(8, 'you');                              // you: ;jail you
-const e6 = e5 + 0.32;                                 // ADMIN: ;unjail me (instant)
-const e7 = e6 + 0.24;                                 // ADMIN: ;jail you (instant)
+const eGap = Math.max(0.3, Wd(8, 'unjail', 1) - e5);  // the beat before "UN-JAIL ME!"
+const e6 = e5 + 0.35 * eGap;                          // ADMIN: ;unjail me (instant)
+const e7 = e5 + 0.7 * eGap;                           // ADMIN: ;jail you (instant)
 const e8 = n[8].b;                                    // you: ;UNJAIL ME
 const FEED = [
   { who: 'you', text: ';jail Admin', a: n[6].a, b: e1 },
