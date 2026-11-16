@@ -411,6 +411,8 @@ function shotAt(t) {
 function scene(t) {
   let o = SHOTS[shotAt(t)][1](t);
   for (const tc of WHIPS) if (Math.abs(t - tc) < 0.1) o += whip(t, tc, 1);
+  const t0 = K.V.scene('SC 11').start;                       // SC 10 ends on white: fade in from it
+  if (t < t0 + 0.45) o += K.C.whiteFlash(1 - K.ease.out(K.clamp((t - t0) / 0.45, 0, 1)));
   return o;
 }
 function look(t) {

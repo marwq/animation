@@ -98,9 +98,10 @@ const P = (sx) => r3(clamp(((sx - 960) / 960) * 0.7, -1, 1));          // pan fr
 const PW = (wx, cx, z) => P(960 + z * (wx - cx));                        // world x seen by a cam at(cx, _, z)
 const sfx = [];
 const add = (t, name, g, pan, note) => sfx.push([r3(t), name, g, pan, note]);
-// keyboard bursts (~1 s each) while the command's letters appear
+// keyboard bursts (~1 s each) while the command's letters appear; a follow-up burst only if it would not
+// run far past the ENTER
 function typing(t0, t1, g, pan, note) {
-  for (let t = t0, k = 0; t < t1 - 0.25 || k === 0; t += 0.9, k++) add(t, 'typing', k ? g - 2 : g, pan, k ? note + ' (cont.)' : note);
+  for (let t = t0, k = 0; t < t1 - 0.5 || k === 0; t += 0.9, k++) add(t, 'typing', k ? g - 2 : g, pan, k ? note + ' (cont.)' : note);
 }
 // ENTER: key click + confirm ding
 function enter(t, g, pan, note) {
@@ -239,7 +240,8 @@ add(c18 + 0.55, 'door_open', -4, P(1450), "'CREEEAK' the house creaks on his bac
   add(c19, 'rumble', -9, 0, 'ground still shaking under the giant cat');
   typing(a, b, -1, P(620), "frantic typing ';size Pancake 1'");
   enter(tOneE, 0, P(620), ';size Pancake 1');
-  add(w(9, 'ONE', 1), 'click', 0, P(640), 'ENTER! hammered again');
+  // the extra ENTER ring (cmd extraE) is only on screen while sh19 lasts
+  if (w(9, 'ONE', 1) < c20) add(w(9, 'ONE', 1), 'click', 0, P(640), 'ENTER! hammered again');
 }
 // ---- 20. poof — normal size; the house drops back into its hole
 {
