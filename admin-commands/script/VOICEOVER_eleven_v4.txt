@@ -1,0 +1,266 @@
+WHAT IF ROBUX BECAME REAL MONEY?
+ElevenLabs Eleven v4 · Text to Dialogue · voice-over script
+Generated from script/SCRIPT.md — edit the script, then run: node tools/build_vo.js
+Spoken words: 1724 · estimated runtime: ~12:46 (incl. silent visual beats)
+==============================================================================
+
+HOW TO USE (по-русски)
+- Модель: Eleven v4. Режим Text to Dialogue: каждая строка "SPEAKER: текст" = отдельный блок
+  с выбранным голосом. Имя спикера и двоеточие НЕ вставлять, только текст.
+- Теги в [квадратных скобках] оставляем — это интонация, они не произносятся.
+  КАПС = ударение, "..." и [pause] = паузы, тире "—" = оборванная фраза.
+- TY — рассказчик и герой (от первого лица): один голос на весь ролик.
+- Генерируйте по дублям (TAKE), файлы называйте take01.mp3, take05a.mp3 ... и кладите рядом .txt/JSON,
+  как в прошлый раз, — так я разложу всё по таймлайну автоматически.
+
+CAST
+  NARRATOR  (68 lines)  
+  YOU       (54 lines)  
+  ADMIN     (12 lines)  
+  DAD       ( 5 lines)  tired, dramatic dad
+  MOM       ( 3 lines)  calm, practical mom, dry humour
+  GRANNY    ( 4 lines)  
+  ZOE       ( 9 lines)  
+  BRICK     ( 7 lines)  
+  OLDMAN    (15 lines)  
+  SYSTEM    ( 8 lines)  bright game-UI voice; booming for BANNED / alarm lines
+  BOSS      ( 2 lines)  
+  COACH     ( 1 lines)  
+  PRINCIPAL ( 1 lines)  
+  KID       ( 1 lines)  
+  ANCHOR    ( 2 lines)  classic over-the-top TV news anchor
+
+==============================================================================
+
+=== TAKE 01 · SC 01 COLD OPEN — город в хаосе · ~0:00–0:31 · 7 lines · 477 chars ===
+
+NARRATOR: [excited, hushed] What if you had... admin commands? In real life?
+NARRATOR: [playful] You type it in the chat... and it just... happens.
+NARRATOR: [fast, playful] Your dad is in orbit. Your granny is faster than sound. And your cat... is the size of a building.
+YOU: [nervous laugh] Okay. Okay! I can fix this. Un... fly... everyone...
+YOU: [panicked] Permission DENIED?! But I'm the admin!
+ADMIN: [booming, echoing] No. [pause] I am.
+NARRATOR: [deadpan] Yeah. Things got a little... out of hand. [pause] Let's go back to Monday.
+
+=== TAKE 02a · SC 02 ОБЫЧНЫЙ НУБ · ~0:31–2:17 · 20 lines · 1547 chars ===
+
+NARRATOR: [storyteller] This is you. Twelve years old. Totally normal. [pause] Maybe a little... too normal.
+NARRATOR: You get picked last in gym. Every time. Even after the kid with the broken arm.
+NARRATOR: In every obby, you die on the first jump. [pause] Even in "Easy Obby for Babies."
+YOU: [frustrated] That lava came out of NOWHERE!
+NARRATOR: [deadpan] It was the floor. The whole floor was lava. It said so in the name.
+NARRATOR: At home, there's Dad. He works from home. Mostly by asking if people can hear him.
+DAD: [loud, into the headset] Can you hear me now? [pause] How about now? [pause] NOW?
+NARRATOR: There's Mom. She runs the whole house with sticky notes.
+MOM: [cheerful, firm] Room. Clean. Today. [pause] I put it on a sticky note, so it's official.
+NARRATOR: There's Granny. She is ninety-one, and she still drives to the store... at four miles an hour.
+GRANNY: [sweet, slow] I like to... enjoy... the journey, sweetie.
+NARRATOR: And there's Pancake. The laziest cat in the world. He moves twice a day. [pause] Both times to sit on your keyboard.
+NARRATOR: At school, there's Zoe. Your best friend. She knows everything about computers... and she's not afraid to tell you.
+ZOE: [sarcastic] You wrote your password on a sticky note. On your monitor. Facing the window.
+YOU: [defensive] It's a SECRET sticky note!
+NARRATOR: And then... there's Brick.
+BRICK: [slow, smug] Lunch money. [pause] Also your cookie. [pause] Also your OTHER cookie.
+YOU: [trying to be brave] No! [pause] ...Okay. Here. Have both cookies.
+ZOE: [deadpan] Very brave. Very strong. [pause] Truly a legend.
+NARRATOR: At night, you dream about being someone else. Someone strong. Someone fast. [pause] Someone who never gets picked last.
+
+=== TAKE 02b · SC 02 ОБЫЧНЫЙ НУБ · ~0:31–2:17 · 1 lines · 68 chars ===
+
+NARRATOR: [sighs] Yeah. It was a normal Monday. [pause] Until the garage sale.
+
+=== TAKE 03 · SC 03 НОУТБУК ЗА ДОЛЛАР · ~2:17–3:36 · 19 lines · 1216 chars ===
+
+NARRATOR: On the way home, you see a garage sale you've never seen before. On a street you've never seen before.
+YOU: [reading] "Server Street"? [pause] Since when do we have a Server Street?
+NARRATOR: And a very old man... who looks at you like he's been waiting.
+OLDMAN: [creaky, mysterious] Ahh. Finally. [pause] You'll want the laptop.
+YOU: [confused] I didn't say anything.
+OLDMAN: [mysterious] One dollar. No refunds. [pause] And no questions.
+YOU: Why does it say "do not type"?
+OLDMAN: [smiling] That was a question.
+OLDMAN: [whispers] Oh, and one more thing... [pause] It's not a game.
+NARRATOR: You turn around to get your dollar... and the whole garage sale is gone.
+YOU: [nervous] Cool. Cool cool cool. [pause] Totally normal neighborhood.
+NARRATOR: At home, the laptop has no apps. No games. Just one black screen... that knows your name.
+SYSTEM: [calm, robotic] Admin panel loaded. Welcome... you.
+YOU: [whispers] It knows my username.
+YOU: [whispers] Pancake. Not now. [pause] This is a very spooky moment.
+NARRATOR: So you do what anyone would do. You type "help."
+SYSTEM: Available commands: Fly. Speed. Size. Jail. Teleport. God mode. Noclip. Freeze. [pause] Kick.
+NARRATOR: [laughs] Admin commands. Like in a game. [pause] So, as a joke... you type: "fly me."
+YOU: [shocked, then excited] I'm— I'm FLYING! I'm actually— [bonk] OW. Ceiling. There's a ceiling.
+
+=== TAKE 04 · SC 04 ПРОВЕРКА КОМАНД · ~3:36–5:14 · 28 lines · 1531 chars ===
+
+NARRATOR: The next morning... you start testing.
+NARRATOR: Granny has been making one pancake. For forty minutes.
+YOU: [whispers, typing] Speed... Granny.
+GRANNY: [very fast, delighted] Oh my! Oh my! I made four hundred pancakes, sweetie! Want to go to the store? I'll drive!
+NARRATOR: [worried] Granny wanted to drive. At nine hundred miles an hour.
+YOU: [quickly] Un-speed Granny! UN-SPEED GRANNY!
+NARRATOR: Next... the cat.
+YOU: Size... Pancake... [pause] ten.
+NARRATOR: [panicked] Ten was too much. Ten was VERY much.
+YOU: Size Pancake ONE! ONE!
+NARRATOR: Then you got hungry. But the fridge was SO far away.
+YOU: [lazy] Teleport me... to the fridge.
+YOU: [muffled] ...I said TO the fridge. Not IN the fridge.
+NARRATOR: And Dad. Dad was in a very important meeting.
+DAD: [into the headset] Can you hear me now? Sir? Sir, can you—
+YOU: [whispers, mischievous] Fly... Dad.
+BOSS: [confused, on the call] Dave... are you... outside? Are you... above a tree?
+DAD: [panicking, then pretending] I'm— I'm working from... the sky office! [pause] Can you hear me now?
+BOSS: [amazed] Yes! Perfectly! [pause] First time in three years!
+YOU: God mode. Me.
+MOM: [confused] Why... won't my sticky notes stick?
+NARRATOR: You called Zoe. She was there in four minutes.
+ZOE: [stunned, then serious] That's a real admin panel. Like, a REAL one. For... real life.
+ZOE: [fast, explaining] In games, admins can do anything. Fly. Teleport. Ban people. They're basically... the boss of the server.
+YOU: [slowly realizing] So I'm the boss... of real life?
+ZOE: [serious] Listen to me. Admin panels have logs. Every command gets saved. Somebody, somewhere... can see what you type.
+YOU: [cocky] Relax. What could possibly go wrong?
+NARRATOR: [ominous] Famous last words.
+
+=== TAKE 05 · SC 05 ШКОЛА · ~5:14–6:25 · 21 lines · 1045 chars ===
+
+NARRATOR: The next day, you take the laptop to school.
+BRICK: [slow, smug] Move, noob. Lunch money.
+YOU: [smirks, typing] Jail... Brick.
+BRICK: [confused] Hey! Who put a CAGE on me?!
+NARRATOR: [proud] For the first time ever, Brick was the one who couldn't move.
+YOU: Teleport me... to the front of the line.
+NARRATOR: Gym class. The mile run.
+YOU: [whispers] Speed me.
+NARRATOR: You ran the mile in zero point three seconds. [pause] Your shoes did not survive.
+COACH: [stunned] That's... a new world record. [pause] Also... where are your shoes?
+NARRATOR: Math test. You didn't study.
+YOU: [typing] Noclip... me.
+NARRATOR: Noclip lets you walk through walls. [pause] It does NOT let you choose which wall.
+PRINCIPAL: [slow, unimpressed] Young man. [pause] Did you just walk through my wall?
+YOU: [nervous] ...No? [pause] Noclip... me... AWAY!
+NARRATOR: By lunch... you were the most popular kid in school.
+NARRATOR: Everybody wanted a command. And you said yes. To everybody.
+KID: [excited] Make me fly! [pause] No, wait, make me GIANT! [pause] No, wait, BOTH!
+ZOE: [worried] Stop. Please. The logs. Somebody is going to notice.
+YOU: [laughs] Zoe. Relax. Nobody reads the logs.
+NARRATOR: [whispers] Somebody... reads the logs.
+
+=== TAKE 06 · SC 06 ГОРОД В ХАОСЕ · ~6:25–7:26 · 13 lines · 953 chars ===
+
+NARRATOR: Saturday. You decide to think bigger.
+YOU: [excited] Fly... ALL!
+NARRATOR: The whole town took off. Including the mailman. Including a bus. [pause] Including a guy who was in the bath.
+NARRATOR: Then you wanted to make Pancake big again. Just a little. [pause] But you made a typo.
+SYSTEM: [calm] Command: size... all cats. One hundred.
+NARRATOR: [stunned] Every cat in the city. [pause] One hundred times bigger.
+YOU: [laughing, drunk on power] I'm the king of the city! [pause] I'm the ADMIN OF EVERYTHING!
+ZOE: [alarmed] Your log is nine thousand lines long! Somebody is DEFINITELY reading it!
+ANCHOR: [dramatic] Breaking news! The city is flying! Grandmas are breaking the sound barrier! And a giant cat is sitting... on the mayor.
+ANCHOR: [worried] Experts are asking one question. [pause] Who is doing this?
+YOU: [nervous, typing fast] Okay! I'll fix it! Un-fly all! Size all cats... one!
+SYSTEM: [cold] Permission denied. [pause] Permission denied. [pause] Your admin rights... are under review.
+NARRATOR: [hushed] And that's when the sky... cracked.
+
+=== TAKE 07 · SC 07 АДМИН · ~7:26–8:12 · 12 lines · 684 chars ===
+
+NARRATOR: Out of the crack came... a chat message. [pause] The biggest chat message you've ever seen.
+ADMIN: [booming] Who. Gave you. Admin?
+YOU: [tiny voice] ...A garage sale?
+ADMIN: [booming] You flew a bus. You jailed a child. You made one hundred thousand cats... GIANT.
+ADMIN: [booming] Your log is longer... than my beard.
+YOU: [nervous] In my defense... the cats look really happy.
+ADMIN: [cold, booming] Un-fly. All.
+NARRATOR: Everyone fell at the same time. [pause] Lucky for them... cats are VERY good at catching things.
+ADMIN: [booming] And now... you. [pause] Kick.
+YOU: [panicked] No no no— God mode! GOD MODE ME!
+ADMIN: [surprised, then angry] You... dare... use god mode... against an ADMIN?
+NARRATOR: [hushed] And that's how the first admin battle in history began.
+
+=== TAKE 08 · SC 08 БИТВА КОМАНД · ~8:12–9:16 · 19 lines · 1039 chars ===
+
+ADMIN: [booming] Freeze.
+NARRATOR: He froze you solid.
+GRANNY: [very fast, cheerful] Hold still, sweetie! Granny's got a hair dryer!
+YOU: [teeth chattering] Th-thanks, Granny! Teleport... me... away!
+NARRATOR: You teleported to the desert. He was there. [pause] To the ocean. He was there. [pause] To the top of a mountain. [pause] He was there... with a snack.
+ADMIN: [calm] Teleport is my command. [pause] I invented it.
+YOU: [typing fast] Jail... Admin!
+ADMIN: [calm] Un-jail me. [pause] Jail YOU.
+YOU: [frustrated] Un-jail me! [pause] Jail you! [pause] UN-JAIL ME!
+NARRATOR: [deadpan] This went on for eleven minutes.
+YOU: [typing furiously] Fine! Size me... one hundred!
+ADMIN: [unimpressed] Size me... one thousand.
+NARRATOR: [deadpan] He always had a bigger number.
+DAD: [heroic] Nobody messes with my kid! [pause] Can you hear me now?!
+ADMIN: [annoyed, booming] Yes! I can hear you! Everybody can hear you!
+ZOE: [focused] I'm in his logs! He's not a program... he's a PERSON. He's typing from somewhere REAL!
+YOU: [determined] Then I'm going there. [pause] Teleport me... to the Admin!
+SYSTEM: [warning] Warning. Battery... three percent.
+YOU: [shouting] TELEPORT ME TO THE ADMIN!
+
+=== TAKE 09 · SC 09 ПРАВДА · ~9:16–10:30 · 16 lines · 1097 chars ===
+
+NARRATOR: You land in a small, warm room. Full of screens. Every screen... a different city. Every city... live.
+NARRATOR: And in the big chair... is a very old man. [pause] The old man from the garage sale.
+OLDMAN: [tired, gentle] Ah. You found the server room. [pause] Sit down. Would you like some tea?
+YOU: [stunned] YOU'RE the Admin?! You SOLD me the laptop!
+OLDMAN: [chuckles] Every hundred years, I give the panel to one person. To see what they do with it.
+YOU: [confused] Every hundred YEARS? How old ARE you?
+OLDMAN: [proud] I've been the admin since the very first player joined. [pause] A very confused dinosaur.
+OLDMAN: [sighs] Most people want to fly. Be fast. Be big. Win.
+OLDMAN: [chuckles] One fellow in nineteen sixty-four made himself nine feet tall. [pause] He couldn't fit through any doors. He was very sad.
+YOU: [quiet] ...That's exactly what I did.
+OLDMAN: [gentle] I know. I read the logs. [pause] Every single one.
+OLDMAN: [kind] And you never once typed a command... to help somebody else.
+NARRATOR: [quiet] And he was right.
+SYSTEM: [calm] Battery... one percent.
+OLDMAN: [gentle] Now I'll type "undo all." Everything goes back. Including you.
+YOU: [urgent] Wait! [pause] Let me fix it. Myself. One by one.
+
+=== TAKE 10 · SC 10 ИСПРАВИТЬ ВСЁ · ~10:30–11:45 · 22 lines · 1142 chars ===
+
+NARRATOR: So you go back. [pause] With the old man's spare charger. And a cup of tea.
+YOU: [careful] Size... all cats... one.
+YOU: Un-fly... the bus.
+NARRATOR: You bring back every flying thing. Every giant thing. Every Granny. [pause] Well. Almost every Granny.
+GRANNY: [delighted] Leave me fast, sweetie! I've never been early before!
+MOM: [touched] A sticky note? [pause] From YOU? [pause] Oh, it's official now.
+NARRATOR: And then... Brick.
+BRICK: [quiet, embarrassed] ...Are you gonna leave me in here?
+YOU: [softly] Un-jail Brick. [pause] Hey. Why do you always take my lunch?
+BRICK: [small, sad] ...Because then you have to talk to me. [pause] Nobody else does.
+NARRATOR: [softly] Oh.
+YOU: [warm] You know you could just... sit with us?
+BRICK: [hopeful, gruff] ...Can I still have the cookie?
+YOU: [laughs] HALF the cookie.
+BRICK: [smiling for the first time] ...Deal.
+OLDMAN: [warm] One last thing. The panel can keep one command for you. Forever. Any command you want.
+NARRATOR: You could be fast forever. Big forever. Never picked last again.
+NARRATOR: You think about it... for a long time.
+SYSTEM: [calm] Admin rights... removed. [pause] Thanks for playing.
+OLDMAN: [proud, warm] Hm. [pause] In two thousand years... you're only the second person to type that.
+YOU: [curious] Who was the first?
+OLDMAN: [winks] Me.
+
+=== TAKE 11 · SC 11 ПОСЛЕ · ~11:45–12:32 · 11 lines · 686 chars ===
+
+NARRATOR: The next morning, everything is normal. [pause] Mostly.
+NARRATOR: You still get picked last in gym. [pause] Except now Brick is team captain. [pause] And he picks you first.
+DAD: [into the headset] Can you hear me now? [pause] ...I miss the sky office.
+NARRATOR: Granny is still fast. She's never been late again. [pause] She also walks to the store... faster than the car.
+NARRATOR: Zoe checks your monitor every day.
+ZOE: [deadpan] Your password sticky note is still facing the window.
+YOU: [proud] Yeah. But now it says "nice try."
+NARRATOR: And Pancake still sits on your keyboard. [pause] But now... when he does...
+SYSTEM: [calm] Command accepted.
+YOU: [whispers, horrified] ...PANCAKE.
+NARRATOR: [deadpan] The panel didn't keep one command. [pause] It kept one admin.
+
+=== TAKE 12 · SC 12 АУТРО · ~12:32–12:46 · 3 lines · 247 chars ===
+
+NARRATOR: [warm, to camera] So... if YOU had admin commands... what would you type first? Tell us in the comments!
+YOU: [to camera] And remember: with great commands... comes great... [pause] cat problems.
+YOU: [panicked, turning around] Pancake! Put. The laptop. DOWN!
+
+=== END ===

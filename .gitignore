@@ -17,3 +17,7 @@ roblox-shutdown/out/*.mp4
 roblox-shutdown/out/audio/
 roblox-shutdown/out/*.log
 roblox-shutdown/out/*.txt
+admin-commands/out/*.mp4
+admin-commands/out/audio/
+admin-commands/out/*.log
+admin-commands/out/*.txt

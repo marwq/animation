@@ -1,0 +1,1346 @@
+[
+ {
+  "scene": "SC 01",
+  "speaker": "NARRATOR",
+  "text": "[excited, hushed] What if you had... admin commands? In real life?",
+  "estStart": 0,
+  "estDur": 3.87
+ },
+ {
+  "scene": "SC 01",
+  "speaker": "NARRATOR",
+  "text": "[playful] You type it in the chat... and it just... happens.",
+  "estStart": 3.87,
+  "estDur": 4.54
+ },
+ {
+  "scene": "SC 01",
+  "speaker": "NARRATOR",
+  "text": "[fast, playful] Your dad is in orbit. Your granny is faster than sound. And your cat... is the size of a building.",
+  "estStart": 8.41,
+  "estDur": 7.87
+ },
+ {
+  "scene": "SC 01",
+  "speaker": "YOU",
+  "text": "[nervous laugh] Okay. Okay! I can fix this. Un... fly... everyone...",
+  "estStart": 16.28,
+  "estDur": 4.47
+ },
+ {
+  "scene": "SC 01",
+  "speaker": "YOU",
+  "text": "[panicked] Permission DENIED?! But I'm the admin!",
+  "estStart": 20.75,
+  "estDur": 2.48
+ },
+ {
+  "scene": "SC 01",
+  "speaker": "ADMIN",
+  "text": "[booming, echoing] No. [pause] I am.",
+  "estStart": 23.24,
+  "estDur": 1.89
+ },
+ {
+  "scene": "SC 01",
+  "speaker": "NARRATOR",
+  "text": "[deadpan] Yeah. Things got a little... out of hand. [pause] Let's go back to Monday.",
+  "estStart": 25.13,
+  "estDur": 5.83
+ },
+ {
+  "scene": "SC 02",
+  "speaker": "NARRATOR",
+  "text": "[storyteller] This is you. Twelve years old. Totally normal. [pause] Maybe a little... too normal.",
+  "estStart": 30.95,
+  "estDur": 5.83
+ },
+ {
+  "scene": "SC 02",
+  "speaker": "NARRATOR",
+  "text": "You get picked last in gym. Every time. Even after the kid with the broken arm.",
+  "estStart": 36.78,
+  "estDur": 6.12
+ },
+ {
+  "scene": "SC 02",
+  "speaker": "NARRATOR",
+  "text": "In every obby, you die on the first jump. [pause] Even in \"Easy Obby for Babies.\"",
+  "estStart": 42.9,
+  "estDur": 6.25
+ },
+ {
+  "scene": "SC 02",
+  "speaker": "YOU",
+  "text": "[frustrated] That lava came out of NOWHERE!",
+  "estStart": 49.15,
+  "estDur": 2.48
+ },
+ {
+  "scene": "SC 02",
+  "speaker": "NARRATOR",
+  "text": "[deadpan] It was the floor. The whole floor was lava. It said so in the name.",
+  "estStart": 51.64,
+  "estDur": 5.75
+ },
+ {
+  "scene": "SC 02",
+  "speaker": "NARRATOR",
+  "text": "At home, there's Dad. He works from home. Mostly by asking if people can hear him.",
+  "estStart": 57.39,
+  "estDur": 6.12
+ },
+ {
+  "scene": "SC 02",
+  "speaker": "DAD",
+  "text": "[loud, into the headset] Can you hear me now? [pause] How about now? [pause] NOW?",
+  "estStart": 63.51,
+  "estDur": 4.57
+ },
+ {
+  "scene": "SC 02",
+  "speaker": "NARRATOR",
+  "text": "There's Mom. She runs the whole house with sticky notes.",
+  "estStart": 68.08,
+  "estDur": 3.94
+ },
+ {
+  "scene": "SC 02",
+  "speaker": "MOM",
+  "text": "[cheerful, firm] Room. Clean. Today. [pause] I put it on a sticky note, so it's official.",
+  "estStart": 72.02,
+  "estDur": 5.53
+ },
+ {
+  "scene": "SC 02",
+  "speaker": "NARRATOR",
+  "text": "There's Granny. She is ninety-one, and she still drives to the store... at four miles an hour.",
+  "estStart": 77.55,
+  "estDur": 6.78
+ },
+ {
+  "scene": "SC 02",
+  "speaker": "GRANNY",
+  "text": "[sweet, slow] I like to... enjoy... the journey, sweetie.",
+  "estStart": 84.33,
+  "estDur": 3.45
+ },
+ {
+  "scene": "SC 02",
+  "speaker": "NARRATOR",
+  "text": "And there's Pancake. The laziest cat in the world. He moves twice a day. [pause] Both times to sit on your keyboard.",
+  "estStart": 87.77,
+  "estDur": 8.44
+ },
+ {
+  "scene": "SC 02",
+  "speaker": "NARRATOR",
+  "text": "At school, there's Zoe. Your best friend. She knows everything about computers... and she's not afraid to tell you.",
+  "estStart": 96.21,
+  "estDur": 7.51
+ },
+ {
+  "scene": "SC 02",
+  "speaker": "ZOE",
+  "text": "[sarcastic] You wrote your password on a sticky note. On your monitor. Facing the window.",
+  "estStart": 103.72,
+  "estDur": 5.39
+ },
+ {
+  "scene": "SC 02",
+  "speaker": "YOU",
+  "text": "[defensive] It's a SECRET sticky note!",
+  "estStart": 109.11,
+  "estDur": 2.12
+ },
+ {
+  "scene": "SC 02",
+  "speaker": "NARRATOR",
+  "text": "And then... there's Brick.",
+  "estStart": 111.23,
+  "estDur": 2.05
+ },
+ {
+  "scene": "SC 02",
+  "speaker": "BRICK",
+  "text": "[slow, smug] Lunch money. [pause] Also your cookie. [pause] Also your OTHER cookie.",
+  "estStart": 113.28,
+  "estDur": 4.57
+ },
+ {
+  "scene": "SC 02",
+  "speaker": "YOU",
+  "text": "[trying to be brave] No! [pause] ...Okay. Here. Have both cookies.",
+  "estStart": 117.85,
+  "estDur": 3.28
+ },
+ {
+  "scene": "SC 02",
+  "speaker": "ZOE",
+  "text": "[deadpan] Very brave. Very strong. [pause] Truly a legend.",
+  "estStart": 121.14,
+  "estDur": 3.35
+ },
+ {
+  "scene": "SC 02",
+  "speaker": "NARRATOR",
+  "text": "At night, you dream about being someone else. Someone strong. Someone fast. [pause] Someone who never gets picked last.",
+  "estStart": 124.48,
+  "estDur": 7.35
+ },
+ {
+  "scene": "SC 02",
+  "speaker": "NARRATOR",
+  "text": "[sighs] Yeah. It was a normal Monday. [pause] Until the garage sale.",
+  "estStart": 131.83,
+  "estDur": 4.44
+ },
+ {
+  "scene": "SC 03",
+  "speaker": "NARRATOR",
+  "text": "On the way home, you see a garage sale you've never seen before. On a street you've never seen before.",
+  "estStart": 137.26,
+  "estDur": 7.57
+ },
+ {
+  "scene": "SC 03",
+  "speaker": "YOU",
+  "text": "[reading] \"Server Street\"? [pause] Since when do we have a Server Street?",
+  "estStart": 144.84,
+  "estDur": 4.44
+ },
+ {
+  "scene": "SC 03",
+  "speaker": "NARRATOR",
+  "text": "And a very old man... who looks at you like he's been waiting.",
+  "estStart": 149.27,
+  "estDur": 5.33
+ },
+ {
+  "scene": "SC 03",
+  "speaker": "OLDMAN",
+  "text": "[creaky, mysterious] Ahh. Finally. [pause] You'll want the laptop.",
+  "estStart": 154.6,
+  "estDur": 2.98
+ },
+ {
+  "scene": "SC 03",
+  "speaker": "YOU",
+  "text": "[confused] I didn't say anything.",
+  "estStart": 157.58,
+  "estDur": 1.75
+ },
+ {
+  "scene": "SC 03",
+  "speaker": "OLDMAN",
+  "text": "[mysterious] One dollar. No refunds. [pause] And no questions.",
+  "estStart": 159.34,
+  "estDur": 3.35
+ },
+ {
+  "scene": "SC 03",
+  "speaker": "YOU",
+  "text": "Why does it say \"do not type\"?",
+  "estStart": 162.68,
+  "estDur": 2.85
+ },
+ {
+  "scene": "SC 03",
+  "speaker": "OLDMAN",
+  "text": "[smiling] That was a question.",
+  "estStart": 165.53,
+  "estDur": 1.75
+ },
+ {
+  "scene": "SC 03",
+  "speaker": "OLDMAN",
+  "text": "[whispers] Oh, and one more thing... [pause] It's not a game.",
+  "estStart": 167.28,
+  "estDur": 4.37
+ },
+ {
+  "scene": "SC 03",
+  "speaker": "NARRATOR",
+  "text": "You turn around to get your dollar... and the whole garage sale is gone.",
+  "estStart": 171.65,
+  "estDur": 5.69
+ },
+ {
+  "scene": "SC 03",
+  "speaker": "YOU",
+  "text": "[nervous] Cool. Cool cool cool. [pause] Totally normal neighborhood.",
+  "estStart": 177.35,
+  "estDur": 3.35
+ },
+ {
+  "scene": "SC 03",
+  "speaker": "NARRATOR",
+  "text": "At home, the laptop has no apps. No games. Just one black screen... that knows your name.",
+  "estStart": 180.69,
+  "estDur": 6.78
+ },
+ {
+  "scene": "SC 03",
+  "speaker": "SYSTEM",
+  "text": "[calm, robotic] Admin panel loaded. Welcome... you.",
+  "estStart": 187.47,
+  "estDur": 2.42
+ },
+ {
+  "scene": "SC 03",
+  "speaker": "YOU",
+  "text": "[whispers] It knows my username.",
+  "estStart": 189.89,
+  "estDur": 1.75
+ },
+ {
+  "scene": "SC 03",
+  "speaker": "YOU",
+  "text": "[whispers] Pancake. Not now. [pause] This is a very spooky moment.",
+  "estStart": 191.65,
+  "estDur": 4.07
+ },
+ {
+  "scene": "SC 03",
+  "speaker": "NARRATOR",
+  "text": "So you do what anyone would do. You type \"help.\"",
+  "estStart": 195.72,
+  "estDur": 3.94
+ },
+ {
+  "scene": "SC 03",
+  "speaker": "SYSTEM",
+  "text": "Available commands: Fly. Speed. Size. Jail. Teleport. God mode. Noclip. Freeze. [pause] Kick.",
+  "estStart": 199.65,
+  "estDur": 5.16
+ },
+ {
+  "scene": "SC 03",
+  "speaker": "NARRATOR",
+  "text": "[laughs] Admin commands. Like in a game. [pause] So, as a joke... you type: \"fly me.\"",
+  "estStart": 204.82,
+  "estDur": 6.19
+ },
+ {
+  "scene": "SC 03",
+  "speaker": "YOU",
+  "text": "[shocked, then excited] I'm— I'm FLYING! I'm actually— [bonk] OW. Ceiling. There's a ceiling.",
+  "estStart": 211.01,
+  "estDur": 3.94
+ },
+ {
+  "scene": "SC 04",
+  "speaker": "NARRATOR",
+  "text": "The next morning... you start testing.",
+  "estStart": 216.45,
+  "estDur": 2.78
+ },
+ {
+  "scene": "SC 04",
+  "speaker": "NARRATOR",
+  "text": "Granny has been making one pancake. For forty minutes.",
+  "estStart": 219.23,
+  "estDur": 3.57
+ },
+ {
+  "scene": "SC 04",
+  "speaker": "YOU",
+  "text": "[whispers, typing] Speed... Granny.",
+  "estStart": 222.8,
+  "estDur": 1.33
+ },
+ {
+  "scene": "SC 04",
+  "speaker": "GRANNY",
+  "text": "[very fast, delighted] Oh my! Oh my! I made four hundred pancakes, sweetie! Want to go to the store? I'll drive!",
+  "estStart": 224.13,
+  "estDur": 6.85
+ },
+ {
+  "scene": "SC 04",
+  "speaker": "NARRATOR",
+  "text": "[worried] Granny wanted to drive. At nine hundred miles an hour.",
+  "estStart": 230.97,
+  "estDur": 3.94
+ },
+ {
+  "scene": "SC 04",
+  "speaker": "YOU",
+  "text": "[quickly] Un-speed Granny! UN-SPEED GRANNY!",
+  "estStart": 234.91,
+  "estDur": 1.75
+ },
+ {
+  "scene": "SC 04",
+  "speaker": "NARRATOR",
+  "text": "Next... the cat.",
+  "estStart": 236.66,
+  "estDur": 1.69
+ },
+ {
+  "scene": "SC 04",
+  "speaker": "YOU",
+  "text": "Size... Pancake... [pause] ten.",
+  "estStart": 238.35,
+  "estDur": 2.49
+ },
+ {
+  "scene": "SC 04",
+  "speaker": "NARRATOR",
+  "text": "[panicked] Ten was too much. Ten was VERY much.",
+  "estStart": 240.85,
+  "estDur": 3.21
+ },
+ {
+  "scene": "SC 04",
+  "speaker": "YOU",
+  "text": "Size Pancake ONE! ONE!",
+  "estStart": 244.05,
+  "estDur": 1.75
+ },
+ {
+  "scene": "SC 04",
+  "speaker": "NARRATOR",
+  "text": "Then you got hungry. But the fridge was SO far away.",
+  "estStart": 245.81,
+  "estDur": 4.3
+ },
+ {
+  "scene": "SC 04",
+  "speaker": "YOU",
+  "text": "[lazy] Teleport me... to the fridge.",
+  "estStart": 250.11,
+  "estDur": 2.42
+ },
+ {
+  "scene": "SC 04",
+  "speaker": "YOU",
+  "text": "[muffled] ...I said TO the fridge. Not IN the fridge.",
+  "estStart": 252.53,
+  "estDur": 3.87
+ },
+ {
+  "scene": "SC 04",
+  "speaker": "NARRATOR",
+  "text": "And Dad. Dad was in a very important meeting.",
+  "estStart": 256.4,
+  "estDur": 3.57
+ },
+ {
+  "scene": "SC 04",
+  "speaker": "DAD",
+  "text": "[into the headset] Can you hear me now? Sir? Sir, can you—",
+  "estStart": 259.97,
+  "estDur": 3.57
+ },
+ {
+  "scene": "SC 04",
+  "speaker": "YOU",
+  "text": "[whispers, mischievous] Fly... Dad.",
+  "estStart": 263.55,
+  "estDur": 1.33
+ },
+ {
+  "scene": "SC 04",
+  "speaker": "BOSS",
+  "text": "[confused, on the call] Dave... are you... outside? Are you... above a tree?",
+  "estStart": 264.87,
+  "estDur": 4.47
+ },
+ {
+  "scene": "SC 04",
+  "speaker": "DAD",
+  "text": "[panicking, then pretending] I'm— I'm working from... the sky office! [pause] Can you hear me now?",
+  "estStart": 269.35,
+  "estDur": 5.46
+ },
+ {
+  "scene": "SC 04",
+  "speaker": "BOSS",
+  "text": "[amazed] Yes! Perfectly! [pause] First time in three years!",
+  "estStart": 274.81,
+  "estDur": 3.35
+ },
+ {
+  "scene": "SC 04",
+  "speaker": "YOU",
+  "text": "God mode. Me.",
+  "estStart": 278.15,
+  "estDur": 1.39
+ },
+ {
+  "scene": "SC 04",
+  "speaker": "MOM",
+  "text": "[confused] Why... won't my sticky notes stick?",
+  "estStart": 279.55,
+  "estDur": 2.78
+ },
+ {
+  "scene": "SC 04",
+  "speaker": "NARRATOR",
+  "text": "You called Zoe. She was there in four minutes.",
+  "estStart": 282.33,
+  "estDur": 3.57
+ },
+ {
+  "scene": "SC 04",
+  "speaker": "ZOE",
+  "text": "[stunned, then serious] That's a real admin panel. Like, a REAL one. For... real life.",
+  "estStart": 285.9,
+  "estDur": 4.96
+ },
+ {
+  "scene": "SC 04",
+  "speaker": "ZOE",
+  "text": "[fast, explaining] In games, admins can do anything. Fly. Teleport. Ban people. They're basically... the boss of the server.",
+  "estStart": 290.86,
+  "estDur": 6.78
+ },
+ {
+  "scene": "SC 04",
+  "speaker": "YOU",
+  "text": "[slowly realizing] So I'm the boss... of real life?",
+  "estStart": 297.65,
+  "estDur": 3.15
+ },
+ {
+  "scene": "SC 04",
+  "speaker": "ZOE",
+  "text": "[serious] Listen to me. Admin panels have logs. Every command gets saved. Somebody, somewhere... can see what you type.",
+  "estStart": 300.79,
+  "estDur": 7.15
+ },
+ {
+  "scene": "SC 04",
+  "speaker": "YOU",
+  "text": "[cocky] Relax. What could possibly go wrong?",
+  "estStart": 307.94,
+  "estDur": 2.48
+ },
+ {
+  "scene": "SC 04",
+  "speaker": "NARRATOR",
+  "text": "[ominous] Famous last words.",
+  "estStart": 310.42,
+  "estDur": 1.39
+ },
+ {
+  "scene": "SC 05",
+  "speaker": "NARRATOR",
+  "text": "The next day, you take the laptop to school.",
+  "estStart": 314.31,
+  "estDur": 3.57
+ },
+ {
+  "scene": "SC 05",
+  "speaker": "BRICK",
+  "text": "[slow, smug] Move, noob. Lunch money.",
+  "estStart": 317.88,
+  "estDur": 1.75
+ },
+ {
+  "scene": "SC 05",
+  "speaker": "YOU",
+  "text": "[smirks, typing] Jail... Brick.",
+  "estStart": 319.64,
+  "estDur": 1.33
+ },
+ {
+  "scene": "SC 05",
+  "speaker": "BRICK",
+  "text": "[confused] Hey! Who put a CAGE on me?!",
+  "estStart": 320.96,
+  "estDur": 2.85
+ },
+ {
+  "scene": "SC 05",
+  "speaker": "NARRATOR",
+  "text": "[proud] For the first time ever, Brick was the one who couldn't move.",
+  "estStart": 323.81,
+  "estDur": 4.66
+ },
+ {
+  "scene": "SC 05",
+  "speaker": "YOU",
+  "text": "Teleport me... to the front of the line.",
+  "estStart": 328.47,
+  "estDur": 3.51
+ },
+ {
+  "scene": "SC 05",
+  "speaker": "NARRATOR",
+  "text": "Gym class. The mile run.",
+  "estStart": 331.98,
+  "estDur": 2.12
+ },
+ {
+  "scene": "SC 05",
+  "speaker": "YOU",
+  "text": "[whispers] Speed me.",
+  "estStart": 334.1,
+  "estDur": 1.03
+ },
+ {
+  "scene": "SC 05",
+  "speaker": "NARRATOR",
+  "text": "You ran the mile in zero point three seconds. [pause] Your shoes did not survive.",
+  "estStart": 335.13,
+  "estDur": 5.89
+ },
+ {
+  "scene": "SC 05",
+  "speaker": "COACH",
+  "text": "[stunned] That's... a new world record. [pause] Also... where are your shoes?",
+  "estStart": 341.02,
+  "estDur": 5.04
+ },
+ {
+  "scene": "SC 05",
+  "speaker": "NARRATOR",
+  "text": "Math test. You didn't study.",
+  "estStart": 346.05,
+  "estDur": 2.12
+ },
+ {
+  "scene": "SC 05",
+  "speaker": "YOU",
+  "text": "[typing] Noclip... me.",
+  "estStart": 348.17,
+  "estDur": 1.33
+ },
+ {
+  "scene": "SC 05",
+  "speaker": "NARRATOR",
+  "text": "Noclip lets you walk through walls. [pause] It does NOT let you choose which wall.",
+  "estStart": 349.5,
+  "estDur": 5.89
+ },
+ {
+  "scene": "SC 05",
+  "speaker": "PRINCIPAL",
+  "text": "[slow, unimpressed] Young man. [pause] Did you just walk through my wall?",
+  "estStart": 355.39,
+  "estDur": 4.07
+ },
+ {
+  "scene": "SC 05",
+  "speaker": "YOU",
+  "text": "[nervous] ...No? [pause] Noclip... me... AWAY!",
+  "estStart": 359.46,
+  "estDur": 3.15
+ },
+ {
+  "scene": "SC 05",
+  "speaker": "NARRATOR",
+  "text": "By lunch... you were the most popular kid in school.",
+  "estStart": 362.62,
+  "estDur": 4.24
+ },
+ {
+  "scene": "SC 05",
+  "speaker": "NARRATOR",
+  "text": "Everybody wanted a command. And you said yes. To everybody.",
+  "estStart": 366.85,
+  "estDur": 3.94
+ },
+ {
+  "scene": "SC 05",
+  "speaker": "KID",
+  "text": "[excited] Make me fly! [pause] No, wait, make me GIANT! [pause] No, wait, BOTH!",
+  "estStart": 370.79,
+  "estDur": 5.3
+ },
+ {
+  "scene": "SC 05",
+  "speaker": "ZOE",
+  "text": "[worried] Stop. Please. The logs. Somebody is going to notice.",
+  "estStart": 376.09,
+  "estDur": 3.57
+ },
+ {
+  "scene": "SC 05",
+  "speaker": "YOU",
+  "text": "[laughs] Zoe. Relax. Nobody reads the logs.",
+  "estStart": 379.66,
+  "estDur": 2.48
+ },
+ {
+  "scene": "SC 05",
+  "speaker": "NARRATOR",
+  "text": "[whispers] Somebody... reads the logs.",
+  "estStart": 382.15,
+  "estDur": 2.05
+ },
+ {
+  "scene": "SC 06",
+  "speaker": "NARRATOR",
+  "text": "Saturday. You decide to think bigger.",
+  "estStart": 385.2,
+  "estDur": 2.48
+ },
+ {
+  "scene": "SC 06",
+  "speaker": "YOU",
+  "text": "[excited] Fly... ALL!",
+  "estStart": 387.68,
+  "estDur": 1.33
+ },
+ {
+  "scene": "SC 06",
+  "speaker": "NARRATOR",
+  "text": "The whole town took off. Including the mailman. Including a bus. [pause] Including a guy who was in the bath.",
+  "estStart": 389.01,
+  "estDur": 7.71
+ },
+ {
+  "scene": "SC 06",
+  "speaker": "NARRATOR",
+  "text": "Then you wanted to make Pancake big again. Just a little. [pause] But you made a typo.",
+  "estStart": 396.72,
+  "estDur": 6.62
+ },
+ {
+  "scene": "SC 06",
+  "speaker": "SYSTEM",
+  "text": "[calm] Command: size... all cats. One hundred.",
+  "estStart": 403.34,
+  "estDur": 2.78
+ },
+ {
+  "scene": "SC 06",
+  "speaker": "NARRATOR",
+  "text": "[stunned] Every cat in the city. [pause] One hundred times bigger.",
+  "estStart": 406.12,
+  "estDur": 4.07
+ },
+ {
+  "scene": "SC 06",
+  "speaker": "YOU",
+  "text": "[laughing, drunk on power] I'm the king of the city! [pause] I'm the ADMIN OF EVERYTHING!",
+  "estStart": 410.19,
+  "estDur": 4.8
+ },
+ {
+  "scene": "SC 06",
+  "speaker": "ZOE",
+  "text": "[alarmed] Your log is nine thousand lines long! Somebody is DEFINITELY reading it!",
+  "estStart": 414.99,
+  "estDur": 4.66
+ },
+ {
+  "scene": "SC 06",
+  "speaker": "ANCHOR",
+  "text": "[dramatic] Breaking news! The city is flying! Grandmas are breaking the sound barrier! And a giant cat is sitting... on the mayor.",
+  "estStart": 419.65,
+  "estDur": 8.24
+ },
+ {
+  "scene": "SC 06",
+  "speaker": "ANCHOR",
+  "text": "[worried] Experts are asking one question. [pause] Who is doing this?",
+  "estStart": 427.89,
+  "estDur": 4.07
+ },
+ {
+  "scene": "SC 06",
+  "speaker": "YOU",
+  "text": "[nervous, typing fast] Okay! I'll fix it! Un-fly all! Size all cats... one!",
+  "estStart": 431.96,
+  "estDur": 4.24
+ },
+ {
+  "scene": "SC 06",
+  "speaker": "SYSTEM",
+  "text": "[cold] Permission denied. [pause] Permission denied. [pause] Your admin rights... are under review.",
+  "estStart": 436.2,
+  "estDur": 5.24
+ },
+ {
+  "scene": "SC 06",
+  "speaker": "NARRATOR",
+  "text": "[hushed] And that's when the sky... cracked.",
+  "estStart": 441.44,
+  "estDur": 2.78
+ },
+ {
+  "scene": "SC 07",
+  "speaker": "NARRATOR",
+  "text": "Out of the crack came... a chat message. [pause] The biggest chat message you've ever seen.",
+  "estStart": 446.22,
+  "estDur": 6.55
+ },
+ {
+  "scene": "SC 07",
+  "speaker": "ADMIN",
+  "text": "[booming] Who. Gave you. Admin?",
+  "estStart": 452.77,
+  "estDur": 1.75
+ },
+ {
+  "scene": "SC 07",
+  "speaker": "YOU",
+  "text": "[tiny voice] ...A garage sale?",
+  "estStart": 454.53,
+  "estDur": 1.69
+ },
+ {
+  "scene": "SC 07",
+  "speaker": "ADMIN",
+  "text": "[booming] You flew a bus. You jailed a child. You made one hundred thousand cats... GIANT.",
+  "estStart": 456.22,
+  "estDur": 6.05
+ },
+ {
+  "scene": "SC 07",
+  "speaker": "ADMIN",
+  "text": "[booming] Your log is longer... than my beard.",
+  "estStart": 462.27,
+  "estDur": 3.15
+ },
+ {
+  "scene": "SC 07",
+  "speaker": "YOU",
+  "text": "[nervous] In my defense... the cats look really happy.",
+  "estStart": 465.42,
+  "estDur": 3.51
+ },
+ {
+  "scene": "SC 07",
+  "speaker": "ADMIN",
+  "text": "[cold, booming] Un-fly. All.",
+  "estStart": 468.93,
+  "estDur": 1.03
+ },
+ {
+  "scene": "SC 07",
+  "speaker": "NARRATOR",
+  "text": "Everyone fell at the same time. [pause] Lucky for them... cats are VERY good at catching things.",
+  "estStart": 469.95,
+  "estDur": 6.92
+ },
+ {
+  "scene": "SC 07",
+  "speaker": "ADMIN",
+  "text": "[booming] And now... you. [pause] Kick.",
+  "estStart": 476.87,
+  "estDur": 2.55
+ },
+ {
+  "scene": "SC 07",
+  "speaker": "YOU",
+  "text": "[panicked] No no no— God mode! GOD MODE ME!",
+  "estStart": 479.43,
+  "estDur": 3.21
+ },
+ {
+  "scene": "SC 07",
+  "speaker": "ADMIN",
+  "text": "[surprised, then angry] You... dare... use god mode... against an ADMIN?",
+  "estStart": 482.64,
+  "estDur": 4.11
+ },
+ {
+  "scene": "SC 07",
+  "speaker": "NARRATOR",
+  "text": "[hushed] And that's how the first admin battle in history began.",
+  "estStart": 486.75,
+  "estDur": 3.94
+ },
+ {
+  "scene": "SC 08",
+  "speaker": "ADMIN",
+  "text": "[booming] Freeze.",
+  "estStart": 492.18,
+  "estDur": 0.66
+ },
+ {
+  "scene": "SC 08",
+  "speaker": "NARRATOR",
+  "text": "He froze you solid.",
+  "estStart": 492.85,
+  "estDur": 1.75
+ },
+ {
+  "scene": "SC 08",
+  "speaker": "GRANNY",
+  "text": "[very fast, cheerful] Hold still, sweetie! Granny's got a hair dryer!",
+  "estStart": 494.6,
+  "estDur": 3.21
+ },
+ {
+  "scene": "SC 08",
+  "speaker": "YOU",
+  "text": "[teeth chattering] Th-thanks, Granny! Teleport... me... away!",
+  "estStart": 497.81,
+  "estDur": 2.72
+ },
+ {
+  "scene": "SC 08",
+  "speaker": "NARRATOR",
+  "text": "You teleported to the desert. He was there. [pause] To the ocean. He was there. [pause] To the top of a mountain. [pause] He was there... with a snack.",
+  "estStart": 500.53,
+  "estDur": 11.55
+ },
+ {
+  "scene": "SC 08",
+  "speaker": "ADMIN",
+  "text": "[calm] Teleport is my command. [pause] I invented it.",
+  "estStart": 512.08,
+  "estDur": 3.35
+ },
+ {
+  "scene": "SC 08",
+  "speaker": "YOU",
+  "text": "[typing fast] Jail... Admin!",
+  "estStart": 515.43,
+  "estDur": 1.33
+ },
+ {
+  "scene": "SC 08",
+  "speaker": "ADMIN",
+  "text": "[calm] Un-jail me. [pause] Jail YOU.",
+  "estStart": 516.75,
+  "estDur": 2.25
+ },
+ {
+  "scene": "SC 08",
+  "speaker": "YOU",
+  "text": "[frustrated] Un-jail me! [pause] Jail you! [pause] UN-JAIL ME!",
+  "estStart": 519.01,
+  "estDur": 3.48
+ },
+ {
+  "scene": "SC 08",
+  "speaker": "NARRATOR",
+  "text": "[deadpan] This went on for eleven minutes.",
+  "estStart": 522.49,
+  "estDur": 2.48
+ },
+ {
+  "scene": "SC 08",
+  "speaker": "YOU",
+  "text": "[typing furiously] Fine! Size me... one hundred!",
+  "estStart": 524.97,
+  "estDur": 2.42
+ },
+ {
+  "scene": "SC 08",
+  "speaker": "ADMIN",
+  "text": "[unimpressed] Size me... one thousand.",
+  "estStart": 527.39,
+  "estDur": 2.05
+ },
+ {
+  "scene": "SC 08",
+  "speaker": "NARRATOR",
+  "text": "[deadpan] He always had a bigger number.",
+  "estStart": 529.45,
+  "estDur": 2.48
+ },
+ {
+  "scene": "SC 08",
+  "speaker": "DAD",
+  "text": "[heroic] Nobody messes with my kid! [pause] Can you hear me now?!",
+  "estStart": 531.93,
+  "estDur": 4.44
+ },
+ {
+  "scene": "SC 08",
+  "speaker": "ADMIN",
+  "text": "[annoyed, booming] Yes! I can hear you! Everybody can hear you!",
+  "estStart": 536.36,
+  "estDur": 3.57
+ },
+ {
+  "scene": "SC 08",
+  "speaker": "ZOE",
+  "text": "[focused] I'm in his logs! He's not a program... he's a PERSON. He's typing from somewhere REAL!",
+  "estStart": 539.94,
+  "estDur": 6.42
+ },
+ {
+  "scene": "SC 08",
+  "speaker": "YOU",
+  "text": "[determined] Then I'm going there. [pause] Teleport me... to the Admin!",
+  "estStart": 546.35,
+  "estDur": 4.37
+ },
+ {
+  "scene": "SC 08",
+  "speaker": "SYSTEM",
+  "text": "[warning] Warning. Battery... three percent.",
+  "estStart": 550.73,
+  "estDur": 2.05
+ },
+ {
+  "scene": "SC 08",
+  "speaker": "YOU",
+  "text": "[shouting] TELEPORT ME TO THE ADMIN!",
+  "estStart": 552.78,
+  "estDur": 2.12
+ },
+ {
+  "scene": "SC 09",
+  "speaker": "NARRATOR",
+  "text": "You land in a small, warm room. Full of screens. Every screen... a different city. Every city... live.",
+  "estStart": 556.4,
+  "estDur": 7.45
+ },
+ {
+  "scene": "SC 09",
+  "speaker": "NARRATOR",
+  "text": "And in the big chair... is a very old man. [pause] The old man from the garage sale.",
+  "estStart": 563.85,
+  "estDur": 7.28
+ },
+ {
+  "scene": "SC 09",
+  "speaker": "OLDMAN",
+  "text": "[tired, gentle] Ah. You found the server room. [pause] Sit down. Would you like some tea?",
+  "estStart": 571.13,
+  "estDur": 5.53
+ },
+ {
+  "scene": "SC 09",
+  "speaker": "YOU",
+  "text": "[stunned] YOU'RE the Admin?! You SOLD me the laptop!",
+  "estStart": 576.65,
+  "estDur": 3.21
+ },
+ {
+  "scene": "SC 09",
+  "speaker": "OLDMAN",
+  "text": "[chuckles] Every hundred years, I give the panel to one person. To see what they do with it.",
+  "estStart": 579.86,
+  "estDur": 6.48
+ },
+ {
+  "scene": "SC 09",
+  "speaker": "YOU",
+  "text": "[confused] Every hundred YEARS? How old ARE you?",
+  "estStart": 586.35,
+  "estDur": 2.85
+ },
+ {
+  "scene": "SC 09",
+  "speaker": "OLDMAN",
+  "text": "[proud] I've been the admin since the very first player joined. [pause] A very confused dinosaur.",
+  "estStart": 589.19,
+  "estDur": 5.89
+ },
+ {
+  "scene": "SC 09",
+  "speaker": "OLDMAN",
+  "text": "[sighs] Most people want to fly. Be fast. Be big. Win.",
+  "estStart": 595.08,
+  "estDur": 3.94
+ },
+ {
+  "scene": "SC 09",
+  "speaker": "OLDMAN",
+  "text": "[chuckles] One fellow in nineteen sixty-four made himself nine feet tall. [pause] He couldn't fit through any doors. He was very sad.",
+  "estStart": 599.02,
+  "estDur": 8.07
+ },
+ {
+  "scene": "SC 09",
+  "speaker": "YOU",
+  "text": "[quiet] ...That's exactly what I did.",
+  "estStart": 607.09,
+  "estDur": 2.42
+ },
+ {
+  "scene": "SC 09",
+  "speaker": "OLDMAN",
+  "text": "[gentle] I know. I read the logs. [pause] Every single one.",
+  "estStart": 609.51,
+  "estDur": 4.07
+ },
+ {
+  "scene": "SC 09",
+  "speaker": "OLDMAN",
+  "text": "[kind] And you never once typed a command... to help somebody else.",
+  "estStart": 613.58,
+  "estDur": 4.6
+ },
+ {
+  "scene": "SC 09",
+  "speaker": "NARRATOR",
+  "text": "[quiet] And he was right.",
+  "estStart": 618.18,
+  "estDur": 1.75
+ },
+ {
+  "scene": "SC 09",
+  "speaker": "SYSTEM",
+  "text": "[calm] Battery... one percent.",
+  "estStart": 619.94,
+  "estDur": 1.69
+ },
+ {
+  "scene": "SC 09",
+  "speaker": "OLDMAN",
+  "text": "[gentle] Now I'll type \"undo all.\" Everything goes back. Including you.",
+  "estStart": 621.63,
+  "estDur": 3.94
+ },
+ {
+  "scene": "SC 09",
+  "speaker": "YOU",
+  "text": "[urgent] Wait! [pause] Let me fix it. Myself. One by one.",
+  "estStart": 625.56,
+  "estDur": 4.07
+ },
+ {
+  "scene": "SC 10",
+  "speaker": "NARRATOR",
+  "text": "So you go back. [pause] With the old man's spare charger. And a cup of tea.",
+  "estStart": 629.64,
+  "estDur": 6.25
+ },
+ {
+  "scene": "SC 10",
+  "speaker": "YOU",
+  "text": "[careful] Size... all cats... one.",
+  "estStart": 635.89,
+  "estDur": 2.35
+ },
+ {
+  "scene": "SC 10",
+  "speaker": "YOU",
+  "text": "Un-fly... the bus.",
+  "estStart": 638.25,
+  "estDur": 1.69
+ },
+ {
+  "scene": "SC 10",
+  "speaker": "NARRATOR",
+  "text": "You bring back every flying thing. Every giant thing. Every Granny. [pause] Well. Almost every Granny.",
+  "estStart": 639.94,
+  "estDur": 6.25
+ },
+ {
+  "scene": "SC 10",
+  "speaker": "GRANNY",
+  "text": "[delighted] Leave me fast, sweetie! I've never been early before!",
+  "estStart": 646.19,
+  "estDur": 3.57
+ },
+ {
+  "scene": "SC 10",
+  "speaker": "MOM",
+  "text": "[touched] A sticky note? [pause] From YOU? [pause] Oh, it's official now.",
+  "estStart": 649.76,
+  "estDur": 4.57
+ },
+ {
+  "scene": "SC 10",
+  "speaker": "NARRATOR",
+  "text": "And then... Brick.",
+  "estStart": 654.34,
+  "estDur": 1.69
+ },
+ {
+  "scene": "SC 10",
+  "speaker": "BRICK",
+  "text": "[quiet, embarrassed] ...Are you gonna leave me in here?",
+  "estStart": 656.03,
+  "estDur": 3.15
+ },
+ {
+  "scene": "SC 10",
+  "speaker": "YOU",
+  "text": "[softly] Un-jail Brick. [pause] Hey. Why do you always take my lunch?",
+  "estStart": 659.17,
+  "estDur": 4.44
+ },
+ {
+  "scene": "SC 10",
+  "speaker": "BRICK",
+  "text": "[small, sad] ...Because then you have to talk to me. [pause] Nobody else does.",
+  "estStart": 663.61,
+  "estDur": 5.1
+ },
+ {
+  "scene": "SC 10",
+  "speaker": "NARRATOR",
+  "text": "[softly] Oh.",
+  "estStart": 668.71,
+  "estDur": 0.66
+ },
+ {
+  "scene": "SC 10",
+  "speaker": "YOU",
+  "text": "[warm] You know you could just... sit with us?",
+  "estStart": 669.37,
+  "estDur": 3.51
+ },
+ {
+  "scene": "SC 10",
+  "speaker": "BRICK",
+  "text": "[hopeful, gruff] ...Can I still have the cookie?",
+  "estStart": 672.88,
+  "estDur": 2.78
+ },
+ {
+  "scene": "SC 10",
+  "speaker": "YOU",
+  "text": "[laughs] HALF the cookie.",
+  "estStart": 675.66,
+  "estDur": 1.39
+ },
+ {
+  "scene": "SC 10",
+  "speaker": "BRICK",
+  "text": "[smiling for the first time] ...Deal.",
+  "estStart": 677.05,
+  "estDur": 0.96
+ },
+ {
+  "scene": "SC 10",
+  "speaker": "OLDMAN",
+  "text": "[warm] One last thing. The panel can keep one command for you. Forever. Any command you want.",
+  "estStart": 678.02,
+  "estDur": 6.12
+ },
+ {
+  "scene": "SC 10",
+  "speaker": "NARRATOR",
+  "text": "You could be fast forever. Big forever. Never picked last again.",
+  "estStart": 684.14,
+  "estDur": 4.3
+ },
+ {
+  "scene": "SC 10",
+  "speaker": "NARRATOR",
+  "text": "You think about it... for a long time.",
+  "estStart": 688.44,
+  "estDur": 3.51
+ },
+ {
+  "scene": "SC 10",
+  "speaker": "SYSTEM",
+  "text": "[calm] Admin rights... removed. [pause] Thanks for playing.",
+  "estStart": 691.95,
+  "estDur": 3.28
+ },
+ {
+  "scene": "SC 10",
+  "speaker": "OLDMAN",
+  "text": "[proud, warm] Hm. [pause] In two thousand years... you're only the second person to type that.",
+  "estStart": 695.23,
+  "estDur": 5.83
+ },
+ {
+  "scene": "SC 10",
+  "speaker": "YOU",
+  "text": "[curious] Who was the first?",
+  "estStart": 701.05,
+  "estDur": 1.75
+ },
+ {
+  "scene": "SC 10",
+  "speaker": "OLDMAN",
+  "text": "[winks] Me.",
+  "estStart": 702.81,
+  "estDur": 0.66
+ },
+ {
+  "scene": "SC 11",
+  "speaker": "NARRATOR",
+  "text": "The next morning, everything is normal. [pause] Mostly.",
+  "estStart": 705.47,
+  "estDur": 3.35
+ },
+ {
+  "scene": "SC 11",
+  "speaker": "NARRATOR",
+  "text": "You still get picked last in gym. [pause] Except now Brick is team captain. [pause] And he picks you first.",
+  "estStart": 708.82,
+  "estDur": 7.85
+ },
+ {
+  "scene": "SC 11",
+  "speaker": "DAD",
+  "text": "[into the headset] Can you hear me now? [pause] ...I miss the sky office.",
+  "estStart": 716.66,
+  "estDur": 4.74
+ },
+ {
+  "scene": "SC 11",
+  "speaker": "NARRATOR",
+  "text": "Granny is still fast. She's never been late again. [pause] She also walks to the store... faster than the car.",
+  "estStart": 721.4,
+  "estDur": 8.01
+ },
+ {
+  "scene": "SC 11",
+  "speaker": "NARRATOR",
+  "text": "Zoe checks your monitor every day.",
+  "estStart": 729.41,
+  "estDur": 2.48
+ },
+ {
+  "scene": "SC 11",
+  "speaker": "ZOE",
+  "text": "[deadpan] Your password sticky note is still facing the window.",
+  "estStart": 731.89,
+  "estDur": 3.57
+ },
+ {
+  "scene": "SC 11",
+  "speaker": "YOU",
+  "text": "[proud] Yeah. But now it says \"nice try.\"",
+  "estStart": 735.46,
+  "estDur": 2.85
+ },
+ {
+  "scene": "SC 11",
+  "speaker": "NARRATOR",
+  "text": "And Pancake still sits on your keyboard. [pause] But now... when he does...",
+  "estStart": 738.31,
+  "estDur": 5.76
+ },
+ {
+  "scene": "SC 11",
+  "speaker": "SYSTEM",
+  "text": "[calm] Command accepted.",
+  "estStart": 744.07,
+  "estDur": 1.03
+ },
+ {
+  "scene": "SC 11",
+  "speaker": "YOU",
+  "text": "[whispers, horrified] ...PANCAKE.",
+  "estStart": 745.1,
+  "estDur": 0.96
+ },
+ {
+  "scene": "SC 11",
+  "speaker": "NARRATOR",
+  "text": "[deadpan] The panel didn't keep one command. [pause] It kept one admin.",
+  "estStart": 746.06,
+  "estDur": 4.44
+ },
+ {
+  "scene": "SC 12",
+  "speaker": "NARRATOR",
+  "text": "[warm, to camera] So... if YOU had admin commands... what would you type first? Tell us in the comments!",
+  "estStart": 752,
+  "estDur": 6.72
+ },
+ {
+  "scene": "SC 12",
+  "speaker": "YOU",
+  "text": "[to camera] And remember: with great commands... comes great... [pause] cat problems.",
+  "estStart": 758.72,
+  "estDur": 4.67
+ },
+ {
+  "scene": "SC 12",
+  "speaker": "YOU",
+  "text": "[panicked, turning around] Pancake! Put. The laptop. DOWN!",
+  "estStart": 763.39,
+  "estDur": 2.12
+ }
+]
