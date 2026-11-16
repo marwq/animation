@@ -1,0 +1,48 @@
+{
+  "scene": "SC 12",
+  "start": 779.534,
+  "end": 795.8,
+  "music": [
+    {"start":779.534,"end":795.8,"mood":"outro","energy":0.6,"in":"cut","out":"fade"}
+  ],
+  "ambience": [
+    {"start":779.534,"end":795.8,"name":"room","gain_db":-14},
+    {"start":779.534,"end":795.8,"name":"birds","gain_db":-20}
+  ],
+  "footsteps": [],
+  "sfx": [
+    [780.161,"swish",-8,-0.327,"the hero points at you"],
+    [780.201,"zoom_in",-3,-0.327,"quick push-in"],
+    [780.261,"orch_hit",-1,0.438,"'YOU?!' bang (small shake)"],
+    [780.448,"chat_pop",-4,0.248,"the big empty chat bar pops"],
+    [782.111,"typing",-9,0.248,"ideas typed and deleted: ';fly me', ';size pizza 100', ';tp me to the moon', ';skip homework'"],
+    [783.011,"typing",-11,0.248,"ideas typed and deleted: ';fly me', ';size pizza 100', ';tp me to the moon', ';skip homework' (cont.)"],
+    [784.221,"ui_pop",-3,0.255,"the chat bar turns into a comment box"],
+    [784.371,"notify",-8,0.255,"comment ding"],
+    [784.431,"boing",-9,0.255,"the down arrow bounces in"],
+    [785.447,"typing",-10,0.175,"'I would type ;' typed into the box"],
+    [785.936,"whoosh_long",-5,0.5,"the end-card panel slides in, camera pulls back"],
+    [786.014,"ui_close",-6,0.255,"the comment box closes"],
+    [786.136,"pop",-6,0.423,"'WATCH NEXT' frame pops"],
+    [786.314,"shine",-10,-0.34,"wise finger up"],
+    [786.316,"pop",-7,0.423,"'MORE VIDEOS' frame pops"],
+    [786.496,"pop",-5,0.088,"'SUBSCRIBE' circle pops"],
+    [786.536,"bell",-8,0.088,"subscribe bell"],
+    [788.663,"jump",-7,0.015,"Pancake pounces"],
+    [788.913,"typing",-5,-0.077,"cat on the keys: 'kkkkkkkk' ;fly all"],
+    [788.993,"body_fall",-4,-0.077,"'flomp' onto the laptop keyboard"],
+    [789.163,"click",-4,-0.077,"ENTER (paw): ;fly all"],
+    [789.163,"whoosh_up",0,-0.077,";fly all: the laptop, Pancake and the junk start floating up"],
+    [789.193,"confirm",-3,-0.292,"'Command accepted'"],
+    [789.363,"magic",-9,-0.278,"floating shimmer (left half of the room)"],
+    [790.284,"slide_up",-3,-0.34,"'...cat problems.' the hero's feet leave the floor"],
+    [791.388,"swish",-9,-0.34,"the hero spins around (still floating)"],
+    [791.488,"pop",-3,-0.386,"'PANCAKE!' bang"],
+    [792.226,"swish",-9,-0.34,"jab: 'Put.'"],
+    [792.296,"blink",-6,-0.077,"Pancake blinks, unimpressed"],
+    [793.052,"swish",-9,-0.34,"jab: 'The laptop.'"],
+    [793.775,"swish",-6,-0.34,"big jab: 'DOWN!'"],
+    [793.825,"boom",3,-0.139,"'DOWN!' comic hit + big shake"],
+    [794.7,"cricket",-11,-0.34,"deadpan float: awkward cricket as the music fades"]
+  ]
+}

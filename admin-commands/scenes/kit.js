@@ -311,8 +311,9 @@ function chatCommand(x, y, text, progress = 1, opts = {}) {
 // progress of typing a command spoken by a line: letters follow the spoken words of [w0, w1] (word strings or indices)
 function typeProgress(t, line, fromWord = 0, toWord = null) {
   const ws = line.words;
-  const i0 = typeof fromWord === 'number' ? fromWord : ws.findIndex((w) => w[0].toLowerCase().replace(/[^a-z0-9]/g, '') === fromWord.toLowerCase());
-  const i1 = toWord === null ? ws.length - 1 : typeof toWord === 'number' ? toWord : ws.findIndex((w, i) => i >= i0 && w[0].toLowerCase().replace(/[^a-z0-9]/g, '') === toWord.toLowerCase());
+  const norm = (x) => String(x).toLowerCase().replace(/[^a-z0-9]/g, '');   // "Un-fly" matches the spoken word "Un-fly"
+  const i0 = typeof fromWord === 'number' ? fromWord : ws.findIndex((w) => norm(w[0]) === norm(fromWord));
+  const i1 = toWord === null ? ws.length - 1 : typeof toWord === 'number' ? toWord : ws.findIndex((w, i) => i >= i0 && norm(w[0]) === norm(toWord));
   const a = ws[Math.max(0, i0)][1], b = ws[Math.max(0, i1)][2];
   return clamp((t - a) / Math.max(0.05, b - a), 0, 1);
 }
