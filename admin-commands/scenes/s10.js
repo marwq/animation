@@ -192,7 +192,7 @@ function shotBus(t) {
 // 5. the bath guy drops back into his own bathroom
 function shotTub(t) {
   const u = seg(t, c5, c5 + 0.42);
-  const y = lerp(-260, 930, u * u);
+  const y = lerp(200, 930, u * u);
   const sq = bump(t, c5 + 0.4, c5 + 0.7);
   let o = E.bathroom(t, 1);
   o += CS.bathtubGuy(960, y + 10 * sq, 0.62 * (1 + 0.04 * sq), 0, { t, face: u >= 1 ? 'happy' : 'shock' });
@@ -270,13 +270,13 @@ function shotGrannyTalk(t) {
 // 9. Dad drops into his chair, still on the call | split: Mom finds a sticky note
 function dadFrame(t) {
   const ch = ST.SPOTS.livingRoom.dadChair;
-  const cam = at(560, 600, 1.55);
+  const cam = at(570, 545, 1.45);
   const Ld = ST.livingRoom.layers(t, { time: 'day', call: true, curtains: 0.6 });
   const drop = seg(t, c9, c9 + 0.3), sq = bump(t, c9 + 0.28, c9 + 0.55);
   const talk = Math.floor(t * 7) % 3 === 0 ? 'O' : 'smile';
   const dad = K.actor('dad', t, { x: ch.x, y: ch.feet, s: ch.s, view: 'side', legL: 82, kneeL: 86, legR: 72, kneeR: 82, lift: (1 - ease.in(drop)) * 700, sy: 1 - 0.1 * sq, sx: 1 + 0.06 * sq, armL: 40, face: { name: drop < 1 ? 'shocked' : 'happy', mouth: drop < 1 ? 'O' : talk } }, { arms: false });
   let o = K.view(cam, Ld.bg, 0.7) + K.view(cam, Ld.mid + dad + Ld.front, 1) + K.view(cam, Ld.fg || '', 1.2) + K.view(cam, Ld.light || '', 1);
-  if (sq > 0) o += K.bang('PLOP', 1240, 260, seg(t, c9 + 0.3, c9 + 0.4), 80, -8, '#FFFFFF');
+  if (t > c9 + 0.28 && t < c9 + 1.1) o += K.bang('PLOP', 880, 190, seg(t, c9 + 0.3, c9 + 0.4) * (1 - seg(t, c9 + 0.9, c9 + 1.1)), 80, -8, '#FFFFFF');
   return o;
 }
 function momPose(t, extra = {}) {
@@ -411,7 +411,7 @@ function shotKeep(t) {
   const chips = t > tAny - 0.3;
   const h = E.heroLap(t, { x: HX, y: 960, s: HS, turn: -0.3, armL: chips ? 30 : 12, armR: chips ? 30 : 12, face: chips ? { name: 'amazed', fx: [], eyes: { look: [0, 0.8] } } : { name: 'happy', eyes: { look: [-0.8, -0.2] } } }, {}, { open: chips, s: chips ? 0.62 : 0.5, screen: chips ? ST.adminScreen(t, { commands: true, battery: 100 }) : null, battery: 100, glow: 0.6 });
   let o = E.room(t, cam, {}, o2, h);
-  o += K.view(cam, G(keepSlot(t, seg(t, tKeep - 0.1, tKeep + 0.25) * (1 - seg(t, tAny, tAny + 0.3))), tr(HX - 160, 372)), 1);
+  o += K.view(cam, G(keepSlot(t, seg(t, tKeep - 0.1, tKeep + 0.25) * (1 - seg(t, tAny - 0.25, tAny + 0.05))), tr(HX - 160, 372)), 1);
   if (t > tForever) o += K.view(cam, K.sparkles([[HX + 140, 180, 24], [HX - 380, 200, 18], [HX + 200, 330, 14]], t), 1);
   return o;
 }

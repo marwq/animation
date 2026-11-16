@@ -137,19 +137,18 @@ function shotE1(t) {
   const k = seg(t, Wd(3, 'bus') - 0.1, Wd(3, 'bus') + 0.35);
   return cityFrame(t, cam, {}, { chars: near }) + E.logTag(1360, 790, '0412', ';fly all', k, -4, 0.95);
 }
-// E2 — the jailed child (exhibit B): Brick in the cage on the crane hook
+// E2 — the jailed child (exhibit B): Brick in the cage, swinging on the crane cable high above the city
 function shotE2(t) {
   const u = seg(t, c5, c6);
-  const hk = CS.craneHook(t, { hookSwing: 7 });
-  const cs = 0.42, bot = hk.y + 40 + 680 * cs + 20;
-  const cam = camK(hk.x + 90, hk.y + 120 + lerp(10, -20, u), 2.0, CS.KF.mid);
-  let cg = P(`M${f(hk.x)} ${f(hk.y)}V${f(hk.y + 46)}`, ln(5, '#5A6070'));
-  cg += SETS.cage(hk.x, bot, cs, t, { theme: 'green', part: 'back' });
-  cg += actor('brick', t, { x: hk.x, y: bot - 10, s: 0.185, armL: 150 + 6 * Math.sin(t * 5), armR: 150 - 6 * Math.sin(t * 5), face: { name: 'sad', eyes: { look: [0.6, 0.6] }, fx: ['blush', 'sweat'], mouth: 'wavy' } });
-  cg += SETS.cage(hk.x, bot, cs, t, { theme: 'green', part: 'front' });
-  const mid = K.view(cam, G(cg, `rotate(${f(hk.rot)} ${f(hk.x)} ${f(hk.y)})`), CS.KF.mid);
+  const cam = at(lerp(940, 1000, u), 330, 1.18);
+  const sw = 6 * Math.sin(t * 1.3);
+  const cs = 0.55, top = -60, bot = 900;
+  let cg = P(`M760 ${top}V${f(bot - 680 * cs - 40)}`, ln(14)) + P(`M760 ${top}V${f(bot - 680 * cs - 40)}`, ln(7, '#B9C0D0')) + G(R(-26, -10, 52, 40, 10, ol('#E8B400', 5)) + P('M0 30q0 26 -20 30', ln(9, '#5A6070')), `translate(760 ${f(bot - 680 * cs - 70)})`);
+  cg += SETS.cage(760, bot, cs, t, { theme: 'green', part: 'back' });
+  cg += actor('brick', t, { x: 760, y: bot - 14, s: 0.24, armL: 150 + 6 * Math.sin(t * 5), armR: 150 - 6 * Math.sin(t * 5), face: { name: 'sad', eyes: { look: [0.6, 0.6] }, fx: ['blush', 'sweat'], mouth: 'wavy' } });
+  cg += SETS.cage(760, bot, cs, t, { theme: 'green', part: 'front' });
   const k = seg(t, Wd(3, 'child') - 0.1, Wd(3, 'child') + 0.35);
-  return cityFrame(t, cam, {}, { mid }) + E.logTag(1380, 760, '0377', ';jail Brick', k, 5, 0.95);
+  return cityFrame(t, cam, {}, { chars: G(cg, `rotate(${f(sw)} 760 ${top})`) }) + E.logTag(1380, 720, '0377', ';jail Brick', k, 5, 0.95);
 }
 // E3 — 100,000 giant cats (exhibit C) + the counter
 function shotE3(t) {
