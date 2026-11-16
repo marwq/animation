@@ -43,7 +43,30 @@ Every command is a chat line. Use `K.chatCommand(x, y, ';fly me', progress, { t,
 
 ## Drawing characters
 
-CAST_SECTION_PLACEHOLDER
+`actor(name, t, pose, act)` draws a rig character (look at `concept/cast_lineup.png`, `cast_expressions.png`, `cast_turnaround.png`). Speaking characters lip-sync automatically (YOU, ZOE, BRICK, DAD, MOM, GRANNY, OLDMAN, ADMIN, ANCHOR, BOSS, PRINCIPAL, COACH, KID); the NARRATOR is off-screen.
+
+| Key | Look | Height at s 1 (px) | Options |
+|---|---|---|---|
+| `you` | THE HERO: orange bowl cut, white face, huge eyes, red jacket, yellow T-shirt, dark green pants | 951 | — keep him on model |
+| `zoe` | best friend: purple bob, big black glasses, orange cursor hoodie | 933 | `laptop: true \| 'closed' \| 'screen'`, `laptopScreen: svg` |
+| `brick` | the bully: huge (1.3), backwards cap, tank top, brick fists | 1362 | sad/shy ending: `face: { name: 'sad', eyes: { look: [.6, .6] }, fx: ['blush', 'sweat'], mouth: 'wavy' }` |
+| `dad` | balding, glasses, shirt + tie, duck pyjama bottoms, headset | 1040 | `headset: false` |
+| `mom` | neat ponytail, apron, sticky notes | 1097 | `notes: true \| 'WORD'` (pad in her hand) |
+| `granny` | 91: white curls, cardigan, glasses on a chain, slippers | 911 | `fast: true` (hair blown back; add `fireTrail`) |
+| `oldman` | the garage-sale old man (secretly the Admin): tiny, long beard, cardigan, crown pin | 735 | — |
+| `admin` | the ADMIN: white robe of code, golden ADMIN crown, face of pure light with gold eyes, no mouth (light pulses when he speaks) | 1485 | `glow: 0..1`; pass `t` in the pose (code scroll, cape) |
+| `anchor` | Rex Ratings, news anchor | 1209 | — |
+| `boss` | Mr. Gray, Dad's boss (video call) | 1049 | — |
+| `principal` | Principal Pratt, mug | 1208 | `mug: false`, `steam: 0..1` (pass `t`) |
+| `coach` | Coach Hale, whistle | 1170 | `whistle: 'mouth'` |
+
+Crowds: `K.draw.kid(i, pose)` / `K.draw.adult(i, pose)` (or `actor('kid', t, { i, … })`; the KID line lip-syncs on the kid you draw with `actor`).
+
+Props from `rig/cast.js` (body space, feet at 0,0 → usable in `pose.props`, or in screen space): `zoeLaptop({ x, y, s, rot, open, face, screen })`, `stickyNote(x, y, s, rot, text, col)`, `stickyStack({ x, y, s, rot, text, n })`, `coffeeMug({ x, y, s, rot, steam, t })`, `whistle(x, y, s, rot)`, `fireTrail({ x, y, len, angle, w, t, alpha })` or `fireTrail({ pts: [[x, y], …], w, t })` (Granny's flame trail). Hand positions: `[±(shoulderX + 252·sin a), −515 + 252·cos a]` with shoulderX 100 (Brick 128, Dad 104, Pratt 96, Coach 108), or `require('./acting').hand(a, side)`.
+
+Cats (`require('../rig/cats')`, look at `concept/cats.png`): `pancake({ x, y, s, t, pose, mood, blink, crown, look, flip, rot, mouth, keyboard, zzz })` — poses `sit loaf walk sleep pounce lie paw`, moods `lazy smug happy surprised angry`, `mouth` `w smirk open o hiss meow`, `crown: true` = the final ADMIN gag; sitting Pancake ≈ 258 px at s 1 (in proportion with rig characters at the same s; s 6+ fills the frame). `cat({ …, coat, seed })` coats `black white grey calico siamese tabby`.
+
+Performance: a character ≈ 20 ms at s 0.5 (Brick ≈ 35–48 ms); giant close-ups of rig characters are expensive (Brick at s 1.6 ≈ 200 ms) → pass `volume: false` for huge close-ups. 20 small cats ≈ 60 ms. Avoid big radial gradients (≈ 220 ms per full frame) and diagonal linear gradients.
 
 Pose fields (rig characters):
 
