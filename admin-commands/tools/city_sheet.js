@@ -37,7 +37,7 @@ const TILES = [
     const hr = C.toScreen(cam, A.heroRoof);
     return all(L) + hero(hr.x, hr.y, 0.5 * 0.2) + m;
   }],
-  ['usage: cats on CITY.tower / inStadium / CITY.roofs[3] + cage on craneHook', (t) => {
+  ['usage: cats on tower / inStadium / roofs[3], cage on hook', (t) => {
     const cats = require('../rig/cats');
     const cam = { zoom: 1.15, x: -120, y: -60 }, o = { time: 0.85, popups: 0.4 };
     const T = C.CITY.tower, St = C.CITY.stadium, h = C.craneHook(t, o);

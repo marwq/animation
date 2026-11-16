@@ -1,4 +1,72 @@
-// HEADER_PLACEHOLDER
+// Shared CITY (SC 01, SC 06–SC 08, SC 10), TELEPORT-CHASE (SC 08) and SERVER ROOM (SC 09–SC 10) background sets.
+// Contact sheet: `node tools/city_sheet.js [filter] [--dir <folder>] [--time]` → concept/sets_city.png (magenta = floors/anchors).
+//
+// CONVENTIONS
+// - World space = the 1920x1080 frame at the default camera ({zoom:1, x:0, y:0}). `t` = absolute seconds (idle motion only).
+// - Every set is (t, cam, opts) → Layers { bg, mid, fg, light } ALREADY seen through the camera. Each sub-layer carries its own
+//   parallax k and the camera is applied to EVERY layer (washes, roads, floors too), so zoomed / panned / shaken cameras never
+//   show an unwashed or empty edge. cam = { zoom, x, y, fx, fy, sx, sy } (sx/sy = shake offset), as for K.camKeys / K.view.
+//       const L = CS.city(t, cam, { time: 1, flying: 1 });
+//       return L.bg + L.mid + K.view(cam, onLandmarks, CS.KF.mid) + L.fg + K.view(cam, chars, 1) + L.light;   // String(L) = all 4
+//   `light` = colour washes (time of day, the Admin's light, crack beams, lamp glow): draw it LAST so characters get tinted too.
+// - ANCHORS are in LAYER coordinates and carry that layer's k: draw things that sit on a landmark with K.view(cam, svg, a.k)
+//   between L.mid and L.fg; toScreen(cam, a) → its screen point right now (at the default cam layer coords = screen coords).
+// - Props return plain SVG (no camera): bus, bathtubGuy, waterTower, blimp, mailman, flyer, dog, car, tinyPerson, saguaro,
+//   tumbleweed, crack, serverMsg, skyChat; crt / liveScreen / logScreen / thumb (monitor bits). All props take opts.tint+tintK.
+// - Static <defs> in DEFS (ids `city*`), loaded by main.js. No filters / masks / blend modes, no big radial gradients; a few
+//   clipPaths (monitor screens). All windows of a layer are ONE pattern path (each pattern element costs Chromium a few ms).
+//   Perf (`--time`, most tiles incl. a hero): city 40–65 ms, rooftop 55–70, giantScale ~65, chase 35–50, server room 40–55;
+//   ≤ ~650 elements (≈ 710 at zoom .5 with every option on).
+//
+// city(t, cam, opts) — a lively mid-size city, wide side view (sky, 2 far skyline rows, mid towers + landmarks, near shop row, street).
+//   opts.time 0 day → .5 sunset (pink/purple) → 1 night (lit windows, neon signs, stars, big moon) · dawn 0..1 (soft pink-gold
+//     morning, use with time 1) · flying 0..1 (people, dogs, cars, a sofa, a tree, the mailman, a BUS and the BATHTUB GUY rise from
+//     behind the buildings and drift; sidewalk people and cars float up too) · popups 0..1 (grey SERVER MESSAGE windows pop in one by
+//     one, neon-rimmed at night) · crack 0..1 (the sky cracks like glass from crackAt {x, y} (k .04 ≈ screen), radius crackR 560,
+//     light beams + cold white-gold wash) · admin 0..1 (the Admin's cold white-gold light without a crack) · blimp (true |
+//     {x, y, s, text, flip, rot}) · waterTip 0..1, waterFall 0..1 (the rooftop water tower tips over, then drops off its roof) ·
+//     hookLen 330, hookSwing 4 (deg), hookX 470 (crane) · street (false: no cars / people) · flyMid, flyNear (false hides a group)
+//     · onSky (svg at k .04 AFTER the crack, i.e. behind the skyline: the Admin coming out of it) · onMid (svg, mid-layer coords,
+//     after the towers) · inStadium (svg inside the stadium bowl: between the stands and the front wall) · onNear (near-layer coords).
+//   Layers: bg = sky, sun/moon, clouds, crack, far skyline, far flyers, blimp, pop-ups · mid = mid towers + landmarks (k .4), mid
+//     flyers (k .55) · fg = near row (k .75), street (k 1), near flyers (k 1.15) · light. L.pal = the palette used.
+//   KF (parallax): sky 0, sun .03, crack .04, cloud .06, far2 .1, far .18, flyFar .26, pop/blimp .3, mid .4, flyMid .55, near .75, street 1, flyNear 1.15.
+//   ANCHORS CITY.*:
+//     tower {x 720, y 222} k .4      flat roof of the tall teal tower (roof x 616..824) — the giant-cat seat (pancake({x, y, s≈1}))
+//     craneHook(t, opts) → {x, y, rot, k .4}  the swaying hook bend (default ≈ {470, 520}); hang the cage's ring there, rotate by rot
+//     stadium {x 1690, y 614, rx 215} k .4   middle of the pitch (bowl x 1475..1905, rim y 610); a cat IN it → opts.inStadium
+//     waterTower {x 1120, y 590, s .42} k .4  feet of the rooftop water tower (coral roof x 1024..1184, tips to the right)
+//     tv {x 1328, y 470, sign {1328, 545}, dish {1270, 450}} k .4   NEWS 7 station roof
+//     heroRoof {x 1320, y 674, x0 1160, x1 1480} k .75   the hero's roof in the wide (it has the tank + antenna of rooftop())
+//     moon {1500, 250, r 120} k .03 · crack {960, 190, r 560} k .04 · blimp {1010, 300, s .4} k .3
+//     street {y 990 (sidewalk feet), laneR 1044, laneL 1082 (bottom of the wheels)} k 1
+//     roofs[] = near-row roofs {x0, x1, y, k .75} (cats lounging) · midRoofs[] = flat mid roofs {x0, x1, y, k .4} (+ tv, tower)
+// rooftop(t, cam, opts) — the hero's roof high above the city (SC 06 "king of the city"). Same opts as city(); the city behind is
+//   seen from up high (far skyline +ROOF.dyFar 170, mid towers +ROOF.dyMid 330: add dyMid to CITY mid anchors' y here).
+//   FLOOR ROOF.floor 905 (brick parapet y 790..862 behind the hero, deck from 862). ROOF.tank (big water tank, x 300),
+//   ROOF.antenna {x 1660, top 300} (red light), AC unit, vents, string lights (glow at night), ROOF.pigeon. Layers: bg = sky + city,
+//   mid = the deck, fg = near flyers (bus, bathtub guy), light.
+// giantScale(t, cam, opts) — low angle for the size duel: three rows of tiny rooftops, giants stand on GIANT.ground 1000 (the
+//   front row = fg hides their feet). Same sky opts as city() (default time .88) + shadow 0..1 (a giant boot's shadow + darkening),
+//   shadowX. Layering: L.bg + giants + L.fg + L.light (mid is empty).
+// skyChat(x, y, w, h, t, opts) — the Admin's gigantic white-and-gold chat window (centre x, y). opts: text (wraps on spaces or
+//   '\n'), progress 0..1 (letters typed; layout never shifts while typing), glow 0..1, user 'ADMIN', size (font px), k (pop-in),
+//   cursor, s, rot. Glue it to the crack with K.view(cam, skyChat(...), CS.KF.crack) and descend it from CITY.crack.
+// crack(x, y, r, k, opts{glow, rot}) — standalone glass crack overlay (rays → branches → web rings, glowing hole, shards).
+// desert / island / mountain (t, cam, opts) — teleport-chase beats. Shared opts: admin 0..1 (Admin light), flash 0..1 (white).
+//   desert:   FLOOR DESERT.floor 905, stand x 560..1360; opts heat (shimmer), tumble (tumbleweed). Big saguaro x 330, mesas, sun.
+//   island:   FLOOR ISLAND.floor 858, stand x 840..1260 (palm x 650..800); opts shark (a fin circles the island). fg = front waves.
+//   mountain: FLOOR MOUNTAIN.floor 640, summit x 720..1200 (flag at 1236; opts flag, snow 0..1); fg = clouds below (k 1.15).
+// serverRoom(t, cam, opts) — the Admin's small warm amber room: walls of old CRT monitors (pattern) + 6 live monitors, header
+//   "REAL LIFE SERVER — Players: 8,000,000,000", main CRT, keyboard desk, huge red armchair + knitted blanket, tea, teapot, cat
+//   bed, floor lamp, coat rack with the golden ADMIN crown and the white robe of code.
+//   opts: logs [strings] (main screen = command log, newest last, blinking cursor) · logTitle · mainScreen (svg, 0..556 x 0..350)
+//     · screens [svg] (override SERVER.monitors[i], local 0..w-24 x 0..h-40) · green 0..1 (screens + glow turn green) · lamp 0..1
+//     · crown (true = on its hook) · cloak (true) · steam (tea) · players ('8,000,000,000').
+//   FLOOR SERVER.floor 960. chair {x 480, seat 738, back 432, s .3}: L.bg + oldman({x, y: seat, s .3}) + L.mid (arms + blanket)
+//     + hero + L.fg + L.light. desk {top 672, x0 380, x1 1560}, keyboard {1010, 660}, mugs [{1252, 672}, {1318, 672}],
+//     screen {682, 182, 556 x 350}, header {960, 92}, crown {1834, 356}, cloak {1764, 330}, catBed {1590, 966}, lamp {84, 330}.
+// FLOOR = { street 990, heroRoof 674, rooftop 905, giant 1000, desert 905, island 858, mountain 640, server 960 }.
 'use strict';
 
 const K = require('./kit');
@@ -346,7 +414,11 @@ function crack(x, y, r, k, opts = {}) {
   const { glow = 1, rot = 0 } = opts;
   const d = crackD(r, k), sw = clamp(r / 420, 0.45, 2.4);
   let o = '';
-  if (glow > 0) o += Ci(0, 0, r * (0.22 + 0.32 * k), { fill: 'url(#cityGlowGold)', opacity: f(0.8 * glow * Math.min(1, k * 2)) });
+  if (glow > 0) {
+    // halo as concentric translucent discs (a radial gradient this big costs tens of ms)
+    const g = glow * Math.min(1, k * 2), rr = r * (0.22 + 0.32 * k);
+    o += Ci(0, 0, rr, op('#FFE9A0', 0.12 * g)) + Ci(0, 0, rr * 0.7, op('#FFF2C0', 0.16 * g)) + Ci(0, 0, rr * 0.45, op('#FFF8E0', 0.24 * g)) + Ci(0, 0, rr * 0.24, op('#FFFFFF', 0.45 * g));
+  }
   o += P(d, ln(34 * sw, '#FFE9A0', 0.25 * glow));
   o += P(d, ln(13 * sw, LINE, 0.4));
   o += P(d, ln(8.5 * sw, '#FFC93C'));
