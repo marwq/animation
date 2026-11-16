@@ -20,34 +20,43 @@
 // Contact sheet: `node tools/sets_sheet.js` -> concept/sets_home.png (the hero is drawn on each FLOOR line; `--only k1,k2`,
 // `--full DIR` writes full-size tiles, `--noref` hides the hero).
 //
-// Index (details in the comment above each function):
-//   heroRoom(t, o)        YOUR bedroom. o: time 'day'|'evening'|'night', laptop (screen svg|fn), laptopAt 'bed'|'desk'|false,
-//                         laptopOff, glow, monitor (svg|fn), monitorOff, note (password sticky lines), notes 0..1, floatDust 0..1,
-//                         lamp. + .layers (mid, front = blanket + laptop, light). Ceiling bonk line SPOTS.heroRoom.ceiling
-//   laptop(x, y, s, screen, o)   the magical old laptop (screen box 400x300 centred (0,-296), LAPTOP_SCREEN).
+// Index (details in the comment above each function; anchors in SPOTS.<set>):
+//   heroRoom(t, o)        YOUR bedroom. o: time 'day'|'evening'|'night', laptop (screen svg|fn: puts the magic laptop on the
+//                         bed), laptopAt 'bed'|'desk'|false, laptopOff, glow, monitor (svg|fn), monitorOff, note (password
+//                         sticky lines), notes 0..1, floatDust 0..1, lamp, bonk 0..1 + bonkX. + .layers (front = blanket +
+//                         laptop on the bed).
+//                         The ceiling line is y 100: SPOTS.heroRoom.ceiling (hero s .5 bonking -> feet y 572).
+//   laptop(x, y, s, screen, o)   the magical old laptop; screen box 400x300 centred (0,-296) = LAPTOP_SCREEN.
 //                         o: glow 0..1, off, lid 0..1, back (seen from behind), dust 0..1, rot, t
-//   adminScreen(t, o)     -> fn(w, h): the black ADMIN PANEL v1.0 chat UI. o: lines, typed, cursor, title, battery,
-//                         commands (help chips), glitch 0..1, welcome
-//   kitchen(t, o)         o: time, pancakes 0..400, wind 0..1, notes 0..1, fridgeOpen 0..1, fridgeLight, panCake (pancake in the
-//                         pan), steam.  + .layers (front = table + fridge door).  fridgeInside(t, o) close-up inside the fridge
-//   livingRoom(t, o)      o: time, call (true|svg|fn on Dad's laptop), tv (svg|fn), tvOff, windowOpen, curtains wind 0..1, lamp.
-//                         + .layers (front = couch + coffee table)
-//   houseExterior(t, o)   o: time, lift 0..1, house:false, splash 0..1.  + .layers (house layer separate)
-//   house(x, y, s, o)     the family house alone. o: time, lit, uprooted 0..1, tilt, notes
-//   street(t, cam, o)     morning suburban street (parallax). o: time, pigeon {x, state, sandwich} | false
-//   serverStreet(t, cam, o)  the street that shouldn't exist. o: flicker 0..1, sale (sign + tables far away)
-//   garageSale(t, o)      o: gone 0..1, tumble 0..1, laptop:false, glow. + .layers
-//   cafeteria(t, o)       o: menu, trays, lunchLadyJump.  + .layers (front = counter/sneeze guard + near table)
-//   gym(t, o)             o: scoreboard, track, cones, rope.  + .layers
-//   hallway(t, cam, o)    long locker hallway (parallax).  o: posters, doorsOpen
-//   principalOffice(t, o) o: hole 0..1, holeX, floorHole 0..1, steam.  + .layers (front = desk)
-//   classroom(t, o)       o: board (lines), test, clock.  + .layers (front = desks)
-//   schoolyard(t, o)      o: time 'dawn'|'day'|'sunset'.  + .layers
-//   cage(x, y, s, t, o)   the jail command cage. o: drop 0..1, part 'back'|'front'|'all', theme 'green'|'gold', glow, vanish 0..1, plate
-//   newsStudio(t, o)      o: window (svg|fn) | chaos 0..1, ticker, logo.  + .layers, .ticker(t, text, o)
-//   videoCall(x, y, w, h, t, o)  video-call app window CENTRED on (x, y). o: boss (svg|fn), bossFace, mouth 0..1, self (svg|fn),
-//                         selfSky, muted, title, tiles
-//   extras: pigeon, tray, stickyNote, streetSign, tumbleweed, dntSticker, frameIn, glowSpot, darkPool, sky, LAPTOP_SCREEN
+//   adminScreen(t, o)     -> fn(w, h): the black ADMIN PANEL v1.0 chat UI for any screen. o: lines, typed, cursor, title,
+//                         battery, commands (help chips), glitch 0..1, welcome:false
+//   kitchen(t, o)         o: time, pancakes 0..400, wind 0..1, notes 0..1, fridgeOpen 0..1, panCake:false, steam:false.
+//                         + .layers (front = table + fridge door)
+//   fridgeInside(t, o)    close-up inside the open fridge (hero squeezed between milk + cake). o: dark 0..1, cake 0..1, chill
+//   livingRoom(t, o)      o: time, call (true|false|svg|fn on Dad's laptop), callOpts, tv (svg|fn), tvOff, windowOpen,
+//                         curtains 0..1, lamp, catBed:false. + .layers (front = couch front + coffee table)
+//   videoCall(x, y, w, h, t, o)  video-call app window CENTRED on (x, y). o: boss (svg|fn), bossFace 'bored'|'amazed'|
+//                         'confused', mouth 0..1, speaking, self (svg|fn), selfSky, muted 0..1, title, timer, tiles
+//   houseExterior(t, o)   wide street shot of the family house. o: time, lift 0..1, tail, house:false, splash 0..1.
+//                         + .layers (front = the house: draw the giant cat between mid and front)
+//   house(x, y, s, o)     the family house alone (origin = foundation bottom centre). o: time, lit, uprooted 0..1, tilt,
+//                         tail, notes:false
+//   street(t, cam, o)     morning suburban street (parallax, long). o: time, pigeon {x, state, sandwich, lift, flip, s} | false
+//   serverStreet(t, cam, o)  the street that shouldn't exist (violet dusk). o: flicker 0..1, sale:false
+//   garageSale(t, o)      o: gone 0..1 (the sale vanishes), tumble 0..1, laptop:false, glow. + .layers (front = table skirt)
+//   cafeteria(t, o)       o: menu [lines], trays:false, steam:false. + .layers (front = counter + sneeze guard + table)
+//   gym(t, o)             o: scoreboard ([4] | 'TEXT'), track:false, cones:false, rope:false. + .layers
+//   hallway(t, cam, o)    long locker hallway (parallax). o: posters:false, doorOpen (door index)
+//   principalOffice(t, o) o: hole 0..1 (hero-shaped hole in the back wall), holeX, floorHole 0..1, steam. + .layers (front = desk)
+//   classroom(t, o)       o: board [lines], test:false, clock. + .layers (front = desk tops)
+//   schoolyard(t, o)      o: time 'dawn'|'day'|'sunset'. + .layers
+//   cage(x, y, s, t, o)   the jail command cage. o: drop 0..1, part 'back'|'front'|'all', theme 'green'|'gold', glow,
+//                         vanish 0..1, plate
+//   newsStudio(t, o)      o: chaos 0..1 | window (svg|fn), ticker (text), tickerY (870), logo. + .layers, .ticker(t, text, {y})
+//   props: pigeon, tray, mailbox, lampPost, streetSign, tumbleweed, lavaLamp, stuffedOwl, pancakeStack, catClock, bossBust,
+//          stickyNote, dntSticker, schoolPoster, schoolClock, cloud, tree, sparkle
+//   helpers: frameIn(svg1080, w, h), glowSpot(x, y, r, id, op), darkPool(x, y, r, op), sky(t, time, cx, cy, w, h, o), vanish(svg,
+//          k, box, seed), heroHoleD(s, k, ox, oy), camTf, mix, LAPTOP_SCREEN, ADMIN_CMDS, MOM_NOTES
 'use strict';
 
 const S = require('../rig/svg');
@@ -401,7 +410,8 @@ function adminScreen(t = 0, opts = {}) {
 // Sitting on the bed edge: hips y ~700, feet y ~860. Stand line y 990 (FLOOR.heroRoom).
 // opts: { time 'day'|'evening'|'night', laptop (screen svg|fn: puts the magic laptop on the bed), laptopAt 'bed'|'desk'|false,
 //   laptopOff, glow (laptop glow 0..1, default 1 at night), monitor (svg|fn for the 200x132 monitor screen), monitorOff,
-//   note (sticky lines, default ['PASSWORD:', 'pancake', '123']), notes 0..1 (Mom's notes appear), floatDust 0..1, lamp }
+//   note (sticky lines, default ['PASSWORD:', 'pancake', '123']), notes 0..1 (Mom's notes appear), floatDust 0..1, lamp,
+//   bonk 0..1 (time since he hit the ceiling: dent, cracks + falling plaster at opts.bonkX, default 1400) }
 // layers.front = blanket + laptop on the bed; layers.light = evening tint / night darkness lit by the laptop (+ glowing
 // ceiling stars, dust motes) — draw it after the characters.
 const HR = { ceil: 100, base: 790, win: { x0: 150, y0: 200, x1: 560, y1: 560 }, desk: { x0: 586, x1: 1086, top: 680 }, mon: { x: 862, y: 670, s: 0.92 }, bed: 716 };
@@ -457,6 +467,17 @@ function heroRoomLayers(t, opts = {}) {
   const STARS = [[180, 52, 13], [330, 78, 9], [690, 40, 12], [1250, 66, 10], [1420, 34, 14], [1640, 74, 9], [1820, 44, 12]];
   m += P(STARS.map(([x, y, r]) => starD(x, y, r)).join(' '), { fill: '#EAF5BF', stroke: '#C9C79A', 'stroke-width': 2 });
   m += E(1000, 44, 96, 26, ol('#FFF7E2', 5)) + P('M904 44 Q1000 92 1096 44', ol('#FFF0C8', 5)) + E(1000, 46, 30, 8, { fill: '#FFFFFF', opacity: 0.7 });
+  // bonk: a dent + cracks in the ceiling and plaster dust falling (opts.bonk 0..1 = time since the hit, opts.bonkX)
+  const bonk = bool01(opts.bonk);
+  if (bonk > 0) {
+    const bx = opts.bonkX ?? 1400, by = HR.ceil - 6, k = ease.out(clamp(bonk * 4, 0, 1));
+    let cr = '';
+    for (let i = 0; i < 7; i++) { const a = Math.PI * (1.05 + 0.9 * (i / 6)), L = (40 + 50 * hash(i * 2.7)) * k; cr += `M${bx} ${by} l${f(Math.cos(a) * L * 0.6)} ${f(Math.sin(a) * L * 0.25)} l${f(Math.cos(a + 0.3) * L * 0.4)} ${f(Math.sin(a + 0.3) * L * 0.18)} `; }
+    m += E(bx, by - 4, 46 * k, 9 * k, { fill: '#C9A878', opacity: 0.7 }) + P(cr, ln(3.5, '#8A6A40'));
+    let du = '';
+    for (let i = 0; i < 10; i++) { const u = clamp(bonk * 1.4 - hash(i) * 0.3, 0, 1); if (u <= 0 || u >= 1) continue; du += circD(bx + (hash(i * 3.1) - 0.5) * 120 + Math.sin(u * 6 + i) * 12, by + 10 + u * 420, 3 + 4 * hash(i * 5.3)); }
+    if (du) m += P(du, { fill: '#F4E6C8', stroke: '#C9A878', 'stroke-width': 1.5, opacity: f(1 - bonk * 0.8) });
+  }
   // wall with the window hole
   const wallD = `M${XL} ${HR.ceil} H${XR} V${HR.base} H${XL} Z M${W.x0} ${W.y0} V${W.y1} H${W.x1} V${W.y0} Z`;
   m += P(wallD, { fill: 'url(#setsHRWall)', 'fill-rule': 'evenodd' }) + P(wallD, { fill: 'url(#setsHRPix)', 'fill-rule': 'evenodd' });
@@ -507,7 +528,7 @@ function heroRoomLayers(t, opts = {}) {
   m += R(D.x0, D.top - 12, D.x1 - D.x0, 16, 5, ol('#E8AE6E', 4)) + R(D.x0 - 4, D.top, D.x1 - D.x0 + 8, 22, 5, ol('#D99A5C', 5));
   // desk lamp (left)
   {
-    const on = opts.lamp ?? nite;
+    const on = opts.lamp ?? eve;
     let l = E(0, 0, 30, 8, ol('#2A2D38', 4)) + P('M0 -4 L-16 -84 L28 -116', ln(13, LINE)) + P('M0 -4 L-16 -84 L28 -116', ln(6, '#3A3F4E')) + CI(-16, -84, 6, ol('#FFC23A', 2.5));
     l += G(P('M-18 -12 L18 -12 L30 18 L-30 18 Z', ol('#FF6A3D', 4)) + E(0, 19, 30, 6, ol(on ? '#FFF4B8' : '#E9D9A8', 3)), 'translate(36 -106) rotate(-30)');
     if (on) l += P('M38 -92 L130 22 L40 22 L14 -86 Z', { fill: '#FFF2B0', opacity: 0.2 });
@@ -577,6 +598,7 @@ function heroRoomLayers(t, opts = {}) {
     if (lapLit) light += darkPool(lap0.x, lap0.y - 296 * lap0.s, 300) + glowSpot(lap0.x, lap0.y - 100, 520, 'setsGlowGreen', 0.55 * (0.9 + 0.1 * Math.sin(t * 3.1)));
     else light += darkPool(355, 420, 280);
     light += glowSpot(355, 380, 300, 'setsGlowBlue', 0.45);
+    if (opts.lamp) light += glowSpot(HR.desk.x0 + 80, HR.desk.top - 60, 320, 'setsGlowWarm', 0.7);
     light += P(STARS.map(([x, y, r]) => starD(x, y, r)).join(' '), { fill: '#D7FF8A', opacity: 0.9 }) + STARS.map(([x, y, r]) => glowSpot(x, y, r * 3.4, 'setsGlowGreen', 0.6)).join('');
   } else if (eve) light += cover('#FF7A3D', { opacity: 0.1 });
   const dustK = bool01(opts.floatDust);
@@ -869,7 +891,7 @@ function kitchenLayers(t, opts = {}) {
     }
   }
   let light = '';
-  if (nite) light = darkPool(380, 420, 520, 0.85) + glowSpot(380, 300, 360, 'setsGlowWarm', 0.5);
+  if (nite) light = darkPool(380, 420, 520, 0.85) + glowSpot(380, 300, 360, 'setsGlowWarm', 0.5) + glowSpot((F.x0 + F.x1) / 2, 560, 380, 'setsGlowBlue', 0.8 * open);
   else if (eve) light = cover('#FF7A3D', { opacity: 0.09 });
   return { bg, mid: m, front: fr, fg, light };
 }
@@ -1249,9 +1271,9 @@ function house(x, y, s = 1, opts = {}) {
 // behind a low picket fence (SPOTS.houseExterior.pool = water centre, rx/ry) — Dad's splash; a big tree at left.
 // Characters: this is a WIDE shot — the hero is ~s .3 on the sidewalk (FLOOR.houseExterior 945), ~s .24 at the door.
 // opts: { time 'day'|'evening'|'night', lift 0..1 (the giant cat lifts the house: it rises ~640 px, tilts, dirt hangs
-//   under it; a pit stays in the lawn — draw the cat between layers.mid and layers.house), tail (Pancake's tail),
+//   under it; a pit stays in the lawn — draw the cat between layers.mid and layers.front), tail (Pancake's tail),
 //   house:false (no house: just the pit), splash 0..1 (Dad hits the pool: crown + droplets over life 0..1) }
-// layers: bg (sky, far houses), mid (yards, pool, street, pit), house (the house itself), fg (''), light.
+// layers: bg (sky, far houses), mid (yards, pool, street, pit), front (= the house itself + its bushes), fg (''), light.
 def('<pattern id="setsLawn" width="240" height="60" patternUnits="userSpaceOnUse"><rect width="120" height="60" fill="#FFFFFF" opacity="0.08"/></pattern>');
 def(lg('setsPool', [[0, '#7FE6FF'], [1, '#2FA8E0']]));
 def(lg('setsRoad', [[0, '#7A8296'], [1, '#666D80']]));
@@ -1322,10 +1344,9 @@ function houseExteriorLayers(t, opts = {}) {
   let light = '';
   if (nite) light = cover('#0B0E36', { opacity: 0.3 });
   else if (eve) light = cover('#FF7A3D', { opacity: 0.08 });
-  return { bg, mid: m, house: hs, fg: '', light };
+  return { bg, mid: m, front: hs, fg: '', light };
 }
-const houseExterior = (t = 0, opts = {}) => { const L = houseExteriorLayers(t, opts); return L.bg + L.mid + L.house + L.fg + L.light; };
-houseExterior.layers = houseExteriorLayers;
+const houseExterior = makeSet(houseExteriorLayers);
 
 // ================================================================= 6. STREETS
 // pigeon(x, y, s, t, opts): origin = feet. Side view facing LEFT (opts.flip faces right). ~130 px tall at s = 1.
@@ -1501,7 +1522,7 @@ function serverStreetLayers(t, cam = {}, opts = {}) {
     const u = md(t * 0.45 + hash(i * 3.3), 1), px = lerp(a, b, u), py = 470 + Math.sin(u * Math.PI) * 52;
     pul += circD(px, py, 6);
   }
-  hs += P(cab, ln(4, '#1E1640')) + glowSpot(0, 0, 0) + P(pul, { fill: '#7DFFB8' });
+  hs += P(cab, ln(4, '#1E1640')) + P(pul, { fill: '#7DFFB8' });
   hs += R(x0, 760, x1 - x0, 440, 0, { fill: '#4A3A8A' });
   // front strip (k 1)
   const [m0, m1] = visX(cam, 1, 400);
@@ -1635,6 +1656,491 @@ function garageSaleLayers(t, opts = {}) {
 }
 const garageSale = makeSet(garageSaleLayers);
 
+// ================================================================= 7. SCHOOL — Maple Hill Middle School (sky blue + school yellow)
+def('<pattern id="setsVCT" width="120" height="120" patternUnits="userSpaceOnUse"><rect width="120" height="120" fill="#E3E9F1"/><rect width="60" height="60" fill="#D3DCE8"/><rect x="60" y="60" width="60" height="60" fill="#D3DCE8"/><circle cx="18" cy="22" r="2" fill="#B9C4D4"/><circle cx="84" cy="40" r="1.6" fill="#FFFFFF"/><circle cx="44" cy="92" r="1.8" fill="#B9C4D4"/><circle cx="100" cy="104" r="1.5" fill="#FFFFFF"/></pattern>');
+def('<pattern id="setsCinder" width="120" height="60" patternUnits="userSpaceOnUse"><rect width="120" height="60" fill="#C9DCEE"/><rect x="2" y="2" width="116" height="26" rx="3" fill="#E4F0FB"/><rect x="-58" y="32" width="116" height="26" rx="3" fill="#E4F0FB"/><rect x="62" y="32" width="116" height="26" rx="3" fill="#E4F0FB"/></pattern>');
+def('<pattern id="setsLockers" x="0" y="330" width="96" height="460" patternUnits="userSpaceOnUse"><rect width="96" height="460" fill="#24507E"/><rect x="2" y="0" width="92" height="452" rx="4" fill="#3E8FE0"/><rect x="2" y="0" width="10" height="452" fill="#6FB2F2" opacity="0.6"/><rect x="18" y="26" width="60" height="6" rx="3" fill="#24507E"/><rect x="18" y="40" width="60" height="6" rx="3" fill="#24507E"/><rect x="18" y="54" width="60" height="6" rx="3" fill="#24507E"/><rect x="30" y="90" width="36" height="20" rx="3" fill="#DDEBFF"/><rect x="70" y="200" width="12" height="44" rx="5" fill="#C9D3E2" stroke="#151515" stroke-width="2.5"/><rect x="18" y="384" width="60" height="6" rx="3" fill="#24507E"/><rect x="18" y="398" width="60" height="6" rx="3" fill="#24507E"/><rect x="0" y="452" width="96" height="8" fill="#1B3A5C"/></pattern>');
+def(lg('setsSchoolWall', [[0, '#D9F0FF'], [1, '#B6DEFA']]));
+def(lg('setsGymFloor', [[0, '#EDBE72'], [1, '#D49A4A']]));
+def('<pattern id="setsMats" width="160" height="160" patternUnits="userSpaceOnUse"><rect width="160" height="160" fill="#3E7FD0"/><rect x="0" width="6" height="160" fill="#2A5FA8"/><rect x="10" y="8" width="140" height="10" rx="5" fill="#6FA8EC" opacity="0.6"/></pattern>');
+def('<pattern id="setsBrick" width="80" height="40" patternUnits="userSpaceOnUse"><rect width="80" height="40" fill="#B9583E"/><rect x="2" y="2" width="76" height="16" rx="2" fill="#D46E4E"/><rect x="-38" y="22" width="76" height="16" rx="2" fill="#D46E4E"/><rect x="42" y="22" width="76" height="16" rx="2" fill="#D46E4E"/></pattern>');
+def('<pattern id="setsChain" width="28" height="28" patternUnits="userSpaceOnUse"><path d="M0 14 L14 0 L28 14 L14 28 Z" fill="none" stroke="#9AA4B8" stroke-width="2.5"/></pattern>');
+def('<pattern id="setsCarpet" width="60" height="60" patternUnits="userSpaceOnUse"><rect width="60" height="60" fill="#5E7396"/><circle cx="12" cy="14" r="2" fill="#7488AA"/><circle cx="42" cy="36" r="2" fill="#4E6386"/><circle cx="26" cy="50" r="1.6" fill="#7488AA"/></pattern>');
+def('<pattern id="setsPanel" width="70" height="300" patternUnits="userSpaceOnUse"><rect width="70" height="300" fill="#B9824E"/><rect x="0" width="4" height="300" fill="#8A5A30"/><rect x="10" y="20" width="4" height="260" fill="#CF9A62" opacity="0.6"/></pattern>');
+def(lg('setsChalk', [[0, '#2F6E52'], [1, '#245A42']]));
+def('<pattern id="setsWinRow" width="200" height="150" patternUnits="userSpaceOnUse"><rect x="30" y="20" width="140" height="100" rx="6" fill="#FFFFFF"/><rect x="40" y="30" width="120" height="80" rx="3" fill="#9FD8FF"/><path d="M100 30 V110 M40 70 H160" stroke="#FFFFFF" stroke-width="6"/><path d="M52 98 L92 38 L108 38 L68 98 Z" fill="#FFFFFF" opacity="0.4"/></pattern>');
+
+// school wall decor helpers
+function schoolPoster(kind, x, y, rot = 0, s = 1) {
+  let o = '';
+  const W = 200, H = 150;
+  if (kind === 'kind') o = R(-W / 2, -H / 2, W, H, 6, ol('#FFE14D', 5)) + T('BE KIND', 0, -10, 44, '#E8243C', OUTX(6)) + P('M-30 26 Q0 54 30 26', ln(8)) + CI(-40, 30, 8, { fill: '#FF8FA3' }) + CI(40, 30, 8, { fill: '#FF8FA3' });
+  else if (kind === 'science') o = R(-W / 2, -H / 2, W, H, 6, ol('#7FE0C9', 5)) + T('SCIENCE', 0, -24, 34, '#2A2246') + T('FAIR FRI!', 0, 12, 30, '#E8243C') + P('M-40 54 L-28 30 L-16 54 Z M10 54 Q24 26 38 54', ol('#FFFFFF', 3));
+  else if (kind === 'chess') o = R(-W / 2, -H / 2, W, H, 6, ol('#FFFFFF', 5)) + T('CHESS', 0, -20, 38, '#2A2246') + T('CLUB', 0, 16, 32, '#3E8FE0') + P('M-14 60 L-14 34 Q-24 24 -10 18 L10 18 Q24 24 14 34 L14 60 Z', ol('#2A2246', 3));
+  else if (kind === 'spirit') o = R(-W / 2, -H / 2, W, H, 6, ol('#3E8FE0', 5)) + T('GO', 0, -10, 46, '#FFE14D', OUTX(6)) + T('MOOSE!', 0, 40, 38, '#FFFFFF', OUTX(6));
+  else if (kind === 'hamster') o = R(-W / 2, -H / 2, W, H, 6, ol('#FFF2C8', 5)) + T('LOST:', 0, -30, 30, '#E8243C') + T('HAMSTER', 0, 2, 30, '#2A2246') + E(0, 40, 24, 16, ol('#E8B87A', 3)) + CI(-8, 36, 2.5, { fill: LINE }) + TF('answers to "Kevin"', 0, 70, 13, '#5A4A3A');
+  else if (kind === 'math') o = R(-W / 2, -H / 2, W, H, 6, ol('#B06BFF', 5)) + T('MATH IS', 0, -22, 32, '#FFFFFF', OUTX(5)) + T('EVERYWHERE', 0, 12, 26, '#FFE14D', OUTX(5)) + TF('π  √  ÷  ∞', 0, 52, 26, '#FFFFFF');
+  else if (kind === 'rules') o = R(-W / 2, -H / 2, W, H, 6, ol('#2A2246', 5)) + T('RULES', 0, -30, 34, '#FFE14D') + T('ARE COOL', 0, 4, 30, '#FFFFFF') + R(-60, 30, 120, 26, 4, ol('#FFC93C', 3)) + P('M-50 30 v10 M-30 30 v14 M-10 30 v10 M10 30 v14 M30 30 v10 M50 30 v14', ln(2.5)) + R(-34, 20, 30, 14, 5, { fill: LINE }) + R(4, 20, 30, 14, 5, { fill: LINE });
+  return G(o, tr(x, y, s, rot));
+}
+function schoolClock(x, y, r, t) {
+  const hr = ((t / 3600) * 360 + 300) % 360, mn = ((t / 60) * 360) % 360;
+  return CI(x, y, r, ol('#FFFFFF', 6)) + CI(x, y, r * 0.82, ln(3, '#D0D8E4')) + P(`M${x} ${y} L${f(x + Math.sin(hr * Math.PI / 180) * r * 0.45)} ${f(y - Math.cos(hr * Math.PI / 180) * r * 0.45)} M${x} ${y} L${f(x + Math.sin(mn * Math.PI / 180) * r * 0.7)} ${f(y - Math.cos(mn * Math.PI / 180) * r * 0.7)}`, ln(5)) + CI(x, y, 4, { fill: '#E8243C' });
+}
+// lunch tray prop: tray(x, y, s, opts) origin = centre. opts: { cookies 0..2, empty, milk:false }
+function tray(x, y, s = 1, opts = {}) {
+  const ck = opts.cookies ?? 2;
+  let o = R(-130, -60, 260, 120, 18, ol('#FF9A3D', 5)) + R(-118, -48, 116, 96, 12, { fill: '#F27F22' }) + R(8, -48, 110, 44, 10, { fill: '#F27F22' }) + R(8, 4, 52, 44, 10, { fill: '#F27F22' }) + R(66, 4, 52, 44, 10, { fill: '#F27F22' });
+  if (!opts.empty) {
+    o += P('M-100 10 Q-104 -30 -60 -36 Q-20 -30 -24 10 Z', ol('#FFF4D6', 3)) + E(-62, -14, 16, 6, { fill: '#FFE08A' });
+    o += P(circD(30, -30, 7) + circD(46, -24, 7) + circD(62, -32, 7) + circD(80, -26, 7) + circD(96, -34, 7), ol('#5CB85A', 2));
+    o += R(16, 12, 36, 30, 6, ol('#7FD8FF', 3)) + R(22, 16, 10, 8, 3, { fill: '#FFFFFF', opacity: 0.6 });
+    for (let i = 0; i < ck; i++) o += CI(80 + i * 22, 26 - i * 6, 16, ol('#C9884A', 3)) + P(`M${74 + i * 22} ${22 - i * 6} h2 M${86 + i * 22} ${30 - i * 6} h2`, ln(4, '#5A3A20'));
+  }
+  if (opts.milk !== false) o += G(R(-18, -44, 36, 44, 3, ol('#FFFFFF', 3)) + P('M-18 -44 L0 -60 L18 -44 Z', ol('#FFFFFF', 3)) + R(-18, -30, 36, 12, 0, { fill: '#3DA8FF' }), 'translate(-112 -20) scale(0.8)');
+  return G(o, tr(x, y, s, opts.rot || 0));
+}
+
+// ---------------------------------------------------------------- 7a. CAFETERIA
+// The lunch line runs left->right along the serving counter at right (counter top y 736); kids stand in line on the
+// FLOOR (y 990) facing right: SPOTS.cafeteria.line[0] is the FRONT of the line (x 1700), then every 190 px to the left.
+// The lunch lady stands behind the counter (SPOTS.cafeteria.lunchLady; layers.front = counter front + sneeze guard).
+// Left: a long table with kids' seats (SPOTS.cafeteria.seats, hips y 770, layers.front hides their legs), trays on it.
+// opts: { menu: ['TODAY', 'MYSTERY TACOS', 'PEAS · JELLO'] , trays (default true), steam (default true) }
+def(lg('setsSteel', [[0, '#F2F5FA'], [0.5, '#C9D1DE'], [1, '#A3ADBF']]));
+function cafeteriaLayers(t, opts = {}) {
+  let bg = sky(t, 'day', 360, 300, 560, 320, { clouds: 2 });
+  bg += tree(240, 560, 0.8, { col: '#4CB65A', hi: '#7CD978' }) + tree(520, 580, 0.7, { col: '#3FA650', hi: '#6CCB6A' }) + R(0, 460, 700, 200, 0, { fill: '#79D46A' });
+  let m = '';
+  const wallD = `M${XL} ${YT} H${XR} V790 H${XL} Z M80 150 V470 H640 V150 Z`;
+  m += P(wallD, { fill: 'url(#setsSchoolWall)', 'fill-rule': 'evenodd' });
+  m += band(560, 790, '#7FD3C3') + P(Array.from({ length: 70 }, (_, i) => `M${-700 + i * 50} 560 V790`).join(' ') + ' M-760 620 H2680 M-760 680 H2680 M-760 740 H2680', ln(2.5, '#5FB8A8')) + band(548, 566, '#FFC93C') + P(`M${XL} 548 H${XR} M${XL} 566 H${XR}`, ln(3.5, LINE, 0.7));
+  // windows (3 panes)
+  m += P('M60 130 H660 V490 H60 Z M80 150 V470 H640 V150 Z', { fill: '#FFFFFF', 'fill-rule': 'evenodd', stroke: LINE, 'stroke-width': 6 }) + P('M266 150 V470 M452 150 V470', ln(16, '#FFFFFF'));
+  m += P('M266 150 V470 M452 150 V470', ln(4, LINE, 0.4)) + P('M100 300 L170 170 L200 170 L130 300 Z M300 330 L370 200 L390 200 L320 330 Z', { fill: '#FFFFFF', opacity: 0.3 }) + R(50, 486, 620, 20, 5, ol('#FFFFFF', 5));
+  // banner + clock + menu board
+  m += G(P('M-230 -40 L230 -40 L210 0 L230 40 L-230 40 L-210 0 Z', ol('#5CB85A', 5)) + T('EAT YOUR GREENS!', 0, 14, 40, '#FFFFFF', OUTX(6)), 'translate(960 110)');
+  m += schoolClock(760, 330, 52, t);
+  const menu = opts.menu || ["TODAY'S LUNCH", 'MYSTERY TACOS', 'PEAS · JELLO · MILK'];
+  m += R(1080, 190, 560, 190, 12, ol('#2A2D38', 6)) + R(1092, 202, 536, 166, 8, { fill: '#1B1E28' }) + menu.map((l, i) => TF(l, 1360, 248 + i * 48, i ? 34 : 26, i === 1 ? '#FFE14D' : '#FFFFFF')).join('');
+  m += P('M1150 190 L1170 150 M1570 190 L1550 150', ln(4, '#5A6070')) + CI(1170, 148, 6, { fill: '#5A6070' }) + CI(1550, 148, 6, { fill: '#5A6070' });
+  m += G(R(-60, -70, 120, 140, 10, ol('#FF8FA3', 4)) + T('MILK', 0, -26, 30, '#FFFFFF', OUTX(5)) + TF('does a', 0, 6, 18, '#2A2246') + TF('body good?', 0, 30, 18, '#2A2246'), 'translate(1780 280) rotate(4)');
+  // back wall of the kitchen behind the counter (pass-through)
+  m += R(820, 430, 1140, 120, 0, { fill: '#E9EEF5', stroke: LINE, 'stroke-width': 5 }) + R(840, 448, 1100, 84, 6, { fill: '#2A2D38' }) + R(860, 470, 140, 40, 6, ol('#C9D1DE', 3)) + E(1500, 500, 70, 22, ol('#A3ADBF', 3));
+  // floor
+  m += R(XL, 790, XR - XL, YB - 790, 0, { fill: 'url(#setsVCT)' }) + R(XL, 790, XR - XL, 30, 0, { fill: '#000', opacity: 0.06 }) + R(XL, 940, XR - XL, YB - 940, 0, { fill: '#E3E9F1', opacity: 0.35 });
+  // trash can
+  m += G(P('M-44 0 L-52 -150 L52 -150 L44 0 Z', ol('#3E8FE0', 5)) + R(-58, -170, 116, 26, 10, ol('#2E6FB8', 5)) + TF('THANK YOU', 0, -100, 16, '#FFFFFF') + P('M-24 -60 V-20 M0 -60 V-20 M24 -60 V-20', ln(4, '#2E6FB8')), 'translate(764 834)');
+  // long table (seats behind it) — table front in layers.front
+  m += R(40, 690, 640, 10, 4, { fill: '#B9C4D4' });
+  // ---- front: counter + sneeze guard + rail, table
+  let fr = '';
+  // food wells on the counter (visible through the guard)
+  const pans = [['#FFF4D6', 'mash'], ['#5CB85A', 'peas'], ['#9A5A3A', 'meat'], ['#FF4D7A', 'jello'], ['#FFC93C', 'pizza']];
+  const CT = 736;   // counter top
+  let foods = '';
+  pans.forEach(([c, k], i) => {
+    const px = 900 + i * 180, py = CT - 30;
+    foods += R(px, py, 150, 34, 6, ol('#C9D1DE', 4)) + P(`M${px + 10} ${py + 6} Q${px + 75} ${k === 'jello' ? py - 30 : py - 14} ${px + 140} ${py + 6} Z`, ol(c, 3));
+    if (k === 'peas') foods += P(circD(px + 50, py - 4, 6) + circD(px + 70, py - 8, 6) + circD(px + 90, py - 4, 6), { fill: '#7FD06A' });
+    if (k === 'jello') foods += P(`M${px + 40} ${py - 16} l20 -10 l20 10 M${px + 80} ${py - 12} l18 -8 l18 8`, ln(3, '#FFFFFF', 0.7));
+    if (k === 'meat') foods += P(`M${px + 30} ${py - 4} q15 -14 30 0 q15 -14 30 0 q15 -14 30 0`, ln(4, '#6A3A20'));
+    if (opts.steam !== false) { const ph = md(t * 0.6 + i * 0.3, 1); foods += P(`M${px + 75} ${py - 20} q${f(-10 + ph * 20)} -30 0 ${f(-40 - ph * 40)}`, ln(5, '#FFFFFF', f(0.5 * (1 - ph)))); }
+  });
+  fr += foods;
+  fr += R(820, CT, 1140, 24, 6, ol('url(#setsSteel)', 5)) + R(810, CT + 22, 1160, 150, 4, ol('#9FB3CC', 6)) + R(810, CT + 22, 1160, 150, 4, { fill: 'url(#setsSteel)', opacity: 0.5 });
+  for (let i = 0; i < 6; i++) fr += R(840 + i * 190, CT + 66, 160, 96, 8, { fill: 'none', stroke: '#8296B4', 'stroke-width': 4 });
+  fr += R(800, CT + 32, 1180, 22, 6, ol('#C9D1DE', 4)) + P(`M820 ${CT + 42} H1960`, ln(3, '#FFFFFF', 0.7));
+  // sneeze guard glass
+  fr += P(`M840 ${CT - 8} L860 ${CT - 124} L1940 ${CT - 124} L1920 ${CT - 8} Z`, { fill: '#DDF4FF', opacity: 0.35, stroke: LINE, 'stroke-width': 4 }) + P(`M880 ${CT - 26} L896 ${CT - 104} M1300 ${CT - 26} L1314 ${CT - 104}`, ln(5, '#FFFFFF', 0.6)) + P(`M850 ${CT - 8} L860 ${CT - 124} M1930 ${CT - 8} L1940 ${CT - 124}`, ln(6, '#8A93A6'));
+  // cash register at the end
+  fr += G(R(-70, -70, 140, 70, 8, ol('#2E6FB8', 5)) + R(-56, -60, 70, 30, 4, { fill: '#BFF0FF' }) + TF('$2.50', -21, -38, 16, '#2A2246') + R(24, -60, 36, 44, 4, { fill: 'url(#setsKeysDark)' }), `translate(1860 ${CT})`);
+  // the table + benches
+  fr += R(30, 700, 660, 26, 6, ol('#C9D3E2', 5)) + R(40, 726, 640, 14, 4, { fill: '#9AA4B8' }) + P('M80 740 L60 860 M640 740 L660 860', ln(9, '#6A7488'));
+  fr += R(20, 820, 680, 22, 6, ol('#3E8FE0', 4)) + P('M60 842 L60 880 M660 842 L660 880', ln(8, '#6A7488'));
+  if (opts.trays !== false) fr += tray(160, 690, 0.55, { cookies: 1 }) + tray(400, 690, 0.55, { cookies: 2 }) + tray(600, 690, 0.55, { empty: true, milk: false });
+  return { bg, mid: m, front: fr, fg: '', light: '' };
+}
+const cafeteria = makeSet(cafeteriaLayers);
+
+// ---------------------------------------------------------------- 7b. GYM
+// Wooden floor with court lines and painted running lanes (y 846..904), blue wall mats at the back (y 640..800) =
+// the TEAM-PICK WALL: kids line up against it (SPOTS.gym.pickLine, feet y 828, s .42). Bleachers at right (rows:
+// SPOTS.gym.bleachers). Hoop on the back wall (rim SPOTS.gym.hoop), scoreboard (opts.scoreboard), climbing rope,
+// caged ceiling lights. Captains / the coach stand on the FLOOR line y 990.
+// opts: { scoreboard: ['HOME', '00', 'GUEST', '00'] or a single string (e.g. 'MILE 0:00.3'), track (default true),
+//   cones (default true), rope (default true) }
+function gymLayers(t, opts = {}) {
+  let m = cover('url(#setsCinder)') + R(XL, YT, XR - XL, 70 - YT, 0, { fill: '#5A6A86' }) + P(Array.from({ length: 30 }, (_, i) => `M${-700 + i * 120} 70 L${-700 + i * 120 - 40} -200`).join(' '), ln(8, '#46546E'));
+  m += band(62, 78, '#FFC93C');
+  // caged lights
+  for (const lx of [240, 720, 1200, 1680]) m += P(`M${lx} 70 V96`, ln(4)) + P(`M${lx - 46} 96 L${lx + 46} 96 L${lx + 34} 128 L${lx - 34} 128 Z`, ol('#C9D1DE', 4)) + E(lx, 130, 34, 8, { fill: '#FFF8D6', stroke: LINE, 'stroke-width': 3 }) + glowSpot(lx, 150, 120, 'setsGlowWhite', 0.5);
+  // high windows
+  for (let i = 0; i < 6; i++) m += R(140 + i * 290, 160, 240, 90, 6, ol('#9FD8FF', 5)) + P(`M${260 + i * 290} 160 V250 M${140 + i * 290} 205 H${380 + i * 290}`, ln(5, '#FFFFFF'));
+  // banners
+  m += G(P('M-110 0 L110 0 L110 100 L0 140 L-110 100 Z', ol('#3E8FE0', 5)) + T('GO', 0, 50, 40, '#FFE14D', OUTX(5)) + T('MOOSE!', 0, 92, 34, '#FFFFFF', OUTX(5)), 'translate(1100 290)');
+  m += G(R(-150, -36, 300, 72, 8, ol('#FFC93C', 5)) + T('CHAMPIONS', 0, -2, 32, '#2A2246') + TF('dodgeball · 1998', 0, 24, 18, '#2A2246'), 'translate(250 330)');
+  // wall mats (team-pick wall) + floor seam
+  m += R(XL, 640, 1160 - XL, 160, 0, { fill: 'url(#setsMats)', stroke: LINE, 'stroke-width': 5 }) + band(796, 806, '#2A3A5A');
+  // hoop on the wall
+  m += R(510, 380, 20, 260, 0, { fill: '#8A93A6', stroke: LINE, 'stroke-width': 4 }) + R(420, 210, 200, 140, 8, ol('#FFFFFF', 6)) + R(480, 270, 80, 60, 3, { fill: 'none', stroke: '#FF6A2E', 'stroke-width': 6 });
+  m += R(508, 350, 24, 22, 3, ol('#8A93A6', 3)) + E(520, 380, 54, 12, { fill: 'none', stroke: '#FF6A2E', 'stroke-width': 8 }) + P('M470 384 L486 450 L554 450 L570 384 M490 384 L500 450 M520 386 L520 450 M550 384 L540 450 M480 412 H560', ln(3, '#FFFFFF'));
+  // scoreboard
+  {
+    let sb = R(-190, -80, 380, 160, 12, ol('#1B1E28', 6)) + R(-178, -68, 356, 136, 8, { fill: '#10131C' });
+    const v = opts.scoreboard;
+    if (typeof v === 'string') sb += T(v, 0, 22, v.length > 9 ? 48 : 64, '#FF4D3A');
+    else { const [a, b, c, d] = v || ['HOME', '00', 'GUEST', '00']; sb += TF(a, -90, -36, 22, '#FFE14D') + TF(c, 90, -36, 22, '#FFE14D') + T(b, -90, 40, 66, '#FF4D3A') + T(d, 90, 40, 66, '#FF4D3A') + P('M0 -60 V60', ln(3, '#3A3F4E')); }
+    m += G(sb, 'translate(1580 380) scale(0.9)');
+  }
+  // climbing rope
+  if (opts.rope !== false) { const sw = Math.sin(t * 0.9) * 10; m += P(`M880 70 Q${880 + sw * 0.5} 360 ${880 + sw} 620`, ln(16, LINE)) + P(`M880 70 Q${880 + sw * 0.5} 360 ${880 + sw} 620`, ln(9, '#E8C27A')) + P(`M880 70 Q${880 + sw * 0.5} 360 ${880 + sw} 620`, { fill: 'none', stroke: '#C9A060', 'stroke-width': 9, 'stroke-dasharray': '6 10' }) + E(880 + sw, 626, 12, 16, ol('#E8C27A', 4)); }
+  // bleachers (right)
+  const BL = [{ y: 560, x0: 1180 }, { y: 620, x0: 1160 }, { y: 680, x0: 1140 }, { y: 740, x0: 1120 }];
+  m += R(1180, 500, XR - 1180, 300, 0, { fill: '#5A4A3A' });
+  BL.forEach(({ y, x0 }) => { m += R(x0, y, XR - x0, 22, 4, ol('#E8B86A', 4)) + R(x0, y + 22, XR - x0, 38, 0, { fill: '#7A5A3A', stroke: LINE, 'stroke-width': 3 }) + P(`M${x0} ${y + 4} H${XR}`, ln(3, '#FFE0A8', 0.7)); });
+  m += R(1100, 800, XR - 1100, 8, 0, { fill: '#3A2A20' });
+  // floor + court lines + track lanes
+  m += R(XL, 806, XR - XL, YB - 806, 0, { fill: 'url(#setsGymFloor)' }) + floorBoards(806, 1200, XL, XR, 10, '#B9823E', 5, true, 3, 0.55);
+  m += P('M430 806 L404 842 M610 806 L636 842', ln(7, '#FFFFFF', 0.95)) + P('M1500 806 L1560 1100', ln(7, '#FFFFFF', 0.9)) + E(1530, 960, 240, 40, { fill: 'none', stroke: '#FFFFFF', 'stroke-width': 7 });
+  m += P('M-760 820 H2680', ln(7, '#3E8FE0', 0.9));
+  if (opts.track !== false) {
+    m += R(XL, 846, XR - XL, 58, 0, { fill: '#D9573A', opacity: 0.88 }) + P(`M${XL} 846 H${XR} M${XL} 875 H${XR} M${XL} 904 H${XR}`, ln(5, '#FFFFFF')) + T('1', 200, 870, 22, '#FFFFFF') + T('2', 200, 900, 26, '#FFFFFF') + P('M240 846 L232 904', ln(6, '#FFFFFF'));
+  }
+  if (opts.cones !== false) for (const cx of [140, 1780]) m += G(P('M-20 0 L-6 -48 L6 -48 L20 0 Z', ol('#FF8A2A', 4)) + R(-26, -4, 52, 8, 3, ol('#FF8A2A', 3)) + P('M-12 -24 H12', ln(6, '#FFFFFF')), `translate(${cx} 880)`);
+  m += R(XL, 950, XR - XL, YB - 950, 0, { fill: '#EDBE72', opacity: 0.3 });
+  return { bg: '', mid: m, front: '', fg: '', light: '' };
+}
+const gym = makeSet(gymLayers);
+
+// ---------------------------------------------------------------- 7c. HALLWAY (long, parallax)
+// hallway(t, cam, opts): lockers (y 330..782) along a sky-blue wall, posters above them, classroom doors every
+// 1600 px (SPOTS.hallway.doors), a trophy case and a water fountain; caged fluorescent lights on the ceiling (y < 60);
+// glossy tile floor. FLOOR.hallway 960 (crowds: stand kids between y 900 and 1000, smaller further back).
+// Long: world x -1200..6800. opts: { posters (default true), doorOpen (index of an open door) }
+// hallway.layers(t, cam, opts) -> { bg, mid, fg } (fg: spirit-week banners hanging from the ceiling, k 1.15).
+function hallwayLayers(t, cam = {}, opts = {}) {
+  const [m0, m1] = visX(cam, 1, 400);
+  const bw = (y0, y1, fill) => R(m0, y0, m1 - m0, y1 - y0, 0, { fill });
+  let m = bw(YT, 60, '#E6EEF8') + bw(54, 70, '#FFFFFF') + bw(70, 790, 'url(#setsSchoolWall)') + bw(300, 330, '#FFC93C') + P(`M${f(m0)} 300 H${f(m1)} M${f(m0)} 330 H${f(m1)}`, ln(3.5, LINE, 0.7));
+  for (let x = Math.floor(m0 / 400) * 400; x < m1; x += 400) m += R(x + 100, 20, 200, 30, 6, ol('#FFFFFF', 4)) + glowSpot(x + 200, 50, 150, 'setsGlowWhite', 0.5);
+  // segments of lockers between features
+  const SEG = 1600;
+  for (let i = Math.floor((m0 - 400) / SEG); i * SEG < m1 + 400; i++) {
+    const sx = i * SEG, kind = ((i % 4) + 4) % 4;
+    // feature at sx..sx+260
+    if (kind === 0 || kind === 2) {
+      const open = opts.doorOpen === i;
+      m += R(sx - 10, 270, 280, 520, 6, ol('#FFFFFF', 5)) + (open ? R(sx + 10, 290, 240, 500, 4, { fill: '#2A3A5A' }) + P(`M${sx + 10} 290 L${sx + 120} 320 L${sx + 120} 770 L${sx + 10} 790 Z`, ol('#C98A52', 5)) : R(sx + 10, 290, 240, 500, 4, ol('#C98A52', 5)) + R(sx + 40, 330, 90, 150, 6, ol('#BFE6FF', 4)) + CI(sx + 220, 560, 10, ol('#FFC93C', 3)));
+      m += G(R(-60, -22, 120, 44, 6, ol('#2A2246', 4)) + T(`ROOM ${12 + i}`, 0, 12, 24, '#FFFFFF'), `translate(${sx + 130} 240)`);
+    } else if (kind === 1) {
+      m += R(sx, 380, 260, 330, 8, ol('#8A5A33', 6)) + R(sx + 14, 394, 232, 302, 4, { fill: '#DDF4FF', opacity: 0.7 }) + P(`M${sx + 14} 500 H${sx + 246} M${sx + 14} 600 H${sx + 246}`, ln(5, '#8A5A33'));
+      m += G(P('M-22 -58 Q-22 -26 0 -22 Q22 -26 22 -58 Z', ol('#FFC23A', 4)) + R(-6, -22, 12, 10, 2, ol('#FFC23A', 3)) + R(-18, -12, 36, 12, 3, ol('#7E4A2A', 3)), `translate(${sx + 70} 500)`) + G(P('M-26 -70 Q-26 -30 0 -26 Q26 -30 26 -70 Z', ol('#C9D1DD', 4)) + R(-20, -16, 40, 16, 3, ol('#7E4A2A', 3)), `translate(${sx + 170} 500)`) + CI(sx + 130, 570, 26, ol('#FF6A2E', 4)) + P(`M${sx + 104} 570 H${sx + 156} M${sx + 130} 544 V596`, ln(3));
+      m += TF('TROPHIES', sx + 130, 680, 22, '#5A3A20');
+    } else {
+      m += R(sx + 60, 560, 140, 90, 12, ol('#C9D1DE', 5)) + R(sx + 76, 548, 108, 22, 8, ol('#E6EEF8', 4)) + P(`M${sx + 130} 548 Q${sx + 150} 520 ${sx + 166} 540`, ln(5, '#7FD8FF')) + R(sx + 110, 650, 40, 140, 4, ol('#A3ADBF', 4));
+      m += R(sx + 20, 360, 220, 150, 6, ol('#C98A52', 5)) + R(sx + 30, 370, 200, 130, 3, { fill: '#E8C890' }) + stickyNote(sx + 80, 420, -6, 'TRYOUTS\nTODAY', { w: 74, col: '#9FE0FF' }) + stickyNote(sx + 170, 440, 5, 'BAKE\nSALE!', { w: 70, col: '#FF9EC4' });
+    }
+    // lockers from sx+300 to sx+SEG-40
+    m += R(sx + 300, 330, SEG - 340, 460, 0, { fill: 'url(#setsLockers)', stroke: LINE, 'stroke-width': 5 }) + R(sx + 300, 318, SEG - 340, 14, 3, ol('#24507E', 3));
+    if (opts.posters !== false) {
+      const PK = ['kind', 'science', 'chess', 'spirit', 'hamster', 'math'];
+      for (let j = 0; j < 3; j++) m += schoolPoster(PK[(((i * 3 + j) % 6) + 6) % 6], sx + 500 + j * 420, 180, (hash(i * 7 + j) - 0.5) * 8, 0.85);
+    }
+  }
+  m += bw(790, YB, 'url(#setsVCT)') + bw(782, 796, '#2A3A5A') + R(m0, 940, m1 - m0, YB - 940, 0, { fill: '#E3E9F1', opacity: 0.35 });
+  let refl = '';
+  for (let x = Math.floor(m0 / 400) * 400; x < m1; x += 400) refl += `M${x + 120} 820 L${x + 280} 820 L${x + 330} 900 L${x + 70} 900 Z `;
+  m += P(refl, { fill: '#FFFFFF', opacity: 0.25 });
+  // fg: spirit banners
+  const [f0, f1] = visX(cam, 1.15, 600);
+  let fg = '';
+  for (let i = Math.floor(f0 / 2400); i * 2400 < f1; i++) {
+    const bx = i * 2400 + 900;
+    fg += P(`M${bx - 300} -40 Q${bx} 30 ${bx + 300} -40`, ln(4, '#5A6070')) + G(P('M-160 0 L160 0 L160 80 L-160 80 Z', ol('#FFC93C', 5)) + T('SPIRIT WEEK!', 0, 54, 40, '#3E8FE0'), `translate(${bx} -14)`);
+  }
+  return { bg: '', mid: layer(m, cam, 1), fg: layer(fg, cam, 1.15) };
+}
+const hallway = (t = 0, cam = {}, opts = {}) => { const L = hallwayLayers(t, cam, opts); return L.bg + L.mid + L.fg; };
+hallway.layers = hallwayLayers;
+
+// ---------------------------------------------------------------- 7d. PRINCIPAL'S OFFICE
+// The principal sits behind the big desk (SPOTS.principalOffice.principal; layers.front = desk front + nameplate)
+// with his coffee mug. The BACK WALL is the one YOU noclip through: opts.hole 0..1 opens a hero-shaped hole (cracks
+// first, then the hole; the hallway lockers show through it) at opts.holeX (default 1360) — the hole's feet sit on
+// the wall base y 792 at hole scale .44 (SPOTS.principalOffice.hole). opts.floorHole 0..1: a ragged hole in the floor
+// (he falls through it: SPOTS.principalOffice.floorHole). Stand line y 990. opts: { hole, holeX, floorHole, steam }
+const HERO_HOLE = [[-100, 0], [-112, -300], [-176, -250], [-150, -530], [-62, -545], [-152, -566], [-240, -650], [-236, -790], [-196, -905], [-110, -955], [110, -955], [196, -905], [236, -790], [240, -650], [152, -566], [62, -545], [150, -530], [176, -250], [112, -300], [100, 0], [12, 0], [10, -262], [-10, -262], [-12, 0]];
+const heroHoleD = (s, k = 1, ox = 0, oy = 0) => S.roundedPath(HERO_HOLE.map(([x, y]) => [ox + x * s * k + hash(x + y) * 4, oy + y * s * k + hash(y - x) * 4]), 14 * s * k);
+function principalLayers(t, opts = {}) {
+  const hole = bool01(opts.hole), hx = opts.holeX ?? 1360, hs = 0.44;
+  const fh = bool01(opts.floorHole);
+  // bg: hallway behind the wall (seen through the hole) + the window view
+  let bg = sky(t, 'day', 300, 300, 400, 330, { clouds: 2, sunX: 0.8, sunY: 0.2 }) + tree(330, 560, 0.7, { col: '#4CB65A', hi: '#7CD978' });
+  let m = '';
+  const holeK = clamp((hole - 0.25) / 0.75, 0, 1);
+  let wallD = `M${XL} ${YT} H${XR} V792 H${XL} Z M120 150 V470 H480 V150 Z`;
+  const holeD = holeK > 0 ? heroHoleD(hs, ease.outBack(holeK), hx, 792) : '';
+  m += P(wallD, { fill: '#D9ECC9', 'fill-rule': 'evenodd' });
+  // wood paneling (lower wall) with the same hole
+  let panD = `M${XL} 520 H${XR} V792 H${XL} Z`;
+  m += P(panD, { fill: 'url(#setsPanel)', 'fill-rule': 'evenodd' }) + band(508, 526, '#8A5A30') + P(`M${XL} 508 H${XR}`, ln(3.5, LINE, 0.7));
+  // window with blinds
+  m += P('M100 130 H500 V490 H100 Z M120 150 V470 H480 V150 Z', { fill: '#FFFFFF', 'fill-rule': 'evenodd', stroke: LINE, 'stroke-width': 6 });
+  let bl = '';
+  for (let y = 158; y < 360; y += 22) bl += `M120 ${y} H480 `;
+  m += P(bl, ln(10, '#F4F1E6')) + P(bl, ln(2, '#C9C2AC')) + R(110, 360, 380, 16, 4, ol('#F4F1E6', 3)) + P('M300 150 V360', ln(2, '#8A8070')) + R(90, 486, 420, 18, 5, ol('#FFFFFF', 4));
+  // diplomas + crest + poster
+  for (const [dx, dy, r] of [[620, 230, -2], [800, 216, 2], [980, 236, -1]]) m += G(R(-70, -54, 140, 108, 6, ol('#2A2246', 5)) + R(-58, -42, 116, 84, 3, { fill: '#FFF8E6' }) + P('M-40 -20 H40 M-40 -2 H40 M-30 14 H30', ln(3, '#C9B88A')) + CI(30, 28, 10, ol('#E8243C', 2.5)), tr(dx, dy, 1, r));
+  m += G(P('M-80 -90 L80 -90 L80 20 Q80 80 0 110 Q-80 80 -80 20 Z', ol('#3E8FE0', 6)) + P('M-60 -70 L60 -70 L60 16 Q60 62 0 86 Q-60 62 -60 16 Z', { fill: '#FFC93C' }) + T('MH', 0, 10, 54, '#3E8FE0') + G(R(-110, -18, 220, 36, 8, ol('#FFFFFF', 4)) + T('MAPLE HILL', 0, 10, 24, '#2A2246'), 'translate(0 128)'), 'translate(1160 230)');
+  m += schoolPoster('rules', 1700, 250, 3, 1.1);
+  // bookshelf + filing cabinet + plant
+  m += R(1560, 380, 300, 412, 6, ol('#8A5A30', 6)) + [470, 570, 670].map((y) => R(1574, y, 272, 10, 2, { fill: '#5A3A20' })).join('');
+  [[1580, 470, '#E8243C', 66], [1610, 470, '#3E8FE0', 58], [1640, 470, '#FFC93C', 70], [1700, 470, '#5CB85A', 62], [1730, 470, '#B06BFF', 66], [1590, 570, '#2A2246', 70], [1622, 570, '#FF8A2A', 60], [1654, 570, '#3E8FE0', 66], [1760, 670, '#E8243C', 64], [1600, 670, '#FFC93C', 58], [1630, 670, '#5CB85A', 70]].forEach(([x, y, c, h]) => { m += R(x, y - h, 26, h, 3, ol(c, 3)); });
+  m += R(180, 600, 170, 192, 6, ol('#9AA4B8', 5)) + R(196, 616, 138, 76, 4, ol('#B9C2D2', 3)) + R(196, 702, 138, 76, 4, ol('#B9C2D2', 3)) + R(240, 646, 50, 10, 4, ol('#5A6070', 2)) + R(240, 732, 50, 10, 4, ol('#5A6070', 2));
+  m += G(P('M-34 0 L-40 -60 L40 -60 L34 0 Z', ol('#C8553D', 4)) + P('M0 -60 Q-40 -120 -20 -170 M0 -60 Q20 -140 50 -150 M0 -60 Q-10 -110 -60 -110', ln(10, '#5C9A4A')) + P(circD(-20, -170, 14) + circD(50, -150, 14) + circD(-60, -110, 12), { fill: '#5C9A4A', stroke: LINE, 'stroke-width': 3 }), 'translate(470 790)');
+  // the principal's chair (behind the desk)
+  m += R(600, 470, 200, 250, 40, ol('#5A2A2A', 6)) + R(626, 494, 148, 160, 30, { fill: '#7A3A3A' }) + P('M640 520 V630 M700 510 V640 M760 520 V630', ln(4, '#5A2A2A'));
+  // hole: cracks + rim + debris
+  if (hole > 0) {
+    const ck = clamp(hole / 0.4, 0, 1);
+    let cr = '';
+    for (let i = 0; i < 9; i++) { const a = -Math.PI * (0.05 + 0.9 * (i / 8)) , L = (90 + 90 * hash(i * 3.3)) * ck, r0 = 120; const x0 = hx + Math.cos(a) * r0 * 1.1, y0 = 792 - 220 + Math.sin(a) * r0 * 1.6; cr += `M${f(x0)} ${f(y0)} l${f(Math.cos(a + 0.4) * L * 0.5)} ${f(Math.sin(a + 0.4) * L * 0.5)} l${f(Math.cos(a - 0.2) * L * 0.5)} ${f(Math.sin(a - 0.2) * L * 0.5)} `; }
+    m += P(cr, ln(4, '#4A5A3A', 0.8));
+    if (holeK > 0) {
+      const hd = holeD, id = S.uid('setsHole');
+      // the hallway seen through the hole (lockers), with the wall's thickness on the inner edge
+      const thru = R(hx - 260, 300, 520, 520, 0, { fill: 'url(#setsSchoolWall)' }) + R(hx - 260, 330, 520, 20, 0, { fill: '#FFC93C' }) + R(hx - 260, 350, 520, 440, 0, { fill: 'url(#setsLockers)' }) + R(hx - 260, 780, 520, 40, 0, { fill: '#D3DCE8' }) + P(hd, { fill: 'none', stroke: '#8A7A5A', 'stroke-width': 26 }) + P(hd, { fill: 'none', stroke: '#5A4A3A', 'stroke-width': 10 });
+      m += S.clipDef(id, P(hd)) + G(thru, null, { 'clip-path': `url(#${id})` });
+      m += P(hd, { fill: 'none', stroke: LINE, 'stroke-width': 7 }) + P(hd, { fill: 'none', stroke: '#E9DCC0', 'stroke-width': 3, transform: 'translate(-4 -3)' });
+      m += P(`M${hx - 140} 800 l20 -16 l18 12 Z M${hx + 110} 800 l16 -20 l20 14 Z M${hx - 60} 806 l12 -10 l12 8 Z M${hx + 40} 808 l14 -12 l10 10 Z`, ol('#C9B88A', 3));
+    }
+  }
+  // floor (carpet) + floor hole
+  m += R(XL, 792, XR - XL, YB - 792, 0, { fill: 'url(#setsCarpet)' }) + band(788, 798, '#5A3A20');
+  if (fh > 0) {
+    const k = ease.outBack(fh), x = 1360, y = 970;
+    let d = `M${x - 150 * k} ${y}`;
+    for (let i = 1; i <= 16; i++) { const a = Math.PI + (i / 16) * Math.PI * 2, r = (1 + (hash(i * 3.1) - 0.5) * 0.25) * k; d += ` L${f(x + Math.cos(a) * 150 * r)} ${f(y + Math.sin(a) * 36 * r)}`; }
+    m += P(d + ' Z', { fill: '#0E0A1A', stroke: LINE, 'stroke-width': 6 }) + P(`M${x - 150 * k} ${y} Q${x} ${y + 18 * k} ${x + 150 * k} ${y}`, ln(10, '#2A3A5A', 0.7));
+  }
+  // ---- front: the desk
+  let fr = R(360, 690, 700, 26, 6, ol('#A86B3C', 6)) + R(380, 716, 660, 220, 6, ol('#8A5530', 6)) + R(410, 740, 600, 170, 10, { fill: 'none', stroke: '#A86B3C', 'stroke-width': 6 }) + R(380, 930, 30, 18, 3, ol('#5A3A20', 3)) + R(1010, 930, 30, 18, 3, ol('#5A3A20', 3));
+  fr += G(P('M-80 0 L-70 -30 L70 -30 L80 0 Z', ol('#2A2246', 4)) + T('PRINCIPAL', 0, -8, 22, '#FFC93C'), 'translate(710 690)');
+  fr += G(R(-30, -60, 60, 60, 10, ol('#FFFFFF', 4)) + P('M30 -46 Q54 -42 30 -18', ln(6)) + TF("WORLD'S", 0, -38, 10, '#2A2246') + TF('OKAYEST', 0, -24, 11, '#E8243C') + TF('PRINCIPAL', 0, -11, 9, '#2A2246'), 'translate(900 688)');
+  if (opts.steam !== false) for (let i = 0; i < 2; i++) { const ph = md(t * 0.5 + i * 0.5, 1); fr += P(`M${890 + i * 18} 620 q${f(-8 + ph * 16)} -24 0 ${f(-34 - ph * 30)}`, ln(5, '#FFFFFF', f(0.6 * (1 - ph)))); }
+  fr += P('M440 690 l90 -8 l4 -12 l-90 8 Z', ol('#FFFFFF', 3)) + P('M444 676 l90 -8 l4 -12 l-90 8 Z', ol('#F4F6FF', 3)) + G(R(-34, -24, 68, 24, 6, ol('#2A2D38', 3)) + P('M-28 -24 Q0 -44 28 -24', ln(8, LINE)) + P('M-28 -24 Q0 -44 28 -24', ln(4, '#2A2D38')), 'translate(1000 690)') + G(R(-14, -40, 28, 40, 4, ol('#3E8FE0', 3)) + P('M-6 -40 L-8 -58 M4 -40 L8 -56', ln(4, '#FFC93C')), 'translate(580 690)');
+  return { bg, mid: m, front: fr, fg: '', light: '' };
+}
+const principalOffice = makeSet(principalLayers);
+
+// ---------------------------------------------------------------- 7e. CLASSROOM (math test)
+// Chalkboard (x 420..1500, y 150..520) with a MATH TEST (opts.board = array of lines to replace it). Two rows of
+// student desks: back row tops y 768, middle row tops y 868 (seats: SPOTS.classroom.seats — draw seated kids, then
+// layers.front = desk tops/fronts + test papers). YOUR desk: SPOTS.classroom.heroDesk. Teacher's desk at right.
+// Stand line y 990 in front of the desks. opts: { board, test (papers on desks, default true), clock }
+function classroomLayers(t, opts = {}) {
+  let bg = sky(t, 'day', 180, 330, 260, 400, { clouds: 2, sunX: 0.8, sunY: 0.2 }) + tree(200, 600, 0.8, { col: '#4CB65A', hi: '#7CD978' });
+  let m = '';
+  const wallD = `M${XL} ${YT} H${XR} V790 H${XL} Z M60 140 V520 H300 V140 Z`;
+  m += P(wallD, { fill: 'url(#setsSchoolWall)', 'fill-rule': 'evenodd' }) + band(560, 790, '#9FCDEB') + band(552, 566, '#FFC93C') + P(`M${XL} 552 H${XR} M${XL} 566 H${XR}`, ln(3, LINE, 0.6));
+  m += P('M40 120 H320 V540 H40 Z M60 140 V520 H300 V140 Z', { fill: '#FFFFFF', 'fill-rule': 'evenodd', stroke: LINE, 'stroke-width': 6 }) + P('M180 140 V520 M60 330 H300', ln(10, '#FFFFFF')) + P('M180 140 V520 M60 330 H300', ln(3, LINE, 0.3));
+  // chalkboard + math test
+  m += R(400, 130, 1120, 410, 12, ol('#B9824E', 8)) + R(420, 150, 1080, 370, 6, { fill: 'url(#setsChalk)' }) + R(410, 520, 1100, 18, 4, ol('#B9824E', 4)) + R(560, 512, 60, 10, 3, { fill: '#FFFFFF' }) + R(640, 512, 40, 10, 3, { fill: '#FFE14D' });
+  const chalk = (s, x, y, size, col = '#F4F7EE', a = 'start') => TF(s, x, y, size, col, { 'text-anchor': a, opacity: 0.92 });
+  if (opts.board) opts.board.forEach((l, i) => { m += chalk(l, 960, 230 + i * 70, i ? 46 : 64, i ? '#F4F7EE' : '#FFE14D', 'middle'); });
+  else {
+    m += chalk('MATH TEST', 960, 214, 62, '#FFE14D', 'middle') + P('M770 228 H1150', ln(4, '#FFE14D', 0.8));
+    m += chalk('1)  3x + 7 = 22', 470, 292, 40) + chalk('2)  ½ + ⅓ = ?', 470, 350, 40) + chalk('3)  x² = 144', 470, 408, 40) + chalk('4)  find the angle →', 470, 462, 34);
+    m += P('M1150 440 L1440 440 L1300 290 Z', ln(5, '#F4F7EE', 0.9)) + chalk('?', 1200, 430, 34) + chalk('40°', 1290, 336, 28) + chalk('NO CALCULATORS!', 1300, 262, 30, '#FF9AA6', 'middle');
+  }
+  // clock, posters, flag-free alphabet strip
+  m += schoolClock(1620, 200, 56, opts.clock ?? t) + schoolPoster('math', 1750, 380, 3, 0.95) + schoolPoster('kind', 1650, 520, -3, 0.7);
+  m += G(R(-90, -110, 180, 220, 6, ol('#FFFFFF', 5)) + T('×', 0, -70, 40, '#3E8FE0') + P(Array.from({ length: 5 }, (_, i) => `M-70 ${-40 + i * 30} H70`).join(' '), ln(3, '#C9D3E2')) + TF('2×2=4', 0, -30, 18, '#2A2246') + TF('3×3=9', 0, 0, 18, '#2A2246') + TF('7×8=56', 0, 30, 18, '#2A2246') + TF('9×9=81', 0, 60, 18, '#2A2246'), 'translate(400 680) scale(0.8)');
+  // teacher's desk (right) with an apple
+  m += R(1560, 690, 320, 24, 6, ol('#A86B3C', 5)) + R(1576, 714, 288, 110, 6, ol('#8A5530', 5)) + CI(1620, 670, 20, ol('#E8243C', 4)) + P('M1620 650 Q1626 636 1640 636', ln(4, '#5CB85A')) + P('M1700 690 l90 -6 l4 -12 l-90 6 Z', ol('#FFFFFF', 3));
+  m += R(XL, 790, XR - XL, YB - 790, 0, { fill: 'url(#setsVCT)' }) + R(XL, 940, XR - XL, YB - 940, 0, { fill: '#E3E9F1', opacity: 0.35 });
+  // student desks: chair backs (mid) + desk tops/fronts (front)
+  const BACK = [400, 760, 1120, 1480], MIDR = [220, 580, 940, 1300, 1660];
+  let fr = '';
+  const desk = (x, top, s, paper) => {
+    let back = G(R(-60, -170, 120, 120, 18, ol('#3E8FE0', 5)) + R(-46, -156, 92, 40, 12, { fill: '#6FB2F2' }), tr(x, top, s));
+    let front = G(R(-110, -8, 220, 22, 5, ol('#E8B86A', 4)) + R(-100, 14, 200, 70, 4, ol('#8A93A6', 4)) + P('M-90 84 L-96 130 M90 84 L96 130', ln(6, '#6A7488')) + (paper ? G(P('M-50 -10 L44 -14 L46 -2 L-48 2 Z', ol('#FFFFFF', 2.5)) + TF('TEST', -2, -4, 9, '#E8243C'), '') : ''), tr(x, top, s));
+    return [back, front];
+  };
+  BACK.forEach((x) => { const [b, d] = desk(x, 768, 0.82, opts.test !== false); m += b; fr += d; });
+  MIDR.forEach((x) => { const [b, d] = desk(x, 868, 1, opts.test !== false); m += b; fr += d; });
+  return { bg, mid: m, front: fr, fg: '', light: '' };
+}
+const classroom = makeSet(classroomLayers);
+
+// ---------------------------------------------------------------- 7f. SCHOOLYARD (empty, dawn / sunset)
+// The school building behind a chain-link fence, blacktop with painted games, a basketball hoop on a pole (left), a
+// bench (right). Brick's cage goes at SPOTS.schoolyard.cage (cage(x, y, .9, t, ...)). Long soft shadows at dawn/sunset.
+// Stand line y 960. opts: { time 'dawn'|'day'|'sunset' (default 'dawn') }
+def(lg('setsAsphalt', [[0, '#6E7488'], [1, '#585E72']]));
+function schoolyardLayers(t, opts = {}) {
+  const time = opts.time || 'dawn', low = time !== 'day';
+  const tint = time === 'sunset' ? '#FF9A5A' : time === 'dawn' ? '#FFB8C8' : null;
+  let bg = sky(t, time === 'dawn' ? 'dawn' : time === 'sunset' ? 'sunset' : 'day', 960, 240, 1920, 480, { clouds: 3, sunX: 0.85, sunY: low ? 0.78 : 0.2 });
+  let m = '';
+  // building
+  m += R(240, 300, 1440, 470, 0, { fill: 'url(#setsBrick)', stroke: LINE, 'stroke-width': 6 }) + R(220, 280, 1480, 32, 6, ol('#E9E4D8', 5));
+  m += R(260, 330, 1400, 300, 0, { fill: 'url(#setsWinRow)' }) + R(760, 210, 400, 100, 0, { fill: 'url(#setsBrick)', stroke: LINE, 'stroke-width': 6 }) + R(740, 196, 440, 24, 5, ol('#E9E4D8', 4));
+  m += schoolClock(960, 260, 38, t);
+  m += R(560, 304, 800, 56, 6, ol('#3E8FE0', 5)) + T('MAPLE HILL MIDDLE SCHOOL', 960, 344, 36, '#FFFFFF', { 'letter-spacing': 1 });
+  m += R(840, 580, 240, 190, 4, ol('#3E8FE0', 5)) + P('M960 580 V770', ln(5)) + R(860, 600, 80, 70, 4, ol('#BFE6FF', 3)) + R(980, 600, 80, 70, 4, ol('#BFE6FF', 3)) + P('M800 580 L1120 580 L1100 548 L820 548 Z', ol('#E9E4D8', 5));
+  if (tint) m += R(240, 300, 1440, 470, 0, { fill: tint, opacity: 0.18 });
+  m += tree(140, 780, 1.1, { col: time === 'sunset' ? '#6F8A52' : '#4CB65A', hi: '#7CD978' }) + tree(1800, 780, 1, { col: time === 'sunset' ? '#6F8A52' : '#3FA650', hi: '#6CCB6A' });
+  // chain-link fence
+  m += R(XL, 640, XR - XL, 150, 0, { fill: 'url(#setsChain)' }) + band(636, 646, '#9AA4B8');
+  for (let x = -600; x < 2600; x += 300) m += R(x - 6, 630, 12, 170, 3, ol('#8A93A6', 3));
+  // blacktop + games
+  m += R(XL, 790, XR - XL, YB - 790, 0, { fill: 'url(#setsAsphalt)' }) + band(788, 800, '#4A5064');
+  m += P('M1250 840 L1650 840 L1720 930 L1180 930 Z M1450 840 L1450 930 M1215 885 L1685 885', ln(5, '#FFFFFF', 0.85));
+  let hop = '';
+  [[420, 850], [420, 880], [380, 912], [460, 912], [420, 946]].forEach(([x, y], i) => { hop += `M${x - 34} ${y - 14} h68 v28 h-68 Z `; });
+  m += P(hop, ln(4, '#FFE14D', 0.85)) + E(900, 900, 160, 28, { fill: 'none', stroke: '#FF8FA3', 'stroke-width': 5, opacity: 0.8 });
+  // hoop on a pole (left)
+  m += R(232, 380, 22, 470, 4, ol('#8A93A6', 5)) + R(150, 340, 170, 110, 6, ol('#FFFFFF', 5)) + R(206, 382, 60, 44, 3, { fill: 'none', stroke: '#FF6A2E', 'stroke-width': 5 }) + E(236, 456, 42, 9, { fill: 'none', stroke: '#FF6A2E', 'stroke-width': 7 }) + P('M198 458 L210 506 L262 506 L274 458 M220 460 L226 506 M252 460 L246 506', ln(3, '#FFFFFF'));
+  // bench (right)
+  m += R(1560, 880, 240, 18, 4, ol('#C98A52', 4)) + R(1560, 846, 240, 16, 4, ol('#C98A52', 4)) + P('M1580 898 L1576 930 M1780 898 L1784 930', ln(8, '#5A6070'));
+  m += CI(1120, 812, 22, ol('#FF8A2A', 4)) + P('M1100 812 H1140 M1120 790 V834', ln(2.5));
+  // long shadows (dawn / sunset)
+  if (low) { const dir = time === 'sunset' ? 1 : -1; m += poly([[232, 850], [254, 850], [254 + dir * 520, 940], [232 + dir * 520, 940]], { fill: '#1E1A3A', opacity: 0.25 }) + poly([[1560, 930], [1800, 930], [1800 + dir * 260, 970], [1560 + dir * 260, 970]], { fill: '#1E1A3A', opacity: 0.2 }); }
+  let light = tint ? cover(tint, { opacity: 0.1 }) : '';
+  light += motes(t, 8, 0, 600, 1920, 300, '#FFFFFF', 0.5, 4, 6);
+  return { bg, mid: m, front: '', fg: '', light };
+}
+const schoolyard = makeSet(schoolyardLayers);
+
+// ================================================================= 8. THE JAIL CAGE (command prop)
+// cage(x, y, s, t, opts): origin = floor contact, bottom centre. At s = 1: 500 wide, 680 tall (fits Brick at ~s .55;
+// for the hero s .5 use s .85). Glowing bars + a "JAILED" plate on two chains.
+// opts: { drop 0..1 (0 = high above the frame; falls ACCELERATING, lands at .7, squash-bounce + dust to 1),
+//   part 'back'|'front'|'all' (draw part:'back', then the prisoner, then part:'front'),
+//   theme 'green' (YOUR command) | 'gold' (the Admin's), glow 0..1 (default 1), vanish 0..1 (un-jail: bars dissolve),
+//   plate (text, default 'JAILED') }
+function cage(x, y, s = 1, t = 0, opts = {}) {
+  const part = opts.part || 'all', gold = opts.theme === 'gold', glow = opts.glow ?? 1, drop = opts.drop ?? 1, van = bool01(opts.vanish);
+  const C = gold ? { bar: '#FFD34D', core: '#FFF6C8', frame: '#B88A1A', glow: 'setsGlowGold', text: '#FFE14D' } : { bar: '#3DFF9A', core: '#D4FFE8', frame: '#1E7A50', glow: 'setsGlowGreen', text: '#7DFFB8' };
+  let dy = 0, sx = 1, sy = 1, dust = '';
+  if (drop < 0.7) { const v = drop / 0.7; dy = -1500 * (1 - v * v); }
+  else {
+    const k = (drop - 0.7) / 0.3;
+    sy = 1 - 0.16 * Math.sin(k * Math.PI * 2.2) * (1 - k); sx = 1 + (1 - sy) * 0.8;
+    if (k < 0.8) { const u = k / 0.8; for (const d of [-1, 1]) for (let i = 0; i < 3; i++) dust += CI(d * (250 + u * 160 + i * 40), -20 - i * 14 - u * 30, (26 + i * 8) * (1 - u * 0.5), { fill: '#FFFFFF', stroke: LINE, 'stroke-width': 4, opacity: f(1 - u) }); }
+  }
+  const pulse = 0.85 + 0.15 * Math.sin(t * 4);
+  const W = 240, H = 680, BX = 34, BY = -26;
+  const barsD = (x0, x1, n, y0, y1, ox = 0, oy = 0) => { let d = ''; for (let i = 0; i < n; i++) { const bx = lerp(x0, x1, i / (n - 1)); d += `M${f(bx + ox)} ${f(y0 + oy)} L${f(bx + ox)} ${f(y1 + oy)} `; } return d; };
+  const bars = (d, w) => P(d, ln(w + 9, LINE)) + P(d, ln(w + 14, C.bar, 0.25 * glow * pulse)) + P(d, ln(w, C.bar)) + P(d, ln(w * 0.35, C.core));
+  let back = '', front = '';
+  // back: floor glow, back bars, back frame
+  back += E(0, 0, W + 90, 40, { fill: C.bar, opacity: f(0.22 * glow) }) + glowSpot(0, -H / 2, 520, C.glow, 0.45 * glow * pulse);
+  back += bars(barsD(-W + 30, W - 30, 7, -H + 40, -10, BX, BY), 8);
+  back += P(`M${-W + BX} ${-H + BY} H${W + BX} M${-W + BX} ${BY - 4} H${W + BX}`, ln(22, LINE)) + P(`M${-W + BX} ${-H + BY} H${W + BX} M${-W + BX} ${BY - 4} H${W + BX}`, ln(14, C.frame));
+  // front: posts, front bars, top + bottom frames, plate
+  front += bars(barsD(-W + 22, W - 22, 9, -H + 30, -6), 13);
+  front += P(`M${-W} ${-H} L${-W + BX} ${-H + BY} M${W} ${-H} L${W + BX} ${-H + BY} M${W} 0 L${W + BX} ${BY}`, ln(24, LINE)) + P(`M${-W} ${-H} L${-W + BX} ${-H + BY} M${W} ${-H} L${W + BX} ${-H + BY} M${W} 0 L${W + BX} ${BY}`, ln(14, C.frame));
+  front += R(-W - 14, -H - 20, 2 * W + 28, 42, 10, ol(C.frame, 6)) + R(-W - 6, -H - 14, 2 * W + 12, 8, 4, { fill: C.bar, opacity: 0.9 });
+  front += R(-W - 14, -22, 2 * W + 28, 30, 8, ol(C.frame, 6)) + R(-W - 6, -18, 2 * W + 12, 6, 3, { fill: C.bar, opacity: 0.8 });
+  front += R(-W - 20, -H - 20, 34, H + 28, 8, ol(C.frame, 6)) + R(W - 14, -H - 20, 34, H + 28, 8, ol(C.frame, 6));
+  {
+    const sw = Math.sin(t * 2.4) * 3;
+    let pl = P('M-60 0 L-70 26 M60 0 L70 26', { fill: 'none', stroke: '#8A93A6', 'stroke-width': 5, 'stroke-dasharray': '7 4' });
+    pl += R(-116, 24, 232, 66, 10, ol('#2A2D38', 6)) + R(-106, 33, 212, 48, 6, { fill: 'none', stroke: C.bar, 'stroke-width': 3 }) + T(opts.plate || 'JAILED', 0, 72, 40, C.text, { 'letter-spacing': 3 });
+    front += G(pl, `translate(0 ${-H + 20}) rotate(${f(sw)} 0 0)`);
+  }
+  const tf = `translate(${f(x)} ${f(y)}) scale(${f(s * sx)} ${f(s * sy)}) translate(0 ${f(dy / s)})`;
+  const wrap = (svg) => (van > 0 ? vanish(svg, van, [-W - 30, -H - 40, 2 * W + 90, H + 60], 21) : svg);
+  if (part === 'back') return G(wrap(back), tf);
+  if (part === 'front') return G(wrap(front), tf) + G(dust, tr(x, y, s));
+  return G(wrap(back + front), tf) + G(dust, tr(x, y, s));
+}
+
+// ================================================================= 9. NEWS STUDIO (city in chaos behind the glass)
+// A glass-walled studio high above the city: the big window (x 140..1780, y 90..650) shows the evening city; with
+// opts.chaos 0..1 the chaos ramps in: people and a bus fly by, giant cats sit on the rooftops, Granny's fire trail
+// streaks across, and at chaos > .6 a GIANT CAT PAW presses against the glass. opts.window (svg|fn(1640,560)) replaces
+// the view entirely (e.g. frameIn(cityShot, w, h)). The anchor stands behind the curved desk: SPOTS.newsStudio.anchor
+// (layers.front = desk). opts.ticker = scrolling BREAKING NEWS lower third (y 870..940 or opts.tickerY, in layers.fg);
+// newsStudio.ticker(t, text, opts) draws only the ticker (screen-fixed, outside the camera). opts.logo (desk text).
+def(lg('setsNewsSky', [[0, '#2A1A5A'], [0.5, '#7A3A8A'], [0.85, '#E0668A'], [1, '#FFA86A']]));
+def('<pattern id="setsCityWin" width="40" height="48" patternUnits="userSpaceOnUse"><rect x="6" y="8" width="12" height="16" rx="2" fill="#FFE08A" opacity="0.9"/><rect x="24" y="8" width="12" height="16" rx="2" fill="#3A2A6A" opacity="0.7"/><rect x="6" y="30" width="12" height="16" rx="2" fill="#3A2A6A" opacity="0.7"/><rect x="24" y="30" width="12" height="16" rx="2" fill="#FFB8E0" opacity="0.8"/></pattern>');
+def(lg('setsNewsFloor', [[0, '#1E2450'], [1, '#12162E']]));
+function flyer(x, y, s, rot, col) {
+  return G(R(-14, -60, 28, 26, 6, ol('#FFE0C0', 3)) + R(-16, -34, 32, 34, 5, ol(col, 3)) + P('M-16 -30 L-34 -50 M16 -30 L34 -50 M-8 0 L-14 26 M8 0 L14 26', ln(7, LINE)), tr(x, y, s, rot));
+}
+function newsTicker(t, text, opts = {}) {
+  const y = opts.y ?? 870;
+  let o = R(-10, y, 1940, 70, 0, { fill: '#10162A', opacity: 0.94 });
+  const msg = `${text}   •   `, w = Math.max(400, msg.length * 21);
+  const x0 = 380 - md(t * 200, w);
+  let s = '';
+  for (let x = x0; x < 1940; x += w) s += TF(msg, x, y + 48, 34, '#FFE14D', { 'text-anchor': 'start' });
+  o += s + R(-10, y - 8, 370, 86, 0, { fill: '#E8243C' }) + T('BREAKING', 175, y + 52, 50, '#FFFFFF') + P(`M360 ${y - 8} L400 ${y - 8} L360 ${y + 78} Z`, { fill: '#E8243C' });
+  o += R(1690, y - 46, 230, 40, 0, { fill: '#E8243C' }) + T('LIVE', 1790, y - 15, 30, '#FFFFFF') + CI(1730, y - 26, 8, { fill: '#FFFFFF', opacity: Math.floor(t * 2) % 2 ? 0.4 : 1 });
+  return o;
+}
+function newsLayers(t, opts = {}) {
+  const chaos = bool01(opts.chaos);
+  const WX0 = 140, WX1 = 1780, WY0 = 90, WY1 = 650;
+  // bg: the city
+  let bg = '';
+  if (opts.window !== undefined) bg = cover('#10142A') + G(screenOf(opts.window, WX1 - WX0, WY1 - WY0), `translate(${(WX0 + WX1) / 2} ${(WY0 + WY1) / 2})`);
+  else {
+    bg = cover('url(#setsNewsSky)');
+    let st = '';
+    for (let i = 0; i < 24; i++) st += circD(hash(i * 3.3) * 1920, hash(i * 6.1) * 260 + 20, 1.6 + hash(i) * 1.8);
+    bg += P(st, { fill: '#FFFFFF', opacity: 0.7 }) + glowSpot(1500, 180, 180, 'setsGlowWhite', 0.4) + CI(1500, 180, 52, ol('#FFF3D6', 4));
+    const B = [[60, 360, 160], [230, 300, 130], [370, 420, 120], [500, 250, 170], [680, 380, 120], [810, 300, 150], [970, 440, 110], [1090, 280, 160], [1260, 360, 120], [1390, 240, 170], [1570, 340, 140], [1720, 290, 160]];
+    for (const [x, top, w] of B) bg += R(x, top, w, 700 - top, 4, { fill: '#2E2160', stroke: '#1E1440', 'stroke-width': 4 }) + R(x + 10, top + 14, w - 20, 680 - top, 0, { fill: 'url(#setsCityWin)' });
+    bg += R(-200, 560, 2320, 200, 0, { fill: '#E0668A', opacity: 0.25 });
+    if (chaos > 0) {
+      // giant cats on rooftops (silhouettes with glowing eyes)
+      const catSil = (cx, top, sc, k) => G(P('M-90 0 Q-100 -120 -60 -150 L-70 -210 L-30 -170 Q0 -180 30 -170 L70 -210 L60 -150 Q100 -120 90 0 Z', ol('#F28C28', 6)) + E(-30, -120, 12, 15, ol('#FFE14D', 3)) + E(30, -120, 12, 15, ol('#FFE14D', 3)) + E(-30, -118, 4, 11, { fill: LINE }) + E(30, -118, 4, 11, { fill: LINE }) + P('M90 -20 Q170 -40 150 -140', ln(30, LINE)) + P('M90 -20 Q170 -40 150 -140', ln(20, '#F28C28')), `translate(${cx} ${f(top + (1 - k) * 200)}) scale(${sc})`, { opacity: f(k) });
+      bg += catSil(575, 254, 0.9, clamp(chaos * 2, 0, 1)) + catSil(1475, 244, 0.75, clamp(chaos * 2 - 0.3, 0, 1));
+      // fire trail (Granny) arc
+      const ft = clamp(chaos * 1.5 - 0.2, 0, 1);
+      if (ft > 0) bg += P(`M${f(1900 - 1700 * ft)} 140 Q960 60 1900 220`, ln(26, '#FF8A2A', 0.5)) + P(`M${f(1900 - 1700 * ft)} 140 Q960 60 1900 220`, ln(10, '#FFE14D', 0.9));
+      // flying people + a bus
+      for (let i = 0; i < 6; i++) { const ph = md(t * (0.05 + 0.03 * hash(i)) + hash(i * 3.7), 1); if (hash(i * 9.1) < chaos) bg += flyer(lerp(100, 1800, ph), 200 + hash(i * 5.3) * 280 + Math.sin(t + i) * 20, 0.8 + 0.5 * hash(i * 2.2), (t * 40 + i * 60) % 360, ['#E8243C', '#3E8FE0', '#5CB85A', '#FFC93C', '#B06BFF', '#FF8A2A'][i]); }
+      if (chaos > 0.3) { const bx = lerp(-300, 2200, md(t * 0.04, 1)); bg += G(R(-150, -60, 300, 110, 18, ol('#FFC93C', 6)) + [-110, -50, 10, 70].map((wx) => R(wx, -44, 46, 36, 6, ol('#BFE6FF', 3))).join('') + CI(-90, 50, 22, ol('#2A2D38', 4)) + CI(90, 50, 22, ol('#2A2D38', 4)) + T('SCHOOL', 0, 30, 24, '#2A2246'), `translate(${f(bx)} ${f(330 + Math.sin(t) * 30)}) rotate(${f(Math.sin(t * 0.7) * 12)}) scale(0.7)`); }
+    }
+  }
+  // mid: studio walls, window frame, floor, lights
+  let m = '';
+  const wallD = `M${XL} ${YT} H${XR} V${YB} H${XL} Z M${WX0} ${WY0} V${WY1} H${WX1} V${WY0} Z`;
+  m += P(wallD, { fill: '#1A1E3E', 'fill-rule': 'evenodd' });
+  m += R(WX0 - 20, WY0 - 20, WX1 - WX0 + 40, WY1 - WY0 + 40, 10, { fill: 'none', stroke: '#2E3466', 'stroke-width': 30 }) + R(WX0 - 34, WY0 - 34, WX1 - WX0 + 68, WY1 - WY0 + 68, 14, ln(6));
+  m += P([550, 960, 1370].map((x) => `M${x} ${WY0} V${WY1}`).join(' '), ln(26, '#2E3466')) + P([550, 960, 1370].map((x) => `M${x} ${WY0} V${WY1}`).join(' '), ln(4, LINE, 0.5));
+  m += P(`M${WX0 + 60} ${WY1 - 40} L${WX0 + 260} ${WY0 + 30} L${WX0 + 320} ${WY0 + 30} L${WX0 + 120} ${WY1 - 40} Z M${1000} ${WY1 - 20} L${1180} ${WY0 + 50} L${1210} ${WY0 + 50} L${1030} ${WY1 - 20} Z`, { fill: '#FFFFFF', opacity: 0.07 });
+  // giant paw on the glass
+  if (chaos > 0.6 && opts.window === undefined) {
+    const k = ease.outBack(clamp((chaos - 0.6) / 0.25, 0, 1));
+    let paw = E(0, 0, 230, 190, ol('#F28C28', 7)) + E(0, 30, 120, 96, ol('#FF9AB0', 6)) + [[-150, -110], [-55, -170], [55, -170], [150, -110]].map(([px, py]) => E(px, py, 54, 64, ol('#FF9AB0', 5))).join('') + P('M-200 60 Q-150 40 -120 70 M200 60 Q150 40 120 70', ln(8, '#C9651A'));
+    m += G(paw, `translate(1180 ${f(520 + (1 - k) * 400)}) rotate(-12) scale(${f(0.95 * k)})`);
+  }
+  // studio lights on a truss
+  m += R(XL, 30, XR - XL, 18, 0, ol('#3A3F5E', 4));
+  for (const lx of [330, 760, 1160, 1590]) m += P(`M${lx} 48 v24`, ln(6)) + P(`M${lx - 30} 72 L${lx + 30} 72 L${lx + 22} 110 L${lx - 22} 110 Z`, ol('#2A2D38', 4)) + E(lx, 112, 22, 6, { fill: '#FFF8D6' }) + P(`M${lx - 22} 112 L${lx + 22} 112 L${lx + 140} 700 L${lx - 140} 700 Z`, { fill: '#FFFFFF', opacity: 0.045 });
+  // side screens with the logo
+  for (const sx of [40, 1880]) m += R(sx - 70, 300, 140, 240, 10, ol('#10142A', 5)) + T('CN', sx, 410, 56, '#3E8FE0') + T('9', sx, 476, 64, '#FFC93C');
+  m += R(XL, 700, XR - XL, YB - 700, 0, { fill: 'url(#setsNewsFloor)' }) + P(`M${XL} 700 H${XR}`, ln(5, '#3E4A8A'));
+  m += E(960, 780, 700, 40, { fill: '#3E4A8A', opacity: 0.35 });
+  if (chaos > 0) m += cover('#FF3B5C', { opacity: f(0.08 * chaos * (0.6 + 0.4 * Math.sin(t * 6))) });
+  // front: anchor desk
+  let fr = P('M360 800 Q960 750 1560 800 L1520 1030 L400 1030 Z', ol('#E9EDF5', 7)) + P('M380 832 Q960 784 1540 832', ln(8, '#E8243C')) + P('M400 990 Q960 950 1520 990', ln(4, '#AEB7C6', 0.6));
+  fr += P('M340 792 Q960 740 1580 792 L1580 812 Q960 762 340 812 Z', ol('#3E4A8A', 6));
+  if (!opts.ticker) fr += G(R(-130, -30, 260, 60, 16, ol('#3E8FE0', 5)) + T(opts.logo || 'CITY NEWS 9', 0, 12, 34, '#FFFFFF'), 'translate(960 890)');
+  fr += R(1180, 762, 120, 26, 4, ol('#FFFFFF', 4)) + R(1192, 754, 120, 26, 4, ol('#F4F1E6', 4)) + G(R(-22, -48, 44, 48, 8, ol('#E8243C', 4)) + P('M22 -38 Q40 -32 22 -16', ln(5)), 'translate(640 780)');
+  const fg = opts.ticker ? newsTicker(t, opts.ticker, { y: opts.tickerY }) : '';
+  return { bg, mid: m, front: fr, fg, light: '' };
+}
+const newsStudio = makeSet(newsLayers);
+newsStudio.ticker = newsTicker;
+
 // <<SETS_APPEND>>
 
 // ================================================================= floor lines + anchors
@@ -1648,6 +2154,13 @@ const FLOOR = {
   street: 940,         // the sidewalk (hero s .5); world x -1200..7200
   serverStreet: 940,   // the sidewalk (hero s .5); sign at x 380, the sale at x 2600
   garageSale: 965,     // on the driveway in front of the tables
+  cafeteria: 990,      // the lunch line (SPOTS.cafeteria.line[0] = front)
+  gym: 990,            // captains / coach; the pick line is further back (SPOTS.gym.pickLine, feet y 828, s .42)
+  hallway: 960,        // crowds between y 900 (s .42) and 1000 (s .52)
+  principalOffice: 990,
+  classroom: 990,      // in front of the desks (seated: SPOTS.classroom.seats)
+  schoolyard: 960,
+  newsStudio: 960,     // the anchor's feet (hidden by the desk; s .55)
 };
 const lapScreen = (L) => ({ cx: L.x, cy: L.y - 296 * L.s, w: 400 * L.s, h: 300 * L.s });
 const SPOTS = {
@@ -1697,6 +2210,33 @@ const SPOTS = {
     lavaLamp: { x: 270, y: 690 }, owl: { x: 1210, y: 680 }, tables: [{ x0: 200, x1: 640, top: 700 }, { x0: 760, x1: 1280, top: 690 }],
     hero: { x: 560, y: 965, s: 0.5 }, tumbleY: 930,
   },
+  cafeteria: {
+    line: [1700, 1510, 1320, 1130, 940, 750].map((x) => ({ x, y: 990, s: 0.5 })),   // [0] = the FRONT of the line (face right: view 'side', flip)
+    lunchLady: { x: 1380, y: 890, s: 0.5 },          // behind the counter: draw her before layers.front
+    counterTop: 736, register: { x: 1860, y: 700 },
+    seats: [150, 300, 450, 600].map((x) => ({ x, y: 850, s: 0.42 })),   // behind the table (legs hidden by layers.front)
+    table: { x0: 30, x1: 690, top: 700 }, trays: [{ x: 160, y: 690, s: 0.55 }, { x: 400, y: 690, s: 0.55 }],
+  },
+  gym: {
+    pickLine: [180, 300, 420, 540, 660, 780, 900, 1020].map((x) => ({ x, y: 828, s: 0.42 })),   // kids against the mats; the hero is last
+    captains: [{ x: 640, y: 990, s: 0.5 }, { x: 1040, y: 990, s: 0.5 }], coach: { x: 300, y: 990, s: 0.52 },
+    bleachers: [{ y: 560, x0: 1180 }, { y: 620, x0: 1160 }, { y: 680, x0: 1140 }, { y: 740, x0: 1120 }].map((r) => ({ ...r, s: 0.36 })),  // seat top y per row
+    hoop: { x: 520, y: 380 }, scoreboard: { x: 1580, y: 380 }, lanes: [875, 904], rope: { x: 880, bottom: 626 },
+  },
+  hallway: { doors: { every: 6400, first: 0, also: 3200 }, lockers: { y0: 330, y1: 782 }, worldX: [-1200, 6800] },
+  principalOffice: {
+    principal: { x: 700, y: 900, s: 0.5 },           // behind the desk (sitting: hips ~y 760); draw before layers.front
+    desk: { x0: 360, x1: 1060, top: 690 }, mug: { x: 900, y: 688 },
+    hole: { x: 1360, y: 792, s: 0.44 },                // the hero-shaped hole in the back wall (feet on the wall base)
+    floorHole: { x: 1360, y: 970 }, window: { x0: 120, y0: 150, x1: 480, y1: 470 },
+  },
+  classroom: {
+    board: { x0: 420, y0: 150, x1: 1500, y1: 520 },
+    seats: [...[400, 760, 1120, 1480].map((x) => ({ x, y: 860, s: 0.4, row: 'back' })), ...[220, 580, 940, 1300, 1660].map((x) => ({ x, y: 960, s: 0.48, row: 'mid' }))],
+    heroDesk: { x: 940, y: 960, s: 0.48 }, deskTops: [768, 868], teacherDesk: { x: 1720, top: 690 },
+  },
+  schoolyard: { cage: { x: 1150, y: 940, s: 0.9 }, hoop: { x: 236, y: 456 }, bench: { x: 1680, seat: 846 }, door: { x: 960, y: 770 } },
+  newsStudio: { anchor: { x: 960, y: 960, s: 0.55 }, deskTop: 776, window: { x0: 140, y0: 90, x1: 1780, y1: 650 }, paw: { x: 1180, y: 520 }, ticker: { y: 870 } },
 };
 
 const DEFS = `<defs>\n${DEF.join('\n')}\n</defs>`;
@@ -1704,6 +2244,7 @@ const DEFS = `<defs>\n${DEF.join('\n')}\n</defs>`;
 module.exports = {
   DEFS, FLOOR, SPOTS,
   heroRoom, laptop, adminScreen, kitchen, fridgeInside, livingRoom, videoCall, house, houseExterior, street, serverStreet, garageSale,
+  cafeteria, gym, hallway, principalOffice, classroom, schoolyard, cage, newsStudio,
   // extras
-  pigeon, streetSign, tumbleweed, mailbox, lampPost, lavaLamp, stuffedOwl, vanish, pancakeStack, catClock, bossBust, stickyNote, dntSticker, frameIn, glowSpot, darkPool, sky, cloud, tree, sparkle, LAPTOP_SCREEN, ADMIN_CMDS, MOM_NOTES, camTf, mix,
+  tray, schoolPoster, schoolClock, heroHoleD, newsTicker, pigeon, streetSign, tumbleweed, mailbox, lampPost, lavaLamp, stuffedOwl, vanish, pancakeStack, catClock, bossBust, stickyNote, dntSticker, frameIn, glowSpot, darkPool, sky, cloud, tree, sparkle, LAPTOP_SCREEN, ADMIN_CMDS, MOM_NOTES, camTf, mix,
 };

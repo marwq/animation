@@ -40,8 +40,14 @@ function dRR(x, y, w, h, r) {
   const a = `a${f(r)} ${f(r)} 0 0 1`;
   return `M${f(x + r)} ${f(y)}h${f(w - 2 * r)}${a} ${f(r)} ${f(r)}v${f(h - 2 * r)}${a} ${f(-r)} ${f(r)}h${f(-(w - 2 * r))}${a} ${f(-r)} ${f(-r)}v${f(-(h - 2 * r))}${a} ${f(r)} ${f(-r)}Z`;
 }
-const dC = (cx, cy, r) => `M${f(cx - r)} ${f(cy)}a${f(r)} ${f(r)} 0 1 0 ${f(2 * r)} 0a${f(r)} ${f(r)} 0 1 0 ${f(-2 * r)} 0Z`;
-const dPoly = (pts) => 'M' + pts.map((p) => `${f(p[0])} ${f(p[1])}`).join('L') + 'Z';
+// all filled sub-paths wind CLOCKWISE (on screen) so unions of overlapping shapes never cancel into holes (nonzero rule)
+const dC = (cx, cy, r) => `M${f(cx - r)} ${f(cy)}a${f(r)} ${f(r)} 0 1 1 ${f(2 * r)} 0a${f(r)} ${f(r)} 0 1 1 ${f(-2 * r)} 0Z`;
+function dPoly(pts) {
+  let a = 0;
+  for (let i = 0; i < pts.length; i++) { const p = pts[i], q = pts[(i + 1) % pts.length]; a += p[0] * q[1] - q[0] * p[1]; }
+  const P_ = a < 0 ? pts.slice().reverse() : pts;
+  return 'M' + P_.map((p) => `${f(p[0])} ${f(p[1])}`).join('L') + 'Z';
+}
 // a limb as a filled quad between two points (silhouettes)
 function dLimb(x1, y1, x2, y2, w) {
   const a = Math.atan2(y2 - y1, x2 - x1), nx = -Math.sin(a) * w / 2, ny = Math.cos(a) * w / 2;
@@ -96,9 +102,9 @@ function vgrad(stops, id = S.uid('cityG')) {
 const SKY_OFS = [0, 0.3, 0.58, 0.8, 1];
 const PAL = {
   day: { sky: ['#2A82F2', '#4FA6FA', '#7EC6FF', '#AADCFF', '#D9F3FF'], far: '#9DB9E6', far2: '#BDD3F2', haze: '#E6F5FF', tint: '#FFFFFF', tintK: 0, lit: 0, glass: 1, cloud: '#FFFFFF', cloudSh: '#C6DEFA', road: '#5A6079', walk: '#C4C8D8', curb: '#9095AC', star: 0, wash: '#FFFFFF', washK: 0, neon: 0, sil: '#5A6FA0' },
-  sunset: { sky: ['#2B2470', '#6A3A98', '#CB4F8E', '#FF835F', '#FFC57C'], far: '#93589E', far2: '#C46E98', haze: '#FFA483', tint: '#DE5E8E', tintK: 0.32, lit: 0.38, glass: 0.75, cloud: '#FFB5C4', cloudSh: '#C2639A', road: '#4B3C64', walk: '#B58BA6', curb: '#7A5A84', star: 0.12, wash: '#FF5E9A', washK: 0.1, neon: 0.6, sil: '#4A2A66' },
+  sunset: { sky: ['#33287A', '#8A3C9A', '#E4558C', '#FF8E62', '#FFC57C'], far: '#93589E', far2: '#C46E98', haze: '#FFA483', tint: '#DE5E8E', tintK: 0.32, lit: 0.38, glass: 0.75, cloud: '#FFB5C4', cloudSh: '#C2639A', road: '#4B3C64', walk: '#B58BA6', curb: '#7A5A84', star: 0.12, wash: '#FF5E9A', washK: 0.1, neon: 0.6, sil: '#4A2A66' },
   night: { sky: ['#070824', '#10103D', '#1E1650', '#321F66', '#4C2C7C'], far: '#2B245C', far2: '#3B2D6E', haze: '#4E2F80', tint: '#181640', tintK: 0.7, lit: 1, glass: 0.22, cloud: '#3A3478', cloudSh: '#231E52', road: '#24213E', walk: '#3B3662', curb: '#2B274E', star: 1, wash: '#27279A', washK: 0.15, neon: 1, sil: '#120F33' },
-  dawn: { sky: ['#4B5CBC', '#8C77C6', '#E596BC', '#FFB9A6', '#FFDEA8'], far: '#B48FC6', far2: '#D6A8C8', haze: '#FFD3B2', tint: '#F59FB2', tintK: 0.2, lit: 0.12, glass: 0.85, cloud: '#FFE4EC', cloudSh: '#E9A6C3', road: '#685A7E', walk: '#D4B8C8', curb: '#9A82A8', star: 0.12, wash: '#FFB08A', washK: 0.07, neon: 0.1, sil: '#6A4E86' },
+  dawn: { sky: ['#7F93E6', '#B9A2E4', '#F4AFC8', '#FFCDAE', '#FFE8B6'], far: '#B48FC6', far2: '#D6A8C8', haze: '#FFD3B2', tint: '#F59FB2', tintK: 0.2, lit: 0.12, glass: 0.85, cloud: '#FFE4EC', cloudSh: '#E9A6C3', road: '#685A7E', walk: '#D4B8C8', curb: '#9A82A8', star: 0.12, wash: '#FFB08A', washK: 0.07, neon: 0.1, sil: '#6A4E86' },
 };
 function blendPal(a, b, u) {
   if (u <= 0) return a;
@@ -655,16 +661,18 @@ function skyChat(x, y, w, h, t, opts = {}) {
   const total = lines.reduce((a, l) => a + l.length, 0);
   let left = Math.round(clamp(progress, 0, 1) * total);
   const lh = size * 1.12, y0 = -h / 2 + hh + (h - hh) / 2 - (lines.length - 1) * lh / 2 + size * 0.36;
-  let cur = null;
-  lines.forEach((ln_, i) => {
-    const n = Math.min(left, ln_.length);
-    left -= n;
-    const xs = -Math.min(w / 2 - 50, ln_.length * size * 0.27);
-    if (n > 0) o += TF(esc(ln_.slice(0, n)), xs, y0 + i * lh, size, '#2A2140', { 'text-anchor': 'start' });
-    if (n < ln_.length && !cur) cur = [xs + n * size * 0.54, y0 + i * lh];
+  // each line is laid out at its FULL width (untyped rest = invisible tspan), so typing never shifts the centred text;
+  // the cursor is a '|' tspan (every line carries one, invisible when the cursor is elsewhere)
+  const counts = lines.map((l) => { const n = Math.min(left, l.length); left -= n; return n; });
+  let curLine = counts.findIndex((n, i) => n < lines[i].length);
+  if (curLine < 0) curLine = lines.length - 1;
+  const on = cursor && Math.floor(t * 2.5) % 2 === 0 ? 1 : 0;
+  lines.forEach((l, i) => {
+    const n = counts[i];
+    if (n === 0 && i !== curLine) return;
+    const bar = `<tspan fill="#E8A800" stroke="#E8A800" stroke-width="${f(size * 0.05)}" fill-opacity="${i === curLine ? on : 0}" stroke-opacity="${i === curLine ? on : 0}">|</tspan>`;
+    o += S.el('text', { x: 0, y: f(y0 + i * lh), 'font-family': 'Fredoka, sans-serif', 'font-weight': 700, 'font-size': f(size), fill: '#2A2140', 'text-anchor': 'middle' }, esc(l.slice(0, n)) + bar + (n < l.length ? `<tspan fill-opacity="0">${esc(l.slice(n))}</tspan>` : ''));
   });
-  if (!cur && lines.length) { const l = lines[lines.length - 1]; cur = [-Math.min(w / 2 - 50, l.length * size * 0.27) + l.length * size * 0.54 + 6, y0 + (lines.length - 1) * lh]; }
-  if (cursor && cur && Math.floor(t * 2.5) % 2 === 0) o += R(cur[0] + 4, cur[1] - size * 0.78, size * 0.09, size * 0.9, 3, { fill: '#E8A800' });
   if (glow > 0.3) o += K.sparkles([[w / 2 - 10, -h / 2 - 6, 26 * glow], [-w / 2 + 6, h / 2 - 4, 20 * glow], [w / 2 + 10, h / 2 - 30, 14 * glow]], t);
   return G(o, tf(x, y, sc, rot));
 }
@@ -690,7 +698,7 @@ function genSkyline(seed, x0, x1, base, hMin, hMax) {
     else if (kind === 3) { const r = w / 2 - cw / 2; body += `M${f(x + cw / 2)} ${f(top + 1)}a${f(r)} ${f(r * 0.7)} 0 0 1 ${f(2 * r)} 0Z`; }
     else if (kind === 4) { const ax = x + Math.round(w * 0.3); body += dR(ax, top - ch * 3, 4, ch * 3); tips.push([ax + 2, top - ch * 3]); }
     else body += dR(x + cw, top - 12, cw * 2, 13);
-    win += dR(x, top + ch, w, h + 260 - ch);
+    win += dR(x, top + ch, w, h - ch + 22);
     x += w + (rnd(i, seed + 3) < 0.3 ? cw : 0);
   }
   return { body, win, tips };
@@ -710,7 +718,7 @@ const CITY = {
   waterTower: { x: 1120, y: 590, s: 0.42, k: KF.mid },       // feet of the rooftop water tower (roof x 1024..1184; tips right)
   tv: { x: 1328, y: 470, sign: { x: 1328, y: 545 }, dish: { x: 1270, y: 450 }, k: KF.mid },   // TV-station roof centre
   heroRoof: { x: 1320, y: 674, x0: 1160, x1: 1480, k: KF.near },  // rooftop the hero stands on in the wide (feet y)
-  blimp: { x: 430, y: 330, s: 0.42, k: KF.blimp },
+  blimp: { x: 1010, y: 300, s: 0.4, k: KF.blimp },
   street: { y: 990, laneR: 1044, laneL: 1082, k: KF.street },   // sidewalk feet y, car lanes (bottom of wheels)
 };
 function cityOpts(opts = {}) {
@@ -729,14 +737,15 @@ function craneHook(t, opts = {}) {
 // ---------------------------------------------------------------- sky
 const CLOUDS = [[-560, 150, 1], [150, 120, 0.95], [690, 64, 0.7], [1060, 215, 0.85], [1720, 105, 0.8], [2280, 175, 1]];
 function cloudD(x, y, s) {
-  return dRR(x - 100 * s, y, 360 * s, 62 * s, 31 * s) + dC(x - 20 * s, y + 8 * s, 56 * s) + dC(x + 70 * s, y - 24 * s, 76 * s) + dC(x + 165 * s, y + 4 * s, 58 * s) + dC(x + 228 * s, y + 24 * s, 38 * s);
+  return dRR(x - 100 * s, y, 360 * s, 62 * s, 31 * s) + dC(x - 30 * s, y + 14 * s, 46 * s) + dC(x + 66 * s, y - 12 * s, 68 * s) + dC(x + 166 * s, y + 10 * s, 52 * s) + dC(x + 226 * s, y + 28 * s, 33 * s);
 }
 function sunMoon(t, p) {
   let s = '';
   const tm = p.time, dawn = p.dawn;
   let sx, sy, sr, sc;
-  if (tm <= 0.5) { const u = tm * 2; sx = lerp(1560, 1470, u); sy = lerp(190, 650, ease.inOut(u)); sr = lerp(66, 110, u); sc = mix('#FFF2A8', '#FF9A55', u); } else { sx = 1470; sy = 650 + (tm - 0.5) * 2 * 520; sr = 110; sc = '#FF8A50'; }
-  if (dawn > 0) { sx = lerp(sx, 380, dawn); sy = lerp(sy, 700, dawn); sr = lerp(sr, 96, dawn); sc = mix(sc, '#FFDCA0', dawn); }
+  if (tm <= 0.5) { const u = tm * 2; sx = lerp(1560, 1545, u); sy = lerp(190, 470, ease.inOut(u)); sr = lerp(66, 108, u); sc = mix('#FFF2A8', '#FFA65A', u); } else { sx = 1545; sy = 470 + ease.in((tm - 0.5) * 2) * 700; sr = 108; sc = '#FF9A55'; }
+  if (dawn > 0) { sx = lerp(sx, 1700, dawn); sy = lerp(sy, 455, dawn); sr = lerp(sr, 88, dawn); sc = mix(sc, '#FFE4A6', dawn); }
+  if (dawn > 0.05) s += rays(sx, sy, 14, sr * 4.2, '#FFF4D0', 0.14 * dawn, t * 3);
   if (sy < 1050) {
     for (let i = 3; i >= 1; i--) s += Ci(sx, sy, sr * (1 + 0.5 * i), op(sc, 0.07 + (3 - i) * 0.04));
     s += Ci(sx, sy, sr, { fill: sc }) + Ci(sx - sr * 0.32, sy - sr * 0.32, sr * 0.3, op('#FFFFFF', 0.35));
@@ -755,7 +764,7 @@ function skyPart(t, cam, p, o) {
   const g = vgrad(p.sky.map((c, i) => [SKY_OFS[i], c]));
   let s = g.def + fullRect(cam, 0, { fill: g.url });
   if (p.star > 0.02) {
-    s += R(-300, -300, 2520, 1150, 0, { fill: 'url(#cityStars)', opacity: f(p.star) });
+    s += R(-300, -300, 2520, 1080, 0, { fill: 'url(#cityStars)', opacity: f(p.star) });
     let tw = '';
     [[210, 90], [560, 260], [880, 60], [1180, 150], [1760, 380], [1890, 70], [380, 470], [1300, 330]].forEach(([x, y], i) => {
       const k = 0.5 + 0.5 * Math.sin(t * 2.3 + i * 1.7), r = 7 * k + 3;
@@ -765,9 +774,10 @@ function skyPart(t, cam, p, o) {
   }
   let out = V(cam, s, KF.sky) + V(cam, sunMoon(t, p), KF.sun);
   let cl = '', clS = '';
-  for (const [x0, y, sc] of CLOUDS) { const x = wrap(x0 + t * 7 * sc, -900, 2800); clS += cloudD(x, y + 14, sc); cl += cloudD(x, y, sc); }
+  let clH = '';
+  for (const [x0, y, sc] of CLOUDS) { const x = wrap(x0 + t * 7 * sc, -900, 2800); clS += dRR(x - 96 * sc, y + 12 * sc, 352 * sc, 62 * sc, 31 * sc); cl += cloudD(x, y, sc); clH += `M${f(x + 30 * sc)} ${f(y - 52 * sc)}q${f(34 * sc)} ${f(-24 * sc)} ${f(74 * sc)} ${f(-10 * sc)}`; }
   const cop = 1 - 0.25 * sm(0.6, 1, p.time);
-  out += V(cam, P(clS, { fill: p.cloudSh, opacity: f(cop) }) + P(cl, { fill: p.cloud, opacity: f(cop) }), KF.cloud);
+  out += V(cam, P(clS, { fill: p.cloudSh, opacity: f(cop) }) + P(cl, { fill: p.cloud, opacity: f(cop) }) + P(clH, ln(9, '#FFFFFF', 0.45 * cop * (1 - p.lit * 0.6))), KF.cloud);
   if (o.crack > 0 || o.onSky) out += V(cam, crack(o.crackAt.x, o.crackAt.y, o.crackR, o.crack) + (o.onSky || ''), KF.crack);
   return out;
 }
@@ -789,7 +799,7 @@ const FLY_FAR = [['p1', 120, 300, 1, -20, 0.0, 6], ['dog', 380, 430, 0.9, 10, 0.
 const FLY_MID = [['flyer', 270, 360, 1.0, -15, 0.0, 6, 0], ['dog', 540, 250, 1.0, 10, 0.1, -8, 1], ['mail', 900, 410, 0.11, -12, 0.0, 5, 2], ['flyer', 1130, 230, 0.9, 20, 0.2, -6, 3],
   ['car', 1380, 400, 0.9, -18, 0.25, 7, 4], ['flyer', 1650, 290, 1.0, 10, 0.3, -5, 5], ['dog', 1890, 430, 0.9, -20, 0.35, 6, 6], ['flyer', 2160, 270, 1.0, -10, 0.15, -6, 7],
   ['flyer', -210, 270, 1.0, 10, 0.2, 5, 8], ['flyer', 640, 540, 0.85, 30, 0.4, -7, 9]];
-const FLY_NEAR = [['bus', 1470, 330, 0.42, -8, 0.05, -10], ['tub', 400, 340, 0.21, 10, 0.12, 9], ['flyer', 1850, 650, 1.7, -25, 0.3, -8, 3], ['dog', 110, 610, 1.6, 15, 0.35, 8, 4]];
+const FLY_NEAR = [['bus', 1470, 330, 0.42, -8, 0.05, -10], ['tub', 300, 330, 0.21, 10, 0.12, 9], ['flyer', 1850, 650, 1.7, -25, 0.3, -8, 3], ['dog', 110, 610, 1.6, 15, 0.35, 8, 4]];
 function flyPos(e, i, t, flying, groundY) {
   const [, x0, y0, s, r0, th, vx = 5] = e;
   const rise = clamp((flying - th) / 0.35, 0, 1);
@@ -806,7 +816,7 @@ function flyFarPart(t, cam, p, o) {
 }
 function flyMidPart(t, cam, p, o, dy = 0) {
   if (!(o.flying > 0) || !o.flyMid) return '';
-  const tint = { tint: p.tint, tintK: p.tintK * 0.75 };
+  const tint = { tint: p.tint, tintK: p.tintK * 0.4 };
   let s = '';
   FLY_MID.forEach((e, i) => {
     const q = flyPos(e, i, t, o.flying, 1080 + dy);
@@ -821,7 +831,7 @@ function flyMidPart(t, cam, p, o, dy = 0) {
 }
 function flyNearPart(t, cam, p, o) {
   if (!(o.flying > 0) || !o.flyNear) return '';
-  const tint = { tint: p.tint, tintK: p.tintK * 0.6 };
+  const tint = { tint: p.tint, tintK: p.tintK * 0.3 };
   let s = '';
   FLY_NEAR.forEach((e, i) => {
     const q = flyPos(e, i, t, o.flying, 1500);
@@ -843,13 +853,13 @@ const POPS = [
 function farPart(t, cam, p, o, dy = 0) {
   const tr = dy ? `translate(0 ${dy})` : null;
   const hz = vgrad([[0, p.haze, 0], [1, p.haze, 0.85]]), hz2 = vgrad([[0, p.haze, 0], [1, p.haze, 0.55]]);
-  let a = P(FAR2.body, { fill: p.far2 }) + P(FAR2.win, { fill: 'url(#cityWinFarD)', opacity: f(p.glass * 0.45) });
-  if (p.lit > 0.01) a += P(FAR2.win, { fill: 'url(#cityWinFarN)', opacity: f(p.lit * 0.5) });
-  a += hz.def + R(-1700, 560, 5400, 400, 0, { fill: hz.url });
-  let b = P(FAR1.body, { fill: p.far }) + P(FAR1.win, { fill: 'url(#cityWinFarD)', opacity: f(p.glass * 0.55) });
-  if (p.lit > 0.01) b += P(FAR1.win, { fill: 'url(#cityWinFarN)', opacity: f(p.lit * 0.75) });
+  const farWin = (W, kD, kN) => (p.lit < 0.9 ? P(W, { fill: 'url(#cityWinFarD)', opacity: f(p.glass * kD) }) : '') + (p.lit > 0.01 ? P(W, { fill: 'url(#cityWinFarN)', opacity: f(p.lit * kN) }) : '');
+  const v2 = vis(cam, KF.far2), v1 = vis(cam, KF.far);
+  let a = P(FAR2.body, { fill: p.far2 }) + farWin(FAR2.win, 0.45, 0.5);
+  a += hz.def + R(v2.x0 - 100, 560, v2.x1 - v2.x0 + 200, 400, 0, { fill: hz.url });
+  let b = P(FAR1.body, { fill: p.far }) + farWin(FAR1.win, 0.55, 0.75);
   if (p.lit > 0.3) b += P(FAR1.tips.map(([x, y]) => dC(x, y, 4.5)).join(''), { fill: '#FF3B4E', opacity: f(p.lit * (0.35 + 0.65 * blink(t, 1.1))) });
-  b += hz2.def + R(-1700, 720, 5400, 220, 0, { fill: hz2.url });
+  b += hz2.def + R(v1.x0 - 100, 720, v1.x1 - v1.x0 + 200, 220, 0, { fill: hz2.url });
   return V(cam, G(a, tr), KF.far2) + V(cam, G(b, tr), KF.far) + flyFarPart(t, cam, p, o) + skyThings(t, cam, p, o);
 }
 // blimp + SERVER MESSAGE pop-ups (in front of the far skyline, behind the mid towers)
@@ -879,19 +889,29 @@ const MID_A = { x: 352, w: 192, top: 470, kind: 'round', col: '#9ED9A0' };
 const MID_B = [{ x: 896, w: 128, top: 420, kind: 'slant', col: '#7FB2F0' }, { x: 1024, w: 160, top: 590, kind: 'box', col: '#F29A7E', ac: true }];
 const MID_R = [{ x: 1920, w: 192, top: 330, kind: 'spire', col: '#6E86C8' }, { x: 2144, w: 224, top: 470, kind: 'step', col: '#F6D37A' }, { x: 2400, w: 192, top: 400, kind: 'box', col: '#5FC4C9', ant: true }, { x: 2624, w: 224, top: 520, kind: 'round', col: '#F29A7E' }];
 const genMid = (i, x) => ({ x: x + 32 * Math.floor(rnd(i, 21) * 2), w: 32 * (5 + Math.floor(rnd(i, 22) * 3)), top: 300 + Math.floor(rnd(i, 23) * 7) * 40, kind: ['box', 'step', 'round', 'slant', 'spire'][Math.floor(rnd(i, 24) * 5)], col: MID_COLS[Math.floor(rnd(i, 25) * MID_COLS.length)], ant: rnd(i, 26) < 0.3 });
-function winRects(x, y, w, p, kind = 'Mid', y1 = MID_BASE) {
-  const cell = kind === 'Mid' ? 40 : 60, y0 = Math.ceil((y + 14) / cell) * cell;
-  if (y0 >= y1 - 10) return '';
-  let s = R(x, y0, w, y1 - y0, 0, { fill: `url(#cityWin${kind}D)`, opacity: f(p.glass) });
-  if (p.lit > 0.01) s += R(x, y0, w, y1 - y0, 0, { fill: `url(#cityWin${kind}N)`, opacity: f(p.lit) });
-  return s;
+// Buildings of one layer are drawn in passes so that ALL their windows are ONE pattern path (each pattern-filled element
+// costs a few ms in Chromium): A.body (outlined bodies) → windows (day glass / lit night) → A.shade → A.deco (caps, roof gear).
+const newAcc = () => ({ body: '', win: '', shade: '', hi: '', awn: '', deco: '' });
+const MID_WIN_Y1 = 960;   // mid windows below this are always hidden by the near row
+function winD(x, y, w, cell, y1) { const y0 = Math.ceil((y + 14) / cell) * cell; return y0 < y1 - 10 ? dR(x, y0, w, y1 - y0) : ''; }
+function flushAcc(A, p, kind) {
+  let s = A.body;
+  if (A.win) {
+    if (p.lit < 0.9) s += P(A.win, { fill: `url(#cityWin${kind}D)`, opacity: f(p.glass) });
+    if (p.lit > 0.01) s += P(A.win, { fill: `url(#cityWin${kind}N)`, opacity: f(p.lit) });
+  }
+  if (A.shade) s += P(A.shade, op('#000', 0.13));
+  if (A.hi) s += P(A.hi, op('#FFFFFF', 0.12));
+  if (A.awn) s += P(A.awn, { fill: 'url(#cityAwn)', opacity: f(0.75 - 0.35 * p.lit) });
+  return s + A.deco;
 }
+// aviation light: blinks red at night (cheap two-circle glow, no gradient)
 function redLight(x, y, t, p, r = 6) {
   if (p.lit < 0.2) return Ci(x, y, r, olw('#B8303E', 2.5));
   const on = blink(t, 1.1, x * 0.01);
-  return (on ? Ci(x, y, r * 4, { fill: 'url(#cityGlowRed)', opacity: f(p.lit) }) : '') + Ci(x, y, r, { fill: on ? '#FF4A5A' : '#8A2030', stroke: LINE, 'stroke-width': 2.5 });
+  return (on ? Ci(x, y, r * 3.2, op('#FF4A5A', 0.18 * p.lit)) + Ci(x, y, r * 1.9, op('#FF6A7A', 0.3 * p.lit)) : '') + Ci(x, y, r, { fill: on ? '#FF4A5A' : '#8A2030', stroke: LINE, 'stroke-width': 2.5 });
 }
-function midBldg(b, p, t) {
+function midBldg(b, p, t, A) {
   const { x, w, top, kind } = b, c = bc(b.col, p), hi = mix(c, '#FFFFFF', 0.3);
   let body = dR(x, top, w, MID_BASE - top), wins = [[x, top, w]], shadeTop = top, cap = true;
   if (kind === 'step') {
@@ -900,65 +920,68 @@ function midBldg(b, p, t) {
   } else if (kind === 'round') { body += `M${x} ${top + 1}a${f(w / 2)} ${f(w * 0.34)} 0 0 1 ${w} 0Z`; cap = false; }
   else if (kind === 'slant') { body = dPoly([[x, MID_BASE], [x, top + 56], [x + w, top - 6], [x + w, MID_BASE]]); wins = [[x, top + 60, w]]; shadeTop = top + 20; cap = false; }
   else if (kind === 'spire') body += dPoly([[x + w * 0.22, top + 1], [x + w / 2, top - w * 0.62], [x + w * 0.78, top + 1]]);
-  let o = P(body, olw(c, 5));
-  for (const [wx, wy, ww] of wins) o += winRects(wx, wy, ww, p);
-  o += R(x + w * 0.74, shadeTop, w * 0.26, MID_BASE - shadeTop, 0, op('#000', 0.13));
+  A.body += P(body, olw(c, 5));
+  for (const [wx, wy, ww] of wins) A.win += winD(wx, wy, ww, 40, MID_WIN_Y1);
+  A.shade += dR(x + w * 0.74, shadeTop, w * 0.26, MID_BASE - shadeTop);
+  let o = '';
   if (kind === 'step') o += R(x + 58, top - 8, w - 116, 14, 5, olw(hi, 4)) + R(x + 26, top + 34, w - 52, 12, 5, olw(hi, 4)) + R(x - 6, top + 88, w + 12, 14, 5, olw(hi, 4));
   if (cap) o += R(x - 6, top - 10, w + 12, 16, 5, olw(hi, 4));
   if (kind === 'round') o += P(`M${x + 12} ${top - 4}a${f(w / 2 - 12)} ${f(w * 0.3)} 0 0 1 ${f(w * 0.36)} ${f(-w * 0.24)}`, ln(6, '#FFFFFF', 0.3)) + P(`M${f(x + w / 2)} ${f(top - w * 0.34)}V${f(top - w * 0.34 - 40)}`, ln(5)) + redLight(x + w / 2, top - w * 0.34 - 44, t, p, 5);
   if (kind === 'spire') o += P(`M${f(x + w / 2)} ${f(top - w * 0.62)}V${f(top - w * 0.62 - 70)}`, ln(5)) + redLight(x + w / 2, top - w * 0.62 - 74, t, p, 6);
   if (b.ant) o += P(`M${x + w * 0.3} ${top - 8}V${top - 90}M${x + w * 0.3 - 14} ${top - 60}H${x + w * 0.3 + 14}`, ln(5)) + redLight(x + w * 0.3, top - 94, t, p, 5);
   if (b.ac) o += R(x + 16, top - 40, 50, 30, 5, olw(bc('#C9CED8', p), 4)) + Ci(x + 41, top - 25, 9, { fill: 'none', stroke: LINE, 'stroke-width': 3 });
-  return o;
+  A.deco += o;
 }
-function construction(p, t) {
+function construction(p, t, A) {
   const g = bc('#E8603C', p), conc = bc('#BDB8C8', p);
-  let o = R(64, 780, 256, 300, 0, olw(conc, 5)) + winRects(64, 780, 256, p) + R(250, 780, 70, 300, 0, op('#000', 0.12));
+  A.body += R(64, 780, 256, 300, 0, olw(conc, 5));
+  A.win += winD(64, 780, 256, 40, MID_WIN_Y1);
+  A.shade += dR(250, 780, 70, 300);
   const cols = [70, 150, 230, 312];
-  let gd = cols.map((x) => `M${x} 784V${x === 312 ? 640 : 580}`).join('') + 'M66 720H316M66 650H316M66 586H236M150 586L230 650M70 720L150 650';
-  o += P(gd, ln(15, LINE)) + P(gd, ln(8, g));
-  o += R(96, 796, 196, 40, 6, olw(bc('#FFD21F', p), 4)) + TF('COMING SOON', 194, 824, 23, bc('#2A2A2A', p));
-  o += P('M110 586L104 560L124 558L126 586M140 560H180', ln(4, bc('#5A6478', p)));
-  return o;
+  const gd = cols.map((x) => `M${x} 784V${x === 312 ? 640 : 580}`).join('') + 'M66 720H316M66 650H316M66 586H236M150 586L230 650M70 720L150 650';
+  A.deco += P(gd, ln(15, LINE)) + P(gd, ln(8, g)) + P('M110 586L104 560L124 558L126 586M140 560H180', ln(4, bc('#5A6478', p)));
 }
 function crane(p, t, o) {
   const nk = clamp(p.tintK / 0.7, 0, 1), h = craneHook(t, o), tx = o.hookX;
   const yel = bc('#FFC21F', p), grey = bc('#9A98A8', p);
-  const lat = (x, y, w, hh) => R(x, y, w, hh, 0, { fill: 'url(#cityLatD)' }) + (nk > 0.05 ? R(x, y, w, hh, 0, { fill: 'url(#cityLatN)', opacity: f(nk) }) : '') + R(x, y, w, hh, 0, { fill: 'none', stroke: LINE, 'stroke-width': 4 });
+  const latD = dR(176, 150, 36, MID_WIN_Y1 - 150) + dR(176, CRANE.jibY, CRANE.tip - 176, 26) + dR(24, CRANE.jibY, 152, 22);
   let s = P('M194 72L592 152M194 72L28 152', ln(3.5));
-  s += lat(176, 150, 36, MID_BASE - 150) + lat(176, CRANE.jibY, CRANE.tip - 176, 26) + lat(24, CRANE.jibY, 152, 22);
+  s += P(latD, { fill: nk < 0.95 ? 'url(#cityLatD)' : 'url(#cityLatN)' }) + (nk > 0.05 && nk < 0.95 ? P(latD, { fill: 'url(#cityLatN)', opacity: f(nk) }) : '') + P(latD, { fill: 'none', stroke: LINE, 'stroke-width': 4 });
   s += P('M180 150L194 70L208 150', ln(9)) + P('M180 150L194 70L208 150', ln(4.5, yel));
   s += R(28, 172, 66, 56, 6, olw(grey, 4)) + R(98, 172, 50, 40, 6, olw(grey, 4)) + P('M32 190H90M32 208H90', ln(3, mix(grey, '#000000', 0.25)));
   s += R(212, 176, 52, 46, 8, olw(yel, 4)) + R(222, 184, 32, 20, 4, { fill: p.lit > 0.4 ? '#FFE6A0' : bc('#A9DDF5', p), stroke: LINE, 'stroke-width': 3 });
   s += R(tx - 18, 176, 36, 14, 4, olw(bc('#4A4E60', p), 3));
-  s += P(`M${tx - 5} 190L${f(h.x - 5)} ${f(h.y - 38)}M${tx + 5} 190L${f(h.x + 5)} ${f(h.y - 38)}`, ln(3));
-  s += G(R(-18, -44, 36, 28, 6, olw(yel, 3.5)) + P('M-14 -38H14', ln(3, '#000', 0.2)) + P('M0 -16V2Q0 14 -11 12Q-18 10 -16 2', { ...ln(6), fill: 'none' }), `translate(${f(h.x)} ${f(h.y)}) rotate(${f(h.rot)})`);
+  s += P(`M${tx - 5} 190L${f(h.x - 5)} ${f(h.y - 48)}M${tx + 5} 190L${f(h.x + 5)} ${f(h.y - 48)}`, ln(3));
+  s += G(R(-18, -54, 36, 28, 6, olw(yel, 3.5)) + P('M-14 -48H14', ln(3, '#000', 0.2)) + P('M0 -26V-8Q0 4 -11 2Q-18 0 -16 -8', { ...ln(6), fill: 'none' }), `translate(${f(h.x)} ${f(h.y)}) rotate(${f(h.rot)})`);
   s += redLight(CRANE.tip - 6, CRANE.jibY - 6, t, p, 5) + redLight(194, 66, t + 0.4, p, 5);
   return s;
 }
-function tallTower(p, t) {
+function tallTower(p, t, A) {
   const c = bc('#3FB6B0', p), hi = mix(c, '#FFFFFF', 0.28), gold = bc('#FFD24F', p);
-  let s = P(dR(576, 380, 288, MID_BASE - 380) + dR(600, 300, 240, 84) + dR(624, 236, 192, 68), olw(c, 5));
-  s += winRects(576, 384, 288, p) + winRects(608, 304, 224, p, 'Mid', 372) + winRects(640, 248, 160, p, 'Mid', 292);
-  s += R(590, 400, 12, MID_BASE - 400, 5, op(hi, 0.8)) + R(838, 400, 12, MID_BASE - 400, 5, op(hi, 0.8));
-  s += R(808, 384, 56, MID_BASE - 384, 0, op('#000', 0.14)) + R(800, 304, 40, 76, 0, op('#000', 0.14)) + R(784, 240, 32, 60, 0, op('#000', 0.14));
+  A.body += P(dR(576, 380, 288, MID_BASE - 380) + dR(600, 300, 240, 84) + dR(624, 236, 192, 68), olw(c, 5));
+  A.win += winD(576, 384, 288, 40, MID_WIN_Y1) + winD(608, 304, 224, 40, 372) + winD(640, 248, 160, 40, 292);
+  A.shade += dR(808, 384, 56, MID_BASE - 384) + dR(800, 304, 40, 76) + dR(784, 240, 32, 60);
+  let s = R(590, 400, 12, MID_WIN_Y1 - 400, 5, op(hi, 0.8)) + R(838, 400, 12, MID_WIN_Y1 - 400, 5, op(hi, 0.8));
   s += R(568, 372, 304, 14, 5, olw(gold, 4)) + R(592, 292, 256, 12, 5, olw(gold, 4)) + R(614, 222, 212, 16, 6, olw(gold, 4));
   const ha = t * 6, ma = t * 72;
   s += Ci(720, 268, 23, olw(p.lit > 0.4 ? '#FFF2C0' : '#FFF8E8', 4)) + P(`M720 268L${f(720 + Math.sin(ha * Math.PI / 180) * 12)} ${f(268 - Math.cos(ha * Math.PI / 180) * 12)}M720 268L${f(720 + Math.sin(ma * Math.PI / 180) * 17)} ${f(268 - Math.cos(ma * Math.PI / 180) * 17)}`, ln(3.5));
   s += P('M812 222V176', ln(4.5)) + redLight(812, 172, t, p, 5);
-  return s;
+  A.deco += s;
 }
-function tvStation(p, t) {
+function tvStation(p, t, A) {
   const c = bc('#EDE6D6', p), red = bc('#E8453C', p), grey = bc('#C9CED8', p), nk = clamp(p.tintK / 0.7, 0, 1);
-  let s = P('M1380 470L1400 250L1420 470Z', { fill: 'url(#cityLatD)' }) + (nk > 0.05 ? P('M1380 470L1400 250L1420 470Z', { fill: 'url(#cityLatN)', opacity: f(nk) }) : '') + P('M1380 470L1400 250L1420 470Z', { fill: 'none', stroke: LINE, 'stroke-width': 4, 'stroke-linejoin': 'round' });
-  s += P('M1400 252V196', ln(4.5)) + redLight(1400, 192, t, p, 6) + redLight(1400, 340, t + 0.5, p, 4.5);
-  s += R(1216, 470, 224, MID_BASE - 470, 0, olw(c, 5)) + winRects(1216, 586, 224, p);
-  s += R(1216, 470, 224, 34, 0, { fill: red, stroke: LINE, 'stroke-width': 5 }) + R(1384, 504, 56, MID_BASE - 504, 0, op('#000', 0.13));
+  const lat = 'M1380 470L1400 250L1420 470Z';
+  A.body += P(lat, { fill: nk < 0.95 ? 'url(#cityLatD)' : 'url(#cityLatN)' }) + (nk > 0.05 && nk < 0.95 ? P(lat, { fill: 'url(#cityLatN)', opacity: f(nk) }) : '') + P(lat, { fill: 'none', stroke: LINE, 'stroke-width': 4, 'stroke-linejoin': 'round' });
+  A.body += R(1216, 470, 224, MID_BASE - 470, 0, olw(c, 5));
+  A.win += winD(1216, 586, 224, 40, MID_WIN_Y1);
+  A.shade += dR(1384, 504, 56, MID_BASE - 504);
+  let s = P('M1400 252V196', ln(4.5)) + redLight(1400, 192, t, p, 6) + redLight(1400, 340, t + 0.5, p, 4.5);
+  s += R(1216, 470, 224, 34, 0, { fill: red, stroke: LINE, 'stroke-width': 5 });
   if (p.neon > 0.05) s += R(1228, 508, 200, 74, 16, { fill: 'none', stroke: '#FF6A5A', 'stroke-width': 14, opacity: f(0.35 * p.neon) });
   s += R(1236, 514, 184, 62, 10, olw(red, 4)) + T('NEWS 7', 1328, 559, 40, p.neon > 0.5 ? '#FFF6D8' : '#FFFFFF');
   s += G(P('M-48 -8Q0 50 48 -8Z', olw(grey, 4)) + P('M0 16L0 -30', ln(4)) + Ci(0, -32, 5, olw(red, 2.5)), 'translate(1270 458) rotate(-28)') + R(1260, 456, 18, 16, 3, olw(grey, 3));
   s += G(P('M-48 -8Q0 50 48 -8Z', olw(grey, 4)) + P('M0 16L0 -30', ln(4)), 'translate(1334 462) rotate(24) scale(0.55)');
-  return s;
+  A.deco += s;
 }
 const STAD = { cx: 1690, rim: 610, rx: 215, ry: 64 };
 function stadium(p, t) {
@@ -983,21 +1006,22 @@ function stadium(p, t) {
 }
 function midPart(t, cam, p, o, dy = 0) {
   const v = vis(cam, KF.mid), see = (x0, x1) => x1 > v.x0 - 60 && x0 < v.x1 + 60;
-  let m = '';
-  for (const b of MID) if (see(b.x, b.x + b.w)) m += midBldg(b, p, t);
-  if (see(20, 330)) m += construction(p, t);
-  if (see(MID_A.x, MID_A.x + MID_A.w)) m += midBldg(MID_A, p, t);
-  if (see(20, 620)) m += crane(p, t, o);
-  if (see(570, 870)) m += tallTower(p, t);
-  for (const b of MID_B) if (see(b.x, b.x + b.w)) m += midBldg(b, p, t);
+  const A = newAcc();
+  for (const b of MID) if (see(b.x, b.x + b.w)) midBldg(b, p, t, A);
+  if (see(20, 330)) construction(p, t, A);
+  if (see(MID_A.x, MID_A.x + MID_A.w)) midBldg(MID_A, p, t, A);
+  if (see(570, 870)) tallTower(p, t, A);
+  for (const b of MID_B) if (see(b.x, b.x + b.w)) midBldg(b, p, t, A);
+  if (see(1210, 1450)) tvStation(p, t, A);
+  if (see(1440, 1940)) A.body += stadium(p, t);
+  for (const b of MID_R) if (see(b.x, b.x + b.w)) midBldg(b, p, t, A);
+  fillSlots(cam, KF.mid, -704, 2848, 256, (i, x) => { midBldg(genMid(i, x), p, t, A); return ''; });
+  if (see(20, 620)) A.deco += crane(p, t, o);
   if (see(1000, 1200)) {
     const W = CITY.waterTower, fall = ease.in(clamp(o.waterFall, 0, 1));
-    m += G(waterTower(W.x, W.y, W.s, { tip: Math.max(o.waterTip, fall > 0 ? 1 : 0), t, tint: p.tint, tintK: p.tintK }), fall > 0 ? `translate(${f(fall * 90)} ${f(fall * fall * 700)}) rotate(${f(fall * 40)} ${W.x + 30} ${W.y})` : null);
+    A.deco += G(waterTower(W.x, W.y, W.s, { tip: Math.max(o.waterTip, fall > 0 ? 1 : 0), t, tint: p.tint, tintK: p.tintK }), fall > 0 ? `translate(${f(fall * 90)} ${f(fall * fall * 700)}) rotate(${f(fall * 40)} ${W.x + 30} ${W.y})` : null);
   }
-  if (see(1210, 1450)) m += tvStation(p, t);
-  if (see(1440, 1940)) m += stadium(p, t);
-  for (const b of MID_R) if (see(b.x, b.x + b.w)) m += midBldg(b, p, t);
-  m += fillSlots(cam, KF.mid, -704, 2848, 256, (i, x) => midBldg(genMid(i, x), p, t));
+  let m = flushAcc(A, p, 'Mid');
   if (o.onMid) m += o.onMid;
   return V(cam, G(m, dy ? `translate(0 ${dy})` : null), KF.mid) + flyMidPart(t, cam, p, o, dy);
 }
@@ -1014,18 +1038,20 @@ const NEAR = [
 ];
 const NEAR_COLS = ['#D9786A', '#5FB8C8', '#7FC6A4', '#8A8FD8', '#F2C26B', '#E58FB0', '#F09A5E', '#9B7ED0'];
 const genNear = (i, x) => ({ x, w: 48 * (5 + Math.floor(rnd(i, 27) * 2)), top: 760 + Math.floor(rnd(i, 28) * 6) * 22, col: NEAR_COLS[Math.floor(rnd(i, 29) * NEAR_COLS.length)], awn: ['#E8453C', '#3A7BD5', '#2E9C6A'][i & 1 ? 1 : (i % 3 === 0 ? 2 : 0)], ac: rnd(i, 30) < 0.5 });
-function nearBldg(b, p, t) {
+function nearBldg(b, p, t, A) {
   const { x, w, top } = b, c = bc(b.col, p), hi = mix(c, '#FFFFFF', 0.25), sh = mix(c, '#000000', 0.25);
-  let s = R(x, top, w, 1500 - top, 0, olw(c, 6)) + winRects(x, top + 20, w, p, 'Near', SHOP_Y - 8);
-  s += R(x + w - 46, top, 46, 1500 - top, 0, op('#000', 0.13)) + R(x + 8, top + 10, 12, SHOP_Y - top - 18, 6, op('#FFFFFF', 0.12));
-  s += R(x - 10, top - 16, w + 20, 24, 7, olw(hi, 5));
-  s += R(x, SHOP_Y, w, 1500 - SHOP_Y, 0, { fill: sh, stroke: LINE, 'stroke-width': 6 });
-  s += R(x + 22, SHOP_Y + 34, w - 44, 90, 6, { fill: mix(bc('#BFE6FF', p), '#FFD98A', p.lit), stroke: LINE, 'stroke-width': 4 }) + R(x + 32, SHOP_Y + 42, 16, 50, 4, op('#FFFFFF', 0.35));
+  A.body += R(x, top, w, 1500 - top, 0, olw(c, 6)) + R(x, SHOP_Y, w, 1500 - SHOP_Y, 0, { fill: sh, stroke: LINE, 'stroke-width': 6 });
+  A.body += R(x + 22, SHOP_Y + 34, w - 44, 90, 6, { fill: mix(bc('#BFE6FF', p), '#FFD98A', p.lit), stroke: LINE, 'stroke-width': 4 });
+  A.win += winD(x, top + 20, w, 60, SHOP_Y - 8);
+  A.shade += dR(x + w - 46, top, 46, 1500 - top);
+  A.hi += dRR(x + 8, top + 10, 12, SHOP_Y - top - 18, 6) + dRR(x + 32, SHOP_Y + 42, 16, 50, 4);
   const n = Math.max(2, Math.round((w - 20) / 34)), sw = (w - 20) / n;
   let aw = `M${x + 10} ${SHOP_Y - 2}H${x + w - 10}V${SHOP_Y + 22}`;
   for (let i = 0; i < n; i++) aw += `q${f(-sw / 2)} 16 ${f(-sw)} 0`;
   aw += 'Z';
-  s += P(aw, olw(bc(b.awn || '#E8453C', p), 4)) + P(aw, { fill: 'url(#cityAwn)', opacity: f(0.75 - 0.35 * p.lit) });
+  A.body += P(aw, olw(bc(b.awn || '#E8453C', p), 4));
+  A.awn += aw;
+  let s = R(x - 10, top - 16, w + 20, 24, 7, olw(hi, 5));
   if (b.ac) s += R(x + 26, top - 52, 74, 38, 6, olw(bc('#C9CED8', p), 4)) + Ci(x + 63, top - 33, 12, { fill: 'none', stroke: LINE, 'stroke-width': 3 }) + R(x + 112, top - 40, 30, 26, 4, olw(bc('#AEB4C2', p), 3));
   if (b.bill) {
     const bw = Math.min(w - 30, 270), bx = x + w / 2 - bw / 2, by = top - 132;
@@ -1044,13 +1070,13 @@ function nearBldg(b, p, t) {
     const ax = x + w - 56;
     s += P(`M${ax} ${top - 8}V${top - 190}M${ax - 18} ${top - 120}H${ax + 18}M${ax - 12} ${top - 160}H${ax + 12}`, ln(6)) + G(P('M-26 -6Q0 30 26 -6Z', olw(bc('#E8EEF8', p), 3.5)) + P('M0 10V-14', ln(3)), `translate(${ax - 24} ${top - 70}) rotate(-35)`) + redLight(ax, top - 196, t, p, 6);
   }
-  return s;
+  A.deco += s;
 }
 function nearPart(t, cam, p, o) {
-  const v = vis(cam, KF.near);
-  let n = '';
-  for (const b of NEAR) if (b.x + b.w > v.x0 - 60 && b.x < v.x1 + 60) n += nearBldg(b, p, t);
-  n += fillSlots(cam, KF.near, -624, 2688, 336, (i, x) => nearBldg(genNear(i, x), p, t));
+  const v = vis(cam, KF.near), A = newAcc();
+  for (const b of NEAR) if (b.x + b.w > v.x0 - 60 && b.x < v.x1 + 60) nearBldg(b, p, t, A);
+  fillSlots(cam, KF.near, -624, 2688, 336, (i, x) => { nearBldg(genNear(i, x), p, t, A); return ''; });
+  let n = flushAcc(A, p, 'Near');
   if (o.onNear) n += o.onNear;
   return V(cam, n, KF.near);
 }
@@ -1110,7 +1136,7 @@ function cityLight(t, cam, p, o) {
     }
     l += V(cam, P(b, { fill: 'url(#cityBeam)', opacity: f(0.55 * sm(0.1, 0.8, o.crack)) }), KF.crack);
   }
-  if (adm > 0.01) l += V(cam, fullRect(cam, 0, { fill: 'url(#cityAdminWash)', opacity: f(adm * 0.85) }), 0) + wash(cam, '#DDEBFF', adm * 0.06);
+  if (adm > 0.01) l += V(cam, fullRect(cam, 0, { fill: 'url(#cityAdminWash)', opacity: f(adm * 0.7) }), 0) + wash(cam, '#DDEBFF', adm * 0.05);
   return l;
 }
 
@@ -1169,27 +1195,29 @@ function rooftop(t, cam, opts = {}) {
 // Low-angle city for the size duel: rows of tiny rooftops at the bottom, giants stand with their feet on GIANT.ground.
 const GIANT = { ground: 1000, horizon: 830, k: 1 };
 const GROWS = [
-  { k: 0.55, base: 1300, y0: 700, y1: 820, seed: 301, step: 132 },
-  { k: 0.8, base: 1300, y0: 800, y1: 900, seed: 302, step: 150 },
-  { k: 1.18, base: 1400, y0: 960, y1: 1030, seed: 303, step: 200 },
+  { k: 0.55, base: 1300, y0: 700, y1: 820, seed: 301, step: 132, win1: 920 },
+  { k: 0.8, base: 1300, y0: 800, y1: 900, seed: 302, step: 150, win1: 960 },
+  { k: 1.18, base: 1400, y0: 960, y1: 1030, seed: 303, step: 200, win1: 1150 },
 ];
 const G_COLS = ['#6E86C8', '#F2B3C7', '#B59CE6', '#9ED9A0', '#7FB2F0', '#F29A7E', '#F6D37A', '#5FC4C9', '#D9786A', '#8A8FD8'];
 function giantRow(cam, row, p, t) {
-  const v = vis(cam, row.k);
-  let s = '';
+  const v = vis(cam, row.k), A = newAcc(), y1 = row.win1;
   for (let i = Math.floor((v.x0 - 300) / row.step); i <= Math.ceil((v.x1 + 300) / row.step); i++) {
     const w = 16 * (5 + Math.floor(rnd(i, row.seed) * 5)), x = i * row.step + Math.floor(rnd(i, row.seed + 1) * 2) * 16 - 32;
     const top = Math.round(lerp(row.y0, row.y1, rnd(i, row.seed + 2)) / 22) * 22;
     const c = bc(G_COLS[Math.floor(rnd(i, row.seed + 3) * G_COLS.length)], p), hi = mix(c, '#FFFFFF', 0.28);
-    s += R(x, top, w, row.base - top, 0, olw(c, 4)) + R(x, top + 22, w, row.base - top - 22, 0, { fill: 'url(#cityWinFarD)', opacity: f(p.glass * 0.8) });
-    if (p.lit > 0.01) s += R(x, top + 22, w, row.base - top - 22, 0, { fill: 'url(#cityWinFarN)', opacity: f(p.lit) });
-    s += R(x + w - 18, top, 18, row.base - top, 0, op('#000', 0.13)) + R(x - 4, top - 8, w + 8, 12, 4, olw(hi, 3));
-    const kind = Math.floor(rnd(i, row.seed + 4) * 4);
+    const kind = Math.floor(rnd(i, row.seed + 4) * 5);
+    A.body += kind === 3 ? P(dR(x, top, w, row.base - top) + `M${x + 8} ${top + 1}a${f(w / 2 - 8)} ${f(w * 0.3)} 0 0 1 ${w - 16} 0Z`, olw(c, 4)) : R(x, top, w, row.base - top, 0, olw(c, 4));
+    A.win += dR(x, top + 22, w, y1 - top - 22);
+    A.shade += dR(x + w - 18, top, 18, row.base - top);
+    let s = kind === 3 ? '' : R(x - 4, top - 8, w + 8, 12, 4, olw(hi, 3));
     if (kind === 0) s += waterTower(x + w * 0.35, top - 4, 0.16, { tint: p.tint, tintK: p.tintK, t });
     else if (kind === 1) s += P(`M${x + w * 0.7} ${top - 4}V${top - 50}`, ln(3.5)) + redLight(x + w * 0.7, top - 53, t + i, p, 3.5);
     else if (kind === 2) s += R(x + 10, top - 22, 30, 16, 3, olw(bc('#C9CED8', p), 3));
+    else if (kind === 4 && p.lit > 0.3) s += R(x + 6, top - 34, w - 12, 22, 4, { fill: '#1A1638', stroke: LINE, 'stroke-width': 2.5 }) + TF(['PIZZA', 'HOTEL', 'BANK', 'CAFE'][i & 3], x + w / 2, top - 17, 15, ['#FF5A5A', '#4FE3FF', '#7DFF8A', '#FF7AD8'][i & 3]);
+    A.deco += s;
   }
-  return V(cam, s, row.k);
+  return V(cam, flushAcc(A, p, 'Far'), row.k);
 }
 function giantScale(t, cam, opts = {}) {
   cam = cam || {};
@@ -1223,6 +1251,11 @@ function chaseLight(cam, o, base = '') {
   if (o.admin > 0.01) l += V(cam, fullRect(cam, 0, { fill: 'url(#cityAdminWash)', opacity: f(o.admin * 0.8) }), 0);
   if (o.flash > 0.01) l += wash(cam, '#FFFFFF', o.flash);
   return l;
+}
+function clouds(list, t, col = '#FFFFFF', sh = '#D6ECFF') {
+  let d = '', ds = '';
+  for (const [x0, y, sc] of list) { const x = wrap(x0 + t * 6 * sc, -700, 2600); d += cloudD(x, y, sc); ds += dRR(x - 96 * sc, y + 12 * sc, 352 * sc, 62 * sc, 31 * sc); }
+  return P(ds, { fill: sh }) + P(d, { fill: col });
 }
 function sunDisk(x, y, r, t, col = '#FFE45C', rayCol = '#FFF3B0', rayOp = 0.18) {
   return rays(x, y, 16, r * 3.6, rayCol, rayOp, t * 4) + Ci(x, y, r * 1.85, op('#FFF6C8', 0.16)) + Ci(x, y, r * 1.38, op('#FFF6C8', 0.24)) + Ci(x, y, r, { fill: col }) + Ci(x - r * 0.3, y - r * 0.3, r * 0.3, op('#FFFFFF', 0.45));
@@ -1260,11 +1293,18 @@ function desert(t, cam, opts = {}) {
   const g = vgrad([[0, '#2C86F5'], [0.45, '#6CC0FF'], [0.78, '#BFE6FF'], [1, '#FFE6B0']]);
   let bg = V(cam, g.def + fullRect(cam, 0, { fill: g.url }), 0);
   bg += V(cam, sunDisk(1540, 200, 92, t), 0.03);
-  bg += V(cam, P(puffs(160, 520, 150, 40, 5) + puffs(1000, 1260, 110, 30, 7), op('#FFFFFF', 0.85)), 0.06);
+  bg += V(cam, clouds([[260, 130, 0.75], [1020, 90, 0.55], [-400, 160, 0.8]], t, '#FFFFFF', '#FFE6C8'), 0.06);
   const mesa = 'M-900 770L-700 770L-660 610Q-650 592 -630 592L-380 592Q-360 592 -352 610L-300 770L120 770L150 668Q156 654 172 654L330 654Q344 654 350 668L392 770L1290 770L1334 566Q1342 550 1362 550L1700 550Q1720 550 1728 566L1784 770L2900 770V1300H-900Z';
   let m = P(mesa, { fill: '#E5A07E' }) + P('M-660 610Q-650 592 -630 592L-560 592L-600 770H-700Z M150 668Q156 654 172 654L210 654L190 770H120Z M1334 566Q1342 550 1362 550L1440 550L1400 770H1290Z', op('#C47A68', 0.6)) + P('M-640 600H-370M170 662H330M1360 558H1710', ln(6, '#F7C29E'));
-  if (o.heat > 0) { let hd = ''; for (let i = 0; i < 5; i++) { const y = 690 + i * 16, ph = t * 3 + i; hd += `M-400 ${y}` + Array.from({ length: 30 }, (_, j) => `q40 ${f(Math.sin(ph + j) * 6)} 80 0`).join(''); } m += P(hd, ln(3, '#FFFFFF', 0.18 * o.heat)); }
   bg += V(cam, m, 0.12);
+  if (o.heat > 0) {
+    let hd = '';
+    for (let i = 0; i < 8; i++) {
+      const u = (t * 0.35 + rnd(i, 121)) % 1, x = rnd(i, 122) * 1900, y = 800 + rnd(i, 123) * 90 - u * 90, a = Math.sin(u * Math.PI);
+      hd += P(`M${f(x)} ${f(y)}q10 -8 20 0t20 0t20 0`, { ...ln(4, '#FFFFFF', 0.35 * a * o.heat), fill: 'none' });
+    }
+    bg += V(cam, hd, 0.45);
+  }
   const d1 = 'M-900 812Q-500 700 -100 770Q300 832 700 742Q1100 664 1500 752Q1900 832 2300 732Q2700 664 3100 750V1400H-900Z';
   bg += V(cam, P(d1, { fill: '#F2C27A' }) + P(d1, { fill: 'url(#citySand)' }) + P('M-500 742Q-300 712 -100 770M1100 676Q1300 690 1500 752M2300 732Q2500 690 2700 678', ln(7, '#FFE2A8', 0.8)), 0.3);
   const d2 = 'M-900 880Q-400 770 100 846Q500 908 900 826Q1300 764 1700 836Q2100 906 2700 806V1400H-900Z';
@@ -1286,14 +1326,14 @@ function island(t, cam, opts = {}) {
   const o = { shark: false, admin: 0, flash: 0, ...opts };
   const g = vgrad([[0, '#1C7CF2'], [0.5, '#4BAEFF'], [0.85, '#97D7FF'], [1, '#DDF6FF']]);
   let bg = V(cam, g.def + fullRect(cam, 0, { fill: g.url }), 0) + V(cam, sunDisk(1580, 170, 80, t), 0.03);
-  bg += V(cam, P(puffs(200, 640, 200, 52, 11) + puffs(1150, 1430, 140, 40, 13), { fill: '#FFFFFF' }) + P(puffs(220, 640, 214, 50, 11), op('#CFE8FF', 0)), 0.06);
+  bg += V(cam, clouds([[260, 170, 0.95], [1130, 120, 0.7], [-500, 140, 0.8]], t), 0.06);
   let gulls = '';
   for (let i = 0; i < 3; i++) { const x = wrap(300 + i * 500 + t * (30 + i * 8), -200, 2200), y = 300 + i * 50 + Math.sin(t * 1.5 + i) * 12, fl = Math.sin(t * 7 + i * 2) * 8; gulls += `M${f(x - 26)} ${f(y - fl)}Q${f(x - 12)} ${f(y - 14)} ${f(x)} ${y}Q${f(x + 12)} ${f(y - 14)} ${f(x + 26)} ${f(y - fl)}`; }
   bg += V(cam, P(gulls, { ...ln(6, '#FFFFFF'), fill: 'none' }), 0.2);
   let sea = band(cam, 0.1, ISLAND.horizon, 2600, { fill: 'url(#cityOcean)' }) + band(cam, 0.1, ISLAND.horizon - 3, ISLAND.horizon + 7, op('#D8F4FF', 0.9));
   sea += G(P('M-20 0L20 0L14 12H-14Z', olw('#FFFFFF', 3)) + P('M0 -2V-46L24 -6Z', olw('#FF8A5A', 3)), `translate(${f(260 + Math.sin(t * 0.2) * 30)} ${ISLAND.horizon - 2}) scale(0.9)`);
   bg += V(cam, sea, 0.1);
-  bg += V(cam, G(band(cam, 0.35, 600, 2600, { fill: 'url(#cityWaves)' }), `translate(${f((t * 18) % 220)} 0)`), 0.35);
+  bg += V(cam, G(band(cam, 0.35, 600, 2600, { fill: 'url(#cityWaves)', opacity: 0.55 }), `translate(${f((t * 18) % 220)} 0)`), 0.35);
   let gl = '';
   for (let i = 0; i < 9; i++) { const x = rnd(i, 131) * 1900, y = 600 + rnd(i, 132) * 380, r = (4 + 6 * Math.max(0, Math.sin(t * 3 + i * 2))); gl += `M${f(x)} ${f(y - r)}L${f(x + r * 0.3)} ${f(y)}L${f(x)} ${f(y + r)}L${f(x - r * 0.3)} ${f(y)}Z`; }
   bg += V(cam, P(gl, op('#FFFFFF', 0.85)), 0.4);
@@ -1303,6 +1343,7 @@ function island(t, cam, opts = {}) {
   if (o.shark) { const a = t * 0.45, sx = 965 + Math.cos(a) * 640, sy = 940 + Math.sin(a) * 70; if (Math.sin(a) > -0.2) is += G(P('M-26 0Q-4 -10 6 -54Q14 -20 30 0Z', olw('#5A6A88', 4)) + P('M-60 4Q-30 -4 0 4Q30 12 60 4', ln(5, '#FFFFFF', 0.8)), `translate(${f(sx)} ${f(sy)}) scale(${Math.cos(a) > 0 ? -1 : 1} 1)`); }
   const sand = 'M500 902Q540 862 650 856H1290Q1400 862 1430 902Q965 950 500 902Z';
   is += P(sand, olw('#F7D892', 6)) + P('M516 900Q965 948 1414 900Q965 928 516 900Z', { fill: '#E0B26A' }) + P('M560 878Q600 864 660 862H1280', ln(6, '#FFF0C0', 0.9));
+  is += Ell(700, 884, 90, 10, op('#C9964A', 0.45)) + P('M600 872l8 -26l6 22l8 -30l6 30l8 -20l4 24Z M1330 876l7 -22l6 18l7 -26l6 26l7 -16l3 20Z', olw('#5CC46A', 3.5));
   is += G(P('M-16 0L-5 -6L0 -18L5 -6L16 0L5 5L8 16L0 9L-8 16L-5 5Z', olw('#FF7A8A', 3)), 'translate(1190 884) scale(1.3)') + P('M1100 896q-12 -22 6 -28q16 -2 16 18Z', olw('#FFE0E8', 3));
   const cx = 1262 + Math.sin(t * 2) * 12;
   is += G(R(-16, -14, 32, 18, 8, olw('#FF7A3A', 3)) + P('M-14 -10l-10 -10M14 -10l10 -10M-10 4l-8 6M10 4l8 6', ln(3.5, '#151515')) + P(dC(-6, -16, 3) + dC(6, -16, 3), { fill: '#151515' }), `translate(${f(cx)} 870)`);
@@ -1312,12 +1353,13 @@ function island(t, cam, opts = {}) {
   let rings = '';
   for (let i = 1; i < 10; i++) { const u = i / 10, x = (1 - u) * (1 - u) * px + 2 * (1 - u) * u * (px - 20) + u * u * (pt.x + sw), y = (1 - u) * (1 - u) * py + 2 * (1 - u) * u * ((py + pt.y) / 2 + 60) + u * u * pt.y; rings += `M${f(x - 15)} ${f(y + 4)}q15 8 30 0`; }
   is += P(trunk, ln(40, LINE)) + P(trunk, ln(30, '#C08A52')) + P(rings, ln(4, '#8A5A30'));
-  let fronds = '';
-  [[-150, 40], [-110, -20], [-40, -60], [40, -50], [110, -10], [150, 50], [-20, 60]].forEach(([dx, dy], i) => {
-    const ex = dx * 1.2, ey = dy + 40 + Math.sin(t * 1.2 + i) * 6;
-    fronds += `M0 0Q${f(ex * 0.5)} ${f(Math.min(dy, 0) - 40)} ${f(ex)} ${f(ey)}Q${f(ex * 0.45)} ${f(Math.min(dy, 0) - 6)} 0 0Z`;
+  let fronds = '', ribs = '';
+  [[-200, 70], [-170, -10], [-80, -70], [30, -78], [140, -36], [205, 46], [60, 96], [-90, 100]].forEach(([ex0, ey0], i) => {
+    const ex = ex0, ey = ey0 + Math.sin(t * 1.2 + i) * 7, nx = -ey * 0.22, ny = ex * 0.22;
+    fronds += `M0 0Q${f(ex * 0.45 + nx - 10)} ${f(ey * 0.45 + ny - 46)} ${f(ex)} ${f(ey)}Q${f(ex * 0.55 - nx)} ${f(ey * 0.55 - ny + 18)} 0 6Z`;
+    ribs += `M0 0Q${f(ex * 0.48)} ${f(ey * 0.48 - 22)} ${f(ex * 0.92)} ${f(ey * 0.92)}`;
   });
-  is += G(P(fronds, olw('#3EBB5A', 5)) + P(dC(-14, 12, 15) + dC(12, 14, 15) + dC(0, 26, 14), olw('#8A5A2E', 4)), `translate(${f(pt.x + sw)} ${pt.y}) rotate(${f(sw * 0.8)})`);
+  is += G(P(fronds, olw('#3EBB5A', 5)) + P(ribs, { ...ln(4, '#26944A'), fill: 'none' }) + P(dC(-16, 14, 16) + dC(14, 16, 16) + dC(-1, 30, 15), olw('#8A5A2E', 4)) + P(dC(-20, 9, 4) + dC(10, 11, 4), op('#FFFFFF', 0.35)), `translate(${f(pt.x + sw)} ${pt.y}) rotate(${f(sw * 0.8)})`);
   const mid = V(cam, is, 1);
   const fgW = 'M-600 1300V1048Q-300 1022 0 1046T600 1046T1200 1046T1800 1046T2400 1046V1300Z';
   const fg = V(cam, G(P(fgW, { fill: '#2C9FE6' }) + P('M-600 1048Q-300 1022 0 1046T600 1046T1200 1046T1800 1046T2400 1046', ln(8, '#FFFFFF', 0.85)), `translate(${f(Math.sin(t * 0.9) * 40)} ${f(Math.sin(t * 1.3) * 6)})`), 1.25);
@@ -1341,7 +1383,8 @@ function mountain(t, cam, opts = {}) {
   let mt = P(body, olw('#7C86AC', 6));
   mt += P('M1220 652L1360 764L1480 824L1640 904L1800 966L2100 1110L2500 1400H1500Q1400 1100 1250 900Q1150 780 1100 700Z', op('#5A6390', 0.55));
   mt += P('M300 960L420 900M140 1060L320 990M1500 900L1620 960M1700 1040L1860 1090M900 1000L1000 960L1120 990', ln(5, '#5A6390', 0.7));
-  mt += P(rp([[360, 1010], [380, 960], [430, 950], [450, 1000]], 10) + rp([[1480, 1010], [1500, 970], [1560, 966], [1580, 1012]], 10), olw('#6A7398', 5));
+  const rocks = rp([[280, 950], [320, 860], [372, 842], [420, 880], [452, 950]], 10) + rp([[1480, 920], [1520, 826], [1584, 814], [1630, 870], [1650, 930]], 10) + rp([[120, 1040], [176, 960], [226, 976], [272, 1050]], 8) + rp([[1760, 1010], [1806, 920], [1866, 914], [1910, 1000]], 8) + rp([[880, 900], [920, 840], [980, 832], [1010, 890]], 8);
+  mt += P(rocks, olw('#5E6890', 5)) + P('M330 856L372 842L398 860M1530 822L1584 814L1612 834M186 958L226 976M1812 920L1866 914M926 838L980 832', { ...ln(9, '#FFFFFF'), fill: 'none' }) + P('M300 930L340 870M1500 910L1530 840M900 890L924 846', ln(5, '#4A5378', 0.7));
   const snow = 'M560 764L700 652Q712 636 730 636L1190 636Q1208 636 1220 652L1360 764Q1330 780 1300 760Q1276 806 1236 774Q1200 822 1150 784Q1100 830 1040 790Q990 826 950 788Q900 820 856 782Q810 812 776 776Q730 800 704 770Q660 790 630 766Q596 784 560 764Z';
   mt += P(snow, olw('#FFFFFF', 6)) + P('M1110 640L1190 636Q1208 636 1220 652L1360 764Q1330 780 1300 760Q1276 806 1236 774Q1200 822 1150 784Q1120 700 1110 640Z', op('#D4E2F5', 0.9));
   mt += P('M716 646Q730 640 760 640H1180', ln(7, '#FFFFFF')) + P('M740 664Q900 680 1100 664', ln(4, '#BFD3F0', 0.8));
@@ -1369,12 +1412,12 @@ function mountain(t, cam, opts = {}) {
 const SERVER = {
   floor: 960, wall: { y0: 20, y1: 770 },
   desk: { top: 672, x0: 380, x1: 1560 }, keyboard: { x: 1010, y: 660 },
-  chair: { x: 600, seat: 738, back: 372, s: 0.3 },
+  chair: { x: 480, seat: 738, back: 432, s: 0.3 },
   screen: { x: 682, y: 182, w: 556, h: 350 }, header: { x: 960, y: 92 },
-  crown: { x: 1834, y: 356 }, cloak: { x: 1764, y: 330 }, catBed: { x: 1590, y: 966 }, mugs: [{ x: 1236, y: 672 }, { x: 1302, y: 672 }], lamp: { x: 170, y: 330 },
+  crown: { x: 1834, y: 356 }, cloak: { x: 1764, y: 330 }, catBed: { x: 1590, y: 966 }, mugs: [{ x: 1252, y: 672 }, { x: 1318, y: 672 }], lamp: { x: 84, y: 330 },
   monitors: [
-    { x: 30, y: 140, w: 260, h: 190, style: 'cream', kind: 'fly' }, { x: 40, y: 362, w: 290, h: 210, style: 'beige', kind: 'traffic' },
-    { x: 340, y: 176, w: 300, h: 214, style: 'grey', kind: 'city' }, { x: 1282, y: 176, w: 300, h: 214, style: 'dark', kind: 'snow' },
+    { x: 30, y: 140, w: 260, h: 190, style: 'cream', kind: 'fly' }, { x: 20, y: 362, w: 262, h: 200, style: 'beige', kind: 'traffic' },
+    { x: 330, y: 160, w: 300, h: 214, style: 'grey', kind: 'city' }, { x: 1282, y: 176, w: 300, h: 214, style: 'dark', kind: 'snow' },
     { x: 1290, y: 408, w: 320, h: 230, style: 'wood', kind: 'beach' }, { x: 1636, y: 132, w: 256, h: 192, style: 'grey', kind: 'desert' },
   ],
 };
@@ -1383,8 +1426,10 @@ function liveScreen(kind, w, h, t) {
   let o = '';
   if (kind === 'city') {
     o += thumb('night', 0, 0, w, h);
-    const bx = w * 0.42, by = h * 0.28;
-    o += R(bx, by, w * 0.14, h * 0.72, 0, { fill: '#3A3880' }) + P(`M${f(bx + w * 0.02)} ${f(by)}q0 ${f(-h * 0.14)} ${f(w * 0.05)} ${f(-h * 0.16)}l${f(w * 0.01)} ${f(-h * 0.05)}l${f(w * 0.015)} ${f(h * 0.04)}l${f(w * 0.015)} ${f(-h * 0.04)}l${f(w * 0.01)} ${f(h * 0.05)}q${f(w * 0.05)} ${f(h * 0.02)} ${f(w * 0.05)} ${f(h * 0.16)}Z`, { fill: '#FF9A3A' });
+    const bx = w * 0.42, by = h * 0.44;
+    const u = Math.min(w, h * 1.6) * 0.01, sw = Math.sin(t * 2) * 2;
+    o += R(bx, by, w * 0.14, h * 0.72, 0, { fill: '#3A3880' }) + P(`M${f(bx + w * 0.11)} ${f(by - u)}q${f(9 * u)} ${f(-2 * u + sw)} ${f(7 * u)} ${f(-10 * u)}`, { ...ln(2.6 * u, '#FF9A3A'), fill: 'none' });
+    o += P(`${dRR(bx + 1.5 * u, by - 12 * u, 10 * u, 12.5 * u, 4 * u)}${dRR(bx + 0.5 * u, by - 20 * u, 8 * u, 8 * u, 3 * u)}M${f(bx + 0.8 * u)} ${f(by - 18 * u)}l${f(1 * u)} ${f(-4.5 * u)}l${f(2.6 * u)} ${f(3.5 * u)}ZM${f(bx + 8.2 * u)} ${f(by - 18 * u)}l${f(-1 * u)} ${f(-4.5 * u)}l${f(-2.6 * u)} ${f(3.5 * u)}Z`, { fill: '#FF9A3A' });
     o += R(w * 0.66, h * 0.12 + Math.sin(t * 2) * 3, w * 0.24, h * 0.16, 3, { fill: '#C9CED8' }) + R(w * 0.66, h * 0.12 + Math.sin(t * 2) * 3, w * 0.24, h * 0.05, 2, { fill: '#5A6478' });
     let fl = '';
     for (let i = 0; i < 5; i++) fl += dC(wrap(w * rnd(i, 151) + t * 12, 0, w), h * (0.2 + rnd(i, 152) * 0.4) + Math.sin(t * 3 + i) * 4, 3);
@@ -1430,8 +1475,7 @@ function logScreen(w, h, logs, t, green, title) {
   shown.forEach((l, i) => {
     const last = i === shown.length - 1, y = 92 + i * 36;
     if (last) o += R(14, y - 27, w - 28, 36, 6, op(fg, 0.16));
-    o += TF(esc('> ' + l), 24, y, 27, last ? mix(fg, '#FFFFFF', 0.4) : fg, { 'text-anchor': 'start' });
-    if (last && Math.floor(t * 2.5) % 2 === 0) o += R(24 + (l.length + 2) * 14.2 + 4, y - 22, 12, 26, 2, { fill: fg });
+    o += TF(esc('> ' + l) + (last ? `<tspan fill-opacity="${Math.floor(t * 2.5) % 2 === 0 ? 1 : 0}">_</tspan>` : ''), 24, y, 27, last ? mix(fg, '#FFFFFF', 0.4) : fg, { 'text-anchor': 'start' });
   });
   return o;
 }
@@ -1472,20 +1516,20 @@ function serverRoom(t, cam, opts = {}) {
   b += P('M260 770C220 860 300 900 240 960M1700 700C1760 820 1660 880 1720 960M1560 760C1600 860 1520 900 1560 960', { ...ln(12, '#1E1418'), fill: 'none' });
   // keyboard + mouse
   const KB = SERVER.keyboard;
-  b += R(KB.x - 136, KB.y - 16, 272, 30, 8, olw('#E6DCC4', 4)) + R(KB.x - 128, KB.y - 13, 256, 20, 4, { fill: 'url(#cityKeys)' }) + P(`M${KB.x - 136} ${KB.y - 6}Q${KB.x - 200} ${KB.y - 40} ${KB.x - 150} ${KB.y - 90}`, { ...ln(4), fill: 'none' });
+  b += R(KB.x - 136, KB.y - 16, 272, 30, 8, olw('#E6DCC4', 4)) + R(KB.x - 128, KB.y - 13, 256, 20, 4, { fill: 'url(#cityKeys)' });
   b += Ell(KB.x + 176, KB.y + 2, 20, 12, olw('#E6DCC4', 4));
   // desk lamp (amber) bending over the keyboard
-  b += Ell(850, D.top - 2, 46, 10, olw('#5A4A3A', 4)) + P('M850 662L800 560L880 500', { ...ln(10), fill: 'none' }) + P('M850 662L800 560L880 500', { ...ln(5, '#C9A060'), fill: 'none' });
-  b += G(P('M-50 -10L50 -10L36 46H-36Z', olw('#E89A3A', 5)) + Ell(0, 46, 36, 8, { fill: o.lamp > 0.3 ? '#FFF2C0' : '#C9A060', stroke: LINE, 'stroke-width': 3 }), 'translate(900 504) rotate(-30)');
-  if (o.lamp > 0.05) b += P('M906 560L1000 548L1130 672H880Z', { fill: 'url(#cityLampCone)', opacity: f(0.7 * o.lamp) });
+  if (o.lamp > 0.05) b += P('M812 618L862 604L960 668H800Z', { fill: 'url(#cityLampCone)', opacity: f(0.8 * o.lamp) });
+  b += Ell(784, D.top - 2, 34, 8, olw('#5A4A3A', 4)) + P('M784 664L770 600L820 572', { ...ln(9), fill: 'none' }) + P('M784 664L770 600L820 572', { ...ln(4.5, '#C9A060'), fill: 'none' });
+  b += G(P('M-34 -8L34 -8L24 32H-24Z', olw('#E89A3A', 4.5)) + Ell(0, 32, 24, 6, { fill: o.lamp > 0.3 ? '#FFF2C0' : '#C9A060', stroke: LINE, 'stroke-width': 3 }), 'translate(832 580) rotate(-38)');
   // mugs + teapot + printout
   SERVER.mugs.forEach((m, i) => {
     b += P(`M${m.x + 20} ${m.y - 34}q20 2 18 16q-2 12 -18 12`, { ...ln(11), fill: 'none' }) + P(`M${m.x + 20} ${m.y - 34}q20 2 18 16q-2 12 -18 12`, { ...ln(5, i ? '#7FB2F0' : '#F29A7E'), fill: 'none' });
     b += R(m.x - 24, m.y - 46, 48, 46, 9, olw(i ? '#7FB2F0' : '#F29A7E', 4)) + Ell(m.x, m.y - 44, 20, 5, { fill: '#B9773E' }) + (i ? '' : P(`M${m.x - 8} ${m.y - 26}h16`, ln(4, '#FFFFFF', 0.7)));
     if (o.steam) { let st = ''; for (let j = 0; j < 2; j++) { const u = (t * 0.5 + j * 0.5 + i * 0.25) % 1; st += `M${m.x - 6 + j * 12} ${f(m.y - 54 - u * 60)}q${f(8 + Math.sin(t * 2 + j) * 4)} -10 0 -20q-8 -10 0 -20`; } b += P(st, { ...ln(5, '#FFFFFF', 0.35), fill: 'none' }); }
   });
-  b += G(P('M-48 0Q-56 -50 0 -54Q56 -50 48 0Z', olw('#F2EAD8', 5)) + P('M44 -28Q78 -40 80 -62', ln(10)) + P('M44 -28Q78 -40 80 -62', ln(5, '#F2EAD8')) + P('M-44 -36Q-78 -30 -60 -6', { ...ln(9), fill: 'none' }) + Ell(0, -54, 22, 7, olw('#E07A5A', 4)) + Ci(0, -64, 7, olw('#E07A5A', 3)) + P(dC(-20, -24, 6) + dC(4, -30, 6) + dC(24, -20, 6), { fill: '#E07A5A' }), `translate(1400 ${D.top})`);
-  b += R(1462, D.top - 36, 78, 36, 4, olw('#FFFFFF', 4)) + P('M1474 664h50M1474 652h40', ln(3, '#9AA0AE')) + P(`M1530 ${D.top + 14}C1550 760 1500 800 1530 860Q1540 900 1500 930L1580 950Q1620 900 1580 870Q1560 800 1556 ${D.top + 14}Z`, olw('#FFFFFF', 4)) + P('M1536 760h18M1530 800h20M1532 840h22M1520 900h40', ln(3, '#9AA0AE'));
+  b += G(P('M-48 0Q-56 -50 0 -54Q56 -50 48 0Z', olw('#F2EAD8', 5)) + P('M44 -28Q78 -40 80 -62', ln(10)) + P('M44 -28Q78 -40 80 -62', ln(5, '#F2EAD8')) + P('M-44 -36Q-78 -30 -60 -6', { ...ln(9), fill: 'none' }) + Ell(0, -54, 22, 7, olw('#E07A5A', 4)) + Ci(0, -64, 7, olw('#E07A5A', 3)) + P(dC(-20, -24, 6) + dC(4, -30, 6) + dC(24, -20, 6), { fill: '#E07A5A' }), `translate(1424 ${D.top})`);
+  b += R(1472, D.top - 36, 72, 36, 4, olw('#FFFFFF', 4)) + P('M1482 664h46M1482 652h36', ln(3, '#9AA0AE')) + P(`M1520 ${D.top + 14}C1546 760 1496 800 1526 860Q1536 900 1496 930L1576 950Q1616 900 1576 870Q1556 800 1550 ${D.top + 14}Z`, olw('#FFFFFF', 4)) + P('M1530 760h18M1526 800h20M1528 840h22M1516 900h40', ln(3, '#9AA0AE'));
   // floor: planks + braided rug
   b += band(cam, 1, 890, 2200, { fill: '#7A4A2E' }) + band(cam, 1, 890, 2200, { fill: 'url(#cityPlank)' }) + band(cam, 1, 884, 900, { fill: '#3A2418' }) + band(cam, 1, 898, 902, { fill: LINE });
   b += Ell(1000, 1000, 660, 84, olw('#8A3A4A', 6)) + Ell(1000, 1000, 576, 68, { fill: '#C8604A' }) + Ell(1000, 1000, 480, 52, { fill: '#E8B04A' }) + Ell(1000, 1000, 370, 38, { fill: '#7A9A5A' }) + Ell(1000, 1000, 240, 22, { fill: '#C8604A' });
@@ -1495,14 +1539,16 @@ function serverRoom(t, cam, opts = {}) {
   b += Ell(LM.x, 952, 66, 14, olw('#5A4A3A', 5)) + P(`M${LM.x} 950V${LM.y + 50}`, ln(10)) + P(`M${LM.x} 950V${LM.y + 50}`, ln(5, '#C9A060'));
   b += P(`M${LM.x - 70} ${LM.y + 56}L${LM.x - 46} ${LM.y - 44}H${LM.x + 46}L${LM.x + 70} ${LM.y + 56}Z`, olw(o.lamp > 0.3 ? '#F7B04A' : '#C98A3A', 6)) + P(`M${LM.x - 70} ${LM.y + 60}` + Array.from({ length: 7 }, () => 'q10 14 20 0').join(''), { ...ln(4, '#E07A3A'), fill: 'none' });
   // side table with tea + cookies
-  b += P('M270 812V950M230 950H310', ln(10)) + P('M270 812V950M230 950H310', ln(5, '#8A5636')) + Ell(270, 808, 96, 18, olw('#A86A42', 5));
-  b += R(232, 760, 40, 42, 8, olw('#C58BD8', 4)) + Ell(306, 798, 40, 9, olw('#FFFFFF', 3)) + P(dC(292, 790, 11) + dC(316, 788, 11) + dC(304, 780, 10), olw('#D9A05A', 3));
+  b += P('M190 822V952M152 952H228', ln(10)) + P('M190 822V952M152 952H228', ln(5, '#8A5636')) + Ell(190, 818, 82, 16, olw('#A86A42', 5));
+  b += R(140, 770, 40, 42, 8, olw('#C58BD8', 4)) + P('M180 780q16 2 14 14q-2 10 -14 10', { ...ln(4), fill: 'none' }) + Ell(222, 808, 36, 8, olw('#FFFFFF', 3)) + P(dC(210, 800, 10) + dC(232, 798, 10) + dC(221, 790, 9), olw('#D9A05A', 3));
   // coat rack with the Admin's cloak of code + golden crown
   b += Ell(1800, 958, 70, 14, olw('#5A3A2A', 5)) + P('M1800 956V300', ln(14)) + P('M1800 956V300', ln(8, '#8A5636')) + Ci(1800, 292, 14, olw('#A86A42', 4)) + P('M1800 330L1764 312M1800 330L1836 312M1800 380L1760 368', ln(7));
   if (o.cloak) {
     const C0 = SERVER.cloak;
-    const cl = `M${C0.x - 10} ${C0.y}Q${C0.x - 80} ${C0.y + 30} ${C0.x - 96} ${C0.y + 200}L${C0.x - 110} ${C0.y + 430}Q${C0.x - 40} ${C0.y + 450} ${C0.x + 10} ${C0.y + 436}Q${C0.x + 30} ${C0.y + 250} ${C0.x + 18} ${C0.y + 30}Z`;
-    b += P(cl, olw('#F4F8FF', 5)) + P(cl, { fill: 'url(#cityCode)' }) + P(`M${C0.x - 110} ${C0.y + 426}Q${C0.x - 40} ${C0.y + 446} ${C0.x + 10} ${C0.y + 432}`, ln(9, '#FFC93C')) + P(`M${C0.x - 30} ${C0.y + 40}Q${C0.x - 50} ${C0.y + 200} ${C0.x - 40} ${C0.y + 420}`, ln(4, '#BFD3F0', 0.8));
+    const x = C0.x, y = C0.y, sw = Math.sin(t * 0.9) * 4;
+    const cl = `M${x - 14} ${y}Q${x - 44} ${y + 4} ${x - 60} ${y + 40}L${f(x - 112 + sw)} ${y + 440}Q${f(x - 60 + sw)} ${y + 462} ${f(x - 10 + sw)} ${y + 446}Q${f(x + 40 + sw)} ${y + 462} ${f(x + 80 + sw)} ${y + 436}L${x + 46} ${y + 40}Q${x + 34} ${y + 4} ${x + 14} ${y}Z`;
+    b += P(cl, olw('#F4F8FF', 5)) + P(cl, { fill: 'url(#cityCode)' }) + P(`M${x - 36} ${y + 60}Q${f(x - 56 + sw)} ${y + 250} ${f(x - 60 + sw)} ${y + 450}M${x + 20} ${y + 60}Q${f(x + 30 + sw)} ${y + 250} ${f(x + 26 + sw)} ${y + 446}`, { ...ln(4, '#BFD3F0', 0.9), fill: 'none' });
+    b += P(`M${f(x - 110 + sw)} ${y + 436}Q${f(x - 60 + sw)} ${y + 458} ${f(x - 10 + sw)} ${y + 442}Q${f(x + 40 + sw)} ${y + 458} ${f(x + 78 + sw)} ${y + 432}`, { ...ln(9, '#FFC93C'), fill: 'none' }) + P(`M${x - 40} ${y + 14}Q${x} ${y + 44} ${x + 40} ${y + 14}`, { ...ln(12, '#FFC93C'), fill: 'none' });
   }
   if (o.crown) {
     const Cr = SERVER.crown, sw = Math.sin(t * 1.2) * 3;
@@ -1521,10 +1567,12 @@ function serverRoom(t, cam, opts = {}) {
   let tufts = '';
   for (let r = 0; r < 3; r++) for (let c = 0; c < 4; c++) tufts += dC(cx - 105 + c * 70 + (r % 2) * 35, CH.back + 70 + r * 90, 6);
   b += P(tufts, { fill: velSh }) + P(`M${cx - 150} ${CH.back + 40}Q${cx} ${CH.back + 14} ${cx + 150} ${CH.back + 40}`, ln(8, velHi, 0.6));
-  b += R(cx - 200, CH.seat - 16, 400, 86, 30, olw(vel, 7)) + R(cx - 180, CH.seat - 8, 360, 14, 7, op(velHi, 0.7));
-  b += P(`M${cx - 180} ${CH.seat + 66}L${cx - 186} ${CH.seat + 190}M${cx + 180} ${CH.seat + 66}L${cx + 186} ${CH.seat + 190}`, ln(18)) + P(`M${cx - 180} ${CH.seat + 66}L${cx - 186} ${CH.seat + 190}M${cx + 180} ${CH.seat + 66}L${cx + 186} ${CH.seat + 190}`, ln(10, '#5A3A2A'));
+  const legs = `M${cx - 170} ${CH.seat + 140}L${cx - 178} 936M${cx + 170} ${CH.seat + 140}L${cx + 178} 936`;
+  b += P(legs, ln(20)) + P(legs, ln(11, '#5A3A2A'));
+  b += R(cx - 198, CH.seat + 30, 396, 118, 20, olw(velSh, 7)) + P(`M${cx - 190} ${CH.seat + 136}` + Array.from({ length: 12 }, () => 'q16 16 32 0').join(''), { ...ln(5, velHi, 0.7), fill: 'none' });
+  b += R(cx - 204, CH.seat - 16, 408, 62, 28, olw(vel, 7)) + R(cx - 182, CH.seat - 8, 364, 12, 6, op(velHi, 0.7));
   let m = '';
-  for (const sx of [-1, 1]) m += R(cx + sx * 220 - 50, CH.seat - 70, 100, 210, 40, olw(sx < 0 ? vel : velSh, 7)) + Ell(cx + sx * 220, CH.seat - 62, 52, 26, olw(velHi, 6));
+  for (const sx of [-1, 1]) m += R(cx + sx * 212 - 48, CH.seat - 72, 96, 222, 40, olw(sx < 0 ? vel : velSh, 7)) + Ell(cx + sx * 212, CH.seat - 64, 50, 25, olw(velHi, 6)) + P(`M${cx + sx * 212 - 30} ${CH.seat - 20}V${CH.seat + 120}`, ln(5, velSh, 0.6));
   const bl = `M${cx + 150} ${CH.seat - 80}Q${cx + 240} ${CH.seat - 110} ${cx + 290} ${CH.seat - 60}L${cx + 300} ${CH.seat + 150}Q${cx + 250} ${CH.seat + 170} ${cx + 190} ${CH.seat + 140}Q${cx + 120} ${CH.seat + 100} ${cx + 60} ${CH.seat + 120}L${cx + 70} ${CH.seat + 30}Q${cx + 120} ${CH.seat} ${cx + 150} ${CH.seat - 80}Z`;
   m += P(bl, { fill: 'url(#cityKnit)', stroke: LINE, 'stroke-width': 6, 'stroke-linejoin': 'round' }) + P(`M${cx + 300} ${CH.seat + 150}Q${cx + 250} ${CH.seat + 170} ${cx + 190} ${CH.seat + 140}`, { ...ln(10, '#F6E8C8'), 'stroke-dasharray': '4 10', fill: 'none' });
   const fg = V(cam, P('M-300 1090C200 1040 500 1110 900 1080M1300 1100C1600 1050 1900 1110 2300 1070', { ...ln(16, '#1E1418'), fill: 'none' }), 1.15);

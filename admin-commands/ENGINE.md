@@ -121,4 +121,6 @@ Render stills densely: at least one every ~1.5 s across your whole range, plus e
 
 ## Shared sets
 
-SHARED_SETS_PLACEHOLDER
+- **Home + school:** `scenes/sets.js` — read the index comment at the top of the file (every set, its opts and anchors), contact sheet `concept/sets_home.png`. Rooms: `set(t, opts)` or `set.layers(t, opts)` → `{ bg, mid, front, fg, light }`: draw `bg` (parallax k 0.5–0.8), `mid`, characters BEHIND furniture (seated / inside the fridge / behind a counter or desk), then `front` (furniture fronts), then characters on the FLOOR line, then `fg` (k 1.15–1.3), then `light` (night/evening overlay) LAST so characters are darkened too. Street-type sets (`street`, `serverStreet`, `hallway`) take the camera themselves. Use `FLOOR` (feet y) and `SPOTS` (anchors: laptop screen, ceiling y 100, fridge inside, window exit, couch seats, lunch line, pick line, cage spot, office hole…) so every scene places characters the same way. Exteriors are wide shots: characters there are small (s ≈ 0.22–0.3). `adminScreen(t, o)` returns a `fn(w, h)` for screens.
+- **City + world + server room:** `scenes/city.js` (index at the top; contact sheet `concept/sets_city.png`) — being finished; same conventions.
+
