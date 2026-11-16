@@ -164,7 +164,7 @@
     "conveyor": "conveyor belt motor hum + soft rattle"
   },
   "moods": {
-    "hook": "main theme of this video: hopeful, a little bittersweet (cold open, title, outro, big uplifting moments)",
+    "hook": "main \"admin\" theme of this video: bouncy, heroic, cheeky (cold open, big command moments, outro)",
     "action": "fast energetic parkour / action",
     "mystery": "night, curious, music box + soft pad",
     "glitch_build": "tense glitchy build-up that rises",
@@ -185,8 +185,9 @@
     "silence": "no music",
     "news": "TV news jingle energy (breaking news, announcements)",
     "explainer": "light bouncy educational (explaining how something works)",
-    "countdown": "ticking-clock tension (the shutdown countdown, deadlines, the core)",
-    "roadtrip": "bright acoustic road-trip strum (the van ride, travelling)",
-    "tender": "soft piano + strings, emotional (the Archive, the message to the world, the happy ending)"
+    "tender": "soft piano + strings, emotional (Brick, the old man, the last command)",
+    "power": "heroic synth-brass drive for firing commands and the admin battle",
+    "chaos": "frantic circus galop for the city in chaos, flying town, giant cats",
+    "mystic": "music box + low strings, curious and eerie (garage sale, the logs, the server room)"
   }
 }

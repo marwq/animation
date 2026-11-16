@@ -49,14 +49,10 @@ One JSON file per scene: `audio/cues/scNN.json` (`sc01.json` … `sc06b.json` �
 
 Validate with `python3 audio/validate_cues.py audio/cues/scNN.json`.
 
-## Shutdown video specifics
+## Admin Commands video specifics
 
-- The voice is LOUD in the final mix and the music ducks under it automatically. Keep music `energy`
-  around 0.35–0.6 under dense dialogue and save 0.8–1 for montages, title moments and wordless action.
-- Moods written for this video: `hook` (main "last day" theme: hopeful, bittersweet), `countdown` (ticking
-  tension), `roadtrip` (acoustic strum), `tender` (piano + strings). Use the other moods from `vocab.json` too.
-- Every visual hit in the scene code (bang(), shake, flash, pops, stamps, whip-pans, smash-zooms, lag
-  glitches) should get a sound. Lag/glitch: `glitch`, `glitch_long`, `static`, `error`, `loading`, `powerdown`,
-  `reverse_swell`; the countdown: `countdown_tick`, `countdown_final`, `alarm`, `alarm_beep`; Pip's "Ding!":
-  `bell` or `chime` only where the visual shows an elevator; system pop-ups: `notify`, `ui_pop`, `error`.
-- A scene sheet covers exactly the scene's range from `scenes/main.js` RANGES (`start` = a, `end` = b).
+- There is NO voice yet: the timeline is provisional (estimated from the script) and the real voice will be mixed loud on top later, with music ducking under it. Plan the music as if the voice were there: `energy` 0.35–0.6 under dialogue, 0.8–1 for montages and wordless action.
+- Moods written for this video: `hook` (main "admin" theme: bouncy, heroic), `power` (synth-brass drive for commands and the admin battle), `chaos` (frantic circus galop for the city chaos), `mystic` (music box + low strings: garage sale, the logs, the server room), `tender` (piano + strings for the emotional end). Use the other moods from `vocab.json` too.
+- Every command needs a sound recipe: typing (`typing`) while letters appear, a confirm on ENTER (`confirm`/`click`), then the effect: fly (`whoosh_up`/`jetpack`), speed (`zoom_in`/`whoosh_long`/`skid`), size up (`upgrade`/`rumble`/`level_up`), size down (`harp_down`/`powerdown`), jail (`metal_clank`/`metal_hit` + `stamp`), teleport (`teleport`), god mode (`shine`/`angel`/`forcefield`), noclip (`portal_enter`), freeze (`glass`/`shock`), kick (`glitch_long`), errors (`error`/`buzzer_wrong`). The Admin's commands are heavier (`boom`/`sub_drop` under them).
+- Every visual hit in the scene code (bang(), shake, flash, pops, stamps, whip-pans, smash-zooms) should get a sound; giant cats: `monster_growl` softened, `thud` for paws, `rumble`.
+- A scene sheet covers exactly the scene's range from `scenes/main.js` RANGES (`start` = a, `end` = b). Because timing will move when the real voice arrives, generate the sheet from the scene code's own `L(id)` / `.word()` expressions with a small script and keep that script next to the sheet as `audio/cues/gen_scNN.js` so it can be re-run.
