@@ -23,6 +23,7 @@ All recorded sources are **CC0 (public domain)** and come from OpenGameArt.org. 
 | 80 CC0 RPG SFX | rubberduck |
 | 40 CC0 water / splash / slime SFX | rubberduck |
 | 30 CC0 SFX loops | rubberduck |
+| Group giggling (→ giggle, kids_laugh, crowd_laugh via respawn/audio/build_extra_sfx.py) | Nocturnal_Vanguard |
 | Footsteps (Grass/Sand & Stone) | Fantozzi |
 | 37 hits/punches | Independent.nu |
 | Swishes Sound Pack | artisticdude |
