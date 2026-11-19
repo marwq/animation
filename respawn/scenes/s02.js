@@ -427,10 +427,11 @@ function panFlip(k, x = KS.pan.x, y = KS.pan.y - 6, hgt = 320, s = 0.5) {
   return X.pancake(x + 20 * Math.sin(k * Math.PI), y - hgt * Math.sin(k * Math.PI), s, 0, k);
 }
 const flipK = (t, period = 1.6, off = 0) => { const u = ((t - off) % period + period) % period; return seg(u, 0, 0.62); };
+const SEAT_LIFT = { you: -42, bea: -22, par: 0 };   // sit up a bit so the faces clear the plates
 function seated(t, who, pose = {}, act = {}) {
   const st = SEAT[who];
   const key = who === 'par' ? 'dad' : who;
-  return actor(key, t, { x: st.x, y: st.y, s: st.s, ...breathe(t, st.x), ...pose }, act);
+  return actor(key, t, { x: st.x, y: st.y + SEAT_LIFT[who], s: st.s, ...breathe(t, st.x), ...pose }, act);
 }
 
 // ---- 15. "Real life does not have that feature." — hopping on the spot in the kitchen
@@ -545,15 +546,16 @@ function shBecause(t) {
 // ---- 23. FLAT! — smash-zoom, the pancake splats flat on the island, BA-DUM TSS
 function shFlat(t) {
   const tf0 = b.flat;
-  const cam = shakeAll({ zoom: 2.4, x: 660 - 960, y: 520 - 540 }, t, [[tf0, 0.3, 18]]);
+  const cam = shakeAll({ zoom: 1.9, x: 640 - 960, y: 440 - 540 }, t, [[tf0, 0.3, 18]]);
   const slam = seg(t, tf0 - 0.05, tf0 + 0.1);
   const laugh = t > tf0 + 0.2 ? Math.abs(Math.sin(t * 14)) : 0;
   let behind = dadAt(t, { armR: lerp(110, 40, ease.in(slam)), spatRot: lerp(40, 100, slam), lean: lerp(6, 14, slam) - 4 * laugh, bodyY: 8 * laugh, face: t > tf0 + 0.2 ? { name: 'joy' } : { name: 'excited' } }, { energy: 1.4 });
   // the pancake: squashed paper-thin on the island top
-  if (slam > 0.6) behind += S.ellipse(560, 640, 110 + 30 * seg(t, tf0, tf0 + 0.15), 9, ol('#E8A64A', 5)) + K.C.dust(500, 640, tf0 + 0.02, t);
-  let o = kitchen(t, cam, behind, '');
+  let fr = '';
+  if (slam > 0.6) fr += S.ellipse(520, 636, 120 + 30 * seg(t, tf0, tf0 + 0.15), 10, ol('#E8A64A', 5)) + K.C.dust(460, 630, tf0 + 0.02, t);
+  let o = kitchen(t, cam, behind, fr);
   o += zoomLines(760, 470, 1 - seg(t, tf0 + 0.2, tf0 + 0.6), t, '#FFFFFF');
-  o += K.bang('FLAT!', 760, 210, pop(t, tf0, 0.18), 190, -6, '#FFE14D');
+  o += K.bang('FLAT!', 420, 300, pop(t, tf0, 0.18), 190, -8, '#FFE14D');
   o += drumAndRim(t);
   return o + smash(t, tf0, 0.1, 0.7);
 }
@@ -561,7 +563,7 @@ function drumAndRim(t) {
   const hitAge = t - b.rim;
   const k = pop(t, b.rim - 0.4, 0.25) * (1 - seg(t, b.rim + 1.3, b.rim + 1.55));
   if (k <= 0.01) return '';
-  return E.drumKit(1600, 840, 0.9, t, k, hitAge) + K.bang('BA-DUM TSS!', 1560, 600, pop(t, b.rim, 0.2) * (1 - seg(t, b.rim + 1.3, b.rim + 1.55)), 100, -6, '#FFE14D');
+  return E.drumKit(1690, 830, 0.8, t, k, hitAge) + K.bang('BA-DUM TSS!', 1640, 650, pop(t, b.rim, 0.2) * (1 - seg(t, b.rim + 1.3, b.rim + 1.55)), 84, -6, '#FFE14D');
 }
 
 // ---- 24. "There's your little sister, Bea." — the table (deadpan after the joke), push to Bea + BEA tag
@@ -573,7 +575,7 @@ function shBea(t) {
   let o = kitchen(t, cam, behind, '');
   o += K.bang('chirp...', 360, 260, pop(t, C.bea + 0.1, 0.2) * (1 - seg(t, b.beaW - 0.5, b.beaW - 0.3)), 56, -6, '#B8F5D0');
   o += drumAndRim(t);
-  o += nameCard(t, b.beaW - 0.02, 1500, 260, 'BEA', 'LITTLE SISTER · AGE 6', '#FF6FA8', { ax: 1120, ay: 480 });
+  o += nameCard(t, b.beaW - 0.02, 470, 280, 'BEA', 'LITTLE SISTER · AGE 6', '#FF6FA8', { ax: 850, ay: 520 });
   return o;
 }
 // ---- 25. "She's six... and she has never told a lie in her life." — Bea close: unblinking, LIES TOLD: 0
@@ -611,9 +613,9 @@ function shMush(t) {
   if (sad) {
     // a tiny rain cloud over both
     const ck = pop(t, b.sadW + 0.1, 0.3);
-    w += S.g(H.cloud(0, 0, 0.9, undefined, '#9AA0AE', '#7E8596'), tf(960, 70, ck));
+    w += S.g(H.cloud(0, 0, 0.9, undefined, '#9AA0AE', '#7E8596'), tf(960, 150, ck));
     let dr = '';
-    for (let i = 0; i < 16; i++) { const x = 700 + hash(i) * 520, y = 120 + ((t * 900 + hash(i * 3) * 300) % 300); dr += `M${f(x)} ${f(y)} l-6 26 `; }
+    for (let i = 0; i < 16; i++) { const x = 700 + hash(i) * 520, y = 200 + ((t * 900 + hash(i * 3) * 300) % 300); dr += `M${f(x)} ${f(y)} l-6 26 `; }
     if (ck > 0.5) w += S.path(dr, ln(6, '#4A7ACF'));
   }
   let o = view(cam, w);
@@ -647,35 +649,35 @@ function shSeen(t) {
   return o;
 }
 
-// ---- 31. Mom rushes through: "Bye, loves! Long shift!" — kisses + MOM tag
+// ---- 31. Mom rushes through behind the table: "Bye, loves! Long shift!" — kisses + MOM tag
 function shMom(t) {
-  const u = seg(t, C.mom, C.remember);
-  const cam = { zoom: 1.55, x: 1380 - 960, y: 640 - 540 };
-  // path: runs in from the left, stops at Bea (kiss), at the hero (kiss), runs out right
+  const cam = { zoom: 1.55, x: 1360 - 960, y: 600 - 540 };
+  // path: runs in from the left behind the table, stops at Bea (kiss), at the hero (kiss), runs out right to the back door
   const tK1 = b.loves - 0.05, tK2 = b.long - 0.05, tOut = b.shift;
-  let mx, lean = 6, run = true;
-  if (t < tK1) mx = lerp(700, 1250, ease.out(seg(t, C.mom, tK1)));
-  else if (t < tK1 + 0.3) { mx = 1250; run = false; lean = 24 * bump(t, tK1, tK1 + 0.3); }
+  let mx, lean = 0, run = true;
+  if (t < tK1) mx = lerp(760, 1250, ease.out(seg(t, C.mom, tK1)));
+  else if (t < tK1 + 0.3) { mx = 1250; run = false; lean = bump(t, tK1, tK1 + 0.3); }
   else if (t < tK2) mx = lerp(1250, 1440, seg(t, tK1 + 0.3, tK2));
-  else if (t < tK2 + 0.3) { mx = 1440; run = false; lean = 24 * bump(t, tK2, tK2 + 0.3); }
-  else mx = lerp(1440, 2300, ease.in(seg(t, tK2 + 0.3, tOut + 0.6)));
-  const mom = actor('mom', t, { x: mx, y: 990, s: 0.5, view: 'side', flip: true, thermos: true, ...(run ? AC.run(t * 18, 1) : { armL: 30, armR: 20 }), lean: run ? 12 : -lean, face: { name: 'happy' } }, { arms: false });
+  else if (t < tK2 + 0.3) { mx = 1440; run = false; lean = bump(t, tK2, tK2 + 0.3); }
+  else mx = lerp(1440, 2200, ease.in(seg(t, tK2 + 0.3, tOut + 0.7)));
+  const mom = actor('mom', t, { x: mx, y: 850, s: 0.46, view: 'side', flip: true, thermos: true, ...(run ? AC.run(t * 18, 1) : { armL: 30, armR: 20 }), lean: run ? 12 : 30 * lean, headRot: 20 * lean, face: { name: 'happy' } }, { arms: false });
   const kiss1 = t > tK1 + 0.15, kiss2 = t > tK2 + 0.15;
-  const behind = bowl(t, { yaw: -60 }) + seated(t, 'bea', { spoon: true, armR: 26, face: kiss1 ? { name: 'cute' } : { name: 'neutral', eyes: { look: [-0.8, 0] } } }, { arms: false }) +
+  const behind = bowl(t, { yaw: -60 }) + mom + seated(t, 'bea', { spoon: true, armR: 26, face: kiss1 ? { name: 'cute' } : { name: 'neutral', eyes: { look: [-0.8, 0] } } }, { arms: false }) +
     seated(t, 'you', { armL: 24, armR: 24, face: kiss2 ? { name: 'happy', fx: ['blush'] } : { name: 'neutral', eyes: { look: [-0.6, 0] } } }, { arms: false });
+  const heart = (x, y, k, op) => S.g(S.path('M0 -10 c-10 -20 -40 -10 -30 12 l30 28 l30 -28 c10 -22 -20 -32 -30 -12 Z', ol('#FF4F8B', 5)), tf(x, y, k), { opacity: f(op) });
   let fx = '';
-  if (kiss1) fx += S.g(S.path('M0 -10 c-10 -20 -40 -10 -30 12 l30 28 l30 -28 c10 -22 -20 -32 -30 -12 Z', ol('#FF4F8B', 5)), tf(1300, 600 - 80 * seg(t, tK1 + 0.15, tK1 + 1.2), pop(t, tK1 + 0.15, 0.2)), { opacity: f(1 - seg(t, tK1 + 0.9, tK1 + 1.2)) });
-  if (kiss2) fx += S.g(S.path('M0 -10 c-10 -20 -40 -10 -30 12 l30 28 l30 -28 c10 -22 -20 -32 -30 -12 Z', ol('#FF4F8B', 5)), tf(1490, 520 - 80 * seg(t, tK2 + 0.15, tK2 + 1.2), pop(t, tK2 + 0.15, 0.2)), { opacity: f(1 - seg(t, tK2 + 0.9, tK2 + 1.2)) });
-  if (run) fx += K.C.speedLines(mx - 520, mx - 200, 760, 5, 3, '#FFFFFF', 300);
-  let o = kitchen(t, cam, behind, mom + fx, { coat: t < tK1 });
-  o += K.bang('MWAH!', 1150, 330, pop(t, tK1 + 0.12, 0.18) * (1 - seg(t, tK1 + 0.5, tK1 + 0.7)), 70, -8, '#FF6FA8') + K.bang('MWAH!', 1640, 300, pop(t, tK2 + 0.12, 0.18) * (1 - seg(t, tK2 + 0.5, tK2 + 0.7)), 70, 8, '#FF6FA8');
-  o += nameCard(t, b.bye + 0.05, 560, 240, 'MOM', 'ER NURSE · ALWAYS ON SHIFT', '#2FB3A0', { tOut: C.remember - 0.15, rot: -4 });
+  if (kiss1) fx += heart(1290, 560 - 80 * seg(t, tK1 + 0.15, tK1 + 1.2), pop(t, tK1 + 0.15, 0.2), 1 - seg(t, tK1 + 0.9, tK1 + 1.2));
+  if (kiss2) fx += heart(1480, 500 - 80 * seg(t, tK2 + 0.15, tK2 + 1.2), pop(t, tK2 + 0.15, 0.2), 1 - seg(t, tK2 + 0.9, tK2 + 1.2));
+  if (run) fx += K.C.speedLines(mx - 420, mx - 160, 620, 5, 3, '#FFFFFF', 240);
+  let o = kitchen(t, cam, behind, fx, { coat: t < tK1 });
+  o += K.bang('MWAH!', 1060, 300, pop(t, tK1 + 0.12, 0.18) * (1 - seg(t, tK1 + 0.5, tK1 + 0.7)), 70, -8, '#FF6FA8') + K.bang('MWAH!', 1500, 250, pop(t, tK2 + 0.12, 0.18) * (1 - seg(t, tK2 + 0.5, tK2 + 0.7)), 70, 8, '#FF6FA8');
+  o += nameCard(t, b.bye + 0.05, 470, 220, 'MOM', 'ER NURSE · ALWAYS ON SHIFT', '#2FB3A0', { tOut: C.remember - 0.15, rot: -4 });
   return o;
 }
 // ---- 32. "Remember, mistakes are how we learn!" — at the back door, finger up, then gone
 function shRemember(t) {
   const u = seg(t, C.remember, C.mumble);
-  const cam = { zoom: lerp(2.0, 2.1, u), x: 1700 - 960, y: 560 - 540 };
+  const cam = { zoom: lerp(1.75, 1.85, u), x: 1690 - 960, y: 540 - 540 };
   const gone = t > b.momOut;
   const ox = gone ? lerp(1720, 2200, ease.in(seg(t, b.momOut, b.momOut + 0.3))) : 1720;
   const ex = H.SPOTS.kitchen.backDoor.exit;
@@ -715,7 +717,7 @@ function sparksAt(x, y, t, n = 8, seed = 1) {
 // ---- 34. "And then there's Ivy." — goggles down, sparks + IVY tag
 function shIvy(t) {
   const u = seg(t, C.ivy, C.kinder);
-  const cam = { zoom: lerp(1.3, 1.55, ease.inOut(u)), x: lerp(820, 940, u) - 960, y: 600 - 540 };
+  const cam = { zoom: lerp(1.6, 1.8, ease.inOut(u)), x: lerp(900, 960, u) - 960, y: 630 - 540 };
   const bt = WS.behindTable;
   const ivy = actor('ivy', t, { x: bt.x, y: bt.y, s: bt.s, goggles: 'down', armL: 40, armR: 46 + 4 * Math.sin(t * 30), headRot: 6, face: { name: 'determined', eyes: { look: [0, 0.8] } } }, { arms: false });
   const table = X.rocketSneakers({ x: 900, y: 752, s: 0.55, t, flame: 0 }) + sparksAt(1000, 740, t, 8);
@@ -750,7 +752,7 @@ function shBuilds(t) {
   const walking = t < C.builds + 1.3;
   const hero = actor('you', t, { x: hx, y: 990, s: 0.5, ...(walking ? { view: 'side', flip: true, ...AC.walk(t * 9) } : { turn: 0.4, armL: 10, armR: 10 }), face: { name: 'nervous', eyes: { look: [0.8, 0] } } }, { arms: false });
   let o = workshop(t, cam, '', hero + ivy);
-  o += S.g(S.rect(-150, -34, 300, 68, 20, ol('#FFFFFF', 5)) + TF('ROCKET SNEAKERS v12', 0, 12, 28, '#1E1A2E'), tf(1250 + 30, 850, pop(t, b.inventions, 0.25), 4));
+  o += S.g(S.rect(-150, -34, 300, 68, 20, ol('#FFFFFF', 5)) + TF('ROCKET SNEAKERS v12', 0, 12, 28, '#1E1A2E'), tf(1560, 900, pop(t, b.inventions, 0.25), 4)) + S.path('M1420 920 L1330 960', ln(6, '#FFFFFF')) ;
   return o;
 }
 // ---- 37. "They explode." — ignition, into the wall, KA-BOOM

@@ -30,6 +30,7 @@ function timing() {
   C.open = T0;
   C.trick = w(0, "Ivy's") - 0.15;
   C.hat = w(0, 'A') - 0.12;
+  C.hatReal = w(0, 'out') - 0.1;
   C.ladies = A[1].a - 0.1;
   C.pull = w(1, 'I') - 0.1;
   C.know = A[2].a - 0.06;
@@ -61,10 +62,11 @@ function timing() {
   C.knowAll = w(15, 'I', 1) - 0.1;
   C.bea = A[16].a - 0.1;
   C.gary = w(16, 'Even') - 0.12;
+  C.garyClose = A[16].b + 0.02;
   const ks = Object.keys(C);
   for (let i = 1; i < ks.length; i++) if (C[ks[i]] < C[ks[i - 1]] + 0.2) C[ks[i]] = C[ks[i - 1]] + 0.2;
   const B = {};      // beats inside shots
-  B.wed = T0 + 0.05; B.reh = w(0, 'Rehearsal'); B.sheet = w(0, 'Elephant') - 0.05; B.volcano = w(0, 'volcano'); B.burp = w(0, 'hat') + 0.08;
+  B.wed = T0 + 0.05; B.reh = w(0, 'Rehearsal'); B.sheet = w(0, 'Elephant') - 0.05; B.volcano = w(0, 'volcano'); B.foamW = w(0, 'foam'); B.burp = w(0, 'hat') + 0.08;
   B.gent = w(1, 'gentlemen'); B.ordinary = w(1, 'ordinary'); B.dip = w(1, 'pull');
   B.iknow = w(2, 'I'); B.tell = w(3, 'tell'); B.pour = w(3, 'that', 1) - 0.1; B.blast = A[3].b - 0.02;
   B.snap = w(4, 'you') - 0.05; B.crumble = w(4, 'reset') + 0.04; B.pop1 = w(4, 'And') - 0.08;
@@ -102,8 +104,8 @@ function ivy(t, pose = {}, act = {}, hold = {}) {
   const p = { ...IVY, ...pose };
   const props = [...(p.props || [])];
   if (hold.hat) {
-    const h = AC.hand(p.armL ?? 40, -1);
-    props.push({ svg: X.topHat({ x: h[0] + (hold.hat.dx || 0), y: h[1] - 20 + (hold.hat.dy || 0), s: 0.95, rot: hold.hat.rot || 0, mouth: 'up', foam: hold.hat.foam || 0 }), layer: 'front' });
+    const h = AC.hand(p.armL ?? 40, -1), th = ((hold.hat.rot || 0) * Math.PI) / 180;
+    props.push({ svg: X.topHat({ x: h[0] + 180 * Math.sin(th) + (hold.hat.dx || 0), y: h[1] - 180 * Math.cos(th) - 10 + (hold.hat.dy || 0), s: 0.95, rot: hold.hat.rot || 0, mouth: 'up', foam: hold.hat.foam || 0 }), layer: 'front' });
   }
   if (hold.flask) {
     const h = AC.hand(p.armR ?? 30, 1);
@@ -112,6 +114,9 @@ function ivy(t, pose = {}, act = {}, hold = {}) {
   p.props = props;
   return actor('ivy', t, p, act);
 }
+const IVY_K = IVY.s * 0.96;   // Ivy's body units -> px
+// world point of the hat's opening when Ivy holds it on her left palm (armL, rot)
+function hatMouth(armL, rot) { const h = AC.hand(armL, -1), th = (rot * Math.PI) / 180; return [IVY.x + (h[0] + 180 * Math.sin(th)) * IVY_K, IVY.y + (h[1] - 180 * Math.cos(th) - 10) * IVY_K]; }
 const hero = (t, pose = {}, act = {}) => actor('you', t, { x: PAD.x, y: PAD.y, s: PAD.s, ...pose }, act);
 // the whole workshop (Wednesday/Thursday look); o.set = workshop opts, o.ivy = svg (behind the table), o.floor = svg after the table
 function workshopShot(t, cam, o = {}) {
@@ -158,28 +163,38 @@ function shTrick(t) {
   const after = t >= B.sheet;
   const iv = ivy(t, { turn: after ? -0.5 : -0.2, armL: after ? lerp(150, 110, seg(t, B.sheet, B.sheet + 0.5)) : lerp(40, 80, yank), armR: after ? 150 : 40, lift: 18 * bump(t, B.sheet, B.sheet + 0.35), face: after ? 'excited' : 'sneaky' }, { arms: false });
   const ez = E6.easel(520, 992, 0.66, t, seg(t, B.sheet, B.sheet + 0.45));
-  let o = workshopShot(t, cam, { ivy: iv, behindExtra: '', floor: ez, hero: hero(t, { turn: -0.4, face: deadpanEyes([-0.8, 0]) }) });
+  let o = workshopShot(t, cam, { ivy: iv, floor: ez, pad: false });
   if (after) o += K.sparkles([[300, 300, 30], [560, 200, 22], [760, 330, 26]].map(([x, y, r]) => [x, y, r * pop(t, B.sheet, 0.3) * (1 - seg(t, B.sheet + 1.2, B.sheet + 1.6))]), t);
   o += whip(t, CUT.trick, 1);
   return o;
 }
-// ---- 3. "A volcano of foam... out of a magic hat." — insert on the hat: chalk volcano, then the hat burps foam
+// ---- 3a. "A volcano of foam..." — Ivy's blueprint draws itself on (hat -> volcano -> FOAM!!!)
+function shBlueprint(t) {
+  const z = lerp(1.0, 1.08, ease.inOut(seg(t, CUT.hat, CUT.hatReal)));
+  const k = { hat: seg(t, CUT.hat, CUT.hat + 0.35), volcano: seg(t, B.volcano - 0.05, B.volcano + 0.5), foam: seg(t, B.foamW - 0.05, B.foamW + 0.45), labels: seg(t, B.volcano + 0.2, CUT.hatReal - 0.1) };
+  let o = zoomAbout(E6.blueprint(t, k), 960, 520, z);
+  if (k.foam > 0) o += zoomLines(960, 260, 0.5 * bump(t, B.foamW, B.foamW + 0.5), t, '#BFD8F6', 18, 420);
+  return o + whip(t, CUT.hat, 1);
+}
+// ---- 3b. "...out of a magic hat." — the real hat on the table burps a puff of foam
 function shHat(t) {
-  const cam = drift(t, CUT.hat, CUT.ladies, at(1030, 610, 2.5), at(1060, 590, 2.75));
+  const cam = drift(t, CUT.hatReal, CUT.ladies, at(1060, 600, 2.4), at(1068, 610, 2.7));
   const burp = t - B.burp;
   const iv = ivy(t, { turn: 0.2, armL: 26, armR: 30, face: { name: 'excited', eyes: { look: [0.5, 0.6] } } }, { arms: false });
-  let over = E6.chalkVolcano(SW.hat.x, HAT_TABLE.y - 10, 0.62, seg(t, B.volcano - 0.1, B.volcano + 0.9), t);
+  let over = '';
   if (burp > 0) {
     over += R.foamBlobs(SW.hat.x, HAT_TABLE.y - 18 - 30 * ease.out(seg(burp, 0, 0.3)), 0.45, pop(t, B.burp, 0.2) * (1 - 0.3 * seg(burp, 0.5, 1)), 7, { t });
     over += R.foamSplash(SW.hat.x, HAT_TABLE.y - 40, burp, { s: 0.4, n: 6, seed: 3 });
   }
   let o = workshopShot(t, cam, { ivy: iv, over, pad: false, hero: '' });
-  if (burp > 0) o += K.bang('pfft!', 1340, 300, pop(t, B.burp, 0.2) * (1 - seg(burp, 0.7, 0.9)), 90, 8, '#FFFFFF');
+  const [sx, sy] = toScr(cam, SW.hat.x, HAT_TABLE.y);
+  o += K.sparkles([[sx - 160, sy - 120, 22], [sx + 170, sy - 60, 18], [sx + 60, sy - 200, 14]].map(([x, y, r], i) => [x, y, r * (0.5 + 0.5 * Math.sin(t * 7 + i * 2))]), t);
+  if (burp > 0) o += K.bang('pfft!', sx + 220, sy - 300, pop(t, B.burp, 0.2) * (1 - seg(burp, 0.7, 0.9)), 100, 8, '#FFFFFF');
   return o;
 }
 // ---- 4. IVY: "Ladies and gentlemen! From this ordinary hat," — showman; the hero mouths every word along with her
 function shLadies(t) {
-  const cam = drift(t, CUT.ladies, CUT.pull, at(1180, 610, 1.28), at(1170, 600, 1.38));
+  const cam = drift(t, CUT.ladies, CUT.pull, at(1200, 560, 1.55), at(1190, 555, 1.66));
   const up = seg(t, B.gent - 0.25, B.gent + 0.1) * (1 - seg(t, B.ordinary - 0.3, B.ordinary));
   const tilt = seg(t, B.ordinary - 0.2, B.ordinary + 0.3);
   const armL = lerp(40, 160, ease.outBack(up)) - 10 * tilt;
@@ -226,8 +241,8 @@ function shBlast(t) {
   const iv = ivy(t, { turn: 0.45, lean: 6 * seg(age, 0, 0.2), armL: 56, armR: 60, face: age < 0.5 ? 'shocked' : { name: 'joy', fx: ['sweat'] }, lift: 20 * bump(age, 0, 0.3) }, { arms: false }, { hat: { rot: 70, foam: 0.6 }, flask: { col: '#FF6FA8', rot: -120, fill: 0.1 } });
   const he = hero(t, { foam: hit, lean: -8 * bump(age, 0.18, 0.6), armL: 30 * hit, armR: 30 * hit, sx: 1 + 0.1 * bump(age, 0.18, 0.4), sy: 1 - 0.1 * bump(age, 0.18, 0.4), face: hit ? { name: 'deadpan', eyes: { upper: 0.6 } } : { name: 'deadpan', eyes: { look: [-0.8, 0] } } }, { arms: false });
   // the hat in Ivy's hand: opening world point (left hand, armL 56, tilted 70)
-  const hh = AC.hand(56, -1), hx = IVY.x + hh[0] * IVY.s * 0.96, hy = IVY.y + (hh[1] - 20) * IVY.s * 0.96;
-  let over = foamJet(t, hx, hy, 72, age * 1.6, 0.8, 560);
+  const [hx, hy] = hatMouth(56, 70);
+  let over = foamJet(t, hx, hy, 72, age * 1.6, 0.8, 520);
   if (hit > 0) over += R.foamPile(PAD.x, PAD.y, 380 * ease.out(seg(age, 0.3, 1.4)), 150 * ease.out(seg(age, 0.3, 1.4)), { t, seed: 5 }) + R.foamSplash(PAD.x - 10, PAD.y - 400, age - 0.22, { s: 1.2, n: 12, dir: 1, seed: 8 });
   let o = workshopShot(t, cam, { ivy: iv, hero: he, over, tableOpts: { hat: false, flasks: [true, false, true] } });
   o += K.bang('SPLOOSH!', 1450, 240, pop(t, B.blast + 0.22, 0.2), 140, -8, '#FFFFFF');
@@ -250,8 +265,8 @@ function shDrip(t) {
     if (q.heroAt === 'fail') he = hero(t, { foam: 1, armR: lerp(10, 112, ease.out(snapK)), armL: 10, face: { name: 'deadpan', blink: bump(t, B.snap - 0.9, B.snap - 0.6), eyes: { upper: 0.6, look: [0.1, 0.2] } } }, { arms: false });
     let over = R.foamPile(PAD.x, PAD.y, 380, 150, { t, seed: 5 });
     if (q.heroAt === 'fail') {
-      for (let i = 0; i < 3; i++) { const u = ((t * 0.9 + i * 0.37) % 1); drips.push(S.ellipse(PAD.x - 90 + i * 80, PAD.y - 640 + u * 300, 12, 18, ol('#FFFFFF', 4))); }
-      over += drips.join('') + R.foamBlobs(PAD.x - 10, PAD.y - 700, 0.8, 1, 9, { t });
+      for (let i = 0; i < 3; i++) { const u = ((t * 0.9 + i * 0.37) % 1); drips.push(S.ellipse(PAD.x - 110 + i * 110, PAD.y - 520 + u * 260, 12, 18, ol('#FFFFFF', 4))); }
+      over += drips.join('') + R.foamBlobs(PAD.x + 20, PAD.y - 905, 0.55, 1, 9, { t });
     }
     over += q.under + q.over;
     let o = workshopShot(t, camClose, { ivy: ivy(t, { face: { name: 'joy', fx: ['sweat'] }, turn: 0.4 }), hero: he, over, tableOpts: { hat: false, flasks: [true, false, true] } });
@@ -281,7 +296,7 @@ function shAgain1(t) {
   const cam = at(1150, 610, 1.22);
   const pa = t - B.pop1;
   const reach = seg(tw, B.knock - 0.35, B.knock);
-  const iv = ivy(tw, { turn: 0.1, armL: lerp(150, 40, seg(tw, B.pop1, B.pop1 + 0.3)), armR: lerp(130, 20, seg(tw, B.pop1, B.pop1 + 0.3)) + 0 * reach, face: tw > B.crash ? 'shocked' : 'excited', lift: 16 * bump(tw, B.crash, B.crash + 0.3) }, { arms: false }, { hat: { rot: 0 } });
+  const iv = ivy(tw, { turn: -0.2 * reach, armL: lerp(150, 40, seg(tw, B.pop1, B.pop1 + 0.3)) + 38 * reach * (1 - seg(tw, B.crash, B.crash + 0.3)), armR: lerp(130, 20, seg(tw, B.pop1, B.pop1 + 0.3)), face: tw > B.crash ? 'shocked' : 'excited', lift: 16 * bump(tw, B.crash, B.crash + 0.3) }, { arms: false }, { hat: { rot: 0 } });
   // he re-uses the pop pose for the first instants, then stands; snaps on the crash
   const pp = pa < 0.5 ? R.popPose(pa, PAD.s) : {};
   const sn = seg(tw, B.snap2 - 0.15, B.snap2);
@@ -390,7 +405,7 @@ function shThursday(t) {
   const z = lerp(1, 0.1, zk);
   let o = '';
   if (zk > 0) o += S.g(S.rect(-60000, -60000, 120000, 120000, 0, { fill: 'url(#s06thumbs)' }), `translate(960 540) scale(${f(z)}) translate(-960 -540)`);
-  o += zoomAbout(S.rect(0, 0, 1920, 1080, 0, { fill: '#000' }) + loopFrame(t, n, u, drain), 960, 540, z);
+  o += zoomAbout(zk > 0 ? clipTo(0, 0, 1920, 1080, loopFrame(t, n, u, drain)) + S.rect(0, 0, 1920, 1080, 0, { fill: 'none', stroke: '#151515', 'stroke-width': 24 }) : loopFrame(t, n, u, drain), 960, 540, z);
   if (zk > 0) o += R.greyWash(drain * zk * 0.6);
   // the counter: rolls 1 -> 412 (accelerating), lands on "twelve"
   const v = Math.max(1, Math.round(lerp(1, 412, ease.in(seg(t, B.thuIn, B.twelve)))));
@@ -424,7 +439,7 @@ function shYouPerfect(t) {
   const mk = seg(t, CUT.youPerfect + 0.2, CUT.youPerfect + 0.6);
   if (mk > 0) {
     const sp = Math.cos(t * 3);
-    over += S.g(S.circle(0, 0, 60, ol('#B9C0CC', 7)) + S.path('M-26 0 L-6 22 L28 -22', ln(14, '#FFFFFF')), `translate(${PAD.x} ${PAD.y - 1040}) scale(${f(sp * ease.outBack(mk))} ${f(ease.outBack(mk))})`);
+    over += S.g(S.circle(0, 0, 60, ol('#B9C0CC', 7)) + S.path('M-26 0 L-6 22 L28 -22', ln(14, '#FFFFFF')), `translate(${PAD.x} ${PAD.y - 560}) scale(${f(sp * ease.outBack(mk))} ${f(ease.outBack(mk))})`);
   }
   let o = workshopShot(t, cam, { ivy: ivy(t, { face: 'excited', armL: 150, armR: 140 }, { arms: false }), hero: he, over, padOpts: { glow: 0.4 } });
   o += R.greyWash(lerp(0.5, 0.62, seg(t, CUT.youPerfect, CUT.book)));
@@ -478,37 +493,36 @@ function shFriends(t) {
 }
 // ---- 25. the kindergarten flashback (crayon drawing; chibi kids; his hand glued to her backpack; a whole day)
 function shKinder(t) {
-  const cam = drift(t, CUT.kinder, CUT.best, at(960, 600, 1.0), at(980, 610, 1.08));
+  const walk0 = B.stick + 0.35, wu = Math.max(0, t - walk0);
+  const ivX = 1000 + wu * 230;
+  const cam = camKeys(t, [[CUT.kinder, at(880, 650, 1.32)], [walk0, at(900, 650, 1.42)], [CUT.best, at(1180, 640, 1.42)]]);
   const sunU = seg(t, B.day0 - 0.2, B.day1 + 0.1);
   let w = E6.kinderRoom(t, sunU);
-  // the kids: before the stick he stands with the glue bottle; after, she walks off dragging him
-  const walk0 = B.stick + 0.35;
-  const wu = Math.max(0, t - walk0);
-  const loopX = (x) => 300 + ((x - 300) % 1400 + 1400) % 1400;
-  const ivX = t < walk0 ? 1000 : loopX(1000 + wu * 230);
-  const ivyPose = { x: ivX, y: 860, s: 0.27, goggles: false, shadow: true };
-  const stuck = t >= B.stick;
+  const stuck = t >= B.stick, walking = t >= walk0;
   const squeeze = bump(t, B.glued - 0.1, B.glued + 0.5);
-  let kids = '';
-  // Ivy (side view facing right once she walks) + her big backpack on her back
-  const iw = t >= walk0 ? { view: 'side', flip: true, ...AC.walk(wu * 9, 1.2) } : { turn: 0.5 };
-  kids += E6.chibi('ivy', t, { ...ivyPose, ...iw, face: stuck ? (t < walk0 + 0.3 ? 'shocked' : 'joy') : 'happy' }, 0.46, { arms: false });
-  const bpX = t >= walk0 ? ivX - 70 : ivX - 60;
-  kids += X.backpack({ x: bpX, y: 860 - 120, s: 0.3 });
-  // the hero: glue bottle in hand, then his hand stuck to the backpack, stumbling behind
-  const heX = t < walk0 ? lerp(700, 790, seg(t, B.glued + 0.3, B.stick)) : ivX - 260;
-  const arm = t < B.glued + 0.4 ? 40 : t < B.stick ? lerp(40, 92, seg(t, B.stick - 0.3, B.stick)) : 92;
-  const hw = t >= walk0 ? { view: 'side', flip: true, ...AC.walk(wu * 9 + 1.5, 1.2), armR: 70 + 8 * Math.sin(wu * 9), lean: 8 } : { turn: 0.3, armR: arm, armL: 30 };
-  const gh = AC.hand(hw.armL ?? 30, -1);
-  const heProps = t < B.stick ? [{ svg: E6.glueBottle(gh[0], gh[1] + 120, 0.9, -20, squeeze), layer: 'front' }] : [];
-  kids += E6.chibi('you', t, { x: heX, y: 860, s: 0.27, props: heProps, ...hw, face: stuck ? (t < walk0 + 0.3 ? 'shocked' : 'joy') : 'happy' }, 0.46, { arms: false });
-  if (stuck) kids += K.bang('!', heX + 20, 470, pop(t, B.stick, 0.2) * (1 - seg(t, B.stick + 0.6, B.stick + 0.8)), 110, 0, '#E8453C');
-  if (t >= B.glued && t < B.stick) kids += K.bang('squish', heX - 120, 520, pop(t, B.glued, 0.2) * (1 - seg(t, B.glued + 0.6, B.glued + 0.8)), 60, -8, '#FFFFFF');
+  const FY = 905, KS = 0.27, HS = 0.47;
+  // little Ivy: side view facing right, the big backpack on her back
+  const iw = walking ? AC.walk(wu * 9, 1.2) : { armL: 6, armR: 6 };
+  let kids = E6.chibi('ivy', t, { x: ivX, y: FY, s: KS, view: 'side', flip: true, goggles: false, ...iw, face: stuck ? (t < walk0 + 0.3 ? 'shocked' : 'joy') : 'happy', headRot: walking ? 0 : -4 }, HS, { arms: false });
+  kids += X.backpack({ x: ivX - 58, y: FY - 92, s: 0.42 });
+  // little you: glue bottle (left hand) -> right hand slaps the backpack -> stuck, stumbling behind her
+  const reach = ease.outBack(seg(t, B.stick - 0.3, B.stick));
+  const heX = walking ? ivX - 158 + 6 * Math.sin(wu * 9) : lerp(700, ivX - 175, ease.inOut(seg(t, B.glued + 0.35, B.stick - 0.25)));
+  let he;
+  if (!walking) {
+    const gh = AC.hand(34, -1);
+    const props = t < B.stick + 0.2 ? [{ svg: E6.glueBottle(gh[0] - 10, gh[1] + 150, 1.5, -12, squeeze), layer: 'front' }] : [];
+    he = E6.chibi('you', t, { x: heX, y: FY, s: KS, turn: 0.45, armL: 34, armR: lerp(20, 88, reach), props, face: stuck ? 'shocked' : squeeze > 0.2 ? { name: 'joy' } : 'happy', lift: 14 * bump(t, B.stick, B.stick + 0.25) }, HS, { arms: false });
+  } else {
+    he = E6.chibi('you', t, { x: heX, y: FY, s: KS, view: 'side', flip: true, ...AC.walk(wu * 9 + 1.6, 1.3), armR: 82, lean: 10 + 6 * Math.sin(wu * 9), face: 'joy' }, HS, { arms: false });
+  }
+  kids += he;
+  if (stuck) kids += K.bang('!', heX + 40, FY - 330, pop(t, B.stick, 0.2) * (1 - seg(t, B.stick + 0.7, B.stick + 0.9)), 90, 0, '#E8453C') + K.bang('!', ivX, FY - 360, pop(t, B.stick + 0.08, 0.2) * (1 - seg(t, B.stick + 0.7, B.stick + 0.9)), 80, 8, '#E8453C');
+  if (t >= B.glued && t < B.stick) kids += K.bang('squish', heX - 150, FY - 300, pop(t, B.glued + 0.1, 0.2) * (1 - seg(t, B.glued + 0.7, B.glued + 0.9)), 56, -8, '#FFFFFF');
   w += kids;
   let o = view(cam, w);
-  // warm memory wash + paper frame
   o += S.rect(0, 0, 1920, 1080, 0, { fill: '#FFC870', opacity: 0.12 }) + E6.paperFrame(1);
-  if (sunU > 0 && sunU < 1) o += TF('the whole day…', 1500, 960, 46, '#B98552', { opacity: f(bump(sunU, 0, 1)), transform: 'rotate(-3 1500 960)' });
+  if (sunU > 0) o += TF('...the whole day', 1460, 190, 50, '#B98552', { opacity: f(seg(sunU, 0, 0.2)), transform: 'rotate(-3 1460 190)' });
   o += K.C.whiteFlash(0.85 * (1 - seg(t, CUT.kinder, CUT.kinder + 0.3)) + 0.85 * seg(t, CUT.best - 0.25, CUT.best));
   return o;
 }
@@ -533,12 +547,14 @@ function shAlone(t) {
   const wu = t - CUT.alone;
   const turnK = seg(wu, 0, 0.3);
   const ix = lerp(IVY.x, -260, ease.inOut(seg(wu, 0.25, 2.3)));
+  const dk = seg(ix, 780, 600) ;
   const iv = wu < 0.3 ? ivy(t, { turn: lerp(0.15, -0.8, turnK), face: 'sad' }, { arms: false })
-    : actor('ivy', t, { x: ix, y: ix < 700 ? 990 : 900, s: ix < 700 ? 0.5 : 0.46, view: 'side', ...AC.walk(wu * 7.5), face: 'sad' }, { arms: false });
+    : actor('ivy', t, { x: ix, y: lerp(900, 990, ease.inOut(1 - seg(ix, 600, 780))), s: lerp(0.46, 0.5, 1 - seg(ix, 600, 780)), view: 'side', ...AC.walk(wu * 7.5), face: 'sad' }, { arms: false });
+  void dk;
   const he = hero(t, { turn: lerp(-0.2, -0.6, seg(wu, 0.2, 1.2)), headRot: lerp(0, 6, seg(wu, 1.5, 2.4)), face: { name: 'sad', eyes: { look: [lerp(-0.3, -0.9, seg(wu, 0.2, 1.4)), lerp(0, 0.6, seg(wu, 1.6, 2.4))] } } }, { arms: false });
   const book = X.bookOfFails({ x: 860, y: 728, s: 0.32, rot: -6 });
-  const ivyBehind = ix >= 700 ? iv : '';
-  const ivyFloor = ix < 700 ? iv : '';
+  const ivyBehind = ix >= 640 ? iv : '';
+  const ivyFloor = ix < 640 ? iv : '';
   const flick = 0.35 * (1 - 0.6 * bump(t, CUT.dinner - 0.8, CUT.dinner - 0.6));
   return quietShot(t, cam, { ivy: ivyBehind, hero: he, over: book, floor: ivyFloor, padOpts: { glow: flick } }) + bars(1 - seg(t, CUT.dinner - 0.3, CUT.dinner));
 }
@@ -561,7 +577,9 @@ function dadPose(t, armR, rot, item, extra = {}, act = {}) {
 function kitScreen(t) {
   const k = seg(t, B.go - 0.1, B.go + 0.2) * (1 - seg(t, B.flat + 0.2, B.flat + 0.6));
   if (k <= 0) return '';
-  return E6.drumKit(1690, 930, 0.62, t, { k, fizzle: seg(t, B.doctor, B.doctor + 0.35) });
+  let o = E6.drumKit(330, 1000, 0.85, t, { k, fizzle: seg(t, B.doctor, B.doctor + 0.35) });
+  if (t > B.doctor + 0.2) o += K.bang('tss…', 520, 700, pop(t, B.doctor + 0.25, 0.2) * k, 54, -6, '#B9C0CC');
+  return o;
 }
 // ---- 29. DAD: "Why did the pancake go to the—"
 function shDinner(t) {
@@ -576,7 +594,7 @@ function shDinner(t) {
 function shCutoff(t) {
   const cam = drift(t, CUT.cutoff, CUT.dadFreeze, at(1420, 610, 1.95), at(1430, 615, 2.05));
   const he = youSeat(t, { turn: 0.1, armL: 22, armR: 30, headRot: -6, face: { name: 'deadpan', eyes: { look: [0.2, 0.8], upper: 0.6 } } }, { arms: false });
-  const seated = beaSeat(t, { spoon: true, face: { name: 'honest', eyes: { look: [0.8, -0.2] } } }) + he;
+  const seated = beaSeat(t, { spoon: true, face: { name: 'neutral', eyes: { look: [0.8, -0.2] } } }) + he;
   const dad = dadPose(t, 150, 25, 'pancake', { face: 'shocked' });
   return kitchenShot(t, cam, { dad, seated }) + kitScreen(t);
 }
@@ -584,47 +602,51 @@ function shCutoff(t) {
 function shDadFreeze(t) {
   const cam = drift(t, CUT.dadFreeze, CUT.knowAll, at(660, 470, 2.05), at(660, 480, 2.2));
   const tilt = seg(t, B.know, CUT.knowAll);
-  const dad = dadPose(t, 150 - 6 * tilt, 25 + 30 * tilt, 'pancake', { face: t < B.know ? { name: 'happy', eyes: { look: [0.8, 0] } } : { name: 'deflating', eyes: { look: [0.8, 0] } }, turn: 0.3, itemOpts: { itemRot: 20 * tilt, dx: 20 * tilt } });
+  const dad = dadPose(t, 150 - 6 * tilt, 25 + 30 * tilt, 'pancake', { face: t < B.know ? { name: 'happy', eyes: { look: [0.8, 0] } } : { name: 'sad', eyes: { look: [0.8, 0] } }, turn: 0.3, itemOpts: { itemRot: 20 * tilt, dx: 20 * tilt } });
   return kitchenShot(t, cam, { dad });
 }
 // ---- 32. YOU: "I know ALL of them." — flat close; accent on ALL
 function shKnowAll(t) {
-  const camA = at(1490, 560, 2.3), camB = at(1490, 565, 2.55);
+  const camA = at(1490, 610, 2.3), camB = at(1490, 612, 2.55);
   const cam = t < B.ALL ? drift(t, CUT.knowAll, B.ALL, camA, { ...camA, zoom: 2.36 }) : drift(t, B.ALL, CUT.bea, camB, { ...camB, zoom: 2.6 }, ease.out);
   const he = youSeat(t, { turn: -0.1, armL: 22, armR: 22, face: { name: 'deadpan', eyes: { look: [-0.6, 0], upper: 0.6 } } }, { arms: false });
-  return kitchenShot(t, cam, { seated: beaSeat(t, { face: 'honest' }) + he, dad: dadPose(t, 150, 50, 'pancake', { face: 'deflating' }) }) + smash(t, B.ALL, 0.08, 0.25);
+  return kitchenShot(t, cam, { seated: beaSeat(t, { face: 'neutral' }) + he, dad: dadPose(t, 150, 50, 'pancake', { face: 'sad' }) }) + smash(t, B.ALL, 0.08, 0.25);
 }
 // ---- 33. BEA: "You're not fun anymore." — Bea looks at her brother; behind them Dad slowly lowers the spatula (the pancake flops)
 function shBea(t) {
   const cam = drift(t, CUT.bea, CUT.gary, at(1120, 590, 1.58), at(1130, 600, 1.66));
   const low = ease.inOut(seg(t, CUT.bea, CUT.gary));
   const slide = seg(low, 0.45, 0.75);
-  const dad = dadPose(t, lerp(150, 26, low), lerp(50, 165, low), slide < 0.05 ? 'pancake' : null, { face: { name: 'deflating', eyes: { look: [0.8, 0.2] } }, turn: 0.3 });
+  const dad = dadPose(t, lerp(150, 26, low), lerp(50, 165, low), slide < 0.05 ? 'pancake' : null, { face: { name: 'sad', eyes: { look: [0.8, 0.2] } }, turn: 0.3 });
   let fall = '';
   if (slide > 0.05) { const k = ease.in(slide); fall = X.pancake({ x: lerp(760, 700, k), y: lerp(380, SK.pan.y, k), s: 0.45, rot: 40 * k, flip: 0.2 * k }); }
-  const seated = beaSeat(t, { spoon: true, turn: 0.3, face: { name: 'honest', eyes: { look: [0.9, 0] } } }) + youSeat(t, { turn: -0.1, face: { name: 'sad', eyes: { look: [0, 0.7] } } }, { arms: false });
+  const seated = beaSeat(t, { spoon: true, turn: 0.3, face: { name: 'neutral', eyes: { look: [0.9, 0] } } }) + youSeat(t, { turn: -0.1, face: { name: 'sad', eyes: { look: [0, 0.7] } } }, { arms: false });
   return kitchenShot(t, cam, { dad: dad + fall, seated });
 }
-// ---- 34. BEA: "Even Gary thinks so." — she points; Gary slowly turns his tail on the hero. NARRATOR: "Even Gary." Dip to night.
-function shGary(t) {
-  const cam = drift(t, CUT.gary, END, at(1360, 540, 2.35), at(1350, 545, 2.65), ease.out);
+// ---- 34. BEA: "Even Gary thinks so." — she points at the bowl on the counter
+function shGaryPoint(t) {
+  const cam = drift(t, CUT.gary, CUT.garyClose, at(1360, 590, 2.25), at(1330, 575, 2.45));
   const point = ease.outBack(seg(t, B.garyW - 0.3, B.garyW));
+  const seated = beaSeat(t, { turn: 0.2, armL: lerp(10, 135, point), face: { name: 'neutral', eyes: { look: [-0.6, -0.6] } } }) + youSeat(t, { turn: -0.25, face: { name: 'sad', eyes: { look: [-0.8, -0.3] } } }, { arms: false });
+  return kitchenShot(t, cam, { seated, garyYaw: 90, garyBlink: bump(t, B.garyW + 0.2, B.garyW + 0.5), dad: dadPose(t, 26, 165, null, { face: 'sad' }) });
+}
+// ---- 35. Gary slowly turns his tail on the hero (beat) — NARRATOR: "Even Gary." — reveal the hero's face; dip to night
+function shGaryTurn(t) {
+  const cam = camKeys(t, [[CUT.garyClose, at(1238, 505, 4.0)], [B.evenGary - 0.1, at(1242, 505, 4.15)], [END, at(1345, 560, 2.85)]]);
   const yaw = lerp(90, 270, ease.inOut(seg(t, B.turn0, B.turn1)));
-  const blink = bump(t, B.garyW + 0.2, B.garyW + 0.5);
-  const seated = beaSeat(t, { turn: 0.2, armL: lerp(10, 135, point), face: { name: 'honest', eyes: { look: [-0.6, -0.6] } } }) + youSeat(t, { turn: -0.25, face: { name: 'sad', eyes: { look: [-0.8, -0.3] } } }, { arms: false });
-  let o = kitchenShot(t, cam, { seated, garyYaw: yaw, garyBlink: blink, dad: dadPose(t, 26, 165, null, { face: 'deflating' }) });
-  o += dip(seg(t, END - 0.32, END), '#0B1030');
-  return o;
+  const seated = beaSeat(t, { turn: 0.2, armL: 120, face: 'neutral' }) + youSeat(t, { turn: -0.25, headRot: 4, face: { name: 'sad', eyes: { look: [-0.7, -0.2] } } }, { arms: false });
+  let o = kitchenShot(t, cam, { seated, garyYaw: yaw, garyBlink: bump(t, B.turn1 + 0.05, B.turn1 + 0.35), dad: '' });
+  return o + dip(seg(t, END - 0.32, END), '#0B1030');
 }
 
 // ================================================================= dispatch
 const SHOTS = [
-  [CUT.open, shOpen], [CUT.trick, shTrick], [CUT.hat, shHat], [CUT.ladies, shLadies], [CUT.pull, shPull], [CUT.know, shKnow], [CUT.how, shHow],
+  [CUT.open, shOpen], [CUT.trick, shTrick], [CUT.hat, shBlueprint], [CUT.hatReal, shHat], [CUT.ladies, shLadies], [CUT.pull, shPull], [CUT.know, shKnow], [CUT.how, shHow],
   [CUT.blast, shBlast], [CUT.drip, shDrip], [B.pop1 + 0.02, shAgain1], [CUT.again2, shAgain2], [CUT.flask, shFlask], [CUT.sneeze, shSneeze],
   [CUT.ceiling, shCeiling], [CUT.dont, shDont], [CUT.weird, shWeird], [CUT.thu, shThursday], [CUT.perfect, shPerfect], [CUT.youPerfect, shYouPerfect],
   [CUT.book, shBook], [CUT.wide, shWide], [CUT.notHere, shNotHere], [CUT.practice, shPractice], [CUT.friends, shFriends], [CUT.kinder, shKinder],
   [CUT.best, shBest], [CUT.miss, shMiss], [CUT.alone, shAlone], [CUT.dinner, shDinner], [CUT.cutoff, shCutoff], [CUT.dadFreeze, shDadFreeze],
-  [CUT.knowAll, shKnowAll], [CUT.bea, shBea], [CUT.gary, shGary],
+  [CUT.knowAll, shKnowAll], [CUT.bea, shBea], [CUT.gary, shGaryPoint], [CUT.garyClose, shGaryTurn],
 ].sort((a, b) => a[0] - b[0]);
 function shotAt(t) {
   let i = SHOTS.length - 1;
@@ -642,15 +664,23 @@ function look(t) {
 }
 // the wall of 412 identical Thursdays: one cheap thumbnail of the loop moment, tiled (pattern in user space of the frame)
 const THUMB = (() => {
-  let o = '<rect x="0" y="0" width="1920" height="1080" fill="#B8A78E"/><rect x="0" y="0" width="1920" height="70" fill="#A8946E"/><rect x="0" y="830" width="1920" height="250" fill="#8E8A84"/>';
-  o += '<rect x="-200" y="150" width="760" height="680" fill="#9FB4C8"/><rect x="560" y="200" width="560" height="380" fill="#A08A6A"/>';
-  o += '<path d="M690 760 L1190 760 L1170 900 L710 900 Z" fill="#5E4E86" stroke="#151515" stroke-width="10"/>';
-  o += '<path d="M1020 700 Q990 520 1040 420 Q1000 330 1080 300 Q1160 330 1120 420 Q1170 520 1140 700 Z" fill="#F4F4F4" stroke="#151515" stroke-width="10"/>';
-  o += '<rect x="880" y="420" width="130" height="200" rx="20" fill="#9A8A70" stroke="#151515" stroke-width="10"/><circle cx="945" cy="380" r="80" fill="#3A2E2A" stroke="#151515" stroke-width="10"/>';
-  o += '<ellipse cx="1470" cy="985" rx="220" ry="60" fill="#7FB89A" stroke="#151515" stroke-width="10"/><rect x="1400" y="620" width="140" height="340" rx="16" fill="#B07A70" stroke="#151515" stroke-width="10"/><rect x="1380" y="440" width="180" height="180" rx="26" fill="#B78A5E" stroke="#151515" stroke-width="10"/>';
-  o += '<rect x="6" y="6" width="1908" height="1068" fill="none" stroke="#151515" stroke-width="18"/>';
+  const P = (d, fill, w = 12) => `<path d="${d}" fill="${fill}" stroke="#151515" stroke-width="${w}" stroke-linejoin="round"/>`;
+  let o = '<rect x="0" y="0" width="1920" height="1080" fill="#E8C898"/><rect x="0" y="0" width="1920" height="60" fill="#D9B080"/><rect x="0" y="800" width="1920" height="280" fill="#B9B3AE"/>';
+  o += '<rect x="-120" y="190" width="650" height="610" fill="#8FD0F2"/><rect x="-120" y="640" width="650" height="160" fill="#79C96A"/><path d="M60 640 L60 470 L220 390 L380 470 L380 640 Z" fill="#C9B0F2"/>';
+  o += P('M760 150 L1110 150 L1110 560 L760 560 Z', '#FFFDF4', 10) + '<rect x="760" y="150" width="350" height="70" fill="#7A3FD0"/>';
+  o += P('M1560 120 L1560 960 M1860 120 L1860 960', 'none', 14) + P('M1560 330 H1860 M1560 520 H1860 M1560 710 H1860', 'none', 10);
+  o += P('M700 760 L1180 760 L1180 900 L700 900 Z', '#5B3FA8');
+  o += P('M1010 700 Q960 560 1010 440 Q960 330 1060 300 Q1160 330 1110 440 Q1160 560 1110 700 Z', '#FFFFFF');
+  o += '<path d="M1040 690 Q1000 560 1050 450 M1080 690 Q1120 560 1070 450" fill="none" stroke="#8FE8BF" stroke-width="14"/>';
+  o += P('M860 600 L1010 600 L1010 760 L860 760 Z', '#F08A3C') + P('M935 600 m-90 -50 a90 90 0 1 0 180 0 a90 90 0 1 0 -180 0', '#2A1E1A');
+  o += P('M800 470 L870 560 M1070 470 L1000 560', 'none', 22);
+  o += P('M1250 985 a220 60 0 1 0 440 0 a220 60 0 1 0 -440 0', '#3DDC84');
+  o += P('M1400 680 L1540 680 L1540 960 L1400 960 Z', '#1F4A2C') + P('M1390 540 L1550 540 L1550 700 L1390 700 Z', '#E23B34') + P('M1440 540 L1500 540 L1500 700 L1440 700 Z', '#FFD23F', 8);
+  o += P('M1370 300 L1570 300 L1580 470 L1360 470 Z', '#FFFFFF') + P('M1350 250 L1590 250 L1600 360 L1550 360 L1550 300 L1390 300 L1390 360 L1340 360 Z', '#D9661E');
+  o += '<rect x="8" y="8" width="1904" height="1064" fill="none" stroke="#151515" stroke-width="24"/>';
   return o;
 })();
-const DEFS = `<defs><pattern id="s06thumbs" width="1920" height="1080" patternUnits="userSpaceOnUse">${THUMB}</pattern></defs>`;
+const DEFS = `<defs><pattern id="s06thumbs" width="1920" height="1080" patternUnits="userSpaceOnUse">${THUMB}</pattern>` +
+  '<pattern id="s06grid" width="80" height="80" patternUnits="userSpaceOnUse"><path d="M80 0 L0 0 0 80" fill="none" stroke="#3F72B8" stroke-width="2"/><path d="M40 0 V80 M0 40 H80" fill="none" stroke="#2F62A8" stroke-width="1"/></pattern></defs>';
 
 module.exports = { scene, look, DEFS, SHOTS, CUT, B, timing };

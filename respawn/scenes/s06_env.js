@@ -89,12 +89,12 @@ function calendarCard(x, y, k, day, o = {}) {
   c += S.path('M-270 -100 L270 -100 L270 -134 Q270 -160 244 -160 L-244 -160 Q-270 -160 -270 -134 Z', ol(col, 8));
   for (const rx of [-170, -60, 60, 170]) c += S.rect(rx - 10, -186, 20, 52, 10, ol('#C9CED8', 5));
   c += TS(day, 0, 40, day.length > 8 ? 96 : 110, '#2A1640', { 'stroke-width': 0, 'letter-spacing': 2 });
-  if (sub) c += TF(esc(sub), 0, 118, 38, '#7A6A8A');
+  if (sub) c += TF(esc(sub), 0, 104, 36, '#7A6A8A');
   c += S.path('M-240 150 Q-120 138 0 152 Q120 140 240 150', ln(3, '#D8CFC0'));
   if (kStamp > 0) {
     const ks = ease.outBack(clamp(kStamp, 0, 1));
     const st = S.rect(-210, -46, 420, 92, 14, { fill: 'none', stroke: stampCol, 'stroke-width': 9 }) + T(esc(stamp), 0, 26, 64, stampCol, { 'letter-spacing': 4 });
-    c += S.g(st, `translate(40 96) rotate(-9) scale(${f(lerp(2.2, 1, ks))})`, { opacity: f(clamp(kStamp * 3, 0, 1) * 0.92) });
+    c += S.g(st, `translate(70 158) rotate(-9) scale(${f(0.85 * lerp(2.2, 1, ks))})`, { opacity: f(clamp(kStamp * 3, 0, 1) * 0.92) });
   }
   return S.g(c, `translate(${f(x + out * 900)} ${f(y - out * 300)}) rotate(${f(rot + out * 30)}) scale(${f(sc)})`, { opacity: f(op) });
 }
