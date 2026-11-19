@@ -388,7 +388,20 @@ function shPole(t) {
   const age = t - tPop1;
   const close = SY.cams.poleClose, wide = SY.cams.poleWide;
   const near = at(170, -1700, 1.45);
-  const cam = shakeAll(camKeys(t, [[CUT.pole, { ...near, zoom: 1.6 }], [tNot - 0.05, near], [tNot + 0.45, wide], [CUT.poleCr, { ...wide, zoom: 0.37 }]], ease.inOut), t, [[tNot, 0.3, 10]]);
+  let cam;
+  if (t < tNot - 0.05) cam = camKeys(t, [[CUT.pole, { ...near, zoom: 1.6 }], [tNot - 0.05, near]]);
+  else {
+    // zoom out exponentially while the hero's head stays in frame (screen anchor eased from near to wide)
+    const e = ease.inOut(seg(t, tNot - 0.05, tNot + 0.5));
+    const P = { x: HUG.x, y: HUG.y - 420 * HUG.s };
+    const wideZ = lerp(wide.zoom, 0.37, seg(t, tNot + 0.5, CUT.poleCr));
+    const w2 = { ...wide, zoom: wideZ };
+    const [s0x, s0y] = toScr(near, P.x, P.y), [s1x, s1y] = toScr(w2, P.x, P.y);
+    const z = Math.exp(lerp(Math.log(near.zoom), Math.log(wideZ), e));
+    const sx = lerp(s0x, s1x, e), sy = lerp(s0y, s1y, e);
+    cam = { zoom: z, x: P.x - 960 - (sx - 960) / z, y: P.y - 540 - (sy - 540) / z };
+  }
+  cam = shakeAll(cam, t, [[tNot, 0.3, 10]]);
   const pp = R.popPose(age, HUG.s);
   let hero = '';
   if (!pp.hidden) hero += actor('you', t, hugPose(t, { sx: pp.sx, sy: pp.sy, face: t > tNot - 0.1 ? 'scream' : 'scared' }), { arms: false });

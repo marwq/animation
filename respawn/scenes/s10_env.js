@@ -45,6 +45,7 @@ function times(V) {
   C.people = w(3, 'and') - 0.08;
   C.hands = n[4].a - 0.1;
   C.oneTry = w(4, 'Only') - 0.1;
+  C.walkOn = n[4].b + 0.05;                       // the silent beat: Ivy strides out into the light
   // --- the act
   C.ladies = n[5].a - 0.12;
   C.hat = w(5, 'From') - 0.1;
@@ -60,10 +61,12 @@ function times(V) {
   C.whisper = n[8].a - 0.1;
   C.letsMake = w(8, "Let's") - 0.1;
   C.slide = n[9].a - 0.05;
-  C.hesitate = w(9, 'you', 1) - 0.1;
+  const dive = n[9].a + 0.3, plunge = dive + 0.6;
+  C.hesitate = Math.min(Math.max(plunge + 0.4, w(9, 'you', 1)), w(9, 'never') - 0.15);
   C.jump = w(9, 'you', 2) - 0.15;
   // --- the foam disco
   C.disco = n[9].b + 0.2;
+  C.disco2 = lerp(C.disco, n[10].a - 0.1, 0.5);   // the disco beat is long: two shots
   C.foam1 = n[10].a - 0.1;
   C.foam2 = w(10, 'FOAM', 1) - 0.06;
   C.foam3 = w(10, 'FOAM', 2) - 0.06;
@@ -79,6 +82,7 @@ function times(V) {
   C.fair = w(14, 'Honestly') - 0.1;
   C.unforget = n[15].a - 0.1;
   C.final = n[16].a - 0.1;
+  C.final2 = n[16].b + 0.15;                      // pull back: the whole house on its feet
 
   // beats / hits
   const B = {};
@@ -115,11 +119,11 @@ function times(V) {
   B.book = w(8, 'Fail');
   B.n313 = w(8, 'thirteen');
   B.wink = w(8, 'good');
-  B.dive = n[9].a + 0.5;
-  B.plunge = Math.min(B.dive + 0.85, C.hesitate - 0.12);
+  B.dive = dive;
+  B.plunge = plunge;
   B.gulp = w(9, 'never');
   B.breath = w(9, 'before');
-  B.leap = w(9, 'kept') - 0.05;
+  B.leap = Math.max(C.jump + 0.35, w(9, 'going') - 0.1);
   B.splash = n[9].b;
   B.ball = C.disco + 0.1;
   B.chant = [0, 1, 2, 3].map((k) => w(10, 'FOAM', k));
@@ -129,6 +133,7 @@ function times(V) {
   B.best = w(13, 'Best');
   B.disaster = w(13, 'Disaster');
   B.ever = w(13, 'Ever');
+  B.smile = n[13].b + 0.2;                        // the stern principal cracks a tiny smile
   B.notWin = w(14, 'win');
   B.won = w(14, 'won');
   B.fair = w(14, 'Fair');
@@ -142,15 +147,16 @@ function times(V) {
 // ================================================================ the stage layout of the act (stage view, world px)
 const ST = {
   floor: 770, s: 0.45,
-  ivy: 830, table: 1060, mic: 1330, prin: 1540, trip: 520, wingX: 150,
+  ivy: 830, table: 1060, mic: 1300, prin: 1480, trip: 470, wingX: 150,
   tableTop: 612,                           // table surface y
   hatS: 0.5,                               // hat scale; crown 190·s below the opening
 };
 ST.hat = { x: ST.table, y: ST.tableTop - 190 * ST.hatS };   // centre of the hat opening (mouth up)
-ST.fall = 700;                             // where the hero ends face-down after the trip
-ST.mound = { x: 1420, w: 580, h: 300 };    // the big foam mound (buries the principal)
+ST.fall = 500;                             // where the hero ends face-down after the trip (hip x; head reaches ~740)
+ST.mound = { x: 1390, w: 560, h: 240 };    // the big foam mound (buries the principal up to the shoulders)
+ST.stache = { x: ST.prin + 2, y: 444, s: 0.46 };   // under the principal's nose
 // the mic cable from the mic base to the left wing; the hero trips at ST.trip
-const CABLE = [[ST.mic, 776], [1180, 794], [960, 792], [760, 784], [600, 774], [ST.trip, 770], [420, 762], [300, 742], [160, 730]];
+const CABLE = [[ST.mic, 776], [1150, 794], [960, 792], [760, 786], [600, 776], [ST.trip, 770], [360, 758], [250, 740], [140, 728]];
 
 // ================================================================ camera
 const at = (wx, wy, zoom = 1, rot = 0) => ({ zoom, x: wx - 960, y: wy - 540, rot });
@@ -409,13 +415,11 @@ function missingFlag(x, y, s, k, t) {
 function lockedButton(x, y, k, t, label = 'RESET CHARACTER') {
   if (k <= 0.01) return '';
   const sc = ease.outBack(clamp(k, 0, 1));
-  const jig = Math.sin(t * 60) * 6 * bump(t, t - (t % 10), t);   // tiny shake handled by caller
   let o = S.rect(-300, -54, 600, 108, 30, { fill: '#2A2E3A', stroke: '#5A6070', 'stroke-width': 6, opacity: 0.92 });
   o += S.circle(-226, 0, 30, ol('#5A6070', 4)) + S.path('M-238 -2 L-238 -14 Q-226 -34 -214 -14 L-214 -2', ln(6, '#2A2E3A'));
   o += S.rect(-246, -6, 40, 30, 6, ol('#8E96A6', 4));
   o += TF(label, 40, 14, 40, '#7E8596', { 'letter-spacing': 2 });
   o += S.path('M-260 0 H290', ln(6, '#FF3B4E', 0.85));
-  void jig;
   return S.g(o, tf(x, y, sc));
 }
 // finger-snap sparks at (x, y) (screen or world), age seconds since the snap
@@ -471,7 +475,7 @@ const actor = K.actor;
 // a rig character "sitting" in the foam: drawn standing lower (legs hidden by a foreground pile)
 // lying face-down on the floor (side view, flipped = head to the right), x = hip centre
 function lying(name, t, x, y, s, o = {}) {
-  return actor(name, t, { x: x - 300 * s, y: y - 150 * s, s, view: 'side', flip: true, rot: -88, armL: 150, armR: 140, legL: -6, legR: 6, kneeL: 10, kneeR: 4, shadow: false, ...o }, { arms: false, energy: 0.2 });
+  return actor(name, t, { x, y: y + 395 * s, s, view: 'side', flip: true, rot: -88, armL: 150, armR: 140, legL: -6, legR: 6, kneeL: 10, kneeR: 4, shadow: false, ...o }, { arms: false, energy: 0.2 });
 }
 
 module.exports = {

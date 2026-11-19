@@ -69,9 +69,19 @@ const bars = (k, h = 70) => (k > 0 ? S.rect(0, 0, W, h * k, 0, { fill: '#0A0812'
 
 // ---------------------------------------------------------------- room compositing (world space, one camera)
 // L = set.layers(...): bg (parallax kbg), mid, [behind = chars behind the furniture], front, [floor = chars on the floor], fg, light
-function room(L, cam, { behind = '', floor = '', over = '', kbg = 0.85 } = {}) {
-  return view(cam, L.bg || '', kbg) + view(cam, (L.mid || '') + behind + (L.front || '') + floor + (L.fg || '') + (L.light || '') + over, 1);
+// the zoom of the last room drawn (scene() strips the costly volume filter from big close-ups)
+const Z = { last: 1 };
+function room(L, cam, { behind = '', floor = '', over = '', kbg = 0.85, light } = {}) {
+  Z.last = cam.zoom ?? 1;
+  return view(cam, L.bg || '', kbg) + view(cam, (L.mid || '') + behind + (L.front || '') + floor + (L.fg || '') + (light !== undefined ? light : L.light || '') + over, 1);
 }
+// strip the vinyl-volume filter from characters (big close-ups: same look at a fraction of the cost)
+const flat = (svg) => svg.replace(/ filter="url\(#volF?\)"/g, '');
+// cheaper stand-ins for the sets' radial-gradient light layers (the gradients get very slow when zoomed in)
+const LIGHT = {
+  kitchenEve: H.pool(1580, 380, 420, 400, '#FFC070', 0.24, 4) + S.rect(-900, -700, 3720, 2500, 0, { fill: '#FF8A3D', opacity: 0.06 }),
+  workshopQuiet: H.pool(1210, 520, 400, 380, '#FFC070', 0.2, 4) + H.darkRing(1150, 600, 560, 380, '#0A0820', 0.5, 4),
+};
 const SW = H.SPOTS.workshop, SK = H.SPOTS.kitchen;
 // the hero's checkpoint pad in Ivy's workshop (SC 06 only — SC 11 has none: the save was deleted)
 const PAD = { x: 1470, y: 985, s: 0.5 };
@@ -375,7 +385,7 @@ function paperFrame(k = 1) {
 
 module.exports = {
   LINE, tf, esc, TS, TFS, pop, popOut, at, toScr, mixCam, shakeAll, drift, clipTo, zoomAbout,
-  whip, smash, dip, zoomLines, bars, room, SW, SK, PAD, BOWL,
+  whip, smash, dip, zoomLines, bars, room, Z, flat, LIGHT, SW, SK, PAD, BOWL,
   blueprint, calendarCard, dayTag, drumKit, waffle, dadSpatula, scoreCard, pencilHand, glueBottle, easel, chalkVolcano, polaroid,
   bookSpread, bookClosing, chibi, crayon, kinderRoom, paperFrame,
 };

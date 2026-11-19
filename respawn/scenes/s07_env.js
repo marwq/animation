@@ -124,7 +124,8 @@ function ghostFail(kind, t, o = {}) {
   const dir = flip ? 1 : -1;                       // side view: screen direction he faces / travels
   const blink = u < 0.035 ? u / 0.035 : 1;         // re-spawn shimmer at the loop start
   const al = alpha * (0.35 + 0.65 * blink);
-  const G = (pose) => draw.ghost({ x, y, s, alpha: al, ...pose });
+  const GH = (p) => draw.ghost(o.rim === false ? { ...p, rim: false } : p);
+  const G = (pose) => GH({ x, y, s, alpha: al, ...pose });
   let out = '';
   if (kind === 'skate') {
     const tH = 0.36, D = 640 * s;
@@ -136,16 +137,16 @@ function ghostFail(kind, t, o = {}) {
     if (bop > 0.01) out += gprop(X.skateboard(bx, by, s, brot, { flipK: fk % 1 }), bop);
     if (u < tH) {
       const gx = bx, wob = Math.sin(tt * 9) * 4;
-      out += draw.ghost({ x: gx, y: y - 62 * s, s, alpha: al, view: 'side', flip, legL: 12, legR: -14, kneeL: 24, kneeR: 18, armL: 70 + wob, armR: -40 - wob, lean: 5, face: 'smug' });
+      out += GH({ x: gx, y: y - 62 * s, s, alpha: al, view: 'side', flip, legL: 12, legR: -14, kneeL: 24, kneeR: 18, armL: 70 + wob, armR: -40 - wob, lean: 5, face: 'smug' });
     } else if (u < 0.56) {
       const ua = seg(u, tH, 0.56);
       const gx = x + dir * ua * 170 * s, gy = y - 62 * s * (1 - ua) - Math.sin(ua * Math.PI) * 260 * s + ua * 200 * s;
-      out += draw.ghost({ x: gx, y: gy, s, alpha: al, view: 'side', flip, rot: -dir * 55 * ease.out(ua), legL: 80, legR: 55, kneeL: 10, kneeR: 30, armL: 150 + 20 * Math.sin(tt * 30), armR: 120 - 20 * Math.sin(tt * 30), face: 'scream' });
+      out += GH({ x: gx, y: gy, s, alpha: al, view: 'side', flip, rot: -dir * 55 * ease.out(ua), legL: 80, legR: 55, kneeL: 10, kneeR: 30, armL: 150 + 20 * Math.sin(tt * 30), armR: 120 - 20 * Math.sin(tt * 30), face: 'scream' });
     } else {
       const ul = seg(u, 0.56, 0.8), ug = ease.inOut(seg(u, 0.82, 1));
       const sq = 1 - 0.18 * Math.exp(-ul * 9) * Math.cos(ul * 26);
       const sitY = 200 * (1 - ug);
-      out += draw.ghost({ x: x + dir * 170 * s, y: y, s, alpha: al, view: 'side', flip, bodyY: sitY, legL: lerp(85, 0, ug), legR: lerp(72, 0, ug), kneeL: lerp(10, 40 * bump(u, 0.82, 1), ug), kneeR: lerp(14, 30 * bump(u, 0.82, 1), ug), rot: -dir * 10 * (1 - ul), sy: sq, sx: 2 - sq, armL: lerp(-20, 0, ug), armR: lerp(30, 0, ug), face: u < 0.82 ? 'dizzy' : 'oof' });
+      out += GH({ x: x + dir * 170 * s, y: y, s, alpha: al, view: 'side', flip, bodyY: sitY, legL: lerp(85, 0, ug), legR: lerp(72, 0, ug), kneeL: lerp(10, 40 * bump(u, 0.82, 1), ug), kneeR: lerp(14, 30 * bump(u, 0.82, 1), ug), rot: -dir * 10 * (1 - ul), sy: sq, sx: 2 - sq, armL: lerp(-20, 0, ug), armR: lerp(30, 0, ug), face: u < 0.82 ? 'dizzy' : 'oof' });
       if (u < 0.82) out += starsAround(x + dir * 170 * s, y - 600 * s, s, tt);
     }
   } else if (kind === 'ball') {
@@ -170,14 +171,14 @@ function ghostFail(kind, t, o = {}) {
     if (u < tH) {
       const e = u / tH, gx = lerp(sx0, x, e);
       const wk = require('./acting').walk(tt * 9);
-      out += draw.ghost({ x: gx, y, s, alpha: al, view: 'side', flip, ...wk, armL: 80, armR: 74, face: 'happy' });
+      out += GH({ x: gx, y, s, alpha: al, view: 'side', flip, ...wk, armL: 80, armR: 74, face: 'happy' });
       out += gprop(X.lunchTray({ x: gx + dir * 250 * s, y: y - 470 * s, s: s * 0.95, spaghetti: 1 }), 0.65);
     } else {
       const ub = (u - tH) * P;
       const ua = seg(u, tH, 0.52), ug = ease.inOut(seg(u, 0.8, 0.98));
       const rot = -dir * 84 * ease.out(ua) * (1 - ug);
       const air = Math.sin(ua * Math.PI) * 140 * s * (1 - ug);
-      out += draw.ghost({ x: x + dir * 60 * s, y: y - air + 235 * s * Math.sin((Math.abs(rot) * Math.PI) / 180), s, alpha: al, view: 'side', flip, rot, legL: lerp(110, 0, ug), legR: lerp(70, 0, ug), kneeL: 10, kneeR: 20, armL: lerp(160, 0, ug), armR: lerp(130, 0, ug), face: u < 0.52 ? 'scream' : u < 0.8 ? 'dizzy' : 'oof' });
+      out += GH({ x: x + dir * 60 * s, y: y - air + 235 * s * Math.sin((Math.abs(rot) * Math.PI) / 180), s, alpha: al, view: 'side', flip, rot, legL: lerp(110, 0, ug), legR: lerp(70, 0, ug), kneeL: 10, kneeR: 20, armL: lerp(160, 0, ug), armR: lerp(130, 0, ug), face: u < 0.52 ? 'scream' : u < 0.8 ? 'dizzy' : 'oof' });
       if (ub < 1.2) {
         const tx = x + dir * (250 + ub * 520) * s, ty = y - 470 * s - (1000 * ub - 2300 * ub * ub) * s;
         if (ty < y) out += gprop(X.lunchTray({ x: tx, y: ty, s: s * 0.95, rot: dir * ub * 360, spaghetti: 0.2 }), 0.65);
@@ -190,16 +191,16 @@ function ghostFail(kind, t, o = {}) {
     if (u < 0.6) {
       const e = ease.in(ua) * 0.4 + ua * 0.6;
       const hop = Math.abs(Math.sin(e * Math.PI * 4)) * 70 * s;
-      out += draw.ghost({ x: x + dx * e, y: y + dy * e - hop - 120 * s, s, alpha: al, view: 'side', flip: dx > 0, rot: (dx > 0 ? 1 : -1) * 720 * e, legL: 60, legR: 30, kneeL: 70, kneeR: 50, armL: 120, armR: 90, face: 'scream' });
+      out += GH({ x: x + dx * e, y: y + dy * e - hop - 120 * s, s, alpha: al, view: 'side', flip: dx > 0, rot: (dx > 0 ? 1 : -1) * 720 * e, legL: 60, legR: 30, kneeL: 70, kneeR: 50, armL: 120, armR: 90, face: 'scream' });
     } else {
       const fade = 1 - seg(u, 0.86, 1);
       const sq = 1 - 0.2 * Math.exp(-ul * 8) * Math.cos(ul * 24);
-      out += draw.ghost({ x: x + dx, y: y + dy + 235 * s, s, alpha: al * fade, view: 'side', flip: dx > 0, rot: (dx > 0 ? 1 : -1) * -90, sy: sq, armL: 150, armR: 40, legL: 20, legR: -10, face: 'dizzy' });
+      out += GH({ x: x + dx, y: y + dy + 235 * s, s, alpha: al * fade, view: 'side', flip: dx > 0, rot: (dx > 0 ? 1 : -1) * -90, sy: sq, armL: 150, armR: 40, legL: 20, legR: -10, face: 'dizzy' });
       out += starsAround(x + dx, y + dy - 150 * s, s * 0.8, tt, fade);
     }
   } else if (kind === 'foam') {
     const wipe = bump(u, 0.45, 0.7), drip = seg(u, 0, 0.3);
-    out += draw.ghost({ x, y, s, alpha: al, view: 'side', flip, bodyY: 200, legL: 85, legR: 76, kneeL: 8, kneeR: 12, armL: lerp(20, 140, wipe), armR: 10, headRot: -4 + 3 * Math.sin(tt * 2), foam: 1, face: { name: 'deadpan', blink: u > 0.86 && u < 0.9 ? 1 : 0 } });
+    out += GH({ x, y, s, alpha: al, view: 'side', flip, bodyY: 200, legL: 85, legR: 76, kneeL: 8, kneeR: 12, armL: lerp(20, 140, wipe), armR: 10, headRot: -4 + 3 * Math.sin(tt * 2), foam: 1, face: { name: 'deadpan', blink: u > 0.86 && u < 0.9 ? 1 : 0 } });
     out += S.g(R.foamPile(x + dir * 60 * s, y + 10 * s, 900 * s, 330 * s, { t: tt, seed: 4 }), null, { opacity: 0.8 });
     out += R.foamSplash(x, y - 640 * s, (u - 0.02) * P, { s: s * 1.4, n: 6, seed: 5 });
     if (drip > 0 && drip < 1) out += S.circle(x - dir * 40 * s, y - 600 * s + drip * 260 * s, 14 * s, { fill: '#FFFFFF', stroke: '#9AB', 'stroke-width': 3, opacity: 0.8 });
@@ -207,11 +208,11 @@ function ghostFail(kind, t, o = {}) {
     const tH = 0.32, D = 560 * s;
     if (u < tH) {
       const e = u / tH;
-      out += draw.ghost({ x: lerp(x - dir * D, x, e), y, s, alpha: al, view: 'side', flip, ...require('./acting').run(tt * 11, 0.9), face: 'happy' });
+      out += GH({ x: lerp(x - dir * D, x, e), y, s, alpha: al, view: 'side', flip, ...require('./acting').run(tt * 11, 0.9), face: 'happy' });
     } else {
       const ua = ease.in(seg(u, tH, 0.46)), ug = ease.inOut(seg(u, 0.78, 0.98));
       const rot = dir * 86 * ua * (1 - ug);
-      out += draw.ghost({ x: x + dir * 120 * s * ua, y: y + 235 * s * Math.sin((Math.abs(rot) * Math.PI) / 180), s, alpha: al, view: 'side', flip, rot, legL: -30 * (1 - ug), legR: 20 * (1 - ug), armL: lerp(130, 0, ug), armR: lerp(110, 0, ug), face: u < 0.46 ? 'scream' : 'oof' });
+      out += GH({ x: x + dir * 120 * s * ua, y: y + 235 * s * Math.sin((Math.abs(rot) * Math.PI) / 180), s, alpha: al, view: 'side', flip, rot, legL: -30 * (1 - ug), legR: 20 * (1 - ug), armL: lerp(130, 0, ug), armR: lerp(110, 0, ug), face: u < 0.46 ? 'scream' : 'oof' });
     }
   } else if (kind === 'flail') {
     const w = Math.sin(tt * 13 + ph * 3);
@@ -273,6 +274,7 @@ function liteCrowd(t, list, o = {}) {
     if (a.born !== undefined && t < a.born) continue;
     let p = litePose(a.kind || LITE_KINDS[(a.i || 0) % LITE_KINDS.length], t, a, a.i || 0, o.freeze);
     if (a.born !== undefined) { const age = t - a.born; if (age < 0.3) { const pp = R.popPose(age, a.s); p = { ...p, sx: pp.sx, sy: pp.sy }; } }
+    if (o.col) p.col = o.col;
     poses.push(p);
   }
   return poses.length ? draw.ghostCrowd(poses, { alpha: o.alpha ?? 0.62 }) : '';

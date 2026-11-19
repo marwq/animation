@@ -127,7 +127,7 @@ function nightHouse(t, cam, o = {}) {
   const fl = clamp(o.flash || 0, 0, 1);
   let out = Ly.bg + Ly.mid;
   // night: deep blue wash over everything, lighter while the lightning flashes
-  out += S.rect(-20, -20, 1960, 1120, 0, { fill: '#0A1238', opacity: f(0.74 - 0.45 * fl) });
+  out += S.rect(-20, -20, 1960, 1120, 0, { fill: '#0A1238', opacity: f(0.66 - 0.4 * fl) });
   out += S.rect(-20, -20, 1960, 700, 0, { fill: '#1B1050', opacity: f(0.25 * (1 - fl)) });
   // lit windows (the hero's gable window glows monitor-blue / green)
   const hw = H.toScreen(cam, H.SPOTS.street.house.heroWindow);

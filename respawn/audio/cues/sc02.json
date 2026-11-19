@@ -1,0 +1,1533 @@
+{
+ "scene": "SC 02",
+ "start": 42.11,
+ "end": 153.72,
+ "music": [
+  {
+   "start": 42.11,
+   "end": 61.05,
+   "mood": "playful",
+   "energy": 0.45,
+   "in": "fade",
+   "out": "cut"
+  },
+  {
+   "start": 61.05,
+   "end": 62.83,
+   "mood": "mystery",
+   "energy": 0.35,
+   "in": "cut",
+   "out": "scratch"
+  },
+  {
+   "start": 62.83,
+   "end": 65.33,
+   "mood": "silence",
+   "energy": 0,
+   "in": "cut",
+   "out": "cut"
+  },
+  {
+   "start": 65.33,
+   "end": 72.21,
+   "mood": "respawn",
+   "energy": 0.85,
+   "in": "cut",
+   "out": "scratch"
+  },
+  {
+   "start": 72.21,
+   "end": 74.898,
+   "mood": "playful",
+   "energy": 0.3,
+   "in": "cut",
+   "out": "cut"
+  },
+  {
+   "start": 74.898,
+   "end": 75.89,
+   "mood": "silence",
+   "energy": 0,
+   "in": "cut",
+   "out": "cut"
+  },
+  {
+   "start": 75.89,
+   "end": 86.26,
+   "mood": "warm",
+   "energy": 0.45,
+   "in": "swell",
+   "out": "cut"
+  },
+  {
+   "start": 86.26,
+   "end": 88.15,
+   "mood": "silence",
+   "energy": 0,
+   "in": "cut",
+   "out": "cut"
+  },
+  {
+   "start": 88.15,
+   "end": 102.83,
+   "mood": "warm",
+   "energy": 0.4,
+   "in": "fade",
+   "out": "cut"
+  },
+  {
+   "start": 102.83,
+   "end": 104.81,
+   "mood": "mystery",
+   "energy": 0.35,
+   "in": "cut",
+   "out": "cut"
+  },
+  {
+   "start": 104.81,
+   "end": 109.552,
+   "mood": "warm",
+   "energy": 0.5,
+   "in": "cut",
+   "out": "fade"
+  },
+  {
+   "start": 109.552,
+   "end": 111.84,
+   "mood": "sad",
+   "energy": 0.3,
+   "in": "fade",
+   "out": "cut"
+  },
+  {
+   "start": 111.84,
+   "end": 118.22,
+   "mood": "playful",
+   "energy": 0.55,
+   "in": "cut",
+   "out": "cut"
+  },
+  {
+   "start": 118.22,
+   "end": 122.84,
+   "mood": "chaos",
+   "energy": 0.8,
+   "in": "cut",
+   "out": "sting"
+  },
+  {
+   "start": 122.84,
+   "end": 137.64,
+   "mood": "playful",
+   "energy": 0.5,
+   "in": "cut",
+   "out": "cut"
+  },
+  {
+   "start": 137.64,
+   "end": 143,
+   "mood": "showtime",
+   "energy": 0.7,
+   "in": "swell",
+   "out": "scratch"
+  },
+  {
+   "start": 143,
+   "end": 146.542,
+   "mood": "glitch_build",
+   "energy": 0.6,
+   "in": "cut",
+   "out": "cut"
+  },
+  {
+   "start": 146.542,
+   "end": 149.103,
+   "mood": "playful",
+   "energy": 0.5,
+   "in": "cut",
+   "out": "cut"
+  },
+  {
+   "start": 149.103,
+   "end": 150.117,
+   "mood": "silence",
+   "energy": 0,
+   "in": "cut",
+   "out": "cut"
+  },
+  {
+   "start": 150.117,
+   "end": 153.72,
+   "mood": "sad",
+   "energy": 0.25,
+   "in": "cut",
+   "out": "sting"
+  }
+ ],
+ "ambience": [
+  {
+   "start": 42.11,
+   "end": 44.01,
+   "name": "room",
+   "gain_db": -14
+  },
+  {
+   "start": 50.06,
+   "end": 65.33,
+   "name": "room",
+   "gain_db": -14
+  },
+  {
+   "start": 72.21,
+   "end": 102.83,
+   "name": "kitchen",
+   "gain_db": -12
+  },
+  {
+   "start": 72.21,
+   "end": 102.83,
+   "name": "birds",
+   "gain_db": -20
+  },
+  {
+   "start": 104.81,
+   "end": 111.84,
+   "name": "kitchen",
+   "gain_db": -12
+  },
+  {
+   "start": 111.84,
+   "end": 113.6,
+   "name": "town",
+   "gain_db": -18
+  },
+  {
+   "start": 116,
+   "end": 140.44,
+   "name": "town",
+   "gain_db": -18
+  },
+  {
+   "start": 140.44,
+   "end": 143,
+   "name": "crowd",
+   "gain_db": -12
+  },
+  {
+   "start": 143,
+   "end": 153.42,
+   "name": "town",
+   "gain_db": -20
+  }
+ ],
+ "footsteps": [
+  {
+   "start": 67.45,
+   "end": 67.85,
+   "interval": 0.196,
+   "surface": "hard",
+   "gain_db": -12,
+   "pan": -0.2
+  },
+  {
+   "start": 104.81,
+   "end": 107.134,
+   "interval": 0.175,
+   "surface": "hard",
+   "gain_db": -10,
+   "pan": 0.2
+  },
+  {
+   "start": 116,
+   "end": 117.3,
+   "interval": 0.35,
+   "surface": "hard",
+   "gain_db": -10,
+   "pan": -0.4
+  },
+  {
+   "start": 136.2,
+   "end": 136.7,
+   "interval": 0.196,
+   "surface": "hard",
+   "gain_db": -10,
+   "pan": 0.3
+  }
+ ],
+ "sfx": [
+  [
+   42.13,
+   "vhs_clunk",
+   -6,
+   0,
+   "rewind lands: VHS PLAY tail, white flash out"
+  ],
+  [
+   42.41,
+   "ui_pop",
+   -8,
+   0.452,
+   "MONDAY · 8:00 AM title pops"
+  ],
+  [
+   42.83,
+   "record_scratch",
+   -2,
+   0,
+   "freeze-frame on \"you\""
+  ],
+  [
+   42.85,
+   "camera_flash",
+   -6,
+   0,
+   "freeze-frame flash, the still tilts"
+  ],
+  [
+   42.88,
+   "stamp",
+   -2,
+   0.379,
+   "YOU name tag slams in"
+  ],
+  [
+   43.53,
+   "stamp",
+   -5,
+   0.54,
+   "AGE 12 sticker slaps on"
+  ],
+  [
+   43.96,
+   "whoosh",
+   -4,
+   0,
+   "cut to the PLAYER 1 card"
+  ],
+  [
+   45.1,
+   "ui_pop",
+   -5,
+   0.321,
+   "SMART row slides in"
+  ],
+  [
+   45.15,
+   "sparkle",
+   -10,
+   -0.292,
+   "smug sparkle over his head"
+  ],
+  [
+   45.25,
+   "chime",
+   -8,
+   0.394,
+   "stars fill: 4 of 5"
+  ],
+  [
+   46.3,
+   "ui_pop",
+   -5,
+   0.321,
+   "FUNNY row slides in"
+  ],
+  [
+   46.35,
+   "boing",
+   -6,
+   -0.321,
+   "goofy ta-da jump, tongue out"
+  ],
+  [
+   47.36,
+   "ui_pop",
+   -6,
+   0.248,
+   "FEAR OF MESSING UP row"
+  ],
+  [
+   47.71,
+   "zoom_in",
+   -2,
+   0,
+   "smash-zoom on the fear bar"
+  ],
+  [
+   47.76,
+   "alarm_beep",
+   -4,
+   0.343,
+   "fear bar fills, red alarm light"
+  ],
+  [
+   48.16,
+   "impact",
+   0,
+   0,
+   "smash to his terrified face: bar overflows MAX"
+  ],
+  [
+   48.21,
+   "alarm",
+   -8,
+   0,
+   "alarm pulses (overflow)"
+  ],
+  [
+   48.31,
+   "glass",
+   -6,
+   0.394,
+   "the card cracks"
+  ],
+  [
+   50.06,
+   "whoosh",
+   -6,
+   0,
+   "cut to the whiteboard"
+  ],
+  [
+   50.36,
+   "stamp",
+   -4,
+   0.292,
+   "MR. FIG name tag"
+  ],
+  [
+   50.46,
+   "tap",
+   -10,
+   -0.19,
+   "marker taps the 7 × 8"
+  ],
+  [
+   51.09,
+   "tap",
+   -10,
+   -0.19,
+   "marker taps the 7 × 8"
+  ],
+  [
+   51.72,
+   "tap",
+   -10,
+   -0.19,
+   "marker taps the 7 × 8"
+  ],
+  [
+   51.83,
+   "cricket",
+   -6,
+   0.408,
+   "silence: a cricket chirps"
+  ],
+  [
+   52.43,
+   "cloth",
+   -8,
+   0.102,
+   "hand twitches up... and down"
+  ],
+  [
+   54.19,
+   "cloth",
+   -6,
+   0.139,
+   "hand twitches higher... and down"
+  ],
+  [
+   55.983,
+   "harp_up",
+   -4,
+   0,
+   "daydream cloud frame"
+  ],
+  [
+   56.133,
+   "chat_pop",
+   -6,
+   0.204,
+   "\"56!\" bubble"
+  ],
+  [
+   56.35,
+   "buzzer_wrong",
+   0,
+   0,
+   "WRONG! giant red X"
+  ],
+  [
+   56.43,
+   "kids_laugh",
+   -4,
+   0,
+   "the whole class laughs and points"
+  ],
+  [
+   57.9,
+   "swish",
+   -6,
+   -0.467,
+   "panel 1 slides in"
+  ],
+  [
+   58.15,
+   "chime",
+   -10,
+   -0.343,
+   "right answer in the thought bubble"
+  ],
+  [
+   58.3,
+   "swish",
+   -6,
+   0,
+   "panel 2 slides in"
+  ],
+  [
+   58.55,
+   "chime",
+   -10,
+   0.124,
+   "right answer in the thought bubble"
+  ],
+  [
+   58.62,
+   "swish",
+   -6,
+   0.467,
+   "panel 3 slides in"
+  ],
+  [
+   58.87,
+   "chime",
+   -10,
+   0.591,
+   "right answer in the thought bubble"
+  ],
+  [
+   59.94,
+   "slide_up",
+   -4,
+   0,
+   "ZIP! the zipper closes his mouth"
+  ],
+  [
+   60.34,
+   "slap",
+   -4,
+   0.139,
+   "NOPE. the hand is yanked down"
+  ],
+  [
+   61.15,
+   "heartbeat",
+   -6,
+   0,
+   "heartbeat: what if you are wrong"
+  ],
+  [
+   61.983,
+   "heartbeat",
+   -6,
+   0,
+   "heartbeat: what if you are wrong"
+  ],
+  [
+   62.89,
+   "orch_hit",
+   0,
+   0.248,
+   "the neighbour jumps up: FIFTY-SIX!"
+  ],
+  [
+   62.99,
+   "zoom_in",
+   -4,
+   0.248,
+   "smash-zoom on the neighbour"
+  ],
+  [
+   63.37,
+   "chat_pop",
+   -6,
+   -0.459,
+   "CORRECT! bubble"
+  ],
+  [
+   63.47,
+   "slide_down",
+   -6,
+   0,
+   "the hero slowly slides under the desk"
+  ],
+  [
+   63.52,
+   "applause",
+   -8,
+   0,
+   "the class claps"
+  ],
+  [
+   63.62,
+   "whoosh_up",
+   -10,
+   -0.044,
+   "gold star flies to the neighbour"
+  ],
+  [
+   63.97,
+   "pop",
+   -6,
+   0.35,
+   "star sticker lands on his forehead"
+  ],
+  [
+   65.23,
+   "whoosh",
+   -3,
+   0.3,
+   "whip-pan"
+  ],
+  [
+   65.53,
+   "jump_game",
+   -8,
+   0.321,
+   "game sounds from the headset"
+  ],
+  [
+   67.5,
+   "ui_pop",
+   -8,
+   -0.554,
+   "FALLS: 4,790 HUD slides in"
+  ],
+  [
+   67.6,
+   "orch_hit",
+   -6,
+   0.335,
+   "FEARLESS! lettering"
+  ],
+  [
+   67.85,
+   "jump_game",
+   -2,
+   -0.1,
+   "fearless leap over the lava"
+  ],
+  [
+   68,
+   "whoosh_up",
+   -4,
+   0,
+   "front flip in the air"
+  ],
+  [
+   68.41,
+   "land",
+   -4,
+   0,
+   "lands the flip"
+  ],
+  [
+   68.83,
+   "jump_game",
+   -3,
+   0,
+   "leaps over the red kill platform"
+  ],
+  [
+   69.52,
+   "jump_game",
+   -3,
+   0.1,
+   "jumps for the next platform..."
+  ],
+  [
+   69.58,
+   "land",
+   -5,
+   0,
+   "lands"
+  ],
+  [
+   69.845,
+   "bonk",
+   -2,
+   0.2,
+   "...BONK, smacks into its side"
+  ],
+  [
+   69.895,
+   "fall_whistle",
+   -6,
+   0.2,
+   "falls toward the lava"
+  ],
+  [
+   70.17,
+   "splash",
+   0,
+   0.2,
+   "SPLASH into the lava"
+  ],
+  [
+   70.19,
+   "sizzle",
+   -6,
+   0.2,
+   "lava sizzle"
+  ],
+  [
+   70.21,
+   "pop",
+   -4,
+   0.2,
+   "crumbles into blocks"
+  ],
+  [
+   70.22,
+   "tap",
+   -8,
+   -0.554,
+   "FALLS: 4,791 bumps"
+  ],
+  [
+   70.25,
+   "countdown_tick",
+   -8,
+   0.6,
+   "corner pill: RESPAWNING 3"
+  ],
+  [
+   70.27,
+   "stone",
+   -8,
+   0.2,
+   "blocks scatter"
+  ],
+  [
+   70.517,
+   "countdown_tick",
+   -8,
+   0.6,
+   "RESPAWNING 2"
+  ],
+  [
+   70.783,
+   "countdown_final",
+   -6,
+   0.6,
+   "RESPAWNING 1"
+  ],
+  [
+   70.99,
+   "reverse_swell",
+   -8,
+   0,
+   "blocks converge on the checkpoint"
+  ],
+  [
+   71.11,
+   "respawn",
+   -1,
+   -0.1,
+   "POP: respawn on the checkpoint"
+  ],
+  [
+   71.16,
+   "forcefield",
+   -8,
+   -0.1,
+   "spawn forcefield"
+  ],
+  [
+   71.46,
+   "jump_game",
+   -6,
+   -0.1,
+   "happy hop: AGAIN!"
+  ],
+  [
+   72.11,
+   "whoosh",
+   -3,
+   -0.3,
+   "whip-pan"
+  ],
+  [
+   72.36,
+   "jump",
+   -10,
+   0.015,
+   "hop"
+  ],
+  [
+   72.51,
+   "swish",
+   -14,
+   -0.226,
+   "Dad flips a pancake in the background"
+  ],
+  [
+   72.794,
+   "land",
+   -8,
+   0.015,
+   "lands: a dashed \"checkpoint?\" ring flickers... nothing"
+  ],
+  [
+   72.98,
+   "jump",
+   -10,
+   0.015,
+   "hop"
+  ],
+  [
+   73.414,
+   "land",
+   -8,
+   0.015,
+   "lands: a dashed \"checkpoint?\" ring flickers... nothing"
+  ],
+  [
+   73.6,
+   "jump",
+   -10,
+   0.015,
+   "hop"
+  ],
+  [
+   74.01,
+   "swish",
+   -14,
+   -0.226,
+   "Dad flips a pancake in the background"
+  ],
+  [
+   74.034,
+   "land",
+   -8,
+   0.015,
+   "lands: a dashed \"checkpoint?\" ring flickers... nothing"
+  ],
+  [
+   74.22,
+   "jump",
+   -10,
+   0.015,
+   "hop"
+  ],
+  [
+   74.654,
+   "land",
+   -8,
+   0.015,
+   "lands: a dashed \"checkpoint?\" ring flickers... nothing"
+  ],
+  [
+   74.84,
+   "jump",
+   -10,
+   0.015,
+   "hop"
+  ],
+  [
+   75.278,
+   "land",
+   -6,
+   0.015,
+   "one last hop"
+  ],
+  [
+   75.28,
+   "error",
+   -3,
+   0.277,
+   "CHECKPOINT NOT FOUND toast"
+  ],
+  [
+   76.04,
+   "swish",
+   -4,
+   -0.19,
+   "Dad flips a pancake high"
+  ],
+  [
+   76.97,
+   "stamp",
+   -3,
+   0.335,
+   "DAD name tag"
+  ],
+  [
+   77.09,
+   "pan_clang",
+   -6,
+   -0.19,
+   "lands back in the pan"
+  ],
+  [
+   77.93,
+   "swish",
+   -6,
+   -0.467,
+   "MON panel drops in"
+  ],
+  [
+   78.13,
+   "swish",
+   -6,
+   0,
+   "TUE panel drops in"
+  ],
+  [
+   78.77,
+   "swish",
+   -6,
+   0.467,
+   "WED panel drops in"
+  ],
+  [
+   79.09,
+   "pan_clang",
+   -6,
+   0,
+   "all three Dads flip in sync"
+  ],
+  [
+   80.02,
+   "ui_pop",
+   -6,
+   0,
+   "SAME JOKE TOLD counter"
+  ],
+  [
+   80.17,
+   "money_counter",
+   -10,
+   0,
+   "counter rolls up to 1,461"
+  ],
+  [
+   81.15,
+   "chime",
+   -6,
+   0,
+   "counter lands on 1,461"
+  ],
+  [
+   83.21,
+   "bubbles",
+   -14,
+   -0.846,
+   "Gary's bowl bubbles (he mouths along too)"
+  ],
+  [
+   84.75,
+   "drumroll",
+   -10,
+   0,
+   "build-up: Dad leans in"
+  ],
+  [
+   86.31,
+   "splat",
+   0,
+   -0.321,
+   "FLAT! the pancake is slammed flat on the island"
+  ],
+  [
+   86.33,
+   "zoom_in",
+   -4,
+   0,
+   "smash-zoom on Dad"
+  ],
+  [
+   87,
+   "ui_pop",
+   -6,
+   0.532,
+   "drum kit pops into the corner"
+  ],
+  [
+   87.35,
+   "rimshot",
+   2,
+   0.532,
+   "BA-DUM TSS!"
+  ],
+  [
+   87.65,
+   "crowd_laugh",
+   -12,
+   -0.226,
+   "Dad laughs at his own joke"
+  ],
+  [
+   88.25,
+   "cricket",
+   -6,
+   -0.437,
+   "nobody laughs: cricket"
+  ],
+  [
+   89.57,
+   "stamp",
+   -3,
+   -0.357,
+   "BEA name tag"
+  ],
+  [
+   91.99,
+   "ui_pop",
+   -6,
+   0,
+   "LIES TOLD: 0 counter"
+  ],
+  [
+   92.63,
+   "chime",
+   -6,
+   0,
+   "counter bump"
+  ],
+  [
+   92.98,
+   "stamp",
+   -2,
+   0.379,
+   "100% HONEST stamp"
+  ],
+  [
+   94.05,
+   "swish",
+   -10,
+   -0.044,
+   "Bea turns, points the spoon"
+  ],
+  [
+   95.26,
+   "zoom_in",
+   -3,
+   0,
+   "smash to the hair close-up"
+  ],
+  [
+   95.31,
+   "pop",
+   -2,
+   0.306,
+   "the mushroom pops up next to him"
+  ],
+  [
+   97.06,
+   "sad_trombone",
+   -3,
+   0,
+   "SAD: both droop"
+  ],
+  [
+   97.21,
+   "poof",
+   -10,
+   0,
+   "tiny rain cloud appears"
+  ],
+  [
+   98.7,
+   "whoosh",
+   -3,
+   -0.3,
+   "whip-pan"
+  ],
+  [
+   98.9,
+   "bubbles",
+   -8,
+   0,
+   "Gary's bowl"
+  ],
+  [
+   99.52,
+   "stamp",
+   -4,
+   0.343,
+   "GARY name tag"
+  ],
+  [
+   101.08,
+   "swish",
+   -12,
+   0,
+   "Gary turns to the camera"
+  ],
+  [
+   102.83,
+   "dramatic",
+   -4,
+   0,
+   "extreme close-up: Gary has seen things"
+  ],
+  [
+   103.99,
+   "blink",
+   -4,
+   0,
+   "slow blink"
+  ],
+  [
+   105.01,
+   "stamp",
+   -4,
+   -0.357,
+   "MOM name tag"
+  ],
+  [
+   105.16,
+   "heart_pop",
+   -4,
+   0,
+   "kiss on Bea's head: MWAH!"
+  ],
+  [
+   105.8,
+   "heart_pop",
+   -4,
+   0.175,
+   "kiss on your head: MWAH!"
+  ],
+  [
+   106.22,
+   "whoosh",
+   -6,
+   0.5,
+   "Mom zooms off"
+  ],
+  [
+   108.74,
+   "sparkle",
+   -10,
+   0.467,
+   "wink sparkle: mistakes are how we learn"
+  ],
+  [
+   109.62,
+   "door_close",
+   -2,
+   0.3,
+   "SLAM! she is gone"
+  ],
+  [
+   110.54,
+   "kids_laugh",
+   -14,
+   0,
+   "HA HA echo (memory)"
+  ],
+  [
+   111.74,
+   "whoosh",
+   -3,
+   0.3,
+   "whip-pan"
+  ],
+  [
+   111.94,
+   "electric",
+   -12,
+   0.029,
+   "soldering sparks on the rocket sneaker"
+  ],
+  [
+   112.74,
+   "sizzle",
+   -14,
+   0.029,
+   "soldering"
+  ],
+  [
+   112.8,
+   "stamp",
+   -3,
+   0.357,
+   "IVY name tag"
+  ],
+  [
+   113.6,
+   "camera_flash",
+   -6,
+   0,
+   "kindergarten polaroid drops in"
+  ],
+  [
+   113.8,
+   "paper",
+   -10,
+   0,
+   "photo lands on the cork board"
+  ],
+  [
+   116.58,
+   "ui_pop",
+   -8,
+   0.438,
+   "ROCKET SNEAKERS v12 label"
+  ],
+  [
+   118.32,
+   "jetpack",
+   0,
+   0.211,
+   "rocket sneakers ignite"
+  ],
+  [
+   118.37,
+   "whoosh",
+   -2,
+   0.029,
+   "she shoots into the wall"
+  ],
+  [
+   118.62,
+   "explosion",
+   3,
+   -0.117,
+   "KA-BOOM at the scorch mark"
+  ],
+  [
+   118.64,
+   "boom",
+   0,
+   -0.117,
+   "explosion body, camera shake"
+  ],
+  [
+   118.72,
+   "body_fall",
+   -8,
+   -0.292,
+   "the hero is blown back"
+  ],
+  [
+   120.05,
+   "tap",
+   -6,
+   0,
+   "chalk: the 1 becomes 0"
+  ],
+  [
+   120.3,
+   "whoosh",
+   -4,
+   -0.3,
+   "the other sneaker whizzes across the board"
+  ],
+  [
+   120.65,
+   "jetpack",
+   -4,
+   -0.4,
+   "the stray sneaker loops round the garage"
+  ],
+  [
+   120.85,
+   "whoosh_long",
+   -6,
+   0,
+   "NOT AGAIN! he ducks"
+  ],
+  [
+   121.25,
+   "explosion",
+   3,
+   0.583,
+   "KA-BLAM! it hits the BOOM? box"
+  ],
+  [
+   121.27,
+   "impact",
+   0,
+   0.583,
+   "explosion #2 body"
+  ],
+  [
+   121.85,
+   "rock_drop",
+   -10,
+   0.467,
+   "debris rains down"
+  ],
+  [
+   122.84,
+   "ui_pop",
+   -6,
+   -0.554,
+   "FAIL # counter"
+  ],
+  [
+   122.96,
+   "poof",
+   -6,
+   -0.044,
+   "*cough* smoke puff"
+  ],
+  [
+   123.09,
+   "paper",
+   -6,
+   -0.262,
+   "she opens the Book of Fails"
+  ],
+  [
+   124.6,
+   "level_up",
+   -4,
+   -0.554,
+   "counter rolls to 312"
+  ],
+  [
+   126.876,
+   "paper",
+   -10,
+   0,
+   "page close-up"
+  ],
+  [
+   127.85,
+   "squeak",
+   -12,
+   0,
+   "pencil: \"never wear\""
+  ],
+  [
+   128.3,
+   "squeak",
+   -12,
+   0,
+   "pencil: \"rocket sneakers...\""
+  ],
+  [
+   129.88,
+   "whoosh_down",
+   -6,
+   -0.241,
+   "a smoking sneaker falls from the ceiling"
+  ],
+  [
+   129.93,
+   "squeak",
+   -8,
+   0,
+   "pencil: \"INDOORS!!\" underlined"
+  ],
+  [
+   130.33,
+   "bonk",
+   0,
+   -0.241,
+   "BONK! on her head"
+  ],
+  [
+   130.43,
+   "dizzy",
+   -8,
+   -0.241,
+   "swirly eyes"
+  ],
+  [
+   131.66,
+   "zoom_in",
+   -3,
+   -0.248,
+   "smash-zoom on HAPPY"
+  ],
+  [
+   133.26,
+   "sparkle",
+   -10,
+   0.16,
+   "finger up, sparkle"
+  ],
+  [
+   135.22,
+   "achievement",
+   -2,
+   0.365,
+   "LESSON +1 achievement badge"
+  ],
+  [
+   136.2,
+   "whoosh",
+   -4,
+   0.3,
+   "Ivy zips to the rack"
+  ],
+  [
+   136.7,
+   "sparkle",
+   -6,
+   0.248,
+   "the rolled poster raised"
+  ],
+  [
+   137.64,
+   "slide_down",
+   -4,
+   0,
+   "the poster unrolls"
+  ],
+  [
+   137.9,
+   "squeak",
+   -6,
+   0,
+   "marker: \"IVY & YOU: SCIENCE MAGIC!\" scribbles in"
+  ],
+  [
+   138.59,
+   "whoosh_up",
+   -8,
+   0,
+   "tilt up to TALENT SHOW"
+  ],
+  [
+   139.94,
+   "stamp",
+   0,
+   0.394,
+   "FRIDAY! stamp"
+  ],
+  [
+   141.13,
+   "whoosh_long",
+   -2,
+   0,
+   "zoom OUT: the packed auditorium"
+  ],
+  [
+   141.48,
+   "orch_hit",
+   -4,
+   0,
+   "THE WHOLE SCHOOL"
+  ],
+  [
+   141.48,
+   "shine",
+   -4,
+   0,
+   "the follow spot swings onto us"
+  ],
+  [
+   142.9,
+   "whoosh",
+   -3,
+   0.3,
+   "whip-pan"
+  ],
+  [
+   143.19,
+   "zoom_in",
+   0,
+   0,
+   "smash-zoom: THE WHOLE SCHOOL?!"
+  ],
+  [
+   143.22,
+   "impact",
+   -2,
+   0,
+   "scream, shake"
+  ],
+  [
+   145.65,
+   "glitch",
+   -4,
+   0,
+   "imagination flash: on stage"
+  ],
+  [
+   145.71,
+   "slip",
+   -6,
+   0,
+   "he trips"
+  ],
+  [
+   145.85,
+   "pop",
+   -2,
+   0,
+   "crumbles into blocks"
+  ],
+  [
+   145.87,
+   "stone",
+   -6,
+   0,
+   "blocks scatter on the stage"
+  ],
+  [
+   146,
+   "error",
+   0,
+   0,
+   "NO RESPAWN"
+  ],
+  [
+   146.442,
+   "whoosh",
+   -3,
+   -0.3,
+   "whip-pan"
+  ],
+  [
+   148.1,
+   "tada",
+   -6,
+   0.16,
+   "jazz hands: FUN!"
+  ],
+  [
+   148.12,
+   "confetti",
+   -6,
+   0,
+   "confetti"
+  ],
+  [
+   149.403,
+   "cricket",
+   -10,
+   0,
+   "silent stare into the camera"
+  ],
+  [
+   151.46,
+   "blink",
+   -8,
+   0,
+   "eye twitch"
+  ],
+  [
+   151.72,
+   "alarm_beep",
+   -6,
+   0.365,
+   "FEAR OF MESSING UP meter returns, overflowing"
+  ],
+  [
+   153.42,
+   "whoosh_down",
+   -10,
+   0,
+   "dip to night (SC03)"
+  ]
+ ]
+}

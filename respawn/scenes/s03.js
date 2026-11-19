@@ -177,7 +177,7 @@ function parkourKeys() {
 const PK = parkourKeys();
 function sh06(t) {
   const hp = hops(t, PK);
-  const cam = { zoom: 0.82, x: hp.x - 960 + 160, y: hp.y - 660 };
+  const cam = { zoom: 0.82, x: hp.x - 960 + 160, y: hp.y - 790 };
   const sq = hp.air ? { sx: 0.94, sy: 1.08 } : squash(t, t - hp.land, 0.22, 0.4);
   const airPose = { legL: 50, kneeL: 70, legR: -20, kneeR: 60, armL: 150, armR: 120, lean: 8 };
   const pose = { x: hp.x, y: hp.y, s: OW.s, view: 'side', flip: true, ...(hp.air ? airPose : AC.run(t * 18)), ...(hp.air ? sq : squash(t, PK[Math.max(1, hp.i)][0], 0.2, 0.35)), face: { name: 'joy' } };
@@ -257,14 +257,17 @@ function sh09(t) {
 function sh10(t) {
   const sp = { x: OW.checkpoints[0].x - 20, y: OW.checkpoints[0].y, s: OW.s };
   const tP = w(2, 'respawned') + 0.05, age = t - tP;
-  const cam = camKeys(t, [[c10, at(sp.x + 40, 520, 1.55)], [c11, at(sp.x + 40, 540, 1.75)]], ease.out);
+  const tGo = tP + 0.85;
+  const run = hops(t, [[tGo, sp.x, sp.y], [tGo + 0.35, sp.x + 260, sp.y], [tGo + 0.75, OW.platforms[1].x, OW.platforms[1].y, 170]]);
+  const cam = camKeys(t, [[c10, at(sp.x + 40, 520, 1.55)], [tGo, at(sp.x + 40, 540, 1.7)], [c11, at(sp.x + 420, 520, 1.3)]], ease.inOut);
   const Ly = H.obbyWorld.layers(t, cam, { stage: 997 });
   let w_ = R.respawnPop({ ...sp, age, part: 'back' });
   if (age >= 0) {
     const pp = R.popPose(age, sp.s);
     const ta = seg(t, tP + 0.45, tP + 0.75);
-    w_ += you(t, { ...sp, sx: pp.sx, sy: pp.sy, lift: pp.lift, face: fc(ta > 0 ? 'happy' : 'amazed', t, 1), armL: 20 + 50 * ta, armR: 20 + 50 * ta, turn: 0.2 }, { arms: false });
-    w_ += R.forcefield({ ...sp, t, k: 1 - seg(t, c11 - 0.5, c11) * 0.4 });
+    if (t < tGo) w_ += you(t, { ...sp, sx: pp.sx, sy: pp.sy, lift: pp.lift, face: fc(ta > 0 ? 'happy' : 'amazed', t, 1), armL: 20 + 50 * ta, armR: 20 + 50 * ta, turn: 0.2 }, { arms: false });
+    else w_ += you(t, { x: run.x, y: run.y, s: sp.s, view: 'side', flip: true, ...(run.air ? { legL: 50, kneeL: 70, legR: -20, kneeR: 60, armL: 150, armR: 120 } : AC.run(t * 18)), face: { name: 'determined' } }, { arms: false });
+    w_ += R.forcefield({ ...sp, x: t < tGo ? sp.x : run.x, y: t < tGo ? sp.y : run.y, t, k: 1 - seg(t, tGo, c11) * 0.6 });
   }
   w_ += R.respawnPop({ ...sp, age, part: 'front' });
   let o = Ly.bg + Ly.mid + view(cam, w_, 1) + (Ly.fg || '') + (Ly.light || '');
@@ -301,7 +304,7 @@ function sh13(t) {
   const cam = camKeys(t, [[c13, at(900, 600, 1.0)], [c14, at(1000, 430, 1.45)]], ease.inOut);
   const Ly = H.deskClose.layers(t, { time: 'night', storm: 1, monitor: game(t, {}), clock: '2:00' });
   let o = view(cam, Ly.bg, 0.85) + view(cam, Ly.mid + bowlDesk(t, { look: [1, -0.5] }) + E.deskArms(t, { typing: 0.4 }) + Ly.light, 1);
-  o += R.counterHUD({ x: 960, y: 860, k: seg(t, tN - 0.6, tN - 0.3), anchor: 'center', label: 'STAGE', value: 999, theme: 'gold', icon: 'star', t, bump: seg(t, tN, tN + 0.45), size: 80 });
+  o += R.counterHUD({ x: 1850, y: 110, k: seg(t, tN - 0.6, tN - 0.3), anchor: 'right', label: 'STAGE', value: 999, theme: 'gold', icon: 'star', t, bump: seg(t, tN, tN + 0.45), size: 80 });
   return o;
 }
 // ---- 14. "One jump left." — the game screen full frame: from the avatar up to the golden 1000 flag
@@ -328,20 +331,31 @@ function sh15(t) {
 }
 // ---- 16. ECU: the finger on SPACE
 function sh16(t) {
-  const cam = camKeys(t, [[c16, at(960, 880, 2.35)], [c17, at(960, 895, 2.55)]], ease.linear);
-  const pr = seg(t, tPress - 0.14, tPress) * (1 - seg(t, tPress + 0.14, tPress + 0.32));
+  // insert shot: a giant SPACE key cap, the finger (hand block) comes down from above and slams it
+  const cam = camKeys(t, [[c16, at(960, 920, 3.0)], [c17, at(960, 925, 3.2)]], ease.linear);
+  const pr = seg(t, tPress - 0.12, tPress) * (1 - seg(t, tPress + 0.16, tPress + 0.36));
+  const hover = 1 - seg(t, c16, tPress - 0.12);
   const Ly = H.deskClose.layers(t, { time: 'night', storm: 1, monitor: game(t, {}), clock: '2:00' });
-  // the SPACE bar (on top of the keyboard's near row), lit while pressed
-  const key = S.rect(810, 922 + 7 * pr, 320, 38, 10, { fill: '#2A2D38', stroke: '#151515', 'stroke-width': 5 }) +
-    S.rect(810, 922 + 7 * pr, 320, 38, 10, { fill: 'none', stroke: pr > 0.5 ? '#FFFFFF' : '#7DFFD0', 'stroke-width': 3, opacity: 0.8 }) + TF('SPACE', 970, 949 + 7 * pr, 20, pr > 0.5 ? '#FFFFFF' : '#9DB0D0');
-  let o = view(cam, Ly.bg, 0.85) + view(cam, Ly.mid + key + E.deskArms(t, { typing: 0, lx: 640, ly: 880, rx: 960, ry: 860 + 52 * pr }) + Ly.light, 1);
+  let o = view(cam, Ly.bg, 0.85) + view(cam, Ly.mid + Ly.light, 1);
+  o += S.rect(0, 0, 1920, 1080, 0, { fill: '#05070F', opacity: 0.45 });
+  const ky = 760 + 22 * pr;
+  let key = S.rect(-470, 30, 940, 150, 30, ol('#15171F', 10)) + S.rect(-470, -60, 940, 170, 30, ol(pr > 0.5 ? '#3D4560' : '#2E3242', 10));
+  key += S.rect(-440, -46, 880, 40, 18, { fill: '#FFFFFF', opacity: 0.08 });
+  key += TF('SPACE', 0, 50, 72, pr > 0.5 ? '#FFFFFF' : '#9DB0D0', { 'letter-spacing': 12 });
+  key += S.rect(-470, -60, 940, 170, 30, { fill: 'none', stroke: '#7DFFD0', 'stroke-width': 6, opacity: f(0.4 + 0.6 * pr) });
+  o += S.g(key, `translate(960 ${f(ky)})`);
+  // the arm + hand from the upper right
+  const hx = 1010 + 40 * hover, hy = ky - 100 - 260 * hover + 10 * Math.sin(t * 30) * hover;
+  let arm = S.path(`M${f(hx + 120)} ${f(hy - 40)} L${f(2200)} ${f(hy - 900)} L${f(2400)} ${f(hy - 620)} L${f(hx + 170)} ${f(hy + 70)} Z`, ol('#D8262E', 10));
+  arm += S.path(`M${f(hx + 90)} ${f(hy - 60)} L${f(hx + 200)} ${f(hy - 140)} L${f(hx + 260)} ${f(hy - 40)} L${f(hx + 150)} ${f(hy + 50)} Z`, ol('#F2D04A', 9));
+  arm += S.rect(hx - 120, hy - 90, 260, 200, 40, ol('#FFFFFF', 10)) + S.path(`M${f(hx - 60)} ${f(hy + 100)} V${f(hy + 20)} M${f(hx + 10)} ${f(hy + 100)} V${f(hy + 30)}`, ln(6, '#C9CED8'));
+  o += arm;
   if (t > tPress) {
     const k = seg(t, tPress, tPress + 0.3);
-    const p = toS(cam, 970, 940);
-    o += S.ellipse(p[0], p[1], 120 + 400 * k, 40 + 130 * k, { fill: 'none', stroke: '#FFFFFF', 'stroke-width': f(16 * (1 - k)), opacity: f(1 - k) });
-    o += zoomLines(p[0], p[1], 1 - k, '#FFFFFF', 18, 3, 380);
+    o += S.ellipse(960, ky + 40, 500 + 500 * k, 120 + 160 * k, { fill: 'none', stroke: '#FFFFFF', 'stroke-width': f(18 * (1 - k)), opacity: f(1 - k) });
+    o += zoomLines(960, ky, 1 - k, '#FFFFFF', 18, 3, 460);
   }
-  o += bangAt(t, 'TAP', 1420, 380, tPress, 0.3, 90, 8, '#FFFFFF');
+  o += bangAt(t, 'TAP!', 520, 330, tPress, 0.32, 110, -8, '#FFFFFF');
   o += E.pulseVignette(t, 1);
   return o;
 }
@@ -388,16 +402,33 @@ function sh18(t) {
   o += bangAt(t, 'KRA-KOOM!', 1380, 820, tStrike, c19 - tStrike, 130, -8, '#FFE14D');
   return o;
 }
+// ---- 19a. the power surge: the room flickers, the string lights pop, sparks, the screen floods the room with green
+function sh19a(t) {
+  const cam = camKeys(t, [[c19a, at(1150, 540, 1.02)], [c19, at(1290, 500, 1.38)]], ease.inOut);
+  shakeAll(cam, t, [[c19a, 0.4, 16], [c19a, c19 - c19a, 4]]);
+  const step = Math.floor(t * 15);
+  const flick = t < c19a + 0.8 ? (hash(step * 1.7) > 0.55 ? 1 : 0) : 0;
+  const green = ease.inOut(seg(t, c19a + 0.5, c19 - 0.2));
+  const L_ = H.heroRoom.layers(t, { time: 'night', storm: 1, monitor: game(t, { win: green }), greenGlow: green, flash: flick * 0.6, lights: flick ? 1 : 0.2, monitorGlow: 0.6 + 0.4 * flick, clock: '2:00' });
+  const hero = chairSit(t, { armL: 165 + 6 * Math.sin(t * 50), armR: 165 + 6 * Math.sin(t * 46), headRot: 4 * Math.sin(t * 40) });
+  let wd = L_.mid + bowlRoom(t, { look: [0.6, -0.6], blink: 0 }) + hero + L_.front + E.clipRect(1000, 200, 420, HR.chair.seat - 190 - 200, hero) + L_.light;
+  const sc = HR.monitor.screen;
+  wd += E.sparks(sc.cx - 260, sc.cy - 120, 180, t, 1, 2, '#9DFFCB') + E.sparks(sc.cx + 250, sc.cy + 140, 170, t, 1, 7, '#BFF6FF') + E.sparks(1560, 760, 150, t, 0.8, 11);
+  let o = view(cam, L_.bg, 0.85) + view(cam, wd, 1);
+  o += R.flash(1 - seg(t, c19a, c19a + 0.3), '#FFFFFF');
+  o += bangAt(t, 'BZZZT!', 1450, 250, c19a + 0.25, 0.9, 100, 8, '#9DFFCB');
+  return o;
+}
 // ---- 19. frozen in the YES pose; the room hums green, sparks crawl over the desk
 function sh19(t) {
   const cam = camKeys(t, [[c19, at(960, 500, 1.08)], [c20, at(960, 480, 1.18)]], ease.out);
   shakeAll(cam, t, [[c19, c20 - c19, 3]]);
-  const down = ease.inOut(seg(t, c20 - 0.35, c20));
+  const down = ease.inOut(seg(t, c20 - 0.4, c20));
   const pose = { ...DFH, face: { name: t > c19 + 0.5 ? 'confused' : 'shocked', eyes: { look: [0, 0.2] }, fx: t > c19 + 0.5 ? ['question'] : ['exclaim'] }, headphones: true, armL: lerp(165, 20, down) + 3 * Math.sin(t * 50), armR: lerp(165, 20, down) + 3 * Math.sin(t * 47), lean: 0 };
   const Ly = H.deskFace.layers(t, { time: 'night', storm: 1, glow: 'green', glowK: 1, flicker: 0.8, greenGlow: 0.6 });
   let o = view(cam, Ly.bg, 0.8) + view(cam, Ly.mid + you(t, pose, { arms: false }) + Ly.front + Ly.light, 1);
   o += E.sparks(400, 900, 260, t, 0.8, 5) + E.sparks(1560, 880, 240, t, 0.8, 9);
-  o += R.flash(1 - seg(t, c19, c19 + 0.45), '#FFFFFF');
+  o += smash(t, c19, 0.12, 0.5, '#B6FFD6');
   return o;
 }
 // ---- 20. the screen floods green; FINAL CHECKPOINT REACHED
@@ -529,14 +560,14 @@ function tipIntro(t) {
 }
 function sh24(t) {
   const tRL = w(8, 'Real');
-  const cam = camKeys(t, [[c24, at(1370, 470, 2.0)], [c24 + 0.45, at(1400, 500, 1.7)], [c24 + 1.0, at(1180, 600, 1.12)], [c25, at(1260, 580, 1.3)]], ease.inOut);
+  const cam = camKeys(t, [[c24, at(1370, 470, 2.0)], [tTipOut + 0.2, at(1400, 500, 1.7)], [tTipOut + 0.75, at(1180, 600, 1.12)], [c25, at(1260, 580, 1.3)]], ease.inOut);
   const tip = tipIntro(t);
   const lookX = clamp((tip.x - HSTAND.x) / 300, -1, 1);
-  const hero = you(t, { ...HSTAND, turn: 0.35, face: { name: t < c24 + 1.4 ? 'shocked' : 'amazed', eyes: { look: [lookX, (tip.y - 560) / 400] } }, headphones: true, armL: 30, armR: 30, lean: -4 }, { arms: false });
+  const hero = you(t, { ...HSTAND, turn: 0.35, face: { name: t < tTipOut + 1.2 ? 'shocked' : 'amazed', eyes: { look: [lookX, (tip.y - 560) / 400] } }, headphones: true, armL: 30, armR: 30, lean: -4 }, { arms: false });
   const pad = padSvg(t);
   const L_ = H.heroRoom.layers(t, { time: 'night', storm: 1, monitor: greenGame(t), greenGlow: 0.8, chairX: 1500, clock: '2:03' });
   let o = view(cam, L_.bg, 0.85) + view(cam, L_.mid + bowlRoom(t, { look: [0.8, -0.2] }) + L_.front + pad.back + hero + pad.front + L_.light + tip.svg, 1);
-  if (t < c24 + 0.4) { const sc = toS(cam, 1355, 455); o += K.C.burst(sc[0], sc[1], seg(t, c24 + 0.15, c24 + 0.5), '#FFE14D'); }
+  if (t < tTipOut + 0.4) { const sc = toS(cam, 1355, 455); o += K.C.burst(sc[0], sc[1], seg(t, tTipOut - 0.1, tTipOut + 0.3), '#FFE14D'); }
   // WELCOME TO REAL LIFE!
   const bk = seg(t, tRL - 0.1, tRL + 0.3);
   if (bk > 0) {
@@ -545,12 +576,12 @@ function sh24(t) {
     const wav = (i) => Math.sin(t * 7 + i * 0.7) * 10;
     let ban = '';
     const words = ['WELCOME', 'TO', 'REAL', 'LIFE!'];
-    let x = -(words.reduce((a, wd) => a + R.textW(wd, 118, 'L') + 34, 0) - 34) / 2;
+    let x = -(words.reduce((a, wd) => a + R.textW(wd, 118, 'L') + 70, 0) - 70) / 2;
     words.forEach((wd, i) => {
       const wk = ease.outBack(seg(t, tRL - 0.1 + i * 0.07, tRL + 0.2 + i * 0.07));
       const ww = R.textW(wd, 118, 'L');
       if (wk > 0.01) ban += S.g(T(wd, 0, 0, 118, i >= 2 ? '#3DDC84' : '#FFE14D', E.stroke(118)), `translate(${f(x + ww / 2)} ${f(wav(i))}) scale(${f(wk)})`);
-      x += ww + 34;
+      x += ww + 70;
     });
     o += S.g(ban, 'translate(960 170) rotate(-3)');
   }
@@ -611,7 +642,7 @@ function sh28(t) {
 }
 // ---- 29. the careful step onto the pad
 function sh29(t) {
-  const cam = camKeys(t, [[c29, at(1020, 850, 2.35)], [c30, at(1000, 860, 2.5)]], ease.out);
+  const cam = camKeys(t, [[c29, at(1010, 895, 2.6)], [c30, at(990, 900, 2.75)]], ease.out);
   const lift = seg(t, c29 + 0.05, tStep - 0.3);
   const fwd = seg(t, tStep - 0.3, tStep);
   const x = lerp(BACK1 + 20, 1030, ease.inOut(fwd));
@@ -620,7 +651,7 @@ function sh29(t) {
   const pose = { x, y, s: 0.5, view: 'side', legL: on ? 0 : 50 * lift * (1 - fwd) + 10 * fwd, kneeL: on ? 0 : 70 * lift * (1 - fwd), legR: on ? 0 : -6 * fwd, armL: on ? 30 : -20 - 10 * lift, armR: on ? 30 : 40 + 10 * lift, lean: on ? 0 : -6, face: on ? { name: 'amazed' } : { name: 'nervous', eyes: { look: [-0.5, 0.9] }, fx: ['sweat'] }, headphones: true, ...(on ? squash(t, tStep, 0.12, 0.5) : {}) };
   const save = seg(t, tStep, tStep + 1.0);
   const pad = padSvg(t, on ? 'saved' : 'idle', on ? { save } : {});
-  const tip = tipSvg(t, 1210 + 10 * Math.sin(t * 3), 760 + 8 * Math.sin(t * 2.4), 0.8, { look: [-0.9, 0.9], mood: 'happy' });
+  const tip = tipSvg(t, 1230 + 10 * Math.sin(t * 3), 790 + 8 * Math.sin(t * 2.4), 0.75, { look: [-0.9, 0.9], mood: 'happy' });
   const L_ = H.heroRoom.layers(t, { time: 'night', storm: 1, monitor: greenGame(t), greenGlow: 0.7 + 0.3 * save, chairX: 1500, clock: '2:03' });
   let o = view(cam, L_.bg, 0.85) + view(cam, L_.mid + L_.front + pad.back + you(t, pose, { arms: false }) + pad.front + L_.light + tip, 1);
   if (on) o += smash(t, tStep, 0.12, 0.5, '#B6FFD6');
@@ -674,7 +705,7 @@ function sh33(t) {
 // ================================================================= router
 const SHOTS = [
   [c01, sh01], [c02, sh02], [c03, sh03], [c04, sh04], [c05, sh05], [c06, sh06], [c07, sh07], [c08, sh08], [c09, sh09], [c10, sh10],
-  [c11, sh11], [c12, sh12], [c13, sh13], [c14, sh14], [c15, sh15], [c16, sh16], [c17, sh17], [c18, sh18], [c19, sh19], [c20, sh20],
+  [c11, sh11], [c12, sh12], [c13, sh13], [c14, sh14], [c15, sh15], [c16, sh16], [c17, sh17], [c18, sh18], [c19a, sh19a], [c19, sh19], [c20, sh20],
   [c21, sh21], [c22, sh22], [c23, sh23], [c24, sh24], [c25, sh25], [c26, sh26], [c27, sh27], [c28, sh28], [c29, sh29], [c30, sh30],
   [c31, sh31], [c32, sh32], [c33, sh33],
 ];

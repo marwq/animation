@@ -124,7 +124,10 @@ function shRide(t) {
   // camera: follows the bike, then the flight; zoom punch on the hit, slow dutch push while paused
   let tgt;
   if (tw < tHit) tgt = [r.bx + 210, r.gy - 175];
-  else { const fl = flight(tau); tgt = [lerp(r.bx + 210, fl.x + 140, ease.out(seg(tau, 0, 0.3))), lerp(r.gy - 175, fl.y - 200, ease.out(seg(tau, 0, 0.3)))]; }
+  else {
+    const fl = flight(Math.min(tau, tCr1 - tHit));
+    tgt = [lerp(r.bx + 210, fl.x + 100, ease.out(seg(tau, 0, 0.3))), lerp(r.gy - 175, fl.y - 190, ease.out(seg(tau, 0, 0.3)))];
+  }
   const zIn = lerp(1.12, 1.32, ease.out(seg(t, 0, 0.7)));
   let zoom = zIn + 0.14 * bump(t, tHit - 0.02, tHit + 0.35) + 0.32 * ease.inOut(seg(t, tFrz1, tPop1));
   const cam = shakeAll(at(tgt[0], tgt[1], zoom), t, [[tHit, 0.35, 22], [tCr1, 0.25, 12]]);
@@ -178,7 +181,7 @@ function shRide(t) {
   // RESPAWNING 3·2·1 (full), digits on "you", "could", "just"
   o += R.respawnOverlay(t, { t0: tCr1 + 0.3, dur: tPop1 - 0.02 - (tCr1 + 0.3), style: 'full', reason: 'YOU FLEW OVER THE HANDLEBARS', marks: marks1 });
   // opening energy: a whip-in on the very first frames
-  if (t < 0.12) o += whip(t, 0, -1, 0.12);
+  if (t < 0.16) { const k = 1 - t / 0.16; let d = ''; for (let i = 0; i < 14; i++) { const y = hash(i * 3.7) * 1080, len = 400 + hash(i) * 800, x = mod(hash(i * 5.1) * 2600 - t * 14000, 2600) - 400; d += `M${f(x)} ${f(y)}h${f(len)}v${f(8 + hash(i * 2.2) * 14)}h${f(-len)}Z`; } o += S.path(d, { fill: '#FFFFFF', opacity: f(0.8 * k) }); }
   return o;
 }
 
@@ -362,7 +365,7 @@ function shCafe(t) {
   const [bk, fr] = cafeKids(t, !reset && t >= tSplat, tt);
   const lady = actor('kid', t, { i: 21, ...CF.lunchLady, volume: false, turn: 0.3, face: !reset && t > tSplat ? 'shocked' : 'happy' });
   let o = SS.cafeteria.compose(t, { puddle: 1 }, [lady, bk, fr], padB + pr + hero + padF + fx, cam);
-  if (!reset && t >= tSplat) o += K.bang('SPLAT!', 1480, 250, pop(t, tSplat, 0.2) * (1 - seg(t, tCr3 - 0.12, tCr3)), 120, 10, '#FFD21F') + impact(1180, 330, seg(t, tSplat, tSplat + 0.3), 1, '#FFD21F', 4);
+  if (!reset && t >= tSplat) o += K.bang('SPLAT!', 1480, 250, pop(t, tSplat, 0.2) * (1 - seg(t, tPop3 - 0.25, tPop3 - 0.1)), 120, 10, '#FFD21F') + impact(1180, 330, seg(t, tSplat, tSplat + 0.3), 1, '#FFD21F', 4);
   // slow-mo streaks while the spaghetti flies
   const sm = !reset ? bump(t, tSlip + 0.1, tSplat) : 0;
   if (sm > 0) o += S.rect(0, 0, 1920, 1080, 0, { fill: '#9FD8FF', opacity: f(0.12 * sm) }) + TFS('SLOW-MO', 1780, 110, 44, '#FFFFFF', { opacity: f(sm), 'text-anchor': 'end' });
@@ -389,8 +392,12 @@ function gymKids(t, mood) {
   o += K.draw.kid(14, { ...TEAM, volume: false, turn: 0.3, face: mood === 'amazed' ? 'amazed' : 'nervous', armL: 30, armR: 30 });
   return o;
 }
-function thrower(t, tThrow) {
+function thrower(t, tThrow, tBonk = Infinity) {
   const wind = seg(t, tThrow - 0.35, tThrow), fol = seg(t, tThrow, tThrow + 0.2);
+  if (t >= tBonk) {
+    const k = ease.out(seg(t, tBonk, tBonk + 0.35));
+    return K.draw.kid(2, { ...THR, volume: false, view: 'side', flip: true, rot: 80 * k, rotY: -200, lift: 60 * bump(t, tBonk, tBonk + 0.4), armL: 150, armR: 120, legL: 40, legR: 10, face: { name: 'oof', eyes: { type: 'x' } } });
+  }
   return K.draw.kid(2, { ...THR, volume: false, view: 'side', flip: true, armL: lerp(lerp(20, -70, ease.out(wind)), 110, ease.out(fol)), armR: -20, lean: lerp(lerp(0, -10, wind), 14, fol), legL: 20 * fol, legR: -14 * fol, face: 'determined' });
 }
 const gymCompose = (t, cam, chars, o = {}) => SS.gym.compose(t, { scoreboard: ['HOME', '03', 'GUEST', '05'], ...o }, [], chars, cam);
@@ -416,8 +423,8 @@ function gymHit(tt, camOverride) {
   if (hitK) {
     const v = seg(tt, tFace, tFace + 0.9);
     fx += X.dodgeball({ x: faceP[0] - 60 - 520 * v, y: faceP[1] - 260 * Math.sin(Math.PI * v) + 380 * v * v, s: 0.5, rot: -tt * 500, squash: 0.55 * (1 - seg(tt, tFace, tFace + 0.1)) });
-    fx += impact(faceP[0] - 50, faceP[1], seg(tt, tFace, tFace + 0.35), 0.9, '#FFE14D', 7);
-    fx += K.bang('BONK!', faceP[0] - 230, faceP[1] - 210, pop(tt, tFace, 0.16) * (1 - seg(tt, tFace + 0.5, tFace + 0.6)), 100, -12, '#FFE14D');
+    fx += impact(faceP[0] - 150, faceP[1] - 10, seg(tt, tFace, tFace + 0.3), 0.5, '#FFE14D', 7);
+    fx += K.bang('BONK!', faceP[0] - 260, faceP[1] - 120, pop(tt, tFace, 0.16) * (1 - seg(tt, tFace + 0.5, tFace + 0.6)), 100, -12, '#FFE14D');
   }
   return { cam, svg: gymCompose(tt, cam, ch + fx) };
 }
@@ -444,37 +451,52 @@ function shReplay(t) {
   o += R.respawnOverlay(t, { t0: CUT.replay + 0.05, dur: CUT.pop4 - CUT.replay - 0.05, style: 'corner', x: 1880, y: 150 });
   return o + smash(t, CUT.replay, 0.1, 0.7);
 }
+const tBack = Math.min(A[2].b + 0.12, CUT.easy - 0.75);   // he flips the ball back without looking -> bonks the thrower
+const tBonk = tBack + 0.42;
 function shCatch(t) {
-  // pop at the dodge spot, then bullet time: the ball comes back, he catches it without looking
+  // pop at the dodge spot, then bullet time: the ball comes back, he catches it without looking; then tosses it back (BONK)
   const pa = t - tPop4;
   const tThrow = Math.max(tPop4 + 0.35, tCatch - 0.75);
-  const slow = seg(t, tPop4 + 0.3, tPop4 + 0.6) * (1 - seg(t, tCatch + 0.6, A[2].b + 0.2));
-  const caught = t >= tCatch;
-  const cam = camKeys(t, [[CUT.pop4, at(1150, 690, 1.22)], [tThrow, at(1250, 670, 1.3)], [tCatch - 0.05, at(1380, 640, 1.55)], [tCatch + 0.08, at(1380, 600, 2.05)], [CUT.easy, at(1395, 590, 2.2)]]);
-  let ch = gymKids(t, caught ? 'amazed' : 'determined') + thrower(t, tThrow);
-  const cAmaze = caught ? 'amazed' : 'neutral';
-  ch += actor('coach', t, { ...COACH, volume: false, whistle: caught ? 'chest' : 'mouth', face: cAmaze, armL: caught ? 40 : 20, armR: caught ? 40 : 20 });
+  const slow = seg(t, tPop4 + 0.3, tPop4 + 0.6) * (1 - seg(t, tCatch + 0.5, tCatch + 0.9));
+  const caught = t >= tCatch, tossed = t >= tBack;
+  const cam = shakeAll(camKeys(t, [[CUT.pop4, at(1150, 690, 1.22)], [tThrow, at(1250, 670, 1.3)], [tCatch - 0.05, at(1380, 640, 1.55)], [tCatch + 0.08, at(1380, 600, 2.05)], [tBack - 0.08, at(1395, 595, 2.15)], [tBack + 0.22, at(960, 690, 1.08)], [CUT.easy, at(930, 690, 1.12)]]), t, [[tBonk, 0.3, 12]]);
+  let ch = gymKids(t, caught ? 'amazed' : 'determined') + thrower(t, tThrow, tBonk);
+  ch += actor('coach', t, { ...COACH, volume: false, whistle: caught ? 'chest' : 'mouth', face: tossed ? (t > tBonk ? { name: 'shocked' } : 'amazed') : caught ? 'amazed' : 'neutral', armL: caught ? 40 : 20, armR: caught ? 40 : 20 });
   let fx = '';
   const pp = R.popPose(pa, 0.5);
   fx += R.checkpoint({ ...DOD, t, state: 'saved', save: seg(t, tPop4, tPop4 + 0.9), part: 'back' }) + R.respawnPop({ ...DOD, age: pa, part: 'back' });
   const reach = caught ? 1 : ease.outBack(seg(t, tCatch - 0.2, tCatch));
-  const cAng = lerp(14, 98, reach);
+  let cAng = lerp(14, 98, reach);
+  if (tossed) cAng = lerp(lerp(98, 70, ease.out(seg(t, tBack - 0.12, tBack))), 140, ease.out(seg(t, tBack, tBack + 0.14)));
   if (!pp.hidden) {
     fx += actor('you', t, { ...DOD, sx: pp.sx, sy: pp.sy, lift: pp.lift, turn: 0.4, headRot: 4, armL: cAng, armR: 12, face: caught ? { name: 'smug', eyes: { look: [0.85, 0], upper: 0.35 }, fx: t > tCatch + 0.3 ? ['sparkles'] : [] } : { name: 'smug', eyes: { look: [0.85, 0.1], upper: 0.3 } } }, { arms: false });
   }
   fx += R.respawnPop({ ...DOD, age: pa, part: 'front' }) + (pa > 0 ? R.forcefield({ ...DOD, t, k: 1 - seg(pa, 0.8, 1.5) }) : '');
   fx += R.checkpoint({ ...DOD, t, state: 'saved', part: 'front' });
-  // the ball: slow flight, then held in the outstretched left hand
+  // the ball: slow flight, held in the outstretched left hand, then flipped back to the thrower's face
   const hand = AC.hand(98, -1);
   const hx = DOD.x + hand[0] * DOD.s - 20, hy = DOD.y + hand[1] * DOD.s - 6;
+  const thF = [THR.x + 30, THR.y - 740 * THR.s];
   if (t >= tThrow && !caught) {
     const u = seg(t, tThrow, tCatch);
     const p0 = [THR.x + 120, THR.y - 520 * THR.s];
     const bx = lerp(p0[0], hx, u), by = lerp(p0[1], hy, u) - 80 * Math.sin(Math.PI * u);
     fx += trail(bx, by, 0.98, -0.1, 340, 0.8, '#FFFFFF', 5) + X.dodgeball({ x: bx, y: by, s: 0.5, rot: t * 160 });
-  } else if (caught) fx += X.dodgeball({ x: hx - 10 * (1 - seg(t, tCatch, tCatch + 0.1)), y: hy, s: 0.5, rot: (t - tCatch) * 300, squash: 0.35 * (1 - seg(t, tCatch, tCatch + 0.12)) });
+  } else if (caught && !tossed) fx += X.dodgeball({ x: hx - 10 * (1 - seg(t, tCatch, tCatch + 0.1)), y: hy, s: 0.5, rot: (t - tCatch) * 300, squash: 0.35 * (1 - seg(t, tCatch, tCatch + 0.12)) });
+  else if (tossed) {
+    if (t < tBonk) {
+      const u = seg(t, tBack, tBonk);
+      const bx = lerp(hx, thF[0], u), by = lerp(hy, thF[1], u) - 140 * Math.sin(Math.PI * u);
+      fx += trail(bx, by, -1, 0, 260, 0.7) + X.dodgeball({ x: bx, y: by, s: 0.5, rot: -t * 700 });
+    } else {
+      const v = seg(t, tBonk, tBonk + 0.8);
+      fx += X.dodgeball({ x: thF[0] + 300 * v, y: thF[1] - 220 * Math.sin(Math.PI * v) + 300 * v * v, s: 0.5, rot: t * 500, squash: 0.5 * (1 - seg(t, tBonk, tBonk + 0.1)) });
+      fx += impact(thF[0] + 40, thF[1], seg(t, tBonk, tBonk + 0.35), 0.7, '#FFE14D', 9);
+    }
+  }
   let o = gymCompose(t, cam, ch + fx, { slowmo: slow });
   if (caught) o += zoomLines(...toScr(cam, hx, hy), bump(t, tCatch, tCatch + 0.35), t, '#FFFFFF', 20, 220) + K.bang('CATCH!', 1400, 220, pop(t, tCatch, 0.2) * (1 - seg(t, tCatch + 0.7, tCatch + 0.85)), 110, 8, '#7CFF6B');
+  if (t >= tBonk) { const [bxs, bys] = toScr(cam, thF[0], thF[1]); o += K.bang('BONK!', bxs + 60, bys - 160, pop(t, tBonk, 0.16) * (1 - seg(t, CUT.easy - 0.15, CUT.easy)), 90, -8, '#FFE14D'); }
   o += respawnsHUD(t, 4, tPop4 + 0.05);
   return o + smash(t, tPop4 - 0.08, 0.12, 0.85) + smash(t, tCatch, 0.08, 0.35);
 }
@@ -506,9 +528,9 @@ function parkour(t) {
   if (t < tL - 0.18) { const x = lerp(560, BEN.x - 150, seg(t, t0, tL - 0.18)); return { x, y: 990, mode: 'run', ph: t * 15 }; }
   if (t < tL + 0.12) { const u = seg(t, tL - 0.18, tL + 0.12); return { x: lerp(BEN.x - 150, BEN.x - 20, u), y: lerp(990, benchY, u) - 130 * Math.sin(Math.PI * u), mode: 'jump', u }; }
   if (t < tJ - 0.1) { const u = seg(t, tL + 0.12, tJ - 0.1); return { x: lerp(BEN.x - 20, BEN.x + 60, u), y: benchY, mode: 'run', ph: t * 15, stage: 1 }; }
-  if (t < tJ + 0.32) { const u = seg(t, tJ - 0.1, tJ + 0.32); return { x: lerp(BEN.x + 60, BUS.x0 + 70, u), y: lerp(benchY, busY, u) - 230 * Math.sin(Math.PI * u), mode: 'jump', u, stage: 1 }; }
+  if (t < tJ + 0.32) { const u = seg(t, tJ - 0.1, tJ + 0.32); return { x: lerp(BEN.x + 60, BUS.x0 + 70, u), y: lerp(benchY, busY, u) - 150 * Math.sin(Math.PI * u), mode: 'jump', u, stage: 1 }; }
   if (t < tO) { const u = seg(t, tJ + 0.32, tO); return { x: lerp(BUS.x0 + 70, BUS.x1 - 40, u), y: busY, mode: 'run', ph: t * 16, stage: 2 }; }
-  if (t < tW) { const u = seg(t, tO, tW); return { x: lerp(BUS.x1 - 40, FLAGX - 110, u), y: lerp(busY, 990, u) - 260 * Math.sin(Math.PI * u), mode: 'flip', u, stage: 2 }; }
+  if (t < tW) { const u = seg(t, tO, tW); return { x: lerp(BUS.x1 - 40, FLAGX - 110, u), y: lerp(busY, 990, u) - 200 * Math.sin(Math.PI * u), mode: 'flip', u, stage: 2 }; }
   return { x: FLAGX - 110, y: 990, mode: 'land', u: seg(t, tW, tW + 0.25), stage: 3 };
 }
 function stagePill(x, y, n, k, t) {
@@ -523,7 +545,7 @@ function townDay(t, cam, chars, o = {}) {
 function shRun(t) {
   const p = parkour(t);
   const cx = clamp(p.x + 220, 900, FLAGX + 40);
-  const cam = camKeys(t, [[CUT.run, at(820, 800, 1.85)], [PK.tL, at(BEN.x, 790, 1.8)], [PK.tJ, at(BEN.x + 260, 760, 1.7)], [PK.tO, at(BUS.x + 180, 730, 1.62)], [PK.tW, at(FLAGX - 60, 780, 1.72)], [CUT.dark, at(FLAGX - 60, 780, 1.72)]]);
+  const cam = camKeys(t, [[CUT.run, at(820, 790, 1.8)], [PK.tL, at(BEN.x, 770, 1.75)], [PK.tJ, at(BEN.x + 280, 700, 1.62)], [PK.tO, at(BUS.x + 180, 690, 1.58)], [PK.tW, at(FLAGX - 60, 770, 1.7)], [CUT.dark, at(FLAGX - 60, 780, 1.72)]]);
   void cx;
   let ch = '';
   // flag + save
@@ -662,7 +684,7 @@ function shTip(t) {
   const [hx, hy] = toScr(cam, FLAGX - 110 + 60, 990 - 300);
   const spike = Math.floor(t * 6) % 4 === 0 ? 1 : 0;
   o += R.tip({ x: hx + 190, y: hy - 70, s: 1.3, t, look: [-0.6, 0.4], glitch: 0.55 + 0.45 * spike, mood: 'worried', tail: -1 });
-  o += redWindow(t, 1, 0.2, 1, 0, -260 + 0 * u);
+  o += redWindow(t, 1, 0.2, 1, 0, -170);
   return o + smash(t, CUT.tip, 0.08, 0.4, '#FF3B4E');
 }
 
@@ -793,8 +815,14 @@ function shRewind(t) {
     // phase C: the morning street, the empty checkpoint by the house glowing — the first checkpoint
     const u = seg(t, tRwC, END);
     const cam = at(lerp(760, 720, u), lerp(700, 740, u), lerp(1.15, 1.9, ease.inOut(u)));
-    const Ls = street(0.2, cam, { checkpoint: true });
-    o += Ls.bg + Ls.mid + view(cam, R.checkpoint({ ...PAD, t, state: 'saved', part: 'back' }) + R.checkpoint({ ...PAD, t, state: 'saved', part: 'front' }), 1) + Ls.fg + Ls.light;
+    const Ls = street(0.2 - (t - tRwC) * 0.5, cam, { checkpoint: true });
+    // the blocks fly back together on the first checkpoint (reverse crumble), he stands there, PLAY
+    const ag = lerp(1.25, 0, ease.inOut(seg(t, tRwC, Math.min(tRwC + 1.0, tPlay - 0.1))));
+    let w_ = R.checkpoint({ ...PAD, t, state: 'saved', part: 'back' });
+    if (ag > 0.001) w_ += R.crumble({ ...PAD, age: ag, seed: 2, dir: [-0.6, -0.3], pop: false });
+    else w_ += actor('you', t, { ...PAD, ...boing(t, tRwC + 1.0, 0.18), face: t < tPlay ? { name: 'neutral', eyes: { look: [0, 0] } } : { name: 'confused', eyes: { look: [0.6, -0.2] } }, headRot: t < tPlay ? 0 : 6 });
+    w_ += R.checkpoint({ ...PAD, t, state: 'saved', part: 'front' });
+    o += Ls.bg + Ls.mid + view(cam, w_, 1) + Ls.fg + Ls.light;
   }
   // VHS overlay over everything
   const play = t >= tPlay;

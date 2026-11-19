@@ -31,12 +31,15 @@ const NEIGH = 1;
 // the seated kids, back -> front: [row3, row2, row1-without-hero]; mode: 'blank' | 'clap' | 'laugh' | 'stare'
 function classKids(t, mode = 'blank', o = {}) {
   const out = ['', '', ''];
+  // cull kids outside the camera (o.cam) — a seated kid is ~260 px wide at s .5
+  const z = o.cam ? (o.cam.zoom ?? 1) : 1, vx0 = o.cam ? 960 + (o.cam.x || 0) - 960 / z - 180 : -1e9, vx1 = o.cam ? 960 + (o.cam.x || 0) + 960 / z + 180 : 1e9;
   CL.rows.forEach((row, r) => row.forEach((st, c) => {
     const i = ROW_KIDS[r][c];
     if (i < 0) return;
     if (r === 2 && c === 3 && o.noNeighbour) return;
+    if (st.x < vx0 || st.x > vx1) return;
     const seed = i * 1.7;
-    let pose = { x: st.x, y: st.y, s: st.s, volume: r < 2 ? false : undefined, ...breathe(t, seed) };
+    let pose = { x: st.x, y: st.y, s: st.s, volume: false, ...breathe(t, seed) };
     const lookX = clamp((960 - st.x) / 900, -0.8, 0.8);
     if (mode === 'blank') pose.face = { name: (i % 3) ? 'deadpan' : 'neutral', eyes: { look: [hash(i) - 0.5, -0.3] }, blink: blinkV(t, i) };
     else if (mode === 'stare') pose.face = { name: 'neutral', eyes: { look: [lookX, 0.3] }, blink: blinkV(t, i) };
@@ -63,7 +66,7 @@ function shOpen(t) {
   const ft = Math.min(t, b.you + 0.02);
   const u = ease.inOut(seg(t, C.open, b.you));
   const cam = { zoom: lerp(1.02, 1.62, u), x: 0, y: lerp(0, 200, u) };
-  const kids = classKids(ft, 'blank');
+  const kids = classKids(ft, 'blank', { cam });
   const doodle = Math.sin(ft * 9) * 6;
   kids[2] += actor('you', ft, { ...CL.heroDesk, armL: 22 + doodle * 0.3, armR: 26 - doodle * 0.3, headRot: t < b.you ? 4 : 0,
     face: t < b.you ? { name: 'neutral', eyes: { look: [0.1, 0.6] } } : { name: 'nervous', mouth: 'smallSmile', eyes: { look: [0, 0] }, fx: [] } });
@@ -138,7 +141,7 @@ function shBoard(t) {
 function shBlank(t) {
   const u = seg(t, C.blank, C.hero);
   const cam = { zoom: lerp(1.05, 1.2, ease.inOut(u)), x: 0, y: lerp(30, 90, u) };
-  const kids = classKids(t, 'blank');
+  const kids = classKids(t, 'blank', { cam });
   const tw = Math.max(0, Math.sin((t - C.blank) * 7)) * (t > b.eight ? 1 : 0);
   kids[2] += actor('you', t, { ...CL.heroDesk, armL: 18, armR: 18 + 30 * tw, face: { name: 'nervous', eyes: { look: [0, -0.4] } } }, { arms: false });
   let o = SS.classroom.compose(t, classOpts, kids, teacherFront(t, { armR: 30, headRot: -4 }), cam);
@@ -157,7 +160,7 @@ function heroHandRaise(t) {
 function shHero(t) {
   const u = seg(t, C.hero, C.whatif);
   const cam = shakeAll({ zoom: lerp(1.75, 1.95, u), x: 0, y: 210 }, t, []);
-  const kids = classKids(t, 'blank');
+  const kids = classKids(t, 'blank', { cam });
   const armR = heroHandRaise(t);
   kids[2] += actor('you', t, { ...CL.heroDesk, armL: 18, armR, headRot: -3, face: { name: 'nervous', eyes: { look: [0.15, -0.5] }, fx: t > b.its ? ['sweat'] : [] } }, { arms: false, energy: 0.4 });
   let o = SS.classroom.compose(t, classOpts, kids, '', cam);
@@ -184,7 +187,7 @@ function shWhatIf(t) {
   const tWrong = b.what + 0.12;
   const wrong = t >= tWrong;
   const cam = shakeAll({ zoom: lerp(1.05, 1.12, seg(t, C.whatif, C.know)), x: 0, y: 60 }, t, [[tWrong, 0.45, 20]]);
-  const kids = classKids(t, wrong ? 'laugh' : 'stare');
+  const kids = classKids(t, wrong ? 'laugh' : 'stare', { cam });
   const st = ease.outBack(seg(t, C.whatif, C.whatif + 0.3));
   kids[2] += actor('you', t, { x: 960, y: 1080 - 120 * st, s: 0.5, armR: wrong ? 30 : 165, armL: 10, ...boing(t, tWrong, 0.25),
     face: wrong ? { name: 'scared', mouth: 'O' } : { name: 'happy', mouth: 'grin' } }, { arms: false });
@@ -234,7 +237,7 @@ function shKnow(t) {
 function shNever(t) {
   const u = seg(t, C.never, C.wrong);
   const cam = { zoom: lerp(2.15, 2.3, u), x: 0, y: 190 };
-  const kids = classKids(t, 'blank');
+  const kids = classKids(t, 'blank', { cam });
   const yank = b.say + 0.15;
   let armR = 14 + Math.max(0, Math.sin((t - C.never) * 16)) * 16 * (t < b.say ? 1 : 0);
   if (t >= b.say - 0.15 && t < yank) armR = lerp(30, 95, ease.out(seg(t, b.say - 0.15, yank)));
@@ -254,7 +257,7 @@ function shWrong(t) {
   const u = ease.in(seg(t, C.wrong, C.shout));
   const beat = Math.pow(Math.max(0, Math.sin((t - C.wrong) * Math.PI * 2.4)), 8);
   const cam = { zoom: lerp(2.3, 3.6, u) * (1 + 0.025 * beat), x: 0, y: lerp(190, 200, u) };
-  const kids = classKids(t, 'stare');
+  const kids = classKids(t, 'stare', { cam });
   const look = Math.sin(t * 5) > 0 ? 0.6 : -0.6;
   kids[2] += actor('you', t, { ...CL.heroDesk, armL: 14, armR: 14, x: 960 + 2 * Math.sin(t * 50), face: { name: 'scared', eyes: { look: [look, 0] }, fx: ['sweat2'] } }, { arms: false });
   let o = SS.classroom.compose(t, classOpts, kids, '', cam);
@@ -267,7 +270,7 @@ function shWrong(t) {
 function shShout(t) {
   const t0 = b.s56;
   const cam = shakeAll(camKeys(t, [[C.shout, { zoom: 1.35, x: 240, y: 160 }], [t0 + 0.05, { zoom: 1.4, x: 250, y: 160 }], [t0 + 0.14, { zoom: 2.1, x: 1440 - 960, y: 600 - 540 }], [C.slide, { zoom: 2.2, x: 1440 - 960, y: 590 - 540 }]], ease.out), t, [[t0 + 0.1, 0.4, 16]]);
-  const kids = classKids(t, 'stare', { noNeighbour: true });
+  const kids = classKids(t, 'stare', { noNeighbour: true, cam });
   const up = ease.outBack(seg(t, t0 - 0.06, t0 + 0.18));
   kids[2] += kidDraw(NEIGH, { ...CL.neighbour, lift: 110 * up, armR: lerp(10, 172, up) + 6 * Math.sin(t * 30), armL: lerp(10, 40, up), turn: -0.2, ...boing(t, t0 + 0.1, 0.2),
     face: { name: 'excited', mouth: 'scream' } });
@@ -282,11 +285,11 @@ function shShout(t) {
 function shSlide(t) {
   const u = seg(t, C.slide, C.games);
   const cam = { zoom: lerp(1.62, 1.72, u), x: 30, y: 230 };
-  const kids = classKids(t, 'clap', { noNeighbour: true });
+  const kids = classKids(t, 'clap', { noNeighbour: true, cam });
   const nb = Math.abs(Math.sin(t * 8));
   kids[2] += kidDraw(NEIGH, { ...CL.neighbour, lift: 30 * nb, armR: 160, armL: 150, face: { name: 'joy' } });
   const sl = ease.inOut(seg(t, b.correct + 0.1, C.games - 0.05));
-  kids[2] += actor('you', t, { ...CL.heroDesk, y: CL.heroDesk.y + 108 * sl, sy: 1 - 0.08 * sl, sx: 1 + 0.04 * sl, armL: 6, armR: 6, headRot: 4 * sl,
+  kids[2] += actor('you', t, { ...CL.heroDesk, y: CL.heroDesk.y + 82 * sl, sy: 1 - 0.08 * sl, sx: 1 + 0.04 * sl, armL: 6, armR: 6, headRot: 4 * sl,
     face: { name: 'sad', eyes: { look: [0.7, 0], upper: 0.5 } } }, { arms: false });
   let o = SS.classroom.compose(t, classOpts, kids, '', cam);
   o += speech(330, 250, 'CORRECT!', pop(t, b.correct, 0.25), { size: 84, tail: -1, rot: -4 });
@@ -398,7 +401,7 @@ function shObby2(t) {
   if (u >= 0 && u < 0.5) o += K.bang('SPLASH!', 1500, 520, pop(t, tLava, 0.2), 110, 6, '#FF8A2A');
   if (h.wallT && u < 0) { const [wx, wy] = toScr(cam, 1870, 600); o += K.C.burst(wx, wy, seg(t, h.wallT, h.wallT + 0.4), '#FFE14D') + K.bang('BONK', wx + 80, wy - 120, pop(t, h.wallT, 0.15), 70, 8, '#FFFFFF'); }
   o += q.screen;
-  if (q.heroAt === 'spawn') o += K.bang('AGAIN!', 1250, 300, pop(t, b.respawn + 0.35, 0.22), 120, -6, '#3DDC84');
+  if (q.heroAt === 'spawn') o += K.bang('AGAIN!', 1350, 600, pop(t, b.respawn + 0.35, 0.22), 120, -6, '#3DDC84');
   o += obbyFallsHUD(t, tLava);
   return o;
 }
@@ -424,7 +427,7 @@ function dadAt(t, pose = {}, act = {}) {
 // a pancake flipping out of the pan: k 0..1
 function panFlip(k, x = KS.pan.x, y = KS.pan.y - 6, hgt = 320, s = 0.5) {
   if (k <= 0 || k >= 1) return X.pancake(x, y, s, 0, 0);
-  return X.pancake(x + 20 * Math.sin(k * Math.PI), y - hgt * Math.sin(k * Math.PI), s, 0, k);
+  return X.pancake(x + 150 * Math.sin(k * Math.PI * 0.5), y - hgt * Math.sin(k * Math.PI), s, 0, k);
 }
 const flipK = (t, period = 1.6, off = 0) => { const u = ((t - off) % period + period) % period; return seg(u, 0, 0.62); };
 const SEAT_LIFT = { you: -42, bea: -22, par: 0 };   // sit up a bit so the faces clear the plates
@@ -461,11 +464,11 @@ function shHop(t) {
 // ---- 16. "You checked." — close: CHECKPOINT NOT FOUND
 function shChecked(t) {
   const u = seg(t, C.checked, C.dad);
-  const cam = { zoom: lerp(1.4, 1.5, u), x: 1000 - 960, y: 760 - 540 };
+  const cam = { zoom: lerp(1.4, 1.5, u), x: 1000 - 960, y: 700 - 540 };
   const tLand = C.checked + 0.38;
   const hk = seg(t, C.checked, tLand);
-  const lift = 140 * Math.sin(Math.min(1, hk) * Math.PI) * (t < tLand ? 1 : 0);
-  const hero = actor('you', t, { x: 980, y: 990, s: 0.5, lift, ...boing(t, tLand, 0.22), armL: 30, armR: 30, headRot: t > tLand + 0.2 ? 10 : 0,
+  const lift = 90 * Math.sin(Math.min(1, hk) * Math.PI) * (t < tLand ? 1 : 0);
+  const hero = actor('you', t, { x: 980, y: 990, s: 0.5, lift, ...boing(t, tLand, 0.12), armL: 30, armR: 30, headRot: t > tLand + 0.2 ? 10 : 0,
     face: t > tLand + 0.15 ? { name: 'deadpan', eyes: { look: [0, 0.9], upper: 0.4 } } : { name: 'determined', eyes: { look: [0, 0.9] } } }, { arms: false });
   let o = kitchen(t, cam, '', hero, { steam: false });
   o += E.notFound(1340, 250, pop(t, b.checked + 0.05, 0.28)) + K.bang('?', 1180, 380, pop(t, b.checked + 0.3, 0.2), 120, 10, '#FFFFFF');
@@ -586,7 +589,7 @@ function shSix(t) {
     face: { name: 'neutral', eyes: { pupil: lerp(1.2, 1.7, u), look: [0, 0], sparkle: true }, blink: 0 } }, { arms: false });
   let o = kitchen(t, cam, behind, '');
   o += R.counterHUD({ x: 960, y: 140, anchor: 'center', s: 1.1, t, label: 'LIES TOLD:', value: 0, theme: 'gold', icon: 'star', k: pop(t, b.neverB, 0.3), bump: seg(t, b.lie, b.lie + 0.45) });
-  o += S.g(S.rect(-170, -46, 340, 92, 20, { fill: 'none', stroke: '#E8243C', 'stroke-width': 9 }) + T('100% HONEST', 0, 18, 50, '#E8243C'), tf(1500, 820, pop(t, b.lie + 0.35, 0.2) * 1.0, -10));
+  o += S.g(S.rect(-170, -46, 340, 92, 20, { fill: 'none', stroke: '#E8243C', 'stroke-width': 9 }) + T('100% HONEST', 0, 18, 50, '#E8243C'), tf(1480, 760, pop(t, b.lie + 0.35, 0.2) * 1.4, -10));
   return o;
 }
 // ---- 26. "Your hair looks like a mushroom." — Bea turns to him, points the spoon
@@ -660,7 +663,7 @@ function shMom(t) {
   else if (t < tK2) mx = lerp(1250, 1440, seg(t, tK1 + 0.3, tK2));
   else if (t < tK2 + 0.3) { mx = 1440; run = false; lean = bump(t, tK2, tK2 + 0.3); }
   else mx = lerp(1440, 2200, ease.in(seg(t, tK2 + 0.3, tOut + 0.7)));
-  const mom = actor('mom', t, { x: mx, y: 850, s: 0.46, view: 'side', flip: true, thermos: true, ...(run ? AC.run(t * 18, 1) : { armL: 30, armR: 20 }), lean: run ? 12 : 30 * lean, headRot: 20 * lean, face: { name: 'happy' } }, { arms: false });
+  const mom = actor('mom', t, { x: mx, y: 835, s: 0.4, view: 'side', flip: true, thermos: true, ...(run ? AC.run(t * 18, 1) : { armL: 30, armR: 20 }), lean: run ? 12 : 30 * lean, headRot: 20 * lean, face: { name: 'happy' } }, { arms: false });
   const kiss1 = t > tK1 + 0.15, kiss2 = t > tK2 + 0.15;
   const behind = bowl(t, { yaw: -60 }) + mom + seated(t, 'bea', { spoon: true, armR: 26, face: kiss1 ? { name: 'cute' } : { name: 'neutral', eyes: { look: [-0.8, 0] } } }, { arms: false }) +
     seated(t, 'you', { armL: 24, armR: 24, face: kiss2 ? { name: 'happy', fx: ['blush'] } : { name: 'neutral', eyes: { look: [-0.6, 0] } } }, { arms: false });
@@ -677,7 +680,7 @@ function shMom(t) {
 // ---- 32. "Remember, mistakes are how we learn!" — at the back door, finger up, then gone
 function shRemember(t) {
   const u = seg(t, C.remember, C.mumble);
-  const cam = { zoom: lerp(1.75, 1.85, u), x: 1690 - 960, y: 540 - 540 };
+  const cam = { zoom: lerp(1.7, 1.8, u), x: 1690 - 960, y: 490 - 540 };
   const gone = t > b.momOut;
   const ox = gone ? lerp(1720, 2200, ease.in(seg(t, b.momOut, b.momOut + 0.3))) : 1720;
   const ex = H.SPOTS.kitchen.backDoor.exit;
@@ -769,7 +772,7 @@ function shLaunch(t) {
   const blown = seg(t, tHit, tHit + 0.25);
   const hero = actor('you', t, { x: 560 - 60 * blown, y: 990, s: 0.5, turn: 0.4, lean: -14 * blown, armL: 10 + 60 * blown, armR: 10 + 60 * blown, face: t > tHit ? { name: 'scream' } : { name: 'shocked', eyes: { look: [0.8, 0] } } }, { arms: false });
   let front = hero + ivy;
-  if (t >= tHit) front += E.smokeCloud(800, 560, t - tHit, { n: 11, r: 110, spread: 320, life: 2.5, seed: 4 }) + K.C.burst(800, 520, seg(t, tHit, tHit + 0.5), '#FFB23A');
+  if (t >= tHit) front += E.fireBurst(800, 520, seg(t, tHit, tHit + 0.45), 1, 2) + E.smokeCloud(800, 560, t - tHit, { n: 11, r: 110, spread: 320, life: 2.5, seed: 4 }) + K.C.burst(800, 520, seg(t, tHit, tHit + 0.5), '#FFB23A');
   let o = workshop(t, cam, '', front, { boom, soot: t > tHit ? 1 : 0.4, days: 1 });
   if (t >= tHit) o += K.bang('KA-BOOM!', 960, 260, pop(t, tHit, 0.2), 200, -6, '#FF8A2A') + smash(t, tHit, 0.14, 0.9);
   if (t < tHit && t > tIg) o += K.bang('WHOOSH', 1300, 380, pop(t, tIg, 0.2), 80, 6, '#FFFFFF');
@@ -779,8 +782,8 @@ function shLaunch(t) {
 function shALot(t) {
   const cam = { zoom: 3.2, x: 770 - 960, y: 205 - 540 };
   const tW = b.lot - 0.05;
-  let o = workshop(t, cam, '', E.smokeCloud(700, 380, t - C.alot + 1.2, { n: 7, r: 80, life: 2.8, seed: 7, op: 0.5 }), { soot: 1, days: t < tW ? 1 : 0 });
-  o += K.C.dust(860, 640, tW, t);
+  let o = workshop(t, cam, '', E.smokeCloud(560, 330, t - C.alot + 0.4, { n: 4, r: 30, life: 2.4, seed: 7, op: 1, spread: 90, rise: 30, col: '#B8B2C2' }), { soot: 1, days: t < tW ? 1 : 0 });
+  o += K.C.dust(1260, 820, tW, t);
   o += K.bang('AGAIN.', 1500, 830, pop(t, tW + 0.1, 0.18), 90, -6, '#FFFFFF');
   // the other sneaker, still lit, whizzes across the board
   const wk = seg(t, b.lot + 0.2, C.boom2);
@@ -803,12 +806,12 @@ function shBoom2(t) {
     for (let i = 1; i < 6; i++) { const [px, py] = path(Math.max(0, k - i * 0.05)); fx += S.circle(px, py, 14 + i * 5, { fill: '#C9C4D2', stroke: LINE, 'stroke-width': 4, opacity: f(0.8 - i * 0.12) }); }
     fx += X.rocketSneakers({ x, y, s: 0.6, rot, t, flame: 1, pair: false });
   } else {
-    fx += E.smokeCloud(1760, 470, t - tB, { n: 12, r: 120, spread: 380, life: 2.6, seed: 8 }) + K.C.burst(1760, 460, seg(t, tB, tB + 0.5), '#FFB23A');
+    fx += E.fireBurst(1760, 460, seg(t, tB, tB + 0.5), 1.3, 5) + E.smokeCloud(1760, 470, t - tB, { n: 12, r: 120, spread: 380, life: 2.6, seed: 8 }) + K.C.burst(1760, 460, seg(t, tB, tB + 0.5), '#FFB23A');
   }
   const duck = ease.out(seg(t, t0 + 0.15, t0 + 0.35));
   const hero = actor('you', t, { x: 520, y: 990, s: 0.5, turn: 0.3, armL: lerp(10, 168, duck), armR: lerp(10, 168, duck), sy: 1 - 0.14 * duck, sx: 1 + 0.06 * duck,
     face: t > tB ? { name: 'scream' } : { name: 'scared', eyes: { look: [0.6, -0.6] } } }, { arms: false });
-  let o = workshop(t, cam, '', hero + fx, { soot: 1, boom: 0.45, days: 0 });
+  let o = workshop(t, cam, '', hero + fx, { soot: 1, boom: 0, days: 0 });
   if (t >= tB) o += K.bang('KA-BLAM!', 1280, 240, pop(t, tB, 0.2), 210, 6, '#FF5A3D') + smash(t, tB, 0.14, 0.9) + S.rect(0, 0, 1920, 1080, 0, { fill: '#2A2230', opacity: f(0.25 * seg(t, tB + 0.6, C.soot)) });
   else o += K.bang('NOT AGAIN!', 640, 280, pop(t, t0 + 0.2, 0.2), 90, -6, '#FFFFFF');
   return o;
@@ -816,16 +819,17 @@ function shBoom2(t) {
 // ---- 39. "Fail number three hundred and twelve! Rocket sneakers!" — sooty, delighted, the Book of Fails
 function shSoot(t) {
   const u = seg(t, C.soot, C.book);
-  const cam = { zoom: lerp(1.6, 1.95, ease.inOut(u)), x: 860 - 960, y: 600 - 540 };
+  const IX = 600;
+  const cam = { zoom: lerp(1.6, 1.95, ease.inOut(u)), x: IX + 60 - 960, y: 600 - 540 };
   const open = t > b.failW + 0.15;
   const cough = bump(t, C.soot + 0.1, C.soot + 0.45);
-  const ivy = actor('ivy', t, { x: 860, y: 990, s: 0.5, soot: 1, goggles: 'up', book: open ? 'open' : true, armL: open ? undefined : 20, lean: 4 * cough, headRot: -8 * cough, ...breathe(t),
+  const ivy = actor('ivy', t, { x: IX, y: 990, s: 0.5, soot: 1, goggles: 'up', book: open ? 'open' : true, armL: open ? undefined : 20, lean: 4 * cough, headRot: -8 * cough, turn: 0.15, ...breathe(t),
     face: cough > 0.3 ? { name: 'joy', mouth: 'O' } : { name: 'excited' } }, { arms: !open ? false : undefined, energy: 1.2 });
-  let fx = E.smokeCloud(830, 560, t - C.soot + 0.3, { n: 6, r: 60, life: 1.8, seed: 9, op: 0.6 });
-  if (cough > 0) fx += E.smokeCloud(880, 680, t - C.soot - 0.1, { n: 3, r: 26, life: 0.9, seed: 3, spread: 60, rise: 40 });
-  let o = workshop(t, cam, '', ivy + fx, { soot: 1, boom: 0.25 * (1 - u), days: 0 });
+  let fx = E.smokeCloud(IX - 40, 380, t - C.soot + 0.8, { n: 6, r: 70, life: 2.6, seed: 9, op: 0.75, rise: 60 });
+  if (cough > 0) fx += E.smokeCloud(IX + 190, 600, t - C.soot - 0.12, { n: 3, r: 26, life: 0.9, seed: 3, spread: 50, rise: 50, drift: 120, col: '#D8D4E0' });
+  let o = workshop(t, cam, '', ivy + fx, { soot: 1, boom: 0, days: 0 });
   o += R.counterHUD({ x: 60, y: 80, t, label: 'FAIL #', value: 312, theme: 'white', icon: 'retry', roll: seg(t, b.failW, b.twelve2 + 0.3), from: 311, k: pop(t, b.failW - 0.1, 0.3), bump: seg(t, b.twelve2 + 0.3, b.twelve2 + 0.75) });
-  o += K.bang('*cough*', 1260, 300, pop(t, C.soot + 0.12, 0.18) * (1 - seg(t, C.soot + 0.7, C.soot + 0.9)), 64, 8, '#C9D2DC');
+  o += K.bang('*cough*', 1300, 330, pop(t, C.soot + 0.12, 0.18) * (1 - seg(t, C.soot + 0.7, C.soot + 0.9)), 64, 8, '#C9D2DC');
   return o;
 }
 // ---- 40. the page: "Lesson learned: never wear rocket sneakers... indoors."
@@ -847,16 +851,16 @@ function shBook(t) {
 }
 // ---- 41. "...indoors." — the last smoking sneaker drops out of the ceiling: BONK
 function shIndoors(t) {
-  const cam = { zoom: 1.9, x: 860 - 960, y: 560 - 540 };
+  const cam = { zoom: 1.9, x: 660 - 960, y: 560 - 540 };
   const tB = b.indoors + 0.35;
   const hit = t >= tB;
-  const ivy = actor('ivy', t, { x: 860, y: 990, s: 0.5, soot: 1, book: true, armR: hit ? 60 : 150, armL: 20, ...boing(t, tB, 0.3), face: hit ? { name: 'dizzy' } : { name: 'joy' } }, { arms: false });
+  const ivy = actor('ivy', t, { x: 600, y: 990, s: 0.5, soot: 1, book: true, armR: hit ? 60 : 150, armL: 20, ...boing(t, tB, 0.3), face: hit ? { name: 'dizzy' } : { name: 'joy' } }, { arms: false });
   let fx = '';
   const fk = seg(t, b.indoors - 0.1, tB);
-  if (!hit) fx += X.rocketSneakers({ x: 860 + 30, y: lerp(-60, 990 - 0.5 * 1000, ease.in(fk)), s: 0.5, rot: fk * 300, t, flame: 0, pair: false }) + E.smokeCloud(880, lerp(-60, 480, ease.in(fk)) - 40, 0.4, { n: 3, r: 22, seed: 5, spread: 30, life: 1 });
-  else fx += X.rocketSneakers({ x: 1050, y: 990, s: 0.5, rot: 180, t, flame: 0, pair: false }) + K.C.burst(870, 470, seg(t, tB, tB + 0.4), '#FFE14D');
+  if (!hit) fx += X.rocketSneakers({ x: 600 + 30, y: lerp(-60, 990 - 0.5 * 1000, ease.in(fk)), s: 0.5, rot: fk * 300, t, flame: 0, pair: false }) + E.smokeCloud(620, lerp(-60, 480, ease.in(fk)) - 40, 0.4, { n: 3, r: 22, seed: 5, spread: 30, life: 1, col: '#D8D4E0' });
+  else fx += X.rocketSneakers({ x: 800, y: 990, s: 0.5, rot: 180, t, flame: 0, pair: false }) + K.C.burst(610, 470, seg(t, tB, tB + 0.4), '#FFE14D');
   let o = workshop(t, cam, '', ivy + fx, { soot: 1, days: 0 });
-  if (hit) o += K.bang('BONK!', 1240, 300, pop(t, tB, 0.18), 120, 8, '#FFE14D');
+  if (hit) o += K.bang('BONK!', 1180, 300, pop(t, tB, 0.18), 120, 8, '#FFE14D');
   return o;
 }
 // ---- 42. "How are you HAPPY about this?" — two-shot, smash-zoom on HAPPY
@@ -875,8 +879,8 @@ function shLesson(t) {
   const u = seg(t, C.lesson, C.anyway);
   const cam = { zoom: lerp(1.0, 1.08, u), x: 0, y: 0 };
   const Lw = H.workshop.layers(t, { time: 'day', soot: 1, days: 0 });
-  const ivy = actor('ivy', t, { x: 1000, y: faceAt(450, 0.95, 0.96), s: 0.95, soot: 1, volume: false, armR: 160 + 6 * Math.sin(t * 6), armL: 20, turn: -0.15, face: { name: t > b.work ? 'excited' : 'joy' } }, { arms: false, energy: 1.1 });
-  let o = view({ zoom: 1.9, x: 300 - 960 + 0, y: 400 - 540 }, Lw.mid, 1) + S.rect(0, 0, 1920, 1080, 0, { fill: '#FFF0D8', opacity: 0.35 }) + view(cam, ivy);
+  const ivy = actor('ivy', t, { x: 1000, y: faceAt(540, 0.95, 0.96), s: 0.95, soot: 1, volume: false, armR: 160 + 6 * Math.sin(t * 6), armL: 20, turn: -0.15, face: { name: t > b.work ? 'excited' : 'joy' } }, { arms: false, energy: 1.1 });
+  let o = view({ zoom: 1.7, x: 1250 - 960, y: 400 - 540 }, Lw.mid, 1) + S.rect(0, 0, 1920, 1080, 0, { fill: '#FFF0D8', opacity: 0.25 }) + view(cam, ivy);
   o += K.badge(1460, 300, 'LESSON +1', 'ACHIEVEMENT!', pop(t, b.work, 0.3), t);
   o += K.F.sparkle(1180, 200, 40 * bump(t, b.now, b.now + 0.6), '#FFE14D');
   return o;
@@ -902,21 +906,21 @@ function shAnyway(t) {
 
 // ================================================================= THE POSTER, THE WHOLE SCHOOL, THE HORROR
 // ---- 45. the poster: "I signed us up..." (IVY & YOU: SCIENCE MAGIC! scribbles in) — "the talent show!" (tilt up) — "Friday!"
-const PST = { x: 960, y: 150, s: 0.85 };
+const PST = { x: 960, y: 260, s: 0.85 };
 function shPoster(t) {
   const un = seg(t, C.poster, C.poster + 0.35);
   const hand = seg(t, b.signed, b.up + 0.1);
   const fri = seg(t, b.friday, b.friday + 0.35);
   const handY = PST.y + PST.s * 1080, headY = PST.y + PST.s * 260;
   const cam = camKeys(t, [
-    [C.poster, { zoom: 0.78, x: 0, y: 740 - 540 }], [C.poster + 0.35, { zoom: 0.8, x: 0, y: 740 - 540 }],
+    [C.poster, { zoom: 0.72, x: 0, y: 690 - 540 }], [C.poster + 0.35, { zoom: 0.74, x: 0, y: 690 - 540 }],
     [b.signed + 0.1, { zoom: 1.35, x: 0, y: handY - 540 }], [b.talent - 0.15, { zoom: 1.4, x: 0, y: handY - 520 }],
     [b.talent + 0.15, { zoom: 1.25, x: 0, y: headY - 470 }], [b.friday - 0.1, { zoom: 1.25, x: 0, y: headY - 460 }],
-    [b.friday + 0.15, { zoom: 0.92, x: 0, y: 640 - 540 }], [C.whole, { zoom: 0.9, x: 0, y: 640 - 540 }],
+    [b.friday + 0.15, { zoom: 0.86, x: 0, y: 700 - 540 }], [C.whole, { zoom: 0.84, x: 0, y: 700 - 540 }],
   ], ease.inOut);
   let w = S.rect(-800, -900, 3520, 3200, 0, { fill: '#C98A52' }) + S.rect(-800, -900, 3520, 3200, 0, { fill: 'url(#s02Cork)', opacity: 0.35 });
   // Ivy behind the poster: her head peeks over the top, her hands hold the top corners
-  const ivy = actor('ivy', t, { x: PST.x, y: PST.y + 520, s: 0.82, soot: 1, armL: 100, armR: 100, volume: false, headY: -6 * Math.abs(Math.sin(t * 6)), face: { name: 'excited', eyes: { look: [0, 0.6] } } }, { arms: false, energy: 1.2 });
+  const ivy = actor('ivy', t, { x: PST.x, y: PST.y + 453, s: 0.82, soot: 1, armL: 100, armR: 100, volume: false, headY: -6 * Math.abs(Math.sin(t * 6)), face: { name: 'excited', eyes: { look: [0, 0.6] } } }, { arms: false, energy: 1.2 });
   w += ivy;
   w += E.talentPoster(PST.x, PST.y, PST.s, t, { unroll: un, hand, friday: fri });
   let o = view(cam, w);
@@ -943,7 +947,7 @@ function shHorror(t) {
   const Lw = H.workshop.layers(t, { time: 'day', soot: 1, days: 0 });
   const scream = t > tW - 0.05;
   const hero = actor('you', t, { x: 960, y: faceAt(500, 1.0), s: 1.0, volume: false, armL: scream ? 150 : 20, armR: scream ? 150 : 20, ...boing(t, tW, 0.2),
-    face: scream ? { name: 'scream' } : { name: 'shocked' } }, { arms: false });
+    face: scream ? { name: 'scream', ...(t < tW + 0.45 ? { mouth: 'scream' } : {}) } : { name: 'shocked' } }, { arms: false });
   let o = view({ zoom: 1.8, x: 1100 - 960, y: 430 - 540 }, Lw.mid, 1) + S.rect(0, 0, 1920, 1080, 0, { fill: '#FFFFFF', opacity: 0.25 });
   o += view(cam, hero);
   o += zoomLines(960, 500, scream ? 1 : 0, t, '#FFFFFF', 24, 520);
@@ -953,7 +957,7 @@ function shHorror(t) {
 function shMess(t) {
   const cam = { zoom: 1.35, x: 960 - 960, y: 620 - 540 };
   const fl = Math.sin(t * 16);
-  const hero = actor('you', t, { x: 700, y: 990, s: 0.5, turn: 0.4, armL: 140 + 30 * fl, armR: 140 - 30 * fl, lift: 30 * Math.abs(Math.sin(t * 8)), face: { name: 'scream', eyes: { look: [0.8, 0] } } }, { arms: false, energy: 1.6 });
+  const hero = actor('you', t, { x: 700, y: 990, s: 0.5, turn: 0.12, armL: 140 + 30 * fl, armR: 140 - 30 * fl, lift: 30 * Math.abs(Math.sin(t * 8)), face: { name: 'scream', eyes: { look: [0.8, 0] } } }, { arms: false, energy: 1.6 });
   const ivy = actor('ivy', t, { x: 1220, y: 990, s: 0.5, soot: 1, armR: 30, armL: 20, turn: -0.3, face: { name: 'happy', eyes: { look: [-0.8, 0] } } }, { arms: false });
   const tube = S.g(S.rect(-24, -130, 48, 260, 24, ol('#6B4AAC', 6)) + S.path('M-24 -40 H24 M-24 40 H24', ln(5, '#FFD21F')), tf(1300, 760, 1, 30));
   return workshop(t, cam, '', hero + ivy + tube, { soot: 1, days: 0 });
@@ -962,7 +966,7 @@ function shMess(t) {
 function shFlash(t) {
   const tTrip = C.flash + 0.06, tCr = C.flash + 0.2;
   const cam = shakeAll({ zoom: 1.5, x: 0, y: 560 - 540 }, t, [[tCr, 0.4, 18]]);
-  const La = SS.auditorium.layers(t, { view: 'stage', lights: 0, spots: [SS.SPOTS.auditorium.stage.spots.centre] });
+  const La = SS.auditorium.layers(t, { view: 'stage', lights: 0, mic: false, spots: [SS.SPOTS.auditorium.stage.spots.centre] });
   let w = (La.mid || '');
   if (t < tCr) w += actor('you', t, { x: 960, y: 770, s: 0.45, lean: 30 * seg(t, tTrip, tCr), rot: 20 * seg(t, tTrip, tCr), armL: 120, armR: 120, face: { name: 'scream' } }, { arms: false });
   w += R.crumble({ x: 960, y: 770, s: 0.45, age: t - tCr, seed: 12, dir: [0.4, -0.6] });

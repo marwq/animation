@@ -86,13 +86,13 @@ function flagsSvg(t, k = 1) {
 }
 // the near ghosts in the yard: kind, spot, flag they pour out of
 const YG = [
-  { kind: 'skate', x: 470, y: 960, flip: true, fl: 0 },
-  { kind: 'ball', x: 1480, y: 935, flip: false, fl: 1 },
-  { kind: 'tray', x: 1020, y: 850, flip: true, fl: 2 },
-  { kind: 'foam', x: 1800, y: 860, flip: false, fl: 3 },
-  { kind: 'trip', x: 250, y: 900, flip: true, fl: 4 },
+  { kind: 'skate', x: 380, y: 960, flip: true, fl: 0 },
+  { kind: 'ball', x: 1580, y: 930, flip: true, fl: 1 },
+  { kind: 'tray', x: 1820, y: 880, flip: false, fl: 3 },
+  { kind: 'foam', x: 640, y: 850, flip: true, fl: 2 },
+  { kind: 'trip', x: 190, y: 890, flip: true, fl: 4 },
   { kind: 'stairs', x: 1000, y: 700, flip: true, fl: 2, dx: 120, dy: 90 },
-  { kind: 'ball', x: 700, y: 820, flip: true, fl: 0 },
+  { kind: 'ball', x: 1350, y: 800, flip: false, fl: 1 },
 ].map((g, i) => ({ ...g, s: sAt(g.y), born: tCame + 0.06 + i * 0.12 }));
 const ARC = 0.42;
 // one ghost: before it is born nothing; then it flies out of its flag on an arc; then it loops its fail
@@ -108,11 +108,16 @@ function yardGhost(t, g, o = {}) {
   }
   const P = E.GP[g.kind];
   const ph = -(g.born + ARC) + P * 0.02;
-  return ghostFail(g.kind, t, { x: g.x, y: g.y, s: g.s, flip: g.flip, ph, freeze: o.freeze, dx: g.dx, dy: g.dy });
+  return ghostFail(g.kind, t, { x: g.x, y: g.y, s: g.s, flip: g.flip, ph, freeze: o.freeze, dx: g.dx, dy: g.dy, rim: o.rim });
 }
 function yardGhosts(t, o = {}) {
   let back = '', front = '';
-  for (const g of YG) {
+  let vx0 = -1e9, vx1 = 1e9;
+  if (o.cam) { const z = o.cam.zoom ?? 1; vx0 = (o.cam.x || 0) + 960 - 960 / z - 160; vx1 = (o.cam.x || 0) + 960 + 960 / z + 160; }
+  for (const [gi, g] of YG.entries()) {
+    if (o.only && !o.only.includes(gi)) continue;
+    if (o.ex && g.x >= o.ex[0] && g.x <= o.ex[1]) continue;
+    if (g.x < vx0 || g.x > vx1) continue;
     const sv = yardGhost(t, g, o);
     if (g.y < 820) back += sv; else front += sv;
   }
@@ -120,7 +125,7 @@ function yardGhosts(t, o = {}) {
 }
 // far ghosts on the school roof (lite crowd, born in a wave)
 const ROOF = Array.from({ length: 16 }, (_, i) => ({ x: -500 + i * 190 + 60 * hash(i * 2.2), y: 238, s: 0.3, i: i + 3, born: tCame + 0.35 + 0.08 * i, kind: ['flail', 'sit', 'fall', 'tumble'][i % 4] }));
-const roofCrowd = (t, freeze) => liteCrowd(t, ROOF, { alpha: 0.6, freeze });
+const roofCrowd = (t, freeze) => liteCrowd(t, ROOF, { alpha: 1, col: '#C7AEB8', freeze });
 
 // laughing / pointing kids (cheap crowd)
 function kidLaugh(i, t, x, y, s, o = {}) {
@@ -162,13 +167,12 @@ function shCount(t) {
   const tHit = tRoll1 - 0.05;
   const cam = shakeAll(camKeys(t, [[CUT.count, { ...SY.cams.red, zoom: 0.66, y: -260 }], [CUT.undone, { ...SY.cams.red, zoom: 0.72, y: -290 }]]), t, [[tHit, 0.5, 18]]);
   let o = yardR(t, cam, roofCrowd(t), '');
-  o += skyWindow(t, 960, 270, 1180, 440, 1, roll, { glitch: 0.4 * bump(t, tHit, tHit + 0.3) });
-  // the hero from behind (near camera), head tilted up
-  const z = 1 + 0.03 * bump(t, tHit, tHit + 0.3);
-  o += scaleG(actor('you', t, { x: 520, y: 1560, s: 0.95, volume: false, view: 'back', backpack: true, headRot: -4, armL: 18, armR: 22, ...breathe(t) }), z, 520, 1000);
-  o += draw.kid(5, { x: 1480, y: 1500, s: 0.75, view: 'back', volume: false, armL: 10, armR: 12, ...breathe(t, 1) });
+  const zw = 1 + 0.06 * bump(t, tHit, tHit + 0.35);
+  o += scaleG(skyWindow(t, 960, 300, 1320, 480, 1, roll, { glitch: 0.4 * bump(t, tHit, tHit + 0.3) }), zw, 960, 300);
+  // the hero from behind (near camera), looking up at it
+  o += actor('you', t, { x: 470, y: 1330, s: 0.72, volume: false, view: 'back', backpack: true, headRot: -4, armL: 18, armR: 22, lift: 20 * bump(t, tHit, tHit + 0.3), ...breathe(t) });
+  o += draw.kid(5, { x: 1500, y: 1330, s: 0.6, view: 'back', volume: false, armL: 10, armR: 12, ...breathe(t, 1) });
   o += E.redPulse(t, 1, 9);
-  o += R.counterHUD({ x: 960, y: 980 - 70, anchor: 'center', k: pop(t, tRoll0 - 0.2, 0.3), t, label: 'RESPAWNS USED:', value: 9999, roll, from: 0, theme: 'red', bump: seg(t, tHit, tHit + 0.45), size: 72 });
   o += E.smash(t, tHit, 0.14, 0.45, '#FF5A6A');
   return o;
 }
@@ -187,7 +191,7 @@ function shUndone(t) {
 }
 function shBack(t) {
   const cam = shakeAll(camKeys(t, [[CUT.back, { x: 60, y: -10, zoom: 1.0 }], [CUT.flood, { x: 60, y: -60, zoom: 0.88 }]]), t, [[tCame, 0.6, 16]]);
-  const G = yardGhosts(t);
+  const G = yardGhosts(t, { cam });
   let ch = actor('you', t, { ...SY.walk, backpack: true, armL: 130, armR: 130, lift: 30 * bump(t, tCame, tCame + 0.4), face: 'scream', ...boing(t, tCame + 0.4, 0.2) });
   let o = yardR(t, cam, roofCrowd(t), flagsSvg(t) + G.back + ch + G.front);
   o += E.redPulse(t, 1) + E.zoomLines(960, 600, 0.7 * bump(t, tCame, tCame + 0.6), t, '#FFD0D6');
@@ -202,18 +206,20 @@ function townGhosts(t, cam, o = {}) {
   let n = 0;
   const add = (k, a, j = 0) => { rows[k].push({ ...a, i: n, born: o.noBorn ? undefined : t0 + 0.05 + 1.2 * hash(n * 1.37) * (o.spread ?? 1) }); n++; };
   for (const a of TS_.roofs) {
-    const cnt = a.row === 'houses' ? 3 : a.row === 'shops' ? 4 : 3;
-    for (let j = 0; j < cnt; j++) add(a.k, { x: a.x + (j - (cnt - 1) / 2) * (a.row === 'shops' ? 70 : 55), y: a.y, s: a.s }, j);
+    const cnt = a.row === 'houses' ? 2 : a.row === 'shops' ? 3 : 2;
+    for (let j = 0; j < cnt; j++) add(a.k, { x: a.x + (j - (cnt - 1) / 2) * (a.row === 'shops' ? 80 : 70), y: a.y, s: a.s }, j);
   }
   for (const a of TS_.lamps) add(1, { x: a.x, y: a.y + 4, s: a.s, kind: 'flail' });
   for (const a of TS_.trees.slice(0, 4)) add(1, { x: a.x + 30, y: a.y + 70, s: a.s, kind: 'sit' });
   for (let j = 0; j < 4; j++) add(1, { x: TS_.busRoof.x0 + 60 + j * 110, y: TS_.busRoof.y, s: TS_.busRoof.s, kind: ['flail', 'fall', 'tumble', 'sit'][j] });
-  for (let x = -700; x < 2700; x += 260) add(0.68, { x: x + 80 * hash(x), y: TS_.street[1].y, s: TS_.street[1].s });
-  for (let x = -600; x < 2600; x += 300) add(0.42, { x: x + 90 * hash(x * 2), y: TS_.street[2].y, s: TS_.street[2].s });
+  if (!o.noStreet) for (let x = -700; x < 2700; x += 340) add(0.68, { x: x + 80 * hash(x), y: TS_.street[1].y, s: TS_.street[1].s });
+  for (let x = -600; x < 2600; x += o.noStreet ? 600 : 360) add(0.42, { x: x + 90 * hash(x * 2), y: TS_.street[2].y, s: TS_.street[2].s });
   let out = '';
+  // far rows: opaque lites in a dusty ghost-pink (cheap: no group opacity); near rows: translucent
   for (const k of [0.25, 0.42, 0.68, 1]) {
     if (!rows[k].length) continue;
-    out += view(cam, liteCrowd(t, rows[k], { alpha: 0.62, freeze: fz }), k);
+    const far = k < 0.9;
+    out += view(cam, liteCrowd(t, rows[k], far ? { alpha: 1, col: '#C7AEB8', freeze: fz } : { alpha: 0.62, freeze: fz }), k);
   }
   return out;
 }
@@ -242,21 +248,24 @@ function shFlood(t) {
 // ================================================================= 3. "THOSE ARE YOUR FAILS"
 function shTip1(t) {
   const cam = camKeys(t, [[CUT.tip1, at(1000, 660, 1.25)], [CUT.all, at(1010, 650, 1.32)]]);
-  const G = yardGhosts(t);
+  const G = yardGhosts(t, { only: [0, 1, 3], cam, rim: false });
   let ch = actor('you', t, { x: 1080, y: 960, s: 0.5, backpack: true, turn: -0.3, ...breathe(t), face: { name: 'scared', eyes: { look: [-0.6, -0.3] } } });
-  let o = yardR(t, cam, roofCrowd(t), flagsSvg(t) + G.back + ch + G.front);
+  let o = yardR(t, cam, roofCrowd(t), G.back + ch + G.front);
   const [tx, ty] = toScr(cam, 1300, 430);
   o += R.tip({ x: tx, y: ty, s: 1.25, t, glitch: 0.45 + 0.4 * bump(t, A[2].a, A[2].a + 0.4), look: [-0.8, 0.3], mood: 'worried' });
   return o + E.redPulse(t, 1);
 }
 // ---- "All of them." — 2x2 split of fails
+const PANEL_TAG = { stairs: 'FAIL #2,113', foam: 'FAIL #3,412', ball: 'FAIL #988', tray: 'FAIL #5,067' };
 function panel(t, kind, flip, bgCol, seed) {
   let o = S.rect(0, 0, 1920, 1080, 0, { fill: bgCol });
-  o += S.rect(0, 860, 1920, 220, 0, { fill: '#5A1A26' }) + S.path('M0 860 H1920', ln(6));
-  for (let i = 0; i < 9; i++) o += S.rect(hash(i * 3 + seed) * 1920, hash(i * 5 + seed) * 700, 50, 50, 0, { fill: '#FF4A5E', opacity: 0.25 });
-  const st = kind === 'stairs';
-  if (st) { for (let i = 0; i < 4; i++) o += S.rect(560 + i * 130, 560 + i * 75, 900, 80, 4, ol('#C9A0A8', 5)); }
-  o += ghostFail(kind, t, st ? { x: 700, y: 520, s: 0.62, flip: true, dx: 620, dy: 300, ph: seed } : { x: 960, y: 900, s: 0.62, flip, ph: seed });
+  for (let i = 0; i < 9; i++) o += S.rect(hash(i * 3 + seed) * 1920, hash(i * 5 + seed) * 700, 70, 70, 0, { fill: '#FF4A5E', opacity: 0.22 });
+  o += S.rect(0, 900, 1920, 180, 0, { fill: '#4A121E' }) + S.path('M0 900 H1920', ln(8));
+  if (kind === 'stairs') {
+    for (let i = 0; i < 5; i++) o += S.rect(-200 + i * 260, 300 + i * 120, 2400, 130, 6, ol('#B88890', 7));
+    o += ghostFail('stairs', t, { x: 520, y: 330, s: 0.78, flip: true, dx: 900, dy: 470, ph: seed });
+  } else o += ghostFail(kind, t, { x: kind === 'tray' ? 1200 : 960, y: 960, s: 0.8, flip, ph: seed });
+  o += S.rect(60, 50, 520, 110, 55, { fill: '#2A0810', stroke: '#FF3B4E', 'stroke-width': 8 }) + TF(PANEL_TAG[kind], 320, 128, 64, '#FFFFFF');
   return o;
 }
 function shAll(t) {
@@ -277,16 +286,16 @@ function shAll(t) {
 }
 // ---- "They never went away." — the entrance steps, a ghost tumbles down again and again
 function shNever(t) {
-  const cam = camKeys(t, [[CUT.never, at(1040, 640, 1.3)], [CUT.saved, at(1040, 620, 1.5)]]);
-  let back = ghostFail('stairs', t, { x: 1010, y: 690, s: 0.34, flip: true, dx: 70, dy: 130, ph: 0.4 }) + ghostFail('stairs', t, { x: 1090, y: 690, s: 0.34, flip: false, dx: -60, dy: 120, ph: 1.4 });
-  let front = ghostFail('foam', t, { x: 760, y: 900, s: sAt(900), flip: true, ph: 0.2 }) + ghostFail('trip', t, { x: 1380, y: 960, s: 0.5, flip: false, ph: 0.9 });
+  const cam = camKeys(t, [[CUT.never, at(1020, 700, 1.35)], [CUT.saved, at(1030, 690, 1.55)]]);
+  let back = ghostFail('stairs', t, { x: 1000, y: 692, s: 0.36, flip: true, dx: 90, dy: 150, ph: 0.4 });
+  let front = ghostFail('foam', t, { x: 700, y: 900, s: sAt(900), flip: true, ph: 0.2 }) + ghostFail('ball', t, { x: 1380, y: 930, s: sAt(930), flip: true, ph: 0.9 });
   let o = yardR(t, cam, roofCrowd(t), back + front);
   return o + E.redPulse(t, 1);
 }
 // ---- "They were just... saved." — Tip close, the red "Fail saved" toast
 function shSaved(t) {
   const cam = camKeys(t, [[CUT.saved, at(1100, 560, 1.8)], [CUT.kid, at(1110, 560, 1.95)]]);
-  const G = yardGhosts(t);
+  const G = yardGhosts(t, { ex: [850, 1450], cam, rim: false });
   let ch = actor('you', t, { x: 1000, y: 960, s: 0.5, volume: false, backpack: true, turn: 0.4, ...breathe(t), face: { name: 'scared', eyes: { look: [0.8, -0.4] } } });
   let o = yardR(t, cam, roofCrowd(t), G.back + ch + G.front);
   const [tx, ty] = toScr(cam, 1250, 470);
@@ -313,7 +322,7 @@ function skaters(t, freeze) {
   return o;
 }
 function shKid(t) {
-  const cam = camKeys(t, [[CUT.kid, at(3720, 600, 1.12)], [CUT.hundred, at(3760, 590, 1.2)]]);
+  const cam = camKeys(t, [[CUT.kid, at(3780, 640, 1.02)], [CUT.hundred, at(3820, 620, 1.1)]]);
   let back = '';
   SY.crowd.forEach((c, i) => { back += kidLaugh(i + 1, t, c.x, c.y, c.s, { turn: 0.3, point: i % 3 !== 1 }); });
   let speaker = actor('kid', t, { i: 4, x: 3300, y: 990, s: 0.52, turn: 0.45, armR: 108, armL: 20, volume: false, ...breathe(t) }, { arms: false });
@@ -324,14 +333,16 @@ function shKid(t) {
 // ---- "a HUNDRED times": a waterfall of ghost skaters off the lip
 function shHundred(t) {
   const tH = w(3, 'HUNDRED');
-  const cam = shakeAll(camKeys(t, [[CUT.hundred, at(4380, 560, 1.5)], [tH + 0.12, at(4380, 520, 1.25)], [CUT.prin, at(4380, 500, 1.15)]]), t, [[tH, 0.3, 14]]);
+  const cam = shakeAll(camKeys(t, [[CUT.hundred, at(4400, 640, 1.45)], [tH + 0.12, at(4340, 600, 1.2)], [CUT.prin, at(4330, 590, 1.12)]]), t, [[tH, 0.3, 14]]);
   let fall = [];
-  for (let j = 0; j < 16; j++) {
-    const P = 1.6, u = E.mod((t + j * 0.1) / P, 1);
-    const x = lerp(SK.lip.x, SK.landing.x - 100 + 50 * hash(j), u) + 80 * hash(j * 3), y = lerp(SK.lip.y - 20, SK.landing.y, u) - Math.sin(u * Math.PI) * (300 + 140 * hash(j));
-    fall.push({ x, y, s: 0.46, view: 'side', rot: -260 * u - 20 * j, legL: 60, legR: 30, armL: 150, armR: 100 });
+  let boards = '';
+  for (let j = 0; j < 6; j++) {
+    const P = 1.5, u = E.mod((t + j * 0.25) / P, 1);
+    const x = lerp(SK.lip.x - 30, SK.landing.x - 200 + 150 * hash(j), u), y = lerp(SK.lip.y - 20, SK.landing.y, u) - Math.sin(u * Math.PI) * (180 + 120 * hash(j));
+    fall.push({ x, y, s: 0.46, view: 'side', rot: -360 * u, legL: 60, legR: 30, kneeL: 30, armL: 150, armR: 100 });
+    boards += X.skateboard(x + 120, y - 60 + 140 * u, 0.46, 500 * u + j * 40, { flipK: (u * 2.5) % 1 });
   }
-  let o = yardR(t, cam, '', draw.ghostCrowd(fall, { alpha: 0.5 }) + skaters(t));
+  let o = yardR(t, cam, '', R.tint(boards, 'ghost', 0.45) + draw.ghostCrowd(fall, { alpha: 0.66 }) + skaters(t));
   o += R.counterHUD({ x: 1860, y: 84, anchor: 'right', k: pop(t, tH - 0.05, 0.3), t, label: 'SKATE FAILS:', value: 100, roll: seg(t, tH - 0.05, tH + 0.6), from: 1, theme: 'red', icon: 'retry', bump: seg(t, tH + 0.6, tH + 1.05) });
   o += E.zoomLines(960, 500, bump(t, tH, tH + 0.5), t, '#FFD0D6');
   return o + E.redPulse(t, 1);
@@ -402,10 +413,11 @@ function shAgain(t) {
 }
 
 // ---- the town: everyone points at the roofs
-function townFolk(t, freeze) {
+function townFolk(t, freeze, few) {
   const tt = freeze ?? t;
   let o = '';
-  const P = [[-200, 0, 'adult', 3], [120, 1, 'kid', 8], [420, 0, 'adult', 6], [700, 1, 'kid', 12], [980, 0, 'adult', 9], [1300, 1, 'kid', 2], [1900, 0, 'adult', 1], [2200, 1, 'kid', 14]];
+  let P = [[-200, 0, 'adult', 3], [120, 1, 'kid', 8], [420, 0, 'adult', 6], [700, 1, 'kid', 12], [980, 0, 'adult', 9], [1300, 1, 'kid', 2], [1900, 0, 'adult', 1], [2200, 1, 'kid', 14]];
+  if (few) P = P.filter((_, j) => j % 2 === 0);
   for (const [x, kid, kind, i] of P) {
     const y = 990, s = kind === 'kid' ? 0.26 : 0.24;
     const pose = { x, y, s, volume: false, shade: true, shadow: true, turn: 0.2 * Math.sin(i), armR: 140 + 10 * Math.sin(tt * 5 + i), armL: i % 3 === 0 ? 120 : 15, face: { name: i % 2 ? 'joy' : 'shocked', eyes: { look: [0.2, -1] } }, bodyY: kid ? Math.abs(Math.sin(tt * 8 + i)) * 8 : 0 };
@@ -417,13 +429,13 @@ function townFolk(t, freeze) {
 }
 function shEveryone(t) {
   const cam = camKeys(t, [[CUT.everyone, { zoom: 1.5, x: -60, y: 150 }], [CUT.all9999, { zoom: 1.55, x: 400, y: 120 }]]);
-  let o = town(t, cam, { noBorn: true, front: view(cam, townFolk(t), 1) });
+  let o = town(t, cam, { noBorn: true, noStreet: true, front: view(cam, townFolk(t), 1) });
   return o + E.redPulse(t, 1);
 }
 function shAll9999(t) {
   const tN = w1(5, 'ninetynine');
   const cam = shakeAll(camKeys(t, [[CUT.all9999, { zoom: 1.2, x: 300, y: 120 }], [tN, { zoom: 0.66, x: 40, y: 10 }], [CUT.hide, { zoom: 0.64, x: 40, y: 0 }]], ease.inOut), t, [[tN, 0.4, 12]]);
-  let o = town(t, cam, { noBorn: true, front: view(cam, townFolk(t), 1) });
+  let o = town(t, cam, { noBorn: true, front: view(cam, townFolk(t, undefined, true), 1) });
   o += R.counterHUD({ x: 960, y: 90, anchor: 'center', k: pop(t, w(5, 'nine') - 0.1, 0.3), t, label: 'FAILS ON DISPLAY:', value: 9999, roll: seg(t, w(5, 'nine'), tN), from: 0, theme: 'red', bump: seg(t, tN, tN + 0.45), size: 70 });
   return o + E.redPulse(t, 1);
 }
@@ -431,7 +443,7 @@ function shAll9999(t) {
 // ================================================================= 5. THE HERO HIDES
 function shHide(t) {
   const cam = camKeys(t, [[CUT.hide, at(1040, 700, 1.3)], [CUT.literally, at(1040, 700, 1.55)]]);
-  const G = yardGhosts(t);
+  const G = yardGhosts(t, { only: [0, 1, 3], cam, rim: false });
   let around = '';
   const K_ = [[1, 640, 900, 0.5], [6, 1420, 920, -0.5], [10, 1640, 860, -0.6], [13, 450, 870, 0.6]];
   for (const [i, x, y, tn] of K_) around += kidLaugh(i, t, x, y, sAt(y), { turn: tn, point: i % 2 === 1 });
@@ -441,7 +453,7 @@ function shHide(t) {
 }
 function shLiterally(t) {
   const cam = at(1050, 600, 2.1);
-  const G = yardGhosts(t);
+  const G = yardGhosts(t, { ex: [800, 1400], cam, rim: false });
   const peek = ease.inOut(seg(t, CUT.literally, CUT.literally + 0.35));
   let hero = actor('you', t, { x: 1040, y: 960, s: 0.5, volume: false, turn: 0.15, backpack: true, armL: lerp(128, 60, peek), armR: lerp(118, 40, peek), headRot: lerp(12, 0, peek), face: { name: 'deadpan', eyes: { look: [0, 0] }, fx: ['sweat'] } }, { arms: false });
   let o = yardR(t, cam, '', G.back + hero + G.front);
@@ -450,7 +462,7 @@ function shLiterally(t) {
 // ---- "I've HAD this nightmare." — the night insert with a dream bubble
 function shDream(t) {
   const RM = H.SPOTS.heroRoom;
-  const cam = camKeys(t, [[CUT.dream, at(560, 640, 1.35)], [CUT.ivy, at(600, 600, 1.45)]]);
+  const cam = camKeys(t, [[CUT.dream, at(560, 560, 1.3)], [CUT.ivy, at(580, 560, 1.38)]]);
   const Lr = H.heroRoom.layers(t, { time: 'night', sleep: true, clock: '3:00', lights: 0.6 });
   const toss = Math.sin(t * 9) * 4;
   let sleeper = actor('you', t, { ...RM.bed.lie, rot: -90 + toss, face: { name: 'scared', eyes: { type: 'closed' }, fx: ['sweat', 'sweat2'] } });
@@ -462,9 +474,8 @@ function shDream(t) {
   for (let i = 0; i < 12; i++) crowd.push(E.litePose(E.LITE_KINDS[i % 8], t, { x: -420 + i * 78, y: 140 + (i % 2) * 40, s: 0.18 }, i));
   dream += draw.ghostCrowd(crowd, { alpha: 0.7 });
   dream += draw.kid(4, { x: 300, y: 300, s: 0.3, armR: 110, face: 'joy', volume: false });
-  const [bx, by] = toScr(cam, 820, 330);
-  const [hx, hy] = toScr(cam, 300, 760);
-  o += E.dreamBubble(bx + 150, by - 20, 760, 440, seg(t, CUT.dream + 0.05, CUT.dream + 0.4), dream, hx + 60, hy - 60);
+  const [hx, hy] = toScr(cam, 200, 820);
+  o += E.dreamBubble(1240, 360, 1000, 560, seg(t, CUT.dream + 0.05, CUT.dream + 0.4), dream, hx + 120, hy - 120);
   return o;
 }
 
@@ -544,7 +555,7 @@ function shBea(t) {
   while (k + 1 < helps.length && t >= helps[k + 1] - 0.08) k++;
   const tl = t - (helps[k] - 0.08);
   const TR = SR.trampoline;
-  const cam = camKeys(t, [[CUT.bea, at(TR.x, 560, 2.4)], [CUT.tip2, at(TR.x, 550, 2.5)]]);
+  const cam = camKeys(t, [[CUT.bea, at(TR.x, 610, 2.9)], [CUT.tip2, at(TR.x, 600, 3.0)]]);
   const hop = Math.sin(clamp(tl / 0.55, 0, 1) * Math.PI);
   const bea = actor('bea', t, { x: TR.x, y: TR.y - hop * 120, s: TR.s, t, armL: 150 + 20 * Math.sin(t * 20), armR: 150 - 20 * Math.sin(t * 20), sy: tl < 0.06 ? 0.85 : 1, sx: tl < 0.06 ? 1.12 : 1, face: 'scream' }, { arms: false });
   let o = street(t, cam, bea);
@@ -556,9 +567,11 @@ function shBea(t) {
 function frost(k, t) {
   if (k <= 0) return '';
   let o = '';
-  const d = 260 * k;
-  o += S.rect(0, 0, 1920, d * 0.55, 0, { fill: '#CFEFFF', opacity: f(0.35 * k) }) + S.rect(0, 1080 - d * 0.55, 1920, d * 0.55, 0, { fill: '#CFEFFF', opacity: f(0.35 * k) });
-  o += S.rect(0, 0, d * 0.7, 1080, 0, { fill: '#CFEFFF', opacity: f(0.3 * k) }) + S.rect(1920 - d * 0.7, 0, d * 0.7, 1080, 0, { fill: '#CFEFFF', opacity: f(0.3 * k) });
+  for (let i = 0; i < 4; i++) {
+    const d = (70 + 70 * i) * k, a = f(0.13 * k);
+    o += S.rect(0, 0, 1920, d * 0.6, 0, { fill: '#D8F2FF', opacity: a }) + S.rect(0, 1080 - d * 0.6, 1920, d * 0.6, 0, { fill: '#D8F2FF', opacity: a });
+    o += S.rect(0, 0, d, 1080, 0, { fill: '#D8F2FF', opacity: a }) + S.rect(1920 - d, 0, d, 1080, 0, { fill: '#D8F2FF', opacity: a });
+  }
   let cr = '';
   for (let i = 0; i < 14; i++) {
     const side = i % 4, u = hash(i * 3.3);
@@ -566,12 +579,12 @@ function frost(k, t) {
     const a = Math.atan2(540 - y, 960 - x) + (hash(i) - 0.5) * 0.8, L_ = (120 + 200 * hash(i * 7)) * k;
     cr += `M${f(x)} ${f(y)} L${f(x + Math.cos(a) * L_)} ${f(y + Math.sin(a) * L_)} M${f(x + Math.cos(a) * L_ * 0.6)} ${f(y + Math.sin(a) * L_ * 0.6)} l${f(Math.cos(a + 0.7) * L_ * 0.3)} ${f(Math.sin(a + 0.7) * L_ * 0.3)} `;
   }
-  return o + S.path(cr, ln(5, '#FFFFFF', 0.8 * k));
+  return o + S.path(cr, ln(5, '#FFFFFF', 0.7 * k));
 }
 function shTip2(t) {
   const cam = camKeys(t, [[CUT.tip2, at(1060, 560, 1.75)], [CUT.frozen, at(1060, 570, 1.9)]]);
   const fr = seg(t, CUT.tip2, CUT.forever) * 0.6;
-  const G = yardGhosts(t);
+  const G = yardGhosts(t, { ex: [820, 1450], cam, rim: false });
   let hero = actor('you', t, { x: 980, y: 960, s: 0.5, volume: false, backpack: true, turn: 0.4, ...breathe(t), face: { name: 'scared', eyes: { look: [0.8, -0.3] }, fx: ['sweat'] } });
   let o = yardR(t, cam, '', G.back + hero + G.front, { frozen: fr });
   const [tx, ty] = toScr(cam, 1240, 470);
@@ -585,14 +598,14 @@ function shFrozen(t) {
   const fz = Math.min(t, tFreeze);                         // the frozen clock
   const st = t < tFreeze ? E.choppy(t, lerp(24, 4, seg(t, CUT.frozen, tFreeze))) : fz;
   const cam = camKeys(t, [[CUT.frozen, { x: 80, y: 0, zoom: 1.12 }], [tFreeze, { x: 80, y: -20, zoom: 1.04 }], [CUT.forever, { x: 80, y: -30, zoom: 1.02 }]]);
-  const G = yardGhosts(st, { freeze: st });
+  const G = yardGhosts(st, { freeze: st, cam, only: [0, 1, 2, 3], rim: false });
   let around = '';
-  const K_ = [[1, 640, 900, 0.5], [6, 1420, 920, -0.5], [10, 1640, 860, -0.6], [13, 450, 870, 0.6], [3, 1250, 800, -0.2]];
+  const K_ = [[1, 640, 900, 0.5], [6, 1420, 920, -0.5], [10, 1680, 860, -0.6], [13, 430, 870, 0.6]];
   for (const [i, x, y, tn] of K_) around += kidLaugh(i, st, x, y, sAt(y), { turn: tn, freeze: st });
   around += actor('principal', st, { x: 1600, y: 960, s: 0.5, turn: -0.4, spaghetti: 1, armL: 140, armR: 150, face: 'scream' });
   around += actor('you', st, { x: 1040, y: 960, s: 0.5, backpack: true, turn: 0.1, armL: 60, armR: 60, face: 'scared' });
   const frK = 0.5 + 0.5 * seg(t, tFreeze - 0.1, tFreeze + 0.3);
-  let o = yardR(st, cam, roofCrowd(st, st), flagsSvg(st) + G.back + around + G.front, { frozen: frK, tm: st });
+  let o = yardR(st, cam, roofCrowd(st, st), G.back + around + G.front, { frozen: frK, tm: st });
   o += frost(0.7 + 0.3 * seg(t, tFreeze, tFreeze + 0.4), t);
   if (t >= tFreeze) o += R.flash(0.6 * (1 - seg(t, tFreeze, tFreeze + 0.25)), '#DFF6FF') + TFS('II', 1840, 110, 80, '#FFFFFF');
   return o + E.redPulse(t, 0.6);
@@ -602,8 +615,8 @@ function shForever(t) {
   const tF = w(12, 'FOREVER');
   const fz = tFreeze;
   const cam = shakeAll(camKeys(t, [[CUT.forever, { zoom: 1.2, x: 300, y: 100 }], [tF + 0.25, { zoom: 0.72, x: 40, y: 20 }], [END, { zoom: 0.7, x: 40, y: 15 }]], ease.out), t, [[tF, 0.4, 16]]);
-  let o = town(fz, cam, { noBorn: true, freeze: fz, frozen: 1, freezeAt: fz, tm: fz, front: view(cam, townFolk(fz, fz), 1) });
-  o += frost(1, t);
+  let o = town(fz, cam, { noBorn: true, freeze: fz, frozen: 1, freezeAt: fz, tm: fz, front: view(cam, townFolk(fz, fz, true), 1) });
+  o += frost(0.55, t) + E.redPulse(t, 0.6, 3);
   o += E.zoomLines(960, 540, 0.8 * bump(t, tF, tF + 0.45), t, '#DFF6FF');
   o += E.smash(t, CUT.forever, 0.12, 0.6, '#DFF6FF');
   return o;
@@ -628,4 +641,4 @@ function look(t) {
   return { grade: null, vignette: 0.65 };
 }
 
-module.exports = { scene, look, CUT, RT };
+module.exports = { scene, look, CUT, RT, _dbg: { yardR, yardGhosts, roofCrowd, flagsSvg, kidLaugh, frost, town, townFolk } };

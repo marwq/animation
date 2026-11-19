@@ -365,7 +365,7 @@ function notFound(x, y, k, o = {}) {
 // ---------------------------------------------------------------- smoke puffs (cheap, batched), age in s
 function smokeCloud(x, y, age, o = {}) {
   if (age < 0) return '';
-  const n = o.n || 9, R0 = o.r || 90, life = o.life || 2.2, seed = o.seed || 1, col = o.col || '#5E5A66';
+  const n = o.n || 9, R0 = o.r || 90, life = o.life || 2.2, seed = o.seed || 1, col = o.col || '#8E8898';
   let d = '', d2 = '';
   for (let i = 0; i < n; i++) {
     const a = hash(i * 3.1 + seed) * Math.PI * 2, sp = (0.5 + hash(i * 7.3 + seed)) * (o.spread || 260);
@@ -374,11 +374,24 @@ function smokeCloud(x, y, age, o = {}) {
     const r = R0 * (0.6 + 0.6 * hash(i * 1.7 + seed)) * (0.5 + 0.9 * e) * (1 - 0.3 * u);
     if (r < 2) continue;
     d += `M${f(px - r)} ${f(py)}a${f(r)} ${f(r)} 0 1 1 ${f(2 * r)} 0a${f(r)} ${f(r)} 0 1 1 ${f(-2 * r)} 0Z`;
-    d2 += `M${f(px - r * 0.5)} ${f(py - r * 0.35)}a${f(r * 0.35)} ${f(r * 0.25)} 0 1 1 ${f(r * 0.7)} 0a${f(r * 0.35)} ${f(r * 0.25)} 0 1 1 ${f(-r * 0.7)} 0Z`;
+    d2 += `M${f(px - r * 0.62)} ${f(py - r * 0.3)}a${f(r * 0.42)} ${f(r * 0.3)} 0 1 1 ${f(r * 0.84)} 0a${f(r * 0.42)} ${f(r * 0.3)} 0 1 1 ${f(-r * 0.84)} 0Z`;
   }
   const op = clamp(1 - (age - life * 0.6) / (life * 0.4), 0, 1) * (o.op ?? 1);
   if (op <= 0.01) return '';
-  return S.g(S.path(d, { fill: col, stroke: LINE, 'stroke-width': 6 }) + S.path(d2, { fill: '#FFFFFF', opacity: 0.18 }), null, { opacity: f(op) });
+  // one merged puffy silhouette: the outline pass under a stroke-less fill pass (no inner rings)
+  return S.g(S.path(d, { fill: LINE, stroke: LINE, 'stroke-width': 12 }) + S.path(d, { fill: col }) + S.path(d2, { fill: '#FFFFFF', opacity: 0.22 }), null, { opacity: f(op) });
+}
+
+// fiery starburst under an explosion's smoke (k 0..1 over ~0.4 s)
+function fireBurst(x, y, k, s = 1, seed = 1) {
+  if (k <= 0 || k >= 1) return '';
+  const star = (r0, r1, n, rot) => {
+    let d = '';
+    for (let i = 0; i < n * 2; i++) { const a = rot + (i / (n * 2)) * Math.PI * 2, r = i % 2 ? r0 : r1 * (0.8 + 0.4 * hash(i * 1.3 + seed)); d += (i ? 'L' : 'M') + f(x + Math.cos(a) * r) + ' ' + f(y + Math.sin(a) * r); }
+    return d + 'Z';
+  };
+  const e = ease.out(k), R = 360 * s * (0.4 + 0.6 * e), op = 1 - ease.in(k);
+  return S.g(S.path(star(R * 0.45, R, 11, k), { fill: '#FF5A1F', stroke: LINE, 'stroke-width': 8 }) + S.path(star(R * 0.3, R * 0.68, 9, 0.3 + k), { fill: '#FFD21F' }) + S.circle(x, y, R * 0.28, { fill: '#FFFFFF' }), null, { opacity: f(op) });
 }
 
 // ---------------------------------------------------------------- the zipper over the mouth (k 0..1 = zipping shut)
@@ -471,5 +484,5 @@ module.exports = {
   timing,
   esc, tf, TS, TFS, pop, at, toScr, shakeAll, clipTo, clipPath, faceAt, zoomAbout, blinkV, boing,
   whip, smash, zoomLines, streaks,
-  nameCard, speech, thought, playerCard, starD, drumKit, mushroom, notFound, smokeCloud, zipper, talentPoster, polaroid, haha,
+  nameCard, speech, thought, playerCard, starD, drumKit, mushroom, notFound, smokeCloud, fireBurst, zipper, talentPoster, polaroid, haha,
 };
