@@ -15,12 +15,25 @@ _VO = open(os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__
 TAKES = re.findall(r'^=== TAKE (\S+) · ', _VO, re.M)                                   # take ids in order, from the VO file
 SCENE_OF = {m[0]: m[1] for m in re.findall(r'^=== TAKE (\S+) · (SC \d+[a-z]?) ', _VO, re.M)}
 LEAD_IN = 0.35          # silence before the first line
-TAKE_GAP = 0.7          # pause between takes (scene transitions)
+TAKE_GAP = 1.1          # pause between takes (scene transitions)
 SPEED = 1.0             # >1 plays the voice faster (pitch kept, atempo in vo_track.py)
 SAME_SCENE_GAP = 0.35   # 08a -> 08b continue the same scene
 TAIL = 1.6              # after the last line
 # extra animation room: {line_id: seconds} added AFTER that line (on top of the script's ⏱ beats)
-AFTER = {}
+AFTER = {   # Respawn: room for the action beats (montages, slow-mo, effects) and the end screen
+    '01.1': 0.8, '01.2': 1.0, '01.5': 0.5,
+    '02a.4': 0.6, '02a.8': 0.8, '02b.3': 1.0, '02b.7': 0.6,
+    '03.5': 1.5, '03.7': 1.5, '03.8': 0.5,
+    '04.2': 0.8, '04.9': 0.8, '04.14': 1.0,
+    '05.3': 1.5, '05.8': 1.0, '05.12': 1.0, '05.19': 1.0,
+    '06.4': 1.5, '06.8': 1.0,
+    '07.5': 1.5, '07.8': 0.5,
+    '08.1': 1.0, '08.12': 1.0,
+    '09.5': 0.5, '09.8': 1.5, '09.10': 1.0,
+    '10.4': 1.0, '10.9': 1.5, '10.13': 1.0, '10.16': 1.0,
+    '11.8': 0.5,
+    '12.2': 8.0,   # end screen
+}
 
 
 def script_beats():

@@ -232,6 +232,43 @@ function chalkVolcano(x, y, s, k, t) {
   return S.g(o, tf(x, y + Math.sin(t * 3) * 2, s));
 }
 
+// ---------------------------------------------------------------- Ivy's blueprint of the trick (full-frame insert)
+// k = { hat, volcano, foam, labels } draw-on progress 0..1 each; screen space (1920x1080)
+function bpPath(d, k, w = 7, extra = {}) {
+  if (k <= 0) return '';
+  return S.path(d, { fill: 'none', stroke: '#EAF4FF', 'stroke-width': w, 'stroke-linecap': 'round', 'stroke-linejoin': 'round', pathLength: 1, 'stroke-dasharray': `${f(clamp(k, 0, 1))} 1.01`, ...extra });
+}
+function blueprint(t, k = {}) {
+  const kh = k.hat ?? 1, kv = k.volcano ?? 0, kf = k.foam ?? 0, kl = k.labels ?? 0;
+  let o = S.rect(-100, -100, 2120, 1280, 0, { fill: '#1D4F91' }) + S.rect(-100, -100, 2120, 1280, 0, { fill: 'url(#s06grid)' });
+  o += S.rect(40, 40, 1840, 1000, 0, { fill: 'none', stroke: '#9EC2EE', 'stroke-width': 6 });
+  // the hat, upside down (opening on top)
+  o += bpPath('M790 640 A170 36 0 1 0 1130 640 A170 36 0 1 0 790 640', kh, 8);
+  o += bpPath('M836 650 L856 900 Q960 930 1064 900 L1084 650', kh, 8);
+  o += bpPath('M846 720 L1074 720 M850 770 L1070 770', kh, 5, { opacity: 0.8 });
+  // the volcano rising out of it
+  o += bpPath('M850 630 L912 330 Q960 300 1008 330 L1070 630', kv, 8);
+  o += bpPath('M912 330 Q960 360 1008 330', kv, 6);
+  o += bpPath('M880 520 L940 480 M960 560 L1030 520 M900 420 L950 400', kv, 4, { opacity: 0.7 });
+  // the foam eruption
+  o += bpPath('M930 320 Q880 250 920 200 Q900 130 970 120 Q1040 90 1060 160 Q1130 170 1110 240 Q1150 300 1060 320', kf, 8);
+  o += bpPath('M960 300 L880 100 M990 290 L1050 60 M1010 310 L1180 160 M920 310 L760 190', kf, 5, { 'stroke-dasharray': undefined, opacity: f(0.85 * kf) });
+  o += bpPath('M1150 140 Q1200 110 1230 150 Q1270 140 1270 190 Q1240 220 1190 200 Q1150 200 1150 140', kf, 6);
+  o += bpPath('M700 150 Q740 120 770 150 Q800 150 790 190 Q750 210 720 190 Q690 180 700 150', kf, 6);
+  // labels (handwriting)
+  if (kl > 0) {
+    const lab = (txt, x, y, size, rot, kk) => (kk > 0 ? S.g(TF(esc(txt), 0, 0, size, '#FFFFFF', { 'text-anchor': 'start', 'font-weight': 600 }), `translate(${f(x)} ${f(y)}) rotate(${f(rot)})`, { opacity: f(clamp(kk * 3, 0, 1)) }) : '');
+    o += lab('ordinary hat', 1190, 780, 44, -4, seg(kl, 0, 0.3)) + bpPath('M1180 768 Q1130 740 1100 720', seg(kl, 0, 0.3), 4);
+    o += lab('VOLCANO', 380, 470, 54, -6, seg(kl, 0.25, 0.5)) + bpPath('M620 460 Q760 440 870 470', seg(kl, 0.25, 0.5), 4);
+    o += lab('FOAM!!!', 1300, 300, 64, 6, seg(kl, 0.5, 0.75));
+    o += lab('h = way too much', 1300, 380, 34, 4, seg(kl, 0.65, 0.9));
+  }
+  // title block
+  o += S.rect(1420, 880, 420, 120, 0, { fill: 'none', stroke: '#EAF4FF', 'stroke-width': 5 }) + S.path('M1420 930 H1840', ln(3, '#EAF4FF'));
+  o += TF('ELEPHANT TOOTHPASTE', 1630, 918, 32, '#FFFFFF') + TF("IVY'S LAB · TOP SECRET", 1630, 978, 26, '#BFD8F6');
+  return o;
+}
+
 // ---------------------------------------------------------------- memory polaroid ("VERSION 87")
 function polaroid(x, y, s, rot, k, inner, label) {
   if (k <= 0.001) return '';
@@ -339,6 +376,6 @@ function paperFrame(k = 1) {
 module.exports = {
   LINE, tf, esc, TS, TFS, pop, popOut, at, toScr, mixCam, shakeAll, drift, clipTo, zoomAbout,
   whip, smash, dip, zoomLines, bars, room, SW, SK, PAD, BOWL,
-  calendarCard, dayTag, drumKit, waffle, dadSpatula, scoreCard, pencilHand, glueBottle, easel, chalkVolcano, polaroid,
+  blueprint, calendarCard, dayTag, drumKit, waffle, dadSpatula, scoreCard, pencilHand, glueBottle, easel, chalkVolcano, polaroid,
   bookSpread, bookClosing, chibi, crayon, kinderRoom, paperFrame,
 };

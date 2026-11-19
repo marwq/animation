@@ -288,7 +288,7 @@ function cafeKids(t, shocked, tt) {
   return [back.join(''), front.join('')];
 }
 function principal(t, x, pose = {}) {
-  return actor('principal', t, { x, y: PRIN_HIT.y, s: PRIN_HIT.s, ...pose });
+  return actor('principal', t, { x, y: PRIN_HIT.y, s: PRIN_HIT.s, volume: !(t >= tSplat - 0.06 && t < tCr3), ...pose });
 }
 function shCafe(t) {
   const reset = t >= tPop3 - 0.12;              // after the respawn the world rewinds to the start of the walk
@@ -556,10 +556,10 @@ function shRun(t) {
 // ghost crowd: fixed lists per depth row; each ghost loops one fail with its own period + phase
 const KINDS = ['slip', 'ball', 'skate', 'bike', 'trip', 'flail', 'stairs', 'facepalm'];
 const ROWS = [
-  { k: 0.25, s: 0.065, y: TW.street[3].y, n: 54, x0: -900, x1: 2900 },
-  { k: 0.42, s: 0.11, y: TW.street[2].y, n: 56, x0: -1000, x1: 3000 },
-  { k: 0.68, s: 0.17, y: TW.street[1].y, n: 40, x0: -900, x1: 3200 },
-  { k: 1, s: 0.26, y: 990, n: 16, x0: -500, x1: 3400 },
+  { k: 0.25, s: 0.065, y: TW.street[3].y, n: 40, x0: -700, x1: 2700 },
+  { k: 0.42, s: 0.11, y: TW.street[2].y, n: 40, x0: -800, x1: 2900 },
+  { k: 0.68, s: 0.17, y: TW.street[1].y, n: 30, x0: -700, x1: 3100 },
+  { k: 1, s: 0.26, y: 990, n: 12, x0: -400, x1: 3300 },
 ];
 const CROWD = ROWS.map((r, ri) => {
   const list = [];
@@ -578,8 +578,11 @@ function crowdSvg(t, cam, frac = 1, freeze = null, lag = 0, opt = {}) {
   ROWS.forEach((r, ri) => {
     if (!rows.includes(ri)) return;
     const poses = [];
+    // cull to the visible x range of this row's parallax layer
+    const z = 1 + ((cam.zoom ?? 1) - 1) * r.k, fx = cam.fx ?? 960;
+    const vx0 = (-60 - fx - (cam.sx || 0)) / z + fx + (cam.x || 0) * r.k - 320 * r.s, vx1 = (1980 - fx - (cam.sx || 0)) / z + fx + (cam.x || 0) * r.k + 320 * r.s;
     CROWD[ri].forEach((g, i) => {
-      if (g.order > frac) return;
+      if (g.order > frac || g.x < vx0 || g.x > vx1) return;
       if (skip && ri === 3 && Math.abs(g.x - skip) < 520) return;
       let tt = freeze !== null ? freeze : t;
       if (lag > 0) tt = R.freezeT(tt, { every: 0.9 + g.ph, hold: 0.35 * lag, seed: i + ri * 40 });
@@ -588,7 +591,7 @@ function crowdSvg(t, cam, frac = 1, freeze = null, lag = 0, opt = {}) {
       poses.push({ x: g.x + (g.kind === 'trip' ? lerp(-60, 60, u) : 0) * r.s * 4, y: r.y + g.dy, s: r.s, ...P });
     });
     if (ri === 1 || ri === 2) ROOFG.forEach((g, i) => {
-      if (Math.abs(g.k - r.k) > 0.01 || hash(i * 9.9) > frac) return;
+      if (Math.abs(g.k - r.k) > 0.01 || hash(i * 9.9) > frac || g.x < vx0 || g.x > vx1) return;
       const tt = freeze !== null ? freeze : t;
       poses.push({ x: g.x, y: g.y, s: g.s, ...failPose(g.kind, mod(tt / g.per + g.ph, 1)) });
     });
@@ -607,10 +610,8 @@ function nearGhosts(t, freeze = null, close = false) {
   ] : [
     ['bike', 1500, 990, 0.26, 2.1, 0.1, false],
     ['slip', 2480, 990, 0.26, 1.7, 0.5, true],
-    ['ball', 1760, 990, 0.26, 1.5, 0.3, false],
     ['skate', BUS.x - 120, BUS.y, 0.26, 1.9, 0.7, false],
     ['flail', BEN.x, BEN.y - 46, 0.26, 1.3, 0.2, false],
-    ['trip', 2750, 990, 0.26, 1.8, 0.6, true],
   ];
   let o = '';
   for (const [k, x, y, s, per, ph, fl] of G) o += ghostFail(k, tt, mod(tt / per + ph, 1), { x, y, s, flip: fl, alpha: 0.6 });
@@ -727,7 +728,7 @@ function shOkay(t) {
   ch += heroAtFlag(t, pose, { arms: false, energy: 1.6 });
   // a ghost cyclist crashes through the foreground on "LITTLE"
   const gu = seg(t, tLittle + 0.15, tLittle + 1.1);
-  if (gu > 0 && gu < 1) ch += ghostFail('bike', t, lerp(0.05, 0.6, gu), { x: FLAGX - 40 + 300 * gu, y: 1040, s: 0.34, alpha: 0.7 });
+  if (gu > 0 && gu < 1) ch += ghostFail('bike', t, lerp(0.05, 0.6, gu), { x: FLAGX + 170 + 260 * gu, y: 1050, s: 0.3, alpha: 0.7 });
   o += view(cam, ch, 1) + Lt.fg + Lt.light;
   if (little) {
     // the "little" gap between his hands

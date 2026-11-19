@@ -16,7 +16,7 @@ function timing() {
   const T0 = V.scene('SC 02').start, END = V.scene('SC 03').start;
   const C = {};
   C.open = T0;                                    // Monday, Mr. Fig's class: push in, freeze on "you" + YOU tag
-  C.card = wa(0, 'Twelve') - 0.12;                // the player card: AGE / SMART / FUNNY / FEAR
+  C.card = wa(0, 'old') - 0.1;                    // the player card: AGE / SMART / FUNNY / FEAR
   C.board = A[1].a - 0.15;                        // Mr. Fig at the board: "Anyone?"
   C.blank = wa(1, 'Seven') - 0.08;                // the class: blank faces
   C.hero = A[2].a - 0.12;                         // the hero whispers 56, hand twitches

@@ -462,4 +462,221 @@ function shTip1(t) {
   return o + whip(t, CUT.tip1, -1, 0.08);
 }
 
-//@@PART2
+// ================================================================= THE POP QUIZ
+const CLASS_I = [[31, 32, 33, 34, 35], [36, 37, 38, 39, 40], [41, 42, -1, 44, 45]];
+const HD = SP.classroom.heroDesk;
+// kids per row (back -> front), faceOf(r, c, i) -> face, poseOf(r, c, i) -> extra pose
+function classKids(t, faceOf, poseOf) {
+  return SP.classroom.rows.map((row, r) => row.map((seat, c) => {
+    const i = CLASS_I[r][c];
+    if (i < 0) return '';
+    return kid(i, { x: seat.x, y: seat.y, s: seat.s, turn: clamp((960 - seat.x) / 2400, -0.4, 0.4), ...AC.breathe(t, i), face: faceOf ? faceOf(r, c, i) : 'neutral', ...(poseOf ? poseOf(r, c, i) : {}) });
+  }).join(''));
+}
+// classroom 'class' view composed by hand: B[r] = what sits behind desk row r (back -> front), after = the FLOOR line
+function classRoom(t, cam, opts, B, after = '') {
+  const Lc = SS.classroom.layers(t, opts);
+  const rows = Lc.frontRows || [Lc.front || ''];
+  let wv = Lc.mid;
+  rows.forEach((r, i) => { wv += (B[i] || '') + r; });
+  wv += after + (Lc.fg || '') + (Lc.light || '');
+  return { svg: view(cam, Lc.bg, 0.6) + view(cam, wv, 1), rows };
+}
+const TEACH = SP.classroom.teacher;
+function mrFig(t, pose = {}) {
+  return actor('teacher', t, { x: TEACH.x, y: TEACH.y, s: TEACH.s, turn: 0.35, papers: true, armL: 34, armR: 14, ...pose }, { arms: false, energy: 0.6 });
+}
+// a quiz paper lying flat on a desk top (seen from the front: squashed)
+const flatPaper = (x, y, s, rot = 0) => S.g(X.quizPaper({ x: 0, y: 0, s: 1, rot }), `translate(${f(x)} ${f(y)}) scale(${f(s)} ${f(s * 0.38)})`);
+// a yellow pencil, (x, y) = grip, rot (deg; 0 = tip down)
+function pencil(x, y, s = 1, rot = 0) {
+  const o = S.rect(-9, -120, 18, 120, 4, ol('#FFC83A', 4)) + S.rect(-9, -140, 18, 22, 4, ol('#FF8FA8', 4)) + S.rect(-10, -124, 20, 8, 1, { fill: '#B9C0CC' }) + S.path('M-9 0 L0 26 L9 0 Z', ol('#F2D4A8', 4)) + S.path('M-3 16 L0 26 L3 16 Z', { fill: LINE_ });
+  return S.g(o, tf(x, y, s, rot));
+}
+const LINE_ = '#151515';
+
+// ---- 13. TEACHER: "Pop quiz." — Mr. Fig, bored, lifts the stack
+function shQuiz(t) {
+  const cam = camKeys(t, [[CUT.quiz, camAt(360, 700, 1.38)], [CUT.deal, camAt(330, 690, 1.52)]]);
+  const lift = ease.outBack(seg(t, w(7, 'quiz') - 0.15, w(7, 'quiz') + 0.2));
+  const B = classKids(t, (r, c) => (c < 2 ? 'neutral' : 'neutral'));
+  const W_ = classRoom(t, cam, {}, B, mrFig(t, { armL: 34 + 36 * lift, face: { name: 'deadpan' } }));
+  return W_.svg + whip(t, CUT.quiz, 1, 0.12);
+}
+
+// ---- 14. "Twenty questions. No talking." — papers fly to every desk; the class gulps; you lean back
+function shDeal(t) {
+  const cam = camKeys(t, [[CUT.deal, { x: 0, y: 10, zoom: 1.02 }], [CUT.read, { x: 0, y: 0, zoom: 1.08 }]]);
+  const tNo = w(7, 'No');
+  const fig = { x: TEACH.x, y: TEACH.y, s: TEACH.s, turn: 0.35, armL: 70, armR: 14 };
+  const [hx, hy] = CAST.handAt(CAST.D.teacher, fig, -1);
+  const src = [TEACH.x - hx * TEACH.s * -1, TEACH.y + hy * TEACH.s];
+  // flights: every desk (back -> front)
+  const papers = [[], [], []], flying = [];
+  let n = 0;
+  SP.classroom.rows.forEach((row, r) => row.forEach((seat, c) => {
+    if (seat.x < 0 || seat.x > 1920) return;
+    const t0 = CUT.deal + 0.08 + n * 0.055, dur = 0.42;
+    n++;
+    const k = seg(t, t0, t0 + dur);
+    const dst = [seat.x + 20, seat.desk - 4];
+    if (k >= 1) papers[r].push(flatPaper(dst[0], dst[1], seat.s * 0.75, (hash(n) - 0.5) * 20));
+    else if (k > 0) {
+      const e = ease.out(k);
+      const p = [lerp(src[0], dst[0], e), lerp(src[1], dst[1], e) - 260 * Math.sin(Math.PI * e)];
+      flying.push(S.g(X.quizPaper({ x: 0, y: 0, s: lerp(0.5, seat.s * 0.75, e), rot: 720 * k + n * 40 }), `translate(${f(p[0])} ${f(p[1])}) scale(1 ${f(lerp(1, 0.38, ease.in(k)))})`));
+    }
+  }));
+  const landed = (r, c) => t > CUT.deal + 0.08 + (r * 5 + c) * 0.055 + 0.42;
+  const B = classKids(t, (r, c, i) => (landed(r, c) ? (i % 3 === 0 ? { name: 'scared', fx: ['sweat'] } : i % 3 === 1 ? { name: 'nervous', fx: ['sweat2'] } : 'shocked') : 'neutral'),
+    (r, c, i) => (landed(r, c) ? { bodyY: 6 * bump(t, CUT.deal + 0.5 + (r * 5 + c) * 0.055, CUT.deal + 0.9 + (r * 5 + c) * 0.055) } : {}));
+  const relax = ease.inOut(seg(t, CUT.deal + 0.6, CUT.deal + 1.2));
+  B[2] += you(t, { x: HD.x, y: HD.y, s: HD.s, armL: lerp(9, 168, relax), armR: lerp(9, 168, relax), lean: -4 * relax, face: { name: 'smug', eyes: { type: relax > 0.6 ? 'closed' : undefined } } }, { arms: false });
+  B[1] += papers[0].join('');
+  B[2] += papers[1].join('');
+  const shush = t > tNo - 0.1;
+  const W_ = classRoom(t, cam, {}, B, papers[2].join('') + mrFig(t, { armL: 70 - 20 * seg(t, CUT.deal + 1, CUT.deal + 1.3), armR: shush ? 120 : 14, face: 'deadpan' }) + flying.join(''));
+  let o = W_.svg;
+  o += K.bang('SHH.', 420, 300, pop(t, tNo, 0.2) * (1 - seg(t, CUT.read - 0.2, CUT.read)), 70, -6, '#FFFFFF');
+  return o;
+}
+
+// ---- 15. "A pop quiz? No problem." — close at the desk: knuckle crack, lean back, smug
+function shNoProb(t) {
+  const tNoP = w(8, 'No');
+  const cam = camKeys(t, [[CUT.read, camAt(960, 770, 1.6)], [CUT.readQ, camAt(960, 740, 1.75)]]);
+  const crack = t < tNoP - 0.1;
+  const sh = crack ? 6 * Math.sin(t * 40) * bump(t, CUT.read + 0.1, tNoP - 0.1) : 0;
+  const back = ease.outBack(seg(t, tNoP - 0.1, tNoP + 0.25));
+  const pose = crack ? { armL: 62 + sh, armR: 62 - sh, face: { name: 'determined' } } : { armL: lerp(62, 170, back), armR: lerp(62, 170, back), lean: -4 * back, face: { name: 'smug', fx: back > 0.8 ? ['sparkles'] : [] } };
+  const B = classKids(t, (r, c) => (r === 2 && c === 3 ? { name: 'nervous', fx: ['sweat2'] } : r === 1 ? 'scared' : 'nervous'));
+  B[2] += you(t, { x: HD.x, y: HD.y, s: HD.s, ...pose }, { arms: false });
+  let o = classRoom(t, cam, { quiz: true }, B).svg;
+  if (crack) { const cr = bump(t, CUT.read + 0.25, CUT.read + 0.5) + bump(t, CUT.read + 0.6, CUT.read + 0.85); o += K.bang('CRACK', 1220, 520, cr, 54, 8, '#FFFFFF'); }
+  return o;
+}
+
+// ---- 16. "You read all the questions..." — insert: the sheet, rows light up as his eyes race down; READ 0 → 20
+function shRead(t) {
+  const scan = seg(t, w(8, 'read'), w(8, 'questions') + 0.5);
+  const done = seg(t, w(8, 'questions') + 0.5, w(8, 'questions') + 0.85);
+  const u = seg(t, CUT.readQ, CUT.menu);
+  let o = S.rect(0, 0, 1920, 1080, 0, { fill: '#BFEBDD' }) + S.rect(0, 0, 1920, 120, 0, { fill: '#A8DCCB' });
+  o += S.rect(0, 760, 1920, 400, 0, { fill: '#D9A66A' }) + S.path('M0 760 H1920', ln(8, LINE_)) + S.path('M0 840 H1920 M0 940 H1920', ln(4, '#C08A52', 0.7));
+  const row = Math.min(19, Math.floor(scan * 20));
+  const ly = lerp(-0.55, 0.6, (row % 10) / 9), lx = row < 10 ? -1 : -0.55;
+  o += you(t, { x: 1520, y: 1590, s: 1.18, volume: false, turn: -0.35, headRot: -3 + 2 * Math.sin(t * 14) * (scan > 0 && scan < 1 ? 1 : 0), face: { name: done > 0 ? 'smug' : 'determined', eyes: { look: done > 0 ? [0.2, 0] : [lx, ly] } } }, { arms: false });
+  o += E.quizSheet(700 + 20 * u, 590, 0.62 + 0.02 * u, -3, { scan: scan > 0 ? scan : -1, name: 'YOU' });
+  o += R.counterHUD({ x: 1880, y: 80, anchor: 'right', t, label: 'QUESTIONS READ:', value: 20, roll: scan, from: 0, theme: 'green', icon: 'check', bump: seg(t, w(8, 'questions') + 0.5, w(8, 'questions') + 0.95) });
+  o += R.savedToast(1880, 200, done, { text: 'Answers memorized', anchor: 'right', t, s: 0.85 });
+  return o + smash(t, CUT.readQ, 0.1, 0.5);
+}
+
+// ---- 17. "and then you pressed reset." — finger snap, the world pauses grey, ESC menu → RESET CHARACTER → crumble on the desk
+function shMenu(t) {
+  const tC = tPress + 0.22;
+  const cam = camKeys(t, [[CUT.menu, camAt(960, 760, 1.7)], [tSnap + 0.1, camAt(1080, 700, 1.55)], [CUT.door2, camAt(1080, 700, 1.6)]], ease.out);
+  const grey = seg(t, tSnap, tSnap + 0.3);
+  const up = ease.outBack(seg(t, tSnap - 0.15, tSnap + 0.05));
+  const B = classKids(t, (r, c) => (r === 2 && c === 3 ? { name: 'nervous', fx: ['sweat2'] } : 'nervous'));
+  const heroSvg = t < tC ? you(t, { x: HD.x, y: HD.y, s: HD.s, armL: 20, armR: lerp(30, 150, up), face: { name: t > tHl ? 'sneaky' : 'smug', eyes: { look: [0.8, -0.2] } } }, { arms: false }) : '';
+  const W_ = classRoom(t, cam, { quiz: true }, [B[0], B[1], B[2] + heroSvg]);
+  let o = W_.svg;
+  if (grey > 0) {
+    o += R.greyWash(grey);
+    // the player is not paused: his seat stays in colour
+    o += view(cam, clipTo(HD.x - 270, 420, 540, 700, heroSvg + W_.rows[2]));
+  }
+  if (t >= tC) o += view(cam, R.crumble({ x: HD.x, y: HD.y, s: HD.s, age: t - tC, seed: 61, dir: [0, -0.5], floorY: 860 }));
+  // snap FX at the raised hand
+  const [hx, hy] = AC.hand(150, 1);
+  const [sx, sy] = toScr(cam, HD.x + hx * HD.s, HD.y + hy * HD.s);
+  const sn = seg(t, tSnap, tSnap + 0.35);
+  if (sn > 0 && sn < 1) o += S.circle(sx, sy, 30 + 120 * ease.out(sn), { fill: 'none', stroke: '#FFFFFF', 'stroke-width': f(14 * (1 - sn)), opacity: f(1 - sn) }) + K.bang('SNAP!', sx + 40, sy - 90, pop(t, tSnap, 0.15) * (1 - sn), 60, 10, '#FFFFFF');
+  const mk = seg(t, tSnap + 0.05, tSnap + 0.75) * (1 - seg(t, tPress + 0.25, tPress + 0.42));
+  o += R.escMenu({ x: 1380, y: 460, s: 0.78, k: mk, hl: t >= tHl ? 'reset' : t >= tSnap + 0.6 ? 'resume' : null, press: seg(t, tPress, tPress + 0.4), t });
+  return o + K.C.whiteFlash(0.9 * seg(t, CUT.door2 - 0.08, CUT.door2));
+}
+
+// ---- 18. pop on the flag at 8:00 AM. TIP: "That's... cheating." — he grins and sprints for the doors
+function shDoor2(t) {
+  const tPop = CUT.door2 + 0.05, age = t - tPop;
+  const tRun = Math.max(tPop + 0.7, w(9, 'cheating') - 0.1);
+  const cam = camKeys(t, [[CUT.door2, camAt(760, 600, 1.3)], [tRun, camAt(780, 590, 1.36)], [CUT.hall, camAt(860, 560, 1.3)]]);
+  let ch = checkpointAt(t, 'back', { save: 1, plant: 1 }) + R.respawnPop({ x: CP.x, y: CP.y, s: CP.s, age, part: 'back' });
+  const run = ease.inOut(seg(t, tRun, tRun + 0.75));
+  if (age >= 0 && run < 1) {
+    const pp = R.popPose(age, CP.s);
+    const y = lerp(CP.y, 700, run), x = lerp(CP.x, 1060, run);
+    const s = run > 0 ? scaleAt(y) : CP.s;
+    if (run <= 0) ch += you(t, { x: CP.x, y: CP.y, s, sx: pp.sx, sy: pp.sy, lift: pp.lift, turn: -0.4, armL: 9, armR: 30, face: { name: 'smug', eyes: { look: [-0.7, -0.4] } } }, { arms: false });
+    else ch += you(t, { x, y, s, view: 'side', flip: true, ...AC.run(t * 20), lean: 12, face: 'excited', backpack: true }, { arms: false }) + K.C.dust(CP.x + 20, CP.y, tRun, t);
+  }
+  ch += R.respawnPop({ x: CP.x, y: CP.y, s: CP.s, age, part: 'front' }) + checkpointAt(t, 'front', { save: 1 });
+  if (age >= 0 && run <= 0) ch += R.forcefield({ x: CP.x, y: CP.y, s: CP.s, t, k: 1 - seg(age, 0.6, 1.3) });
+  // Tip pops in next to him (world space, it scales with the camera)
+  const tin = pop(t, A[9].a - 0.2, 0.3);
+  if (tin > 0) ch += R.tip({ x: CP.x - 250 + 120 * run, y: CP.y - 520, s: 0.95 * tin, t, look: run > 0 ? [1, 0.2] : [0.6, 0.3], tail: 1 });
+  let o = yard(t, cam, { clock: '8:00' }, kid(9, { x: 1150, y: 720, s: scaleAt(720), turn: -0.3, face: 'neutral' }), ch);
+  o += E.clockStamp(1580, 150, seg(t, tPop + 0.12, tPop + 0.45) * (1 - seg(t, CUT.hall - 0.25, CUT.hall)), t);
+  o += R.tipCard(560, 150, seg(t, A[9].a, A[9].a + 0.3), "TIP: That's... cheating.", { t, w: 560, type: seg(t, A[9].a, A[9].b) });
+  return o + K.C.whiteFlash(0.9 * (1 - seg(t, CUT.door2, CUT.door2 + 0.18)));
+}
+
+// ---- 19. "It was one hundred percent cheating." — the hallway sprint into ROOM 104
+function shHall(t) {
+  const tIn = CUT.write - 0.28;
+  const u = seg(t, CUT.hall, tIn);
+  const hx = lerp(-760, 1560, ease.inOut(u));
+  const into = seg(t, tIn, CUT.write);
+  const cam = { x: clamp(hx - 760, -1100, 900), y: 20, zoom: 1.06 };
+  let ch = '';
+  // two kids at the lockers spin as he blasts past
+  for (const [kx, i] of [[160, 51], [880, 52]]) {
+    const hit = seg(t, CUT.hall + (kx + 760) / 2320 * (tIn - CUT.hall) - 0.05, CUT.hall + (kx + 760) / 2320 * (tIn - CUT.hall) + 0.4);
+    ch += kid(i, { x: kx, y: 760, s: 0.37, turn: hit > 0 ? Math.sin(hit * 12) : 0.2, rot: 6 * Math.sin(hit * 12) * (1 - hit), face: hit > 0 ? 'dizzy' : 'neutral', lift: 20 * bump(hit, 0, 0.5) });
+    if (hit > 0 && hit < 1) for (let j = 0; j < 3; j++) ch += S.g(X.quizPaper({ x: 0, y: 0, s: 0.3, rot: 0 }), tf(kx + 60 + 200 * hit * (j + 1) * 0.6, 520 - 160 * hit + 260 * hit * hit * (j * 0.4 + 0.6), 1, 300 * hit * (j + 1)));
+  }
+  const y = lerp(960, 760, ease.in(into)), s = lerp(0.5, 0.37, into);
+  if (into < 1) ch += you(t, { x: hx + 90 * into, y, s, view: 'side', flip: true, ...AC.run(t * 24), lean: 16, face: 'excited' }, { arms: false }) + K.C.speedLines(hx - 760, hx - 320, y - 240, 6, 9, '#FFFFFF', 300);
+  let o = SS.hallway.compose(t, { doorOpen: seg(t, tIn - 0.3, tIn) }, '', ch, cam);
+  return o + whip(t, CUT.hall, 1, 0.1);
+}
+
+// ---- 20. writes every answer without looking — eyes closed, the pencil a blur, ANSWERS 0 → 20
+function shWrite(t) {
+  const u = seg(t, CUT.write, CUT.grade);
+  const cam = camKeys(t, [[CUT.write, camAt(1040, 720, 1.75)], [CUT.grade, camAt(1060, 700, 1.9)]]);
+  const sc = Math.sin(t * 70);
+  const armR = 82 + 6 * sc;
+  const [px, py] = AC.hand(armR, 1);
+  const pose = { x: HD.x, y: HD.y, s: HD.s, armR, armL: 20, turn: 0.1, headRot: 2 * Math.sin(t * 9), face: { name: 'smug', eyes: { type: 'closed' }, fx: ['sparkles'] }, props: [{ svg: pencil(px + 10 * sc, py + 6, 1.1, -30 + 12 * sc), layer: 'front' }] };
+  const B = classKids(t, (r, c) => (r === 2 && c === 3 ? { name: 'shocked', mouth: 'O' } : r === 1 ? 'confused' : 'neutral'), (r, c) => (r === 2 && c === 3 ? { turn: -0.5 } : {}));
+  B[2] += you(t, pose, { arms: false });
+  let fx = '';
+  const hxw = HD.x + px * HD.s, hyw = HD.y + py * HD.s;
+  for (let i = 0; i < 5; i++) { const a = hash(Math.floor(t * 24) + i * 3.3) * 6.28, d = 60 + 40 * hash(i + Math.floor(t * 24)); fx += S.path(`M${f(hxw + Math.cos(a) * 30)} ${f(hyw + 30 + Math.sin(a) * 16)} l${f(Math.cos(a) * d)} ${f(Math.sin(a) * d * 0.5)}`, ln(5, '#FFFFFF', 0.8)); }
+  fx += S.path(`M${f(hxw - 80)} ${f(hyw - 40)} q40 -30 80 0 t80 0`, ln(6, '#FFFFFF', 0.6 * Math.abs(sc)));
+  let o = classRoom(t, cam, { quiz: true }, B, fx).svg;
+  o += R.counterHUD({ x: 1880, y: 80, anchor: 'right', t, label: 'ANSWERS:', value: 20, roll: seg(t, CUT.write + 0.1, CUT.grade - 0.15), from: 0, theme: 'gold', icon: 'star' });
+  o += K.bang('SCRIBBLE!', 1500, 340, pop(t, CUT.write + 0.05, 0.2), 64, -8, '#FFFFFF');
+  return o;
+}
+
+// ---- 21. "You got one hundred percent." — the sheet, every answer filled; the 100% stamp SLAMS
+function shGrade(t) {
+  const u = seg(t, CUT.grade, CUT.gym);
+  const k = seg(t, tStamp - 0.08, tStamp + 0.5);
+  const tPct = w(10, 'percent', 1);
+  let o = S.rect(0, 0, 1920, 1080, 0, { fill: '#D9A66A' }) + S.path('M0 180 H1920 M0 420 H1920 M0 700 H1920 M0 900 H1920', ln(5, '#C08A52', 0.6));
+  o += K.rays(960, 560, 18, 1400, '#FFE27A', f(0.25 * seg(t, tStamp, tStamp + 0.3)), t * 10);
+  o += you(t, { x: 250, y: 1620, s: 1.12, volume: false, turn: 0.45, face: { name: 'smug', eyes: { look: [0.6, -0.3] }, fx: k > 0.3 ? ['sparkles'] : [] } }, { arms: false });
+  let sheet = E.quizSheet(1020, 560, 0.66 + 0.05 * ease.out(u), -6 + 2 * u, { answered: 1, grade: k, name: 'YOU' });
+  const sh = K.shake(t, tStamp, 0.35, 26);
+  o += S.g(sheet, `translate(${f(sh.sx)} ${f(sh.sy)})`);
+  o += K.confetti(t, tPct, 50, 5);
+  o += K.bang('100%!', 1600, 300, pop(t, tPct, 0.2), 120, 8, '#FFD23F');
+  return o + smash(t, CUT.grade, 0.1, 0.6) + smash(t, tStamp, 0.08, 0.5);
+}
+
+//@@PART3

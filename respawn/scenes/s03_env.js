@@ -78,7 +78,13 @@ const bangAt = (t, txt, x, y, t0, d = 0.6, size = 120, rot = -6, col = '#FFD21F'
 function pulseVignette(t, k, col = '#05070F') {
   if (k <= 0) return '';
   const b = Math.pow(Math.max(0, Math.sin(t * 7.5)), 6);
-  return S.path('M-50 -50 H1970 V1130 H-50 Z M960 120 a820 430 0 1 0 1 0 Z', { fill: col, 'fill-rule': 'evenodd', opacity: f(clamp(k, 0, 1) * (0.45 + 0.25 * b)) });
+  const op = clamp(k, 0, 1) * (0.13 + 0.07 * b);
+  let o = '';
+  for (let i = 0; i < 4; i++) {
+    const rx = 1080 + i * 140 - 40 * b, ry = 640 + i * 90 - 26 * b;
+    o += S.path(`M-50 -50 H1970 V1130 H-50 Z M${f(960 - rx)} 540 a${f(rx)} ${f(ry)} 0 1 0 ${f(2 * rx)} 0 a${f(rx)} ${f(ry)} 0 1 0 ${f(-2 * rx)} 0 Z`, { fill: col, 'fill-rule': 'evenodd', opacity: f(op) });
+  }
+  return o;
 }
 
 // ---------------------------------------------------------------- squash & stretch
