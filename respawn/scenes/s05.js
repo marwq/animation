@@ -852,7 +852,7 @@ const DODGES = (() => {
   const d = [w(12, 'knew'), w(12, 'single', 1), w(12, 'going'), lerp(A[12].b, CUT.pinch, 0.5)];
   return [
     { t: d[0], balls: [540], pose: { rot: 42, rotY: 0, kneeL: 50, kneeR: 40, legL: 30, legR: -20, armL: 150, armR: 170 } },
-    { t: d[1], balls: [880], pose: { lift: 210, kneeL: 95, kneeR: 95, legL: 60, legR: 45, armL: 160, armR: 175 } },
+    { t: d[1], balls: [885], pose: { lift: 150, kneeL: 100, kneeR: 100, legL: 64, legR: 50, armL: 160, armR: 175 } },
     { t: d[2], balls: [690], pose: { rot: 74, rotY: 0, kneeL: 85, kneeR: 75, legL: 40, legR: 20, armL: 205, armR: 215 } },
     { t: d[3], balls: [560, 905], pose: { rot: -90, rotY: -470, lift: 40, armL: 180, armR: 180, legL: 0, legR: 0, kneeL: 0, kneeR: 0 } },
   ];
@@ -872,7 +872,7 @@ function shBullet(t) {
   const u = seg(t, CUT.bullet, CUT.pinch);
   // two angles: front-left, then (after the 2nd dodge) a lower, wider angle from the right
   const tCut = (DODGES[1].t + DODGES[2].t) / 2 + 0.1;
-  const cam = t < tCut ? camKeys(t, [[CUT.bullet, camAt(1500, 660, 1.3)], [tCut, camAt(1540, 640, 1.42)]]) : camKeys(t, [[tCut, camAt(1700, 680, 1.22)], [CUT.pinch, camAt(1660, 670, 1.34)]]);
+  const cam = t < tCut ? camKeys(t, [[CUT.bullet, camAt(1500, 650, 1.28)], [tCut, camAt(1540, 625, 1.36)]]) : camKeys(t, [[tCut, camAt(1700, 680, 1.22)], [CUT.pinch, camAt(1660, 670, 1.34)]]);
   let ch = '';
   // predicted trajectories first (on the floor/wall), then the balls
   const cols = ['#E8453C', '#3B82F6', '#FFD23F', '#3BD16F', '#E8453C'];
@@ -899,14 +899,15 @@ function shPinch(t) {
   const cam = camKeys(t, [[CUT.pinch, camAt(1440, 600, 2.1)], [CUT.coach, camAt(1420, 590, 2.35)]]);
   const up = ease.inOut(seg(t, CUT.pinch + 0.15, tP));
   const armL = lerp(14, 140, up);
-  const [hx, hy] = AC.hand(armL, -1);
-  const hand = [DZ.x + hx * DZ.s, DZ.y + hy * DZ.s];
-  const target = [hand[0], hand[1] - 62];
+  const [gx, gy] = CAST.handAt(CAST.D.you, { armL }, -1);         // grip point of the screen-left hand (body units)
+  const hand = [DZ.x + gx * DZ.s, DZ.y + gy * DZ.s];
+  const tip = [hand[0] - 8, hand[1] - 34];                         // where the two fingertips meet
+  const target = [tip[0], tip[1] - 14];
   const bu = ease.out(seg(t, CUT.pinch, tP));
   const bx = lerp(1060, target[0], bu), by = lerp(575, target[1], bu);
   let ch = you(t, { x: DZ.x, y: DZ.y, s: DZ.s, volume: false, turn: -0.12, armL, armR: 14, face: { name: 'smug', eyes: { look: [0.35, 0.15], upper: 0.4 } } }, { arms: false });
-  ch += E.pinchHand(hand[0], hand[1] - 6, 0.38, -(180 - armL) * 0.15 - 4, t < tP ? 1 - up * 0.7 : 0);
   ch += X.dodgeball({ x: bx, y: by, s: 0.5, rot: 30 * (t - CUT.pinch), squash: 0.15 * bump(t, tP, tP + 0.2) });
+  ch += E.pinchHand(hand[0] - 8, hand[1] - 22, 0.5, -8, t < tP ? 1 - up * 0.7 : 0.25);
   if (t < tP) ch += S.path(`M${f(bx - 60)} ${f(by - 10)} h-120 M${f(bx - 58)} ${f(by + 12)} h-80`, ln(5, '#FFFFFF', 0.6 * (1 - bu)));
   const g = pop(t, tP, 0.2) * (1 - seg(t, tP + 0.5, tP + 0.8));
   if (g > 0) ch += K.F.sparkle(target[0] + 50, target[1] - 40, 22 * g) + K.F.sparkle(target[0] - 40, target[1] - 60, 14 * g);
