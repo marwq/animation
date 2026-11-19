@@ -267,7 +267,7 @@ function shDrip(t) {
     let over = R.foamPile(PAD.x, PAD.y, 380, 150, { t, seed: 5 });
     if (q.heroAt === 'fail') {
       for (let i = 0; i < 3; i++) { const u = ((t * 0.9 + i * 0.37) % 1); drips.push(S.ellipse(PAD.x - 110 + i * 110, PAD.y - 520 + u * 260, 12, 18, ol('#FFFFFF', 4))); }
-      over += drips.join('') + R.foamBlobs(PAD.x + 30, PAD.y - 905 * PAD.s, 0.5, 1, 9, { t });
+      over += drips.join('');
     }
     over += q.under + q.over;
     let o = workshopShot(t, camClose, { ivy: ivy(t, { face: { name: 'joy', fx: ['sweat'] }, turn: 0.4 }), hero: he, over, tableOpts: { hat: false, flasks: [true, false, true] } });
