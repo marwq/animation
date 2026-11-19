@@ -19,13 +19,15 @@
 // Screens take an svg centred on (0,0) of the screen box, or fn(w, h) => svg (e.g. gameScreen(t, {...})).
 //
 // Index (details in the comment above each function):
-//   heroRoom(t, o)   YOUR bedroom. o: time 'morning'|'day'|'night', clock '7:30', monitor (svg|fn), storm, flash, greenGlow,
-//                    redBlink, door 0..1, sleep, chair, chairX, mess 0..1, blind 0..1, lights 0..1, lamp, lowGfx, glitch
+//   heroRoom(t, o)   YOUR attic bedroom. o: time 'morning'|'day'|'night', clock '7:30', monitor (svg|fn), monitorGlow, storm,
+//                    flash, greenGlow, redBlink, door 0..1, sleep, chair, chairX, mess 0..1, blind 0..1, lights 0..1, lamp,
+//                    headphones, lowGfx, glitch. + .layers (front = blanket + gaming chair)
 //   deskClose(t, o)  close framing of the desk: big monitor + keyboard + hands area + Gary's bowl spot (same light opts)
-//   deskFace(t, o)   reverse shot from the monitor: the hero in his gaming chair lit by the screen (same light opts + glow)
-//   stairs(t, o)     side view, upstairs landing -> 12 steps -> downstairs hallway. o: time, skate, light, lowGfx, glitch
-//   kitchen(t, o)    sunny family kitchen. o: time 'morning'|'evening', panCake, stack, steam, coat, birds, frozen,
-//                    lowGfx, glitch, clock
+//   deskFace(t, o)   reverse shot from the monitor: the hero in his gaming chair lit by the screen (light opts + glow colour,
+//                    glowK, flicker). front = desk edge + keyboard
+//   stairs(t, o)     side view, upstairs landing -> 12 steps -> downstairs hallway. o: time, skate, heroDoor, lowGfx, glitch
+//   kitchen(t, o)    sunny family kitchen (Dad behind the island, table in front). o: time 'morning'|'evening', meal,
+//                    panCake, stack, steam, coat, birds, frozen + freezeAt, lowGfx, glitch, clock
 //   workshop(t, o)   Ivy's garage lab. o: time 'day'|'evening', soot, boom, poster, quiet, days, door 0..1, lowGfx
 //   gameScreen(t, o) -> fn(w, h): MEGA OBBY: 1000 STAGES. o: stage, falls, respawns, jump, fall, respawn, win, lava, hud
 //   obbyWorld(t, cam, o)  full-frame "inside the game" course over lava. o: lava, win, glitch, stage
@@ -428,7 +430,7 @@ function glitchBits(t, k, x0, y0, w, h, seed = 1) {
 // centre on the desk top). RIGHT: the gaming desk with a big monitor (screen box SPOTS.heroRoom.monitor.screen 470 x 264),
 // RGB keyboard, the red gaming chair seen from behind (layers.front), shelf, the door (far right).
 // Stand line y 990 (FLOOR.heroRoom, hero s .5). On the pad: hero s .5 at SPOTS.heroRoom.checkpoint.
-// opts: { time 'morning'|'day'|'night' (default 'day'), clock 'H:MM' (default '7:30'; false hides the hands... no: always shown),
+// opts: { time 'morning'|'day'|'night' (default 'day'), clock 'H:MM' or hours as a number (default '7:30'), headphones (default true),
 //   monitor (svg|fn(w,h) screen content; default off), monitorGlow 0..1 (light thrown by the screen, default 1 when monitor is set),
 //   storm 0..1 (storm sky, rain on the glass, wind in the curtains + tree), flash 0..1 (lightning: bolt + white flash in the room),
 //   greenGlow 0..1 (room lit green from the screen/checkpoint), redBlink 0..1 (red alarm light; blink it yourself),
@@ -1187,7 +1189,7 @@ function stairsLayers(t, o = {}) {
     m += P(`M1560 ${ST.floor} q4 -26 30 -24 l26 6 q6 6 0 18 Z M1604 ${ST.floor + 6} q4 -26 30 -24 l26 6 q6 6 0 18 Z`, O('#3DA8D8', 4));
     m += P(`M1910 ${ST.floor} L1904 ${ST.floor - 70} L1960 ${ST.floor - 70} L1954 ${ST.floor} Z`, O('#E8603C', 5)) + P(dC(1920, ST.floor - 110, 30) + dC(1950, ST.floor - 130, 30) + dC(1930, ST.floor - 160, 26), O('#5CB85A', 5));
   }
-  if (o.skate) { const s1 = stepAt(1); m += skateboard(s1.x, s1.y, 0.5, 0, tn); }
+  if (o.skate) { const s1 = stepAt(1); m += skateboard(s1.x, s1.y, 0.6, 0, tn); }
   const gl = glitchBits(t, b01(o.glitch), 0, 0, 1920, 900, 7);
   m += gl.bits;
   if (gl.dx) m = G(m, `translate(${f(gl.dx)} 0)`);
@@ -1196,7 +1198,7 @@ function stairsLayers(t, o = {}) {
   const fr = post(ST.x0 - 6, ST.land + 2, 150) + post(ST.x1 + 34, ST.floor + 2, 190);
   // light
   let light = '';
-  if (morn || time === 'day') light += P(dP([[rw.x - rw.r * 0.7, rw.y - rw.r * 0.7], [rw.x + rw.r * 0.7, rw.y + rw.r * 0.7], [1500, 1000], [900, 1000]]), { fill: 'url(#shBeam)', opacity: f(morn ? 0.32 : 0.2) });
+  if (morn || time === 'day') light += P(dP([[rw.x - rw.r * 0.7, rw.y - rw.r * 0.7], [rw.x + rw.r * 0.7, rw.y + rw.r * 0.7], [1500, 1000], [900, 1000]]), { fill: 'url(#shBeam)', opacity: f(morn ? 0.22 : 0.14) });
   if (nite) light += glow(1530, ST.floor - 30, 150, 'shGlowWarm', 0.8) + glow(320, ST.land - 40, 260, 'shGlowBlue', 0.35) + darkRing(900, 560, 700, 460, '#05081C', 0.4);
   return { bg: '', mid: m, front: fr, fg: '', light };
 }
@@ -1725,7 +1727,6 @@ function streetLayers(t, cam = {}, o = {}) {
   const X0 = v1.x0 - 400, X1 = v1.x1 + 400;
   let m = '';
   // yards (lawn) from far up down to the fence line
-  m += P(dP([[X0, -800], [X1, -800], ...profile(X0, X1, -55).reverse()]).replace(/^M[^L]+L[^L]+L/, (s0) => s0), { fill: 'none' });
   m += P(bandBetween(X0, X1, -420, -55), { fill: tnB.c(sunset ? '#86AE58' : '#6CCB5F') }) + (tnB.detail > 0 ? P(bandBetween(X0, X1, -420, -55), { fill: 'url(#shLawn)', opacity: f(tnB.detail) }) : '');
   // houses
   const HOUSES = [
@@ -2100,7 +2101,7 @@ const SPOTS = {
     desk: { x0: HR.desk.x0, x1: HR.desk.x1, top: HR.desk.top },
     monitor: { x: HR.mon.cx, y: HR.desk.top, screen: { cx: HR.mon.cx, cy: HR.mon.cy, w: HR.mon.w, h: HR.mon.h } },
     chair: { x: HR.chair.x, seat: HR.chair.seat, s: 0.42 },
-    door: { x0: HR.door.x0, x1: HR.door.x1, top: HR.door.y0, knob: { x: HR.door.x0 + 22, y: 540 }, exit: { x: 1794, y: 800, s: 0.4 } },
+    door: { x0: HR.door.x0, x1: HR.door.x1, top: HR.door.y0, knob: { x: HR.door.x0 + 22, y: 540 }, exit: { x: 1794, y: 778, s: 0.38 } },
     bed: { x0: HR.bed.x0, x1: HR.bed.x1, top: HR.bed.top, pillow: { x: 180, y: HR.bed.top - 30 }, lie: { x: 330, y: 905, s: 0.45, rot: -90 }, sit: { hip: HR.bed.top + 8, feet: 880, x0: 300, x1: 600 } },
   },
 };
@@ -2113,7 +2114,7 @@ SPOTS.deskFace = { hero: { x: 960, seat: DF.seat, s: 0.9 }, deskTop: DF.top, han
 SPOTS.stairs = {
   s: 0.34, landing: { x0: XL, x1: ST.x0, y: ST.land, x: 470 }, floor: ST.floor, bottom: { x: 1630, y: ST.floor },
   steps: Array.from({ length: ST.n }, (_, i) => stepAt(i)), rise: ST.rise, run: ST.run, slope: ST.rise / ST.run,
-  skate: { ...stepAt(1), s: 0.5, rot: 0, step: 1 },
+  skate: { ...stepAt(1), s: 0.6, rot: 0, step: 1 },
   heroDoor: { x0: 230, x1: 410, top: ST.land - 420, x: 320 }, frontDoor: { x0: 1690, x1: 1880, top: ST.floor - 470 }, livingDoor: { x0: 146, x1: 374, top: 616 },
   rail: { x0: ST.x0 - 40, y0: ST.land - 150, x1: ST.x1 + 20, y1: ST.floor - ST.rise - 150 }, roundWindow: { x: 112, y: 150, r: 72 },
 };
