@@ -30,13 +30,14 @@
 //                    panCake, stack, steam, coat, birds, frozen + freezeAt, lowGfx, glitch, clock
 //   workshop(t, o)   Ivy's garage lab. o: time 'day'|'evening', soot, boom, poster, quiet, days, door 0..1, lowGfx
 //   gameScreen(t, o) -> fn(w, h): MEGA OBBY: 1000 STAGES. o: stage, falls, respawns, jump, fall, respawn, win, lava, hud
-//   obbyWorld(t, cam, o)  full-frame "inside the game" course over lava. o: lava, win, glitch, stage
+//   obbyWorld(t, cam, o)  full-frame "inside the game" course over lava. o: stage, lava, win, flag
 //   street(t, cam, o)     the family's street (house, trampoline, picket fence, power lines, bus stop corner, hill).
-//                    o: time 'morning'|'day'|'sunset', lowGfx, frozen, freezeAt, red, dog, bus, birds
+//                    o: time 'morning'|'day'|'sunset', lowGfx, frozen, freezeAt, red, dog, bus, birds, leaves, checkpoint
 //   town(t, cam, o)  wide town (water tower, school, rows of roofs, park, main street). o: time 'day'|'sunset'|'golden'|
 //                    'night', red, crack, frozen, freezeAt, lowGfx, gray, colorBack, colorFrom, colorTime, bus
-//   props: miniAvatar, obbyPlat, skateboard, pancake, schoolBus, streetDog, famHouse, suburbHouse, trampoline, willowbrook, shopFront, lampPost, bird, wallClock, redSky, lowPop
-//   helpers: toScreen, camTf, mix, tone, frameIn
+//   props: skateboard, pancake, schoolBus, streetDog, bird, wallClock, cloud, tree, pine, famHouse, suburbHouse, trampoline,
+//          willowbrook, shopFront, lampPost, miniAvatar, obbyPlat
+//   helpers: toScreen, camTf, vis, mix, tone, frameIn, glow, pool, darkRing, redSky, lowPop, makeSet
 'use strict';
 
 const S = require('../rig/svg');
@@ -2079,7 +2080,6 @@ function townLayers(t, cam = {}, o = {}) {
 const town = (t = 0, cam = {}, o = {}) => String(townLayers(t, cam, o));
 town.layers = townLayers;
 
-// @@INSERT@@
 // ================================================================= floor lines + anchors
 const FLOOR = {
   heroRoom: 990,
