@@ -1,0 +1,11268 @@
+{
+ "duration": 761.89,
+ "provisional": true,
+ "lines": [
+  {
+   "id": "01.0",
+   "take": "01",
+   "scene": "SC 01",
+   "idx": 0,
+   "speaker": "NARRATOR",
+   "raw": "[excited, hushed] What if every time you messed up... you could just... respawn?",
+   "text": "What if every time you messed up... you could just... respawn?",
+   "clip": [
+    0.0,
+    4.547
+   ],
+   "start": 0.35,
+   "end": 4.897,
+   "speechStart": 0.35,
+   "speechEnd": 4.897,
+   "words": [
+    [
+     "What",
+     0.35,
+     0.676
+    ],
+    [
+     "if",
+     0.713,
+     0.908
+    ],
+    [
+     "every",
+     0.945,
+     1.337
+    ],
+    [
+     "time",
+     1.374,
+     1.7
+    ],
+    [
+     "you",
+     1.737,
+     1.998
+    ],
+    [
+     "messed",
+     2.035,
+     2.492
+    ],
+    [
+     "up...",
+     2.528,
+     2.724
+    ],
+    [
+     "you",
+     3.023,
+     3.284
+    ],
+    [
+     "could",
+     3.321,
+     3.713
+    ],
+    [
+     "just...",
+     3.75,
+     4.075
+    ],
+    [
+     "respawn?",
+     4.375,
+     4.897
+    ]
+   ]
+  },
+  {
+   "id": "01.1",
+   "take": "01",
+   "scene": "SC 01",
+   "idx": 1,
+   "speaker": "NARRATOR",
+   "raw": "[playful] Fall off your bike? Respawn. Spill spaghetti on the principal? Respawn.",
+   "text": "Fall off your bike? Respawn. Spill spaghetti on the principal? Respawn.",
+   "clip": [
+    4.767,
+    10.26
+   ],
+   "start": 5.117,
+   "end": 10.61,
+   "speechStart": 5.117,
+   "speechEnd": 10.61,
+   "words": [
+    [
+     "Fall",
+     5.117,
+     5.443
+    ],
+    [
+     "off",
+     5.48,
+     5.741
+    ],
+    [
+     "your",
+     5.778,
+     6.104
+    ],
+    [
+     "bike?",
+     6.141,
+     6.467
+    ],
+    [
+     "Respawn.",
+     6.733,
+     7.256
+    ],
+    [
+     "Spill",
+     7.522,
+     7.913
+    ],
+    [
+     "spaghetti",
+     7.95,
+     8.603
+    ],
+    [
+     "on",
+     8.64,
+     8.835
+    ],
+    [
+     "the",
+     8.872,
+     9.133
+    ],
+    [
+     "principal?",
+     9.169,
+     9.822
+    ],
+    [
+     "Respawn.",
+     10.089,
+     10.61
+    ]
+   ]
+  },
+  {
+   "id": "01.2",
+   "take": "01",
+   "scene": "SC 01",
+   "idx": 2,
+   "speaker": "NARRATOR",
+   "raw": "[fast, playful] Get hit in the face with a dodgeball? Respawn... and catch it this time.",
+   "text": "Get hit in the face with a dodgeball? Respawn... and catch it this time.",
+   "clip": [
+    10.48,
+    15.887
+   ],
+   "start": 10.83,
+   "end": 16.237,
+   "speechStart": 10.83,
+   "speechEnd": 16.237,
+   "words": [
+    [
+     "Get",
+     10.83,
+     11.091
+    ],
+    [
+     "hit",
+     11.128,
+     11.388
+    ],
+    [
+     "in",
+     11.425,
+     11.621
+    ],
+    [
+     "the",
+     11.658,
+     11.919
+    ],
+    [
+     "face",
+     11.956,
+     12.282
+    ],
+    [
+     "with",
+     12.319,
+     12.645
+    ],
+    [
+     "a",
+     12.682,
+     12.813
+    ],
+    [
+     "dodgeball?",
+     12.85,
+     13.502
+    ],
+    [
+     "Respawn...",
+     13.768,
+     14.29
+    ],
+    [
+     "and",
+     14.59,
+     14.85
+    ],
+    [
+     "catch",
+     14.887,
+     15.278
+    ],
+    [
+     "it",
+     15.315,
+     15.511
+    ],
+    [
+     "this",
+     15.548,
+     15.875
+    ],
+    [
+     "time.",
+     15.912,
+     16.237
+    ]
+   ]
+  },
+  {
+   "id": "01.3",
+   "take": "01",
+   "scene": "SC 01",
+   "idx": 3,
+   "speaker": "YOU",
+   "raw": "[cocky] Easy. Real life is just an obby... with checkpoints.",
+   "text": "Easy. Real life is just an obby... with checkpoints.",
+   "clip": [
+    16.067,
+    19.985
+   ],
+   "start": 16.417,
+   "end": 20.335,
+   "speechStart": 16.417,
+   "speechEnd": 20.335,
+   "words": [
+    [
+     "Easy.",
+     16.417,
+     16.743
+    ],
+    [
+     "Real",
+     17.01,
+     17.335
+    ],
+    [
+     "life",
+     17.372,
+     17.699
+    ],
+    [
+     "is",
+     17.736,
+     17.932
+    ],
+    [
+     "just",
+     17.968,
+     18.295
+    ],
+    [
+     "an",
+     18.332,
+     18.527
+    ],
+    [
+     "obby...",
+     18.564,
+     18.89
+    ],
+    [
+     "with",
+     19.189,
+     19.516
+    ],
+    [
+     "checkpoints.",
+     19.553,
+     20.335
+    ]
+   ]
+  },
+  {
+   "id": "01.4",
+   "take": "01",
+   "scene": "SC 01",
+   "idx": 4,
+   "speaker": "NARRATOR",
+   "raw": "[ominous] But what if you respawned... too many times?",
+   "text": "But what if you respawned... too many times?",
+   "clip": [
+    20.165,
+    23.361
+   ],
+   "start": 20.515,
+   "end": 23.711,
+   "speechStart": 20.515,
+   "speechEnd": 23.711,
+   "words": [
+    [
+     "But",
+     20.515,
+     20.776
+    ],
+    [
+     "what",
+     20.813,
+     21.139
+    ],
+    [
+     "if",
+     21.176,
+     21.372
+    ],
+    [
+     "you",
+     21.409,
+     21.67
+    ],
+    [
+     "respawned...",
+     21.706,
+     22.358
+    ],
+    [
+     "too",
+     22.658,
+     22.919
+    ],
+    [
+     "many",
+     22.955,
+     23.282
+    ],
+    [
+     "times?",
+     23.319,
+     23.711
+    ]
+   ]
+  },
+  {
+   "id": "01.5",
+   "take": "01",
+   "scene": "SC 01",
+   "idx": 5,
+   "speaker": "TIP",
+   "raw": "[glitching] T-TIP: Respawns used: nine thousand, nine hundred... and ninety-nine. [pause] That's... a lot.",
+   "text": "T-TIP: Respawns used: nine thousand, nine hundred... and ninety-nine. That's... a lot.",
+   "clip": [
+    23.541,
+    30.078
+   ],
+   "start": 23.891,
+   "end": 30.428,
+   "speechStart": 23.891,
+   "speechEnd": 30.428,
+   "words": [
+    [
+     "T-TIP:",
+     23.891,
+     24.266
+    ],
+    [
+     "Respawns",
+     24.303,
+     24.89
+    ],
+    [
+     "used:",
+     24.927,
+     25.253
+    ],
+    [
+     "nine",
+     25.29,
+     25.616
+    ],
+    [
+     "thousand,",
+     25.653,
+     26.24
+    ],
+    [
+     "nine",
+     26.392,
+     26.718
+    ],
+    [
+     "hundred...",
+     26.755,
+     27.277
+    ],
+    [
+     "and",
+     27.576,
+     27.837
+    ],
+    [
+     "ninety-nine.",
+     27.874,
+     28.591
+    ],
+    [
+     "That's...",
+     29.309,
+     29.701
+    ],
+    [
+     "a",
+     30.0,
+     30.13
+    ],
+    [
+     "lot.",
+     30.167,
+     30.428
+    ]
+   ]
+  },
+  {
+   "id": "01.6",
+   "take": "01",
+   "scene": "SC 01",
+   "idx": 6,
+   "speaker": "YOU",
+   "raw": "[panicked] Okay, okay! Maybe I respawned a LITTLE too much!",
+   "text": "Okay, okay! Maybe I respawned a LITTLE too much!",
+   "clip": [
+    30.258,
+    33.967
+   ],
+   "start": 30.608,
+   "end": 34.317,
+   "speechStart": 30.608,
+   "speechEnd": 34.317,
+   "words": [
+    [
+     "Okay,",
+     30.608,
+     30.934
+    ],
+    [
+     "okay!",
+     31.086,
+     31.412
+    ],
+    [
+     "Maybe",
+     31.679,
+     32.07
+    ],
+    [
+     "I",
+     32.107,
+     32.237
+    ],
+    [
+     "respawned",
+     32.274,
+     32.926
+    ],
+    [
+     "a",
+     32.963,
+     33.093
+    ],
+    [
+     "LITTLE",
+     33.13,
+     33.656
+    ],
+    [
+     "too",
+     33.693,
+     33.954
+    ],
+    [
+     "much!",
+     33.99,
+     34.317
+    ]
+   ]
+  },
+  {
+   "id": "01.7",
+   "take": "01",
+   "scene": "SC 01",
+   "idx": 7,
+   "speaker": "NARRATOR",
+   "raw": "[deadpan] Yeah. This needs some explaining. [pause] Let's go back... to the first checkpoint.",
+   "text": "Yeah. This needs some explaining. Let's go back... to the first checkpoint.",
+   "clip": [
+    34.147,
+    40.226
+   ],
+   "start": 34.497,
+   "end": 40.576,
+   "speechStart": 34.497,
+   "speechEnd": 40.576,
+   "words": [
+    [
+     "Yeah.",
+     34.497,
+     34.823
+    ],
+    [
+     "This",
+     35.09,
+     35.415
+    ],
+    [
+     "needs",
+     35.452,
+     35.844
+    ],
+    [
+     "some",
+     35.881,
+     36.208
+    ],
+    [
+     "explaining.",
+     36.244,
+     36.962
+    ],
+    [
+     "Let's",
+     37.679,
+     38.005
+    ],
+    [
+     "go",
+     38.042,
+     38.238
+    ],
+    [
+     "back...",
+     38.275,
+     38.601
+    ],
+    [
+     "to",
+     38.9,
+     39.096
+    ],
+    [
+     "the",
+     39.132,
+     39.394
+    ],
+    [
+     "first",
+     39.431,
+     39.822
+    ],
+    [
+     "checkpoint.",
+     39.859,
+     40.576
+    ]
+   ],
+   "beatAfter": 1.0
+  },
+  {
+   "id": "02a.0",
+   "take": "02a",
+   "scene": "SC 02",
+   "idx": 0,
+   "speaker": "NARRATOR",
+   "raw": "[storyteller] This is you. Twelve years old. Pretty smart. Pretty funny. [pause] And VERY scared of messing up.",
+   "text": "This is you. Twelve years old. Pretty smart. Pretty funny. And VERY scared of messing up.",
+   "clip": [
+    0.0,
+    7.516
+   ],
+   "start": 42.276,
+   "end": 49.792,
+   "speechStart": 42.276,
+   "speechEnd": 49.792,
+   "words": [
+    [
+     "This",
+     42.276,
+     42.602
+    ],
+    [
+     "is",
+     42.639,
+     42.834
+    ],
+    [
+     "you.",
+     42.871,
+     43.133
+    ],
+    [
+     "Twelve",
+     43.399,
+     43.855
+    ],
+    [
+     "years",
+     43.892,
+     44.284
+    ],
+    [
+     "old.",
+     44.321,
+     44.582
+    ],
+    [
+     "Pretty",
+     44.848,
+     45.305
+    ],
+    [
+     "smart.",
+     45.342,
+     45.733
+    ],
+    [
+     "Pretty",
+     46.0,
+     46.456
+    ],
+    [
+     "funny.",
+     46.493,
+     46.884
+    ],
+    [
+     "And",
+     47.602,
+     47.863
+    ],
+    [
+     "VERY",
+     47.9,
+     48.275
+    ],
+    [
+     "scared",
+     48.312,
+     48.769
+    ],
+    [
+     "of",
+     48.806,
+     49.001
+    ],
+    [
+     "messing",
+     49.038,
+     49.56
+    ],
+    [
+     "up.",
+     49.597,
+     49.792
+    ]
+   ]
+  },
+  {
+   "id": "02a.1",
+   "take": "02a",
+   "scene": "SC 02",
+   "idx": 1,
+   "speaker": "TEACHER",
+   "raw": "[bored] Anyone? Seven times eight?",
+   "text": "Anyone? Seven times eight?",
+   "clip": [
+    7.696,
+    9.667
+   ],
+   "start": 49.972,
+   "end": 51.943,
+   "speechStart": 49.972,
+   "speechEnd": 51.943,
+   "words": [
+    [
+     "Anyone?",
+     49.972,
+     50.429
+    ],
+    [
+     "Seven",
+     50.695,
+     51.086
+    ],
+    [
+     "times",
+     51.123,
+     51.514
+    ],
+    [
+     "eight?",
+     51.551,
+     51.943
+    ]
+   ]
+  },
+  {
+   "id": "02a.2",
+   "take": "02a",
+   "scene": "SC 02",
+   "idx": 2,
+   "speaker": "YOU",
+   "raw": "[whispering to himself] Fifty-six. [pause] It's fifty-six. [pause] ...But what if it's not?",
+   "text": "Fifty-six. It's fifty-six. ...But what if it's not?",
+   "clip": [
+    9.847,
+    14.206
+   ],
+   "start": 52.123,
+   "end": 56.482,
+   "speechStart": 52.123,
+   "speechEnd": 56.482,
+   "words": [
+    [
+     "Fifty-six.",
+     52.123,
+     52.71
+    ],
+    [
+     "It's",
+     53.428,
+     53.688
+    ],
+    [
+     "fifty-six.",
+     53.725,
+     54.312
+    ],
+    [
+     "...But",
+     55.03,
+     55.291
+    ],
+    [
+     "what",
+     55.328,
+     55.654
+    ],
+    [
+     "if",
+     55.691,
+     55.887
+    ],
+    [
+     "it's",
+     55.924,
+     56.184
+    ],
+    [
+     "not?",
+     56.221,
+     56.482
+    ]
+   ]
+  },
+  {
+   "id": "02a.3",
+   "take": "02a",
+   "scene": "SC 02",
+   "idx": 3,
+   "speaker": "NARRATOR",
+   "raw": "You always know the answer. You just never say it. [pause] Because what if you're wrong?",
+   "text": "You always know the answer. You just never say it. Because what if you're wrong?",
+   "clip": [
+    14.386,
+    20.835
+   ],
+   "start": 56.662,
+   "end": 63.111,
+   "speechStart": 56.662,
+   "speechEnd": 63.111,
+   "words": [
+    [
+     "You",
+     56.662,
+     56.923
+    ],
+    [
+     "always",
+     56.96,
+     57.416
+    ],
+    [
+     "know",
+     57.453,
+     57.78
+    ],
+    [
+     "the",
+     57.817,
+     58.077
+    ],
+    [
+     "answer.",
+     58.114,
+     58.571
+    ],
+    [
+     "You",
+     58.837,
+     59.098
+    ],
+    [
+     "just",
+     59.135,
+     59.461
+    ],
+    [
+     "never",
+     59.498,
+     59.89
+    ],
+    [
+     "say",
+     59.926,
+     60.187
+    ],
+    [
+     "it.",
+     60.224,
+     60.42
+    ],
+    [
+     "Because",
+     61.138,
+     61.659
+    ],
+    [
+     "what",
+     61.696,
+     62.022
+    ],
+    [
+     "if",
+     62.059,
+     62.255
+    ],
+    [
+     "you're",
+     62.292,
+     62.683
+    ],
+    [
+     "wrong?",
+     62.72,
+     63.111
+    ]
+   ]
+  },
+  {
+   "id": "02a.4",
+   "take": "02a",
+   "scene": "SC 02",
+   "idx": 4,
+   "speaker": "NARRATOR",
+   "raw": "[deadpan] It was fifty-six.",
+   "text": "It was fifty-six.",
+   "clip": [
+    21.055,
+    22.173
+   ],
+   "start": 63.331,
+   "end": 64.449,
+   "speechStart": 63.331,
+   "speechEnd": 64.449,
+   "words": [
+    [
+     "It",
+     63.331,
+     63.527
+    ],
+    [
+     "was",
+     63.564,
+     63.825
+    ],
+    [
+     "fifty-six.",
+     63.862,
+     64.449
+    ]
+   ]
+  },
+  {
+   "id": "02a.5",
+   "take": "02a",
+   "scene": "SC 02",
+   "idx": 5,
+   "speaker": "NARRATOR",
+   "raw": "But in games? In games, you're fearless. [pause] Because in a game, when you fall... you just respawn.",
+   "text": "But in games? In games, you're fearless. Because in a game, when you fall... you just respawn.",
+   "clip": [
+    22.393,
+    29.995
+   ],
+   "start": 64.669,
+   "end": 72.271,
+   "speechStart": 64.669,
+   "speechEnd": 72.271,
+   "words": [
+    [
+     "But",
+     64.669,
+     64.93
+    ],
+    [
+     "in",
+     64.967,
+     65.163
+    ],
+    [
+     "games?",
+     65.2,
+     65.591
+    ],
+    [
+     "In",
+     65.857,
+     66.053
+    ],
+    [
+     "games,",
+     66.09,
+     66.481
+    ],
+    [
+     "you're",
+     66.633,
+     67.024
+    ],
+    [
+     "fearless.",
+     67.061,
+     67.648
+    ],
+    [
+     "Because",
+     68.366,
+     68.888
+    ],
+    [
+     "in",
+     68.925,
+     69.12
+    ],
+    [
+     "a",
+     69.157,
+     69.287
+    ],
+    [
+     "game,",
+     69.324,
+     69.65
+    ],
+    [
+     "when",
+     69.802,
+     70.129
+    ],
+    [
+     "you",
+     70.165,
+     70.426
+    ],
+    [
+     "fall...",
+     70.463,
+     70.789
+    ],
+    [
+     "you",
+     71.089,
+     71.35
+    ],
+    [
+     "just",
+     71.386,
+     71.713
+    ],
+    [
+     "respawn.",
+     71.75,
+     72.271
+    ]
+   ]
+  },
+  {
+   "id": "02a.6",
+   "take": "02a",
+   "scene": "SC 02",
+   "idx": 6,
+   "speaker": "NARRATOR",
+   "raw": "[deadpan] Real life does not have that feature. [pause] You checked.",
+   "text": "Real life does not have that feature. You checked.",
+   "clip": [
+    30.215,
+    34.387
+   ],
+   "start": 72.491,
+   "end": 76.663,
+   "speechStart": 72.491,
+   "speechEnd": 76.663,
+   "words": [
+    [
+     "Real",
+     72.491,
+     72.817
+    ],
+    [
+     "life",
+     72.854,
+     73.181
+    ],
+    [
+     "does",
+     73.218,
+     73.543
+    ],
+    [
+     "not",
+     73.58,
+     73.841
+    ],
+    [
+     "have",
+     73.878,
+     74.204
+    ],
+    [
+     "that",
+     74.241,
+     74.567
+    ],
+    [
+     "feature.",
+     74.604,
+     75.126
+    ],
+    [
+     "You",
+     75.843,
+     76.105
+    ],
+    [
+     "checked.",
+     76.142,
+     76.663
+    ]
+   ]
+  },
+  {
+   "id": "02a.7",
+   "take": "02a",
+   "scene": "SC 02",
+   "idx": 7,
+   "speaker": "NARRATOR",
+   "raw": "At home, there's Dad. He makes pancakes every morning... and the same joke every morning.",
+   "text": "At home, there's Dad. He makes pancakes every morning... and the same joke every morning.",
+   "clip": [
+    34.607,
+    41.145
+   ],
+   "start": 76.883,
+   "end": 83.421,
+   "speechStart": 76.883,
+   "speechEnd": 83.421,
+   "words": [
+    [
+     "At",
+     76.883,
+     77.079
+    ],
+    [
+     "home,",
+     77.116,
+     77.441
+    ],
+    [
+     "there's",
+     77.593,
+     78.05
+    ],
+    [
+     "Dad.",
+     78.087,
+     78.348
+    ],
+    [
+     "He",
+     78.614,
+     78.81
+    ],
+    [
+     "makes",
+     78.847,
+     79.238
+    ],
+    [
+     "pancakes",
+     79.275,
+     79.862
+    ],
+    [
+     "every",
+     79.899,
+     80.291
+    ],
+    [
+     "morning...",
+     80.328,
+     80.849
+    ],
+    [
+     "and",
+     81.149,
+     81.409
+    ],
+    [
+     "the",
+     81.446,
+     81.707
+    ],
+    [
+     "same",
+     81.744,
+     82.07
+    ],
+    [
+     "joke",
+     82.107,
+     82.434
+    ],
+    [
+     "every",
+     82.47,
+     82.862
+    ],
+    [
+     "morning.",
+     82.899,
+     83.421
+    ]
+   ]
+  },
+  {
+   "id": "02a.8",
+   "take": "02a",
+   "scene": "SC 02",
+   "idx": 8,
+   "speaker": "DAD",
+   "raw": "[proud] Why did the pancake go to the doctor? [pause] Because it was feeling a little... FLAT!",
+   "text": "Why did the pancake go to the doctor? Because it was feeling a little... FLAT!",
+   "clip": [
+    41.325,
+    47.66
+   ],
+   "start": 83.601,
+   "end": 89.936,
+   "speechStart": 83.601,
+   "speechEnd": 89.936,
+   "words": [
+    [
+     "Why",
+     83.601,
+     83.862
+    ],
+    [
+     "did",
+     83.899,
+     84.159
+    ],
+    [
+     "the",
+     84.196,
+     84.458
+    ],
+    [
+     "pancake",
+     84.495,
+     85.016
+    ],
+    [
+     "go",
+     85.053,
+     85.249
+    ],
+    [
+     "to",
+     85.286,
+     85.481
+    ],
+    [
+     "the",
+     85.518,
+     85.78
+    ],
+    [
+     "doctor?",
+     85.817,
+     86.273
+    ],
+    [
+     "Because",
+     86.99,
+     87.512
+    ],
+    [
+     "it",
+     87.549,
+     87.744
+    ],
+    [
+     "was",
+     87.781,
+     88.043
+    ],
+    [
+     "feeling",
+     88.08,
+     88.601
+    ],
+    [
+     "a",
+     88.638,
+     88.769
+    ],
+    [
+     "little...",
+     88.806,
+     89.262
+    ],
+    [
+     "FLAT!",
+     89.562,
+     89.936
+    ]
+   ]
+  },
+  {
+   "id": "02a.9",
+   "take": "02a",
+   "scene": "SC 02",
+   "idx": 9,
+   "speaker": "NARRATOR",
+   "raw": "There's your little sister, Bea. She's six... and she has never told a lie in her life.",
+   "text": "There's your little sister, Bea. She's six... and she has never told a lie in her life.",
+   "clip": [
+    47.84,
+    54.256
+   ],
+   "start": 90.116,
+   "end": 96.532,
+   "speechStart": 90.116,
+   "speechEnd": 96.532,
+   "words": [
+    [
+     "There's",
+     90.116,
+     90.573
+    ],
+    [
+     "your",
+     90.61,
+     90.936
+    ],
+    [
+     "little",
+     90.973,
+     91.429
+    ],
+    [
+     "sister,",
+     91.466,
+     91.922
+    ],
+    [
+     "Bea.",
+     92.074,
+     92.336
+    ],
+    [
+     "She's",
+     92.602,
+     92.928
+    ],
+    [
+     "six...",
+     92.965,
+     93.225
+    ],
+    [
+     "and",
+     93.525,
+     93.786
+    ],
+    [
+     "she",
+     93.823,
+     94.084
+    ],
+    [
+     "has",
+     94.121,
+     94.382
+    ],
+    [
+     "never",
+     94.419,
+     94.81
+    ],
+    [
+     "told",
+     94.847,
+     95.173
+    ],
+    [
+     "a",
+     95.21,
+     95.34
+    ],
+    [
+     "lie",
+     95.377,
+     95.638
+    ],
+    [
+     "in",
+     95.675,
+     95.871
+    ],
+    [
+     "her",
+     95.908,
+     96.168
+    ],
+    [
+     "life.",
+     96.205,
+     96.532
+    ]
+   ]
+  },
+  {
+   "id": "02a.10",
+   "take": "02a",
+   "scene": "SC 02",
+   "idx": 10,
+   "speaker": "BEA",
+   "raw": "[tiny voice, honest] Your hair looks like a mushroom. [pause] A sad mushroom.",
+   "text": "Your hair looks like a mushroom. A sad mushroom.",
+   "clip": [
+    54.436,
+    58.478
+   ],
+   "start": 96.712,
+   "end": 100.754,
+   "speechStart": 96.712,
+   "speechEnd": 100.754,
+   "words": [
+    [
+     "Your",
+     96.712,
+     97.038
+    ],
+    [
+     "hair",
+     97.075,
+     97.402
+    ],
+    [
+     "looks",
+     97.439,
+     97.83
+    ],
+    [
+     "like",
+     97.867,
+     98.193
+    ],
+    [
+     "a",
+     98.23,
+     98.36
+    ],
+    [
+     "mushroom.",
+     98.397,
+     98.984
+    ],
+    [
+     "A",
+     99.702,
+     99.832
+    ],
+    [
+     "sad",
+     99.869,
+     100.13
+    ],
+    [
+     "mushroom.",
+     100.167,
+     100.754
+    ]
+   ]
+  },
+  {
+   "id": "02b.0",
+   "take": "02b",
+   "scene": "SC 02",
+   "idx": 11,
+   "speaker": "NARRATOR",
+   "raw": "[warmly] And there's Gary. Gary is a goldfish. [pause] Gary has seen things.",
+   "text": "And there's Gary. Gary is a goldfish. Gary has seen things.",
+   "clip": [
+    0.0,
+    4.932
+   ],
+   "start": 101.104,
+   "end": 106.036,
+   "speechStart": 101.104,
+   "speechEnd": 106.036,
+   "words": [
+    [
+     "And",
+     101.104,
+     101.365
+    ],
+    [
+     "there's",
+     101.402,
+     101.858
+    ],
+    [
+     "Gary.",
+     101.895,
+     102.222
+    ],
+    [
+     "Gary",
+     102.488,
+     102.815
+    ],
+    [
+     "is",
+     102.851,
+     103.047
+    ],
+    [
+     "a",
+     103.083,
+     103.214
+    ],
+    [
+     "goldfish.",
+     103.251,
+     103.838
+    ],
+    [
+     "Gary",
+     104.555,
+     104.882
+    ],
+    [
+     "has",
+     104.919,
+     105.179
+    ],
+    [
+     "seen",
+     105.216,
+     105.543
+    ],
+    [
+     "things.",
+     105.58,
+     106.036
+    ]
+   ]
+  },
+  {
+   "id": "02b.1",
+   "take": "02b",
+   "scene": "SC 02",
+   "idx": 12,
+   "speaker": "MOM",
+   "raw": "[warm, rushing] Bye, loves! Long shift! [pause] Remember, mistakes are how we learn!",
+   "text": "Bye, loves! Long shift! Remember, mistakes are how we learn!",
+   "clip": [
+    5.112,
+    10.237
+   ],
+   "start": 106.216,
+   "end": 111.341,
+   "speechStart": 106.216,
+   "speechEnd": 111.341,
+   "words": [
+    [
+     "Bye,",
+     106.216,
+     106.477
+    ],
+    [
+     "loves!",
+     106.628,
+     107.02
+    ],
+    [
+     "Long",
+     107.287,
+     107.612
+    ],
+    [
+     "shift!",
+     107.649,
+     108.041
+    ],
+    [
+     "Remember,",
+     108.759,
+     109.346
+    ],
+    [
+     "mistakes",
+     109.498,
+     110.084
+    ],
+    [
+     "are",
+     110.121,
+     110.382
+    ],
+    [
+     "how",
+     110.419,
+     110.68
+    ],
+    [
+     "we",
+     110.717,
+     110.913
+    ],
+    [
+     "learn!",
+     110.95,
+     111.341
+    ]
+   ]
+  },
+  {
+   "id": "02b.2",
+   "take": "02b",
+   "scene": "SC 02",
+   "idx": 13,
+   "speaker": "YOU",
+   "raw": "[mumbling] Mistakes are how we get laughed at.",
+   "text": "Mistakes are how we get laughed at.",
+   "clip": [
+    10.417,
+    12.921
+   ],
+   "start": 111.521,
+   "end": 114.025,
+   "speechStart": 111.521,
+   "speechEnd": 114.025,
+   "words": [
+    [
+     "Mistakes",
+     111.521,
+     112.108
+    ],
+    [
+     "are",
+     112.145,
+     112.406
+    ],
+    [
+     "how",
+     112.443,
+     112.703
+    ],
+    [
+     "we",
+     112.74,
+     112.936
+    ],
+    [
+     "get",
+     112.973,
+     113.234
+    ],
+    [
+     "laughed",
+     113.271,
+     113.793
+    ],
+    [
+     "at.",
+     113.83,
+     114.025
+    ]
+   ]
+  },
+  {
+   "id": "02b.3",
+   "take": "02b",
+   "scene": "SC 02",
+   "idx": 14,
+   "speaker": "NARRATOR",
+   "raw": "And then there's Ivy. Your best friend since kindergarten. She builds inventions. [pause] They explode. [pause] A lot.",
+   "text": "And then there's Ivy. Your best friend since kindergarten. She builds inventions. They explode. A lot.",
+   "clip": [
+    13.101,
+    21.802
+   ],
+   "start": 114.205,
+   "end": 122.906,
+   "speechStart": 114.205,
+   "speechEnd": 122.906,
+   "words": [
+    [
+     "And",
+     114.205,
+     114.466
+    ],
+    [
+     "then",
+     114.503,
+     114.829
+    ],
+    [
+     "there's",
+     114.866,
+     115.323
+    ],
+    [
+     "Ivy.",
+     115.36,
+     115.62
+    ],
+    [
+     "Your",
+     115.887,
+     116.213
+    ],
+    [
+     "best",
+     116.25,
+     116.576
+    ],
+    [
+     "friend",
+     116.613,
+     117.069
+    ],
+    [
+     "since",
+     117.106,
+     117.498
+    ],
+    [
+     "kindergarten.",
+     117.535,
+     118.383
+    ],
+    [
+     "She",
+     118.649,
+     118.91
+    ],
+    [
+     "builds",
+     118.947,
+     119.404
+    ],
+    [
+     "inventions.",
+     119.441,
+     120.158
+    ],
+    [
+     "They",
+     120.876,
+     121.202
+    ],
+    [
+     "explode.",
+     121.239,
+     121.76
+    ],
+    [
+     "A",
+     122.478,
+     122.608
+    ],
+    [
+     "lot.",
+     122.645,
+     122.906
+    ]
+   ]
+  },
+  {
+   "id": "02b.4",
+   "take": "02b",
+   "scene": "SC 02",
+   "idx": 15,
+   "speaker": "IVY",
+   "raw": "[delighted, coughing] Fail number three hundred and twelve! Rocket sneakers! [pause] Lesson learned: never wear rocket sneakers... indoors.",
+   "text": "Fail number three hundred and twelve! Rocket sneakers! Lesson learned: never wear rocket sneakers... indoors.",
+   "clip": [
+    21.982,
+    30.39
+   ],
+   "start": 123.086,
+   "end": 131.494,
+   "speechStart": 123.086,
+   "speechEnd": 131.494,
+   "words": [
+    [
+     "Fail",
+     123.086,
+     123.412
+    ],
+    [
+     "number",
+     123.449,
+     123.906
+    ],
+    [
+     "three",
+     123.943,
+     124.334
+    ],
+    [
+     "hundred",
+     124.371,
+     124.892
+    ],
+    [
+     "and",
+     124.929,
+     125.191
+    ],
+    [
+     "twelve!",
+     125.228,
+     125.684
+    ],
+    [
+     "Rocket",
+     125.95,
+     126.407
+    ],
+    [
+     "sneakers!",
+     126.444,
+     127.031
+    ],
+    [
+     "Lesson",
+     127.749,
+     128.205
+    ],
+    [
+     "learned:",
+     128.242,
+     128.764
+    ],
+    [
+     "never",
+     128.801,
+     129.193
+    ],
+    [
+     "wear",
+     129.229,
+     129.555
+    ],
+    [
+     "rocket",
+     129.592,
+     130.049
+    ],
+    [
+     "sneakers...",
+     130.086,
+     130.673
+    ],
+    [
+     "indoors.",
+     130.972,
+     131.494
+    ]
+   ]
+  },
+  {
+   "id": "02b.5",
+   "take": "02b",
+   "scene": "SC 02",
+   "idx": 16,
+   "speaker": "YOU",
+   "raw": "[amazed] How are you HAPPY about this?",
+   "text": "How are you HAPPY about this?",
+   "clip": [
+    30.57,
+    32.705
+   ],
+   "start": 131.674,
+   "end": 133.809,
+   "speechStart": 131.674,
+   "speechEnd": 133.809,
+   "words": [
+    [
+     "How",
+     131.674,
+     131.935
+    ],
+    [
+     "are",
+     131.972,
+     132.232
+    ],
+    [
+     "you",
+     132.269,
+     132.531
+    ],
+    [
+     "HAPPY",
+     132.568,
+     133.017
+    ],
+    [
+     "about",
+     133.054,
+     133.446
+    ],
+    [
+     "this?",
+     133.483,
+     133.809
+    ]
+   ]
+  },
+  {
+   "id": "02b.6",
+   "take": "02b",
+   "scene": "SC 02",
+   "idx": 17,
+   "speaker": "IVY",
+   "raw": "[cheerful] Because now I know one more way it doesn't work! [pause] Anyway! Big news!",
+   "text": "Because now I know one more way it doesn't work! Anyway! Big news!",
+   "clip": [
+    32.885,
+    38.348
+   ],
+   "start": 133.989,
+   "end": 139.452,
+   "speechStart": 133.989,
+   "speechEnd": 139.452,
+   "words": [
+    [
+     "Because",
+     133.989,
+     134.511
+    ],
+    [
+     "now",
+     134.547,
+     134.809
+    ],
+    [
+     "I",
+     134.846,
+     134.976
+    ],
+    [
+     "know",
+     135.013,
+     135.339
+    ],
+    [
+     "one",
+     135.376,
+     135.637
+    ],
+    [
+     "more",
+     135.674,
+     136.0
+    ],
+    [
+     "way",
+     136.037,
+     136.298
+    ],
+    [
+     "it",
+     136.335,
+     136.53
+    ],
+    [
+     "doesn't",
+     136.567,
+     137.024
+    ],
+    [
+     "work!",
+     137.061,
+     137.387
+    ],
+    [
+     "Anyway!",
+     138.105,
+     138.561
+    ],
+    [
+     "Big",
+     138.828,
+     139.089
+    ],
+    [
+     "news!",
+     139.125,
+     139.452
+    ]
+   ]
+  },
+  {
+   "id": "02b.7",
+   "take": "02b",
+   "scene": "SC 02",
+   "idx": 18,
+   "speaker": "IVY",
+   "raw": "[excited] I signed us up for the talent show! Friday! In front of the WHOLE school!",
+   "text": "I signed us up for the talent show! Friday! In front of the WHOLE school!",
+   "clip": [
+    38.568,
+    44.234
+   ],
+   "start": 139.672,
+   "end": 145.338,
+   "speechStart": 139.672,
+   "speechEnd": 145.338,
+   "words": [
+    [
+     "I",
+     139.672,
+     139.802
+    ],
+    [
+     "signed",
+     139.839,
+     140.296
+    ],
+    [
+     "us",
+     140.333,
+     140.529
+    ],
+    [
+     "up",
+     140.566,
+     140.761
+    ],
+    [
+     "for",
+     140.798,
+     141.059
+    ],
+    [
+     "the",
+     141.096,
+     141.357
+    ],
+    [
+     "talent",
+     141.394,
+     141.851
+    ],
+    [
+     "show!",
+     141.888,
+     142.213
+    ],
+    [
+     "Friday!",
+     142.48,
+     142.936
+    ],
+    [
+     "In",
+     143.203,
+     143.399
+    ],
+    [
+     "front",
+     143.436,
+     143.827
+    ],
+    [
+     "of",
+     143.864,
+     144.06
+    ],
+    [
+     "the",
+     144.097,
+     144.357
+    ],
+    [
+     "WHOLE",
+     144.394,
+     144.845
+    ],
+    [
+     "school!",
+     144.881,
+     145.338
+    ]
+   ]
+  },
+  {
+   "id": "02b.8",
+   "take": "02b",
+   "scene": "SC 02",
+   "idx": 19,
+   "speaker": "YOU",
+   "raw": "[horrified] The WHOLE school?! Ivy! What if I mess up?!",
+   "text": "The WHOLE school?! Ivy! What if I mess up?!",
+   "clip": [
+    44.414,
+    47.771
+   ],
+   "start": 145.518,
+   "end": 148.875,
+   "speechStart": 145.518,
+   "speechEnd": 148.875,
+   "words": [
+    [
+     "The",
+     145.518,
+     145.779
+    ],
+    [
+     "WHOLE",
+     145.816,
+     146.266
+    ],
+    [
+     "school?!",
+     146.303,
+     146.759
+    ],
+    [
+     "Ivy!",
+     147.026,
+     147.287
+    ],
+    [
+     "What",
+     147.553,
+     147.88
+    ],
+    [
+     "if",
+     147.917,
+     148.112
+    ],
+    [
+     "I",
+     148.149,
+     148.28
+    ],
+    [
+     "mess",
+     148.317,
+     148.642
+    ],
+    [
+     "up?!",
+     148.679,
+     148.875
+    ]
+   ]
+  },
+  {
+   "id": "02b.9",
+   "take": "02b",
+   "scene": "SC 02",
+   "idx": 20,
+   "speaker": "IVY",
+   "raw": "[shrugs, happy] Then you mess up! That's the fun part!",
+   "text": "Then you mess up! That's the fun part!",
+   "clip": [
+    47.951,
+    50.787
+   ],
+   "start": 149.055,
+   "end": 151.891,
+   "speechStart": 149.055,
+   "speechEnd": 151.891,
+   "words": [
+    [
+     "Then",
+     149.055,
+     149.381
+    ],
+    [
+     "you",
+     149.418,
+     149.679
+    ],
+    [
+     "mess",
+     149.716,
+     150.042
+    ],
+    [
+     "up!",
+     150.079,
+     150.274
+    ],
+    [
+     "That's",
+     150.541,
+     150.933
+    ],
+    [
+     "the",
+     150.97,
+     151.23
+    ],
+    [
+     "fun",
+     151.267,
+     151.528
+    ],
+    [
+     "part!",
+     151.565,
+     151.891
+    ]
+   ],
+   "beatAfter": 1.0
+  },
+  {
+   "id": "02b.10",
+   "take": "02b",
+   "scene": "SC 02",
+   "idx": 21,
+   "speaker": "NARRATOR",
+   "raw": "[deadpan] For you... it was not the fun part.",
+   "text": "For you... it was not the fun part.",
+   "clip": [
+    51.967,
+    54.575
+   ],
+   "start": 153.071,
+   "end": 155.679,
+   "speechStart": 153.071,
+   "speechEnd": 155.679,
+   "words": [
+    [
+     "For",
+     153.071,
+     153.332
+    ],
+    [
+     "you...",
+     153.369,
+     153.629
+    ],
+    [
+     "it",
+     153.929,
+     154.125
+    ],
+    [
+     "was",
+     154.162,
+     154.422
+    ],
+    [
+     "not",
+     154.459,
+     154.72
+    ],
+    [
+     "the",
+     154.757,
+     155.018
+    ],
+    [
+     "fun",
+     155.055,
+     155.316
+    ],
+    [
+     "part.",
+     155.353,
+     155.679
+    ]
+   ]
+  },
+  {
+   "id": "03.0",
+   "take": "03",
+   "scene": "SC 03",
+   "idx": 0,
+   "speaker": "NARRATOR",
+   "raw": "That night, you couldn't sleep. The talent show was in four days. [pause] So you went where you always go when real life gets scary.",
+   "text": "That night, you couldn't sleep. The talent show was in four days. So you went where you always go when real life gets scary.",
+   "clip": [
+    0.0,
+    9.701
+   ],
+   "start": 156.379,
+   "end": 166.08,
+   "speechStart": 156.379,
+   "speechEnd": 166.08,
+   "words": [
+    [
+     "That",
+     156.379,
+     156.705
+    ],
+    [
+     "night,",
+     156.742,
+     157.133
+    ],
+    [
+     "you",
+     157.285,
+     157.546
+    ],
+    [
+     "couldn't",
+     157.583,
+     158.105
+    ],
+    [
+     "sleep.",
+     158.142,
+     158.533
+    ],
+    [
+     "The",
+     158.8,
+     159.06
+    ],
+    [
+     "talent",
+     159.097,
+     159.554
+    ],
+    [
+     "show",
+     159.591,
+     159.917
+    ],
+    [
+     "was",
+     159.954,
+     160.215
+    ],
+    [
+     "in",
+     160.252,
+     160.448
+    ],
+    [
+     "four",
+     160.485,
+     160.81
+    ],
+    [
+     "days.",
+     160.847,
+     161.174
+    ],
+    [
+     "So",
+     161.891,
+     162.087
+    ],
+    [
+     "you",
+     162.124,
+     162.385
+    ],
+    [
+     "went",
+     162.422,
+     162.748
+    ],
+    [
+     "where",
+     162.785,
+     163.176
+    ],
+    [
+     "you",
+     163.213,
+     163.474
+    ],
+    [
+     "always",
+     163.511,
+     163.967
+    ],
+    [
+     "go",
+     164.004,
+     164.2
+    ],
+    [
+     "when",
+     164.237,
+     164.563
+    ],
+    [
+     "real",
+     164.6,
+     164.926
+    ],
+    [
+     "life",
+     164.963,
+     165.289
+    ],
+    [
+     "gets",
+     165.326,
+     165.652
+    ],
+    [
+     "scary.",
+     165.689,
+     166.08
+    ]
+   ]
+  },
+  {
+   "id": "03.1",
+   "take": "03",
+   "scene": "SC 03",
+   "idx": 1,
+   "speaker": "NARRATOR",
+   "raw": "Mega Obby. One thousand stages. [pause] You'd been climbing it for three months.",
+   "text": "Mega Obby. One thousand stages. You'd been climbing it for three months.",
+   "clip": [
+    9.921,
+    15.738
+   ],
+   "start": 166.3,
+   "end": 172.117,
+   "speechStart": 166.3,
+   "speechEnd": 172.117,
+   "words": [
+    [
+     "Mega",
+     166.3,
+     166.626
+    ],
+    [
+     "Obby.",
+     166.663,
+     166.99
+    ],
+    [
+     "One",
+     167.255,
+     167.517
+    ],
+    [
+     "thousand",
+     167.554,
+     168.141
+    ],
+    [
+     "stages.",
+     168.178,
+     168.635
+    ],
+    [
+     "You'd",
+     169.352,
+     169.678
+    ],
+    [
+     "been",
+     169.714,
+     170.041
+    ],
+    [
+     "climbing",
+     170.078,
+     170.665
+    ],
+    [
+     "it",
+     170.702,
+     170.898
+    ],
+    [
+     "for",
+     170.935,
+     171.195
+    ],
+    [
+     "three",
+     171.232,
+     171.623
+    ],
+    [
+     "months.",
+     171.66,
+     172.117
+    ]
+   ]
+  },
+  {
+   "id": "03.2",
+   "take": "03",
+   "scene": "SC 03",
+   "idx": 2,
+   "speaker": "NARRATOR",
+   "raw": "Four thousand, eight hundred and sixteen falls. [pause] And nobody laughed. Nobody even remembered. [pause] You just... respawned.",
+   "text": "Four thousand, eight hundred and sixteen falls. And nobody laughed. Nobody even remembered. You just... respawned.",
+   "clip": [
+    15.958,
+    25.459
+   ],
+   "start": 172.337,
+   "end": 181.838,
+   "speechStart": 172.337,
+   "speechEnd": 181.838,
+   "words": [
+    [
+     "Four",
+     172.337,
+     172.663
+    ],
+    [
+     "thousand,",
+     172.7,
+     173.287
+    ],
+    [
+     "eight",
+     173.439,
+     173.83
+    ],
+    [
+     "hundred",
+     173.867,
+     174.389
+    ],
+    [
+     "and",
+     174.426,
+     174.687
+    ],
+    [
+     "sixteen",
+     174.724,
+     175.246
+    ],
+    [
+     "falls.",
+     175.282,
+     175.674
+    ],
+    [
+     "And",
+     176.391,
+     176.652
+    ],
+    [
+     "nobody",
+     176.689,
+     177.145
+    ],
+    [
+     "laughed.",
+     177.182,
+     177.705
+    ],
+    [
+     "Nobody",
+     177.971,
+     178.428
+    ],
+    [
+     "even",
+     178.465,
+     178.79
+    ],
+    [
+     "remembered.",
+     178.827,
+     179.545
+    ],
+    [
+     "You",
+     180.262,
+     180.524
+    ],
+    [
+     "just...",
+     180.561,
+     180.886
+    ],
+    [
+     "respawned.",
+     181.186,
+     181.838
+    ]
+   ]
+  },
+  {
+   "id": "03.3",
+   "take": "03",
+   "scene": "SC 03",
+   "idx": 3,
+   "speaker": "YOU",
+   "raw": "[sighs] I wish real life had checkpoints.",
+   "text": "I wish real life had checkpoints.",
+   "clip": [
+    25.639,
+    27.976
+   ],
+   "start": 182.018,
+   "end": 184.355,
+   "speechStart": 182.018,
+   "speechEnd": 184.355,
+   "words": [
+    [
+     "I",
+     182.018,
+     182.148
+    ],
+    [
+     "wish",
+     182.185,
+     182.512
+    ],
+    [
+     "real",
+     182.549,
+     182.875
+    ],
+    [
+     "life",
+     182.912,
+     183.237
+    ],
+    [
+     "had",
+     183.274,
+     183.536
+    ],
+    [
+     "checkpoints.",
+     183.573,
+     184.355
+    ]
+   ]
+  },
+  {
+   "id": "03.4",
+   "take": "03",
+   "scene": "SC 03",
+   "idx": 4,
+   "speaker": "NARRATOR",
+   "raw": "Two in the morning. Stage nine hundred and ninety-nine. [pause] One jump left.",
+   "text": "Two in the morning. Stage nine hundred and ninety-nine. One jump left.",
+   "clip": [
+    28.156,
+    33.843
+   ],
+   "start": 184.535,
+   "end": 190.222,
+   "speechStart": 184.535,
+   "speechEnd": 190.222,
+   "words": [
+    [
+     "Two",
+     184.535,
+     184.796
+    ],
+    [
+     "in",
+     184.833,
+     185.029
+    ],
+    [
+     "the",
+     185.066,
+     185.326
+    ],
+    [
+     "morning.",
+     185.363,
+     185.885
+    ],
+    [
+     "Stage",
+     186.151,
+     186.543
+    ],
+    [
+     "nine",
+     186.58,
+     186.906
+    ],
+    [
+     "hundred",
+     186.943,
+     187.465
+    ],
+    [
+     "and",
+     187.502,
+     187.763
+    ],
+    [
+     "ninety-nine.",
+     187.799,
+     188.517
+    ],
+    [
+     "One",
+     189.234,
+     189.495
+    ],
+    [
+     "jump",
+     189.532,
+     189.858
+    ],
+    [
+     "left.",
+     189.895,
+     190.222
+    ]
+   ]
+  },
+  {
+   "id": "03.5",
+   "take": "03",
+   "scene": "SC 03",
+   "idx": 5,
+   "speaker": "YOU",
+   "raw": "[whispers, focused] Come on... come on... [pause] YES!",
+   "text": "Come on... come on... YES!",
+   "clip": [
+    34.023,
+    36.49
+   ],
+   "start": 190.402,
+   "end": 192.869,
+   "speechStart": 190.402,
+   "speechEnd": 192.869,
+   "words": [
+    [
+     "Come",
+     190.402,
+     190.728
+    ],
+    [
+     "on...",
+     190.765,
+     190.96
+    ],
+    [
+     "come",
+     191.26,
+     191.586
+    ],
+    [
+     "on...",
+     191.623,
+     191.819
+    ],
+    [
+     "YES!",
+     192.569,
+     192.869
+    ]
+   ]
+  },
+  {
+   "id": "03.6",
+   "take": "03",
+   "scene": "SC 03",
+   "idx": 6,
+   "speaker": "SYSTEM",
+   "raw": "[calm] Final checkpoint reached. [pause] Exporting... to real life.",
+   "text": "Final checkpoint reached. Exporting... to real life.",
+   "clip": [
+    36.67,
+    40.965
+   ],
+   "start": 193.049,
+   "end": 197.344,
+   "speechStart": 193.049,
+   "speechEnd": 197.344,
+   "words": [
+    [
+     "Final",
+     193.049,
+     193.44
+    ],
+    [
+     "checkpoint",
+     193.477,
+     194.195
+    ],
+    [
+     "reached.",
+     194.231,
+     194.754
+    ],
+    [
+     "Exporting...",
+     195.471,
+     196.123
+    ],
+    [
+     "to",
+     196.422,
+     196.618
+    ],
+    [
+     "real",
+     196.655,
+     196.982
+    ],
+    [
+     "life.",
+     197.019,
+     197.344
+    ]
+   ]
+  },
+  {
+   "id": "03.7",
+   "take": "03",
+   "scene": "SC 03",
+   "idx": 7,
+   "speaker": "YOU",
+   "raw": "[confused] Exporting to WHAT?",
+   "text": "Exporting to WHAT?",
+   "clip": [
+    41.145,
+    42.442
+   ],
+   "start": 197.524,
+   "end": 198.821,
+   "speechStart": 197.524,
+   "speechEnd": 198.821,
+   "words": [
+    [
+     "Exporting",
+     197.524,
+     198.177
+    ],
+    [
+     "to",
+     198.213,
+     198.409
+    ],
+    [
+     "WHAT?",
+     198.446,
+     198.821
+    ]
+   ]
+  },
+  {
+   "id": "03.8",
+   "take": "03",
+   "scene": "SC 03",
+   "idx": 8,
+   "speaker": "TIP",
+   "raw": "[bubbly, fast] Hiii! Welcome to Real Life! I'm Tip, your tutorial! [pause] TIP: Step on the checkpoint to save your progress!",
+   "text": "Hiii! Welcome to Real Life! I'm Tip, your tutorial! TIP: Step on the checkpoint to save your progress!",
+   "clip": [
+    42.622,
+    50.806
+   ],
+   "start": 199.001,
+   "end": 207.185,
+   "speechStart": 199.001,
+   "speechEnd": 207.185,
+   "words": [
+    [
+     "Hiii!",
+     199.001,
+     199.327
+    ],
+    [
+     "Welcome",
+     199.594,
+     200.115
+    ],
+    [
+     "to",
+     200.152,
+     200.348
+    ],
+    [
+     "Real",
+     200.385,
+     200.712
+    ],
+    [
+     "Life!",
+     200.748,
+     201.074
+    ],
+    [
+     "I'm",
+     201.34,
+     201.536
+    ],
+    [
+     "Tip,",
+     201.573,
+     201.834
+    ],
+    [
+     "your",
+     201.986,
+     202.312
+    ],
+    [
+     "tutorial!",
+     202.349,
+     202.936
+    ],
+    [
+     "TIP:",
+     203.654,
+     203.954
+    ],
+    [
+     "Step",
+     203.991,
+     204.317
+    ],
+    [
+     "on",
+     204.354,
+     204.549
+    ],
+    [
+     "the",
+     204.586,
+     204.847
+    ],
+    [
+     "checkpoint",
+     204.884,
+     205.601
+    ],
+    [
+     "to",
+     205.638,
+     205.834
+    ],
+    [
+     "save",
+     205.871,
+     206.197
+    ],
+    [
+     "your",
+     206.234,
+     206.561
+    ],
+    [
+     "progress!",
+     206.597,
+     207.185
+    ]
+   ]
+  },
+  {
+   "id": "03.9",
+   "take": "03",
+   "scene": "SC 03",
+   "idx": 9,
+   "speaker": "YOU",
+   "raw": "[backing away] You're a... talking pop-up.",
+   "text": "You're a... talking pop-up.",
+   "clip": [
+    50.986,
+    52.794
+   ],
+   "start": 207.365,
+   "end": 209.173,
+   "speechStart": 207.365,
+   "speechEnd": 209.173,
+   "words": [
+    [
+     "You're",
+     207.365,
+     207.756
+    ],
+    [
+     "a...",
+     207.793,
+     207.923
+    ],
+    [
+     "talking",
+     208.223,
+     208.745
+    ],
+    [
+     "pop-up.",
+     208.782,
+     209.173
+    ]
+   ]
+  },
+  {
+   "id": "03.10",
+   "take": "03",
+   "scene": "SC 03",
+   "idx": 10,
+   "speaker": "TIP",
+   "raw": "[proud] A HELPFUL talking pop-up!",
+   "text": "A HELPFUL talking pop-up!",
+   "clip": [
+    52.974,
+    54.729
+   ],
+   "start": 209.353,
+   "end": 211.108,
+   "speechStart": 209.353,
+   "speechEnd": 211.108,
+   "words": [
+    [
+     "A",
+     209.353,
+     209.483
+    ],
+    [
+     "HELPFUL",
+     209.52,
+     210.121
+    ],
+    [
+     "talking",
+     210.157,
+     210.679
+    ],
+    [
+     "pop-up!",
+     210.716,
+     211.108
+    ]
+   ]
+  },
+  {
+   "id": "03.11",
+   "take": "03",
+   "scene": "SC 03",
+   "idx": 11,
+   "speaker": "SYSTEM",
+   "raw": "Checkpoint saved.",
+   "text": "Checkpoint saved.",
+   "clip": [
+    54.909,
+    56.055
+   ],
+   "start": 211.288,
+   "end": 212.434,
+   "speechStart": 211.288,
+   "speechEnd": 212.434,
+   "words": [
+    [
+     "Checkpoint",
+     211.288,
+     212.006
+    ],
+    [
+     "saved.",
+     212.042,
+     212.434
+    ]
+   ],
+   "beatAfter": 1.0
+  },
+  {
+   "id": "03.12",
+   "take": "03",
+   "scene": "SC 03",
+   "idx": 12,
+   "speaker": "NARRATOR",
+   "raw": "Gary saw the whole thing. [pause] Gary told no one.",
+   "text": "Gary saw the whole thing. Gary told no one.",
+   "clip": [
+    57.235,
+    60.95
+   ],
+   "start": 213.614,
+   "end": 217.329,
+   "speechStart": 213.614,
+   "speechEnd": 217.329,
+   "words": [
+    [
+     "Gary",
+     213.614,
+     213.94
+    ],
+    [
+     "saw",
+     213.977,
+     214.238
+    ],
+    [
+     "the",
+     214.275,
+     214.536
+    ],
+    [
+     "whole",
+     214.573,
+     214.964
+    ],
+    [
+     "thing.",
+     215.001,
+     215.393
+    ],
+    [
+     "Gary",
+     216.11,
+     216.436
+    ],
+    [
+     "told",
+     216.473,
+     216.799
+    ],
+    [
+     "no",
+     216.836,
+     217.032
+    ],
+    [
+     "one.",
+     217.069,
+     217.329
+    ]
+   ]
+  },
+  {
+   "id": "04.0",
+   "take": "04",
+   "scene": "SC 04",
+   "idx": 0,
+   "speaker": "TIP",
+   "raw": "[cheerful] TIP: You can now respawn in real life! [pause] If you mess up, you go back to your last checkpoint. Time goes back too. [pause] And only YOU remember!",
+   "text": "TIP: You can now respawn in real life! If you mess up, you go back to your last checkpoint. Time goes back too. And only YOU remember!",
+   "clip": [
+    0.0,
+    11.158
+   ],
+   "start": 218.029,
+   "end": 229.187,
+   "speechStart": 218.029,
+   "speechEnd": 229.187,
+   "words": [
+    [
+     "TIP:",
+     218.029,
+     218.329
+    ],
+    [
+     "You",
+     218.366,
+     218.627
+    ],
+    [
+     "can",
+     218.664,
+     218.924
+    ],
+    [
+     "now",
+     218.961,
+     219.223
+    ],
+    [
+     "respawn",
+     219.26,
+     219.781
+    ],
+    [
+     "in",
+     219.818,
+     220.014
+    ],
+    [
+     "real",
+     220.051,
+     220.377
+    ],
+    [
+     "life!",
+     220.414,
+     220.74
+    ],
+    [
+     "If",
+     221.457,
+     221.653
+    ],
+    [
+     "you",
+     221.69,
+     221.951
+    ],
+    [
+     "mess",
+     221.988,
+     222.314
+    ],
+    [
+     "up,",
+     222.351,
+     222.546
+    ],
+    [
+     "you",
+     222.698,
+     222.96
+    ],
+    [
+     "go",
+     222.997,
+     223.192
+    ],
+    [
+     "back",
+     223.229,
+     223.555
+    ],
+    [
+     "to",
+     223.592,
+     223.788
+    ],
+    [
+     "your",
+     223.825,
+     224.15
+    ],
+    [
+     "last",
+     224.187,
+     224.514
+    ],
+    [
+     "checkpoint.",
+     224.55,
+     225.268
+    ],
+    [
+     "Time",
+     225.534,
+     225.861
+    ],
+    [
+     "goes",
+     225.898,
+     226.224
+    ],
+    [
+     "back",
+     226.261,
+     226.587
+    ],
+    [
+     "too.",
+     226.623,
+     226.885
+    ],
+    [
+     "And",
+     227.602,
+     227.863
+    ],
+    [
+     "only",
+     227.9,
+     228.227
+    ],
+    [
+     "YOU",
+     228.263,
+     228.563
+    ],
+    [
+     "remember!",
+     228.6,
+     229.187
+    ]
+   ]
+  },
+  {
+   "id": "04.1",
+   "take": "04",
+   "scene": "SC 04",
+   "idx": 1,
+   "speaker": "YOU",
+   "raw": "[skeptical] Yeah, right. That's\u2014",
+   "text": "Yeah, right. That's\u2014",
+   "clip": [
+    11.338,
+    12.865
+   ],
+   "start": 229.367,
+   "end": 230.894,
+   "speechStart": 229.367,
+   "speechEnd": 230.894,
+   "words": [
+    [
+     "Yeah,",
+     229.367,
+     229.693
+    ],
+    [
+     "right.",
+     229.845,
+     230.236
+    ],
+    [
+     "That's\u2014",
+     230.503,
+     230.894
+    ]
+   ]
+  },
+  {
+   "id": "04.2",
+   "take": "04",
+   "scene": "SC 04",
+   "idx": 2,
+   "speaker": "SYSTEM",
+   "raw": "[calm] Respawning in three... two... one.",
+   "text": "Respawning in three... two... one.",
+   "clip": [
+    13.045,
+    15.544
+   ],
+   "start": 231.074,
+   "end": 233.573,
+   "speechStart": 231.074,
+   "speechEnd": 233.573,
+   "words": [
+    [
+     "Respawning",
+     231.074,
+     231.792
+    ],
+    [
+     "in",
+     231.828,
+     232.024
+    ],
+    [
+     "three...",
+     232.061,
+     232.452
+    ],
+    [
+     "two...",
+     232.752,
+     233.012
+    ],
+    [
+     "one.",
+     233.312,
+     233.573
+    ]
+   ]
+  },
+  {
+   "id": "04.3",
+   "take": "04",
+   "scene": "SC 04",
+   "idx": 3,
+   "speaker": "YOU",
+   "raw": "[stunned] I'm... back. In my room. [pause] And it's seven-thirty AGAIN!",
+   "text": "I'm... back. In my room. And it's seven-thirty AGAIN!",
+   "clip": [
+    15.724,
+    20.186
+   ],
+   "start": 233.753,
+   "end": 238.215,
+   "speechStart": 233.753,
+   "speechEnd": 238.215,
+   "words": [
+    [
+     "I'm...",
+     233.753,
+     233.949
+    ],
+    [
+     "back.",
+     234.248,
+     234.574
+    ],
+    [
+     "In",
+     234.84,
+     235.036
+    ],
+    [
+     "my",
+     235.073,
+     235.269
+    ],
+    [
+     "room.",
+     235.306,
+     235.632
+    ],
+    [
+     "And",
+     236.349,
+     236.611
+    ],
+    [
+     "it's",
+     236.648,
+     236.908
+    ],
+    [
+     "seven-thirty",
+     236.945,
+     237.728
+    ],
+    [
+     "AGAIN!",
+     237.764,
+     238.215
+    ]
+   ]
+  },
+  {
+   "id": "04.4",
+   "take": "04",
+   "scene": "SC 04",
+   "idx": 4,
+   "speaker": "TIP",
+   "raw": "[smug] Told ya!",
+   "text": "Told ya!",
+   "clip": [
+    20.366,
+    20.924
+   ],
+   "start": 238.395,
+   "end": 238.953,
+   "speechStart": 238.395,
+   "speechEnd": 238.953,
+   "words": [
+    [
+     "Told",
+     238.395,
+     238.721
+    ],
+    [
+     "ya!",
+     238.758,
+     238.953
+    ]
+   ]
+  },
+  {
+   "id": "04.5",
+   "take": "04",
+   "scene": "SC 04",
+   "idx": 5,
+   "speaker": "DAD",
+   "raw": "[proud] Why did the pancake go to the doctor?",
+   "text": "Why did the pancake go to the doctor?",
+   "clip": [
+    21.104,
+    23.776
+   ],
+   "start": 239.133,
+   "end": 241.805,
+   "speechStart": 239.133,
+   "speechEnd": 241.805,
+   "words": [
+    [
+     "Why",
+     239.133,
+     239.394
+    ],
+    [
+     "did",
+     239.431,
+     239.691
+    ],
+    [
+     "the",
+     239.728,
+     239.99
+    ],
+    [
+     "pancake",
+     240.027,
+     240.548
+    ],
+    [
+     "go",
+     240.585,
+     240.781
+    ],
+    [
+     "to",
+     240.818,
+     241.013
+    ],
+    [
+     "the",
+     241.05,
+     241.312
+    ],
+    [
+     "doctor?",
+     241.349,
+     241.805
+    ]
+   ]
+  },
+  {
+   "id": "04.6",
+   "take": "04",
+   "scene": "SC 04",
+   "idx": 6,
+   "speaker": "YOU",
+   "raw": "[quickly] Because it was feeling a little flat.",
+   "text": "Because it was feeling a little flat.",
+   "clip": [
+    23.956,
+    26.591
+   ],
+   "start": 241.985,
+   "end": 244.62,
+   "speechStart": 241.985,
+   "speechEnd": 244.62,
+   "words": [
+    [
+     "Because",
+     241.985,
+     242.507
+    ],
+    [
+     "it",
+     242.543,
+     242.739
+    ],
+    [
+     "was",
+     242.776,
+     243.037
+    ],
+    [
+     "feeling",
+     243.074,
+     243.596
+    ],
+    [
+     "a",
+     243.633,
+     243.764
+    ],
+    [
+     "little",
+     243.8,
+     244.257
+    ],
+    [
+     "flat.",
+     244.294,
+     244.62
+    ]
+   ],
+   "beatAfter": 1.0
+  },
+  {
+   "id": "04.7",
+   "take": "04",
+   "scene": "SC 04",
+   "idx": 7,
+   "speaker": "DAD",
+   "raw": "[shocked] How did you\u2014 That's a BRAND NEW joke!",
+   "text": "How did you\u2014 That's a BRAND NEW joke!",
+   "clip": [
+    27.771,
+    30.591
+   ],
+   "start": 245.8,
+   "end": 248.62,
+   "speechStart": 245.8,
+   "speechEnd": 248.62,
+   "words": [
+    [
+     "How",
+     245.8,
+     246.061
+    ],
+    [
+     "did",
+     246.098,
+     246.358
+    ],
+    [
+     "you\u2014",
+     246.395,
+     246.657
+    ],
+    [
+     "That's",
+     246.874,
+     247.265
+    ],
+    [
+     "a",
+     247.302,
+     247.433
+    ],
+    [
+     "BRAND",
+     247.47,
+     247.92
+    ],
+    [
+     "NEW",
+     247.957,
+     248.257
+    ],
+    [
+     "joke!",
+     248.294,
+     248.62
+    ]
+   ]
+  },
+  {
+   "id": "04.8",
+   "take": "04",
+   "scene": "SC 04",
+   "idx": 8,
+   "speaker": "TIP",
+   "raw": "TIP: You can move your checkpoint! Just carry the flag, and plant it wherever you want! [pause] TIP: And you can reset yourself anytime! Just open the menu!",
+   "text": "TIP: You can move your checkpoint! Just carry the flag, and plant it wherever you want! TIP: And you can reset yourself anytime! Just open the menu!",
+   "clip": [
+    30.771,
+    42.326
+   ],
+   "start": 248.8,
+   "end": 260.355,
+   "speechStart": 248.8,
+   "speechEnd": 260.355,
+   "words": [
+    [
+     "TIP:",
+     248.8,
+     249.1
+    ],
+    [
+     "You",
+     249.137,
+     249.398
+    ],
+    [
+     "can",
+     249.435,
+     249.695
+    ],
+    [
+     "move",
+     249.732,
+     250.059
+    ],
+    [
+     "your",
+     250.096,
+     250.422
+    ],
+    [
+     "checkpoint!",
+     250.459,
+     251.176
+    ],
+    [
+     "Just",
+     251.443,
+     251.769
+    ],
+    [
+     "carry",
+     251.806,
+     252.197
+    ],
+    [
+     "the",
+     252.234,
+     252.495
+    ],
+    [
+     "flag,",
+     252.532,
+     252.858
+    ],
+    [
+     "and",
+     253.01,
+     253.271
+    ],
+    [
+     "plant",
+     253.308,
+     253.699
+    ],
+    [
+     "it",
+     253.736,
+     253.932
+    ],
+    [
+     "wherever",
+     253.968,
+     254.556
+    ],
+    [
+     "you",
+     254.592,
+     254.853
+    ],
+    [
+     "want!",
+     254.89,
+     255.216
+    ],
+    [
+     "TIP:",
+     255.934,
+     256.234
+    ],
+    [
+     "And",
+     256.271,
+     256.532
+    ],
+    [
+     "you",
+     256.569,
+     256.829
+    ],
+    [
+     "can",
+     256.866,
+     257.127
+    ],
+    [
+     "reset",
+     257.164,
+     257.556
+    ],
+    [
+     "yourself",
+     257.593,
+     258.18
+    ],
+    [
+     "anytime!",
+     258.217,
+     258.738
+    ],
+    [
+     "Just",
+     259.005,
+     259.331
+    ],
+    [
+     "open",
+     259.368,
+     259.695
+    ],
+    [
+     "the",
+     259.731,
+     259.992
+    ],
+    [
+     "menu!",
+     260.029,
+     260.355
+    ]
+   ]
+  },
+  {
+   "id": "04.9",
+   "take": "04",
+   "scene": "SC 04",
+   "idx": 9,
+   "speaker": "YOU",
+   "raw": "[confused] What menu?",
+   "text": "What menu?",
+   "clip": [
+    42.506,
+    43.195
+   ],
+   "start": 260.535,
+   "end": 261.224,
+   "speechStart": 260.535,
+   "speechEnd": 261.224,
+   "words": [
+    [
+     "What",
+     260.535,
+     260.861
+    ],
+    [
+     "menu?",
+     260.898,
+     261.224
+    ]
+   ]
+  },
+  {
+   "id": "04.10",
+   "take": "04",
+   "scene": "SC 04",
+   "idx": 10,
+   "speaker": "NARRATOR",
+   "raw": "[amazed] Real life... had a pause menu.",
+   "text": "Real life... had a pause menu.",
+   "clip": [
+    43.375,
+    45.583
+   ],
+   "start": 261.404,
+   "end": 263.612,
+   "speechStart": 261.404,
+   "speechEnd": 263.612,
+   "words": [
+    [
+     "Real",
+     261.404,
+     261.73
+    ],
+    [
+     "life...",
+     261.767,
+     262.093
+    ],
+    [
+     "had",
+     262.392,
+     262.654
+    ],
+    [
+     "a",
+     262.691,
+     262.821
+    ],
+    [
+     "pause",
+     262.858,
+     263.249
+    ],
+    [
+     "menu.",
+     263.286,
+     263.612
+    ]
+   ]
+  },
+  {
+   "id": "04.11",
+   "take": "04",
+   "scene": "SC 04",
+   "idx": 11,
+   "speaker": "YOU",
+   "raw": "[nervous] Uh... what happens if I press \"Leave Game\"?",
+   "text": "Uh... what happens if I press \"Leave Game\"?",
+   "clip": [
+    45.763,
+    48.763
+   ],
+   "start": 263.792,
+   "end": 266.792,
+   "speechStart": 263.792,
+   "speechEnd": 266.792,
+   "words": [
+    [
+     "Uh...",
+     263.792,
+     263.988
+    ],
+    [
+     "what",
+     264.287,
+     264.613
+    ],
+    [
+     "happens",
+     264.65,
+     265.172
+    ],
+    [
+     "if",
+     265.209,
+     265.404
+    ],
+    [
+     "I",
+     265.441,
+     265.572
+    ],
+    [
+     "press",
+     265.609,
+     266.0
+    ],
+    [
+     "\"Leave",
+     266.037,
+     266.428
+    ],
+    [
+     "Game\"?",
+     266.465,
+     266.792
+    ]
+   ]
+  },
+  {
+   "id": "04.12",
+   "take": "04",
+   "scene": "SC 04",
+   "idx": 12,
+   "speaker": "TIP",
+   "raw": "[very quickly] TIP: Don't press \"Leave Game.\"",
+   "text": "TIP: Don't press \"Leave Game.\"",
+   "clip": [
+    48.943,
+    50.826
+   ],
+   "start": 266.972,
+   "end": 268.855,
+   "speechStart": 266.972,
+   "speechEnd": 268.855,
+   "words": [
+    [
+     "TIP:",
+     266.972,
+     267.272
+    ],
+    [
+     "Don't",
+     267.309,
+     267.635
+    ],
+    [
+     "press",
+     267.672,
+     268.063
+    ],
+    [
+     "\"Leave",
+     268.1,
+     268.491
+    ],
+    [
+     "Game.\"",
+     268.528,
+     268.855
+    ]
+   ]
+  },
+  {
+   "id": "04.13",
+   "take": "04",
+   "scene": "SC 04",
+   "idx": 13,
+   "speaker": "YOU",
+   "raw": "[singing badly, opera] Ooooh... I am the KIIING... of the breakfaaast!",
+   "text": "Ooooh... I am the KIIING... of the breakfaaast!",
+   "clip": [
+    51.006,
+    54.532
+   ],
+   "start": 269.035,
+   "end": 272.561,
+   "speechStart": 269.035,
+   "speechEnd": 272.561,
+   "words": [
+    [
+     "Ooooh...",
+     269.035,
+     269.426
+    ],
+    [
+     "I",
+     269.725,
+     269.856
+    ],
+    [
+     "am",
+     269.893,
+     270.089
+    ],
+    [
+     "the",
+     270.126,
+     270.386
+    ],
+    [
+     "KIIING...",
+     270.423,
+     270.949
+    ],
+    [
+     "of",
+     271.248,
+     271.443
+    ],
+    [
+     "the",
+     271.48,
+     271.741
+    ],
+    [
+     "breakfaaast!",
+     271.778,
+     272.561
+    ]
+   ]
+  },
+  {
+   "id": "04.14",
+   "take": "04",
+   "scene": "SC 04",
+   "idx": 14,
+   "speaker": "BEA",
+   "raw": "[tiny voice, horrified] Make it stop.",
+   "text": "Make it stop.",
+   "clip": [
+    54.712,
+    55.634
+   ],
+   "start": 272.741,
+   "end": 273.663,
+   "speechStart": 272.741,
+   "speechEnd": 273.663,
+   "words": [
+    [
+     "Make",
+     272.741,
+     273.067
+    ],
+    [
+     "it",
+     273.104,
+     273.299
+    ],
+    [
+     "stop.",
+     273.336,
+     273.663
+    ]
+   ]
+  },
+  {
+   "id": "04.15",
+   "take": "04",
+   "scene": "SC 04",
+   "idx": 15,
+   "speaker": "NARRATOR",
+   "raw": "[delighted] And nobody remembered a thing.",
+   "text": "And nobody remembered a thing.",
+   "clip": [
+    55.814,
+    57.919
+   ],
+   "start": 273.843,
+   "end": 275.948,
+   "speechStart": 273.843,
+   "speechEnd": 275.948,
+   "words": [
+    [
+     "And",
+     273.843,
+     274.104
+    ],
+    [
+     "nobody",
+     274.141,
+     274.597
+    ],
+    [
+     "remembered",
+     274.634,
+     275.352
+    ],
+    [
+     "a",
+     275.389,
+     275.519
+    ],
+    [
+     "thing.",
+     275.556,
+     275.948
+    ]
+   ]
+  },
+  {
+   "id": "04.16",
+   "take": "04",
+   "scene": "SC 04",
+   "idx": 16,
+   "speaker": "BEA",
+   "raw": "[tiny voice] You're acting weird today. [pause] Weirder than normal.",
+   "text": "You're acting weird today. Weirder than normal.",
+   "clip": [
+    58.099,
+    61.937
+   ],
+   "start": 276.128,
+   "end": 279.966,
+   "speechStart": 276.128,
+   "speechEnd": 279.966,
+   "words": [
+    [
+     "You're",
+     276.128,
+     276.519
+    ],
+    [
+     "acting",
+     276.556,
+     277.013
+    ],
+    [
+     "weird",
+     277.05,
+     277.441
+    ],
+    [
+     "today.",
+     277.478,
+     277.87
+    ],
+    [
+     "Weirder",
+     278.587,
+     279.109
+    ],
+    [
+     "than",
+     279.146,
+     279.472
+    ],
+    [
+     "normal.",
+     279.509,
+     279.966
+    ]
+   ]
+  },
+  {
+   "id": "04.17",
+   "take": "04",
+   "scene": "SC 04",
+   "idx": 17,
+   "speaker": "YOU",
+   "raw": "[grinning] Bea... I think today is gonna be a GOOD day.",
+   "text": "Bea... I think today is gonna be a GOOD day.",
+   "clip": [
+    62.117,
+    65.435
+   ],
+   "start": 280.146,
+   "end": 283.464,
+   "speechStart": 280.146,
+   "speechEnd": 283.464,
+   "words": [
+    [
+     "Bea...",
+     280.146,
+     280.407
+    ],
+    [
+     "I",
+     280.706,
+     280.836
+    ],
+    [
+     "think",
+     280.873,
+     281.265
+    ],
+    [
+     "today",
+     281.302,
+     281.693
+    ],
+    [
+     "is",
+     281.73,
+     281.926
+    ],
+    [
+     "gonna",
+     281.963,
+     282.354
+    ],
+    [
+     "be",
+     282.391,
+     282.586
+    ],
+    [
+     "a",
+     282.623,
+     282.754
+    ],
+    [
+     "GOOD",
+     282.791,
+     283.166
+    ],
+    [
+     "day.",
+     283.203,
+     283.464
+    ]
+   ]
+  },
+  {
+   "id": "04.18",
+   "take": "04",
+   "scene": "SC 04",
+   "idx": 18,
+   "speaker": "NARRATOR",
+   "raw": "And it was. [pause] Because for the first time in your life... [pause] messing up didn't matter.",
+   "text": "And it was. Because for the first time in your life... messing up didn't matter.",
+   "clip": [
+    65.615,
+    72.418
+   ],
+   "start": 283.644,
+   "end": 290.447,
+   "speechStart": 283.644,
+   "speechEnd": 290.447,
+   "words": [
+    [
+     "And",
+     283.644,
+     283.905
+    ],
+    [
+     "it",
+     283.942,
+     284.138
+    ],
+    [
+     "was.",
+     284.175,
+     284.435
+    ],
+    [
+     "Because",
+     285.153,
+     285.674
+    ],
+    [
+     "for",
+     285.711,
+     285.973
+    ],
+    [
+     "the",
+     286.01,
+     286.27
+    ],
+    [
+     "first",
+     286.307,
+     286.699
+    ],
+    [
+     "time",
+     286.735,
+     287.062
+    ],
+    [
+     "in",
+     287.099,
+     287.295
+    ],
+    [
+     "your",
+     287.332,
+     287.657
+    ],
+    [
+     "life...",
+     287.694,
+     288.02
+    ],
+    [
+     "messing",
+     288.771,
+     289.292
+    ],
+    [
+     "up",
+     289.329,
+     289.525
+    ],
+    [
+     "didn't",
+     289.562,
+     289.953
+    ],
+    [
+     "matter.",
+     289.99,
+     290.447
+    ]
+   ]
+  },
+  {
+   "id": "05.0",
+   "take": "05",
+   "scene": "SC 05",
+   "idx": 0,
+   "speaker": "NARRATOR",
+   "raw": "So you took the checkpoint to school. In your backpack.",
+   "text": "So you took the checkpoint to school. In your backpack.",
+   "clip": [
+    0.0,
+    4.084
+   ],
+   "start": 291.147,
+   "end": 295.231,
+   "speechStart": 291.147,
+   "speechEnd": 295.231,
+   "words": [
+    [
+     "So",
+     291.147,
+     291.343
+    ],
+    [
+     "you",
+     291.38,
+     291.641
+    ],
+    [
+     "took",
+     291.678,
+     292.004
+    ],
+    [
+     "the",
+     292.041,
+     292.302
+    ],
+    [
+     "checkpoint",
+     292.338,
+     293.056
+    ],
+    [
+     "to",
+     293.093,
+     293.289
+    ],
+    [
+     "school.",
+     293.326,
+     293.782
+    ],
+    [
+     "In",
+     294.048,
+     294.244
+    ],
+    [
+     "your",
+     294.281,
+     294.607
+    ],
+    [
+     "backpack.",
+     294.644,
+     295.231
+    ]
+   ]
+  },
+  {
+   "id": "05.1",
+   "take": "05",
+   "scene": "SC 05",
+   "idx": 1,
+   "speaker": "SYSTEM",
+   "raw": "Checkpoint saved.",
+   "text": "Checkpoint saved.",
+   "clip": [
+    4.264,
+    5.41
+   ],
+   "start": 295.411,
+   "end": 296.557,
+   "speechStart": 295.411,
+   "speechEnd": 296.557,
+   "words": [
+    [
+     "Checkpoint",
+     295.411,
+     296.128
+    ],
+    [
+     "saved.",
+     296.165,
+     296.557
+    ]
+   ]
+  },
+  {
+   "id": "05.2",
+   "take": "05",
+   "scene": "SC 05",
+   "idx": 2,
+   "speaker": "NARRATOR",
+   "raw": "Skateboard trick? Attempt one. [pause] Attempt two. [pause] Attempt twenty-three.",
+   "text": "Skateboard trick? Attempt one. Attempt two. Attempt twenty-three.",
+   "clip": [
+    5.59,
+    11.419
+   ],
+   "start": 296.737,
+   "end": 302.566,
+   "speechStart": 296.737,
+   "speechEnd": 302.566,
+   "words": [
+    [
+     "Skateboard",
+     296.737,
+     297.454
+    ],
+    [
+     "trick?",
+     297.491,
+     297.883
+    ],
+    [
+     "Attempt",
+     298.149,
+     298.671
+    ],
+    [
+     "one.",
+     298.708,
+     298.969
+    ],
+    [
+     "Attempt",
+     299.687,
+     300.208
+    ],
+    [
+     "two.",
+     300.245,
+     300.507
+    ],
+    [
+     "Attempt",
+     301.224,
+     301.746
+    ],
+    [
+     "twenty-three.",
+     301.782,
+     302.566
+    ]
+   ],
+   "beatAfter": 1.5
+  },
+  {
+   "id": "05.3",
+   "take": "05",
+   "scene": "SC 05",
+   "idx": 3,
+   "speaker": "NARRATOR",
+   "raw": "Attempt fifty-seven...",
+   "text": "Attempt fifty-seven...",
+   "clip": [
+    13.139,
+    14.415
+   ],
+   "start": 304.286,
+   "end": 305.562,
+   "speechStart": 304.286,
+   "speechEnd": 305.562,
+   "words": [
+    [
+     "Attempt",
+     304.286,
+     304.808
+    ],
+    [
+     "fifty-seven...",
+     304.844,
+     305.562
+    ]
+   ]
+  },
+  {
+   "id": "05.4",
+   "take": "05",
+   "scene": "SC 05",
+   "idx": 4,
+   "speaker": "KID",
+   "raw": "[amazed] WHOA! Did you see that?! First try!",
+   "text": "WHOA! Did you see that?! First try!",
+   "clip": [
+    14.595,
+    17.412
+   ],
+   "start": 305.742,
+   "end": 308.559,
+   "speechStart": 305.742,
+   "speechEnd": 308.559,
+   "words": [
+    [
+     "WHOA!",
+     305.742,
+     306.117
+    ],
+    [
+     "Did",
+     306.383,
+     306.645
+    ],
+    [
+     "you",
+     306.682,
+     306.942
+    ],
+    [
+     "see",
+     306.979,
+     307.24
+    ],
+    [
+     "that?!",
+     307.277,
+     307.603
+    ],
+    [
+     "First",
+     307.87,
+     308.261
+    ],
+    [
+     "try!",
+     308.298,
+     308.559
+    ]
+   ]
+  },
+  {
+   "id": "05.5",
+   "take": "05",
+   "scene": "SC 05",
+   "idx": 5,
+   "speaker": "YOU",
+   "raw": "[smug] Yeah. First try.",
+   "text": "Yeah. First try.",
+   "clip": [
+    17.592,
+    18.874
+   ],
+   "start": 308.739,
+   "end": 310.021,
+   "speechStart": 308.739,
+   "speechEnd": 310.021,
+   "words": [
+    [
+     "Yeah.",
+     308.739,
+     309.065
+    ],
+    [
+     "First",
+     309.332,
+     309.723
+    ],
+    [
+     "try.",
+     309.76,
+     310.021
+    ]
+   ]
+  },
+  {
+   "id": "05.6",
+   "take": "05",
+   "scene": "SC 05",
+   "idx": 6,
+   "speaker": "TIP",
+   "raw": "[whispering] TIP: That was not first try.",
+   "text": "TIP: That was not first try.",
+   "clip": [
+    19.054,
+    21.039
+   ],
+   "start": 310.201,
+   "end": 312.186,
+   "speechStart": 310.201,
+   "speechEnd": 312.186,
+   "words": [
+    [
+     "TIP:",
+     310.201,
+     310.501
+    ],
+    [
+     "That",
+     310.538,
+     310.864
+    ],
+    [
+     "was",
+     310.901,
+     311.162
+    ],
+    [
+     "not",
+     311.199,
+     311.46
+    ],
+    [
+     "first",
+     311.497,
+     311.888
+    ],
+    [
+     "try.",
+     311.925,
+     312.186
+    ]
+   ]
+  },
+  {
+   "id": "05.7",
+   "take": "05",
+   "scene": "SC 05",
+   "idx": 7,
+   "speaker": "TEACHER",
+   "raw": "[bored] Pop quiz. Twenty questions. No talking.",
+   "text": "Pop quiz. Twenty questions. No talking.",
+   "clip": [
+    21.219,
+    24.276
+   ],
+   "start": 312.366,
+   "end": 315.423,
+   "speechStart": 312.366,
+   "speechEnd": 315.423,
+   "words": [
+    [
+     "Pop",
+     312.366,
+     312.627
+    ],
+    [
+     "quiz.",
+     312.664,
+     312.99
+    ],
+    [
+     "Twenty",
+     313.257,
+     313.713
+    ],
+    [
+     "questions.",
+     313.75,
+     314.402
+    ],
+    [
+     "No",
+     314.669,
+     314.865
+    ],
+    [
+     "talking.",
+     314.901,
+     315.423
+    ]
+   ]
+  },
+  {
+   "id": "05.8",
+   "take": "05",
+   "scene": "SC 05",
+   "idx": 8,
+   "speaker": "NARRATOR",
+   "raw": "A pop quiz? No problem. You read all the questions... [pause] and then you pressed reset.",
+   "text": "A pop quiz? No problem. You read all the questions... and then you pressed reset.",
+   "clip": [
+    24.456,
+    31.103
+   ],
+   "start": 315.603,
+   "end": 322.25,
+   "speechStart": 315.603,
+   "speechEnd": 322.25,
+   "words": [
+    [
+     "A",
+     315.603,
+     315.733
+    ],
+    [
+     "pop",
+     315.77,
+     316.031
+    ],
+    [
+     "quiz?",
+     316.068,
+     316.394
+    ],
+    [
+     "No",
+     316.661,
+     316.857
+    ],
+    [
+     "problem.",
+     316.894,
+     317.415
+    ],
+    [
+     "You",
+     317.682,
+     317.942
+    ],
+    [
+     "read",
+     317.979,
+     318.306
+    ],
+    [
+     "all",
+     318.343,
+     318.603
+    ],
+    [
+     "the",
+     318.64,
+     318.901
+    ],
+    [
+     "questions...",
+     318.938,
+     319.591
+    ],
+    [
+     "and",
+     320.341,
+     320.602
+    ],
+    [
+     "then",
+     320.639,
+     320.965
+    ],
+    [
+     "you",
+     321.002,
+     321.263
+    ],
+    [
+     "pressed",
+     321.3,
+     321.821
+    ],
+    [
+     "reset.",
+     321.858,
+     322.25
+    ]
+   ]
+  },
+  {
+   "id": "05.9",
+   "take": "05",
+   "scene": "SC 05",
+   "idx": 9,
+   "speaker": "TIP",
+   "raw": "[suspicious] TIP: That's... cheating.",
+   "text": "TIP: That's... cheating.",
+   "clip": [
+    31.283,
+    32.898
+   ],
+   "start": 322.43,
+   "end": 324.045,
+   "speechStart": 322.43,
+   "speechEnd": 324.045,
+   "words": [
+    [
+     "TIP:",
+     322.43,
+     322.73
+    ],
+    [
+     "That's...",
+     322.767,
+     323.158
+    ],
+    [
+     "cheating.",
+     323.457,
+     324.045
+    ]
+   ]
+  },
+  {
+   "id": "05.10",
+   "take": "05",
+   "scene": "SC 05",
+   "idx": 10,
+   "speaker": "NARRATOR",
+   "raw": "[deadpan] It was one hundred percent cheating. [pause] You got one hundred percent.",
+   "text": "It was one hundred percent cheating. You got one hundred percent.",
+   "clip": [
+    33.078,
+    38.302
+   ],
+   "start": 324.225,
+   "end": 329.449,
+   "speechStart": 324.225,
+   "speechEnd": 329.449,
+   "words": [
+    [
+     "It",
+     324.225,
+     324.421
+    ],
+    [
+     "was",
+     324.458,
+     324.719
+    ],
+    [
+     "one",
+     324.756,
+     325.016
+    ],
+    [
+     "hundred",
+     325.053,
+     325.575
+    ],
+    [
+     "percent",
+     325.612,
+     326.134
+    ],
+    [
+     "cheating.",
+     326.171,
+     326.758
+    ],
+    [
+     "You",
+     327.475,
+     327.736
+    ],
+    [
+     "got",
+     327.773,
+     328.034
+    ],
+    [
+     "one",
+     328.071,
+     328.332
+    ],
+    [
+     "hundred",
+     328.368,
+     328.891
+    ],
+    [
+     "percent.",
+     328.928,
+     329.449
+    ]
+   ]
+  },
+  {
+   "id": "05.11",
+   "take": "05",
+   "scene": "SC 05",
+   "idx": 11,
+   "speaker": "COACH",
+   "raw": "[loud] Dodgeball! Let's GO!",
+   "text": "Dodgeball! Let's GO!",
+   "clip": [
+    38.482,
+    39.989
+   ],
+   "start": 329.629,
+   "end": 331.136,
+   "speechStart": 329.629,
+   "speechEnd": 331.136,
+   "words": [
+    [
+     "Dodgeball!",
+     329.629,
+     330.282
+    ],
+    [
+     "Let's",
+     330.548,
+     330.874
+    ],
+    [
+     "GO!",
+     330.911,
+     331.136
+    ]
+   ]
+  },
+  {
+   "id": "05.12",
+   "take": "05",
+   "scene": "SC 05",
+   "idx": 12,
+   "speaker": "NARRATOR",
+   "raw": "Dodgeball? You'd already been hit by every single ball. [pause] So you knew where every single ball was going.",
+   "text": "Dodgeball? You'd already been hit by every single ball. So you knew where every single ball was going.",
+   "clip": [
+    40.169,
+    48.164
+   ],
+   "start": 331.316,
+   "end": 339.311,
+   "speechStart": 331.316,
+   "speechEnd": 339.311,
+   "words": [
+    [
+     "Dodgeball?",
+     331.316,
+     331.969
+    ],
+    [
+     "You'd",
+     332.235,
+     332.561
+    ],
+    [
+     "already",
+     332.598,
+     333.12
+    ],
+    [
+     "been",
+     333.157,
+     333.482
+    ],
+    [
+     "hit",
+     333.519,
+     333.781
+    ],
+    [
+     "by",
+     333.818,
+     334.013
+    ],
+    [
+     "every",
+     334.05,
+     334.442
+    ],
+    [
+     "single",
+     334.479,
+     334.935
+    ],
+    [
+     "ball.",
+     334.972,
+     335.298
+    ],
+    [
+     "So",
+     336.015,
+     336.211
+    ],
+    [
+     "you",
+     336.248,
+     336.509
+    ],
+    [
+     "knew",
+     336.546,
+     336.872
+    ],
+    [
+     "where",
+     336.909,
+     337.3
+    ],
+    [
+     "every",
+     337.337,
+     337.728
+    ],
+    [
+     "single",
+     337.765,
+     338.222
+    ],
+    [
+     "ball",
+     338.259,
+     338.585
+    ],
+    [
+     "was",
+     338.622,
+     338.883
+    ],
+    [
+     "going.",
+     338.92,
+     339.311
+    ]
+   ],
+   "beatAfter": 1.5
+  },
+  {
+   "id": "05.13",
+   "take": "05",
+   "scene": "SC 05",
+   "idx": 13,
+   "speaker": "COACH",
+   "raw": "[stunned] Kid... where have you BEEN all my life?!",
+   "text": "Kid... where have you BEEN all my life?!",
+   "clip": [
+    49.844,
+    52.762
+   ],
+   "start": 340.991,
+   "end": 343.909,
+   "speechStart": 340.991,
+   "speechEnd": 343.909,
+   "words": [
+    [
+     "Kid...",
+     340.991,
+     341.252
+    ],
+    [
+     "where",
+     341.551,
+     341.942
+    ],
+    [
+     "have",
+     341.979,
+     342.305
+    ],
+    [
+     "you",
+     342.342,
+     342.603
+    ],
+    [
+     "BEEN",
+     342.64,
+     343.016
+    ],
+    [
+     "all",
+     343.052,
+     343.313
+    ],
+    [
+     "my",
+     343.35,
+     343.546
+    ],
+    [
+     "life?!",
+     343.583,
+     343.909
+    ]
+   ]
+  },
+  {
+   "id": "05.14",
+   "take": "05",
+   "scene": "SC 05",
+   "idx": 14,
+   "speaker": "IVY",
+   "raw": "[suspicious] How did you know it was coming? You didn't even look!",
+   "text": "How did you know it was coming? You didn't even look!",
+   "clip": [
+    52.942,
+    56.867
+   ],
+   "start": 344.089,
+   "end": 348.014,
+   "speechStart": 344.089,
+   "speechEnd": 348.014,
+   "words": [
+    [
+     "How",
+     344.089,
+     344.35
+    ],
+    [
+     "did",
+     344.387,
+     344.647
+    ],
+    [
+     "you",
+     344.684,
+     344.946
+    ],
+    [
+     "know",
+     344.983,
+     345.308
+    ],
+    [
+     "it",
+     345.345,
+     345.541
+    ],
+    [
+     "was",
+     345.578,
+     345.839
+    ],
+    [
+     "coming?",
+     345.876,
+     346.333
+    ],
+    [
+     "You",
+     346.599,
+     346.86
+    ],
+    [
+     "didn't",
+     346.897,
+     347.289
+    ],
+    [
+     "even",
+     347.326,
+     347.651
+    ],
+    [
+     "look!",
+     347.688,
+     348.014
+    ]
+   ]
+  },
+  {
+   "id": "05.15",
+   "take": "05",
+   "scene": "SC 05",
+   "idx": 15,
+   "speaker": "YOU",
+   "raw": "[casual] Lucky guess.",
+   "text": "Lucky guess.",
+   "clip": [
+    57.047,
+    57.867
+   ],
+   "start": 348.194,
+   "end": 349.014,
+   "speechStart": 348.194,
+   "speechEnd": 349.014,
+   "words": [
+    [
+     "Lucky",
+     348.194,
+     348.585
+    ],
+    [
+     "guess.",
+     348.622,
+     349.014
+    ]
+   ]
+  },
+  {
+   "id": "05.16",
+   "take": "05",
+   "scene": "SC 05",
+   "idx": 16,
+   "speaker": "TIP",
+   "raw": "[whispering] TIP: It was not a lucky guess.",
+   "text": "TIP: It was not a lucky guess.",
+   "clip": [
+    58.047,
+    60.199
+   ],
+   "start": 349.194,
+   "end": 351.346,
+   "speechStart": 349.194,
+   "speechEnd": 351.346,
+   "words": [
+    [
+     "TIP:",
+     349.194,
+     349.494
+    ],
+    [
+     "It",
+     349.531,
+     349.727
+    ],
+    [
+     "was",
+     349.764,
+     350.025
+    ],
+    [
+     "not",
+     350.062,
+     350.322
+    ],
+    [
+     "a",
+     350.359,
+     350.49
+    ],
+    [
+     "lucky",
+     350.526,
+     350.918
+    ],
+    [
+     "guess.",
+     350.955,
+     351.346
+    ]
+   ]
+  },
+  {
+   "id": "05.17",
+   "take": "05",
+   "scene": "SC 05",
+   "idx": 17,
+   "speaker": "NARRATOR",
+   "raw": "At lunch, you told a joke. [pause] It was terrible. [pause] Reset. [pause] Thirty-one tries later...",
+   "text": "At lunch, you told a joke. It was terrible. Reset. Thirty-one tries later...",
+   "clip": [
+    60.379,
+    67.479
+   ],
+   "start": 351.526,
+   "end": 358.626,
+   "speechStart": 351.526,
+   "speechEnd": 358.626,
+   "words": [
+    [
+     "At",
+     351.526,
+     351.722
+    ],
+    [
+     "lunch,",
+     351.759,
+     352.15
+    ],
+    [
+     "you",
+     352.302,
+     352.562
+    ],
+    [
+     "told",
+     352.599,
+     352.926
+    ],
+    [
+     "a",
+     352.963,
+     353.093
+    ],
+    [
+     "joke.",
+     353.13,
+     353.456
+    ],
+    [
+     "It",
+     354.174,
+     354.369
+    ],
+    [
+     "was",
+     354.406,
+     354.667
+    ],
+    [
+     "terrible.",
+     354.704,
+     355.291
+    ],
+    [
+     "Reset.",
+     356.009,
+     356.4
+    ],
+    [
+     "Thirty-one",
+     357.118,
+     357.769
+    ],
+    [
+     "tries",
+     357.806,
+     358.198
+    ],
+    [
+     "later...",
+     358.235,
+     358.626
+    ]
+   ]
+  },
+  {
+   "id": "05.18",
+   "take": "05",
+   "scene": "SC 05",
+   "idx": 18,
+   "speaker": "YOU",
+   "raw": "[confident] ...and that's why the cafeteria pizza has its own fan club. [pause] It's called \"The Survivors.\"",
+   "text": "...and that's why the cafeteria pizza has its own fan club. It's called \"The Survivors.\"",
+   "clip": [
+    67.659,
+    74.075
+   ],
+   "start": 358.806,
+   "end": 365.222,
+   "speechStart": 358.806,
+   "speechEnd": 365.222,
+   "words": [
+    [
+     "...and",
+     358.806,
+     359.067
+    ],
+    [
+     "that's",
+     359.104,
+     359.496
+    ],
+    [
+     "why",
+     359.532,
+     359.793
+    ],
+    [
+     "the",
+     359.83,
+     360.091
+    ],
+    [
+     "cafeteria",
+     360.128,
+     360.78
+    ],
+    [
+     "pizza",
+     360.817,
+     361.209
+    ],
+    [
+     "has",
+     361.245,
+     361.506
+    ],
+    [
+     "its",
+     361.543,
+     361.804
+    ],
+    [
+     "own",
+     361.841,
+     362.102
+    ],
+    [
+     "fan",
+     362.138,
+     362.399
+    ],
+    [
+     "club.",
+     362.436,
+     362.762
+    ],
+    [
+     "It's",
+     363.48,
+     363.741
+    ],
+    [
+     "called",
+     363.778,
+     364.234
+    ],
+    [
+     "\"The",
+     364.271,
+     364.532
+    ],
+    [
+     "Survivors.\"",
+     364.569,
+     365.222
+    ]
+   ]
+  },
+  {
+   "id": "05.19",
+   "take": "05",
+   "scene": "SC 05",
+   "idx": 19,
+   "speaker": "NARRATOR",
+   "raw": "[proud] The whole cafeteria laughed. Somebody laughed milk out of their nose.",
+   "text": "The whole cafeteria laughed. Somebody laughed milk out of their nose.",
+   "clip": [
+    74.255,
+    79.289
+   ],
+   "start": 365.402,
+   "end": 370.436,
+   "speechStart": 365.402,
+   "speechEnd": 370.436,
+   "words": [
+    [
+     "The",
+     365.402,
+     365.663
+    ],
+    [
+     "whole",
+     365.7,
+     366.092
+    ],
+    [
+     "cafeteria",
+     366.128,
+     366.78
+    ],
+    [
+     "laughed.",
+     366.817,
+     367.339
+    ],
+    [
+     "Somebody",
+     367.605,
+     368.192
+    ],
+    [
+     "laughed",
+     368.229,
+     368.752
+    ],
+    [
+     "milk",
+     368.789,
+     369.114
+    ],
+    [
+     "out",
+     369.151,
+     369.413
+    ],
+    [
+     "of",
+     369.45,
+     369.645
+    ],
+    [
+     "their",
+     369.682,
+     370.074
+    ],
+    [
+     "nose.",
+     370.11,
+     370.436
+    ]
+   ]
+  },
+  {
+   "id": "05.20",
+   "take": "05",
+   "scene": "SC 05",
+   "idx": 20,
+   "speaker": "YOU",
+   "raw": "[glowing] This is the best day of my LIFE! [pause] Two hundred and fourteen times in a row!",
+   "text": "This is the best day of my LIFE! Two hundred and fourteen times in a row!",
+   "clip": [
+    79.469,
+    85.448
+   ],
+   "start": 370.616,
+   "end": 376.595,
+   "speechStart": 370.616,
+   "speechEnd": 376.595,
+   "words": [
+    [
+     "This",
+     370.616,
+     370.942
+    ],
+    [
+     "is",
+     370.979,
+     371.174
+    ],
+    [
+     "the",
+     371.211,
+     371.473
+    ],
+    [
+     "best",
+     371.51,
+     371.835
+    ],
+    [
+     "day",
+     371.872,
+     372.134
+    ],
+    [
+     "of",
+     372.171,
+     372.366
+    ],
+    [
+     "my",
+     372.403,
+     372.599
+    ],
+    [
+     "LIFE!",
+     372.636,
+     373.01
+    ],
+    [
+     "Two",
+     373.728,
+     373.989
+    ],
+    [
+     "hundred",
+     374.026,
+     374.548
+    ],
+    [
+     "and",
+     374.585,
+     374.846
+    ],
+    [
+     "fourteen",
+     374.882,
+     375.47
+    ],
+    [
+     "times",
+     375.506,
+     375.898
+    ],
+    [
+     "in",
+     375.935,
+     376.13
+    ],
+    [
+     "a",
+     376.167,
+     376.298
+    ],
+    [
+     "row!",
+     376.335,
+     376.595
+    ]
+   ]
+  },
+  {
+   "id": "06.0",
+   "take": "06",
+   "scene": "SC 06",
+   "idx": 0,
+   "speaker": "NARRATOR",
+   "raw": "Wednesday. Rehearsal. Ivy's big trick: \"Elephant Toothpaste.\" [pause] A volcano of foam... out of a magic hat.",
+   "text": "Wednesday. Rehearsal. Ivy's big trick: \"Elephant Toothpaste.\" A volcano of foam... out of a magic hat.",
+   "clip": [
+    0.0,
+    7.957
+   ],
+   "start": 377.295,
+   "end": 385.252,
+   "speechStart": 377.295,
+   "speechEnd": 385.252,
+   "words": [
+    [
+     "Wednesday.",
+     377.295,
+     377.948
+    ],
+    [
+     "Rehearsal.",
+     378.214,
+     378.866
+    ],
+    [
+     "Ivy's",
+     379.133,
+     379.459
+    ],
+    [
+     "big",
+     379.496,
+     379.757
+    ],
+    [
+     "trick:",
+     379.794,
+     380.185
+    ],
+    [
+     "\"Elephant",
+     380.222,
+     380.809
+    ],
+    [
+     "Toothpaste.\"",
+     380.846,
+     381.563
+    ],
+    [
+     "A",
+     382.281,
+     382.411
+    ],
+    [
+     "volcano",
+     382.448,
+     382.97
+    ],
+    [
+     "of",
+     383.007,
+     383.202
+    ],
+    [
+     "foam...",
+     383.239,
+     383.566
+    ],
+    [
+     "out",
+     383.865,
+     384.126
+    ],
+    [
+     "of",
+     384.163,
+     384.358
+    ],
+    [
+     "a",
+     384.395,
+     384.526
+    ],
+    [
+     "magic",
+     384.563,
+     384.954
+    ],
+    [
+     "hat.",
+     384.991,
+     385.252
+    ]
+   ]
+  },
+  {
+   "id": "06.1",
+   "take": "06",
+   "scene": "SC 06",
+   "idx": 1,
+   "speaker": "IVY",
+   "raw": "[dramatic] Ladies and gentlemen! [pause] From this ordinary hat, I will now pull out... a\u2014",
+   "text": "Ladies and gentlemen! From this ordinary hat, I will now pull out... a\u2014",
+   "clip": [
+    8.137,
+    13.943
+   ],
+   "start": 385.432,
+   "end": 391.238,
+   "speechStart": 385.432,
+   "speechEnd": 391.238,
+   "words": [
+    [
+     "Ladies",
+     385.432,
+     385.889
+    ],
+    [
+     "and",
+     385.926,
+     386.186
+    ],
+    [
+     "gentlemen!",
+     386.223,
+     386.876
+    ],
+    [
+     "From",
+     387.594,
+     387.919
+    ],
+    [
+     "this",
+     387.956,
+     388.282
+    ],
+    [
+     "ordinary",
+     388.319,
+     388.906
+    ],
+    [
+     "hat,",
+     388.943,
+     389.204
+    ],
+    [
+     "I",
+     389.356,
+     389.486
+    ],
+    [
+     "will",
+     389.523,
+     389.849
+    ],
+    [
+     "now",
+     389.886,
+     390.147
+    ],
+    [
+     "pull",
+     390.184,
+     390.51
+    ],
+    [
+     "out...",
+     390.547,
+     390.808
+    ],
+    [
+     "a\u2014",
+     391.107,
+     391.238
+    ]
+   ]
+  },
+  {
+   "id": "06.2",
+   "take": "06",
+   "scene": "SC 06",
+   "idx": 2,
+   "speaker": "YOU",
+   "raw": "[flatly] A volcano of foam. I know.",
+   "text": "A volcano of foam. I know.",
+   "clip": [
+    14.123,
+    16.168
+   ],
+   "start": 391.418,
+   "end": 393.463,
+   "speechStart": 391.418,
+   "speechEnd": 393.463,
+   "words": [
+    [
+     "A",
+     391.418,
+     391.548
+    ],
+    [
+     "volcano",
+     391.585,
+     392.107
+    ],
+    [
+     "of",
+     392.144,
+     392.34
+    ],
+    [
+     "foam.",
+     392.377,
+     392.703
+    ],
+    [
+     "I",
+     392.969,
+     393.1
+    ],
+    [
+     "know.",
+     393.137,
+     393.463
+    ]
+   ]
+  },
+  {
+   "id": "06.3",
+   "take": "06",
+   "scene": "SC 06",
+   "idx": 3,
+   "speaker": "IVY",
+   "raw": "[surprised] ...How do you know that? I didn't tell you that.",
+   "text": "...How do you know that? I didn't tell you that.",
+   "clip": [
+    16.348,
+    19.715
+   ],
+   "start": 393.643,
+   "end": 397.01,
+   "speechStart": 393.643,
+   "speechEnd": 397.01,
+   "words": [
+    [
+     "...How",
+     393.643,
+     393.904
+    ],
+    [
+     "do",
+     393.941,
+     394.137
+    ],
+    [
+     "you",
+     394.174,
+     394.434
+    ],
+    [
+     "know",
+     394.471,
+     394.798
+    ],
+    [
+     "that?",
+     394.834,
+     395.161
+    ],
+    [
+     "I",
+     395.427,
+     395.558
+    ],
+    [
+     "didn't",
+     395.595,
+     395.986
+    ],
+    [
+     "tell",
+     396.023,
+     396.349
+    ],
+    [
+     "you",
+     396.386,
+     396.647
+    ],
+    [
+     "that.",
+     396.684,
+     397.01
+    ]
+   ]
+  },
+  {
+   "id": "06.4",
+   "take": "06",
+   "scene": "SC 06",
+   "idx": 4,
+   "speaker": "NARRATOR",
+   "raw": "Every time something went wrong... you reset. [pause] And again. [pause] And again.",
+   "text": "Every time something went wrong... you reset. And again. And again.",
+   "clip": [
+    19.895,
+    25.932
+   ],
+   "start": 397.19,
+   "end": 403.227,
+   "speechStart": 397.19,
+   "speechEnd": 403.227,
+   "words": [
+    [
+     "Every",
+     397.19,
+     397.581
+    ],
+    [
+     "time",
+     397.618,
+     397.944
+    ],
+    [
+     "something",
+     397.981,
+     398.634
+    ],
+    [
+     "went",
+     398.671,
+     398.996
+    ],
+    [
+     "wrong...",
+     399.033,
+     399.425
+    ],
+    [
+     "you",
+     399.725,
+     399.985
+    ],
+    [
+     "reset.",
+     400.022,
+     400.413
+    ],
+    [
+     "And",
+     401.131,
+     401.392
+    ],
+    [
+     "again.",
+     401.429,
+     401.821
+    ],
+    [
+     "And",
+     402.538,
+     402.799
+    ],
+    [
+     "again.",
+     402.836,
+     403.227
+    ]
+   ]
+  },
+  {
+   "id": "06.5",
+   "take": "06",
+   "scene": "SC 06",
+   "idx": 5,
+   "speaker": "IVY",
+   "raw": "[laughing] Okay, okay, what if I sneeze in the middle and the foam goes\u2014",
+   "text": "Okay, okay, what if I sneeze in the middle and the foam goes\u2014",
+   "clip": [
+    26.112,
+    30.633
+   ],
+   "start": 403.407,
+   "end": 407.928,
+   "speechStart": 403.407,
+   "speechEnd": 407.928,
+   "words": [
+    [
+     "Okay,",
+     403.407,
+     403.733
+    ],
+    [
+     "okay,",
+     403.885,
+     404.211
+    ],
+    [
+     "what",
+     404.362,
+     404.689
+    ],
+    [
+     "if",
+     404.726,
+     404.922
+    ],
+    [
+     "I",
+     404.958,
+     405.089
+    ],
+    [
+     "sneeze",
+     405.126,
+     405.582
+    ],
+    [
+     "in",
+     405.619,
+     405.815
+    ],
+    [
+     "the",
+     405.851,
+     406.113
+    ],
+    [
+     "middle",
+     406.15,
+     406.607
+    ],
+    [
+     "and",
+     406.644,
+     406.904
+    ],
+    [
+     "the",
+     406.941,
+     407.202
+    ],
+    [
+     "foam",
+     407.239,
+     407.565
+    ],
+    [
+     "goes\u2014",
+     407.602,
+     407.928
+    ]
+   ]
+  },
+  {
+   "id": "06.6",
+   "take": "06",
+   "scene": "SC 06",
+   "idx": 6,
+   "speaker": "YOU",
+   "raw": "[not laughing] \u2014on the ceiling. Yeah. Don't do that.",
+   "text": "\u2014on the ceiling. Yeah. Don't do that.",
+   "clip": [
+    30.813,
+    33.646
+   ],
+   "start": 408.108,
+   "end": 410.941,
+   "speechStart": 408.108,
+   "speechEnd": 410.941,
+   "words": [
+    [
+     "on",
+     408.108,
+     408.304
+    ],
+    [
+     "the",
+     408.341,
+     408.602
+    ],
+    [
+     "ceiling.",
+     408.639,
+     409.16
+    ],
+    [
+     "Yeah.",
+     409.427,
+     409.753
+    ],
+    [
+     "Don't",
+     410.019,
+     410.346
+    ],
+    [
+     "do",
+     410.383,
+     410.578
+    ],
+    [
+     "that.",
+     410.615,
+     410.941
+    ]
+   ]
+  },
+  {
+   "id": "06.7",
+   "take": "06",
+   "scene": "SC 06",
+   "idx": 7,
+   "speaker": "IVY",
+   "raw": "[slowly] ...You're being so weird.",
+   "text": "...You're being so weird.",
+   "clip": [
+    33.826,
+    35.307
+   ],
+   "start": 411.121,
+   "end": 412.602,
+   "speechStart": 411.121,
+   "speechEnd": 412.602,
+   "words": [
+    [
+     "...You're",
+     411.121,
+     411.512
+    ],
+    [
+     "being",
+     411.549,
+     411.941
+    ],
+    [
+     "so",
+     411.978,
+     412.173
+    ],
+    [
+     "weird.",
+     412.21,
+     412.602
+    ]
+   ]
+  },
+  {
+   "id": "06.8",
+   "take": "06",
+   "scene": "SC 06",
+   "idx": 8,
+   "speaker": "NARRATOR",
+   "raw": "You lived Thursday four hundred and twelve times. [pause] Until the trick was perfect. [pause] Until YOU were perfect.",
+   "text": "You lived Thursday four hundred and twelve times. Until the trick was perfect. Until YOU were perfect.",
+   "clip": [
+    35.487,
+    44.001
+   ],
+   "start": 412.782,
+   "end": 421.296,
+   "speechStart": 412.782,
+   "speechEnd": 421.296,
+   "words": [
+    [
+     "You",
+     412.782,
+     413.043
+    ],
+    [
+     "lived",
+     413.08,
+     413.472
+    ],
+    [
+     "Thursday",
+     413.508,
+     414.095
+    ],
+    [
+     "four",
+     414.132,
+     414.458
+    ],
+    [
+     "hundred",
+     414.495,
+     415.017
+    ],
+    [
+     "and",
+     415.054,
+     415.315
+    ],
+    [
+     "twelve",
+     415.352,
+     415.809
+    ],
+    [
+     "times.",
+     415.846,
+     416.237
+    ],
+    [
+     "Until",
+     416.954,
+     417.345
+    ],
+    [
+     "the",
+     417.382,
+     417.643
+    ],
+    [
+     "trick",
+     417.68,
+     418.072
+    ],
+    [
+     "was",
+     418.109,
+     418.369
+    ],
+    [
+     "perfect.",
+     418.406,
+     418.928
+    ],
+    [
+     "Until",
+     419.645,
+     420.037
+    ],
+    [
+     "YOU",
+     420.074,
+     420.374
+    ],
+    [
+     "were",
+     420.411,
+     420.737
+    ],
+    [
+     "perfect.",
+     420.774,
+     421.296
+    ]
+   ]
+  },
+  {
+   "id": "06.9",
+   "take": "06",
+   "scene": "SC 06",
+   "idx": 9,
+   "speaker": "IVY",
+   "raw": "[hurt, quiet] You don't laugh anymore. You're never surprised. [pause] It's like you're not even here.",
+   "text": "You don't laugh anymore. You're never surprised. It's like you're not even here.",
+   "clip": [
+    44.181,
+    50.361
+   ],
+   "start": 421.476,
+   "end": 427.656,
+   "speechStart": 421.476,
+   "speechEnd": 427.656,
+   "words": [
+    [
+     "You",
+     421.476,
+     421.737
+    ],
+    [
+     "don't",
+     421.774,
+     422.1
+    ],
+    [
+     "laugh",
+     422.137,
+     422.528
+    ],
+    [
+     "anymore.",
+     422.565,
+     423.087
+    ],
+    [
+     "You're",
+     423.354,
+     423.745
+    ],
+    [
+     "never",
+     423.782,
+     424.173
+    ],
+    [
+     "surprised.",
+     424.21,
+     424.863
+    ],
+    [
+     "It's",
+     425.58,
+     425.841
+    ],
+    [
+     "like",
+     425.878,
+     426.204
+    ],
+    [
+     "you're",
+     426.241,
+     426.632
+    ],
+    [
+     "not",
+     426.669,
+     426.93
+    ],
+    [
+     "even",
+     426.967,
+     427.293
+    ],
+    [
+     "here.",
+     427.33,
+     427.656
+    ]
+   ]
+  },
+  {
+   "id": "06.10",
+   "take": "06",
+   "scene": "SC 06",
+   "idx": 10,
+   "speaker": "YOU",
+   "raw": "[quietly] I'm just... practicing.",
+   "text": "I'm just... practicing.",
+   "clip": [
+    50.541,
+    52.116
+   ],
+   "start": 427.836,
+   "end": 429.411,
+   "speechStart": 427.836,
+   "speechEnd": 429.411,
+   "words": [
+    [
+     "I'm",
+     427.836,
+     428.032
+    ],
+    [
+     "just...",
+     428.069,
+     428.394
+    ],
+    [
+     "practicing.",
+     428.694,
+     429.411
+    ]
+   ]
+  },
+  {
+   "id": "06.11",
+   "take": "06",
+   "scene": "SC 06",
+   "idx": 11,
+   "speaker": "IVY",
+   "raw": "[softly] You know how we became friends? [pause] Kindergarten. You glued your hand to my backpack.",
+   "text": "You know how we became friends? Kindergarten. You glued your hand to my backpack.",
+   "clip": [
+    52.296,
+    58.839
+   ],
+   "start": 429.591,
+   "end": 436.134,
+   "speechStart": 429.591,
+   "speechEnd": 436.134,
+   "words": [
+    [
+     "You",
+     429.591,
+     429.852
+    ],
+    [
+     "know",
+     429.889,
+     430.215
+    ],
+    [
+     "how",
+     430.252,
+     430.513
+    ],
+    [
+     "we",
+     430.55,
+     430.746
+    ],
+    [
+     "became",
+     430.782,
+     431.239
+    ],
+    [
+     "friends?",
+     431.276,
+     431.798
+    ],
+    [
+     "Kindergarten.",
+     432.515,
+     433.363
+    ],
+    [
+     "You",
+     433.63,
+     433.89
+    ],
+    [
+     "glued",
+     433.927,
+     434.319
+    ],
+    [
+     "your",
+     434.356,
+     434.682
+    ],
+    [
+     "hand",
+     434.718,
+     435.045
+    ],
+    [
+     "to",
+     435.082,
+     435.278
+    ],
+    [
+     "my",
+     435.315,
+     435.511
+    ],
+    [
+     "backpack.",
+     435.547,
+     436.134
+    ]
+   ]
+  },
+  {
+   "id": "06.12",
+   "take": "06",
+   "scene": "SC 06",
+   "idx": 12,
+   "speaker": "YOU",
+   "raw": "[small laugh] For the whole day.",
+   "text": "For the whole day.",
+   "clip": [
+    59.019,
+    60.304
+   ],
+   "start": 436.314,
+   "end": 437.599,
+   "speechStart": 436.314,
+   "speechEnd": 437.599,
+   "words": [
+    [
+     "For",
+     436.314,
+     436.575
+    ],
+    [
+     "the",
+     436.612,
+     436.872
+    ],
+    [
+     "whole",
+     436.909,
+     437.301
+    ],
+    [
+     "day.",
+     437.338,
+     437.599
+    ]
+   ]
+  },
+  {
+   "id": "06.13",
+   "take": "06",
+   "scene": "SC 06",
+   "idx": 13,
+   "speaker": "IVY",
+   "raw": "[sad smile] Best mistake you ever made. [pause] ...I miss that guy.",
+   "text": "Best mistake you ever made. ...I miss that guy.",
+   "clip": [
+    60.484,
+    64.285
+   ],
+   "start": 437.779,
+   "end": 441.58,
+   "speechStart": 437.779,
+   "speechEnd": 441.58,
+   "words": [
+    [
+     "Best",
+     437.779,
+     438.105
+    ],
+    [
+     "mistake",
+     438.142,
+     438.664
+    ],
+    [
+     "you",
+     438.701,
+     438.961
+    ],
+    [
+     "ever",
+     438.998,
+     439.325
+    ],
+    [
+     "made.",
+     439.362,
+     439.688
+    ],
+    [
+     "...I",
+     440.405,
+     440.556
+    ],
+    [
+     "miss",
+     440.592,
+     440.919
+    ],
+    [
+     "that",
+     440.956,
+     441.281
+    ],
+    [
+     "guy.",
+     441.318,
+     441.58
+    ]
+   ],
+   "beatAfter": 1.5
+  },
+  {
+   "id": "06.14",
+   "take": "06",
+   "scene": "SC 06",
+   "idx": 14,
+   "speaker": "DAD",
+   "raw": "[proud] Why did the pancake go to the\u2014",
+   "text": "Why did the pancake go to the\u2014",
+   "clip": [
+    65.965,
+    68.144
+   ],
+   "start": 443.26,
+   "end": 445.439,
+   "speechStart": 443.26,
+   "speechEnd": 445.439,
+   "words": [
+    [
+     "Why",
+     443.26,
+     443.521
+    ],
+    [
+     "did",
+     443.558,
+     443.818
+    ],
+    [
+     "the",
+     443.855,
+     444.117
+    ],
+    [
+     "pancake",
+     444.154,
+     444.675
+    ],
+    [
+     "go",
+     444.712,
+     444.908
+    ],
+    [
+     "to",
+     444.945,
+     445.14
+    ],
+    [
+     "the\u2014",
+     445.177,
+     445.439
+    ]
+   ]
+  },
+  {
+   "id": "06.15",
+   "take": "06",
+   "scene": "SC 06",
+   "idx": 15,
+   "speaker": "YOU",
+   "raw": "[bored] \u2014doctor. It felt flat. Dad, I know. [pause] I know ALL of them.",
+   "text": "\u2014doctor. It felt flat. Dad, I know. I know ALL of them.",
+   "clip": [
+    68.324,
+    73.285
+   ],
+   "start": 445.619,
+   "end": 450.58,
+   "speechStart": 445.619,
+   "speechEnd": 450.58,
+   "words": [
+    [
+     "doctor.",
+     445.619,
+     446.076
+    ],
+    [
+     "It",
+     446.342,
+     446.538
+    ],
+    [
+     "felt",
+     446.575,
+     446.901
+    ],
+    [
+     "flat.",
+     446.938,
+     447.264
+    ],
+    [
+     "Dad,",
+     447.53,
+     447.791
+    ],
+    [
+     "I",
+     447.943,
+     448.073
+    ],
+    [
+     "know.",
+     448.11,
+     448.437
+    ],
+    [
+     "I",
+     449.154,
+     449.284
+    ],
+    [
+     "know",
+     449.321,
+     449.648
+    ],
+    [
+     "ALL",
+     449.685,
+     449.985
+    ],
+    [
+     "of",
+     450.022,
+     450.217
+    ],
+    [
+     "them.",
+     450.254,
+     450.58
+    ]
+   ]
+  },
+  {
+   "id": "06.16",
+   "take": "06",
+   "scene": "SC 06",
+   "idx": 16,
+   "speaker": "BEA",
+   "raw": "[tiny voice] You're not fun anymore. [pause] Even Gary thinks so.",
+   "text": "You're not fun anymore. Even Gary thinks so.",
+   "clip": [
+    73.465,
+    77.144
+   ],
+   "start": 450.76,
+   "end": 454.439,
+   "speechStart": 450.76,
+   "speechEnd": 454.439,
+   "words": [
+    [
+     "You're",
+     450.76,
+     451.151
+    ],
+    [
+     "not",
+     451.188,
+     451.449
+    ],
+    [
+     "fun",
+     451.486,
+     451.747
+    ],
+    [
+     "anymore.",
+     451.784,
+     452.306
+    ],
+    [
+     "Even",
+     453.023,
+     453.35
+    ],
+    [
+     "Gary",
+     453.386,
+     453.713
+    ],
+    [
+     "thinks",
+     453.75,
+     454.206
+    ],
+    [
+     "so.",
+     454.243,
+     454.439
+    ]
+   ],
+   "beatAfter": 1.0
+  },
+  {
+   "id": "06.17",
+   "take": "06",
+   "scene": "SC 06",
+   "idx": 17,
+   "speaker": "NARRATOR",
+   "raw": "[quietly] Even Gary.",
+   "text": "Even Gary.",
+   "clip": [
+    78.324,
+    79.013
+   ],
+   "start": 455.619,
+   "end": 456.308,
+   "speechStart": 455.619,
+   "speechEnd": 456.308,
+   "words": [
+    [
+     "Even",
+     455.619,
+     455.945
+    ],
+    [
+     "Gary.",
+     455.982,
+     456.308
+    ]
+   ]
+  },
+  {
+   "id": "07.0",
+   "take": "07",
+   "scene": "SC 07",
+   "idx": 0,
+   "speaker": "TIP",
+   "raw": "[glitching] T-T-TIP: Too many respawns make the s-s-save file... heavy. [pause] The world is starting to... l-l-lag.",
+   "text": "T-T-TIP: Too many respawns make the s-s-save file... heavy. The world is starting to... l-l-lag.",
+   "clip": [
+    0.0,
+    7.13
+   ],
+   "start": 457.008,
+   "end": 464.138,
+   "speechStart": 457.008,
+   "speechEnd": 464.138,
+   "words": [
+    [
+     "T-T-TIP:",
+     457.008,
+     457.458
+    ],
+    [
+     "Too",
+     457.495,
+     457.756
+    ],
+    [
+     "many",
+     457.793,
+     458.119
+    ],
+    [
+     "respawns",
+     458.156,
+     458.743
+    ],
+    [
+     "make",
+     458.78,
+     459.106
+    ],
+    [
+     "the",
+     459.143,
+     459.404
+    ],
+    [
+     "s-s-save",
+     459.441,
+     459.898
+    ],
+    [
+     "file...",
+     459.935,
+     460.26
+    ],
+    [
+     "heavy.",
+     460.559,
+     460.951
+    ],
+    [
+     "The",
+     461.669,
+     461.93
+    ],
+    [
+     "world",
+     461.967,
+     462.358
+    ],
+    [
+     "is",
+     462.395,
+     462.591
+    ],
+    [
+     "starting",
+     462.627,
+     463.215
+    ],
+    [
+     "to...",
+     463.251,
+     463.447
+    ],
+    [
+     "l-l-lag.",
+     463.746,
+     464.138
+    ]
+   ]
+  },
+  {
+   "id": "07.1",
+   "take": "07",
+   "scene": "SC 07",
+   "idx": 1,
+   "speaker": "YOU",
+   "raw": "[nervous] Lag? Real life can't lag.",
+   "text": "Lag? Real life can't lag.",
+   "clip": [
+    7.31,
+    9.188
+   ],
+   "start": 464.318,
+   "end": 466.196,
+   "speechStart": 464.318,
+   "speechEnd": 466.196,
+   "words": [
+    [
+     "Lag?",
+     464.318,
+     464.579
+    ],
+    [
+     "Real",
+     464.845,
+     465.172
+    ],
+    [
+     "life",
+     465.209,
+     465.535
+    ],
+    [
+     "can't",
+     465.572,
+     465.897
+    ],
+    [
+     "lag.",
+     465.934,
+     466.196
+    ]
+   ]
+  },
+  {
+   "id": "07.2",
+   "take": "07",
+   "scene": "SC 07",
+   "idx": 2,
+   "speaker": "MOM",
+   "raw": "[stuttering, glitchy] Good m-m-m-morning, sw-sw-sweetie!",
+   "text": "Good m-m-m-morning, sw-sw-sweetie!",
+   "clip": [
+    9.368,
+    11.383
+   ],
+   "start": 466.376,
+   "end": 468.391,
+   "speechStart": 466.376,
+   "speechEnd": 468.391,
+   "words": [
+    [
+     "Good",
+     466.376,
+     466.702
+    ],
+    [
+     "m-m-m-morning,",
+     466.739,
+     467.457
+    ],
+    [
+     "sw-sw-sweetie!",
+     467.608,
+     468.391
+    ]
+   ]
+  },
+  {
+   "id": "07.3",
+   "take": "07",
+   "scene": "SC 07",
+   "idx": 3,
+   "speaker": "NARRATOR",
+   "raw": "Birds froze in the sky. The school bus kept teleporting back to the same corner. [pause] And Dad's pancake... just... stayed up there.",
+   "text": "Birds froze in the sky. The school bus kept teleporting back to the same corner. And Dad's pancake... just... stayed up there.",
+   "clip": [
+    11.563,
+    21.405
+   ],
+   "start": 468.571,
+   "end": 478.413,
+   "speechStart": 468.571,
+   "speechEnd": 478.413,
+   "words": [
+    [
+     "Birds",
+     468.571,
+     468.962
+    ],
+    [
+     "froze",
+     468.999,
+     469.391
+    ],
+    [
+     "in",
+     469.428,
+     469.623
+    ],
+    [
+     "the",
+     469.66,
+     469.921
+    ],
+    [
+     "sky.",
+     469.958,
+     470.219
+    ],
+    [
+     "The",
+     470.486,
+     470.746
+    ],
+    [
+     "school",
+     470.783,
+     471.24
+    ],
+    [
+     "bus",
+     471.277,
+     471.538
+    ],
+    [
+     "kept",
+     471.575,
+     471.901
+    ],
+    [
+     "teleporting",
+     471.938,
+     472.72
+    ],
+    [
+     "back",
+     472.757,
+     473.083
+    ],
+    [
+     "to",
+     473.12,
+     473.316
+    ],
+    [
+     "the",
+     473.353,
+     473.614
+    ],
+    [
+     "same",
+     473.651,
+     473.977
+    ],
+    [
+     "corner.",
+     474.014,
+     474.47
+    ],
+    [
+     "And",
+     475.188,
+     475.449
+    ],
+    [
+     "Dad's",
+     475.486,
+     475.812
+    ],
+    [
+     "pancake...",
+     475.849,
+     476.371
+    ],
+    [
+     "just...",
+     476.67,
+     476.997
+    ],
+    [
+     "stayed",
+     477.296,
+     477.752
+    ],
+    [
+     "up",
+     477.789,
+     477.985
+    ],
+    [
+     "there.",
+     478.022,
+     478.413
+    ]
+   ]
+  },
+  {
+   "id": "07.4",
+   "take": "07",
+   "scene": "SC 07",
+   "idx": 4,
+   "speaker": "DAD",
+   "raw": "[confused, looking up] Huh. [pause] That one's... thinking about it.",
+   "text": "Huh. That one's... thinking about it.",
+   "clip": [
+    21.585,
+    24.8
+   ],
+   "start": 478.593,
+   "end": 481.808,
+   "speechStart": 478.593,
+   "speechEnd": 481.808,
+   "words": [
+    [
+     "Huh.",
+     478.593,
+     478.854
+    ],
+    [
+     "That",
+     479.571,
+     479.898
+    ],
+    [
+     "one's...",
+     479.935,
+     480.261
+    ],
+    [
+     "thinking",
+     480.56,
+     481.147
+    ],
+    [
+     "about",
+     481.184,
+     481.575
+    ],
+    [
+     "it.",
+     481.612,
+     481.808
+    ]
+   ]
+  },
+  {
+   "id": "07.5",
+   "take": "07",
+   "scene": "SC 07",
+   "idx": 5,
+   "speaker": "NARRATOR",
+   "raw": "And then... the whole street switched to low graphics.",
+   "text": "And then... the whole street switched to low graphics.",
+   "clip": [
+    24.98,
+    28.864
+   ],
+   "start": 481.988,
+   "end": 485.872,
+   "speechStart": 481.988,
+   "speechEnd": 485.872,
+   "words": [
+    [
+     "And",
+     481.988,
+     482.249
+    ],
+    [
+     "then...",
+     482.286,
+     482.612
+    ],
+    [
+     "the",
+     482.911,
+     483.172
+    ],
+    [
+     "whole",
+     483.209,
+     483.6
+    ],
+    [
+     "street",
+     483.637,
+     484.094
+    ],
+    [
+     "switched",
+     484.131,
+     484.718
+    ],
+    [
+     "to",
+     484.755,
+     484.951
+    ],
+    [
+     "low",
+     484.988,
+     485.248
+    ],
+    [
+     "graphics.",
+     485.285,
+     485.872
+    ]
+   ]
+  },
+  {
+   "id": "07.6",
+   "take": "07",
+   "scene": "SC 07",
+   "idx": 6,
+   "speaker": "YOU",
+   "raw": "[panicking] Why does everything look like it's from two thousand and six?!",
+   "text": "Why does everything look like it's from two thousand and six?!",
+   "clip": [
+    29.044,
+    33.327
+   ],
+   "start": 486.052,
+   "end": 490.335,
+   "speechStart": 486.052,
+   "speechEnd": 490.335,
+   "words": [
+    [
+     "Why",
+     486.052,
+     486.313
+    ],
+    [
+     "does",
+     486.35,
+     486.676
+    ],
+    [
+     "everything",
+     486.713,
+     487.43
+    ],
+    [
+     "look",
+     487.467,
+     487.794
+    ],
+    [
+     "like",
+     487.831,
+     488.156
+    ],
+    [
+     "it's",
+     488.193,
+     488.455
+    ],
+    [
+     "from",
+     488.491,
+     488.817
+    ],
+    [
+     "two",
+     488.854,
+     489.116
+    ],
+    [
+     "thousand",
+     489.152,
+     489.74
+    ],
+    [
+     "and",
+     489.776,
+     490.037
+    ],
+    [
+     "six?!",
+     490.074,
+     490.335
+    ]
+   ]
+  },
+  {
+   "id": "07.7",
+   "take": "07",
+   "scene": "SC 07",
+   "idx": 7,
+   "speaker": "NARRATOR",
+   "raw": "And the respawns... started going wrong.",
+   "text": "And the respawns... started going wrong.",
+   "clip": [
+    33.507,
+    36.367
+   ],
+   "start": 490.515,
+   "end": 493.375,
+   "speechStart": 490.515,
+   "speechEnd": 493.375,
+   "words": [
+    [
+     "And",
+     490.515,
+     490.776
+    ],
+    [
+     "the",
+     490.813,
+     491.073
+    ],
+    [
+     "respawns...",
+     491.11,
+     491.697
+    ],
+    [
+     "started",
+     491.997,
+     492.519
+    ],
+    [
+     "going",
+     492.556,
+     492.947
+    ],
+    [
+     "wrong.",
+     492.984,
+     493.375
+    ]
+   ]
+  },
+  {
+   "id": "07.8",
+   "take": "07",
+   "scene": "SC 07",
+   "idx": 8,
+   "speaker": "SYSTEM",
+   "raw": "[glitchy] Respawning in three, two, one.",
+   "text": "Respawning in three, two, one.",
+   "clip": [
+    36.547,
+    38.75
+   ],
+   "start": 493.555,
+   "end": 495.758,
+   "speechStart": 493.555,
+   "speechEnd": 495.758,
+   "words": [
+    [
+     "Respawning",
+     493.555,
+     494.272
+    ],
+    [
+     "in",
+     494.309,
+     494.505
+    ],
+    [
+     "three,",
+     494.542,
+     494.933
+    ],
+    [
+     "two,",
+     495.085,
+     495.346
+    ],
+    [
+     "one.",
+     495.498,
+     495.758
+    ]
+   ]
+  },
+  {
+   "id": "07.9",
+   "take": "07",
+   "scene": "SC 07",
+   "idx": 9,
+   "speaker": "YOU",
+   "raw": "[hugging the pole] This is NOT my checkpoint!",
+   "text": "This is NOT my checkpoint!",
+   "clip": [
+    38.93,
+    40.813
+   ],
+   "start": 495.938,
+   "end": 497.821,
+   "speechStart": 495.938,
+   "speechEnd": 497.821,
+   "words": [
+    [
+     "This",
+     495.938,
+     496.264
+    ],
+    [
+     "is",
+     496.301,
+     496.496
+    ],
+    [
+     "NOT",
+     496.533,
+     496.833
+    ],
+    [
+     "my",
+     496.87,
+     497.066
+    ],
+    [
+     "checkpoint!",
+     497.103,
+     497.821
+    ]
+   ]
+  },
+  {
+   "id": "07.10",
+   "take": "07",
+   "scene": "SC 07",
+   "idx": 10,
+   "speaker": "SYSTEM",
+   "raw": "Respawning.",
+   "text": "Respawning.",
+   "clip": [
+    40.993,
+    41.711
+   ],
+   "start": 498.001,
+   "end": 498.719,
+   "speechStart": 498.001,
+   "speechEnd": 498.719,
+   "words": [
+    [
+     "Respawning.",
+     498.001,
+     498.719
+    ]
+   ]
+  },
+  {
+   "id": "07.11",
+   "take": "07",
+   "scene": "SC 07",
+   "idx": 11,
+   "speaker": "YOU",
+   "raw": "[tiny, underwater, bubbly] Hi, Gary.",
+   "text": "Hi, Gary.",
+   "clip": [
+    41.891,
+    42.564
+   ],
+   "start": 498.899,
+   "end": 499.572,
+   "speechStart": 498.899,
+   "speechEnd": 499.572,
+   "words": [
+    [
+     "Hi,",
+     498.899,
+     499.095
+    ],
+    [
+     "Gary.",
+     499.247,
+     499.572
+    ]
+   ],
+   "beatAfter": 1.0
+  },
+  {
+   "id": "07.12",
+   "take": "07",
+   "scene": "SC 07",
+   "idx": 12,
+   "speaker": "SYSTEM",
+   "raw": "Respawning.",
+   "text": "Respawning.",
+   "clip": [
+    43.744,
+    44.461
+   ],
+   "start": 500.752,
+   "end": 501.469,
+   "speechStart": 500.752,
+   "speechEnd": 501.469,
+   "words": [
+    [
+     "Respawning.",
+     500.752,
+     501.469
+    ]
+   ]
+  },
+  {
+   "id": "07.13",
+   "take": "07",
+   "scene": "SC 07",
+   "idx": 13,
+   "speaker": "COACH",
+   "raw": "[confused] ...Are you a ball now?",
+   "text": "...Are you a ball now?",
+   "clip": [
+    44.641,
+    46.028
+   ],
+   "start": 501.649,
+   "end": 503.036,
+   "speechStart": 501.649,
+   "speechEnd": 503.036,
+   "words": [
+    [
+     "...Are",
+     501.649,
+     501.91
+    ],
+    [
+     "you",
+     501.947,
+     502.207
+    ],
+    [
+     "a",
+     502.244,
+     502.376
+    ],
+    [
+     "ball",
+     502.412,
+     502.738
+    ],
+    [
+     "now?",
+     502.775,
+     503.036
+    ]
+   ]
+  },
+  {
+   "id": "07.14",
+   "take": "07",
+   "scene": "SC 07",
+   "idx": 14,
+   "speaker": "SYSTEM",
+   "raw": "Respawning.",
+   "text": "Respawning.",
+   "clip": [
+    46.208,
+    46.925
+   ],
+   "start": 503.216,
+   "end": 503.933,
+   "speechStart": 503.216,
+   "speechEnd": 503.933,
+   "words": [
+    [
+     "Respawning.",
+     503.216,
+     503.933
+    ]
+   ]
+  },
+  {
+   "id": "07.15",
+   "take": "07",
+   "scene": "SC 07",
+   "idx": 15,
+   "speaker": "TEACHER",
+   "raw": "[deadpan] ...That was my birthday cake.",
+   "text": "...That was my birthday cake.",
+   "clip": [
+    47.105,
+    48.948
+   ],
+   "start": 504.113,
+   "end": 505.956,
+   "speechStart": 504.113,
+   "speechEnd": 505.956,
+   "words": [
+    [
+     "...That",
+     504.113,
+     504.439
+    ],
+    [
+     "was",
+     504.476,
+     504.737
+    ],
+    [
+     "my",
+     504.774,
+     504.97
+    ],
+    [
+     "birthday",
+     505.007,
+     505.594
+    ],
+    [
+     "cake.",
+     505.631,
+     505.956
+    ]
+   ]
+  },
+  {
+   "id": "07.16",
+   "take": "07",
+   "scene": "SC 07",
+   "idx": 16,
+   "speaker": "NARRATOR",
+   "raw": "You respawned in Mr. Fig's birthday cake. [pause] To this day, nobody knows how.",
+   "text": "You respawned in Mr. Fig's birthday cake. To this day, nobody knows how.",
+   "clip": [
+    49.128,
+    55.031
+   ],
+   "start": 506.136,
+   "end": 512.039,
+   "speechStart": 506.136,
+   "speechEnd": 512.039,
+   "words": [
+    [
+     "You",
+     506.136,
+     506.397
+    ],
+    [
+     "respawned",
+     506.434,
+     507.086
+    ],
+    [
+     "in",
+     507.123,
+     507.318
+    ],
+    [
+     "Mr.",
+     507.355,
+     507.551
+    ],
+    [
+     "Fig's",
+     507.818,
+     508.144
+    ],
+    [
+     "birthday",
+     508.181,
+     508.768
+    ],
+    [
+     "cake.",
+     508.805,
+     509.131
+    ],
+    [
+     "To",
+     509.848,
+     510.044
+    ],
+    [
+     "this",
+     510.081,
+     510.407
+    ],
+    [
+     "day,",
+     510.444,
+     510.705
+    ],
+    [
+     "nobody",
+     510.857,
+     511.313
+    ],
+    [
+     "knows",
+     511.35,
+     511.742
+    ],
+    [
+     "how.",
+     511.778,
+     512.039
+    ]
+   ]
+  },
+  {
+   "id": "08.0",
+   "take": "08",
+   "scene": "SC 08",
+   "idx": 0,
+   "speaker": "SYSTEM",
+   "raw": "[booming, alarm] Warning! Save file corrupted. [pause] Respawns used: nine thousand, nine hundred, ninety-nine.",
+   "text": "Warning! Save file corrupted. Respawns used: nine thousand, nine hundred, ninety-nine.",
+   "clip": [
+    0.0,
+    6.727
+   ],
+   "start": 512.739,
+   "end": 519.466,
+   "speechStart": 512.739,
+   "speechEnd": 519.466,
+   "words": [
+    [
+     "Warning!",
+     512.739,
+     513.261
+    ],
+    [
+     "Save",
+     513.527,
+     513.853
+    ],
+    [
+     "file",
+     513.89,
+     514.217
+    ],
+    [
+     "corrupted.",
+     514.254,
+     514.905
+    ],
+    [
+     "Respawns",
+     515.623,
+     516.21
+    ],
+    [
+     "used:",
+     516.247,
+     516.573
+    ],
+    [
+     "nine",
+     516.61,
+     516.937
+    ],
+    [
+     "thousand,",
+     516.973,
+     517.561
+    ],
+    [
+     "nine",
+     517.712,
+     518.039
+    ],
+    [
+     "hundred,",
+     518.076,
+     518.597
+    ],
+    [
+     "ninety-nine.",
+     518.749,
+     519.466
+    ]
+   ]
+  },
+  {
+   "id": "08.1",
+   "take": "08",
+   "scene": "SC 08",
+   "idx": 1,
+   "speaker": "NARRATOR",
+   "raw": "[ominous] And then... everything you had ever undone... came back.",
+   "text": "And then... everything you had ever undone... came back.",
+   "clip": [
+    6.907,
+    10.989
+   ],
+   "start": 519.646,
+   "end": 523.728,
+   "speechStart": 519.646,
+   "speechEnd": 523.728,
+   "words": [
+    [
+     "And",
+     519.646,
+     519.907
+    ],
+    [
+     "then...",
+     519.944,
+     520.27
+    ],
+    [
+     "everything",
+     520.569,
+     521.287
+    ],
+    [
+     "you",
+     521.324,
+     521.584
+    ],
+    [
+     "had",
+     521.621,
+     521.882
+    ],
+    [
+     "ever",
+     521.919,
+     522.245
+    ],
+    [
+     "undone...",
+     522.282,
+     522.739
+    ],
+    [
+     "came",
+     523.038,
+     523.365
+    ],
+    [
+     "back.",
+     523.402,
+     523.728
+    ]
+   ],
+   "beatAfter": 1.5
+  },
+  {
+   "id": "08.2",
+   "take": "08",
+   "scene": "SC 08",
+   "idx": 2,
+   "speaker": "TIP",
+   "raw": "[glitching] T-TIP: Those are your fails. All of them. [pause] They never went away. [pause] They were just... saved.",
+   "text": "T-TIP: Those are your fails. All of them. They never went away. They were just... saved.",
+   "clip": [
+    12.669,
+    20.343
+   ],
+   "start": 525.408,
+   "end": 533.082,
+   "speechStart": 525.408,
+   "speechEnd": 533.082,
+   "words": [
+    [
+     "T-TIP:",
+     525.408,
+     525.783
+    ],
+    [
+     "Those",
+     525.82,
+     526.212
+    ],
+    [
+     "are",
+     526.248,
+     526.509
+    ],
+    [
+     "your",
+     526.546,
+     526.873
+    ],
+    [
+     "fails.",
+     526.909,
+     527.301
+    ],
+    [
+     "All",
+     527.567,
+     527.828
+    ],
+    [
+     "of",
+     527.865,
+     528.061
+    ],
+    [
+     "them.",
+     528.098,
+     528.424
+    ],
+    [
+     "They",
+     529.141,
+     529.467
+    ],
+    [
+     "never",
+     529.504,
+     529.896
+    ],
+    [
+     "went",
+     529.933,
+     530.258
+    ],
+    [
+     "away.",
+     530.295,
+     530.622
+    ],
+    [
+     "They",
+     531.339,
+     531.665
+    ],
+    [
+     "were",
+     531.702,
+     532.029
+    ],
+    [
+     "just...",
+     532.066,
+     532.391
+    ],
+    [
+     "saved.",
+     532.69,
+     533.082
+    ]
+   ]
+  },
+  {
+   "id": "08.3",
+   "take": "08",
+   "scene": "SC 08",
+   "idx": 3,
+   "speaker": "KID",
+   "raw": "[laughing] Look! He fell off his skateboard like a HUNDRED times!",
+   "text": "Look! He fell off his skateboard like a HUNDRED times!",
+   "clip": [
+    20.523,
+    24.621
+   ],
+   "start": 533.262,
+   "end": 537.36,
+   "speechStart": 533.262,
+   "speechEnd": 537.36,
+   "words": [
+    [
+     "Look!",
+     533.262,
+     533.588
+    ],
+    [
+     "He",
+     533.855,
+     534.05
+    ],
+    [
+     "fell",
+     534.087,
+     534.413
+    ],
+    [
+     "off",
+     534.45,
+     534.711
+    ],
+    [
+     "his",
+     534.748,
+     535.009
+    ],
+    [
+     "skateboard",
+     535.046,
+     535.764
+    ],
+    [
+     "like",
+     535.801,
+     536.126
+    ],
+    [
+     "a",
+     536.163,
+     536.294
+    ],
+    [
+     "HUNDRED",
+     536.33,
+     536.931
+    ],
+    [
+     "times!",
+     536.968,
+     537.36
+    ]
+   ]
+  },
+  {
+   "id": "08.4",
+   "take": "08",
+   "scene": "SC 08",
+   "idx": 4,
+   "speaker": "PRINCIPAL",
+   "raw": "[outraged] Why is a ghost throwing spaghetti at me?! [pause] AGAIN?!",
+   "text": "Why is a ghost throwing spaghetti at me?! AGAIN?!",
+   "clip": [
+    24.801,
+    28.836
+   ],
+   "start": 537.54,
+   "end": 541.575,
+   "speechStart": 537.54,
+   "speechEnd": 541.575,
+   "words": [
+    [
+     "Why",
+     537.54,
+     537.801
+    ],
+    [
+     "is",
+     537.838,
+     538.034
+    ],
+    [
+     "a",
+     538.071,
+     538.201
+    ],
+    [
+     "ghost",
+     538.238,
+     538.629
+    ],
+    [
+     "throwing",
+     538.666,
+     539.253
+    ],
+    [
+     "spaghetti",
+     539.29,
+     539.943
+    ],
+    [
+     "at",
+     539.98,
+     540.175
+    ],
+    [
+     "me?!",
+     540.212,
+     540.408
+    ],
+    [
+     "AGAIN?!",
+     541.125,
+     541.575
+    ]
+   ]
+  },
+  {
+   "id": "08.5",
+   "take": "08",
+   "scene": "SC 08",
+   "idx": 5,
+   "speaker": "NARRATOR",
+   "raw": "Now everyone could see every mistake you had ever erased. [pause] All nine thousand, nine hundred and ninety-nine of them.",
+   "text": "Now everyone could see every mistake you had ever erased. All nine thousand, nine hundred and ninety-nine of them.",
+   "clip": [
+    29.016,
+    37.716
+   ],
+   "start": 541.755,
+   "end": 550.455,
+   "speechStart": 541.755,
+   "speechEnd": 550.455,
+   "words": [
+    [
+     "Now",
+     541.755,
+     542.016
+    ],
+    [
+     "everyone",
+     542.053,
+     542.64
+    ],
+    [
+     "could",
+     542.677,
+     543.068
+    ],
+    [
+     "see",
+     543.105,
+     543.366
+    ],
+    [
+     "every",
+     543.403,
+     543.794
+    ],
+    [
+     "mistake",
+     543.831,
+     544.353
+    ],
+    [
+     "you",
+     544.39,
+     544.651
+    ],
+    [
+     "had",
+     544.688,
+     544.949
+    ],
+    [
+     "ever",
+     544.986,
+     545.311
+    ],
+    [
+     "erased.",
+     545.349,
+     545.805
+    ],
+    [
+     "All",
+     546.522,
+     546.784
+    ],
+    [
+     "nine",
+     546.821,
+     547.147
+    ],
+    [
+     "thousand,",
+     547.183,
+     547.771
+    ],
+    [
+     "nine",
+     547.922,
+     548.249
+    ],
+    [
+     "hundred",
+     548.285,
+     548.807
+    ],
+    [
+     "and",
+     548.844,
+     549.105
+    ],
+    [
+     "ninety-nine",
+     549.142,
+     549.86
+    ],
+    [
+     "of",
+     549.897,
+     550.092
+    ],
+    [
+     "them.",
+     550.129,
+     550.455
+    ]
+   ],
+   "beatAfter": 1.0
+  },
+  {
+   "id": "08.6",
+   "take": "08",
+   "scene": "SC 08",
+   "idx": 6,
+   "speaker": "YOU",
+   "raw": "[miserable] This is my worst nightmare. [pause] Literally. I've HAD this nightmare.",
+   "text": "This is my worst nightmare. Literally. I've HAD this nightmare.",
+   "clip": [
+    38.896,
+    44.092
+   ],
+   "start": 551.635,
+   "end": 556.831,
+   "speechStart": 551.635,
+   "speechEnd": 556.831,
+   "words": [
+    [
+     "This",
+     551.635,
+     551.961
+    ],
+    [
+     "is",
+     551.998,
+     552.193
+    ],
+    [
+     "my",
+     552.23,
+     552.426
+    ],
+    [
+     "worst",
+     552.463,
+     552.854
+    ],
+    [
+     "nightmare.",
+     552.891,
+     553.544
+    ],
+    [
+     "Literally.",
+     554.261,
+     554.913
+    ],
+    [
+     "I've",
+     555.18,
+     555.441
+    ],
+    [
+     "HAD",
+     555.478,
+     555.778
+    ],
+    [
+     "this",
+     555.815,
+     556.141
+    ],
+    [
+     "nightmare.",
+     556.178,
+     556.831
+    ]
+   ]
+  },
+  {
+   "id": "08.7",
+   "take": "08",
+   "scene": "SC 08",
+   "idx": 7,
+   "speaker": "IVY",
+   "raw": "[amazed, quiet] You fell fifty-six times... and you got back up fifty-six times?",
+   "text": "You fell fifty-six times... and you got back up fifty-six times?",
+   "clip": [
+    44.272,
+    48.752
+   ],
+   "start": 557.011,
+   "end": 561.491,
+   "speechStart": 557.011,
+   "speechEnd": 561.491,
+   "words": [
+    [
+     "You",
+     557.011,
+     557.272
+    ],
+    [
+     "fell",
+     557.309,
+     557.635
+    ],
+    [
+     "fifty-six",
+     557.672,
+     558.259
+    ],
+    [
+     "times...",
+     558.296,
+     558.687
+    ],
+    [
+     "and",
+     558.986,
+     559.247
+    ],
+    [
+     "you",
+     559.284,
+     559.546
+    ],
+    [
+     "got",
+     559.583,
+     559.843
+    ],
+    [
+     "back",
+     559.88,
+     560.207
+    ],
+    [
+     "up",
+     560.243,
+     560.439
+    ],
+    [
+     "fifty-six",
+     560.476,
+     561.063
+    ],
+    [
+     "times?",
+     561.1,
+     561.491
+    ]
+   ]
+  },
+  {
+   "id": "08.8",
+   "take": "08",
+   "scene": "SC 08",
+   "idx": 8,
+   "speaker": "YOU",
+   "raw": "[ashamed] Only because I could respawn.",
+   "text": "Only because I could respawn.",
+   "clip": [
+    48.932,
+    50.971
+   ],
+   "start": 561.671,
+   "end": 563.71,
+   "speechStart": 561.671,
+   "speechEnd": 563.71,
+   "words": [
+    [
+     "Only",
+     561.671,
+     561.997
+    ],
+    [
+     "because",
+     562.034,
+     562.556
+    ],
+    [
+     "I",
+     562.593,
+     562.723
+    ],
+    [
+     "could",
+     562.76,
+     563.152
+    ],
+    [
+     "respawn.",
+     563.189,
+     563.71
+    ]
+   ]
+  },
+  {
+   "id": "08.9",
+   "take": "08",
+   "scene": "SC 08",
+   "idx": 9,
+   "speaker": "IVY",
+   "raw": "[smiling] Still. [pause] That's kind of cool.",
+   "text": "Still. That's kind of cool.",
+   "clip": [
+    51.151,
+    53.61
+   ],
+   "start": 563.89,
+   "end": 566.349,
+   "speechStart": 563.89,
+   "speechEnd": 566.349,
+   "words": [
+    [
+     "Still.",
+     563.89,
+     564.281
+    ],
+    [
+     "That's",
+     564.999,
+     565.391
+    ],
+    [
+     "kind",
+     565.428,
+     565.753
+    ],
+    [
+     "of",
+     565.79,
+     565.986
+    ],
+    [
+     "cool.",
+     566.023,
+     566.349
+    ]
+   ]
+  },
+  {
+   "id": "08.10",
+   "take": "08",
+   "scene": "SC 08",
+   "idx": 10,
+   "speaker": "DAD",
+   "raw": "[stuck, looping] Why did the pan\u2014 [pause] Why did the pan\u2014 [pause] Why did the pan\u2014",
+   "text": "Why did the pan\u2014 Why did the pan\u2014 Why did the pan\u2014",
+   "clip": [
+    53.79,
+    58.589
+   ],
+   "start": 566.529,
+   "end": 571.328,
+   "speechStart": 566.529,
+   "speechEnd": 571.328,
+   "words": [
+    [
+     "Why",
+     566.529,
+     566.79
+    ],
+    [
+     "did",
+     566.827,
+     567.087
+    ],
+    [
+     "the",
+     567.124,
+     567.386
+    ],
+    [
+     "pan\u2014",
+     567.423,
+     567.684
+    ],
+    [
+     "Why",
+     568.352,
+     568.613
+    ],
+    [
+     "did",
+     568.65,
+     568.91
+    ],
+    [
+     "the",
+     568.947,
+     569.208
+    ],
+    [
+     "pan\u2014",
+     569.245,
+     569.506
+    ],
+    [
+     "Why",
+     570.175,
+     570.435
+    ],
+    [
+     "did",
+     570.472,
+     570.733
+    ],
+    [
+     "the",
+     570.77,
+     571.031
+    ],
+    [
+     "pan\u2014",
+     571.068,
+     571.328
+    ]
+   ]
+  },
+  {
+   "id": "08.11",
+   "take": "08",
+   "scene": "SC 08",
+   "idx": 11,
+   "speaker": "BEA",
+   "raw": "[tiny voice, looping] Help! Help! Help!",
+   "text": "Help! Help! Help!",
+   "clip": [
+    58.769,
+    60.28
+   ],
+   "start": 571.508,
+   "end": 573.019,
+   "speechStart": 571.508,
+   "speechEnd": 573.019,
+   "words": [
+    [
+     "Help!",
+     571.508,
+     571.834
+    ],
+    [
+     "Help!",
+     572.101,
+     572.426
+    ],
+    [
+     "Help!",
+     572.693,
+     573.019
+    ]
+   ]
+  },
+  {
+   "id": "08.12",
+   "take": "08",
+   "scene": "SC 08",
+   "idx": 12,
+   "speaker": "TIP",
+   "raw": "[urgent, glitching] TIP: The day is f-f-freezing! If it freezes... everyone gets stuck. FOREVER!",
+   "text": "TIP: The day is f-f-freezing! If it freezes... everyone gets stuck. FOREVER!",
+   "clip": [
+    60.46,
+    66.141
+   ],
+   "start": 573.199,
+   "end": 578.88,
+   "speechStart": 573.199,
+   "speechEnd": 578.88,
+   "words": [
+    [
+     "TIP:",
+     573.199,
+     573.499
+    ],
+    [
+     "The",
+     573.536,
+     573.797
+    ],
+    [
+     "day",
+     573.834,
+     574.094
+    ],
+    [
+     "is",
+     574.131,
+     574.327
+    ],
+    [
+     "f-f-freezing!",
+     574.364,
+     575.082
+    ],
+    [
+     "If",
+     575.348,
+     575.544
+    ],
+    [
+     "it",
+     575.581,
+     575.776
+    ],
+    [
+     "freezes...",
+     575.813,
+     576.336
+    ],
+    [
+     "everyone",
+     576.635,
+     577.222
+    ],
+    [
+     "gets",
+     577.259,
+     577.584
+    ],
+    [
+     "stuck.",
+     577.621,
+     578.013
+    ],
+    [
+     "FOREVER!",
+     578.28,
+     578.88
+    ]
+   ]
+  },
+  {
+   "id": "09.0",
+   "take": "09",
+   "scene": "SC 09",
+   "idx": 0,
+   "speaker": "TIP",
+   "raw": "[softly, glitching] T-tip: Delete the save... and everything goes back to normal. [pause] But no more respawns. Ever.",
+   "text": "T-tip: Delete the save... and everything goes back to normal. But no more respawns. Ever.",
+   "clip": [
+    0.0,
+    7.038
+   ],
+   "start": 579.58,
+   "end": 586.618,
+   "speechStart": 579.58,
+   "speechEnd": 586.618,
+   "words": [
+    [
+     "T-tip:",
+     579.58,
+     579.906
+    ],
+    [
+     "Delete",
+     579.943,
+     580.4
+    ],
+    [
+     "the",
+     580.437,
+     580.698
+    ],
+    [
+     "save...",
+     580.735,
+     581.061
+    ],
+    [
+     "and",
+     581.36,
+     581.621
+    ],
+    [
+     "everything",
+     581.658,
+     582.375
+    ],
+    [
+     "goes",
+     582.412,
+     582.739
+    ],
+    [
+     "back",
+     582.776,
+     583.101
+    ],
+    [
+     "to",
+     583.138,
+     583.334
+    ],
+    [
+     "normal.",
+     583.371,
+     583.828
+    ],
+    [
+     "But",
+     584.545,
+     584.806
+    ],
+    [
+     "no",
+     584.843,
+     585.039
+    ],
+    [
+     "more",
+     585.076,
+     585.401
+    ],
+    [
+     "respawns.",
+     585.438,
+     586.025
+    ],
+    [
+     "Ever.",
+     586.292,
+     586.618
+    ]
+   ]
+  },
+  {
+   "id": "09.1",
+   "take": "09",
+   "scene": "SC 09",
+   "idx": 1,
+   "speaker": "YOU",
+   "raw": "[panicked] But the talent show is TONIGHT! What if I mess up? In front of EVERYONE?!",
+   "text": "But the talent show is TONIGHT! What if I mess up? In front of EVERYONE?!",
+   "clip": [
+    7.218,
+    12.926
+   ],
+   "start": 586.798,
+   "end": 592.506,
+   "speechStart": 586.798,
+   "speechEnd": 592.506,
+   "words": [
+    [
+     "But",
+     586.798,
+     587.059
+    ],
+    [
+     "the",
+     587.096,
+     587.356
+    ],
+    [
+     "talent",
+     587.393,
+     587.85
+    ],
+    [
+     "show",
+     587.887,
+     588.213
+    ],
+    [
+     "is",
+     588.25,
+     588.446
+    ],
+    [
+     "TONIGHT!",
+     588.483,
+     589.083
+    ],
+    [
+     "What",
+     589.35,
+     589.675
+    ],
+    [
+     "if",
+     589.712,
+     589.908
+    ],
+    [
+     "I",
+     589.945,
+     590.076
+    ],
+    [
+     "mess",
+     590.112,
+     590.439
+    ],
+    [
+     "up?",
+     590.476,
+     590.671
+    ],
+    [
+     "In",
+     590.937,
+     591.133
+    ],
+    [
+     "front",
+     591.17,
+     591.561
+    ],
+    [
+     "of",
+     591.598,
+     591.794
+    ],
+    [
+     "EVERYONE?!",
+     591.831,
+     592.506
+    ]
+   ]
+  },
+  {
+   "id": "09.2",
+   "take": "09",
+   "scene": "SC 09",
+   "idx": 2,
+   "speaker": "IVY",
+   "raw": "[warmly] Then you mess up. [pause] With me.",
+   "text": "Then you mess up. With me.",
+   "clip": [
+    13.106,
+    15.602
+   ],
+   "start": 592.686,
+   "end": 595.182,
+   "speechStart": 592.686,
+   "speechEnd": 595.182,
+   "words": [
+    [
+     "Then",
+     592.686,
+     593.012
+    ],
+    [
+     "you",
+     593.049,
+     593.31
+    ],
+    [
+     "mess",
+     593.347,
+     593.673
+    ],
+    [
+     "up.",
+     593.71,
+     593.905
+    ],
+    [
+     "With",
+     594.623,
+     594.949
+    ],
+    [
+     "me.",
+     594.986,
+     595.182
+    ]
+   ],
+   "beatAfter": 1.0
+  },
+  {
+   "id": "09.3",
+   "take": "09",
+   "scene": "SC 09",
+   "idx": 3,
+   "speaker": "NARRATOR",
+   "raw": "You looked at all your fails. [pause] Fifty-six crashes. Thirty-one bad jokes. One very surprised goldfish.",
+   "text": "You looked at all your fails. Fifty-six crashes. Thirty-one bad jokes. One very surprised goldfish.",
+   "clip": [
+    16.782,
+    24.57
+   ],
+   "start": 596.362,
+   "end": 604.15,
+   "speechStart": 596.362,
+   "speechEnd": 604.15,
+   "words": [
+    [
+     "You",
+     596.362,
+     596.623
+    ],
+    [
+     "looked",
+     596.66,
+     597.116
+    ],
+    [
+     "at",
+     597.153,
+     597.349
+    ],
+    [
+     "all",
+     597.386,
+     597.647
+    ],
+    [
+     "your",
+     597.684,
+     598.01
+    ],
+    [
+     "fails.",
+     598.047,
+     598.438
+    ],
+    [
+     "Fifty-six",
+     599.156,
+     599.743
+    ],
+    [
+     "crashes.",
+     599.78,
+     600.301
+    ],
+    [
+     "Thirty-one",
+     600.568,
+     601.221
+    ],
+    [
+     "bad",
+     601.257,
+     601.518
+    ],
+    [
+     "jokes.",
+     601.555,
+     601.946
+    ],
+    [
+     "One",
+     602.213,
+     602.473
+    ],
+    [
+     "very",
+     602.51,
+     602.837
+    ],
+    [
+     "surprised",
+     602.874,
+     603.526
+    ],
+    [
+     "goldfish.",
+     603.563,
+     604.15
+    ]
+   ]
+  },
+  {
+   "id": "09.4",
+   "take": "09",
+   "scene": "SC 09",
+   "idx": 4,
+   "speaker": "NARRATOR",
+   "raw": "[softly] And for the first time... they didn't look embarrassing. [pause] They looked like... trying.",
+   "text": "And for the first time... they didn't look embarrassing. They looked like... trying.",
+   "clip": [
+    24.79,
+    31.396
+   ],
+   "start": 604.37,
+   "end": 610.976,
+   "speechStart": 604.37,
+   "speechEnd": 610.976,
+   "words": [
+    [
+     "And",
+     604.37,
+     604.631
+    ],
+    [
+     "for",
+     604.668,
+     604.928
+    ],
+    [
+     "the",
+     604.965,
+     605.227
+    ],
+    [
+     "first",
+     605.264,
+     605.655
+    ],
+    [
+     "time...",
+     605.692,
+     606.018
+    ],
+    [
+     "they",
+     606.317,
+     606.643
+    ],
+    [
+     "didn't",
+     606.68,
+     607.072
+    ],
+    [
+     "look",
+     607.109,
+     607.434
+    ],
+    [
+     "embarrassing.",
+     607.471,
+     608.32
+    ],
+    [
+     "They",
+     609.037,
+     609.363
+    ],
+    [
+     "looked",
+     609.4,
+     609.857
+    ],
+    [
+     "like...",
+     609.894,
+     610.22
+    ],
+    [
+     "trying.",
+     610.519,
+     610.976
+    ]
+   ]
+  },
+  {
+   "id": "09.5",
+   "take": "09",
+   "scene": "SC 09",
+   "idx": 5,
+   "speaker": "YOU",
+   "raw": "[determined] Okay. [pause] Delete.",
+   "text": "Okay. Delete.",
+   "clip": [
+    31.576,
+    33.077
+   ],
+   "start": 611.156,
+   "end": 612.657,
+   "speechStart": 611.156,
+   "speechEnd": 612.657,
+   "words": [
+    [
+     "Okay.",
+     611.156,
+     611.482
+    ],
+    [
+     "Delete.",
+     612.2,
+     612.657
+    ]
+   ],
+   "beatAfter": 1.5
+  },
+  {
+   "id": "09.6",
+   "take": "09",
+   "scene": "SC 09",
+   "idx": 6,
+   "speaker": "SYSTEM",
+   "raw": "[calm] Save deleted. [pause] Respawn... disabled.",
+   "text": "Save deleted. Respawn... disabled.",
+   "clip": [
+    34.757,
+    37.768
+   ],
+   "start": 614.337,
+   "end": 617.348,
+   "speechStart": 614.337,
+   "speechEnd": 617.348,
+   "words": [
+    [
+     "Save",
+     614.337,
+     614.663
+    ],
+    [
+     "deleted.",
+     614.7,
+     615.222
+    ],
+    [
+     "Respawn...",
+     615.939,
+     616.462
+    ],
+    [
+     "disabled.",
+     616.761,
+     617.348
+    ]
+   ]
+  },
+  {
+   "id": "09.7",
+   "take": "09",
+   "scene": "SC 09",
+   "idx": 7,
+   "speaker": "DAD",
+   "raw": "[unfrozen, confused] \u2014go to the doctor? [pause] Wait. Why am I outside?",
+   "text": "\u2014go to the doctor? Wait. Why am I outside?",
+   "clip": [
+    37.948,
+    41.697
+   ],
+   "start": 617.528,
+   "end": 621.277,
+   "speechStart": 617.528,
+   "speechEnd": 621.277,
+   "words": [
+    [
+     "go",
+     617.528,
+     617.724
+    ],
+    [
+     "to",
+     617.761,
+     617.956
+    ],
+    [
+     "the",
+     617.993,
+     618.254
+    ],
+    [
+     "doctor?",
+     618.291,
+     618.747
+    ],
+    [
+     "Wait.",
+     619.465,
+     619.791
+    ],
+    [
+     "Why",
+     620.058,
+     620.318
+    ],
+    [
+     "am",
+     620.355,
+     620.551
+    ],
+    [
+     "I",
+     620.588,
+     620.719
+    ],
+    [
+     "outside?",
+     620.756,
+     621.277
+    ]
+   ]
+  },
+  {
+   "id": "09.8",
+   "take": "09",
+   "scene": "SC 09",
+   "idx": 8,
+   "speaker": "TIP",
+   "raw": "[softly, fading] TIP: Last tip. [pause] Real life doesn't have checkpoints. [pause] That's what makes it... count.",
+   "text": "TIP: Last tip. Real life doesn't have checkpoints. That's what makes it... count.",
+   "clip": [
+    41.877,
+    48.744
+   ],
+   "start": 621.457,
+   "end": 628.324,
+   "speechStart": 621.457,
+   "speechEnd": 628.324,
+   "words": [
+    [
+     "TIP:",
+     621.457,
+     621.757
+    ],
+    [
+     "Last",
+     621.794,
+     622.12
+    ],
+    [
+     "tip.",
+     622.157,
+     622.418
+    ],
+    [
+     "Real",
+     623.136,
+     623.462
+    ],
+    [
+     "life",
+     623.499,
+     623.824
+    ],
+    [
+     "doesn't",
+     623.861,
+     624.318
+    ],
+    [
+     "have",
+     624.355,
+     624.681
+    ],
+    [
+     "checkpoints.",
+     624.718,
+     625.501
+    ],
+    [
+     "That's",
+     626.219,
+     626.61
+    ],
+    [
+     "what",
+     626.647,
+     626.973
+    ],
+    [
+     "makes",
+     627.01,
+     627.401
+    ],
+    [
+     "it...",
+     627.438,
+     627.634
+    ],
+    [
+     "count.",
+     627.933,
+     628.324
+    ]
+   ]
+  },
+  {
+   "id": "09.9",
+   "take": "09",
+   "scene": "SC 09",
+   "idx": 9,
+   "speaker": "YOU",
+   "raw": "[quietly] Thanks, Tip.",
+   "text": "Thanks, Tip.",
+   "clip": [
+    48.924,
+    49.793
+   ],
+   "start": 628.504,
+   "end": 629.373,
+   "speechStart": 628.504,
+   "speechEnd": 629.373,
+   "words": [
+    [
+     "Thanks,",
+     628.504,
+     628.961
+    ],
+    [
+     "Tip.",
+     629.112,
+     629.373
+    ]
+   ]
+  },
+  {
+   "id": "09.10",
+   "take": "09",
+   "scene": "SC 09",
+   "idx": 10,
+   "speaker": "NARRATOR",
+   "raw": "Lives remaining: one. [pause] Just like everybody else.",
+   "text": "Lives remaining: one. Just like everybody else.",
+   "clip": [
+    49.973,
+    53.811
+   ],
+   "start": 629.553,
+   "end": 633.391,
+   "speechStart": 629.553,
+   "speechEnd": 633.391,
+   "words": [
+    [
+     "Lives",
+     629.553,
+     629.944
+    ],
+    [
+     "remaining:",
+     629.981,
+     630.634
+    ],
+    [
+     "one.",
+     630.671,
+     630.931
+    ],
+    [
+     "Just",
+     631.649,
+     631.975
+    ],
+    [
+     "like",
+     632.012,
+     632.338
+    ],
+    [
+     "everybody",
+     632.375,
+     633.027
+    ],
+    [
+     "else.",
+     633.064,
+     633.391
+    ]
+   ]
+  },
+  {
+   "id": "10.0",
+   "take": "10",
+   "scene": "SC 10",
+   "idx": 0,
+   "speaker": "NARRATOR",
+   "raw": "Friday night. The whole school was there. [pause] And every act before yours... was perfect.",
+   "text": "Friday night. The whole school was there. And every act before yours... was perfect.",
+   "clip": [
+    0.0,
+    6.805
+   ],
+   "start": 634.091,
+   "end": 640.896,
+   "speechStart": 634.091,
+   "speechEnd": 640.896,
+   "words": [
+    [
+     "Friday",
+     634.091,
+     634.548
+    ],
+    [
+     "night.",
+     634.585,
+     634.976
+    ],
+    [
+     "The",
+     635.242,
+     635.503
+    ],
+    [
+     "whole",
+     635.54,
+     635.932
+    ],
+    [
+     "school",
+     635.969,
+     636.426
+    ],
+    [
+     "was",
+     636.462,
+     636.723
+    ],
+    [
+     "there.",
+     636.76,
+     637.151
+    ],
+    [
+     "And",
+     637.869,
+     638.13
+    ],
+    [
+     "every",
+     638.166,
+     638.558
+    ],
+    [
+     "act",
+     638.594,
+     638.856
+    ],
+    [
+     "before",
+     638.893,
+     639.35
+    ],
+    [
+     "yours...",
+     639.387,
+     639.778
+    ],
+    [
+     "was",
+     640.077,
+     640.338
+    ],
+    [
+     "perfect.",
+     640.375,
+     640.896
+    ]
+   ]
+  },
+  {
+   "id": "10.1",
+   "take": "10",
+   "scene": "SC 10",
+   "idx": 1,
+   "speaker": "NARRATOR",
+   "raw": "Dad came. Mom came straight from her shift. [pause] And Bea made a sign.",
+   "text": "Dad came. Mom came straight from her shift. And Bea made a sign.",
+   "clip": [
+    7.025,
+    12.422
+   ],
+   "start": 641.116,
+   "end": 646.513,
+   "speechStart": 641.116,
+   "speechEnd": 646.513,
+   "words": [
+    [
+     "Dad",
+     641.116,
+     641.377
+    ],
+    [
+     "came.",
+     641.414,
+     641.74
+    ],
+    [
+     "Mom",
+     642.007,
+     642.267
+    ],
+    [
+     "came",
+     642.304,
+     642.631
+    ],
+    [
+     "straight",
+     642.667,
+     643.255
+    ],
+    [
+     "from",
+     643.291,
+     643.618
+    ],
+    [
+     "her",
+     643.655,
+     643.915
+    ],
+    [
+     "shift.",
+     643.952,
+     644.344
+    ],
+    [
+     "And",
+     645.061,
+     645.322
+    ],
+    [
+     "Bea",
+     645.359,
+     645.62
+    ],
+    [
+     "made",
+     645.657,
+     645.983
+    ],
+    [
+     "a",
+     646.02,
+     646.15
+    ],
+    [
+     "sign.",
+     646.187,
+     646.513
+    ]
+   ],
+   "beatAfter": 1.0
+  },
+  {
+   "id": "10.2",
+   "take": "10",
+   "scene": "SC 10",
+   "idx": 2,
+   "speaker": "PRINCIPAL",
+   "raw": "[announcing] And next... Ivy and... [pause] you! With \"Science Magic\"!",
+   "text": "And next... Ivy and... you! With \"Science Magic\"!",
+   "clip": [
+    13.602,
+    17.675
+   ],
+   "start": 647.693,
+   "end": 651.766,
+   "speechStart": 647.693,
+   "speechEnd": 651.766,
+   "words": [
+    [
+     "And",
+     647.693,
+     647.954
+    ],
+    [
+     "next...",
+     647.991,
+     648.317
+    ],
+    [
+     "Ivy",
+     648.616,
+     648.877
+    ],
+    [
+     "and...",
+     648.914,
+     649.175
+    ],
+    [
+     "you!",
+     649.925,
+     650.187
+    ],
+    [
+     "With",
+     650.453,
+     650.779
+    ],
+    [
+     "\"Science",
+     650.816,
+     651.338
+    ],
+    [
+     "Magic\"!",
+     651.375,
+     651.766
+    ]
+   ]
+  },
+  {
+   "id": "10.3",
+   "take": "10",
+   "scene": "SC 10",
+   "idx": 3,
+   "speaker": "NARRATOR",
+   "raw": "No checkpoint. No reset. No pause menu. [pause] Just you... and four hundred people.",
+   "text": "No checkpoint. No reset. No pause menu. Just you... and four hundred people.",
+   "clip": [
+    17.855,
+    24.266
+   ],
+   "start": 651.946,
+   "end": 658.357,
+   "speechStart": 651.946,
+   "speechEnd": 658.357,
+   "words": [
+    [
+     "No",
+     651.946,
+     652.142
+    ],
+    [
+     "checkpoint.",
+     652.179,
+     652.896
+    ],
+    [
+     "No",
+     653.163,
+     653.358
+    ],
+    [
+     "reset.",
+     653.395,
+     653.787
+    ],
+    [
+     "No",
+     654.053,
+     654.249
+    ],
+    [
+     "pause",
+     654.285,
+     654.677
+    ],
+    [
+     "menu.",
+     654.714,
+     655.04
+    ],
+    [
+     "Just",
+     655.757,
+     656.084
+    ],
+    [
+     "you...",
+     656.121,
+     656.381
+    ],
+    [
+     "and",
+     656.681,
+     656.941
+    ],
+    [
+     "four",
+     656.978,
+     657.305
+    ],
+    [
+     "hundred",
+     657.342,
+     657.864
+    ],
+    [
+     "people.",
+     657.901,
+     658.357
+    ]
+   ]
+  },
+  {
+   "id": "10.4",
+   "take": "10",
+   "scene": "SC 10",
+   "idx": 4,
+   "speaker": "YOU",
+   "raw": "[nervous, whispering] Okay. One try. Only one try.",
+   "text": "Okay. One try. Only one try.",
+   "clip": [
+    24.446,
+    26.785
+   ],
+   "start": 658.537,
+   "end": 660.876,
+   "speechStart": 658.537,
+   "speechEnd": 660.876,
+   "words": [
+    [
+     "Okay.",
+     658.537,
+     658.863
+    ],
+    [
+     "One",
+     659.13,
+     659.391
+    ],
+    [
+     "try.",
+     659.428,
+     659.688
+    ],
+    [
+     "Only",
+     659.955,
+     660.281
+    ],
+    [
+     "one",
+     660.318,
+     660.579
+    ],
+    [
+     "try.",
+     660.616,
+     660.876
+    ]
+   ]
+  },
+  {
+   "id": "10.5",
+   "take": "10",
+   "scene": "SC 10",
+   "idx": 5,
+   "speaker": "IVY",
+   "raw": "[dramatic] Ladies and gentlemen! From this ordinary hat, I will now pull out\u2014",
+   "text": "Ladies and gentlemen! From this ordinary hat, I will now pull out\u2014",
+   "clip": [
+    26.965,
+    31.89
+   ],
+   "start": 661.056,
+   "end": 665.981,
+   "speechStart": 661.056,
+   "speechEnd": 665.981,
+   "words": [
+    [
+     "Ladies",
+     661.056,
+     661.513
+    ],
+    [
+     "and",
+     661.55,
+     661.81
+    ],
+    [
+     "gentlemen!",
+     661.847,
+     662.5
+    ],
+    [
+     "From",
+     662.767,
+     663.092
+    ],
+    [
+     "this",
+     663.129,
+     663.455
+    ],
+    [
+     "ordinary",
+     663.492,
+     664.079
+    ],
+    [
+     "hat,",
+     664.116,
+     664.377
+    ],
+    [
+     "I",
+     664.529,
+     664.659
+    ],
+    [
+     "will",
+     664.696,
+     665.022
+    ],
+    [
+     "now",
+     665.059,
+     665.32
+    ],
+    [
+     "pull",
+     665.357,
+     665.683
+    ],
+    [
+     "out\u2014",
+     665.72,
+     665.981
+    ]
+   ]
+  },
+  {
+   "id": "10.6",
+   "take": "10",
+   "scene": "SC 10",
+   "idx": 6,
+   "speaker": "NARRATOR",
+   "raw": "And of course... you messed up.",
+   "text": "And of course... you messed up.",
+   "clip": [
+    32.07,
+    34.343
+   ],
+   "start": 666.161,
+   "end": 668.434,
+   "speechStart": 666.161,
+   "speechEnd": 668.434,
+   "words": [
+    [
+     "And",
+     666.161,
+     666.422
+    ],
+    [
+     "of",
+     666.459,
+     666.655
+    ],
+    [
+     "course...",
+     666.692,
+     667.148
+    ],
+    [
+     "you",
+     667.448,
+     667.708
+    ],
+    [
+     "messed",
+     667.745,
+     668.202
+    ],
+    [
+     "up.",
+     668.239,
+     668.434
+    ]
+   ],
+   "beatAfter": 1.5
+  },
+  {
+   "id": "10.7",
+   "take": "10",
+   "scene": "SC 10",
+   "idx": 7,
+   "speaker": "YOU",
+   "raw": "[whispering, frozen] Reset... reset... RESET!",
+   "text": "Reset... reset... RESET!",
+   "clip": [
+    36.023,
+    37.854
+   ],
+   "start": 670.114,
+   "end": 671.945,
+   "speechStart": 670.114,
+   "speechEnd": 671.945,
+   "words": [
+    [
+     "Reset...",
+     670.114,
+     670.505
+    ],
+    [
+     "reset...",
+     670.804,
+     671.196
+    ],
+    [
+     "RESET!",
+     671.496,
+     671.945
+    ]
+   ]
+  },
+  {
+   "id": "10.8",
+   "take": "10",
+   "scene": "SC 10",
+   "idx": 8,
+   "speaker": "IVY",
+   "raw": "[whispering, grinning] Fail number three hundred and thirteen. [pause] Let's make it a good one.",
+   "text": "Fail number three hundred and thirteen. Let's make it a good one.",
+   "clip": [
+    38.034,
+    43.23
+   ],
+   "start": 672.125,
+   "end": 677.321,
+   "speechStart": 672.125,
+   "speechEnd": 677.321,
+   "words": [
+    [
+     "Fail",
+     672.125,
+     672.451
+    ],
+    [
+     "number",
+     672.488,
+     672.945
+    ],
+    [
+     "three",
+     672.982,
+     673.373
+    ],
+    [
+     "hundred",
+     673.41,
+     673.931
+    ],
+    [
+     "and",
+     673.968,
+     674.23
+    ],
+    [
+     "thirteen.",
+     674.267,
+     674.853
+    ],
+    [
+     "Let's",
+     675.571,
+     675.897
+    ],
+    [
+     "make",
+     675.934,
+     676.26
+    ],
+    [
+     "it",
+     676.297,
+     676.493
+    ],
+    [
+     "a",
+     676.53,
+     676.66
+    ],
+    [
+     "good",
+     676.697,
+     677.023
+    ],
+    [
+     "one.",
+     677.06,
+     677.321
+    ]
+   ]
+  },
+  {
+   "id": "10.9",
+   "take": "10",
+   "scene": "SC 10",
+   "idx": 9,
+   "speaker": "NARRATOR",
+   "raw": "So you did something you had never done before. [pause] You kept going.",
+   "text": "So you did something you had never done before. You kept going.",
+   "clip": [
+    43.41,
+    48.541
+   ],
+   "start": 677.501,
+   "end": 682.632,
+   "speechStart": 677.501,
+   "speechEnd": 682.632,
+   "words": [
+    [
+     "So",
+     677.501,
+     677.697
+    ],
+    [
+     "you",
+     677.734,
+     677.995
+    ],
+    [
+     "did",
+     678.032,
+     678.292
+    ],
+    [
+     "something",
+     678.329,
+     678.982
+    ],
+    [
+     "you",
+     679.019,
+     679.28
+    ],
+    [
+     "had",
+     679.316,
+     679.577
+    ],
+    [
+     "never",
+     679.614,
+     680.005
+    ],
+    [
+     "done",
+     680.042,
+     680.369
+    ],
+    [
+     "before.",
+     680.405,
+     680.862
+    ],
+    [
+     "You",
+     681.58,
+     681.84
+    ],
+    [
+     "kept",
+     681.877,
+     682.204
+    ],
+    [
+     "going.",
+     682.241,
+     682.632
+    ]
+   ],
+   "beatAfter": 2.0
+  },
+  {
+   "id": "10.10",
+   "take": "10",
+   "scene": "SC 10",
+   "idx": 10,
+   "speaker": "KID",
+   "raw": "[chanting] FOAM! FOAM! FOAM! FOAM!",
+   "text": "FOAM! FOAM! FOAM! FOAM!",
+   "clip": [
+    50.721,
+    53.021
+   ],
+   "start": 684.812,
+   "end": 687.112,
+   "speechStart": 684.812,
+   "speechEnd": 687.112,
+   "words": [
+    [
+     "FOAM!",
+     684.812,
+     685.187
+    ],
+    [
+     "FOAM!",
+     685.453,
+     685.829
+    ],
+    [
+     "FOAM!",
+     686.095,
+     686.47
+    ],
+    [
+     "FOAM!",
+     686.737,
+     687.112
+    ]
+   ]
+  },
+  {
+   "id": "10.11",
+   "take": "10",
+   "scene": "SC 10",
+   "idx": 11,
+   "speaker": "MOM",
+   "raw": "[cheering, laughing] I'm sending this to the WHOLE family!",
+   "text": "I'm sending this to the WHOLE family!",
+   "clip": [
+    53.201,
+    55.829
+   ],
+   "start": 687.292,
+   "end": 689.92,
+   "speechStart": 687.292,
+   "speechEnd": 689.92,
+   "words": [
+    [
+     "I'm",
+     687.292,
+     687.488
+    ],
+    [
+     "sending",
+     687.525,
+     688.046
+    ],
+    [
+     "this",
+     688.083,
+     688.41
+    ],
+    [
+     "to",
+     688.447,
+     688.642
+    ],
+    [
+     "the",
+     688.679,
+     688.94
+    ],
+    [
+     "WHOLE",
+     688.977,
+     689.427
+    ],
+    [
+     "family!",
+     689.464,
+     689.92
+    ]
+   ]
+  },
+  {
+   "id": "10.12",
+   "take": "10",
+   "scene": "SC 10",
+   "idx": 12,
+   "speaker": "BEA",
+   "raw": "[tiny voice, shouting] THAT'S MY BROTHER! [pause] He's a mushroom!",
+   "text": "THAT'S MY BROTHER! He's a mushroom!",
+   "clip": [
+    56.009,
+    59.099
+   ],
+   "start": 690.1,
+   "end": 693.19,
+   "speechStart": 690.1,
+   "speechEnd": 693.19,
+   "words": [
+    [
+     "THAT'S",
+     690.1,
+     690.55
+    ],
+    [
+     "MY",
+     690.587,
+     690.783
+    ],
+    [
+     "BROTHER!",
+     690.82,
+     691.419
+    ],
+    [
+     "He's",
+     692.137,
+     692.398
+    ],
+    [
+     "a",
+     692.435,
+     692.566
+    ],
+    [
+     "mushroom!",
+     692.603,
+     693.19
+    ]
+   ]
+  },
+  {
+   "id": "10.13",
+   "take": "10",
+   "scene": "SC 10",
+   "idx": 13,
+   "speaker": "PRINCIPAL",
+   "raw": "[foamy, deadpan] ...Best. Disaster. Ever.",
+   "text": "...Best. Disaster. Ever.",
+   "clip": [
+    59.279,
+    61.051
+   ],
+   "start": 693.37,
+   "end": 695.142,
+   "speechStart": 693.37,
+   "speechEnd": 695.142,
+   "words": [
+    [
+     "...Best.",
+     693.37,
+     693.696
+    ],
+    [
+     "Disaster.",
+     693.963,
+     694.55
+    ],
+    [
+     "Ever.",
+     694.816,
+     695.142
+    ]
+   ]
+  },
+  {
+   "id": "10.14",
+   "take": "10",
+   "scene": "SC 10",
+   "idx": 14,
+   "speaker": "NARRATOR",
+   "raw": "You didn't win. [pause] The girl with seven bowling pins won. [pause] Honestly? Fair.",
+   "text": "You didn't win. The girl with seven bowling pins won. Honestly? Fair.",
+   "clip": [
+    61.231,
+    67.468
+   ],
+   "start": 695.322,
+   "end": 701.559,
+   "speechStart": 695.322,
+   "speechEnd": 701.559,
+   "words": [
+    [
+     "You",
+     695.322,
+     695.583
+    ],
+    [
+     "didn't",
+     695.62,
+     696.012
+    ],
+    [
+     "win.",
+     696.048,
+     696.309
+    ],
+    [
+     "The",
+     697.027,
+     697.288
+    ],
+    [
+     "girl",
+     697.324,
+     697.651
+    ],
+    [
+     "with",
+     697.688,
+     698.013
+    ],
+    [
+     "seven",
+     698.05,
+     698.442
+    ],
+    [
+     "bowling",
+     698.479,
+     699.001
+    ],
+    [
+     "pins",
+     699.037,
+     699.364
+    ],
+    [
+     "won.",
+     699.401,
+     699.661
+    ],
+    [
+     "Honestly?",
+     700.379,
+     700.966
+    ],
+    [
+     "Fair.",
+     701.233,
+     701.559
+    ]
+   ]
+  },
+  {
+   "id": "10.15",
+   "take": "10",
+   "scene": "SC 10",
+   "idx": 15,
+   "speaker": "YOU",
+   "raw": "[laughing, covered in foam] We got \"Most Unforgettable\"!",
+   "text": "We got \"Most Unforgettable\"!",
+   "clip": [
+    67.648,
+    69.454
+   ],
+   "start": 701.739,
+   "end": 703.545,
+   "speechStart": 701.739,
+   "speechEnd": 703.545,
+   "words": [
+    [
+     "We",
+     701.739,
+     701.935
+    ],
+    [
+     "got",
+     701.972,
+     702.233
+    ],
+    [
+     "\"Most",
+     702.27,
+     702.596
+    ],
+    [
+     "Unforgettable\"!",
+     702.633,
+     703.545
+    ]
+   ]
+  },
+  {
+   "id": "10.16",
+   "take": "10",
+   "scene": "SC 10",
+   "idx": 16,
+   "speaker": "IVY",
+   "raw": "[laughing] See? Told you! The mess-up IS the fun part!",
+   "text": "See? Told you! The mess-up IS the fun part!",
+   "clip": [
+    69.634,
+    72.998
+   ],
+   "start": 703.725,
+   "end": 707.089,
+   "speechStart": 703.725,
+   "speechEnd": 707.089,
+   "words": [
+    [
+     "See?",
+     703.725,
+     703.986
+    ],
+    [
+     "Told",
+     704.252,
+     704.579
+    ],
+    [
+     "you!",
+     704.616,
+     704.876
+    ],
+    [
+     "The",
+     705.143,
+     705.404
+    ],
+    [
+     "mess-up",
+     705.44,
+     705.897
+    ],
+    [
+     "IS",
+     705.934,
+     706.13
+    ],
+    [
+     "the",
+     706.167,
+     706.428
+    ],
+    [
+     "fun",
+     706.465,
+     706.725
+    ],
+    [
+     "part!",
+     706.762,
+     707.089
+    ]
+   ]
+  },
+  {
+   "id": "11.0",
+   "take": "11",
+   "scene": "SC 11",
+   "idx": 0,
+   "speaker": "DAD",
+   "raw": "[proud] Okay, brand new one! Why did the waffle go to school? [pause] To be more... well-rounded!",
+   "text": "Okay, brand new one! Why did the waffle go to school? To be more... well-rounded!",
+   "clip": [
+    -0.0,
+    6.631
+   ],
+   "start": 707.789,
+   "end": 714.42,
+   "speechStart": 707.789,
+   "speechEnd": 714.42,
+   "words": [
+    [
+     "Okay,",
+     707.789,
+     708.115
+    ],
+    [
+     "brand",
+     708.267,
+     708.658
+    ],
+    [
+     "new",
+     708.695,
+     708.956
+    ],
+    [
+     "one!",
+     708.993,
+     709.254
+    ],
+    [
+     "Why",
+     709.52,
+     709.782
+    ],
+    [
+     "did",
+     709.818,
+     710.079
+    ],
+    [
+     "the",
+     710.116,
+     710.377
+    ],
+    [
+     "waffle",
+     710.414,
+     710.871
+    ],
+    [
+     "go",
+     710.907,
+     711.103
+    ],
+    [
+     "to",
+     711.14,
+     711.336
+    ],
+    [
+     "school?",
+     711.372,
+     711.829
+    ],
+    [
+     "To",
+     712.547,
+     712.743
+    ],
+    [
+     "be",
+     712.78,
+     712.975
+    ],
+    [
+     "more...",
+     713.012,
+     713.338
+    ],
+    [
+     "well-rounded!",
+     713.637,
+     714.42
+    ]
+   ]
+  },
+  {
+   "id": "11.1",
+   "take": "11",
+   "scene": "SC 11",
+   "idx": 1,
+   "speaker": "BEA",
+   "raw": "[tiny voice] Waffles are square.",
+   "text": "Waffles are square.",
+   "clip": [
+    6.811,
+    8.124
+   ],
+   "start": 714.6,
+   "end": 715.913,
+   "speechStart": 714.6,
+   "speechEnd": 715.913,
+   "words": [
+    [
+     "Waffles",
+     714.6,
+     715.122
+    ],
+    [
+     "are",
+     715.158,
+     715.42
+    ],
+    [
+     "square.",
+     715.457,
+     715.913
+    ]
+   ]
+  },
+  {
+   "id": "11.2",
+   "take": "11",
+   "scene": "SC 11",
+   "idx": 2,
+   "speaker": "DAD",
+   "raw": "[deflating] ...I'm gonna need a minute.",
+   "text": "...I'm gonna need a minute.",
+   "clip": [
+    8.304,
+    9.952
+   ],
+   "start": 716.093,
+   "end": 717.741,
+   "speechStart": 716.093,
+   "speechEnd": 717.741,
+   "words": [
+    [
+     "...I'm",
+     716.093,
+     716.289
+    ],
+    [
+     "gonna",
+     716.326,
+     716.717
+    ],
+    [
+     "need",
+     716.754,
+     717.08
+    ],
+    [
+     "a",
+     717.117,
+     717.248
+    ],
+    [
+     "minute.",
+     717.284,
+     717.741
+    ]
+   ]
+  },
+  {
+   "id": "11.3",
+   "take": "11",
+   "scene": "SC 11",
+   "idx": 3,
+   "speaker": "YOU",
+   "raw": "[laughing] Dad, that's the worst joke ever. [pause] I LOVE it.",
+   "text": "Dad, that's the worst joke ever. I LOVE it.",
+   "clip": [
+    10.132,
+    13.881
+   ],
+   "start": 717.921,
+   "end": 721.67,
+   "speechStart": 717.921,
+   "speechEnd": 721.67,
+   "words": [
+    [
+     "Dad,",
+     717.921,
+     718.182
+    ],
+    [
+     "that's",
+     718.333,
+     718.725
+    ],
+    [
+     "the",
+     718.761,
+     719.023
+    ],
+    [
+     "worst",
+     719.06,
+     719.451
+    ],
+    [
+     "joke",
+     719.488,
+     719.814
+    ],
+    [
+     "ever.",
+     719.851,
+     720.177
+    ],
+    [
+     "I",
+     720.894,
+     721.026
+    ],
+    [
+     "LOVE",
+     721.062,
+     721.437
+    ],
+    [
+     "it.",
+     721.474,
+     721.67
+    ]
+   ]
+  },
+  {
+   "id": "11.4",
+   "take": "11",
+   "scene": "SC 11",
+   "idx": 4,
+   "speaker": "YOU",
+   "raw": "[confident] Sixty-four!",
+   "text": "Sixty-four!",
+   "clip": [
+    14.101,
+    14.753
+   ],
+   "start": 721.89,
+   "end": 722.542,
+   "speechStart": 721.89,
+   "speechEnd": 722.542,
+   "words": [
+    [
+     "Sixty-four!",
+     721.89,
+     722.542
+    ]
+   ]
+  },
+  {
+   "id": "11.5",
+   "take": "11",
+   "scene": "SC 11",
+   "idx": 5,
+   "speaker": "TEACHER",
+   "raw": "[deadpan] ...Sixty-three.",
+   "text": "...Sixty-three.",
+   "clip": [
+    14.933,
+    15.65
+   ],
+   "start": 722.722,
+   "end": 723.439,
+   "speechStart": 722.722,
+   "speechEnd": 723.439,
+   "words": [
+    [
+     "...Sixty-three.",
+     722.722,
+     723.439
+    ]
+   ]
+  },
+  {
+   "id": "11.6",
+   "take": "11",
+   "scene": "SC 11",
+   "idx": 6,
+   "speaker": "NARRATOR",
+   "raw": "You were wrong. [pause] And it was fine.",
+   "text": "You were wrong. And it was fine.",
+   "clip": [
+    15.83,
+    18.754
+   ],
+   "start": 723.619,
+   "end": 726.543,
+   "speechStart": 723.619,
+   "speechEnd": 726.543,
+   "words": [
+    [
+     "You",
+     723.619,
+     723.88
+    ],
+    [
+     "were",
+     723.917,
+     724.243
+    ],
+    [
+     "wrong.",
+     724.28,
+     724.671
+    ],
+    [
+     "And",
+     725.389,
+     725.649
+    ],
+    [
+     "it",
+     725.686,
+     725.882
+    ],
+    [
+     "was",
+     725.919,
+     726.18
+    ],
+    [
+     "fine.",
+     726.217,
+     726.543
+    ]
+   ]
+  },
+  {
+   "id": "11.7",
+   "take": "11",
+   "scene": "SC 11",
+   "idx": 7,
+   "speaker": "NARRATOR",
+   "raw": "You tried the skateboard trick again. For real this time. [pause] Attempt one... [pause] Ouch.",
+   "text": "You tried the skateboard trick again. For real this time. Attempt one... Ouch.",
+   "clip": [
+    18.974,
+    25.802
+   ],
+   "start": 726.763,
+   "end": 733.591,
+   "speechStart": 726.763,
+   "speechEnd": 733.591,
+   "words": [
+    [
+     "You",
+     726.763,
+     727.024
+    ],
+    [
+     "tried",
+     727.061,
+     727.453
+    ],
+    [
+     "the",
+     727.49,
+     727.75
+    ],
+    [
+     "skateboard",
+     727.787,
+     728.505
+    ],
+    [
+     "trick",
+     728.542,
+     728.933
+    ],
+    [
+     "again.",
+     728.97,
+     729.361
+    ],
+    [
+     "For",
+     729.627,
+     729.889
+    ],
+    [
+     "real",
+     729.926,
+     730.251
+    ],
+    [
+     "this",
+     730.288,
+     730.615
+    ],
+    [
+     "time.",
+     730.651,
+     730.978
+    ],
+    [
+     "Attempt",
+     731.695,
+     732.217
+    ],
+    [
+     "one...",
+     732.254,
+     732.514
+    ],
+    [
+     "Ouch.",
+     733.265,
+     733.591
+    ]
+   ],
+   "beatAfter": 1.0
+  },
+  {
+   "id": "11.8",
+   "take": "11",
+   "scene": "SC 11",
+   "idx": 8,
+   "speaker": "YOU",
+   "raw": "[laughing, getting up] Attempt TWO!",
+   "text": "Attempt TWO!",
+   "clip": [
+    26.982,
+    27.841
+   ],
+   "start": 734.771,
+   "end": 735.63,
+   "speechStart": 734.771,
+   "speechEnd": 735.63,
+   "words": [
+    [
+     "Attempt",
+     734.771,
+     735.293
+    ],
+    [
+     "TWO!",
+     735.329,
+     735.63
+    ]
+   ]
+  },
+  {
+   "id": "11.9",
+   "take": "11",
+   "scene": "SC 11",
+   "idx": 9,
+   "speaker": "IVY",
+   "raw": "[warm] Every inventor needs one.",
+   "text": "Every inventor needs one.",
+   "clip": [
+    28.021,
+    29.763
+   ],
+   "start": 735.81,
+   "end": 737.552,
+   "speechStart": 735.81,
+   "speechEnd": 737.552,
+   "words": [
+    [
+     "Every",
+     735.81,
+     736.201
+    ],
+    [
+     "inventor",
+     736.238,
+     736.825
+    ],
+    [
+     "needs",
+     736.862,
+     737.254
+    ],
+    [
+     "one.",
+     737.291,
+     737.552
+    ]
+   ]
+  },
+  {
+   "id": "11.10",
+   "take": "11",
+   "scene": "SC 11",
+   "idx": 10,
+   "speaker": "YOU",
+   "raw": "[writing, smiling] Fail number one. Talent show. [pause] Lesson learned: totally worth it.",
+   "text": "Fail number one. Talent show. Lesson learned: totally worth it.",
+   "clip": [
+    29.943,
+    35.099
+   ],
+   "start": 737.732,
+   "end": 742.888,
+   "speechStart": 737.732,
+   "speechEnd": 742.888,
+   "words": [
+    [
+     "Fail",
+     737.732,
+     738.058
+    ],
+    [
+     "number",
+     738.095,
+     738.552
+    ],
+    [
+     "one.",
+     738.589,
+     738.85
+    ],
+    [
+     "Talent",
+     739.116,
+     739.573
+    ],
+    [
+     "show.",
+     739.61,
+     739.935
+    ],
+    [
+     "Lesson",
+     740.653,
+     741.11
+    ],
+    [
+     "learned:",
+     741.146,
+     741.669
+    ],
+    [
+     "totally",
+     741.706,
+     742.227
+    ],
+    [
+     "worth",
+     742.264,
+     742.655
+    ],
+    [
+     "it.",
+     742.692,
+     742.888
+    ]
+   ]
+  },
+  {
+   "id": "12.0",
+   "take": "12",
+   "scene": "SC 12",
+   "idx": 0,
+   "speaker": "SYSTEM",
+   "raw": "[whispering] Checkpoint saved.",
+   "text": "Checkpoint saved.",
+   "clip": [
+    -0.0,
+    1.146
+   ],
+   "start": 743.588,
+   "end": 744.734,
+   "speechStart": 743.588,
+   "speechEnd": 744.734,
+   "words": [
+    [
+     "Checkpoint",
+     743.588,
+     744.305
+    ],
+    [
+     "saved.",
+     744.342,
+     744.734
+    ]
+   ]
+  },
+  {
+   "id": "12.1",
+   "take": "12",
+   "scene": "SC 12",
+   "idx": 1,
+   "speaker": "NARRATOR",
+   "raw": "[playful] Gary saw the whole thing. [pause] And now... Gary wants a turn.",
+   "text": "Gary saw the whole thing. And now... Gary wants a turn.",
+   "clip": [
+    1.326,
+    5.965
+   ],
+   "start": 744.914,
+   "end": 749.553,
+   "speechStart": 744.914,
+   "speechEnd": 749.553,
+   "words": [
+    [
+     "Gary",
+     744.914,
+     745.24
+    ],
+    [
+     "saw",
+     745.277,
+     745.538
+    ],
+    [
+     "the",
+     745.575,
+     745.836
+    ],
+    [
+     "whole",
+     745.873,
+     746.264
+    ],
+    [
+     "thing.",
+     746.301,
+     746.693
+    ],
+    [
+     "And",
+     747.41,
+     747.671
+    ],
+    [
+     "now...",
+     747.708,
+     747.968
+    ],
+    [
+     "Gary",
+     748.268,
+     748.594
+    ],
+    [
+     "wants",
+     748.631,
+     749.022
+    ],
+    [
+     "a",
+     749.059,
+     749.189
+    ],
+    [
+     "turn.",
+     749.226,
+     749.553
+    ]
+   ]
+  },
+  {
+   "id": "12.2",
+   "take": "12",
+   "scene": "SC 12",
+   "idx": 2,
+   "speaker": "NARRATOR",
+   "raw": "[warmly] So... if you could respawn just once, what would YOU redo? [pause] Tell me in the comments! [pause] And remember... one life. Make it count.",
+   "text": "So... if you could respawn just once, what would YOU redo? Tell me in the comments! And remember... one life. Make it count.",
+   "clip": [
+    6.185,
+    16.702
+   ],
+   "start": 749.773,
+   "end": 760.29,
+   "speechStart": 749.773,
+   "speechEnd": 760.29,
+   "words": [
+    [
+     "So...",
+     749.773,
+     749.969
+    ],
+    [
+     "if",
+     750.268,
+     750.463
+    ],
+    [
+     "you",
+     750.5,
+     750.762
+    ],
+    [
+     "could",
+     750.799,
+     751.19
+    ],
+    [
+     "respawn",
+     751.227,
+     751.748
+    ],
+    [
+     "just",
+     751.785,
+     752.112
+    ],
+    [
+     "once,",
+     752.149,
+     752.475
+    ],
+    [
+     "what",
+     752.627,
+     752.952
+    ],
+    [
+     "would",
+     752.989,
+     753.381
+    ],
+    [
+     "YOU",
+     753.418,
+     753.718
+    ],
+    [
+     "redo?",
+     753.755,
+     754.08
+    ],
+    [
+     "Tell",
+     754.798,
+     755.124
+    ],
+    [
+     "me",
+     755.161,
+     755.357
+    ],
+    [
+     "in",
+     755.394,
+     755.589
+    ],
+    [
+     "the",
+     755.626,
+     755.888
+    ],
+    [
+     "comments!",
+     755.925,
+     756.512
+    ],
+    [
+     "And",
+     757.229,
+     757.49
+    ],
+    [
+     "remember...",
+     757.527,
+     758.114
+    ],
+    [
+     "one",
+     758.413,
+     758.674
+    ],
+    [
+     "life.",
+     758.711,
+     759.037
+    ],
+    [
+     "Make",
+     759.304,
+     759.629
+    ],
+    [
+     "it",
+     759.666,
+     759.862
+    ],
+    [
+     "count.",
+     759.899,
+     760.29
+    ]
+   ]
+  }
+ ],
+ "takes": [
+  {
+   "id": "01",
+   "scene": "SC 01",
+   "start": 0.35,
+   "end": 41.576,
+   "file": null
+  },
+  {
+   "id": "02a",
+   "scene": "SC 02",
+   "start": 42.276,
+   "end": 100.754,
+   "file": null
+  },
+  {
+   "id": "02b",
+   "scene": "SC 02",
+   "start": 101.104,
+   "end": 155.679,
+   "file": null
+  },
+  {
+   "id": "03",
+   "scene": "SC 03",
+   "start": 156.379,
+   "end": 217.329,
+   "file": null
+  },
+  {
+   "id": "04",
+   "scene": "SC 04",
+   "start": 218.029,
+   "end": 290.447,
+   "file": null
+  },
+  {
+   "id": "05",
+   "scene": "SC 05",
+   "start": 291.147,
+   "end": 376.595,
+   "file": null
+  },
+  {
+   "id": "06",
+   "scene": "SC 06",
+   "start": 377.295,
+   "end": 456.308,
+   "file": null
+  },
+  {
+   "id": "07",
+   "scene": "SC 07",
+   "start": 457.008,
+   "end": 512.039,
+   "file": null
+  },
+  {
+   "id": "08",
+   "scene": "SC 08",
+   "start": 512.739,
+   "end": 578.88,
+   "file": null
+  },
+  {
+   "id": "09",
+   "scene": "SC 09",
+   "start": 579.58,
+   "end": 633.391,
+   "file": null
+  },
+  {
+   "id": "10",
+   "scene": "SC 10",
+   "start": 634.091,
+   "end": 707.089,
+   "file": null
+  },
+  {
+   "id": "11",
+   "scene": "SC 11",
+   "start": 707.789,
+   "end": 742.888,
+   "file": null
+  },
+  {
+   "id": "12",
+   "scene": "SC 12",
+   "start": 743.588,
+   "end": 760.29,
+   "file": null
+  }
+ ],
+ "scenes": {
+  "SC 01": {
+   "start": 0.35,
+   "end": 41.576
+  },
+  "SC 02": {
+   "start": 42.276,
+   "end": 155.679
+  },
+  "SC 03": {
+   "start": 156.379,
+   "end": 217.329
+  },
+  "SC 04": {
+   "start": 218.029,
+   "end": 290.447
+  },
+  "SC 05": {
+   "start": 291.147,
+   "end": 376.595
+  },
+  "SC 06": {
+   "start": 377.295,
+   "end": 456.308
+  },
+  "SC 07": {
+   "start": 457.008,
+   "end": 512.039
+  },
+  "SC 08": {
+   "start": 512.739,
+   "end": 578.88
+  },
+  "SC 09": {
+   "start": 579.58,
+   "end": 633.391
+  },
+  "SC 10": {
+   "start": 634.091,
+   "end": 707.089
+  },
+  "SC 11": {
+   "start": 707.789,
+   "end": 742.888
+  },
+  "SC 12": {
+   "start": 743.588,
+   "end": 760.29
+  }
+ }
+}

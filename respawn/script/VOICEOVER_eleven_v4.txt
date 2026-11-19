@@ -1,0 +1,243 @@
+WHAT IF YOU COULD RESPAWN IN REAL LIFE?
+ElevenLabs Eleven v4 · Text to Dialogue · voice-over script
+Generated from script/SCRIPT.md — edit the script, then run: node tools/build_vo.js
+Spoken words: 1563 · characters: 11340 · estimated runtime: ~11:51 (incl. silent visual beats)
+==============================================================================
+
+HOW TO USE (по-русски)
+- Модель: Eleven v4. Режим Text to Dialogue: каждая строка "SPEAKER: текст" = отдельный блок
+  с голосом этого персонажа (список голосов ниже). Имя спикера и двоеточие НЕ вставлять, только текст.
+- Теги в [квадратных скобках] оставляем — это интонация, они не произносятся.
+  КАПС = ударение, "..." и [pause] = паузы, тире "—" = оборванная фраза.
+- Один дубль (TAKE) = одна генерация. Файлы называть take01.mp3, take02a.mp3 ...
+- Проще всего: дать ключ API через форму (как в прошлый раз) — я сгенерирую всё сам и с таймингом слов.
+
+CAST
+  NARRATOR  (54 lines)  George · warm, playful storyteller, talks to the viewer as "you"
+  YOU       (42 lines)  Liam · the hero, 12 — energetic, funny, panics easily
+  TIP       (15 lines)  Charlie · tiny tutorial pop-up — hyper, bubbly, fast; glitches near the end
+  TEACHER   ( 4 lines)  Brian · Mr. Fig — bored maths teacher
+  DAD       ( 9 lines)  Chris · proud pun dad
+  BEA       ( 7 lines)  Jessica · little sister, 6 — tiny, brutally honest
+  MOM       ( 3 lines)  Sarah · warm nurse, always rushing
+  IVY       (19 lines)  Laura · best friend, inventor — sunny, quirky, fearless
+  SYSTEM    (11 lines)  River · calm game-interface voice; booming for the alarm
+  KID       ( 3 lines)  Will · random excited kid
+  COACH     ( 3 lines)  Alice · Coach Dee — loud, sporty
+  PRINCIPAL ( 3 lines)  Matilda · Principal Pemberton — stern, later covered in foam
+
+==============================================================================
+
+=== TAKE 01 · SC 01 COLD OPEN — РЕСПАУН · ~0:00–0:38 · 8 lines · 621 chars ===
+
+NARRATOR: [excited, hushed] What if every time you messed up... you could just... respawn?
+NARRATOR: [playful] Fall off your bike? Respawn. Spill spaghetti on the principal? Respawn.
+NARRATOR: [fast, playful] Get hit in the face with a dodgeball? Respawn... and catch it this time.
+YOU: [cocky] Easy. Real life is just an obby... with checkpoints.
+NARRATOR: [ominous] But what if you respawned... too many times?
+TIP: [glitching] T-TIP: Respawns used: nine thousand, nine hundred... and ninety-nine. [pause] That's... a lot.
+YOU: [panicked] Okay, okay! Maybe I respawned a LITTLE too much!
+NARRATOR: [deadpan] Yeah. This needs some explaining. [pause] Let's go back... to the first checkpoint.
+
+=== TAKE 02a · SC 02 ТЫ ОЧЕНЬ БОИШЬСЯ ОШИБИТЬСЯ · ~0:38–2:24 · 11 lines · 868 chars ===
+
+NARRATOR: [storyteller] This is you. Twelve years old. Pretty smart. Pretty funny. [pause] And VERY scared of messing up.
+TEACHER: [bored] Anyone? Seven times eight?
+YOU: [whispering to himself] Fifty-six. [pause] It's fifty-six. [pause] ...But what if it's not?
+NARRATOR: You always know the answer. You just never say it. [pause] Because what if you're wrong?
+NARRATOR: [deadpan] It was fifty-six.
+NARRATOR: But in games? In games, you're fearless. [pause] Because in a game, when you fall... you just respawn.
+NARRATOR: [deadpan] Real life does not have that feature. [pause] You checked.
+NARRATOR: At home, there's Dad. He makes pancakes every morning... and the same joke every morning.
+DAD: [proud] Why did the pancake go to the doctor? [pause] Because it was feeling a little... FLAT!
+NARRATOR: There's your little sister, Bea. She's six... and she has never told a lie in her life.
+BEA: [tiny voice, honest] Your hair looks like a mushroom. [pause] A sad mushroom.
+
+=== TAKE 02b · SC 02 ТЫ ОЧЕНЬ БОИШЬСЯ ОШИБИТЬСЯ · ~0:38–2:24 · 11 lines · 823 chars ===
+
+NARRATOR: [warmly] And there's Gary. Gary is a goldfish. [pause] Gary has seen things.
+MOM: [warm, rushing] Bye, loves! Long shift! [pause] Remember, mistakes are how we learn!
+YOU: [mumbling] Mistakes are how we get laughed at.
+NARRATOR: And then there's Ivy. Your best friend since kindergarten. She builds inventions. [pause] They explode. [pause] A lot.
+IVY: [delighted, coughing] Fail number three hundred and twelve! Rocket sneakers! [pause] Lesson learned: never wear rocket sneakers... indoors.
+YOU: [amazed] How are you HAPPY about this?
+IVY: [cheerful] Because now I know one more way it doesn't work! [pause] Anyway! Big news!
+IVY: [excited] I signed us up for the talent show! Friday! In front of the WHOLE school!
+YOU: [horrified] The WHOLE school?! Ivy! What if I mess up?!
+IVY: [shrugs, happy] Then you mess up! That's the fun part!
+NARRATOR: [deadpan] For you... it was not the fun part.
+
+=== TAKE 03 · SC 03 ЧЕКПОИНТ 1000 · ~2:24–3:19 · 13 lines · 879 chars ===
+
+NARRATOR: That night, you couldn't sleep. The talent show was in four days. [pause] So you went where you always go when real life gets scary.
+NARRATOR: Mega Obby. One thousand stages. [pause] You'd been climbing it for three months.
+NARRATOR: Four thousand, eight hundred and sixteen falls. [pause] And nobody laughed. Nobody even remembered. [pause] You just... respawned.
+YOU: [sighs] I wish real life had checkpoints.
+NARRATOR: Two in the morning. Stage nine hundred and ninety-nine. [pause] One jump left.
+YOU: [whispers, focused] Come on... come on... [pause] YES!
+SYSTEM: [calm] Final checkpoint reached. [pause] Exporting... to real life.
+YOU: [confused] Exporting to WHAT?
+TIP: [bubbly, fast] Hiii! Welcome to Real Life! I'm Tip, your tutorial! [pause] TIP: Step on the checkpoint to save your progress!
+YOU: [backing away] You're a... talking pop-up.
+TIP: [proud] A HELPFUL talking pop-up!
+SYSTEM: Checkpoint saved.
+NARRATOR: Gary saw the whole thing. [pause] Gary told no one.
+
+=== TAKE 04 · SC 04 ТУТОРИАЛ · ~3:19–4:32 · 19 lines · 1141 chars ===
+
+TIP: [cheerful] TIP: You can now respawn in real life! [pause] If you mess up, you go back to your last checkpoint. Time goes back too. [pause] And only YOU remember!
+YOU: [skeptical] Yeah, right. That's—
+SYSTEM: [calm] Respawning in three... two... one.
+YOU: [stunned] I'm... back. In my room. [pause] And it's seven-thirty AGAIN!
+TIP: [smug] Told ya!
+DAD: [proud] Why did the pancake go to the doctor?
+YOU: [quickly] Because it was feeling a little flat.
+DAD: [shocked] How did you— That's a BRAND NEW joke!
+TIP: TIP: You can move your checkpoint! Just carry the flag, and plant it wherever you want! [pause] TIP: And you can reset yourself anytime! Just open the menu!
+YOU: [confused] What menu?
+NARRATOR: [amazed] Real life... had a pause menu.
+YOU: [nervous] Uh... what happens if I press "Leave Game"?
+TIP: [very quickly] TIP: Don't press "Leave Game."
+YOU: [singing badly, opera] Ooooh... I am the KIIING... of the breakfaaast!
+BEA: [tiny voice, horrified] Make it stop.
+NARRATOR: [delighted] And nobody remembered a thing.
+BEA: [tiny voice] You're acting weird today. [pause] Weirder than normal.
+YOU: [grinning] Bea... I think today is gonna be a GOOD day.
+NARRATOR: And it was. [pause] Because for the first time in your life... [pause] messing up didn't matter.
+
+=== TAKE 05 · SC 05 ИДЕАЛЬНЫЙ ДЕНЬ · ~4:32–5:53 · 21 lines · 1232 chars ===
+
+NARRATOR: So you took the checkpoint to school. In your backpack.
+SYSTEM: Checkpoint saved.
+NARRATOR: Skateboard trick? Attempt one. [pause] Attempt two. [pause] Attempt twenty-three.
+NARRATOR: Attempt fifty-seven...
+KID: [amazed] WHOA! Did you see that?! First try!
+YOU: [smug] Yeah. First try.
+TIP: [whispering] TIP: That was not first try.
+TEACHER: [bored] Pop quiz. Twenty questions. No talking.
+NARRATOR: A pop quiz? No problem. You read all the questions... [pause] and then you pressed reset.
+TIP: [suspicious] TIP: That's... cheating.
+NARRATOR: [deadpan] It was one hundred percent cheating. [pause] You got one hundred percent.
+COACH: [loud] Dodgeball! Let's GO!
+NARRATOR: Dodgeball? You'd already been hit by every single ball. [pause] So you knew where every single ball was going.
+COACH: [stunned] Kid... where have you BEEN all my life?!
+IVY: [suspicious] How did you know it was coming? You didn't even look!
+YOU: [casual] Lucky guess.
+TIP: [whispering] TIP: It was not a lucky guess.
+NARRATOR: At lunch, you told a joke. [pause] It was terrible. [pause] Reset. [pause] Thirty-one tries later...
+YOU: [confident] ...and that's why the cafeteria pizza has its own fan club. [pause] It's called "The Survivors."
+NARRATOR: [proud] The whole cafeteria laughed. Somebody laughed milk out of their nose.
+YOU: [glowing] This is the best day of my LIFE! [pause] Two hundred and fourteen times in a row!
+
+=== TAKE 06 · SC 06 СЛИШКОМ ИДЕАЛЬНО · ~5:53–7:10 · 18 lines · 1180 chars ===
+
+NARRATOR: Wednesday. Rehearsal. Ivy's big trick: "Elephant Toothpaste." [pause] A volcano of foam... out of a magic hat.
+IVY: [dramatic] Ladies and gentlemen! [pause] From this ordinary hat, I will now pull out... a—
+YOU: [flatly] A volcano of foam. I know.
+IVY: [surprised] ...How do you know that? I didn't tell you that.
+NARRATOR: Every time something went wrong... you reset. [pause] And again. [pause] And again.
+IVY: [laughing] Okay, okay, what if I sneeze in the middle and the foam goes—
+YOU: [not laughing] —on the ceiling. Yeah. Don't do that.
+IVY: [slowly] ...You're being so weird.
+NARRATOR: You lived Thursday four hundred and twelve times. [pause] Until the trick was perfect. [pause] Until YOU were perfect.
+IVY: [hurt, quiet] You don't laugh anymore. You're never surprised. [pause] It's like you're not even here.
+YOU: [quietly] I'm just... practicing.
+IVY: [softly] You know how we became friends? [pause] Kindergarten. You glued your hand to my backpack.
+YOU: [small laugh] For the whole day.
+IVY: [sad smile] Best mistake you ever made. [pause] ...I miss that guy.
+DAD: [proud] Why did the pancake go to the—
+YOU: [bored] —doctor. It felt flat. Dad, I know. [pause] I know ALL of them.
+BEA: [tiny voice] You're not fun anymore. [pause] Even Gary thinks so.
+NARRATOR: [quietly] Even Gary.
+
+=== TAKE 07 · SC 07 ЛАГИ · ~7:10–8:02 · 17 lines · 883 chars ===
+
+TIP: [glitching] T-T-TIP: Too many respawns make the s-s-save file... heavy. [pause] The world is starting to... l-l-lag.
+YOU: [nervous] Lag? Real life can't lag.
+MOM: [stuttering, glitchy] Good m-m-m-morning, sw-sw-sweetie!
+NARRATOR: Birds froze in the sky. The school bus kept teleporting back to the same corner. [pause] And Dad's pancake... just... stayed up there.
+DAD: [confused, looking up] Huh. [pause] That one's... thinking about it.
+NARRATOR: And then... the whole street switched to low graphics.
+YOU: [panicking] Why does everything look like it's from two thousand and six?!
+NARRATOR: And the respawns... started going wrong.
+SYSTEM: [glitchy] Respawning in three, two, one.
+YOU: [hugging the pole] This is NOT my checkpoint!
+SYSTEM: Respawning.
+YOU: [tiny, underwater, bubbly] Hi, Gary.
+SYSTEM: Respawning.
+COACH: [confused] ...Are you a ball now?
+SYSTEM: Respawning.
+TEACHER: [deadpan] ...That was my birthday cake.
+NARRATOR: You respawned in Mr. Fig's birthday cake. [pause] To this day, nobody knows how.
+
+=== TAKE 08 · SC 08 СОХРАНЕНИЕ ПОВРЕЖДЕНО · ~8:02–9:03 · 13 lines · 1013 chars ===
+
+SYSTEM: [booming, alarm] Warning! Save file corrupted. [pause] Respawns used: nine thousand, nine hundred, ninety-nine.
+NARRATOR: [ominous] And then... everything you had ever undone... came back.
+TIP: [glitching] T-TIP: Those are your fails. All of them. [pause] They never went away. [pause] They were just... saved.
+KID: [laughing] Look! He fell off his skateboard like a HUNDRED times!
+PRINCIPAL: [outraged] Why is a ghost throwing spaghetti at me?! [pause] AGAIN?!
+NARRATOR: Now everyone could see every mistake you had ever erased. [pause] All nine thousand, nine hundred and ninety-nine of them.
+YOU: [miserable] This is my worst nightmare. [pause] Literally. I've HAD this nightmare.
+IVY: [amazed, quiet] You fell fifty-six times... and you got back up fifty-six times?
+YOU: [ashamed] Only because I could respawn.
+IVY: [smiling] Still. [pause] That's kind of cool.
+DAD: [stuck, looping] Why did the pan— [pause] Why did the pan— [pause] Why did the pan—
+BEA: [tiny voice, looping] Help! Help! Help!
+TIP: [urgent, glitching] TIP: The day is f-f-freezing! If it freezes... everyone gets stuck. FOREVER!
+
+=== TAKE 09 · SC 09 УДАЛИТЬ СОХРАНЕНИЕ · ~9:03–9:52 · 11 lines · 797 chars ===
+
+TIP: [softly, glitching] T-tip: Delete the save... and everything goes back to normal. [pause] But no more respawns. Ever.
+YOU: [panicked] But the talent show is TONIGHT! What if I mess up? In front of EVERYONE?!
+IVY: [warmly] Then you mess up. [pause] With me.
+NARRATOR: You looked at all your fails. [pause] Fifty-six crashes. Thirty-one bad jokes. One very surprised goldfish.
+NARRATOR: [softly] And for the first time... they didn't look embarrassing. [pause] They looked like... trying.
+YOU: [determined] Okay. [pause] Delete.
+SYSTEM: [calm] Save deleted. [pause] Respawn... disabled.
+DAD: [unfrozen, confused] —go to the doctor? [pause] Wait. Why am I outside?
+TIP: [softly, fading] TIP: Last tip. [pause] Real life doesn't have checkpoints. [pause] That's what makes it... count.
+YOU: [quietly] Thanks, Tip.
+NARRATOR: Lives remaining: one. [pause] Just like everybody else.
+
+=== TAKE 10 · SC 10 ШОУ ТАЛАНТОВ БЕЗ РЕСПАУНА · ~9:52–11:01 · 17 lines · 1082 chars ===
+
+NARRATOR: Friday night. The whole school was there. [pause] And every act before yours... was perfect.
+NARRATOR: Dad came. Mom came straight from her shift. [pause] And Bea made a sign.
+PRINCIPAL: [announcing] And next... Ivy and... [pause] you! With "Science Magic"!
+NARRATOR: No checkpoint. No reset. No pause menu. [pause] Just you... and four hundred people.
+YOU: [nervous, whispering] Okay. One try. Only one try.
+IVY: [dramatic] Ladies and gentlemen! From this ordinary hat, I will now pull out—
+NARRATOR: And of course... you messed up.
+YOU: [whispering, frozen] Reset... reset... RESET!
+IVY: [whispering, grinning] Fail number three hundred and thirteen. [pause] Let's make it a good one.
+NARRATOR: So you did something you had never done before. [pause] You kept going.
+KID: [chanting] FOAM! FOAM! FOAM! FOAM!
+MOM: [cheering, laughing] I'm sending this to the WHOLE family!
+BEA: [tiny voice, shouting] THAT'S MY BROTHER! [pause] He's a mushroom!
+PRINCIPAL: [foamy, deadpan] ...Best. Disaster. Ever.
+NARRATOR: You didn't win. [pause] The girl with seven bowling pins won. [pause] Honestly? Fair.
+YOU: [laughing, covered in foam] We got "Most Unforgettable"!
+IVY: [laughing] See? Told you! The mess-up IS the fun part!
+
+=== TAKE 11 · SC 11 ПОСЛЕ · ~11:01–11:35 · 11 lines · 569 chars ===
+
+DAD: [proud] Okay, brand new one! Why did the waffle go to school? [pause] To be more... well-rounded!
+BEA: [tiny voice] Waffles are square.
+DAD: [deflating] ...I'm gonna need a minute.
+YOU: [laughing] Dad, that's the worst joke ever. [pause] I LOVE it.
+YOU: [confident] Sixty-four!
+TEACHER: [deadpan] ...Sixty-three.
+NARRATOR: You were wrong. [pause] And it was fine.
+NARRATOR: You tried the skateboard trick again. For real this time. [pause] Attempt one... [pause] Ouch.
+YOU: [laughing, getting up] Attempt TWO!
+IVY: [warm] Every inventor needs one.
+YOU: [writing, smiling] Fail number one. Talent show. [pause] Lesson learned: totally worth it.
+
+=== TAKE 12 · SC 12 ФИНАЛ И АУТРО · ~11:35–11:51 · 3 lines · 252 chars ===
+
+SYSTEM: [whispering] Checkpoint saved.
+NARRATOR: [playful] Gary saw the whole thing. [pause] And now... Gary wants a turn.
+NARRATOR: [warmly] So... if you could respawn just once, what would YOU redo? [pause] Tell me in the comments! [pause] And remember... one life. Make it count.
+
+=== END ===

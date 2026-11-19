@@ -21,3 +21,7 @@ admin-commands/out/*.mp4
 admin-commands/out/audio/
 admin-commands/out/*.log
 admin-commands/out/*.txt
+respawn/out/*.mp4
+respawn/out/audio/
+respawn/out/*.log
+respawn/out/*.txt

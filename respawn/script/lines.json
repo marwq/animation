@@ -1,0 +1,1213 @@
+[
+ {
+  "scene": "SC 01",
+  "speaker": "NARRATOR",
+  "text": "[excited, hushed] What if every time you messed up... you could just... respawn?",
+  "estStart": 0,
+  "estDur": 4.9
+ },
+ {
+  "scene": "SC 01",
+  "speaker": "NARRATOR",
+  "text": "[playful] Fall off your bike? Respawn. Spill spaghetti on the principal? Respawn.",
+  "estStart": 4.9,
+  "estDur": 4.3
+ },
+ {
+  "scene": "SC 01",
+  "speaker": "NARRATOR",
+  "text": "[fast, playful] Get hit in the face with a dodgeball? Respawn... and catch it this time.",
+  "estStart": 9.2,
+  "estDur": 5.69
+ },
+ {
+  "scene": "SC 01",
+  "speaker": "YOU",
+  "text": "[cocky] Easy. Real life is just an obby... with checkpoints.",
+  "estStart": 14.89,
+  "estDur": 3.87
+ },
+ {
+  "scene": "SC 01",
+  "speaker": "NARRATOR",
+  "text": "[ominous] But what if you respawned... too many times?",
+  "estStart": 18.76,
+  "estDur": 3.51
+ },
+ {
+  "scene": "SC 01",
+  "speaker": "TIP",
+  "text": "[glitching] T-TIP: Respawns used: nine thousand, nine hundred... and ninety-nine. [pause] That's... a lot.",
+  "estStart": 22.27,
+  "estDur": 5.76
+ },
+ {
+  "scene": "SC 01",
+  "speaker": "YOU",
+  "text": "[panicked] Okay, okay! Maybe I respawned a LITTLE too much!",
+  "estStart": 28.04,
+  "estDur": 3.57
+ },
+ {
+  "scene": "SC 01",
+  "speaker": "NARRATOR",
+  "text": "[deadpan] Yeah. This needs some explaining. [pause] Let's go back... to the first checkpoint.",
+  "estStart": 31.61,
+  "estDur": 5.46
+ },
+ {
+  "scene": "SC 02",
+  "speaker": "NARRATOR",
+  "text": "[storyteller] This is you. Twelve years old. Pretty smart. Pretty funny. [pause] And VERY scared of messing up.",
+  "estStart": 38.07,
+  "estDur": 6.62
+ },
+ {
+  "scene": "SC 02",
+  "speaker": "TEACHER",
+  "text": "[bored] Anyone? Seven times eight?",
+  "estStart": 44.69,
+  "estDur": 1.75
+ },
+ {
+  "scene": "SC 02",
+  "speaker": "YOU",
+  "text": "[whispering to himself] Fifty-six. [pause] It's fifty-six. [pause] ...But what if it's not?",
+  "estStart": 46.45,
+  "estDur": 4.51
+ },
+ {
+  "scene": "SC 02",
+  "speaker": "NARRATOR",
+  "text": "You always know the answer. You just never say it. [pause] Because what if you're wrong?",
+  "estStart": 50.95,
+  "estDur": 6.25
+ },
+ {
+  "scene": "SC 02",
+  "speaker": "NARRATOR",
+  "text": "[deadpan] It was fifty-six.",
+  "estStart": 57.21,
+  "estDur": 1.39
+ },
+ {
+  "scene": "SC 02",
+  "speaker": "NARRATOR",
+  "text": "But in games? In games, you're fearless. [pause] Because in a game, when you fall... you just respawn.",
+  "estStart": 58.6,
+  "estDur": 7.28
+ },
+ {
+  "scene": "SC 02",
+  "speaker": "NARRATOR",
+  "text": "[deadpan] Real life does not have that feature. [pause] You checked.",
+  "estStart": 65.88,
+  "estDur": 4.07
+ },
+ {
+  "scene": "SC 02",
+  "speaker": "NARRATOR",
+  "text": "At home, there's Dad. He makes pancakes every morning... and the same joke every morning.",
+  "estStart": 69.95,
+  "estDur": 6.05
+ },
+ {
+  "scene": "SC 02",
+  "speaker": "DAD",
+  "text": "[proud] Why did the pancake go to the doctor? [pause] Because it was feeling a little... FLAT!",
+  "estStart": 76.01,
+  "estDur": 6.55
+ },
+ {
+  "scene": "SC 02",
+  "speaker": "NARRATOR",
+  "text": "There's your little sister, Bea. She's six... and she has never told a lie in her life.",
+  "estStart": 82.56,
+  "estDur": 6.78
+ },
+ {
+  "scene": "SC 02",
+  "speaker": "BEA",
+  "text": "[tiny voice, honest] Your hair looks like a mushroom. [pause] A sad mushroom.",
+  "estStart": 89.35,
+  "estDur": 4.07
+ },
+ {
+  "scene": "SC 02",
+  "speaker": "NARRATOR",
+  "text": "[warmly] And there's Gary. Gary is a goldfish. [pause] Gary has seen things.",
+  "estStart": 93.42,
+  "estDur": 4.8
+ },
+ {
+  "scene": "SC 02",
+  "speaker": "MOM",
+  "text": "[warm, rushing] Bye, loves! Long shift! [pause] Remember, mistakes are how we learn!",
+  "estStart": 98.22,
+  "estDur": 4.44
+ },
+ {
+  "scene": "SC 02",
+  "speaker": "YOU",
+  "text": "[mumbling] Mistakes are how we get laughed at.",
+  "estStart": 102.65,
+  "estDur": 2.85
+ },
+ {
+  "scene": "SC 02",
+  "speaker": "NARRATOR",
+  "text": "And then there's Ivy. Your best friend since kindergarten. She builds inventions. [pause] They explode. [pause] A lot.",
+  "estStart": 105.5,
+  "estDur": 7.12
+ },
+ {
+  "scene": "SC 02",
+  "speaker": "IVY",
+  "text": "[delighted, coughing] Fail number three hundred and twelve! Rocket sneakers! [pause] Lesson learned: never wear rocket sneakers... indoors.",
+  "estStart": 112.62,
+  "estDur": 6.55
+ },
+ {
+  "scene": "SC 02",
+  "speaker": "YOU",
+  "text": "[amazed] How are you HAPPY about this?",
+  "estStart": 119.17,
+  "estDur": 2.48
+ },
+ {
+  "scene": "SC 02",
+  "speaker": "IVY",
+  "text": "[cheerful] Because now I know one more way it doesn't work! [pause] Anyway! Big news!",
+  "estStart": 121.65,
+  "estDur": 5.53
+ },
+ {
+  "scene": "SC 02",
+  "speaker": "IVY",
+  "text": "[excited] I signed us up for the talent show! Friday! In front of the WHOLE school!",
+  "estStart": 127.18,
+  "estDur": 5.75
+ },
+ {
+  "scene": "SC 02",
+  "speaker": "YOU",
+  "text": "[horrified] The WHOLE school?! Ivy! What if I mess up?!",
+  "estStart": 132.94,
+  "estDur": 3.57
+ },
+ {
+  "scene": "SC 02",
+  "speaker": "IVY",
+  "text": "[shrugs, happy] Then you mess up! That's the fun part!",
+  "estStart": 136.51,
+  "estDur": 3.21
+ },
+ {
+  "scene": "SC 02",
+  "speaker": "NARRATOR",
+  "text": "[deadpan] For you... it was not the fun part.",
+  "estStart": 139.72,
+  "estDur": 3.51
+ },
+ {
+  "scene": "SC 03",
+  "speaker": "NARRATOR",
+  "text": "That night, you couldn't sleep. The talent show was in four days. [pause] So you went where you always go when real life gets scary.",
+  "estStart": 144.23,
+  "estDur": 9.53
+ },
+ {
+  "scene": "SC 03",
+  "speaker": "NARRATOR",
+  "text": "Mega Obby. One thousand stages. [pause] You'd been climbing it for three months.",
+  "estStart": 153.75,
+  "estDur": 5.16
+ },
+ {
+  "scene": "SC 03",
+  "speaker": "NARRATOR",
+  "text": "Four thousand, eight hundred and sixteen falls. [pause] And nobody laughed. Nobody even remembered. [pause] You just... respawned.",
+  "estStart": 158.92,
+  "estDur": 7.42
+ },
+ {
+  "scene": "SC 03",
+  "speaker": "YOU",
+  "text": "[sighs] I wish real life had checkpoints.",
+  "estStart": 166.34,
+  "estDur": 2.48
+ },
+ {
+  "scene": "SC 03",
+  "speaker": "NARRATOR",
+  "text": "Two in the morning. Stage nine hundred and ninety-nine. [pause] One jump left.",
+  "estStart": 168.82,
+  "estDur": 5.16
+ },
+ {
+  "scene": "SC 03",
+  "speaker": "YOU",
+  "text": "[whispers, focused] Come on... come on... [pause] YES!",
+  "estStart": 173.98,
+  "estDur": 3.22
+ },
+ {
+  "scene": "SC 03",
+  "speaker": "SYSTEM",
+  "text": "[calm] Final checkpoint reached. [pause] Exporting... to real life.",
+  "estStart": 177.2,
+  "estDur": 3.65
+ },
+ {
+  "scene": "SC 03",
+  "speaker": "YOU",
+  "text": "[confused] Exporting to WHAT?",
+  "estStart": 180.85,
+  "estDur": 1.39
+ },
+ {
+  "scene": "SC 03",
+  "speaker": "TIP",
+  "text": "[bubbly, fast] Hiii! Welcome to Real Life! I'm Tip, your tutorial! [pause] TIP: Step on the checkpoint to save your progress!",
+  "estStart": 182.24,
+  "estDur": 7.35
+ },
+ {
+  "scene": "SC 03",
+  "speaker": "YOU",
+  "text": "[backing away] You're a... talking pop-up.",
+  "estStart": 189.58,
+  "estDur": 2.05
+ },
+ {
+  "scene": "SC 03",
+  "speaker": "TIP",
+  "text": "[proud] A HELPFUL talking pop-up!",
+  "estStart": 191.64,
+  "estDur": 1.75
+ },
+ {
+  "scene": "SC 03",
+  "speaker": "SYSTEM",
+  "text": "Checkpoint saved.",
+  "estStart": 193.39,
+  "estDur": 1.03
+ },
+ {
+  "scene": "SC 03",
+  "speaker": "NARRATOR",
+  "text": "Gary saw the whole thing. [pause] Gary told no one.",
+  "estStart": 194.42,
+  "estDur": 4.07
+ },
+ {
+  "scene": "SC 04",
+  "speaker": "TIP",
+  "text": "[cheerful] TIP: You can now respawn in real life! [pause] If you mess up, you go back to your last checkpoint. Time goes back too. [pause] And only YOU remember!",
+  "estStart": 199.49,
+  "estDur": 11.12
+ },
+ {
+  "scene": "SC 04",
+  "speaker": "YOU",
+  "text": "[skeptical] Yeah, right. That's—",
+  "estStart": 210.61,
+  "estDur": 1.39
+ },
+ {
+  "scene": "SC 04",
+  "speaker": "SYSTEM",
+  "text": "[calm] Respawning in three... two... one.",
+  "estStart": 212,
+  "estDur": 2.72
+ },
+ {
+  "scene": "SC 04",
+  "speaker": "YOU",
+  "text": "[stunned] I'm... back. In my room. [pause] And it's seven-thirty AGAIN!",
+  "estStart": 214.72,
+  "estDur": 4.37
+ },
+ {
+  "scene": "SC 04",
+  "speaker": "TIP",
+  "text": "[smug] Told ya!",
+  "estStart": 219.09,
+  "estDur": 1.03
+ },
+ {
+  "scene": "SC 04",
+  "speaker": "DAD",
+  "text": "[proud] Why did the pancake go to the doctor?",
+  "estStart": 220.12,
+  "estDur": 3.21
+ },
+ {
+  "scene": "SC 04",
+  "speaker": "YOU",
+  "text": "[quickly] Because it was feeling a little flat.",
+  "estStart": 223.33,
+  "estDur": 2.85
+ },
+ {
+  "scene": "SC 04",
+  "speaker": "DAD",
+  "text": "[shocked] How did you— That's a BRAND NEW joke!",
+  "estStart": 226.17,
+  "estDur": 3.21
+ },
+ {
+  "scene": "SC 04",
+  "speaker": "TIP",
+  "text": "TIP: You can move your checkpoint! Just carry the flag, and plant it wherever you want! [pause] TIP: And you can reset yourself anytime! Just open the menu!",
+  "estStart": 229.38,
+  "estDur": 10.62
+ },
+ {
+  "scene": "SC 04",
+  "speaker": "YOU",
+  "text": "[confused] What menu?",
+  "estStart": 240,
+  "estDur": 1.03
+ },
+ {
+  "scene": "SC 04",
+  "speaker": "NARRATOR",
+  "text": "[amazed] Real life... had a pause menu.",
+  "estStart": 241.03,
+  "estDur": 2.78
+ },
+ {
+  "scene": "SC 04",
+  "speaker": "YOU",
+  "text": "[nervous] Uh... what happens if I press \"Leave Game\"?",
+  "estStart": 243.81,
+  "estDur": 3.51
+ },
+ {
+  "scene": "SC 04",
+  "speaker": "TIP",
+  "text": "[very quickly] TIP: Don't press \"Leave Game.\"",
+  "estStart": 247.32,
+  "estDur": 2.12
+ },
+ {
+  "scene": "SC 04",
+  "speaker": "YOU",
+  "text": "[singing badly, opera] Ooooh... I am the KIIING... of the breakfaaast!",
+  "estStart": 249.44,
+  "estDur": 3.81
+ },
+ {
+  "scene": "SC 04",
+  "speaker": "BEA",
+  "text": "[tiny voice, horrified] Make it stop.",
+  "estStart": 253.25,
+  "estDur": 1.39
+ },
+ {
+  "scene": "SC 04",
+  "speaker": "NARRATOR",
+  "text": "[delighted] And nobody remembered a thing.",
+  "estStart": 254.64,
+  "estDur": 2.12
+ },
+ {
+  "scene": "SC 04",
+  "speaker": "BEA",
+  "text": "[tiny voice] You're acting weird today. [pause] Weirder than normal.",
+  "estStart": 256.75,
+  "estDur": 3.35
+ },
+ {
+  "scene": "SC 04",
+  "speaker": "YOU",
+  "text": "[grinning] Bea... I think today is gonna be a GOOD day.",
+  "estStart": 260.1,
+  "estDur": 4.24
+ },
+ {
+  "scene": "SC 04",
+  "speaker": "NARRATOR",
+  "text": "And it was. [pause] Because for the first time in your life... [pause] messing up didn't matter.",
+  "estStart": 264.34,
+  "estDur": 7.05
+ },
+ {
+  "scene": "SC 05",
+  "speaker": "NARRATOR",
+  "text": "So you took the checkpoint to school. In your backpack.",
+  "estStart": 272.39,
+  "estDur": 3.94
+ },
+ {
+  "scene": "SC 05",
+  "speaker": "SYSTEM",
+  "text": "Checkpoint saved.",
+  "estStart": 276.33,
+  "estDur": 1.03
+ },
+ {
+  "scene": "SC 05",
+  "speaker": "NARRATOR",
+  "text": "Skateboard trick? Attempt one. [pause] Attempt two. [pause] Attempt twenty-three.",
+  "estStart": 277.35,
+  "estDur": 4.21
+ },
+ {
+  "scene": "SC 05",
+  "speaker": "NARRATOR",
+  "text": "Attempt fifty-seven...",
+  "estStart": 281.56,
+  "estDur": 1.33
+ },
+ {
+  "scene": "SC 05",
+  "speaker": "KID",
+  "text": "[amazed] WHOA! Did you see that?! First try!",
+  "estStart": 282.89,
+  "estDur": 2.85
+ },
+ {
+  "scene": "SC 05",
+  "speaker": "YOU",
+  "text": "[smug] Yeah. First try.",
+  "estStart": 285.74,
+  "estDur": 1.39
+ },
+ {
+  "scene": "SC 05",
+  "speaker": "TIP",
+  "text": "[whispering] TIP: That was not first try.",
+  "estStart": 287.13,
+  "estDur": 2.48
+ },
+ {
+  "scene": "SC 05",
+  "speaker": "TEACHER",
+  "text": "[bored] Pop quiz. Twenty questions. No talking.",
+  "estStart": 289.61,
+  "estDur": 2.48
+ },
+ {
+  "scene": "SC 05",
+  "speaker": "NARRATOR",
+  "text": "A pop quiz? No problem. You read all the questions... [pause] and then you pressed reset.",
+  "estStart": 292.09,
+  "estDur": 6.55
+ },
+ {
+  "scene": "SC 05",
+  "speaker": "TIP",
+  "text": "[suspicious] TIP: That's... cheating.",
+  "estStart": 298.65,
+  "estDur": 1.69
+ },
+ {
+  "scene": "SC 05",
+  "speaker": "NARRATOR",
+  "text": "[deadpan] It was one hundred percent cheating. [pause] You got one hundred percent.",
+  "estStart": 300.34,
+  "estDur": 4.8
+ },
+ {
+  "scene": "SC 05",
+  "speaker": "COACH",
+  "text": "[loud] Dodgeball! Let's GO!",
+  "estStart": 305.14,
+  "estDur": 1.39
+ },
+ {
+  "scene": "SC 05",
+  "speaker": "NARRATOR",
+  "text": "Dodgeball? You'd already been hit by every single ball. [pause] So you knew where every single ball was going.",
+  "estStart": 306.53,
+  "estDur": 7.35
+ },
+ {
+  "scene": "SC 05",
+  "speaker": "COACH",
+  "text": "[stunned] Kid... where have you BEEN all my life?!",
+  "estStart": 313.87,
+  "estDur": 3.51
+ },
+ {
+  "scene": "SC 05",
+  "speaker": "IVY",
+  "text": "[suspicious] How did you know it was coming? You didn't even look!",
+  "estStart": 317.38,
+  "estDur": 4.3
+ },
+ {
+  "scene": "SC 05",
+  "speaker": "YOU",
+  "text": "[casual] Lucky guess.",
+  "estStart": 321.68,
+  "estDur": 1.03
+ },
+ {
+  "scene": "SC 05",
+  "speaker": "TIP",
+  "text": "[whispering] TIP: It was not a lucky guess.",
+  "estStart": 322.71,
+  "estDur": 2.85
+ },
+ {
+  "scene": "SC 05",
+  "speaker": "NARRATOR",
+  "text": "At lunch, you told a joke. [pause] It was terrible. [pause] Reset. [pause] Thirty-one tries later...",
+  "estStart": 325.55,
+  "estDur": 6.83
+ },
+ {
+  "scene": "SC 05",
+  "speaker": "YOU",
+  "text": "[confident] ...and that's why the cafeteria pizza has its own fan club. [pause] It's called \"The Survivors.\"",
+  "estStart": 332.38,
+  "estDur": 6.55
+ },
+ {
+  "scene": "SC 05",
+  "speaker": "NARRATOR",
+  "text": "[proud] The whole cafeteria laughed. Somebody laughed milk out of their nose.",
+  "estStart": 338.94,
+  "estDur": 4.3
+ },
+ {
+  "scene": "SC 05",
+  "speaker": "YOU",
+  "text": "[glowing] This is the best day of my LIFE! [pause] Two hundred and fourteen times in a row!",
+  "estStart": 343.24,
+  "estDur": 6.62
+ },
+ {
+  "scene": "SC 06",
+  "speaker": "NARRATOR",
+  "text": "Wednesday. Rehearsal. Ivy's big trick: \"Elephant Toothpaste.\" [pause] A volcano of foam... out of a magic hat.",
+  "estStart": 352.85,
+  "estDur": 6.92
+ },
+ {
+  "scene": "SC 06",
+  "speaker": "IVY",
+  "text": "[dramatic] Ladies and gentlemen! [pause] From this ordinary hat, I will now pull out... a—",
+  "estStart": 359.77,
+  "estDur": 5.83
+ },
+ {
+  "scene": "SC 06",
+  "speaker": "YOU",
+  "text": "[flatly] A volcano of foam. I know.",
+  "estStart": 365.6,
+  "estDur": 2.48
+ },
+ {
+  "scene": "SC 06",
+  "speaker": "IVY",
+  "text": "[surprised] ...How do you know that? I didn't tell you that.",
+  "estStart": 368.08,
+  "estDur": 4.24
+ },
+ {
+  "scene": "SC 06",
+  "speaker": "NARRATOR",
+  "text": "Every time something went wrong... you reset. [pause] And again. [pause] And again.",
+  "estStart": 372.32,
+  "estDur": 5.6
+ },
+ {
+  "scene": "SC 06",
+  "speaker": "IVY",
+  "text": "[laughing] Okay, okay, what if I sneeze in the middle and the foam goes—",
+  "estStart": 377.92,
+  "estDur": 5.03
+ },
+ {
+  "scene": "SC 06",
+  "speaker": "YOU",
+  "text": "[not laughing] —on the ceiling. Yeah. Don't do that.",
+  "estStart": 382.95,
+  "estDur": 2.85
+ },
+ {
+  "scene": "SC 06",
+  "speaker": "IVY",
+  "text": "[slowly] ...You're being so weird.",
+  "estStart": 385.79,
+  "estDur": 2.05
+ },
+ {
+  "scene": "SC 06",
+  "speaker": "NARRATOR",
+  "text": "You lived Thursday four hundred and twelve times. [pause] Until the trick was perfect. [pause] Until YOU were perfect.",
+  "estStart": 387.85,
+  "estDur": 7.48
+ },
+ {
+  "scene": "SC 06",
+  "speaker": "IVY",
+  "text": "[hurt, quiet] You don't laugh anymore. You're never surprised. [pause] It's like you're not even here.",
+  "estStart": 395.33,
+  "estDur": 5.53
+ },
+ {
+  "scene": "SC 06",
+  "speaker": "YOU",
+  "text": "[quietly] I'm just... practicing.",
+  "estStart": 400.85,
+  "estDur": 1.69
+ },
+ {
+  "scene": "SC 06",
+  "speaker": "IVY",
+  "text": "[softly] You know how we became friends? [pause] Kindergarten. You glued your hand to my backpack.",
+  "estStart": 402.55,
+  "estDur": 5.89
+ },
+ {
+  "scene": "SC 06",
+  "speaker": "YOU",
+  "text": "[small laugh] For the whole day.",
+  "estStart": 408.44,
+  "estDur": 1.75
+ },
+ {
+  "scene": "SC 06",
+  "speaker": "IVY",
+  "text": "[sad smile] Best mistake you ever made. [pause] ...I miss that guy.",
+  "estStart": 410.19,
+  "estDur": 4.37
+ },
+ {
+  "scene": "SC 06",
+  "speaker": "DAD",
+  "text": "[proud] Why did the pancake go to the—",
+  "estStart": 414.56,
+  "estDur": 2.85
+ },
+ {
+  "scene": "SC 06",
+  "speaker": "YOU",
+  "text": "[bored] —doctor. It felt flat. Dad, I know. [pause] I know ALL of them.",
+  "estStart": 417.41,
+  "estDur": 5.16
+ },
+ {
+  "scene": "SC 06",
+  "speaker": "BEA",
+  "text": "[tiny voice] You're not fun anymore. [pause] Even Gary thinks so.",
+  "estStart": 422.57,
+  "estDur": 3.71
+ },
+ {
+  "scene": "SC 06",
+  "speaker": "NARRATOR",
+  "text": "[quietly] Even Gary.",
+  "estStart": 426.28,
+  "estDur": 1.03
+ },
+ {
+  "scene": "SC 07",
+  "speaker": "TIP",
+  "text": "[glitching] T-T-TIP: Too many respawns make the s-s-save file... heavy. [pause] The world is starting to... l-l-lag.",
+  "estStart": 429.81,
+  "estDur": 6.85
+ },
+ {
+  "scene": "SC 07",
+  "speaker": "YOU",
+  "text": "[nervous] Lag? Real life can't lag.",
+  "estStart": 436.66,
+  "estDur": 2.12
+ },
+ {
+  "scene": "SC 07",
+  "speaker": "MOM",
+  "text": "[stuttering, glitchy] Good m-m-m-morning, sw-sw-sweetie!",
+  "estStart": 438.78,
+  "estDur": 1.39
+ },
+ {
+  "scene": "SC 07",
+  "speaker": "NARRATOR",
+  "text": "Birds froze in the sky. The school bus kept teleporting back to the same corner. [pause] And Dad's pancake... just... stayed up there.",
+  "estStart": 440.17,
+  "estDur": 9.4
+ },
+ {
+  "scene": "SC 07",
+  "speaker": "DAD",
+  "text": "[confused, looking up] Huh. [pause] That one's... thinking about it.",
+  "estStart": 449.57,
+  "estDur": 3.28
+ },
+ {
+  "scene": "SC 07",
+  "speaker": "NARRATOR",
+  "text": "And then... the whole street switched to low graphics.",
+  "estStart": 452.85,
+  "estDur": 3.87
+ },
+ {
+  "scene": "SC 07",
+  "speaker": "YOU",
+  "text": "[panicking] Why does everything look like it's from two thousand and six?!",
+  "estStart": 456.73,
+  "estDur": 4.3
+ },
+ {
+  "scene": "SC 07",
+  "speaker": "NARRATOR",
+  "text": "And the respawns... started going wrong.",
+  "estStart": 461.03,
+  "estDur": 2.78
+ },
+ {
+  "scene": "SC 07",
+  "speaker": "SYSTEM",
+  "text": "[glitchy] Respawning in three, two, one.",
+  "estStart": 463.81,
+  "estDur": 2.12
+ },
+ {
+  "scene": "SC 07",
+  "speaker": "YOU",
+  "text": "[hugging the pole] This is NOT my checkpoint!",
+  "estStart": 465.93,
+  "estDur": 2.12
+ },
+ {
+  "scene": "SC 07",
+  "speaker": "SYSTEM",
+  "text": "Respawning.",
+  "estStart": 468.05,
+  "estDur": 0.66
+ },
+ {
+  "scene": "SC 07",
+  "speaker": "YOU",
+  "text": "[tiny, underwater, bubbly] Hi, Gary.",
+  "estStart": 468.71,
+  "estDur": 1.03
+ },
+ {
+  "scene": "SC 07",
+  "speaker": "SYSTEM",
+  "text": "Respawning.",
+  "estStart": 469.74,
+  "estDur": 0.66
+ },
+ {
+  "scene": "SC 07",
+  "speaker": "COACH",
+  "text": "[confused] ...Are you a ball now?",
+  "estStart": 470.4,
+  "estDur": 2.42
+ },
+ {
+  "scene": "SC 07",
+  "speaker": "SYSTEM",
+  "text": "Respawning.",
+  "estStart": 472.82,
+  "estDur": 0.66
+ },
+ {
+  "scene": "SC 07",
+  "speaker": "TEACHER",
+  "text": "[deadpan] ...That was my birthday cake.",
+  "estStart": 473.48,
+  "estDur": 2.42
+ },
+ {
+  "scene": "SC 07",
+  "speaker": "NARRATOR",
+  "text": "You respawned in Mr. Fig's birthday cake. [pause] To this day, nobody knows how.",
+  "estStart": 475.9,
+  "estDur": 5.53
+ },
+ {
+  "scene": "SC 08",
+  "speaker": "SYSTEM",
+  "text": "[booming, alarm] Warning! Save file corrupted. [pause] Respawns used: nine thousand, nine hundred, ninety-nine.",
+  "estStart": 482.43,
+  "estDur": 4.8
+ },
+ {
+  "scene": "SC 08",
+  "speaker": "NARRATOR",
+  "text": "[ominous] And then... everything you had ever undone... came back.",
+  "estStart": 487.23,
+  "estDur": 4.17
+ },
+ {
+  "scene": "SC 08",
+  "speaker": "TIP",
+  "text": "[glitching] T-TIP: Those are your fails. All of them. [pause] They never went away. [pause] They were just... saved.",
+  "estStart": 491.4,
+  "estDur": 7.42
+ },
+ {
+  "scene": "SC 08",
+  "speaker": "KID",
+  "text": "[laughing] Look! He fell off his skateboard like a HUNDRED times!",
+  "estStart": 498.82,
+  "estDur": 3.94
+ },
+ {
+  "scene": "SC 08",
+  "speaker": "PRINCIPAL",
+  "text": "[outraged] Why is a ghost throwing spaghetti at me?! [pause] AGAIN?!",
+  "estStart": 502.75,
+  "estDur": 4.07
+ },
+ {
+  "scene": "SC 08",
+  "speaker": "NARRATOR",
+  "text": "Now everyone could see every mistake you had ever erased. [pause] All nine thousand, nine hundred and ninety-nine of them.",
+  "estStart": 506.83,
+  "estDur": 7.71
+ },
+ {
+  "scene": "SC 08",
+  "speaker": "YOU",
+  "text": "[miserable] This is my worst nightmare. [pause] Literally. I've HAD this nightmare.",
+  "estStart": 514.54,
+  "estDur": 4.44
+ },
+ {
+  "scene": "SC 08",
+  "speaker": "IVY",
+  "text": "[amazed, quiet] You fell fifty-six times... and you got back up fifty-six times?",
+  "estStart": 518.97,
+  "estDur": 4.6
+ },
+ {
+  "scene": "SC 08",
+  "speaker": "YOU",
+  "text": "[ashamed] Only because I could respawn.",
+  "estStart": 523.57,
+  "estDur": 2.12
+ },
+ {
+  "scene": "SC 08",
+  "speaker": "IVY",
+  "text": "[smiling] Still. [pause] That's kind of cool.",
+  "estStart": 525.69,
+  "estDur": 2.62
+ },
+ {
+  "scene": "SC 08",
+  "speaker": "DAD",
+  "text": "[stuck, looping] Why did the pan— [pause] Why did the pan— [pause] Why did the pan—",
+  "estStart": 528.31,
+  "estDur": 5.66
+ },
+ {
+  "scene": "SC 08",
+  "speaker": "BEA",
+  "text": "[tiny voice, looping] Help! Help! Help!",
+  "estStart": 533.97,
+  "estDur": 1.39
+ },
+ {
+  "scene": "SC 08",
+  "speaker": "TIP",
+  "text": "[urgent, glitching] TIP: The day is f-f-freezing! If it freezes... everyone gets stuck. FOREVER!",
+  "estStart": 535.36,
+  "estDur": 4.96
+ },
+ {
+  "scene": "SC 09",
+  "speaker": "TIP",
+  "text": "[softly, glitching] T-tip: Delete the save... and everything goes back to normal. [pause] But no more respawns. Ever.",
+  "estStart": 542.83,
+  "estDur": 6.55
+ },
+ {
+  "scene": "SC 09",
+  "speaker": "YOU",
+  "text": "[panicked] But the talent show is TONIGHT! What if I mess up? In front of EVERYONE?!",
+  "estStart": 549.38,
+  "estDur": 5.75
+ },
+ {
+  "scene": "SC 09",
+  "speaker": "IVY",
+  "text": "[warmly] Then you mess up. [pause] With me.",
+  "estStart": 555.14,
+  "estDur": 2.98
+ },
+ {
+  "scene": "SC 09",
+  "speaker": "NARRATOR",
+  "text": "You looked at all your fails. [pause] Fifty-six crashes. Thirty-one bad jokes. One very surprised goldfish.",
+  "estStart": 558.12,
+  "estDur": 6.25
+ },
+ {
+  "scene": "SC 09",
+  "speaker": "NARRATOR",
+  "text": "[softly] And for the first time... they didn't look embarrassing. [pause] They looked like... trying.",
+  "estStart": 564.37,
+  "estDur": 6.13
+ },
+ {
+  "scene": "SC 09",
+  "speaker": "YOU",
+  "text": "[determined] Okay. [pause] Delete.",
+  "estStart": 570.5,
+  "estDur": 1.53
+ },
+ {
+  "scene": "SC 09",
+  "speaker": "SYSTEM",
+  "text": "[calm] Save deleted. [pause] Respawn... disabled.",
+  "estStart": 572.03,
+  "estDur": 2.55
+ },
+ {
+  "scene": "SC 09",
+  "speaker": "DAD",
+  "text": "[unfrozen, confused] —go to the doctor? [pause] Wait. Why am I outside?",
+  "estStart": 574.58,
+  "estDur": 4.07
+ },
+ {
+  "scene": "SC 09",
+  "speaker": "TIP",
+  "text": "[softly, fading] TIP: Last tip. [pause] Real life doesn't have checkpoints. [pause] That's what makes it... count.",
+  "estStart": 578.65,
+  "estDur": 6.33
+ },
+ {
+  "scene": "SC 09",
+  "speaker": "YOU",
+  "text": "[quietly] Thanks, Tip.",
+  "estStart": 584.98,
+  "estDur": 1.03
+ },
+ {
+  "scene": "SC 09",
+  "speaker": "NARRATOR",
+  "text": "Lives remaining: one. [pause] Just like everybody else.",
+  "estStart": 586.01,
+  "estDur": 3.35
+ },
+ {
+  "scene": "SC 10",
+  "speaker": "NARRATOR",
+  "text": "Friday night. The whole school was there. [pause] And every act before yours... was perfect.",
+  "estStart": 591.85,
+  "estDur": 6.19
+ },
+ {
+  "scene": "SC 10",
+  "speaker": "NARRATOR",
+  "text": "Dad came. Mom came straight from her shift. [pause] And Bea made a sign.",
+  "estStart": 598.05,
+  "estDur": 5.53
+ },
+ {
+  "scene": "SC 10",
+  "speaker": "PRINCIPAL",
+  "text": "[announcing] And next... Ivy and... [pause] you! With \"Science Magic\"!",
+  "estStart": 603.57,
+  "estDur": 4.31
+ },
+ {
+  "scene": "SC 10",
+  "speaker": "NARRATOR",
+  "text": "No checkpoint. No reset. No pause menu. [pause] Just you... and four hundred people.",
+  "estStart": 607.88,
+  "estDur": 5.83
+ },
+ {
+  "scene": "SC 10",
+  "speaker": "YOU",
+  "text": "[nervous, whispering] Okay. One try. Only one try.",
+  "estStart": 613.71,
+  "estDur": 2.48
+ },
+ {
+  "scene": "SC 10",
+  "speaker": "IVY",
+  "text": "[dramatic] Ladies and gentlemen! From this ordinary hat, I will now pull out—",
+  "estStart": 616.19,
+  "estDur": 4.66
+ },
+ {
+  "scene": "SC 10",
+  "speaker": "NARRATOR",
+  "text": "And of course... you messed up.",
+  "estStart": 620.85,
+  "estDur": 2.78
+ },
+ {
+  "scene": "SC 10",
+  "speaker": "YOU",
+  "text": "[whispering, frozen] Reset... reset... RESET!",
+  "estStart": 623.64,
+  "estDur": 1.99
+ },
+ {
+  "scene": "SC 10",
+  "speaker": "IVY",
+  "text": "[whispering, grinning] Fail number three hundred and thirteen. [pause] Let's make it a good one.",
+  "estStart": 625.63,
+  "estDur": 5.16
+ },
+ {
+  "scene": "SC 10",
+  "speaker": "NARRATOR",
+  "text": "So you did something you had never done before. [pause] You kept going.",
+  "estStart": 630.79,
+  "estDur": 5.16
+ },
+ {
+  "scene": "SC 10",
+  "speaker": "KID",
+  "text": "[chanting] FOAM! FOAM! FOAM! FOAM!",
+  "estStart": 635.95,
+  "estDur": 1.75
+ },
+ {
+  "scene": "SC 10",
+  "speaker": "MOM",
+  "text": "[cheering, laughing] I'm sending this to the WHOLE family!",
+  "estStart": 637.71,
+  "estDur": 2.85
+ },
+ {
+  "scene": "SC 10",
+  "speaker": "BEA",
+  "text": "[tiny voice, shouting] THAT'S MY BROTHER! [pause] He's a mushroom!",
+  "estStart": 640.55,
+  "estDur": 2.98
+ },
+ {
+  "scene": "SC 10",
+  "speaker": "PRINCIPAL",
+  "text": "[foamy, deadpan] ...Best. Disaster. Ever.",
+  "estStart": 643.54,
+  "estDur": 1.69
+ },
+ {
+  "scene": "SC 10",
+  "speaker": "NARRATOR",
+  "text": "You didn't win. [pause] The girl with seven bowling pins won. [pause] Honestly? Fair.",
+  "estStart": 645.23,
+  "estDur": 5.66
+ },
+ {
+  "scene": "SC 10",
+  "speaker": "YOU",
+  "text": "[laughing, covered in foam] We got \"Most Unforgettable\"!",
+  "estStart": 650.89,
+  "estDur": 1.75
+ },
+ {
+  "scene": "SC 10",
+  "speaker": "IVY",
+  "text": "[laughing] See? Told you! The mess-up IS the fun part!",
+  "estStart": 652.65,
+  "estDur": 3.57
+ },
+ {
+  "scene": "SC 11",
+  "speaker": "DAD",
+  "text": "[proud] Okay, brand new one! Why did the waffle go to school? [pause] To be more... well-rounded!",
+  "estStart": 660.72,
+  "estDur": 6.55
+ },
+ {
+  "scene": "SC 11",
+  "speaker": "BEA",
+  "text": "[tiny voice] Waffles are square.",
+  "estStart": 667.27,
+  "estDur": 1.39
+ },
+ {
+  "scene": "SC 11",
+  "speaker": "DAD",
+  "text": "[deflating] ...I'm gonna need a minute.",
+  "estStart": 668.66,
+  "estDur": 2.42
+ },
+ {
+  "scene": "SC 11",
+  "speaker": "YOU",
+  "text": "[laughing] Dad, that's the worst joke ever. [pause] I LOVE it.",
+  "estStart": 671.08,
+  "estDur": 4.07
+ },
+ {
+  "scene": "SC 11",
+  "speaker": "YOU",
+  "text": "[confident] Sixty-four!",
+  "estStart": 675.15,
+  "estDur": 0.66
+ },
+ {
+  "scene": "SC 11",
+  "speaker": "TEACHER",
+  "text": "[deadpan] ...Sixty-three.",
+  "estStart": 675.82,
+  "estDur": 0.96
+ },
+ {
+  "scene": "SC 11",
+  "speaker": "NARRATOR",
+  "text": "You were wrong. [pause] And it was fine.",
+  "estStart": 676.78,
+  "estDur": 3.35
+ },
+ {
+  "scene": "SC 11",
+  "speaker": "NARRATOR",
+  "text": "You tried the skateboard trick again. For real this time. [pause] Attempt one... [pause] Ouch.",
+  "estStart": 680.13,
+  "estDur": 6.33
+ },
+ {
+  "scene": "SC 11",
+  "speaker": "YOU",
+  "text": "[laughing, getting up] Attempt TWO!",
+  "estStart": 686.45,
+  "estDur": 1.03
+ },
+ {
+  "scene": "SC 11",
+  "speaker": "IVY",
+  "text": "[warm] Every inventor needs one.",
+  "estStart": 687.48,
+  "estDur": 1.75
+ },
+ {
+  "scene": "SC 11",
+  "speaker": "YOU",
+  "text": "[writing, smiling] Fail number one. Talent show. [pause] Lesson learned: totally worth it.",
+  "estStart": 689.24,
+  "estDur": 4.44
+ },
+ {
+  "scene": "SC 12",
+  "speaker": "SYSTEM",
+  "text": "[whispering] Checkpoint saved.",
+  "estStart": 694.67,
+  "estDur": 1.03
+ },
+ {
+  "scene": "SC 12",
+  "speaker": "NARRATOR",
+  "text": "[playful] Gary saw the whole thing. [pause] And now... Gary wants a turn.",
+  "estStart": 695.7,
+  "estDur": 5.1
+ },
+ {
+  "scene": "SC 12",
+  "speaker": "NARRATOR",
+  "text": "[warmly] So... if you could respawn just once, what would YOU redo? [pause] Tell me in the comments! [pause] And remember... one life. Make it count.",
+  "estStart": 700.8,
+  "estDur": 10.26
+ }
+]
