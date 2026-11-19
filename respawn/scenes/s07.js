@@ -52,14 +52,14 @@ const MARKS = ['three', 'two', 'one'].map((x) => w(8, x));
 const tPop1 = Math.max(MARKS[2] + 0.3, A[8].b + 0.02);     // pop on top of the flagpole
 CUT.pole = tPop1 - 0.02;
 const tNot = w(9, 'NOT');
-CUT.poleCr = A[10].a - 0.12;
-const tCr2 = A[10].a - 0.05;
-CUT.bowl = A[10].b + 0.08;
+CUT.poleCr = Math.max(A[9].b - 0.05, A[10].a - 0.12);
+const tCr2 = CUT.poleCr + 0.07;
+CUT.bowl = Math.min(A[10].b + 0.08, A[11].a - 0.2);
 const tCr3 = A[12].a - 0.06;
 CUT.bin = Math.min(A[12].b + 0.05, A[12].a + 0.32);
 const tCr4 = A[14].a - 0.05;
-CUT.cake = A[14].b + 0.08;
-CUT.fig = w(15, 'my') - 0.12;
+CUT.cake = Math.min(A[14].b + 0.08, A[14].a + 0.45);
+CUT.fig = Math.max(w(15, 'my') - 0.12, w(15, 'birthday') - 0.15);
 CUT.tableau = A[16].a - 0.1;
 CUT.case = w(16, 'To') - 0.12;
 const tNobody = w(16, 'nobody'), tHow = w(16, 'how');
@@ -308,7 +308,7 @@ function shDad(t) {
 }
 
 // ---- the street switches to low graphics
-const lowK = (t) => ease.inOut(seg(t, w(5, 'switched') - 0.1, w(5, 'graphics') + 0.7));
+const lowK = (t) => ease.inOut(seg(t, w(5, 'switched') - 0.1, Math.max(w(5, 'graphics') + 0.7, A[5].b + 0.9)));
 function shLow(t) {
   const lk = lowK(t);
   const cam = camKeys(t, [[CUT.low, { zoom: 0.9, x: 40, y: -30 }], [CUT.y2006, { zoom: 0.98, x: 30, y: -10 }]]);

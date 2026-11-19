@@ -52,7 +52,8 @@ function timing() {
   C.kinder = wb(3, 'Your') - 0.1;                 // kindergarten polaroid
   C.builds = wb(3, 'She') - 0.1;                  // Ivy presents the rocket sneakers
   C.launch = wb(3, 'They') - 0.12;                // ignition -> wall -> BOOM
-  C.alot = wb(3, 'A') - 0.1;                      // chalkboard: DAYS SINCE LAST EXPLOSION 0
+  C.alot = wb(3, 'A') - 0.1;                      // chalkboard: DAYS SINCE LAST EXPLOSION 0 (a stray sneaker whizzes past)
+  C.boom2 = wb(3, 'lot') + 0.55;                  // the silent beat: the stray sneaker hits the BOOM? box — explosion #2
   C.soot = B[4].a - 0.1;                          // sooty Ivy + the Book of Fails, FAIL #312
   C.book = wb(4, 'Lesson') - 0.1;                 // the page: LESSON
   C.indoors = wb(4, 'indoors') - 0.1;             // the sneaker falls on her head

@@ -32,17 +32,20 @@ const standY = ST.standY;
 const tHit = w(0, 'messed');                      // the bike hits the bump
 const tCr1 = w(0, 'up...');                       // mid-air crumble
 const tFrz1 = tCr1 + 0.36;                        // the world pauses
-const marks1 = [w(0, 'you', 1), w(0, 'could'), w(0, 'just...')];
 const tPop1 = w(0, 'respawn?');
+// 3·2·1 from "you could just", spread evenly so the digits never bunch up (elastic with the voice)
+const tM0 = Math.max(tFrz1, Math.min(w(0, 'you', 1), tPop1 - 0.75)), dM = (tPop1 - 0.12 - tM0) / 3;
+const marks1 = [tM0, tM0 + dM, tM0 + 2 * dM];
 const tPop2 = w(1, 'Respawn.');                   // second bike fail -> fast respawn
 const tCr2 = tPop2 - 0.3;
 const tLens = Math.min(tCr2 - 0.14, w(1, 'bike?') + 0.12);
 const tHit2 = tLens - 0.22;
 const tSlip = w(1, 'spaghetti') + 0.05;
 const tSplat = w(1, 'principal?');
-const tCr3 = tSplat + 0.34;
+const tCr3 = tSplat + 0.2;
 const tPop3 = w(1, 'Respawn.', 1);
 const tFace = w(2, 'face');
+const tThrow1 = tFace - 0.55;
 const tCr4 = tFace + 0.2;
 const tPop4 = w(2, 'Respawn...');
 const tCatch = w(2, 'catch');
@@ -59,11 +62,11 @@ CUT.pad1 = tPop1 - 0.12;
 CUT.lens = A[1].a - 0.1;
 CUT.pad2 = tCr2 + 0.22;
 CUT.cafe = w(1, 'Spill') - 0.12;
-CUT.gym = w(2, 'hit') - 0.12;
+CUT.gym = Math.min(w(2, 'hit') - 0.12, tFace - 0.8);
 CUT.replay = Math.max(tCr4 + 0.14, w(2, 'with') - 0.05);
 CUT.pop4 = tPop4 - 0.08;
 CUT.easy = A[3].a - 0.12;
-CUT.run = w(3, 'Real') - 0.1;
+CUT.run = Math.min(w(3, 'Real') - 0.1, A[3].a + 0.5);
 CUT.dark = A[4].a - 0.08;
 CUT.tip = A[5].a - 0.12;
 CUT.count = w(5, 'nine') - 0.15;
@@ -296,7 +299,7 @@ function shCafe(t) {
   // --- camera
   let cam;
   if (!reset) {
-    cam = camKeys(t, [[CUT.cafe, at(760, 690, 1.3)], [tSlip, at(900, 650, 1.36)], [tSplat - 0.4, at(1000, 610, 1.32)], [tSplat - 0.06, at(1050, 620, 1.36)], [tSplat, at(PRIN_HIT.x, 510, 2.6)], [tCr3 - 0.08, at(PRIN_HIT.x, 500, 2.75)], [tCr3, at(780, 690, 1.3)], [tPop3, at(760, 690, 1.32)]]);
+    cam = camKeys(t, [[CUT.cafe, at(760, 690, 1.3)], [tSlip, at(900, 650, 1.36)], [tSplat - 0.4, at(1000, 610, 1.32)], [tSplat - 0.06, at(1050, 620, 1.36)], [tSplat, at(PRIN_HIT.x - 40, 520, 2.5)], [tPop3, at(PRIN_HIT.x - 60, 510, 2.75)]]);
   } else cam = camKeys(t, [[tPop3, at(640, 700, 1.45)], [CUT.gym, at(760, 690, 1.5)]]);
   shakeAll(cam, t, [[tSplat, 0.35, 16], [tSlip + 0.45, 0.25, 10]]);
   // --- principal: walks right -> left; stops and gets spaghetti'd
@@ -325,7 +328,7 @@ function shCafe(t) {
       if (t < tCr3) {
         hero = actor('you', t, { x, y: 960, s: 0.5, view: 'side', flip: true, rot: lerp(0, 88, ease.out(a)), rotY: -260, lift: 150 * Math.sin(Math.PI * seg(t, tSlip, tSlip + 0.5)), legL: lerp(0, 70, a), legR: lerp(0, 40, a), kneeL: 10, kneeR: 10, armL: lerp(60, 160, a), armR: lerp(60, 140, a), face: lying ? { name: 'dizzy' } : { name: 'scream' }, ...boing(t, tSlip + 0.5, 0.15) }, { arms: false });
       } else {
-        fx += R.crumble({ x: x - 240, y: 960 - 10, s: 0.5, age: t - tCr3, dir: [0.2, -0.5], seed: 11, floorY: 960, life: 0.9 });
+        fx += R.crumble({ x: x - 240, y: 960 - 10, s: 0.5, age: t - tCr3, dir: [0.9, -0.9], spread: 1.3, seed: 11, floorY: 960, life: 0.9 });
       }
       fx += K.C.dust(x - 80, 960, tSlip + 0.48, t);
       // tray + spaghetti in slow motion
@@ -364,7 +367,7 @@ function shCafe(t) {
   const sm = !reset ? bump(t, tSlip + 0.1, tSplat) : 0;
   if (sm > 0) o += S.rect(0, 0, 1920, 1080, 0, { fill: '#9FD8FF', opacity: f(0.12 * sm) }) + TFS('SLOW-MO', 1780, 110, 44, '#FFFFFF', { opacity: f(sm), 'text-anchor': 'end' });
   // banner respawn: "SPAGHETTI INCIDENT"
-  if (!reset) o += R.respawnOverlay(t, { t0: tCr3 + 0.08, dur: tPop3 - 0.04 - (tCr3 + 0.08), style: 'banner', y: 230, reason: 'SPAGHETTI INCIDENT' });
+  if (!reset) o += R.respawnOverlay(t, { t0: tCr3 + 0.04, dur: Math.max(0.3, tPop3 - 0.04 - (tCr3 + 0.04)), style: 'banner', y: 800, reason: 'SPAGHETTI INCIDENT' });
   if (reset) o += respawnsHUD(t, 3, tPop3 + 0.05);
   o += smash(t, tSplat, 0.12, 0.6) + smash(t, tPop3 - 0.12, 0.12, 0.8);
   return o;
@@ -398,7 +401,7 @@ function ballPos(t, tThrow, tArr, slow = false) {
 }
 function gymHit(tt, camOverride) {
   // the first ball (world time tt), used live and in the replay
-  const tThrow = CUT.gym + 0.22;
+  const tThrow = tThrow1;
   const hitK = tt >= tFace;
   const cam = camOverride || shakeAll(camKeys(tt, [[CUT.gym, at(1150, 700, 1.25)], [tFace - 0.25, at(1250, 680, 1.32)], [tFace, at(1400, 640, 1.75)]]), tt, [[tFace, 0.3, 20]]);
   let ch = gymKids(tt, hitK ? 'shocked' : 'happy') + thrower(tt, tThrow);
@@ -429,7 +432,7 @@ function shReplay(t) {
   const H_ = gymHit(tt, cam);
   let o = H_.svg;
   o += S.rect(0, 0, 1920, 1080, 0, { fill: '#203050', opacity: 0.12 });
-  const [bx, by] = ballPos(tt, CUT.gym + 0.22, tFace);
+  const [bx, by] = ballPos(tt, tThrow1, tFace);
   if (tt < tFace) {
     const [sx, sy] = toScr(cam, bx, by);
     const dk = seg(t, CUT.replay + 0.05, CUT.replay + 0.4);
@@ -493,8 +496,8 @@ function shEasy(t) {
 const BEN = TW.bench, BUS = TW.busRoof;
 const FLAGX = 2160, TS_ = 0.26;
 const PK = (() => {
-  const tL = w(3, 'life'), tJ = w(3, 'just'), tO = w(3, 'obby...'), tW = w(3, 'with');
-  return { t0: CUT.run, tL, tJ, tO, tW, tP: tPlant };
+  const t0 = CUT.run, tW = Math.max(w(3, 'with'), t0 + 1.6);
+  return { t0, tL: lerp(t0, tW, 0.22), tJ: lerp(t0, tW, 0.47), tO: lerp(t0, tW, 0.74), tW, tP: Math.max(tPlant, tW + 0.2) };
 })();
 // hero path: run -> hop on the bench -> leap on the bus roof -> run -> front-flip off -> land -> plant
 function parkour(t) {

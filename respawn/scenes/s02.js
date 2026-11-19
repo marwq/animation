@@ -782,6 +782,35 @@ function shALot(t) {
   let o = workshop(t, cam, '', E.smokeCloud(700, 380, t - C.alot + 1.2, { n: 7, r: 80, life: 2.8, seed: 7, op: 0.5 }), { soot: 1, days: t < tW ? 1 : 0 });
   o += K.C.dust(860, 640, tW, t);
   o += K.bang('AGAIN.', 1500, 830, pop(t, tW + 0.1, 0.18), 90, -6, '#FFFFFF');
+  // the other sneaker, still lit, whizzes across the board
+  const wk = seg(t, b.lot + 0.2, C.boom2);
+  if (wk > 0 && wk < 1) {
+    const sx = lerp(-300, 2200, wk), sy = 560 - 140 * Math.sin(wk * Math.PI);
+    o += K.C.speedLines(sx + 120, sx + 420, sy, 4, 9, '#FFE14D', 120) + X.rocketSneakers({ x: sx, y: sy, s: 1.6, rot: 180 + 12 * Math.sin(wk * 9), t, flame: 1, pair: false });
+  }
+  return o;
+}
+// ---- 38b. the silent beat after "A lot.": the stray sneaker loops round the garage into the BOOM? box — explosion #2
+function shBoom2(t) {
+  const t0 = C.boom2, tB = t0 + 0.6;
+  const cam = shakeAll({ zoom: 1.05, x: 40, y: 20 }, t, [[tB, 0.8, 34]]);
+  const path = (k) => [lerp(260, 1790, ease.inOut(k)), 470 - 300 * Math.sin(k * Math.PI) + 70 * Math.sin(k * Math.PI * 3)];
+  let fx = E.smokeCloud(800, 560, t - b.hit, { n: 11, r: 110, spread: 320, life: 4.5, seed: 4, op: 0.8 });
+  if (t < tB) {
+    const k = seg(t, t0, tB);
+    const [x, y] = path(k), [x2, y2] = path(Math.min(1, k + 0.02));
+    const rot = (Math.atan2(y2 - y, x2 - x) * 180) / Math.PI + 180;
+    for (let i = 1; i < 6; i++) { const [px, py] = path(Math.max(0, k - i * 0.05)); fx += S.circle(px, py, 14 + i * 5, { fill: '#C9C4D2', stroke: LINE, 'stroke-width': 4, opacity: f(0.8 - i * 0.12) }); }
+    fx += X.rocketSneakers({ x, y, s: 0.6, rot, t, flame: 1, pair: false });
+  } else {
+    fx += E.smokeCloud(1760, 470, t - tB, { n: 12, r: 120, spread: 380, life: 2.6, seed: 8 }) + K.C.burst(1760, 460, seg(t, tB, tB + 0.5), '#FFB23A');
+  }
+  const duck = ease.out(seg(t, t0 + 0.15, t0 + 0.35));
+  const hero = actor('you', t, { x: 520, y: 990, s: 0.5, turn: 0.3, armL: lerp(10, 168, duck), armR: lerp(10, 168, duck), sy: 1 - 0.14 * duck, sx: 1 + 0.06 * duck,
+    face: t > tB ? { name: 'scream' } : { name: 'scared', eyes: { look: [0.6, -0.6] } } }, { arms: false });
+  let o = workshop(t, cam, '', hero + fx, { soot: 1, boom: 0.45, days: 0 });
+  if (t >= tB) o += K.bang('KA-BLAM!', 1280, 240, pop(t, tB, 0.2), 210, 6, '#FF5A3D') + smash(t, tB, 0.14, 0.9) + S.rect(0, 0, 1920, 1080, 0, { fill: '#2A2230', opacity: f(0.25 * seg(t, tB + 0.6, C.soot)) });
+  else o += K.bang('NOT AGAIN!', 640, 280, pop(t, t0 + 0.2, 0.2), 90, -6, '#FFFFFF');
   return o;
 }
 // ---- 39. "Fail number three hundred and twelve! Rocket sneakers!" — sooty, delighted, the Book of Fails
@@ -1006,7 +1035,7 @@ const SHOTS = [
   [C.dad, shDad], [C.mornings, shMornings], [C.same, shSame], [C.why, shWhy], [C.along, shAlong], [C.because, shBecause], [C.flat, shFlat],
   [C.bea, shBea], [C.six, shSix], [C.hair, shHair], [C.mush, shMush],
   [C.gary, shGary], [C.seen, shSeen], [C.mom, shMom], [C.remember, shRemember], [C.mumble, shMumble],
-  [C.ivy, shIvy], [C.kinder, shKinder], [C.builds, shBuilds], [C.launch, shLaunch], [C.alot, shALot], [C.soot, shSoot], [C.book, shBook], [C.indoors, shIndoors],
+  [C.ivy, shIvy], [C.kinder, shKinder], [C.builds, shBuilds], [C.launch, shLaunch], [C.alot, shALot], [C.boom2, shBoom2], [C.soot, shSoot], [C.book, shBook], [C.indoors, shIndoors],
   [C.how, shHow], [C.lesson, shLesson], [C.anyway, shAnyway],
   [C.poster, shPoster], [C.whole, shWhole], [C.horror, shHorror], [C.mess, shMess], [C.flash, shFlash], [C.fun, shFun], [C.stare, shStare],
 ].sort((a, b_) => a[0] - b_[0]);
