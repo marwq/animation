@@ -47,14 +47,16 @@ const tYes = w(5, 'YES');                         // "YES!" == lightning
 const tTouch = tYes - 0.1;                        // the avatar's hand touches the final flag
 const c18 = tYes + 0.04;                          // exterior: the bolt hits the house
 const tStrike = c18 + 0.05;
-const c19 = Math.max(tStrike + 0.4, A[6].a - 0.05); // frozen in the YES pose, room green, sparks
+const c19a = tStrike + 0.55;                      // power surge in the room: flicker, sparks, green flood
+const c19 = Math.max(c19a + 0.8, A[6].a - 0.15);  // frozen in the YES pose (deskFace)
 const c20 = w(6, 'reached') - 0.12;               // the screen floods green + system window
 const c21 = w(6, 'Exporting') - 0.1;              // big export window + progress
 const c22 = A[7].a - 0.08;                        // "Exporting to WHAT?"
-const c23 = w(7, 'WHAT') - 0.02;                  // the pad bursts out of the screen
-const tBurst = c23 + 0.08;
-const tPlant = tBurst + 0.36;
-const c24 = tPlant + 0.2;                         // Tip squeezes out of the monitor and bounces
+const c23 = w(7, 'WHAT') - 0.02;                  // the screen bulges -> the pad bursts out, loops round the room
+const tBurst = Math.max(c23 + 0.3, A[7].b - 0.1);
+const tPlant = tBurst + clamp((A[8].a - 0.5 - tBurst) * 0.8, 0.4, 0.85);
+const c24 = Math.max(tPlant + 0.3, A[8].a - 0.35); // Tip squeezes out of the monitor and bounces
+const tTipOut = c24 + 0.3;                        // Tip pops free of the screen
 const c25 = w(8, "I'm") - 0.12;                   // Tip's intro card
 const c26 = w(8, 'TIP', 1) - 0.12;                  // "step on the checkpoint"
 const c27 = A[9].a - 0.08;                        // backing away
@@ -434,17 +436,23 @@ function sh22(t) {
   return o;
 }
 // ---- 23. the pad bursts out of the screen and plants itself in the rug; he leaps out of the chair
+const PADB = [[HR.monitor.screen.cx, HR.monitor.screen.cy], [700, -120], [180, 760], [CP.x, CP.y]];   // bezier: out of the screen, a loop under the ceiling, down into the rug
 function padFlight(t) {
-  const u = seg(t, tBurst, tPlant);
-  const x = lerp(HR.monitor.screen.cx, CP.x, u), y = lerp(HR.monitor.screen.cy, CP.y, u) - 4 * 280 * u * (1 - u);
-  return { x, y, s: lerp(0.12, CP.s, ease.out(u)), rot: -400 * (1 - ease.out(u)), u };
+  const u = seg(t, tBurst, tPlant), v = 1 - u;
+  const bz = (i) => v * v * v * PADB[0][i] + 3 * v * v * u * PADB[1][i] + 3 * v * u * u * PADB[2][i] + u * u * u * PADB[3][i];
+  return { x: bz(0), y: bz(1), s: lerp(0.12, CP.s, ease.out(Math.min(1, u * 1.6))), rot: -560 * (1 - ease.out(u)), u };
 }
 function padSvg(t, state = 'idle', extra = {}) {
   if (t < tBurst) return { back: '', front: '' };
   if (t < tPlant) {
     const p = padFlight(t);
+    let tr = '';
+    for (let i = 3; i >= 1; i--) {   // green afterimages
+      const q = padFlight(t - i * 0.035);
+      tr += S.ellipse(q.x, q.y, 420 * q.s, 112 * q.s, { fill: '#7CFFB2', opacity: f(0.12 * (4 - i)), transform: `rotate(${f(q.rot)} ${f(q.x)} ${f(q.y)})` });
+    }
     const all = R.checkpoint({ x: 0, y: 0, s: p.s, t, state: 'saved' });
-    return { back: '', front: S.g(all, `translate(${f(p.x)} ${f(p.y)}) rotate(${f(p.rot)})`) };
+    return { back: '', front: tr + S.g(all, `translate(${f(p.x)} ${f(p.y)}) rotate(${f(p.rot)})`) };
   }
   const a = t - tPlant;
   const sq = squash(t, tPlant, 0.25, 0.5);
@@ -459,8 +467,8 @@ function padSvg(t, state = 'idle', extra = {}) {
   return { back, front };
 }
 function sh23(t) {
-  const cam = camKeys(t, [[c23, at(1150, 560, 1.12)], [tPlant, at(1060, 600, 1.0)]], ease.out);
-  shakeAll(cam, t, [[c23, tBurst - c23 + 0.1, 8], [tPlant, 0.4, 24]]);
+  const cam = camKeys(t, [[c23, at(1150, 560, 1.12)], [tBurst, at(1100, 560, 1.05)], [tPlant, at(1000, 580, 0.98)], [tPlant + 0.15, at(1000, 590, 1.0)], [c24, at(1300, 500, 1.45)]], ease.inOut);
+  shakeAll(cam, t, [[c23, tBurst - c23 + 0.1, 4 + 8 * seg(t, c23, tBurst)], [tPlant, 0.4, 24]]);
   const leap = t >= tBurst;
   const lp = hops(t, [[tBurst, 1210, 880], [tBurst + 0.32, HSTAND.x, HSTAND.y, 140]]);
   const chairX = lerp(HR.chair.x, 1500, ease.out(seg(t, tBurst, tBurst + 0.6)));
@@ -469,7 +477,10 @@ function sh23(t) {
   if (!leap) chars = chairSit(t, { headRot: 6 * Math.sin(t * 40) });
   else {
     const air = t < tBurst + 0.32;
-    chars = you(t, { x: lp.x, y: lp.y, s: 0.5, turn: -0.3, face: { name: 'scream' }, headphones: true, armL: air ? 160 : 120, armR: air ? 150 : 110, legL: air ? 20 : 0, legR: air ? -10 : 0, kneeL: air ? 40 : 0, ...(air ? { sx: 0.92, sy: 1.1 } : squash(t, tBurst + 0.32, 0.25, 0.5)) }, { arms: false });
+    const p = padFlight(t);
+    const duck = t < tPlant ? bump(t, tBurst + 0.32, tPlant) : 0;
+    const lookP = t < tPlant ? [clamp((p.x - HSTAND.x) / 500, -1, 1), clamp((p.y - 560) / 400, -1, 1)] : [-1, 0.6];
+    chars = you(t, { x: lp.x, y: lp.y, s: 0.5, turn: -0.3, face: { name: t < tPlant ? 'scream' : 'shocked', eyes: { look: lookP } }, headphones: true, armL: air ? 160 : 120 + 40 * duck, armR: air ? 150 : 110 + 40 * duck, bodyY: 60 * duck, legL: air ? 20 : 0, legR: air ? -10 : 0, kneeL: air ? 40 : 0, ...(air ? { sx: 0.92, sy: 1.1 } : squash(t, tBurst + 0.32, 0.25, 0.5)) }, { arms: false });
   }
   const behind = bowlRoom(t, { look: [0.6, -0.4], blink: 0 });
   const L_ = H.heroRoom.layers(t, { time: 'night', storm: 1, monitor: greenGame(t), greenGlow: 1, chairX, clock: '2:03' });
@@ -495,7 +506,7 @@ function sh23(t) {
 }
 // ---- 24. Tip squeezes out of the monitor, bounces off the desk and the pad, and lands by his face
 function tipPath(t) {
-  return hops(t, [[c24 + 0.25, 1355, 440], [c24 + 0.5, 1590, 545, 130], [c24 + 0.92, 1010, 820, 260], [c24 + 1.3, TIPHOVER.x, TIPHOVER.y, 200]]);
+  return hops(t, [[tTipOut, 1355, 440], [tTipOut + 0.3, 1590, 545, 130], [tTipOut + 0.75, 1010, 820, 260], [tTipOut + 1.15, TIPHOVER.x, TIPHOVER.y, 200]]);
 }
 function tipSvg(t, x, y, s, extra = {}, sq = { sx: 1, sy: 1 }) {
   const tp = R.tip({ x: 0, y: 0, s, t, ...extra });
@@ -503,8 +514,8 @@ function tipSvg(t, x, y, s, extra = {}, sq = { sx: 1, sy: 1 }) {
 }
 function tipIntro(t) {
   // returns { svg (world), x, y }
-  const e = seg(t, c24, c24 + 0.25);
-  if (t < c24 + 0.25) {
+  const e = seg(t, c24, tTipOut);
+  if (t < tTipOut) {
     const sx = lerp(0.2, 0.9, ease.outBack(e)), sy = lerp(0.05, 1.25, ease.outBack(e));
     return { svg: tipSvg(t, 1355, 455 - 30 * e, 1.05, { look: [0, 0.3] }, { sx, sy }), x: 1355, y: 440 };
   }
