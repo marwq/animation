@@ -642,4 +642,4 @@ function look(t) {
   return { grade: null, vignette: 0.65 };
 }
 
-module.exports = { scene, look, CUT, RT, _dbg: { yardR, yardGhosts, roofCrowd, flagsSvg, kidLaugh, frost, town, townFolk } };
+module.exports = { scene, look, CUT, RT };
