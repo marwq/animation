@@ -476,7 +476,7 @@ function shYeah(t) {
   const tF = w(5, 'First');
   const cam = camKeys(t, [[CUT.yeah, camAt(4700, 330, 1.55)], [CUT.tip1, camAt(4700, 300, 1.68)]]);
   const brush = bump(t, A[5].a - 0.05, tF - 0.05);
-  const pose = { x: DECK.x - 30, y: DECK.y, s: HS, turn: -0.25, armL: 30 + 60 * brush, armR: t >= tF - 0.05 ? 110 : 24, face: { name: 'smug', fx: t > tF ? ['sparkles'] : [] }, props: [{ svg: X.skateboard({ x: 250, y: -170, s: 0.95, rot: -82 }), layer: 'back' }] };
+  const pose = { x: DECK.x - 30, y: DECK.y, s: HS, volume: false, turn: -0.25, armL: 30 + 60 * brush, armR: t >= tF - 0.05 ? 110 : 24, face: { name: 'smug', fx: t > tF ? ['sparkles'] : [] }, props: [{ svg: X.skateboard({ x: 250, y: -170, s: 0.95, rot: -82 }), layer: 'back' }] };
   let ch = you(t, pose, { arms: false });
   const g = pop(t, tF + 0.1, 0.2) * (1 - seg(t, tF + 0.6, tF + 0.9));
   if (g > 0) ch += K.F.sparkle(DECK.x + 40, DECK.y - 330, 20 * g);
@@ -616,7 +616,7 @@ function shMenu(t) {
   const up = ease.outBack(seg(t, tSnap - 0.15, tSnap + 0.05));
   const B = classKids(t, (r, c) => (r === 2 && c === 3 ? { name: 'nervous', fx: ['sweat2'] } : 'nervous'), undefined, cam);
   const heroSvg = t < tC ? you(t, { x: HD.x, y: HD.y, s: HD.s, armL: 20, armR: lerp(30, 150, up), face: { name: t > tHl ? 'sneaky' : 'smug', eyes: { look: [0.8, -0.2] } } }, { arms: false }) : '';
-  const W_ = classRoom(t, cam, { quiz: true }, [B[0], B[1], B[2] + heroSvg]);
+  const W_ = classRoom(t, cam, { quiz: true }, [B[0], B[1], B[2] + (grey > 0 ? '' : heroSvg)]);
   let o = W_.svg;
   if (grey > 0) {
     o += R.greyWash(grey);
@@ -752,7 +752,7 @@ function throwers(t, kOf) {
   }).join('');
 }
 const coachP = (t, pose = {}, act = {}) => actor('coach', t, { x: G.coachFront.x - 60, y: G.coachFront.y + 10, s: G.coachFront.s, turn: 0.4, t, ...pose }, { energy: 1.4, ...act });
-const ivyP = (t, pose = {}, act = {}) => actor('ivy', t, { s: 0.48, t, ...pose }, act);
+const ivyP = (t, pose = {}, act = {}) => actor('ivy', t, { s: 0.48, t, volume: false, ...pose }, act);
 // the hero holding the last ball between two fingers (front view, right arm up)
 function heroPinch(t, pose = {}, armR = 128) {
   const [hx, hy] = AC.hand(armR, 1);
@@ -904,7 +904,7 @@ function shPinch(t) {
   const target = [hand[0], hand[1] - 62];
   const bu = ease.out(seg(t, CUT.pinch, tP));
   const bx = lerp(1060, target[0], bu), by = lerp(575, target[1], bu);
-  let ch = you(t, { x: DZ.x, y: DZ.y, s: DZ.s, turn: -0.12, armL, armR: 14, face: { name: 'smug', eyes: { look: [0.35, 0.15], upper: 0.4 } } }, { arms: false });
+  let ch = you(t, { x: DZ.x, y: DZ.y, s: DZ.s, volume: false, turn: -0.12, armL, armR: 14, face: { name: 'smug', eyes: { look: [0.35, 0.15], upper: 0.4 } } }, { arms: false });
   ch += E.pinchHand(hand[0], hand[1] - 6, 0.38, -(180 - armL) * 0.15 - 4, t < tP ? 1 - up * 0.7 : 0);
   ch += X.dodgeball({ x: bx, y: by, s: 0.5, rot: 30 * (t - CUT.pinch), squash: 0.15 * bump(t, tP, tP + 0.2) });
   if (t < tP) ch += S.path(`M${f(bx - 60)} ${f(by - 10)} h-120 M${f(bx - 58)} ${f(by + 12)} h-80`, ln(5, '#FFFFFF', 0.6 * (1 - bu)));
@@ -931,7 +931,7 @@ function shCoach2(t) {
   }
   ch += heroPinch(t, { turn: -0.25, face: { name: 'smug', fx: ['sparkles'] } });
   const love = t >= tBeen - 0.05;
-  ch += actor('coach', t, { x: 600, y: 1050, s: 0.6, turn: 0.45, t, whistle: t < A[13].a ? 'mouth' : 'chest', armL: love ? 120 : 40, armR: love ? 120 : 30, face: love ? { name: 'love', fx: ['hearts', 'sparkles'] } : { name: 'shocked', fx: ['sweat'] }, lift: love ? 10 * Math.abs(Math.sin(t * 8)) : 0 }, { arms: false, energy: 1.6 });
+  ch += actor('coach', t, { x: 600, y: 1050, s: 0.6, turn: 0.45, t, volume: false, whistle: t < A[13].a ? 'mouth' : 'chest', armL: love ? 120 : 40, armR: love ? 120 : 30, face: love ? { name: 'love', fx: ['hearts', 'sparkles'] } : { name: 'shocked', fx: ['sweat'] }, lift: love ? 10 * Math.abs(Math.sin(t * 8)) : 0 }, { arms: false, energy: 1.6 });
   let o = gymRoom(t, cam, {}, ch);
   o += zoomLines(960, 420, bump(t, tBeen, tBeen + 0.5), t, '#FFFFFF', 22, 330);
   return o + smash(t, CUT.coach, 0.08, 0.5);
@@ -954,7 +954,7 @@ function shLucky(t) {
   const armR = 162;
   const [hx, hy] = AC.hand(armR, 1);
   const props = [{ svg: S.rect(hx - 8, hy - 50, 16, 50, 8, ol('#FFFFFF', 5)) + X.dodgeball({ x: hx, y: hy - 112, s: 1, rot: t * 900 }) + S.path(`M${f(hx - 90)} ${f(hy - 112)} a90 26 0 0 0 180 0`, ln(5, '#FFFFFF', 0.6)), layer: 'front' }];
-  const ch = you(t, { x: 1600, y: DZ.y, s: DZ.s, turn: -0.2, armR, armL: 38 + 8 * Math.sin(t * 4), headRot: 6, props, face: { name: 'smug', eyes: { upper: 0.3 } } }, { arms: false });
+  const ch = you(t, { x: 1600, y: DZ.y, s: DZ.s, volume: false, turn: -0.2, armR, armL: 38 + 8 * Math.sin(t * 4), headRot: 6, props, face: { name: 'smug', eyes: { upper: 0.3 } } }, { arms: false });
   return gymRoom(t, cam, {}, ch) + smash(t, CUT.lucky, 0.08, 0.4);
 }
 

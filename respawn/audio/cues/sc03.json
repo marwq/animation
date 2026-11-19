@@ -1,0 +1,1094 @@
+{
+ "scene": "SC 03",
+ "start": 153.72,
+ "end": 221.48,
+ "music": [
+  {
+   "start": 153.72,
+   "end": 160.98,
+   "mood": "mystery",
+   "energy": 0.35,
+   "in": "fade",
+   "out": "cut"
+  },
+  {
+   "start": 160.98,
+   "end": 163.24,
+   "mood": "tender",
+   "energy": 0.3,
+   "in": "cut",
+   "out": "cut"
+  },
+  {
+   "start": 163.24,
+   "end": 173.46,
+   "mood": "game",
+   "energy": 0.8,
+   "in": "cut",
+   "out": "cut"
+  },
+  {
+   "start": 173.46,
+   "end": 178.29,
+   "mood": "sad",
+   "energy": 0.3,
+   "in": "cut",
+   "out": "cut"
+  },
+  {
+   "start": 178.29,
+   "end": 179.94,
+   "mood": "respawn",
+   "energy": 0.5,
+   "in": "cut",
+   "out": "fade"
+  },
+  {
+   "start": 179.94,
+   "end": 182.36,
+   "mood": "tender",
+   "energy": 0.3,
+   "in": "fade",
+   "out": "cut"
+  },
+  {
+   "start": 182.36,
+   "end": 189.63,
+   "mood": "climax",
+   "energy": 0.55,
+   "in": "cut",
+   "out": "cut"
+  },
+  {
+   "start": 189.63,
+   "end": 191.17,
+   "mood": "epic",
+   "energy": 0.75,
+   "in": "cut",
+   "out": "sting"
+  },
+  {
+   "start": 191.17,
+   "end": 191.72,
+   "mood": "silence",
+   "energy": 0,
+   "in": "cut",
+   "out": "cut"
+  },
+  {
+   "start": 191.72,
+   "end": 198.02,
+   "mood": "mystic",
+   "energy": 0.5,
+   "in": "swell",
+   "out": "cut"
+  },
+  {
+   "start": 198.02,
+   "end": 200.21,
+   "mood": "chaos",
+   "energy": 0.85,
+   "in": "cut",
+   "out": "sting"
+  },
+  {
+   "start": 200.21,
+   "end": 200.69,
+   "mood": "silence",
+   "energy": 0,
+   "in": "cut",
+   "out": "cut"
+  },
+  {
+   "start": 200.69,
+   "end": 205.16,
+   "mood": "tutorial",
+   "energy": 0.75,
+   "in": "swell",
+   "out": "cut"
+  },
+  {
+   "start": 205.16,
+   "end": 213.84,
+   "mood": "tutorial",
+   "energy": 0.45,
+   "in": "cut",
+   "out": "cut"
+  },
+  {
+   "start": 213.84,
+   "end": 215.58,
+   "mood": "respawn",
+   "energy": 0.65,
+   "in": "cut",
+   "out": "sting"
+  },
+  {
+   "start": 215.58,
+   "end": 220.44,
+   "mood": "playful",
+   "energy": 0.3,
+   "in": "cut",
+   "out": "cut"
+  },
+  {
+   "start": 220.44,
+   "end": 221.48,
+   "mood": "tutorial",
+   "energy": 0.5,
+   "in": "swell",
+   "out": "cut"
+  }
+ ],
+ "ambience": [
+  {
+   "start": 153.72,
+   "end": 163.24,
+   "name": "rain",
+   "gain_db": -8
+  },
+  {
+   "start": 153.72,
+   "end": 163.24,
+   "name": "night",
+   "gain_db": -14
+  },
+  {
+   "start": 167.34,
+   "end": 169.54,
+   "name": "rain",
+   "gain_db": -14
+  },
+  {
+   "start": 179.94,
+   "end": 189.63,
+   "name": "rain",
+   "gain_db": -12
+  },
+  {
+   "start": 179.94,
+   "end": 189.63,
+   "name": "room",
+   "gain_db": -16
+  },
+  {
+   "start": 191.12,
+   "end": 191.72,
+   "name": "rain",
+   "gain_db": -4
+  },
+  {
+   "start": 191.72,
+   "end": 220.44,
+   "name": "rain",
+   "gain_db": -14
+  },
+  {
+   "start": 191.72,
+   "end": 200.69,
+   "name": "static",
+   "gain_db": -18
+  },
+  {
+   "start": 220.44,
+   "end": 221.48,
+   "name": "birds",
+   "gain_db": -10
+  }
+ ],
+ "footsteps": [
+  {
+   "start": 159.11,
+   "end": 160.88,
+   "interval": 0.349,
+   "surface": "wood",
+   "gain_db": -12,
+   "pan": -0.1
+  },
+  {
+   "start": 209.22,
+   "end": 211.22,
+   "interval": 0.286,
+   "surface": "wood",
+   "gain_db": -12,
+   "pan": 0.2
+  }
+ ],
+ "sfx": [
+  [
+   154.05,
+   "thunder",
+   -2,
+   0.5,
+   "distant lightning over the street"
+  ],
+  [
+   154.32,
+   "rumble",
+   -8,
+   0.3,
+   "thunder rolls"
+  ],
+  [
+   154.9,
+   "blink",
+   -10,
+   -0.292,
+   "eyes dart"
+  ],
+  [
+   155.2,
+   "thunder",
+   -10,
+   -0.2,
+   "window flashes, he stares at the ceiling"
+  ],
+  [
+   155.99,
+   "pop",
+   -6,
+   0.211,
+   "thought bubble pops"
+  ],
+  [
+   156.24,
+   "kids_laugh",
+   -12,
+   0.211,
+   "the laughing front row in the bubble"
+  ],
+  [
+   157.31,
+   "stamp",
+   -3,
+   0.365,
+   "'4 DAYS' stamp slams"
+  ],
+  [
+   157.76,
+   "gulp",
+   -4,
+   -0.321,
+   "'GULP'"
+  ],
+  [
+   160.06,
+   "thunder",
+   -8,
+   -0.3,
+   "lightning beam through the window"
+  ],
+  [
+   161.16,
+   "tv_on",
+   -4,
+   0,
+   "the monitor switches on, blue light on his face"
+  ],
+  [
+   162.26,
+   "thunder",
+   2,
+   -0.4,
+   "'KRAKOOM!' lightning behind him"
+  ],
+  [
+   162.28,
+   "squeak",
+   -8,
+   0,
+   "he flinches"
+  ],
+  [
+   162.73,
+   "equip",
+   -6,
+   0,
+   "headphones on"
+  ],
+  [
+   163.14,
+   "whoosh",
+   -4,
+   0.3,
+   "whip-pan"
+  ],
+  [
+   163.572,
+   "jump_game",
+   -8,
+   0.1,
+   "avatar jumps to the next platform"
+  ],
+  [
+   164.146,
+   "jump_game",
+   -8,
+   0.1,
+   "avatar jumps to the next platform"
+  ],
+  [
+   164.638,
+   "jump_game",
+   -8,
+   0.1,
+   "avatar jumps to the next platform"
+  ],
+  [
+   164.83,
+   "orch_hit",
+   0,
+   0,
+   "'1000 STAGES' title slams"
+  ],
+  [
+   165.13,
+   "jump_game",
+   -8,
+   0.1,
+   "avatar jumps to the next platform"
+  ],
+  [
+   165.622,
+   "jump_game",
+   -8,
+   0.1,
+   "avatar jumps to the next platform"
+  ],
+  [
+   166.278,
+   "jump_game",
+   -8,
+   0.1,
+   "avatar jumps to the next platform"
+  ],
+  [
+   166.77,
+   "jump_game",
+   -8,
+   0.1,
+   "avatar jumps to the next platform"
+  ],
+  [
+   167.44,
+   "ui_pop",
+   -8,
+   0.54,
+   "DAY counter pops in"
+  ],
+  [
+   167.54,
+   "money_counter",
+   -10,
+   0.54,
+   "days + stages roll up"
+  ],
+  [
+   167.64,
+   "typing",
+   -12,
+   0,
+   "hands on the keyboard"
+  ],
+  [
+   168.54,
+   "money_counter",
+   -12,
+   0.54,
+   "rolling (cont.)"
+  ],
+  [
+   168.67,
+   "bell",
+   -6,
+   0.379,
+   "'3 MONTHS' bang"
+  ],
+  [
+   168.92,
+   "pop",
+   -6,
+   0.54,
+   "DAY 92 bump"
+  ],
+  [
+   169.54,
+   "ui_pop",
+   -4,
+   0,
+   "FALLS counter pops"
+  ],
+  [
+   169.64,
+   "money_counter",
+   -6,
+   0,
+   "FALLS rolls up to 4,816"
+  ],
+  [
+   169.79,
+   "splash",
+   -14,
+   -0.5,
+   "an avatar falls into the lava"
+  ],
+  [
+   170.39,
+   "splash",
+   -14,
+   0,
+   "an avatar falls into the lava"
+  ],
+  [
+   170.84,
+   "money_counter",
+   -7,
+   0,
+   "rolling (cont.)"
+  ],
+  [
+   170.99,
+   "splash",
+   -14,
+   0.5,
+   "an avatar falls into the lava"
+  ],
+  [
+   171.59,
+   "splash",
+   -14,
+   -0.5,
+   "an avatar falls into the lava"
+  ],
+  [
+   172.19,
+   "splash",
+   -14,
+   0,
+   "an avatar falls into the lava"
+  ],
+  [
+   172.2,
+   "achievement",
+   -6,
+   0,
+   "FALLS 4,816 bump"
+  ],
+  [
+   172.79,
+   "splash",
+   -14,
+   0.5,
+   "an avatar falls into the lava"
+  ],
+  [
+   173.36,
+   "whoosh",
+   -4,
+   -0.3,
+   "whip-pan"
+  ],
+  [
+   173.58,
+   "jump_game",
+   -6,
+   0,
+   "he jumps short"
+  ],
+  [
+   174.07,
+   "splash",
+   -2,
+   0.102,
+   "into the lava"
+  ],
+  [
+   174.12,
+   "pop",
+   -4,
+   0.102,
+   "crumbles into blocks"
+  ],
+  [
+   174.17,
+   "stone",
+   -8,
+   0.102,
+   "blocks sink in the lava"
+  ],
+  [
+   174.22,
+   "tap",
+   -10,
+   -0.554,
+   "FALLS 4,817"
+  ],
+  [
+   174.27,
+   "chat_pop",
+   -8,
+   0.394,
+   "empty chat window opens: 0 online"
+  ],
+  [
+   174.52,
+   "cricket",
+   -6,
+   0.394,
+   "nobody laughed"
+  ],
+  [
+   177.54,
+   "loading",
+   -10,
+   0.612,
+   "corner RESPAWNING pill counts"
+  ],
+  [
+   178.29,
+   "respawn",
+   -2,
+   0,
+   "pop on the checkpoint"
+  ],
+  [
+   178.34,
+   "forcefield",
+   -8,
+   0,
+   "spawn protection"
+  ],
+  [
+   179.79,
+   "jump_game",
+   -8,
+   0.3,
+   "off he goes again"
+  ],
+  [
+   181.32,
+   "sparkle",
+   -12,
+   0,
+   "a green glint in the screen light"
+  ],
+  [
+   182.84,
+   "tap",
+   -6,
+   -0.292,
+   "the minute hand ticks to 2:00"
+  ],
+  [
+   182.92,
+   "thunder",
+   0,
+   -0.6,
+   "lightning in the window"
+  ],
+  [
+   183.52,
+   "whoosh",
+   -4,
+   0.3,
+   "whip-pan"
+  ],
+  [
+   185.04,
+   "level_up",
+   -6,
+   0,
+   "STAGE 999 bumps"
+  ],
+  [
+   186.57,
+   "whoosh_up",
+   -8,
+   0,
+   "camera tilts up to the golden flag"
+  ],
+  [
+   187.11,
+   "heartbeat",
+   -4,
+   0,
+   "'1 JUMP LEFT'"
+  ],
+  [
+   188.09,
+   "heartbeat",
+   -2,
+   0,
+   "ECU eyes, sweat"
+  ],
+  [
+   188.89,
+   "heartbeat",
+   -2,
+   0,
+   "heartbeat"
+  ],
+  [
+   189.43,
+   "click",
+   2,
+   0,
+   "'TAP!' SPACE"
+  ],
+  [
+   189.45,
+   "jump_game",
+   -2,
+   0,
+   "the jump"
+  ],
+  [
+   189.48,
+   "reverse_swell",
+   -2,
+   0,
+   "swell into the touch"
+  ],
+  [
+   189.63,
+   "whoosh_long",
+   -4,
+   0.2,
+   "slow-motion leap"
+  ],
+  [
+   190.98,
+   "shine",
+   0,
+   0.3,
+   "his hand touches the final flag"
+  ],
+  [
+   191.15,
+   "thunder",
+   4,
+   0.2,
+   "lightning strikes the house"
+  ],
+  [
+   191.17,
+   "electric",
+   0,
+   0,
+   "the bolt hits the roof, sparks"
+  ],
+  [
+   191.22,
+   "impact",
+   2,
+   0,
+   "'KRA-KOOM!' white-out"
+  ],
+  [
+   191.72,
+   "shock",
+   -2,
+   0,
+   "power surge, the room flickers"
+  ],
+  [
+   191.97,
+   "glitch",
+   -6,
+   0.3,
+   "'BZZZT!' sparks over the desk"
+  ],
+  [
+   192.22,
+   "electric",
+   -8,
+   -0.3,
+   "sparks crawl along the monitor"
+  ],
+  [
+   192.32,
+   "riser",
+   -10,
+   0,
+   "the screen floods the room with green (hum)"
+  ],
+  [
+   193.55,
+   "zoom_in",
+   -6,
+   0,
+   "frozen in the YES pose"
+  ],
+  [
+   193.85,
+   "electric",
+   -10,
+   -0.5,
+   "sparks"
+  ],
+  [
+   194.61,
+   "ui_pop",
+   -2,
+   0,
+   "SYSTEM window pops: FINAL CHECKPOINT REACHED"
+  ],
+  [
+   194.71,
+   "achievement",
+   -4,
+   0,
+   "final checkpoint chime"
+  ],
+  [
+   195.68,
+   "ui_pop",
+   -4,
+   0,
+   "the export window fills the frame"
+  ],
+  [
+   195.78,
+   "loading",
+   -6,
+   0,
+   "progress bar fills"
+  ],
+  [
+   196.08,
+   "electric",
+   -12,
+   -0.6,
+   "sparks"
+  ],
+  [
+   196.82,
+   "loading",
+   -6,
+   0,
+   "progress (cont.)"
+  ],
+  [
+   197.97,
+   "confirm",
+   -2,
+   0,
+   "export 100%"
+  ],
+  [
+   198.62,
+   "riser",
+   -6,
+   0,
+   "the screen flares (riser into the burst)"
+  ],
+  [
+   198.8,
+   "rumble",
+   -4,
+   0.175,
+   "the screen bulges"
+  ],
+  [
+   199.36,
+   "explosion_small",
+   0,
+   0.211,
+   "the checkpoint pad bursts out of the screen"
+  ],
+  [
+   199.38,
+   "whoosh_long",
+   -2,
+   -0.044,
+   "the pad loops round the room"
+  ],
+  [
+   199.41,
+   "cloth",
+   -8,
+   0.204,
+   "he leaps out of the chair"
+  ],
+  [
+   199.66,
+   "body_fall",
+   -6,
+   0.204,
+   "he lands, ducks"
+  ],
+  [
+   200.19,
+   "thud",
+   3,
+   -0.066,
+   "'BOOM!' the pad slams into the rug"
+  ],
+  [
+   200.21,
+   "sub_drop",
+   -2,
+   0,
+   "impact"
+  ],
+  [
+   200.26,
+   "confirm",
+   -8,
+   -0.066,
+   "the pad lights up"
+  ],
+  [
+   200.74,
+   "squeak",
+   -6,
+   0,
+   "Tip squeezes through the screen"
+  ],
+  [
+   200.94,
+   "chat_pop",
+   0,
+   0,
+   "Tip pops free: Hiii!"
+  ],
+  [
+   200.99,
+   "sparkle",
+   -6,
+   0,
+   "burst of sparkles"
+  ],
+  [
+   201.29,
+   "boing",
+   -4,
+   0.4,
+   "Tip bounces off the desk"
+  ],
+  [
+   201.74,
+   "boing",
+   -3,
+   -0.2,
+   "Tip bounces on the pad"
+  ],
+  [
+   202.14,
+   "heart_pop",
+   -6,
+   0.2,
+   "Tip lands by his face"
+  ],
+  [
+   202.3,
+   "confetti",
+   -4,
+   0,
+   "'WELCOME TO REAL LIFE!' + block confetti"
+  ],
+  [
+   202.35,
+   "tada",
+   -6,
+   0,
+   "welcome fanfare"
+  ],
+  [
+   203.16,
+   "whoosh",
+   -2,
+   0.3,
+   "intro card slides in"
+  ],
+  [
+   203.28,
+   "stamp",
+   -2,
+   0.306,
+   "'TIP' name slams"
+  ],
+  [
+   203.56,
+   "ui_pop",
+   -8,
+   0.314,
+   "CLASS: POP-UP"
+  ],
+  [
+   203.71,
+   "tap",
+   -14,
+   0.357,
+   "helpfulness star"
+  ],
+  [
+   203.78,
+   "tap",
+   -14,
+   0.392,
+   "helpfulness star"
+  ],
+  [
+   203.85,
+   "tap",
+   -14,
+   0.427,
+   "helpfulness star"
+  ],
+  [
+   203.92,
+   "tap",
+   -14,
+   0.462,
+   "helpfulness star"
+  ],
+  [
+   203.99,
+   "tap",
+   -14,
+   0.497,
+   "helpfulness star"
+  ],
+  [
+   204.31,
+   "level_up",
+   -4,
+   0.314,
+   "'YOUR TUTORIAL!' pill pops"
+  ],
+  [
+   205.06,
+   "whoosh",
+   -4,
+   -0.3,
+   "whip-pan"
+  ],
+  [
+   205.23,
+   "ui_pop",
+   -4,
+   -0.248,
+   "tip card pops"
+  ],
+  [
+   205.28,
+   "typing",
+   -12,
+   -0.248,
+   "tip card types"
+  ],
+  [
+   206.46,
+   "pop",
+   -6,
+   -0.066,
+   "pointer arrow bounces over the pad"
+  ],
+  [
+   210.9,
+   "swish",
+   -6,
+   0.321,
+   "Tip spins happily"
+  ],
+  [
+   212.05,
+   "blush",
+   -4,
+   0,
+   "Tip puffs up"
+  ],
+  [
+   212.15,
+   "stamp",
+   -2,
+   0.357,
+   "'HELPFUL!' stamp"
+  ],
+  [
+   213.54,
+   "step_wood",
+   -8,
+   0,
+   "careful foot lifts"
+  ],
+  [
+   213.84,
+   "thud",
+   -4,
+   0,
+   "foot lands on the pad"
+  ],
+  [
+   213.84,
+   "achievement",
+   -2,
+   -0.5,
+   "'Checkpoint saved' toast"
+  ],
+  [
+   213.86,
+   "level_up",
+   -2,
+   0,
+   "the flag shoots up"
+  ],
+  [
+   213.89,
+   "chime",
+   -4,
+   0,
+   "save rings"
+  ],
+  [
+   213.89,
+   "whoosh_long",
+   -6,
+   0,
+   "the green wave sweeps the room"
+  ],
+  [
+   215.83,
+   "blink",
+   -2,
+   -0.2,
+   "Gary's slow blink"
+  ],
+  [
+   219.1,
+   "bubbles",
+   -10,
+   -0.2,
+   "Gary turns away"
+  ],
+  [
+   219.7,
+   "pop",
+   -12,
+   -0.2,
+   "one bubble"
+  ],
+  [
+   220.44,
+   "rewind",
+   -4,
+   0,
+   "clock spins forward (fast-forward)"
+  ],
+  [
+   220.49,
+   "ui_pop",
+   -8,
+   0.51,
+   ">> OSD"
+  ],
+  [
+   221.012,
+   "shine",
+   -6,
+   0,
+   "night turns into morning (flash)"
+  ]
+ ]
+}

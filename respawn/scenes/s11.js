@@ -280,8 +280,10 @@ function shReal(t) {
 }
 // ---- 13. "Attempt one... Ouch." — up the quarter-pipe, a slow-motion hang at the top, the board flips away, he lands on his butt
 const LAND_X = 4110;
+// the trick's beats (also used by audio/cues/gen_sc11.js)
+const TR = { base: B.one - 0.15, lip: B.one + 0.12, apex: B.one + 0.37, off: B.ouch - 0.28, land: B.ouch };
 function trickState(t) {
-  const t0 = CUT.attempt, tBase = B.one - 0.15, tLip = B.one + 0.12, tApex = tLip + 0.25, tOff = B.ouch - 0.28, tLand = B.ouch;
+  const t0 = CUT.attempt, tBase = TR.base, tLip = TR.lip, tApex = TR.apex, tOff = TR.off, tLand = TR.land;
   if (t < tBase) { const k = seg(t, t0, tBase); return { px: lerp(3620, CR.x, ease.in(k)), py: 968, rot: 0, ride: true }; }
   if (t < tLip) { const a = lerp(90, 0, seg(t, tBase, tLip)) * Math.PI / 180; return { px: CR.x + CR.r * Math.cos(a), py: CR.y + CR.r * Math.sin(a), rot: -(90 - a * 180 / Math.PI), ride: true }; }
   if (t < tApex) { const k = ease.out(seg(t, tLip, tApex)); return { px: lerp(RP.lip.x, 4560, k), py: lerp(RP.lip.y, 400, k), rot: lerp(-90, -60, k), sep: 0 }; }
@@ -450,4 +452,4 @@ function look(t) {
   return { grade: 'warm', vignette: 0.45 };
 }
 
-module.exports = { scene, look, SHOTS, CUT, B, timing };
+module.exports = { scene, look, SHOTS, CUT, B, timing, TR };

@@ -651,6 +651,7 @@ function redWindow(t, k, glitch = 0.15, scale = 1, dx = 0, dy = 0) {
   return R.sysWindow({ x: WIN.x + dx, y: WIN.y + dy, w: WIN.w * scale, h: WIN.h * scale, k, open: 'crt', t, theme: 'red', title: 'WARNING', lines: ['SAVE FILE CORRUPTED', 'Respawns used: 9,999'], small: 'Too many respawns. The world may lag.', glitch: glitch + 0.5 * (hash(Math.floor(t * 8) * 1.37) < 0.12 ? 1 : 0) });
 }
 const heroAtFlag = (t, pose = {}, act = {}) => actor('you', t, { x: FLAGX - 110, y: 990, s: TS_, ...pose }, act);
+const heroCU = (t, pose = {}, act = {}) => heroAtFlag(t, { volume: false, ...pose }, act);
 const redFlag = (t) => R.flag({ x: FLAGX + 30, y: 990, s: TS_ * 1.3, t, state: 'red' });
 
 // ---- 9. the hard switch: same framing, sunset, lag, ghosts everywhere; pull back; the red window opens on "times?"
@@ -680,7 +681,7 @@ function shTip(t) {
   const Lt = townRed(t, cam, { red: 0.95, frozen: 0.25 });
   let o = Lt.bg + Lt.mid + crowdSvg(t, cam, 1, null, 1, { alpha: 0.5, haze: 0.28, skip: FLAGX, rows: [1, 2, 3] });
   let ch = nearGhosts(t, null, true) + redFlag(t);
-  ch += heroAtFlag(t, { turn: 0.2, armL: 20, armR: 26, headRot: -4, face: { name: 'scared', eyes: { look: [0.3, -0.8] } } }, { arms: false });
+  ch += heroCU(t, { turn: 0.2, armL: 20, armR: 26, headRot: -4, face: { name: 'scared', eyes: { look: [0.3, -0.8] } } }, { arms: false });
   o += view(cam, ch, 1) + Lt.fg + Lt.light;
   const [hx, hy] = toScr(cam, FLAGX - 110 + 60, 990 - 300);
   const spike = Math.floor(t * 6) % 4 === 0 ? 1 : 0;
@@ -727,7 +728,7 @@ function shLot(t) {
   let o = Lt.bg + Lt.mid + crowdSvg(t, cam, 1, null, 1, { alpha: 0.5, haze: 0.3, skip: FLAGX, rows: [1, 2, 3] });
   let ch = nearGhosts(t, null, true) + redFlag(t);
   const gulp = bump(t, w(5, 'lot.') + 0.1, w(5, 'lot.') + 0.5);
-  ch += heroAtFlag(t, { turn: 0.25, armL: 14, armR: 14, bodyY: 8 * gulp, headY: 6 * gulp, face: { name: 'nervous', fx: ['sweat'], eyes: { look: [0.7, -0.3] }, mouth: gulp > 0.3 ? 'wavy' : 'line' } }, { arms: false });
+  ch += heroCU(t, { turn: 0.25, armL: 14, armR: 14, bodyY: 8 * gulp, headY: 6 * gulp, face: { name: 'nervous', fx: ['sweat'], eyes: { look: [0.7, -0.3] }, mouth: gulp > 0.3 ? 'wavy' : 'line' } }, { arms: false });
   o += view(cam, ch, 1) + Lt.fg + Lt.light;
   const [hx, hy] = toScr(cam, FLAGX - 110, 990 - 300);
   o += sweat(hx - 20, hy - 280, t, 1.2);
@@ -741,7 +742,7 @@ function shOkay(t) {
   const zl = bump(t, tLittle - 0.05, tLittle + 0.7);
   const cam = shakeAll(at(FLAGX - 90 + 60 * u, 760, 2.15 + 0.15 * u + 0.6 * zl), t, [[tLittle + 0.25, 0.4, 18]]);
   const Lt = townRed(t, cam, { red: 1, frozen: 0.25 });
-  let o = Lt.bg + Lt.mid + crowdSvg(t, cam, 1, null, 1, { alpha: 0.5, haze: 0.3, skip: FLAGX, rows: [1, 2, 3] });
+  let o = Lt.bg + Lt.mid + crowdSvg(t, cam, 1, null, 1, { alpha: 0.5, haze: 0.3, skip: FLAGX, rows: [2, 3] });
   let ch = redFlag(t);
   // ghosts right behind him
   ch += ghostFail('slip', t, mod(t / 1.6 + 0.2, 1), { x: FLAGX + 300, y: 975, s: 0.24 });
@@ -751,7 +752,7 @@ function shOkay(t) {
   const wave = Math.sin(t * 16);
   const pose = little ? { turn: 0.1, armL: 70, armR: 66, lean: 4, face: { name: 'nervous', eyes: { look: [0.2, 0] }, fx: ['sweat'] } }
     : { turn: 0.1 * wave, armL: 120 + 40 * wave, armR: 120 - 40 * wave, lift: 10 * Math.abs(wave), face: { name: 'scared', fx: ['sweat2'] } };
-  ch += heroAtFlag(t, pose, { arms: false, energy: 1.6 });
+  ch += heroCU(t, pose, { arms: false, energy: 1.6 });
   // a ghost cyclist crashes through the foreground on "LITTLE"
   const gu = seg(t, tLittle + 0.15, tLittle + 1.1);
   if (gu > 0 && gu < 1) ch += ghostFail('bike', t, lerp(0.05, 0.6, gu), { x: FLAGX + 170 + 260 * gu, y: 1050, s: 0.3, alpha: 0.7 });

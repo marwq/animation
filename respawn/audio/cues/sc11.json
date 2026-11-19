@@ -1,0 +1,590 @@
+{
+ "scene": "SC 11",
+ "start": 742.24,
+ "end": 782.84,
+ "music": [
+  {
+   "start": 742.24,
+   "end": 748.62,
+   "mood": "playful",
+   "energy": 0.45,
+   "in": "fade",
+   "out": "cut"
+  },
+  {
+   "start": 748.62,
+   "end": 753.64,
+   "mood": "silence",
+   "energy": 0.3,
+   "in": "cut",
+   "out": "cut"
+  },
+  {
+   "start": 753.64,
+   "end": 758.29,
+   "mood": "warm",
+   "energy": 0.5,
+   "in": "swell",
+   "out": "cut"
+  },
+  {
+   "start": 758.29,
+   "end": 763.9,
+   "mood": "playful",
+   "energy": 0.5,
+   "in": "cut",
+   "out": "fade"
+  },
+  {
+   "start": 763.9,
+   "end": 769.01,
+   "mood": "respawn",
+   "energy": 0.65,
+   "in": "cut",
+   "out": "tapestop"
+  },
+  {
+   "start": 769.01,
+   "end": 769.84,
+   "mood": "silence",
+   "energy": 0.3,
+   "in": "cut",
+   "out": "cut"
+  },
+  {
+   "start": 769.84,
+   "end": 774.31,
+   "mood": "respawn",
+   "energy": 0.7,
+   "in": "cut",
+   "out": "sting"
+  },
+  {
+   "start": 774.31,
+   "end": 782.84,
+   "mood": "warm",
+   "energy": 0.45,
+   "in": "fade",
+   "out": "fade"
+  }
+ ],
+ "ambience": [
+  {
+   "start": 742.24,
+   "end": 758.29,
+   "name": "kitchen",
+   "gain_db": -15
+  },
+  {
+   "start": 758.29,
+   "end": 763.9,
+   "name": "crowd",
+   "gain_db": -24
+  },
+  {
+   "start": 763.9,
+   "end": 774.31,
+   "name": "birds",
+   "gain_db": -12
+  },
+  {
+   "start": 763.9,
+   "end": 774.31,
+   "name": "town",
+   "gain_db": -24
+  },
+  {
+   "start": 774.31,
+   "end": 782.84,
+   "name": "room",
+   "gain_db": -18
+  },
+  {
+   "start": 774.31,
+   "end": 782.84,
+   "name": "birds",
+   "gain_db": -24
+  }
+ ],
+ "footsteps": [
+  {
+   "start": 770.14,
+   "end": 770.84,
+   "interval": 0.349,
+   "surface": "hard",
+   "gain_db": -12,
+   "pan": 0.4
+  }
+ ],
+ "sfx": [
+  [
+   742.26,
+   "bubbles",
+   -8,
+   0,
+   "SC 10's foam clears off the frame"
+  ],
+  [
+   742.29,
+   "whoosh_up",
+   -10,
+   0,
+   ""
+  ],
+  [
+   742.44,
+   "stamp",
+   -4,
+   0.55,
+   "SATURDAY calendar page"
+  ],
+  [
+   742.48,
+   "chime",
+   -14,
+   0.55,
+   ""
+  ],
+  [
+   742.92,
+   "swish",
+   -10,
+   -0.3,
+   "Dad raises the spatula with the waffle"
+  ],
+  [
+   744.2,
+   "whoosh",
+   -10,
+   0,
+   "whip to Dad"
+  ],
+  [
+   745.88,
+   "pop",
+   -6,
+   0.1,
+   "the waffle gets a graduation cap"
+  ],
+  [
+   745.91,
+   "sparkle",
+   -8,
+   0.1,
+   ""
+  ],
+  [
+   748.12,
+   "impact",
+   -12,
+   0,
+   "smash: jazz hands"
+  ],
+  [
+   748.62,
+   "rimshot",
+   0,
+   -0.6,
+   "the full rimshot: BA-DUM TSS!"
+  ],
+  [
+   749.08,
+   "cymbal",
+   -10,
+   -0.6,
+   "cymbal wobble"
+  ],
+  [
+   750.44,
+   "record_scratch",
+   -6,
+   0.2,
+   "\"Waffles are square.\" (dashed square outline)"
+  ],
+  [
+   750.49,
+   "ui_pop",
+   -10,
+   0.2,
+   ""
+  ],
+  [
+   751.78,
+   "sad_trombone",
+   -4,
+   -0.2,
+   "Dad deflates"
+  ],
+  [
+   752.08,
+   "slide_down",
+   -12,
+   -0.2,
+   "the cap slides, the waffle slips"
+  ],
+  [
+   752.38,
+   "splat",
+   -8,
+   -0.2,
+   "the waffle flops into the pan"
+  ],
+  [
+   752.41,
+   "pan_clang",
+   -14,
+   -0.2,
+   ""
+  ],
+  [
+   755.32,
+   "giggle",
+   -10,
+   0.3,
+   "Bea giggles (gap-tooth grin)"
+  ],
+  [
+   757.55,
+   "heart_pop",
+   -4,
+   -0.2,
+   "Dad re-inflates: love eyes"
+  ],
+  [
+   757.65,
+   "boing",
+   -10,
+   -0.2,
+   "a little hop"
+  ],
+  [
+   757.7,
+   "sparkle",
+   -8,
+   -0.2,
+   ""
+  ],
+  [
+   758.29,
+   "whoosh",
+   -8,
+   0,
+   "whip to the classroom"
+  ],
+  [
+   758.31,
+   "ui_pop",
+   -10,
+   -0.6,
+   "\"7 × 9 = ?\" bubble"
+  ],
+  [
+   758.34,
+   "ui_pop",
+   -14,
+   0.8,
+   "MONDAY tag"
+  ],
+  [
+   758.42,
+   "whoosh_up",
+   -4,
+   0,
+   "his hand shoots up FIRST"
+  ],
+  [
+   758.5,
+   "chime",
+   -10,
+   0.2,
+   "FIRST!"
+  ],
+  [
+   759.96,
+   "squeak",
+   -6,
+   0,
+   "Mr. Fig writes 63 (marker squeak)"
+  ],
+  [
+   760.16,
+   "buzzer_wrong",
+   -14,
+   0.5,
+   "the 64 gets a red cross"
+  ],
+  [
+   761.17,
+   "kids_laugh",
+   -2,
+   0,
+   "the whole class laughs — and so does he"
+  ],
+  [
+   763.2,
+   "sparkle",
+   -8,
+   0,
+   "\"And it was fine.\""
+  ],
+  [
+   763.25,
+   "chime",
+   -12,
+   0,
+   ""
+  ],
+  [
+   763.9,
+   "whoosh",
+   -8,
+   0,
+   "whip to the skate park"
+  ],
+  [
+   763.95,
+   "skate_roll",
+   -6,
+   -0.3,
+   "he rolls in"
+  ],
+  [
+   766.49,
+   "ui_pop",
+   -8,
+   -0.9,
+   "ATTEMPT 1 / LIVES: 1"
+  ],
+  [
+   766.64,
+   "heartbeat",
+   -12,
+   0,
+   "for real this time"
+  ],
+  [
+   768.3,
+   "skate_roll",
+   -4,
+   -0.2,
+   "the run-up"
+  ],
+  [
+   768.48,
+   "tap",
+   -10,
+   -0.9,
+   "ATTEMPT 1 bumps"
+  ],
+  [
+   768.49,
+   "whoosh",
+   -6,
+   0.1,
+   "into the quarter-pipe"
+  ],
+  [
+   768.76,
+   "whoosh_up",
+   -4,
+   0.3,
+   "launch off the lip"
+  ],
+  [
+   769.01,
+   "reverse_swell",
+   -8,
+   0.3,
+   "slow-motion hang time"
+  ],
+  [
+   769.06,
+   "swish",
+   -8,
+   0.4,
+   "the board kickflips away without him"
+  ],
+  [
+   769.56,
+   "fall_whistle",
+   -8,
+   0.2,
+   "uh-oh"
+  ],
+  [
+   769.84,
+   "body_fall",
+   0,
+   0,
+   "lands on his butt: OUCH!"
+  ],
+  [
+   769.86,
+   "thud",
+   -2,
+   0,
+   ""
+  ],
+  [
+   769.92,
+   "dizzy",
+   -6,
+   0,
+   "stars"
+  ],
+  [
+   770.02,
+   "skid",
+   -8,
+   0.4,
+   "the board clatters down"
+  ],
+  [
+   770.39,
+   "giggle",
+   -6,
+   -0.1,
+   "he flops back laughing"
+  ],
+  [
+   770.89,
+   "ui_pop",
+   -4,
+   0.4,
+   "Ivy holds up 6/10"
+  ],
+  [
+   770.99,
+   "tada",
+   -14,
+   0.4,
+   ""
+  ],
+  [
+   772.72,
+   "jump",
+   -4,
+   0,
+   "he springs up, board overhead"
+  ],
+  [
+   773.08,
+   "impact",
+   -8,
+   0,
+   "\"Attempt TWO!\""
+  ],
+  [
+   773.1,
+   "level_up",
+   -6,
+   -0.9,
+   "ATTEMPT 2"
+  ],
+  [
+   774.31,
+   "whoosh",
+   -8,
+   0,
+   "whip to the workshop"
+  ],
+  [
+   774.56,
+   "cloth",
+   -12,
+   -0.1,
+   "Ivy holds out the new book"
+  ],
+  [
+   775.58,
+   "paper",
+   -8,
+   0.2,
+   "he takes it"
+  ],
+  [
+   775.63,
+   "sparkle",
+   -6,
+   0.2,
+   ""
+  ],
+  [
+   775.68,
+   "chime",
+   -8,
+   0.2,
+   ""
+  ],
+  [
+   776.806,
+   "paper",
+   -12,
+   0,
+   "the book opens on the star tablecloth"
+  ],
+  [
+   776.956,
+   "typing",
+   -16,
+   -0.1,
+   "pencil scratch: FAIL #1:"
+  ],
+  [
+   778.22,
+   "typing",
+   -16,
+   -0.1,
+   "pencil: Talent show"
+  ],
+  [
+   779.692,
+   "typing",
+   -18,
+   0.1,
+   "pencil: LESSON:"
+  ],
+  [
+   780.5,
+   "paper",
+   -14,
+   0,
+   "back to the page"
+  ],
+  [
+   780.7,
+   "typing",
+   -16,
+   0.2,
+   "pencil: totally worth it!"
+  ],
+  [
+   781.74,
+   "stamp",
+   -6,
+   0.2,
+   "a gold star sticker"
+  ],
+  [
+   781.79,
+   "sparkle",
+   -8,
+   0.2,
+   ""
+  ],
+  [
+   782.14,
+   "giggle",
+   -10,
+   0,
+   "they laugh"
+  ],
+  [
+   782.46,
+   "harp_down",
+   -12,
+   0,
+   "dip to night (SC 12)"
+  ]
+ ]
+}
