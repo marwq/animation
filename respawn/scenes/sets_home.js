@@ -457,6 +457,7 @@ def(pat('shWains', 96, 220, '<rect x="10" y="22" width="76" height="150" rx="6" 
 def(pat('shQuiltPix', 64, 64, '<rect x="6" y="6" width="14" height="14" fill="#FFD23F" opacity="0.55"/><rect x="38" y="38" width="14" height="14" fill="#FFFFFF" opacity="0.22"/><rect x="38" y="6" width="14" height="14" fill="#000" opacity="0.08"/><rect x="6" y="38" width="14" height="14" fill="#000" opacity="0.08"/>'));
 def(lg('shRGB', [[0, '#FF4FD8'], [0.25, '#FFB13B'], [0.5, '#3DFF9A'], [0.75, '#33D6FF'], [1, '#8A5CFF']], 1, 0));
 def(pat('shKeys', 15, 10, '<rect width="15" height="10" fill="none"/><path d="M0 0 H15 V10 H0 Z M2 1.5 V7.5 H13 V1.5 Z" fill="#1E2029" fill-rule="evenodd"/><rect x="2" y="1.5" width="11" height="6" rx="1.5" fill="#2C303C"/><rect x="3" y="2" width="9" height="2" rx="1" fill="#FFFFFF" opacity="0.12"/>'));
+def(pat('shKeysBig', 40, 29, '<path d="M0 0 H40 V29 H0 Z M4 4 V24 H36 V4 Z" fill="#1E2029" fill-rule="evenodd"/><rect x="4" y="4" width="32" height="20" rx="4" fill="#2C303C"/><rect x="7" y="6" width="26" height="6" rx="3" fill="#FFFFFF" opacity="0.12"/>', ' x="640" y="852"'));
 def(lg('shScreenOff', [[0, '#1B1F2C'], [1, '#0C0E16']]));
 
 // MEGA OBBY poster (original): purple, lava, a zig-zag tower and a flag
@@ -1017,7 +1018,7 @@ function deskCloseLayers(t, o = {}) {
   // keyboard (perspective) + mouse pad + mouse + juice box
   const kb = dP([[640, 852], [1250, 852], [1300, 968], [596, 968]]);
   m += R(560, 960, 780, 14, 6, { fill: '#000', opacity: 0.2 });
-  m += P(kb, { fill: 'url(#shRGB)', stroke: tn.line, 'stroke-width': f(6 * tn.lw), 'stroke-linejoin': 'round' }) + G(P(kb, { fill: 'url(#shKeys)' }), null, { transform: 'translate(0 0)' }) + G(P(dP([[0, 0], [610, 0], [660, 116], [-44, 116]]), { fill: 'url(#shKeys)' }), 'translate(640 852) scale(1 1)', { opacity: 0 });
+  m += P(kb, { fill: 'url(#shRGB)', stroke: tn.line, 'stroke-width': f(6 * tn.lw), 'stroke-linejoin': 'round' }) + P(kb, { fill: 'url(#shKeysBig)' }) + P(kb, { fill: 'none', stroke: tn.line, 'stroke-width': f(6 * tn.lw), 'stroke-linejoin': 'round' });
   m += P(dP([[1360, 862], [1660, 862], [1700, 990], [1340, 990]]), O('#2A2D38', 5)) + P(dP([[1370, 870], [1652, 870], [1688, 980], [1352, 980]]), { fill: 'none', stroke: 'url(#shRGB)', 'stroke-width': 4 });
   m += P('M1460 950 Q1456 890 1500 884 Q1544 890 1540 950 Q1536 978 1500 978 Q1464 978 1460 950 Z', O('#2A2D38', 5)) + P('M1500 886 V920', LN(3, '#55607A')) + E(1500, 902, 7, 10, FL('#33D6FF'));
   m += G(R(-34, -96, 68, 96, 6, O('#5CB85A', 5)) + R(-34, -64, 68, 28, 0, FL('#FFFFFF')) + TF('JUICE', 0, -44, 14, C('#5CB85A')) + P('M14 -96 L24 -140', LN(7, '#FF4D5E')), 'translate(1790 900)');
@@ -2096,7 +2097,7 @@ const SPOTS = {
   heroRoom: {
     wallBase: HR.base, ceiling: HR.ceil, slopeY, window: HR.win,
     checkpoint: { x: HR.checkpoint.x, y: HR.checkpoint.y, s: 0.5 },
-    bowl: { x: HR.bowl.x, y: HR.bowl.y },
+    bowl: { x: HR.bowl.x, y: HR.bowl.y, s: 0.2 },                 // X.fishbowl({x, y, s}) from rig/extras.js: 120 x 98 px
     clock: { x: HR.clock.x, y: HR.clock.y, r: HR.clock.r },
     desk: { x0: HR.desk.x0, x1: HR.desk.x1, top: HR.desk.top },
     monitor: { x: HR.mon.cx, y: HR.desk.top, screen: { cx: HR.mon.cx, cy: HR.mon.cy, w: HR.mon.w, h: HR.mon.h } },
@@ -2107,7 +2108,7 @@ const SPOTS = {
 };
 SPOTS.deskClose = {
   screen: { ...DC.scr }, deskTop: DC.top, clock: { x: DC.clock.x, y: DC.clock.y, r: DC.clock.r },
-  bowl: { x: DC.bowl.x, y: DC.bowl.y, scale: 2.34 },        // the bowl ~2.34x its heroRoom size
+  bowl: { x: DC.bowl.x, y: DC.bowl.y, s: 0.47 },             // fishbowl at s .47 (~2.34x its heroRoom size)
   hands: { L: { x: 760, y: 905 }, R: { x: 1500, y: 925 }, keyboard: { x0: 600, x1: 1300, y0: 852, y1: 968 }, mouse: { x: 1500, y: 930 } },
 };
 SPOTS.deskFace = { hero: { x: 960, seat: DF.seat, s: 0.9 }, deskTop: DF.top, hands: { L: { x: 820, y: 960 }, R: { x: 1420, y: 960 } }, window: { x0: 90, y0: 150, x1: 520, y1: 560 } };

@@ -40,17 +40,23 @@ const LC = (fn, t, cam, o, between = '') => { const l = fn.layers(t, cam, o); re
 const quad4 = (svgs) => svgs.map((v, i) => `<svg x="${(i % 2) * 960}" y="${Math.floor(i / 2) * 540}" width="960" height="540" viewBox="0 0 1920 1080">${v}</svg>`).join('') + '<path d="M960 0 V1080 M0 540 H1920" stroke="#000" stroke-width="6"/>';
 const three = (svgs) => svgs.map((v, i) => `<svg x="${i * 640}" y="0" width="640" height="1080" viewBox="${i * 640} 0 640 1080">${v}</svg>`).join('') + '<path d="M640 0 V1080 M1280 0 V1080" stroke="#000" stroke-width="6"/>';
 const SP = X.SPOTS, FL = X.FLOOR;
+// the real fishbowl (rig/extras.js) and checkpoint pad (scenes/respawn.js) on their anchors, when those modules exist
+let EX = null, RS = null;
+try { EX = require('../rig/extras'); } catch (e) { EX = null; }
+try { RS = require('../scenes/respawn'); } catch (e) { RS = null; }
+const bowlAt = (p, t, o = {}) => (REF && refOn && EX && EX.fishbowl ? EX.fishbowl({ x: p.x, y: p.y, s: p.s, t, ...o }) : mark(p.x, p.y));
+const padAt = (p, t, o = {}) => (REF && refOn && RS && RS.checkpoint ? RS.checkpoint({ x: p.x, y: p.y, s: p.s ?? 0.5, t, ...o }) : mark(p.x, p.y, '#3DFF9A'));
 const has = (k) => typeof X[k] === 'function';
 
 const TILES = [
-  ['heroRoom', 'heroRoom · day', (t) => L(X.heroRoom, t, {}, '', ref(SP.heroRoom.checkpoint.x, FL.heroRoom) + mark(SP.heroRoom.bowl.x, SP.heroRoom.bowl.y) + mark(SP.heroRoom.checkpoint.x, SP.heroRoom.checkpoint.y, '#3DFF9A'))],
+  ['heroRoom', 'heroRoom · day (fishbowl + checkpoint pad on their SPOTS)', (t) => L(X.heroRoom, t, {}, bowlAt(SP.heroRoom.bowl, t), padAt(SP.heroRoom.checkpoint, t) + ref(SP.heroRoom.checkpoint.x, SP.heroRoom.checkpoint.y))],
   ['heroRoom_morning', 'heroRoom · morning 7:30, mess 1, door .7', (t) => L(X.heroRoom, t, { time: 'morning', mess: 1, door: 0.7 }, '', ref(SP.heroRoom.door.exit.x, SP.heroRoom.door.exit.y, SP.heroRoom.door.exit.s, { view: 'back' }) + refOnly(700, FL.heroRoom, 0.5, { face: 'sleepy' }))],
   ['heroRoom_night', 'heroRoom · night 2:00, monitor = gameScreen, hero in chair', (t) => L(X.heroRoom, t, { time: 'night', clock: '2:00', monitor: has('gameScreen') ? X.gameScreen(t, {}) : undefined }, refOnly(SP.heroRoom.chair.x, SP.heroRoom.chair.seat + 300 * SP.heroRoom.chair.s, SP.heroRoom.chair.s, { view: 'back', legL: 90, legR: 90, kneeL: 90, kneeR: 90 }))],
   ['heroRoom_storm', 'heroRoom · night storm 1 + flash .8', (t) => L(X.heroRoom, t, { time: 'night', clock: '2:00', storm: 1, flash: 0.8, monitor: has('gameScreen') ? X.gameScreen(t, { jump: 0.6 }) : undefined }, '', ref(1000, FL.heroRoom, 0.5, { face: 'scared' }))],
   ['heroRoom_green', 'heroRoom · night, greenGlow 1 (checkpoint spot)', (t) => L(X.heroRoom, t, { time: 'night', clock: '2:00', storm: 0.6, greenGlow: 1, monitor: (w, h) => `<rect x="${-w / 2}" y="${-h / 2}" width="${w}" height="${h}" fill="#3DFF9A"/>` }, '', ref(SP.heroRoom.checkpoint.x, SP.heroRoom.checkpoint.y, 0.5, { face: 'amazed' }))],
-  ['heroRoom_sleep', 'heroRoom · night, asleep (SC12), redBlink .7', (t) => L(X.heroRoom, t, { time: 'night', sleep: true, redBlink: 0.7, lights: 0.6 }, refOnly(SP.heroRoom.bed.lie.x, SP.heroRoom.bed.lie.y, SP.heroRoom.bed.lie.s, { rot: SP.heroRoom.bed.lie.rot, face: 'sleepy' }))],
-  ['deskClose', 'deskClose · night, gameScreen, hands area', (t) => L(X.deskClose, t, { time: 'night', storm: 0.7, monitor: has('gameScreen') ? X.gameScreen(t, {}) : undefined }, '', mark(SP.deskClose.hands.L.x, SP.deskClose.hands.L.y) + mark(SP.deskClose.hands.R.x, SP.deskClose.hands.R.y) + mark(SP.deskClose.bowl.x, SP.deskClose.bowl.y))],
-  ['deskClose_day', 'deskClose · day (SC02), lava fall', (t) => L(X.deskClose, t, { time: 'day', monitor: has('gameScreen') ? X.gameScreen(t, { fall: 0.5, stage: 412 }) : undefined }, '', mark(SP.deskClose.bowl.x, SP.deskClose.bowl.y))],
+  ['heroRoom_sleep', 'heroRoom · night, asleep (SC12), redBlink .7', (t) => L(X.heroRoom, t, { time: 'night', sleep: true, redBlink: 0.7, lights: 0.6 }, refOnly(SP.heroRoom.bed.lie.x, SP.heroRoom.bed.lie.y, SP.heroRoom.bed.lie.s, { rot: SP.heroRoom.bed.lie.rot, face: 'sleepy' }) + bowlAt(SP.heroRoom.bowl, t, { flag: 1 }), padAt(SP.heroRoom.checkpoint, t, { state: 'red' }))],
+  ['deskClose', 'deskClose · night, gameScreen, hands area', (t) => L(X.deskClose, t, { time: 'night', storm: 0.7, monitor: has('gameScreen') ? X.gameScreen(t, {}) : undefined }, '', mark(SP.deskClose.hands.L.x, SP.deskClose.hands.L.y) + mark(SP.deskClose.hands.R.x, SP.deskClose.hands.R.y) + bowlAt(SP.deskClose.bowl, t))],
+  ['deskClose_day', 'deskClose · day (SC02), lava fall', (t) => L(X.deskClose, t, { time: 'day', monitor: has('gameScreen') ? X.gameScreen(t, { fall: 0.5, stage: 412 }) : undefined }, '', bowlAt(SP.deskClose.bowl, t))],
   ['deskFace', 'deskFace · night storm, hero lit by the screen', (t) => L(X.deskFace, t, { time: 'night', storm: 1 }, refOnly(SP.deskFace.hero.x, SP.deskFace.hero.seat + 306 * SP.deskFace.hero.s, SP.deskFace.hero.s, { face: 'determined', legL: 90, legR: 90, kneeL: 90, kneeR: 90 }))],
   ['deskFace_green', 'deskFace · green glow / flash', (t) => quad4([L(X.deskFace, t, { time: 'night', greenGlow: 1 }, refOnly(SP.deskFace.hero.x, SP.deskFace.hero.seat + 306 * SP.deskFace.hero.s, SP.deskFace.hero.s, { face: 'shocked' })), L(X.deskFace, t, { time: 'night', flash: 1, storm: 1 }, refOnly(SP.deskFace.hero.x, SP.deskFace.hero.seat + 306 * SP.deskFace.hero.s, SP.deskFace.hero.s, { face: 'scared' })), L(X.deskFace, t, { time: 'day' }, refOnly(SP.deskFace.hero.x, SP.deskFace.hero.seat + 306 * SP.deskFace.hero.s, SP.deskFace.hero.s, { face: 'excited' })), L(X.deskFace, t, { time: 'night', redBlink: 1 })])],
   ['gameScreen', 'gameScreen · stage 999 / jump .5 / fall .6 / win 1', (t) => bgCard() + [{}, { jump: 0.5 }, { fall: 0.6, stage: 731 }, { win: 1, jump: 1 }].map((o, i) => `<g transform="translate(${480 + (i % 2) * 960} ${270 + Math.floor(i / 2) * 540})">${X.gameScreen(t, o)(900, 506)}</g>`).join('')],
@@ -83,7 +89,7 @@ const TILES = [
 
 (async () => {
   const tiles = TILES.filter(([k]) => !ONLY || ONLY.some((o) => k.startsWith(o)));
-  const r = await openRenderer(1920, 1080, { staticDefs: X.DEFS + require('../rig/style').DEFS });
+  const r = await openRenderer(1920, 1080, { staticDefs: X.DEFS + require('../rig/style').DEFS + ((EX && EX.DEFS) || '') + ((RS && RS.DEFS) || '') });
   const tmp = fs.mkdtempSync(path.join(os.tmpdir(), 'shsheet-'));
   if (FULL) fs.mkdirSync(FULL, { recursive: true });
   const timeIt = async (svg) => { const ts = []; for (let i = 0; i < 5; i++) { const b = Date.now(); await r.render(svg, 'jpeg'); ts.push(Date.now() - b); } return ts.sort((x, y) => x - y)[2]; };
