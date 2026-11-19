@@ -117,7 +117,7 @@ function sh01(t) {
   const cam = camKeys(t, [[d01, at(HR.clock.x, HR.clock.y + 30, 2.8)], [d01 + 0.7, at(760, 560, 1.35)], [d02, at(760, 570, 1.45)]], ease.inOut);
   const st = bump(t, tUp, tUp + 1.6);
   const hero = you(t, { x: 640, y: 975, s: 0.5, turn: 0.2, armL: 25 + 145 * st, armR: 25 + 145 * st, lean: 0, bodyY: -10 * st, face: SLEEPY(t, 1, { mouth: st > 0.3 ? 'yawn' : 'line' }) }, { arms: false });
-  const tIn = A[0].a - 0.1;
+  const tIn = Math.max(A[0].a - 0.1, d01 + 0.55);   // Tip flies in once the camera has pulled back from the clock
   const th = hops(t, [[tIn, 1500, 380], [tIn + 0.45, 850, 470, 60]]);
   const tip = t > tIn ? tipSvg(t, th.x, th.y + 6 * Math.sin(t * 3), 1.05, { look: [-0.6, 0.2] }, t < tIn + 0.45 ? { sx: 1.12, sy: 0.9 } : squash(t, tIn + 0.45, 0.2, 0.4)) : '';
   let o = bedroom(t, cam, { chars: hero + tip });

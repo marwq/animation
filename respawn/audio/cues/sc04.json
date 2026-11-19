@@ -242,13 +242,6 @@
  ],
  "sfx": [
   [
-   221.46,
-   "whoosh",
-   -6,
-   0.5,
-   "Tip zooms in"
-  ],
-  [
    221.48,
    "whoosh",
    -8,
@@ -277,11 +270,11 @@
    "big sleepy stretch"
   ],
   [
-   221.91,
-   "boing",
+   222.03,
+   "whoosh",
    -6,
-   -0.08,
-   "Tip lands by his face"
+   0.5,
+   "Tip zooms in"
   ],
   [
    222.13,
@@ -296,6 +289,13 @@
    -6,
    0.211,
    "'YOU!'"
+  ],
+  [
+   222.48,
+   "boing",
+   -6,
+   -0.08,
+   "Tip lands by his face"
   ],
   [
    224.74,

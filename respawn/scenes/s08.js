@@ -125,7 +125,11 @@ function yardGhosts(t, o = {}) {
 }
 // far ghosts on the school roof (lite crowd, born in a wave)
 const ROOF = Array.from({ length: 16 }, (_, i) => ({ x: -500 + i * 190 + 60 * hash(i * 2.2), y: 238, s: 0.3, i: i + 3, born: tCame + 0.35 + 0.08 * i, kind: ['flail', 'sit', 'fall', 'tumble'][i % 4] }));
-const roofCrowd = (t, freeze) => liteCrowd(t, ROOF, { alpha: 1, col: '#C7AEB8', freeze });
+// (skipped when the camera does not see the roof line)
+const roofCrowd = (t, freeze, cam) => {
+  if (cam) { const z = cam.zoom ?? 1; if ((cam.y || 0) + 540 - 540 / z > 262) return ''; }
+  return liteCrowd(t, ROOF, { alpha: 1, col: '#C7AEB8', freeze });
+};
 
 // laughing / pointing kids (cheap crowd)
 function kidLaugh(i, t, x, y, s, o = {}) {
@@ -167,7 +171,7 @@ function shCount(t) {
   const roll = seg(t, tRoll0, tRoll1);
   const tHit = tRoll1 - 0.05;
   const cam = shakeAll(camKeys(t, [[CUT.count, { ...SY.cams.red, zoom: 0.66, y: -260 }], [CUT.undone, { ...SY.cams.red, zoom: 0.72, y: -290 }]]), t, [[tHit, 0.5, 18]]);
-  let o = yardR(t, cam, roofCrowd(t), '');
+  let o = yardR(t, cam, roofCrowd(t, undefined, cam), '');
   const zw = 1 + 0.06 * bump(t, tHit, tHit + 0.35);
   o += scaleG(skyWindow(t, 960, 300, 1320, 480, 1, roll, { glitch: 0.25 * bump(t, tHit, tHit + 0.25) }), zw, 960, 300);
   // the hero from behind (near camera), looking up at it
@@ -190,7 +194,7 @@ function shBack(t) {
   const cam = shakeAll(camKeys(t, [[CUT.back, { x: 60, y: -10, zoom: 1.0 }], [CUT.flood, { x: 60, y: -60, zoom: 0.88 }]]), t, [[tCame, 0.6, 16]]);
   const G = yardGhosts(t, { cam });
   let ch = actor('you', t, { ...SY.walk, backpack: true, armL: 130, armR: 130, lift: 30 * bump(t, tCame, tCame + 0.4), face: 'scream', ...boing(t, tCame + 0.4, 0.2) });
-  let o = yardR(t, cam, roofCrowd(t), flagsSvg(t) + G.back + ch + G.front);
+  let o = yardR(t, cam, roofCrowd(t, undefined, cam), flagsSvg(t) + G.back + ch + G.front);
   o += E.redPulse(t, 1) + E.zoomLines(960, 600, 0.7 * bump(t, tCame, tCame + 0.6), t, '#FFD0D6');
   return o;
 }
@@ -247,7 +251,7 @@ function shTip1(t) {
   const cam = camKeys(t, [[CUT.tip1, at(1000, 660, 1.25)], [CUT.all, at(1010, 650, 1.32)]]);
   const G = yardGhosts(t, { only: [0, 1, 3], cam, rim: false });
   let ch = actor('you', t, { x: 1080, y: 960, s: 0.5, backpack: true, turn: -0.3, ...breathe(t), face: { name: 'scared', eyes: { look: [-0.6, -0.3] } } });
-  let o = yardR(t, cam, roofCrowd(t), G.back + ch + G.front);
+  let o = yardR(t, cam, roofCrowd(t, undefined, cam), G.back + ch + G.front);
   const [tx, ty] = toScr(cam, 1300, 430);
   o += R.tip({ x: tx, y: ty, s: 1.25, t, glitch: 0.45 + 0.4 * bump(t, A[2].a, A[2].a + 0.4), look: [-0.8, 0.3], mood: 'worried' });
   return o + E.redPulse(t, 1);
@@ -286,7 +290,7 @@ function shNever(t) {
   const cam = camKeys(t, [[CUT.never, at(1020, 700, 1.35)], [CUT.saved, at(1030, 690, 1.55)]]);
   let back = ghostFail('stairs', t, { x: 1000, y: 692, s: 0.36, flip: true, dx: 90, dy: 150, ph: 0.4 });
   let front = ghostFail('foam', t, { x: 700, y: 900, s: sAt(900), flip: true, ph: 0.2 }) + ghostFail('ball', t, { x: 1380, y: 930, s: sAt(930), flip: true, ph: 0.9 });
-  let o = yardR(t, cam, roofCrowd(t), back + front);
+  let o = yardR(t, cam, roofCrowd(t, undefined, cam), back + front);
   return o + E.redPulse(t, 1);
 }
 // ---- "They were just... saved." — Tip close, the red "Fail saved" toast
@@ -294,7 +298,7 @@ function shSaved(t) {
   const cam = camKeys(t, [[CUT.saved, at(1100, 560, 1.8)], [CUT.kid, at(1110, 560, 1.95)]]);
   const G = yardGhosts(t, { ex: [850, 1450], cam, rim: false });
   let ch = actor('you', t, { x: 1000, y: 960, s: 0.5, volume: false, backpack: true, turn: 0.4, ...breathe(t), face: { name: 'scared', eyes: { look: [0.8, -0.4] } } });
-  let o = yardR(t, cam, roofCrowd(t), G.back + ch + G.front);
+  let o = yardR(t, cam, roofCrowd(t, undefined, cam), G.back + ch + G.front);
   const [tx, ty] = toScr(cam, 1250, 470);
   const gl = 0.5 + 0.5 * bump(t, tSaved - 0.1, tSaved + 0.4);
   o += R.tip({ x: tx, y: ty, s: 1.7, t, glitch: gl, look: [-0.6, 0.2], mood: 'sad' });
@@ -388,7 +392,7 @@ function spagScene(t, cam, o2 = {}) {
   const hitAge = t - tHit;
   let pem = principal(t, done, { armL: hitAge > 0 && hitAge < 2 ? 140 : 20, armR: hitAge > 0 && hitAge < 2 ? 150 : 24, lift: hitAge > 0 ? 18 * bump(hitAge, 0, 0.3) : 0, face: hitAge > 0 ? 'angry' : { name: 'neutral', eyes: { look: [-1, 0] } } });
   if (hitAge > 0 && hitAge < 0.5) front += X.spaghetti({ x: head[0], y: head[1] + 40, s: 0.6, mode: 'splat', seed: 6 });
-  let o = yardR(t, cam, roofCrowd(t) + (o2.back || ''), front + pem + (o2.front || ''));
+  let o = yardR(t, cam, roofCrowd(t, undefined, cam) + (o2.back || ''), front + pem + (o2.front || ''));
   return o;
 }
 function shPrin(t) {
@@ -445,7 +449,7 @@ function shHide(t) {
   const K_ = [[1, 640, 900, 0.5], [6, 1420, 920, -0.5], [10, 1640, 860, -0.6]];
   for (const [i, x, y, tn] of K_) around += kidLaugh(i, t, x, y, sAt(y), { turn: tn, point: i % 2 === 1 });
   let hero = actor('you', t, { x: 1040, y: 960, s: 0.5, view: 'side', backpack: true, armL: 128, armR: 118, headRot: 20, lean: 10, legL: 20, legR: 10, kneeL: 40, kneeR: 50, bodyY: 40 + 4 * Math.sin(t * 14), face: { name: 'crying' } });
-  let o = yardR(t, cam, roofCrowd(t), G.back + around + hero + G.front);
+  let o = yardR(t, cam, roofCrowd(t, undefined, cam), G.back + around + hero + G.front);
   return o + E.redPulse(t, 1);
 }
 function shLiterally(t) {
@@ -602,7 +606,7 @@ function shFrozen(t) {
   around += actor('principal', st, { x: 1600, y: 960, s: 0.5, turn: -0.4, spaghetti: 1, armL: 140, armR: 150, face: 'scream' });
   around += actor('you', st, { x: 1040, y: 960, s: 0.5, backpack: true, turn: 0.1, armL: 60, armR: 60, face: 'scared' });
   const frK = 0.5 + 0.5 * seg(t, tFreeze - 0.1, tFreeze + 0.3);
-  let o = yardR(st, cam, roofCrowd(st, st), G.back + around + G.front, { frozen: frK, tm: st });
+  let o = yardR(st, cam, roofCrowd(st, st, cam), G.back + around + G.front, { frozen: frK, tm: st });
   o += frost(0.7 + 0.3 * seg(t, tFreeze, tFreeze + 0.4), t);
   if (t >= tFreeze) o += R.flash(0.6 * (1 - seg(t, tFreeze, tFreeze + 0.25)), '#DFF6FF') + TFS('II', 1840, 110, 80, '#FFFFFF');
   return o + E.redPulse(t, 0.6);

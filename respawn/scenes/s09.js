@@ -81,10 +81,9 @@ const delWin = (t, k, o = {}) => R.sysWindow({ x: WIN.x, y: WIN.y, w: WIN.w, h: 
 const YG = [
   ['stairs', 1110, 740, 0.28, false], ['slip', 520, 905, 0.42, false], ['ball', 300, 870, 0.45, false], ['skate', 1600, 935, 0.42, true],
   ['trip', 1820, 885, 0.5, true], ['flail', 800, 820, 0.3, false], ['bike', 1420, 815, 0.35, true], ['slip', 2080, 900, 0.38, true],
-  ['ball', -60, 905, 0.4, true], ['trip', 640, 760, 0.52, false],
 ];
 // far ghost lites along the building
-const YL = Array.from({ length: 26 }, (_, i) => ({ x: -500 + i * 118 + hash(i * 3.1) * 60, y: 700 + hash(i * 1.7) * 50, kind: ['slip', 'ball', 'skate', 'trip', 'flail', 'stairs', 'facepalm'][i % 7], u: hash(i * 5.3) }));
+const YL = Array.from({ length: 18 }, (_, i) => ({ x: -500 + i * 170 + hash(i * 3.1) * 70, y: 700 + hash(i * 1.7) * 50, kind: ['slip', 'ball', 'skate', 'trip', 'flail', 'stairs', 'facepalm'][i % 7], u: hash(i * 5.3) }));
 // stand-up blend: fail pose -> standing (k 0..1), cheer = raise an arm
 function standUp(P, k, cheer = 0) {
   const o = { ...P };
@@ -570,4 +569,4 @@ function look(t) {
   return { grade: 'warm', vignette: 0.6 };
 }
 
-module.exports = { scene, look, CUT, beats: { tDel, tPress, tPancake, tDoc, tTipFade0, tTipGone, tFlag, tOne, START, END } };
+module.exports = { scene, look, CUT, _dbg: { yard, yardGhosts, delWin, frost, hero, ivy, in56, in31, in1 }, beats: { tDel, tPress, tPancake, tDoc, tTipFade0, tTipGone, tFlag, tOne, START, END } };

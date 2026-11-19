@@ -34,8 +34,11 @@ add(END - 0.12, 'whoosh', -2, 0.4, 'whip-pan into SC 05');
 // ---- 1. 7:30: pull back from the clock, stretch, Tip pops in
 add(d01, 'whoosh', -8, 0, 'pull back from the clock');
 add(d01 + 0.3, 'cloth', -8, P(640), 'big sleepy stretch');
-add(A[0].a - 0.1, 'whoosh', -6, 0.5, 'Tip zooms in');
-add(A[0].a + 0.35, 'boing', -6, P(850), 'Tip lands by his face');
+{
+  const tIn = Math.max(A[0].a - 0.1, d01 + 0.55);   // same as s04.js sh01
+  add(tIn, 'whoosh', -6, 0.5, 'Tip zooms in');
+  add(tIn + 0.45, 'boing', -6, P(850), 'Tip lands by his face');
+}
 add(A[0].a - 0.05, 'ui_pop', -4, P(1260), 'tip card pops');
 add(A[0].a + 0.1, 'typing', -14, P(1260), 'tip card types');
 // ---- 2. the hologram diagram
