@@ -520,7 +520,7 @@ function townDay(t, cam, chars, o = {}) {
 function shRun(t) {
   const p = parkour(t);
   const cx = clamp(p.x + 220, 900, FLAGX + 40);
-  const cam = camKeys(t, [[CUT.run, at(900, 760, 1.55)], [PK.tJ, at(BEN.x + 260, 730, 1.5)], [PK.tO, at(BUS.x + 200, 700, 1.45)], [PK.tW, at(FLAGX - 40, 760, 1.6)], [CUT.dark, at(FLAGX - 60, 780, 1.72)]]);
+  const cam = camKeys(t, [[CUT.run, at(820, 800, 1.85)], [PK.tL, at(BEN.x, 790, 1.8)], [PK.tJ, at(BEN.x + 260, 760, 1.7)], [PK.tO, at(BUS.x + 180, 730, 1.62)], [PK.tW, at(FLAGX - 60, 780, 1.72)], [CUT.dark, at(FLAGX - 60, 780, 1.72)]]);
   void cx;
   let ch = '';
   // flag + save
@@ -572,12 +572,15 @@ const CROWD = ROWS.map((r, ri) => {
 // roof ghosts (stand on SPOTS.town.roofs)
 const ROOFG = TW.roofs.map((a, i) => ({ ...a, kind: KINDS[(i * 3) % KINDS.length], per: 1.5 + hash(i) * 1.2, ph: hash(i * 2.3) }));
 // shown(): fraction of the crowd visible (the counter grows it)
-function crowdSvg(t, cam, frac = 1, freeze = null, lag = 0) {
+function crowdSvg(t, cam, frac = 1, freeze = null, lag = 0, opt = {}) {
+  const { rows = [0, 1, 2, 3], alpha = 0.62, haze = 0, skip = null } = opt;
   let o = '';
   ROWS.forEach((r, ri) => {
+    if (!rows.includes(ri)) return;
     const poses = [];
     CROWD[ri].forEach((g, i) => {
       if (g.order > frac) return;
+      if (skip && ri === 3 && Math.abs(g.x - skip) < 520) return;
       let tt = freeze !== null ? freeze : t;
       if (lag > 0) tt = R.freezeT(tt, { every: 0.9 + g.ph, hold: 0.35 * lag, seed: i + ri * 40 });
       const u = mod(tt / g.per + g.ph, 1);
@@ -589,23 +592,28 @@ function crowdSvg(t, cam, frac = 1, freeze = null, lag = 0) {
       const tt = freeze !== null ? freeze : t;
       poses.push({ x: g.x, y: g.y, s: g.s, ...failPose(g.kind, mod(tt / g.per + g.ph, 1)) });
     });
-    o += view(cam, draw.ghostCrowd(poses, { alpha: 0.62 }), r.k);
+    o += view(cam, draw.ghostCrowd(poses, { alpha }), r.k);
+    if (haze > 0 && ri === 2) o += S.rect(0, 0, 1920, 1080, 0, { fill: '#3A0614', opacity: f(haze) });
   });
   return o;
 }
 // the hero standing at his (now red) flag in the corrupted street; close full ghosts around him
-function nearGhosts(t, freeze = null, set = 0) {
+function nearGhosts(t, freeze = null, close = false) {
   const tt = freeze !== null ? freeze : t;
-  const G = [
+  const G = close ? [
+    ['slip', 2470, 990, 0.26, 1.7, 0.5, true],
+    ['bike', 1560, 990, 0.26, 2.1, 0.1, false],
+    ['skate', BUS.x - 120, BUS.y, 0.26, 1.9, 0.7, false],
+  ] : [
     ['bike', 1500, 990, 0.26, 2.1, 0.1, false],
     ['slip', 2480, 990, 0.26, 1.7, 0.5, true],
-    ['ball', 1840, 990, 0.26, 1.5, 0.3, false],
+    ['ball', 1760, 990, 0.26, 1.5, 0.3, false],
     ['skate', BUS.x - 120, BUS.y, 0.26, 1.9, 0.7, false],
     ['flail', BEN.x, BEN.y - 46, 0.26, 1.3, 0.2, false],
     ['trip', 2750, 990, 0.26, 1.8, 0.6, true],
   ];
   let o = '';
-  for (const [k, x, y, s, per, ph, fl] of G.slice(0, set ? 6 : 6)) o += ghostFail(k, tt, mod(tt / per + ph, 1), { x, y, s, flip: fl, alpha: 0.6 });
+  for (const [k, x, y, s, per, ph, fl] of G) o += ghostFail(k, tt, mod(tt / per + ph, 1), { x, y, s, flip: fl, alpha: 0.6 });
   return o;
 }
 function townRed(t, cam, o = {}) {
@@ -613,7 +621,7 @@ function townRed(t, cam, o = {}) {
 }
 const WIN = { x: 960, y: 250, w: 1180, h: 400 };
 function redWindow(t, k, glitch = 0.15, scale = 1, dx = 0, dy = 0) {
-  return R.sysWindow({ x: WIN.x + dx, y: WIN.y + dy, w: WIN.w * scale, h: WIN.h * scale, k, open: 'crt', t, theme: 'red', title: 'WARNING', lines: ['SAVE FILE CORRUPTED', 'Respawns used: 9,999'], small: 'Too many respawns. The world may lag.', glitch: glitch + 0.6 * (Math.floor(t * 7) % 5 === 0 ? 1 : 0) });
+  return R.sysWindow({ x: WIN.x + dx, y: WIN.y + dy, w: WIN.w * scale, h: WIN.h * scale, k, open: 'crt', t, theme: 'red', title: 'WARNING', lines: ['SAVE FILE CORRUPTED', 'Respawns used: 9,999'], small: 'Too many respawns. The world may lag.', glitch: glitch + 0.5 * (hash(Math.floor(t * 8) * 1.37) < 0.12 ? 1 : 0) });
 }
 const heroAtFlag = (t, pose = {}, act = {}) => actor('you', t, { x: FLAGX - 110, y: 990, s: TS_, ...pose }, act);
 const redFlag = (t) => R.flag({ x: FLAGX + 30, y: 990, s: TS_ * 1.3, t, state: 'red' });
@@ -643,8 +651,8 @@ function shTip(t) {
   const u = seg(t, CUT.tip, CUT.count);
   const cam = at(FLAGX - 40, 760 - 40 * u, 2.3 + 0.15 * u);
   const Lt = townRed(t, cam, { red: 0.95, frozen: 0.25 });
-  let o = Lt.bg + Lt.mid + crowdSvg(t, cam, 1, null, 1);
-  let ch = nearGhosts(t) + redFlag(t);
+  let o = Lt.bg + Lt.mid + crowdSvg(t, cam, 1, null, 1, { alpha: 0.5, haze: 0.28, skip: FLAGX });
+  let ch = nearGhosts(t, null, true) + redFlag(t);
   ch += heroAtFlag(t, { turn: 0.2, armL: 20, armR: 26, headRot: -4, face: { name: 'scared', eyes: { look: [0.3, -0.8] } } }, { arms: false });
   o += view(cam, ch, 1) + Lt.fg + Lt.light;
   const [hx, hy] = toScr(cam, FLAGX - 110 + 60, 990 - 300);
@@ -664,7 +672,7 @@ function shCount(t) {
   if (t >= t99 - 0.15) { from = 9900; val = 9999; roll = seg(t, t99 - 0.15, t99 + 0.4); tb = t99 + 0.4; }
   const frac = 0.25 + 0.75 * (lerp(from, val, ease.out(roll)) / 9999);
   const Lt = townRed(t, cam, { red: 1, frozen: 0.25 });
-  let o = Lt.bg + Lt.mid + crowdSvg(t, cam, frac, null, 1);
+  let o = Lt.bg + Lt.mid + crowdSvg(t, cam, frac, null, 1, { haze: 0.12 });
   let ch = nearGhosts(t) + redFlag(t);
   ch += heroAtFlag(t, { armL: 30, armR: 30, face: { name: 'scared', eyes: { look: [0, -0.9] } } }, { arms: false });
   o += view(cam, ch, 1) + Lt.fg + Lt.light;
@@ -679,7 +687,7 @@ function shCount(t) {
   }
   // the big counter
   const kIn = seg(t, CUT.count, CUT.count + 0.3);
-  o += S.g(R.counterHUD({ x: 0, y: 0, s: 1, t, label: 'RESPAWNS USED:', value: val, theme: 'red', roll, from, bump: seg(t, tb, tb + 0.45), anchor: 'center', size: 80, labelSize: 34, k: kIn }), `translate(960 ${f(lerp(620, 600, u))}) scale(${f(1.55 + 0.25 * bump(t, t99 - 0.1, t99 + 0.5))}) rotate(-3)`);
+  o += S.g(R.counterHUD({ x: 0, y: 0, s: 1, t, label: 'RESPAWNS USED:', value: Math.round(lerp(from, val, ease.out(roll))), theme: 'red', bump: seg(t, tb, tb + 0.45), anchor: 'center', size: 80, labelSize: 34, k: kIn }), `translate(960 ${f(lerp(620, 600, u))}) scale(${f(1.55 + 0.25 * bump(t, t99 - 0.1, t99 + 0.5))}) rotate(-3)`);
   o += zoomLines(960, 600, bump(t, t99, t99 + 0.5), t, '#FFFFFF', 24, 520);
   return o + (t >= t99 && t < t99 + 0.2 ? R.flash(0.5 * (1 - (t - t99) / 0.2), '#FF3B4E') : '');
 }
@@ -689,8 +697,8 @@ function shLot(t) {
   const u = seg(t, CUT.lot, CUT.okay);
   const cam = at(FLAGX - 20, 740, 2.6 + 0.35 * ease.inOut(u));
   const Lt = townRed(t, cam, { red: 1, frozen: 0.25 });
-  let o = Lt.bg + Lt.mid + crowdSvg(t, cam, 1, null, 1);
-  let ch = nearGhosts(t) + redFlag(t);
+  let o = Lt.bg + Lt.mid + crowdSvg(t, cam, 1, null, 1, { alpha: 0.5, haze: 0.3, skip: FLAGX });
+  let ch = nearGhosts(t, null, true) + redFlag(t);
   const gulp = bump(t, w(5, 'lot.') + 0.1, w(5, 'lot.') + 0.5);
   ch += heroAtFlag(t, { turn: 0.25, armL: 14, armR: 14, bodyY: 8 * gulp, headY: 6 * gulp, face: { name: 'nervous', fx: ['sweat'], eyes: { look: [0.7, -0.3] }, mouth: gulp > 0.3 ? 'wavy' : 'line' } }, { arms: false });
   o += view(cam, ch, 1) + Lt.fg + Lt.light;
@@ -706,12 +714,12 @@ function shOkay(t) {
   const zl = bump(t, tLittle - 0.05, tLittle + 0.7);
   const cam = shakeAll(at(FLAGX - 90 + 60 * u, 760, 2.15 + 0.15 * u + 0.6 * zl), t, [[tLittle + 0.25, 0.4, 18]]);
   const Lt = townRed(t, cam, { red: 1, frozen: 0.25 });
-  let o = Lt.bg + Lt.mid + crowdSvg(t, cam, 1, null, 1);
+  let o = Lt.bg + Lt.mid + crowdSvg(t, cam, 1, null, 1, { alpha: 0.5, haze: 0.3, skip: FLAGX });
   let ch = redFlag(t);
   // ghosts right behind him
-  ch += ghostFail('slip', t, mod(t / 1.6 + 0.2, 1), { x: FLAGX + 240, y: 975, s: 0.24 });
+  ch += ghostFail('slip', t, mod(t / 1.6 + 0.2, 1), { x: FLAGX + 300, y: 975, s: 0.24 });
   ch += ghostFail('ball', t, mod(t / 1.4 + 0.6, 1), { x: FLAGX - 420, y: 975, s: 0.24, flip: true });
-  ch += ghostFail('skate', t, mod(t / 1.8, 1), { x: FLAGX - 260, y: 960, s: 0.22 });
+  ch += ghostFail('skate', t, mod(t / 1.8, 1), { x: FLAGX - 330, y: 955, s: 0.2, alpha: 0.5 });
   const little = t >= tLittle - 0.1 && t < tLittle + 0.75;
   const wave = Math.sin(t * 16);
   const pose = little ? { turn: 0.1, armL: 70, armR: 66, lean: 4, face: { name: 'nervous', eyes: { look: [0.2, 0] }, fx: ['sweat'] } }
@@ -723,9 +731,9 @@ function shOkay(t) {
   o += view(cam, ch, 1) + Lt.fg + Lt.light;
   if (little) {
     // the "little" gap between his hands
-    const [hx, hy] = toScr(cam, FLAGX - 110, 990 - 520 * TS_);
+    const [hx, hy] = toScr(cam, FLAGX - 110, 990 - 1010 * TS_);
     const gk = pop(t, tLittle - 0.1, 0.2);
-    o += S.g(S.path('M-40 -30 L-12 0 L-40 30 M40 -30 L12 0 L40 30', ln(10, '#FFFFFF')) + TFS('a LITTLE', 0, -64, 54, '#FFE14D'), tf(hx, hy, gk));
+    o += S.g(S.path('M-70 -26 L-30 0 L-70 26 M70 -26 L30 0 L70 26', ln(12, '#FFFFFF')) + TFS('a LITTLE', 0, -50, 64, '#FFE14D'), tf(hx, hy - 40, gk));
   }
   return o;
 }
@@ -769,7 +777,7 @@ function shRewind(t) {
     let ch = redFlag(tm);
     ch += heroAtFlag(t, { armL: 20, armR: 20, headRot: -10, face: { name: 'shocked', eyes: { look: [0, -1] } } }, { arms: false });
     // reverse crumbles: a few near ghosts reassemble backwards into nothing
-    for (let i = 0; i < 4; i++) ch += R.crumble({ x: 1500 + i * 380, y: 990, s: 0.26, age: Math.max(0, 1.2 - u * 1.6 - i * 0.1), seed: 30 + i, ghost: 1 });
+    for (let i = 0; i < 4; i++) { const ag = 1.2 - u * 1.6 - i * 0.1; if (ag > 0.14) ch += R.crumble({ x: 1500 + i * 380, y: 990, s: 0.26, age: ag, seed: 30 + i, ghost: 1, pop: false }); }
     o += view(cam, ch, 1) + Lt.fg + Lt.light;
     o += redWindow(t, 1 - seg(u, 0.35, 0.8), 0.4);
     o += R.skyCrack({ cx: 1080, cy: 330, k: 1 - seg(u, 0, 0.5), t: -t, s: 1.05, seed: 4 });

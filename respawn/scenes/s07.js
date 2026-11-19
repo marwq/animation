@@ -190,9 +190,9 @@ function shMom(t) {
   const kiss = bump(tm, tS - 0.05, tS + 0.4);
   const jit = stut ? R.lagJitter(t, 3, 1, { fps: 15, amp: 18 }) : { dx: 0, dy: 0, rot: 0 };
   let mom = actor('mom', t, { x: 1180 + jit.dx, y: 990 + jit.dy, s: 0.5, turn: 0.55, thermos: true, lean: -14 * kiss + jit.rot * 2, bodyY: 4 * Math.sin(tm * 9), armR: 40 + 80 * bump(tm, tM - 0.1, tM + 0.5), headRot: -6 + 5 * Math.sin(tm * 11) }, { arms: false });
-  if (stut) mom = R.rgbSplit(mom, 1, { t, dx: 16 });
+  if (stut && Math.floor(t * 15) % 2 === 0) mom = R.rgbSplit(mom, 1, { t, dx: 16 });
   let behind = dadKitchen(t, { face: 'happy', armR: 40 + 30 * Math.sin(t * 5) }) + beaSeat(t, { face: { name: 'neutral', eyes: { look: [-0.6, 0] } } }) + heroSeat(t, { face: { name: 'nervous', eyes: { look: [-1, 0] } } });
-  let o = kitchen(t, cam, behind, mom, { glitch: stut ? 0.5 : 0.12 });
+  let o = kitchen(t, cam, behind, mom, { glitch: stut ? 0.3 : 0.12 });
   o += R.counterHUD({ x: 60, y: 84, k: pop(t, CUT.mom + 0.1, 0.3) * (1 - seg(t, CUT.birds - 0.3, CUT.birds)), t, label: 'FRIDAY', value: '7:30 AM', theme: 'white', icon: 'cal', size: 54 });
   if (stut) o += E.glitchHit(t, Math.floor(t * 8) / 8 + 0.02, 0.1, 5, 0.6);
   return o;
@@ -516,10 +516,10 @@ function teachersFrozen(t, opts = {}) {
   behind += draw.adult(5, { x: LG.seats[1].x, y: LG.seats[1].y, s: LG.seats[1].s, turn: -0.35, armL: 70, armR: 150, face: { name: 'scream', eyes: { look: [-1, -0.2] } } }) + hat(LG.seats[1].x - 6, LG.seats[1].y - 1060 * LG.seats[1].s, 0.5, 8, '#FF6FB5');
   floor += draw.adult(8, { x: LG.ends[1].x, y: LG.ends[1].y, s: LG.ends[1].s, turn: -0.5, armL: 40, armR: 95, face: { name: 'amazed', eyes: { look: [-1, -0.1] } } }) + hat(LG.ends[1].x - 10, LG.ends[1].y - 1110 * LG.ends[1].s, 0.55, 6, '#FFC21A');
   // Mr. Fig at the left end (only his mouth moves)
-  const figPose = { ...FIG, turn: 0.45, armL: 30, armR: 50, face: { name: 'neutral', eyes: { look: [1, 0], upper: 0.5 } }, ...(opts.fig || {}) };
+  const figPose = { ...FIG, turn: 0.45, armL: 8, armR: 14, face: { name: 'neutral', eyes: { look: [1, 0], upper: 0.5 } }, ...(opts.fig || {}) };
   floor += actor('teacher', t, figPose, { arms: false, energy: 0 });
   floor += hat(FIG.x + 14, FIG.y - 1185 * FIG.s, 0.58, 10, '#B06BFF');
-  if (opts.splat) floor += R.foamBlobs(FIG.x + 40, FIG.y - 770 * FIG.s, 0.5, 1, 3);
+  if (opts.splat) floor += R.foamBlobs(FIG.x + 70, FIG.y - 880 * FIG.s, 0.42, 1, 3);
   return { behind, floor };
 }
 function lounge(t, cam, opts = {}) {
@@ -538,7 +538,7 @@ function lounge(t, cam, opts = {}) {
   return view(cam, Ll.bg, 0.6) + view(cam, world, 1);
 }
 function shCake(t) {
-  const cam = shakeAll(camKeys(t, [[CUT.cake, { ...LG.cams.table, zoom: 1.2 }], [CUT.fig, { ...LG.cams.table, zoom: 1.28 }]]), t, [[CUT.cake + 0.06, 0.35, 22]]);
+  const cam = shakeAll(camKeys(t, [[CUT.cake, at(960, 600, 1.45)], [CUT.fig, at(960, 590, 1.55)]]), t, [[CUT.cake + 0.06, 0.35, 22]]);
   let o = lounge(t, cam, {});
   o += K.bang('SPLAT!', 1450, 300, pop(t, CUT.cake + 0.08, 0.2) * (1 - seg(t, CUT.cake + 0.6, CUT.cake + 0.8)), 110, 8, '#FF8FC0');
   o += R.flash(0.85 * (1 - seg(t, CUT.cake, CUT.cake + 0.12)));
@@ -589,7 +589,7 @@ function shCase(t) {
   o = scaleG(o, z);
   // hand-over to SC 08: the red alarm starts to bleed in
   const red = seg(t, END - 0.35, END);
-  if (red > 0) o = R.glitchSlices(o, t, red, 13, { n: 3 }) + R.flash(0.55 * red, '#FF1A2E');
+  if (red > 0) o += E.glitchHit(t, END - 0.05, 0.3, 13, red) + R.flash(0.55 * red, '#FF1A2E');
   return o;
 }
 

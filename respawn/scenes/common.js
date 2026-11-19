@@ -13,8 +13,8 @@ const blinkAt = (t, ...cs) => Math.max(0, ...cs.map((c) => 1 - Math.abs(t - c) /
 
 // ---------------------------------------------------------------- lines -> captions / visemes
 // line: [start, end, speaker, text]; *word* marks a highlighted keyword.
-const SPEAKER_COL = { NARRATOR: '#FFFFFF', YOU: '#FFE7B8', ZOE: '#E4D2FF', BRICK: '#FFD0B0', DAD: '#D7E6FF', MOM: '#FFF3A8', GRANNY: '#FFD2EC', OLDMAN: '#E8F2D8', ADMIN: '#FFF4C4', SYSTEM: '#9CF7C8', ANCHOR: '#FFD2EC', BOSS: '#D0D8E8', PRINCIPAL: '#D0D8E8', COACH: '#C8FF9A', KID: '#C9F7FF' };
-const HILITE = { NARRATOR: '#FFD21F', YOU: '#FF6A3D', ZOE: '#B98CFF', BRICK: '#FF8A3D', DAD: '#5AB0FF', MOM: '#FFD21F', GRANNY: '#FF6FB0', OLDMAN: '#9CE07A', ADMIN: '#FFD21F', SYSTEM: '#3DFF9A', ANCHOR: '#FF6FB0', BOSS: '#9AB0D0', PRINCIPAL: '#9AB0D0', COACH: '#7CFF6B', KID: '#5CE1FF' };
+const SPEAKER_COL = { NARRATOR: '#FFFFFF', YOU: '#FFE7B8', ZOE: '#E4D2FF', BRICK: '#FFD0B0', DAD: '#D7E6FF', MOM: '#FFF3A8', GRANNY: '#FFD2EC', OLDMAN: '#E8F2D8', ADMIN: '#FFF4C4', SYSTEM: '#9CF7C8', ANCHOR: '#FFD2EC', BOSS: '#D0D8E8', PRINCIPAL: '#D0D8E8', COACH: '#C8FF9A', KID: '#C9F7FF', TIP: '#FFE14D', BEA: '#FFD0E8', IVY: '#C8F5C0', TEACHER: '#D8E2C8' };
+const HILITE = { NARRATOR: '#FFD21F', YOU: '#FF6A3D', ZOE: '#B98CFF', BRICK: '#FF8A3D', DAD: '#5AB0FF', MOM: '#FFD21F', GRANNY: '#FF6FB0', OLDMAN: '#9CE07A', ADMIN: '#FFD21F', SYSTEM: '#3DFF9A', ANCHOR: '#FF6FB0', BOSS: '#9AB0D0', PRINCIPAL: '#9AB0D0', COACH: '#7CFF6B', KID: '#5CE1FF', TIP: '#FF8A1F', BEA: '#FF6FB5', IVY: '#3DDC84', TEACHER: '#B9D36A' };
 
 function words(text) {
   const out = []; let hi = false;
@@ -62,7 +62,7 @@ function makeTrack(lines) {
   const caps = [];
   for (const l of L) l.chunks.forEach((c, i) => {
     const next = l.chunks[i + 1];
-    caps.push([c.t0, next ? next.t0 : Math.max(c.t1, l.b), c.text, c.hi ? HILITE[c.sp] : SPEAKER_COL[c.sp], c.hi ? 1.12 : 1]);
+    caps.push([c.t0, next ? next.t0 : Math.max(c.t1, l.b), c.text, c.hi ? (HILITE[c.sp] || '#FFD21F') : (SPEAKER_COL[c.sp] || '#FFFFFF'), c.hi ? 1.12 : 1]);
   });
   return { lines: L, caps };
 }
