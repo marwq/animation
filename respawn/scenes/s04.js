@@ -479,7 +479,7 @@ function sh23(t) {
   const mp = toS(cam, MENU.x, MENU.y);
   o += K.sparkles([[mp[0] - 330, mp[1] - 230, 34 * bump(t, tPM - 0.1, tPM + 0.6)], [mp[0] + 320, mp[1] + 220, 28 * bump(t, tPM, tPM + 0.7)]], t);
   if (k > 0 && k < 1) o += zoomLines(mp[0], mp[1], 1 - k, '#FFFFFF', 16, 6, 380);
-  o += TFS('II  PAUSED', 230, 110, 46, '#FFFFFF', { opacity: f(0.9 * seg(t, d23 + 0.2, d23 + 0.5) * (Math.floor(t * 2.5) % 2 ? 1 : 0.6)) });
+  o += TFS('II  PAUSED', 1690, 110, 46, '#FFFFFF', { opacity: f(0.9 * seg(t, d23 + 0.2, d23 + 0.5) * (Math.floor(t * 2.5) % 2 ? 1 : 0.6)) });
   return o;
 }
 // ---- 24. "Uh... what happens if I press 'Leave Game'?"
@@ -695,7 +695,7 @@ function shotAt(t) {
   while (i > 0 && t < SHOTS[i][0]) i--;
   return i;
 }
-const CU_SHOTS = new Set([sh06, sh08, sh09, sh10, sh11, sh12, sh13, sh14, sh15, sh16, sh17, sh18, sh19, sh20, sh21, sh22, sh23, sh24, sh25, sh27, sh28, sh29, sh30, sh31, sh32, sh33, sh34, sh35]);
+const CU_SHOTS = new Set([sh02, sh06, sh08, sh09, sh10, sh11, sh12, sh13, sh14, sh15, sh16, sh17, sh18, sh19, sh20, sh21, sh22, sh23, sh24, sh25, sh27, sh28, sh29, sh30, sh31, sh32, sh33, sh34, sh35]);
 function scene(t) {
   const fn = SHOTS[shotAt(t)][1];
   CU = CU_SHOTS.has(fn);
