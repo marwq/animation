@@ -4,6 +4,7 @@
 - giggle / kids_laugh / crowd_laugh: built from "Group giggling" by Nocturnal_Vanguard (OpenGameArt, CC0),
   layered with pitch/time offsets into a classroom laugh and a big hall laugh.
 - crowd_gasp: synthesized (band-passed breathy noise swell of many people inhaling).
+- whistle: synthesized referee pea whistle (two short blasts + one long).
 - skate_roll: synthesized skateboard wheels rolling on concrete (rumble + seam clicks), ~2 s.
 usage: python3 -I audio/build_extra_sfx.py <path to group_giggling.ogg>
 """
@@ -64,3 +65,13 @@ if __name__ == '__main__':
         clicks[j:j + len(c)] += c[:max(0, len(clicks) - j)] * 0.55
     roll = (rum + clicks) * env_pts(d, [(0, 0), (0.15, 1), (1.9, 1), (2.2, 0)])
     out('skate_roll', st(roll, 0), 0.7)
+    # referee pea whistle: ~2.9 kHz tone, pea trill (FM + AM ~ 34 Hz), breath noise; blasts .18 .18 .7 s
+    def blast(d, seed):
+        tt = np.arange(int(d * SR)) / SR
+        f = 2900 + 140 * np.sin(2 * np.pi * 34 * tt) + 60 * np.sin(2 * np.pi * 7 * tt)
+        ph = 2 * np.pi * np.cumsum(f) / SR
+        tone = np.sin(ph) * (0.75 + 0.25 * np.sin(2 * np.pi * 34 * tt + 1.0)) + 0.15 * np.sin(2 * ph)
+        br = bp(noise(d, seed, 'white'), 2000, 6000) * 0.12
+        return (tone + br) * env_pts(d, [(0, 0), (0.015, 1), (d - 0.03, 0.9), (d, 0)])
+    w = np.concatenate([blast(0.18, 41), np.zeros(int(0.09 * SR)), blast(0.18, 42), np.zeros(int(0.09 * SR)), blast(0.7, 43)])
+    out('whistle', reverb(st(w, 0), 0.9, 0.2), 0.6)

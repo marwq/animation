@@ -150,7 +150,8 @@
   "kids_laugh": "a classroom/cafeteria of kids laughing ~7s: a joke lands, kids point and laugh",
   "crowd_laugh": "big hall of people laughing ~8s: the whole cafeteria / auditorium bursts out laughing",
   "crowd_gasp": "audience gasps ~1s: shock in a crowd (the foam explodes, the trick fails)",
-  "skate_roll": "skateboard wheels rolling on concrete ~2.2s: skating, approaching the ramp"
+  "skate_roll": "skateboard wheels rolling on concrete ~2.2s: skating, approaching the ramp",
+  "whistle": "referee whistle ~1.3s (two short + one long blast): coach, gym, game starts"
  },
  "ambience": {
   "birds": "daytime outdoors, birds chirping",

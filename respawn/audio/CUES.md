@@ -62,7 +62,7 @@ Validate with `python3 audio/validate_cues.py audio/cues/scNN.json`.
   - **Counters/HUD:** `tap`/`click` per tick, `ka_ching`-free (no money in this video).
   - **Lag:** `glitch`, `glitch_long`, `static`, `record_scratch`, `vhs_clunk`; low graphics: `powerdown` + `pixel_wipe`.
   - **Corruption:** `siren`/`alarm`, `sub_drop`, `rumble`, `glitch_long`; ghosts appearing: `poof` (soft, many, panned); delete save: `confirm` → `shine` + `confetti` + `tada` (soft) + `reverse_swell`.
-  - **School life:** skate `skate_roll`, `skid`, `land`, `whoosh`; dodgeball `slap`/`punch`/`boing`, whistle → use `beep`/`bell`-free: just `chat_pop`? (no whistle SFX — skip or use `squeak`); laughter `giggle` / `kids_laugh` / `crowd_laugh`; audience `crowd_gasp`, `applause`, `crowd_cheer`; dead silence `cricket`.
+  - **School life:** skate `skate_roll`, `skid`, `land`, `whoosh`; dodgeball `slap`/`punch`/`boing`, Coach's `whistle`; laughter `giggle` / `kids_laugh` / `crowd_laugh`; audience `crowd_gasp`, `applause`, `crowd_cheer`; dead silence `cricket`.
   - **Home:** pancake flip `swish` + `splat`/`pan_clang`, `rimshot` after Dad's joke, stairs tumble `body_fall`×3 + `thud`, lightning `thunder` + `electric` + `shock`, rain ambience `rain`.
   - **Foam:** `riser` → `big_splash` + `bubbles` + `whoosh_up` + `steam_hiss`.
 - A scene sheet covers exactly the scene's range from `scenes/main.js` RANGES (`start` = a, `end` = b). Because timing will move when the real voice arrives, generate the sheet from the scene code's own `L(id)` / `.word()` expressions with a small script and keep that script next to the sheet as `audio/cues/gen_scNN.js` so it can be re-run (see `/home/user/animation/admin-commands/audio/cues/gen_sc04.js` for the pattern).
