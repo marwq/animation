@@ -1,4 +1,4 @@
-// Shared toolkit for the Admin Commands scenes: camera keys, actors with auto-acting, Robux props, particles, UI cards.
+// Shared toolkit for the Respawn scenes (respawn FX/UI live in scenes/respawn.js): camera keys, actors with auto-acting, Robux props, particles, UI cards.
 'use strict';
 
 const S = require('../rig/svg');
@@ -45,7 +45,7 @@ const shaken = (t, a, inner, dur, amp) => { const s = shake(t, a, dur, amp); ret
 
 // ---------------------------------------------------------------- actors
 // actor('ty', t, { x, y, s, ...pose }, { face, energy, arms }) — auto lip-sync/blinks/gestures from the voice timeline
-const SPEAKER = { you: 'YOU', zoe: 'ZOE', brick: 'BRICK', dad: 'DAD', mom: 'MOM', granny: 'GRANNY', oldman: 'OLDMAN', admin: 'ADMIN', anchor: 'ANCHOR', boss: 'BOSS', principal: 'PRINCIPAL', coach: 'COACH', kid: 'KID' };
+const SPEAKER = { you: 'YOU', ivy: 'IVY', dad: 'DAD', mom: 'MOM', bea: 'BEA', teacher: 'TEACHER', coach: 'COACH', principal: 'PRINCIPAL', kid: 'KID' };
 function actor(name, t, pose = {}, act = {}) {
   pose = Object.fromEntries(Object.entries(pose).filter(([, v]) => v !== undefined));   // an explicit undefined must not override auto-acting
   const sp = SPEAKER[name];

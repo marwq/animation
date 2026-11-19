@@ -1,4 +1,4 @@
-// Master timeline of "What If You Had ADMIN COMMANDS in Real Life?": routes time to the scene modules, adds captions + frame finish.
+// Master timeline of "What If You Could RESPAWN in Real Life?": routes time to the scene modules, adds captions + frame finish.
 // Usage: node scenes/main.js out.mp4 [fps=60] [from=0] [to=end]
 'use strict';
 
@@ -33,7 +33,7 @@ function placeholder(id, t) {
 }
 
 const optDefs = (m) => { try { return require(m).DEFS || ''; } catch (e) { if (e.code === 'MODULE_NOT_FOUND') return ''; throw e; } };
-const STATIC_DEFS = ST.DEFS + ST.FRAME_DEFS + (require('./env').DEFS || '') + optDefs('./sets') + optDefs('./city') + optDefs('../rig/cats') + ORDER.map((id) => (mod(id) && mod(id).DEFS) || '').join('');
+const STATIC_DEFS = ST.DEFS + ST.FRAME_DEFS + (require('./env').DEFS || '') + ['./sets_home', './sets_school', './respawn', '../rig/extras'].map(optDefs).join('') + ORDER.map((id) => (mod(id) && mod(id).DEFS) || '').join('');
 
 function frame(t) {
   const r = RANGES.find((x) => t >= x.a && t < x.b) || RANGES[RANGES.length - 1];
@@ -48,7 +48,7 @@ function frame(t) {
 }
 
 if (require.main === module) {
-  const out = process.argv[2] || path.join(__dirname, '..', 'out', 'admin_full.mp4');
+  const out = process.argv[2] || path.join(__dirname, '..', 'out', 'respawn_full.mp4');
   const fps = Number(process.argv[3] || 60);
   const from = Number(process.argv[4] || 0), to = Number(process.argv[5] || V.DURATION);
   renderVideo(frame, { w: 1920, h: 1080, fps, duration: to - from, start: from, out, crf: 19, staticDefs: STATIC_DEFS })
