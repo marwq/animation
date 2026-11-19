@@ -181,6 +181,15 @@ function vis(cam = {}, k = 1) {
   const x = (cam.x || 0) * k, y = (cam.y || 0) * k;
   return { x0: fx + x - (fx + sx) / z, x1: fx + x + (1920 - fx - sx) / z, y0: fy + y - (fy + sy) / z, y1: fy + y + (1080 - fy - sy) / z, z };
 }
+// vis() limited to a screen-space box [x0, y0, x1, y1] (cull what a clip will hide anyway)
+function visBox(cam = {}, k = 1, box) {
+  const v = vis(cam, k);
+  if (!box) return v;
+  const fx = cam.fx ?? 960, fy = cam.fy ?? 540;
+  const inv = (xs, ys) => [fx + (cam.x || 0) * k + (xs - fx - (cam.sx || 0)) / v.z, fy + (cam.y || 0) * k + (ys - fy - (cam.sy || 0)) / v.z];
+  const [ax, ay] = inv(box[0], box[1]), [bx, by] = inv(box[2], box[3]);
+  return { ...v, x0: Math.max(v.x0, ax), x1: Math.max(Math.max(v.x0, ax) + 1, Math.min(v.x1, bx)), y0: Math.max(v.y0, ay), y1: Math.min(v.y1, by) };
+}
 // screen position of a layer point {x, y, k} seen through cam
 function toScreen(cam, a) {
   cam = cam || {};
@@ -365,7 +374,7 @@ const lowAt = (k, th) => (k >= th ? 1 : 0);
 const popAt = (k, th, w = 0.06) => (k > th && k < th + w ? 1 - (k - th) / w : 0);
 function lowPop(svg, k, th, cx, cy, box) {
   const p = popAt(k, th);
-  if (!p) return svg;
+  if (!p || cx === undefined || cy === undefined) return svg;
   const sy = 1 - 0.12 * p, sx = 1 + 0.06 * p;
   let o = G(svg, `translate(${f(cx)} ${f(cy)}) scale(${f(sx)} ${f(sy)}) translate(${f(-cx)} ${f(-cy)})`);
   if (box) o += R(box[0], box[1], box[2], box[3], 0, { fill: '#FFFFFF', opacity: f(0.55 * p) });
@@ -1742,13 +1751,13 @@ function streetLayers(t, cam = {}, o = {}) {
   for (const [x, i] of BUSH) {
     if (x < X0 || x > X1) continue;
     const y = houseBase(x) + 10;
-    m += obj(thOf(x, 2), (tn) => P(dC(x - 50, y - 20, 40) + dC(x, y - 40, 50) + dC(x + 50, y - 20, 40) + dR(x - 90, y - 30, 180, 30), tn.ol('#3FA650', 6)) + P(dC(x - 20, y - 54, 14) + dC(x + 40, y - 34, 10), { fill: tn.c('#7CD978') }) + (i % 2 ? P(dC(x - 40, y - 30, 7) + dC(x + 20, y - 50, 7) + dC(x + 56, y - 24, 7), { fill: tn.c('#FF6FB5') }) : ''), (tn) => R(x - 90, y - 80, 180, 80, 0, tn.fl('#5E7A52')));
+    m += obj(thOf(x, 2), (tn) => P(dC(x - 50, y - 20, 40) + dC(x, y - 40, 50) + dC(x + 50, y - 20, 40) + dR(x - 90, y - 30, 180, 30), tn.ol('#3FA650', 6)) + P(dC(x - 20, y - 54, 14) + dC(x + 40, y - 34, 10), { fill: tn.c('#7CD978') }) + (i % 2 ? P(dC(x - 40, y - 30, 7) + dC(x + 20, y - 50, 7) + dC(x + 56, y - 24, 7), { fill: tn.c('#FF6FB5') }) : ''), (tn) => R(x - 90, y - 80, 180, 80, 0, tn.fl('#5E7A52')), x, y);
   }
   const YT = [[1260, 0.9], [2780, 1], [-500, 0.95], [4400, 1.05], [-1200, 0.9]];
   for (const [x, s] of YT) {
     if (x < X0 - 200 || x > X1 + 200) continue;
     const y = houseBase(x) + 120;
-    m += obj(thOf(x, 4), (tn) => tree(x, y, s, tn, { sway: frz >= 1 ? 0 : Math.sin(tm * 0.9 + x) * 1.6 }), (tn) => tree(x, y, s, tn, { lowK: 1, col: '#6E8A62' }));
+    m += obj(thOf(x, 4), (tn) => tree(x, y, s, tn, { sway: frz >= 1 ? 0 : Math.sin(tm * 0.9 + x) * 1.6 }), (tn) => tree(x, y, s, tn, { lowK: 1, col: '#6E8A62' }), x, y);
   }
   // the yard path (stepping stones) to the gate + the trampoline
   if (SR.house > X0 && SR.house < X1) m += obj(0.4, (tn) => P(dE(900, houseBase(900) + 60, 50, 12) + dE(900, houseBase(900) + 110, 56, 14) + dE(900, houseBase(900) + 165, 62, 16), tn.ol('#D9D2C8', 4)), (tn) => R(850, houseBase(900) + 40, 100, 160, 0, tn.fl('#9A968E')));
@@ -1919,6 +1928,7 @@ function lampPost(x, base, tn, lk, on) {
   return s;
 }
 function townCore(t, cam = {}, o = {}) {
+  const visB = (k) => visBox(cam, k, o._box);
   const time = o.time || 'day', night = time === 'night', sunset = time === 'sunset', golden = time === 'golden';
   const lowG = b01(o.lowGfx), red = b01(o.red), frz = b01(o.frozen), gray = b01(o.gray), crack = b01(o.crack);
   const tm = frz >= 1 ? (o.freezeAt ?? 0) : frz > 0 ? Math.floor(t * lerp(24, 3, frz)) / lerp(24, 3, frz) : t;
@@ -1930,7 +1940,7 @@ function townCore(t, cam = {}, o = {}) {
   const hazeCol = night ? '#2A3A7A' : sunset ? '#E8A0B8' : golden ? '#FFD9A0' : '#CFE8FF';
   const hzK = (k) => (c) => mix(c, hazeCol, k);
   // ---- sky (k 0)
-  const v0 = vis(cam, 0);
+  const v0 = visB(0);
   const SB = [v0.x0 - 200, v0.y0 - 200, v0.x1 + 200, v0.y1 + 200];
   const skyId = night ? 'shSkyNight' : sunset ? 'shSkySunset' : golden ? 'shSkyGolden' : 'shSkyDay';
   let sky = R(SB[0], SB[1], SB[2] - SB[0], SB[3] - SB[1], 0, { fill: `url(#${skyId})` });
@@ -1947,7 +1957,7 @@ function townCore(t, cam = {}, o = {}) {
     if (red > 0) sun = G(sun, null, { opacity: f(1 - red) });
   } else if (lowAt(lowG, 0.3)) sun = R(1600, 90, 90, 90, 0, { fill: '#F2F2EA' });
   // clouds (k .06), skipping the window area a bit
-  const vc = vis(cam, 0.06);
+  const vc = visB(0.06);
   let cl = '';
   if (red < 1) {
     for (let i = Math.floor((vc.x0 - 400) / 640); i * 640 < vc.x1 + 400; i++) {
@@ -1965,7 +1975,7 @@ function townCore(t, cam = {}, o = {}) {
     }
   }
   // ---- hills + water tower (k .12)
-  const vh = vis(cam, 0.12);
+  const vh = visB(0.12);
   let hills = '';
   {
     const pts = [];
@@ -1984,7 +1994,7 @@ function townCore(t, cam = {}, o = {}) {
       : P('M262 410 L280 300 M358 410 L340 300 M270 360 L350 360 M280 300 L350 410 M340 300 L270 410', tn.ln(7, '#8A93A6')) + R(232, 236, 156, 76, 30, tn.ol('#E8F2FF', 5)) + P('M240 236 L310 196 L380 236 Z', tn.ol('#8A93A6', 5)) + TF('WILLOWBROOK', 310, 282, 17, tn.c('#3DA8D8')) + R(236, 300, 148, 8, 3, tn.fl('#8A93A6'))), 310, 410);
   }
   // ---- back row: tiny houses + the school (k .25)
-  const vs = vis(cam, 0.25);
+  const vs = visB(0.25);
   let row1 = R(vs.x0 - 300, TW.school - 10, vs.x1 - vs.x0 + 600, 1200, 0, { fill: tnB.c(hzK(0.3)(night ? '#2A5A4A' : '#86CC74')) });
   const SCH = { x0: TW.school0, x1: TW.school0 + 650 };
   for (let i = Math.floor((vs.x0 - 200) / 150); i * 150 < vs.x1 + 200; i++) {
@@ -1996,7 +2006,7 @@ function townCore(t, cam = {}, o = {}) {
   }
   row1 += obj(0.58, (tn, lk) => willowbrook(SCH.x0, TW.school, tn, lk, tm, night), SCH.x0 + 300, TW.school);
   // ---- roofs row + park (k .42)
-  const vr = vis(cam, 0.42);
+  const vr = visB(0.42);
   let row2 = R(vr.x0 - 300, TW.roofs - 30, vr.x1 - vr.x0 + 600, 1200, 0, { fill: tnB.c(hzK(0.18)(night ? '#2F6A4A' : '#74C866')) });
   // park: lawn path, pond, trees, bench, fountain
   {
@@ -2014,7 +2024,7 @@ function townCore(t, cam = {}, o = {}) {
   const PARK_TREES = [[TW.park.x0 + 20, 0.5], [TW.park.x1 - 10, 0.52], [TW.park.x0 + 520, 0.42], [-560, 0.55], [2250, 0.55]];
   for (const [x, s] of PARK_TREES) if (x > vr.x0 - 300 && x < vr.x1 + 300) row2 += obj(thOf(x, 14), (tn, lk) => tree(x, TW.roofs, s, tn, { lowK: lk, col: hzK(0.1)('#4DB85E'), hi: '#8BDB7C', sway: frz >= 1 ? 0 : Math.sin(tm * 0.8 + x) * 1.2 }), x, TW.roofs);
   // ---- shops row (k .68)
-  const vp = vis(cam, 0.68);
+  const vp = visB(0.68);
   let row3 = R(vp.x0 - 300, TW.shops - 40, vp.x1 - vp.x0 + 600, 1200, 0, { fill: tnB.c('#D9D2C8') });
   for (let i = Math.floor((vp.x0 + 50) / 330) - 1; shopX(i) < vp.x1 + 330; i++) {
     const x = shopX(i);
@@ -2022,7 +2032,7 @@ function townCore(t, cam = {}, o = {}) {
   }
   row3 += R(vp.x0 - 300, TW.shops, vp.x1 - vp.x0 + 600, 24, 0, { fill: tnB.c('#C9C1B2') }) + P(`M${vp.x0 - 300} ${TW.shops} H${vp.x1 + 300}`, tnB.ln(4, LINE, 0.6));
   // ---- street (k 1)
-  const v1 = vis(cam, 1);
+  const v1 = visB(1);
   const X0 = v1.x0 - 300, X1 = v1.x1 + 300;
   let st = R(X0, TW.shops + 16, X1 - X0, TW.road - TW.shops - 16, 0, { fill: tnB.c('#E9E2D6') }) + R(X0, TW.road - 6, X1 - X0, 16, 0, { fill: tnB.c('#BDB6AA') }) + R(X0, TW.road + 10, X1 - X0, 900, 0, { fill: tnB.c(night ? '#3A3858' : sunset ? '#6A6484' : '#7C8096') });
   if (tnB.detail > 0) st += R(X0, TW.road + 10, X1 - X0, 900, 0, { fill: 'url(#shRoad)', opacity: f(tnB.detail) });
@@ -2035,8 +2045,8 @@ function townCore(t, cam = {}, o = {}) {
   }
   for (let i = Math.floor((X0 - 250) / 900); LAMP_X(i) < X1; i++) { const x = LAMP_X(i); st += obj(thOf(x, 11), (tn, lk) => G(lampPost(x, 925, tn, lk, night), `translate(${x} 925) scale(0.8) translate(${-x} -925)`), x, 925); }
   st += obj(0.74, (tn, lk) => (lk ? R(1050, 885, 180, 36, 0, tn.fl('#7A7068')) : G(R(-90, -34, 180, 14, 6, tn.ol('#2E7D8A', 4)) + R(-90, -58, 180, 14, 6, tn.ol('#2E7D8A', 4)) + P('M-74 -20 V0 M74 -20 V0', tn.ln(7, '#2E3550')), 'translate(1140 925)')));
-  const busX = o.bus === undefined ? 1560 : o.bus;
-  if (busX !== false && busX !== null) st += schoolBus(busX, TW.road + 66, 0.6, pick(0.8), { lowK: lowAt(lowG, 0.8), flip: true });
+  const bus = o.bus === undefined ? { x: 1560 } : o.bus === false || o.bus === null ? null : typeof o.bus === 'object' ? o.bus : { x: +o.bus };
+  if (bus) st += schoolBus(bus.x ?? 1560, TW.road + 66, bus.s ?? 0.6, pick(0.8), { lowK: bus.lowK ?? lowAt(lowG, 0.8), flip: bus.flip ?? true, sign: bus.sign, ghost: bus.ghost });
   // ---- light
   let light = '';
   const wash = (col, op) => (op > 0.003 ? V(cam, R(v0.x0 - 300, v0.y0 - 300, v0.x1 - v0.x0 + 600, v0.y1 - v0.y0 + 600, 0, { fill: col, opacity: f(op) }), 0) : '');
@@ -2051,10 +2061,10 @@ function townLayers(t, cam = {}, o = {}) {
   if (cb <= 0) return townCore(t, cam, o);
   const colOpts = { ...o, time: o.colorTime || 'golden', red: 0, gray: 0, lowGfx: 0, frozen: 0, crack: 0, colorBack: 0 };
   if (cb >= 1) return townCore(t, cam, colOpts);
-  const A = townCore(t, cam, o), B = townCore(t, cam, colOpts);
   const c = o.colorFrom ? (o.colorFrom.k !== undefined ? toScreen(cam, o.colorFrom) : o.colorFrom) : { x: 960, y: 860 };
   const far = Math.max(Math.hypot(c.x, c.y), Math.hypot(1920 - c.x, c.y), Math.hypot(c.x, 1080 - c.y), Math.hypot(1920 - c.x, 1080 - c.y)) + 60;
   const r = ease.inOut(cb) * far;
+  const A = townCore(t, cam, o), B = townCore(t, cam, { ...colOpts, _box: [c.x - r - 40, c.y - r - 40, c.x + r + 40, c.y + r + 40] });
   const id = S.uid('shCB'), idO = S.uid('shCBo');
   const defs = `<defs><clipPath id="${id}"><circle cx="${f(c.x)}" cy="${f(c.y)}" r="${f(r)}"/></clipPath><clipPath id="${idO}"><path clip-rule="evenodd" d="M-2000 -2000 H4000 V4000 H-2000 Z ${dC(c.x, c.y, r)}"/></clipPath></defs>`;
   const inC = (s) => (s ? G(s, null, { 'clip-path': `url(#${id})` }) : '');

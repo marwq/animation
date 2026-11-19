@@ -69,7 +69,7 @@ X.spatula({ x, y, s, rot, pancake: true })    // ... or one object — every fun
 ### The fishbowl
 `fishbowl({ x, y, s, t, gary: {...}|false, garyFront, flag 0..1, flagSvg, inside: svg, bubbles, plant, water, line })`
 * (x, y) = bottom centre on the desk; 600 wide × ≈ 490 tall at s 1. On the hero's desk use **s ≈ 0.45 × the hero's s** and `line: 7 * heroS / s` to match line weights.
-* `gary` = options for the fish inside, in bowl-local units (default `{ x: -40, y: -230, s: 0.62 }` + your fields, e.g. `{ yaw: 0, glowEyes: 1, s: 1.1 }`).
+* `gary` = options for the fish inside, in bowl-local units (default `{ x: -40, y: -230, s: 0.62 }` + your fields, e.g. `{ yaw: 0, glowEyes: 1, s: 1.1 }`); his line weight stays matched to the bowl whatever his `s`.
 * `flag 0..1` = the small glowing checkpoint flag on the gravel; or pass the official one: `flagSvg: R.tinyFlag(0, 0, 2.4, t)` (placed on the gravel at local (−120, −30)).
 * **`fishbowl.layers(opts)` → `{ back, front }`**: draw something between the water and the glass. Local frame: `fishbowl.LOCAL = { cx: 0, cy: -270, R: 300, gravelY: -44, waterY: -435 }` (multiply by s, add x, y).
   ```js
@@ -116,8 +116,8 @@ X.spatula({ x, y, s, rot, pancake: true })    // ... or one object — every fun
   Layers: `'front'` over everything (held items), `'mid'` after the torso but before the arms (things under an arm), `'back'` behind the torso (back view: things held in front), `'top'` outside the body transform (doesn't follow lean/bodyY).
 * Example — YOU carrying the flask tray on stage:
   ```js
-  const pose = { x, y, s: 0.5, armL: 40, armR: 40 };
-  pose.props = [{ svg: X.flaskTray({ x: 0, y: -330, s: 0.8, t }), layer: 'front' }];
+  const pose = { x, y, s: 0.5, armL: 26, armR: 26 };                 // hands at ±205, y ≈ -303 (body units)
+  pose.props = [{ svg: X.flaskTray({ x: 0, y: -293, s: 1.15, t }), layer: 'front' }];   // tray ends sit in the hands
   actor('you', t, pose, { arms: false });
   ```
 * Arms are straight R6 blocks: to "hold" something at the chest use arms ≈ 25–45°; raise to 120–160 to lift things; the hand is never at the mouth.

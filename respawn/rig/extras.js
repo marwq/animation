@@ -887,7 +887,7 @@ function fishbowlLayers(...args) {
   back += S.g(inner, null, { 'clip-path': `url(#${shellId})` });
   back += S.path(shell, { fill: 'none', stroke: '#BFE6F5', 'stroke-width': w * 3, opacity: 0.35 });
   let gfish = '';
-  if (o.gary) gfish = gary({ x: -40, y: -230, s: 0.62, t: o.t, line: w / 0.62 * 0.85, ...o.gary });
+  if (o.gary) { const gs = o.gary.s || 0.62; gfish = gary({ x: -40, y: -230, s: 0.62, t: o.t, line: (w * 0.85) / gs, ...o.gary }); }
   if (gfish && !o.garyFront) back += S.g(gfish, null, { 'clip-path': `url(#${shellId})` });
   let front = '';
   if (gfish && o.garyFront) front += gfish;
