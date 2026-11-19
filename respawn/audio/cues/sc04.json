@@ -1,0 +1,1085 @@
+{
+ "scene": "SC 04",
+ "start": 221.48,
+ "end": 294.9,
+ "music": [
+  {
+   "start": 221.48,
+   "end": 232.64,
+   "mood": "tutorial",
+   "energy": 0.45,
+   "in": "cut",
+   "out": "cut"
+  },
+  {
+   "start": 232.64,
+   "end": 233.932,
+   "mood": "chaos",
+   "energy": 0.8,
+   "in": "cut",
+   "out": "scratch"
+  },
+  {
+   "start": 233.932,
+   "end": 236.804,
+   "mood": "silence",
+   "energy": 0,
+   "in": "cut",
+   "out": "cut"
+  },
+  {
+   "start": 236.804,
+   "end": 243.26,
+   "mood": "respawn",
+   "energy": 0.5,
+   "in": "cut",
+   "out": "cut"
+  },
+  {
+   "start": 243.26,
+   "end": 244.34,
+   "mood": "epic",
+   "energy": 0.7,
+   "in": "swell",
+   "out": "cut"
+  },
+  {
+   "start": 244.34,
+   "end": 246.63,
+   "mood": "playful",
+   "energy": 0.4,
+   "in": "cut",
+   "out": "cut"
+  },
+  {
+   "start": 246.63,
+   "end": 248.14,
+   "mood": "silence",
+   "energy": 0,
+   "in": "cut",
+   "out": "cut"
+  },
+  {
+   "start": 248.14,
+   "end": 250.91,
+   "mood": "playful",
+   "energy": 0.5,
+   "in": "cut",
+   "out": "cut"
+  },
+  {
+   "start": 250.91,
+   "end": 262.02,
+   "mood": "tutorial",
+   "energy": 0.45,
+   "in": "cut",
+   "out": "cut"
+  },
+  {
+   "start": 262.02,
+   "end": 262.4,
+   "mood": "silence",
+   "energy": 0,
+   "in": "cut",
+   "out": "cut"
+  },
+  {
+   "start": 262.4,
+   "end": 268.87,
+   "mood": "wonder",
+   "energy": 0.45,
+   "in": "swell",
+   "out": "cut"
+  },
+  {
+   "start": 268.87,
+   "end": 270.54,
+   "mood": "chaos",
+   "energy": 0.6,
+   "in": "cut",
+   "out": "sting"
+  },
+  {
+   "start": 270.54,
+   "end": 277.41,
+   "mood": "silence",
+   "energy": 0,
+   "in": "cut",
+   "out": "cut"
+  },
+  {
+   "start": 277.41,
+   "end": 278.74,
+   "mood": "respawn",
+   "energy": 0.6,
+   "in": "cut",
+   "out": "sting"
+  },
+  {
+   "start": 278.74,
+   "end": 287.83,
+   "mood": "warm",
+   "energy": 0.4,
+   "in": "fade",
+   "out": "cut"
+  },
+  {
+   "start": 287.83,
+   "end": 294.9,
+   "mood": "perfect",
+   "energy": 0.65,
+   "in": "swell",
+   "out": "cut"
+  }
+ ],
+ "ambience": [
+  {
+   "start": 221.48,
+   "end": 227.82,
+   "name": "birds",
+   "gain_db": -14
+  },
+  {
+   "start": 221.48,
+   "end": 232.64,
+   "name": "room",
+   "gain_db": -16
+  },
+  {
+   "start": 236.804,
+   "end": 243.26,
+   "name": "birds",
+   "gain_db": -14
+  },
+  {
+   "start": 244.34,
+   "end": 262.02,
+   "name": "kitchen",
+   "gain_db": -10
+  },
+  {
+   "start": 270.54,
+   "end": 277.41,
+   "name": "kitchen",
+   "gain_db": -12
+  },
+  {
+   "start": 278.74,
+   "end": 289.396,
+   "name": "kitchen",
+   "gain_db": -10
+  },
+  {
+   "start": 289.396,
+   "end": 294.9,
+   "name": "birds",
+   "gain_db": -8
+  },
+  {
+   "start": 289.396,
+   "end": 294.9,
+   "name": "town",
+   "gain_db": -16
+  }
+ ],
+ "footsteps": [
+  {
+   "start": 224.84,
+   "end": 227.77,
+   "interval": 0.449,
+   "surface": "wood",
+   "gain_db": -14,
+   "pan": 0
+  },
+  {
+   "start": 227.82,
+   "end": 228.62,
+   "interval": 0.449,
+   "surface": "wood",
+   "gain_db": -14,
+   "pan": -0.3
+  },
+  {
+   "start": 231.4,
+   "end": 232.64,
+   "interval": 0.393,
+   "surface": "wood",
+   "gain_db": -12,
+   "pan": -0.2
+  },
+  {
+   "start": 244.34,
+   "end": 245.04,
+   "interval": 0.349,
+   "surface": "hard",
+   "gain_db": -12,
+   "pan": 0.5
+  },
+  {
+   "start": 288.58,
+   "end": 289.396,
+   "interval": 0.196,
+   "surface": "hard",
+   "gain_db": -10,
+   "pan": 0.6
+  },
+  {
+   "start": 289.596,
+   "end": 292.83,
+   "interval": 0.314,
+   "surface": "hard",
+   "gain_db": -12,
+   "pan": 0
+  },
+  {
+   "start": 293.48,
+   "end": 294.85,
+   "interval": 0.314,
+   "surface": "hard",
+   "gain_db": -12,
+   "pan": 0.3
+  }
+ ],
+ "sfx": [
+  [
+   221.46,
+   "whoosh",
+   -6,
+   0.5,
+   "Tip zooms in"
+  ],
+  [
+   221.48,
+   "whoosh",
+   -8,
+   0,
+   "pull back from the clock"
+  ],
+  [
+   221.51,
+   "ui_pop",
+   -4,
+   0.219,
+   "tip card pops"
+  ],
+  [
+   221.66,
+   "typing",
+   -14,
+   0.219,
+   "tip card types"
+  ],
+  [
+   221.78,
+   "cloth",
+   -8,
+   -0.233,
+   "big sleepy stretch"
+  ],
+  [
+   221.91,
+   "boing",
+   -6,
+   -0.08,
+   "Tip lands by his face"
+  ],
+  [
+   222.13,
+   "boom",
+   -2,
+   0,
+   "spotlight on him"
+  ],
+  [
+   222.28,
+   "orch_hit",
+   -6,
+   0.211,
+   "'YOU!'"
+  ],
+  [
+   224.74,
+   "ui_pop",
+   -4,
+   0,
+   "'TUTORIAL 1/3' hologram unfolds"
+  ],
+  [
+   225.2,
+   "bonk",
+   -6,
+   0.139,
+   "mini-you trips"
+  ],
+  [
+   225.4,
+   "pop",
+   -6,
+   0.139,
+   "mini-you crumbles into blocks"
+  ],
+  [
+   226.1,
+   "slide_up",
+   -8,
+   0,
+   "the arrow loops back to the flag"
+  ],
+  [
+   227.16,
+   "respawn",
+   -6,
+   -0.292,
+   "mini-you pops on the checkpoint"
+  ],
+  [
+   227.72,
+   "whoosh",
+   -4,
+   0.3,
+   "whip-pan"
+  ],
+  [
+   227.82,
+   "door_open",
+   -6,
+   -0.4,
+   "out of his room onto the landing"
+  ],
+  [
+   227.87,
+   "ui_pop",
+   -6,
+   0.321,
+   "tip card pops"
+  ],
+  [
+   228.02,
+   "rewind",
+   -6,
+   0.102,
+   "Tip's clock spins backwards"
+  ],
+  [
+   232.08,
+   "swish",
+   -8,
+   -0.2,
+   "dismissive wave"
+  ],
+  [
+   232.62,
+   "slip",
+   2,
+   -0.3,
+   "'WHOOPS!' foot on Bea's skateboard"
+  ],
+  [
+   232.66,
+   "skate_roll",
+   -2,
+   0,
+   "the skateboard shoots down the stairs"
+  ],
+  [
+   232.94,
+   "body_fall",
+   -2,
+   -0.1,
+   "tumble: first bounce"
+  ],
+  [
+   233.19,
+   "bonk",
+   0,
+   0.1,
+   "'BONK'"
+  ],
+  [
+   233.39,
+   "metal_clank",
+   -6,
+   0.5,
+   "the board hits the front door"
+  ],
+  [
+   233.44,
+   "bonk",
+   0,
+   0.3,
+   "'BONK'"
+  ],
+  [
+   233.66,
+   "thud",
+   0,
+   0.4,
+   "he hits the hallway floor"
+  ],
+  [
+   233.932,
+   "pop",
+   0,
+   0.4,
+   "crumbles into blocks"
+  ],
+  [
+   233.972,
+   "stone",
+   -4,
+   0.4,
+   "blocks scatter"
+  ],
+  [
+   234.032,
+   "pixel_wipe",
+   -8,
+   0,
+   "the fail"
+  ],
+  [
+   234.152,
+   "powerdown",
+   -2,
+   0,
+   "the world freezes and greys: RESPAWNING"
+  ],
+  [
+   234.28,
+   "countdown_tick",
+   -2,
+   0,
+   "digit 3 slams"
+  ],
+  [
+   235.32,
+   "countdown_tick",
+   -2,
+   0,
+   "digit 2 slams"
+  ],
+  [
+   236.12,
+   "countdown_final",
+   -2,
+   0,
+   "digit 1 + 'YOU FELL DOWN THE STAIRS'"
+  ],
+  [
+   236.804,
+   "respawn",
+   2,
+   -0.066,
+   "pop on the pad in his room"
+  ],
+  [
+   236.834,
+   "forcefield",
+   -6,
+   -0.066,
+   "spawn protection shimmers"
+  ],
+  [
+   236.954,
+   "ui_pop",
+   -8,
+   0.54,
+   "TIME 7:30 pill"
+  ],
+  [
+   239.46,
+   "whoosh",
+   -8,
+   0.6,
+   "Tip floats in through the door"
+  ],
+  [
+   240.16,
+   "boing",
+   -8,
+   0.2,
+   "Tip settles"
+  ],
+  [
+   240.92,
+   "vhs_clunk",
+   -6,
+   -0.292,
+   "the minute hand snaps back to 7:30"
+  ],
+  [
+   240.95,
+   "bell",
+   -6,
+   0.306,
+   "'7:30'"
+  ],
+  [
+   241.56,
+   "zoom_in",
+   -2,
+   0,
+   "smash zoom on his face"
+  ],
+  [
+   241.6,
+   "boom",
+   0,
+   0,
+   "AGAIN!"
+  ],
+  [
+   242.413,
+   "boing",
+   -6,
+   0.2,
+   "Tip bounces, smug"
+  ],
+  [
+   242.563,
+   "sparkle",
+   -10,
+   0.4,
+   "smug sparkles"
+  ],
+  [
+   243.16,
+   "whoosh",
+   -4,
+   0.3,
+   "whip-pan"
+  ],
+  [
+   243.26,
+   "angel",
+   -4,
+   0,
+   "heavenly choir: the majestic step"
+  ],
+  [
+   243.56,
+   "sparkle",
+   -8,
+   0,
+   "sparkles around the skateboard"
+  ],
+  [
+   244.24,
+   "whoosh",
+   -4,
+   -0.3,
+   "whip-pan"
+  ],
+  [
+   244.39,
+   "sizzle",
+   -12,
+   -0.3,
+   "pancake in the pan"
+  ],
+  [
+   244.95,
+   "swish",
+   -2,
+   -0.226,
+   "Dad flips: 'FLIP!'"
+  ],
+  [
+   245,
+   "whoosh_up",
+   -4,
+   -0.226,
+   "the pancake flies up out of frame"
+  ],
+  [
+   247.21,
+   "rimshot",
+   -2,
+   0,
+   "ba-dum-tss (he told it first)"
+  ],
+  [
+   247.26,
+   "whoosh_down",
+   -6,
+   -0.226,
+   "the pancake falls back"
+  ],
+  [
+   247.71,
+   "splat",
+   0,
+   -0.226,
+   "'FLOP.' on Dad's head"
+  ],
+  [
+   248.01,
+   "blink",
+   -6,
+   -0.226,
+   "Dad blinks"
+  ],
+  [
+   249.55,
+   "zoom_in",
+   -4,
+   0,
+   "smash zoom on Dad"
+  ],
+  [
+   249.57,
+   "orch_hit",
+   -4,
+   0.3,
+   "'BRAND NEW?!'"
+  ],
+  [
+   250.81,
+   "whoosh",
+   -4,
+   0.3,
+   "whip-pan"
+  ],
+  [
+   250.91,
+   "ui_pop",
+   -4,
+   -0.248,
+   "tip card pops"
+  ],
+  [
+   251.21,
+   "chomp",
+   -14,
+   0.3,
+   "he chews pancakes"
+  ],
+  [
+   251.81,
+   "chomp",
+   -14,
+   0.3,
+   "he chews pancakes"
+  ],
+  [
+   252.02,
+   "magic",
+   -8,
+   0,
+   "Tip draws an arrow in the air"
+  ],
+  [
+   252.41,
+   "chomp",
+   -14,
+   0.3,
+   "he chews pancakes"
+  ],
+  [
+   253.3,
+   "ui_pop",
+   -4,
+   0,
+   "'TUTORIAL 2/3' hologram"
+  ],
+  [
+   253.64,
+   "step",
+   -16,
+   -0.2,
+   "mini-you marches with the flag"
+  ],
+  [
+   254.64,
+   "thud",
+   -2,
+   0,
+   "the flag is planted"
+  ],
+  [
+   254.69,
+   "confirm",
+   -6,
+   0,
+   "mini toast: Checkpoint saved"
+  ],
+  [
+   255.12,
+   "swish",
+   -6,
+   0,
+   "SCHOOL"
+  ],
+  [
+   255.44,
+   "swish",
+   -6,
+   0,
+   "BEACH"
+  ],
+  [
+   255.76,
+   "swish",
+   -6,
+   0,
+   "THE MOON"
+  ],
+  [
+   256.55,
+   "ui_pop",
+   -4,
+   -0.233,
+   "tip card pops"
+  ],
+  [
+   257.76,
+   "poof",
+   -2,
+   -0.335,
+   "Tip resets itself: poof"
+  ],
+  [
+   258.11,
+   "respawn",
+   -4,
+   -0.335,
+   "Tip pops back"
+  ],
+  [
+   259.6,
+   "ui_pop",
+   -4,
+   0.16,
+   "tip card pops"
+  ],
+  [
+   260.36,
+   "pop",
+   -6,
+   0.467,
+   "the II icon pops"
+  ],
+  [
+   260.98,
+   "cloth",
+   -10,
+   0.4,
+   "shrug"
+  ],
+  [
+   262.02,
+   "click",
+   3,
+   0.4,
+   "'SNAP!'"
+  ],
+  [
+   262.04,
+   "powerdown",
+   -2,
+   0,
+   "the world freezes"
+  ],
+  [
+   262.05,
+   "ui_pop",
+   0,
+   0,
+   "the pause menu unfolds in the air"
+  ],
+  [
+   262.15,
+   "whoosh_up",
+   -6,
+   0,
+   "buttons slide in"
+  ],
+  [
+   264.44,
+   "sparkle",
+   -8,
+   0,
+   "sparkle on \"pause menu\""
+  ],
+  [
+   267.06,
+   "click",
+   -6,
+   0,
+   "hover: RESET CHARACTER"
+  ],
+  [
+   267.79,
+   "click",
+   -4,
+   0,
+   "hover: LEAVE GAME"
+  ],
+  [
+   267.84,
+   "beep",
+   -8,
+   0,
+   "LEAVE GAME turns red"
+  ],
+  [
+   268.87,
+   "whoosh",
+   -2,
+   0.5,
+   "Tip slams in front of the button"
+  ],
+  [
+   268.95,
+   "ui_pop",
+   -6,
+   0.394,
+   "red tip card"
+  ],
+  [
+   268.97,
+   "buzzer_wrong",
+   -4,
+   0,
+   "TIP: Don't press"
+  ],
+  [
+   270.19,
+   "ui_close",
+   -4,
+   0,
+   "menu folds away (resume)"
+  ],
+  [
+   270.44,
+   "whoosh",
+   -4,
+   -0.3,
+   "whip-pan"
+  ],
+  [
+   270.59,
+   "pop",
+   -8,
+   -0.481,
+   "'TEST #1'"
+  ],
+  [
+   272.53,
+   "cymbal",
+   -4,
+   0.394,
+   "'KIIING!'"
+  ],
+  [
+   274.03,
+   "glass",
+   -10,
+   -0.1,
+   "the window starts to crack"
+  ],
+  [
+   274.13,
+   "slide_down",
+   -8,
+   -0.146,
+   "the pancake slides off the spatula"
+  ],
+  [
+   274.725,
+   "glass",
+   2,
+   -0.3,
+   "'CRACK!'"
+  ],
+  [
+   276.38,
+   "dishes",
+   -4,
+   0.248,
+   "Bea's spoon clatters on the plate"
+  ],
+  [
+   277.01,
+   "ui_pop",
+   0,
+   0.4,
+   "the menu slams open"
+  ],
+  [
+   277.27,
+   "click",
+   0,
+   0.4,
+   "RESET CHARACTER pressed"
+  ],
+  [
+   277.3,
+   "confirm",
+   -2,
+   0.4,
+   "'RESET!'"
+  ],
+  [
+   277.41,
+   "pop",
+   0,
+   0,
+   "blocks burst off the chair"
+  ],
+  [
+   277.44,
+   "stone",
+   -4,
+   0,
+   "blocks scatter"
+  ],
+  [
+   277.59,
+   "pixel_wipe",
+   -4,
+   0,
+   "white flash"
+  ],
+  [
+   277.71,
+   "respawn",
+   0,
+   -0.066,
+   "pop on the pad, 7:30"
+  ],
+  [
+   277.76,
+   "rewind",
+   -8,
+   0.5,
+   "<< rewound"
+  ],
+  [
+   277.86,
+   "tap",
+   -6,
+   -0.554,
+   "RESET 7:30 pill"
+  ],
+  [
+   278.64,
+   "whoosh",
+   -4,
+   0.3,
+   "whip-pan"
+  ],
+  [
+   278.84,
+   "sizzle",
+   -12,
+   -0.3,
+   "pancakes sizzle again"
+  ],
+  [
+   279.34,
+   "swish",
+   -6,
+   -0.3,
+   "Dad flips, happy"
+  ],
+  [
+   280.14,
+   "pan_clang",
+   -10,
+   -0.3,
+   "back into the pan"
+  ],
+  [
+   280.46,
+   "squeak",
+   -12,
+   0,
+   "suspicious squint"
+  ],
+  [
+   282.884,
+   "gulp",
+   -4,
+   0.3,
+   "he sweats"
+  ],
+  [
+   284.96,
+   "cloth",
+   -8,
+   0,
+   "leans back, hands behind his head"
+  ],
+  [
+   286.71,
+   "shine",
+   -2,
+   0,
+   "sun rays on \"GOOD\""
+  ],
+  [
+   286.76,
+   "boing",
+   -6,
+   -0.3,
+   "Tip bounces"
+  ],
+  [
+   288.08,
+   "equip",
+   -4,
+   0.3,
+   "backpack on, the flag sticks out"
+  ],
+  [
+   289.296,
+   "whoosh",
+   -4,
+   0.3,
+   "whip-pan"
+  ],
+  [
+   289.446,
+   "door_open",
+   -6,
+   0,
+   "front door"
+  ],
+  [
+   292.83,
+   "jump",
+   -2,
+   0,
+   "jump for joy"
+  ],
+  [
+   292.88,
+   "confetti",
+   -4,
+   0,
+   "block confetti + sparkles"
+  ],
+  [
+   292.93,
+   "tada",
+   -8,
+   0,
+   "tiny fanfare"
+  ],
+  [
+   293.43,
+   "land",
+   -4,
+   0,
+   "lands"
+  ],
+  [
+   294.78,
+   "whoosh",
+   -2,
+   0.4,
+   "whip-pan into SC 05"
+  ]
+ ]
+}

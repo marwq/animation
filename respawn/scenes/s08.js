@@ -440,9 +440,9 @@ function shAll9999(t) {
 // ================================================================= 5. THE HERO HIDES
 function shHide(t) {
   const cam = camKeys(t, [[CUT.hide, at(1040, 700, 1.3)], [CUT.literally, at(1040, 700, 1.55)]]);
-  const G = yardGhosts(t, { only: [0, 1, 3], cam, rim: false });
+  const G = yardGhosts(t, { only: [1, 3], cam, rim: false });
   let around = '';
-  const K_ = [[1, 640, 900, 0.5], [6, 1420, 920, -0.5], [10, 1640, 860, -0.6], [13, 450, 870, 0.6]];
+  const K_ = [[1, 640, 900, 0.5], [6, 1420, 920, -0.5], [10, 1640, 860, -0.6]];
   for (const [i, x, y, tn] of K_) around += kidLaugh(i, t, x, y, sAt(y), { turn: tn, point: i % 2 === 1 });
   let hero = actor('you', t, { x: 1040, y: 960, s: 0.5, view: 'side', backpack: true, armL: 128, armR: 118, headRot: 20, lean: 10, legL: 20, legR: 10, kneeL: 40, kneeR: 50, bodyY: 40 + 4 * Math.sin(t * 14), face: { name: 'crying' } });
   let o = yardR(t, cam, roofCrowd(t), G.back + around + hero + G.front);
@@ -597,7 +597,7 @@ function shFrozen(t) {
   const cam = camKeys(t, [[CUT.frozen, { x: 80, y: 0, zoom: 1.12 }], [tFreeze, { x: 80, y: -20, zoom: 1.04 }], [CUT.forever, { x: 80, y: -30, zoom: 1.02 }]]);
   const G = yardGhosts(st, { freeze: st, cam, only: [0, 1, 2, 3], rim: false });
   let around = '';
-  const K_ = [[1, 640, 900, 0.5], [6, 1420, 920, -0.5], [10, 1680, 860, -0.6], [13, 430, 870, 0.6]];
+  const K_ = [[1, 640, 900, 0.5], [6, 1420, 920, -0.5], [10, 1680, 860, -0.6]];
   for (const [i, x, y, tn] of K_) around += kidLaugh(i, st, x, y, sAt(y), { turn: tn, freeze: st });
   around += actor('principal', st, { x: 1600, y: 960, s: 0.5, turn: -0.4, spaghetti: 1, armL: 140, armR: 150, face: 'scream' });
   around += actor('you', st, { x: 1040, y: 960, s: 0.5, backpack: true, turn: 0.1, armL: 60, armR: 60, face: 'scared' });

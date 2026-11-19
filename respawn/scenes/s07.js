@@ -190,9 +190,9 @@ function shMom(t) {
   const kiss = bump(tm, tS - 0.05, tS + 0.4);
   const jit = stut ? R.lagJitter(t, 3, 1, { fps: 15, amp: 18 }) : { dx: 0, dy: 0, rot: 0 };
   let mom = actor('mom', t, { x: 1180 + jit.dx, y: 990 + jit.dy, s: 0.5, turn: 0.55, thermos: true, lean: -14 * kiss + jit.rot * 2, bodyY: 4 * Math.sin(tm * 9), armR: 40 + 80 * bump(tm, tM - 0.1, tM + 0.5), headRot: -6 + 5 * Math.sin(tm * 11) }, { arms: false });
-  if (stut && Math.floor(t * 15) % 2 === 0) mom = R.rgbSplit(mom, 1, { t, dx: 16 });
+  if (stut && Math.floor(t * 15) % 2 === 0) mom = S.g(R.tint(mom, 'cyan', 0.5), `translate(${f(14 + 10 * hash(Math.floor(t * 15)))} 0)`) + mom;   // one cheap RGB ghost
   let behind = dadKitchen(t, { face: 'happy', armR: 40 + 30 * Math.sin(t * 5) }) + beaSeat(t, { face: { name: 'neutral', eyes: { look: [-0.6, 0] } } }) + heroSeat(t, { face: { name: 'nervous', eyes: { look: [-1, 0] } } });
-  let o = kitchen(t, cam, behind, mom, { glitch: stut ? 0.3 : 0.12 });
+  let o = kitchen(t, cam, behind, mom, { glitch: 0.12 });
   o += R.counterHUD({ x: 60, y: 84, k: pop(t, CUT.mom + 0.1, 0.3) * (1 - seg(t, CUT.birds - 0.3, CUT.birds)), t, label: 'FRIDAY', value: '7:30 AM', theme: 'white', icon: 'cal', size: 54 });
   if (stut) o += E.glitchHit(t, Math.floor(t * 8) / 8 + 0.02, 0.1, 5, 0.6);
   return o;

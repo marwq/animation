@@ -914,7 +914,7 @@ function shPinch(t) {
   let o = gymRoom(t, cam, { slowmo: 1, scoreboard: ['HOME', '00', 'GUEST', '00'] }, ch);
   o += letterbox(1, 70);
   const [sx, sy] = toScr(cam, target[0], target[1]);
-  o += K.bang('*ting*', sx + 150, sy - 110, g, 54, -6, '#FFFFFF');
+  o += K.bang('*ting*', sx - 170, sy - 70, g, 54, -6, '#FFFFFF');
   return o;
 }
 

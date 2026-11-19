@@ -94,39 +94,43 @@ function standUp(P, k, cheer = 0) {
   return o;
 }
 function yardGhosts(t, o = {}) {
-  const { freeze = true, up = 0, popT = null, colorK = 0, skipNear = false } = o;
-  let back = '', front = '';
+  const { freeze = true, up = 0, popT = null, skipNear = false, few = false } = o;
+  let back = '', front = '', glowB = '', glowF = '', pops = '';
   // far lites (frozen), pop with the rest
   const poses = [];
   YL.forEach((g, i) => {
     const dly = popT !== null ? popT + 0.1 + hash(i) * 0.5 : Infinity;
-    if (t >= dly) return;
+    if (t >= dly) { pops += R.ghostPop({ x: g.x, y: g.y, s: sAt(g.y), age: t - dly, seed: i + 50 }); return; }
     const P = failPose(g.kind, freeze ? g.u : mod(t / 1.6 + g.u, 1));
     poses.push({ x: g.x, y: g.y, s: sAt(g.y), ...standUp(P, up * seg(up, 0, 1), i % 3 === 0 ? 1 : 0) });
   });
-  back += draw.ghostCrowd(poses, { alpha: 0.6 });
-  YL.forEach((g, i) => { if (popT !== null) back += R.ghostPop({ x: g.x, y: g.y, s: sAt(g.y), age: t - (popT + 0.1 + hash(i) * 0.5), seed: i + 50 }); });
+  back += draw.ghostCrowd(poses, { alpha: 1 });
   YG.forEach(([kind, x, y, u, fl], i) => {
     if (skipNear && Math.abs(x - HERO.x) < 420) return;
+    if (few && i >= 7) return;
     const s = sAt(y);
     const dist = Math.abs(x - HERO.x) + Math.abs(y - HERO.y);
     const dly = popT !== null ? popT + dist / 2600 : Infinity;
     const age = t - dly;
     let svg = '';
+    const isF = y > HERO.y - 20;
     if (age < 0) {
       const ku = clamp(up * 1.4 - i * 0.05, 0, 1);
       if (ku > 0) {
         // golden rim: "they looked like... trying"
-        svg += S.ellipse(x, y - 470 * s, 340 * s, 560 * s, { fill: 'url(#rspGlowY)', opacity: f(0.9 * ku) }) + S.ellipse(x, y - 470 * s, 220 * s, 420 * s, { fill: 'url(#rspGlowW)', opacity: f(0.35 * ku) });
+        const gl = S.ellipse(x, y - 470 * s, 340 * s, 560 * s, { fill: 'url(#rspGlowY)', opacity: f(0.9 * ku) }) + S.ellipse(x, y - 470 * s, 220 * s, 420 * s, { fill: 'url(#rspGlowW)', opacity: f(0.35 * ku) });
+        if (isF) glowF += gl; else glowB += gl;
         let P = failPose(kind, u);
         if (fl && P.view === 'side') P.flip = !P.flip;
         P = standUp(P, ease.inOut(ku), i % 2);
-        svg += draw.ghost({ x, y, s, alpha: 0.62, ...P, face: { name: ku > 0.7 ? 'happy' : 'determined' } });
-      } else svg += ghostFail(kind === 'bike' ? 'trip' : kind, t, u, { x, y, s, flip: fl, alpha: 0.6 });
-    } else svg += R.ghostPop({ x, y, s, age, seed: i + 7 });
-    if (y > HERO.y - 20) front += svg; else back += svg;
+        svg += draw.ghost({ x, y, s, alpha: 1, rim: false, ...P, face: { name: ku > 0.7 ? 'happy' : 'determined' } });
+      } else svg += ghostFail(kind === 'bike' ? 'trip' : kind, t, u, { x, y, s, flip: fl, alpha: 1 });
+    } else { pops += R.ghostPop({ x, y, s, age, seed: i + 7 }); }
+    if (isF) front += svg; else back += svg;
   });
-  return { back, front };
+  // one translucent group per depth band (instead of one offscreen layer per ghost)
+  const grp = (g) => (g ? S.g(g, null, { opacity: 0.6 }) : '');
+  return { back: glowB + grp(back) + pops, front: glowF + grp(front) };
 }
 function yard(t, cam, behind, chars, o = {}) {
   const Ly = SS.schoolyard.layers(o.tm ?? t, cam, { time: o.time || 'day', red: o.red ?? 1, frozen: o.frozen ?? 0.8, colorBack: o.colorBack, colorFrom: o.colorFrom, crowdBench: false });
@@ -179,8 +183,8 @@ function shYard(t) {
   const cam = at(1110, lerp(580, 560, u), lerp(1.12, 1.22, ease.inOut(u)));
   const G = yardGhosts(START);
   let ch = flagSvg(START);
-  ch += hero(t, { turn: -0.1, armL: 14, armR: 14, headRot: -8, face: { name: 'nervous', eyes: { look: [0, -1] } } });
-  ch += ivy(t, { face: { name: 'shocked', eyes: { look: [-0.2, -1] } }, armL: 20, armR: 20 });
+  ch += hero(t, { volume: false, turn: -0.1, armL: 14, armR: 14, headRot: -8, face: { name: 'nervous', eyes: { look: [0, -1] } } });
+  ch += ivy(t, { volume: false, face: { name: 'shocked', eyes: { look: [-0.2, -1] } }, armL: 20, armR: 20 });
   let o = yard(START, cam, G.back + G.front, ch, { haze: 0.18 });
   const [tx, ty] = toScr(cam, 1560, 600);
   o += tipAt(t, tx, ty);
@@ -266,7 +270,7 @@ function shFails(t) {
   const u = ease.inOut(seg(t, CUT.fails, CUT.c56));
   const cam = at(lerp(260, 1900, u), 700, 1.45);
   const G = yardGhosts(START);
-  let ch = flagSvg(START) + G.back + hero(t, { turn: -0.3, face: { name: 'sad', eyes: { look: [lerp(-1, 1, u), 0.1] } } }) + ivy(t, { face: 'neutral' }) + G.front;
+  let ch = flagSvg(START) + G.back + hero(t, { volume: false, turn: -0.3, face: { name: 'sad', eyes: { look: [lerp(-1, 1, u), 0.1] } } }) + ivy(t, { volume: false, face: 'neutral' }) + G.front;
   return yard(START, cam, '', ch) + redPulse(t, 0.4);
 }
 
@@ -329,7 +333,7 @@ const MONT = [
 function shMontage(t) {
   // backdrop: the frozen yard, dimmed
   const cam = at(1040, 600, 1.1);
-  let o = yard(START, cam, '', yardGhosts(START).back + hero(START, { turn: -0.3 }), { frozen: 1 });
+  let o = yard(START, cam, '', hero(START, { turn: -0.3, volume: false }), { frozen: 1 });
   o += S.rect(0, 0, 1920, 1080, 0, { fill: '#1A0610', opacity: 0.62 });
   let top = 0;
   for (let i = 0; i < MONT.length; i++) if (t >= MONT[i].t0) top = i;
@@ -364,7 +368,7 @@ function shTrying(t) {
   const up = ease.inOut(seg(t, CUT.trying + 0.1, w(4, 'trying.') + 0.3));
   const cam = camKeys(t, [[CUT.trying, { x: 80, y: -10, zoom: 1.0 }], [CUT.okay, { x: 80, y: -30, zoom: 0.94 }]]);
   const G = yardGhosts(t, { up });
-  let ch = flagSvg(START) + G.back + hero(t, { turn: -0.2, face: { name: 'happy', eyes: { look: [-0.4, 0] } } }) + ivy(t, { face: 'happy' }) + G.front;
+  let ch = flagSvg(START) + G.back + hero(t, { volume: false, turn: -0.2, face: { name: 'happy', eyes: { look: [-0.4, 0] } } }) + ivy(t, { volume: false, face: 'happy' }) + G.front;
   let o = yard(START, cam, '', ch, { frozen: 1 - 0.4 * up });
   return o + S.rect(0, 0, 1920, 1080, 0, { fill: '#FFC060', opacity: f(0.1 * up) });
 }
@@ -464,8 +468,8 @@ function shTip(t) {
   const u = seg(t, CUT.tip, CUT.tipCU);
   const cam = at(1180, lerp(560, 540, u), lerp(1.5, 1.65, ease.inOut(u)));
   let ch = flagSvg(t, 'saved', { wave: 0.4 });
-  ch += hero(t, { turn: 0.35, face: { name: 'sad', eyes: { look: [0.6, -0.5] } } });
-  ch += ivy(t, { face: { name: 'sad', eyes: { look: [-0.4, -0.6] } }, armL: 20, armR: 20 });
+  ch += hero(t, { volume: false, turn: 0.35, face: { name: 'sad', eyes: { look: [0.6, -0.5] } } });
+  ch += ivy(t, { volume: false, face: { name: 'sad', eyes: { look: [-0.4, -0.6] } }, armL: 20, armR: 20 });
   let o = yard(t, cam, '', ch, GOLD(cam));
   const [tx, ty] = toScr(cam, 1190, lerp(520, 560, u));
   o += R.tip({ x: tx, y: ty, s: 1.55, t, look: [-0.3, 0.3], mood: 'happy', glitch: 0.08, fade: tipFadeK(t) });
@@ -489,8 +493,8 @@ function shThanks(t) {
   const u = seg(t, CUT.thanks, CUT.flag);
   const cam = at(1100, lerp(470, 430, u), 1.7);
   let ch = flagSvg(t, 'saved', { wave: 0.3 });
-  ch += hero(t, { turn: 0.25, armR: lerp(14, 60, ease.out(seg(t, A[9].a, A[9].a + 0.5))), headRot: -6, face: { name: 'happy', eyes: { look: [0.4, -1] }, fx: ['tears'] } }, { arms: false });
-  ch += ivy(t, { face: { name: 'happy', eyes: { look: [-0.2, -1] } } });
+  ch += hero(t, { volume: false, turn: 0.25, armR: lerp(14, 60, ease.out(seg(t, A[9].a, A[9].a + 0.5))), headRot: -6, face: { name: 'happy', eyes: { look: [0.4, -1] }, fx: ['tears'] } }, { arms: false });
+  ch += ivy(t, { volume: false, face: { name: 'happy', eyes: { look: [-0.2, -1] } } });
   let o = yard(t, cam, '', ch, GOLD(cam));
   const sy = lerp(330, -40, ease.in(u)), sx = 1240 + 30 * Math.sin(t * 3);
   const r = 26 * (1 - 0.6 * u);
@@ -514,8 +518,8 @@ function shLives(t) {
   const u = seg(t, CUT.lives, CUT.walk);
   const cam = at(1080, 560, lerp(1.6, 1.5, u));
   let ch = R.flag({ x: FLAG.x + 40, y: FLAG.y, s: FLAG.s * 1.2, rot: 84, t, state: 'dead', wave: 0 });
-  ch += hero(t, { turn: 0.1, armL: 14, armR: 14, face: { name: 'happy', eyes: { look: [0, 0] } }, bodyY: 6 * bump(t, tOne, tOne + 0.5) });
-  ch += ivy(t, { face: 'happy' });
+  ch += hero(t, { volume: false, turn: 0.1, armL: 14, armR: 14, face: { name: 'happy', eyes: { look: [0, 0] } }, bodyY: 6 * bump(t, tOne, tOne + 0.5) });
+  ch += ivy(t, { volume: false, face: 'happy' });
   let o = yard(t, cam, '', ch, GOLD(cam));
   return o + livesHUD(t);
 }

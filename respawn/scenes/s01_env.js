@@ -199,7 +199,7 @@ function ghostFail(kind, t, u, o = {}) {
       pr += S.g(X.skateboard({ x: x + sg * (lerp(0, 900, a)) * s, y: y - 30 * s, s, rot: sg * 360 * a, flipK: a * 0.75 }), null, { opacity: f(alpha * (1 - seg(u, 0.75, 0.85))) });
     }
   }
-  return R.tint(pr, 'ghost', 0.9) + gh;
+  return (pr ? R.tint(pr, 'ghost', alpha >= 1 ? 1 : 0.9) : '') + gh;
 }
 
 // ---------------------------------------------------------------- sports replay frame (gym)
