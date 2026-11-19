@@ -662,7 +662,7 @@ function shDark(t) {
   const red = 0.25 + 0.7 * ease.inOut(seg(t, tWin - 0.2, tWin + 0.5));
   const Lt = townRed(t, cam, { red, frozen: 0.25 });
   let o = Lt.bg + Lt.mid;
-  o += crowdSvg(t, cam, 0.4 + 0.6 * ease.out(u), null, 1);
+  o += crowdSvg(t, cam, 0.3 + 0.3 * ease.out(u), null, 1);   // the crowd keeps growing with the counter (shCount)
   let ch = nearGhosts(t) + redFlag(t);
   const look = t > tWin - 0.3;
   ch += heroAtFlag(t, { turn: look ? 0 : -0.3, headRot: look ? -6 : 0, armL: look ? 30 : 14, armR: look ? 30 : 14, face: look ? { name: 'scared', eyes: { look: [0, -0.9] } } : { name: 'confused', eyes: { look: [-0.8, 0] } } }, { arms: false });
@@ -679,7 +679,7 @@ function shTip(t) {
   const u = seg(t, CUT.tip, CUT.count);
   const cam = at(FLAGX - 40, 760 - 40 * u, 2.3 + 0.15 * u);
   const Lt = townRed(t, cam, { red: 0.95, frozen: 0.25 });
-  let o = Lt.bg + Lt.mid + crowdSvg(t, cam, 1, null, 1, { alpha: 0.5, haze: 0.28, skip: FLAGX, rows: [1, 2, 3] });
+  let o = Lt.bg + Lt.mid + crowdSvg(t, cam, 0.6, null, 1, { alpha: 0.5, haze: 0.28, skip: FLAGX, rows: [1, 2, 3] });
   let ch = nearGhosts(t, null, true) + redFlag(t);
   ch += heroCU(t, { turn: 0.2, armL: 20, armR: 26, headRot: -4, face: { name: 'scared', eyes: { look: [0.3, -0.8] } } }, { arms: false });
   o += view(cam, ch, 1) + Lt.fg + Lt.light;
@@ -698,7 +698,7 @@ function shCount(t) {
   let from = 0, val = 9000, roll = seg(t, w(5, 'nine'), t9k + 0.35), tb = t9k + 0.35;
   if (t >= t9h - 0.1) { from = 9000; val = 9900; roll = seg(t, t9h - 0.1, t9h + 0.35); tb = t9h + 0.35; }
   if (t >= t99 - 0.15) { from = 9900; val = 9999; roll = seg(t, t99 - 0.15, t99 + 0.4); tb = t99 + 0.4; }
-  const frac = 0.25 + 0.75 * (lerp(from, val, ease.out(roll)) / 9999);
+  const frac = 0.6 + 0.4 * (lerp(from, val, ease.out(roll)) / 9999);
   const Lt = townRed(t, cam, { red: 1, frozen: 0.25 });
   let o = Lt.bg + Lt.mid + crowdSvg(t, cam, frac, null, 1, { haze: 0.12 });
   let ch = nearGhosts(t) + redFlag(t);
