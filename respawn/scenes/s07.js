@@ -311,9 +311,12 @@ function shDad(t) {
 const lowK = (t) => ease.inOut(seg(t, w(5, 'switched') - 0.1, Math.max(w(5, 'graphics') + 0.7, A[5].b + 0.9)));
 function shLow(t) {
   const lk = lowK(t);
-  const cam = camKeys(t, [[CUT.low, { zoom: 0.9, x: 40, y: -30 }], [CUT.y2006, { zoom: 0.98, x: 30, y: -10 }]]);
+  const tB = A[5].b + 0.1;                                  // the silent beat: he checks his own (still HD) hands
+  const cam = camKeys(t, [[CUT.low, { zoom: 0.9, x: 40, y: -30 }], [tB, { zoom: 0.97, x: 30, y: -10 }], [CUT.y2006, { zoom: 1.35, x: -60, y: 110 }]]);
   const Ls = H.street.layers(t, cam, { time: 'morning', lowGfx: lk, dog: { x: 1280, walk: t * 7 } });
-  let hero = actor('you', t, { x: 760, y: SR.stand, s: 0.34, backpack: true, turn: 0.1, ...breathe(t), face: { name: lk > 0.3 ? 'shocked' : 'neutral', eyes: { look: [lk > 0.3 ? 0.6 : 0, -0.2] } }, lift: 30 * bump(t, w(5, 'low'), w(5, 'low') + 0.35) });
+  const hands = ease.inOut(seg(t, tB, tB + 0.4)) * (1 - ease.inOut(seg(t, CUT.y2006 - 0.45, CUT.y2006 - 0.1)));
+  const lookCam = t > CUT.y2006 - 0.45;
+  let hero = actor('you', t, { x: 760, y: SR.stand, s: 0.34, backpack: true, turn: 0.1, ...breathe(t), armL: 10 + 60 * hands, armR: 10 + 60 * hands, headRot: 10 * hands, face: { name: lookCam ? 'scared' : lk > 0.3 ? 'shocked' : 'neutral', eyes: { look: hands > 0.3 && !lookCam ? [0, 1] : [lk > 0.3 && !lookCam ? 0.6 : 0, -0.2] } }, lift: 30 * bump(t, w(5, 'low'), w(5, 'low') + 0.35) }, { arms: false });
   let o = Ls.bg + Ls.mid + view(cam, hero, 1) + Ls.fg + Ls.light;
   // a couple of houses go through a "texture not loaded" frame on their way down
   const [hx, hy] = toScr(cam, 380, 380);

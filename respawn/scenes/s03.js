@@ -70,13 +70,18 @@ const c33 = A[12].b + 0.06;                       // fast-forward to 7:30
 
 // ---------------------------------------------------------------- shared bits
 const HR = H.SPOTS.heroRoom, CP = HR.checkpoint, DC = H.SPOTS.deskClose, DF = H.SPOTS.deskFace, OW = H.SPOTS.obbyWorld;
-const you = (t, pose, act) => actor('you', t, pose, act);
+// the hero is drawn flat (volume: false) in the heavy night-room shots and big close-ups (perf)
+let FLAT = false;
+const you = (t, pose, act) => actor('you', t, FLAT && pose.volume === undefined ? { ...pose, volume: false } : pose, act);
 const DFH = { x: DF.hero.x, y: DF.hero.seat + 306 * DF.hero.s, s: DF.hero.s };   // hero in the deskFace chair
 const bowlRoom = (t, gary = {}) => X.fishbowl({ x: HR.bowl.x, y: HR.bowl.y, s: HR.bowl.s, t, line: (7 * 0.5) / HR.bowl.s, gary: { yaw: -40, ...gary } });
 const bowlDesk = (t, gary = {}, extra = {}) => X.fishbowl({ x: DC.bowl.x, y: DC.bowl.y, s: DC.bowl.s, t, gary: { yaw: 40, ...gary }, ...extra });
 const bowlCU = (t, gary = {}) => bowlDesk(t, { x: -20, y: -250, s: 1.05, ...gary }, { bubbles: true });
 const game = (t, o = {}) => H.gameScreen(t, { run: t * 14, ...o });
 const greenGame = (t) => game(t, { win: 1 });
+// after the export the monitor just glows green with the banner (a cheap stand-in for the full game screen)
+const greenLite = (t) => (w_, h_) => S.rect(-w_ / 2, -h_ / 2, w_, h_, 0, { fill: '#3DFF9A' }) + S.rect(-w_ / 2, -h_ / 2, w_, h_ * 0.5, 0, { fill: '#9DFFCB', opacity: f(0.35 + 0.1 * Math.sin(t * 6)) }) +
+  S.g(S.rect(-300, -52, 600, 104, 30, { fill: '#0E3A22', stroke: '#151515', 'stroke-width': 6 }) + T('FINAL CHECKPOINT!', 0, 20, 56, '#FFFFFF'), `scale(${f(Math.min(w_ / 1600, h_ / 900) * 1.4)})`);
 // the export progress (0..1) from the SYSTEM voice
 const exportP = (t) => (t < w(6, 'to') ? 0.55 * ease.out(seg(t, w(6, 'Exporting'), w(6, 'to'))) : lerp(0.55, 1, ease.inOut(seg(t, w(6, 'to'), w1(6, 'life')))));
 // the hero sitting in the gaming chair, back view (heroRoom)
@@ -514,7 +519,7 @@ function sh23(t) {
     chars = you(t, { x: lp.x, y: lp.y, s: 0.5, turn: -0.3, face: { name: t < tPlant ? 'scream' : 'shocked', eyes: { look: lookP } }, headphones: true, armL: air ? 160 : 120 + 40 * duck, armR: air ? 150 : 110 + 40 * duck, bodyY: 60 * duck, legL: air ? 20 : 0, legR: air ? -10 : 0, kneeL: air ? 40 : 0, ...(air ? { sx: 0.92, sy: 1.1 } : squash(t, tBurst + 0.32, 0.25, 0.5)) }, { arms: false });
   }
   const behind = bowlRoom(t, { look: [0.6, -0.4], blink: 0 });
-  const L_ = H.heroRoom.layers(t, { time: 'night', storm: 1, monitor: greenGame(t), greenGlow: 1, chairX, clock: '2:03' });
+  const L_ = H.heroRoom.layers(t, { time: 'night', storm: 1, monitor: greenLite(t), greenGlow: 1, chairX, clock: '2:03' });
   // in the chair he is drawn before the chair back (front layer) so only his head shows
   let wd = L_.mid + behind + (leap ? L_.front + pad.back + chars : chars + L_.front + pad.back);
   wd += pad.front + L_.light;
@@ -565,7 +570,7 @@ function sh24(t) {
   const lookX = clamp((tip.x - HSTAND.x) / 300, -1, 1);
   const hero = you(t, { ...HSTAND, turn: 0.35, face: { name: t < tTipOut + 1.2 ? 'shocked' : 'amazed', eyes: { look: [lookX, (tip.y - 560) / 400] } }, headphones: true, armL: 30, armR: 30, lean: -4 }, { arms: false });
   const pad = padSvg(t);
-  const L_ = H.heroRoom.layers(t, { time: 'night', storm: 1, monitor: greenGame(t), greenGlow: 0.8, chairX: 1500, clock: '2:03' });
+  const L_ = H.heroRoom.layers(t, { time: 'night', storm: 1, monitor: greenLite(t), greenGlow: 0.8, chairX: 1500, clock: '2:03' });
   let o = view(cam, L_.bg, 0.85) + view(cam, L_.mid + bowlRoom(t, { look: [0.8, -0.2] }) + L_.front + pad.back + hero + pad.front + L_.light + tip.svg, 1);
   if (t < tTipOut + 0.4) { const sc = toS(cam, 1355, 455); o += K.C.burst(sc[0], sc[1], seg(t, tTipOut - 0.1, tTipOut + 0.3), '#FFE14D'); }
   // WELCOME TO REAL LIFE!
@@ -603,7 +608,7 @@ function sh26(t) {
   const lookPad = t > tC - 0.1 && t < tC + 1.2;
   const hero = you(t, { ...HSTAND, turn: lookPad ? -0.2 : 0.4, face: fc(lookPad ? 'confused' : 'nervous', t, 2, { eyes: { look: lookPad ? [-1, 0.7] : [1, -0.2] } }), headphones: true, armL: 20, armR: 20 }, { arms: false });
   const tip = tipSvg(t, TIPHOVER.x, TIPHOVER.y, 1.05, { look: t > tC - 0.2 ? [-1, 0.6] : [-0.8, 0.1] });
-  const L_ = H.heroRoom.layers(t, { time: 'night', storm: 1, monitor: greenGame(t), greenGlow: 0.7, chairX: 1500, clock: '2:03' });
+  const L_ = H.heroRoom.layers(t, { time: 'night', storm: 1, monitor: greenLite(t), greenGlow: 0.7, chairX: 1500, clock: '2:03' });
   let o = view(cam, L_.bg, 0.85) + view(cam, L_.mid + bowlRoom(t) + L_.front + pad.back + hero + pad.front + L_.light + tip, 1);
   o += E.pointer(toS(cam, CP.x, CP.y - 120)[0], toS(cam, CP.x, CP.y - 120)[1], seg(t, tC - 0.1, tC + 0.2), t, '#FFD43B', 0.9);
   o += R.tipCard(620, 170, seg(t, tT - 0.05, tT + 0.3), 'TIP: Step on the checkpoint to save your progress!', { t, w: 820, type: seg(t, tT, w1(8, 'progress')) });
@@ -623,7 +628,7 @@ function sh27(t) {
   const tx = lerp(TIPHOVER.x, 1360, ease.inOut(u));
   const spin = seg(t, tp, tp + 0.4);
   const tip = tipSvg(t, tx, TIPHOVER.y + 10, 1.05, { look: [-0.7, 0.1], mood: 'happy' }, { sx: Math.cos(spin * Math.PI * 2) || 0.05, sy: 1 });
-  const L_ = H.heroRoom.layers(t, { time: 'night', storm: 1, monitor: greenGame(t), greenGlow: 0.7, chairX: 1500, clock: '2:03' });
+  const L_ = H.heroRoom.layers(t, { time: 'night', storm: 1, monitor: greenLite(t), greenGlow: 0.7, chairX: 1500, clock: '2:03' });
   return view(cam, L_.bg, 0.85) + view(cam, L_.mid + L_.front + pad.back + hero + pad.front + L_.light + tip, 1);
 }
 // ---- 28. "A HELPFUL talking pop-up!" — Tip puffs up
@@ -634,7 +639,7 @@ function sh28(t) {
   const puff = 1 + 0.28 * bump(t, tHf - 0.05, tHf + 0.55);
   const hero = you(t, { ...HSTAND, x: BACK1, turn: 0.55, face: { name: 'deadpan', eyes: { look: [1, -0.4] } }, headphones: true, armL: 14, armR: 14 }, { arms: false });
   const tip = tipSvg(t, 1360, TIPHOVER.y + 10, 1.05 * puff, { look: [-0.5, -0.1] });
-  const L_ = H.heroRoom.layers(t, { time: 'night', storm: 1, monitor: greenGame(t), greenGlow: 0.7, chairX: 1500, clock: '2:03' });
+  const L_ = H.heroRoom.layers(t, { time: 'night', storm: 1, monitor: greenLite(t), greenGlow: 0.7, chairX: 1500, clock: '2:03' });
   let o = view(cam, L_.bg, 0.85) + view(cam, L_.mid + L_.front + pad.back + hero + pad.front + L_.light + tip, 1);
   o += E.stamp('HELPFUL!', 1450, 820, seg(t, tHf + 0.05, tHf + 0.5), 96, -10, '#3DDC84');
   o += K.sparkles([[600, 300, 34], [1450, 230, 28], [1300, 700, 24]], t);
@@ -652,7 +657,7 @@ function sh29(t) {
   const save = seg(t, tStep, tStep + 1.0);
   const pad = padSvg(t, on ? 'saved' : 'idle', on ? { save } : {});
   const tip = tipSvg(t, 1230 + 10 * Math.sin(t * 3), 790 + 8 * Math.sin(t * 2.4), 0.75, { look: [-0.9, 0.9], mood: 'happy' });
-  const L_ = H.heroRoom.layers(t, { time: 'night', storm: 1, monitor: greenGame(t), greenGlow: 0.7 + 0.3 * save, chairX: 1500, clock: '2:03' });
+  const L_ = H.heroRoom.layers(t, { time: 'night', storm: 1, monitor: greenLite(t), greenGlow: 0.7 + 0.3 * save, chairX: 1500, clock: '2:03' });
   let o = view(cam, L_.bg, 0.85) + view(cam, L_.mid + L_.front + pad.back + you(t, pose, { arms: false }) + pad.front + L_.light + tip, 1);
   if (on) o += smash(t, tStep, 0.12, 0.5, '#B6FFD6');
   return o;
@@ -665,7 +670,7 @@ function sh30(t) {
   const hero = you(t, { x: 920, y: CP.y + 6, s: 0.5, turn: 0.1, face: fc('amazed', t, 4, { eyes: { look: [0.3, -0.6] }, fx: ['sparkles'] }), headphones: true, armL: 40, armR: 40 }, { arms: false });
   const bounce = Math.abs(Math.sin((t - c30) * 9)) * 40;
   const tip = tipSvg(t, 1330, 470 - bounce, 1.05, { look: [-0.8, 0.4], mood: 'happy' }, bounce < 4 ? { sx: 1.12, sy: 0.9 } : { sx: 1, sy: 1 });
-  const L_ = H.heroRoom.layers(t, { time: 'night', storm: 1, monitor: greenGame(t), greenGlow: 1, chairX: 1500, clock: '2:03' });
+  const L_ = H.heroRoom.layers(t, { time: 'night', storm: 1, monitor: greenLite(t), greenGlow: 1, chairX: 1500, clock: '2:03' });
   let o = view(cam, L_.bg, 0.85) + view(cam, L_.mid + bowlRoom(t, { look: [-0.6, 0.4] }) + L_.front + pad.back + hero + pad.front + L_.light + tip, 1);
   o += R.saveWave(seg(t, tStep + 0.05, tStep + 0.9), { x: toS(cam, CP.x, CP.y)[0] });
   return o;
@@ -694,9 +699,11 @@ function sh33(t) {
   const mins = lerp(124, 450, ease.in(u));
   const clock = `${Math.floor(mins / 60)}:${String(Math.floor(mins % 60)).padStart(2, '0')}`;
   const cam = camKeys(t, [[c33, at(HR.clock.x, HR.clock.y + 20, 3.0)], [END, at(HR.clock.x, HR.clock.y + 30, 2.8)]], ease.linear);
-  let o = room(H.heroRoom, t, { time: 'night', clock, monitorGlow: 0 }, cam, {});
+  // night -> morning: one room at a time, tinted toward the other, swapped under a short white flash
   const mk = seg(u, 0.2, 0.95);
-  if (mk > 0) o += S.g(room(H.heroRoom, t, { time: 'morning', clock }, cam, {}), null, { opacity: f(mk) });
+  let o = mk < 0.5 ? room(H.heroRoom, t, { time: 'night', clock, monitorGlow: 0 }, cam, {}) + R.flash(0.5 * mk, '#FFD9A0')
+    : room(H.heroRoom, t, { time: 'morning', clock }, cam, {}) + R.flash(0.55 * (1 - mk), '#0A1238');
+  o += R.flash(0.6 * (1 - Math.abs(mk - 0.5) / 0.08), '#FFFFFF');
   o += S.g(S.rect(-170, -46, 340, 92, 46, { fill: '#10131C', opacity: 0.8 }) + S.path('M-130 -22 L-96 0 L-130 22 Z M-92 -22 L-58 0 L-92 22 Z', { fill: '#FFFFFF' }) + TF(`${clock} AM`, 40, 14, 40, '#FFFFFF'), `translate(1660 110) scale(${f(pop(t, c33, 0.2))})`);
   o += streaks(t, 0.5, '#FFFFFF', 10, 2, -1, 4200);
   return o;
@@ -715,8 +722,12 @@ function shotAt(t) {
   while (i > 0 && t < SHOTS[i][0]) i--;
   return i;
 }
+const FLAT_SHOTS = new Set([sh02, sh03, sh05, sh11, sh15, sh19a, sh19, sh22, sh23, sh24, sh26, sh27, sh28, sh29, sh30]);
 function scene(t) {
-  let o = SHOTS[shotAt(t)][1](t);
+  const fn = SHOTS[shotAt(t)][1];
+  FLAT = FLAT_SHOTS.has(fn);
+  let o = fn(t);
+  FLAT = false;
   for (const [tc, d] of WHIPS) if (Math.abs(t - tc) < 0.1) o += whip(t, tc, d);
   // the "Checkpoint saved" toast rides over the cut to Gary
   const tk = seg(t, A[11].a - 0.1, A[11].a + 0.35);
@@ -734,4 +745,4 @@ function look(t) {
 function captionY(t) {
   return 1010;
 }
-module.exports = { scene, look, captionY, SHOTS, CUTS: { c01, c02, c03, c04, c05, c06, c07, c08, c09, c10, c11, c12, c13, c14, c15, c16, c17, c18, c19, c20, c21, c22, c23, c24, c25, c26, c27, c28, c29, c30, c31, c32, c33, tPress, tYes, tStrike, tBurst, tPlant, tStep, END } };
+module.exports = { scene, look, captionY, SHOTS, CUTS: { c01, c02, c03, c04, c05, c06, c07, c08, c09, c10, c11, c12, c13, c14, c15, c16, c17, c18, c19, c20, c21, c22, c23, c24, c25, c26, c27, c28, c29, c30, c31, c32, c33, tPress, tYes, tTouch, tStrike, c19a, tBurst, tPlant, tTipOut, tStep, END } };

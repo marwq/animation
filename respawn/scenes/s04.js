@@ -74,7 +74,10 @@ const d37 = w(18, 'messing') - 0.1;               // a jump for joy → whip int
 
 // ---------------------------------------------------------------- shared bits
 const HR = H.SPOTS.heroRoom, CP = HR.checkpoint, ST = H.SPOTS.stairs, KS = H.SPOTS.kitchen, SR = H.SPOTS.street;
-const you = (t, pose, act) => actor('you', t, pose, act);
+// close shots draw the rig characters flat (volume: false) — the volume shading costs ~4x at big zooms
+let CU = false;
+const flat = (pose) => (CU && pose.volume === undefined ? { ...pose, volume: false } : pose);
+const you = (t, pose, act) => actor('you', t, flat(pose), act);
 const tipSvg = (t, x, y, s, extra = {}, sq = { sx: 1, sy: 1 }) => S.g(R.tip({ x: 0, y: 0, s, t, ...extra }), `translate(${f(x)} ${f(y)}) scale(${f(sq.sx)} ${f(sq.sy)})`);
 const SLEEPY = (t, seed = 1, extra = {}) => ({ name: 'sleepy', blink: E.blinkK(t, seed, 2.2), fx: ['eyebags'], ...extra });
 // the bedroom (morning) with the saved checkpoint in the rug
@@ -86,10 +89,10 @@ const kitchenRoom = (t, cam, parts = {}, opts = {}) => room(H.kitchen, t, { time
 const stairsRoom = (t, cam, parts = {}, opts = {}) => room(H.stairs, t, { time: 'morning', skate: true, heroDoor: 1, ...opts }, cam, { bgK: 1, ...parts });
 const STEP = ST.steps;
 // family at breakfast
-const dad = (t, o = {}, act = {}) => actor('dad', t, { ...KS.dad, spatula: true, ...o }, act);
-const BEA = { x: KS.seats[0].x, y: KS.seats[0].y, s: KS.seats[0].s };
-const bea = (t, o = {}, act = {}) => actor('bea', t, { ...BEA, spoon: true, t, ...o }, act);
-const YSEAT = { x: KS.seats[1].x, y: KS.seats[1].y, s: KS.seats[1].s };
+const dad = (t, o = {}, act = {}) => actor('dad', t, { ...KS.dad, spatula: true, volume: false, ...o }, act);   // Dad + Bea always flat (perf)
+const BEA = { x: KS.seats[0].x, y: KS.seats[0].y - 22, s: KS.seats[0].s };   // sits a little taller (booster) so her face clears the table
+const bea = (t, o = {}, act = {}) => actor('bea', t, { ...BEA, spoon: true, t, volume: false, ...o }, act);
+const YSEAT = { x: KS.seats[1].x, y: KS.seats[1].y - 50, s: KS.seats[1].s };  // raised so his whole face clears the table
 const youSeat = (t, o = {}, act = {}) => you(t, { ...YSEAT, ...o }, act);
 // the opera chair (front view kitchen chair), (x, y) = floor centre; seat top at y - 220 * s / 0.5
 const CHAIR = { x: 960, y: 990, s: 0.5 };
@@ -150,11 +153,11 @@ function diagram(t) {
 function sh02(t) {
   const u = seg(t, d02 + 0.1, d03 - 0.05);
   const x = lerp(700, 1660, u);
-  const cam = camKeys(t, [[d02, at(820, 600, 1.2)], [d03, at(1450, 600, 1.2)]], ease.inOut);
+  const cam = camKeys(t, [[d02, at(860, 590, 1.05)], [d03, at(1400, 590, 1.08)]], ease.inOut);
   const hero = you(t, { x, y: 975, s: 0.5, view: 'side', flip: true, ...AC.walk(t * 7, 0.55), lean: 8, armL: 6, armR: -6, face: SLEEPY(t, 3, { mouth: bump(t, d02 + 1.2, d02 + 2.0) > 0.2 ? 'yawn' : 'line' }) }, { arms: false });
   const tip = tipSvg(t, x + 230, 470 + 10 * Math.sin(t * 3.2), 1.05, { look: [-0.7, 0.2], tail: -1 });
   let o = bedroom(t, cam, { chars: hero + tip });
-  o += E.holoPanel(960, 330, 980, 360, seg(t, d02, d02 + 0.45), 'TUTORIAL 1/3', diagram(t), t);
+  o += E.holoPanel(960, 215, 900, 330, seg(t, d02, d02 + 0.45), 'TUTORIAL 1/3', S.g(diagram(t), 'translate(0 -15) scale(0.918)'), t);
   return o;
 }
 // ---- 3. "Time goes back too." — on the landing; Tip holds a clock spinning backwards
@@ -273,7 +276,7 @@ function sh09(t) {
 }
 // ---- 10. AGAIN! — smash zoom on his face
 function sh10(t) {
-  const cam = camKeys(t, [[d10, at(CP.x, 520, 2.2)], [d10 + 0.12, at(CP.x, 510, 2.9)], [d11, at(CP.x, 505, 3.0)]], ease.out);
+  const cam = camKeys(t, [[d10, at(CP.x, 590, 2.2)], [d10 + 0.12, at(CP.x, 585, 2.9)], [d11, at(CP.x, 580, 3.0)]], ease.out);
   shakeAll(cam, t, [[d10 + 0.1, 0.5, 18]]);
   const hero = you(t, { ...SPAWN, face: { name: 'scream', fx: ['exclaim'] }, armL: 150, armR: 150, volume: false }, { arms: false });
   let o = bedroom(t, cam, { chars: hero });
@@ -295,7 +298,7 @@ function sh12(t) {
   const u = seg(t, d12, d13);
   const sl = ease.inOut(u);
   const x = lerp(560, STEP[2].x - 10, sl), y = lerp(ST.landing.y, STEP[2].y, seg(sl, 0.55, 1)) - 60 * Math.sin(Math.PI * seg(sl, 0.1, 0.9));
-  const cam = camKeys(t, [[d12, at(560, 470, 2.2)], [d13, at(680, 470, 2.35)]], ease.linear);
+  const cam = camKeys(t, [[d12, at(580, 340, 1.75)], [d13, at(680, 360, 1.85)]], ease.linear);
   const lift = Math.sin(Math.PI * seg(u, 0.05, 0.85));
   const pose = { x, y, s: ST.s, view: 'side', flip: true, legL: 95 * lift, kneeL: 25 * lift, legR: -18 * lift, armL: 120 + 30 * lift, armR: -50 * lift + 20, lean: -10 * lift, headRot: -8 * lift, face: { name: 'smug', eyes: { upper: 0.4 }, fx: ['sparkles'] } };
   let o = stairsRoom(t, cam, { chars: you(t, pose, { arms: false }) });
@@ -328,14 +331,14 @@ function sh13(t) {
 }
 // ---- 14. "Because it was feeling a little flat." — he beats Dad to it
 function sh14(t) {
-  const cam = camKeys(t, [[d14, at(1120, 560, 2.1)], [d15, at(1120, 540, 2.3)]], ease.out);
+  const cam = camKeys(t, [[d14, at(1120, 660, 2.0)], [d15, at(1130, 650, 2.2)]], ease.out);
   const hero = you(t, { x: 1150, y: 990, s: 0.5, turn: -0.5, face: { name: 'smug', eyes: { look: [-1, 0], upper: 0.35 } }, armL: 14, armR: 30 + 30 * bump(t, w(6, 'flat') - 0.3, d15) }, { arms: false, energy: 0.8 });
   const dp = dad(t, { turn: 0.2, face: { name: 'shocked', eyes: { look: [1, 0] } }, armR: 150, armL: 30 }, { arms: false });
   return kitchenRoom(t, cam, { behind: dp + bea(t), chars: hero }, { panCake: false });
 }
 // ---- 15. Dad frozen; the pancake comes down on his head
 function sh15(t) {
-  const cam = camKeys(t, [[d15, at(820, 470, 1.6)], [tLand, at(760, 440, 1.75)], [d16, at(760, 440, 1.8)]], ease.out);
+  const cam = camKeys(t, [[d15, at(880, 540, 1.45)], [tLand, at(840, 520, 1.55)], [d16, at(840, 520, 1.6)]], ease.out);
   shakeAll(cam, t, [[tLand, 0.25, 10]]);
   const onHead = t >= tLand;
   const blink = E.blinkK(t, 1, 0.55);
@@ -351,7 +354,7 @@ function sh15(t) {
 function sh16(t) {
   const cam = camKeys(t, [[d16, at(650, 420, 2.3)], [d17, at(650, 410, 2.5)]], ease.out);
   const dp = dad(t, { pancakeOnHead: true, turn: 0.25, armR: 60, armL: 30, face: { name: 'shocked', eyes: { look: [1, 0] } }, volume: false }, { arms: false, energy: 1.2 });
-  return kitchenRoom(t, cam, { behind: dp }, { panCake: false });
+  return kitchenRoom(t, cam, { behind: dp }, { panCake: false, steam: false });
 }
 // ---- 17. "That's a BRAND NEW joke!"
 function sh17(t) {
@@ -360,7 +363,7 @@ function sh17(t) {
   shakeAll(cam, t, [[tB + 0.05, 0.4, 14]]);
   const dp = dad(t, { pancakeOnHead: true, turn: 0.3, armR: 90 + 10 * Math.sin(t * 9), armL: 40, face: { name: 'angry' } }, { arms: false, energy: 1.6 });
   const hero = you(t, { x: 1150, y: 990, s: 0.5, turn: -0.5, face: { name: 'smug', eyes: { look: [-1, -0.2], upper: 0.35 } }, armL: 14, armR: 14 }, { arms: false });
-  let o = kitchenRoom(t, cam, { behind: dp + bea(t, { face: { name: 'deadpan', eyes: { look: [-1, 0] } } }), chars: hero }, { panCake: false });
+  let o = kitchenRoom(t, cam, { behind: dp + bea(t, { face: { name: 'deadpan', eyes: { look: [-1, 0] } } }), chars: hero }, { panCake: false, steam: false });
   o += bangAt(t, 'BRAND NEW?!', 1300, 250, tB + 0.05, d18 - tB, 120, -6, '#FFE14D');
   o += smash(t, tB + 0.05, 0.1, 0.5);
   return o;
@@ -374,8 +377,8 @@ function sh18(t) {
   // the drawing: a flag here -> dotted arrow -> a new spot (X)
   const dk = seg(t, w(8, 'move') - 0.1, w1(8, 'checkpoint'));
   let air = R.flag({ x: 1180, y: 700, s: 0.2, t, state: 'saved' });
-  air += E.airLine([[1210, 640], [1300, 560], [1420, 540], [1560, 600], [1640, 690]], dk, '#FFE14D', 9, '22 14');
-  if (dk > 0.95) air += S.path('M1620 670 l40 40 m0 -40 l-40 40', ln(10, '#FFE14D'));
+  air += E.airLine([[1210, 640], [1300, 560], [1420, 540], [1560, 600], [1640, 690]], dk, '#FF8A1F', 9, '22 14');
+  if (dk > 0.95) air += S.path('M1620 670 l40 40 m0 -40 l-40 40', ln(12, '#FF8A1F'));
   let o = kitchenRoom(t, cam, { behind: dad(t, {}, { energy: 0.4 }) + bea(t, { spoon: 'full' }) + hero, chars: tip + air }, {});
   o += R.tipCard(620, 170, seg(t, A[8].a - 0.05, A[8].a + 0.3), 'TIP: You can move your checkpoint!', { t, w: 760, type: seg(t, A[8].a, w1(8, 'checkpoint')) });
   return o;
@@ -432,9 +435,9 @@ function sh21(t) {
   const hero = youSeat(t, { face: { name: 'confused', eyes: { look: [-0.8, -0.3] }, fx: ['question'] }, armL: 25, armR: 25 }, { arms: false });
   const tip = tipSvg(t, 1250, 430 + 8 * Math.sin(t * 3), 1.0, { look: [0.6, 0.2] });
   let o = kitchenRoom(t, cam, { behind: bea(t, { spoon: 'full' }) + hero, chars: tip }, {});
-  o += R.tipCard(560, 180, seg(t, d21 + 0.02, d21 + 0.3), 'TIP: Just open the menu!', { t, w: 640, type: seg(t, w(8, 'Just', 1), w1(8, 'menu')) });
+  o += R.tipCard(1180, 150, seg(t, d21 + 0.02, d21 + 0.3), 'TIP: Just open the menu!', { t, w: 640, type: seg(t, w(8, 'Just', 1), w1(8, 'menu')) });
   const mk = pop(t, w(8, 'menu'), 0.3);
-  if (mk > 0.01) o += S.g(S.rect(-60, -60, 120, 120, 26, ol('#2A2D5A', 7)) + S.rect(-28, -32, 18, 64, 5, { fill: '#FFFFFF' }) + S.rect(10, -32, 18, 64, 5, { fill: '#FFFFFF' }), `translate(1000 180) rotate(8) scale(${f(mk)})`);
+  if (mk > 0.01) o += S.g(S.rect(-60, -60, 120, 120, 26, ol('#2A2D5A', 7)) + S.rect(-28, -32, 18, 64, 5, { fill: '#FFFFFF' }) + S.rect(10, -32, 18, 64, 5, { fill: '#FFFFFF' }), `translate(1600 160) rotate(8) scale(${f(mk)})`);
   return o;
 }
 // ---- 22. "What menu?" — the shrug, then the snap
@@ -452,17 +455,18 @@ function sh22(t) {
 }
 // ---- 23. the giant pause menu unfolds over a frozen kitchen
 const MENU = { x: 1000, y: 330, s: 0.8 };
-const FROZEN_CAKE = { x: KS.pan.x + 20, y: 380 };
+const FROZEN_CAKE = { x: KS.pan.x - 120, y: 250 };
 function frozenFamily(t, tf_) {
-  return dad(tf_, { armR: 150, armL: 30, turn: 0.15, face: { name: 'proud', blink: 0 } }, { arms: false, energy: 0 }) + X.pancake(FROZEN_CAKE.x, FROZEN_CAKE.y, 0.5, 20, 0.3) +
+  return dad(tf_, { armR: 150, armL: 30, turn: 0.15, face: { name: 'proud', blink: 0 } }, { arms: false, energy: 0 }) + X.pancake(FROZEN_CAKE.x, FROZEN_CAKE.y, 0.8, 24, 0.15) +
     bea(tf_, { spoon: 'full', armR: 100, face: { name: 'happy', blink: 0, mouth: 'O' } }, { arms: false });
 }
 function pausedKitchen(t, cam, heroSvg, menuSvg, wash = 1, extra = {}) {
   const tf_ = tSnap;   // the world stops at the snap
   const Ly = H.kitchen.layers(tf_, { time: 'morning', coat: false, panCake: false, frozen: 1, freezeAt: tf_ });
-  let o = view(cam, Ly.bg, 0.85) + view(cam, Ly.mid + frozenFamily(t, tf_) + Ly.front + (extra.chars || '') + (Ly.fg || '') + Ly.light, 1);
+  // the seated hero is drawn behind the table (greyed with the world), then again in colour above the table top
+  let o = view(cam, Ly.bg, 0.85) + view(cam, Ly.mid + frozenFamily(t, tf_) + heroSvg + Ly.front + (extra.chars || '') + (Ly.fg || '') + Ly.light, 1);
   o += R.greyWash(0.75 * wash);
-  o += view(cam, heroSvg + menuSvg, 1);
+  o += view(cam, E.clipRect(YSEAT.x - 400, -400, 800, KS.table.top + 400, heroSvg) + menuSvg, 1);
   return o;
 }
 function sh23(t) {
@@ -490,7 +494,7 @@ function sh24(t) {
 }
 // ---- 25. Tip: "Don't press 'Leave Game.'" — Tip slams in front of the button
 function sh25(t) {
-  const cam = camKeys(t, [[d25, at(1100, 420, 1.6)], [d25 + 0.12, at(1060, 420, 2.0)], [d26, at(1060, 420, 2.05)]], ease.out);
+  const cam = camKeys(t, [[d25, at(1060, 340, 1.45)], [d25 + 0.12, at(1020, 330, 1.7)], [d26, at(1020, 330, 1.75)]], ease.out);
   shakeAll(cam, t, [[d25 + 0.1, 0.35, 16]]);
   const close = seg(t, d26 - 0.35, d26 - 0.05);
   const menu = R.escMenu({ ...MENU, k: 1 - close, t, hl: 'leave' });
@@ -499,7 +503,7 @@ function sh25(t) {
   const hero = youSeat(t, { face: { name: 'scared', eyes: { look: [-1, -0.4] } }, armL: 25, armR: lerp(115, 25, seg(t, d25 + 0.1, d25 + 0.4)) }, { arms: false });
   const tip = tipSvg(t, tx, ty + 6 * Math.sin(t * 20), 1.2, { look: [0.6, 0.2], mood: 'worried' }, ti < 1 ? { sx: 1.25, sy: 0.85 } : squash(t, d25 + 0.15, 0.2, 0.4));
   let o = pausedKitchen(t, cam, hero, menu + tip, 1 - close);
-  o += R.tipCard(960, 820 - 0, seg(t, d25 + 0.05, d25 + 0.25) * (1 - seg(t, d26 - 0.2, d26)), 'TIP: Don\'t press "Leave Game."', { t, w: 700, accent: '#FF3B4E', type: seg(t, A[12].a, A[12].b - 0.1), rot: 2 });
+  o += R.tipCard(1500, 860, seg(t, d25 + 0.05, d25 + 0.25) * (1 - seg(t, d26 - 0.2, d26)), 'TIP: Don\'t press "Leave Game."', { t, w: 640, accent: '#FF3B4E', type: seg(t, A[12].a, A[12].b - 0.1), rot: 2 });
   o += smash(t, d25 + 0.1, 0.1, 0.4);
   return o;
 }
@@ -522,12 +526,12 @@ function sh26(t) {
 }
 // ---- 27. KIIING — low angle, arms wide, a fantasy spotlight
 function sh27(t) {
-  const cam = camKeys(t, [[d27, at(960, 470, 1.9)], [d28, at(960, 440, 2.1)]], ease.out);
+  const cam = camKeys(t, [[d27, at(1060, 450, 1.8)], [d28, at(1060, 430, 2.0)]], ease.out);
   shakeAll(cam, t, [[d27 + 0.1, d28 - d27, 4]]);
   const hero = opera(t, { armL: 135, armR: 160, headRot: -10, face: { name: 'excited', eyes: { type: 'closed' } } });
   let o = kitchenRoom(t, cam, { behind: dad(t, { armR: 40, armL: 30, face: { name: 'shocked', blink: 0 } }, { arms: false, energy: 0 }), chars: chairProp(CHAIR.x, CHAIR.y) + hero }, {});
   const hp = toS(cam, CHAIR.x, CHAIR_SEAT - 420);
-  o = o + S.g(K.rays(0, 0, 16, 1400, '#FFE6A8', 0.16, t * 25), `translate(${f(hp[0])} ${f(hp[1])})`);
+  o = o + S.g(K.rays(0, 0, 12, 950, '#FFE6A8', 0.16, t * 25), `translate(${f(hp[0])} ${f(hp[1])})`);
   o += E.operaNotes(t, hp[0] + 260, hp[1] - 80, 1.2, 2) + E.operaNotes(t + 0.4, hp[0] - 300, hp[1] - 40, 1.1, 5);
   o += bangAt(t, 'KIIING!', 1500, 250, w(13, 'KIIING') + 0.05, 0.9, 100, 8, '#FFE14D');
   return o;
@@ -560,12 +564,12 @@ function sh28b(t) {
 }
 // ---- 29. Bea: "Make it stop." — the spoon drops
 function sh29(t) {
-  const cam = camKeys(t, [[d29, at(BEA.x, 650, 2.7)], [tM, at(BEA.x, 645, 2.95)]], ease.linear);
+  const cam = camKeys(t, [[d29, at(BEA.x - 20, 640, 3.2)], [tM, at(BEA.x - 20, 635, 3.45)]], ease.linear);
   const tDrop = w(14, 'stop');
   const dropped = t > tDrop;
   const bp = bea(t, { spoon: dropped ? false : 'full', armR: dropped ? 30 : 90, face: { name: 'scared', fx: ['sweat'] }, volume: false }, { arms: false, energy: 0.4 });
   let sp = '';
-  if (dropped) { const u = seg(t, tDrop, tDrop + 0.4); sp = X.spoon(BEA.x + 60, lerp(560, 760, ease.in(u)), 0.35, 200 * u); }
+  if (dropped) { const u = seg(t, tDrop, tDrop + 0.35); sp = X.spoon(BEA.x + 55, lerp(690, 800, ease.in(u)), 0.35, 30 + 160 * u); }
   return kitchenRoom(t, cam, { behind: bp + sp }, { panCake: false });
 }
 // ---- 30. RESET CHARACTER — a smash cut: the menu slams open, press, the blocks, back on the pad at 7:30
@@ -582,10 +586,10 @@ function sh30(t) {
     o += S.g(S.path('M-40 -24 L-4 0 L-40 24 Z M0 -24 L36 0 L0 24 Z', ol('#FFFFFF', 5)), `translate(1700 200) scale(-1.4 1.4)`, { opacity: f(0.9 * (Math.floor(t * 6) % 2 ? 1 : 0.5)) });
     return o;
   }
-  const cam = camKeys(t, [[tM, at(1000, 470, 1.45)], [tCr2, at(980, 470, 1.6)]], ease.out);
+  const cam = camKeys(t, [[tM, at(1150, 470, 1.35)], [tCr2, at(1100, 480, 1.5)]], ease.out);
   shakeAll(cam, t, [[tPress2, 0.25, 14]]);
   const k = seg(t, tM, tM + 0.12);
-  const menu = R.escMenu({ x: 1000, y: 300, s: 0.7, k: t < tCr2 ? k : 0, t, hl: 'reset', press: seg(t, tPress2, tPress2 + 0.3) });
+  const menu = R.escMenu({ x: 1420, y: 330, s: 0.62, k: t < tCr2 ? k : 0, t, hl: 'reset', press: seg(t, tPress2, tPress2 + 0.3) });
   let chars = chairProp(CHAIR.x, CHAIR.y);
   if (q.heroAt === 'fail') chars += opera(t, { armL: 160, armR: 100, face: { name: 'smug' } });
   chars += q.over;
@@ -610,13 +614,13 @@ function sh31(t) {
 }
 // ---- 32. Bea, suspicious: "You're acting weird today."
 function sh32(t) {
-  const cam = camKeys(t, [[d32, at(BEA.x + 20, 640, 2.4)], [d33, at(BEA.x + 10, 640, 2.7)]], ease.linear);
+  const cam = camKeys(t, [[d32, at(BEA.x - 40, 630, 3.0)], [d33, at(BEA.x - 40, 625, 3.3)]], ease.linear);
   const bp = bea(t, { spoon: 'full', armR: 70, face: { name: 'suspicious' }, lean: 3, volume: false }, { arms: false, energy: 0.5 });
   return kitchenRoom(t, cam, { behind: bp + youSeat(t, { face: { name: 'nervous' }, armL: 25, armR: 25 }, { arms: false }) }, {});
 }
 // ---- 33. "Weirder than normal." — she leans in; he sweats
 function sh33(t) {
-  const cam = camKeys(t, [[d33, at(1400, 640, 1.9)], [d34, at(1410, 630, 2.05)]], ease.inOut);
+  const cam = camKeys(t, [[d33, at(1470, 650, 2.5)], [d34, at(1490, 640, 2.7)]], ease.inOut);
   const lean = ease.out(seg(t, d33, d33 + 0.5));
   const bp = bea(t, { spoon: 'full', armR: 90, face: { name: 'suspicious' }, lean: 10 * lean, x: BEA.x + 20 * lean }, { arms: false, energy: 0.6 });
   const hero = youSeat(t, { face: { name: 'nervous', eyes: { look: [-1, 0.1] }, fx: ['sweat2'] }, armL: 25, armR: 25, lean: 5 }, { arms: false });
@@ -631,7 +635,7 @@ function sh34(t) {
   const tip = tipSvg(t, 1230, 420 + 8 * Math.sin(t * 3), 1.0, { look: [0.6, 0.3], mood: 'happy' }, squash(t, tG, 0.2, 0.5));
   let o = kitchenRoom(t, cam, { behind: bea(t, { spoon: 'full', face: { name: 'suspicious' } }) + hero, chars: t > tG - 0.6 ? tip : '' }, {});
   const rk = seg(t, tG - 0.05, tG + 0.3);
-  if (rk > 0) { const hp = toS(cam, YSEAT.x, YSEAT.y - 330); o = o + S.g(K.rays(0, 0, 14, 1100, '#FFE88A', 0.22 * rk, t * 20), `translate(${f(hp[0])} ${f(hp[1])})`) + K.sparkles([[hp[0] - 260, hp[1] - 160, 40 * rk], [hp[0] + 280, hp[1] - 80, 32 * rk]], t); }
+  if (rk > 0) { const hp = toS(cam, YSEAT.x, YSEAT.y - 330); o = o + S.g(K.rays(0, 0, 12, 900, '#FFE88A', 0.22 * rk, t * 20), `translate(${f(hp[0])} ${f(hp[1])})`) + K.sparkles([[hp[0] - 260, hp[1] - 160, 40 * rk], [hp[0] + 280, hp[1] - 80, 32 * rk]], t); }
   return o;
 }
 // ---- 35. "And it was." — backpack on (the flag sticking out), out of the kitchen
@@ -685,14 +689,18 @@ const SHOTS = [
   [d22, sh22], [d23, sh23], [d24, sh24], [d25, sh25], [d26, sh26], [d27, sh27], [d28, sh28], [d28b, sh28b], [d29, sh29], [tM, sh30],
   [d31, sh31], [d32, sh32], [d33, sh33], [d34, sh34], [d35, sh35], [d36, sh36], [d37, sh37],
 ];
-const WHIPS = [[d03, 1], [d12, 1], [d13, -1], [d18, 1], [d26, -1], [d31, 1], [d36, 1], [END - 0.1, 1]];
+const WHIPS = [[d03, 1], [d12, 1], [d13, -1], [d18, 1], [d26, -1], [d31, 1], [d36, 1], [END - 0.02, 1]];
 function shotAt(t) {
   let i = SHOTS.length - 1;
   while (i > 0 && t < SHOTS[i][0]) i--;
   return i;
 }
+const CU_SHOTS = new Set([sh06, sh08, sh09, sh10, sh11, sh12, sh13, sh14, sh15, sh16, sh17, sh18, sh19, sh20, sh21, sh22, sh23, sh24, sh25, sh27, sh28, sh29, sh30, sh31, sh32, sh33, sh34, sh35]);
 function scene(t) {
-  let o = SHOTS[shotAt(t)][1](t);
+  const fn = SHOTS[shotAt(t)][1];
+  CU = CU_SHOTS.has(fn);
+  let o = fn(t);
+  CU = false;
   for (const [tc, d] of WHIPS) if (Math.abs(t - tc) < 0.1) o += whip(t, tc, d);
   return o;
 }

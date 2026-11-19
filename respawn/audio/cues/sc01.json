@@ -1,0 +1,1388 @@
+{
+ "scene": "SC 01",
+ "start": 0,
+ "end": 42.11,
+ "music": [
+  {
+   "start": 0,
+   "end": 19.19,
+   "mood": "respawn",
+   "energy": 0.85,
+   "in": "cut",
+   "out": "tapestop"
+  },
+  {
+   "start": 19.19,
+   "end": 21.67,
+   "mood": "lag",
+   "energy": 0.45,
+   "in": "fade",
+   "out": "cut"
+  },
+  {
+   "start": 21.67,
+   "end": 34.23,
+   "mood": "corrupt",
+   "energy": 0.7,
+   "in": "cut",
+   "out": "sting"
+  },
+  {
+   "start": 34.23,
+   "end": 37.478,
+   "mood": "glitch_build",
+   "energy": 0.5,
+   "in": "cut",
+   "out": "tapestop"
+  },
+  {
+   "start": 37.478,
+   "end": 41.61,
+   "mood": "silence",
+   "energy": 0.3,
+   "in": "cut",
+   "out": "cut"
+  },
+  {
+   "start": 41.61,
+   "end": 42.11,
+   "mood": "playful",
+   "energy": 0.4,
+   "in": "swell",
+   "out": "cut"
+  }
+ ],
+ "ambience": [
+  {
+   "start": 0,
+   "end": 6.79,
+   "name": "birds",
+   "gain_db": -12
+  },
+  {
+   "start": 6.79,
+   "end": 10.11,
+   "name": "crowd",
+   "gain_db": -16
+  },
+  {
+   "start": 10.11,
+   "end": 16.01,
+   "name": "crowd",
+   "gain_db": -18
+  },
+  {
+   "start": 16.01,
+   "end": 19.19,
+   "name": "town",
+   "gain_db": -14
+  },
+  {
+   "start": 19.19,
+   "end": 37.478,
+   "name": "wind",
+   "gain_db": -14
+  },
+  {
+   "start": 21.67,
+   "end": 37.478,
+   "name": "static",
+   "gain_db": -22
+  },
+  {
+   "start": 37.478,
+   "end": 42.11,
+   "name": "static",
+   "gain_db": -18
+  }
+ ],
+ "footsteps": [
+  {
+   "start": 6.79,
+   "end": 7.2,
+   "interval": 0.286,
+   "surface": "hard",
+   "gain_db": -10,
+   "pan": -0.19
+  },
+  {
+   "start": 9.07,
+   "end": 10.11,
+   "interval": 0.262,
+   "surface": "soft",
+   "gain_db": -14,
+   "pan": -0.262
+  },
+  {
+   "start": 16.01,
+   "end": 16.274,
+   "interval": 0.209,
+   "surface": "hard",
+   "gain_db": -9,
+   "pan": -0.19
+  },
+  {
+   "start": 17.279,
+   "end": 17.505,
+   "interval": 0.196,
+   "surface": "wood",
+   "gain_db": -11,
+   "pan": 0.029
+  }
+ ],
+ "sfx": [
+  [
+   0,
+   "whoosh",
+   -2,
+   0.3,
+   "whip-in on the speeding bike"
+  ],
+  [
+   0.05,
+   "skate_roll",
+   -6,
+   -0.117,
+   "bike wheels rolling fast down the hill"
+  ],
+  [
+   0.6,
+   "wind_gust",
+   -8,
+   0,
+   "wind rushing past"
+  ],
+  [
+   0.82,
+   "whoosh_up",
+   -8,
+   0,
+   "\"look, no hands!\" arms shoot up"
+  ],
+  [
+   1,
+   "skate_roll",
+   -8,
+   -0.044,
+   "wheels (cont.)"
+  ],
+  [
+   1.67,
+   "impact",
+   1,
+   -0.044,
+   "front wheel slams the bump"
+  ],
+  [
+   1.69,
+   "metal_hit",
+   -2,
+   -0.044,
+   "bike frame clangs"
+  ],
+  [
+   1.73,
+   "fall_whistle",
+   -6,
+   0.029,
+   "he flies over the handlebars"
+  ],
+  [
+   2.03,
+   "pop",
+   -2,
+   0.015,
+   "mid-air: hero bursts into blocks"
+  ],
+  [
+   2.07,
+   "stone",
+   -4,
+   0.015,
+   "mid-air: blocks scatter"
+  ],
+  [
+   2.11,
+   "pixel_wipe",
+   -8,
+   0.015,
+   "mid-air: pixel wipe"
+  ],
+  [
+   2.22,
+   "metal_clank",
+   -6,
+   0.102,
+   "the bike lands upside down"
+  ],
+  [
+   2.33,
+   "powerdown",
+   -4,
+   0,
+   "world freezes, grey PAUSED wash"
+  ],
+  [
+   2.35,
+   "reverse_swell",
+   -8,
+   0,
+   "RESPAWNING..."
+  ],
+  [
+   2.59,
+   "countdown_tick",
+   -4,
+   0,
+   "RESPAWNING: 3"
+  ],
+  [
+   2.87,
+   "countdown_tick",
+   -4,
+   0,
+   "RESPAWNING: 2"
+  ],
+  [
+   3.15,
+   "countdown_final",
+   -3,
+   0,
+   "RESPAWNING: 1"
+  ],
+  [
+   3.49,
+   "camera_flash",
+   -8,
+   0,
+   "white flash, cut to the pad"
+  ],
+  [
+   3.55,
+   "respawn",
+   0,
+   0,
+   "bike #1: pop on the checkpoint"
+  ],
+  [
+   3.6,
+   "forcefield",
+   -8,
+   0,
+   "bike #1: spawn forcefield"
+  ],
+  [
+   3.65,
+   "tap",
+   -8,
+   -0.554,
+   "RESPAWNS: 1 counter"
+  ],
+  [
+   3.67,
+   "sparkle",
+   -10,
+   0,
+   "bike #1: sparkles"
+  ],
+  [
+   4.53,
+   "whoosh",
+   -2,
+   0.3,
+   "whip-pan"
+  ],
+  [
+   4.7,
+   "skate_roll",
+   -6,
+   -0.262,
+   "riding down again"
+  ],
+  [
+   5.29,
+   "impact",
+   1,
+   -0.335,
+   "the bump again"
+  ],
+  [
+   5.31,
+   "metal_hit",
+   -3,
+   -0.335,
+   "bike clangs"
+  ],
+  [
+   5.33,
+   "zoom_in",
+   -2,
+   0,
+   "he flies straight at the camera"
+  ],
+  [
+   5.51,
+   "splat",
+   3,
+   0,
+   "SPLAT! face squashed on the lens"
+  ],
+  [
+   5.52,
+   "glass",
+   -2,
+   0,
+   "the lens cracks"
+  ],
+  [
+   5.53,
+   "bonk",
+   -2,
+   0,
+   "thud on the glass"
+  ],
+  [
+   5.73,
+   "pop",
+   -2,
+   0,
+   "on the lens: hero bursts into blocks"
+  ],
+  [
+   5.77,
+   "stone",
+   -4,
+   0,
+   "on the lens: blocks scatter"
+  ],
+  [
+   5.81,
+   "pixel_wipe",
+   -8,
+   0,
+   "on the lens: pixel wipe"
+  ],
+  [
+   5.93,
+   "camera_flash",
+   -8,
+   0,
+   "white flash"
+  ],
+  [
+   6.03,
+   "respawn",
+   0,
+   0,
+   "fast respawn: pop on the checkpoint"
+  ],
+  [
+   6.08,
+   "forcefield",
+   -8,
+   0,
+   "fast respawn: spawn forcefield"
+  ],
+  [
+   6.08,
+   "tap",
+   -8,
+   -0.554,
+   "RESPAWNS: 2"
+  ],
+  [
+   6.15,
+   "sparkle",
+   -10,
+   0,
+   "fast respawn: sparkles"
+  ],
+  [
+   6.15,
+   "dizzy",
+   -6,
+   0,
+   "dizzy swirl eyes, orbiting stars"
+  ],
+  [
+   6.67,
+   "whoosh",
+   -2,
+   0.3,
+   "whip-pan to the cafeteria"
+  ],
+  [
+   6.99,
+   "dishes",
+   -12,
+   -0.481,
+   "lunch-line clatter"
+  ],
+  [
+   7.2,
+   "slip",
+   0,
+   -0.044,
+   "foot hits the puddle"
+  ],
+  [
+   7.22,
+   "squeak",
+   -4,
+   -0.044,
+   "sneaker squeak"
+  ],
+  [
+   7.26,
+   "whoosh_up",
+   -6,
+   0.029,
+   "tray launched (slow-mo)"
+  ],
+  [
+   7.3,
+   "reverse_swell",
+   -10,
+   0,
+   "slow-motion swell"
+  ],
+  [
+   7.7,
+   "body_fall",
+   -2,
+   -0.044,
+   "he lands flat on his back"
+  ],
+  [
+   7.95,
+   "metal_clank",
+   -6,
+   0.102,
+   "the tray clatters on the floor"
+  ],
+  [
+   7.98,
+   "dishes",
+   -8,
+   0.102,
+   "milk + plate scatter"
+  ],
+  [
+   7.99,
+   "zoom_in",
+   -4,
+   0.16,
+   "smash zoom on Pemberton"
+  ],
+  [
+   8.03,
+   "splat",
+   3,
+   0.16,
+   "SPLAT! spaghetti on the principal"
+  ],
+  [
+   8.11,
+   "crowd_gasp",
+   -6,
+   0.248,
+   "the cafeteria gasps"
+  ],
+  [
+   8.23,
+   "pop",
+   -2,
+   -0.19,
+   "shame: hero bursts into blocks"
+  ],
+  [
+   8.27,
+   "stone",
+   -4,
+   -0.19,
+   "shame: blocks scatter"
+  ],
+  [
+   8.27,
+   "powerdown",
+   -6,
+   0,
+   "banner: RESPAWNING · SPAGHETTI INCIDENT"
+  ],
+  [
+   8.27,
+   "countdown_tick",
+   -4,
+   0,
+   "banner: 3"
+  ],
+  [
+   8.31,
+   "pixel_wipe",
+   -8,
+   -0.19,
+   "shame: pixel wipe"
+  ],
+  [
+   8.43,
+   "countdown_tick",
+   -4,
+   0,
+   "banner: 2"
+  ],
+  [
+   8.59,
+   "countdown_final",
+   -3,
+   0,
+   "banner: 1"
+  ],
+  [
+   8.79,
+   "respawn",
+   0,
+   -0.408,
+   "cafeteria: pop on the checkpoint"
+  ],
+  [
+   8.84,
+   "forcefield",
+   -8,
+   -0.408,
+   "cafeteria: spawn forcefield"
+  ],
+  [
+   8.84,
+   "tap",
+   -8,
+   -0.554,
+   "RESPAWNS: 3"
+  ],
+  [
+   8.91,
+   "sparkle",
+   -10,
+   -0.408,
+   "cafeteria: sparkles"
+  ],
+  [
+   9.39,
+   "squeak",
+   -12,
+   -0.19,
+   "tiptoeing around the puddle"
+  ],
+  [
+   9.99,
+   "whoosh",
+   -2,
+   -0.3,
+   "whip-pan to the gym"
+  ],
+  [
+   10.19,
+   "whistle",
+   -6,
+   0.612,
+   "Coach Dee's whistle"
+  ],
+  [
+   10.36,
+   "whoosh",
+   -2,
+   -0.262,
+   "the dodgeball is thrown"
+  ],
+  [
+   10.91,
+   "bonk",
+   4,
+   0.321,
+   "BONK! ball to the face"
+  ],
+  [
+   10.93,
+   "slap",
+   -2,
+   0.321,
+   "slap of rubber"
+  ],
+  [
+   11.11,
+   "pop",
+   -2,
+   0.357,
+   "gym: hero bursts into blocks"
+  ],
+  [
+   11.15,
+   "stone",
+   -4,
+   0.357,
+   "gym: blocks scatter"
+  ],
+  [
+   11.19,
+   "pixel_wipe",
+   -8,
+   0.357,
+   "gym: pixel wipe"
+  ],
+  [
+   11.25,
+   "vhs_clunk",
+   -4,
+   0,
+   "REPLAY cut-in"
+  ],
+  [
+   11.3,
+   "whoosh_long",
+   -8,
+   -0.3,
+   "slow-motion replay of the ball"
+  ],
+  [
+   11.3,
+   "countdown_tick",
+   -4,
+   0.6,
+   "corner RESPAWNING pill: 3"
+  ],
+  [
+   11.597,
+   "countdown_tick",
+   -4,
+   0.6,
+   "corner RESPAWNING pill: 2"
+  ],
+  [
+   11.85,
+   "bonk",
+   -6,
+   0.248,
+   "replay: the hit again (slow)"
+  ],
+  [
+   11.893,
+   "countdown_final",
+   -3,
+   0.6,
+   "corner RESPAWNING pill: 1"
+  ],
+  [
+   12.27,
+   "respawn",
+   0,
+   0.379,
+   "gym: pop on the checkpoint"
+  ],
+  [
+   12.32,
+   "forcefield",
+   -8,
+   0.379,
+   "gym: spawn forcefield"
+  ],
+  [
+   12.32,
+   "tap",
+   -8,
+   -0.554,
+   "RESPAWNS: 4"
+  ],
+  [
+   12.39,
+   "sparkle",
+   -10,
+   0.379,
+   "gym: sparkles"
+  ],
+  [
+   12.57,
+   "reverse_swell",
+   -6,
+   0,
+   "bullet time"
+  ],
+  [
+   12.62,
+   "whoosh_long",
+   -4,
+   -0.117,
+   "the ball flies in slow motion"
+  ],
+  [
+   13.27,
+   "slap",
+   2,
+   0.248,
+   "CATCH! one hand, without looking"
+  ],
+  [
+   13.29,
+   "orch_hit",
+   -2,
+   0,
+   "catch accent"
+  ],
+  [
+   13.37,
+   "crowd_gasp",
+   -8,
+   -0.044,
+   "kids gasp"
+  ],
+  [
+   14.39,
+   "whoosh",
+   -4,
+   0.175,
+   "he flips the ball back, still not looking"
+  ],
+  [
+   14.81,
+   "bonk",
+   2,
+   -0.335,
+   "BONK! the thrower gets it"
+  ],
+  [
+   15.01,
+   "body_fall",
+   -4,
+   -0.372,
+   "thrower falls over"
+  ],
+  [
+   15.11,
+   "kids_laugh",
+   -10,
+   -0.117,
+   "kids laugh"
+  ],
+  [
+   15.49,
+   "swish",
+   -8,
+   0.248,
+   "ball spinning on his finger"
+  ],
+  [
+   15.89,
+   "whoosh",
+   -2,
+   0.3,
+   "whip to Main Street"
+  ],
+  [
+   16.274,
+   "jump",
+   -4,
+   -0.19,
+   "jump onto the bench"
+  ],
+  [
+   16.574,
+   "land",
+   -4,
+   -0.044,
+   "lands on the bench"
+  ],
+  [
+   16.574,
+   "level_up",
+   -10,
+   -0.044,
+   "STAGE 1 tick"
+  ],
+  [
+   16.859,
+   "jump",
+   -4,
+   -0.044,
+   "leap to the bus roof"
+  ],
+  [
+   17.279,
+   "metal_hit",
+   -8,
+   0.029,
+   "lands on the bus roof"
+  ],
+  [
+   17.279,
+   "level_up",
+   -9,
+   0.029,
+   "STAGE 2 tick"
+  ],
+  [
+   17.505,
+   "jump_game",
+   -4,
+   0.102,
+   "front-flip off the bus"
+  ],
+  [
+   17.655,
+   "whoosh",
+   -6,
+   0.102,
+   "flip"
+  ],
+  [
+   18.03,
+   "land",
+   -2,
+   0,
+   "stuck the landing"
+  ],
+  [
+   18.08,
+   "level_up",
+   -8,
+   0,
+   "STAGE 3 tick"
+  ],
+  [
+   18.18,
+   "thud",
+   -2,
+   0.029,
+   "plants the checkpoint flag"
+  ],
+  [
+   18.23,
+   "confirm",
+   -4,
+   0.029,
+   "flag planted"
+  ],
+  [
+   18.28,
+   "achievement",
+   -4,
+   0,
+   "green save wave + Checkpoint saved"
+  ],
+  [
+   18.33,
+   "chime",
+   -8,
+   -0.554,
+   "toast"
+  ],
+  [
+   19.19,
+   "sub_drop",
+   2,
+   0,
+   "hard cut: the lagging sunset town"
+  ],
+  [
+   19.21,
+   "glitch_long",
+   -4,
+   0,
+   "world lags"
+  ],
+  [
+   19.49,
+   "poof",
+   -12,
+   0,
+   "ghost copies appear everywhere"
+  ],
+  [
+   19.77,
+   "poof",
+   -13,
+   0.522,
+   "ghost copies appear everywhere"
+  ],
+  [
+   20.05,
+   "poof",
+   -14,
+   -0.696,
+   "ghost copies appear everywhere"
+  ],
+  [
+   20.33,
+   "poof",
+   -12,
+   0.405,
+   "ghost copies appear everywhere"
+  ],
+  [
+   20.61,
+   "poof",
+   -13,
+   0.156,
+   "ghost copies appear everywhere"
+  ],
+  [
+   20.89,
+   "poof",
+   -14,
+   -0.613,
+   "ghost copies appear everywhere"
+  ],
+  [
+   21.17,
+   "poof",
+   -12,
+   0.661,
+   "ghost copies appear everywhere"
+  ],
+  [
+   21.45,
+   "poof",
+   -13,
+   -0.267,
+   "ghost copies appear everywhere"
+  ],
+  [
+   21.62,
+   "tv_on",
+   -2,
+   0,
+   "giant red window crt-opens in the sky"
+  ],
+  [
+   21.67,
+   "alarm",
+   0,
+   0,
+   "SAVE FILE CORRUPTED"
+  ],
+  [
+   21.72,
+   "error",
+   -4,
+   0,
+   "error chime"
+  ],
+  [
+   22.07,
+   "siren",
+   -10,
+   0,
+   "alarm siren"
+  ],
+  [
+   22.599,
+   "glitch",
+   -4,
+   0.284,
+   "Tip glitches in"
+  ],
+  [
+   22.629,
+   "chat_pop",
+   -8,
+   0.284,
+   "Tip pops"
+  ],
+  [
+   23.479,
+   "static",
+   -12,
+   0.284,
+   "Tip flickers"
+  ],
+  [
+   24.72,
+   "ui_pop",
+   -4,
+   0,
+   "RESPAWNS USED pill slams in"
+  ],
+  [
+   24.82,
+   "click",
+   -14,
+   0,
+   "digits rolling"
+  ],
+  [
+   24.9,
+   "click",
+   -14,
+   0,
+   "digits rolling"
+  ],
+  [
+   24.98,
+   "click",
+   -14,
+   0,
+   "digits rolling"
+  ],
+  [
+   25.06,
+   "click",
+   -14,
+   0,
+   "digits rolling"
+  ],
+  [
+   25.11,
+   "poof",
+   -12,
+   0,
+   "more ghosts pop into existence"
+  ],
+  [
+   25.14,
+   "click",
+   -14,
+   0,
+   "digits rolling"
+  ],
+  [
+   25.19,
+   "poof",
+   -12,
+   0.568,
+   "more ghosts pop into existence"
+  ],
+  [
+   25.22,
+   "click",
+   -14,
+   0,
+   "digits rolling"
+  ],
+  [
+   25.27,
+   "poof",
+   -12,
+   -0.367,
+   "more ghosts pop into existence"
+  ],
+  [
+   25.3,
+   "click",
+   -14,
+   0,
+   "digits rolling"
+  ],
+  [
+   25.38,
+   "click",
+   -14,
+   0,
+   "digits rolling"
+  ],
+  [
+   25.46,
+   "impact",
+   -4,
+   0,
+   "9,000"
+  ],
+  [
+   25.81,
+   "click",
+   -14,
+   0,
+   "digits rolling"
+  ],
+  [
+   25.89,
+   "click",
+   -14,
+   0,
+   "digits rolling"
+  ],
+  [
+   25.91,
+   "poof",
+   -12,
+   -0.33,
+   "more ghosts pop into existence"
+  ],
+  [
+   25.97,
+   "click",
+   -14,
+   0,
+   "digits rolling"
+  ],
+  [
+   25.99,
+   "poof",
+   -12,
+   0.581,
+   "more ghosts pop into existence"
+  ],
+  [
+   26.05,
+   "click",
+   -14,
+   0,
+   "digits rolling"
+  ],
+  [
+   26.07,
+   "poof",
+   -12,
+   -0.045,
+   "more ghosts pop into existence"
+  ],
+  [
+   26.13,
+   "click",
+   -14,
+   0,
+   "digits rolling"
+  ],
+  [
+   26.21,
+   "click",
+   -14,
+   0,
+   "digits rolling"
+  ],
+  [
+   26.26,
+   "impact",
+   -4,
+   0,
+   "9,900"
+  ],
+  [
+   26.64,
+   "click",
+   -14,
+   0,
+   "digits rolling"
+  ],
+  [
+   26.72,
+   "click",
+   -14,
+   0,
+   "digits rolling"
+  ],
+  [
+   26.79,
+   "boom",
+   0,
+   0,
+   "9,999 — red flash"
+  ],
+  [
+   26.79,
+   "poof",
+   -12,
+   -0.552,
+   "more ghosts pop into existence"
+  ],
+  [
+   26.8,
+   "click",
+   -14,
+   0,
+   "digits rolling"
+  ],
+  [
+   26.81,
+   "alarm_beep",
+   -6,
+   0,
+   "counter alarm"
+  ],
+  [
+   26.87,
+   "poof",
+   -12,
+   0.402,
+   "more ghosts pop into existence"
+  ],
+  [
+   26.88,
+   "click",
+   -14,
+   0,
+   "digits rolling"
+  ],
+  [
+   26.95,
+   "poof",
+   -12,
+   0.292,
+   "more ghosts pop into existence"
+  ],
+  [
+   26.96,
+   "click",
+   -14,
+   0,
+   "digits rolling"
+  ],
+  [
+   27.04,
+   "click",
+   -14,
+   0,
+   "digits rolling"
+  ],
+  [
+   27.12,
+   "click",
+   -14,
+   0,
+   "digits rolling"
+  ],
+  [
+   29.29,
+   "gulp",
+   -2,
+   -0.044,
+   "the hero gulps"
+  ],
+  [
+   30.31,
+   "glitch",
+   -8,
+   0,
+   "cut"
+  ],
+  [
+   30.91,
+   "slip",
+   -12,
+   0.248,
+   "ghost slips behind him"
+  ],
+  [
+   31.51,
+   "bonk",
+   -12,
+   -0.262,
+   "ghost hit by a ball behind him"
+  ],
+  [
+   32.87,
+   "zoom_in",
+   -4,
+   0,
+   "smash zoom on \"a LITTLE\""
+  ],
+  [
+   33.12,
+   "whoosh",
+   -4,
+   0.248,
+   "a ghost cyclist crashes through the foreground"
+  ],
+  [
+   33.32,
+   "impact",
+   -4,
+   0.321,
+   "ghost crash, camera shake"
+  ],
+  [
+   34.33,
+   "glass",
+   4,
+   0,
+   "the sky cracks like a phone screen"
+  ],
+  [
+   34.35,
+   "impact",
+   0,
+   0,
+   "crack impact"
+  ],
+  [
+   34.58,
+   "rumble",
+   -6,
+   0,
+   "the world freezes"
+  ],
+  [
+   34.93,
+   "loading",
+   -6,
+   0.088,
+   "loading wheel spins in the crack"
+  ],
+  [
+   37.478,
+   "vhs_clunk",
+   -2,
+   0,
+   "REWIND"
+  ],
+  [
+   37.498,
+   "rewind",
+   2,
+   0,
+   "everything winds backwards"
+  ],
+  [
+   37.878,
+   "reverse_swell",
+   -6,
+   0,
+   "ghosts suck back into blocks"
+  ],
+  [
+   38.56,
+   "rewind",
+   0,
+   0,
+   "the cold open flickers backwards"
+  ],
+  [
+   39.06,
+   "static",
+   -12,
+   0,
+   "VHS tracking hiss"
+  ],
+  [
+   40.16,
+   "reverse_swell",
+   -4,
+   -0.19,
+   "the blocks fly back together on the first checkpoint"
+  ],
+  [
+   41.16,
+   "pop",
+   -6,
+   -0.19,
+   "he is whole again"
+  ],
+  [
+   41.61,
+   "vhs_clunk",
+   -4,
+   0,
+   "▶ PLAY"
+  ],
+  [
+   41.64,
+   "click",
+   -8,
+   0,
+   "play button"
+  ],
+  [
+   41.81,
+   "shine",
+   -8,
+   0,
+   "white flash into Monday"
+  ]
+ ]
+}

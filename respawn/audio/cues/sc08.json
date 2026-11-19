@@ -1,0 +1,1476 @@
+{
+ "scene": "SC 08",
+ "start": 530.18,
+ "end": 597.94,
+ "music": [
+  {
+   "start": 530.18,
+   "end": 536.96,
+   "mood": "corrupt",
+   "energy": 0.65,
+   "in": "cut",
+   "out": "cut"
+  },
+  {
+   "start": 536.96,
+   "end": 544.5,
+   "mood": "corrupt",
+   "energy": 0.85,
+   "in": "swell",
+   "out": "cut"
+  },
+  {
+   "start": 544.5,
+   "end": 573.48,
+   "mood": "corrupt",
+   "energy": 0.5,
+   "in": "cut",
+   "out": "fade"
+  },
+  {
+   "start": 573.48,
+   "end": 583.274,
+   "mood": "tender",
+   "energy": 0.4,
+   "in": "fade",
+   "out": "scratch"
+  },
+  {
+   "start": 583.274,
+   "end": 589.98,
+   "mood": "loop",
+   "energy": 0.5,
+   "in": "cut",
+   "out": "cut"
+  },
+  {
+   "start": 589.98,
+   "end": 594.48,
+   "mood": "corrupt",
+   "energy": 0.75,
+   "in": "cut",
+   "out": "tapestop"
+  },
+  {
+   "start": 594.48,
+   "end": 596.08,
+   "mood": "silence",
+   "energy": 0,
+   "in": "cut",
+   "out": "cut"
+  },
+  {
+   "start": 596.08,
+   "end": 597.94,
+   "mood": "mystery",
+   "energy": 0.25,
+   "in": "swell",
+   "out": "fade"
+  }
+ ],
+ "ambience": [
+  {
+   "start": 530.23,
+   "end": 594.48,
+   "name": "wind",
+   "gain_db": -16
+  },
+  {
+   "start": 530.68,
+   "end": 597.94,
+   "name": "static",
+   "gain_db": -24
+  },
+  {
+   "start": 551.94,
+   "end": 559.54,
+   "name": "crowd",
+   "gain_db": -16
+  },
+  {
+   "start": 559.54,
+   "end": 567.37,
+   "name": "town",
+   "gain_db": -12
+  },
+  {
+   "start": 567.37,
+   "end": 571.8,
+   "name": "crowd",
+   "gain_db": -16
+  },
+  {
+   "start": 571.8,
+   "end": 573.48,
+   "name": "night",
+   "gain_db": -10
+  },
+  {
+   "start": 583.274,
+   "end": 589.98,
+   "name": "birds",
+   "gain_db": -22
+  }
+ ],
+ "footsteps": [],
+ "sfx": [
+  [
+   530.26,
+   "siren",
+   0,
+   0,
+   "the alarm siren over the town"
+  ],
+  [
+   530.28,
+   "sub_drop",
+   2,
+   0,
+   "the sky floods red"
+  ],
+  [
+   530.34,
+   "alarm",
+   -4,
+   0.2,
+   "alarm"
+  ],
+  [
+   530.46,
+   "crowd_gasp",
+   -8,
+   0,
+   "the kids look up"
+  ],
+  [
+   530.64,
+   "rumble",
+   -6,
+   0,
+   "red rumble"
+  ],
+  [
+   531.82,
+   "tv_on",
+   -2,
+   0,
+   "the giant sky window opens (crt)"
+  ],
+  [
+   532.04,
+   "error",
+   -4,
+   0,
+   "SAVE FILE CORRUPTED"
+  ],
+  [
+   532.98,
+   "glitch",
+   -5,
+   0,
+   "glitch cut"
+  ],
+  [
+   534.5,
+   "tap",
+   -10,
+   0,
+   "the number rolls"
+  ],
+  [
+   534.62,
+   "tap",
+   -12,
+   0,
+   "the number rolls"
+  ],
+  [
+   534.74,
+   "tap",
+   -10,
+   0,
+   "the number rolls"
+  ],
+  [
+   534.86,
+   "tap",
+   -12,
+   0,
+   "the number rolls"
+  ],
+  [
+   534.98,
+   "tap",
+   -10,
+   0,
+   "the number rolls"
+  ],
+  [
+   535.1,
+   "tap",
+   -12,
+   0,
+   "the number rolls"
+  ],
+  [
+   535.22,
+   "tap",
+   -10,
+   0,
+   "the number rolls"
+  ],
+  [
+   535.34,
+   "tap",
+   -12,
+   0,
+   "the number rolls"
+  ],
+  [
+   535.46,
+   "tap",
+   -10,
+   0,
+   "the number rolls"
+  ],
+  [
+   535.58,
+   "tap",
+   -12,
+   0,
+   "the number rolls"
+  ],
+  [
+   535.7,
+   "tap",
+   -10,
+   0,
+   "the number rolls"
+  ],
+  [
+   535.82,
+   "tap",
+   -12,
+   0,
+   "the number rolls"
+  ],
+  [
+   535.94,
+   "tap",
+   -10,
+   0,
+   "the number rolls"
+  ],
+  [
+   536.06,
+   "tap",
+   -12,
+   0,
+   "the number rolls"
+  ],
+  [
+   536.18,
+   "tap",
+   -10,
+   0,
+   "the number rolls"
+  ],
+  [
+   536.3,
+   "tap",
+   -12,
+   0,
+   "the number rolls"
+  ],
+  [
+   536.42,
+   "tap",
+   -10,
+   0,
+   "the number rolls"
+  ],
+  [
+   536.54,
+   "tap",
+   -12,
+   0,
+   "the number rolls"
+  ],
+  [
+   536.66,
+   "tap",
+   -10,
+   0,
+   "the number rolls"
+  ],
+  [
+   536.78,
+   "tap",
+   -12,
+   0,
+   "the number rolls"
+  ],
+  [
+   536.9,
+   "tap",
+   -10,
+   0,
+   "the number rolls"
+  ],
+  [
+   536.93,
+   "impact",
+   2,
+   0,
+   "9,999 lands (shake)"
+  ],
+  [
+   536.95,
+   "alarm_beep",
+   -4,
+   0,
+   "alarm beep"
+  ],
+  [
+   536.98,
+   "glitch",
+   -6,
+   0,
+   "the window glitches"
+  ],
+  [
+   538.34,
+   "whoosh_down",
+   -8,
+   -0.335,
+   "a red flag falls from the sky"
+  ],
+  [
+   538.46,
+   "thud",
+   -2,
+   -0.335,
+   "red flag slams into the ground"
+  ],
+  [
+   538.49,
+   "error",
+   -12,
+   -0.335,
+   "it blinks red"
+  ],
+  [
+   538.7,
+   "whoosh_down",
+   -8,
+   0.197,
+   "a red flag falls from the sky"
+  ],
+  [
+   538.82,
+   "thud",
+   -2,
+   0.197,
+   "red flag slams into the ground"
+  ],
+  [
+   538.85,
+   "error",
+   -12,
+   0.197,
+   "it blinks red"
+  ],
+  [
+   538.9,
+   "whoosh_down",
+   -8,
+   -0.102,
+   "a red flag falls from the sky"
+  ],
+  [
+   539.02,
+   "thud",
+   -2,
+   -0.102,
+   "red flag slams into the ground"
+  ],
+  [
+   539.05,
+   "error",
+   -12,
+   -0.102,
+   "it blinks red"
+  ],
+  [
+   539.1,
+   "whoosh_down",
+   -8,
+   0.496,
+   "a red flag falls from the sky"
+  ],
+  [
+   539.22,
+   "thud",
+   -2,
+   0.496,
+   "red flag slams into the ground"
+  ],
+  [
+   539.25,
+   "error",
+   -12,
+   0.496,
+   "it blinks red"
+  ],
+  [
+   539.34,
+   "whoosh_down",
+   -8,
+   -0.583,
+   "a red flag falls from the sky"
+  ],
+  [
+   539.46,
+   "thud",
+   -2,
+   -0.583,
+   "red flag slams into the ground"
+  ],
+  [
+   539.49,
+   "error",
+   -12,
+   -0.583,
+   "it blinks red"
+  ],
+  [
+   539.94,
+   "reverse_swell",
+   -2,
+   0,
+   "build-up to \"came back\""
+  ],
+  [
+   540.74,
+   "boom",
+   2,
+   0,
+   "the ghosts burst out (shake)"
+  ],
+  [
+   540.79,
+   "crowd_gasp",
+   -6,
+   0,
+   "gasps"
+  ],
+  [
+   540.8,
+   "poof",
+   -4,
+   -0.467,
+   "a ghost-YOU pours out of a flag (skate)"
+  ],
+  [
+   540.92,
+   "poof",
+   -4,
+   0.408,
+   "a ghost-YOU pours out of a flag (ball)"
+  ],
+  [
+   541.04,
+   "poof",
+   -4,
+   0.583,
+   "a ghost-YOU pours out of a flag (tray)"
+  ],
+  [
+   541.09,
+   "whoosh_up",
+   -8,
+   0,
+   "more ghosts on the school roof"
+  ],
+  [
+   541.16,
+   "poof",
+   -4,
+   -0.277,
+   "a ghost-YOU pours out of a flag (foam)"
+  ],
+  [
+   541.28,
+   "poof",
+   -4,
+   -0.605,
+   "a ghost-YOU pours out of a flag (trip)"
+  ],
+  [
+   541.4,
+   "poof",
+   -4,
+   -0.015,
+   "a ghost-YOU pours out of a flag (stairs)"
+  ],
+  [
+   541.52,
+   "poof",
+   -4,
+   0.241,
+   "a ghost-YOU pours out of a flag (ball)"
+  ],
+  [
+   541.58,
+   "whoosh",
+   -3,
+   0.3,
+   "whip-pan"
+  ],
+  [
+   541.58,
+   "splat",
+   -12,
+   -0.233,
+   "ghost loop: foam fail"
+  ],
+  [
+   541.661,
+   "poof",
+   -11,
+   -0.26,
+   "ghosts pop onto lamps / the bus roof"
+  ],
+  [
+   541.697,
+   "poof",
+   -9,
+   0.42,
+   "ghosts pop onto lamps / the bus roof"
+  ],
+  [
+   541.8,
+   "rumble",
+   -6,
+   0,
+   "hundreds of ghosts"
+  ],
+  [
+   541.871,
+   "poof",
+   -10,
+   -0.43,
+   "ghosts pop onto lamps / the bus roof"
+  ],
+  [
+   542.141,
+   "poof",
+   -9,
+   -0.09,
+   "ghosts pop onto lamps / the bus roof"
+  ],
+  [
+   542.193,
+   "poof",
+   -10,
+   0.08,
+   "ghosts pop onto lamps / the bus roof"
+  ],
+  [
+   542.563,
+   "poof",
+   -10,
+   0.59,
+   "ghosts pop onto lamps / the bus roof"
+  ],
+  [
+   542.581,
+   "poof",
+   -11,
+   0.25,
+   "ghosts pop onto lamps / the bus roof"
+  ],
+  [
+   542.633,
+   "poof",
+   -9,
+   -0.6,
+   "ghosts pop onto lamps / the bus roof"
+  ],
+  [
+   542.9,
+   "glitch_long",
+   -10,
+   0,
+   "static over the town"
+  ],
+  [
+   544.46,
+   "glitch",
+   -5,
+   0,
+   "glitch cut"
+  ],
+  [
+   544.6,
+   "glitch",
+   -2,
+   0.248,
+   "T-TIP (glitch)"
+  ],
+  [
+   544.78,
+   "splat",
+   -12,
+   -0.328,
+   "ghost loop: foam fail"
+  ],
+  [
+   545.9,
+   "bonk",
+   -13,
+   0.529,
+   "ghost loop: ball fail"
+  ],
+  [
+   546.602,
+   "body_fall",
+   -12,
+   -0.565,
+   "ghost loop: skate fail"
+  ],
+  [
+   546.64,
+   "ui_pop",
+   -4,
+   -0.35,
+   "split panel 1 pops in"
+  ],
+  [
+   546.72,
+   "ui_pop",
+   -4,
+   0.35,
+   "split panel 2 pops in"
+  ],
+  [
+   546.92,
+   "ui_pop",
+   -4,
+   -0.35,
+   "split panel 3 pops in"
+  ],
+  [
+   547.12,
+   "body_fall",
+   -10,
+   -0.35,
+   "panel: stairs tumble"
+  ],
+  [
+   547.18,
+   "bonk",
+   -10,
+   -0.35,
+   "panel: dodgeball to the face"
+  ],
+  [
+   547.26,
+   "ui_pop",
+   -4,
+   0.35,
+   "split panel 4 pops in"
+  ],
+  [
+   547.932,
+   "glitch",
+   -5,
+   0,
+   "glitch cut"
+  ],
+  [
+   548.222,
+   "body_fall",
+   -8,
+   0,
+   "a ghost tumbles down the entrance steps"
+  ],
+  [
+   548.572,
+   "bubbles",
+   -12,
+   -0.335,
+   "the foam ghost"
+  ],
+  [
+   548.722,
+   "body_fall",
+   -9,
+   0,
+   "a ghost tumbles down the entrance steps"
+  ],
+  [
+   549.222,
+   "body_fall",
+   -10,
+   0,
+   "a ghost tumbles down the entrance steps"
+  ],
+  [
+   550.71,
+   "notify",
+   -2,
+   0,
+   "red toast 'Fail saved x9,999'"
+  ],
+  [
+   550.76,
+   "error",
+   -4,
+   0,
+   "toast error"
+  ],
+  [
+   550.78,
+   "glitch_long",
+   -8,
+   0.248,
+   "Tip glitches hard"
+  ],
+  [
+   551.82,
+   "whoosh",
+   -3,
+   0.3,
+   "whip-pan"
+  ],
+  [
+   552.04,
+   "kids_laugh",
+   -2,
+   0,
+   "the kids point and laugh"
+  ],
+  [
+   552.09,
+   "skate_roll",
+   -8,
+   0.2,
+   "ghost skaters roll"
+  ],
+  [
+   552.44,
+   "body_fall",
+   -10,
+   0.1,
+   "a ghost falls off his skateboard"
+  ],
+  [
+   553.24,
+   "body_fall",
+   -10,
+   0.25,
+   "a ghost falls off his skateboard"
+  ],
+  [
+   553.94,
+   "giggle",
+   -6,
+   -0.3,
+   "giggles"
+  ],
+  [
+   554.04,
+   "body_fall",
+   -10,
+   0.4,
+   "a ghost falls off his skateboard"
+  ],
+  [
+   554.16,
+   "zoom_in",
+   -2,
+   0.2,
+   "smash zoom on the ramp"
+  ],
+  [
+   554.23,
+   "tap",
+   -12,
+   0.54,
+   "SKATE FAILS counter rolls"
+  ],
+  [
+   554.31,
+   "body_fall",
+   -8,
+   -0.2,
+   "ghost skaters bail off the lip one after another"
+  ],
+  [
+   554.33,
+   "tap",
+   -12,
+   0.54,
+   "SKATE FAILS counter rolls"
+  ],
+  [
+   554.43,
+   "tap",
+   -12,
+   0.54,
+   "SKATE FAILS counter rolls"
+  ],
+  [
+   554.53,
+   "tap",
+   -12,
+   0.54,
+   "SKATE FAILS counter rolls"
+  ],
+  [
+   554.56,
+   "skid",
+   -9,
+   -0.1,
+   "ghost skaters bail off the lip one after another"
+  ],
+  [
+   554.63,
+   "tap",
+   -12,
+   0.54,
+   "SKATE FAILS counter rolls"
+  ],
+  [
+   554.73,
+   "tap",
+   -12,
+   0.54,
+   "SKATE FAILS counter rolls"
+  ],
+  [
+   554.81,
+   "body_fall",
+   -10,
+   0,
+   "ghost skaters bail off the lip one after another"
+  ],
+  [
+   554.88,
+   "alarm_beep",
+   -8,
+   0.54,
+   "counter hits 100"
+  ],
+  [
+   555.06,
+   "skid",
+   -8,
+   0.1,
+   "ghost skaters bail off the lip one after another"
+  ],
+  [
+   555.31,
+   "body_fall",
+   -9,
+   0.2,
+   "ghost skaters bail off the lip one after another"
+  ],
+  [
+   555.42,
+   "whoosh",
+   -3,
+   -0.3,
+   "whip-pan"
+  ],
+  [
+   555.56,
+   "skid",
+   -10,
+   0.3,
+   "ghost skaters bail off the lip one after another"
+  ],
+  [
+   556.41,
+   "swish",
+   -4,
+   -0.044,
+   "spaghetti flies"
+  ],
+  [
+   556.475,
+   "slip",
+   -4,
+   -0.19,
+   "the ghost slips on the spaghetti tray"
+  ],
+  [
+   556.86,
+   "splat",
+   1,
+   0.211,
+   "SPLAT! spaghetti on the principal"
+  ],
+  [
+   557.16,
+   "giggle",
+   -6,
+   0.5,
+   "kids giggle"
+  ],
+  [
+   557.94,
+   "swish",
+   -4,
+   -0.044,
+   "spaghetti flies"
+  ],
+  [
+   558.005,
+   "slip",
+   -4,
+   -0.19,
+   "the ghost slips on the spaghetti tray"
+  ],
+  [
+   558.37,
+   "zoom_in",
+   -4,
+   0,
+   "smash zoom on her face"
+  ],
+  [
+   558.39,
+   "splat",
+   3,
+   0.211,
+   "AGAIN: splat on her head"
+  ],
+  [
+   558.41,
+   "impact",
+   -4,
+   0,
+   "AGAIN?! shake"
+  ],
+  [
+   559.42,
+   "whoosh",
+   -3,
+   0.3,
+   "whip-pan"
+  ],
+  [
+   559.74,
+   "crowd_gasp",
+   -6,
+   0,
+   "the whole street points up at the ghosts"
+  ],
+  [
+   561.14,
+   "camera_flash",
+   -8,
+   0.394,
+   "a mom films it on her phone"
+  ],
+  [
+   562.14,
+   "kids_laugh",
+   -12,
+   -0.3,
+   "laughter down the street"
+  ],
+  [
+   563.75,
+   "whoosh_long",
+   -2,
+   0,
+   "crane out over the whole town"
+  ],
+  [
+   564.2,
+   "tap",
+   -11,
+   0,
+   "FAILS ON DISPLAY counter rolls"
+  ],
+  [
+   564.34,
+   "tap",
+   -13,
+   0,
+   "FAILS ON DISPLAY counter rolls"
+  ],
+  [
+   564.48,
+   "tap",
+   -11,
+   0,
+   "FAILS ON DISPLAY counter rolls"
+  ],
+  [
+   564.62,
+   "tap",
+   -13,
+   0,
+   "FAILS ON DISPLAY counter rolls"
+  ],
+  [
+   564.76,
+   "tap",
+   -11,
+   0,
+   "FAILS ON DISPLAY counter rolls"
+  ],
+  [
+   564.9,
+   "tap",
+   -13,
+   0,
+   "FAILS ON DISPLAY counter rolls"
+  ],
+  [
+   565.04,
+   "tap",
+   -11,
+   0,
+   "FAILS ON DISPLAY counter rolls"
+  ],
+  [
+   565.18,
+   "tap",
+   -13,
+   0,
+   "FAILS ON DISPLAY counter rolls"
+  ],
+  [
+   565.32,
+   "tap",
+   -11,
+   0,
+   "FAILS ON DISPLAY counter rolls"
+  ],
+  [
+   565.46,
+   "tap",
+   -13,
+   0,
+   "FAILS ON DISPLAY counter rolls"
+  ],
+  [
+   565.6,
+   "tap",
+   -11,
+   0,
+   "FAILS ON DISPLAY counter rolls"
+  ],
+  [
+   565.74,
+   "tap",
+   -13,
+   0,
+   "FAILS ON DISPLAY counter rolls"
+  ],
+  [
+   565.88,
+   "tap",
+   -11,
+   0,
+   "FAILS ON DISPLAY counter rolls"
+  ],
+  [
+   566.02,
+   "tap",
+   -13,
+   0,
+   "FAILS ON DISPLAY counter rolls"
+  ],
+  [
+   566.16,
+   "tap",
+   -11,
+   0,
+   "FAILS ON DISPLAY counter rolls"
+  ],
+  [
+   566.3,
+   "tap",
+   -13,
+   0,
+   "FAILS ON DISPLAY counter rolls"
+  ],
+  [
+   566.44,
+   "tap",
+   -11,
+   0,
+   "FAILS ON DISPLAY counter rolls"
+  ],
+  [
+   566.6,
+   "impact",
+   0,
+   0,
+   "9,999 (shake)"
+  ],
+  [
+   566.62,
+   "sub_drop",
+   -4,
+   0,
+   "sub drop"
+  ],
+  [
+   567.33,
+   "glitch",
+   -5,
+   0,
+   "glitch cut"
+  ],
+  [
+   567.47,
+   "kids_laugh",
+   -6,
+   0,
+   "the kids laugh around him"
+  ],
+  [
+   567.77,
+   "sad_trombone",
+   -8,
+   0,
+   "he hides his face"
+  ],
+  [
+   567.9,
+   "bonk",
+   -14,
+   0.551,
+   "ghost loop: ball fail"
+  ],
+  [
+   569.602,
+   "body_fall",
+   -13,
+   -0.674,
+   "ghost loop: skate fail"
+  ],
+  [
+   569.9,
+   "bonk",
+   -14,
+   0.551,
+   "ghost loop: ball fail"
+  ],
+  [
+   570.38,
+   "splat",
+   -13,
+   -0.408,
+   "ghost loop: foam fail"
+  ],
+  [
+   570.89,
+   "blink",
+   -8,
+   0,
+   "he peeks out: \"Literally.\""
+  ],
+  [
+   571.76,
+   "glitch",
+   -5,
+   0,
+   "glitch cut"
+  ],
+  [
+   571.85,
+   "ui_pop",
+   -4,
+   0.3,
+   "the dream bubble pops up"
+  ],
+  [
+   571.9,
+   "heartbeat",
+   -6,
+   -0.4,
+   "nightmare heartbeat"
+  ],
+  [
+   572.1,
+   "kids_laugh",
+   -16,
+   0.3,
+   "muffled laughter inside the dream"
+  ],
+  [
+   573.36,
+   "whoosh",
+   -3,
+   -0.3,
+   "whip-pan"
+  ],
+  [
+   574.23,
+   "ui_pop",
+   -6,
+   0.35,
+   "'FELL: 56' counter"
+  ],
+  [
+   574.28,
+   "error",
+   -12,
+   0.35,
+   "red counter"
+  ],
+  [
+   577.32,
+   "confirm",
+   -4,
+   0.35,
+   "'GOT UP: 56' — green"
+  ],
+  [
+   577.37,
+   "chime",
+   -6,
+   0.35,
+   "warm chime"
+  ],
+  [
+   577.42,
+   "sparkle",
+   -10,
+   0.35,
+   "sparkles"
+  ],
+  [
+   582.4,
+   "shine",
+   -6,
+   0,
+   "\"That's kind of cool.\" sparkles"
+  ],
+  [
+   582.5,
+   "harp_up",
+   -10,
+   0,
+   "warm harp"
+  ],
+  [
+   583.234,
+   "glitch",
+   -5,
+   0,
+   "glitch cut"
+  ],
+  [
+   584.374,
+   "record_scratch",
+   -8,
+   0,
+   "he gets stuck mid-sentence"
+  ],
+  [
+   584.76,
+   "rewind",
+   -4,
+   0,
+   "loop 2: Dad snaps back"
+  ],
+  [
+   584.77,
+   "ui_pop",
+   -10,
+   0.612,
+   "LOOP 2"
+  ],
+  [
+   584.78,
+   "glitch",
+   -6,
+   0,
+   "loop glitch"
+  ],
+  [
+   585.75,
+   "record_scratch",
+   -8,
+   0,
+   "he gets stuck mid-sentence"
+  ],
+  [
+   586.28,
+   "rewind",
+   -4,
+   0,
+   "loop 3: Dad snaps back"
+  ],
+  [
+   586.29,
+   "ui_pop",
+   -10,
+   0.612,
+   "LOOP 3"
+  ],
+  [
+   586.3,
+   "glitch",
+   -6,
+   0,
+   "loop glitch"
+  ],
+  [
+   587.27,
+   "record_scratch",
+   -8,
+   0,
+   "he gets stuck mid-sentence"
+  ],
+  [
+   587.46,
+   "glitch",
+   -5,
+   0,
+   "glitch cut"
+  ],
+  [
+   587.52,
+   "boing",
+   -2,
+   0,
+   "trampoline bounce 1 (exactly the same)"
+  ],
+  [
+   588.56,
+   "boing",
+   -2,
+   0,
+   "trampoline bounce 2 (exactly the same)"
+  ],
+  [
+   588.58,
+   "glitch",
+   -8,
+   0,
+   "frame-repeat glitch"
+  ],
+  [
+   589.2,
+   "boing",
+   -2,
+   0,
+   "trampoline bounce 3 (exactly the same)"
+  ],
+  [
+   589.22,
+   "glitch",
+   -8,
+   0,
+   "frame-repeat glitch"
+  ],
+  [
+   589.86,
+   "whoosh",
+   -3,
+   0.3,
+   "whip-pan"
+  ],
+  [
+   590.08,
+   "wind_gust",
+   -10,
+   0,
+   "an icy wind as the day starts to freeze"
+  ],
+  [
+   590.18,
+   "glass",
+   -14,
+   -0.6,
+   "frost crackles at the edges"
+  ],
+  [
+   591.68,
+   "glitch_long",
+   -4,
+   0.248,
+   "Tip: f-f-freezing (glitch)"
+  ],
+  [
+   592.58,
+   "glitch",
+   -5,
+   0,
+   "glitch cut"
+  ],
+  [
+   592.92,
+   "glass",
+   -10,
+   0.6,
+   "frost spreads"
+  ],
+  [
+   594.08,
+   "powerdown",
+   -2,
+   0,
+   "the world slows down"
+  ],
+  [
+   594.48,
+   "impact",
+   2,
+   0,
+   "FREEZE: everything stops"
+  ],
+  [
+   594.5,
+   "glass",
+   -2,
+   0,
+   "ice crack"
+  ],
+  [
+   594.53,
+   "sub_drop",
+   -2,
+   0,
+   "freeze sub drop"
+  ],
+  [
+   594.92,
+   "impact",
+   0,
+   0,
+   "smash cut: the frozen town"
+  ],
+  [
+   594.97,
+   "whoosh_long",
+   -4,
+   0,
+   "pull out over the frozen town"
+  ],
+  [
+   595.52,
+   "rumble",
+   -10,
+   0,
+   "frozen rumble"
+  ],
+  [
+   596.12,
+   "static",
+   -16,
+   0,
+   "a frozen hum"
+  ]
+ ]
+}

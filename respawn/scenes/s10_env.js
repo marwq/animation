@@ -339,7 +339,7 @@ const bannerFoam = (t, k = 1) => (k > 0.01 ? R.foamBlobs(1300, 140, 0.9, k, 4, {
 const BEAM_COLS = ['#FF4FD8', '#3FE0FF', '#FFE14D', '#6BFF8A', '#9B6BFF'];
 function beams(t, k = 1, o = {}) {
   if (k <= 0.01) return '';
-  const { n = 5, x0 = 260, x1 = 1660, top = -200, floor = 790, w = 240, speed = 1 } = o;
+  const { n = 4, x0 = 300, x1 = 1620, top = -200, floor = 790, w = 220, speed = 1 } = o;
   let out = '';
   for (let i = 0; i < n; i++) {
     const src = lerp(x0, x1, (i + 0.5) / n);
@@ -377,7 +377,7 @@ function discoBall(x, y, r, t, k = 1, y0 = -400) {
 // light specks flying around the room from the disco ball (screen or world px)
 function specks(t, k = 1, o = {}) {
   if (k <= 0.01) return '';
-  const { n = 34, x0 = 0, x1 = W, y0 = 0, y1 = H, seed = 3 } = o;
+  const { n = 26, x0 = 0, x1 = W, y0 = 0, y1 = H, seed = 3 } = o;
   let d = '';
   for (let i = 0; i < n; i++) {
     const x = x0 + (((hash(i * 1.7 + seed) * (x1 - x0) + t * (80 + 60 * hash(i))) % (x1 - x0)) + (x1 - x0)) % (x1 - x0);

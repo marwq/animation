@@ -716,4 +716,4 @@ const THUMB = (() => {
 const DEFS = `<defs><pattern id="s06thumbs" width="1920" height="1080" patternUnits="userSpaceOnUse"><rect x="0" y="0" width="1920" height="1080" fill="#E8C898"/><g transform="${K.E.camTf(at(1150, 600, 1.22), 1)}">${THUMB}</g><rect x="8" y="8" width="1904" height="1064" fill="none" stroke="#151515" stroke-width="24"/></pattern>` +
   '<pattern id="s06grid" width="80" height="80" patternUnits="userSpaceOnUse"><path d="M80 0 L0 0 0 80" fill="none" stroke="#3F72B8" stroke-width="2"/><path d="M40 0 V80 M0 40 H80" fill="none" stroke="#2F62A8" stroke-width="1"/></pattern></defs>';
 
-module.exports = { scene, look, DEFS, SHOTS, CUT, B, timing };
+module.exports = { scene, look, DEFS, SHOTS, CUT, B, timing, MONT, LOOP };

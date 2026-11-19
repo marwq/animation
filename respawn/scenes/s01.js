@@ -581,10 +581,10 @@ function shRun(t) {
 // ghost crowd: fixed lists per depth row; each ghost loops one fail with its own period + phase
 const KINDS = ['slip', 'ball', 'skate', 'bike', 'trip', 'flail', 'stairs', 'facepalm'];
 const ROWS = [
-  { k: 0.25, s: 0.065, y: TW.street[3].y, n: 40, x0: -700, x1: 2700 },
-  { k: 0.42, s: 0.11, y: TW.street[2].y, n: 40, x0: -800, x1: 2900 },
-  { k: 0.68, s: 0.17, y: TW.street[1].y, n: 30, x0: -700, x1: 3100 },
-  { k: 1, s: 0.26, y: 990, n: 12, x0: -400, x1: 3300 },
+  { k: 0.25, s: 0.065, y: TW.street[3].y, n: 30, x0: -600, x1: 2600 },
+  { k: 0.42, s: 0.11, y: TW.street[2].y, n: 32, x0: -700, x1: 2800 },
+  { k: 0.68, s: 0.17, y: TW.street[1].y, n: 26, x0: -700, x1: 3100 },
+  { k: 1, s: 0.26, y: 990, n: 10, x0: -400, x1: 3300 },
 ];
 const CROWD = ROWS.map((r, ri) => {
   const list = [];
@@ -620,10 +620,11 @@ function crowdSvg(t, cam, frac = 1, freeze = null, lag = 0, opt = {}) {
       const tt = freeze !== null ? freeze : t;
       poses.push({ x: g.x, y: g.y, s: g.s, ...failPose(g.kind, mod(tt / g.per + g.ph, 1)) });
     });
-    o += view(cam, draw.ghostCrowd(poses, { alpha }), r.k);
-    if (haze > 0 && ri === 2) o += S.rect(0, 0, 1920, 1080, 0, { fill: '#3A0614', opacity: f(haze) });
+    // all rows share ONE translucent group (one offscreen layer instead of one per row); the haze sits after the far rows
+    if (haze > 0 && ri === 2) { o += S.rect(0, 0, 1920, 1080, 0, { fill: '#3A0614', opacity: f(haze / alpha) }); }
+    o += view(cam, draw.ghostCrowd(poses, { alpha: 1 }), r.k);
   });
-  return o;
+  return S.g(o, null, { opacity: f(alpha) });
 }
 // the hero standing at his (now red) flag in the corrupted street; close full ghosts around him
 function nearGhosts(t, freeze = null, close = false) {
@@ -677,7 +678,7 @@ function shTip(t) {
   const u = seg(t, CUT.tip, CUT.count);
   const cam = at(FLAGX - 40, 760 - 40 * u, 2.3 + 0.15 * u);
   const Lt = townRed(t, cam, { red: 0.95, frozen: 0.25 });
-  let o = Lt.bg + Lt.mid + crowdSvg(t, cam, 1, null, 1, { alpha: 0.5, haze: 0.28, skip: FLAGX });
+  let o = Lt.bg + Lt.mid + crowdSvg(t, cam, 1, null, 1, { alpha: 0.5, haze: 0.28, skip: FLAGX, rows: [1, 2, 3] });
   let ch = nearGhosts(t, null, true) + redFlag(t);
   ch += heroAtFlag(t, { turn: 0.2, armL: 20, armR: 26, headRot: -4, face: { name: 'scared', eyes: { look: [0.3, -0.8] } } }, { arms: false });
   o += view(cam, ch, 1) + Lt.fg + Lt.light;
@@ -723,7 +724,7 @@ function shLot(t) {
   const u = seg(t, CUT.lot, CUT.okay);
   const cam = at(FLAGX - 20, 740, 2.6 + 0.35 * ease.inOut(u));
   const Lt = townRed(t, cam, { red: 1, frozen: 0.25 });
-  let o = Lt.bg + Lt.mid + crowdSvg(t, cam, 1, null, 1, { alpha: 0.5, haze: 0.3, skip: FLAGX });
+  let o = Lt.bg + Lt.mid + crowdSvg(t, cam, 1, null, 1, { alpha: 0.5, haze: 0.3, skip: FLAGX, rows: [1, 2, 3] });
   let ch = nearGhosts(t, null, true) + redFlag(t);
   const gulp = bump(t, w(5, 'lot.') + 0.1, w(5, 'lot.') + 0.5);
   ch += heroAtFlag(t, { turn: 0.25, armL: 14, armR: 14, bodyY: 8 * gulp, headY: 6 * gulp, face: { name: 'nervous', fx: ['sweat'], eyes: { look: [0.7, -0.3] }, mouth: gulp > 0.3 ? 'wavy' : 'line' } }, { arms: false });
@@ -740,7 +741,7 @@ function shOkay(t) {
   const zl = bump(t, tLittle - 0.05, tLittle + 0.7);
   const cam = shakeAll(at(FLAGX - 90 + 60 * u, 760, 2.15 + 0.15 * u + 0.6 * zl), t, [[tLittle + 0.25, 0.4, 18]]);
   const Lt = townRed(t, cam, { red: 1, frozen: 0.25 });
-  let o = Lt.bg + Lt.mid + crowdSvg(t, cam, 1, null, 1, { alpha: 0.5, haze: 0.3, skip: FLAGX });
+  let o = Lt.bg + Lt.mid + crowdSvg(t, cam, 1, null, 1, { alpha: 0.5, haze: 0.3, skip: FLAGX, rows: [1, 2, 3] });
   let ch = redFlag(t);
   // ghosts right behind him
   ch += ghostFail('slip', t, mod(t / 1.6 + 0.2, 1), { x: FLAGX + 300, y: 975, s: 0.24 });
@@ -862,4 +863,4 @@ function look(t) {
   return { grade: null, vignette: 0.55 };
 }
 
-module.exports = { scene, look, SHOTS, CUT, beats: { tHit, tCr1, tPop1, tHit2, tLens, tCr2, tPop2, tSlip, tSplat, tCr3, tPop3, tFace, tCr4, tPop4, tCatch, tPlant, tWin, t9k, t9h, t99, tLittle, tCrack, tRwA, tRwB, tRwC, tPlay, END, PK } };
+module.exports = { scene, look, SHOTS, CUT, _dbg: { crowdSvg, nearGhosts, townRed, redWindow, heroAtFlag }, beats: { marks1, tFrz1, tThrow1, tBack, tBonk, tHit, tCr1, tPop1, tHit2, tLens, tCr2, tPop2, tSlip, tSplat, tCr3, tPop3, tFace, tCr4, tPop4, tCatch, tPlant, tWin, t9k, t9h, t99, tLittle, tCrack, tRwA, tRwB, tRwC, tPlay, END, PK } };

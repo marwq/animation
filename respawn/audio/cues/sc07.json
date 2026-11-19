@@ -1,0 +1,1062 @@
+{
+ "scene": "SC 07",
+ "start": 471.04,
+ "end": 530.18,
+ "music": [
+  {
+   "start": 471.04,
+   "end": 478.19,
+   "mood": "lag",
+   "energy": 0.4,
+   "in": "fade",
+   "out": "tapestop"
+  },
+  {
+   "start": 478.19,
+   "end": 478.66,
+   "mood": "silence",
+   "energy": 0,
+   "in": "cut",
+   "out": "cut"
+  },
+  {
+   "start": 478.66,
+   "end": 481.85,
+   "mood": "lag",
+   "energy": 0.35,
+   "in": "cut",
+   "out": "scratch"
+  },
+  {
+   "start": 481.85,
+   "end": 497.34,
+   "mood": "lag",
+   "energy": 0.5,
+   "in": "cut",
+   "out": "cut"
+  },
+  {
+   "start": 497.34,
+   "end": 501.62,
+   "mood": "lag",
+   "energy": 0.45,
+   "in": "cut",
+   "out": "tapestop"
+  },
+  {
+   "start": 501.62,
+   "end": 507.15,
+   "mood": "lag",
+   "energy": 0.55,
+   "in": "cut",
+   "out": "cut"
+  },
+  {
+   "start": 507.15,
+   "end": 511.12,
+   "mood": "lag",
+   "energy": 0.3,
+   "in": "cut",
+   "out": "cut"
+  },
+  {
+   "start": 511.12,
+   "end": 526.4,
+   "mood": "lag",
+   "energy": 0.75,
+   "in": "cut",
+   "out": "sting"
+  },
+  {
+   "start": 526.4,
+   "end": 530.18,
+   "mood": "mystery",
+   "energy": 0.4,
+   "in": "cut",
+   "out": "scratch"
+  }
+ ],
+ "ambience": [
+  {
+   "start": 471.04,
+   "end": 481.85,
+   "name": "night",
+   "gain_db": -10
+  },
+  {
+   "start": 471.04,
+   "end": 481.85,
+   "name": "room",
+   "gain_db": -16
+  },
+  {
+   "start": 481.85,
+   "end": 484.54,
+   "name": "kitchen",
+   "gain_db": -10
+  },
+  {
+   "start": 484.54,
+   "end": 490.328,
+   "name": "town",
+   "gain_db": -10
+  },
+  {
+   "start": 490.328,
+   "end": 497.34,
+   "name": "kitchen",
+   "gain_db": -10
+  },
+  {
+   "start": 497.34,
+   "end": 511.12,
+   "name": "town",
+   "gain_db": -14
+  },
+  {
+   "start": 498.34,
+   "end": 511.12,
+   "name": "static",
+   "gain_db": -24
+  },
+  {
+   "start": 511.12,
+   "end": 515.08,
+   "name": "wind",
+   "gain_db": -8
+  },
+  {
+   "start": 515.08,
+   "end": 517.96,
+   "name": "room",
+   "gain_db": -14
+  },
+  {
+   "start": 517.96,
+   "end": 520.81,
+   "name": "room",
+   "gain_db": -12
+  },
+  {
+   "start": 520.81,
+   "end": 530.18,
+   "name": "room",
+   "gain_db": -16
+  }
+ ],
+ "footsteps": [
+  {
+   "start": 505.05,
+   "end": 507.1,
+   "interval": 0.349,
+   "surface": "hard",
+   "gain_db": -10,
+   "pan": -0.1
+  }
+ ],
+ "sfx": [
+  [
+   471.11,
+   "glitch",
+   -3,
+   0.139,
+   "Tip glitches (stuttered word)"
+  ],
+  [
+   471.14,
+   "glitch_long",
+   -4,
+   0.1,
+   "red spike: the checkpoint starts blinking red"
+  ],
+  [
+   471.44,
+   "alarm_beep",
+   -16,
+   -0.05,
+   "the red pad blinks"
+  ],
+  [
+   472.24,
+   "alarm_beep",
+   -16,
+   -0.05,
+   "the red pad blinks"
+  ],
+  [
+   472.59,
+   "ui_pop",
+   -6,
+   -0.481,
+   "RESPAWNS counter pops in"
+  ],
+  [
+   472.74,
+   "tap",
+   -12,
+   -0.481,
+   "counter ticks up"
+  ],
+  [
+   472.92,
+   "tap",
+   -12,
+   -0.481,
+   "counter ticks up"
+  ],
+  [
+   473.04,
+   "alarm_beep",
+   -16,
+   -0.05,
+   "the red pad blinks"
+  ],
+  [
+   473.1,
+   "tap",
+   -12,
+   -0.481,
+   "counter ticks up"
+  ],
+  [
+   473.28,
+   "tap",
+   -12,
+   -0.481,
+   "counter ticks up"
+  ],
+  [
+   473.64,
+   "ui_pop",
+   -6,
+   0,
+   "the SAVE FILE floppy floats in"
+  ],
+  [
+   473.84,
+   "alarm_beep",
+   -16,
+   -0.05,
+   "the red pad blinks"
+  ],
+  [
+   473.84,
+   "glitch",
+   -3,
+   0.139,
+   "Tip glitches (stuttered word)"
+  ],
+  [
+   474.3,
+   "riser",
+   -6,
+   0,
+   "the floppy swells, turning red"
+  ],
+  [
+   475.4,
+   "whoosh_down",
+   -2,
+   0,
+   "it drops like an anvil"
+  ],
+  [
+   475.6,
+   "impact",
+   3,
+   0,
+   "THUD! onto the checkpoint"
+  ],
+  [
+   475.6,
+   "thud",
+   0,
+   0,
+   "THUD body"
+  ],
+  [
+   475.62,
+   "glass",
+   -6,
+   0,
+   "the floppy cracks"
+  ],
+  [
+   475.65,
+   "boing",
+   -6,
+   -0.292,
+   "the hero jumps"
+  ],
+  [
+   478.19,
+   "record_scratch",
+   -2,
+   0,
+   "the frame freezes (LAG)"
+  ],
+  [
+   478.22,
+   "loading",
+   -10,
+   0,
+   "loading wheel in the frozen frame"
+  ],
+  [
+   478.24,
+   "glitch",
+   -3,
+   0.139,
+   "Tip glitches (stuttered word)"
+  ],
+  [
+   478.66,
+   "vhs_clunk",
+   -4,
+   0,
+   "the frame catches up"
+  ],
+  [
+   479.3,
+   "glitch",
+   -5,
+   0,
+   "glitch cut (lag spike)"
+  ],
+  [
+   481.01,
+   "glitch",
+   -3,
+   -0.219,
+   "his own body freezes (RGB split)"
+  ],
+  [
+   481.81,
+   "glitch",
+   -5,
+   0,
+   "glitch cut (lag spike)"
+  ],
+  [
+   481.95,
+   "ui_pop",
+   -8,
+   -0.481,
+   "FRIDAY 7:30 AM pops in"
+  ],
+  [
+   482.047,
+   "vhs_clunk",
+   -5,
+   -0.219,
+   "he snaps back"
+  ],
+  [
+   482.45,
+   "glitch",
+   -8,
+   0.16,
+   "Mom's pose frame-repeats"
+  ],
+  [
+   482.58,
+   "glitch",
+   -8,
+   0.16,
+   "Mom's pose frame-repeats"
+  ],
+  [
+   482.71,
+   "glitch",
+   -8,
+   0.16,
+   "Mom's pose frame-repeats"
+  ],
+  [
+   483.33,
+   "glitch",
+   -8,
+   0.16,
+   "Mom's pose frame-repeats"
+  ],
+  [
+   483.48,
+   "glitch",
+   -8,
+   0.16,
+   "Mom's pose frame-repeats"
+  ],
+  [
+   483.63,
+   "glitch",
+   -8,
+   0.16,
+   "Mom's pose frame-repeats"
+  ],
+  [
+   483.63,
+   "pop",
+   -12,
+   0.248,
+   "a stuttering kiss on his head"
+  ],
+  [
+   484.42,
+   "whoosh",
+   -3,
+   0.3,
+   "whip-pan"
+  ],
+  [
+   485.12,
+   "powerdown",
+   -6,
+   -0.1,
+   "the birds freeze mid-flap"
+  ],
+  [
+   485.17,
+   "glitch",
+   -6,
+   -0.2,
+   "freeze glitch"
+  ],
+  [
+   485.32,
+   "loading",
+   -10,
+   0,
+   "loading wheels over the frozen birds"
+  ],
+  [
+   485.72,
+   "pop",
+   -8,
+   0.248,
+   "'...?' pops"
+  ],
+  [
+   486.66,
+   "whoosh",
+   -3,
+   0.3,
+   "whip-pan"
+  ],
+  [
+   486.88,
+   "engine",
+   -10,
+   0.4,
+   "the school bus drives up"
+  ],
+  [
+   488.58,
+   "teleport",
+   -3,
+   0.5,
+   "the bus snaps back to the corner"
+  ],
+  [
+   488.6,
+   "glitch",
+   -8,
+   0.5,
+   "teleport glitch"
+  ],
+  [
+   488.96,
+   "glitch",
+   -5,
+   0,
+   "glitch cut (lag spike)"
+  ],
+  [
+   489.2,
+   "loading",
+   -10,
+   -0.408,
+   "loading wheel over the dog"
+  ],
+  [
+   489.35,
+   "dog_bark",
+   -10,
+   -0.408,
+   "the dog, stuck in the fence, barks (choppy)"
+  ],
+  [
+   489.36,
+   "whoosh",
+   -1,
+   0.5,
+   "the bus blasts through the foreground"
+  ],
+  [
+   489.4,
+   "car_horn",
+   -8,
+   0.3,
+   "bus horn"
+  ],
+  [
+   489.98,
+   "teleport",
+   -5,
+   0,
+   "and snaps back (cyan flash)"
+  ],
+  [
+   490.208,
+   "whoosh",
+   -3,
+   -0.3,
+   "whip-pan"
+  ],
+  [
+   490.378,
+   "sizzle",
+   -14,
+   -0.3,
+   "the pan sizzles"
+  ],
+  [
+   490.95,
+   "swish",
+   -2,
+   -0.3,
+   "FLIP!"
+  ],
+  [
+   492.16,
+   "record_scratch",
+   -6,
+   -0.3,
+   "the pancake stops dead in the air"
+  ],
+  [
+   492.26,
+   "loading",
+   -10,
+   -0.3,
+   "loading ring around the pancake"
+  ],
+  [
+   493.7,
+   "glitch",
+   -5,
+   0,
+   "glitch cut (lag spike)"
+  ],
+  [
+   495.148,
+   "pop",
+   -10,
+   0.3,
+   "'...' pops"
+  ],
+  [
+   496.273,
+   "loading",
+   -4,
+   -0.1,
+   "the pancake spins like a loading icon"
+  ],
+  [
+   497.22,
+   "whoosh",
+   -3,
+   0.3,
+   "whip-pan"
+  ],
+  [
+   498.94,
+   "powerdown",
+   -2,
+   0,
+   "GRAPHICS: LOW — the street powers down"
+  ],
+  [
+   499.163,
+   "pixel_wipe",
+   -9,
+   -0.5,
+   "objects pop into 2006 boxes"
+  ],
+  [
+   499.61,
+   "pixel_wipe",
+   -11,
+   -0.3,
+   "objects pop into 2006 boxes"
+  ],
+  [
+   499.63,
+   "ui_pop",
+   -4,
+   -0.481,
+   "GRAPHICS: LOW badge"
+  ],
+  [
+   499.68,
+   "error",
+   -8,
+   -0.481,
+   "badge bump"
+  ],
+  [
+   500.057,
+   "pixel_wipe",
+   -9,
+   -0.1,
+   "objects pop into 2006 boxes"
+  ],
+  [
+   500.503,
+   "pixel_wipe",
+   -11,
+   0.1,
+   "objects pop into 2006 boxes"
+  ],
+  [
+   500.95,
+   "pixel_wipe",
+   -9,
+   0.3,
+   "objects pop into 2006 boxes"
+  ],
+  [
+   501.397,
+   "pixel_wipe",
+   -11,
+   0.5,
+   "objects pop into 2006 boxes"
+  ],
+  [
+   503.56,
+   "zoom_in",
+   -2,
+   0,
+   "smash zoom"
+  ],
+  [
+   503.62,
+   "impact",
+   0,
+   0,
+   "'2006?!' slams in"
+  ],
+  [
+   504.54,
+   "boom",
+   -3,
+   0,
+   "shake on \"six\""
+  ],
+  [
+   504.96,
+   "glitch",
+   -5,
+   0,
+   "glitch cut (lag spike)"
+  ],
+  [
+   507.15,
+   "body_fall",
+   0,
+   -0.05,
+   "he trips over the grey box"
+  ],
+  [
+   507.25,
+   "pop",
+   -2,
+   0,
+   "he crumbles into blocks"
+  ],
+  [
+   507.27,
+   "stone",
+   -4,
+   0,
+   "blocks scatter"
+  ],
+  [
+   507.3,
+   "pixel_wipe",
+   -8,
+   0,
+   "crumble"
+  ],
+  [
+   507.47,
+   "powerdown",
+   -4,
+   0,
+   "the world greys under RESPAWNING"
+  ],
+  [
+   508.86,
+   "countdown_tick",
+   -2,
+   0,
+   "3"
+  ],
+  [
+   509.66,
+   "countdown_tick",
+   -2,
+   0,
+   "2"
+  ],
+  [
+   509.86,
+   "glitch",
+   -6,
+   0,
+   "label scrambles 'RESP@WN1NG'"
+  ],
+  [
+   510.54,
+   "countdown_final",
+   -2,
+   0,
+   "1"
+  ],
+  [
+   510.59,
+   "glitch_long",
+   -6,
+   0,
+   "'SPAWN POINT: ???' — the overlay tears"
+  ],
+  [
+   511.12,
+   "respawn",
+   0,
+   0,
+   "pop — at the top of the flagpole"
+  ],
+  [
+   511.17,
+   "error",
+   -6,
+   0,
+   "red forcefield: wrong spawn"
+  ],
+  [
+   511.22,
+   "forcefield",
+   -10,
+   0,
+   "forcefield shimmer"
+  ],
+  [
+   511.32,
+   "wind_gust",
+   -6,
+   0.2,
+   "wind at the top of the pole"
+  ],
+  [
+   512.27,
+   "whoosh_long",
+   -2,
+   0,
+   "pull-out reveal: tiny hero on a huge pole"
+  ],
+  [
+   512.32,
+   "impact",
+   -6,
+   0.262,
+   "'NOT!' bang"
+  ],
+  [
+   514.18,
+   "pop",
+   -2,
+   0,
+   "he crumbles on the pole"
+  ],
+  [
+   514.18,
+   "loading",
+   -10,
+   0.612,
+   "corner RESPAWNING pill"
+  ],
+  [
+   514.2,
+   "stone",
+   -5,
+   0,
+   "blocks"
+  ],
+  [
+   514.23,
+   "fall_whistle",
+   -8,
+   0,
+   "blocks fall all the way down"
+  ],
+  [
+   515.08,
+   "respawn",
+   -4,
+   -0.146,
+   "pop — tiny, inside the fishbowl"
+  ],
+  [
+   515.11,
+   "splash",
+   -6,
+   -0.146,
+   "plop into the water"
+  ],
+  [
+   515.28,
+   "bubbles",
+   -6,
+   -0.146,
+   "\"Hi, Gary.\" comes out as bubbles"
+  ],
+  [
+   517.19,
+   "blink",
+   -4,
+   0.175,
+   "Gary blinks. Slowly."
+  ],
+  [
+   517.24,
+   "bubbles",
+   -12,
+   0.175,
+   "Gary blows a bubble"
+  ],
+  [
+   517.58,
+   "pop",
+   -6,
+   -0.146,
+   "tiny crumble"
+  ],
+  [
+   517.63,
+   "bubbles",
+   -4,
+   -0.146,
+   "the blocks float up like bubbles"
+  ],
+  [
+   517.63,
+   "loading",
+   -10,
+   0,
+   "RESPAWNING banner"
+  ],
+  [
+   517.96,
+   "respawn",
+   -4,
+   0.066,
+   "pop — inside the ball bin"
+  ],
+  [
+   518.11,
+   "squeak",
+   -10,
+   -0.292,
+   "Coach Dee slowly pulls the whistle out of her mouth"
+  ],
+  [
+   518.574,
+   "boing",
+   -12,
+   -0.044,
+   "a dodgeball lands in the bin"
+  ],
+  [
+   518.694,
+   "boing",
+   -10,
+   0.015,
+   "a dodgeball lands in the bin"
+  ],
+  [
+   518.77,
+   "bonk",
+   2,
+   0.102,
+   "BONK! a ball on his head"
+  ],
+  [
+   518.79,
+   "boing",
+   -6,
+   0.102,
+   "it bounces off"
+  ],
+  [
+   518.813,
+   "boing",
+   -12,
+   0.073,
+   "a dodgeball lands in the bin"
+  ],
+  [
+   519.084,
+   "boing",
+   -12,
+   -0.044,
+   "a dodgeball lands in the bin"
+  ],
+  [
+   519.203,
+   "boing",
+   -10,
+   0.015,
+   "a dodgeball lands in the bin"
+  ],
+  [
+   519.354,
+   "boing",
+   -12,
+   0.073,
+   "a dodgeball lands in the bin"
+  ],
+  [
+   519.474,
+   "boing",
+   -10,
+   0.131,
+   "a dodgeball lands in the bin"
+  ],
+  [
+   519.593,
+   "boing",
+   -12,
+   -0.044,
+   "a dodgeball lands in the bin"
+  ],
+  [
+   520.31,
+   "pop",
+   -4,
+   0.066,
+   "crumble among the balls"
+  ],
+  [
+   520.33,
+   "stone",
+   -8,
+   0.066,
+   "blocks bounce on the balls"
+  ],
+  [
+   520.36,
+   "countdown_tick",
+   -8,
+   0.066,
+   "mini ring countdown"
+  ],
+  [
+   520.81,
+   "respawn",
+   -6,
+   0,
+   "pop"
+  ],
+  [
+   520.87,
+   "splat",
+   3,
+   0,
+   "SPLAT! out of the cake"
+  ],
+  [
+   520.89,
+   "impact",
+   -2,
+   0,
+   "cake explodes (shake)"
+  ],
+  [
+   521.21,
+   "splat",
+   -10,
+   0.4,
+   "cake chunks land"
+  ],
+  [
+   521.36,
+   "splat",
+   -12,
+   -0.4,
+   "cake chunks land"
+  ],
+  [
+   522.04,
+   "cricket",
+   -12,
+   -0.3,
+   "the frozen teachers: dead silence"
+  ],
+  [
+   523.1,
+   "whoosh",
+   -3,
+   -0.3,
+   "whip-pan"
+  ],
+  [
+   525.08,
+   "sparkle",
+   -10,
+   0.2,
+   "sparkles around the hero in the cake"
+  ],
+  [
+   526.36,
+   "glitch",
+   -5,
+   0,
+   "glitch cut (lag spike)"
+  ],
+  [
+   526.6,
+   "paper",
+   -4,
+   0,
+   "the polaroid drops onto the cork board"
+  ],
+  [
+   526.72,
+   "tap",
+   -6,
+   0,
+   "push-pin"
+  ],
+  [
+   527.64,
+   "stamp",
+   0,
+   0.16,
+   "'UNSOLVED' stamp"
+  ],
+  [
+   528.493,
+   "pop",
+   -6,
+   -0.321,
+   "'???'"
+  ],
+  [
+   529.83,
+   "glitch_long",
+   -4,
+   0,
+   "red alarm glitch bleeds in (to SC 08)"
+  ]
+ ]
+}

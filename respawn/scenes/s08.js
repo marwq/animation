@@ -140,17 +140,18 @@ function skyWindow(t, x, y, wd, ht, k, roll, o = {}) {
   const n = roll === undefined ? null : Math.round(lerp(0, 9999, ease.out(clamp(roll, 0, 1))));
   const lines = ['SAVE FILE CORRUPTED'];
   if (n !== null) lines.push('Respawns used: ' + n.toLocaleString('en-US'));
-  const spike = (hash(Math.floor(t * 9)) > 0.86 ? 0.35 : 0) + (o.glitch || 0);
-  return R.sysWindow({ x, y, w: wd, h: ht, k, open: 'crt', t, theme: 'red', title: 'WARNING', lines, small: n !== null ? 'Too many respawns. The world may lag.' : '', glitch: 0.04 + spike });
+  const spike = (hash(Math.floor(t * 9)) > 0.92 ? 0.18 : 0) + (o.glitch || 0);
+  return R.sysWindow({ x, y, w: wd, h: ht, k, open: 'crt', t, theme: 'red', title: 'WARNING', lines, small: n !== null ? 'Too many respawns. The world may lag.' : '', glitch: 0.02 + spike });
 }
 function shAlarm(t) {
-  const redK = ease.inOut(seg(t, T0 + 0.1, T0 + 1.3));
-  const cam = shakeAll(camKeys(t, [[T0, { x: 80, y: 40, zoom: 1.05 }], [T0 + 0.35, { x: 80, y: 30, zoom: 1.04 }], [tCorr, SY.cams.red], [CUT.count, { ...SY.cams.red, zoom: 0.62 }]]), t, [[T0 + 0.1, 0.5, 14], [tCorr + 0.1, 0.4, 10]]);
-  const look = t > T0 + 0.3;
+  const tW = w(0, 'Warning');
+  const redK = ease.out(seg(t, tW - 0.06, tW + 0.9));
+  const cam = shakeAll(camKeys(t, [[T0, { x: 80, y: 40, zoom: 1.05 }], [T0 + 0.35, { x: 80, y: 30, zoom: 1.04 }], [tCorr, SY.cams.red], [CUT.count, { ...SY.cams.red, zoom: 0.62 }]]), t, [[tW - 0.04, 0.5, 14], [tCorr + 0.1, 0.4, 10]]);
+  const look = t > tW + 0.1;
   let ch = '';
   const kids = [[3, 760, 930], [7, 1330, 950], [11, 1560, 900], [2, 600, 860], [9, 1820, 920]];
-  for (const [i, x, y] of kids) ch += draw.kid(i, { x, y, s: sAt(y), volume: false, turn: (x - 1040) / 1400, lift: look ? 14 * bump(t, T0 + 0.15 + i * 0.03, T0 + 0.5) : 0, face: { name: look ? 'shocked' : 'happy', eyes: { look: [0, look ? -1 : 0] } }, armL: look ? 30 : 10, armR: look ? 30 : 10, ...breathe(t, i) });
-  ch += actor('you', t, { ...SY.walk, backpack: true, turn: 0.1, armL: look ? 40 : 10, armR: look ? 40 : 10, face: { name: look ? 'scared' : 'happy', eyes: { look: [0, look ? -1 : 0] } }, lift: look ? 20 * bump(t, T0 + 0.12, T0 + 0.45) : 0 });
+  for (const [i, x, y] of kids) ch += draw.kid(i, { x, y, s: sAt(y), volume: false, turn: (x - 1040) / 1400, lift: look ? 14 * bump(t, tW + 0.12 + i * 0.03, tW + 0.45) : 0, face: { name: look ? 'shocked' : 'happy', eyes: { look: [0, look ? -1 : 0] } }, armL: look ? 30 : 10, armR: look ? 30 : 10, ...breathe(t, i) });
+  ch += actor('you', t, { ...SY.walk, backpack: true, turn: 0.1, armL: look ? 40 : 10, armR: look ? 40 : 10, face: { name: look ? 'scared' : 'happy', eyes: { look: [0, look ? -1 : 0] } }, lift: look ? 20 * bump(t, tW + 0.1, tW + 0.42) : 0 });
   let o = yardR(t, cam, '', ch, { red: redK });
   // the sky window (screen space, the empty sky above the school)
   const kw = seg(t, tCorr - 0.12, tCorr + 0.5);
@@ -158,7 +159,7 @@ function shAlarm(t) {
   o += E.redPulse(t, redK, 9);
   // siren light sweeps
   if (redK > 0) o += S.path(`M960 -40 L${f(960 + 1400 * Math.cos(t * 4))} 1200 L${f(960 + 1400 * Math.cos(t * 4 + 0.5))} 1200 Z`, { fill: '#FF3B4E', opacity: f(0.1 * redK) });
-  o += E.smash(t, T0 + 0.08, 0.18, 0.6, '#FF2E3E');
+  o += E.smash(t, T0, 0.3, 0.6, '#FF2E3E');
   return o;
 }
 // ---- over the hero's shoulder: the counter rolls to 9,999
@@ -168,7 +169,7 @@ function shCount(t) {
   const cam = shakeAll(camKeys(t, [[CUT.count, { ...SY.cams.red, zoom: 0.66, y: -260 }], [CUT.undone, { ...SY.cams.red, zoom: 0.72, y: -290 }]]), t, [[tHit, 0.5, 18]]);
   let o = yardR(t, cam, roofCrowd(t), '');
   const zw = 1 + 0.06 * bump(t, tHit, tHit + 0.35);
-  o += scaleG(skyWindow(t, 960, 300, 1320, 480, 1, roll, { glitch: 0.4 * bump(t, tHit, tHit + 0.3) }), zw, 960, 300);
+  o += scaleG(skyWindow(t, 960, 300, 1320, 480, 1, roll, { glitch: 0.25 * bump(t, tHit, tHit + 0.25) }), zw, 960, 300);
   // the hero from behind (near camera), looking up at it
   o += actor('you', t, { x: 470, y: 1330, s: 0.72, volume: false, view: 'back', backpack: true, headRot: -4, armL: 18, armR: 22, lift: 20 * bump(t, tHit, tHit + 0.3), ...breathe(t) });
   o += draw.kid(5, { x: 1500, y: 1330, s: 0.6, view: 'back', volume: false, armL: 10, armR: 12, ...breathe(t, 1) });
@@ -183,10 +184,6 @@ function shUndone(t) {
   let fl = flagsSvg(t);
   let ch = actor('you', t, { ...SY.walk, backpack: true, turn: 0.2 * Math.sin(t * 1.3), ...breathe(t), face: { name: 'scared', eyes: { look: [Math.sin(t * 1.3), 0.2] } } });
   let o = yardR(t, shakeAll(cam, t, FLAGS.map((q) => [q.tp, 0.2, 8])), '', fl + ch);
-  for (const q of FLAGS) {
-    const [sx, sy] = toScr(cam, q.x, q.y - 520 * q.s);
-    o += E.loadRing(sx, sy - 40, 18, t, '#FFFFFF', 0);
-  }
   return o + E.redPulse(t, 1);
 }
 function shBack(t) {
@@ -308,12 +305,12 @@ function shSaved(t) {
 // ================================================================= 4. EVERYONE SEES
 // ---- the skate area: kids point and laugh at the ghost skaters
 const SK = SY.ramp;
-function skaters(t, freeze) {
+function skaters(t, freeze, noBail) {
   let o = '';
   o += ghostFail('skate', t, { x: 3560, y: 968, s: 0.5, flip: true, ph: 0.2, freeze });
   o += ghostFail('skate', t, { x: 4000, y: 968, s: 0.5, flip: false, ph: 1.3, freeze });
   // ghosts launching off the quarter-pipe lip and bailing
-  for (let j = 0; j < 3; j++) {
+  for (let j = 0; j < (noBail ? 0 : 3); j++) {
     const P = 1.5, u = E.mod(((freeze ?? t) + j * 0.5) / P, 1);
     const x = lerp(SK.lip.x - 20, SK.landing.x + 120 + j * 60, u), y = lerp(SK.lip.y, SK.landing.y, u) - Math.sin(u * Math.PI) * 330;
     o += draw.ghost({ x, y, s: 0.48, alpha: 0.55, view: 'side', rot: -200 * u - 30, legL: 60, legR: 30, kneeL: 40, armL: 150, armR: 110, face: 'scream' });
@@ -342,7 +339,7 @@ function shHundred(t) {
     fall.push({ x, y, s: 0.46, view: 'side', rot: -360 * u, legL: 60, legR: 30, kneeL: 30, armL: 150, armR: 100 });
     boards += X.skateboard(x + 120, y - 60 + 140 * u, 0.46, 500 * u + j * 40, { flipK: (u * 2.5) % 1 });
   }
-  let o = yardR(t, cam, '', R.tint(boards, 'ghost', 0.45) + draw.ghostCrowd(fall, { alpha: 0.66 }) + skaters(t));
+  let o = yardR(t, cam, '', R.tint(boards, 'ghost', 0.45) + draw.ghostCrowd(fall, { alpha: 0.66 }) + skaters(t, undefined, true));
   o += R.counterHUD({ x: 1860, y: 84, anchor: 'right', k: pop(t, tH - 0.05, 0.3), t, label: 'SKATE FAILS:', value: 100, roll: seg(t, tH - 0.05, tH + 0.6), from: 1, theme: 'red', icon: 'retry', bump: seg(t, tH + 0.6, tH + 1.05) });
   o += E.zoomLines(960, 500, bump(t, tH, tH + 0.5), t, '#FFD0D6');
   return o + E.redPulse(t, 1);
@@ -567,8 +564,8 @@ function shBea(t) {
 function frost(k, t) {
   if (k <= 0) return '';
   let o = '';
-  for (let i = 0; i < 4; i++) {
-    const d = (70 + 70 * i) * k, a = f(0.13 * k);
+  for (let i = 0; i < 2; i++) {
+    const d = (90 + 140 * i) * k, a = f(0.2 * k);
     o += S.rect(0, 0, 1920, d * 0.6, 0, { fill: '#D8F2FF', opacity: a }) + S.rect(0, 1080 - d * 0.6, 1920, d * 0.6, 0, { fill: '#D8F2FF', opacity: a });
     o += S.rect(0, 0, d, 1080, 0, { fill: '#D8F2FF', opacity: a }) + S.rect(1920 - d, 0, d, 1080, 0, { fill: '#D8F2FF', opacity: a });
   }

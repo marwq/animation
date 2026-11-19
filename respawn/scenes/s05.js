@@ -98,6 +98,13 @@ const MOUTHS = ['O', 'smile', 'o', 'bigGrin', 'teeth', 'o', 'grin'];
 const yap = (t, name = 'talkHappy', extra = {}) => ({ name, mouth: MOUTHS[Math.floor(t * 9) % MOUTHS.length], ...extra });
 const laughPose = (t, ph = 0, amp = 1) => { const b = Math.abs(Math.sin(t * 11 + ph)); return { bodyY: 10 * b * amp, headRot: 6 * Math.sin(t * 11 + ph) * amp, armL: 30 + 40 * b * amp, armR: 34 + 36 * Math.abs(Math.sin(t * 11 + ph + 0.7)) * amp }; };
 const hudPos = { x: 56, y: 78 };
+// is a character standing at (x, y) with scale s (≈ 950*s tall) visible through cam? (cheap culling for crowds)
+function inView(cam, x, y, s = 0.5) {
+  if (!cam) return true;
+  const z = cam.zoom ?? 1, cx = 960 + (cam.x || 0), cy = 540 + (cam.y || 0);
+  const hw = 960 / z + 260 * s * 2, top = y - 980 * s, bot = y;
+  return Math.abs(x - cx) < hw && bot > cy - 540 / z - 20 && top < cy + 540 / z + 20;
+}
 
 // ---------------------------------------------------------------- the schoolyard, the planted flag + pad
 const CP = { x: 588, y: 868, s: scaleAt(868) };                 // checkpoint pad (hero's feet) by the door
@@ -121,7 +128,7 @@ const CROWD_I = [2, 5, 8, 11, 14, 17, 20, 23];
 function crowdKids(t, mood, o = {}) {
   let out = '';
   SP.schoolyard.crowd.forEach((c, j) => {
-    if (o.skip && o.skip.includes(j)) return;
+    if ((o.skip && o.skip.includes(j)) || !inView(o.cam, c.x, c.y, c.s)) return;
     const ph = j * 1.3;
     const pose = { x: c.x, y: c.y, s: c.s, turn: o.turn ?? 0.45 };
     if (mood === 'watch') Object.assign(pose, AC.breathe(t, ph), { face: j % 3 ? 'happy' : 'neutral', armL: 9, armR: 9 });
@@ -219,9 +226,9 @@ function shPlant(t) {
 
 // ---- 3. "Skateboard trick?" — whip-pan to the skate area; he rolls in, points at the ramp, winks at the crowd
 function shSkate(t) {
-  const tWhip = CUT.skate + 0.1;
+  const tWhip = CUT.skate + 0.02;
   const tTrick = w(2, 'trick');
-  const cam = camKeys(t, [[CUT.skate, camAt(1100, 600, 1.4)], [tWhip + 0.12, { x: 2980, y: 10, zoom: 1.06 }], [CUT.a1, { x: 3060, y: 0, zoom: 1.12 }]], ease.out);
+  const cam = camKeys(t, [[CUT.skate, camAt(900, 600, 1.4)], [tWhip + 0.14, { x: 2980, y: 10, zoom: 1.06 }], [CUT.a1, { x: 3060, y: 0, zoom: 1.12 }]], ease.inOut);
   const u = ease.out(seg(t, CUT.skate + 0.05, tTrick + 0.2));
   const cx = lerp(3060, 3820, u);
   const wave = bump(t, tTrick - 0.1, CUT.a1);
@@ -230,7 +237,7 @@ function shSkate(t) {
   if (u < 0.98) ch += K.C.speedLines(cx - 640, cx - 300, 968 - 200, 4, 3, '#FFFFFF', 200);
   const wink = pop(t, tTrick + 0.05, 0.2) * (1 - seg(t, tTrick + 0.6, tTrick + 0.8));
   if (wink > 0) ch += K.F.sparkle(cx + 70, 968 - 430, 30 * wink);
-  const o = yard(t, cam, {}, crowdKids(t, 'watch'), ch);
+  const o = yard(t, cam, {}, crowdKids(t, 'watch', { cam }), ch);
   return o + whip(t, tWhip, 1, 0.16);
 }
 
@@ -258,7 +265,7 @@ function shA1(t) {
     const c = E.quadAt(AIR.a, AIR.c, AIR.b, seg(tF1, tL, tL + 0.9) * 0.9);
     ch += R.crumble({ x: c[0], y: c[1] - BH, s: HS, age: t - tF1, seed: 11, dir: [-0.5, -0.3], floorY: 968, spread: 1.1 });
   }
-  let o = yard(t, cam, {}, crowdKids(t, t > tF1 ? 'wince' : 'watch'), ch);
+  let o = yard(t, cam, {}, crowdKids(t, t > tF1 ? 'wince' : 'watch', { cam }), ch);
   o += attemptHUD(t, { value: 1, bump: seg(t, w(2, 'one'), w(2, 'one') + 0.45), k: seg(t, CUT.a1, CUT.a1 + 0.25) });
   o += R.respawnOverlay(t, { t0: tF1 + 0.04, dur: CUT.r1 - tF1 - 0.03, style: 'corner', x: 1870, y: 86, label: 'RESPAWNING' });
   return o;
@@ -318,7 +325,7 @@ function shA2(t) {
     ch += boardAt(3500 + 900 * Math.min(age, 0.6), railY + 140 * Math.min(age, 0.6) * Math.min(age, 0.6) * 4, -10 * age, 0);
     fx += K.bang('OOF!', 3560, railY - 420, pop(tt, tF2, 0.18) * (rewinding ? 1 - rk : 1 - seg(tt, tF2 + 0.5, tF2 + 0.7)), 70, -8, '#FFFFFF');
   }
-  let o = yard(t, cam, {}, crowdKids(t, tt > tF2 ? 'wince' : 'watch'), ch, fx);
+  let o = yard(t, cam, {}, crowdKids(t, tt > tF2 ? 'wince' : 'watch', { cam }), ch, fx);
   if (rewinding) o += R.rewind(t, bump(t, tRw0, tRw1) * 0.9 + 0.1, { label: 'REWIND' });
   const roll = seg(t, tRw0 + 0.1, tRw1);
   o += t < tRw0 ? attemptHUD(t, { value: 2, bump: seg(t, w(2, 'two'), w(2, 'two') + 0.45) }) : attemptHUD(t, { value: 23, roll, from: 2, y: hudPos.y + 122 * (ease.inOut(seg(t, tRw0, tRw0 + 0.18)) - ease.inOut(seg(t, tRw1 - 0.18, tRw1))) });
@@ -346,7 +353,7 @@ function shA23(t) {
     ch += boardAt(can.x - 240 - 400 * Math.min(age, 0.5), 968, 0, 0);
     fx += K.bang('CLANG!', can.x + 40, can.top - 330, pop(t, tF23, 0.18) * (1 - seg(t, tF23 + 0.6, tF23 + 0.8)), 96, 6, '#FFD23F');
   }
-  let o = yard(t, cam, {}, crowdKids(t, t > tF23 ? 'wince' : 'watch'), ch, fx);
+  let o = yard(t, cam, {}, crowdKids(t, t > tF23 ? 'wince' : 'watch', { cam }), ch, fx);
   o += attemptHUD(t, { value: 23, bump: seg(t, w(2, 'twenty-three'), w(2, 'twenty-three') + 0.45) });
   return o;
 }
@@ -410,7 +417,7 @@ function shA57(t) {
     ch += you(t, rider(r.c[0], r.c[1], r.rot, { ...E.rideStance(t), face: 'determined', props: [E.boardProp()] }), { arms: false });
   } else if (phase === 3) {
     // slow-motion crowd insert: mouths opening, a juice box slipping out of a hand
-    behind = crowdKids(t, 'slow', { k: seg(xx, P2, P3) });
+    behind = crowdKids(t, 'slow', { cam, k: seg(xx, P2, P3) });
     const jk = seg(xx, P2, P3);
     fx += S.g(S.rect(-22, -34, 44, 68, 6, ol('#FF8A2A', 5)) + S.rect(-14, -20, 28, 18, 3, { fill: '#FFE27A' }) + S.path('M8 -34 L14 -60', ln(6, '#FFFFFF')), tf(3640, 640 + 120 * jk * jk, 1, 40 * jk));
   } else if (phase < 4) {
@@ -426,7 +433,7 @@ function shA57(t) {
       const by = c[1] + gap - 32;
       fx += S.path(`M${f(c[0] - 150)} ${f(by - 40)} A150 60 0 0 1 ${f(c[0] + 150)} ${f(by - 40)} M${f(c[0] + 160)} ${f(by + 20)} A160 60 0 0 1 ${f(c[0] - 160)} ${f(by + 20)}`, ln(7, '#FFFFFF', 0.7));
     }
-    if (phase === 1) behind = crowdKids(t, 'slow', { k: 0 });
+    if (phase === 1) behind = crowdKids(t, 'slow', { cam, k: 0 });
   } else {
     const age = t - tLand;
     if (age < 0) {
@@ -436,9 +443,9 @@ function shA57(t) {
       ch += you(t, rider(DECK.x, DECK.y, 0, { ...E.rideStance(t, 0, 0.4), ...boing(t, tLand, 0.3), armL: 150, armR: 150, face: { name: 'joy', fx: ['sparkles'] }, props: [E.boardProp()] }), { arms: false });
       fx += K.C.dust(DECK.x - 160, DECK.y, tLand, t) + K.C.burst(DECK.x + 40, DECK.y - 560, seg(age, 0, 0.5), '#FFE27A');
     }
-    behind = crowdKids(t, t > tLand ? 'cheer' : 'slow', { k: 1 });
+    behind = crowdKids(t, t > tLand ? 'cheer' : 'slow', { cam, k: 1 });
   }
-  if (phase === 0) behind = crowdKids(t, 'watch');
+  if (phase === 0) behind = crowdKids(t, 'watch', { cam });
   let o = yard(t, cam, {}, behind, ch, fx);
   if (slow > 0) o += S.rect(0, 0, 1920, 1080, 0, { fill: '#2A4A8A', opacity: f(0.12 * slow) }) + streaks(t * 0.25, 120, 960, 10, 5, '#FFFFFF', 0.25 * slow, 900) + letterbox(slow, 84);
   if (slow > 0.5) o += TFS('SLOW-MO', 1780, 64 + 84 * slow - 50, 30, '#FFFFFF', { 'letter-spacing': 6, opacity: f(slow) });
@@ -457,7 +464,7 @@ function shWhoa(t) {
   const point = t > w(4, 'Did') - 0.1 && t < tFirst - 0.1;
   let front = actor('kid', t, { i: 12, x: KX, y: KY, s: scaleAt(KY), lift: jump, armL: point ? 30 : 150, armR: point ? 95 : t >= tFirst - 0.1 ? 175 : 150, turn: point ? 0.6 : 0.1, face: { name: 'amazed', fx: ['sparkles'] } }, { arms: false, energy: 1.5 });
   // two phones filming
-  let behind = crowdKids(t, 'cheer');
+  let behind = crowdKids(t, 'cheer', { cam });
   for (const [px, py, r] of [[3420, 450, -10], [3990, 440, 8]]) behind += X.phone({ x: px, y: py, s: 0.42, rot: r, face: 'back', rec: true, t });
   let o = yard(t, cam, {}, behind, front);
   o += attemptHUD(t, { value: 57, theme: 'gold', s: 0.8 });
@@ -496,10 +503,10 @@ function shTip1(t) {
 const CLASS_I = [[31, 32, 33, 34, 35], [36, 37, 38, 39, 40], [41, 42, -1, 44, 45]];
 const HD = SP.classroom.heroDesk;
 // kids per row (back -> front), faceOf(r, c, i) -> face, poseOf(r, c, i) -> extra pose
-function classKids(t, faceOf, poseOf) {
+function classKids(t, faceOf, poseOf, cam) {
   return SP.classroom.rows.map((row, r) => row.map((seat, c) => {
     const i = CLASS_I[r][c];
-    if (i < 0) return '';
+    if (i < 0 || !inView(cam, seat.x, seat.y, seat.s)) return '';
     return kid(i, { x: seat.x, y: seat.y, s: seat.s, turn: clamp((960 - seat.x) / 2400, -0.4, 0.4), ...AC.breathe(t, i), face: faceOf ? faceOf(r, c, i) : 'neutral', ...(poseOf ? poseOf(r, c, i) : {}) });
   }).join(''));
 }
@@ -529,7 +536,7 @@ const LINE_ = '#151515';
 function shQuiz(t) {
   const cam = camKeys(t, [[CUT.quiz, camAt(360, 700, 1.38)], [CUT.deal, camAt(330, 690, 1.52)]]);
   const lift = ease.outBack(seg(t, w(7, 'quiz') - 0.15, w(7, 'quiz') + 0.2));
-  const B = classKids(t, (r, c) => (c < 2 ? 'neutral' : 'neutral'));
+  const B = classKids(t, (r, c) => (c < 2 ? 'neutral' : 'neutral'), undefined, cam);
   const W_ = classRoom(t, cam, {}, B, mrFig(t, { armL: 34 + 36 * lift, face: { name: 'deadpan' } }));
   return W_.svg + whip(t, CUT.quiz, 1, 0.12);
 }
@@ -558,8 +565,7 @@ function shDeal(t) {
     }
   }));
   const landed = (r, c) => t > CUT.deal + 0.08 + (r * 5 + c) * 0.055 + 0.42;
-  const B = classKids(t, (r, c, i) => (landed(r, c) ? (i % 3 === 0 ? { name: 'scared', fx: ['sweat'] } : i % 3 === 1 ? { name: 'nervous', fx: ['sweat2'] } : 'shocked') : 'neutral'),
-    (r, c, i) => (landed(r, c) ? { bodyY: 6 * bump(t, CUT.deal + 0.5 + (r * 5 + c) * 0.055, CUT.deal + 0.9 + (r * 5 + c) * 0.055) } : {}));
+  const B = classKids(t, (r, c, i) => (landed(r, c) ? (i % 3 === 0 ? { name: 'scared', fx: ['sweat'] } : i % 3 === 1 ? { name: 'nervous', fx: ['sweat2'] } : 'shocked') : 'neutral'), (r, c, i) => (landed(r, c) ? { bodyY: 6 * bump(t, CUT.deal + 0.5 + (r * 5 + c) * 0.055, CUT.deal + 0.9 + (r * 5 + c) * 0.055) } : {}), cam);
   const relax = ease.inOut(seg(t, CUT.deal + 0.6, CUT.deal + 1.2));
   B[2] += you(t, { x: HD.x, y: HD.y, s: HD.s, armL: lerp(9, 128, relax), armR: lerp(9, 128, relax), lean: -4 * relax, face: { name: 'smug', eyes: { type: relax > 0.6 ? 'closed' : undefined } } }, { arms: false });
   B[1] += papers[0].join('');
@@ -579,7 +585,7 @@ function shNoProb(t) {
   const sh = crack ? 6 * Math.sin(t * 40) * bump(t, CUT.read + 0.1, tNoP - 0.1) : 0;
   const back = ease.outBack(seg(t, tNoP - 0.1, tNoP + 0.25));
   const pose = crack ? { armL: 62 + sh, armR: 62 - sh, face: { name: 'determined' } } : { armL: lerp(62, 130, back), armR: lerp(62, 130, back), lean: -4 * back, face: { name: 'smug', fx: back > 0.8 ? ['sparkles'] : [] } };
-  const B = classKids(t, (r, c) => (r === 2 && c === 3 ? { name: 'nervous', fx: ['sweat2'] } : r === 1 ? 'scared' : 'nervous'));
+  const B = classKids(t, (r, c) => (r === 2 && c === 3 ? { name: 'nervous', fx: ['sweat2'] } : r === 1 ? 'scared' : 'nervous'), undefined, cam);
   B[2] += you(t, { x: HD.x, y: HD.y, s: HD.s, ...pose }, { arms: false });
   let o = classRoom(t, cam, { quiz: true }, B).svg;
   if (crack) { const cr = bump(t, CUT.read + 0.25, CUT.read + 0.5) + bump(t, CUT.read + 0.6, CUT.read + 0.85); o += K.bang('CRACK', 1220, 520, cr, 54, 8, '#FFFFFF'); }
@@ -608,7 +614,7 @@ function shMenu(t) {
   const cam = camKeys(t, [[CUT.menu, camAt(960, 760, 1.7)], [tSnap + 0.1, camAt(1080, 700, 1.55)], [CUT.door2, camAt(1080, 700, 1.6)]], ease.out);
   const grey = seg(t, tSnap, tSnap + 0.3);
   const up = ease.outBack(seg(t, tSnap - 0.15, tSnap + 0.05));
-  const B = classKids(t, (r, c) => (r === 2 && c === 3 ? { name: 'nervous', fx: ['sweat2'] } : 'nervous'));
+  const B = classKids(t, (r, c) => (r === 2 && c === 3 ? { name: 'nervous', fx: ['sweat2'] } : 'nervous'), undefined, cam);
   const heroSvg = t < tC ? you(t, { x: HD.x, y: HD.y, s: HD.s, armL: 20, armR: lerp(30, 150, up), face: { name: t > tHl ? 'sneaky' : 'smug', eyes: { look: [0.8, -0.2] } } }, { arms: false }) : '';
   const W_ = classRoom(t, cam, { quiz: true }, [B[0], B[1], B[2] + heroSvg]);
   let o = W_.svg;
@@ -680,7 +686,7 @@ function shWrite(t) {
   const armR = 82 + 6 * sc;
   const [px, py] = AC.hand(armR, 1);
   const pose = { x: HD.x, y: HD.y, s: HD.s, armR, armL: 20, turn: 0.1, headRot: 2 * Math.sin(t * 9), face: { name: 'smug', eyes: { type: 'closed' }, fx: ['sparkles'] }, props: [{ svg: pencil(px + 10 * sc, py + 6, 1.1, -30 + 12 * sc), layer: 'front' }] };
-  const B = classKids(t, (r, c) => (r === 2 && c === 3 ? { name: 'shocked', mouth: 'O' } : r === 1 ? 'confused' : 'neutral'), (r, c) => (r === 2 && c === 3 ? { turn: -0.5 } : {}));
+  const B = classKids(t, (r, c) => (r === 2 && c === 3 ? { name: 'shocked', mouth: 'O' } : r === 1 ? 'confused' : 'neutral'), (r, c) => (r === 2 && c === 3 ? { turn: -0.5 } : {}), cam);
   B[2] += you(t, pose, { arms: false });
   let fx = '';
   const hxw = HD.x + px * HD.s, hyw = HD.y + py * HD.s;
@@ -703,7 +709,7 @@ function shDone(t) {
   const up = ease.outBack(seg(t, CUT.done, CUT.done + 0.35));
   const armR = 165;
   const [hx, hy] = AC.hand(armR, 1);
-  const B = classKids(t, (r, c) => ({ name: 'shocked', mouth: 'O', eyes: { look: [clamp((960 - SP.classroom.rows[r][c].x) / 700, -1, 1), 0.1] } }), (r, c) => ({ turn: clamp((960 - SP.classroom.rows[r][c].x) / 1400, -0.6, 0.6) }));
+  const B = classKids(t, (r, c) => ({ name: 'shocked', mouth: 'O', eyes: { look: [clamp((960 - SP.classroom.rows[r][c].x) / 700, -1, 1), 0.1] } }), (r, c) => ({ turn: clamp((960 - SP.classroom.rows[r][c].x) / 1400, -0.6, 0.6) }), cam);
   B[2] += you(t, { x: HD.x, y: HD.y, s: HD.s, lift: 150 * up, armR, armL: 30, face: { name: 'smug', fx: ['sparkles'] }, props: [{ svg: X.quizPaper({ x: hx + 10, y: hy - 120, s: 1.05, rot: 8 }), layer: 'front' }] }, { arms: false });
   const figFace = t > tCh ? { name: 'confused', eyes: { look: [1, 0] } } : { name: 'deadpan', eyes: { look: [1, 0] } };
   let o = classRoom(t, cam, { quiz: true }, B, mrFig(t, { armL: 34, face: figFace })).svg;
@@ -988,19 +994,20 @@ function cafeKids(t, mood, o = {}) {
   let back = '';
   CF.seats.back.forEach((p, j) => {
     const i = BACK_I[j];
-    if (o.skipBack && o.skipBack.includes(j)) return;
+    if ((o.skipBack && o.skipBack.includes(j)) || !inView(o.cam, p.x, p.y, p.s)) return;
     back += kid(i, { x: p.x, y: p.y, s: p.s, turn: clamp((1720 - p.x) / 1600, -0.5, 0.5), face: face(i, j), ...pose(i, j * 1.7) });
   });
   let front = '';
   for (const x of [MILK_X, 2420]) {
-    if (o.skipFront && o.skipFront.includes(x)) continue;
+    if ((o.skipFront && o.skipFront.includes(x)) || !inView(o.cam, x, 1004, 0.45)) continue;
     const i = FRONT_I[x];
     const extra = o.front && o.front[x] ? o.front[x] : {};
     front += kid(i, { x, y: 1004, s: 0.45, turn: x < 1720 ? 0.45 : -0.45, face: face(i, x), ...pose(i, x * 0.01), ...extra });
   }
   return { back, front };
 }
-const ivyCafe = (t, pose = {}, act = {}) => actor('ivy', t, { x: 2060, y: 1004, s: 0.45, turn: -0.4, t, ...pose }, act);
+const ivyCafe = (t, pose = {}, act = {}) => actor('ivy', t, { x: 2060, y: 1004, s: 0.45, turn: -0.4, t, volume: false, ...pose }, act);
+const youCafe = (t, pose, act = {}) => you(t, { volume: false, ...pose }, act);
 const lunchLady = (t, pose = {}) => K.draw.adult(5, { x: CF.lunchLady.x, y: CF.lunchLady.y, s: CF.lunchLady.s, turn: 0.3, shade: true, shadow: false, volume: false, ...pose });
 function cafe(t, cam, opts, rows, after = '') {
   return SS.cafeteria.compose(t, { menu: ['PIZZA DAY!', 'PEPPERONI · CHEESE', 'SALAD BAR · FRUIT CUP', 'MILK · JUICE'], ...opts }, rows, after, cam);
@@ -1016,8 +1023,8 @@ function milkCarton(x, y, s = 1, rot = 0, straw = null) {
 function shLunch(t) {
   const cam = camKeys(t, [[CUT.lunch, camAt(1720, 730, 1.72)], [CUT.terrible, camAt(1720, 715, 1.84)]]);
   const g = Math.sin(t * 5);
-  const K_ = cafeKids(t, 'listen');
-  const hero = you(t, { x: SEAT.x, y: SEAT.y, s: SEAT.s, armL: 110 + 40 * g, armR: 115 - 40 * Math.sin(t * 5 + 1.3), headRot: 5 * g, bodyY: 4 * Math.abs(g), face: yap(t, 'excited') }, { arms: false });
+  const K_ = cafeKids(t, 'listen', { cam });
+  const hero = youCafe(t, { x: SEAT.x, y: SEAT.y, s: SEAT.s, armL: 110 + 40 * g, armR: 115 - 40 * Math.sin(t * 5 + 1.3), headRot: 5 * g, bodyY: 4 * Math.abs(g), face: yap(t, 'excited') }, { arms: false });
   const ivy = ivyCafe(t, { face: 'happy', armL: 14, armR: 14 }, { arms: false });
   return cafe(t, cam, {}, [lunchLady(t), K_.back, K_.front + hero + ivy]) + whip(t, CUT.lunch, 1, 0.1);
 }
@@ -1026,8 +1033,8 @@ function shLunch(t) {
 function shTerrible(t) {
   const u = seg(t, CUT.terrible, CUT.reset);
   const cam = camKeys(t, [[CUT.terrible, camAt(1720, 705, 1.9)], [CUT.reset, camAt(1720, 650, 2.35)]], (x) => x);
-  const K_ = cafeKids(t, 'dead');
-  const hero = you(t, { x: SEAT.x, y: SEAT.y, s: SEAT.s, armL: 105, armR: 100, face: { name: 'nervous', mouth: 'grin', fx: u > 0.3 ? ['sweat', 'sweat2'] : ['sweat'] } }, { arms: false });
+  const K_ = cafeKids(t, 'dead', { cam });
+  const hero = youCafe(t, { x: SEAT.x, y: SEAT.y, s: SEAT.s, armL: 105, armR: 100, face: { name: 'nervous', mouth: 'grin', fx: u > 0.3 ? ['sweat', 'sweat2'] : ['sweat'] } }, { arms: false });
   const ivy = ivyCafe(t, { face: { name: 'deadpan', eyes: { look: [-0.8, 0] } }, armL: 14, armR: 14 }, { arms: false });
   let after = E.cricket(1490, 812, 1.0, t);
   for (const [x, y, d] of [[1560, 500, 0.3], [1880, 500, 0.15], [2060, 440, 0.5], [1330, 575, 0.2]]) after += E.dots(x, y, seg(u, d, d + 0.3), 0.9);
@@ -1038,9 +1045,9 @@ function shTerrible(t) {
 function shReset(t) {
   const tC = tReset + 0.06;
   const cam = camAt(1720, 680, 2.0);
-  const K_ = cafeKids(t, 'dead');
+  const K_ = cafeKids(t, 'dead', { cam });
   const up = ease.outBack(seg(t, CUT.reset, tReset));
-  const hero = t < tC ? you(t, { x: SEAT.x, y: SEAT.y, s: SEAT.s, armL: 100, armR: lerp(100, 155, up), face: { name: 'determined', fx: ['sweat'] } }, { arms: false }) : '';
+  const hero = t < tC ? youCafe(t, { x: SEAT.x, y: SEAT.y, s: SEAT.s, armL: 100, armR: lerp(100, 155, up), face: { name: 'determined', fx: ['sweat'] } }, { arms: false }) : '';
   const ivy = ivyCafe(t, { face: 'deadpan', armL: 14, armR: 14 }, { arms: false });
   let after = t >= tC ? R.crumble({ x: SEAT.x, y: SEAT.y, s: SEAT.s, age: Math.min(t - tC, 0.34), seed: 91, dir: [0, -0.4], floorY: 820 }) : '';
   let o = cafe(t, cam, {}, [lunchLady(t), K_.back, K_.front + hero + ivy], after);
@@ -1063,14 +1070,12 @@ function shTries(t) {
   const jx = (hash(n * 3.1) - 0.5) * 60, jy = (hash(n * 7.7) - 0.5) * 30;
   const cam = camAt(1720 + jx, 715 + jy, 1.82 + 0.12 * hash(n));
   const P = TRY_POSES[n % TRY_POSES.length];
-  const backF = cafeKids(t, 'dead');
   // re-face the kids per try
-  const kids = cafeKids(t, 'none');
   const fOf = (i) => TRY_FACES[Math.floor(hash(i * 1.3 + n * 5.1) * TRY_FACES.length)];
   let back = '', front = '';
   CF.seats.back.forEach((p, j) => { back += kid(BACK_I[j], { x: p.x, y: p.y, s: p.s, turn: clamp((1720 - p.x) / 1600, -0.5, 0.5), face: n === 31 ? 'excited' : fOf(BACK_I[j]) }); });
   for (const x of [MILK_X, 2420]) front += kid(FRONT_I[x], { x, y: 1004, s: 0.45, turn: x < 1720 ? 0.45 : -0.45, face: n === 31 ? 'happy' : fOf(FRONT_I[x]) });
-  const hero = you(t, { x: SEAT.x, y: SEAT.y, s: SEAT.s, armL: P.armL, armR: P.armR, face: yap(t, P.face) }, { arms: false });
+  const hero = youCafe(t, { x: SEAT.x, y: SEAT.y, s: SEAT.s, armL: P.armL, armR: P.armR, face: yap(t, P.face) }, { arms: false });
   const ivy = ivyCafe(t, { face: n === 31 ? 'happy' : fOf(99), armL: 14, armR: 14 }, { arms: false });
   let o = cafe(t, cam, {}, [lunchLady(t), back, front + hero + ivy]);
   const fl = 1 - seg(t, tN, tN + 0.06);
@@ -1086,8 +1091,8 @@ function shJoke(t) {
   const raise = ease.outBack(seg(t, tPz - 0.2, tPz + 0.15));
   const armR = lerp(70, 150, raise);
   const [hx, hy] = AC.hand(armR, 1);
-  const hero = you(t, { x: STAGE.x, y: STAGE.y, s: STAGE.s, armR, props: [{ svg: E.pizzaSlice(hx, hy + 30, 0.9, 180 - armR + 10), layer: 'front' }] }, { energy: 1.3, arms: false });
-  const K_ = cafeKids(t, 'lean');
+  const hero = youCafe(t, { x: STAGE.x, y: STAGE.y, s: STAGE.s, armR, props: [{ svg: E.pizzaSlice(hx, hy + 30, 0.9, 180 - armR + 10), layer: 'front' }] }, { energy: 1.3, arms: false });
+  const K_ = cafeKids(t, 'lean', { cam });
   const ivy = ivyCafe(t, { face: { name: 'happy', eyes: { look: [-0.6, -0.4] } }, armL: 14, armR: 14 }, { arms: false });
   let after = '';
   const g = pop(t, tPz, 0.2) * (1 - seg(t, tPz + 0.5, tPz + 0.8));
@@ -1097,7 +1102,7 @@ function shJoke(t) {
 // ---- 36. "...fan club." — reaction: the table leans in; the milk kid sips through a bendy straw (setup)
 function shFan(t) {
   const cam = camKeys(t, [[CUT.fan, camAt(1410, 690, 1.95)], [CUT.surv, camAt(1395, 690, 2.08)]]);
-  const K_ = cafeKids(t, 'lean', { skipFront: [MILK_X] });
+  const K_ = cafeKids(t, 'lean', { cam, skipFront: [MILK_X] });
   const sip = Math.sin(t * 10) * 3;
   const milkKid = kid(FRONT_I[MILK_X], { x: MILK_X, y: 1004 - MILK_LIFT, s: 0.45, turn: 0.45, armR: 52, armL: 14, face: { name: 'amazed', mouth: 'o', eyes: { look: [0.9, -0.3] } } });
   const carton = milkCarton(MILK_X + 150, 880 + sip, 0.55, -6, [-70, -400]);
@@ -1112,8 +1117,8 @@ function shSurv(t) {
   const finger = t < tS - 0.1 && t > w(18, 'called') - 0.1;
   const armR = wide > 0 ? lerp(150, 115, wide) : finger ? 165 : 70;
   const [hx, hy] = AC.hand(armR, 1);
-  const hero = you(t, { x: STAGE.x, y: STAGE.y, s: STAGE.s, armL: lerp(20, 115, wide), armR, volume: false, props: [{ svg: E.pizzaSlice(hx, hy + 30, 0.9, 180 - armR + 10, wide), layer: 'front' }], face: wide > 0.3 ? { name: 'smug', fx: ['sparkles'] } : { name: 'sneaky' } }, { arms: false, energy: 1.2 });
-  const K_ = cafeKids(t, 'lean');
+  const hero = youCafe(t, { x: STAGE.x, y: STAGE.y, s: STAGE.s, armL: lerp(20, 115, wide), armR, volume: false, props: [{ svg: E.pizzaSlice(hx, hy + 30, 0.9, 180 - armR + 10, wide), layer: 'front' }], face: wide > 0.3 ? { name: 'smug', fx: ['sparkles'] } : { name: 'sneaky' } }, { arms: false, energy: 1.2 });
+  const K_ = cafeKids(t, 'lean', { cam });
   let o = cafe(t, cam, {}, [lunchLady(t), K_.back, K_.front + hero]);
   const tk = pop(t, tS, 0.25);
   if (tk > 0) o += S.g(S.rect(-420, -70, 840, 140, 26, ol('#2A1640', 8)) + S.rect(-406, -56, 812, 112, 18, { fill: 'none', stroke: '#FFD23F', 'stroke-width': 5 }) + TS('THE SURVIVORS', 0, 34, 92, '#FFD23F'), tf(960, 170, tk, -3));
@@ -1125,8 +1130,8 @@ function shSurv(t) {
 function shLaugh(t) {
   const cam = shakeAll(camKeys(t, [[CUT.laugh, { x: 500, y: -30, zoom: 0.96 }], [CUT.milk, { x: 470, y: -40, zoom: 0.9 }]]), t, [[CUT.laugh, 0.5, 14]]);
   const fall = ease.in(seg(t, CUT.laugh + 0.5, CUT.laugh + 1.1));
-  const K_ = cafeKids(t, 'laugh', { front: { 2420: { rot: 85 * fall, x: 2420 + 140 * fall, lift: -40 * fall, legL: 60 * fall, legR: 40 * fall } } });
-  const hero = you(t, { x: STAGE.x, y: STAGE.y, s: STAGE.s, armL: 160, armR: 160, face: { name: 'joy', fx: ['sparkles'] }, ...laughPose(t, 0.4, 0.6) }, { arms: false });
+  const K_ = cafeKids(t, 'laugh', { cam, front: { 2420: { rot: 85 * fall, x: 2420 + 140 * fall, lift: -40 * fall, legL: 60 * fall, legR: 40 * fall } } });
+  const hero = youCafe(t, { x: STAGE.x, y: STAGE.y, s: STAGE.s, armL: 160, armR: 160, face: { name: 'joy', fx: ['sparkles'] }, ...laughPose(t, 0.4, 0.6) }, { arms: false });
   const ivy = ivyCafe(t, { face: { name: 'joy', fx: ['tears'] }, ...laughPose(t, 2.1) }, { arms: false });
   // the lunch line laughs too
   let line = '';
@@ -1140,7 +1145,7 @@ function shLaugh(t) {
 function shMilk(t) {
   const tM = w(19, 'milk'), tN = w(19, 'nose');
   const cam = shakeAll(camKeys(t, [[CUT.milk, camAt(1380, 650, 1.95)], [tM, camAt(1360, 640, 2.05)], [tN, camAt(1360, 640, 2.08)], [tN + 0.12, camAt(1350, 630, 2.35)], [CUT.laugh2, camAt(1350, 630, 2.4)]], ease.out), t, [[tM, 0.3, 10], [tN, 0.3, 12]]);
-  const K_ = cafeKids(t, 'laugh', { skipFront: [MILK_X] });
+  const K_ = cafeKids(t, 'laugh', { cam, skipFront: [MILK_X] });
   const lp = laughPose(t, 0.3, 1.2);
   const head = { x: MILK_X, y: 1004 - lp.bodyY * 0.45 };
   const milkKid = kid(FRONT_I[MILK_X], { x: MILK_X, y: 1004 - MILK_LIFT, s: 0.45, turn: 0.35, ...lp, armR: 52, face: { name: 'joy', fx: ['tears', 'blush'] } });
@@ -1156,11 +1161,11 @@ function shMilk(t) {
 // ---- 39b. (laughter beat) — wider: the milk still arcing, the whole table howling, the hero basking
 function shLaugh2(t) {
   const cam = shakeAll(camKeys(t, [[CUT.laugh2, camAt(1560, 640, 1.18)], [CUT.best, camAt(1580, 630, 1.24)]]), t, [[CUT.laugh2, 0.3, 8]]);
-  const K_ = cafeKids(t, 'laugh', { skipFront: [MILK_X] });
+  const K_ = cafeKids(t, 'laugh', { cam, skipFront: [MILK_X] });
   const lp = laughPose(t, 0.3, 1.2);
   const milkKid = kid(FRONT_I[MILK_X], { x: MILK_X, y: 1004 - MILK_LIFT, s: 0.45, turn: 0.35, ...lp, armR: 52, face: { name: 'joy', fx: ['tears', 'blush'] } });
   const jets = E.milkJets(MILK_X + 16, 1004 - MILK_LIFT - lp.bodyY * 0.45 - 0.45 * 590, 1, t, 0.6, 1);
-  const hero = you(t, { x: STAGE.x, y: STAGE.y, s: STAGE.s, armL: 150, armR: 150, face: { name: 'joy', fx: ['sparkles'] }, ...laughPose(t, 0.4, 0.5) }, { arms: false });
+  const hero = youCafe(t, { x: STAGE.x, y: STAGE.y, s: STAGE.s, armL: 150, armR: 150, face: { name: 'joy', fx: ['sparkles'] }, ...laughPose(t, 0.4, 0.5) }, { arms: false });
   const ivy = ivyCafe(t, { face: { name: 'joy', fx: ['tears'] }, ...laughPose(t, 2.1) }, { arms: false });
   let o = cafe(t, cam, {}, [lunchLady(t, { face: { name: 'joy' } }), K_.back, K_.front + milkKid + ivy + hero], milkCarton(MILK_X + 150, 880, 0.55, -6) + jets);
   o += E.haLetters(960, 360, t, 1, 7, 9, 1600, 76);
@@ -1171,10 +1176,10 @@ function shLaugh2(t) {
 function shBest(t) {
   const tLife = w(20, 'LIFE');
   const cam = shakeAll(camKeys(t, [[CUT.best, camAt(1720, 600, 1.45)], [tLife - 0.06, camAt(1720, 590, 1.55)], [tLife + 0.06, camAt(1720, 560, 1.95)], [CUT.count, camAt(1720, 560, 2.0)]], ease.out), t, [[tLife, 0.4, 14]]);
-  const K_ = cafeKids(t, 'cheer');
+  const K_ = cafeKids(t, 'cheer', { cam });
   const glow = seg(t, CUT.best, CUT.best + 0.5);
   const rays = E.goldRays(STAGE.x, STAGE.y - 300, glow, t, 1300);
-  const hero = you(t, { x: STAGE.x, y: STAGE.y, s: STAGE.s, armL: 145, armR: 145, lift: 20 * Math.abs(Math.sin(t * 6)), face: { name: 'excited', fx: ['sparkles'] } }, { energy: 1.5, arms: false });
+  const hero = youCafe(t, { x: STAGE.x, y: STAGE.y, s: STAGE.s, armL: 145, armR: 145, lift: 20 * Math.abs(Math.sin(t * 6)), face: { name: 'excited', fx: ['sparkles'] } }, { energy: 1.5, arms: false });
   const ivy = ivyCafe(t, { face: 'joy', armL: 150, armR: 150, bodyY: -6 * Math.abs(Math.sin(t * 9)) }, { arms: false });
   let o = cafe(t, cam, {}, [lunchLady(t), K_.back + rays, K_.front + ivy + hero], K.C.burst(STAGE.x, STAGE.y - 400, seg(t, tLife, tLife + 0.5), '#FFE27A'));
   o += zoomLines(960, 420, bump(t, tLife, tLife + 0.6), t, '#FFE27A', 22, 360);
@@ -1186,9 +1191,9 @@ const ICONS = ['board', 'cube', 'quiz', 'ball', 'cube', 'board', 'pizza', 'ball'
 function shCount(t) {
   const tTwo = w(20, 'Two'), tFt = w1(20, 'fourteen');
   const cam = camKeys(t, [[CUT.count, camAt(1720, 560, 2.0)], [CUT.count + 0.7, camAt(1660, 600, 1.12)], [END, camAt(1660, 590, 1.18)]], ease.inOut);
-  const K_ = cafeKids(t, 'cheer');
+  const K_ = cafeKids(t, 'cheer', { cam });
   const rays = E.goldRays(STAGE.x, STAGE.y - 300, 1, t, 1500);
-  const hero = you(t, { x: STAGE.x, y: STAGE.y, s: STAGE.s, armL: 145, armR: 145, lift: 16 * Math.abs(Math.sin(t * 6)), face: { name: 'joy', fx: ['sparkles'] } }, { energy: 1.4, arms: false });
+  const hero = youCafe(t, { x: STAGE.x, y: STAGE.y, s: STAGE.s, armL: 145, armR: 145, lift: 16 * Math.abs(Math.sin(t * 6)), face: { name: 'joy', fx: ['sparkles'] } }, { energy: 1.4, arms: false });
   const ivy = ivyCafe(t, { face: 'joy', armL: 150, armR: 150 }, { arms: false });
   let o = cafe(t, cam, {}, [lunchLady(t, { face: 'happy' }), K_.back + rays, K_.front + ivy + hero]);
   // the counter + flying fail icons
@@ -1231,4 +1236,6 @@ function look(t) {
   return { grade: 'warm', vignette: 0.45 };
 }
 
-module.exports = { scene, look, SHOTS, CUT };
+// beats shared with audio/cues/gen_sc05.js (the cue sheet re-uses these exact expressions)
+const BEATS = { T0, END, tF1, tF2, tF23, tPlant, tLaunch, tLand, tSnap, tHl, tPress, tStamp, tWhistle, tReset, DODGES: DODGES.map((d) => ({ t: d.t, balls: d.balls.length })), MONT: MONT.map((ph) => ph.length) };
+module.exports = { scene, look, SHOTS, CUT, BEATS };

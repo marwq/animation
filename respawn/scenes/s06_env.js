@@ -168,7 +168,7 @@ function dadSpatula(pose, rot, item = null, o = {}) {
   const r = (rot * Math.PI) / 180, L = 266 * 0.8;
   const bx = h[0] + Math.sin(r) * L, by = h[1] - Math.cos(r) * L;
   if (item === 'pancake') p += X.pancake({ x: bx + (o.dx || 0), y: by - 14 + (o.dy || 0), s: 0.9, rot: o.itemRot || 0 });
-  else if (item === 'waffle' || item === 'waffleCap') p += waffle(bx + (o.dx || 0), by - 60 + (o.dy || 0), 0.95, o.itemRot ?? rot * 0.15, { cap: item === 'waffleCap', sq: o.sq || 1 });
+  else if (item === 'waffle' || item === 'waffleCap') p += waffle(bx + (o.dx || 0), by - 70 + (o.dy || 0), 1.2, o.itemRot ?? rot * 0.15, { cap: item === 'waffleCap', sq: o.sq || 1 });
   return { ...pose, props: [...(pose.props || []), { svg: p, layer: 'front' }], _blade: [bx, by] };
 }
 // score card on a stick (Ivy's "6/10"); (x, y) = grip, rot 0 = up; ≈ 260 wide at s 1
@@ -185,8 +185,9 @@ function pencilHand(x, y, s = 1, rot = 0, o = {}) {
     S.path('M22 -40 L150 -300 L124 -312 L-4 -52 Z', ol('#FFD23F', 5)) + S.path('M14 -44 L138 -306', ln(4, '#E0A81A')) +
     S.path('M150 -300 L168 -338 L142 -350 L124 -312 Z', ol('#C9CED8', 4)) + S.path('M168 -338 L180 -364 Q174 -380 158 -374 L142 -350 Z', ol('#FF8FB0', 4)), '');
   if (hand) {
-    p += S.g(S.rect(-60, -70, 130, 120, 30, ol('#FFFFFF', 6)) + S.path('M-40 -30 Q-10 -46 30 -40', ln(4, '#D8D8E0')), 'translate(86 -150) rotate(-26)');
-    p += S.g(S.rect(-80, -40, 170, 300, 26, ol('#E23B34', 6)) + S.rect(-80, -40, 170, 46, 20, ol('#C42A24', 5)), 'translate(150 -40) rotate(-26)');
+    // the forearm comes in from the lower right; the white R6 hand grips the pencil's lower third
+    p += S.g(S.rect(-90, -10, 180, 420, 30, ol('#E23B34', 6)) + S.rect(-90, -10, 180, 50, 22, ol('#C42A24', 5)), 'translate(150 -20) rotate(-58)');
+    p += S.g(S.rect(-62, -56, 124, 112, 30, ol('#FFFFFF', 6)) + S.path('M-40 -20 Q-6 -36 34 -26', ln(4, '#D8D8E0')), 'translate(92 -88) rotate(-30)');
   }
   return S.g(p, tf(x, y, s, rot));
 }

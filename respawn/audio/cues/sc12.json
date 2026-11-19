@@ -1,0 +1,371 @@
+{
+ "scene": "SC 12",
+ "start": 782.84,
+ "end": 809.08,
+ "music": [
+  {
+   "start": 782.84,
+   "end": 787.028,
+   "mood": "mystic",
+   "energy": 0.25,
+   "in": "fade",
+   "out": "cut"
+  },
+  {
+   "start": 787.028,
+   "end": 789.68,
+   "mood": "mystery",
+   "energy": 0.4,
+   "in": "cut",
+   "out": "sting"
+  },
+  {
+   "start": 789.68,
+   "end": 809.08,
+   "mood": "outro",
+   "energy": 0.7,
+   "in": "cut",
+   "out": "fade"
+  }
+ ],
+ "ambience": [
+  {
+   "start": 782.84,
+   "end": 789.68,
+   "name": "night",
+   "gain_db": -14
+  }
+ ],
+ "footsteps": [],
+ "sfx": [
+  [
+   782.98,
+   "chime",
+   -10,
+   0.071,
+   "tiny flag pulses green in the bowl"
+  ],
+  [
+   783.04,
+   "snore",
+   -14,
+   -0.51,
+   "the hero sleeps"
+  ],
+  [
+   783.05,
+   "notify",
+   -14,
+   -0.518,
+   "Checkpoint saved (small toast)"
+  ],
+  [
+   784.4,
+   "snore",
+   -15,
+   -0.51,
+   "snore"
+  ],
+  [
+   784.94,
+   "bubbles",
+   -10,
+   0,
+   "the bowl, close"
+  ],
+  [
+   786.12,
+   "blink",
+   -6,
+   0,
+   "Gary's slow blink"
+  ],
+  [
+   787.228,
+   "swish",
+   -12,
+   0,
+   "Gary slowly turns to camera"
+  ],
+  [
+   787.9,
+   "riser",
+   -8,
+   0,
+   "tension"
+  ],
+  [
+   788.9,
+   "magic",
+   -2,
+   0,
+   "Gary's eyes glow green"
+  ],
+  [
+   788.92,
+   "dramatic",
+   -2,
+   0,
+   "sting"
+  ],
+  [
+   789.02,
+   "heart_pop",
+   -8,
+   0.54,
+   "GARY · LIVES: ∞"
+  ],
+  [
+   789.66,
+   "whoosh_up",
+   -4,
+   0,
+   "bright outro stage"
+  ],
+  [
+   789.83,
+   "ui_pop",
+   -8,
+   -0.4,
+   "respawn cards swing in"
+  ],
+  [
+   789.93,
+   "ui_pop",
+   -9,
+   0.4,
+   "cards"
+  ],
+  [
+   790.08,
+   "swish",
+   -10,
+   0.102,
+   "he waves"
+  ],
+  [
+   793.16,
+   "zoom_in",
+   -2,
+   0,
+   "smash zoom: what would YOU redo?"
+  ],
+  [
+   793.23,
+   "orch_hit",
+   -2,
+   0,
+   "YOU"
+  ],
+  [
+   794.678,
+   "chat_pop",
+   -6,
+   0.292,
+   "comment bubble 1"
+  ],
+  [
+   794.928,
+   "heart_pop",
+   -12,
+   0.532,
+   "likes tick up"
+  ],
+  [
+   795.098,
+   "chat_pop",
+   -6,
+   0.292,
+   "comment bubble 2"
+  ],
+  [
+   795.348,
+   "heart_pop",
+   -12,
+   0.532,
+   "likes tick up"
+  ],
+  [
+   795.518,
+   "chat_pop",
+   -6,
+   0.292,
+   "comment bubble 3"
+  ],
+  [
+   795.768,
+   "heart_pop",
+   -12,
+   0.532,
+   "likes tick up"
+  ],
+  [
+   795.938,
+   "chat_pop",
+   -6,
+   0.292,
+   "comment bubble 4"
+  ],
+  [
+   796.148,
+   "whoosh",
+   -6,
+   -0.3,
+   "cut"
+  ],
+  [
+   796.188,
+   "heart_pop",
+   -12,
+   0.532,
+   "likes tick up"
+  ],
+  [
+   797.32,
+   "heart_pop",
+   -2,
+   0,
+   "LIVES: 1"
+  ],
+  [
+   798.54,
+   "jump",
+   -4,
+   0,
+   "he jumps"
+  ],
+  [
+   799.06,
+   "confetti",
+   -2,
+   0,
+   "block confetti"
+  ],
+  [
+   799.08,
+   "tada",
+   -4,
+   0,
+   "make it count"
+  ],
+  [
+   799.31,
+   "land",
+   -6,
+   0,
+   "lands on the pad"
+  ],
+  [
+   799.73,
+   "shine",
+   -6,
+   0,
+   "end screen"
+  ],
+  [
+   799.88,
+   "swish",
+   -14,
+   -0.292,
+   "the hero waves"
+  ],
+  [
+   799.98,
+   "pop",
+   -8,
+   -0.489,
+   "subscribe circle"
+  ],
+  [
+   800.13,
+   "ui_pop",
+   -8,
+   0.394,
+   "video slot 1"
+  ],
+  [
+   800.23,
+   "paper",
+   -14,
+   -0.102,
+   "Ivy writes in the Book of Fails"
+  ],
+  [
+   800.28,
+   "ui_pop",
+   -8,
+   0.394,
+   "video slot 2"
+  ],
+  [
+   803.28,
+   "swish",
+   -14,
+   -0.292,
+   "the hero waves"
+  ],
+  [
+   803.93,
+   "pop",
+   -6,
+   -0.576,
+   "Gary crumbles into orange cubes"
+  ],
+  [
+   803.97,
+   "stone",
+   -10,
+   -0.576,
+   "tiny fish blocks"
+  ],
+  [
+   804.13,
+   "countdown_tick",
+   -10,
+   -0.576,
+   "mini RESPAWNING 3"
+  ],
+  [
+   804.43,
+   "countdown_tick",
+   -10,
+   -0.576,
+   "2"
+  ],
+  [
+   804.73,
+   "countdown_final",
+   -9,
+   -0.576,
+   "1"
+  ],
+  [
+   805.03,
+   "respawn",
+   -4,
+   -0.576,
+   "Gary respawns on his tiny flag"
+  ],
+  [
+   805.08,
+   "sparkle",
+   -10,
+   -0.576,
+   "GARY: ATTEMPT 1"
+  ],
+  [
+   806.68,
+   "swish",
+   -14,
+   -0.292,
+   "the hero waves"
+  ],
+  [
+   808.58,
+   "whoosh_long",
+   -14,
+   0,
+   "fade out"
+  ]
+ ]
+}

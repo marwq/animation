@@ -1,0 +1,2526 @@
+{
+ "scene": "SC 05",
+ "start": 294.9,
+ "end": 385.74,
+ "music": [
+  {
+   "start": 294.9,
+   "end": 299.9,
+   "mood": "perfect",
+   "energy": 0.55,
+   "in": "swell",
+   "out": "cut"
+  },
+  {
+   "start": 299.9,
+   "end": 309.71,
+   "mood": "perfect",
+   "energy": 0.9,
+   "in": "cut",
+   "out": "cut"
+  },
+  {
+   "start": 309.71,
+   "end": 312.5,
+   "mood": "wonder",
+   "energy": 0.35,
+   "in": "cut",
+   "out": "cut"
+  },
+  {
+   "start": 312.5,
+   "end": 317.229,
+   "mood": "perfect",
+   "energy": 0.8,
+   "in": "cut",
+   "out": "scratch"
+  },
+  {
+   "start": 317.229,
+   "end": 319.892,
+   "mood": "silence",
+   "energy": 0,
+   "in": "cut",
+   "out": "cut"
+  },
+  {
+   "start": 319.892,
+   "end": 328.113,
+   "mood": "perfect",
+   "energy": 0.45,
+   "in": "fade",
+   "out": "tapestop"
+  },
+  {
+   "start": 328.113,
+   "end": 329.2,
+   "mood": "silence",
+   "energy": 0,
+   "in": "cut",
+   "out": "cut"
+  },
+  {
+   "start": 329.2,
+   "end": 333.22,
+   "mood": "perfect",
+   "energy": 0.8,
+   "in": "cut",
+   "out": "cut"
+  },
+  {
+   "start": 333.22,
+   "end": 337.984,
+   "mood": "perfect",
+   "energy": 0.55,
+   "in": "cut",
+   "out": "sting"
+  },
+  {
+   "start": 337.984,
+   "end": 344.56,
+   "mood": "perfect",
+   "energy": 0.65,
+   "in": "cut",
+   "out": "cut"
+  },
+  {
+   "start": 344.56,
+   "end": 350.02,
+   "mood": "wonder",
+   "energy": 0.35,
+   "in": "cut",
+   "out": "cut"
+  },
+  {
+   "start": 350.02,
+   "end": 357.309,
+   "mood": "perfect",
+   "energy": 0.55,
+   "in": "cut",
+   "out": "scratch"
+  },
+  {
+   "start": 357.309,
+   "end": 359.78,
+   "mood": "silence",
+   "energy": 0,
+   "in": "cut",
+   "out": "cut"
+  },
+  {
+   "start": 359.78,
+   "end": 362.34,
+   "mood": "perfect",
+   "energy": 0.45,
+   "in": "fade",
+   "out": "scratch"
+  },
+  {
+   "start": 362.34,
+   "end": 365.987,
+   "mood": "silence",
+   "energy": 0,
+   "in": "cut",
+   "out": "cut"
+  },
+  {
+   "start": 365.987,
+   "end": 367.631,
+   "mood": "perfect",
+   "energy": 0.85,
+   "in": "cut",
+   "out": "cut"
+  },
+  {
+   "start": 367.631,
+   "end": 373.4,
+   "mood": "perfect",
+   "energy": 0.5,
+   "in": "cut",
+   "out": "sting"
+  },
+  {
+   "start": 373.4,
+   "end": 378.94,
+   "mood": "perfect",
+   "energy": 0.85,
+   "in": "cut",
+   "out": "cut"
+  },
+  {
+   "start": 378.94,
+   "end": 385.74,
+   "mood": "perfect",
+   "energy": 1,
+   "in": "swell",
+   "out": "sting"
+  }
+ ],
+ "ambience": [
+  {
+   "start": 294.9,
+   "end": 319.892,
+   "name": "birds",
+   "gain_db": -9
+  },
+  {
+   "start": 299.9,
+   "end": 309.16,
+   "name": "crowd",
+   "gain_db": -16
+  },
+  {
+   "start": 312.74,
+   "end": 319.892,
+   "name": "crowd",
+   "gain_db": -12
+  },
+  {
+   "start": 319.892,
+   "end": 328.113,
+   "name": "room",
+   "gain_db": -13
+  },
+  {
+   "start": 329.2,
+   "end": 330.15,
+   "name": "birds",
+   "gain_db": -11
+  },
+  {
+   "start": 330.15,
+   "end": 337.984,
+   "name": "room",
+   "gain_db": -14
+  },
+  {
+   "start": 337.984,
+   "end": 344.56,
+   "name": "crowd",
+   "gain_db": -15
+  },
+  {
+   "start": 350.02,
+   "end": 357.309,
+   "name": "crowd",
+   "gain_db": -15
+  },
+  {
+   "start": 359.78,
+   "end": 362.34,
+   "name": "crowd",
+   "gain_db": -12
+  },
+  {
+   "start": 367.631,
+   "end": 385.74,
+   "name": "crowd",
+   "gain_db": -10
+  }
+ ],
+ "footsteps": [
+  {
+   "start": 295,
+   "end": 297.15,
+   "interval": 0.37,
+   "surface": "hard",
+   "gain_db": -9,
+   "pan": -0.25
+  },
+  {
+   "start": 303.07,
+   "end": 303.43,
+   "interval": 0.143,
+   "surface": "hard",
+   "gain_db": -7,
+   "pan": 0.3
+  },
+  {
+   "start": 329.655,
+   "end": 330.15,
+   "interval": 0.157,
+   "surface": "hard",
+   "gain_db": -7,
+   "pan": 0.2
+  },
+  {
+   "start": 330.2,
+   "end": 331.11,
+   "interval": 0.131,
+   "surface": "hard",
+   "gain_db": -6,
+   "pan": 0
+  },
+  {
+   "start": 353.113,
+   "end": 353.913,
+   "interval": 0.393,
+   "surface": "wood",
+   "gain_db": -10,
+   "pan": -0.2
+  }
+ ],
+ "sfx": [
+  [
+   294.9,
+   "whoosh",
+   -6,
+   0.3,
+   "whip-pan in from SC 04"
+  ],
+  [
+   295.78,
+   "sparkle",
+   -6,
+   -0.292,
+   "the flag in the backpack glints on \"checkpoint\""
+  ],
+  [
+   296.5,
+   "jump",
+   -10,
+   -0.233,
+   "happy hop on \"school\""
+  ],
+  [
+   296.86,
+   "land",
+   -12,
+   -0.233,
+   "lands from the hop"
+  ],
+  [
+   297.62,
+   "swish",
+   -2,
+   -0.19,
+   "yanks the flag out of the backpack"
+  ],
+  [
+   297.74,
+   "sparkle",
+   -8,
+   -0.131,
+   "the raised flag sparkles"
+  ],
+  [
+   298.2,
+   "whoosh_down",
+   -3,
+   -0.044,
+   "swings the flag down"
+  ],
+  [
+   298.38,
+   "thud",
+   2,
+   0.015,
+   "THUNK! the flag spikes into the ground (shake)"
+  ],
+  [
+   298.4,
+   "confirm",
+   -2,
+   0.015,
+   "planted: the checkpoint pad pops up"
+  ],
+  [
+   298.4,
+   "ui_pop",
+   -6,
+   -0.481,
+   "\"Checkpoint saved\" toast"
+  ],
+  [
+   298.43,
+   "impact",
+   -6,
+   0.015,
+   "dirt puff"
+  ],
+  [
+   298.45,
+   "level_up",
+   -3,
+   0.015,
+   "checkpoint saved: green wave sweeps the frame"
+  ],
+  [
+   298.7,
+   "sparkle",
+   -9,
+   -0.117,
+   "fist pump sparkles"
+  ],
+  [
+   298.8,
+   "chime",
+   -6,
+   0.015,
+   "saved chime"
+  ],
+  [
+   299.9,
+   "whoosh",
+   -2,
+   0.3,
+   "whip-pan to the skate area"
+  ],
+  [
+   300,
+   "skate_roll",
+   -4,
+   -0.3,
+   "rolls in on the skateboard"
+  ],
+  [
+   300.63,
+   "sparkle",
+   -9,
+   0.102,
+   "wink at the crowd"
+  ],
+  [
+   301.32,
+   "ui_pop",
+   -8,
+   -0.554,
+   "ATTEMPT counter pops in"
+  ],
+  [
+   301.37,
+   "skate_roll",
+   -3,
+   -0.1,
+   "rides up the ramp"
+  ],
+  [
+   301.63,
+   "whoosh_up",
+   -4,
+   0.1,
+   "launch off the ramp"
+  ],
+  [
+   301.78,
+   "tap",
+   -5,
+   -0.554,
+   "counter bump: 1"
+  ],
+  [
+   301.92,
+   "impact",
+   0,
+   0.029,
+   "attempt 1 fails mid-air"
+  ],
+  [
+   301.93,
+   "pop",
+   -2,
+   0.029,
+   "attempt 1: white pop"
+  ],
+  [
+   301.96,
+   "stone",
+   -4,
+   0.029,
+   "attempt 1: blocks scatter"
+  ],
+  [
+   301.98,
+   "crowd_gasp",
+   -8,
+   -0.3,
+   "the crowd winces"
+  ],
+  [
+   301.99,
+   "countdown_tick",
+   -8,
+   0.576,
+   "corner RESPAWNING pill counts"
+  ],
+  [
+   302.23,
+   "countdown_final",
+   -6,
+   0.576,
+   "corner pill hits 1 (white flash)"
+  ],
+  [
+   302.28,
+   "rock_drop",
+   -12,
+   0.029,
+   "attempt 1: blocks land"
+  ],
+  [
+   302.33,
+   "respawn",
+   -1,
+   -0.19,
+   "pops on the checkpoint by the door"
+  ],
+  [
+   302.38,
+   "forcefield",
+   -9,
+   -0.19,
+   "spawn forcefield shimmer"
+  ],
+  [
+   302.78,
+   "pop",
+   -7,
+   0.16,
+   "\"AGAIN!\" bang"
+  ],
+  [
+   303.07,
+   "whoosh",
+   -2,
+   0.4,
+   "sprints off right with the board"
+  ],
+  [
+   303.49,
+   "skate_roll",
+   -4,
+   -0.4,
+   "rolls toward the rail"
+  ],
+  [
+   303.79,
+   "jump",
+   -5,
+   -0.1,
+   "ollie onto the rail"
+  ],
+  [
+   303.99,
+   "metal_hit",
+   -5,
+   0,
+   "board lands on the rail"
+  ],
+  [
+   304.01,
+   "skid",
+   -7,
+   0,
+   "grind (sparks)"
+  ],
+  [
+   304.18,
+   "tap",
+   -5,
+   -0.554,
+   "counter bump: 2"
+  ],
+  [
+   304.29,
+   "bonk",
+   0,
+   0.175,
+   "OOF! slams onto the rail"
+  ],
+  [
+   304.3,
+   "pop",
+   -2,
+   0.175,
+   "attempt 2: white pop"
+  ],
+  [
+   304.33,
+   "stone",
+   -4,
+   0.175,
+   "attempt 2: blocks scatter"
+  ],
+  [
+   304.35,
+   "crowd_gasp",
+   -9,
+   -0.2,
+   "crowd winces"
+  ],
+  [
+   304.6,
+   "vhs_clunk",
+   -4,
+   0,
+   "REWIND: the VHS clunk"
+  ],
+  [
+   304.62,
+   "rewind",
+   -2,
+   0,
+   "blocks scrub back together"
+  ],
+  [
+   304.65,
+   "rock_drop",
+   -12,
+   0.175,
+   "attempt 2: blocks land"
+  ],
+  [
+   304.75,
+   "tap",
+   -12,
+   -0.554,
+   "counter rolls 2 -> 23"
+  ],
+  [
+   304.97,
+   "tap",
+   -12,
+   -0.554,
+   "counter rolls 2 -> 23"
+  ],
+  [
+   305.19,
+   "tap",
+   -12,
+   -0.554,
+   "counter rolls 2 -> 23"
+  ],
+  [
+   305.41,
+   "tap",
+   -12,
+   -0.554,
+   "counter rolls 2 -> 23"
+  ],
+  [
+   305.63,
+   "tap",
+   -12,
+   -0.554,
+   "counter rolls 2 -> 23"
+  ],
+  [
+   305.8,
+   "vhs_clunk",
+   -8,
+   0,
+   "rewind ends"
+  ],
+  [
+   305.88,
+   "skate_roll",
+   -4,
+   -0.3,
+   "rolls toward the trash can"
+  ],
+  [
+   306.26,
+   "jump",
+   -5,
+   0,
+   "jumps the can"
+  ],
+  [
+   306.34,
+   "tap",
+   -5,
+   -0.554,
+   "counter bump: 23"
+  ],
+  [
+   306.61,
+   "metal_hit",
+   3,
+   0.102,
+   "CLANG! into the trash can (big shake)"
+  ],
+  [
+   306.62,
+   "impact",
+   -3,
+   0.102,
+   "impact"
+  ],
+  [
+   306.63,
+   "pop",
+   -2,
+   0.102,
+   "attempt 23: white pop"
+  ],
+  [
+   306.66,
+   "stone",
+   -4,
+   0.102,
+   "attempt 23: blocks scatter"
+  ],
+  [
+   306.67,
+   "metal_clank",
+   -6,
+   0.211,
+   "the lid flies off"
+  ],
+  [
+   306.68,
+   "crowd_gasp",
+   -8,
+   -0.3,
+   "crowd gasps"
+  ],
+  [
+   306.98,
+   "rock_drop",
+   -12,
+   0.102,
+   "attempt 23: blocks land"
+  ],
+  [
+   307.37,
+   "whoosh",
+   -4,
+   0,
+   "smash cut into the split screen"
+  ],
+  [
+   307.37,
+   "pixel_wipe",
+   -8,
+   0,
+   "panels pop in"
+  ],
+  [
+   307.42,
+   "tap",
+   -12,
+   -0.554,
+   "counter rolls 23 -> 56"
+  ],
+  [
+   307.51,
+   "pop",
+   -7,
+   -0.35,
+   "montage crumble #1 (2 panels)"
+  ],
+  [
+   307.58,
+   "stone",
+   -7,
+   0.35,
+   "montage crumble #2 (2 panels)"
+  ],
+  [
+   307.6,
+   "tap",
+   -12,
+   -0.554,
+   "counter rolls 23 -> 56"
+  ],
+  [
+   307.78,
+   "tap",
+   -12,
+   -0.554,
+   "counter rolls 23 -> 56"
+  ],
+  [
+   307.877,
+   "camera_flash",
+   -8,
+   0,
+   "the grid splits into 4 panels"
+  ],
+  [
+   307.96,
+   "tap",
+   -12,
+   -0.554,
+   "counter rolls 23 -> 56"
+  ],
+  [
+   308.047,
+   "pop",
+   -7,
+   -0.35,
+   "montage crumble #1 (4 panels)"
+  ],
+  [
+   308.117,
+   "stone",
+   -7,
+   0.35,
+   "montage crumble #2 (4 panels)"
+  ],
+  [
+   308.14,
+   "tap",
+   -12,
+   -0.554,
+   "counter rolls 23 -> 56"
+  ],
+  [
+   308.167,
+   "stone",
+   -7,
+   0.35,
+   "montage crumble #4 (4 panels)"
+  ],
+  [
+   308.187,
+   "pop",
+   -7,
+   -0.35,
+   "montage crumble #3 (4 panels)"
+  ],
+  [
+   308.32,
+   "tap",
+   -12,
+   -0.554,
+   "counter rolls 23 -> 56"
+  ],
+  [
+   308.414,
+   "camera_flash",
+   -8,
+   0,
+   "the grid splits into 9 panels"
+  ],
+  [
+   308.5,
+   "tap",
+   -12,
+   -0.554,
+   "counter rolls 23 -> 56"
+  ],
+  [
+   308.584,
+   "pop",
+   -11,
+   -0.467,
+   "montage crumble #1 (9 panels)"
+  ],
+  [
+   308.68,
+   "tap",
+   -12,
+   -0.554,
+   "counter rolls 23 -> 56"
+  ],
+  [
+   308.724,
+   "pop",
+   -11,
+   0.467,
+   "montage crumble #3 (9 panels)"
+  ],
+  [
+   308.774,
+   "pop",
+   -11,
+   0,
+   "montage crumble #5 (9 panels)"
+  ],
+  [
+   308.824,
+   "pop",
+   -11,
+   -0.467,
+   "montage crumble #7 (9 panels)"
+  ],
+  [
+   308.86,
+   "tap",
+   -12,
+   -0.554,
+   "counter rolls 23 -> 56"
+  ],
+  [
+   308.964,
+   "pop",
+   -11,
+   0.467,
+   "montage crumble #9 (9 panels)"
+  ],
+  [
+   309.16,
+   "skate_roll",
+   -2,
+   -0.2,
+   "attempt 57: rides up the ramp"
+  ],
+  [
+   309.66,
+   "reverse_swell",
+   -3,
+   0,
+   "into slow motion"
+  ],
+  [
+   309.71,
+   "whoosh_up",
+   -2,
+   0.1,
+   "launch"
+  ],
+  [
+   309.76,
+   "tap",
+   -4,
+   -0.554,
+   "gold counter bump: 57"
+  ],
+  [
+   310.547,
+   "whoosh_long",
+   -4,
+   0,
+   "close-up: the board flips under his feet (slowed)"
+  ],
+  [
+   310.947,
+   "swish",
+   -8,
+   0,
+   "the board spins"
+  ],
+  [
+   311.328,
+   "crowd_gasp",
+   -4,
+   -0.2,
+   "slow-motion crowd: mouths open, a juice box drops"
+  ],
+  [
+   311.942,
+   "whoosh",
+   -6,
+   0.2,
+   "back to the wide: coming down"
+  ],
+  [
+   312.5,
+   "land",
+   2,
+   0,
+   "lands perfectly on the deck"
+  ],
+  [
+   312.52,
+   "skate_roll",
+   -6,
+   0,
+   "wheels on the deck"
+  ],
+  [
+   312.53,
+   "orch_hit",
+   -2,
+   0.365,
+   "\"PERFECT!\" pops"
+  ],
+  [
+   312.6,
+   "achievement",
+   -5,
+   0.365,
+   "perfect-trick sting"
+  ],
+  [
+   312.74,
+   "crowd_cheer",
+   0,
+   0,
+   "smash cut: the crowd goes wild"
+  ],
+  [
+   312.76,
+   "applause",
+   -6,
+   -0.1,
+   "applause"
+  ],
+  [
+   312.84,
+   "camera_flash",
+   -10,
+   -0.5,
+   "phones filming"
+  ],
+  [
+   313.14,
+   "camera_flash",
+   -11,
+   0.35,
+   "phones filming"
+  ],
+  [
+   315.5,
+   "cloth",
+   -10,
+   -0.044,
+   "brushes his shoulder"
+  ],
+  [
+   316.32,
+   "shine",
+   -6,
+   0.029,
+   "smug teeth glint"
+  ],
+  [
+   317.209,
+   "chat_pop",
+   -4,
+   -0.19,
+   "Tip pops in at his ear"
+  ],
+  [
+   317.229,
+   "whoosh",
+   -8,
+   -0.3,
+   "whip"
+  ],
+  [
+   317.329,
+   "ui_pop",
+   -8,
+   -0.233,
+   "TIP card"
+  ],
+  [
+   318.38,
+   "tap",
+   -3,
+   -0.481,
+   "ATTEMPT 57 slams in as evidence"
+  ],
+  [
+   318.4,
+   "boing",
+   -10,
+   -0.481,
+   "57 counter bounce"
+  ],
+  [
+   319.892,
+   "whoosh",
+   -5,
+   0.3,
+   "whip to the classroom"
+  ],
+  [
+   319.99,
+   "paper",
+   -6,
+   -0.335,
+   "lifts the stack of quizzes"
+  ],
+  [
+   321.04,
+   "swish",
+   -10,
+   -0.481,
+   "a quiz paper flies to a desk"
+  ],
+  [
+   321.205,
+   "swish",
+   -10,
+   -0.262,
+   "a quiz paper flies to a desk"
+  ],
+  [
+   321.37,
+   "swish",
+   -10,
+   -0.044,
+   "a quiz paper flies to a desk"
+  ],
+  [
+   321.46,
+   "paper",
+   -10,
+   -0.2,
+   "papers land on the desks"
+  ],
+  [
+   321.535,
+   "swish",
+   -10,
+   0.175,
+   "a quiz paper flies to a desk"
+  ],
+  [
+   321.7,
+   "swish",
+   -10,
+   0.394,
+   "a quiz paper flies to a desk"
+  ],
+  [
+   321.86,
+   "gulp",
+   -9,
+   0.2,
+   "the class gulps"
+  ],
+  [
+   321.91,
+   "paper",
+   -11,
+   0.3,
+   "papers land"
+  ],
+  [
+   322.22,
+   "pop",
+   -9,
+   -0.394,
+   "\"SHH.\" bang"
+  ],
+  [
+   323.53,
+   "click",
+   -2,
+   0.19,
+   "CRACK (knuckles)"
+  ],
+  [
+   323.88,
+   "click",
+   -3,
+   0.19,
+   "CRACK (knuckles)"
+  ],
+  [
+   324.28,
+   "cloth",
+   -10,
+   0,
+   "leans back, smug"
+  ],
+  [
+   324.58,
+   "sparkle",
+   -11,
+   0,
+   "smug sparkle"
+  ],
+  [
+   325.32,
+   "paper",
+   -7,
+   -0.2,
+   "the quiz sheet"
+  ],
+  [
+   325.66,
+   "loading",
+   -12,
+   0,
+   "eyes racing down the questions"
+  ],
+  [
+   325.76,
+   "tap",
+   -11,
+   0.671,
+   "QUESTIONS READ ticks up"
+  ],
+  [
+   325.95,
+   "tap",
+   -11,
+   0.671,
+   "QUESTIONS READ ticks up"
+  ],
+  [
+   326.14,
+   "tap",
+   -11,
+   0.671,
+   "QUESTIONS READ ticks up"
+  ],
+  [
+   326.33,
+   "tap",
+   -11,
+   0.671,
+   "QUESTIONS READ ticks up"
+  ],
+  [
+   326.52,
+   "tap",
+   -11,
+   0.671,
+   "QUESTIONS READ ticks up"
+  ],
+  [
+   326.71,
+   "tap",
+   -11,
+   0.671,
+   "QUESTIONS READ ticks up"
+  ],
+  [
+   326.8,
+   "confirm",
+   -5,
+   0.54,
+   "\"Answers memorized\" toast"
+  ],
+  [
+   326.85,
+   "chime",
+   -8,
+   0.54,
+   "memorized"
+  ],
+  [
+   328.113,
+   "click",
+   0,
+   0.139,
+   "SNAP!"
+  ],
+  [
+   328.133,
+   "powerdown",
+   -5,
+   0,
+   "the world pauses (grey)"
+  ],
+  [
+   328.173,
+   "ui_pop",
+   -2,
+   0.306,
+   "ESC menu unfolds in the air"
+  ],
+  [
+   328.58,
+   "click",
+   -6,
+   0.306,
+   "highlight: RESET CHARACTER"
+  ],
+  [
+   328.733,
+   "click",
+   -9,
+   0.306,
+   "highlight: RESUME"
+  ],
+  [
+   328.78,
+   "confirm",
+   -2,
+   0.306,
+   "presses RESET CHARACTER"
+  ],
+  [
+   329,
+   "pop",
+   -2,
+   0,
+   "reset at the desk: white pop"
+  ],
+  [
+   329.02,
+   "pixel_wipe",
+   -8,
+   0,
+   "menu folds away"
+  ],
+  [
+   329.03,
+   "stone",
+   -4,
+   0,
+   "reset at the desk: blocks scatter"
+  ],
+  [
+   329.12,
+   "camera_flash",
+   -8,
+   0,
+   "white flash cut"
+  ],
+  [
+   329.25,
+   "respawn",
+   0,
+   -0.292,
+   "respawns on the flag by the door"
+  ],
+  [
+   329.3,
+   "forcefield",
+   -9,
+   -0.292,
+   "forcefield"
+  ],
+  [
+   329.35,
+   "rock_drop",
+   -12,
+   0,
+   "reset at the desk: blocks land"
+  ],
+  [
+   329.37,
+   "rewind",
+   -8,
+   0.452,
+   "\"8:00 AM\" clock spins back"
+  ],
+  [
+   329.65,
+   "bell",
+   -6,
+   0.452,
+   "\"8:00 AM — TIME RESET\" stamp"
+  ],
+  [
+   329.655,
+   "whoosh",
+   -4,
+   0.3,
+   "sprints for the doors"
+  ],
+  [
+   330.15,
+   "whoosh",
+   -4,
+   -0.3,
+   "whip into the hallway"
+  ],
+  [
+   330.255,
+   "door_open",
+   -8,
+   0.248,
+   "through the school doors"
+  ],
+  [
+   330.35,
+   "chat_pop",
+   -10,
+   -0.4,
+   "Tip zooms after him"
+  ],
+  [
+   330.531,
+   "whoosh",
+   -7,
+   0,
+   "blasts past a kid at the lockers"
+  ],
+  [
+   330.581,
+   "paper",
+   -10,
+   0.1,
+   "the kid's papers fly"
+  ],
+  [
+   330.74,
+   "ui_pop",
+   -8,
+   -0.292,
+   "TIP card"
+  ],
+  [
+   330.829,
+   "whoosh",
+   -7,
+   0,
+   "blasts past a kid at the lockers"
+  ],
+  [
+   330.879,
+   "paper",
+   -10,
+   0.1,
+   "the kid's papers fly"
+  ],
+  [
+   330.91,
+   "door_open",
+   -6,
+   0.321,
+   "ROOM 104 door swings open"
+  ],
+  [
+   331.39,
+   "paper",
+   -5,
+   0.102,
+   "slaps the quiz on the desk"
+  ],
+  [
+   331.44,
+   "chat_pop",
+   -8,
+   0.248,
+   "Tip hovers by the desk, squinting"
+  ],
+  [
+   331.49,
+   "swish",
+   -12,
+   0.139,
+   "pencil blur scribbling"
+  ],
+  [
+   331.51,
+   "tap",
+   -12,
+   0.671,
+   "ANSWERS counter rolls 0 -> 20"
+  ],
+  [
+   331.54,
+   "steam_hiss",
+   -15,
+   0.139,
+   "the paper smokes"
+  ],
+  [
+   331.71,
+   "tap",
+   -12,
+   0.671,
+   "ANSWERS counter rolls 0 -> 20"
+  ],
+  [
+   331.84,
+   "swish",
+   -12,
+   0.139,
+   "pencil blur scribbling"
+  ],
+  [
+   331.91,
+   "tap",
+   -12,
+   0.671,
+   "ANSWERS counter rolls 0 -> 20"
+  ],
+  [
+   332.11,
+   "tap",
+   -12,
+   0.671,
+   "ANSWERS counter rolls 0 -> 20"
+  ],
+  [
+   332.19,
+   "swish",
+   -12,
+   0.139,
+   "pencil blur scribbling"
+  ],
+  [
+   332.31,
+   "tap",
+   -12,
+   0.671,
+   "ANSWERS counter rolls 0 -> 20"
+  ],
+  [
+   332.51,
+   "tap",
+   -12,
+   0.671,
+   "ANSWERS counter rolls 0 -> 20"
+  ],
+  [
+   332.54,
+   "swish",
+   -12,
+   0.139,
+   "pencil blur scribbling"
+  ],
+  [
+   332.71,
+   "tap",
+   -12,
+   0.671,
+   "ANSWERS counter rolls 0 -> 20"
+  ],
+  [
+   332.89,
+   "swish",
+   -12,
+   0.139,
+   "pencil blur scribbling"
+  ],
+  [
+   332.91,
+   "tap",
+   -12,
+   0.671,
+   "ANSWERS counter rolls 0 -> 20"
+  ],
+  [
+   333.24,
+   "jump",
+   -8,
+   0,
+   "stands up"
+  ],
+  [
+   333.27,
+   "paper",
+   -5,
+   0.05,
+   "raises the finished quiz"
+  ],
+  [
+   333.37,
+   "pop",
+   -7,
+   0.248,
+   "\"DONE!\" bang"
+  ],
+  [
+   333.5,
+   "ui_pop",
+   -8,
+   0,
+   "CHEATING meter appears"
+  ],
+  [
+   333.7,
+   "tap",
+   -11,
+   0,
+   "meter rolls up"
+  ],
+  [
+   333.85,
+   "tap",
+   -11,
+   0,
+   "meter rolls up"
+  ],
+  [
+   334,
+   "tap",
+   -11,
+   0,
+   "meter rolls up"
+  ],
+  [
+   334.15,
+   "tap",
+   -11,
+   0,
+   "meter rolls up"
+  ],
+  [
+   334.3,
+   "tap",
+   -11,
+   0,
+   "meter rolls up"
+  ],
+  [
+   334.45,
+   "tap",
+   -11,
+   0,
+   "meter rolls up"
+  ],
+  [
+   334.6,
+   "tap",
+   -11,
+   0,
+   "meter rolls up"
+  ],
+  [
+   334.82,
+   "alarm_beep",
+   -3,
+   0,
+   "CHEATING: 100%"
+  ],
+  [
+   336.208,
+   "whoosh",
+   -6,
+   0.2,
+   "the sheet slides in"
+  ],
+  [
+   336.74,
+   "stamp",
+   3,
+   0.175,
+   "the red 100% stamp SLAMS"
+  ],
+  [
+   336.76,
+   "impact",
+   -4,
+   0.175,
+   "stamp shake"
+  ],
+  [
+   337.14,
+   "confetti",
+   -3,
+   0,
+   "confetti"
+  ],
+  [
+   337.16,
+   "tada",
+   -5,
+   0.467,
+   "\"100%!\""
+  ],
+  [
+   337.984,
+   "whoosh",
+   -6,
+   0.3,
+   "whip to the gym"
+  ],
+  [
+   339.3,
+   "whoosh",
+   -5,
+   0,
+   "camera whips out to the court"
+  ],
+  [
+   340.21,
+   "whistle",
+   1,
+   -0.335,
+   "TWEEEET! Coach Dee's whistle"
+  ],
+  [
+   340.24,
+   "whoosh",
+   -5,
+   -0.335,
+   "dodgeball #1 thrown"
+  ],
+  [
+   340.32,
+   "whoosh",
+   -5,
+   -0.19,
+   "dodgeball #2 thrown"
+  ],
+  [
+   340.38,
+   "snore",
+   -14,
+   0.394,
+   "you, yawning"
+  ],
+  [
+   340.4,
+   "whoosh",
+   -5,
+   -0.044,
+   "dodgeball #3 thrown"
+  ],
+  [
+   341.08,
+   "vhs_clunk",
+   -4,
+   0,
+   "REPLAY · EVERY HIT"
+  ],
+  [
+   341.13,
+   "rewind",
+   -10,
+   0,
+   "memory replay"
+  ],
+  [
+   342.01,
+   "bonk",
+   1,
+   0,
+   "BONK! the face hit (full frame)"
+  ],
+  [
+   342.02,
+   "pop",
+   -2,
+   0,
+   "memory hit 1: white pop"
+  ],
+  [
+   342.05,
+   "stone",
+   -4,
+   0,
+   "memory hit 1: blocks scatter"
+  ],
+  [
+   342.31,
+   "ui_pop",
+   -10,
+   0,
+   "memory panel 2 pops in"
+  ],
+  [
+   342.32,
+   "whoosh",
+   -8,
+   0,
+   "the frame shrinks into the grid"
+  ],
+  [
+   342.37,
+   "rock_drop",
+   -12,
+   0,
+   "memory hit 1: blocks land"
+  ],
+  [
+   342.55,
+   "ui_pop",
+   -10,
+   0.45,
+   "memory panel 3 pops in"
+  ],
+  [
+   342.64,
+   "bonk",
+   -4,
+   0,
+   "BONK in panel 2"
+  ],
+  [
+   342.66,
+   "pop",
+   -10,
+   0,
+   "panel 2: crumble"
+  ],
+  [
+   342.88,
+   "bonk",
+   -4,
+   0.45,
+   "BONK in panel 3"
+  ],
+  [
+   342.9,
+   "pop",
+   -10,
+   0.45,
+   "panel 3: crumble"
+  ],
+  [
+   343.03,
+   "ui_pop",
+   -10,
+   -0.45,
+   "memory panel 4 pops in"
+  ],
+  [
+   343.27,
+   "ui_pop",
+   -10,
+   0,
+   "memory panel 5 pops in"
+  ],
+  [
+   343.36,
+   "bonk",
+   -4,
+   -0.45,
+   "BONK in panel 4"
+  ],
+  [
+   343.38,
+   "pop",
+   -10,
+   -0.45,
+   "panel 4: crumble"
+  ],
+  [
+   343.57,
+   "ui_pop",
+   -10,
+   0.45,
+   "memory panel 6 pops in"
+  ],
+  [
+   343.6,
+   "bonk",
+   -4,
+   0,
+   "BONK in panel 5"
+  ],
+  [
+   343.62,
+   "pop",
+   -10,
+   0,
+   "panel 5: crumble"
+  ],
+  [
+   343.85,
+   "confirm",
+   -6,
+   0.5,
+   "\"Every ball memorized\" toast"
+  ],
+  [
+   343.89,
+   "laser_sweep",
+   -13,
+   -0.4,
+   "predicted path #1 draws itself"
+  ],
+  [
+   343.9,
+   "bonk",
+   -4,
+   0.45,
+   "BONK in panel 6"
+  ],
+  [
+   343.92,
+   "pop",
+   -10,
+   0.45,
+   "panel 6: crumble"
+  ],
+  [
+   344.56,
+   "reverse_swell",
+   -2,
+   0,
+   "bullet time"
+  ],
+  [
+   344.61,
+   "zoom_in",
+   -7,
+   0,
+   "slow push"
+  ],
+  [
+   344.69,
+   "laser_sweep",
+   -13,
+   -0.4,
+   "predicted path #2 draws itself"
+  ],
+  [
+   344.79,
+   "swish",
+   -5,
+   0.05,
+   "dodge #1"
+  ],
+  [
+   344.89,
+   "whoosh_long",
+   -4,
+   0,
+   "slow-motion ball passes by"
+  ],
+  [
+   345.57,
+   "laser_sweep",
+   -13,
+   -0.4,
+   "predicted path #3 draws itself"
+  ],
+  [
+   345.59,
+   "swish",
+   -5,
+   0.05,
+   "dodge #2"
+  ],
+  [
+   345.69,
+   "whoosh_long",
+   -4,
+   0,
+   "slow-motion ball passes by"
+  ],
+  [
+   346.47,
+   "swish",
+   -5,
+   0.05,
+   "dodge #3"
+  ],
+  [
+   346.48,
+   "whoosh",
+   -9,
+   0.3,
+   "angle change"
+  ],
+  [
+   346.57,
+   "whoosh_long",
+   -4,
+   0,
+   "slow-motion ball passes by"
+  ],
+  [
+   346.832,
+   "laser_sweep",
+   -13,
+   -0.4,
+   "predicted path #4 draws itself"
+  ],
+  [
+   347.732,
+   "swish",
+   -5,
+   0.05,
+   "dodge #4"
+  ],
+  [
+   347.832,
+   "whoosh_long",
+   -2,
+   0,
+   "slow-motion balls pass by"
+  ],
+  [
+   348.624,
+   "whoosh_long",
+   -10,
+   -0.4,
+   "the last ball drifts in (nearly frozen)"
+  ],
+  [
+   349.461,
+   "sparkle",
+   -2,
+   0.029,
+   "*ting* — two fingers"
+  ],
+  [
+   349.491,
+   "chime",
+   -7,
+   0.029,
+   "caught"
+  ],
+  [
+   350.02,
+   "whoosh_down",
+   -4,
+   0,
+   "time snaps back to normal"
+  ],
+  [
+   350.34,
+   "slap",
+   -4,
+   0.6,
+   "a ball slams into the wall"
+  ],
+  [
+   350.41,
+   "punch",
+   -5,
+   0.6,
+   "a ball slams into the wall"
+  ],
+  [
+   350.48,
+   "slap",
+   -6,
+   0.6,
+   "a ball slams into the wall"
+  ],
+  [
+   351.68,
+   "heart_pop",
+   -2,
+   -0.19,
+   "Coach Dee's heart eyes"
+  ],
+  [
+   351.7,
+   "zoom_in",
+   -5,
+   0,
+   "smash zoom on BEEN"
+  ],
+  [
+   353.46,
+   "equip",
+   -8,
+   -0.19,
+   "Ivy's goggles snap down"
+  ],
+  [
+   354.99,
+   "swish",
+   -10,
+   -0.117,
+   "Ivy points"
+  ],
+  [
+   356.31,
+   "swish",
+   -11,
+   0.175,
+   "spins the ball on a finger"
+  ],
+  [
+   357.309,
+   "chat_pop",
+   -3,
+   -0.321,
+   "Tip pops in close to camera"
+  ],
+  [
+   357.309,
+   "whoosh",
+   -8,
+   -0.3,
+   "whip"
+  ],
+  [
+   357.389,
+   "ui_pop",
+   -8,
+   0.211,
+   "TIP card"
+  ],
+  [
+   359.78,
+   "whoosh",
+   -6,
+   0.3,
+   "whip to the cafeteria"
+  ],
+  [
+   359.88,
+   "dishes",
+   -14,
+   0.4,
+   "cafeteria trays"
+  ],
+  [
+   362.59,
+   "cricket",
+   -3,
+   -0.335,
+   "the joke dies: a cricket on the table"
+  ],
+  [
+   362.609,
+   "pop",
+   -15,
+   -0.262,
+   "\"...\" over a head"
+  ],
+  [
+   362.698,
+   "pop",
+   -15,
+   -0.117,
+   "\"...\" over a head"
+  ],
+  [
+   362.877,
+   "pop",
+   -15,
+   0,
+   "\"...\" over a head"
+  ],
+  [
+   363.235,
+   "pop",
+   -15,
+   0.321,
+   "\"...\" over a head"
+  ],
+  [
+   363.34,
+   "cricket",
+   -6,
+   -0.335,
+   "cricket"
+  ],
+  [
+   364.23,
+   "click",
+   -2,
+   0.102,
+   "snap"
+  ],
+  [
+   364.34,
+   "pop",
+   -2,
+   0,
+   "reset at the lunch table: white pop"
+  ],
+  [
+   364.37,
+   "stone",
+   -4,
+   0,
+   "reset at the lunch table: blocks scatter"
+  ],
+  [
+   364.38,
+   "powerdown",
+   -4,
+   0,
+   "RESPAWNING overlay greys the room"
+  ],
+  [
+   364.4,
+   "countdown_tick",
+   -4,
+   0,
+   "RESPAWNING 3"
+  ],
+  [
+   364.69,
+   "rock_drop",
+   -12,
+   0,
+   "reset at the lunch table: blocks land"
+  ],
+  [
+   364.916,
+   "countdown_tick",
+   -4,
+   0,
+   "RESPAWNING 2"
+  ],
+  [
+   365.451,
+   "countdown_final",
+   -3,
+   0,
+   "RESPAWNING 1"
+  ],
+  [
+   365.967,
+   "respawn",
+   -2,
+   0,
+   "respawn (white flash)"
+  ],
+  [
+   366.427,
+   "camera_flash",
+   -12,
+   0,
+   "TRY 3"
+  ],
+  [
+   366.687,
+   "camera_flash",
+   -12,
+   0,
+   "TRY 6"
+  ],
+  [
+   366.827,
+   "camera_flash",
+   -12,
+   0,
+   "TRY 9"
+  ],
+  [
+   366.937,
+   "camera_flash",
+   -12,
+   0,
+   "TRY 12"
+  ],
+  [
+   367.017,
+   "camera_flash",
+   -12,
+   0,
+   "TRY 15"
+  ],
+  [
+   367.097,
+   "camera_flash",
+   -12,
+   0,
+   "TRY 18"
+  ],
+  [
+   367.157,
+   "camera_flash",
+   -12,
+   0,
+   "TRY 21"
+  ],
+  [
+   367.217,
+   "camera_flash",
+   -12,
+   0,
+   "TRY 24"
+  ],
+  [
+   367.267,
+   "camera_flash",
+   -12,
+   0,
+   "TRY 27"
+  ],
+  [
+   367.317,
+   "camera_flash",
+   -12,
+   0,
+   "TRY 30"
+  ],
+  [
+   367.331,
+   "bell",
+   -4,
+   0,
+   "TRY 31 (gold)"
+  ],
+  [
+   369.16,
+   "sparkle",
+   -9,
+   0.175,
+   "raises the pizza slice"
+  ],
+  [
+   370.28,
+   "bubbles",
+   -12,
+   -0.19,
+   "the milk kid slurps through a bendy straw"
+  ],
+  [
+   372.28,
+   "orch_hit",
+   -4,
+   0,
+   "\"THE SURVIVORS\" banner"
+  ],
+  [
+   372.63,
+   "rimshot",
+   0,
+   0.394,
+   "BA-DUM TSS!"
+  ],
+  [
+   373.4,
+   "crowd_laugh",
+   2,
+   0,
+   "the whole cafeteria laughs"
+  ],
+  [
+   373.45,
+   "kids_laugh",
+   -1,
+   0.2,
+   "kids howling"
+  ],
+  [
+   374.5,
+   "body_fall",
+   -5,
+   0.6,
+   "a kid falls off the bench"
+  ],
+  [
+   374.52,
+   "thud",
+   -8,
+   0.6,
+   "thump"
+  ],
+  [
+   375.79,
+   "giggle",
+   -4,
+   -0.117,
+   "the milk kid giggles"
+  ],
+  [
+   376.47,
+   "splash",
+   -2,
+   0.102,
+   "milk shoots out of his nose"
+  ],
+  [
+   377.32,
+   "splat",
+   -2,
+   0.211,
+   "PFFFT!"
+  ],
+  [
+   378.04,
+   "kids_laugh",
+   -2,
+   0,
+   "the table howls harder"
+  ],
+  [
+   378.14,
+   "splash",
+   -10,
+   -0.19,
+   "milk still arcing"
+  ],
+  [
+   378.94,
+   "shine",
+   -4,
+   0.029,
+   "golden rays"
+  ],
+  [
+   378.99,
+   "harp_up",
+   -6,
+   0,
+   "he glows"
+  ],
+  [
+   380.72,
+   "impact",
+   -2,
+   0,
+   "smash zoom on LIFE"
+  ],
+  [
+   380.74,
+   "crowd_cheer",
+   -2,
+   0,
+   "the cafeteria cheers"
+  ],
+  [
+   381.64,
+   "whoosh",
+   -6,
+   0,
+   "pull back"
+  ],
+  [
+   381.69,
+   "ui_pop",
+   -4,
+   0,
+   "ATTEMPTS TODAY counter"
+  ],
+  [
+   381.76,
+   "tap",
+   -11,
+   0,
+   "counter rolls 0 -> 214"
+  ],
+  [
+   381.88,
+   "tap",
+   -11,
+   0,
+   "counter rolls 0 -> 214"
+  ],
+  [
+   382,
+   "tap",
+   -11,
+   0,
+   "counter rolls 0 -> 214"
+  ],
+  [
+   382.12,
+   "tap",
+   -11,
+   0,
+   "counter rolls 0 -> 214"
+  ],
+  [
+   382.16,
+   "pop",
+   -12,
+   0,
+   "a fail of the day flies into the counter (1/10)"
+  ],
+  [
+   382.24,
+   "tap",
+   -11,
+   0,
+   "counter rolls 0 -> 214"
+  ],
+  [
+   382.297,
+   "pop",
+   -12,
+   0,
+   "a fail of the day flies into the counter (2/10)"
+  ],
+  [
+   382.36,
+   "tap",
+   -11,
+   0,
+   "counter rolls 0 -> 214"
+  ],
+  [
+   382.433,
+   "pop",
+   -12,
+   0,
+   "a fail of the day flies into the counter (3/10)"
+  ],
+  [
+   382.48,
+   "tap",
+   -11,
+   0,
+   "counter rolls 0 -> 214"
+  ],
+  [
+   382.57,
+   "pop",
+   -12,
+   0,
+   "a fail of the day flies into the counter (4/10)"
+  ],
+  [
+   382.6,
+   "tap",
+   -11,
+   0,
+   "counter rolls 0 -> 214"
+  ],
+  [
+   382.707,
+   "pop",
+   -12,
+   0,
+   "a fail of the day flies into the counter (5/10)"
+  ],
+  [
+   382.72,
+   "tap",
+   -11,
+   0,
+   "counter rolls 0 -> 214"
+  ],
+  [
+   382.84,
+   "tap",
+   -11,
+   0,
+   "counter rolls 0 -> 214"
+  ],
+  [
+   382.843,
+   "pop",
+   -12,
+   0,
+   "a fail of the day flies into the counter (6/10)"
+  ],
+  [
+   382.96,
+   "tap",
+   -11,
+   0,
+   "counter rolls 0 -> 214"
+  ],
+  [
+   382.98,
+   "pop",
+   -12,
+   0,
+   "a fail of the day flies into the counter (7/10)"
+  ],
+  [
+   383.04,
+   "achievement",
+   0,
+   0,
+   "214!"
+  ],
+  [
+   383.09,
+   "confetti",
+   -5,
+   0,
+   "sparkles"
+  ],
+  [
+   383.117,
+   "pop",
+   -12,
+   0,
+   "a fail of the day flies into the counter (8/10)"
+  ],
+  [
+   383.253,
+   "pop",
+   -12,
+   0,
+   "a fail of the day flies into the counter (9/10)"
+  ],
+  [
+   383.39,
+   "pop",
+   -12,
+   0,
+   "a fail of the day flies into the counter (10/10)"
+  ],
+  [
+   384.64,
+   "tada",
+   -4,
+   0,
+   "second bump on \"row!\""
+  ],
+  [
+   385.42,
+   "whoosh_up",
+   -2,
+   0,
+   "the counter flies at the camera"
+  ],
+  [
+   385.68,
+   "camera_flash",
+   -5,
+   0,
+   "white flash to SC 06"
+  ]
+ ]
+}

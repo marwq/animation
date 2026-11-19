@@ -181,10 +181,10 @@ function ghostFail(kind, t, u, o = {}) {
     const bk = bikeRig(t, { x: bx, y, s, rot: sg * 0, spin: u * 20, rider: false, grey: true });
     pr += S.g(bk.bike, null, { opacity: f(alpha) });
     if (u < 0.15) { const b2 = bikeRig(t, { x: bx, y, s, rider: 'ghost', grey: true, alpha }); gh += S.g(b2.rider, flip ? `translate(${f(2 * bx)} 0) scale(-1 1)` : null); }
-    else gh += draw.ghost({ x: x + sg * 420 * s * seg(u, 0.15, 0.55), y, s, alpha, ...P, face });
+    else gh += draw.ghost({ x: x + sg * 420 * s * seg(u, 0.15, 0.55), y, s, alpha, rim: o.rim ?? false, ...P, face });
   } else {
     const fx = kind === 'trip' ? x + sg * lerp(-120, 80, u) * s * 2 : kind === 'slip' ? x + sg * lerp(-200, 60, seg(u, 0, 0.42)) * s * 2 : x;
-    gh += draw.ghost({ x: fx, y, s, alpha, ...P, face });
+    gh += draw.ghost({ x: fx, y, s, alpha, rim: o.rim ?? false, ...P, face });
     if (kind === 'slip') {
       const a = seg(u, 0.28, 0.7);
       const tx = fx + sg * lerp(220, 520, a) * s, ty = y - lerp(560, 300, a) * s - 600 * s * Math.sin(a * Math.PI);

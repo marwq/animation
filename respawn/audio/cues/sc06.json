@@ -1,0 +1,984 @@
+{
+ "scene": "SC 06",
+ "start": 385.74,
+ "end": 471.04,
+ "music": [
+  {
+   "start": 385.74,
+   "end": 408.68,
+   "mood": "playful",
+   "energy": 0.45,
+   "in": "fade",
+   "out": "scratch"
+  },
+  {
+   "start": 408.68,
+   "end": 412.668,
+   "mood": "silence",
+   "energy": 0.3,
+   "in": "cut",
+   "out": "cut"
+  },
+  {
+   "start": 412.668,
+   "end": 417.28,
+   "mood": "loop",
+   "energy": 0.55,
+   "in": "cut",
+   "out": "cut"
+  },
+  {
+   "start": 417.28,
+   "end": 427.12,
+   "mood": "loop",
+   "energy": 0.4,
+   "in": "cut",
+   "out": "cut"
+  },
+  {
+   "start": 427.12,
+   "end": 436.41,
+   "mood": "loop",
+   "energy": 0.65,
+   "in": "cut",
+   "out": "tapestop"
+  },
+  {
+   "start": 436.41,
+   "end": 446.28,
+   "mood": "tender",
+   "energy": 0.3,
+   "in": "fade",
+   "out": "fade"
+  },
+  {
+   "start": 446.28,
+   "end": 451.42,
+   "mood": "warm",
+   "energy": 0.35,
+   "in": "swell",
+   "out": "fade"
+  },
+  {
+   "start": 451.42,
+   "end": 471.04,
+   "mood": "sad",
+   "energy": 0.28,
+   "in": "fade",
+   "out": "fade"
+  }
+ ],
+ "ambience": [
+  {
+   "start": 385.74,
+   "end": 392.5,
+   "name": "room",
+   "gain_db": -18
+  },
+  {
+   "start": 394.72,
+   "end": 446.28,
+   "name": "room",
+   "gain_db": -18
+  },
+  {
+   "start": 385.74,
+   "end": 436.41,
+   "name": "birds",
+   "gain_db": -24
+  },
+  {
+   "start": 451.42,
+   "end": 457.22,
+   "name": "room",
+   "gain_db": -16
+  },
+  {
+   "start": 457.22,
+   "end": 471.04,
+   "name": "kitchen",
+   "gain_db": -15
+  }
+ ],
+ "footsteps": [
+  {
+   "start": 455.23,
+   "end": 456.78,
+   "interval": 0.349,
+   "surface": "hard",
+   "gain_db": -12,
+   "pan": -0.45
+  },
+  {
+   "start": 449.35,
+   "end": 451.37,
+   "interval": 0.349,
+   "surface": "soft",
+   "gain_db": -18,
+   "pan": 0.1
+  }
+ ],
+ "sfx": [
+  [
+   385.76,
+   "swish",
+   -10,
+   0,
+   "out of SC 05's white flash into the workshop"
+  ],
+  [
+   385.87,
+   "stamp",
+   -3,
+   -0.4,
+   "WEDNESDAY calendar page slams in"
+  ],
+  [
+   386.92,
+   "stamp",
+   0,
+   -0.35,
+   "REHEARSAL rubber stamp"
+  ],
+  [
+   387.99,
+   "whoosh",
+   -8,
+   0.3,
+   "whip to Ivy and the easel"
+  ],
+  [
+   389.8,
+   "cloth",
+   -6,
+   -0.4,
+   "Ivy yanks the sheet off the easel"
+  ],
+  [
+   389.9,
+   "tada",
+   -10,
+   -0.4,
+   "ELEPHANT TOOTHPASTE! chart revealed"
+  ],
+  [
+   389.95,
+   "sparkle",
+   -10,
+   -0.3,
+   "sparkles"
+  ],
+  [
+   392.5,
+   "whoosh",
+   -8,
+   0,
+   "whip to the blueprint insert"
+  ],
+  [
+   392.55,
+   "paper",
+   -10,
+   0,
+   "blueprint paper"
+  ],
+  [
+   392.78,
+   "swish",
+   -12,
+   0,
+   "the volcano draws itself on"
+  ],
+  [
+   393.66,
+   "whoosh_up",
+   -6,
+   0,
+   "FOAM!!! bursts out of the drawing"
+  ],
+  [
+   393.76,
+   "bubbles",
+   -12,
+   0,
+   ""
+  ],
+  [
+   394.72,
+   "pop",
+   -16,
+   0,
+   "cut to the real hat"
+  ],
+  [
+   395.74,
+   "poof",
+   -4,
+   0.1,
+   "the hat burps a puff of foam: pfft!"
+  ],
+  [
+   395.79,
+   "bubbles",
+   -12,
+   0.1,
+   ""
+  ],
+  [
+   396.44,
+   "whoosh",
+   -8,
+   -0.2,
+   "whip: two-shot"
+  ],
+  [
+   397.34,
+   "sparkle",
+   -6,
+   -0.3,
+   "showman flourish, hat held high"
+  ],
+  [
+   397.39,
+   "tada",
+   -12,
+   -0.3,
+   ""
+  ],
+  [
+   399.74,
+   "swish",
+   -14,
+   -0.3,
+   "she tilts the hat to show it is empty"
+  ],
+  [
+   401.58,
+   "magic",
+   -8,
+   0,
+   "her hand dips into the hat"
+  ],
+  [
+   403.44,
+   "tap",
+   -14,
+   0.2,
+   "smash to the flat close-up"
+  ],
+  [
+   405.3,
+   "cloth",
+   -14,
+   0.2,
+   "he shrugs"
+  ],
+  [
+   407.58,
+   "riser",
+   -8,
+   0,
+   "build to the eruption"
+  ],
+  [
+   407.88,
+   "splash",
+   -10,
+   -0.2,
+   "the flask tips into the hat"
+  ],
+  [
+   408,
+   "sizzle",
+   -8,
+   -0.2,
+   "fzzz..."
+  ],
+  [
+   408.68,
+   "whoosh_up",
+   0,
+   -0.1,
+   "the foam jet erupts sideways"
+  ],
+  [
+   408.9,
+   "big_splash",
+   3,
+   0.4,
+   "SPLOOSH! foam in his face"
+  ],
+  [
+   408.93,
+   "impact",
+   -6,
+   0.4,
+   "camera shake"
+  ],
+  [
+   408.98,
+   "bubbles",
+   -6,
+   0.4,
+   ""
+  ],
+  [
+   409.08,
+   "steam_hiss",
+   -10,
+   0.4,
+   "foam fizzing"
+  ],
+  [
+   409.28,
+   "giggle",
+   -10,
+   -0.2,
+   "Ivy can't help laughing"
+  ],
+  [
+   409.98,
+   "pop",
+   -18,
+   0.1,
+   "foam drip"
+  ],
+  [
+   410.38,
+   "pop",
+   -18,
+   0.1,
+   "foam drip"
+  ],
+  [
+   410.89,
+   "click",
+   0,
+   0.3,
+   "casual finger snap"
+  ],
+  [
+   411.14,
+   "pop",
+   -2,
+   0.1,
+   "he crumbles into blocks"
+  ],
+  [
+   411.17,
+   "stone",
+   -4,
+   0.1,
+   "blocks"
+  ],
+  [
+   411.22,
+   "pixel_wipe",
+   -8,
+   0,
+   ""
+  ],
+  [
+   411.24,
+   "powerdown",
+   -6,
+   0,
+   "grey RESETTING banner"
+  ],
+  [
+   411.26,
+   "countdown_tick",
+   -4,
+   0.3,
+   "3"
+  ],
+  [
+   411.716,
+   "countdown_tick",
+   -4,
+   0.3,
+   "2"
+  ],
+  [
+   412.192,
+   "countdown_final",
+   -2,
+   0.3,
+   "1"
+  ],
+  [
+   412.668,
+   "respawn",
+   0,
+   0.3,
+   "pop back onto the pad: the rehearsal starts over"
+  ],
+  [
+   412.718,
+   "forcefield",
+   -10,
+   0.3,
+   ""
+  ],
+  [
+   412.718,
+   "tap",
+   -12,
+   -0.9,
+   "RESETS: 1"
+  ],
+  [
+   412.84,
+   "swish",
+   -10,
+   -0.3,
+   "Ivy's arm sweeps the green flask off the table"
+  ],
+  [
+   413.14,
+   "glass",
+   -2,
+   -0.5,
+   "CRASH!"
+  ],
+  [
+   413.17,
+   "splash",
+   -8,
+   -0.5,
+   ""
+  ],
+  [
+   413.26,
+   "click",
+   -2,
+   0.3,
+   "snap"
+  ],
+  [
+   413.34,
+   "rewind",
+   -2,
+   0,
+   "VHS rewind: the flask flies back up"
+  ],
+  [
+   414.03,
+   "vhs_clunk",
+   -8,
+   0,
+   "RESET"
+  ],
+  [
+   414.08,
+   "tap",
+   -12,
+   -0.9,
+   "RESETS: 2"
+  ],
+  [
+   414.12,
+   "whoosh",
+   -10,
+   0,
+   "cut to Ivy's POV"
+  ],
+  [
+   414.42,
+   "splat",
+   -4,
+   0.3,
+   "a dollop of foam lands on his head"
+  ],
+  [
+   414.5,
+   "pop",
+   -4,
+   0.3,
+   "fast crumble"
+  ],
+  [
+   414.52,
+   "stone",
+   -8,
+   0.3,
+   ""
+  ],
+  [
+   414.8,
+   "respawn",
+   -4,
+   0.3,
+   "fast pop"
+  ],
+  [
+   415.51,
+   "respawn",
+   -12,
+   0.1,
+   "montage loop 1: pop"
+  ],
+  [
+   415.668,
+   "metal_hit",
+   -4,
+   0.1,
+   "CLONK: the hat flips onto his head"
+  ],
+  [
+   415.707,
+   "pop",
+   -8,
+   0.1,
+   "crumble"
+  ],
+  [
+   415.737,
+   "tap",
+   -12,
+   -0.9,
+   "RESETS counter rolls"
+  ],
+  [
+   415.948,
+   "respawn",
+   -12,
+   0.3,
+   "montage loop 2: pop"
+  ],
+  [
+   416.105,
+   "bonk",
+   -4,
+   0.3,
+   "BONK: a flask cork"
+  ],
+  [
+   416.144,
+   "pop",
+   -8,
+   0.3,
+   "crumble"
+  ],
+  [
+   416.174,
+   "tap",
+   -12,
+   -0.9,
+   "RESETS counter rolls"
+  ],
+  [
+   416.385,
+   "respawn",
+   -12,
+   0.2,
+   "montage loop 3: pop"
+  ],
+  [
+   416.543,
+   "splash",
+   -4,
+   0.2,
+   "ACHOO: Ivy sneezes foam"
+  ],
+  [
+   416.582,
+   "pop",
+   -8,
+   0.2,
+   "crumble"
+  ],
+  [
+   416.612,
+   "tap",
+   -12,
+   -0.9,
+   "RESETS counter rolls"
+  ],
+  [
+   416.823,
+   "respawn",
+   -12,
+   0.1,
+   "montage loop 4: pop"
+  ],
+  [
+   416.98,
+   "slip",
+   -4,
+   0.1,
+   "SLIP: foam puddle"
+  ],
+  [
+   417.019,
+   "pop",
+   -8,
+   0.1,
+   "crumble"
+  ],
+  [
+   417.049,
+   "tap",
+   -12,
+   -0.9,
+   "RESETS counter rolls"
+  ],
+  [
+   417.13,
+   "ui_pop",
+   -8,
+   -0.9,
+   "RESETS: 27"
+  ],
+  [
+   417.28,
+   "whoosh",
+   -12,
+   0,
+   "cut"
+  ],
+  [
+   419.24,
+   "glass",
+   -14,
+   0.1,
+   "she takes the flask (clink)"
+  ],
+  [
+   420.03,
+   "whoosh",
+   -10,
+   -0.3,
+   "the sneeze mime: ah-CHOO"
+  ],
+  [
+   421.451,
+   "tap",
+   -14,
+   0.3,
+   "smash to his flat close-up"
+  ],
+  [
+   421.91,
+   "camera_flash",
+   -8,
+   -0.5,
+   "memory polaroid VERSION 87 pops"
+  ],
+  [
+   421.96,
+   "paper",
+   -10,
+   -0.5,
+   ""
+  ],
+  [
+   422.66,
+   "swish",
+   -10,
+   -0.6,
+   "the polaroid slides away"
+  ],
+  [
+   423.48,
+   "tap",
+   -16,
+   0.3,
+   "finger wag"
+  ],
+  [
+   423.68,
+   "tap",
+   -16,
+   0.3,
+   "finger wag"
+  ],
+  [
+   427.12,
+   "whoosh",
+   -6,
+   0,
+   "whip into the loop"
+  ],
+  [
+   427.22,
+   "ui_pop",
+   -6,
+   0,
+   "THURSDAY · VERSION counter"
+  ],
+  [
+   427.39,
+   "cricket",
+   -14,
+   0,
+   "awkward silence"
+  ],
+  [
+   427.64,
+   "countdown_tick",
+   -14,
+   0,
+   "the same moment loops: pop, again"
+  ],
+  [
+   428.16,
+   "countdown_tick",
+   -14,
+   0,
+   "the same moment loops: pop, again"
+  ],
+  [
+   428.37,
+   "whoosh_long",
+   -6,
+   0,
+   "the frame shrinks into a wall of 412 identical Thursdays"
+  ],
+  [
+   429.32,
+   "impact",
+   -8,
+   0,
+   "VERSION 412"
+  ],
+  [
+   429.34,
+   "level_up",
+   -12,
+   0,
+   "counter bump (hollow)"
+  ],
+  [
+   430.96,
+   "whoosh_up",
+   -6,
+   -0.1,
+   "the perfect foam crown"
+  ],
+  [
+   431.06,
+   "bubbles",
+   -12,
+   -0.1,
+   ""
+  ],
+  [
+   432.35,
+   "stamp",
+   -4,
+   -0.4,
+   "PERFECT! stamp"
+  ],
+  [
+   432.4,
+   "achievement",
+   -8,
+   -0.4,
+   ""
+  ],
+  [
+   433.813,
+   "chime",
+   -10,
+   0.3,
+   "grey quest marker spins over him"
+  ],
+  [
+   433.96,
+   "impact",
+   -10,
+   0,
+   "smash zoom on YOU"
+  ],
+  [
+   437.13,
+   "paper",
+   -10,
+   0,
+   "pages"
+  ],
+  [
+   437.38,
+   "thud",
+   -4,
+   0,
+   "Ivy closes the Book of Fails"
+  ],
+  [
+   440.68,
+   "reverse_swell",
+   -10,
+   0.3,
+   "he fades toward a grey ghost"
+  ],
+  [
+   441.66,
+   "shine",
+   -16,
+   0.3,
+   "colour returns"
+  ],
+  [
+   446.03,
+   "harp_up",
+   -6,
+   0,
+   "into the crayon memory"
+  ],
+  [
+   446.33,
+   "magic",
+   -14,
+   0,
+   ""
+  ],
+  [
+   448.02,
+   "squeak",
+   -8,
+   -0.3,
+   "the glue bottle squish"
+  ],
+  [
+   449,
+   "slap",
+   -6,
+   0,
+   "hand on the backpack"
+  ],
+  [
+   449.05,
+   "boing",
+   -4,
+   0,
+   "stuck!"
+  ],
+  [
+   449.55,
+   "giggle",
+   -10,
+   0.1,
+   "the little kids laugh"
+  ],
+  [
+   450.28,
+   "chime",
+   -12,
+   -0.3,
+   "the crayon sun arcs over: the whole day"
+  ],
+  [
+   451.22,
+   "harp_down",
+   -8,
+   0,
+   "back to the present"
+  ],
+  [
+   451.44,
+   "music_box",
+   -12,
+   0.3,
+   "the moon"
+  ],
+  [
+   454.82,
+   "cloth",
+   -14,
+   -0.1,
+   "Ivy turns to go"
+  ],
+  [
+   457.22,
+   "dishes",
+   -14,
+   0.4,
+   "dinner"
+  ],
+  [
+   457.93,
+   "ui_pop",
+   -10,
+   -0.6,
+   "the rimshot kit pops in, ready"
+  ],
+  [
+   459.411,
+   "cymbal",
+   -18,
+   -0.6,
+   "tss… the rimshot fizzles (no ba-dum)"
+  ],
+  [
+   462.007,
+   "blink",
+   -12,
+   -0.2,
+   "Dad's smile freezes"
+  ],
+  [
+   462.86,
+   "tap",
+   -14,
+   0.3,
+   "accent on ALL"
+  ],
+  [
+   464.691,
+   "slide_down",
+   -12,
+   -0.4,
+   "the pancake slides off the lowered spatula"
+  ],
+  [
+   465.285,
+   "splat",
+   -10,
+   -0.4,
+   "flop into the pan"
+  ],
+  [
+   465.315,
+   "pan_clang",
+   -16,
+   -0.4,
+   ""
+  ],
+  [
+   466.62,
+   "blink",
+   -12,
+   0.1,
+   "Gary's slow blink"
+  ],
+  [
+   467.71,
+   "bubbles",
+   -12,
+   0,
+   "Gary slowly turns..."
+  ],
+  [
+   468.11,
+   "swish",
+   -14,
+   0,
+   "...his tail to the hero"
+  ],
+  [
+   468.82,
+   "blink",
+   -12,
+   0,
+   "blink"
+  ],
+  [
+   470.72,
+   "whoosh_down",
+   -14,
+   0,
+   "dip to night blue (SC 07)"
+  ]
+ ]
+}

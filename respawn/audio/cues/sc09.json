@@ -1,0 +1,773 @@
+{
+ "scene": "SC 09",
+ "start": 597.94,
+ "end": 655.82,
+ "music": [
+  {
+   "start": 597.94,
+   "end": 604.9,
+   "mood": "sad",
+   "energy": 0.3,
+   "in": "fade",
+   "out": "cut"
+  },
+  {
+   "start": 604.9,
+   "end": 610.64,
+   "mood": "glitch_build",
+   "energy": 0.6,
+   "in": "cut",
+   "out": "cut"
+  },
+  {
+   "start": 610.64,
+   "end": 626.82,
+   "mood": "tender",
+   "energy": 0.4,
+   "in": "fade",
+   "out": "fade"
+  },
+  {
+   "start": 626.82,
+   "end": 630.62,
+   "mood": "wonder",
+   "energy": 0.5,
+   "in": "swell",
+   "out": "cut"
+  },
+  {
+   "start": 630.62,
+   "end": 636.68,
+   "mood": "epic",
+   "energy": 0.9,
+   "in": "cut",
+   "out": "fade"
+  },
+  {
+   "start": 636.68,
+   "end": 640.36,
+   "mood": "playful",
+   "energy": 0.45,
+   "in": "fade",
+   "out": "fade"
+  },
+  {
+   "start": 640.36,
+   "end": 649.91,
+   "mood": "tender",
+   "energy": 0.4,
+   "in": "fade",
+   "out": "fade"
+  },
+  {
+   "start": 649.91,
+   "end": 655.82,
+   "mood": "warm",
+   "energy": 0.5,
+   "in": "swell",
+   "out": "fade"
+  }
+ ],
+ "ambience": [
+  {
+   "start": 597.94,
+   "end": 630.62,
+   "name": "wind",
+   "gain_db": -16
+  },
+  {
+   "start": 630.92,
+   "end": 634.68,
+   "name": "birds",
+   "gain_db": -12
+  },
+  {
+   "start": 634.68,
+   "end": 636.68,
+   "name": "kitchen",
+   "gain_db": -16
+  },
+  {
+   "start": 636.68,
+   "end": 655.82,
+   "name": "birds",
+   "gain_db": -14
+  },
+  {
+   "start": 633.416,
+   "end": 634.68,
+   "name": "town",
+   "gain_db": -16
+  }
+ ],
+ "footsteps": [
+  {
+   "start": 652.128,
+   "end": 655.82,
+   "interval": 0.449,
+   "surface": "hard",
+   "gain_db": -12,
+   "pan": 0
+  }
+ ],
+ "sfx": [
+  [
+   597.99,
+   "static",
+   -14,
+   0,
+   "frozen world hum"
+  ],
+  [
+   599.09,
+   "ui_pop",
+   -2,
+   0,
+   "DELETE SAVE? window pops open"
+  ],
+  [
+   599.14,
+   "notify",
+   -6,
+   0,
+   "system chime"
+  ],
+  [
+   599.54,
+   "glitch",
+   -12,
+   0.496,
+   "Tip glitches softly"
+  ],
+  [
+   600.6,
+   "whoosh",
+   -8,
+   0.2,
+   "cut to the yard"
+  ],
+  [
+   601.6,
+   "glitch",
+   -14,
+   0.321,
+   "Tip flicker"
+  ],
+  [
+   603.22,
+   "zoom_in",
+   -6,
+   0,
+   "zoom on the fine print"
+  ],
+  [
+   603.24,
+   "ui_pop",
+   -8,
+   0.51,
+   "respawn icon pops"
+  ],
+  [
+   603.81,
+   "stamp",
+   0,
+   0.51,
+   "red X slams over the respawn icon"
+  ],
+  [
+   603.86,
+   "buzzer_wrong",
+   -6,
+   0.51,
+   "NO MORE RESPAWNS"
+  ],
+  [
+   604.95,
+   "gulp",
+   -4,
+   -0.044,
+   "the hero gulps"
+  ],
+  [
+   606.84,
+   "zoom_in",
+   -6,
+   0,
+   "smash zoom"
+  ],
+  [
+   606.92,
+   "stamp",
+   1,
+   0.029,
+   "TONIGHT! stamped over the poster"
+  ],
+  [
+   606.94,
+   "dramatic",
+   -4,
+   0,
+   "dun-dun"
+  ],
+  [
+   607.76,
+   "heartbeat",
+   -4,
+   0,
+   "heartbeat: the whole school watching"
+  ],
+  [
+   608.66,
+   "heartbeat",
+   -4,
+   0,
+   "heartbeat"
+  ],
+  [
+   609.62,
+   "crowd_gasp",
+   -2,
+   0,
+   "the whole house gasps"
+  ],
+  [
+   609.67,
+   "zoom_in",
+   -4,
+   0,
+   "dolly zoom"
+  ],
+  [
+   610.64,
+   "whoosh",
+   -10,
+   -0.2,
+   "back to the yard"
+  ],
+  [
+   612.492,
+   "cloth",
+   -8,
+   0.175,
+   "Ivy's hand on his shoulder"
+  ],
+  [
+   614.05,
+   "heartbeat",
+   -10,
+   0,
+   "silence: he looks up at YES"
+  ],
+  [
+   614.7,
+   "whoosh_long",
+   -10,
+   -0.4,
+   "slow pan across the frozen ghosts"
+  ],
+  [
+   616.93,
+   "whoosh",
+   -4,
+   0.5,
+   "a photo card slides in"
+  ],
+  [
+   617.18,
+   "paper",
+   -8,
+   0,
+   "card lands on the stack"
+  ],
+  [
+   617.43,
+   "skid",
+   -12,
+   -0.117,
+   "ghost skaters wipe out"
+  ],
+  [
+   617.69,
+   "stamp",
+   -1,
+   0.248,
+   "× 56 skate crashes"
+  ],
+  [
+   618.03,
+   "skid",
+   -13,
+   0.102,
+   "another wipe-out"
+  ],
+  [
+   618.71,
+   "whoosh",
+   -4,
+   0.5,
+   "a photo card slides in"
+  ],
+  [
+   618.96,
+   "paper",
+   -8,
+   0,
+   "card lands on the stack"
+  ],
+  [
+   619.21,
+   "cricket",
+   -6,
+   0.394,
+   "the joke dies: crickets"
+  ],
+  [
+   619.77,
+   "stamp",
+   -1,
+   0.248,
+   "× 31 bad jokes"
+  ],
+  [
+   620.71,
+   "whoosh",
+   -4,
+   0.5,
+   "a photo card slides in"
+  ],
+  [
+   620.96,
+   "paper",
+   -8,
+   0,
+   "card lands on the stack"
+  ],
+  [
+   621.11,
+   "bubbles",
+   -8,
+   0,
+   "Gary's bowl"
+  ],
+  [
+   621.66,
+   "boing",
+   -6,
+   0,
+   "Gary's eyes go wide"
+  ],
+  [
+   622.25,
+   "stamp",
+   -1,
+   0.248,
+   "× 1 very surprised goldfish"
+  ],
+  [
+   623.32,
+   "whoosh",
+   -6,
+   0,
+   "the cards scatter off his face"
+  ],
+  [
+   624.52,
+   "harp_up",
+   -10,
+   0,
+   "his face softens"
+  ],
+  [
+   626.92,
+   "magic",
+   -6,
+   0,
+   "the ghosts get back up"
+  ],
+  [
+   627.12,
+   "shine",
+   -8,
+   0,
+   "golden rims"
+  ],
+  [
+   629.26,
+   "cloth",
+   -10,
+   0.029,
+   "he nods"
+  ],
+  [
+   630.43,
+   "whoosh_up",
+   -8,
+   -0.262,
+   "he reaches for YES"
+  ],
+  [
+   630.62,
+   "click",
+   0,
+   -0.233,
+   "YES pressed"
+  ],
+  [
+   630.65,
+   "confirm",
+   -2,
+   -0.233,
+   "confirm"
+  ],
+  [
+   630.92,
+   "reverse_swell",
+   -2,
+   0,
+   "the save deletes"
+  ],
+  [
+   630.94,
+   "shine",
+   0,
+   0,
+   "white flash"
+  ],
+  [
+   630.96,
+   "confetti",
+   -2,
+   0,
+   "block confetti bursts"
+  ],
+  [
+   630.98,
+   "pop",
+   -8,
+   0,
+   "a ghost pops into cubes"
+  ],
+  [
+   631.02,
+   "magic",
+   -4,
+   0,
+   "colour floods back from the hero"
+  ],
+  [
+   631.04,
+   "glass",
+   -8,
+   0,
+   "the window bursts into blocks"
+  ],
+  [
+   631.05,
+   "pop",
+   -10,
+   0.694,
+   "a ghost pops into cubes"
+  ],
+  [
+   631.12,
+   "pop",
+   -12,
+   -0.179,
+   "a ghost pops into cubes"
+  ],
+  [
+   631.19,
+   "pop",
+   -8,
+   -0.648,
+   "a ghost pops into cubes"
+  ],
+  [
+   631.22,
+   "tada",
+   -4,
+   0,
+   "golden hour"
+  ],
+  [
+   631.26,
+   "pop",
+   -10,
+   0.346,
+   "a ghost pops into cubes"
+  ],
+  [
+   631.33,
+   "pop",
+   -12,
+   0.559,
+   "a ghost pops into cubes"
+  ],
+  [
+   631.4,
+   "pop",
+   -8,
+   -0.49,
+   "a ghost pops into cubes"
+  ],
+  [
+   631.47,
+   "pop",
+   -10,
+   -0.433,
+   "a ghost pops into cubes"
+  ],
+  [
+   631.54,
+   "pop",
+   -12,
+   0.601,
+   "a ghost pops into cubes"
+  ],
+  [
+   631.61,
+   "pop",
+   -8,
+   0.278,
+   "a ghost pops into cubes"
+  ],
+  [
+   633.296,
+   "whoosh",
+   -4,
+   0.3,
+   "whip to the town"
+  ],
+  [
+   633.516,
+   "wind_gust",
+   -10,
+   0,
+   "birds take off"
+  ],
+  [
+   633.516,
+   "achievement",
+   -6,
+   -0.518,
+   "Save deleted toast"
+  ],
+  [
+   633.716,
+   "engine",
+   -10,
+   0.467,
+   "the bus drives off"
+  ],
+  [
+   634.016,
+   "car_horn",
+   -14,
+   0.54,
+   "bus horn"
+  ],
+  [
+   634.73,
+   "ui_pop",
+   -8,
+   0,
+   "RESPAWN: DISABLED pill"
+  ],
+  [
+   634.78,
+   "loading",
+   -10,
+   0,
+   "the hanging pancake spinner"
+  ],
+  [
+   635.84,
+   "fall_whistle",
+   -8,
+   0,
+   "it finally falls"
+  ],
+  [
+   636.22,
+   "splat",
+   0,
+   0,
+   "PLOP! on the pan"
+  ],
+  [
+   636.22,
+   "powerdown",
+   -6,
+   0,
+   "disabled"
+  ],
+  [
+   636.24,
+   "pan_clang",
+   -4,
+   0,
+   "pan clang"
+  ],
+  [
+   636.27,
+   "sizzle",
+   -12,
+   0,
+   "sizzle"
+  ],
+  [
+   636.56,
+   "whoosh",
+   -4,
+   -0.3,
+   "whip to the front yard"
+  ],
+  [
+   636.88,
+   "boing",
+   -12,
+   0.394,
+   "Bea's trampoline"
+  ],
+  [
+   637.628,
+   "boing",
+   -12,
+   0.394,
+   "Bea's trampoline"
+  ],
+  [
+   638.33,
+   "blink",
+   -6,
+   0.029,
+   "Dad blinks, looks around"
+  ],
+  [
+   638.376,
+   "boing",
+   -12,
+   0.394,
+   "Bea's trampoline"
+  ],
+  [
+   639.124,
+   "boing",
+   -12,
+   0.394,
+   "Bea's trampoline"
+  ],
+  [
+   639.3,
+   "cloth",
+   -10,
+   0.029,
+   "scratches his head"
+  ],
+  [
+   639.872,
+   "boing",
+   -12,
+   0.394,
+   "Bea's trampoline"
+  ],
+  [
+   640.36,
+   "whoosh",
+   -10,
+   0.2,
+   "back to the golden yard"
+  ],
+  [
+   640.62,
+   "boing",
+   -12,
+   0.394,
+   "Bea's trampoline"
+  ],
+  [
+   640.86,
+   "sparkle",
+   -10,
+   0.248,
+   "the first pixels break off Tip"
+  ],
+  [
+   645.1,
+   "harp_up",
+   -6,
+   0.248,
+   "Tip starts to dissolve"
+  ],
+  [
+   646.1,
+   "sparkle",
+   -8,
+   0.248,
+   "pixels drift up"
+  ],
+  [
+   647.42,
+   "magic",
+   -6,
+   0.248,
+   "the last spark"
+  ],
+  [
+   648.12,
+   "chime",
+   -6,
+   0.248,
+   "Tip is gone"
+  ],
+  [
+   648.7,
+   "harp_up",
+   -10,
+   0.204,
+   "the spark rises into the sunset"
+  ],
+  [
+   649.91,
+   "thud",
+   -6,
+   -0.117,
+   "the flag falls into the grass"
+  ],
+  [
+   649.91,
+   "heart_pop",
+   -6,
+   0,
+   "LIVES: ∞"
+  ],
+  [
+   649.96,
+   "powerdown",
+   -8,
+   -0.117,
+   "its glow dies"
+  ],
+  [
+   651.4,
+   "heart_pop",
+   -2,
+   0,
+   "LIVES: 1"
+  ],
+  [
+   651.42,
+   "tap",
+   -8,
+   0,
+   "counter bump"
+  ],
+  [
+   655.47,
+   "whoosh_long",
+   -14,
+   0,
+   "dusk dip into the show"
+  ]
+ ]
+}

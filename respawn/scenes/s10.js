@@ -15,7 +15,10 @@ const SS = require('./sets_school');
 const X = require('../rig/extras');
 const AC = require('./acting');
 const E = require('./s10_env');
-const { S, f, clamp, lerp, ease, seg, bump, hash, ol, ln, T, TF, actor } = K;
+const { S, f, clamp, lerp, ease, seg, bump, hash, ol, ln, T, TF } = K;
+// close-up shots render the rig characters without the body-volume filter (perf; ENGINE.md). The router sets VOL_OFF.
+let VOL_OFF = false;
+const actor = (name, t, pose = {}, act) => K.actor(name, t, VOL_OFF && pose.volume === undefined ? { ...pose, volume: false } : pose, act);
 const V = K.V;
 const TM = E.times(V);
 const { START, END, C, B } = TM;
@@ -24,7 +27,7 @@ const SP = SS.SPOTS.auditorium;
 const HS = SP.house;
 const WG = SP.wings;
 const camAt = (x, y, z, rot = 0) => ({ ...SS.camAt(x, y, z), rot });
-const kid = (i, pose) => K.draw.kid(i, { shade: true, shadow: true, ...pose });
+const kid = (i, pose) => K.draw.kid(i, { shade: true, shadow: true, ...(VOL_OFF ? { volume: false } : {}), ...pose });
 const S45 = ST.s;
 const TWIN = 5;                                   // kid design used for the synchronized twins
 
@@ -217,12 +220,13 @@ function aftermath(t, o = {}) {
   const P = actProps(Math.max(t, B.land + 1));
   const FS = E.foamScape(t, 1, o);
   let back = P.back + FS.back;
-  let chars = principalAct(t, o.prin || {});
-  if (o.stache) chars += R.foamMustache(ST.stache.x, ST.stache.y, ST.stache.s * ease.outBack(clamp(o.stache, 0, 1)), t);
+  let chars = o.prinOff ? '' : principalAct(t, o.prin || {});
+  if (o.stache && !o.prinOff) chars += R.foamMustache(ST.stache.x, ST.stache.y, ST.stache.s * ease.outBack(clamp(o.stache, 0, 1)), t);
   chars += o.behindMound || '';
-  chars += FS.front;
+  if (!o.prinOff) chars += FS.front;
   chars += P.mid;
-  chars += E.drips(ST.prin - 10, 470, t, o.drips ?? 1, { n: 3, fall: 140, spread: 70 }) + E.bannerFoam(t, 1);
+  if (!o.prinOff) chars += E.drips(ST.prin - 10, 470, t, o.drips ?? 1, { n: 3, fall: 140, spread: 70 });
+  chars += E.bannerFoam(t, 1);
   return { back, chars };
 }
 
@@ -703,7 +707,7 @@ function shotL3(t) {
 const STACHE_T = () => B.chant[1] + 0.32;
 const FOAMY = 0.35;                               // foam on the two from the disco on (more hides the faces)
 function discoWorld(t, o = {}) {
-  const A = aftermath(t, { stache: seg(t, STACHE_T(), STACHE_T() + 0.25), drips: 0.5 });
+  const A = aftermath(t, { stache: seg(t, STACHE_T(), STACHE_T() + 0.25), drips: 0.5, prinOff: o.prinOff });
   let chars = A.chars;
   // snowman at stage left (built on the 4th FOAM)
   const snowK = o.snow ?? seg(t, B.chant[3] - 0.15, B.chant[3] + 0.25);
@@ -862,7 +866,7 @@ function shotP2(t) {
 function shotQ(t) {
   const z = 1.75 + 0.35 * ease.out(seg(t, B.disaster - 0.03, B.disaster + 0.07)) + 0.4 * ease.out(seg(t, B.ever - 0.03, B.ever + 0.07)) - 0.3 * ease.inOut(seg(t, B.smile, C.noWin));
   const cam = camAt(ST.prin - 10, 420, z, t >= B.disaster && t < B.ever ? -3 : 0);
-  const D = discoWorld(t, { snow: 1, beams: 0.6 });
+  const D = discoWorld(t, { snow: 1, beams: 0.6, prinOff: true });
   const chars = D.chars + dancers(t, { heroX: 1050, ivyX: 1230 });
   let o = stageFrame(t, cam, { spots: SPOTS3, confetti: 0.6 }, { back: D.back, chars: chars, top: principalCU(t) });
   const sm = seg(t, B.smile, B.smile + 0.3);
@@ -1013,9 +1017,13 @@ const SHOTS = [
   [C.phone, shotO1], [C.bea2, shotO2], [C.mushroom, shotP1], [C.best, shotP2], [C.noWin, shotQ],
   [C.pins, shotR1], [C.fair, shotR2], [C.unforget, shotR3], [C.final, shotS1], [C.final2, shotS2], [Infinity, shotS2b],
 ];
+// wide shots keep the full character shading; everything else is a close-up
+const WIDE = new Set([shotA1, shotA2, shotA3, shotA4, shotD5, shotF1, shotF3, shotH, shotI2, shotL1, shotN1]);
 function scene(t) {
-  for (const [end, fn] of SHOTS) if (t < end) return fn(t);
-  return shotS2b(t);
+  let fn = shotS2b;
+  for (const [end, g] of SHOTS) if (t < end) { fn = g; break; }
+  VOL_OFF = !WIDE.has(fn);
+  return fn(t);
 }
 function look(t) {
   if (t >= C.noCp && t < C.ladies) return { grade: 'cool', vignette: 0.95 };          // backstage nerves

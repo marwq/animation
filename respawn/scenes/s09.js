@@ -117,7 +117,7 @@ function yardGhosts(t, o = {}) {
       const ku = clamp(up * 1.4 - i * 0.05, 0, 1);
       if (ku > 0) {
         // golden rim: "they looked like... trying"
-        svg += S.ellipse(x, y - 470 * s, 300 * s, 520 * s, { fill: 'url(#rspGlowY)', opacity: f(0.55 * ku) });
+        svg += S.ellipse(x, y - 470 * s, 340 * s, 560 * s, { fill: 'url(#rspGlowY)', opacity: f(0.9 * ku) }) + S.ellipse(x, y - 470 * s, 220 * s, 420 * s, { fill: 'url(#rspGlowW)', opacity: f(0.35 * ku) });
         let P = failPose(kind, u);
         if (fl && P.view === 'side') P.flip = !P.flip;
         P = standUp(P, ease.inOut(ku), i % 2);
@@ -130,7 +130,8 @@ function yardGhosts(t, o = {}) {
 }
 function yard(t, cam, behind, chars, o = {}) {
   const Ly = SS.schoolyard.layers(o.tm ?? t, cam, { time: o.time || 'day', red: o.red ?? 1, frozen: o.frozen ?? 0.8, colorBack: o.colorBack, colorFrom: o.colorFrom, crowdBench: false });
-  return Ly.bg + Ly.mid + view(cam, behind || '', 1) + Ly.pole + Ly.front + view(cam, chars, 1) + Ly.fg + Ly.light;
+  const hz = o.haze ? S.rect(0, 0, 1920, 1080, 0, { fill: o.hazeCol || '#3A1828', opacity: f(o.haze) }) : '';
+  return Ly.bg + Ly.mid + view(cam, behind || '', 1) + hz + Ly.pole + Ly.front + view(cam, chars, 1) + Ly.fg + Ly.light;
 }
 // frost edges + pause bars (SC 08's frozen look, continued)
 function frost(k, t) {
@@ -168,7 +169,7 @@ function shTown(t) {
   const P2 = SH.SPOTS.town.roofs.filter((a) => a.k > 0.6).map((a, i) => ({ x: a.x, y: a.y, s: a.s, ...failPose(['flail', 'stairs', 'facepalm'][i % 3], hash(i)) }));
   o += view(cam, draw.ghostCrowd(P2, { alpha: 0.6 }), 0.68) + view(cam, draw.ghostCrowd(P, { alpha: 0.6 }), 1);
   o += Lt.fg + Lt.light + redPulse(t, 0.8) + frost(1, t);
-  o += delWin(t, seg(t, tDel - 0.05, tDel + 0.35), { y: WIN.y + 10 });
+  o += delWin(t, seg(t, tDel - 0.05, tDel + 0.35), { y: WIN.y + 60 });
   o += R.tip({ x: 1640, y: 640, s: 1.1, t, look: [-0.8, -0.4], glitch: 0.4, mood: 'sad' });
   return o + smash(t, tDel - 0.05, 0.1, 0.5);
 }
@@ -177,12 +178,11 @@ function shYard(t) {
   const u = seg(t, CUT.yard, CUT.fine);
   const cam = at(1110, lerp(580, 560, u), lerp(1.12, 1.22, ease.inOut(u)));
   const G = yardGhosts(START);
-  let ch = flagSvg(START) + G.back;
+  let ch = flagSvg(START);
   ch += hero(t, { turn: -0.1, armL: 14, armR: 14, headRot: -8, face: { name: 'nervous', eyes: { look: [0, -1] } } });
   ch += ivy(t, { face: { name: 'shocked', eyes: { look: [-0.2, -1] } }, armL: 20, armR: 20 });
-  ch += G.front;
-  let o = yard(START, cam, '', ch);
-  const [tx, ty] = toScr(cam, TIPW[0], TIPW[1]);
+  let o = yard(START, cam, G.back + G.front, ch, { haze: 0.18 });
+  const [tx, ty] = toScr(cam, 1560, 600);
   o += tipAt(t, tx, ty);
   o += delWin(t, 1, { y: WIN.y - 30, s: 0.92 });
   return o + redPulse(t, 0.6) + frost(0.6, t);
@@ -192,14 +192,14 @@ function shFine(t) {
   const u = seg(t, CUT.fine, CUT.ever);
   const z = lerp(2.1, 2.4, u);
   let o = S.rect(0, 0, 1920, 1080, 0, { fill: '#5A1420' });
-  o += S.g(delWin(t, 1, { x: 960, y: 540 }), frameTf(z, -2, 0, 0) + ` translate(0 ${f(-120)})`);
+  o += S.g(delWin(t, 1, { x: 960, y: 540 }), frameTf(z * 0.68, -2, -260, 40));
   // the respawn icon + red X slam
   const tX = w(0, 'respawns.');
   const k = pop(t, tX - 0.05, 0.22);
   const ic = S.circle(0, 0, 90, ol('#2A2F3D', 10)) + R.icon('retry', 0, 0, 56, '#FFFFFF', t);
-  o += S.g(ic, tf(1530, 300, pop(t, CUT.fine + 0.1, 0.25), -6));
-  if (k > 0) o += S.g(S.path('M-80 -80 L80 80 M80 -80 L-80 80', ln(34, '#151515')) + S.path('M-80 -80 L80 80 M80 -80 L-80 80', ln(22, '#FF3B4E')), tf(1530, 300, k));
-  o += TFS('NO MORE RESPAWNS', 1530, 470, 46, '#FFFFFF', { opacity: f(k) });
+  o += S.g(ic, tf(1660, 380, pop(t, CUT.fine + 0.1, 0.25) * 1.2, -6));
+  if (k > 0) o += S.g(S.path('M-80 -80 L80 80 M80 -80 L-80 80', ln(34, '#151515')) + S.path('M-80 -80 L80 80 M80 -80 L-80 80', ln(22, '#FF3B4E')), tf(1660, 380, k * 1.2));
+  o += TFS('NO MORE', 1660, 580, 50, '#FFFFFF', { opacity: f(k) }) + TFS('RESPAWNS', 1660, 640, 50, '#FFFFFF', { opacity: f(k) });
   return o + smash(t, tX, 0.1, 0.4, '#FF3B4E');
 }
 // ---- 4. "Ever." / "But the talent show is TONIGHT!" — panic close-up
@@ -207,19 +207,19 @@ function shEver(t) {
   const tT = w(1, 'TONIGHT!');
   const cam = shakeAll(at(1080, 560, lerp(2.2, 2.35, seg(t, CUT.ever, CUT.poster))), t, [[w(1, 'But'), 0.25, 6]]);
   const G = yardGhosts(START, { skipNear: true });
-  let ch = flagSvg(START) + G.back;
+  let ch = flagSvg(START);
   const talking = t >= A[1].a;
   const wave = Math.sin(t * 15);
   ch += hero(t, { volume: false, turn: 0.15, armL: talking ? 120 + 30 * wave : 14, armR: talking ? 120 - 30 * wave : 14, face: talking ? { name: 'scared', fx: ['sweat2'] } : { name: 'shocked', eyes: { look: [0.2, -0.6] } } }, { arms: false, energy: 1.6 });
   ch += ivy(t, { volume: false, face: { name: 'worried' } });
-  let o = yard(START, cam, '', ch + G.front);
+  let o = yard(START, cam, G.back + G.front, ch, { haze: 0.3 });
   return o + redPulse(t, 0.5) + zoomLines(960, 420, bump(t, tT - 0.05, tT + 0.4), t, '#FFFFFF');
 }
 // ---- 5. TONIGHT! poster insert
 function shPoster(t) {
   const u = seg(t, CUT.poster, CUT.house);
   let o = S.rect(0, 0, 1920, 1080, 0, { fill: '#7A2A3A' }) + S.rect(0, 0, 1920, 1080, 0, { fill: 'url(#rspScan)', opacity: 0.25 });
-  const p = SS.schoolPoster(['SCHOOL', 'TALENT SHOW', 'FRIDAY 7 PM'], 0, 0, { w: 900, h: 1000, col: '#FFE9A8', ink: '#2A1640', rot: 0, s: 1 });
+  const p = SS.schoolPoster(['SCHOOL', 'TALENT SHOW', 'FRIDAY 7 PM'], 960, 470, { w: 760, h: 820, col: '#FFE9A8', ink: '#2A1640', rot: 0, s: 1, size: 96, icon: 'star' });
   o += S.g(p, frameTf(lerp(0.95, 1.08, ease.out(u)), -3, 0, 40));
   const k = pop(t, CUT.poster + 0.08, 0.2);
   o += S.g(S.rect(-330, -80, 660, 160, 22, { fill: 'none', stroke: '#E8243A', 'stroke-width': 18 }) + T('TONIGHT!', 0, 52, 140, '#E8243A'), tf(1000, 760, k * 1.05, -12), { opacity: f(0.95) });
@@ -245,11 +245,11 @@ function shIvy(t) {
   const tWith = w(2, 'With');
   const cam = at(lerp(1190, 1210, u), 560, lerp(1.75, 1.95, ease.inOut(u)));
   const G = yardGhosts(START, { skipNear: true });
-  let ch = flagSvg(START) + G.back;
+  let ch = flagSvg(START);
   const hand = ease.inOut(seg(t, tWith - 0.3, tWith + 0.2));
   ch += hero(t, { volume: false, turn: 0.45, face: t > tWith ? { name: 'sad', eyes: { look: [0.8, 0] } } : { name: 'nervous', eyes: { look: [0.8, 0] } } });
   ch += ivy(t, { volume: false, x: IVY.x - 60, turn: -0.5, armL: lerp(14, 72, hand), armR: 14, face: t > tWith ? { name: 'happy', eyes: { look: [-0.7, 0] } } : undefined }, { arms: false });
-  let o = yard(START, cam, '', ch + G.front, { frozen: 0.9 });
+  let o = yard(START, cam, G.back + G.front, ch, { frozen: 0.9, haze: 0.3 });
   return o + redPulse(t, 0.35) + S.rect(0, 0, 1920, 1080, 0, { fill: '#FFB860', opacity: f(0.06 * hand) });
 }
 // ---- 8. silence: over the shoulder, he looks up at YES
@@ -287,29 +287,29 @@ function card(inner, x, y, rot, s, label, stamp, kStamp, t) {
 const blankCard = (x, y, rot, s, col) => S.g(S.rect(-CARD.w / 2 + 14, -CARD.h / 2 + 18, CARD.w, CARD.h, 18, { fill: '#000', opacity: 0.3 }) + S.rect(-CARD.w / 2, -CARD.h / 2, CARD.w, CARD.h, 18, ol('#FFFDF6', 8)) + S.rect(-CARD.w / 2 + 24, -CARD.h / 2 + 24, CARD.w - 48, CARD.h - 150, 6, ol(col, 5)), `translate(${f(x)} ${f(y)}) rotate(${f(rot)}) scale(${f(s)})`);
 // card contents (full-frame svgs)
 function in56(t) {
-  const cam = { x: 3150, y: 20, zoom: 1.05 };
+  const cam = SS.camAt(3820, 700, 1.25);
   const Ly = SS.schoolyard.layers(t, cam, { time: 'day' });
   let ch = '';
   const P = [];
-  for (let i = 0; i < 9; i++) P.push({ x: 3330 + i * 150, y: 900 + (i % 3) * 30, s: 0.4, ...failPose('skate', mod(t / 1.3 + i * 0.11, 1)) });
-  ch += draw.ghostCrowd(P, { alpha: 0.55 });
-  ch += ghostFail('skate', t, mod(t / 1.2, 1), { x: 3600, y: 968, s: 0.5 }) + ghostFail('skate', t, mod(t / 1.2 + 0.5, 1), { x: 4000, y: 968, s: 0.5, flip: true });
+  for (let i = 0; i < 7; i++) P.push({ x: 3420 + i * 150, y: 850 + (i % 2) * 40, s: 0.4, ...failPose('skate', mod(t / 1.1 + i * 0.14, 1)) });
+  ch += draw.ghostCrowd(P, { alpha: 0.5 });
+  ch += ghostFail('skate', t, mod(t / 1.1, 1), { x: 3560, y: 968, s: 0.55, alpha: 0.75 }) + ghostFail('skate', t, mod(t / 1.1 + 0.45, 1), { x: 4020, y: 968, s: 0.55, flip: true, alpha: 0.75 });
   return Ly.bg + Ly.mid + Ly.pole + Ly.front + view(cam, ch, 1) + Ly.fg + Ly.light;
 }
 function in31(t) {
   const cam = SS.camAt(1720, 640, 1.35);
   const CF = SS.SPOTS.cafeteria;
-  const kids = CF.seats.front.slice(0, 3).map((p, i) => K.draw.kid(4 + i * 5, { ...p, volume: false, turn: -0.2, face: { name: 'deadpan', eyes: { upper: 0.5 } } })).join('');
+  const kids = CF.seats.back.slice(0, 4).map((p, i) => K.draw.kid(4 + i * 5, { ...p, volume: false, turn: -0.2, face: { name: 'deadpan', eyes: { upper: 0.5 } } })).join('');
   let st = '';
-  // onion-skin: four attempts at the same joke
+  // onion-skin: four attempts at the same joke on the bench
   for (let i = 0; i < 4; i++) {
-    const ph = t * 3 + i;
-    st += draw.ghost({ x: CF.stage.x - 260 + i * 170, y: CF.stage.y, s: 0.45, alpha: 0.32 + 0.12 * i, armL: 80 + 40 * Math.sin(ph), armR: 120 + 30 * Math.cos(ph), headRot: 8 * Math.sin(ph), face: { name: i === 3 ? 'excited' : 'talkHappy' } });
+    const ph = t * 3 + i * 1.7;
+    st += draw.ghost({ x: CF.stage.x - 330 + i * 220, y: CF.stage.y + 60, s: 0.5, alpha: 0.4 + 0.15 * i, armL: 80 + 40 * Math.sin(ph), armR: 120 + 30 * Math.cos(ph), headRot: 8 * Math.sin(ph), face: { name: i === 3 ? 'excited' : 'talkHappy' } });
   }
-  let o = SS.cafeteria.compose(t, {}, ['', '', ''], st + kids, cam);
-  o += TFS('...and that\'s why the pizza has a fan club!', 960, 150, 46, '#FFFFFF');
+  let o = SS.cafeteria.compose(t, {}, ['', kids, ''], st, cam);
+  o += S.g(S.rect(-560, -60, 1120, 100, 30, ol('#FFFFFF', 6)) + TF('...and that\'s why the pizza has a fan club!', 0, 8, 42, '#2A1640'), tf(960, 130));
   const cr = Math.floor(t * 6) % 2;
-  o += S.g(S.path('M0 0 q30 -30 60 0 q-30 20 -60 0 Z M10 -6 l-30 -40 M40 -6 l40 -36', { fill: '#3C6E2A', stroke: '#151515', 'stroke-width': 5 }) + TFS('*cricket*', 30, 70, 40, '#FFFFFF'), tf(1640, 860 + cr * 4, 1.4));
+  o += S.g(S.path('M0 0 q30 -30 60 0 q-30 20 -60 0 Z M10 -6 l-30 -40 M40 -6 l40 -36', { fill: '#3C6E2A', stroke: '#151515', 'stroke-width': 5 }) + TFS('*cricket*', 30, 70, 44, '#FFFFFF'), tf(1640, 760 + cr * 4, 1.5));
   return o;
 }
 function in1(t) {
@@ -317,7 +317,7 @@ function in1(t) {
   const B = X.fishbowl.layers({ x: 960, y: 1080, s: 1.75, t, gary: { yaw: 25, s: 1.25, lids: 0, mouth: 'open', look: [-0.3, 0.4] }, garyFront: true });
   const gx = 960 + (-120) * 1.75, gy = 1080 - 44 * 1.75;
   const bob = Math.sin(t * 3) * 6;
-  o += B.back + draw.ghost({ x: gx + 140, y: gy - 4 + bob, s: 0.075, alpha: 0.7, armL: 150, armR: 150, face: { name: 'happy' } }) + B.front;
+  o += B.back + actor('you', t, { x: gx + 150, y: gy - 6 + bob, s: 0.12, volume: false, shadow: false, armL: 150, armR: 150, face: { name: 'happy' } }) + B.front;
   o += S.path(R.star4(1180, 300, 34, t * 90), { fill: '#FFFFFF' }) + TFS('!!', 1260, 330, 90, '#FFE14D');
   return o;
 }
@@ -349,10 +349,10 @@ function shFace(t) {
   const cam = at(1050, 520, 2.6 + 0.2 * u);
   const warm = seg(t, CUT.face + 0.3, CUT.trying);
   let ch = hero(t, { volume: false, turn: 0.05, face: u < 0.45 ? { name: 'sad', eyes: { look: [0, 0.4] } } : { name: 'happy', eyes: { look: [0.1, -0.2] }, mouth: 'smallSmile' } });
-  let o = yard(START, cam, yardGhosts(START, { skipNear: true }).back, ch, { frozen: 1 });
+  let o = yard(START, cam, yardGhosts(START, { skipNear: true }).back, ch, { frozen: 1, haze: 0.35 });
   o += S.rect(0, 0, 1920, 1080, 0, { fill: '#FFB050', opacity: f(0.12 * warm) });
   // the three cards fly apart
-  const k = ease.in(seg(t, CUT.face, CUT.face + 0.7));
+  const k = ease.in(seg(t, CUT.face, CUT.face + 0.42));
   MONT.forEach((m, i) => {
     const dx = [-1, 1, 0.3][i], dy = [-0.4, -0.2, 1][i];
     if (k < 1) o += blankCard(m.x + dx * 1500 * k, m.y + dy * 900 * k, m.rot + dx * 40 * k, 1 - 0.2 * k, m.col);
@@ -373,7 +373,7 @@ function shOkay(t) {
   const cam = at(1100, 540, 2.15);
   let ch = hero(t, { volume: false, turn: 0.1, face: { name: 'determined', eyes: { look: [0.1, -0.4] } }, headY: 8 * bump(t, w(5, 'Okay.'), w(5, 'Okay.') + 0.3) }, { arms: false });
   ch += ivy(t, { volume: false, x: IVY.x - 80, turn: -0.5, armL: 70, face: { name: 'happy', eyes: { look: [-0.7, 0] } } }, { arms: false });
-  return yard(START, cam, yardGhosts(START, { skipNear: true }).back, ch, { frozen: 0.7 }) + redPulse(t, 0.25);
+  return yard(START, cam, yardGhosts(START, { skipNear: true }).back, ch, { frozen: 0.7, haze: 0.3 }) + redPulse(t, 0.25);
 }
 // ---- 16. "Delete." — over the shoulder, the hand on YES
 function shPress(t) {
@@ -381,9 +381,9 @@ function shPress(t) {
   const press = seg(t, tPress, tPress + 0.4);
   const cam = at(1040, 520, 1.3);
   let o = yard(START, cam, '', yardGhosts(START).back);
-  o += delWin(t, 1, { y: WIN.y + 60, s: 1.12, press });
-  o += actor('you', t, { x: 560, y: 1700, s: 1.25, view: 'back', volume: false, backpack: true, armR: lerp(10, 158, reach), armL: 8, lean: -3 * reach });
-  o += zoomLines(YES[0] + 20, YES[1] + 120, 0.8 * bump(t, tPress, tPress + 0.3), t, '#FFFFFF', 18, 160);
+  o += delWin(t, 1, { x: 823, y: 578, s: 1.12, press });
+  o += actor('you', t, { x: 360, y: 1700, s: 1.25, view: 'back', volume: false, backpack: true, armR: lerp(10, 158, reach), armL: 8, lean: -3 * reach });
+  o += zoomLines(640, 766, 0.8 * bump(t, tPress, tPress + 0.3), t, '#FFFFFF', 18, 160);
   return o + redPulse(t, 0.4) + smash(t, tPress, 0.12, 0.5);
 }
 // ---- 17. BOOM: every ghost pops into block confetti, colour floods back from the hero (golden hour)
@@ -429,14 +429,14 @@ function shPancake(t) {
   const cam = at(KS.pan.x, lerp(470, 520, seg(t, CUT.pancake, CUT.dad)), 2.0);
   const fall = ease.in(seg(t, tPancake - 0.38, tPancake));
   const py = lerp(KS.panHang.y, KS.pan.y - 6, fall);
-  const L_ = SH.kitchen.layers(t, { time: 'morning', panCake: false, stack: false });
+  const L_ = SH.kitchen.layers(t, { time: 'evening', panCake: false, stack: false, coat: false });
   let o = view(cam, L_.bg, 0.8) + view(cam, L_.mid, 1);
   let ch = SH.pancake(KS.pan.x, py, 1.1 * (1 + 0.25 * bump(t, tPancake, tPancake + 0.25)), 0);
   if (t < tPancake - 0.38) ch += S.g(R.spinner(0, 0, 26, t, '#FFFFFF'), tf(KS.pan.x, KS.panHang.y - 90));
   o += view(cam, L_.front + ch + K.C.dust(KS.pan.x - 60, KS.pan.y, tPancake, t) + L_.fg + L_.light, 1);
   const [sx, sy] = toScr(cam, KS.pan.x, KS.pan.y - 80);
   o += K.bang('PLOP!', sx + 220, sy - 120, pop(t, tPancake, 0.18), 110, 8, '#FFD21F');
-  o += R.counterHUD({ x: 960, y: 900, s: 1, anchor: 'center', t, label: 'RESPAWN:', value: 'DISABLED', theme: 'grey', icon: 'retry', k: seg(t, w(6, 'Respawn...') - 0.1, w(6, 'Respawn...') + 0.2), bump: seg(t, w(6, 'disabled.'), w(6, 'disabled.') + 0.45) });
+  o += R.counterHUD({ x: 960, y: 830, s: 1, anchor: 'center', t, label: 'RESPAWN:', value: 'DISABLED', theme: 'grey', icon: 'retry', k: seg(t, w(6, 'Respawn...') - 0.1, w(6, 'Respawn...') + 0.2), bump: seg(t, w(6, 'disabled.'), w(6, 'disabled.') + 0.45) });
   return o;
 }
 // ---- 20. Dad unfreezes mid-joke in the front yard: "—go to the doctor? Wait. Why am I outside?"
@@ -504,7 +504,7 @@ function shFlag(t) {
   const cam = at(FLAG.x + 80, FLAG.y - 160, 2.3);
   let ch = R.checkpoint({ ...FLAG, t, state: dead > 0.5 ? 'dead' : 'saved', part: 'back', pole: false, flag: false, glow: 1 - dead });
   const fl = R.flag({ x: 0, y: 0, s: FLAG.s * 1.2, t, state: dead > 0.6 ? 'dead' : 'saved', wave: 1 - dead });
-  ch += S.g(fl, `translate(${f(FLAG.x + 40)} ${f(FLAG.y)}) rotate(${f(84 * fall + 4 * Math.sin(fall * Math.PI) * (1 - fall))}) translate(${f(-FLAG.x - 40)} ${f(-FLAG.y)})`);
+  ch += S.g(fl, `translate(${f(FLAG.x + 40)} ${f(FLAG.y)}) rotate(${f(84 * fall + 4 * Math.sin(fall * Math.PI) * (1 - fall))})`);
   if (fall >= 1) ch += K.C.dust(FLAG.x + 200, FLAG.y, CUT.flag + 0.4, t);
   let o = yard(t, cam, '', ch, GOLD(cam));
   return o + S.rect(0, 0, 1920, 1080, 0, { fill: '#1A0A2A', opacity: f(0.18 * dead) });
