@@ -92,6 +92,18 @@ function standUp(P, k, cheer = 0) {
   if (k > 0.5) { o.view = 'front'; o.flip = false; o.turn = 0.3; }
   return o;
 }
+// close-ups: the background ghosts as flat opaque pale lites (no translucent layer over the whole zoomed frame)
+function yardGhostsLite(skipNear = true) {
+  const poses = [];
+  YL.forEach((g) => poses.push({ x: g.x, y: g.y, s: sAt(g.y), col: '#C3CAD6', ...failPose(g.kind, g.u) }));
+  YG.forEach(([kind, x, y, u, fl]) => {
+    if (skipNear && Math.abs(x - HERO.x) < 420) return;
+    const P = failPose(kind, u);
+    if (fl && P.view === 'side') P.flip = !P.flip;
+    poses.push({ x, y, s: sAt(y), col: '#C3CAD6', ...P });
+  });
+  return draw.ghostCrowd(poses, { alpha: 1 });
+}
 function yardGhosts(t, o = {}) {
   const { freeze = true, up = 0, popT = null, skipNear = false, few = false } = o;
   let back = '', front = '', glowB = '', glowF = '', pops = '';
@@ -132,9 +144,12 @@ function yardGhosts(t, o = {}) {
   return { back: glowB + grp(back) + pops, front: glowF + grp(front) };
 }
 function yard(t, cam, behind, chars, o = {}) {
-  const Ly = SS.schoolyard.layers(o.tm ?? t, cam, { time: o.time || 'day', red: o.red ?? 1, frozen: o.frozen ?? 0.8, colorBack: o.colorBack, colorFrom: o.colorFrom, crowdBench: false });
+  // frozen look = the set's cool tint without its fine scanline pattern (a full-frame small-tile pattern is slow)
+  const fz = o.frozen ?? 0.8;
+  const Ly = SS.schoolyard.layers(o.tm ?? t, cam, { time: o.time || 'day', red: o.red ?? 1, frozen: 0, colorBack: o.colorBack, colorFrom: o.colorFrom, crowdBench: false });
   const hz = o.haze ? S.rect(0, 0, 1920, 1080, 0, { fill: o.hazeCol || '#3A1828', opacity: f(o.haze) }) : '';
-  return Ly.bg + Ly.mid + view(cam, behind || '', 1) + hz + Ly.pole + Ly.front + view(cam, chars, 1) + Ly.fg + Ly.light;
+  const cold = fz > 0 ? S.rect(0, 0, 1920, 1080, 0, { fill: '#AFC3DC', opacity: f(0.3 * fz) }) : '';
+  return Ly.bg + Ly.mid + view(cam, behind || '', 1) + hz + Ly.pole + Ly.front + view(cam, chars, 1) + Ly.fg + Ly.light + cold;
 }
 // frost edges + pause bars (SC 08's frozen look, continued)
 function frost(k, t) {
@@ -209,7 +224,7 @@ function shFine(t) {
 function shEver(t) {
   const tT = w(1, 'TONIGHT!');
   const cam = shakeAll(at(1080, 560, lerp(2.2, 2.35, seg(t, CUT.ever, CUT.poster))), t, [[w(1, 'But'), 0.25, 6]]);
-  const G = yardGhosts(START, { skipNear: true });
+  const G = { back: yardGhostsLite(), front: '' };
   let ch = flagSvg(START);
   const talking = t >= A[1].a;
   const wave = Math.sin(t * 15);
@@ -247,7 +262,7 @@ function shIvy(t) {
   const u = seg(t, CUT.ivy, CUT.look);
   const tWith = w(2, 'With');
   const cam = at(lerp(1190, 1210, u), 560, lerp(1.75, 1.95, ease.inOut(u)));
-  const G = yardGhosts(START, { skipNear: true });
+  const G = { back: yardGhostsLite(), front: '' };
   let ch = flagSvg(START);
   const hand = ease.inOut(seg(t, tWith - 0.3, tWith + 0.2));
   ch += hero(t, { volume: false, turn: 0.45, face: t > tWith ? { name: 'sad', eyes: { look: [0.8, 0] } } : { name: 'nervous', eyes: { look: [0.8, 0] } } });
@@ -352,7 +367,7 @@ function shFace(t) {
   const cam = at(1050, 520, 2.6 + 0.2 * u);
   const warm = seg(t, CUT.face + 0.3, CUT.trying);
   let ch = hero(t, { volume: false, turn: 0.05, face: u < 0.45 ? { name: 'sad', eyes: { look: [0, 0.4] } } : { name: 'happy', eyes: { look: [0.1, -0.2] }, mouth: 'smallSmile' } });
-  let o = yard(START, cam, yardGhosts(START, { skipNear: true }).back, ch, { frozen: 1, haze: 0.35 });
+  let o = yard(START, cam, yardGhostsLite(), ch, { frozen: 1, haze: 0.35 });
   o += S.rect(0, 0, 1920, 1080, 0, { fill: '#FFB050', opacity: f(0.12 * warm) });
   // the three cards fly apart
   const k = ease.in(seg(t, CUT.face, CUT.face + 0.42));
@@ -376,7 +391,7 @@ function shOkay(t) {
   const cam = at(1100, 540, 2.15);
   let ch = hero(t, { volume: false, turn: 0.1, face: { name: 'determined', eyes: { look: [0.1, -0.4] } }, headY: 8 * bump(t, w(5, 'Okay.'), w(5, 'Okay.') + 0.3) }, { arms: false });
   ch += ivy(t, { volume: false, x: IVY.x - 80, turn: -0.5, armL: 70, face: { name: 'happy', eyes: { look: [-0.7, 0] } } }, { arms: false });
-  return yard(START, cam, yardGhosts(START, { skipNear: true }).back, ch, { frozen: 0.7, haze: 0.3 }) + redPulse(t, 0.25);
+  return yard(START, cam, yardGhostsLite(), ch, { frozen: 0.7, haze: 0.3 }) + redPulse(t, 0.25);
 }
 // ---- 16. "Delete." — over the shoulder, the hand on YES
 function shPress(t) {

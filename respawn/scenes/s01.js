@@ -640,8 +640,8 @@ function nearGhosts(t, freeze = null, close = false) {
     ['flail', BEN.x, BEN.y - 46, 0.26, 1.3, 0.2, false],
   ];
   let o = '';
-  for (const [k, x, y, s, per, ph, fl] of G) o += ghostFail(k, tt, mod(tt / per + ph, 1), { x, y, s, flip: fl, alpha: 0.6 });
-  return o;
+  for (const [k, x, y, s, per, ph, fl] of G) o += ghostFail(k, tt, mod(tt / per + ph, 1), { x, y, s, flip: fl, alpha: 1 });
+  return S.g(o, null, { opacity: 0.6 });   // one translucent layer for all of them
 }
 function townRed(t, cam, o = {}) {
   return SH.town.layers(o.tm ?? t, cam, { time: 'sunset', ...o });

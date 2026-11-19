@@ -109,8 +109,8 @@ function trail(x, y, dx, dy, len, s = 1, col = '#FFFFFF', n = 4, seed = 1) {
 // returns { bike, rider } (draw bike first, rider second — or rider: false and draw your own)
 function bikeRig(t, o = {}) {
   const { x = 0, y = 0, s = 0.34, rot = 0, spin = 0, pedal = 0, rider = 'you', face = 'happy', grey = false, alpha } = o;
-  let bike = X.bicycle({ x: 0, y: 0, s: 1, flip: true, wheelSpin: spin, bars: o.bars || 0, col: grey ? '#9AA4B4' : '#2E7BD1' });
-  if (grey) bike = R.tint(bike, 'ghost', 1);
+  // grey (ghost) bike: plain grey frame colour (a CSS tint over the whole bike is slower)
+  const bike = X.bicycle({ x: 0, y: 0, s: 1, flip: true, wheelSpin: spin, bars: o.bars || 0, col: grey ? '#AEB6C4' : '#2E7BD1' });
   const g = (inner) => S.g(inner, `translate(${f(x)} ${f(y)}) rotate(${f(rot)}) scale(${f(s)})`);
   let rid = '';
   if (rider) {
@@ -179,7 +179,7 @@ function ghostFail(kind, t, u, o = {}) {
     const a = seg(u, 0.0, 0.15);
     const bx = x - sg * 260 * s * (1 - a);
     const bk = bikeRig(t, { x: bx, y, s, rot: sg * 0, spin: u * 20, rider: false, grey: true });
-    pr += S.g(bk.bike, null, { opacity: f(alpha) });
+    gh += alpha >= 1 ? bk.bike : S.g(bk.bike, null, { opacity: f(alpha) });
     if (u < 0.15) { const b2 = bikeRig(t, { x: bx, y, s, rider: 'ghost', grey: true, alpha }); gh += S.g(b2.rider, flip ? `translate(${f(2 * bx)} 0) scale(-1 1)` : null); }
     else gh += draw.ghost({ x: x + sg * 420 * s * seg(u, 0.15, 0.55), y, s, alpha, rim: o.rim ?? false, ...P, face });
   } else {
