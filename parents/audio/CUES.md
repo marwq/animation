@@ -49,20 +49,17 @@ One JSON file per scene: `audio/cues/scNN.json` (`sc01.json` … `sc06b.json` �
 
 Validate with `python3 audio/validate_cues.py audio/cues/scNN.json`.
 
-## Respawn video specifics
+## Parents video specifics
 
-- There is NO voice yet: the timeline is provisional (estimated from the script) and the real voice will be mixed loud on top later, with music ducking under it. Plan the music as if the voice were there: `energy` 0.35–0.6 under dialogue, 0.8–1 for montages and wordless action.
-- Moods written for this video (all built on one original main theme): `respawn` (MAIN theme: chiptune-pop "try again"), `tutorial` (Tip, rules, bubbly), `perfect` (the perfect-day montage), `loop` (Thursday x412: the same bar forever), `lag` (glitching reality), `corrupt` (alarm, ghost storm), `showtime` (talent-show band), `foam` (foam disco finale), plus `tender` / `sad` / `mystery` / `mystic` / `playful` / `wonder` etc. from `vocab.json`. Use `silence` drop-outs for comedic beats (the "dead silence + cricket" moments are written in the script).
+- The REAL voice is in place (scenes/timeline.json from the ElevenLabs takes); the voice is mixed loud on top with music ducking under it. Plan the music as if the voice were there: `energy` 0.35–0.6 under dialogue, 0.8–1 for montages and wordless action.
+- Moods written for this video (all built on one original main theme): `family` (MAIN theme: warm bouncy pop), `lobby` (chill Cube City groove), `arena` (arena rock: Mom's fights), `tycoon` (Granny's money montage), `boss` (the Block King), `anthem` (JUMP DAD JUMP → VICTORY), plus `tender` / `sad` (bedroom talk), `playful`, `chaos`, `mystery`, `wonder`, `warm`, `epic`, `climax` from `vocab.json`. Use `silence` drop-outs for awkward beats (the whole server staring, the cereal falling, the slammed laptop).
 - Every visual hit in the scene code needs a sound. Signature recipes:
-  - **Fail → crumble into blocks:** `bonk`/`impact`/`body_fall` on the hit, then `pop` + `stone` (or `rock_drop`) for the blocks, a short `pixel_wipe`.
-  - **Respawn overlay:** `powerdown` or `reverse_swell` as the world greys, `countdown_tick` on 3 and 2, `countdown_final` on 1, then `respawn` (+ `sparkle`/`forcefield`) on the pop.
-  - **Checkpoint saved:** `achievement` or `level_up` (soft) + `chime`; planting the flag: `thud` + `confirm`.
-  - **Pause menu:** `ui_pop` open, `click` per highlight, `confirm` on press; broken menu: `glitch` + `error`.
-  - **Tip:** `chat_pop`/`heart_pop` when it pops in, `boing` for bounces, `glitch`/`static` when glitching, `sparkle` + `harp_up` for its goodbye.
-  - **Counters/HUD:** `tap`/`click` per tick, `ka_ching`-free (no money in this video).
-  - **Lag:** `glitch`, `glitch_long`, `static`, `record_scratch`, `vhs_clunk`; low graphics: `powerdown` + `pixel_wipe`.
-  - **Corruption:** `siren`/`alarm`, `sub_drop`, `rumble`, `glitch_long`; ghosts appearing: `poof` (soft, many, panned); delete save: `confirm` → `shine` + `confetti` + `tada` (soft) + `reverse_swell`.
-  - **School life:** skate `skate_roll`, `skid`, `land`, `whoosh`; dodgeball `slap`/`punch`/`boing`, Coach's `whistle`; laughter `giggle` / `kids_laugh` / `crowd_laugh`; audience `crowd_gasp`, `applause`, `crowd_cheer`; dead silence `cricket`.
-  - **Home:** pancake flip `swish` + `splat`/`pan_clang`, `rimshot` after Dad's joke, stairs tumble `body_fall`×3 + `thud`, lightning `thunder` + `electric` + `shock`, rain ambience `rain`.
-  - **Foam:** `riser` → `big_splash` + `bubbles` + `whoosh_up` + `steam_hiss`.
-- A scene sheet covers exactly the scene's range from `scenes/main.js` RANGES (`start` = a, `end` = b). Because timing will move when the real voice arrives, generate the sheet from the scene code's own `L(id)` / `.word()` expressions with a small script and keep that script next to the sheet as `audio/cues/gen_scNN.js` so it can be re-run (see `/home/user/animation/admin-commands/audio/cues/gen_sc04.js` for the pattern).
+  - **Typing / chat:** `typing` while letters appear (Dad's caps lock: slower, heavier `click`s), `chat_pop` when a bubble pops, `notify` for join toasts ("joined the server"), chat flood = many soft `chat_pop`s panned around.
+  - **Spawning / game feel:** `respawn` or `teleport` + `sparkle` when an avatar spawns, `jump_game` for jumps, `land`, `splash`/`big_splash` when Dad falls into the water, `level_up`/`achievement` for ranks, `ui_pop`/`click` in the avatar editor, `ka_ching`/`coins`/`money_counter` for purchases and Granny's money.
+  - **Combat:** `swish` / `whoosh` for swings, `punch` / `slap` / `impact` for hits, `boing` + `whoosh_up` + `sparkle` for a player flying out of the arena, `crowd_cheer` / `applause` for the stands, `orch_hit` for a big KO.
+  - **Granny's empire:** `pop` for each block appearing, `rumble` + `riser` as the skyscraper grows, `stamp` for SOLD, a lone `squeak` / `cricket` for the 12 coins.
+  - **Dad:** `rimshot` after his jokes, `kids_laugh`/`giggle` for the players laughing, `crowd_cheer` for "DAD!", `heart_pop` for the kid's "be my dad too".
+  - **Emotional:** almost nothing under the bedroom talk (room ambience, soft `tender` music); `door_close` slam; `alarm`/`siren` + `sub_drop` for the Block King alert.
+  - **Boss:** `monster_roar` (softened), `rumble`, `boom`/`explosion` for smashes, `stone`/`rock_drop` debris, `forcefield` for the shield dome, `glass` + `shine` + `reverse_swell` for the crystal, `explosion` + `confetti` + `tada` for VICTORY, `achievement` for MVP.
+  - **Real life:** `kitchen`/`room`/`night` ambiences, `dishes`, `paper` (newspaper), `typing`, `tv_on`.
+- A scene sheet covers exactly the scene's range from `scenes/main.js` RANGES (`start` = a, `end` = b). Generate the sheet from the scene code's own `L(id)` / `.word()` expressions with a small script kept next to it as `audio/cues/gen_scNN.js` (see `/home/user/animation/respawn/audio/cues/gen_sc05.js` for the pattern).

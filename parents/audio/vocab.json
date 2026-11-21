@@ -170,7 +170,7 @@
   "conveyor": "conveyor belt motor hum + soft rattle"
  },
  "moods": {
-  "hook": "older bouncy theme arrangement (C major, piano) — in this video prefer `respawn`",
+  "hook": "older bouncy theme arrangement (C major, piano) - in this video prefer `family`",
   "action": "fast energetic parkour / action",
   "mystery": "night, curious, music box + soft pad",
   "glitch_build": "tense glitchy build-up that rises",
@@ -195,13 +195,13 @@
   "power": "heroic synth-brass drive for firing commands and the admin battle",
   "chaos": "frantic circus galop for the city in chaos, flying town, giant cats",
   "mystic": "music box + low strings, curious and eerie (garage sale, the logs, the server room)",
-  "respawn": "MAIN theme of this video: bouncy chiptune-pop \"try again\" theme (cold open, title moments, the respawn power, outro)",
   "tutorial": "bubbly, cute tutorial music (Tip explains the rules, checkpoint basics, light comedy)",
-  "perfect": "sunny, very upbeat \"perfect day\" montage with claps and the theme on brass",
-  "loop": "the same bar over and over (music box + tick): too-perfect repetition, Thursday x412, slightly hollow",
-  "lag": "the theme LAGGING: stuttering, dropped beats, detuned — reality glitches, low graphics",
-  "corrupt": "alarm / corruption: siren synth, pounding toms, harmonic-minor theme — save file corrupted, ghost storm",
   "showtime": "school talent-show band: swing ride, walking bass, brass fanfare (the show begins)",
-  "foam": "foam disco: four-on-the-floor funk with the theme — the triumphant mess at the talent show"
+  "family": "MAIN theme of this video: warm bouncy pop (cold open, family moments, titles, outro)",
+  "lobby": "chill game-lobby groove: Cube City by day, wandering around, the lobby obby",
+  "arena": "arena rock: Mom destroying players, fights, the leaderboard climb",
+  "tycoon": "bouncy money montage: Granny's cookie empire growing, prices, rent",
+  "boss": "epic dark boss fight: the Block King, the raid, server health dropping",
+  "anthem": "rising triumphant anthem: JUMP DAD JUMP, the climb, VICTORY, MVP"
  }
 }
