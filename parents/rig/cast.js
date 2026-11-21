@@ -1,226 +1,275 @@
-// The cast of "What If You Could RESPAWN in Real Life?" — all built on the R6 rig.
+// The cast of "What If Your PARENTS Joined Your Roblox Server?" — all built on the R6 rig.
 // YOU is the channel hero: the default r6.js construction (BASE_STYLE) with his jacket/T-shirt/pants colours only.
-// Everyone else uses the looks5.js hair, accessories and body parts (on top of looks3/looks4).
-// Gary the goldfish, his fishbowl and all the props live in rig/extras.js (non-rig). Reference: docs/CAST.md.
+// Real-life family (dad, mom, grandma, momTeen) and their Cube City avatars (dadAvatar = the hot dog, momAvatar, grandmaAvatar),
+// NoodleBoi, xX_DarkBlade_Xx (+ clan), DarkBlade's mom, cheap players / noobs, and the BLOCK KING boss (non-rig).
+// Looks live in rig/looks6.js (on top of looks3..5), props in rig/extras.js. Reference: docs/CAST.md.
 'use strict';
 
 const S = require('./svg');
-const { makeDesign } = require('./r6');
-const { drawCharacter, bentLimb } = require('./body');
+const { makeDesign, makeStyle } = require('./r6');
+const { drawCharacter, BASE_DEFAULTS, BASE_DIMS } = require('./body');
 const L3 = require('./looks3');
 const L4 = require('./looks4');
 const L5 = require('./looks5');
+const L6 = require('./looks6');
 const X = require('./extras');
-const { f } = S;
+const { f, clamp, lerp } = S;
 
 const D = {};
-const design = (style) => L5.dress5(L4.dress4(L3.dress(makeDesign(style))));
+const design = (style) => L6.dress6(L5.dress5(L4.dress4(L3.dress(makeDesign(style)))));
 
 // ---------------------------------------------------------------- YOU (the hero) — DO NOT REDESIGN: only these colours
 D.you = makeDesign({
   col: { jacket: '#D8262E', jacketLine: '#B01D24', shirt: '#F2D04A', shirtShade: '#D9B73A', pants: '#1F3B2A', pantsShade: '#162C1F' },
 });
 
-// ---------------------------------------------------------------- ghost-YOU: the same rig in cool greys (every undone fail)
-D.ghost = makeDesign({
-  col: {
-    hair: '#8E98AA', hairShade: '#788396', hairHi: '#B3BCCB', skin: '#E6ECF3', skinShade: '#CDD5E0',
-    jacket: '#9BA6B8', jacketLine: '#7F8A9C', shirt: '#C9D0DB', shirtShade: '#B2BAC7', pants: '#6F7A8E', pantsShade: '#5F697C',
-    sole: '#E2E7EE', soleShade: '#C9D0DA', toe: '#E2E7EE',
-  },
-});
-
-// ---------------------------------------------------------------- Ivy — best friend, 12, inventor
-// big dark curls in a puff (+ a wrench), goggles on the forehead, green patched overalls over an orange striped tee,
-// band-aids (cheek + a torn knee), purple high-tops
-const IVY = {
-  hair: 'ivyPuff', eyeStyle: 'mid', lashes: true, top: 'ivyOveralls', sleeve: 'long', sleeveStripes: '#FFE2BC', pantsShape: 'straight', size: 0.96, shoe: 'hightop', rockets: true,
-  eye: { iris: '#B87A2A', pupil: 0.95 }, brows: { L: [-2, 0], R: [-2, 0] }, neutralMouth: 'smallSmile',
-  acc: { bandaid: { x: 92, y: -636, rot: -24 }, freckles: '#6E3E22' },
-  kneePatch: { side: -1, col: '#FFD23F' }, kneeHole: { side: 1 }, cuffCol: '#5DBB6E',
-  col: {
-    skin: '#A86B45', skinShade: '#8E5634', hair: '#2A1A16', hairShade: '#1A100D', hairHi: '#6A4A3E', brow: '#1A100D', accent: '#FFB020',
-    top: '#FF8A3D', topShade: '#E06E22', sleeve: '#FF8A3D', cuff: '#E06E22', stripe: '#FFE2BC', denim: '#3E9B4F', denimShade: '#2F7D3E', stitch: '#B8F0A0',
-    patch1: '#FFD23F', patch2: '#FF6FA8', button: '#FFC93C',
-    pants: '#3E9B4F', pantsShade: '#2F7D3E', sole: '#FFFFFF', soleShade: '#E0E0EA', toe: '#FFFFFF', collar: '#7A4FD6', collarDim: '#5E38B4', lace: '#FFE14D',
-  },
-};
-D.ivy = design(IVY);
-D.ivyFrizz = design({ ...IVY, hair: 'ivyFrizz' });
-
-// ---------------------------------------------------------------- Dad — huge ginger beard, chunky, plaid shirt with rolled sleeves, FLIP MASTER apron, slippers
+// ================================================================= THE REAL FAMILY
+// Dad — accountant: chubby, receding grey-brown hair, big walrus moustache, thick brows, reading glasses pushed up on the forehead,
+// light-blue shirt under a mustard argyle sweater vest (two pens), khakis, white socks in brown sandals
 const DAD = {
-  hair: 'dadSwoop', eyeStyle: 'dot', top: 'dadApron', sleeve: 'rolled', sleevePlaid: true, pantsShape: 'straight', size: 1.14, torsoW: 122, taper: -4, armW: 1.16, legW: 1.12, hipK: 1.15, shoe: 'slipper',
-  eye: { pupil: 1.0 }, brows: false, browBase: { L: [-6, 0], R: [-6, 0] }, neutralMouth: 'smile',
-  acc: { bushyBeard: true, thickBrows: '#C4561D', cheekBlush: '#FF8F8F' },
-  ext5: { kind: 'apron', top: -330, len: 172, flare: 12, col: '#F2B33D', trim: '#FFF2C0', text: ['FLIP', 'MASTER'], ink: '#6A3A14' },
+  hair: 'dadRecede', eyeStyle: 'dot', top: 'vestDad', sleeve: 'long', pantsShape: 'straight', size: 1.1, torsoW: 118, taper: -12, armW: 1.12, legW: 1.1, hipK: 1.12,
+  shoe: 'sandal', socks: '#FFFFFF', sockH: 58, sockRib: '#D8DCE6',
+  eye: { pupil: 1.0 }, brows: false, browBase: { L: [-2, 0], R: [-2, 0] }, neutralMouth: 'smile',
+  acc: { walrus: true, thickBrows: '#5E4432', cheekBlush: '#FF9F8F' },
   col: {
-    skin: '#F6D2B4', skinShade: '#E6B994', hair: '#C4561D', hairShade: '#9E4012', hairHi: '#E87A3A', brow: '#9E4012', beard: '#C4561D', beardShade: '#A2440F', beardHi: '#F29A58',
-    top: '#4F86C6', topShade: '#3C6AA4', sleeve: '#4F86C6', cuff: '#6E9ED6', plaid1: '#2E4E86', plaid2: '#FFFFFF', collar: '#3C6AA4',
-    apron: '#F2B33D', apronTrim: '#FFF2C0', apronInk: '#6A3A14',
-    pants: '#6B5B4E', pantsShade: '#574A3F', sole: '#5A2A32', soleShade: '#3E1C22', toe: '#8E3B46',
+    skin: '#F4CDAE', skinShade: '#E3B48F', hair: '#6E5444', hairShade: '#4E3A2E', hairHi: '#A08A7A', brow: '#4E3626', stache: '#6B4E3A', stacheHi: '#A0826A',
+    top: '#BFD9F2', topShade: '#9FC0E0', sleeve: '#BFD9F2', cuff: '#A8C8E8', collar: '#E6F2FF',
+    vest: '#D9A13A', vestShade: '#B8821F', vestTrim: '#9E6A14', argyle1: '#8A4F2A', argyle2: '#FFF0C8',
+    pants: '#C2A57A', pantsShade: '#A88C62', sole: '#7A4A26', soleShade: '#5A3418', toe: '#7A4A26', strap: '#8A5A30',
   },
 };
 D.dad = design(DAD);
-D.dadNoApron = design({ ...DAD, top: 'dadPlaid', ext5: null });
 
-// ---------------------------------------------------------------- Mom — ER nurse: teal scrubs, messy bun, ID badge on a lanyard, comfy clogs
-D.mom = design({
-  hair: 'nurseBun', eyeStyle: 'mid', lashes: true, top: 'scrubs', sleeve: 'short', pantsShape: 'straight', size: 1.06, torsoW: 98, shoe: 'clog',
-  eye: { iris: '#3E8E5E', pupil: 0.92 }, brows: { L: [0, 0], R: [0, 0] }, neutralMouth: 'smallSmile',
-  ext5: { kind: 'tunic', top: -330, len: 46, flare: 6, col: '#2FA8A0', shade: '#23877F' },
-  col: {
-    skin: '#F2CDB0', skinShade: '#E0B494', hair: '#5A3426', hairShade: '#40241A', hairHi: '#8A5A44', brow: '#40241A', accent: '#FF8FB0',
-    top: '#2FA8A0', topShade: '#23877F', sleeve: '#2FA8A0', trim: '#1E7A72', lanyard: '#3B5BDB', badge: '#E8453C',
-    pants: '#3BB3AA', pantsShade: '#2E968E', sole: '#F4F6FA', soleShade: '#D8DCE6', toe: '#2FA8A0',
-  },
-});
-
-// ---------------------------------------------------------------- Bea — little sister, 6: orange pigtails, pink star dress, missing front tooth, light-up sneakers
-D.bea = design({
-  hair: 'beaPigtails', eyeStyle: 'big', top: 'beaDress', sleeve: 'puff', sleeveTrim: '#FFFFFF', pantsShape: 'straight', size: 0.68, torsoW: 98, shoe: 'lightup',
-  eye: { pupil: 1.12, sparkle: true, iris: '#5B8FD8' }, brows: { L: [0, 0], R: [0, 0] }, neutralMouth: 'smallSmile',
-  acc: { toothGap: true, freckles: '#E0946A', cheekBlush: '#FF9FB0' },
-  socks: '#FFFFFF', sockFrill: true,
-  ext5: { kind: 'skirt', top: -330, len: 122, flare: 42, col: '#FF8FC0', shade: '#E86FA4', trim: '#FFFFFF', dots: '#FFFFFF' },
-  col: {
-    skin: '#FFE6D6', skinShade: '#F2CDB8', hair: '#D2601A', hairShade: '#A8460C', hairHi: '#F08A3E', brow: '#8A3A0A', accent: '#FF5FA2',
-    top: '#FF8FC0', topShade: '#E86FA4', sleeve: '#FF8FC0', collar: '#FFFFFF', star: '#FFD23F',
-    pants: '#FFE6D6', pantsShade: '#F2CDB8', sole: '#FFFFFF', soleShade: '#E8E0EC', toe: '#FF6FA8',
-  },
-});
-
-// ---------------------------------------------------------------- Mr. Fig — maths teacher: tall and thin, neat side part, glasses, pencil moustache, olive vest, plum bow tie
-D.teacher = design({
-  hair: 'figPart', eyeStyle: 'dot', top: 'figVest', sleeve: 'long', pantsShape: 'straight', size: 1.24, headK: 0.86, torsoW: 84, armW: 0.84, legW: 0.82, hipK: 0.86, shoe: 'loafer',
-  eye: { pupil: 0.86, upper: 0.36 }, brows: { L: [4, -2], R: [4, -2] }, neutralMouth: 'line',
-  acc: { specs: { type: 'rect', col: '#3A3440', sw: 6, w: 100, h: 62, r: 12, x: 58, y: -712 }, pencilStache: '#2E2420' },
-  col: {
-    skin: '#F0D2BC', skinShade: '#DDB89E', hair: '#2E2420', hairShade: '#1E1714', hairHi: '#6A5A50', brow: '#1E1714',
-    top: '#CFE3F5', topShade: '#A9C6E2', sleeve: '#CFE3F5', cuff: '#B4CCE4', vest: '#8E9A3A', vestTrim: '#6E7A26', bow: '#7A2E5A', bowDot: '#F4D9E8',
-    pants: '#5A5048', pantsShade: '#4A413A', sole: '#4A3226', soleShade: '#36241A', toe: '#4A3226',
-  },
-});
-
-// ---------------------------------------------------------------- Coach Dee — athletic: lime sun visor, high ponytail, purple track jacket, whistle on a cord
-const COACH = {
-  hair: 'visorPony', eyeStyle: 'mid', lashes: true, top: 'trackJacket', sleeve: 'long', trackStripe: '#FFFFFF', pantsShape: 'straight', size: 1.08, torsoW: 104, armW: 1.06, legW: 1.04, legStripe: '#FFFFFF', shoe: 'sneaker',
-  eye: { iris: '#5A3A1E', pupil: 0.9 }, brows: { L: [6, -4], R: [6, -4] }, neutralMouth: 'smirk',
-  col: {
-    skin: '#8A5536', skinShade: '#744628', hair: '#1E1715', hairShade: '#120D0C', hairHi: '#5A4A44', brow: '#120D0C', accent: '#C6EB3A', visor: '#C6EB3A', visorBrim: '#A8CC22',
-    top: '#6A3FD0', topShade: '#5530AE', sleeve: '#6A3FD0', cuff: '#5530AE', panel: '#FFFFFF', zip: '#C6EB3A', lanyard: '#E8453C',
-    pants: '#2A2836', pantsShade: '#1E1C28', sole: '#FFFFFF', soleShade: '#E0E0EA', toe: '#6A3FD0',
-  },
+// Mom — the quiet librarian: auburn hair in a neat bun with a pencil through it, round glasses, sage cardigan over a cream blouse
+// with a peter-pan collar (book brooch, bookmark in the pocket), plum A-line skirt, dark tights, burgundy flats
+const MOM_COL = {
+  skin: '#F6D5BC', skinShade: '#E6BC9E', hair: '#8A3B22', hairShade: '#6A2A16', hairHi: '#B8603E', brow: '#6A2A16', accent: '#3E6E9E',
+  top: '#6FAE9C', topShade: '#558E7E', sleeve: '#6FAE9C', cuff: '#558E7E', shirt: '#FFF6E6', shirtShade: '#E8D8C0', collar: '#FFFFFF', button: '#F2C14E',
+  pants: '#4E4258', pantsShade: '#3E3448', sole: '#8A2A3A', soleShade: '#6A1E2A', toe: '#B04A5A',
 };
-D.coach = design(COACH);
-D.coachW = design({ ...COACH, whistleUp: true });
+const MOM = {
+  hair: 'momBun', eyeStyle: 'mid', lashes: true, top: 'cardiganMom', sleeve: 'long', pantsShape: 'straight', size: 1.04, torsoW: 98, shoe: 'flats',
+  eye: { iris: '#5E8A3A', pupil: 0.92 }, brows: { L: [0, 0], R: [0, 0] }, neutralMouth: 'smallSmile',
+  acc: { specs: { type: 'round', col: '#7A3A4A', r: 52, x: 62, y: -704, sw: 7 }, lipTint: '#E86A7A' },
+  ext6: { kind: 'skirt', top: -330, len: 190, flare: 22, col: '#7A5A8A', shade: '#624870' },
+  col: MOM_COL,
+};
+D.mom = design(MOM);
+// Mom at night: lavender moon-print pajamas, fuzzy slippers (same bun and glasses)
+D.momPJ = design({
+  ...MOM, top: 'pjTop', sleevePattern: 'moons', pantsPattern: 'moons', ext6: null, shoe: 'slipper',
+  col: { ...MOM_COL, top: '#B9A6E8', topShade: '#9A86CC', sleeve: '#B9A6E8', cuff: '#9A86CC', piping: '#FFFFFF', pattern: '#FFF3B0', pants: '#B9A6E8', pantsShade: '#9A86CC', sole: '#E8D8F8', soleShade: '#C9B8E0', toe: '#F2DFFF', pompom: '#FFFFFF' },
+});
 
-// ---------------------------------------------------------------- Principal Pemberton — stern: silver bun, crimson cat-eye glasses, navy cardigan + pearls, pencil skirt
-D.principal = design({
-  hair: 'greyBun', eyeStyle: 'mid', lashes: true, top: 'pembCardigan', sleeve: 'long', pantsShape: 'straight', size: 1.08, torsoW: 100, shoe: 'loafer',
-  eye: { iris: '#5A7A9A', pupil: 0.85, upper: 0.16 }, brows: { L: [8, -6], R: [8, -6] }, neutralMouth: 'line',
-  acc: { catEye: { col: '#B02E4A' }, pearls: true },
-  ext5: { kind: 'pencil', top: -330, len: 150, flare: -6, col: '#5C5F6E', shade: '#4A4D5A' },
+// Grandma — white curls, glasses on a beaded chain, rosy cardigan over a dusty-blue flowered dress, fuzzy pink slippers
+const GRAN_COL = {
+  skin: '#F8DCCB', skinShade: '#E8C2AE', hair: '#F4F2F8', hairShade: '#C9C4D8', hairHi: '#FFFFFF', brow: '#B8B4C4',
+  top: '#E992B4', topShade: '#CC7598', sleeve: '#E992B4', cuff: '#CC7598', dress: '#86AEDE', flower1: '#FFFFFF', flower2: '#FF8FB0', leaf: '#5DBB6E', flowerMid: '#FFD23F', button: '#FFFFFF',
+  pants: '#F2D2C0', pantsShade: '#E0BCA8', sole: '#E06F9A', soleShade: '#C05A80', toe: '#FF9FC4', pompom: '#FFFFFF',
+};
+D.grandma = design({
+  hair: 'granCurls', eyeStyle: 'mid', lashes: true, top: 'grannyDress', sleeve: 'long', pantsShape: 'straight', size: 0.9, torsoW: 100, taper: -4, shoe: 'slipper',
+  eye: { iris: '#4A7AB8', pupil: 0.9, upper: 0.08 }, brows: { L: [0, 0], R: [0, 0] }, neutralMouth: 'smile',
+  acc: { specs: { type: 'round', col: '#B08A3A', r: 48, x: 60, y: -704, sw: 6 }, specChain: '#E0B84A', cheekBlush: '#FF9FB0', lipTint: '#E8607A' },
+  ext6: { kind: 'flowers', top: -330, len: 186, flare: 28, col: '#86AEDE', shade: '#6E96C6' },
+  col: GRAN_COL,
+});
+
+// Mom at 16 in 1998: big teased bangs + side ponytail with a neon scrunchie, oversized colour-block windbreaker, baggy light jeans,
+// chunky white sneakers, freckles
+D.momTeen = design({
+  hair: 'teenBangs', eyeStyle: 'mid', lashes: true, top: 'jacket90s', sleeve: 'long', sleeveBlock: '#7A4FD6', pantsShape: 'wide', size: 0.95, torsoW: 112, armW: 1.08, shoe: 'chunky',
+  eye: { iris: '#5E8A3A', pupil: 1.05, sparkle: true }, brows: { L: [-4, 0], R: [-4, 0] }, neutralMouth: 'smile',
+  acc: { cheekBlush: '#FF9FB0', freckles6: '#D08A6A' },
   col: {
-    skin: '#F2D6C6', skinShade: '#E0BCA8', hair: '#B9BCC8', hairShade: '#9A9EAC', hairHi: '#E6E8F0', brow: '#7A7E8C',
-    top: '#2E3A6E', topShade: '#232D58', sleeve: '#2E3A6E', cuff: '#232D58', shirt: '#FFF6E6', shirtShade: '#E8D8C0', button: '#FFC93C',
-    pants: '#4A4048', pantsShade: '#3A3238', sole: '#1A1A1E', soleShade: '#101013', toe: '#1A1A1E',
+    skin: '#F6D5BC', skinShade: '#E6BC9E', hair: '#8A3B22', hairShade: '#6A2A16', hairHi: '#C0663E', brow: '#6A2A16', accent: '#FF4FD8',
+    top: '#2BB5B0', topShade: '#1E8E8A', sleeve: '#2BB5B0', cuff: '#FFD23F', block2: '#7A4FD6', block3: '#FF4FA0', zip: '#FFD23F', shirt: '#FFFFFF', shirtShade: '#D8DCE6',
+    pants: '#8FB4E2', pantsShade: '#759ACB', sole: '#FFFFFF', soleShade: '#E0E0EA', toe: '#FFFFFF', soleBand: '#FF4FA0', lace: '#2BB5B0',
   },
 });
 
-// ---------------------------------------------------------------- the juggler — talent-show winner: sparkly leotard, ballet bun with a gold headband
-D.juggler = design({
-  hair: 'jugglerBun', eyeStyle: 'mid', lashes: true, top: 'leotard', sleeve: 'long', sleeveSparkle: true, pantsShape: 'straight', size: 0.86, torsoW: 92, shoe: 'flats',
-  eye: { iris: '#6A3A1E', sparkle: true }, brows: { L: [-6, -2], R: [-6, -2] }, neutralMouth: 'smile',
-  acc: { cheekBlush: '#FF8FB0' },
-  ext5: { kind: 'brief', top: -330, len: 46, col: '#D6339A' },
+// ================================================================= CUBE CITY AVATARS
+// DadBod1978 — the HOT DOG costume: tall sausage (mustard zigzags) between two bun halves, a blocky avatar face with Dad's moustache
+// in the face hole, bun-coloured sleeves, khakis + white socks in sandals (just like the real Dad)
+const HOTDOG = makeStyle({
+  top: 'tee6', sleeve: 'short', pantsShape: 'straight', shoe: 'sandal', socks: '#FFFFFF', sockH: 70, sockRib: '#D8DCE6', armW: 1.06, legW: 1.06, size: 1.06,
   col: {
-    skin: '#C98D6A', skinShade: '#B0754F', hair: '#2A1A12', hairShade: '#1A100A', hairHi: '#5A3A28', brow: '#1A100A', accent: '#FF6FD0',
-    top: '#D6339A', topShade: '#B2257E', sleeve: '#D6339A', cuff: '#B2257E', pants: '#F7C6D9', pantsShade: '#E8AEC6', sole: '#F2C14E', soleShade: '#D9A73A', toe: '#FFC93C',
+    skin: '#FFD7A8', skinShade: '#F0C090', sleeve: '#F2B45C', top: '#F2B45C', bun: '#F2B45C', bunHi: '#FCD592', bunDark: '#D48A38',
+    sausage: '#D9573E', sausageHi: '#F28A6E', sausageShade: '#B4412C', mustard: '#FFD21F', stache: '#6B4E3A', hair: '#6B4E3A',
+    pants: '#C2A57A', pantsShade: '#A88C62', sole: '#7A4A26', soleShade: '#5A3418', toe: '#7A4A26', strap: '#8A5A30',
+  },
+});
+D.dadAvatar = {
+  style: HOTDOG,
+  dims: { ...BASE_DIMS, size: 1.06, shoulderX: 214, shoulderY: -566, sideShoulder: [24, -560], hipX: 56, nametagY: -1235, shadowR: 250 },
+  leg: L6.makeLeg6(HOTDOG), legSide: L6.makeLegSide6(HOTDOG), arm: L6.makeArm6(HOTDOG),
+  torso: L6.hotdogTorso(HOTDOG), torsoSide: L6.hotdogTorsoSide(HOTDOG),
+  head: () => '', headSide: () => '', headBack: () => '',
+};
+
+// MOM_OFFICIAL — armor 0: the plain default grey avatar (grey skin, grey shirt, grey legs) + her round glasses;
+// armor 1: golden warrior armour (plumed helmet, heart breastplate, pauldrons, tassets, greaves), pot-lid shield, sword, red cape
+const MA_COL = {
+  skin: '#B9BDC8', skinShade: '#A3A8B4', hair: '#8A8F9B', top: '#A2A7B3', topShade: '#8E939F', pants: '#8E939F', pantsShade: '#7E838E', sole: '#6E727C', soleShade: '#5E626C', toe: '#6E727C',
+};
+const MA = {
+  hair: 'none', eyeStyle: 'dot', top: 'plainAvatar', sleeve: 'none', pantsShape: 'straight', size: 1.02, shoe: 'avatar', brows: false, neutralMouth: 'smile',
+  acc: { specs: { type: 'round', col: '#3E3F4A', r: 46, x: 56, y: -716, sw: 8 }, avatarShine: true },
+  col: MA_COL,
+};
+D.momAvatar0 = design(MA);
+D.momAvatar0nog = design({ ...MA, acc: { avatarShine: true } });
+const GOLD = { gold: '#F2C230', goldHi: '#FFE58A', goldShade: '#C98E12', gem: '#FF4F7A', plume: '#E8456A' };
+const MA1 = {
+  ...MA, top: 'goldArmor', armor: { kind: 'gold', col: GOLD.gold, hi: GOLD.goldHi, shade: GOLD.goldShade, trim: GOLD.goldShade, gem: GOLD.gem },
+  greaves: { col: GOLD.gold, hi: GOLD.goldHi, knee: true }, shoe: 'boot', torsoW: 104,
+  ext6: { kind: 'tassets', top: -318, len: 96, flare: 18, col: GOLD.gold, shade: GOLD.goldShade },
+  col: { ...MA_COL, ...GOLD, top: GOLD.gold, under: '#7E8696', belt: '#8A4A22', sole: GOLD.gold, soleShade: GOLD.goldShade, bootTrim: GOLD.goldShade },
+};
+D.momAvatar1 = design(MA1);
+D.momAvatar1nog = design({ ...MA1, acc: { avatarShine: true } });
+
+// GrannyGoodies — the billionaire: cream fur coat (fluffy collar + cuffs, knee-length, open over a purple dress), big pearls,
+// gold monocle on a chain, pink lipstick, white curls, gold flats; golden cane + money bag
+const GA_COL = {
+  skin: '#FFE0C8', skinShade: '#F0C8AE', hair: '#FFFFFF', hairShade: '#C9C4D8', hairHi: '#FFFFFF', top: '#F6EDE0', topShade: '#E0D0BC', furShade: '#D2BFA6', sleeve: '#F6EDE0', cuff: '#E0D0BC', dress: '#8E3FB8',
+  pants: '#FFE0C8', pantsShade: '#F0C8AE', sole: '#FFC93C', soleShade: '#E09A00', toe: '#FFE58A',
+};
+D.grandmaAvatar = design({
+  hair: 'granCurls', eyeStyle: 'dot', top: 'furCoat', sleeve: 'long', sleevePattern: 'fur', furCuff: '#F6EDE0', pantsShape: 'straight', size: 0.94, torsoW: 108, taper: -6, shoe: 'flats',
+  brows: false, neutralMouth: 'smile', eye: { pupil: 1.05 },
+  acc: { monocle: true, lashFlicks: true, lipTint: '#FF4F7A', cheekBlush: '#FF9FB0', avatarShine: true },
+  ext6: { kind: 'coat', top: -330, len: 220, flare: 34 },
+  col: GA_COL,
+});
+
+// NoodleBoi — a ramen bowl for a head (noodles, half egg, naruto, nori, chopsticks; a happy face on the bowl), navy sushi hoodie
+const NOODLE = makeStyle({
+  hair: 'none', top: 'sushiHoodie', sleeve: 'long', sleevePattern: 'maki', pantsShape: 'straight', size: 0.98, shoe: 'sneaker', eyeStyle: 'dot',
+  col: {
+    skin: '#FFDDBB', skinShade: '#F0C8A0', top: '#2A4F7A', topShade: '#1F3D60', sleeve: '#2A4F7A', cuff: '#1F3D60', pants: '#3A3F4E', pantsShade: '#2E3240', sole: '#FFFFFF', soleShade: '#E0E0EA', toe: '#FF8A5C',
+    bowl: '#FFF8EC', bowlShade: '#E8DCC8', band: '#E8453C', wave: '#3B82F6', noodle: '#FFD86B', noodleShade: '#E0B040', chop: '#E8C48A', chopTip: '#C0392B', yolk: '#FFA51F',
+  },
+});
+D.noodle = design(NOODLE);
+Object.assign(D.noodle, { head: L6.noodleHead(D.noodle.style), headSide: L6.noodleHeadSide(D.noodle.style), headBack: L6.noodleHeadBack(D.noodle.style) });
+D.noodle.dims.nametagY = -1250;
+
+// xX_DarkBlade_Xx — black spiky armour with red trim, a helmet with five spikes and a T-visor (glowing red eyes, no mouth),
+// spiky pauldrons, gauntlets, jagged tassets, spiked boots, tattered maroon cape, big black sword
+const DB_COL = {
+  skin: '#34343F', skinShade: '#2A2A33', top: '#2A2A33', topShade: '#16161C', armorHi: '#5A5A6A', trim: '#B0182E', glow: '#FF2E4A', belt: '#141418', helm: '#22222A', visor: '#0B0B10', spike: '#3A3A46',
+  eye: '#FF2E4A', eyeCore: '#FFD0D6', pants: '#26262E', pantsShade: '#1A1A20', sole: '#22222A', soleShade: '#141418', toe: '#22222A', bootTrim: '#B0182E',
+  kidSkin: '#F6D5BC', kidHair: '#2A2230', kidIris: '#7A5AE0',
+};
+const DBS = {
+  hair: 'none', eyeStyle: 'dot', top: 'darkArmor', sleeve: 'none', pantsShape: 'straight', size: 1.0, torsoW: 104, shoe: 'boot', bootSpike: '#C9CED8',
+  armor: { kind: 'dark', col: '#2A2A33', hi: '#5A5A6A', shade: '#16161C', trim: '#B0182E', spike: '#C9CED8' }, gloveCol: '#1A1A20', greaves: { col: '#2A2A33', hi: '#5A5A6A' },
+  ext6: { kind: 'jagged', top: -318, len: 110, flare: 14, col: '#2A2A33', shade: '#16161C' },
+  helm: { spikes: 5 },
+  col: DB_COL,
+};
+function darkDesign(style) {
+  const d = design(style);
+  Object.assign(d, { head: L6.darkHead(d.style), headSide: L6.darkHeadSide(d.style), headBack: L6.darkHeadBack(d.style) });
+  d.dims.nametagY = -1110;
+  return d;
+}
+D.darkblade = darkDesign(DBS);
+
+// the clan: darker armour variants (i): gunmetal / maroon / navy / charcoal, coloured eye slits, horns or spikes, axes and swords
+const CLAN = [
+  { top: '#4A5060', hi: '#7A8090', trim: '#7A3FD0', eye: '#B65CFF', spikes: 3, horns: false, weapon: 'axe' },
+  { top: '#4A2A30', hi: '#7A4A50', trim: '#FF8A1F', eye: '#FF8A1F', spikes: 0, horns: true, weapon: 'sword' },
+  { top: '#2A3450', hi: '#4A5A80', trim: '#3DF2FF', eye: '#3DF2FF', spikes: 1, horns: false, weapon: 'axe' },
+  { top: '#33363E', hi: '#5A5E68', trim: '#3BD16F', eye: '#3BD16F', spikes: 3, horns: true, weapon: 'sword' },
+  { top: '#3A2A48', hi: '#5E4A70', trim: '#FF3B6B', eye: '#FF3B6B', spikes: 5, horns: false, weapon: 'axe' },
+];
+const clanCache = {};
+function clanDesign(i) {
+  const k = ((i % CLAN.length) + CLAN.length) % CLAN.length;
+  if (clanCache[k]) return clanCache[k];
+  const c = CLAN[k];
+  const col = { ...DB_COL, skin: L6.shadeHex(c.top, 0.8), top: c.top, topShade: L6.shadeHex(c.top, 0.65), armorHi: c.hi, trim: c.trim, glow: c.eye, helm: L6.shadeHex(c.top, 0.85), spike: L6.shadeHex(c.top, 1.2), eye: c.eye, eyeCore: '#FFFFFF', pants: L6.shadeHex(c.top, 0.7), pantsShade: L6.shadeHex(c.top, 0.55), sole: L6.shadeHex(c.top, 0.6), soleShade: L6.shadeHex(c.top, 0.45), toe: L6.shadeHex(c.top, 0.6), bootTrim: c.trim };
+  clanCache[k] = darkDesign({
+    ...DBS, size: 0.94 + (k % 3) * 0.03, torsoW: 100 + (k % 2) * 6, bootSpike: null,
+    armor: { kind: k % 2 ? 'gold' : 'dark', col: c.top, hi: c.hi, shade: L6.shadeHex(c.top, 0.65), trim: c.trim, spike: c.hi }, gloveCol: L6.shadeHex(c.top, 0.6), greaves: { col: c.top, hi: c.hi },
+    ext6: { kind: 'jagged', top: -318, len: 96, flare: 10, col: c.top, shade: L6.shadeHex(c.top, 0.65) },
+    helm: { spikes: c.spikes, horns: c.horns, crest: k === 2 ? c.trim : null },
+    col,
+  });
+  clanCache[k].clan = c;
+  return clanCache[k];
+}
+
+// DarkBlade's mom (avatar, final gag): plum beehive, magenta top, white apron with MOM on it, pink slippers, rolling pin
+D.darkbladeMom = design({
+  hair: 'hiveBun', eyeStyle: 'dot', top: 'tee6', sleeve: 'long', pantsShape: 'straight', size: 1.04, shoe: 'slipper', brows: { L: [10, -6], R: [10, -6] }, neutralMouth: 'line',
+  apronAlways: { col: '#FFFFFF', trim: '#E8456A', text: 'MOM' },
+  acc: { lashFlicks: true, lipTint: '#C0397A', avatarShine: true },
+  col: {
+    skin: '#F2C9A8', skinShade: '#E0B090', hair: '#4A2A5A', hairShade: '#2E1A3A', hairHi: '#7A5A8A', brow: '#2E1A3A', top: '#C0397A', topShade: '#9A2A60', sleeve: '#C0397A', cuff: '#9A2A60',
+    pants: '#3A3F4E', pantsShade: '#2E3240', sole: '#FF9FC4', soleShade: '#E07FA4', toe: '#FF9FC4', pompom: '#FFFFFF',
   },
 });
 
-// ---------------------------------------------------------------- crowds: classmates, cafeteria, audience (cheap looks4 designs)
+// ================================================================= PLAYERS / NOOBS (cheap lite avatars)
 const hashK = (i, k) => { const v = Math.sin((i + 1) * 91.7 + k * 13.3) * 43758.5453; return v - Math.floor(v); };
 const pickK = (i, arr, k) => arr[Math.floor(hashK(i, k) * arr.length) % arr.length];
-const PALETTE = ['#FF6B6B', '#4ECDC4', '#FFD166', '#6A4C93', '#1982C4', '#8AC926', '#FF924C', '#F15BB5', '#00BBF9', '#9B5DE5', '#F94144', '#43AA8B', '#2EC4B6', '#E76F51', '#3A86FF', '#FFB703'];
-const SKINS = [['#F8D9C0', '#EBC0A2'], ['#E9B38B', '#D29A72'], ['#C98D6A', '#B0754F'], ['#8D5A3B', '#764830'], ['#F2C9A0', '#DDB083'], ['#6B4430', '#573522'], ['#FFE3CF', '#F0C9AE'], ['#A86B45', '#8E5634']];
-const HAIRC = ['#1E1A1C', '#5A3A22', '#E0A23A', '#C2452D', '#3A2A1A', '#2F4AA8', '#E870A8', '#7A4A2A', '#2A1A16', '#F2D06A'];
-const shade = (hex, k = 0.82) => '#' + [1, 3, 5].map((i) => Math.round(parseInt(hex.slice(i, i + 2), 16) * k).toString(16).padStart(2, '0')).join('');
-const KID_HAIR = ['crop', 'curlTop', 'twists', 'twinTails', 'lowBun', 'afroPuffs', 'puff', 'swoop', 'ponytail', 'buzz', 'longStraight', 'spiky', 'crop', 'mohawk'];
-const KID_TOP = ['raglan', 'stripeTee', 'zipHoodie', 'plaid', 'puffer', 'raglan', 'stripeTee', 'zipHoodie'];
-const KID_SHOE = ['sneaker', 'hightop', 'sneaker', 'chunky'];
-function crowdCol(i, base) {
-  const top = pickK(i, PALETTE, 1), pants = pickK(i, ['#2E3A55', '#5A6070', '#7A5A3A', '#3A6A9A', '#2B2B33', '#6E7891', '#4A5A3A', '#8A4A5A'], 2);
-  const [skin, skinShade] = pickK(i, SKINS, 3);
-  const hairC = pickK(i, HAIRC, 4), acc = pickK(i, PALETTE, 14), sl = pickK(i, PALETTE, 15);
+const PAL = ['#FF6B6B', '#4ECDC4', '#FFD166', '#9B5DE5', '#1982C4', '#8AC926', '#FF924C', '#F15BB5', '#00BBF9', '#F94144', '#43AA8B', '#3A86FF', '#FFB703', '#06D6A0', '#EF476F', '#7B2CBF'];
+const ASK = ['#FFD9B0', '#F2C9A0', '#E0A878', '#C98D6A', '#8D5A3B', '#FFE3CF', '#F7D26B', '#B9E4FF', '#C8F2B0'];
+const HAIRS = ['#1E1A1C', '#5A3A22', '#E0A23A', '#C2452D', '#2F4AA8', '#E870A8', '#F2D06A', '#7A4A2A', '#3BD16F', '#FFFFFF'];
+const HATS = ['cap', 'spiky', 'beanie', 'bob', 'headphones', 'catEars', 'crown', 'tophat', 'viking', 'bunny', 'ninja', 'afro', 'pony', 'cap', 'spiky', ''];
+const LOGOS = ['star', 'heart', 'bolt', 'stripe', 'num', '', 'star', 'stripe'];
+const playerCache = {}, noobCache = {};
+function playerSpec(i) {
+  const shirt = pickK(i, PAL, 1);
   return {
-    skin, skinShade, hair: hairC, hairShade: shade(hairC), hairHi: '#FFFFFF55', brow: shade(hairC, 0.7), accent: acc,
-    top, topShade: shade(top), sleeve: sl === top ? '#FFFFFF' : sl, cuff: shade(top), trim: '#FFFFFF', stripe: pickK(i, ['#FFFFFF', '#1E1A1C', '#FFD166', '#2E3A55'], 16),
-    plaid1: shade(top, 0.62), plaid2: '#FFFFFF', shirt: '#FFFFFF', tie: pickK(i, PALETTE, 17), collar: '#FFFFFF', button: '#E9C25A',
-    pants, pantsShade: shade(pants), sole: '#FFFFFF', soleShade: '#E0E0E8', toe: pickK(i, PALETTE, 13), collarDim: shade(acc), ...base,
+    skin: pickK(i, ASK, 2), shirt, sleeve: hashK(i, 3) > 0.5 ? shirt : pickK(i, PAL, 4), pants: pickK(i, ['#2E3A55', '#5A6070', '#3A6A9A', '#2B2B33', '#6E7891', '#4A5A3A', '#8A4A5A', '#1E1E28'], 5),
+    hat: pickK(i, HATS, 6), hatCol: pickK(i, PAL, 7), hatCol2: pickK(i, PAL, 8), hair: pickK(i, HAIRS, 9), logo: pickK(i, LOGOS, 10), logoCol: hashK(i, 11) > 0.5 ? '#FFFFFF' : pickK(i, PAL, 12),
+    num: String(1 + Math.floor(hashK(i, 13) * 98)), face: hashK(i, 14) > 0.85 ? 'cool' : null, mouth: pickK(i, ['smile', 'smile', 'grin', 'smallSmile'], 15), size: 0.86 + hashK(i, 16) * 0.16,
+    brows: hashK(i, 17) > 0.6, blush: hashK(i, 18) > 0.75,
   };
 }
-const crowdDesign = (style) => L4.dress4(L3.dress(makeDesign(style)));
-function kidDesign(i) {
-  const top = pickK(i, KID_TOP, 7);
-  const c = crowdCol(i, {});
-  if (top !== 'raglan') c.sleeve = c.top;
-  return crowdDesign({
-    hair: pickK(i, KID_HAIR, 5), eyeStyle: hashK(i, 6) > 0.45 ? 'dot' : 'mid', top, sleeve: top === 'puffer' || top === 'zipHoodie' || top === 'plaid' ? 'long' : 'short', pantsShape: 'straight',
-    eye: { iris: pickK(i, ['#5C3A1E', '#2E7DD1', '#3E8E41', '#7A4B2A'], 9) }, size: 0.8 + hashK(i, 10) * 0.16, number: String(1 + Math.floor(hashK(i, 16) * 98)),
-    shoe: pickK(i, KID_SHOE, 18), neutralMouth: pickK(i, ['smallSmile', 'line', 'smile'], 19),
-    acc: hashK(i, 17) > 0.8 ? { specs: { type: hashK(i, 18) > 0.5 ? 'round' : 'rect', col: '#2A2A33', r: 48, x: 58, w: 96, h: 64 } } : {},
-    col: { ...c, collar: c.accent },
-  });
+// noobs: plain starter avatars (bald, flat starter colours, simple smile). noob 0 = THE KID: tiny, propeller cap
+const NOOB_SETS = [['#F7D26B', '#3B82F6', '#3BD16F'], ['#FFD9B0', '#9AA0AE', '#4A5060'], ['#F7D26B', '#E8453C', '#2E3A55'], ['#E0A878', '#FFFFFF', '#3A6A9A'], ['#F7D26B', '#43AA8B', '#5A6070'], ['#FFE3CF', '#FFB703', '#2B2B33'], ['#C98D6A', '#9B5DE5', '#2E3A55'], ['#F7D26B', '#FF924C', '#1E1E28']];
+function noobSpec(i) {
+  const [skin, shirt, pants] = NOOB_SETS[((i % NOOB_SETS.length) + NOOB_SETS.length) % NOOB_SETS.length];
+  if (i === 0) return { skin: '#F7D26B', shirt: '#3B82F6', pants: '#3BD16F', hat: 'propeller', size: 0.66, mouth: 'smallSmile', blush: true, brows: false };
+  return { skin, shirt, pants, size: 0.66 + hashK(i, 21) * 0.1, mouth: pickK(i, ['smile', 'smallSmile', 'smile', 'line'], 22), hat: hashK(i, 23) > 0.8 ? 'cap' : '', hatCol: pickK(i, PAL, 24), blush: hashK(i, 25) > 0.6 };
 }
-const ADULT_HAIR = ['sidePart', 'crop', 'lowBun', 'longWave', 'shaved', 'curlTop', 'twists', 'sidePart', 'longWave', 'buzz', 'ponytail'];
-const ADULT_TOP = ['plaid', 'puffer', 'suit4', 'zipHoodie', 'stripeTee', 'raglan', 'suit4', 'plaid'];
-function adultDesign(i) {
-  const hair = pickK(i, ADULT_HAIR, 21), top = pickK(i, ADULT_TOP, 22);
-  const grey = hair === 'shaved' ? hashK(i, 24) > 0.4 : hashK(i, 24) > 0.85;
-  const hairC = grey ? pickK(i, ['#B9BAC2', '#8A8A92', '#D8D8DE'], 25) : pickK(i, HAIRC, 4);
-  const skirt = ['lowBun', 'longWave', 'ponytail'].includes(hair) && hashK(i, 26) > 0.45;
-  const skirtCol = pickK(i, PALETTE, 27);
-  const c = crowdCol(i + 40, { hair: hairC, hairShade: shade(hairC), brow: shade(hairC, 0.7), ...(skirt ? { pants: pickK(i, SKINS, 3)[0], pantsShade: pickK(i, SKINS, 3)[1] } : {}) });
-  if (top !== 'raglan') c.sleeve = c.top;
-  return crowdDesign({
-    hair, eyeStyle: hashK(i, 28) > 0.5 ? 'dot' : 'mid', lashes: ['longWave', 'lowBun'].includes(hair) && hashK(i, 29) > 0.3, top, sleeve: top === 'stripeTee' || top === 'raglan' ? 'short' : 'long', pantsShape: 'straight',
-    eye: { iris: pickK(i, ['#5C3A1E', '#2E7DD1', '#3E8E41', '#7A4B2A'], 9), pupil: 0.9 }, size: 1.02 + hashK(i, 30) * 0.12, neutralMouth: pickK(i, ['line', 'smallSmile', 'smile'], 31),
-    suitKind: hashK(i, 32) > 0.7 ? 'double' : 'single', shoe: top === 'suit4' ? 'dress' : pickK(i, ['sneaker', 'dress', 'sneaker'], 33),
-    ext: skirt ? { kind: 'skirt', top: -326, len: 120 + hashK(i, 34) * 40, flare: 18, col: skirtCol, shade: shade(skirtCol), under: true } : null,
-    acc: {
-      ...(hashK(i, 35) > 0.6 ? { specs: { type: hashK(i, 36) > 0.5 ? 'round' : 'rect', col: pickK(i, ['#2A2A33', '#7A4B2A', '#B08A3A'], 37), r: 50, x: 60, w: 100, h: 68 } } : {}),
-      ...(['sidePart', 'shaved', 'crop'].includes(hair) && hashK(i, 38) > 0.6 ? { mustache: shade(hairC, 0.9) } : {}),
-    },
-    col: c,
-  });
-}
-const kidCache = {}, adultCache = {};
-// kid(i, pose) or kid({ i, ...pose }) (actor('kid', t, { i: 3, ... }) works too)
-function kid(i, pose) {
-  if (typeof i === 'object' && i) { pose = i; i = i.i ?? i.seed ?? 0; }
-  if (!kidCache[i]) kidCache[i] = kidDesign(i);
-  return drawCharacter(kidCache[i], pose || {});
-}
-function adult(i, pose) {
-  if (typeof i === 'object' && i) { pose = i; i = i.i ?? i.seed ?? 0; }
-  if (!adultCache[i]) adultCache[i] = adultDesign(i);
-  return drawCharacter(adultCache[i], pose || {});
-}
+const playerDesign = (i) => (playerCache[i] = playerCache[i] || L6.liteDesign(playerSpec(i)));
+const noobDesign = (i) => (noobCache[i] = noobCache[i] || L6.liteDesign(noobSpec(i)));
 
-// ---------------------------------------------------------------- helpers: hands, props, overlays
+// real-world crowd humans (kept for the API; not needed much in this story): kidDesign(i) / adultDesign(i)
+const HSKINS = [['#F8D9C0', '#EBC0A2'], ['#E9B38B', '#D29A72'], ['#C98D6A', '#B0754F'], ['#8D5A3B', '#764830'], ['#F2C9A0', '#DDB083'], ['#6B4430', '#573522']];
+const crowdDesign = (style) => L4.dress4(L3.dress(makeDesign(style)));
+function humanCol(i) {
+  const top = pickK(i, PAL, 31), pants = pickK(i, ['#2E3A55', '#5A6070', '#7A5A3A', '#3A6A9A', '#2B2B33'], 32);
+  const [skin, skinShade] = pickK(i, HSKINS, 33), hair = pickK(i, HAIRS.slice(0, 7), 34);
+  return { skin, skinShade, hair, hairShade: L6.shadeHex(hair), hairHi: '#FFFFFF55', brow: L6.shadeHex(hair, 0.7), accent: pickK(i, PAL, 35), top, topShade: L6.shadeHex(top), sleeve: top, cuff: L6.shadeHex(top), trim: '#FFFFFF', stripe: '#FFFFFF', plaid1: L6.shadeHex(top, 0.62), plaid2: '#FFFFFF', shirt: '#FFFFFF', tie: pickK(i, PAL, 36), collar: '#FFFFFF', button: '#E9C25A', pants, pantsShade: L6.shadeHex(pants), sole: '#FFFFFF', soleShade: '#E0E0E8', toe: pickK(i, PAL, 37) };
+}
+function kidDesign(i) {
+  return crowdDesign({ hair: pickK(i, ['crop', 'curlTop', 'twists', 'twinTails', 'lowBun', 'puff', 'swoop', 'ponytail', 'buzz'], 38), eyeStyle: hashK(i, 39) > 0.45 ? 'dot' : 'mid', top: pickK(i, ['raglan', 'stripeTee', 'zipHoodie', 'puffer'], 40), sleeve: 'short', pantsShape: 'straight', size: 0.8 + hashK(i, 41) * 0.14, shoe: 'sneaker', col: humanCol(i) });
+}
+function adultDesign(i) {
+  return crowdDesign({ hair: pickK(i, ['sidePart', 'crop', 'lowBun', 'longWave', 'shaved', 'curlTop', 'ponytail'], 42), eyeStyle: hashK(i, 43) > 0.5 ? 'dot' : 'mid', top: pickK(i, ['plaid', 'puffer', 'suit4', 'zipHoodie', 'stripeTee'], 44), sleeve: 'long', pantsShape: 'straight', size: 1.02 + hashK(i, 45) * 0.12, shoe: 'sneaker', col: humanCol(i + 50) });
+}
+const humanKidCache = {}, adultCache = {};
+
+// ================================================================= helpers: hands, props, overlays, nametags
 const rad = (d) => (d * Math.PI) / 180;
 // grip point of a hand in BODY space for the pose's arm angle; side +1 = screen-right arm (armR), -1 = screen-left (armL)
 function handAt(dsg, pose, side, grip = 236) {
   const view = pose.view || 'front';
   const a = side < 0 ? (pose.armL ?? 9) : (pose.armR ?? 9);
-  if (view === 'side') { const [sx, sy] = (dsg.dims && dsg.dims.sideShoulder) || [4, -505]; return [sx - grip * Math.sin(rad(a)), sy + grip * Math.cos(rad(a))]; }
-  const W = (dsg.dims && dsg.dims.shoulderX) || 100;
-  const t = view === 'back' ? 0 : S.clamp(pose.turn || 0, -1, 1), at = Math.abs(t), dir = t >= 0 ? 1 : -1;
+  const dims = dsg.dims || {};
+  if (view === 'side') { const [sx, sy] = dims.sideShoulder || [4, -505]; return [sx - grip * Math.sin(rad(a)), sy + grip * Math.cos(rad(a))]; }
+  const W = dims.shoulderX || 100, Y = dims.shoulderY || -515;
+  const t = view === 'back' ? 0 : clamp(pose.turn || 0, -1, 1), at = Math.abs(t), dir = t >= 0 ? 1 : -1;
   const far = at > 0.35 && dir === side;
   const ax = side * W + (far ? -side * 30 * at : 8 * at * dir);
-  return [ax + side * grip * Math.sin(rad(a)), -515 + grip * Math.cos(rad(a))];
+  return [ax + side * grip * Math.sin(rad(a)), Y + grip * Math.cos(rad(a))];
 }
 const withProps = (pose, extra) => ({ ...pose, props: [...(pose.props || []), ...extra.filter((q) => q && q.svg)] });
 // add an extra `over` layer (head space, follows headRot/headY) to a design for one draw
@@ -230,275 +279,355 @@ function withOver(dsg, fn) {
   return { ...dsg, over: (face, t, shade, view) => (o0 ? o0(face, t, shade, view) : '') + L5.headScale(fn(face, t, shade, view) || '', k) };
 }
 const viewOf = (p) => p.view || 'front';
-const turnOf = (p) => (viewOf(p) === 'front' ? S.clamp(p.turn || 0, -1, 1) : 0);
+const turnOf = (p) => (viewOf(p) === 'front' ? clamp(p.turn || 0, -1, 1) : 0);
 const faceWith = (face, extra) => (typeof face === 'object' && face ? { ...face, ...extra } : { name: face || 'neutral', ...extra });
-
-// YOU and the ghost share these options: foam 0..1, backpack true|'flag', headphones true|colour
-function heroOptions(dsg, pose) {
-  const view = viewOf(pose);
-  const props = [];
-  let d = dsg;
-  if (pose.backpack) {
-    const bp = X.backpackWorn(view, { flag: pose.backpack === 'flag' ? (pose.flagGlow ?? 1) : false, t: pose.t || 0, flagSvg: pose.flagSvg ?? null });
-    if (bp.back) props.push({ svg: bp.back, layer: 'back' });
-    if (bp.mid) props.push({ svg: bp.mid, layer: 'mid' });
-    if (bp.top) props.push({ svg: bp.top, layer: 'top' });
-  }
-  const foam = pose.foam || 0;
-  if (foam > 0) props.push({ svg: L5.foamBody(view, foam, 3), layer: 'front' });
-  if (foam > 0 || pose.headphones) {
-    d = withOver(d, (face, t, shade, v) => (pose.headphones ? L5.heroHeadphones(v, t, pose.headphones === true ? '#2E7BD1' : pose.headphones) : '') + (foam > 0 ? L5.foamHead(v, foam, pose.t || 0, { seed: 2, turn: t, topY: -930 }) : ''));
-  }
-  return { d, pose: props.length ? withProps(pose, props) : pose };
+// sword angle for a hand: blade up from the fist when the arm hangs, continuing the arm when it is raised
+const swordRot = (a, side) => side * lerp(18, 180 - a, clamp((a - 60) / 70, 0, 1));
+// something drawn BEHIND the whole body (capes in the front / side view), with the character's transform + torso bob/lean
+function underlay(dsg, pose, svg) {
+  if (!svg) return '';
+  const p = { ...BASE_DEFAULTS, ...(dsg.defaults || {}), ...pose };
+  const Z = (dsg.dims && dsg.dims.size) || 1, fs = p.flip ? -1 : 1;
+  const tf = `translate(${f(p.x)} ${f(p.y - p.lift)}) scale(${f(fs * p.s * Z)} ${f(p.s * Z)}) rotate(${f(p.rot)} 0 ${f(p.rotY)}) scale(${f(p.sx)} ${f(p.sy)})`;
+  return S.g(S.g(svg, `translate(0 ${f(p.bodyY)}) rotate(${f(p.lean)} 0 -306)`), tf);
+}
+// the game nametag above a head (screen space), placed like body.js's nametag
+function tagFor(dsg, pose, opts) {
+  if (!opts || !opts.name) return '';
+  const p = { ...BASE_DEFAULTS, ...(dsg.defaults || {}), ...pose };
+  const Z = (dsg.dims && dsg.dims.size) || 1;
+  const ny = ((dsg.dims && dsg.dims.nametagY) || -1035) + p.bodyY + p.headY - 70;
+  return L6.gameTag(p.x, p.y - p.lift + ny * p.sy * Z * p.s, p.s * (opts.scale || 1), opts);
+}
+// resolve a nametag option: undefined -> default, false -> none, string -> that name
+const tagName = (v, def) => (v === false || v === null ? null : typeof v === 'string' ? v : v === true || v === undefined ? def : null);
+function drawWith(dsg, pose, props) {
+  const p = { ...pose, nametag: null };
+  return drawCharacter(dsg, props && props.length ? withProps(p, props) : p);
 }
 
-// ---------------------------------------------------------------- draw functions + options
+// ================================================================= draw functions + options
 const draw = {};
-draw.you = (pose = {}) => { const r = heroOptions(D.you, pose); return drawCharacter(r.d, r.pose); };
 
-// Ivy: goggles 'up'|'down' (default 'up', false hides them), soot 0..1 (smudges + frizzed hair from 0.4, smoke from 0.6),
-// foam 0..1, book true|'open'|2 (the BOOK OF FAILS; 2 = VOL. 2 for the ending), rockets 0..1 (rocket boosters + flame on the sneakers), t (time)
-draw.ivy = (pose = {}) => {
+// YOU: nametag 'YOU'|true|string (floating game nametag + LVL tag; lvl: 99), crown: true (LVL-99 crown), sword: true|'gold'|'dark',
+// hood: true (red hood over the bob), headset: true|0..1 (gaming headset; a number animates putting it on), headphones (old option)
+draw.you = (pose = {}) => {
   const view = viewOf(pose);
-  const soot = pose.soot || 0, foam = pose.foam || 0;
-  let d = soot >= 0.4 || pose.frizz ? D.ivyFrizz : D.ivy;
-  const gog = pose.goggles === undefined ? 'up' : pose.goggles;
-  d = withOver(d, (face, t, shade, v) => (gog ? L5.goggles(v, gog, t) : '') + L5.sootFace(v, soot, t) + (soot > 0.6 ? L5.smokeWisps(soot, pose.t || 0) : '') + (foam > 0 ? L5.foamHead(v, foam, pose.t || 0, { seed: 5, turn: t, topY: -990 }) : ''));
+  let d = D.you, p = pose;
+  const overs = [];
+  if (pose.hood) overs.push((face, t, shade, v) => L6.heroHood(v, t));
+  if (pose.headset) overs.push((face, t, shade, v) => L6.gamingHeadset(v, t, { earX: 222, top: -1120, k: pose.headset === true ? 1 : +pose.headset }));
+  if (pose.headphones) overs.push((face, t, shade, v) => L5.heroHeadphones(v, t, pose.headphones === true ? '#2E7BD1' : pose.headphones));
+  if (pose.crown) overs.push((face, t, shade, v) => L6.crown99(v, t, { text: pose.crown === true ? '99' : String(pose.crown) }));
+  if (overs.length) d = withOver(d, (face, t, shade, v) => overs.map((fn) => fn(face, t, shade, v)).join(''));
   const props = [];
-  if (soot > 0) props.push({ svg: L5.sootBody(view, soot), layer: 'front' });
-  if (foam > 0) props.push({ svg: L5.foamBody(view, foam, 6), layer: 'front' });
-  let p = pose;
-  if (pose.book) {
-    const vol = pose.book === 2 || pose.vol === 2 ? 2 : 1;
-    if (pose.book === 'open' && view !== 'side') {
-      p = { armL: 34, armR: 34, ...p };
-      props.push({ svg: X.bookOfFails({ x: turnOf(p) * 30, y: -400, s: 0.62, open: true, vol }), layer: view === 'back' ? 'back' : 'front' });
+  if (pose.sword) {
+    p = { armR: view === 'side' ? 60 : 50, ...p };
+    const side = view === 'side' ? 1 : view === 'back' ? -1 : 1;
+    const h = handAt(d, p, side);
+    const a = view === 'side' ? p.armR : (side < 0 ? p.armL : p.armR) ?? 9;
+    const rot = pose.swordRot ?? (view === 'side' ? -lerp(30, a - 90, clamp((a - 60) / 70, 0, 1)) : swordRot(a, side));
+    props.push({ svg: X.goldSword({ x: h[0], y: h[1], s: 0.95, rot, kind: pose.sword === true ? 'steel' : pose.sword, glow: pose.swordGlow || 0 }), layer: view === 'back' ? 'back' : 'front' });
+  }
+  const name = tagName(pose.nametag, 'YOU');
+  return drawWith(d, p, props) + (pose.nametag ? tagFor(d, p, { name, lvl: pose.lvl ?? 99, col: '#FFE14D', mvp: pose.mvp }) : '');
+};
+
+// Dad: glasses 'up' (default, pushed up on the forehead) | 'on' | 'off'; mouse: true (holds a computer mouse to his ear like a phone);
+// blanket: true (asleep under a quilt; pair with face 'sleepy' or sleepy: true); sleepy: true (sleepy face + zzz)
+draw.dad = (pose = {}) => {
+  const view = viewOf(pose);
+  const gl = pose.glasses === undefined ? 'up' : pose.glasses;
+  let d = D.dad, p = pose;
+  if (gl && gl !== 'off') d = withOver(d, (face, t, shade, v) => L6.readers(v, t, gl));
+  if (pose.sleepy && !p.face) p = { ...p, face: 'sleepy' };
+  else if (pose.sleepy && p.face) p = { ...p, face: faceWith(p.face, { eyes: { upper: 0.7, tilt: -8 }, fx: ['zzz'] }) };
+  const props = [];
+  if (pose.mouse) {
+    p = view === 'side' ? { armL: 150, ...p } : { armR: 162, ...p };
+    const side = view === 'side' ? -1 : 1;
+    const h = handAt(d, p, view === 'side' ? -1 : 1, 224);
+    props.push({ svg: X.computerMouse({ x: h[0] + (view === 'side' ? 10 : -14), y: h[1] + 30, s: 0.85, rot: view === 'side' ? -20 : 12, t: pose.t || 0 }), layer: view === 'back' ? 'back' : 'front' });
+    void side;
+  }
+  if (pose.blanket) {
+    p = { armL: 6, armR: 6, ...p };
+    props.push({ svg: X.blanket({ x: view === 'side' ? -20 : turnOf(p) * 30, y: -548, s: 1, w: view === 'side' ? 300 : 360, h: 420, t: pose.t || 0, wave: 1 }), layer: 'front' });
+  }
+  return drawWith(d, p, props);
+};
+
+// Mom: mug: true|text ('#1 MOM' mug in the right hand; mugUp: true raises it to sip), headset: true|0..1 (big pink gaming headset;
+// a number animates putting it on), pajamas: true (night look; a tea cup in her left hand unless cup: false), tablet: true (both hands;
+// screen / tabletFace / glow pass through to X.tablet)
+draw.mom = (pose = {}) => {
+  const view = viewOf(pose);
+  let d = pose.pajamas ? D.momPJ : D.mom, p = pose;
+  if (pose.headset !== undefined && pose.headset !== false) d = withOver(d, (face, t, shade, v) => L6.gamingHeadset(v, t, { earX: 172, top: -1080, col: '#3A2A48', glow: '#FF4FD8', glow2: '#3DF2FF', k: pose.headset === true ? 1 : +pose.headset }));
+  const props = [];
+  const lay = view === 'back' ? 'back' : 'front';
+  if (pose.tablet) {
+    p = { armL: view === 'side' ? 40 : 26, armR: view === 'side' ? 50 : 26, ...p };
+    props.push({ svg: X.tablet({ x: view === 'side' ? -150 : turnOf(p) * 40, y: -380, s: 0.62, rot: view === 'side' ? 0 : -4, face: pose.tabletFace || (view === 'side' ? 'back' : 'back'), screen: pose.screen || null, glow: pose.glow || 0 }), layer: lay });
+  }
+  if (pose.mug) {
+    if (pose.mugUp && view !== 'side') {
+      p = { armR: 150, ...p };
+      const h = handAt(d, p, 1, 200);
+      props.push({ svg: X.teaMug({ x: h[0] - 20, y: h[1] - 30, s: 0.62, rot: -20, text: pose.mug === true ? '#1 MOM' : pose.mug, t: pose.t || 0, steam: 0 }), layer: lay });
     } else {
-      p = { armL: view === 'side' ? 30 : 22, ...p };
-      const h = handAt(d, p, -1);
-      props.push({ svg: X.bookOfFails({ x: h[0] + (view === 'side' ? -10 : 0), y: h[1] - 20, s: 0.55, rot: view === 'side' ? -8 : -6, vol }), layer: view === 'back' ? 'back' : 'front' });
+      p = { armR: view === 'side' ? 50 : 30, ...p };
+      const h = handAt(d, p, view === 'side' ? -1 : 1, 226);
+      props.push({ svg: X.teaMug({ x: h[0] + (view === 'side' ? -20 : 20), y: h[1] - 10, s: 0.6, text: pose.mug === true ? '#1 MOM' : pose.mug, t: pose.t || 0 }), layer: lay });
     }
   }
-  L5.STATE.rocket = pose.rockets ? { flame: pose.rockets === true ? 1 : pose.rockets, t: pose.t || 0 } : null;
-  const out = drawCharacter(d, props.length ? withProps(p, props) : p);
-  L5.STATE.rocket = null;
+  if (pose.pajamas && pose.cup !== false) {
+    p = { armL: view === 'side' ? 40 : 24, ...p };
+    const h = handAt(d, p, view === 'side' ? 1 : -1, 230);
+    props.push({ svg: X.teaCup({ x: h[0] + (view === 'side' ? -30 : -10), y: h[1] + 18, s: 0.55, t: pose.t || 0, steam: pose.steam ?? 1 }), layer: lay });
+  }
+  return drawWith(d, p, props);
+};
+
+// Grandma: knitting: true (needles + swatch at her hands, yarn ball by her side), phone: 'arm' (phone held out at arm's length, we see
+// its back; phoneFace: 'screen' + screen), curlers: true (night), cracking: true|0..1 (knuckle-crack pose: hands together in front,
+// little crack bursts; animate the number)
+draw.grandma = (pose = {}) => {
+  const view = viewOf(pose);
+  let d = D.grandma, p = pose;
+  if (pose.curlers) d = withOver(d, (face, t, shade, v) => L6.curlers(v, t));
+  const props = [];
+  const lay = view === 'back' ? 'back' : 'front';
+  if (pose.knitting) {
+    p = { armL: view === 'side' ? 40 : 24, armR: view === 'side' ? 50 : 24, ...p };
+    props.push({ svg: X.knittingYarn({ x: view === 'side' ? -140 : turnOf(p) * 30, y: -300, s: 0.7, ball: [180, 200], t: pose.t || 0 }), layer: lay });
+  }
+  if (pose.phone) {
+    p = view === 'side' ? { armL: 95, ...p } : { armR: 100, ...p };
+    const h = handAt(d, p, view === 'side' ? -1 : 1, 250);
+    props.push({ svg: X.phone({ x: h[0] + (view === 'side' ? -20 : 30), y: h[1] - 40, s: 0.62, rot: view === 'side' ? -6 : 8, face: pose.phoneFace || 'back', screen: pose.screen || null, glow: pose.glow || 0 }), layer: view === 'side' ? 'front' : lay });
+  }
+  if (pose.cracking) {
+    const k = pose.cracking === true ? 1 : clamp(+pose.cracking, 0, 1);
+    p = { armL: -26, armR: -26, ...p };
+    const h = handAt(d, p, 1);
+    let fx = '';
+    if (k > 0.05) for (let i = 0; i < 5; i++) { const a = (i / 5) * Math.PI * 2 + 0.4, r0 = 50 + 40 * k, r1 = r0 + 40 * k; fx += S.path(`M${f(h[0] - 10 + Math.cos(a) * r0)} ${f(h[1] + Math.sin(a) * r0)} L${f(h[0] - 10 + Math.cos(a) * r1)} ${f(h[1] + Math.sin(a) * r1)}`, { fill: 'none', stroke: '#FFD21F', 'stroke-width': 10, 'stroke-linecap': 'round', opacity: f(k) }); }
+    props.push({ svg: fx, layer: 'front' });
+  }
+  return drawWith(d, p, props);
+};
+
+// teen Mom (1998): trophy: true (the huge ARCADE QUEEN 1998 trophy held in front) | 'up' (lifted over her head)
+draw.momTeen = (pose = {}) => {
+  const view = viewOf(pose);
+  let p = pose;
+  const props = [];
+  if (pose.trophy) {
+    if (pose.trophy === 'up') {
+      p = { armL: 165, armR: 165, ...p };
+      props.push({ svg: X.arcadeTrophy({ x: view === 'side' ? -40 : 0, y: -820, s: 0.7, t: pose.t || 0 }), layer: view === 'back' ? 'top' : 'front' });
+    } else {
+      p = { armL: view === 'side' ? 40 : 30, armR: view === 'side' ? 50 : 30, ...p };
+      props.push({ svg: X.arcadeTrophy({ x: view === 'side' ? -150 : turnOf(p) * 40, y: -170, s: 0.62, t: pose.t || 0 }), layer: view === 'back' ? 'back' : 'front' });
+    }
+  }
+  return drawWith(D.momTeen, p, props);
+};
+
+// DadBod1978 (the hot dog): nametag (default 'DadBod1978'), mvp: true (gold MVP medal on the costume + MVP star on the nametag)
+draw.dadAvatar = (pose = {}) => {
+  const p = pose;
+  L6.STATE.face = p.face || 'neutral';
+  L6.STATE.headRot = p.headRot || 0;
+  L6.STATE.mvp = !!pose.mvp;
+  const out = drawWith(D.dadAvatar, { ...p, headRot: 0 }) + tagFor(D.dadAvatar, p, { name: tagName(pose.nametag, 'DadBod1978'), mvp: pose.mvp });
+  L6.STATE.face = null; L6.STATE.mvp = false; L6.STATE.headRot = 0;
   return out;
 };
 
-// Dad: spatula true (right hand; pose.pancake true|'burnt' puts a pancake on it), apron false, pancakeOnHead true
-draw.dad = (pose = {}) => {
+// MOM_OFFICIAL: armor 0 (grey default, default) | 1 (golden armour); glasses (default true); in armour: shield (pot lid on the left
+// arm, default true), sword (right hand, default true; 'gold' | 'steel'), cape (default true), shieldUp: true (raised to block)
+draw.momAvatar = (pose = {}) => {
   const view = viewOf(pose);
-  let d = pose.apron === false ? D.dadNoApron : D.dad;
-  if (pose.pancakeOnHead) d = withOver(d, (face, t, shade, v) => L5.pancakeHead(v, t, 1));
-  let p = pose;
-  if (pose.spatula) {
-    p = { armR: view === 'side' ? 50 : 56, ...p };
-    const side = view === 'back' ? -1 : 1;
-    const h = handAt(d, p, view === 'side' ? 1 : side);
-    const hasP = pose.pancake;
-    const rot = view === 'side' ? (hasP ? -78 : -14) : side * (hasP ? 80 : 14);
-    p = withProps(p, [{ svg: X.spatula({ x: h[0], y: h[1], s: 0.8, rot, pancake: hasP || false }), layer: view === 'back' ? 'back' : 'front' }]);
-  }
-  return drawCharacter(d, p);
-};
-
-// Mom: thermos true (left hand), phone true (right hand raised, filming — we see the back of the phone; phoneFace: 'screen' to see the screen)
-draw.mom = (pose = {}) => {
-  const view = viewOf(pose);
+  const armor = pose.armor ? 1 : 0;
+  const gl = pose.glasses !== false;
+  let d = armor ? (gl ? D.momAvatar1 : D.momAvatar1nog) : (gl ? D.momAvatar0 : D.momAvatar0nog);
   let p = pose;
   const props = [];
-  if (pose.thermos) {
-    p = { armL: view === 'side' ? 24 : 18, ...p };
-    const h = handAt(D.mom, p, view === 'side' ? 1 : -1);
-    props.push({ svg: X.thermos({ x: h[0], y: h[1] - 10, s: 0.62, rot: view === 'side' ? 0 : -4 }), layer: view === 'back' ? 'back' : 'front' });
-  }
-  if (pose.phone) {
-    p = { armR: view === 'side' ? 120 : 150, ...p };
-    const side = view === 'side' ? 1 : 1;
-    const h = handAt(D.mom, p, side);
-    props.push({ svg: X.phone({ x: h[0] + (view === 'side' ? -20 : -14), y: h[1] - 40, s: 0.72, rot: view === 'side' ? -10 : -8, face: pose.phoneFace || 'back', t: pose.t || 0 }), layer: view === 'back' ? 'back' : 'top' });
-  }
-  return drawCharacter(D.mom, props.length ? withProps(p, props) : p);
-};
-
-// Bea: spoon true (right hand), sign true (held in front of her with both hands) | 'up' (on a stick, above her head), gapSmile true (gap-tooth grin)
-draw.bea = (pose = {}) => {
-  const view = viewOf(pose);
-  let p = pose;
-  if (pose.gapSmile) p = { ...p, face: faceWith(p.face || 'happy', { mouth: 'grin' }) };
-  L5.STATE.t = pose.t || 0;
-  const props = [];
-  if (pose.spoon) {
-    p = { armR: view === 'side' ? 40 : 40, ...p };
-    const h = handAt(D.bea, p, 1);
-    props.push({ svg: X.spoon({ x: h[0], y: h[1], s: 0.7, rot: view === 'side' ? -20 : 18, full: pose.spoon === 'full' }), layer: view === 'back' ? 'back' : 'front' });
-  }
-  if (pose.sign) {
-    if (pose.sign === 'up') {
-      p = { armL: 150, armR: 150, ...p };
-      const h = handAt(D.bea, p, 1);
-      props.push({ svg: X.goSign({ x: view === 'side' ? -40 : 0, y: h[1] - 280, s: 0.95, stick: true, t: pose.t || 0 }), layer: view === 'back' ? 'back' : 'front' });
-    } else {
-      p = { armL: 26, armR: 26, ...p };
-      props.push({ svg: X.goSign({ x: view === 'side' ? -120 : turnOf(p) * 40, y: -360, s: 0.9, rot: view === 'side' ? 0 : -3, t: pose.t || 0 }), layer: view === 'back' ? 'back' : 'front' });
+  let under = '';
+  if (armor) {
+    d = withOver(d, (face, t, shade, v) => L6.goldHelmet(v, t, GOLD));
+    if (pose.cape !== false) {
+      const cape = L6.heroCape(view === 'back' ? 'back' : view === 'side' ? 'side' : 'front', '#D8263E', '#9E1A2C', pose.t || 0, 430);
+      if (view === 'back') props.push({ svg: cape, layer: 'front' }); else under = cape;
+    }
+    if (pose.shield !== false) {
+      if (pose.shieldUp && view !== 'back') p = { armL: view === 'side' ? 80 : 60, ...p };
+      else p = { armL: view === 'side' ? 30 : 24, ...p };
+      const h = handAt(d, p, view === 'side' ? 1 : -1, 170);
+      props.push({ svg: X.potLid({ x: h[0] + (view === 'side' ? -40 : -20), y: h[1] - (pose.shieldUp ? 40 : 0), s: view === 'side' ? 0.95 : 1.05, rot: -10, flash: pose.shieldFlash || 0 }), layer: view === 'back' ? 'back' : view === 'side' ? 'front' : 'front' });
+    }
+    if (pose.sword !== false) {
+      p = { armR: view === 'side' ? 60 : 40, ...p };
+      const side = view === 'side' ? -1 : view === 'back' ? -1 : 1;
+      const h = handAt(d, p, view === 'side' ? -1 : 1);
+      const a = view === 'side' ? p.armL : p.armR;
+      props.push({ svg: X.goldSword({ x: h[0], y: h[1], s: 0.95, rot: pose.swordRot ?? (view === 'side' ? -lerp(30, a - 90, clamp((a - 60) / 70, 0, 1)) : swordRot(a, 1)), kind: pose.sword === true || pose.sword === undefined ? 'gold' : pose.sword, glow: pose.swordGlow || 0 }), layer: view === 'back' ? 'back' : view === 'side' ? 'mid' : 'front' });
+      void side;
     }
   }
-  return drawCharacter(D.bea, props.length ? withProps(p, props) : p);
+  return underlay(d, p, under) + drawWith(d, p, props) + tagFor(d, p, { name: tagName(pose.nametag, 'MOM_OFFICIAL'), col: '#FFB3DA', mvp: pose.mvp, lvl: pose.lvl });
 };
 
-// Mr. Fig: papers true (stack of quiz papers in the left hand), marker true (right hand)
-draw.teacher = (pose = {}) => {
+// GrannyGoodies: cane (golden cane in the left hand, default true), bag (money bag in the right hand, default true; coins 0..1),
+// apron: true (Granny's Goodies bakery apron over the fur coat)
+draw.grandmaAvatar = (pose = {}) => {
   const view = viewOf(pose);
   let p = pose;
   const props = [];
-  if (pose.papers) {
-    p = { armL: view === 'side' ? 60 : 30, ...p };
-    const h = handAt(D.teacher, p, view === 'side' ? 1 : -1);
-    props.push({ svg: X.paperStack({ x: h[0] + (view === 'side' ? -30 : 10), y: h[1] - 10, s: 0.7, rot: view === 'side' ? 0 : -8 }), layer: view === 'back' ? 'back' : 'front' });
+  const lay = view === 'back' ? 'back' : 'front';
+  if (pose.cane !== false) {
+    p = { armL: view === 'side' ? 20 : 14, ...p };
+    const h = handAt(D.grandmaAvatar, p, view === 'side' ? 1 : -1, 240);
+    props.push({ svg: X.cane({ x: h[0] - (view === 'side' ? 30 : 6), y: h[1] - 10, s: 0.62, rot: view === 'side' ? 0 : 4 }), layer: view === 'side' ? 'back' : lay });
   }
-  if (pose.marker) {
-    p = { armR: view === 'side' ? 70 : 50, ...p };
-    const h = handAt(D.teacher, p, 1);
-    props.push({ svg: X.marker({ x: h[0], y: h[1], s: 0.7, rot: view === 'side' ? -30 : 24, cap: pose.marker !== 'open' }), layer: view === 'back' ? 'back' : 'front' });
+  if (pose.bag !== false) {
+    p = { armR: view === 'side' ? 30 : 20, ...p };
+    const h = handAt(D.grandmaAvatar, p, view === 'side' ? -1 : 1, 240);
+    props.push({ svg: X.coinBag({ x: h[0] + (view === 'side' ? 0 : 6), y: h[1] - 6, s: 0.5, coins: pose.coins || 0 }), layer: lay });
   }
-  return drawCharacter(D.teacher, props.length ? withProps(p, props) : p);
+  L6.STATE.apron = pose.apron ? L6.APRON_GG : false;
+  const out = drawWith(D.grandmaAvatar, p, props) + tagFor(D.grandmaAvatar, p, { name: tagName(pose.nametag, 'GrannyGoodies'), col: '#FFE14D', mvp: pose.mvp });
+  L6.STATE.apron = false;
+  return out;
 };
 
-// Coach Dee: whistle 'chest' (default) | 'mouth' (blowing it: mouth 'o', no chest whistle) ; ball true (dodgeball under the right arm)
-draw.coach = (pose = {}) => {
-  const view = viewOf(pose);
-  let d = D.coach, p = pose;
-  if (pose.whistle === 'mouth') {
-    d = withOver(D.coachW, (face, t, shade, v) => L5.whistleMouth(v, t));
-    p = { ...p, face: faceWith(p.face || 'determined', { mouth: 'o' }) };
-  }
-  if (pose.ball) {
-    const side = view === 'side' ? 0 : 1;
-    p = { armR: view === 'side' ? -8 : 16, ...p };
-    const x = view === 'side' ? 20 : side * ((d.dims.shoulderX || 100) + 46), y = view === 'side' ? -380 : -396;
-    p = withProps(p, [{ svg: X.dodgeball({ x, y, s: 0.95, col: pose.ballCol || '#E8453C' }), layer: view === 'side' ? 'mid' : view === 'back' ? 'mid' : 'mid' }]);
-  }
-  return drawCharacter(d, p);
+// NoodleBoi: hairnet: true (net over the noodles), apron: true (Granny's Goodies factory apron), badge: true|'EMPLOYEE OF THE MONTH'
+draw.noodle = (pose = {}) => {
+  L6.STATE.hairnet = !!pose.hairnet;
+  L6.STATE.apron = pose.apron ? L6.APRON_GG : false;
+  L6.STATE.badge = pose.badge || null;
+  L6.STATE.t = pose.t || 0;
+  const out = drawWith(D.noodle, pose) + tagFor(D.noodle, pose, { name: tagName(pose.nametag, 'NoodleBoi'), col: '#7FE8FF' });
+  L6.STATE.hairnet = false; L6.STATE.apron = false; L6.STATE.badge = null;
+  return out;
 };
 
-// Principal Pemberton: foam 0..1 (covered in foam, + foam moustache), spaghetti 0..1 (on her head and shoulders), mic true (right hand)
-draw.principal = (pose = {}) => {
+// xX_DarkBlade_Xx: sword (default true; 'back' = slung on his back, false = none), cape (default true), shy: true (visor pushed up —
+// a shy kid's face shows; softer default stance), stars: true (dizzy KO stars; pass t). No mouth while the visor is down: his eyes
+// pulse with his voice (lip-sync drives the glow) — his lines are carried by chat bubbles.
+draw.darkblade = (pose = {}) => {
   const view = viewOf(pose);
-  const foam = pose.foam || 0, sp = pose.spaghetti || 0;
-  let d = D.principal, p = pose;
-  if (foam > 0 || sp > 0) d = withOver(d, (face, t, shade, v) => L5.spaghettiHead(v, sp, t) + L5.foamHead(v, foam, pose.t || 0, { seed: 8, stache: foam > 0.3, turn: t, topY: -1000 }));
+  let d = D.darkblade, p = pose;
+  if (pose.shy) p = { armL: -6, armR: -6, headRot: 6, lean: 3, ...p };
+  if (pose.stars) d = withOver(d, () => L6.dizzyStars(pose.t || 0));
   const props = [];
-  if (sp > 0) props.push({ svg: L5.spaghettiBody(view, sp), layer: 'front' });
-  if (foam > 0) props.push({ svg: L5.foamBody(view, foam, 9), layer: 'front' });
-  if (pose.mic) {
-    p = { armR: view === 'side' ? 64 : 48, ...p };
-    const h = handAt(d, p, 1);
-    props.push({ svg: X.handMic({ x: h[0], y: h[1], s: 0.75, rot: view === 'side' ? -28 : -22 }), layer: view === 'back' ? 'back' : 'front' });
+  let under = '';
+  if (pose.cape !== false) {
+    const cape = L6.tatteredCape(view === 'back' ? 'back' : view === 'side' ? 'side' : 'front', '#5A0E1E', '#2A0710', pose.t || 0, 480);
+    if (view === 'back') props.push({ svg: cape, layer: 'front' }); else under = cape;
   }
-  return drawCharacter(d, props.length ? withProps(p, props) : p);
-};
-
-// the juggler: juggle = phase (cycles; e.g. t * 1.6) juggles `pins` (7) bowling pins in a cascade above her hands and drives her arms
-draw.juggler = (pose = {}) => {
-  if (pose.juggle === undefined || pose.juggle === false) return drawCharacter(D.juggler, pose);
-  const ph = +pose.juggle || 0, n = pose.pins || 7;
-  const p = { armL: 52 + 16 * Math.sin(ph * Math.PI * 2), armR: 52 - 16 * Math.sin(ph * Math.PI * 2), face: 'happy', ...pose };
-  let pins = '';
-  for (let i = 0; i < n; i++) {
-    // a cascade: every pin runs round a loop of two throws (left->right, then right->left), evenly spaced in phase
-    const q = (((ph * 2 + (2 * i) / n) % 2) + 2) % 2;
-    const ltr = q < 1, u = ltr ? q : q - 1;
-    const x0 = ltr ? -240 : 240, x1 = ltr ? 290 : -290;
-    const ux = u * u * (3 - 2 * u); // pins rise beside her head and cross over the top
-    const x = x0 + (x1 - x0) * ux, y = -380 - (ltr ? 4900 : 4500) * u * (1 - u);
-    pins += X.bowlingPin({ x, y, s: 0.85, rot: u * 540 + i * 30, col: '#FFFFFF', stripe: ['#FF3B6B', '#FFD23F', '#3BD16F', '#2E7BD1'][i % 4], sparkle: true });
+  if (pose.sword !== false && !pose.shy) {
+    if (pose.sword === 'back') {
+      const sv = X.goldSword({ x: view === 'side' ? 90 : -70, y: -330, s: 1.15, rot: view === 'side' ? 200 : 155, kind: 'dark' });
+      if (view === 'back') props.push({ svg: sv, layer: 'front' }); else props.push({ svg: sv, layer: 'back' });
+    } else {
+      p = { armR: view === 'side' ? 60 : 50, ...p };
+      const h = handAt(d, p, view === 'side' ? -1 : 1);
+      const a = view === 'side' ? p.armL : p.armR;
+      props.push({ svg: X.goldSword({ x: h[0], y: h[1], s: 1.15, rot: pose.swordRot ?? (view === 'side' ? -lerp(30, a - 90, clamp((a - 60) / 70, 0, 1)) : swordRot(a, 1)), kind: 'dark', glow: pose.swordGlow || 0 }), layer: view === 'back' ? 'back' : 'front' });
+    }
   }
-  return drawCharacter(D.juggler, withProps(p, [{ svg: pins, layer: 'top' }]));
+  L6.STATE.shy = !!pose.shy;
+  const out = underlay(d, p, under) + drawWith(d, p, props) + tagFor(d, p, { name: tagName(pose.nametag, 'xX_DarkBlade_Xx'), col: '#FF5A6E' });
+  L6.STATE.shy = false;
+  return out;
 };
 
-draw.kid = kid;
-draw.adult = adult;
-
-// ---------------------------------------------------------------- the ghost (grey, translucent copy of YOU) + ghostLite for crowds
-const GHOST_SWAP = [[/#151515/g, '#27364C'], [/#4B1020/g, '#3A4656'], [/#EE6A7C/g, '#9AA6B8'], [/#FF8FA3/g, '#B8C4D4'], [/#8AD8FF/g, '#C8E8F8']];
-// Full ghost: the hero rig (same options as YOU: foam, backpack...) in greys, a faint cyan rim, alpha (default 0.55). volume off by default.
-draw.ghost = (pose = {}) => {
-  const a = pose.alpha ?? 0.55;
-  const r = heroOptions(D.ghost, { volume: false, ...pose });
-  let svg = drawCharacter(r.d, { shadow: false, ...r.pose });
-  for (const [re, to] of GHOST_SWAP) svg = svg.replace(re, to);
-  const rim = pose.rim === false ? '' : ghostLiteBody({ ...pose, shadow: false }, RIM);
-  return S.g(rim + svg, null, { opacity: f(a) });
+// the clan: draw.clan(i, pose) or actor('clan', t, { i, ... }); weapon (default per member: axe or sword; false = none), stars: true
+draw.clan = (i, pose) => {
+  if (typeof i === 'object' && i) { pose = i; i = i.i ?? 0; }
+  pose = pose || {};
+  const view = viewOf(pose);
+  let d = clanDesign(i), p = pose;
+  if (pose.stars) d = withOver(d, () => L6.dizzyStars(pose.t || 0));
+  const props = [];
+  const w = pose.weapon === undefined ? d.clan.weapon : pose.weapon;
+  if (w) {
+    p = { armR: view === 'side' ? 60 : 40, ...p };
+    const h = handAt(d, p, view === 'side' ? -1 : 1);
+    const a = view === 'side' ? p.armL : p.armR;
+    const rot = view === 'side' ? -lerp(30, a - 90, clamp((a - 60) / 70, 0, 1)) : swordRot(a, 1);
+    props.push({ svg: w === 'axe' ? X.axe({ x: h[0], y: h[1], s: 0.9, rot, col: d.clan.hi, glow: d.clan.eye }) : X.goldSword({ x: h[0], y: h[1], s: 0.95, rot, kind: 'dark' }), layer: view === 'back' ? 'back' : 'front' });
+  }
+  return drawWith(d, p, props) + (pose.nametag ? tagFor(d, p, { name: typeof pose.nametag === 'string' ? pose.nametag : `DarkClan_${(i % 90) + 7}`, col: '#C9B8FF' }) : '');
 };
-// ghostLite: a flat simplified silhouette (no clips, no filters, ~16 elements) for crowds of hundreds.
-// Same pose fields as any rig character; options: alpha (default 0.55; 1 = opaque, cheapest), col (fill), rim (true adds the cyan rim).
-const GL = { fill: '#B7C1CF', hair: '#8F9AAC', face: '#E4EAF2', line: '#4FA9C2', lw: 8, eye: '#FFFFFF', pupil: '#2A3442', face2: true };
-const RIM = { fill: '#8FF3FF', hair: '#8FF3FF', face: '#8FF3FF', line: '#8FF3FF', lw: 30, face2: false, shoe: '#8FF3FF' };
-const BOB = 'M-141 -672 L-243 -709 L-201 -894 Q0 -1006 199 -894 L242 -712 L142 -672 L142 -708 L126 -716 L104 -770 L92 -796 L84 -849 L5 -792 L-5 -792 L-84 -849 L-92 -796 L-104 -770 L-126 -716 L-142 -708 Z';
-const BOB_SIDE = 'M-190 -810 L-145 -795 L-95 -842 L-55 -715 L-15 -722 L-15 -625 L40 -625 L40 -575 L180 -585 L180 -675 L235 -685 L175 -900 Q10 -990 -160 -920 Z';
-const BOB_BACK = 'M-243 -709 L-201 -894 Q0 -1006 199 -894 L242 -712 L211 -700 L211 -627 L150 -612 L146 -578 L0 -572 L-146 -578 L-150 -612 L-211 -627 L-211 -700 Z';
-const HEAD_F = S.roundedPath([[-140, -890], [140, -890], [140, -559], [-140, -559]], 46);
-const HEAD_S = S.roundedPath([[-165, -885], [150, -885], [150, -553], [-165, -553]], 44);
-const ARM_F = S.roundedPath([[-30, -18], [30, -18], [40, 268], [-40, 268]], 17);
-const ARM_S = S.roundedPath([[-40, -20], [40, -20], [40, 248], [-40, 248]], 18);
-const TORSO_F = S.roundedPath([[-100, -533], [100, -533], [100, -306], [-100, -306]], 16);
-const TORSO_S = S.roundedPath([[-62, -535], [70, -535], [70, -305], [-62, -305]], 16);
-const glCache = new Map();
-function glDesign(pal) {
-  if (glCache.has(pal)) return glCache.get(pal);
-  const st = (fill) => ({ fill, stroke: pal.line, 'stroke-width': pal.lw, 'stroke-linejoin': 'round' });
-  const B = st(pal.fill), H = st(pal.hair), Fc = st(pal.face);
-  const shoeF = st(pal.shoe || '#DDE3EB');
-  const eyes = (cx, side) => {
-    if (!pal.face2) return '';
-    if (side) return S.ellipse(-118, -716, 40, 62, { fill: pal.eye, stroke: pal.line, 'stroke-width': pal.lw }) + S.circle(-142, -708, 13, { fill: pal.pupil });
-    return S.ellipse(cx - 64, -719, 56, 72, { fill: pal.eye, stroke: pal.line, 'stroke-width': pal.lw }) + S.ellipse(cx + 64, -719, 56, 72, { fill: pal.eye, stroke: pal.line, 'stroke-width': pal.lw }) +
-      S.circle(cx - 50, -712, 13, { fill: pal.pupil }) + S.circle(cx + 50, -712, 13, { fill: pal.pupil });
+
+// DarkBlade's mom: rollingPin (default true; raised in the right hand), nametag (default 'MOM')
+draw.darkbladeMom = (pose = {}) => {
+  const view = viewOf(pose);
+  let p = pose;
+  const props = [];
+  if (pose.rollingPin !== false) {
+    p = view === 'side' ? { armL: 140, ...p } : { armR: 150, ...p };
+    const h = handAt(D.darkbladeMom, p, view === 'side' ? -1 : 1, 240);
+    props.push({ svg: X.rollingPin({ x: h[0], y: h[1], s: 0.7, rot: view === 'side' ? 70 : -60 }), layer: view === 'back' ? 'back' : 'front' });
+  }
+  return drawWith(D.darkbladeMom, p, props) + tagFor(D.darkbladeMom, p, { name: tagName(pose.nametag, 'MOM'), col: '#FF9FD0' });
+};
+
+// generic players and noobs (lite avatars: no clips, no filters). player(i, pose) / noob(i, pose), or actor(.., { i }).
+// options: sword true|'gold'|'steel'|'dark', nametag (string), stars: true, t (propeller spin). noob 0 = THE KID (propeller cap).
+function lite(dsgFn, defTag) {
+  return (i, pose) => {
+    if (typeof i === 'object' && i) { pose = i; i = i.i ?? i.seed ?? 0; }
+    pose = pose || {};
+    const view = viewOf(pose);
+    const d = dsgFn(i);
+    let p = pose;
+    const props = [];
+    if (pose.sword) {
+      p = { armR: view === 'side' ? 60 : 50, ...p };
+      const h = handAt(d, p, view === 'side' ? -1 : 1);
+      const a = view === 'side' ? p.armL : p.armR;
+      props.push({ svg: X.goldSword({ x: h[0], y: h[1], s: 0.9, rot: view === 'side' ? -lerp(30, a - 90, clamp((a - 60) / 70, 0, 1)) : swordRot(a, 1), kind: pose.sword === true ? 'steel' : pose.sword }), layer: view === 'back' ? 'back' : 'front' });
+    }
+    if (pose.stars) props.push({ svg: L6.dizzyStars(pose.t || 0, 3, -1000, 170), layer: 'front' });
+    L6.STATE.t = pose.t || 0;
+    return drawWith(d, p, props) + (pose.nametag ? tagFor(d, p, { name: typeof pose.nametag === 'string' ? pose.nametag : defTag(i), col: '#FFFFFF', scale: 0.8 }) : '');
   };
-  const dsg = {
-    dims: {},
-    defaults: { volume: false, shade: false, shadow: false, dimFar: false },
-    leg: ({ J, back }) => S.path(bentLimb(J, [42, 70, 96], [40, 40, 40], 24).d, B) + S.g(S.path('M-44 -4 L107 -4 L107 40 L-44 40 Z', shoeF), `translate(${f(J.ankle[0])} ${f(J.ankle[1])}) rotate(${f(J.foot)})`),
-    legSide: ({ J }) => S.path(bentLimb(J, [64, 74, 85], [58, 69, 80], 24).d, B) + S.g(S.path('M-138 -4 L88 -4 L88 42 L-138 42 Z', shoeF), `translate(${f(J.ankle[0])} ${f(J.ankle[1])}) rotate(${f(J.foot)})`),
-    arm: ({ view }) => S.path(view === 'side' ? ARM_S : ARM_F, B),
-    torso: () => S.path(TORSO_F, B),
-    torsoSide: () => S.path(TORSO_S, B),
-    head: (face, t) => { const cx = (t || 0) * 30; return S.g(S.path(HEAD_F, Fc) + S.path(BOB, H), cx ? `translate(${f(cx * 0.5)} 0)` : null) + eyes(cx, false); },
-    headSide: () => S.path(HEAD_S, Fc) + S.path(BOB_SIDE, H) + eyes(0, true),
-    headBack: () => S.path(HEAD_F, Fc) + S.path(BOB_BACK, H),
-  };
-  glCache.set(pal, dsg);
-  return dsg;
 }
-function ghostLiteBody(pose, pal) {
-  const dsg = glDesign(pal);
-  return drawCharacter(dsg, { ...dsg.defaults, ...pose, face: 'neutral', props: [] });
-}
-draw.ghostLite = (pose = {}) => {
-  const pal = pose.col ? { ...GL, fill: pose.col } : GL;
-  let svg = ghostLiteBody({ shadow: false, ...pose }, pal);
-  if (pose.rim) svg = ghostLiteBody({ shadow: false, ...pose }, RIM) + svg;
-  const a = pose.alpha ?? 0.55;
-  return a >= 1 ? svg : S.g(svg, null, { opacity: f(a) });
-};
+const PLAYER_NAMES = ['xXPro_GamerXx', 'BlockyBoi', 'CoolKid2015', 'PizzaLord', 'Speedrun_Sam', 'ObbyQueen', 'NotAFish', 'TacoTuesday', 'MegaMilo', 'Pixel_Pat', 'SirLagsAlot', 'Bob'];
+draw.player = lite(playerDesign, (i) => PLAYER_NAMES[((i % PLAYER_NAMES.length) + PLAYER_NAMES.length) % PLAYER_NAMES.length]);
+draw.noob = lite(noobDesign, (i) => (i === 0 ? 'lil_noob_7' : `Guest_${1000 + ((i * 739) % 9000)}`));
+// `kid` = the noob kids of Cube City (actor('kid', …) lip-syncs the KID voice; i 0 = THE KID with the propeller cap)
+draw.kid = draw.noob;
+// real-world humans for crowds (not in the script, kept for the API)
+draw.humanKid = (i, pose) => { if (typeof i === 'object' && i) { pose = i; i = i.i ?? 0; } if (!humanKidCache[i]) humanKidCache[i] = kidDesign(i); return drawCharacter(humanKidCache[i], pose || {}); };
+draw.adult = (i, pose) => { if (typeof i === 'object' && i) { pose = i; i = i.i ?? 0; } if (!adultCache[i]) adultCache[i] = adultDesign(i); return drawCharacter(adultCache[i], pose || {}); };
 
-// many ghostLites at once: one shared opacity (≈0.6 ms per ghost at s 0.15 instead of ≈1.2 ms with per-ghost alpha).
-// poses: array of pose objects (each may set col / rim); opts.alpha (default 0.55)
-draw.ghostCrowd = (poses = [], opts = {}) => {
-  if (!Array.isArray(poses)) poses = [poses];
+// THE BLOCK KING (non-rig): x, y (feet), s (≈ 1220 tall at s 1 — use s 1.5–4 to fill the sky), flip, pose 'idle'|'rise'|'smash'|'roar'|'hit',
+// k (smash progress 0 raised -> 1 slammed), rise 0..1 (emerging from the ground, cut at y), crack 0..1 (glowing cracks; > 0.55 the
+// cubes burst apart), shield 0..1 (core glow + ring; the dome itself is in the UI kit), t (idle breathing, glow flicker), face
+// (actor('boss', …) drives the jaw with the voice), jaw 0..1, glow, armL/armR/bendL/bendR/lean/headRot/headY/bodyY/fist overrides,
+// shadow (default true), lw (outline width in local units; default keeps ≈ 14 px on screen)
+draw.blockKing = (pose = {}) => {
+  const s = pose.s ?? 1, x = pose.x || 0, y = pose.y || 0;
   let o = '';
-  for (const p of poses) o += draw.ghostLite({ ...p, alpha: 1 });
-  const a = opts.alpha ?? 0.55;
-  return a >= 1 ? o : S.g(o, null, { opacity: f(a) });
+  if (pose.shadow !== false && (pose.rise ?? 1) > 0.3) o += S.ellipse(x, y, 520 * s, 60 * s, { fill: 'rgba(0,0,0,0.22)' });
+  o += S.g(L6.blockKing({ ...pose, s }), `translate(${f(x)} ${f(y - (pose.lift || 0))}) scale(${f((pose.flip ? -1 : 1) * s)} ${f(s)})${pose.rot ? ` rotate(${f(pose.rot)} 0 -500)` : ''}`);
+  return o;
 };
+draw.boss = draw.blockKing;
 
 const NAMES = {
-  you: 'You', ivy: 'Ivy', dad: 'Dad', mom: 'Mom', bea: 'Bea', teacher: 'Mr. Fig', coach: 'Coach Dee', principal: 'Principal Pemberton',
-  juggler: 'Juggler', ghost: 'Ghost', ghostLite: 'Ghost (lite)', kid: 'Kid', adult: 'Adult', gary: 'Gary',
+  you: 'YOU', dad: 'Dad', mom: 'Mom', grandma: 'Grandma', momTeen: 'Mom (1998)',
+  dadAvatar: 'DadBod1978', momAvatar: 'MOM_OFFICIAL', grandmaAvatar: 'GrannyGoodies', noodle: 'NoodleBoi', darkblade: 'xX_DarkBlade_Xx', clan: 'DarkBlade clan',
+  darkbladeMom: "DarkBlade's mom", player: 'Player', noob: 'Noob', kid: 'The KID', blockKing: 'The Block King', boss: 'The Block King', adult: 'Adult', humanKid: 'Kid (human)',
 };
 
 module.exports = {
-  D, draw, NAMES, kidDesign, adultDesign, handAt,
-  // re-exports for convenience (scenes can also require('../rig/extras') directly)
-  gary: X.gary, fishbowl: X.fishbowl, extras: X,
+  D, draw, NAMES, kidDesign, adultDesign, handAt, clanDesign, playerDesign, noobDesign, playerSpec, noobSpec, underlay, tagFor,
+  extras: X, looks: L6,
 };
