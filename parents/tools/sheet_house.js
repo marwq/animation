@@ -66,14 +66,24 @@ const has = (k) => typeof X[k] === 'function';
 const KS = SP.kitchen ? SP.kitchen.seats : null;
 const kitFam = (o = {}) => sit('dad', KS.dad, { face: o.dadFace || 'happy' }) + sit('mom', KS.mom, { face: 'smallSmile', armL: 30 }) + sit('grandma', KS.grandma, { face: 'happy' }) + (o.noYou ? '' : sit('you', KS.you, { face: o.youFace || 'neutral' }));
 const LS = SP.livingRoom;
-// stand-in devices (rig/extras.js will have the real ones): laptop lid back, tablet back, phone back
-const devs = () => (REF && refOn && LS ? (() => {
+// the family's devices: rig/extras.js (laptopOld lid, tablet back, phone back) when it exists, else simple stand-ins
+let EXR = null;
+try { EXR = require('../rig/extras'); if (!EXR.laptopOld) EXR = null; } catch (e) { EXR = null; }
+const devs = (glowK = 0) => (REF && refOn && LS ? (() => {
   const d = LS.devices;
-  let o = `<g transform="translate(${d.laptop.x} ${d.laptop.y}) scale(${d.laptop.s * 2})"><path d="M-80 0 L-70 -110 L70 -110 L80 0 Z" fill="#B9BCC4" stroke="#151515" stroke-width="5" stroke-linejoin="round"/><circle cx="0" cy="-56" r="16" fill="#F2B84B" stroke="#151515" stroke-width="3"/></g>`;
-  o += `<g transform="translate(${d.tablet.x} ${d.tablet.y}) scale(${d.tablet.s * 2})"><rect x="-55" y="-40" width="110" height="80" rx="10" fill="#E86A8A" stroke="#151515" stroke-width="5"/></g>`;
-  o += `<g transform="translate(${d.phone.x} ${d.phone.y}) scale(${d.phone.s * 2})"><rect x="-18" y="-34" width="36" height="68" rx="7" fill="#3A3F52" stroke="#151515" stroke-width="4"/></g>`;
+  let o = '';
+  if (EXR) {
+    o += EXR.laptopOld({ x: d.laptop.x, y: d.laptop.y, s: d.laptop.s, face: 'lid', glow: glowK });
+    o += EXR.tablet({ x: d.tablet.x, y: d.tablet.y, s: d.tablet.s, face: 'back', landscape: true });
+    o += EXR.phone({ x: d.phone.x, y: d.phone.y, s: d.phone.s, face: 'back', rot: -8 });
+  } else {
+    o += `<g transform="translate(${d.laptop.x} ${d.laptop.y}) scale(${d.laptop.s * 2})"><path d="M-80 0 L-70 -110 L70 -110 L80 0 Z" fill="#B9BCC4" stroke="#151515" stroke-width="5" stroke-linejoin="round"/><circle cx="0" cy="-56" r="16" fill="#F2B84B" stroke="#151515" stroke-width="3"/></g>`;
+    o += `<g transform="translate(${d.tablet.x} ${d.tablet.y}) scale(${d.tablet.s * 2})"><rect x="-55" y="-40" width="110" height="80" rx="10" fill="#E86A8A" stroke="#151515" stroke-width="5"/></g>`;
+    o += `<g transform="translate(${d.phone.x} ${d.phone.y}) scale(${d.phone.s * 2})"><rect x="-18" y="-34" width="36" height="68" rx="7" fill="#3A3F52" stroke="#151515" stroke-width="4"/></g>`;
+  }
   return o + box(d.pc.screen) + box({ cx: LS.tv.cx, cy: LS.tv.cy, w: LS.tv.w, h: LS.tv.h }, '#33D6FF');
 })() : '');
+const extrasPC = (spot, screen) => (REF && refOn && EXR && EXR.gamingPC ? EXR.gamingPC({ x: spot.x, y: spot.y, s: spot.s, tower: false, screen }) : '');
 const demoScreen = (label) => (w, h) => `<rect x="${-w / 2}" y="${-h / 2}" width="${w}" height="${h}" fill="#4FB0F0"/><rect x="${-w / 2}" y="${h * 0.15}" width="${w}" height="${h * 0.35}" fill="#5DC85A"/><rect x="${-w * 0.2}" y="${-h * 0.1}" width="${w * 0.12}" height="${h * 0.25}" fill="#E87A3A" stroke="#151515" stroke-width="3"/><text x="0" y="${-h * 0.25}" font-family="Lilita One" font-size="${w * 0.12}" fill="#FFE14D" text-anchor="middle" stroke="#151515" stroke-width="4" paint-order="stroke">${label}</text>`;
 const livFam = () => LS ? sit('you', LS.seats.you, { view: 'back' }) + sit('dad', LS.seats.dad, { face: 'confused', armL: 40, armR: 40 }) + sit('mom', LS.seats.mom, { face: 'smallSmile', armL: 30, armR: 30 }) + sit('grandma', LS.seats.grandma, { face: 'happy', armL: 100 }) : '';
 const livSleep = () => LS ? sit('grandma', LS.asleep.grandma, { face: 'sleepy', rot: LS.asleep.grandma.rot }) + sit('dad', LS.asleep.dad, { face: 'sleepy', rot: LS.asleep.dad.rot }) + sit('mom', LS.asleep.mom, { face: 'sleepy', rot: LS.asleep.mom.rot }) : '';
@@ -90,6 +100,7 @@ const TILES = [
   ['living_night', 'livingRoom · night, glow "all", tvScreen + pcScreen = game', (t) => L(X.livingRoom, t, { time: 'night', glow: 'all', tvScreen: demoScreen('TV'), pcScreen: demoScreen('PC') }, livFam(), '', devs())],
   ['living_asleep', 'livingRoom · asleep (SC12), blanket .8, YOU covering Dad', (t) => L(X.livingRoom, t, { asleep: true, blanket: 0.8 }, livSleep(), stand('you', LS.asleep.you.x, LS.asleep.you.y, LS.asleep.you.s, { face: 'happy', armR: 60, turn: 0.4 }))],
   ['living_mess', 'livingRoom · night, mess 1, chair front (YOU face camera), tea', (t) => L(X.livingRoom, t, { time: 'night', mess: 1, chair: 'front', tea: true, glow: X.deviceGlows(['you', 'dad', 'mom']) }, sit('you', LS.seats.you, { legL: 90, legR: 90, kneeL: 90, kneeR: 90, face: 'angry' }) + sit('dad', LS.seats.dad, { face: 'shocked' }) + sit('mom', LS.seats.mom, { face: 'sad' }), stand('grandma', 1720, LS.front.y, 0.5, { face: 'sad' }))],
+  ['living_extrasPC', 'livingRoom · pc: false + extras gamingPC on devices.pc.extras, chair front', (t) => L(X.livingRoom, t, { pc: false, chair: 'front' }, extrasPC(LS.devices.pc.extras, demoScreen('PC')) + sit('you', LS.seats.you, { legL: 90, legR: 90, kneeL: 90, kneeR: 90, face: 'happy' }), '', devs())],
   ['living_quad', 'livingRoom · midnight / evening lamp 0 / night no TV / boardGame', (t) => quad4([L(X.livingRoom, t, { time: 'midnight', glow: 'all' }, livFam()), L(X.livingRoom, t, { lamp: 0, boardGame: true }), L(X.livingRoom, t, { time: 'night', tv: false, glow: X.deviceGlows(['dad']) }, livFam()), L(X.livingRoom, t, { time: 'night', tvScreen: demoScreen('VICTORY'), asleep: true })])],
   ['bedroom', 'bedroom · night, lamp 1: YOU lie facing the wall, Dad on the bed edge', (t) => L(X.bedroom, t, {}, bedLie(), '', bedSit('sad'))],
   ['bedroom_alarm', 'bedroom · alarm .9 (11 p.m. — the PC flashes red)', (t) => L(X.bedroom, t, { alarm: 0.9, clock: '11:00' }, bedLie({ rot: -80 }), '', bedSit('shocked'))],

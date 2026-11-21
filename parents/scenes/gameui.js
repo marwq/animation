@@ -779,12 +779,12 @@ function leaderboard(o = {}) {
     if (hi) { const pu = 0.5 + 0.5 * Math.sin(t * 7); rc += S.rect(rx - 6, ry - 6, rw + 12, rh + 12, rh * 0.36, { fill: 'none', stroke: P.gold, 'stroke-width': hud ? 3 : 6, opacity: f(0.5 + 0.5 * pu) }); }
     const cy = ry + rh / 2;
     if (hud) {
-      rc += T(`#${rank}`, rx + 14, cy + fs * 0.36, fs, first ? P.gold : '#FFFFFF', { 'text-anchor': 'start' });
+      rc += T(`#${rank}`, rx + 14, cy + fs * 0.36, fs, first && !hi ? P.gold : '#FFFFFF', { 'text-anchor': 'start', ...(hi ? stroked(4) : {}) });
       const scW = textW(R.fmt(score), fs, 'L') + 24, crW = (r.crown ?? first) ? 34 : 0;
       const nm = fitText(r.name, rw - 14 - fs * 2.6 - scW - crW - 8, fs * 0.9);
       rc += TF(nm.text, rx + 14 + fs * 2.6, cy + nm.size * 0.36, nm.size, hi ? '#FFFFFF' : uc, { 'text-anchor': 'start', ...(hi ? stroked(4) : {}) });
       if (r.crown ?? first) rc += crown(rx + 14 + fs * 2.6 + textW(nm.text, nm.size, 'F') + 22, cy + 8, 11, P.gold, 2.5);
-      rc += T(R.fmt(score), rx + rw - 12, cy + fs * 0.36, fs, '#FFFFFF', { 'text-anchor': 'end' });
+      rc += T(R.fmt(score), rx + rw - 12, cy + fs * 0.36, fs, '#FFFFFF', { 'text-anchor': 'end', ...(hi ? stroked(4) : {}) });
     } else {
       rc += rankBadge(rx + 46, cy, rh * 0.38, rank);
       if (who !== null || r.portrait) rc += portrait(who, rx + 136, cy, rh * 0.38, { col: uc, gold: r.gold });
@@ -793,7 +793,7 @@ function leaderboard(o = {}) {
       const nm = fitText(r.name, rw - 190 - textW(sc, fs * 1.1, 'L') - 60 - ((r.crown ?? first) ? fs * 1.3 : 0), fs);
       rc += TF(nm.text, nx, cy + nm.size * 0.36, nm.size, hi ? '#FFFFFF' : uc, stroked(nm.size * 0.14, '#0B1020', { 'text-anchor': 'start' }));
       if (r.crown ?? first) rc += crown(nx + textW(nm.text, nm.size, 'F') + 44, cy + fs * 0.25, fs * 0.5, P.gold, 4);
-      rc += T(sc, rx + rw - 30, cy + fs * 0.4, fs * 1.1, first ? P.gold : '#FFFFFF', stroked(fs * 0.12, '#0B1020', { 'text-anchor': 'end' }));
+      rc += T(sc, rx + rw - 30, cy + fs * 0.4, fs * 1.1, first && !hi ? P.gold : '#FFFFFF', stroked(fs * 0.12, '#0B1020', { 'text-anchor': 'end' }));
       if (moving && roll > 0 && roll < 1) rc += S.path(`M${f(rx + rw + 22)} ${f(cy + 20)} l18 -30 l18 30 Z`, ol(P.green, 4));
     }
     if (hi) hiBody += S.g(rc, moving && roll > 0 && roll < 1 ? `translate(${f(rx + rw / 2)} ${f(cy)}) scale(1.04) translate(${f(-(rx + rw / 2))} ${f(-cy)})` : null);

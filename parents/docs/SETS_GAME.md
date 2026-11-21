@@ -186,7 +186,7 @@ the cookie-stand counter, the factory's outdoor belt, the SOLD sign** · fg '' �
 | `.plots[4]` · `.lines` (860 / 930 / 975, gaps between plots) | | friends carrying cookies (SC01) on `lines[1]` |
 
 cams: `castle` camAt(−330, 520, .85) · `roof` (…, 1.7) · `gate` · `lava` · `trophyWindow` (2.2) · `stand` camAt(1520, 690,
-1.2) · `granny` camAt(1400, 560, .8) (all stages fit) · `factory` · `skyscraper` camAt(1700, −900, .3) (the whole tower +
+1.2) · `granny` camAt(1400, 560, .8) (all stages fit) · `factory` · `skyscraper` camAt(1650, −1000, .28) (the whole tower +
 billboard) · `top` camAt(1520, −2500, .9) (neon cookie) · `billboard` · `valley` {400, −200, .45}. Tilt up the tower:
 `K.camKeys` from `cams.granny` to `cams.top`.
 
@@ -259,8 +259,8 @@ light = lava glow, burst, dawn wash.
 | `.lines` | y 850 / 910 / 960 / 1000, x −2700…650 | the raid crowd / the family formation |
 | `.lavaY` 1000 · `.spire` {x0 1400, x1 1600} · `.plateau` | | |
 
-cams: `base` camAt(700, 600, 1) · `battle` camAt(−900, 560, .6) · `climb` {600, −1100, .35} · `full` {600, −9500, .05}
-(LOD) · `finalGap` (floor 99 left, the top at right) · `top` (the summit) · `moon` (floor 99 against the moon) ·
+cams: `base` camAt(700, 600, 1) · `battle` camAt(−900, 470, .6) · `climb` {600, −1100, .35} · `full` {600, −10000, .048}
+(LOD; the crystal shows as a big cyan glow + gem at the summit — SC10 "the crystal on top of the tower!") · `finalGap` (floor 99 left, the top at right) · `top` (the summit) · `moon` (floor 99 against the moon) ·
 **`GS.towerCam(i, zoom = 1, sx = 960, sy = 620)`** = a cam on floor i (also `SPOTS.tower.camFor`) — `K.camKeys` through
 `towerCam(i)` for the climb montage; whip with white flashes between far-apart floors.
 
@@ -282,7 +282,9 @@ landmarks) · **`victory 0..1`** (sky to the gold dawn, fires out, the sun rises
 (no rooftop: the pure wide) · `letters` (CUBE CITY letters intact; day default true) · `searchlights` · `flash`.
 
 **Layers / draw order:** `L.bg` (sky … mid row + fires) → **the boss** `K.view(cam, boss, .5)` → `L.mid` (front row + the
-ledge) → characters on the ledge (k 1) → `L.light`. (front / fg are empty.)
+ledge) → characters on the ledge (k 1) → `L.light`. (front / fg are empty.) Extra keys: `L.sky` (everything behind the
+mid row) and `L.row` (the mid row + plaza; `L.bg = L.sky + L.row`) — for the boss RISING from behind the city (SC09) draw
+`L.sky + boss + L.row + L.mid + …` with the boss's feet below the plaza line, then lift him.
 
 | anchor | value | notes |
 |---|---|---|

@@ -351,7 +351,7 @@ function islandBottom(x0, x1, y, depth, tn, seed = 1, o = {}) {
   const cols = [o.dirt || C.dirt, o.stone || '#9AA3C2', o.dirt2 || C.dirtD, o.stone2 || '#7F88A8'];
   let s = '';
   for (let j = 0; j < rows; j++) {
-    const k = 1 - (j + 0.5) / rows, w = W * (0.18 + 0.82 * Math.pow(k, 1.25)), cx = (x0 + x1) / 2 + (hash(seed + j * 1.7) - 0.5) * W * 0.16 * (j / rows);
+    const k = 1 - (j + 0.8) / (rows + 0.4), w = W * (0.16 + 0.8 * Math.pow(Math.max(0, k), 1.1)), cx = (x0 + x1) / 2 + (hash(seed + j * 1.7) - 0.5) * W * 0.16 * (j / rows);
     const yy = y + j * rh, n = Math.max(1, Math.round(w / 110));
     let xx = cx - w / 2;
     for (let i = 0; i < n; i++) {
@@ -1300,11 +1300,12 @@ const TY_BACK = [
   [-900, 370, 320, 'mushroom', 0.3], [200, 330, 300, 'noob', 0.3], [1100, 380, 320, 'rocket', 0.3], [2100, 340, 300, 'farm', 0.3], [3000, 360, 300, 'dome', 0.3], [-1900, 350, 300, 'ship', 0.3],
 ];
 // the giant billboard with Granny's face (origin = centre of the board). k = rise 0..1
-function grannyBillboard(x, y, tn, t, k, face) {
+function grannyBillboard(x, y, tn, t, k, face, o_ground) {
   if (k <= 0) return '';
   const w = 900, h = 470, dy = (1 - ease.out(k)) * 1100;
-  let o = R(-300, h / 2, 40, 1200, 4, tn.ol(C.slate, 6)) + R(260, h / 2, 40, 1200, 4, tn.ol(C.slate, 6));
-  for (let i = 0; i < 5; i++) o += P(`M-280 ${h / 2 + 80 + i * 220} L280 ${h / 2 + 190 + i * 220} M280 ${h / 2 + 80 + i * 220} L-280 ${h / 2 + 190 + i * 220}`, tn.ln(8, C.slate));
+  const legH = Math.max(0, (o_ground ?? 760) - (y + dy + h / 2));
+  let o = R(-280, h / 2, 40, legH, 4, tn.ol(C.slate, 6)) + R(40, h / 2, 40, legH, 4, tn.ol(C.slate, 6));
+  for (let yy = h / 2 + 60; yy + 120 < h / 2 + legH; yy += 200) o += P(`M-260 ${yy} L60 ${yy + 110} M60 ${yy} L-260 ${yy + 110}`, tn.ln(8, C.slate));
   o += R(-w / 2 - 22, -h / 2 - 22, w + 44, h + 44, 20, tn.ol('#2E3550', 8)) + R(-w / 2, -h / 2, w, h, 10, tn.ol('#FFE3EE', 0));
   o += R(-w / 2, -h / 2, w, h, 10, { fill: 'url(#gsPolka)' });
   // portrait box (left)
@@ -1438,7 +1439,8 @@ function tycoonLayers(t, cam, o) {
     fr += gfr;
     // the giant billboard (behind the tower, right)
     const bbK = b01(o.billboard, g >= 4 ? 1 : 0);
-    if (bbK > 0) m += G(grannyBillboard(2130, 150, tn, t, bbK, o.billboardFace), null, smashed > 0.5 ? { transform: `rotate(${f(8 * smashed)} 2130 760)` } : undefined);
+    const tnBB = tone({ ...tw, night: (tw.night || 0) * 0.15, raid: (tw.raid || 0) * 0.3 });
+    if (bbK > 0) m += G(grannyBillboard(2130, 150, tnBB, t, bbK, o.billboardFace) + (night ? glow(2130, 150, 520, 'gsGlowPink', 0.35 * bbK) : ''), null, smashed > 0.5 ? { transform: `rotate(${f(8 * smashed)} 2130 760)` } : undefined);
     // clouds the tower pierces (k 1, in front of the tower)
     if (g > 3.2) { const ck = clamp((g - 3.2) / 0.8, 0, 1); gb += G(cubeCloud(GR.x - 260, -1080, 1.3, tn, night ? '#5A4C9A' : '#FFFFFF', 3) + cubeCloud(GR.x + 300, -1300, 1.1, tn, night ? '#5A4C9A' : '#FFFFFF', 8) + cubeCloud(GR.x - 120, -1900, 1.0, tn, night ? '#5A4C9A' : '#FFFFFF', 12), null, { opacity: op(ck * 0.95) }); }
   }
@@ -1733,6 +1735,22 @@ function towerLayers(t, cam, o) {
   // ---- main (k 1): plateau, spire, platforms, lava
   const X0 = v1.x0 - 300, X1 = v1.x1 + 300, Y0 = v1.y0 - 400, Y1 = v1.y1 + 400;
   let m = '';
+  // lava sea
+  if (Y1 > TW.lava - 300) {
+    const lx0 = X0, lx1 = X1;
+    m += R(lx0, TW.lava - 260, lx1 - lx0, 260, 0, { fill: 'url(#gsLavaGlow)', opacity: op(0.8 * lavaK) });
+    m += R(lx0, TW.lava, lx1 - lx0, 1200, 0, { fill: tn.c('!#FF6A1F') });
+    if (!lod) {
+      const dx = md(t * 24, 180);
+      m += G(R(lx0 - dx, TW.lava + 8, lx1 - lx0 + 180, 1200, 0, { fill: 'url(#gsLavaTex)' }), `translate(${f(dx)} 0)`);
+      let wv = `M${f(lx0)} ${TW.lava + 6}`;
+      for (let x = Math.floor(lx0 / 80) * 80; x < lx1; x += 80) wv += ` Q${x + 20} ${f(TW.lava - 8 + Math.sin(t * 2.6 + x * 0.03) * 5)} ${x + 40} ${TW.lava + 6} T${x + 80} ${TW.lava + 6}`;
+      m += P(wv, { fill: 'none', stroke: '#FFE27A', 'stroke-width': 8 });
+      let bub = '';
+      for (let i = 0; i < 10; i++) { const u = md(t * 0.7 + i * 0.13, 1), bx = lx0 + md(i * 397 + 120, lx1 - lx0); bub += dC(bx, TW.lava + 30 - u * 24, 10 * Math.sin(u * Math.PI) + 2); }
+      m += P(bub, { fill: '#FFE27A', opacity: op(lavaK) });
+    }
+  }
   // the plateau (battlefield)
   const PL = TW.plateau;
   if (Y1 > PL.back - 400 && X0 < PL.x1) {
@@ -1741,7 +1759,7 @@ function towerLayers(t, cam, o) {
     // glowing rune circle in the middle of the battlefield + cracks
     m += E(-900, 905, 520, 80, { fill: 'none', stroke: tn.c(night ? '!#B98CFF' : '#9A7AE0'), 'stroke-width': 10, opacity: 0.6 }) + E(-900, 905, 380, 56, { fill: 'none', stroke: tn.c(night ? '!#B98CFF' : '#9A7AE0'), 'stroke-width': 6, opacity: 0.5 });
     m += P('M-2300 880 l60 20 l40 -14 l70 24 M-260 960 l50 -18 l60 22 l50 -10 M300 850 l-40 30 l30 30', tn.ln(5, '#4A3E70', 0.7));
-    m += R(PL.x0, PL.front - 4, PL.x1 - PL.x0, 140, 6, tn.ol('#5A4E78', 7)) + R(PL.x0 + 4, PL.front, PL.x1 - PL.x0 - 8, 136, 0, { fill: 'url(#gsBrickBig)' });
+    m += R(PL.x0, PL.front - 4, PL.x1 - PL.x0, 420, 6, tn.ol('#5A4E78', 7)) + R(PL.x0 + 4, PL.front, PL.x1 - PL.x0 - 8, 416, 0, { fill: 'url(#gsBrickBig)' }) + R(PL.x0, PL.front + 300, PL.x1 - PL.x0, 120, 0, { fill: '#FF6A1F', opacity: 0.35 });
     // broken pillars, torches, banners along the back edge
     for (const [x, h] of [[-2300, 260], [-1700, 180], [-1100, 300], [-500, 220], [200, 160]]) {
       if (x < X0 - 300 || x > X1 + 300) continue;
@@ -1779,6 +1797,7 @@ function towerLayers(t, cam, o) {
   for (const p of TW_FLOORS) if (p.y > Y0 - 100 && p.y < Y1 + 100 && p.x1 > X0 && p.x0 < X1) m += towerPlatform(p, tnP, t, night, lod);
   // the top platform + crystal pedestal
   const TP = TW_TOP;
+  if (lod) m += glow(TP.x, TP.y - 200, 900, 'gsGlowCyan', 0.9 * (1 - burst)) + G(P('M0 -150 L60 -60 L36 40 L-36 40 L-60 -60 Z', { fill: '#BFFFFF', stroke: LINE, 'stroke-width': 20 }), tr(TP.x, TP.y - 150, 2.2));
   if (TP.y > Y0 - 600 && TP.y < Y1 + 200) {
     m += towerPlatform(TP, tnP, t, night, lod);
     if (!lod) {
@@ -1788,22 +1807,6 @@ function towerLayers(t, cam, o) {
       if (o.crystal) m += G(P('M0 -150 L60 -60 L36 40 L-36 40 L-60 -60 Z', tn.ol('!#7FF6FF', 7)) + P('M0 -150 L-20 -60 L0 40 M-60 -60 H60', tn.ln(4, '#FFFFFF', 0.8)), tr(TP.x, TP.y - 150 + Math.sin(t * 2) * 10));
       // flags on the corners
       m += obbyFlag(TP.x0 + 50, TP.y - 44, 1.1, tn, t, C.gold, '100') + obbyFlag(TP.x1 - 50, TP.y - 44, 1.1, tn, t, C.gold, '100');
-    }
-  }
-  // lava sea
-  if (Y1 > TW.lava - 300) {
-    const lx0 = X0, lx1 = X1;
-    m += R(lx0, TW.lava - 260, lx1 - lx0, 260, 0, { fill: 'url(#gsLavaGlow)', opacity: op(0.8 * lavaK) });
-    m += R(lx0, TW.lava, lx1 - lx0, 1200, 0, { fill: tn.c('!#FF6A1F') });
-    if (!lod) {
-      const dx = md(t * 24, 180);
-      m += G(R(lx0 - dx, TW.lava + 8, lx1 - lx0 + 180, 1200, 0, { fill: 'url(#gsLavaTex)' }), `translate(${f(dx)} 0)`);
-      let wv = `M${f(lx0)} ${TW.lava + 6}`;
-      for (let x = Math.floor(lx0 / 80) * 80; x < lx1; x += 80) wv += ` Q${x + 20} ${f(TW.lava - 8 + Math.sin(t * 2.6 + x * 0.03) * 5)} ${x + 40} ${TW.lava + 6} T${x + 80} ${TW.lava + 6}`;
-      m += P(wv, { fill: 'none', stroke: '#FFE27A', 'stroke-width': 8 });
-      let bub = '';
-      for (let i = 0; i < 10; i++) { const u = md(t * 0.7 + i * 0.13, 1), bx = lx0 + md(i * 397 + 120, lx1 - lx0); bub += dC(bx, TW.lava + 30 - u * 24, 10 * Math.sin(u * Math.PI) + 2); }
-      m += P(bub, { fill: '#FFE27A', opacity: op(lavaK) });
     }
   }
   // ---- fg: embers rising from the lava (k 1.2)
@@ -1986,7 +1989,9 @@ function cityLayers(t, cam, o) {
     light += G(cf, null, { opacity: op(clamp(vic * 2.5, 0, 1)) }) + R(0, 0, 1920, 1080, 0, { fill: '#FFC060', opacity: op(0.1 * vic) });
   }
   if (o.flash > 0) light += R(0, 0, 1920, 1080, 0, { fill: '#FFFFFF', opacity: op(o.flash) });
-  return layersOf(V(cam, sky, 0) + V(cam, sm_, 0.02) + V(cam, cl, 0.06) + V(cam, isl, 0.12) + V(cam, far, 0.18) + V(cam, sl, 0.3) + V(cam, lmk, 0.3) + V(cam, mid + fires, 0.5), V(cam, fr, 0.75) + V(cam, ledge, 1), '', '', light);
+  const skyL = V(cam, sky, 0) + V(cam, sm_, 0.02) + V(cam, cl, 0.06) + V(cam, isl, 0.12) + V(cam, far, 0.18) + V(cam, sl, 0.3) + V(cam, lmk, 0.3), rowL = V(cam, mid + fires, 0.5);
+  // extra keys: sky (everything behind the mid row) + row (the mid row + plaza) — draw a RISING boss between them
+  return layersOf(skyL + rowL, V(cam, fr, 0.75) + V(cam, ledge, 1), '', '', light, { sky: skyL, row: rowL });
 }
 const cityNight = camSet((t, cam, o) => cityLayers(t, cam, { time: 'night', ...o }));
 const cityDay = camSet((t, cam, o) => cityLayers(t, cam, { time: 'day', ...o }));
@@ -2129,7 +2134,7 @@ const SPOTS = {
     lines: [860, 930, 975].map((y) => line(y, tyS, -2650, 3450, [[-1650, -1350], [560, 820], [2220, 2480]])),
     cams: {
       castle: camAt(-330, 520, 0.85), roof: camAt(-330, 230, 1.7), gate: camAt(-330, 700, 1.3), lava: camAt(-900, 760, 1.5), trophyWindow: camAt(-330, 400, 2.2),
-      stand: camAt(1520, 690, 1.2), granny: camAt(1400, 560, 0.8), factory: camAt(1520, 470, 0.72), skyscraper: camAt(1700, -900, 0.3),
+      stand: camAt(1520, 690, 1.2), granny: camAt(1400, 560, 0.8), factory: camAt(1520, 470, 0.72), skyscraper: camAt(1650, -1000, 0.28),
       top: camAt(1520, -2500, 0.9), billboard: camAt(2130, 160, 0.95), valley: { x: 400, y: -200, zoom: 0.45 },
     },
   },
@@ -2158,7 +2163,7 @@ const SPOTS = {
     crystal: { x: TW_TOP.x, y: TW_TOP.y - 125, k: 1 },
     finalGap: { x0: TW_FLOORS[98].x1, x1: TW_TOP.x0, mid: (TW_FLOORS[98].x1 + TW_TOP.x0) / 2, y: TW_FLOORS[98].y - 15, k: 1, edge: { x: TW_TOP.x0, y: TW_TOP.y - 30, k: 1 } },
     lines: [850, 910, 960, 1000].map((y) => line(y, twS, -2700, 650)),
-    cams: { base: camAt(700, 600, 1), battle: camAt(-900, 560, 0.6), climb: { x: 600, y: -1100, zoom: 0.35 }, full: { x: 600, y: -9500, zoom: 0.05 }, finalGap: towerCam(99, 0.6, 520), top: towerCam(100, 0.8), moon: towerCam(99, 0.55, 1250) },
+    cams: { base: camAt(700, 600, 1), battle: camAt(-900, 470, 0.6), climb: { x: 600, y: -1100, zoom: 0.35 }, full: { x: 600, y: -10000, zoom: 0.048 }, finalGap: towerCam(99, 0.6, 520), top: towerCam(100, 0.8), moon: towerCam(99, 0.55, 1250) },
     camFor: towerCam,
   },
   cityNight: {
