@@ -207,7 +207,7 @@ const SHEETS = {
   boss: {
     file: 'cast_boss.png', w: 4800, h: 3400,
     draw() {
-      let o = bg(4800, 3400, 'THE BLOCK KING — draw.blockKing(pose) / actor(\'boss\', …)', 'non-rig boss · ≈ 1220 tall at s 1 (use s 1.5–4 to fill the sky) · pose idle | rise | smash (k) | roar | hit · crack · shield · rise · jaw follows the BOSS voice', 'night');
+      let o = bg(4800, 3400, 'THE BLOCK KING — draw.blockKing(pose) / actor(\'boss\', …)', 'non-rig boss · ≈ 1350 tall at s 1 (use s 1.5–4 to fill the sky) · pose idle | rise | smash (k) | roar | hit · crack · shield · rise · jaw follows the BOSS voice', 'night');
       const G1 = 1560, G2 = 3140;
       o += S.rect(0, G1, 4800, 40, 0, { fill: '#2A1F45' }) + S.rect(0, G2, 4800, 260, 0, { fill: '#2A1F45' });
       const row1 = [
@@ -220,8 +220,8 @@ const SHEETS = {
       row2.forEach(([p, c], i) => { const x = 470 + i * 900; o += draw.blockKing({ x, y: G2, s: 0.72, t: 0.7, ...p }) + cap(c, x, G2 + 34, '#FFFFFF'); });
       // scale check: hero + hot dog at s 0.5 next to the boss at s 2 (cropped)
       const bx = 4320;
-      o += crop(S.rect(3880, 1680, 880, 1440, 0, { fill: '#3A2A6A' }) + draw.blockKing({ x: bx + 120, y: G2 - 20, s: 1.15, t: 0.4, pose: 'roar' }) + draw.you({ x: 4000, y: G2 - 20, s: 0.32, face: 'scared', nametag: 'YOU', crown: true }) + draw.dadAvatar({ x: 4140, y: G2 - 20, s: 0.32, face: 'shocked', nametag: false }), 3880, 1680, 880, 1440);
-      o += cap('scale: boss s 1.15 vs YOU/hot dog s 0.32', 4320, G2 + 34, '#FFFFFF');
+      o += crop(S.rect(3880, 1680, 880, 1440, 0, { fill: '#3A2A6A' }) + draw.blockKing({ x: bx + 120, y: G2 - 20, s: 0.95, t: 0.4, pose: 'roar' }) + draw.you({ x: 4000, y: G2 - 20, s: 0.32, face: 'scared', nametag: 'YOU', crown: true }) + draw.dadAvatar({ x: 4140, y: G2 - 20, s: 0.32, face: 'shocked', nametag: false }), 3880, 1680, 880, 1440);
+      o += cap('scale: boss s 0.95 vs YOU / hot dog s 0.32', 4320, G2 + 34, '#FFFFFF');
       return o;
     },
   },
@@ -257,7 +257,8 @@ const SHEETS = {
       o += X.knittingYarn({ x: 2960, y: y + 260, s: 0.9 }) + cap('knittingYarn', 3000, y + 560);
       o += X.computerMouse({ x: 3360, y: y + 300, rot: 15 }) + cap('computerMouse', 3360, y + 560);
       o += X.arcadeTrophy({ x: 3750, y: y + 600, s: 0.85, t: 0.4 }) + cap('arcadeTrophy', 3750, y + 620);
-      o += X.rollingPin({ x: 4320, y: y + 300, rot: -20, flour: 1 }) + cap('rollingPin', 4320, y + 560);
+      o += X.rollingPin({ x: 4250, y: y + 240, s: 0.8, rot: -20, flour: 1 }) + cap('rollingPin', 4250, y + 330);
+      o += X.newspaper({ x: 4560, y: y + 420, s: 0.6, rot: -4 }) + cap('newspaper', 4560, y + 560);
       // GAME
       y = 1630;
       o += sec('CUBE CITY', 20, y, 4760, 640);
@@ -279,12 +280,12 @@ const SHEETS = {
       o += sec('CHARACTER OPTIONS (pose fields)', 20, y, 4760, 1990);
       const opts = [
         ['you', { headset: true, face: 'excited' }, 'headset'], ['you', { headset: 0.4, face: 'determined' }, 'headset: 0.4'], ['you', { hood: true, face: 'nervous' }, 'hood'], ['you', { hood: true, view: 'side', face: 'scared' }, 'hood side'], ['you', { crown: true, nametag: 'YOU', face: 'smug' }, 'crown + nametag'], ['you', { sword: true, armR: 60, face: 'determined' }, 'sword: true'], ['you', { sword: 'gold', armR: 150, face: 'joy' }, "sword 'gold' up"],
-        ['dad', { glasses: 'on', face: 'confused' }, "glasses: 'on'"], ['dad', { glasses: 'off', face: 'sad' }, "glasses: 'off'"], ['dad', { mouse: true, face: 'talkHappy' }, 'mouse'], ['dad', { blanket: true, sleepy: true }, 'blanket + sleepy'], ['dad', { view: 'side', mouse: true, face: 'happy' }, 'mouse side'],
+        ['dad', { glasses: 'on', face: 'confused' }, "glasses: 'on'"], ['dad', { glasses: 'off', face: 'sad' }, "glasses: 'off'"], ['dad', { mouse: true, face: 'talkHappy' }, 'mouse'], ['dad', { blanket: true, sleepy: true }, 'blanket + sleepy'], ['dad', { newspaper: true, face: 'happy' }, 'newspaper'],
         ['mom', { mug: true, face: 'happy' }, 'mug'], ['mom', { mug: true, mugUp: true, face: 'smallSmile' }, 'mugUp'], ['mom', { tablet: true, face: 'neutral' }, 'tablet'], ['mom', { pajamas: true, face: 'sleepy' }, 'pajamas'], ['mom', { pajamas: true, headset: 0.5, cup: false, face: 'determined' }, 'headset 0.5'],
         ['grandma', { knitting: true, face: 'happy' }, 'knitting'], ['grandma', { phone: 'arm', face: 'confused' }, "phone: 'arm'"], ['grandma', { cracking: 1, face: 'determined' }, 'cracking'], ['grandma', { curlers: true, face: 'sleepy' }, 'curlers'],
         ['momTeen', { trophy: 'up', face: 'joy' }, "trophy: 'up'"],
         ['dadAvatar', { mvp: true, face: 'joy', armL: 150, armR: 150 }, 'mvp'], ['dadAvatar', { view: 'side', face: 'happy' }, 'side'], ['dadAvatar', { view: 'back' }, 'back'],
-        ['momAvatar', { armor: 1, glasses: false, face: 'angry' }, 'glasses: false'], ['momAvatar', { armor: 1, shieldUp: true, face: 'determined' }, 'shieldUp'], ['momAvatar', { armor: 1, view: 'back', t: 0.5 }, 'cape (back)'],
+        ['you', { tablet: true, face: 'neutral' }, 'tablet'], ['momAvatar', { armor: 1, shieldUp: true, face: 'determined' }, 'shieldUp'], ['momAvatar', { armor: 1, view: 'back', t: 0.5 }, 'cape (back)'],
         ['grandmaAvatar', { apron: true, face: 'happy' }, 'apron'],
       ];
       opts.forEach(([k, p, l], i) => {

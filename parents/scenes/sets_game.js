@@ -453,11 +453,11 @@ function crowd(rows, o = {}) {
           signs += R(sx - 150 * s, sy - 60 * s, 300 * s, 120 * s, 10 * s, tn.ol(h(14.1) > 0.5 ? '#FFFFFF' : '#FFE14D', Math.max(2, 10 * s))) + T(txt, sx, sy + 26 * s, 74 * s, tn.c('#E8263A'));
         }
       }
-      add(B.shirt, shirt, dRR(x - 150 * s, y, 300 * s, 230 * s, 20 * s));
-      add(B.skin, skin, dRR(hx_ - hw / 2, y - hh - 8 * s, hw, hh, 26 * s));
+      add(B.shirt, shirt, s < 0.3 ? dR(x - 150 * s, y, 300 * s, 230 * s) : dRR(x - 150 * s, y, 300 * s, 230 * s, 20 * s));
+      add(B.skin, skin, s < 0.3 ? dR(hx_ - hw / 2, y - hh - 8 * s, hw, hh) : dRR(hx_ - hw / 2, y - hh - 8 * s, hw, hh, 26 * s));
       const hk = Math.floor(h(13.7) * 5), ht = y - hh - 8 * s;
-      if (hk === 0) add(B.hair, CROWD_HAIR[Math.floor(h(7.7) * CROWD_HAIR.length)], dRR(hx_ - hw / 2 - 6 * s, ht - 26 * s, hw + 12 * s, 66 * s, 14 * s));
-      else if (hk === 1) add(B.hat, CANDY[Math.floor(h(8.3) * CANDY.length)], dRR(hx_ - hw / 2 - 4 * s, ht - 30 * s, hw + 8 * s, 56 * s, 10 * s) + dR(hx_ - hw / 2 - 4 * s, ht + 14 * s, hw + 60 * s, 18 * s));
+      if (hk === 0) add(B.hair, CROWD_HAIR[Math.floor(h(7.7) * CROWD_HAIR.length)], dR(hx_ - hw / 2 - 6 * s, ht - 26 * s, hw + 12 * s, 66 * s));
+      else if (hk === 1) add(B.hat, CANDY[Math.floor(h(8.3) * CANDY.length)], dR(hx_ - hw / 2 - 4 * s, ht - 30 * s, hw + 8 * s, 56 * s) + dR(hx_ - hw / 2 - 4 * s, ht + 14 * s, hw + 60 * s, 18 * s));
       else if (hk === 2) add(B.hair, CROWD_HAIR[Math.floor(h(4.7) * CROWD_HAIR.length)], `M${f(hx_ - hw / 2 - 8 * s)} ${f(ht + 70 * s)} V${f(ht - 10 * s)} H${f(hx_ + hw / 2 + 8 * s)} V${f(ht + 40 * s)} L${f(hx_ + hw * 0.1)} ${f(ht + 30 * s)} L${f(hx_ - hw * 0.3)} ${f(ht + 44 * s)} Z`);
       else if (hk === 3) add(B.hat, '#FFC83A', `M${f(hx_ - hw * 0.4)} ${f(ht + 6 * s)} l${f(hw * 0.13)} ${f(-56 * s)} l${f(hw * 0.13)} ${f(36 * s)} l${f(hw * 0.14)} ${f(-46 * s)} l${f(hw * 0.14)} ${f(46 * s)} l${f(hw * 0.13)} ${f(-36 * s)} l${f(hw * 0.13)} ${f(56 * s)} Z`);
       if (!o.back && lt_ > 0.3 && s > 0.07) {

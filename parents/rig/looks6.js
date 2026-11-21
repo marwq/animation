@@ -1582,7 +1582,7 @@ function blockKing(p = {}) {
   cr += S.rect(-cw + lw, -34, 2 * cw - 2 * lw, 22, 4, { fill: BK.goldSh }) + S.path(`M${-cw + 20} ${-chh * 0.5} L${-cw * 0.45} ${-chh * 0.26}`, lineOnly(lw * 1.1, '#FFF2B0'));
   for (const [x, y, c2] of [[-cw * 0.3, -chh, BK.gem], [cw * 0.3, -chh, BK.gem], [-cw, -chh * 0.6, BK.gem2], [cw, -chh * 0.6, BK.gem2], [0, -60, BK.gem]]) cr += S.circle(x, y, 16, { fill: c2, stroke: LINE, 'stroke-width': lw * 0.8 });
   head += S.g(cr, `translate(-10 -1106) rotate(${f(-7 + (burst ? 40 * burst : 0))})${burst ? ` translate(${f(burst * 120)} ${f(-burst * 300)})` : ''}`);
-  torso += S.g(head, `translate(${f(hb[0])} ${f(q.headY + hb[1])}) rotate(${f(q.headRot)} 0 -860)`);
+  torso += S.g(head, `translate(${f(hb[0])} ${f(q.headY + hb[1])}) rotate(${f(q.headRot)} 0 -860) translate(0 -850) scale(1.2) translate(0 850)`);
   let out = legs + S.g(torso, `translate(0 ${f(q.bodyY)}) rotate(${f(q.lean)} 0 -330)`);
   // falling debris while cracking
   if (crack > 0.1) {

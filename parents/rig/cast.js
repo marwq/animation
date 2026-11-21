@@ -130,6 +130,7 @@ const MA1 = {
 D.momAvatar1 = design(MA1);
 D.momAvatar1nog = design({ ...MA1, acc: { avatarShine: true } });
 D.momAvatar1.dims.nametagY = D.momAvatar1nog.dims.nametagY = -1240;
+D.momAvatar = D.momAvatar0;   // alias for handAt(D.momAvatar, …)
 
 // GrannyGoodies — the billionaire: cream fur coat (fluffy collar + cuffs, knee-length, open over a purple dress), big pearls,
 // gold monocle on a chain, pink lipstick, white curls, gold flats; golden cane + money bag
@@ -548,7 +549,7 @@ draw.darkblade = (pose = {}) => {
   }
   if (pose.sword !== false && !pose.shy) {
     if (pose.sword === 'back') {
-      const sv = X.goldSword({ x: view === 'side' ? 70 : view === 'back' ? 60 : -60, y: -600, s: 1.1, rot: view === 'side' ? 170 : view === 'back' ? 200 : 160, kind: 'dark' });
+      const sv = X.goldSword({ x: view === 'side' ? 70 : view === 'back' ? 60 : -150, y: view === 'front' ? -560 : -600, s: 1.1, rot: view === 'side' ? 170 : view === 'back' ? 200 : 152, kind: 'dark' });
       if (view === 'back') props.push({ svg: sv, layer: 'front' }); else props.push({ svg: sv, layer: 'back' });
     } else {
       p = { armR: view === 'side' ? 60 : 50, ...p };
@@ -625,7 +626,7 @@ draw.kid = draw.noob;
 draw.humanKid = (i, pose) => { if (typeof i === 'object' && i) { pose = i; i = i.i ?? 0; } if (!humanKidCache[i]) humanKidCache[i] = kidDesign(i); return drawCharacter(humanKidCache[i], pose || {}); };
 draw.adult = (i, pose) => { if (typeof i === 'object' && i) { pose = i; i = i.i ?? 0; } if (!adultCache[i]) adultCache[i] = adultDesign(i); return drawCharacter(adultCache[i], pose || {}); };
 
-// THE BLOCK KING (non-rig): x, y (feet), s (≈ 1220 tall at s 1 — use s 1.5–4 to fill the sky), flip, pose 'idle'|'rise'|'smash'|'roar'|'hit',
+// THE BLOCK KING (non-rig): x, y (feet), s (≈ 1350 tall at s 1 — use s 1.5–4 to fill the sky), flip, pose 'idle'|'rise'|'smash'|'roar'|'hit',
 // k (smash progress 0 raised -> 1 slammed), rise 0..1 (emerging from the ground, cut at y), crack 0..1 (glowing cracks; > 0.55 the
 // cubes burst apart), shield 0..1 (core glow + ring; the dome itself is in the UI kit), t (idle breathing, glow flicker), face
 // (actor('boss', …) drives the jaw with the voice), jaw 0..1, glow, armL/armR/bendL/bendR/lean/headRot/headY/bodyY/fist overrides,

@@ -62,7 +62,7 @@ Real-world crowd humans are still available for the API (`draw.humanKid(i, pose)
 `draw.blockKing(pose)` = `draw.boss(pose)`; **use `actor('boss', t, pose, { … })`** so the BOSS voice drives his jaw.
 A giant of grey stone cubes (cracks, moss on the shoulders and head, moss drips), a tilted **gold crown** with purple/pink gems,
 **glowing purple eye slits**, stone teeth and a jaw that drops when he talks, a **glowing purple crystal core** in the chest,
-huge cube **fists** with knuckle grooves. Feet at (x, y); **≈ 1270 tall at s 1 (1530 with the arms up), ≈ 1490 wide** —
+huge cube **fists** with knuckle grooves. Feet at (x, y); **≈ 1350 tall at s 1 to the crown (1530 with the fists up), ≈ 1490 wide with the arms hanging** —
 use **s 1.5–4** to fill the sky (the hero at s 0.5 is 475 px). Front view only (`flip` mirrors).
 
 | field | meaning |
@@ -159,7 +159,7 @@ X.teaMug({ x, y, s, rot, text: '#1 MOM', t })     // ... or one object — every
 | close-up s 1.8 with volume | you 49 · dad 47 · mom 70 · grandma 54 · dadAvatar 66 · noodle 65 · grandmaAvatar 49 · momAvatar armour 40 · **darkblade 113** |
 | close-up s 1.8 `volume: false` | 13–15 for everyone → **pass `volume: false` for big close-ups** (always for DarkBlade) |
 | crowds | **noob ≈ 0.5–0.9 ms** each (60 noobs at s 0.15 = 29 ms; 50 at s 0.25 = 45 ms) · **player ≈ 0.8 ms** (40 at s 0.3 = 32 ms) |
-| Block King | s 2: 28 ms · s 3: 18 ms · s 4 bursting (crack 0.8): 17 ms (no filters; it gets cheaper as it leaves the frame) |
+| Block King | s 1.2: 18 ms · s 2: 19–28 ms · s 3 talking: 15–18 ms · s 4 bursting (crack 0.8): 16 ms (no filters; it gets cheaper as it leaves the frame) |
 
 JS time is ≈ 1–5 ms per character. A family of four at s 0.5 ≈ 48 ms.
 
