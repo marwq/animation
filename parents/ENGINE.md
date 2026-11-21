@@ -1,26 +1,28 @@
-# "What If You Could RESPAWN in Real Life?" — how to write a scene
+# "What If Your PARENTS Joined Your Roblox Server?" — how to write a scene
 
-Project: `/home/user/animation/respawn`. 1920×1080, rendered at 30 fps (frames are SVG strings rendered by headless Chromium, `tools/render.js`). The video is about **13:15** long. Story and shot list: `script/SCRIPT.md` (Russian shot notes 🎬/💥/⏱ + the English voice lines).
+Project: `/home/user/animation/parents`. 1920×1080, rendered at 30 fps (frames are SVG strings rendered by headless Chromium, `tools/render.js`). The video is about **13:00** long. Story and shot list: `script/SCRIPT.md` (Russian shot notes 🎬/💥/⏱ + the English voice lines).
 
-**The voice does NOT exist yet — the timeline is PROVISIONAL.** `scenes/timeline.json` was built by `voice/provisional.py` from the script with ESTIMATED word times. Later the real voice replaces it (`voice/timeline.py`) and every line and word moves a little (real takes usually run ~4% longer, individual words ±20%). So animation must be timed **only through the voice API** (`L(id).a/.b`, `L(id).word(...)`) — never hard-code absolute seconds, never assume a gap length; make beats elastic (ease between two word times, hold poses until the next word).
+**The real ElevenLabs voice exists** — `scenes/timeline.json` is built from the real takes by `voice/timeline.py` (with extra silent animation room after some lines, `AFTER` in that file). Still time animation **only through the voice API** (`L(id).a/.b`, `L(id).word(...)`) — never hard-code absolute seconds — so small re-timings stay safe.
 
-The hero of the channel is **YOU** (`actor('you', …)`): orange bowl-cut hair, white face, huge round eyes, red open jacket, yellow T-shirt, dark green pants. He is in almost every scene; keep him on model. The NARRATOR talks to the viewer as "you" (second person); the hero has his own lines as YOU.
+The hero of the channel is **YOU** (`actor('you', …)`): orange bowl-cut hair, white face, huge round eyes, red open jacket, yellow T-shirt, dark green pants. In the game his avatar looks exactly the same (nametag YOU, LVL 99). He is in almost every scene; keep him on model. The NARRATOR talks to the viewer as "you" (second person); the hero has his own lines as YOU.
 
-Quality references (same engine, earlier videos — study the level of dynamics and polish, **don't copy content**): `/home/user/animation/admin-commands/scenes/s04.js`, `s05.js`, `s08.js` and `/home/user/animation/roblox-shutdown/scenes/s02.js`.
+**Two worlds:** the real living room / house (real Dad, Mom, Grandma at their devices) and **Cube City**, the in-game world (their avatars: Dad = the hot dog DadBod1978, Mom = MOM_OFFICIAL, Grandma = GrannyGoodies; plus NoodleBoi, xX_DarkBlade_Xx, players, the Block King). Cut between them constantly: a line spoken by a real person at the keyboard pops up as chat over their avatar.
+
+Quality references (same engine, earlier videos — study the level of dynamics and polish, **don't copy content**): `/home/user/animation/respawn/scenes/s02.js`, `s05.js`, `s10.js` and `/home/user/animation/admin-commands/scenes/s04.js`.
 
 ## Reference docs (read the ones you need)
 
 | Doc | What |
 |---|---|
-| `docs/CAST.md` | every character key, look, size, options, props (Ivy, Dad, Mom, Bea, Mr. Fig, Coach Dee, Principal Pemberton, kids, ghost-YOU, Gary the goldfish) — contact sheets in `concept/cast_*.png` |
-| `docs/FX.md` | `scenes/respawn.js`: Tip, checkpoint, crumble-into-blocks, respawn overlay + pop, ESC pause menu, attempt counters, toasts, system windows, lag/glitch, foam, rewind — sheet `concept/fx.png` |
-| `docs/SETS_HOME.md` | `scenes/sets_home.js`: bedroom, stairs, kitchen, Ivy's garage workshop, the Mega Obby game screen, house + street + town exteriors (lag / low graphics / corrupted red sky) — sheet `concept/sets_home.png` |
-| `docs/SETS_SCHOOL.md` | `scenes/sets_school.js`: schoolyard + skate area + flagpole, classroom, gym, cafeteria, teachers' lounge, auditorium (stage, audience, backstage) — sheet `concept/sets_school.png` |
+| `docs/CAST.md` | every character key: the real family (dad, mom, grandma, teen mom 1998), their avatars (dadAvatar = hot dog, momAvatar, grandmaAvatar), YOU, noodle, darkblade (+ clan), players/noobs, the Block King boss — looks, sizes, options, props — sheets `concept/cast_*.png` |
+| `docs/GAMEUI.md` | `scenes/gameui.js`: chat bubbles + chat log, "joined the server" toasts, leaderboard billboard, coins/HUD, emotes (hearts…), avatar-editor UI, device frames (laptop/tablet/phone/PC showing the game), combat FX (slash, KO, damage numbers), boss health bar + shield dome, party UI, VICTORY / MVP cards, server-health bar, typing capslock chat — sheet `concept/gameui.png`. `scenes/respawn.js` (the previous video's FX kit: crumble, respawnPop, counterHUD, sysWindow, foam, confetti…) is still available — see `/home/user/animation/respawn/docs/FX.md` |
+| `docs/SETS_HOUSE.md` | `scenes/sets_house.js`: kitchen (Saturday breakfast), living room game-night setup (couch + 4 devices), hero's bedroom (night talk) — sheet `concept/sets_house.png` |
+| `docs/SETS_GAME.md` | `scenes/sets_game.js`: Cube City — spawn plaza/lobby with the first obby over water, Battle Arena, Tycoon Valley (cookie stand → skyscraper, the hero's castle), the obby tower over lava (100 floors, crystal on top), the city at night with the Block King — sheet `concept/sets_game.png` |
 
 ## Files you may and may not touch
 
 - **Write only** your own scene module(s) `scenes/sNN.js`, plus optional private helpers in `scenes/sNN_env.js`.
-- **Read-only shared files:** `scenes/kit.js`, `scenes/respawn.js`, `scenes/vo.js`, `scenes/common.js`, `scenes/env.js`, `scenes/main.js`, `scenes/sets_home.js`, `scenes/sets_school.js`, `rig/*`, `voice/*`. If you need something different, copy it into your own file.
+- **Read-only shared files:** `scenes/kit.js`, `scenes/gameui.js`, `scenes/respawn.js`, `scenes/vo.js`, `scenes/common.js`, `scenes/env.js`, `scenes/main.js`, `scenes/sets_house.js`, `scenes/sets_game.js`, `rig/*`, `voice/*`. If you need something different, copy it into your own file.
 - `scenes/main.js` loads `sNN.js` by scene id and gives it time `t` in **absolute video seconds**. Your scene owns `[its first take start (or 0) … next scene's take start)`: get the range with `node -e "console.log(require('./scenes/main').RANGES)"`.
 
 ## Module contract
@@ -28,7 +30,8 @@ Quality references (same engine, earlier videos — study the level of dynamics 
 ```js
 'use strict';
 const K = require('./kit');
-const R = require('./respawn');   // respawn FX/UI (docs/FX.md)
+const G = require('./gameui');    // game UI (docs/GAMEUI.md)
+const R = require('./respawn');   // generic FX kit from the Respawn video
 const { S, f, clamp, lerp, ease, seg, bump, hash, ol, ln, T, TF, camKeys, view, actor } = K;
 const { L } = K.V;              // L('03.4') → line; .a/.b = speech start/end; .word('STAGE').t0/.t1
 module.exports = {
@@ -43,9 +46,9 @@ module.exports = {
 ## Timing from the voice
 
 - List a scene's lines: `node -e "const V=require('./scenes/vo');for(const l of V.TL.lines.filter(l=>l.scene==='SC 05'))console.log(l.id,l.speaker,l.speechStart.toFixed(2),l.speechEnd.toFixed(2),l.text)"`.
-- Line ids are `take.index`, e.g. `05.3`; takes are 01, 02a, 02b, 03 … 12 (SC 02 has two takes).
+- Line ids are `take.index`, e.g. `05.3`; takes are 01 … 12 (one per scene).
 - `L(id).a` / `L(id).b` = speech start/end; `L(id).word('ATTEMPT').t0`; `.word(w, n)` for the n-th repeat.
-- **Captions, lip-sync and blinks are automatic.** `actor()` moves the mouth whenever that character speaks (YOU, IVY, DAD, MOM, BEA, TEACHER, COACH, PRINCIPAL, KID). Tip lip-syncs through `R.tip(...)` (see docs/FX.md). Captions are drawn by `main.js`.
+- **Captions, lip-sync and blinks are automatic.** `actor()` moves the mouth whenever that character speaks (YOU, DAD, MOM, GRANDMA, NOODLE, DARKBLADE, KID — real people and their avatars share the speaker; see docs/CAST.md for how avatars without mouths show speech, e.g. chat bubbles). SYSTEM is a voice only (show it as game toasts). Captions are drawn by `main.js`.
 - Silent beats from the script (⏱) are already in the timeline as gaps after lines (`line.beatAfter`).
 
 ## Drawing characters
@@ -82,10 +85,11 @@ Performance: a character ≈ 20 ms at s 0.5; giant close-ups of rig characters a
 
 ## Visual language of this video
 
-- **Colour script:** cosy suburban Monday (warm peach, mint, cream) → school (sky blue, lime, lockers) → 2 AM bedroom (deep blue monitor light, storm flashes, the checkpoint's green glow) → the "perfect day" (saturated, sunny, almost too clean) → Thursday loops (slowly desaturating, repetitive framing) → lag (grey low-graphics, flicker, frozen objects) → corrupted Friday (red alarm sky, hundreds of grey ghost-YOUs) → delete save (colour floods back, golden hour, block confetti) → talent show (purple house, warm stage spotlights, white foam) → Saturday (soft bright) → final night (blue + one tiny green flag in Gary's bowl).
-- **Respawn = the signature device:** fail → the hero crumbles into coloured blocks → grey "RESPAWNING 3·2·1" → pop onto the glowing checkpoint inside a shimmering forcefield. **Vary it every time** (angle, speed, size, sometimes a smash cut with only the counter, sometimes a split-screen of several attempts). Attempt counters ("ATTEMPT 57") and "Checkpoint saved" toasts sell the game logic.
-- **Recurring gags:** Dad's pancake joke, Bea's brutal honesty, Gary the goldfish's slow blink, Tip's "TIP:" corrections ("That was not first try"), the ESC pause menu.
-- **Dynamic, never static:** cut or move the camera about every 3–4 s (~17 cuts/min): wides, close-ups, push-ins, pans, whip-pans (0.1 s white flash), smash-zooms on punchlines, split-screens, montages synced to words. Characters always move: gestures, reactions, squash and stretch, jumps, real walk cycles.
+- **Colour script:** Cube City by day (saturated candy colours, blue sky, bright UI) ↔ the cosy real house (warm lamp light, beige/teal, Saturday morning sun) → evening game night (TV/laptop glow on faces) → the arena (stone, banners, golden light) → Tycoon Valley (pastel bakery pinks growing into a glass skyscraper) → the lobby at sunset (gold) → the emotional bedroom talk (dim blue, one warm lamp) → the Block King night (deep purple/red, fire, purple boss glow) → the obby tower over lava under the moon → victory dawn (gold + confetti) → the sleeping family (soft TV blue).
+- **Two worlds, one cut:** match-cuts between a real person at the keyboard and their avatar doing the same thing (Dad shouts "JUMP!" at the laptop → the hot dog doesn't jump). Device frames (laptop/tablet/phone) showing the game are great transitions.
+- **Game UI sells the comedy:** chat bubbles typed letter by letter (Dad's CAPS LOCK), "joined the server" toasts, the leaderboard billboard, coin counters, emote hearts, KO stars, the boss health bar.
+- **Recurring gags:** Dad can't jump ("SPACE! BAR!"), Mom's sweet care-talk while destroying players, Granny's prices and rent, Noodle's "bro bro bro", DarkBlade's edgy act cracking.
+- **Dynamic, never static:** cut or move the camera about every 3–4 s (~17 cuts/min): wides, close-ups, push-ins, pans, whip-pans (0.1 s white flash), smash-zooms on punchlines, split-screens (real face | avatar), montages synced to words. Characters always move: gestures, reactions, squash and stretch, jumps, real walk cycles.
 - **Sync hits to words** with `L(id).word('X').t0`; give each line's payoff an accent (burst, `bang()`, shake, flash, sparkle).
 - **Leave room for captions** at the bottom (y > 950) or move them with `captionY`.
 - **Copy nothing** from the competitor channel (Skylox Story) or from our previous videos' scenes.
@@ -97,7 +101,7 @@ A frame must render in under ~250 ms. Avoid CSS blend modes, SVG filters (other 
 ## Checking your work
 
 ```bash
-cd /home/user/animation/respawn
+cd /home/user/animation/parents
 node tools/stills.js /tmp/<scratch>/check.png 61.0 62.5 64.0 …   # 3-column contact sheet of exact times; view it with Read
 ```
 
