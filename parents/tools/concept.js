@@ -61,34 +61,33 @@ const SHEETS = {
       let o = bg(6400, 2000, 'WHAT IF YOUR PARENTS JOINED YOUR ROBLOX SERVER? — CAST', 'R6 cut-out rig · vinyl volume · everyone at the same scale (s 0.7) · left: the real house · right: Cube City (game avatars with nametags)');
       const G = 1720, s = 0.7;
       // two worlds: warm floor | game grass
-      o += S.rect(0, G, 2620, 280, 0, { fill: '#F2D2AE' }) + S.rect(2620, 200, 3780, G - 200, 0, { fill: '#BFE8FF', opacity: 0.55 }) + S.rect(2620, G, 3780, 280, 0, { fill: '#8FD36A' }) + S.path(`M2620 ${G} L6400 ${G}`, { stroke: '#5DAA3F', 'stroke-width': 5 });
-      o += S.path(`M2620 200 L2620 ${G + 280}`, { stroke: '#FFFFFF', 'stroke-width': 8, 'stroke-dasharray': '24 16' });
-      o += T('REAL LIFE', 1310, 270, 54, '#B0603A') + T('CUBE CITY', 4510, 270, 54, '#2A6EB8');
+      o += S.rect(0, G, 2420, 280, 0, { fill: '#F2D2AE' }) + S.rect(2420, 200, 3980, G - 200, 0, { fill: '#BFE8FF', opacity: 0.55 }) + S.rect(2420, G, 3980, 280, 0, { fill: '#8FD36A' }) + S.path(`M2420 ${G} L6400 ${G}`, { stroke: '#5DAA3F', 'stroke-width': 5 });
+      o += S.path(`M2420 200 L2420 ${G + 280}`, { stroke: '#FFFFFF', 'stroke-width': 8, 'stroke-dasharray': '24 16' });
+      o += T('REAL LIFE', 1210, 270, 54, '#B0603A') + T('CUBE CITY', 4410, 270, 54, '#2A6EB8');
       const real = [
-        ['you', 230, { face: 'happy', armR: 150, armL: 14, headset: true }, 'YOU', 'the hero · on model'],
-        ['dad', 660, { face: 'talkHappy', turn: 0.12, armL: 20, mouse: true }, 'Dad', 'size 1.1'],
-        ['mom', 1110, { face: 'happy', turn: 0.08, mug: true }, 'Mom', 'size 1.04'],
-        ['grandma', 1530, { face: 'happy', turn: -0.08, knitting: true }, 'Grandma', 'size 0.9'],
-        ['momTeen', 2020, { face: 'joy', trophy: true }, 'Mom (1998)', 'size 0.95'],
-        ['momTeen', 2380, { face: 'neutral', turn: 0.3, view: 'side', flip: true, armR: 40 }, '', ''],
+        ['you', 260, { face: 'happy', armR: 150, armL: 14, headset: true }, 'YOU', 'the hero · on model'],
+        ['dad', 730, { face: 'talkHappy', turn: 0.12, armL: 20, mouse: true }, 'Dad', 'size 1.1'],
+        ['mom', 1200, { face: 'happy', turn: 0.08, mug: true }, 'Mom', 'size 1.04'],
+        ['grandma', 1640, { face: 'happy', turn: -0.08, knitting: true }, 'Grandma', 'size 0.9'],
+        ['momTeen', 2100, { face: 'joy', trophy: true }, 'Mom (1998)', 'size 0.95'],
       ];
       const game = [
-        ['you', 2830, { face: 'smug', nametag: 'YOU', crown: true, sword: 'gold', armR: 150 }, 'YOU (avatar)', 'nametag + crown + sword'],
-        ['dadAvatar', 3260, { face: 'happy', armL: 30, armR: 40 }, 'DadBod1978', 'the hot dog · size 1.06'],
-        ['momAvatar', 3680, { face: 'happy' }, 'MOM_OFFICIAL', 'armor 0 · grey default'],
-        ['momAvatar', 4060, { face: 'determined', armor: 1, armR: 60, t: 0.6 }, 'MOM_OFFICIAL', 'armor 1 · golden'],
-        ['grandmaAvatar', 4470, { face: 'happy', coins: 1 }, 'GrannyGoodies', 'size 0.94'],
-        ['noodle', 4840, { face: 'joy', armL: 140, armR: 150 }, 'NoodleBoi', 'size 0.98'],
-        ['darkblade', 5230, { face: 'angry', armR: 70, t: 0.4 }, 'xX_DarkBlade_Xx', 'size 1.0'],
-        ['clan', 5560, { i: 0, face: 'angry', turn: -0.2, nametag: false }, 'clan', 'clan(i)'],
+        ['you', 2720, { face: 'smug', nametag: 'YOU', crown: true, sword: 'gold', armR: 150 }, 'YOU (avatar)', 'nametag + crown + sword'],
+        ['dadAvatar', 3150, { face: 'happy', armL: 30, armR: 40 }, 'DadBod1978', 'the hot dog · size 1.06'],
+        ['momAvatar', 3560, { face: 'happy' }, 'MOM_OFFICIAL', 'armor 0 · grey default'],
+        ['momAvatar', 3920, { face: 'determined', armor: 1, armR: 60, t: 0.6 }, 'MOM_OFFICIAL', 'armor 1 · golden'],
+        ['grandmaAvatar', 4330, { face: 'happy', coins: 1 }, 'GrannyGoodies', 'size 0.94'],
+        ['noodle', 4720, { face: 'joy', armL: 140, armR: 150 }, 'NoodleBoi', 'size 0.98'],
+        ['darkblade', 5130, { face: 'angry', armR: 70, t: 0.4 }, 'xX_DarkBlade_Xx', 'size 1.0'],
+        ['clan', 5480, { i: 0, face: 'angry', turn: -0.2 }, 'clan', 'clan(i)'],
         ['darkbladeMom', 5800, { face: 'angry', nametag: false }, "DarkBlade's mom", 'final gag'],
       ];
       for (const [k, x, pose, name, sub] of [...real, ...game]) {
         o += KIND(k, pose.i || 0, { x, y: G, s, t: 0.8, ...pose });
         if (name) o += T(esc(name), x, G + 84, name.length > 13 ? 34 : 42, INK) + TF(esc(sub), x, G + 124, 24, '#7A5A6A');
       }
-      o += draw.noob(0, { x: 6020, y: G, s, face: 'cute', t: 0.6, nametag: true }) + T('THE KID', 6020, G + 84, 36, INK) + TF('noob 0 · size 0.66', 6020, G + 124, 22, '#7A5A6A');
-      o += draw.player(4, { x: 6240, y: G, s, face: 'happy', turn: -0.2 }) + T('player 4', 6240, G + 84, 36, INK) + TF('crowds', 6240, G + 124, 22, '#7A5A6A');
+      o += draw.noob(0, { x: 6050, y: G, s, face: 'cute', t: 0.6, nametag: true }) + T('THE KID', 6050, G + 84, 36, INK) + TF('noob 0 · size 0.66', 6050, G + 124, 22, '#7A5A6A');
+      o += draw.player(4, { x: 6260, y: G, s, face: 'happy', turn: -0.2 }) + T('player 4', 6260, G + 84, 36, INK) + TF('crowds', 6260, G + 124, 22, '#7A5A6A');
       return o;
     },
   },
