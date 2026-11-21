@@ -348,13 +348,13 @@ switches to a silhouette LOD below zoom .25); glows are small radial gradients; 
 
 | set / framing | elements | build + render |
 |---|---|---|
-| plaza (spawn / wide / wall / obby / crowd / night / tree) | 530–620 | 36–58 ms |
-| arena day cheer + signs / night cheer / raid | 380–510 | 32–74 ms |
-| arena worst: night + raid .6 + full crowd cheering + near crowd | ~760 | ~79 ms |
-| tycoon castle / stand / skyscraper / smashed night / museum | 520–700 | 29–49 ms |
-| castleInterior / factoryInterior | 220–260 | 28–32 ms |
-| tower base / battle / climb / final gap / top + burst | 200–310 | 22–40 ms |
-| cityNight (boss 0 / 1 / victory) / cityDay | 340–520 | 30–69 ms |
-| avatarShop | ~110 | ~20 ms |
+| plaza (spawn / wide / wall / obby / crowd / night / tree) | 510–600 | 29–45 ms |
+| arena day cheer + signs / night cheer / raid | 380–510 | 30–63 ms |
+| arena worst: night + raid .6 + full crowd cheering + signs + near crowd | ~760 | 70–87 ms |
+| tycoon castle / stand / skyscraper / smashed night / museum | 520–700 | 20–47 ms |
+| castleInterior / factoryInterior | 220–260 | ~28 ms |
+| tower base / battle / climb / final gap / top + burst | 200–310 | 17–30 ms |
+| cityNight (boss 0 / 1 / victory) / cityDay | 340–520 | 27–46 ms |
+| avatarShop | ~110 | ~13 ms |
 
 The four-in-one tiles on the sheet are 4 sets in one frame (not one set). Characters (~20 ms each at s .5) come on top.

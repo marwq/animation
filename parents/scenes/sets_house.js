@@ -27,16 +27,17 @@
 //   kitchen(t, o)        Saturday breakfast table for 4. o: time 'morning'|'day', meeting, next, chart, paper, steam, birds
 //   livingRoom(t, o)     GAME NIGHT: couch + armchair + PC desk + side-wall TV + coffee table. o: time 'evening'|'night'|
 //                        'midnight', glow [{x,y,col,k,r}], glowK, mess, asleep, blanket, tvScreen, pcScreen, tv, pc, chair,
-//                        lamp, clock, tea, boardGame, flicker      (+ layers.table = the coffee table)
-//   bedroom(t, o)        YOUR room for the talk. o: time 'evening'|'night'|'day', lamp, door, alarm, monitor, pc, sleep, hall
+//                        lamp, clock, tea, boardGame, flicker, tvGlow      (+ layers.table = the coffee table)
+//   bedroom(t, o)        YOUR room for the talk. o: time 'night'|'evening'|'day', lamp, door, hall, alarm, alarmPulse, monitor,
+//                        pc, tuck, stars, clock
 //   stairs(t, o)         hallway stairs, landing top-right -> 12 steps down-left -> hall + living-room doorway.
 //                        o: time 'day'|'evening'|'night', heroDoor, tvGlow, lights, nightLight
 //   houseExterior(t, cam, o)  the house from the street (camera set, parallax). o: time 'morning'|'day'|'evening'|'night',
-//                        tvGlow, silhouettes, heroWindow, windows, car, paper, birds, smoke
+//                        tvGlow, silhouettes, heroWindow, windows, car, carLights, paper, birds, smoke
 //   keyboardClose(t, o)  Dad's ancient laptop, POV: QWERTY with a BIG space bar, screen above. o: screen, time, glow,
-//                        highlight, press, caps, jumpLabel, crumbs, notes
-//   props: newspaper, cerealBox, bowl, mug, cookiePlate, yarnBall, knitBasket, flipChart, houseFront, oakTree, hsCloud,
-//          hsBird, wallClock, familyFrame
+//                        highlight, press, caps, jumpLabel, crumbs, notes, worn
+//   props: newspaper, cerealBox, bowl, mug, cookiePlate, yarnBall, knitBasket, flipChart, bunting, familyFrame, plant,
+//          oakTree, hsCloud, hsBird, wallClock, houseFront, nbHouse, dadCar, alarmScreen, keyAt, deviceGlows
 //   helpers: toScreen, camTf, vis, mix, tone, frameIn, glow, pool, darkRing, seatPose, makeSet, layersOf
 'use strict';
 
@@ -1767,7 +1768,7 @@ SPOTS.livingRoom = {
   blanket: { x: LSEAT.dad.x, top0: LR.couch.front + 40, top1: LR.couch.seat - 92 },
   asleep: {
     dad: { x: 1000, hip: 768, s: 0.5, rot: -5 }, mom: { x: 1290, hip: 772, s: 0.5, rot: -15 },
-    grandma: { x: 1752, hip: 790, s: 0.5, rot: 9, turn: -0.25 }, you: { x: 820, y: 1012, s: 0.5 },
+    grandma: { x: 1752, hip: 790, s: 0.5, rot: 9, turn: -0.25 }, you: { x: 750, y: 1012, s: 0.5 },
     cam: { zoom: 1.22, x: 250, y: 60 },
   },
 };

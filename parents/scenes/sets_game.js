@@ -1754,7 +1754,7 @@ function towerLayers(t, cam, o) {
   // the plateau (battlefield)
   const PL = TW.plateau;
   if (Y1 > PL.back - 400 && X0 < PL.x1) {
-    m += R(PL.x0, PL.back, PL.x1 - PL.x0, PL.front - PL.back, 10, tn.ol('#8E84B4', 7)) + R(PL.x0 + 6, PL.back + 6, PL.x1 - PL.x0 - 12, PL.front - PL.back - 12, 6, { fill: 'url(#gsTileFloor)' });
+    m += R(PL.x0, PL.back, PL.x1 - PL.x0, PL.front - PL.back, 10, tn.ol('#857BA8', 7)) + R(PL.x0 + 6, PL.back + 6, PL.x1 - PL.x0 - 12, PL.front - PL.back - 12, 6, { fill: 'url(#gsBrickBig)', opacity: 0.7 }) + R(PL.x0 + 6, PL.back + 6, PL.x1 - PL.x0 - 12, PL.front - PL.back - 12, 6, { fill: 'url(#gsSand)', opacity: 0.6 });
     m += R(PL.x0 + 6, PL.back + 4, PL.x1 - PL.x0 - 12, 12, 4, { fill: '#FFF', opacity: 0.2 });
     // glowing rune circle in the middle of the battlefield + cracks
     m += E(-900, 905, 520, 80, { fill: 'none', stroke: tn.c(night ? '!#B98CFF' : '#9A7AE0'), 'stroke-width': 10, opacity: 0.6 }) + E(-900, 905, 380, 56, { fill: 'none', stroke: tn.c(night ? '!#B98CFF' : '#9A7AE0'), 'stroke-width': 6, opacity: 0.5 });
