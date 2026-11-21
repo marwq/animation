@@ -1,0 +1,239 @@
+WHAT IF YOUR PARENTS JOINED YOUR ROBLOX SERVER?
+ElevenLabs Eleven v4 · Text to Dialogue · voice-over script
+Generated from script/SCRIPT.md — edit the script, then run: node tools/build_vo.js
+Spoken words: 1450 · characters: 10635 · estimated runtime: ~11:07 (incl. silent visual beats)
+==============================================================================
+
+HOW TO USE (по-русски)
+- Модель: Eleven v4. Режим Text to Dialogue: каждая строка "SPEAKER: текст" = отдельный блок
+  с голосом этого персонажа (список голосов ниже). Имя спикера и двоеточие НЕ вставлять, только текст.
+- Теги в [квадратных скобках] оставляем — это интонация, они не произносятся.
+  КАПС = ударение, "..." и [pause] = паузы, тире "—" = оборванная фраза.
+- Один дубль (TAKE) = одна генерация. Файлы называть take01.mp3, take02a.mp3 ...
+- Проще всего: дать ключ API через форму (как в прошлый раз) — я сгенерирую всё сам и с таймингом слов.
+
+CAST
+  NARRATOR  (52 lines)  George · warm, playful storyteller, talks to the viewer as "you"
+  MOM       (19 lines)  Matilda · calm, sweet librarian mom — secretly a cold, focused arcade champion
+  GRANDMA   (15 lines)  Lily · sweet grandma with the instincts of a business shark
+  DAD       (28 lines)  Eric · goofy, proud, warm dad who cannot jump; sincere in the bedroom talk
+  YOU       (34 lines)  Liam · the hero, 12 — energetic, funny, easily embarrassed
+  NOODLE    ( 8 lines)  Will · online best friend — hyper, loud, "bro bro bro"
+  DARKBLADE ( 8 lines)  Callum · edgy try-hard teen rival, dramatic and slow — later shy
+  SYSTEM    ( 6 lines)  River · calm game-interface announcer; booming for the alarm and VICTORY
+  KID       ( 1 lines)  Charlie · tiny shy new player
+  BOSS      ( 3 lines)  Adam · the Block King — huge, booming, echoing
+
+==============================================================================
+
+=== TAKE 01 · SC 01 COLD OPEN — СЕРВЕР ЗАХВАЧЕН · ~0:00–0:34 · 9 lines · 579 chars ===
+
+NARRATOR: [excited, hushed] What if your parents... joined your Roblox server?
+NARRATOR: [playful] Your mom is number one on the leaderboard.
+MOM: [sweetly] Good game, sweetie! [pause] Drink some water!
+NARRATOR: [playful] Your granny owns half the server. [pause] Your friends work for her now.
+GRANDMA: [sweet, firm] Faster, boys! Those cookies won't sell themselves!
+NARRATOR: [deadpan] And your dad... has been walking into the same wall for three hours.
+DAD: [shouting at the screen] JUMP! [pause] Computer, I said JUMP!
+YOU: [panicked] This is MY server! How did this even HAPPEN?!
+NARRATOR: [deadpan] Well. [pause] It all started with a family breakfast.
+
+=== TAKE 02 · SC 02 ЛЕГЕНДА CUBE CITY · ~0:34–2:13 · 21 lines · 1539 chars ===
+
+NARRATOR: [storyteller] This is you. In real life, you're just a kid. [pause] But in Cube City... you're a legend.
+NARRATOR: Level ninety-nine. The best base in Tycoon Valley. Two thousand wins in the arena.
+YOU: [proud] Two thousand and ONE.
+YOU: [showing off] Welcome to my castle. [pause] Lava pool. Trophy room. [pause] And this... is my throne.
+NARRATOR: [deadpan] The throne was just a chair. [pause] A very expensive chair.
+NARRATOR: That's Noodle. Your best friend. You've never met in real life... [pause] but you've beaten four hundred bosses together.
+NOODLE: [excited] Bro! Bro, bro, bro! New update! [pause] The Block King is coming!
+NARRATOR: And that's DarkBlade. Nobody knows who he really is. [pause] Nobody knows why he's always so angry.
+DARKBLADE: [edgy, slow] You got lucky last time, YOU. [pause] Enjoy your little castle.
+YOU: [smug] Enjoy your little losing streak.
+NARRATOR: But on Saturday morning... real life happened.
+NARRATOR: There's Dad. An accountant. He thinks every video game is called "the Nintendo."
+NARRATOR: There's Mom. A very quiet librarian. [pause] She says "shh" more than any other word.
+NARRATOR: And there's Granny. She knits. She bakes. [pause] And she has never lost an argument in her life.
+DAD: [cheerful] Family meeting! [pause] Your mother and I have noticed you spend eleven hours a day in... the Nintendo.
+YOU: [annoyed] It's not a Nintendo, Dad. It's Cube City.
+MOM: [calm, firm] So we made a decision. [pause] Tonight is Family Game Night.
+YOU: [relieved] Oh. Board games. Okay, that's fine—
+GRANDMA: [sweetly] No, dear. [pause] We're joining YOUR game.
+YOU: [horrified] You're joining... my SERVER?!
+NARRATOR: [deadpan] It was the scariest sentence you had ever heard.
+
+=== TAKE 03 · SC 03 СОЗДАНИЕ АВАТАРОВ · ~2:13–3:15 · 19 lines · 1010 chars ===
+
+NARRATOR: That evening, the living room turned into a gaming setup. [pause] Kind of.
+DAD: [squinting] Okay. Username. [pause] D... A... D... [pause] Where's the B?
+YOU: [impatient] Dad, it's RIGHT there!
+DAD: [proud] Got it! "DadBod nineteen seventy-eight."
+YOU: [groans] Why would you tell everyone your age?!
+DAD: [proudly] And for the password... [pause] "password."
+YOU: [facepalm] Dad. NO.
+NARRATOR: Then Dad went to the avatar shop. [pause] And he clicked... everything.
+DAD: [confused] Son... why am I a hot dog?
+YOU: [deadpan] I don't know, Dad. You did that.
+DAD: [warming up] You know what? [pause] I like it. I'm keeping it.
+MOM: [calm] I'm not really a gamer, sweetie. [pause] I'll just watch.
+YOU: [confused] Mom... you're completely grey.
+MOM: [calm] Grey is classy, sweetie.
+GRANDMA: [loudly, into the phone] HELLO, PHONE. [pause] MAKE ME. A GAME. PERSON.
+GRANDMA: [confused] Which button is "go"? [pause] Oh! I bought something.
+NARRATOR: Granny pressed buttons at random... and somehow ended up looking like a billionaire.
+YOU: [defeated] Okay. Rule number one. [pause] Do NOT talk to my friends.
+DAD: [cheerfully] Got it, champ!
+
+=== TAKE 04 · SC 04 ЛОББИ · ~3:15–4:07 · 15 lines · 893 chars ===
+
+SYSTEM: [cheerful] DadBod1978 joined the server. [pause] MOM_OFFICIAL joined the server. [pause] GrannyGoodies joined the server.
+NARRATOR: The whole server saw it. [pause] Every. Single. Name.
+DAD: [loud, typing slowly] HELLO SON. [pause] IT IS DAD. [pause] LOVE, DAD.
+NOODLE: [laughing] Bro... is that your DAD?!
+YOU: [whispering, panicked] Rule number one, Dad! RULE NUMBER ONE!
+NARRATOR: Then Mom found the emote button.
+MOM: [sweetly] Mwah! [pause] Love you, honey!
+DARKBLADE: [mocking] Ha! The legend brought his MOMMY.
+DAD: [determined] Don't worry, son. Dad's got this. [pause] How do I jump?
+YOU: [whisper-shouting] Spacebar!
+DAD: [shouting at the screen] SPACE! [pause] BAR!
+NARRATOR: [deadpan] He did not press the spacebar. [pause] He said it. Very loudly. To the computer.
+DAD: [typing slowly] DEAR EVERYONE. [pause] WHERE IS THE JUMP BUTTON.
+NARRATOR: Fifty players answered at the same time. [pause] Fifty players said "SPACEBAR."
+YOU: [whispering] Nobody look at me. [pause] I'm a tree. I'm a tree.
+
+=== TAKE 05 · SC 05 МАМА НА АРЕНЕ · ~4:07–5:11 · 16 lines · 963 chars ===
+
+YOU: [quickly] Okay! You guys... stay here! Practice jumping! [pause] I'll be in the arena!
+NARRATOR: You ran to the Battle Arena, where nobody could embarrass you. [pause] But Mom followed you.
+MOM: [calm] Don't mind me, sweetie. I'm just watching.
+NARRATOR: Then someone hit Mom with a sword. [pause] And Mom... hit back.
+YOU: [stunned] Mom... how did you DO that?
+MOM: [modest] Oh. Muscle memory.
+NARRATOR: That's when you learned the truth. [pause] In nineteen ninety-eight, your mom was the arcade champion of the whole state.
+MOM: [laughing softly] They called me "The Queen." [pause] I retired. For you.
+NARRATOR: Ten minutes later... she was number one on the leaderboard.
+MOM: [sweetly] Nice try, honey! [pause] Sit up straight! [pause] Did you eat breakfast?
+NARRATOR: She defeated a hundred players. [pause] And she made sure every single one of them was hydrated.
+DARKBLADE: [angry] One on one, Mom! [pause] Right now!
+MOM: [sweetly] Okay, sweetie.
+MOM: [kind] Good game! [pause] Don't forget to stretch!
+NOODLE: [screaming] YOUR MOM IS A LEGEND!
+YOU: [quietly] ...I'm the legend.
+
+=== TAKE 06 · SC 06 БАБУШКИНА ИМПЕРИЯ · ~5:11–5:57 · 12 lines · 712 chars ===
+
+NARRATOR: Meanwhile, Granny opened a cookie stand. [pause] Just a little one.
+GRANDMA: [sweet] Fresh cookies! Two coins! [pause] Three for the cute ones!
+NARRATOR: Then a bakery. Then a factory. [pause] Then a skyscraper.
+GRANDMA: [sweetly] Cookies are now five coins. [pause] Ten coins on weekends. [pause] Fifteen if you're rude.
+NARRATOR: She hired your friends. [pause] Then she hired your friends' friends.
+NOODLE: [cheerful] Sorry, bro! She pays double! [pause] And there's dental!
+GRANDMA: [sweetly] I bought your castle, dear. [pause] It was a very good deal.
+YOU: [shocked] You BOUGHT my base?!
+GRANDMA: [sweet, firm] You can still live there. [pause] Rent is fifty coins a week.
+YOU: [pleading] Granny! I'm your grandson!
+GRANDMA: [sweetly] That's why it's only fifty, dear.
+NARRATOR: [deadpan] You had twelve coins.
+
+=== TAKE 07 · SC 07 ПАПА ВСЕХ ИГРОКОВ · ~5:57–7:00 · 12 lines · 928 chars ===
+
+NARRATOR: And Dad? [pause] Dad was still trying the first jump. [pause] For almost three hours.
+DAD: [determined] Okay. Space... bar. [pause] Space... BAR!
+NARRATOR: But then something strange happened. [pause] The new players... started gathering around him.
+DAD: [warm, encouraging] You can do it, kiddo! [pause] I believe in you! [pause] I don't believe in ME... but I believe in you!
+NARRATOR: He cheered for every jump. [pause] He told terrible jokes.
+DAD: [proud] Why did the noob cross the road? [pause] He couldn't! He was stuck in the lobby! [pause] Like me!
+DAD: [inspiring] Listen up, kids! [pause] Falling is not failing! [pause] Failing is when you stop trying! [pause] I fell two hundred times today!
+NARRATOR: By sunset... the whole server was calling him "Dad."
+KID: [shy] Mister Hot Dog? [pause] Can you be my dad too?
+DAD: [touched] Of course, kiddo. [pause] Everybody gets a dad today!
+NOODLE: [happy] Your dad is so cool, bro. [pause] My dad never plays with me.
+YOU: [quietly, jealous] ...He's MY dad.
+
+=== TAKE 08 · SC 08 РЕЙДЖ-КВИТ · ~7:00–8:02 · 14 lines · 936 chars ===
+
+NARRATOR: Your mom was the best fighter. Your granny was the richest player. [pause] Your dad was everyone's favorite.
+NARRATOR: [quietly] And you... were just "the son."
+YOU: [angry] This is MY game! My friends! My server! [pause] You're taking EVERYTHING!
+MOM: [surprised, soft] Sweetie...
+YOU: [shouting] I wish you never joined!
+MOM: [quietly] Maybe we pushed too hard.
+GRANDMA: [softly] Go talk to him, dear. [pause] Not you. [pause] Him.
+DAD: [softly] Hey, champ. [pause] Can I tell you something?
+DAD: [softly] I don't care about the game. [pause] I don't know how to jump. I don't even know what a "noob" is.
+DAD: [softly, sincere] You've been in that world for a whole year... [pause] and I just wanted to see it. With you.
+YOU: [quietly] ...You could've just asked.
+DAD: [small laugh] I did. [pause] You said, "Not now, Dad." [pause] About two hundred times.
+NARRATOR: And then... at eleven p.m.... the alarm went off.
+SYSTEM: [booming, alarm] Warning! The Block King has awakened! [pause] If the server falls... everything resets!
+
+=== TAKE 09 · SC 09 КОРОЛЬ БЛОКОВ · ~8:02–8:45 · 14 lines · 719 chars ===
+
+NARRATOR: The Block King. The biggest boss in Cube City history.
+BOSS: [booming, echoing] CUBE CITY... [pause] IS MINE!
+NARRATOR: He smashed the arena. He smashed Tycoon Valley. [pause] He smashed Granny's cookie factory.
+GRANDMA: [outraged] MY COOKIES!
+DARKBLADE: [panicked] Clan, attack! [pause] Clan? CLAN?!
+NOODLE: [panicked] Bro, where ARE you?! We need you!
+NARRATOR: The server health bar was dropping. [pause] Ninety percent. Fifty. [pause] Twenty.
+YOU: [determined] Dad... [pause] I can't win this alone.
+DAD: [warm] Then don't.
+YOU: [urgent] Mom! Grandma! The server needs us!
+MOM: [stern] It's eleven p.m., young man. [pause] Bedtime.
+MOM: [cold, focused] ...Five minutes. [pause] Let's go.
+GRANDMA: [cracking knuckles] Granny's coming, dear.
+NARRATOR: [epic] And for the first time ever... your whole family logged in. Together.
+
+=== TAKE 10 · SC 10 СЕМЕЙНЫЙ РЕЙД · ~8:45–9:35 · 14 lines · 886 chars ===
+
+SYSTEM: [cheerful] Party formed. [pause] Party name: "The Family."
+YOU: [commanding] Okay! Mom, you're the tank. [pause] Granny, we need gear!
+GRANDMA: [proud] Swords for everyone! [pause] Put it on my tab!
+MOM: [battle cry] Kids! Formation! [pause] And wear your helmets!
+MOM: [fierce] Mommy's got you! [pause] Everybody behind me!
+NARRATOR: Mom blocked the punches. You led the attack. [pause] Even DarkBlade joined your team.
+DARKBLADE: [grudging] Just this once.
+GRANDMA: [shouting] Healing potions! A hundred of them! [pause] Family discount!
+YOU: [commanding] Noodle, left side! DarkBlade, right side! [pause] Everybody, ATTACK!
+BOSS: [booming, laughing] FOOLS! [pause] My shield cannot break!
+NOODLE: [urgent] The crystal! On top of the obby tower! [pause] Someone has to jump up there and break it!
+YOU: [panicked] I can't! If I leave, the whole team falls apart!
+NARRATOR: Everybody was fighting. [pause] Everybody... except one.
+DAD: [quietly, determined] Son. [pause] I've been practicing.
+
+=== TAKE 11 · SC 11 ПРЫГАЙ, ПАПА! · ~9:35–10:20 · 15 lines · 720 chars ===
+
+NARRATOR: Dad. The man who couldn't jump. [pause] Versus one hundred floors of obby.
+DAD: [nervous] Space... bar.
+NARRATOR: He jumped. [pause] He jumped again. [pause] He slipped... and didn't fall.
+NOODLE: [chanting] Jump, Dad! [pause] Jump, Dad!
+NARRATOR: And then the whole server started chanting.
+DARKBLADE: [shouting] Jump, Mister Hot Dog! JUMP!
+DAD: [panicking] No no no no no... [pause] Okay. Okay! I'm okay!
+YOU: [shouting] JUMP, DAD, JUMP!
+DAD: [whispering] For my son.
+BOSS: [booming, shocked] NO! [pause] Defeated... by a HOT DOG?!
+SYSTEM: [booming, triumphant] VICTORY! [pause] Server saved!
+MOM: [proud, shouting] That's my husband! [pause] THAT'S MY HUSBAND!
+DAD: [laughing, emotional] I did a jump! [pause] Son, I did a JUMP!
+YOU: [laughing] You did a HUNDRED jumps, Dad!
+SYSTEM: [cheerful] Most valuable player: DadBod1978.
+
+=== TAKE 12 · SC 12 ПОСЛЕ И ФИНАЛ · ~10:20–11:07 · 13 lines · 750 chars ===
+
+NARRATOR: That night, nobody went to bed at eleven. [pause] Not even Mom.
+MOM: [sleepy] Five more minutes...
+DAD: [sleepy, smiling] Same time next week, champ?
+YOU: [softly] Same time, Dad. [pause] Every week.
+NARRATOR: And the next Saturday... YOU called the family meeting.
+YOU: [cheerful] Family Game Night! [pause] Same server! Same time!
+GRANDMA: [sweetly] And don't forget your rent, dear.
+NARRATOR: Dad still can't do a double jump. [pause] Mom started a training class. [pause] DarkBlade signed up first.
+DARKBLADE: [shy] Thank you, Mrs. Mom.
+NARRATOR: And Granny bought the Block King's castle. [pause] It's a cookie museum now. [pause] Tickets are ten coins.
+SYSTEM: [cheerful] DarkBlade's mom joined the server.
+DARKBLADE: [horrified] ...MOM?!
+NARRATOR: [warmly] So... if YOUR parents joined your server, who would be the noob? [pause] Tell me in the comments!
+
+=== END ===

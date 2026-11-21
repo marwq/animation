@@ -1,0 +1,1220 @@
+[
+ {
+  "scene": "SC 01",
+  "speaker": "NARRATOR",
+  "text": "[excited, hushed] What if your parents... joined your Roblox server?",
+  "estStart": 0,
+  "estDur": 3.51
+ },
+ {
+  "scene": "SC 01",
+  "speaker": "NARRATOR",
+  "text": "[playful] Your mom is number one on the leaderboard.",
+  "estStart": 3.51,
+  "estDur": 3.21
+ },
+ {
+  "scene": "SC 01",
+  "speaker": "MOM",
+  "text": "[sweetly] Good game, sweetie! [pause] Drink some water!",
+  "estStart": 6.72,
+  "estDur": 2.98
+ },
+ {
+  "scene": "SC 01",
+  "speaker": "NARRATOR",
+  "text": "[playful] Your granny owns half the server. [pause] Your friends work for her now.",
+  "estStart": 9.7,
+  "estDur": 5.16
+ },
+ {
+  "scene": "SC 01",
+  "speaker": "GRANDMA",
+  "text": "[sweet, firm] Faster, boys! Those cookies won't sell themselves!",
+  "estStart": 14.86,
+  "estDur": 2.85
+ },
+ {
+  "scene": "SC 01",
+  "speaker": "NARRATOR",
+  "text": "[deadpan] And your dad... has been walking into the same wall for three hours.",
+  "estStart": 17.71,
+  "estDur": 5.33
+ },
+ {
+  "scene": "SC 01",
+  "speaker": "DAD",
+  "text": "[shouting at the screen] JUMP! [pause] Computer, I said JUMP!",
+  "estStart": 23.04,
+  "estDur": 2.62
+ },
+ {
+  "scene": "SC 01",
+  "speaker": "YOU",
+  "text": "[panicked] This is MY server! How did this even HAPPEN?!",
+  "estStart": 25.65,
+  "estDur": 3.57
+ },
+ {
+  "scene": "SC 01",
+  "speaker": "NARRATOR",
+  "text": "[deadpan] Well. [pause] It all started with a family breakfast.",
+  "estStart": 29.23,
+  "estDur": 3.71
+ },
+ {
+  "scene": "SC 02",
+  "speaker": "NARRATOR",
+  "text": "[storyteller] This is you. In real life, you're just a kid. [pause] But in Cube City... you're a legend.",
+  "estStart": 33.94,
+  "estDur": 7.28
+ },
+ {
+  "scene": "SC 02",
+  "speaker": "NARRATOR",
+  "text": "Level ninety-nine. The best base in Tycoon Valley. Two thousand wins in the arena.",
+  "estStart": 41.22,
+  "estDur": 5.39
+ },
+ {
+  "scene": "SC 02",
+  "speaker": "YOU",
+  "text": "[proud] Two thousand and ONE.",
+  "estStart": 46.61,
+  "estDur": 1.75
+ },
+ {
+  "scene": "SC 02",
+  "speaker": "YOU",
+  "text": "[showing off] Welcome to my castle. [pause] Lava pool. Trophy room. [pause] And this... is my throne.",
+  "estStart": 48.36,
+  "estDur": 6.33
+ },
+ {
+  "scene": "SC 02",
+  "speaker": "NARRATOR",
+  "text": "[deadpan] The throne was just a chair. [pause] A very expensive chair.",
+  "estStart": 54.69,
+  "estDur": 4.44
+ },
+ {
+  "scene": "SC 02",
+  "speaker": "NARRATOR",
+  "text": "That's Noodle. Your best friend. You've never met in real life... [pause] but you've beaten four hundred bosses together.",
+  "estStart": 59.13,
+  "estDur": 7.65
+ },
+ {
+  "scene": "SC 02",
+  "speaker": "NOODLE",
+  "text": "[excited] Bro! Bro, bro, bro! New update! [pause] The Block King is coming!",
+  "estStart": 66.77,
+  "estDur": 4.8
+ },
+ {
+  "scene": "SC 02",
+  "speaker": "NARRATOR",
+  "text": "And that's DarkBlade. Nobody knows who he really is. [pause] Nobody knows why he's always so angry.",
+  "estStart": 71.57,
+  "estDur": 6.62
+ },
+ {
+  "scene": "SC 02",
+  "speaker": "DARKBLADE",
+  "text": "[edgy, slow] You got lucky last time, YOU. [pause] Enjoy your little castle.",
+  "estStart": 78.19,
+  "estDur": 4.44
+ },
+ {
+  "scene": "SC 02",
+  "speaker": "YOU",
+  "text": "[smug] Enjoy your little losing streak.",
+  "estStart": 82.63,
+  "estDur": 2.12
+ },
+ {
+  "scene": "SC 02",
+  "speaker": "NARRATOR",
+  "text": "But on Saturday morning... real life happened.",
+  "estStart": 84.75,
+  "estDur": 3.15
+ },
+ {
+  "scene": "SC 02",
+  "speaker": "NARRATOR",
+  "text": "There's Dad. An accountant. He thinks every video game is called \"the Nintendo.\"",
+  "estStart": 87.89,
+  "estDur": 5.03
+ },
+ {
+  "scene": "SC 02",
+  "speaker": "NARRATOR",
+  "text": "There's Mom. A very quiet librarian. [pause] She says \"shh\" more than any other word.",
+  "estStart": 92.92,
+  "estDur": 5.89
+ },
+ {
+  "scene": "SC 02",
+  "speaker": "NARRATOR",
+  "text": "And there's Granny. She knits. She bakes. [pause] And she has never lost an argument in her life.",
+  "estStart": 98.81,
+  "estDur": 6.98
+ },
+ {
+  "scene": "SC 02",
+  "speaker": "DAD",
+  "text": "[cheerful] Family meeting! [pause] Your mother and I have noticed you spend eleven hours a day in... the Nintendo.",
+  "estStart": 105.79,
+  "estDur": 7.28
+ },
+ {
+  "scene": "SC 02",
+  "speaker": "YOU",
+  "text": "[annoyed] It's not a Nintendo, Dad. It's Cube City.",
+  "estStart": 113.07,
+  "estDur": 3.21
+ },
+ {
+  "scene": "SC 02",
+  "speaker": "MOM",
+  "text": "[calm, firm] So we made a decision. [pause] Tonight is Family Game Night.",
+  "estStart": 116.28,
+  "estDur": 4.44
+ },
+ {
+  "scene": "SC 02",
+  "speaker": "YOU",
+  "text": "[relieved] Oh. Board games. Okay, that's fine—",
+  "estStart": 120.72,
+  "estDur": 2.48
+ },
+ {
+  "scene": "SC 02",
+  "speaker": "GRANDMA",
+  "text": "[sweetly] No, dear. [pause] We're joining YOUR game.",
+  "estStart": 123.2,
+  "estDur": 2.98
+ },
+ {
+  "scene": "SC 02",
+  "speaker": "YOU",
+  "text": "[horrified] You're joining... my SERVER?!",
+  "estStart": 126.18,
+  "estDur": 2.05
+ },
+ {
+  "scene": "SC 02",
+  "speaker": "NARRATOR",
+  "text": "[deadpan] It was the scariest sentence you had ever heard.",
+  "estStart": 128.24,
+  "estDur": 3.57
+ },
+ {
+  "scene": "SC 03",
+  "speaker": "NARRATOR",
+  "text": "That evening, the living room turned into a gaming setup. [pause] Kind of.",
+  "estStart": 132.81,
+  "estDur": 5.16
+ },
+ {
+  "scene": "SC 03",
+  "speaker": "DAD",
+  "text": "[squinting] Okay. Username. [pause] D... A... D... [pause] Where's the B?",
+  "estStart": 137.97,
+  "estDur": 5.11
+ },
+ {
+  "scene": "SC 03",
+  "speaker": "YOU",
+  "text": "[impatient] Dad, it's RIGHT there!",
+  "estStart": 143.08,
+  "estDur": 1.75
+ },
+ {
+  "scene": "SC 03",
+  "speaker": "DAD",
+  "text": "[proud] Got it! \"DadBod nineteen seventy-eight.\"",
+  "estStart": 144.84,
+  "estDur": 2.12
+ },
+ {
+  "scene": "SC 03",
+  "speaker": "YOU",
+  "text": "[groans] Why would you tell everyone your age?!",
+  "estStart": 146.95,
+  "estDur": 2.85
+ },
+ {
+  "scene": "SC 03",
+  "speaker": "DAD",
+  "text": "[proudly] And for the password... [pause] \"password.\"",
+  "estStart": 149.8,
+  "estDur": 2.92
+ },
+ {
+  "scene": "SC 03",
+  "speaker": "YOU",
+  "text": "[facepalm] Dad. NO.",
+  "estStart": 152.72,
+  "estDur": 1.03
+ },
+ {
+  "scene": "SC 03",
+  "speaker": "NARRATOR",
+  "text": "Then Dad went to the avatar shop. [pause] And he clicked... everything.",
+  "estStart": 153.75,
+  "estDur": 5.1
+ },
+ {
+  "scene": "SC 03",
+  "speaker": "DAD",
+  "text": "[confused] Son... why am I a hot dog?",
+  "estStart": 158.85,
+  "estDur": 3.15
+ },
+ {
+  "scene": "SC 03",
+  "speaker": "YOU",
+  "text": "[deadpan] I don't know, Dad. You did that.",
+  "estStart": 161.99,
+  "estDur": 2.85
+ },
+ {
+  "scene": "SC 03",
+  "speaker": "DAD",
+  "text": "[warming up] You know what? [pause] I like it. I'm keeping it.",
+  "estStart": 164.84,
+  "estDur": 4.07
+ },
+ {
+  "scene": "SC 03",
+  "speaker": "MOM",
+  "text": "[calm] I'm not really a gamer, sweetie. [pause] I'll just watch.",
+  "estStart": 168.91,
+  "estDur": 4.07
+ },
+ {
+  "scene": "SC 03",
+  "speaker": "YOU",
+  "text": "[confused] Mom... you're completely grey.",
+  "estStart": 172.98,
+  "estDur": 2.05
+ },
+ {
+  "scene": "SC 03",
+  "speaker": "MOM",
+  "text": "[calm] Grey is classy, sweetie.",
+  "estStart": 175.04,
+  "estDur": 1.75
+ },
+ {
+  "scene": "SC 03",
+  "speaker": "GRANDMA",
+  "text": "[loudly, into the phone] HELLO, PHONE. [pause] MAKE ME. A GAME. PERSON.",
+  "estStart": 176.79,
+  "estDur": 3.35
+ },
+ {
+  "scene": "SC 03",
+  "speaker": "GRANDMA",
+  "text": "[confused] Which button is \"go\"? [pause] Oh! I bought something.",
+  "estStart": 180.14,
+  "estDur": 3.71
+ },
+ {
+  "scene": "SC 03",
+  "speaker": "NARRATOR",
+  "text": "Granny pressed buttons at random... and somehow ended up looking like a billionaire.",
+  "estStart": 183.85,
+  "estDur": 5.33
+ },
+ {
+  "scene": "SC 03",
+  "speaker": "YOU",
+  "text": "[defeated] Okay. Rule number one. [pause] Do NOT talk to my friends.",
+  "estStart": 189.17,
+  "estDur": 4.44
+ },
+ {
+  "scene": "SC 03",
+  "speaker": "DAD",
+  "text": "[cheerfully] Got it, champ!",
+  "estStart": 193.61,
+  "estDur": 1.39
+ },
+ {
+  "scene": "SC 04",
+  "speaker": "SYSTEM",
+  "text": "[cheerful] DadBod1978 joined the server. [pause] MOM_OFFICIAL joined the server. [pause] GrannyGoodies joined the server.",
+  "estStart": 195,
+  "estDur": 5.66
+ },
+ {
+  "scene": "SC 04",
+  "speaker": "NARRATOR",
+  "text": "The whole server saw it. [pause] Every. Single. Name.",
+  "estStart": 200.66,
+  "estDur": 3.71
+ },
+ {
+  "scene": "SC 04",
+  "speaker": "DAD",
+  "text": "[loud, typing slowly] HELLO SON. [pause] IT IS DAD. [pause] LOVE, DAD.",
+  "estStart": 204.37,
+  "estDur": 3.85
+ },
+ {
+  "scene": "SC 04",
+  "speaker": "NOODLE",
+  "text": "[laughing] Bro... is that your DAD?!",
+  "estStart": 208.22,
+  "estDur": 2.42
+ },
+ {
+  "scene": "SC 04",
+  "speaker": "YOU",
+  "text": "[whispering, panicked] Rule number one, Dad! RULE NUMBER ONE!",
+  "estStart": 210.64,
+  "estDur": 2.85
+ },
+ {
+  "scene": "SC 04",
+  "speaker": "NARRATOR",
+  "text": "Then Mom found the emote button.",
+  "estStart": 213.48,
+  "estDur": 2.48
+ },
+ {
+  "scene": "SC 04",
+  "speaker": "MOM",
+  "text": "[sweetly] Mwah! [pause] Love you, honey!",
+  "estStart": 215.96,
+  "estDur": 2.25
+ },
+ {
+  "scene": "SC 04",
+  "speaker": "DARKBLADE",
+  "text": "[mocking] Ha! The legend brought his MOMMY.",
+  "estStart": 218.22,
+  "estDur": 2.48
+ },
+ {
+  "scene": "SC 04",
+  "speaker": "DAD",
+  "text": "[determined] Don't worry, son. Dad's got this. [pause] How do I jump?",
+  "estStart": 220.7,
+  "estDur": 4.44
+ },
+ {
+  "scene": "SC 04",
+  "speaker": "YOU",
+  "text": "[whisper-shouting] Spacebar!",
+  "estStart": 225.14,
+  "estDur": 0.66
+ },
+ {
+  "scene": "SC 04",
+  "speaker": "DAD",
+  "text": "[shouting at the screen] SPACE! [pause] BAR!",
+  "estStart": 225.8,
+  "estDur": 1.53
+ },
+ {
+  "scene": "SC 04",
+  "speaker": "NARRATOR",
+  "text": "[deadpan] He did not press the spacebar. [pause] He said it. Very loudly. To the computer.",
+  "estStart": 227.33,
+  "estDur": 5.89
+ },
+ {
+  "scene": "SC 04",
+  "speaker": "DAD",
+  "text": "[typing slowly] DEAR EVERYONE. [pause] WHERE IS THE JUMP BUTTON.",
+  "estStart": 233.22,
+  "estDur": 3.35
+ },
+ {
+  "scene": "SC 04",
+  "speaker": "NARRATOR",
+  "text": "Fifty players answered at the same time. [pause] Fifty players said \"SPACEBAR.\"",
+  "estStart": 236.56,
+  "estDur": 4.8
+ },
+ {
+  "scene": "SC 04",
+  "speaker": "YOU",
+  "text": "[whispering] Nobody look at me. [pause] I'm a tree. I'm a tree.",
+  "estStart": 241.36,
+  "estDur": 4.44
+ },
+ {
+  "scene": "SC 05",
+  "speaker": "YOU",
+  "text": "[quickly] Okay! You guys... stay here! Practice jumping! [pause] I'll be in the arena!",
+  "estStart": 246.8,
+  "estDur": 5.46
+ },
+ {
+  "scene": "SC 05",
+  "speaker": "NARRATOR",
+  "text": "You ran to the Battle Arena, where nobody could embarrass you. [pause] But Mom followed you.",
+  "estStart": 252.26,
+  "estDur": 6.25
+ },
+ {
+  "scene": "SC 05",
+  "speaker": "MOM",
+  "text": "[calm] Don't mind me, sweetie. I'm just watching.",
+  "estStart": 258.52,
+  "estDur": 2.85
+ },
+ {
+  "scene": "SC 05",
+  "speaker": "NARRATOR",
+  "text": "Then someone hit Mom with a sword. [pause] And Mom... hit back.",
+  "estStart": 261.36,
+  "estDur": 5.1
+ },
+ {
+  "scene": "SC 05",
+  "speaker": "YOU",
+  "text": "[stunned] Mom... how did you DO that?",
+  "estStart": 266.46,
+  "estDur": 2.78
+ },
+ {
+  "scene": "SC 05",
+  "speaker": "MOM",
+  "text": "[modest] Oh. Muscle memory.",
+  "estStart": 269.25,
+  "estDur": 1.39
+ },
+ {
+  "scene": "SC 05",
+  "speaker": "NARRATOR",
+  "text": "That's when you learned the truth. [pause] In nineteen ninety-eight, your mom was the arcade champion of the whole state.",
+  "estStart": 270.64,
+  "estDur": 7.71
+ },
+ {
+  "scene": "SC 05",
+  "speaker": "MOM",
+  "text": "[laughing softly] They called me \"The Queen.\" [pause] I retired. For you.",
+  "estStart": 278.35,
+  "estDur": 4.07
+ },
+ {
+  "scene": "SC 05",
+  "speaker": "NARRATOR",
+  "text": "Ten minutes later... she was number one on the leaderboard.",
+  "estStart": 282.42,
+  "estDur": 4.24
+ },
+ {
+  "scene": "SC 05",
+  "speaker": "MOM",
+  "text": "[sweetly] Nice try, honey! [pause] Sit up straight! [pause] Did you eat breakfast?",
+  "estStart": 286.65,
+  "estDur": 4.94
+ },
+ {
+  "scene": "SC 05",
+  "speaker": "NARRATOR",
+  "text": "She defeated a hundred players. [pause] And she made sure every single one of them was hydrated.",
+  "estStart": 291.59,
+  "estDur": 6.62
+ },
+ {
+  "scene": "SC 05",
+  "speaker": "DARKBLADE",
+  "text": "[angry] One on one, Mom! [pause] Right now!",
+  "estStart": 298.21,
+  "estDur": 2.98
+ },
+ {
+  "scene": "SC 05",
+  "speaker": "MOM",
+  "text": "[sweetly] Okay, sweetie.",
+  "estStart": 301.19,
+  "estDur": 1.03
+ },
+ {
+  "scene": "SC 05",
+  "speaker": "MOM",
+  "text": "[kind] Good game! [pause] Don't forget to stretch!",
+  "estStart": 302.22,
+  "estDur": 2.98
+ },
+ {
+  "scene": "SC 05",
+  "speaker": "NOODLE",
+  "text": "[screaming] YOUR MOM IS A LEGEND!",
+  "estStart": 305.2,
+  "estDur": 2.12
+ },
+ {
+  "scene": "SC 05",
+  "speaker": "YOU",
+  "text": "[quietly] ...I'm the legend.",
+  "estStart": 307.32,
+  "estDur": 1.69
+ },
+ {
+  "scene": "SC 06",
+  "speaker": "NARRATOR",
+  "text": "Meanwhile, Granny opened a cookie stand. [pause] Just a little one.",
+  "estStart": 310.51,
+  "estDur": 4.44
+ },
+ {
+  "scene": "SC 06",
+  "speaker": "GRANDMA",
+  "text": "[sweet] Fresh cookies! Two coins! [pause] Three for the cute ones!",
+  "estStart": 314.95,
+  "estDur": 4.07
+ },
+ {
+  "scene": "SC 06",
+  "speaker": "NARRATOR",
+  "text": "Then a bakery. Then a factory. [pause] Then a skyscraper.",
+  "estStart": 319.02,
+  "estDur": 4.07
+ },
+ {
+  "scene": "SC 06",
+  "speaker": "GRANDMA",
+  "text": "[sweetly] Cookies are now five coins. [pause] Ten coins on weekends. [pause] Fifteen if you're rude.",
+  "estStart": 323.09,
+  "estDur": 6.03
+ },
+ {
+  "scene": "SC 06",
+  "speaker": "NARRATOR",
+  "text": "She hired your friends. [pause] Then she hired your friends' friends.",
+  "estStart": 329.12,
+  "estDur": 4.44
+ },
+ {
+  "scene": "SC 06",
+  "speaker": "NOODLE",
+  "text": "[cheerful] Sorry, bro! She pays double! [pause] And there's dental!",
+  "estStart": 333.55,
+  "estDur": 3.71
+ },
+ {
+  "scene": "SC 06",
+  "speaker": "GRANDMA",
+  "text": "[sweetly] I bought your castle, dear. [pause] It was a very good deal.",
+  "estStart": 337.26,
+  "estDur": 4.8
+ },
+ {
+  "scene": "SC 06",
+  "speaker": "YOU",
+  "text": "[shocked] You BOUGHT my base?!",
+  "estStart": 342.06,
+  "estDur": 1.75
+ },
+ {
+  "scene": "SC 06",
+  "speaker": "GRANDMA",
+  "text": "[sweet, firm] You can still live there. [pause] Rent is fifty coins a week.",
+  "estStart": 343.82,
+  "estDur": 4.8
+ },
+ {
+  "scene": "SC 06",
+  "speaker": "YOU",
+  "text": "[pleading] Granny! I'm your grandson!",
+  "estStart": 348.62,
+  "estDur": 1.75
+ },
+ {
+  "scene": "SC 06",
+  "speaker": "GRANDMA",
+  "text": "[sweetly] That's why it's only fifty, dear.",
+  "estStart": 350.37,
+  "estDur": 2.48
+ },
+ {
+  "scene": "SC 06",
+  "speaker": "NARRATOR",
+  "text": "[deadpan] You had twelve coins.",
+  "estStart": 352.85,
+  "estDur": 1.75
+ },
+ {
+  "scene": "SC 07",
+  "speaker": "NARRATOR",
+  "text": "And Dad? [pause] Dad was still trying the first jump. [pause] For almost three hours.",
+  "estStart": 356.61,
+  "estDur": 6.03
+ },
+ {
+  "scene": "SC 07",
+  "speaker": "DAD",
+  "text": "[determined] Okay. Space... bar. [pause] Space... BAR!",
+  "estStart": 362.64,
+  "estDur": 3.22
+ },
+ {
+  "scene": "SC 07",
+  "speaker": "NARRATOR",
+  "text": "But then something strange happened. [pause] The new players... started gathering around him.",
+  "estStart": 365.85,
+  "estDur": 5.46
+ },
+ {
+  "scene": "SC 07",
+  "speaker": "DAD",
+  "text": "[warm, encouraging] You can do it, kiddo! [pause] I believe in you! [pause] I don't believe in ME... but I believe in you!",
+  "estStart": 371.32,
+  "estDur": 8.51
+ },
+ {
+  "scene": "SC 07",
+  "speaker": "NARRATOR",
+  "text": "He cheered for every jump. [pause] He told terrible jokes.",
+  "estStart": 379.83,
+  "estDur": 4.07
+ },
+ {
+  "scene": "SC 07",
+  "speaker": "DAD",
+  "text": "[proud] Why did the noob cross the road? [pause] He couldn't! He was stuck in the lobby! [pause] Like me!",
+  "estStart": 383.9,
+  "estDur": 7.48
+ },
+ {
+  "scene": "SC 07",
+  "speaker": "DAD",
+  "text": "[inspiring] Listen up, kids! [pause] Falling is not failing! [pause] Failing is when you stop trying! [pause] I fell two hundred times today!",
+  "estStart": 391.38,
+  "estDur": 8.71
+ },
+ {
+  "scene": "SC 07",
+  "speaker": "NARRATOR",
+  "text": "By sunset... the whole server was calling him \"Dad.\"",
+  "estStart": 400.09,
+  "estDur": 3.87
+ },
+ {
+  "scene": "SC 07",
+  "speaker": "KID",
+  "text": "[shy] Mister Hot Dog? [pause] Can you be my dad too?",
+  "estStart": 403.96,
+  "estDur": 4.07
+ },
+ {
+  "scene": "SC 07",
+  "speaker": "DAD",
+  "text": "[touched] Of course, kiddo. [pause] Everybody gets a dad today!",
+  "estStart": 408.04,
+  "estDur": 3.71
+ },
+ {
+  "scene": "SC 07",
+  "speaker": "NOODLE",
+  "text": "[happy] Your dad is so cool, bro. [pause] My dad never plays with me.",
+  "estStart": 411.75,
+  "estDur": 5.16
+ },
+ {
+  "scene": "SC 07",
+  "speaker": "YOU",
+  "text": "[quietly, jealous] ...He's MY dad.",
+  "estStart": 416.91,
+  "estDur": 1.69
+ },
+ {
+  "scene": "SC 08",
+  "speaker": "NARRATOR",
+  "text": "Your mom was the best fighter. Your granny was the richest player. [pause] Your dad was everyone's favorite.",
+  "estStart": 419.6,
+  "estDur": 6.98
+ },
+ {
+  "scene": "SC 08",
+  "speaker": "NARRATOR",
+  "text": "[quietly] And you... were just \"the son.\"",
+  "estStart": 426.58,
+  "estDur": 2.78
+ },
+ {
+  "scene": "SC 08",
+  "speaker": "YOU",
+  "text": "[angry] This is MY game! My friends! My server! [pause] You're taking EVERYTHING!",
+  "estStart": 429.36,
+  "estDur": 4.8
+ },
+ {
+  "scene": "SC 08",
+  "speaker": "MOM",
+  "text": "[surprised, soft] Sweetie...",
+  "estStart": 434.16,
+  "estDur": 0.96
+ },
+ {
+  "scene": "SC 08",
+  "speaker": "YOU",
+  "text": "[shouting] I wish you never joined!",
+  "estStart": 435.13,
+  "estDur": 2.12
+ },
+ {
+  "scene": "SC 08",
+  "speaker": "MOM",
+  "text": "[quietly] Maybe we pushed too hard.",
+  "estStart": 437.25,
+  "estDur": 2.12
+ },
+ {
+  "scene": "SC 08",
+  "speaker": "GRANDMA",
+  "text": "[softly] Go talk to him, dear. [pause] Not you. [pause] Him.",
+  "estStart": 439.36,
+  "estDur": 4.21
+ },
+ {
+  "scene": "SC 08",
+  "speaker": "DAD",
+  "text": "[softly] Hey, champ. [pause] Can I tell you something?",
+  "estStart": 443.57,
+  "estDur": 3.35
+ },
+ {
+  "scene": "SC 08",
+  "speaker": "DAD",
+  "text": "[softly] I don't care about the game. [pause] I don't know how to jump. I don't even know what a \"noob\" is.",
+  "estStart": 446.92,
+  "estDur": 8.07
+ },
+ {
+  "scene": "SC 08",
+  "speaker": "DAD",
+  "text": "[softly, sincere] You've been in that world for a whole year... [pause] and I just wanted to see it. With you.",
+  "estStart": 454.99,
+  "estDur": 7.65
+ },
+ {
+  "scene": "SC 08",
+  "speaker": "YOU",
+  "text": "[quietly] ...You could've just asked.",
+  "estStart": 462.64,
+  "estDur": 2.05
+ },
+ {
+  "scene": "SC 08",
+  "speaker": "DAD",
+  "text": "[small laugh] I did. [pause] You said, \"Not now, Dad.\" [pause] About two hundred times.",
+  "estStart": 464.69,
+  "estDur": 5.3
+ },
+ {
+  "scene": "SC 08",
+  "speaker": "NARRATOR",
+  "text": "And then... at eleven p.m.... the alarm went off.",
+  "estStart": 469.99,
+  "estDur": 4.17
+ },
+ {
+  "scene": "SC 08",
+  "speaker": "SYSTEM",
+  "text": "[booming, alarm] Warning! The Block King has awakened! [pause] If the server falls... everything resets!",
+  "estStart": 474.16,
+  "estDur": 5.46
+ },
+ {
+  "scene": "SC 09",
+  "speaker": "NARRATOR",
+  "text": "The Block King. The biggest boss in Cube City history.",
+  "estStart": 482.13,
+  "estDur": 3.94
+ },
+ {
+  "scene": "SC 09",
+  "speaker": "BOSS",
+  "text": "[booming, echoing] CUBE CITY... [pause] IS MINE!",
+  "estStart": 486.06,
+  "estDur": 2.55
+ },
+ {
+  "scene": "SC 09",
+  "speaker": "NARRATOR",
+  "text": "He smashed the arena. He smashed Tycoon Valley. [pause] He smashed Granny's cookie factory.",
+  "estStart": 488.62,
+  "estDur": 5.53
+ },
+ {
+  "scene": "SC 09",
+  "speaker": "GRANDMA",
+  "text": "[outraged] MY COOKIES!",
+  "estStart": 494.15,
+  "estDur": 1.03
+ },
+ {
+  "scene": "SC 09",
+  "speaker": "DARKBLADE",
+  "text": "[panicked] Clan, attack! [pause] Clan? CLAN?!",
+  "estStart": 495.17,
+  "estDur": 2.25
+ },
+ {
+  "scene": "SC 09",
+  "speaker": "NOODLE",
+  "text": "[panicked] Bro, where ARE you?! We need you!",
+  "estStart": 497.43,
+  "estDur": 2.85
+ },
+ {
+  "scene": "SC 09",
+  "speaker": "NARRATOR",
+  "text": "The server health bar was dropping. [pause] Ninety percent. Fifty. [pause] Twenty.",
+  "estStart": 500.27,
+  "estDur": 4.94
+ },
+ {
+  "scene": "SC 09",
+  "speaker": "YOU",
+  "text": "[determined] Dad... [pause] I can't win this alone.",
+  "estStart": 505.21,
+  "estDur": 3.28
+ },
+ {
+  "scene": "SC 09",
+  "speaker": "DAD",
+  "text": "[warm] Then don't.",
+  "estStart": 508.49,
+  "estDur": 1.03
+ },
+ {
+  "scene": "SC 09",
+  "speaker": "YOU",
+  "text": "[urgent] Mom! Grandma! The server needs us!",
+  "estStart": 509.52,
+  "estDur": 2.48
+ },
+ {
+  "scene": "SC 09",
+  "speaker": "MOM",
+  "text": "[stern] It's eleven p.m., young man. [pause] Bedtime.",
+  "estStart": 512,
+  "estDur": 2.98
+ },
+ {
+  "scene": "SC 09",
+  "speaker": "MOM",
+  "text": "[cold, focused] ...Five minutes. [pause] Let's go.",
+  "estStart": 514.98,
+  "estDur": 2.55
+ },
+ {
+  "scene": "SC 09",
+  "speaker": "GRANDMA",
+  "text": "[cracking knuckles] Granny's coming, dear.",
+  "estStart": 517.54,
+  "estDur": 1.39
+ },
+ {
+  "scene": "SC 09",
+  "speaker": "NARRATOR",
+  "text": "[epic] And for the first time ever... your whole family logged in. Together.",
+  "estStart": 518.93,
+  "estDur": 4.96
+ },
+ {
+  "scene": "SC 10",
+  "speaker": "SYSTEM",
+  "text": "[cheerful] Party formed. [pause] Party name: \"The Family.\"",
+  "estStart": 524.89,
+  "estDur": 2.98
+ },
+ {
+  "scene": "SC 10",
+  "speaker": "YOU",
+  "text": "[commanding] Okay! Mom, you're the tank. [pause] Granny, we need gear!",
+  "estStart": 527.87,
+  "estDur": 4.07
+ },
+ {
+  "scene": "SC 10",
+  "speaker": "GRANDMA",
+  "text": "[proud] Swords for everyone! [pause] Put it on my tab!",
+  "estStart": 531.95,
+  "estDur": 3.71
+ },
+ {
+  "scene": "SC 10",
+  "speaker": "MOM",
+  "text": "[battle cry] Kids! Formation! [pause] And wear your helmets!",
+  "estStart": 535.65,
+  "estDur": 2.98
+ },
+ {
+  "scene": "SC 10",
+  "speaker": "MOM",
+  "text": "[fierce] Mommy's got you! [pause] Everybody behind me!",
+  "estStart": 538.64,
+  "estDur": 2.98
+ },
+ {
+  "scene": "SC 10",
+  "speaker": "NARRATOR",
+  "text": "Mom blocked the punches. You led the attack. [pause] Even DarkBlade joined your team.",
+  "estStart": 541.62,
+  "estDur": 5.53
+ },
+ {
+  "scene": "SC 10",
+  "speaker": "DARKBLADE",
+  "text": "[grudging] Just this once.",
+  "estStart": 547.15,
+  "estDur": 1.39
+ },
+ {
+  "scene": "SC 10",
+  "speaker": "GRANDMA",
+  "text": "[shouting] Healing potions! A hundred of them! [pause] Family discount!",
+  "estStart": 548.54,
+  "estDur": 3.71
+ },
+ {
+  "scene": "SC 10",
+  "speaker": "YOU",
+  "text": "[commanding] Noodle, left side! DarkBlade, right side! [pause] Everybody, ATTACK!",
+  "estStart": 552.25,
+  "estDur": 3.71
+ },
+ {
+  "scene": "SC 10",
+  "speaker": "BOSS",
+  "text": "[booming, laughing] FOOLS! [pause] My shield cannot break!",
+  "estStart": 555.95,
+  "estDur": 2.62
+ },
+ {
+  "scene": "SC 10",
+  "speaker": "NOODLE",
+  "text": "[urgent] The crystal! On top of the obby tower! [pause] Someone has to jump up there and break it!",
+  "estStart": 558.57,
+  "estDur": 6.98
+ },
+ {
+  "scene": "SC 10",
+  "speaker": "YOU",
+  "text": "[panicked] I can't! If I leave, the whole team falls apart!",
+  "estStart": 565.55,
+  "estDur": 3.94
+ },
+ {
+  "scene": "SC 10",
+  "speaker": "NARRATOR",
+  "text": "Everybody was fighting. [pause] Everybody... except one.",
+  "estStart": 569.49,
+  "estDur": 3.28
+ },
+ {
+  "scene": "SC 10",
+  "speaker": "DAD",
+  "text": "[quietly, determined] Son. [pause] I've been practicing.",
+  "estStart": 572.77,
+  "estDur": 2.25
+ },
+ {
+  "scene": "SC 11",
+  "speaker": "NARRATOR",
+  "text": "Dad. The man who couldn't jump. [pause] Versus one hundred floors of obby.",
+  "estStart": 575.03,
+  "estDur": 5.16
+ },
+ {
+  "scene": "SC 11",
+  "speaker": "DAD",
+  "text": "[nervous] Space... bar.",
+  "estStart": 580.19,
+  "estDur": 1.33
+ },
+ {
+  "scene": "SC 11",
+  "speaker": "NARRATOR",
+  "text": "He jumped. [pause] He jumped again. [pause] He slipped... and didn't fall.",
+  "estStart": 581.52,
+  "estDur": 5.24
+ },
+ {
+  "scene": "SC 11",
+  "speaker": "NOODLE",
+  "text": "[chanting] Jump, Dad! [pause] Jump, Dad!",
+  "estStart": 586.75,
+  "estDur": 2.25
+ },
+ {
+  "scene": "SC 11",
+  "speaker": "NARRATOR",
+  "text": "And then the whole server started chanting.",
+  "estStart": 589.01,
+  "estDur": 2.85
+ },
+ {
+  "scene": "SC 11",
+  "speaker": "DARKBLADE",
+  "text": "[shouting] Jump, Mister Hot Dog! JUMP!",
+  "estStart": 591.85,
+  "estDur": 2.12
+ },
+ {
+  "scene": "SC 11",
+  "speaker": "DAD",
+  "text": "[panicking] No no no no no... [pause] Okay. Okay! I'm okay!",
+  "estStart": 593.97,
+  "estDur": 4.37
+ },
+ {
+  "scene": "SC 11",
+  "speaker": "YOU",
+  "text": "[shouting] JUMP, DAD, JUMP!",
+  "estStart": 598.35,
+  "estDur": 1.39
+ },
+ {
+  "scene": "SC 11",
+  "speaker": "DAD",
+  "text": "[whispering] For my son.",
+  "estStart": 599.74,
+  "estDur": 1.39
+ },
+ {
+  "scene": "SC 11",
+  "speaker": "BOSS",
+  "text": "[booming, shocked] NO! [pause] Defeated... by a HOT DOG?!",
+  "estStart": 601.13,
+  "estDur": 3.28
+ },
+ {
+  "scene": "SC 11",
+  "speaker": "SYSTEM",
+  "text": "[booming, triumphant] VICTORY! [pause] Server saved!",
+  "estStart": 604.41,
+  "estDur": 1.89
+ },
+ {
+  "scene": "SC 11",
+  "speaker": "MOM",
+  "text": "[proud, shouting] That's my husband! [pause] THAT'S MY HUSBAND!",
+  "estStart": 606.3,
+  "estDur": 2.98
+ },
+ {
+  "scene": "SC 11",
+  "speaker": "DAD",
+  "text": "[laughing, emotional] I did a jump! [pause] Son, I did a JUMP!",
+  "estStart": 609.28,
+  "estDur": 4.07
+ },
+ {
+  "scene": "SC 11",
+  "speaker": "YOU",
+  "text": "[laughing] You did a HUNDRED jumps, Dad!",
+  "estStart": 613.35,
+  "estDur": 2.48
+ },
+ {
+  "scene": "SC 11",
+  "speaker": "SYSTEM",
+  "text": "[cheerful] Most valuable player: DadBod1978.",
+  "estStart": 615.84,
+  "estDur": 1.75
+ },
+ {
+  "scene": "SC 12",
+  "speaker": "NARRATOR",
+  "text": "That night, nobody went to bed at eleven. [pause] Not even Mom.",
+  "estStart": 619.59,
+  "estDur": 4.8
+ },
+ {
+  "scene": "SC 12",
+  "speaker": "MOM",
+  "text": "[sleepy] Five more minutes...",
+  "estStart": 624.39,
+  "estDur": 1.69
+ },
+ {
+  "scene": "SC 12",
+  "speaker": "DAD",
+  "text": "[sleepy, smiling] Same time next week, champ?",
+  "estStart": 626.08,
+  "estDur": 2.12
+ },
+ {
+  "scene": "SC 12",
+  "speaker": "YOU",
+  "text": "[softly] Same time, Dad. [pause] Every week.",
+  "estStart": 628.2,
+  "estDur": 2.62
+ },
+ {
+  "scene": "SC 12",
+  "speaker": "NARRATOR",
+  "text": "And the next Saturday... YOU called the family meeting.",
+  "estStart": 630.82,
+  "estDur": 3.87
+ },
+ {
+  "scene": "SC 12",
+  "speaker": "YOU",
+  "text": "[cheerful] Family Game Night! [pause] Same server! Same time!",
+  "estStart": 634.69,
+  "estDur": 3.35
+ },
+ {
+  "scene": "SC 12",
+  "speaker": "GRANDMA",
+  "text": "[sweetly] And don't forget your rent, dear.",
+  "estStart": 638.04,
+  "estDur": 2.48
+ },
+ {
+  "scene": "SC 12",
+  "speaker": "NARRATOR",
+  "text": "Dad still can't do a double jump. [pause] Mom started a training class. [pause] DarkBlade signed up first.",
+  "estStart": 640.52,
+  "estDur": 7.12
+ },
+ {
+  "scene": "SC 12",
+  "speaker": "DARKBLADE",
+  "text": "[shy] Thank you, Mrs. Mom.",
+  "estStart": 647.64,
+  "estDur": 1.75
+ },
+ {
+  "scene": "SC 12",
+  "speaker": "NARRATOR",
+  "text": "And Granny bought the Block King's castle. [pause] It's a cookie museum now. [pause] Tickets are ten coins.",
+  "estStart": 649.39,
+  "estDur": 7.12
+ },
+ {
+  "scene": "SC 12",
+  "speaker": "SYSTEM",
+  "text": "[cheerful] DarkBlade's mom joined the server.",
+  "estStart": 656.51,
+  "estDur": 2.12
+ },
+ {
+  "scene": "SC 12",
+  "speaker": "DARKBLADE",
+  "text": "[horrified] ...MOM?!",
+  "estStart": 658.63,
+  "estDur": 0.96
+ },
+ {
+  "scene": "SC 12",
+  "speaker": "NARRATOR",
+  "text": "[warmly] So... if YOUR parents joined your server, who would be the noob? [pause] Tell me in the comments!",
+  "estStart": 659.59,
+  "estDur": 7.28
+ }
+]

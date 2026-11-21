@@ -1,0 +1,10732 @@
+{
+ "duration": 747.935,
+ "provisional": true,
+ "lines": [
+  {
+   "id": "01.0",
+   "take": "01",
+   "scene": "SC 01",
+   "idx": 0,
+   "speaker": "NARRATOR",
+   "raw": "[excited, hushed] What if your parents... joined your Roblox server?",
+   "text": "What if your parents... joined your Roblox server?",
+   "clip": [
+    0.0,
+    3.587
+   ],
+   "start": 0.35,
+   "end": 3.937,
+   "speechStart": 0.35,
+   "speechEnd": 3.937,
+   "words": [
+    [
+     "What",
+     0.35,
+     0.676
+    ],
+    [
+     "if",
+     0.713,
+     0.908
+    ],
+    [
+     "your",
+     0.945,
+     1.272
+    ],
+    [
+     "parents...",
+     1.309,
+     1.831
+    ],
+    [
+     "joined",
+     2.13,
+     2.586
+    ],
+    [
+     "your",
+     2.623,
+     2.949
+    ],
+    [
+     "Roblox",
+     2.986,
+     3.443
+    ],
+    [
+     "server?",
+     3.48,
+     3.937
+    ]
+   ]
+  },
+  {
+   "id": "01.1",
+   "take": "01",
+   "scene": "SC 01",
+   "idx": 1,
+   "speaker": "NARRATOR",
+   "raw": "[playful] Your mom is number one on the leaderboard.",
+   "text": "Your mom is number one on the leaderboard.",
+   "clip": [
+    3.807,
+    6.805
+   ],
+   "start": 4.157,
+   "end": 7.155,
+   "speechStart": 4.157,
+   "speechEnd": 7.155,
+   "words": [
+    [
+     "Your",
+     4.157,
+     4.483
+    ],
+    [
+     "mom",
+     4.52,
+     4.781
+    ],
+    [
+     "is",
+     4.818,
+     5.014
+    ],
+    [
+     "number",
+     5.051,
+     5.507
+    ],
+    [
+     "one",
+     5.544,
+     5.805
+    ],
+    [
+     "on",
+     5.842,
+     6.037
+    ],
+    [
+     "the",
+     6.074,
+     6.335
+    ],
+    [
+     "leaderboard.",
+     6.372,
+     7.155
+    ]
+   ],
+   "beatAfter": 0.8
+  },
+  {
+   "id": "01.2",
+   "take": "01",
+   "scene": "SC 01",
+   "idx": 2,
+   "speaker": "MOM",
+   "raw": "[sweetly] Good game, sweetie! [pause] Drink some water!",
+   "text": "Good game, sweetie! Drink some water!",
+   "clip": [
+    7.785,
+    11.048
+   ],
+   "start": 8.135,
+   "end": 11.398,
+   "speechStart": 8.135,
+   "speechEnd": 11.398,
+   "words": [
+    [
+     "Good",
+     8.135,
+     8.461
+    ],
+    [
+     "game,",
+     8.498,
+     8.825
+    ],
+    [
+     "sweetie!",
+     8.976,
+     9.498
+    ],
+    [
+     "Drink",
+     10.215,
+     10.606
+    ],
+    [
+     "some",
+     10.643,
+     10.97
+    ],
+    [
+     "water!",
+     11.007,
+     11.398
+    ]
+   ],
+   "beatAfter": 1.0
+  },
+  {
+   "id": "01.3",
+   "take": "01",
+   "scene": "SC 01",
+   "idx": 3,
+   "speaker": "NARRATOR",
+   "raw": "[playful] Your granny owns half the server. [pause] Your friends work for her now.",
+   "text": "Your granny owns half the server. Your friends work for her now.",
+   "clip": [
+    12.228,
+    17.424
+   ],
+   "start": 12.578,
+   "end": 17.774,
+   "speechStart": 12.578,
+   "speechEnd": 17.774,
+   "words": [
+    [
+     "Your",
+     12.578,
+     12.904
+    ],
+    [
+     "granny",
+     12.941,
+     13.398
+    ],
+    [
+     "owns",
+     13.435,
+     13.76
+    ],
+    [
+     "half",
+     13.797,
+     14.124
+    ],
+    [
+     "the",
+     14.161,
+     14.421
+    ],
+    [
+     "server.",
+     14.458,
+     14.915
+    ],
+    [
+     "Your",
+     15.633,
+     15.959
+    ],
+    [
+     "friends",
+     15.996,
+     16.517
+    ],
+    [
+     "work",
+     16.554,
+     16.881
+    ],
+    [
+     "for",
+     16.917,
+     17.178
+    ],
+    [
+     "her",
+     17.215,
+     17.476
+    ],
+    [
+     "now.",
+     17.513,
+     17.774
+    ]
+   ]
+  },
+  {
+   "id": "01.4",
+   "take": "01",
+   "scene": "SC 01",
+   "idx": 4,
+   "speaker": "GRANDMA",
+   "raw": "[sweet, firm] Faster, boys! Those cookies won't sell themselves!",
+   "text": "Faster, boys! Those cookies won't sell themselves!",
+   "clip": [
+    17.604,
+    21.236
+   ],
+   "start": 17.954,
+   "end": 21.586,
+   "speechStart": 17.954,
+   "speechEnd": 21.586,
+   "words": [
+    [
+     "Faster,",
+     17.954,
+     18.411
+    ],
+    [
+     "boys!",
+     18.562,
+     18.889
+    ],
+    [
+     "Those",
+     19.155,
+     19.546
+    ],
+    [
+     "cookies",
+     19.583,
+     20.105
+    ],
+    [
+     "won't",
+     20.142,
+     20.468
+    ],
+    [
+     "sell",
+     20.505,
+     20.831
+    ],
+    [
+     "themselves!",
+     20.868,
+     21.586
+    ]
+   ]
+  },
+  {
+   "id": "01.5",
+   "take": "01",
+   "scene": "SC 01",
+   "idx": 5,
+   "speaker": "NARRATOR",
+   "raw": "[deadpan] And your dad... has been walking into the same wall for three hours.",
+   "text": "And your dad... has been walking into the same wall for three hours.",
+   "clip": [
+    21.416,
+    26.361
+   ],
+   "start": 21.766,
+   "end": 26.711,
+   "speechStart": 21.766,
+   "speechEnd": 26.711,
+   "words": [
+    [
+     "And",
+     21.766,
+     22.027
+    ],
+    [
+     "your",
+     22.064,
+     22.39
+    ],
+    [
+     "dad...",
+     22.427,
+     22.688
+    ],
+    [
+     "has",
+     22.987,
+     23.248
+    ],
+    [
+     "been",
+     23.285,
+     23.611
+    ],
+    [
+     "walking",
+     23.648,
+     24.169
+    ],
+    [
+     "into",
+     24.206,
+     24.533
+    ],
+    [
+     "the",
+     24.57,
+     24.83
+    ],
+    [
+     "same",
+     24.867,
+     25.194
+    ],
+    [
+     "wall",
+     25.23,
+     25.557
+    ],
+    [
+     "for",
+     25.594,
+     25.855
+    ],
+    [
+     "three",
+     25.891,
+     26.283
+    ],
+    [
+     "hours.",
+     26.319,
+     26.711
+    ]
+   ],
+   "beatAfter": 0.5
+  },
+  {
+   "id": "01.6",
+   "take": "01",
+   "scene": "SC 01",
+   "idx": 6,
+   "speaker": "DAD",
+   "raw": "[shouting at the screen] JUMP! [pause] Computer, I said JUMP!",
+   "text": "JUMP! Computer, I said JUMP!",
+   "clip": [
+    27.041,
+    29.778
+   ],
+   "start": 27.391,
+   "end": 30.128,
+   "speechStart": 27.391,
+   "speechEnd": 30.128,
+   "words": [
+    [
+     "JUMP!",
+     27.391,
+     27.766
+    ],
+    [
+     "Computer,",
+     28.483,
+     29.07
+    ],
+    [
+     "I",
+     29.222,
+     29.352
+    ],
+    [
+     "said",
+     29.389,
+     29.716
+    ],
+    [
+     "JUMP!",
+     29.753,
+     30.128
+    ]
+   ]
+  },
+  {
+   "id": "01.7",
+   "take": "01",
+   "scene": "SC 01",
+   "idx": 7,
+   "speaker": "YOU",
+   "raw": "[panicked] This is MY server! How did this even HAPPEN?!",
+   "text": "This is MY server! How did this even HAPPEN?!",
+   "clip": [
+    29.958,
+    33.356
+   ],
+   "start": 30.308,
+   "end": 33.706,
+   "speechStart": 30.308,
+   "speechEnd": 33.706,
+   "words": [
+    [
+     "This",
+     30.308,
+     30.634
+    ],
+    [
+     "is",
+     30.671,
+     30.866
+    ],
+    [
+     "MY",
+     30.903,
+     31.099
+    ],
+    [
+     "server!",
+     31.136,
+     31.593
+    ],
+    [
+     "How",
+     31.859,
+     32.12
+    ],
+    [
+     "did",
+     32.157,
+     32.418
+    ],
+    [
+     "this",
+     32.455,
+     32.781
+    ],
+    [
+     "even",
+     32.818,
+     33.144
+    ],
+    [
+     "HAPPEN?!",
+     33.181,
+     33.706
+    ]
+   ]
+  },
+  {
+   "id": "01.8",
+   "take": "01",
+   "scene": "SC 01",
+   "idx": 8,
+   "speaker": "NARRATOR",
+   "raw": "[deadpan] Well. [pause] It all started with a family breakfast.",
+   "text": "Well. It all started with a family breakfast.",
+   "clip": [
+    33.536,
+    37.345
+   ],
+   "start": 33.886,
+   "end": 37.695,
+   "speechStart": 33.886,
+   "speechEnd": 37.695,
+   "words": [
+    [
+     "Well.",
+     33.886,
+     34.212
+    ],
+    [
+     "It",
+     34.93,
+     35.125
+    ],
+    [
+     "all",
+     35.162,
+     35.424
+    ],
+    [
+     "started",
+     35.46,
+     35.982
+    ],
+    [
+     "with",
+     36.019,
+     36.345
+    ],
+    [
+     "a",
+     36.382,
+     36.512
+    ],
+    [
+     "family",
+     36.549,
+     37.006
+    ],
+    [
+     "breakfast.",
+     37.043,
+     37.695
+    ]
+   ],
+   "beatAfter": 1.0
+  },
+  {
+   "id": "02.0",
+   "take": "02",
+   "scene": "SC 02",
+   "idx": 0,
+   "speaker": "NARRATOR",
+   "raw": "[storyteller] This is you. In real life, you're just a kid. [pause] But in Cube City... you're a legend.",
+   "text": "This is you. In real life, you're just a kid. But in Cube City... you're a legend.",
+   "clip": [
+    0.0,
+    6.705
+   ],
+   "start": 39.795,
+   "end": 46.5,
+   "speechStart": 39.795,
+   "speechEnd": 46.5,
+   "words": [
+    [
+     "This",
+     39.795,
+     40.121
+    ],
+    [
+     "is",
+     40.158,
+     40.353
+    ],
+    [
+     "you.",
+     40.39,
+     40.652
+    ],
+    [
+     "In",
+     40.918,
+     41.114
+    ],
+    [
+     "real",
+     41.15,
+     41.477
+    ],
+    [
+     "life,",
+     41.514,
+     41.84
+    ],
+    [
+     "you're",
+     41.992,
+     42.383
+    ],
+    [
+     "just",
+     42.42,
+     42.746
+    ],
+    [
+     "a",
+     42.783,
+     42.913
+    ],
+    [
+     "kid.",
+     42.95,
+     43.211
+    ],
+    [
+     "But",
+     43.929,
+     44.189
+    ],
+    [
+     "in",
+     44.226,
+     44.422
+    ],
+    [
+     "Cube",
+     44.459,
+     44.786
+    ],
+    [
+     "City...",
+     44.822,
+     45.148
+    ],
+    [
+     "you're",
+     45.447,
+     45.839
+    ],
+    [
+     "a",
+     45.876,
+     46.006
+    ],
+    [
+     "legend.",
+     46.043,
+     46.5
+    ]
+   ]
+  },
+  {
+   "id": "02.1",
+   "take": "02",
+   "scene": "SC 02",
+   "idx": 1,
+   "speaker": "NARRATOR",
+   "raw": "Level ninety-nine. The best base in Tycoon Valley. Two thousand wins in the arena.",
+   "text": "Level ninety-nine. The best base in Tycoon Valley. Two thousand wins in the arena.",
+   "clip": [
+    6.925,
+    13.017
+   ],
+   "start": 46.72,
+   "end": 52.812,
+   "speechStart": 46.72,
+   "speechEnd": 52.812,
+   "words": [
+    [
+     "Level",
+     46.72,
+     47.111
+    ],
+    [
+     "ninety-nine.",
+     47.148,
+     47.866
+    ],
+    [
+     "The",
+     48.132,
+     48.394
+    ],
+    [
+     "best",
+     48.431,
+     48.756
+    ],
+    [
+     "base",
+     48.793,
+     49.119
+    ],
+    [
+     "in",
+     49.156,
+     49.352
+    ],
+    [
+     "Tycoon",
+     49.389,
+     49.846
+    ],
+    [
+     "Valley.",
+     49.883,
+     50.339
+    ],
+    [
+     "Two",
+     50.605,
+     50.867
+    ],
+    [
+     "thousand",
+     50.904,
+     51.491
+    ],
+    [
+     "wins",
+     51.528,
+     51.853
+    ],
+    [
+     "in",
+     51.89,
+     52.086
+    ],
+    [
+     "the",
+     52.123,
+     52.384
+    ],
+    [
+     "arena.",
+     52.421,
+     52.812
+    ]
+   ]
+  },
+  {
+   "id": "02.2",
+   "take": "02",
+   "scene": "SC 02",
+   "idx": 2,
+   "speaker": "YOU",
+   "raw": "[proud] Two thousand and ONE.",
+   "text": "Two thousand and ONE.",
+   "clip": [
+    13.197,
+    14.716
+   ],
+   "start": 52.992,
+   "end": 54.511,
+   "speechStart": 52.992,
+   "speechEnd": 54.511,
+   "words": [
+    [
+     "Two",
+     52.992,
+     53.253
+    ],
+    [
+     "thousand",
+     53.29,
+     53.877
+    ],
+    [
+     "and",
+     53.914,
+     54.174
+    ],
+    [
+     "ONE.",
+     54.211,
+     54.511
+    ]
+   ]
+  },
+  {
+   "id": "02.3",
+   "take": "02",
+   "scene": "SC 02",
+   "idx": 3,
+   "speaker": "YOU",
+   "raw": "[showing off] Welcome to my castle. [pause] Lava pool. Trophy room. [pause] And this... is my throne.",
+   "text": "Welcome to my castle. Lava pool. Trophy room. And this... is my throne.",
+   "clip": [
+    14.936,
+    21.472
+   ],
+   "start": 54.731,
+   "end": 61.267,
+   "speechStart": 54.731,
+   "speechEnd": 61.267,
+   "words": [
+    [
+     "Welcome",
+     54.731,
+     55.253
+    ],
+    [
+     "to",
+     55.289,
+     55.485
+    ],
+    [
+     "my",
+     55.522,
+     55.718
+    ],
+    [
+     "castle.",
+     55.755,
+     56.212
+    ],
+    [
+     "Lava",
+     56.929,
+     57.255
+    ],
+    [
+     "pool.",
+     57.292,
+     57.618
+    ],
+    [
+     "Trophy",
+     57.885,
+     58.341
+    ],
+    [
+     "room.",
+     58.378,
+     58.705
+    ],
+    [
+     "And",
+     59.422,
+     59.683
+    ],
+    [
+     "this...",
+     59.72,
+     60.046
+    ],
+    [
+     "is",
+     60.346,
+     60.541
+    ],
+    [
+     "my",
+     60.578,
+     60.774
+    ],
+    [
+     "throne.",
+     60.81,
+     61.267
+    ]
+   ]
+  },
+  {
+   "id": "02.4",
+   "take": "02",
+   "scene": "SC 02",
+   "idx": 4,
+   "speaker": "NARRATOR",
+   "raw": "[deadpan] The throne was just a chair. [pause] A very expensive chair.",
+   "text": "The throne was just a chair. A very expensive chair.",
+   "clip": [
+    21.652,
+    25.991
+   ],
+   "start": 61.447,
+   "end": 65.786,
+   "speechStart": 61.447,
+   "speechEnd": 65.786,
+   "words": [
+    [
+     "The",
+     61.447,
+     61.708
+    ],
+    [
+     "throne",
+     61.745,
+     62.201
+    ],
+    [
+     "was",
+     62.238,
+     62.499
+    ],
+    [
+     "just",
+     62.536,
+     62.862
+    ],
+    [
+     "a",
+     62.899,
+     63.03
+    ],
+    [
+     "chair.",
+     63.066,
+     63.458
+    ],
+    [
+     "A",
+     64.175,
+     64.306
+    ],
+    [
+     "very",
+     64.342,
+     64.669
+    ],
+    [
+     "expensive",
+     64.706,
+     65.358
+    ],
+    [
+     "chair.",
+     65.395,
+     65.786
+    ]
+   ]
+  },
+  {
+   "id": "02.5",
+   "take": "02",
+   "scene": "SC 02",
+   "idx": 5,
+   "speaker": "NARRATOR",
+   "raw": "That's Noodle. Your best friend. You've never met in real life... [pause] but you've beaten four hundred bosses together.",
+   "text": "That's Noodle. Your best friend. You've never met in real life... but you've beaten four hundred bosses together.",
+   "clip": [
+    26.211,
+    34.86
+   ],
+   "start": 66.006,
+   "end": 74.655,
+   "speechStart": 66.006,
+   "speechEnd": 74.655,
+   "words": [
+    [
+     "That's",
+     66.006,
+     66.397
+    ],
+    [
+     "Noodle.",
+     66.434,
+     66.891
+    ],
+    [
+     "Your",
+     67.157,
+     67.484
+    ],
+    [
+     "best",
+     67.521,
+     67.847
+    ],
+    [
+     "friend.",
+     67.884,
+     68.341
+    ],
+    [
+     "You've",
+     68.607,
+     68.998
+    ],
+    [
+     "never",
+     69.035,
+     69.426
+    ],
+    [
+     "met",
+     69.463,
+     69.724
+    ],
+    [
+     "in",
+     69.761,
+     69.957
+    ],
+    [
+     "real",
+     69.994,
+     70.32
+    ],
+    [
+     "life...",
+     70.357,
+     70.682
+    ],
+    [
+     "but",
+     71.433,
+     71.694
+    ],
+    [
+     "you've",
+     71.731,
+     72.122
+    ],
+    [
+     "beaten",
+     72.159,
+     72.616
+    ],
+    [
+     "four",
+     72.653,
+     72.979
+    ],
+    [
+     "hundred",
+     73.016,
+     73.538
+    ],
+    [
+     "bosses",
+     73.575,
+     74.031
+    ],
+    [
+     "together.",
+     74.068,
+     74.655
+    ]
+   ]
+  },
+  {
+   "id": "02.6",
+   "take": "02",
+   "scene": "SC 02",
+   "idx": 6,
+   "speaker": "NOODLE",
+   "raw": "[excited] Bro! Bro, bro, bro! New update! [pause] The Block King is coming!",
+   "text": "Bro! Bro, bro, bro! New update! The Block King is coming!",
+   "clip": [
+    35.04,
+    40.171
+   ],
+   "start": 74.835,
+   "end": 79.966,
+   "speechStart": 74.835,
+   "speechEnd": 79.966,
+   "words": [
+    [
+     "Bro!",
+     74.835,
+     75.096
+    ],
+    [
+     "Bro,",
+     75.362,
+     75.623
+    ],
+    [
+     "bro,",
+     75.775,
+     76.036
+    ],
+    [
+     "bro!",
+     76.188,
+     76.449
+    ],
+    [
+     "New",
+     76.715,
+     76.976
+    ],
+    [
+     "update!",
+     77.013,
+     77.47
+    ],
+    [
+     "The",
+     78.187,
+     78.448
+    ],
+    [
+     "Block",
+     78.485,
+     78.876
+    ],
+    [
+     "King",
+     78.913,
+     79.239
+    ],
+    [
+     "is",
+     79.276,
+     79.472
+    ],
+    [
+     "coming!",
+     79.509,
+     79.966
+    ]
+   ]
+  },
+  {
+   "id": "02.7",
+   "take": "02",
+   "scene": "SC 02",
+   "idx": 7,
+   "speaker": "NARRATOR",
+   "raw": "And that's DarkBlade. Nobody knows who he really is. [pause] Nobody knows why he's always so angry.",
+   "text": "And that's DarkBlade. Nobody knows who he really is. Nobody knows why he's always so angry.",
+   "clip": [
+    40.351,
+    47.49
+   ],
+   "start": 80.146,
+   "end": 87.285,
+   "speechStart": 80.146,
+   "speechEnd": 87.285,
+   "words": [
+    [
+     "And",
+     80.146,
+     80.407
+    ],
+    [
+     "that's",
+     80.444,
+     80.836
+    ],
+    [
+     "DarkBlade.",
+     80.873,
+     81.524
+    ],
+    [
+     "Nobody",
+     81.791,
+     82.248
+    ],
+    [
+     "knows",
+     82.285,
+     82.676
+    ],
+    [
+     "who",
+     82.713,
+     82.973
+    ],
+    [
+     "he",
+     83.01,
+     83.206
+    ],
+    [
+     "really",
+     83.243,
+     83.7
+    ],
+    [
+     "is.",
+     83.737,
+     83.933
+    ],
+    [
+     "Nobody",
+     84.65,
+     85.106
+    ],
+    [
+     "knows",
+     85.143,
+     85.535
+    ],
+    [
+     "why",
+     85.572,
+     85.833
+    ],
+    [
+     "he's",
+     85.87,
+     86.13
+    ],
+    [
+     "always",
+     86.167,
+     86.624
+    ],
+    [
+     "so",
+     86.661,
+     86.857
+    ],
+    [
+     "angry.",
+     86.894,
+     87.285
+    ]
+   ]
+  },
+  {
+   "id": "02.8",
+   "take": "02",
+   "scene": "SC 02",
+   "idx": 8,
+   "speaker": "DARKBLADE",
+   "raw": "[edgy, slow] You got lucky last time, YOU. [pause] Enjoy your little castle.",
+   "text": "You got lucky last time, YOU. Enjoy your little castle.",
+   "clip": [
+    47.67,
+    52.294
+   ],
+   "start": 87.465,
+   "end": 92.089,
+   "speechStart": 87.465,
+   "speechEnd": 92.089,
+   "words": [
+    [
+     "You",
+     87.465,
+     87.726
+    ],
+    [
+     "got",
+     87.763,
+     88.023
+    ],
+    [
+     "lucky",
+     88.06,
+     88.452
+    ],
+    [
+     "last",
+     88.489,
+     88.815
+    ],
+    [
+     "time,",
+     88.852,
+     89.178
+    ],
+    [
+     "YOU.",
+     89.33,
+     89.63
+    ],
+    [
+     "Enjoy",
+     90.347,
+     90.738
+    ],
+    [
+     "your",
+     90.775,
+     91.102
+    ],
+    [
+     "little",
+     91.139,
+     91.595
+    ],
+    [
+     "castle.",
+     91.632,
+     92.089
+    ]
+   ]
+  },
+  {
+   "id": "02.9",
+   "take": "02",
+   "scene": "SC 02",
+   "idx": 9,
+   "speaker": "YOU",
+   "raw": "[smug] Enjoy your little losing streak.",
+   "text": "Enjoy your little losing streak.",
+   "clip": [
+    52.474,
+    54.709
+   ],
+   "start": 92.269,
+   "end": 94.504,
+   "speechStart": 92.269,
+   "speechEnd": 94.504,
+   "words": [
+    [
+     "Enjoy",
+     92.269,
+     92.66
+    ],
+    [
+     "your",
+     92.697,
+     93.023
+    ],
+    [
+     "little",
+     93.06,
+     93.517
+    ],
+    [
+     "losing",
+     93.554,
+     94.011
+    ],
+    [
+     "streak.",
+     94.048,
+     94.504
+    ]
+   ]
+  },
+  {
+   "id": "02.10",
+   "take": "02",
+   "scene": "SC 02",
+   "idx": 10,
+   "speaker": "NARRATOR",
+   "raw": "But on Saturday morning... real life happened.",
+   "text": "But on Saturday morning... real life happened.",
+   "clip": [
+    54.889,
+    58.178
+   ],
+   "start": 94.684,
+   "end": 97.973,
+   "speechStart": 94.684,
+   "speechEnd": 97.973,
+   "words": [
+    [
+     "But",
+     94.684,
+     94.945
+    ],
+    [
+     "on",
+     94.982,
+     95.178
+    ],
+    [
+     "Saturday",
+     95.215,
+     95.802
+    ],
+    [
+     "morning...",
+     95.839,
+     96.36
+    ],
+    [
+     "real",
+     96.659,
+     96.986
+    ],
+    [
+     "life",
+     97.023,
+     97.349
+    ],
+    [
+     "happened.",
+     97.386,
+     97.973
+    ]
+   ]
+  },
+  {
+   "id": "02.11",
+   "take": "02",
+   "scene": "SC 02",
+   "idx": 11,
+   "speaker": "NARRATOR",
+   "raw": "There's Dad. An accountant. He thinks every video game is called \"the Nintendo.\"",
+   "text": "There's Dad. An accountant. He thinks every video game is called \"the Nintendo.\"",
+   "clip": [
+    58.398,
+    64.192
+   ],
+   "start": 98.193,
+   "end": 103.987,
+   "speechStart": 98.193,
+   "speechEnd": 103.987,
+   "words": [
+    [
+     "There's",
+     98.193,
+     98.65
+    ],
+    [
+     "Dad.",
+     98.687,
+     98.947
+    ],
+    [
+     "An",
+     99.214,
+     99.41
+    ],
+    [
+     "accountant.",
+     99.447,
+     100.164
+    ],
+    [
+     "He",
+     100.431,
+     100.626
+    ],
+    [
+     "thinks",
+     100.663,
+     101.12
+    ],
+    [
+     "every",
+     101.156,
+     101.548
+    ],
+    [
+     "video",
+     101.585,
+     101.976
+    ],
+    [
+     "game",
+     102.013,
+     102.34
+    ],
+    [
+     "is",
+     102.377,
+     102.572
+    ],
+    [
+     "called",
+     102.609,
+     103.065
+    ],
+    [
+     "\"the",
+     103.102,
+     103.363
+    ],
+    [
+     "Nintendo.\"",
+     103.4,
+     103.987
+    ]
+   ]
+  },
+  {
+   "id": "02.12",
+   "take": "02",
+   "scene": "SC 02",
+   "idx": 12,
+   "speaker": "NARRATOR",
+   "raw": "There's Mom. A very quiet librarian. [pause] She says \"shh\" more than any other word.",
+   "text": "There's Mom. A very quiet librarian. She says \"shh\" more than any other word.",
+   "clip": [
+    64.412,
+    70.499
+   ],
+   "start": 104.207,
+   "end": 110.294,
+   "speechStart": 104.207,
+   "speechEnd": 110.294,
+   "words": [
+    [
+     "There's",
+     104.207,
+     104.664
+    ],
+    [
+     "Mom.",
+     104.701,
+     104.961
+    ],
+    [
+     "A",
+     105.228,
+     105.358
+    ],
+    [
+     "very",
+     105.395,
+     105.722
+    ],
+    [
+     "quiet",
+     105.758,
+     106.15
+    ],
+    [
+     "librarian.",
+     106.186,
+     106.839
+    ],
+    [
+     "She",
+     107.557,
+     107.817
+    ],
+    [
+     "says",
+     107.854,
+     108.181
+    ],
+    [
+     "\"shh\"",
+     108.218,
+     108.478
+    ],
+    [
+     "more",
+     108.515,
+     108.842
+    ],
+    [
+     "than",
+     108.879,
+     109.204
+    ],
+    [
+     "any",
+     109.241,
+     109.503
+    ],
+    [
+     "other",
+     109.539,
+     109.931
+    ],
+    [
+     "word.",
+     109.968,
+     110.294
+    ]
+   ]
+  },
+  {
+   "id": "02.13",
+   "take": "02",
+   "scene": "SC 02",
+   "idx": 13,
+   "speaker": "NARRATOR",
+   "raw": "And there's Granny. She knits. She bakes. [pause] And she has never lost an argument in her life.",
+   "text": "And there's Granny. She knits. She bakes. And she has never lost an argument in her life.",
+   "clip": [
+    70.719,
+    77.994
+   ],
+   "start": 110.514,
+   "end": 117.789,
+   "speechStart": 110.514,
+   "speechEnd": 117.789,
+   "words": [
+    [
+     "And",
+     110.514,
+     110.775
+    ],
+    [
+     "there's",
+     110.812,
+     111.268
+    ],
+    [
+     "Granny.",
+     111.305,
+     111.762
+    ],
+    [
+     "She",
+     112.029,
+     112.289
+    ],
+    [
+     "knits.",
+     112.326,
+     112.717
+    ],
+    [
+     "She",
+     112.984,
+     113.245
+    ],
+    [
+     "bakes.",
+     113.282,
+     113.673
+    ],
+    [
+     "And",
+     114.391,
+     114.652
+    ],
+    [
+     "she",
+     114.689,
+     114.949
+    ],
+    [
+     "has",
+     114.986,
+     115.248
+    ],
+    [
+     "never",
+     115.285,
+     115.676
+    ],
+    [
+     "lost",
+     115.713,
+     116.039
+    ],
+    [
+     "an",
+     116.076,
+     116.271
+    ],
+    [
+     "argument",
+     116.308,
+     116.895
+    ],
+    [
+     "in",
+     116.932,
+     117.128
+    ],
+    [
+     "her",
+     117.165,
+     117.426
+    ],
+    [
+     "life.",
+     117.463,
+     117.789
+    ]
+   ]
+  },
+  {
+   "id": "02.14",
+   "take": "02",
+   "scene": "SC 02",
+   "idx": 14,
+   "speaker": "DAD",
+   "raw": "[cheerful] Family meeting! [pause] Your mother and I have noticed you spend eleven hours a day in... the Nintendo.",
+   "text": "Family meeting! Your mother and I have noticed you spend eleven hours a day in... the Nintendo.",
+   "clip": [
+    78.174,
+    85.643
+   ],
+   "start": 117.969,
+   "end": 125.438,
+   "speechStart": 117.969,
+   "speechEnd": 125.438,
+   "words": [
+    [
+     "Family",
+     117.969,
+     118.426
+    ],
+    [
+     "meeting!",
+     118.463,
+     118.984
+    ],
+    [
+     "Your",
+     119.702,
+     120.028
+    ],
+    [
+     "mother",
+     120.065,
+     120.522
+    ],
+    [
+     "and",
+     120.559,
+     120.819
+    ],
+    [
+     "I",
+     120.856,
+     120.987
+    ],
+    [
+     "have",
+     121.023,
+     121.35
+    ],
+    [
+     "noticed",
+     121.387,
+     121.908
+    ],
+    [
+     "you",
+     121.945,
+     122.207
+    ],
+    [
+     "spend",
+     122.244,
+     122.635
+    ],
+    [
+     "eleven",
+     122.672,
+     123.128
+    ],
+    [
+     "hours",
+     123.165,
+     123.556
+    ],
+    [
+     "a",
+     123.593,
+     123.724
+    ],
+    [
+     "day",
+     123.761,
+     124.021
+    ],
+    [
+     "in...",
+     124.058,
+     124.254
+    ],
+    [
+     "the",
+     124.554,
+     124.814
+    ],
+    [
+     "Nintendo.",
+     124.851,
+     125.438
+    ]
+   ]
+  },
+  {
+   "id": "02.15",
+   "take": "02",
+   "scene": "SC 02",
+   "idx": 15,
+   "speaker": "YOU",
+   "raw": "[annoyed] It's not a Nintendo, Dad. It's Cube City.",
+   "text": "It's not a Nintendo, Dad. It's Cube City.",
+   "clip": [
+    85.823,
+    88.839
+   ],
+   "start": 125.618,
+   "end": 128.634,
+   "speechStart": 125.618,
+   "speechEnd": 128.634,
+   "words": [
+    [
+     "It's",
+     125.618,
+     125.879
+    ],
+    [
+     "not",
+     125.916,
+     126.176
+    ],
+    [
+     "a",
+     126.213,
+     126.345
+    ],
+    [
+     "Nintendo,",
+     126.381,
+     126.968
+    ],
+    [
+     "Dad.",
+     127.119,
+     127.381
+    ],
+    [
+     "It's",
+     127.647,
+     127.908
+    ],
+    [
+     "Cube",
+     127.945,
+     128.272
+    ],
+    [
+     "City.",
+     128.308,
+     128.634
+    ]
+   ]
+  },
+  {
+   "id": "02.16",
+   "take": "02",
+   "scene": "SC 02",
+   "idx": 16,
+   "speaker": "MOM",
+   "raw": "[calm, firm] So we made a decision. [pause] Tonight is Family Game Night.",
+   "text": "So we made a decision. Tonight is Family Game Night.",
+   "clip": [
+    89.019,
+    93.358
+   ],
+   "start": 128.814,
+   "end": 133.153,
+   "speechStart": 128.814,
+   "speechEnd": 133.153,
+   "words": [
+    [
+     "So",
+     128.814,
+     129.01
+    ],
+    [
+     "we",
+     129.047,
+     129.242
+    ],
+    [
+     "made",
+     129.279,
+     129.605
+    ],
+    [
+     "a",
+     129.642,
+     129.773
+    ],
+    [
+     "decision.",
+     129.809,
+     130.397
+    ],
+    [
+     "Tonight",
+     131.114,
+     131.636
+    ],
+    [
+     "is",
+     131.673,
+     131.868
+    ],
+    [
+     "Family",
+     131.905,
+     132.362
+    ],
+    [
+     "Game",
+     132.399,
+     132.725
+    ],
+    [
+     "Night.",
+     132.762,
+     133.153
+    ]
+   ]
+  },
+  {
+   "id": "02.17",
+   "take": "02",
+   "scene": "SC 02",
+   "idx": 17,
+   "speaker": "YOU",
+   "raw": "[relieved] Oh. Board games. Okay, that's fine\u2014",
+   "text": "Oh. Board games. Okay, that's fine\u2014",
+   "clip": [
+    93.538,
+    96.319
+   ],
+   "start": 133.333,
+   "end": 136.114,
+   "speechStart": 133.333,
+   "speechEnd": 136.114,
+   "words": [
+    [
+     "Oh.",
+     133.333,
+     133.529
+    ],
+    [
+     "Board",
+     133.795,
+     134.187
+    ],
+    [
+     "games.",
+     134.224,
+     134.615
+    ],
+    [
+     "Okay,",
+     134.881,
+     135.208
+    ],
+    [
+     "that's",
+     135.359,
+     135.75
+    ],
+    [
+     "fine\u2014",
+     135.787,
+     136.114
+    ]
+   ]
+  },
+  {
+   "id": "02.18",
+   "take": "02",
+   "scene": "SC 02",
+   "idx": 18,
+   "speaker": "GRANDMA",
+   "raw": "[sweetly] No, dear. [pause] We're joining YOUR game.",
+   "text": "No, dear. We're joining YOUR game.",
+   "clip": [
+    96.499,
+    99.55
+   ],
+   "start": 136.294,
+   "end": 139.345,
+   "speechStart": 136.294,
+   "speechEnd": 139.345,
+   "words": [
+    [
+     "No,",
+     136.294,
+     136.49
+    ],
+    [
+     "dear.",
+     136.642,
+     136.967
+    ],
+    [
+     "We're",
+     137.685,
+     138.011
+    ],
+    [
+     "joining",
+     138.048,
+     138.57
+    ],
+    [
+     "YOUR",
+     138.607,
+     138.982
+    ],
+    [
+     "game.",
+     139.019,
+     139.345
+    ]
+   ],
+   "beatAfter": 1.0
+  },
+  {
+   "id": "02.19",
+   "take": "02",
+   "scene": "SC 02",
+   "idx": 19,
+   "speaker": "YOU",
+   "raw": "[horrified] You're joining... my SERVER?!",
+   "text": "You're joining... my SERVER?!",
+   "clip": [
+    100.73,
+    102.737
+   ],
+   "start": 140.525,
+   "end": 142.532,
+   "speechStart": 140.525,
+   "speechEnd": 142.532,
+   "words": [
+    [
+     "You're",
+     140.525,
+     140.916
+    ],
+    [
+     "joining...",
+     140.953,
+     141.475
+    ],
+    [
+     "my",
+     141.775,
+     141.97
+    ],
+    [
+     "SERVER?!",
+     142.007,
+     142.532
+    ]
+   ]
+  },
+  {
+   "id": "02.20",
+   "take": "02",
+   "scene": "SC 02",
+   "idx": 20,
+   "speaker": "NARRATOR",
+   "raw": "[deadpan] It was the scariest sentence you had ever heard.",
+   "text": "It was the scariest sentence you had ever heard.",
+   "clip": [
+    102.917,
+    106.343
+   ],
+   "start": 142.712,
+   "end": 146.138,
+   "speechStart": 142.712,
+   "speechEnd": 146.138,
+   "words": [
+    [
+     "It",
+     142.712,
+     142.908
+    ],
+    [
+     "was",
+     142.945,
+     143.206
+    ],
+    [
+     "the",
+     143.243,
+     143.503
+    ],
+    [
+     "scariest",
+     143.54,
+     144.127
+    ],
+    [
+     "sentence",
+     144.164,
+     144.751
+    ],
+    [
+     "you",
+     144.788,
+     145.049
+    ],
+    [
+     "had",
+     145.086,
+     145.347
+    ],
+    [
+     "ever",
+     145.384,
+     145.71
+    ],
+    [
+     "heard.",
+     145.747,
+     146.138
+    ]
+   ]
+  },
+  {
+   "id": "03.0",
+   "take": "03",
+   "scene": "SC 03",
+   "idx": 0,
+   "speaker": "NARRATOR",
+   "raw": "That evening, the living room turned into a gaming setup. [pause] Kind of.",
+   "text": "That evening, the living room turned into a gaming setup. Kind of.",
+   "clip": [
+    0.0,
+    5.376
+   ],
+   "start": 147.238,
+   "end": 152.614,
+   "speechStart": 147.238,
+   "speechEnd": 152.614,
+   "words": [
+    [
+     "That",
+     147.238,
+     147.564
+    ],
+    [
+     "evening,",
+     147.601,
+     148.123
+    ],
+    [
+     "the",
+     148.274,
+     148.535
+    ],
+    [
+     "living",
+     148.572,
+     149.029
+    ],
+    [
+     "room",
+     149.066,
+     149.392
+    ],
+    [
+     "turned",
+     149.429,
+     149.886
+    ],
+    [
+     "into",
+     149.923,
+     150.249
+    ],
+    [
+     "a",
+     150.286,
+     150.416
+    ],
+    [
+     "gaming",
+     150.453,
+     150.909
+    ],
+    [
+     "setup.",
+     150.947,
+     151.338
+    ],
+    [
+     "Kind",
+     152.055,
+     152.382
+    ],
+    [
+     "of.",
+     152.419,
+     152.614
+    ]
+   ]
+  },
+  {
+   "id": "03.1",
+   "take": "03",
+   "scene": "SC 03",
+   "idx": 1,
+   "speaker": "DAD",
+   "raw": "[squinting] Okay. Username. [pause] D... A... D... [pause] Where's the B?",
+   "text": "Okay. Username. D... A... D... Where's the B?",
+   "clip": [
+    5.556,
+    10.174
+   ],
+   "start": 152.794,
+   "end": 157.412,
+   "speechStart": 152.794,
+   "speechEnd": 157.412,
+   "words": [
+    [
+     "Okay.",
+     152.794,
+     153.12
+    ],
+    [
+     "Username.",
+     153.387,
+     153.974
+    ],
+    [
+     "D...",
+     154.691,
+     154.842
+    ],
+    [
+     "A...",
+     155.141,
+     155.291
+    ],
+    [
+     "D...",
+     155.59,
+     155.74
+    ],
+    [
+     "Where's",
+     156.491,
+     156.946
+    ],
+    [
+     "the",
+     156.983,
+     157.245
+    ],
+    [
+     "B?",
+     157.282,
+     157.412
+    ]
+   ]
+  },
+  {
+   "id": "03.2",
+   "take": "03",
+   "scene": "SC 03",
+   "idx": 2,
+   "speaker": "YOU",
+   "raw": "[impatient] Dad, it's RIGHT there!",
+   "text": "Dad, it's RIGHT there!",
+   "clip": [
+    10.354,
+    11.943
+   ],
+   "start": 157.592,
+   "end": 159.181,
+   "speechStart": 157.592,
+   "speechEnd": 159.181,
+   "words": [
+    [
+     "Dad,",
+     157.592,
+     157.853
+    ],
+    [
+     "it's",
+     158.004,
+     158.265
+    ],
+    [
+     "RIGHT",
+     158.302,
+     158.752
+    ],
+    [
+     "there!",
+     158.789,
+     159.181
+    ]
+   ]
+  },
+  {
+   "id": "03.3",
+   "take": "03",
+   "scene": "SC 03",
+   "idx": 3,
+   "speaker": "DAD",
+   "raw": "[proud] Got it! \"DadBod nineteen seventy-eight.\"",
+   "text": "Got it! \"DadBod nineteen seventy-eight.\"",
+   "clip": [
+    12.123,
+    14.849
+   ],
+   "start": 159.361,
+   "end": 162.087,
+   "speechStart": 159.361,
+   "speechEnd": 162.087,
+   "words": [
+    [
+     "Got",
+     159.361,
+     159.622
+    ],
+    [
+     "it!",
+     159.659,
+     159.855
+    ],
+    [
+     "\"DadBod",
+     160.121,
+     160.578
+    ],
+    [
+     "nineteen",
+     160.615,
+     161.202
+    ],
+    [
+     "seventy-eight.\"",
+     161.239,
+     162.087
+    ]
+   ]
+  },
+  {
+   "id": "03.4",
+   "take": "03",
+   "scene": "SC 03",
+   "idx": 4,
+   "speaker": "YOU",
+   "raw": "[groans] Why would you tell everyone your age?!",
+   "text": "Why would you tell everyone your age?!",
+   "clip": [
+    15.029,
+    17.664
+   ],
+   "start": 162.267,
+   "end": 164.902,
+   "speechStart": 162.267,
+   "speechEnd": 164.902,
+   "words": [
+    [
+     "Why",
+     162.267,
+     162.528
+    ],
+    [
+     "would",
+     162.565,
+     162.957
+    ],
+    [
+     "you",
+     162.994,
+     163.254
+    ],
+    [
+     "tell",
+     163.291,
+     163.617
+    ],
+    [
+     "everyone",
+     163.654,
+     164.241
+    ],
+    [
+     "your",
+     164.278,
+     164.604
+    ],
+    [
+     "age?!",
+     164.641,
+     164.902
+    ]
+   ]
+  },
+  {
+   "id": "03.5",
+   "take": "03",
+   "scene": "SC 03",
+   "idx": 5,
+   "speaker": "DAD",
+   "raw": "[proudly] And for the password... [pause] \"password.\"",
+   "text": "And for the password... \"password.\"",
+   "clip": [
+    17.844,
+    20.662
+   ],
+   "start": 165.082,
+   "end": 167.9,
+   "speechStart": 165.082,
+   "speechEnd": 167.9,
+   "words": [
+    [
+     "And",
+     165.082,
+     165.343
+    ],
+    [
+     "for",
+     165.38,
+     165.64
+    ],
+    [
+     "the",
+     165.677,
+     165.939
+    ],
+    [
+     "password...",
+     165.976,
+     166.563
+    ],
+    [
+     "\"password.\"",
+     167.313,
+     167.9
+    ]
+   ],
+   "beatAfter": 1.5
+  },
+  {
+   "id": "03.6",
+   "take": "03",
+   "scene": "SC 03",
+   "idx": 6,
+   "speaker": "YOU",
+   "raw": "[facepalm] Dad. NO.",
+   "text": "Dad. NO.",
+   "clip": [
+    22.342,
+    23.095
+   ],
+   "start": 169.58,
+   "end": 170.333,
+   "speechStart": 169.58,
+   "speechEnd": 170.333,
+   "words": [
+    [
+     "Dad.",
+     169.58,
+     169.841
+    ],
+    [
+     "NO.",
+     170.107,
+     170.333
+    ]
+   ]
+  },
+  {
+   "id": "03.7",
+   "take": "03",
+   "scene": "SC 03",
+   "idx": 7,
+   "speaker": "NARRATOR",
+   "raw": "Then Dad went to the avatar shop. [pause] And he clicked... everything.",
+   "text": "Then Dad went to the avatar shop. And he clicked... everything.",
+   "clip": [
+    23.275,
+    28.435
+   ],
+   "start": 170.513,
+   "end": 175.673,
+   "speechStart": 170.513,
+   "speechEnd": 175.673,
+   "words": [
+    [
+     "Then",
+     170.513,
+     170.839
+    ],
+    [
+     "Dad",
+     170.876,
+     171.137
+    ],
+    [
+     "went",
+     171.174,
+     171.5
+    ],
+    [
+     "to",
+     171.537,
+     171.732
+    ],
+    [
+     "the",
+     171.769,
+     172.031
+    ],
+    [
+     "avatar",
+     172.068,
+     172.524
+    ],
+    [
+     "shop.",
+     172.561,
+     172.887
+    ],
+    [
+     "And",
+     173.604,
+     173.865
+    ],
+    [
+     "he",
+     173.902,
+     174.098
+    ],
+    [
+     "clicked...",
+     174.135,
+     174.656
+    ],
+    [
+     "everything.",
+     174.956,
+     175.673
+    ]
+   ],
+   "beatAfter": 1.5
+  },
+  {
+   "id": "03.8",
+   "take": "03",
+   "scene": "SC 03",
+   "idx": 8,
+   "speaker": "DAD",
+   "raw": "[confused] Son... why am I a hot dog?",
+   "text": "Son... why am I a hot dog?",
+   "clip": [
+    30.115,
+    32.099
+   ],
+   "start": 177.353,
+   "end": 179.337,
+   "speechStart": 177.353,
+   "speechEnd": 179.337,
+   "words": [
+    [
+     "Son...",
+     177.353,
+     177.614
+    ],
+    [
+     "why",
+     177.913,
+     178.174
+    ],
+    [
+     "am",
+     178.211,
+     178.407
+    ],
+    [
+     "I",
+     178.444,
+     178.574
+    ],
+    [
+     "a",
+     178.611,
+     178.741
+    ],
+    [
+     "hot",
+     178.778,
+     179.039
+    ],
+    [
+     "dog?",
+     179.076,
+     179.337
+    ]
+   ],
+   "beatAfter": 0.5
+  },
+  {
+   "id": "03.9",
+   "take": "03",
+   "scene": "SC 03",
+   "idx": 9,
+   "speaker": "YOU",
+   "raw": "[deadpan] I don't know, Dad. You did that.",
+   "text": "I don't know, Dad. You did that.",
+   "clip": [
+    32.779,
+    35.237
+   ],
+   "start": 180.017,
+   "end": 182.475,
+   "speechStart": 180.017,
+   "speechEnd": 182.475,
+   "words": [
+    [
+     "I",
+     180.017,
+     180.147
+    ],
+    [
+     "don't",
+     180.184,
+     180.511
+    ],
+    [
+     "know,",
+     180.548,
+     180.874
+    ],
+    [
+     "Dad.",
+     181.026,
+     181.286
+    ],
+    [
+     "You",
+     181.553,
+     181.814
+    ],
+    [
+     "did",
+     181.851,
+     182.111
+    ],
+    [
+     "that.",
+     182.148,
+     182.475
+    ]
+   ]
+  },
+  {
+   "id": "03.10",
+   "take": "03",
+   "scene": "SC 03",
+   "idx": 10,
+   "speaker": "DAD",
+   "raw": "[warming up] You know what? [pause] I like it. I'm keeping it.",
+   "text": "You know what? I like it. I'm keeping it.",
+   "clip": [
+    35.417,
+    39.101
+   ],
+   "start": 182.655,
+   "end": 186.339,
+   "speechStart": 182.655,
+   "speechEnd": 186.339,
+   "words": [
+    [
+     "You",
+     182.655,
+     182.916
+    ],
+    [
+     "know",
+     182.953,
+     183.279
+    ],
+    [
+     "what?",
+     183.316,
+     183.642
+    ],
+    [
+     "I",
+     184.36,
+     184.49
+    ],
+    [
+     "like",
+     184.527,
+     184.853
+    ],
+    [
+     "it.",
+     184.89,
+     185.085
+    ],
+    [
+     "I'm",
+     185.352,
+     185.548
+    ],
+    [
+     "keeping",
+     185.585,
+     186.106
+    ],
+    [
+     "it.",
+     186.143,
+     186.339
+    ]
+   ]
+  },
+  {
+   "id": "03.11",
+   "take": "03",
+   "scene": "SC 03",
+   "idx": 11,
+   "speaker": "MOM",
+   "raw": "[calm] I'm not really a gamer, sweetie. [pause] I'll just watch.",
+   "text": "I'm not really a gamer, sweetie. I'll just watch.",
+   "clip": [
+    39.281,
+    43.307
+   ],
+   "start": 186.519,
+   "end": 190.545,
+   "speechStart": 186.519,
+   "speechEnd": 190.545,
+   "words": [
+    [
+     "I'm",
+     186.519,
+     186.715
+    ],
+    [
+     "not",
+     186.752,
+     187.013
+    ],
+    [
+     "really",
+     187.05,
+     187.506
+    ],
+    [
+     "a",
+     187.543,
+     187.674
+    ],
+    [
+     "gamer,",
+     187.71,
+     188.102
+    ],
+    [
+     "sweetie.",
+     188.253,
+     188.776
+    ],
+    [
+     "I'll",
+     189.493,
+     189.754
+    ],
+    [
+     "just",
+     189.791,
+     190.116
+    ],
+    [
+     "watch.",
+     190.153,
+     190.545
+    ]
+   ]
+  },
+  {
+   "id": "03.12",
+   "take": "03",
+   "scene": "SC 03",
+   "idx": 12,
+   "speaker": "YOU",
+   "raw": "[confused] Mom... you're completely grey.",
+   "text": "Mom... you're completely grey.",
+   "clip": [
+    43.487,
+    45.556
+   ],
+   "start": 190.725,
+   "end": 192.794,
+   "speechStart": 190.725,
+   "speechEnd": 192.794,
+   "words": [
+    [
+     "Mom...",
+     190.725,
+     190.986
+    ],
+    [
+     "you're",
+     191.285,
+     191.677
+    ],
+    [
+     "completely",
+     191.713,
+     192.431
+    ],
+    [
+     "grey.",
+     192.468,
+     192.794
+    ]
+   ]
+  },
+  {
+   "id": "03.13",
+   "take": "03",
+   "scene": "SC 03",
+   "idx": 13,
+   "speaker": "MOM",
+   "raw": "[calm] Grey is classy, sweetie.",
+   "text": "Grey is classy, sweetie.",
+   "clip": [
+    45.736,
+    47.462
+   ],
+   "start": 192.974,
+   "end": 194.7,
+   "speechStart": 192.974,
+   "speechEnd": 194.7,
+   "words": [
+    [
+     "Grey",
+     192.974,
+     193.3
+    ],
+    [
+     "is",
+     193.337,
+     193.532
+    ],
+    [
+     "classy,",
+     193.569,
+     194.026
+    ],
+    [
+     "sweetie.",
+     194.178,
+     194.7
+    ]
+   ]
+  },
+  {
+   "id": "03.14",
+   "take": "03",
+   "scene": "SC 03",
+   "idx": 14,
+   "speaker": "GRANDMA",
+   "raw": "[loudly, into the phone] HELLO, PHONE. [pause] MAKE ME. A GAME. PERSON.",
+   "text": "HELLO, PHONE. MAKE ME. A GAME. PERSON.",
+   "clip": [
+    47.642,
+    51.649
+   ],
+   "start": 194.88,
+   "end": 198.887,
+   "speechStart": 194.88,
+   "speechEnd": 198.887,
+   "words": [
+    [
+     "HELLO,",
+     194.88,
+     195.33
+    ],
+    [
+     "PHONE.",
+     195.482,
+     195.932
+    ],
+    [
+     "MAKE",
+     196.65,
+     197.024
+    ],
+    [
+     "ME.",
+     197.061,
+     197.287
+    ],
+    [
+     "A",
+     197.553,
+     197.684
+    ],
+    [
+     "GAME.",
+     197.72,
+     198.095
+    ],
+    [
+     "PERSON.",
+     198.362,
+     198.887
+    ]
+   ]
+  },
+  {
+   "id": "03.15",
+   "take": "03",
+   "scene": "SC 03",
+   "idx": 15,
+   "speaker": "GRANDMA",
+   "raw": "[confused] Which button is \"go\"? [pause] Oh! I bought something.",
+   "text": "Which button is \"go\"? Oh! I bought something.",
+   "clip": [
+    51.869,
+    55.712
+   ],
+   "start": 199.107,
+   "end": 202.95,
+   "speechStart": 199.107,
+   "speechEnd": 202.95,
+   "words": [
+    [
+     "Which",
+     199.107,
+     199.498
+    ],
+    [
+     "button",
+     199.535,
+     199.992
+    ],
+    [
+     "is",
+     200.029,
+     200.225
+    ],
+    [
+     "\"go\"?",
+     200.262,
+     200.457
+    ],
+    [
+     "Oh!",
+     201.174,
+     201.37
+    ],
+    [
+     "I",
+     201.637,
+     201.767
+    ],
+    [
+     "bought",
+     201.804,
+     202.261
+    ],
+    [
+     "something.",
+     202.298,
+     202.95
+    ]
+   ]
+  },
+  {
+   "id": "03.16",
+   "take": "03",
+   "scene": "SC 03",
+   "idx": 16,
+   "speaker": "NARRATOR",
+   "raw": "Granny pressed buttons at random... and somehow ended up looking like a billionaire.",
+   "text": "Granny pressed buttons at random... and somehow ended up looking like a billionaire.",
+   "clip": [
+    55.892,
+    61.881
+   ],
+   "start": 203.13,
+   "end": 209.119,
+   "speechStart": 203.13,
+   "speechEnd": 209.119,
+   "words": [
+    [
+     "Granny",
+     203.13,
+     203.587
+    ],
+    [
+     "pressed",
+     203.624,
+     204.145
+    ],
+    [
+     "buttons",
+     204.182,
+     204.704
+    ],
+    [
+     "at",
+     204.741,
+     204.936
+    ],
+    [
+     "random...",
+     204.973,
+     205.43
+    ],
+    [
+     "and",
+     205.729,
+     205.99
+    ],
+    [
+     "somehow",
+     206.027,
+     206.549
+    ],
+    [
+     "ended",
+     206.586,
+     206.977
+    ],
+    [
+     "up",
+     207.014,
+     207.21
+    ],
+    [
+     "looking",
+     207.247,
+     207.769
+    ],
+    [
+     "like",
+     207.806,
+     208.132
+    ],
+    [
+     "a",
+     208.169,
+     208.299
+    ],
+    [
+     "billionaire.",
+     208.336,
+     209.119
+    ]
+   ]
+  },
+  {
+   "id": "03.17",
+   "take": "03",
+   "scene": "SC 03",
+   "idx": 17,
+   "speaker": "YOU",
+   "raw": "[defeated] Okay. Rule number one. [pause] Do NOT talk to my friends.",
+   "text": "Okay. Rule number one. Do NOT talk to my friends.",
+   "clip": [
+    62.061,
+    66.409
+   ],
+   "start": 209.299,
+   "end": 213.647,
+   "speechStart": 209.299,
+   "speechEnd": 213.647,
+   "words": [
+    [
+     "Okay.",
+     209.299,
+     209.625
+    ],
+    [
+     "Rule",
+     209.892,
+     210.217
+    ],
+    [
+     "number",
+     210.254,
+     210.711
+    ],
+    [
+     "one.",
+     210.748,
+     211.01
+    ],
+    [
+     "Do",
+     211.727,
+     211.922
+    ],
+    [
+     "NOT",
+     211.959,
+     212.259
+    ],
+    [
+     "talk",
+     212.296,
+     212.622
+    ],
+    [
+     "to",
+     212.659,
+     212.855
+    ],
+    [
+     "my",
+     212.892,
+     213.087
+    ],
+    [
+     "friends.",
+     213.124,
+     213.647
+    ]
+   ]
+  },
+  {
+   "id": "03.18",
+   "take": "03",
+   "scene": "SC 03",
+   "idx": 18,
+   "speaker": "DAD",
+   "raw": "[cheerfully] Got it, champ!",
+   "text": "Got it, champ!",
+   "clip": [
+    66.589,
+    67.625
+   ],
+   "start": 213.827,
+   "end": 214.863,
+   "speechStart": 213.827,
+   "speechEnd": 214.863,
+   "words": [
+    [
+     "Got",
+     213.827,
+     214.088
+    ],
+    [
+     "it,",
+     214.125,
+     214.321
+    ],
+    [
+     "champ!",
+     214.472,
+     214.863
+    ]
+   ]
+  },
+  {
+   "id": "04.0",
+   "take": "04",
+   "scene": "SC 04",
+   "idx": 0,
+   "speaker": "SYSTEM",
+   "raw": "[cheerful] DadBod1978 joined the server. [pause] MOM_OFFICIAL joined the server. [pause] GrannyGoodies joined the server.",
+   "text": "DadBod1978 joined the server. MOM_OFFICIAL joined the server. GrannyGoodies joined the server.",
+   "clip": [
+    0.0,
+    7.82
+   ],
+   "start": 215.963,
+   "end": 223.783,
+   "speechStart": 215.963,
+   "speechEnd": 223.783,
+   "words": [
+    [
+     "DadBod1978",
+     215.963,
+     216.68
+    ],
+    [
+     "joined",
+     216.717,
+     217.174
+    ],
+    [
+     "the",
+     217.211,
+     217.472
+    ],
+    [
+     "server.",
+     217.509,
+     217.965
+    ],
+    [
+     "MOM_OFFICIAL",
+     218.683,
+     219.583
+    ],
+    [
+     "joined",
+     219.62,
+     220.077
+    ],
+    [
+     "the",
+     220.114,
+     220.375
+    ],
+    [
+     "server.",
+     220.411,
+     220.868
+    ],
+    [
+     "GrannyGoodies",
+     221.586,
+     222.498
+    ],
+    [
+     "joined",
+     222.535,
+     222.992
+    ],
+    [
+     "the",
+     223.029,
+     223.29
+    ],
+    [
+     "server.",
+     223.327,
+     223.783
+    ]
+   ]
+  },
+  {
+   "id": "04.1",
+   "take": "04",
+   "scene": "SC 04",
+   "idx": 1,
+   "speaker": "NARRATOR",
+   "raw": "The whole server saw it. [pause] Every. Single. Name.",
+   "text": "The whole server saw it. Every. Single. Name.",
+   "clip": [
+    8.0,
+    12.138
+   ],
+   "start": 223.963,
+   "end": 228.101,
+   "speechStart": 223.963,
+   "speechEnd": 228.101,
+   "words": [
+    [
+     "The",
+     223.963,
+     224.224
+    ],
+    [
+     "whole",
+     224.261,
+     224.653
+    ],
+    [
+     "server",
+     224.69,
+     225.145
+    ],
+    [
+     "saw",
+     225.182,
+     225.444
+    ],
+    [
+     "it.",
+     225.481,
+     225.676
+    ],
+    [
+     "Every.",
+     226.393,
+     226.785
+    ],
+    [
+     "Single.",
+     227.052,
+     227.508
+    ],
+    [
+     "Name.",
+     227.774,
+     228.101
+    ]
+   ]
+  },
+  {
+   "id": "04.2",
+   "take": "04",
+   "scene": "SC 04",
+   "idx": 2,
+   "speaker": "DAD",
+   "raw": "[loud, typing slowly] HELLO SON. [pause] IT IS DAD. [pause] LOVE, DAD.",
+   "text": "HELLO SON. IT IS DAD. LOVE, DAD.",
+   "clip": [
+    12.318,
+    16.132
+   ],
+   "start": 228.281,
+   "end": 232.095,
+   "speechStart": 228.281,
+   "speechEnd": 232.095,
+   "words": [
+    [
+     "HELLO",
+     228.281,
+     228.731
+    ],
+    [
+     "SON.",
+     228.768,
+     229.068
+    ],
+    [
+     "IT",
+     229.786,
+     229.981
+    ],
+    [
+     "IS",
+     230.018,
+     230.214
+    ],
+    [
+     "DAD.",
+     230.251,
+     230.551
+    ],
+    [
+     "LOVE,",
+     231.268,
+     231.643
+    ],
+    [
+     "DAD.",
+     231.795,
+     232.095
+    ]
+   ],
+   "beatAfter": 0.8
+  },
+  {
+   "id": "04.3",
+   "take": "04",
+   "scene": "SC 04",
+   "idx": 3,
+   "speaker": "NOODLE",
+   "raw": "[laughing] Bro... is that your DAD?!",
+   "text": "Bro... is that your DAD?!",
+   "clip": [
+    17.112,
+    18.931
+   ],
+   "start": 233.075,
+   "end": 234.894,
+   "speechStart": 233.075,
+   "speechEnd": 234.894,
+   "words": [
+    [
+     "Bro...",
+     233.075,
+     233.336
+    ],
+    [
+     "is",
+     233.635,
+     233.831
+    ],
+    [
+     "that",
+     233.868,
+     234.194
+    ],
+    [
+     "your",
+     234.231,
+     234.557
+    ],
+    [
+     "DAD?!",
+     234.594,
+     234.894
+    ]
+   ]
+  },
+  {
+   "id": "04.4",
+   "take": "04",
+   "scene": "SC 04",
+   "idx": 4,
+   "speaker": "YOU",
+   "raw": "[whispering, panicked] Rule number one, Dad! RULE NUMBER ONE!",
+   "text": "Rule number one, Dad! RULE NUMBER ONE!",
+   "clip": [
+    19.111,
+    22.182
+   ],
+   "start": 235.074,
+   "end": 238.145,
+   "speechStart": 235.074,
+   "speechEnd": 238.145,
+   "words": [
+    [
+     "Rule",
+     235.074,
+     235.4
+    ],
+    [
+     "number",
+     235.437,
+     235.894
+    ],
+    [
+     "one,",
+     235.931,
+     236.192
+    ],
+    [
+     "Dad!",
+     236.343,
+     236.604
+    ],
+    [
+     "RULE",
+     236.871,
+     237.245
+    ],
+    [
+     "NUMBER",
+     237.282,
+     237.808
+    ],
+    [
+     "ONE!",
+     237.845,
+     238.145
+    ]
+   ]
+  },
+  {
+   "id": "04.5",
+   "take": "04",
+   "scene": "SC 04",
+   "idx": 5,
+   "speaker": "NARRATOR",
+   "raw": "Then Mom found the emote button.",
+   "text": "Then Mom found the emote button.",
+   "clip": [
+    22.362,
+    24.634
+   ],
+   "start": 238.325,
+   "end": 240.597,
+   "speechStart": 238.325,
+   "speechEnd": 240.597,
+   "words": [
+    [
+     "Then",
+     238.325,
+     238.651
+    ],
+    [
+     "Mom",
+     238.688,
+     238.949
+    ],
+    [
+     "found",
+     238.986,
+     239.377
+    ],
+    [
+     "the",
+     239.414,
+     239.675
+    ],
+    [
+     "emote",
+     239.712,
+     240.104
+    ],
+    [
+     "button.",
+     240.14,
+     240.597
+    ]
+   ]
+  },
+  {
+   "id": "04.6",
+   "take": "04",
+   "scene": "SC 04",
+   "idx": 6,
+   "speaker": "MOM",
+   "raw": "[sweetly] Mwah! [pause] Love you, honey!",
+   "text": "Mwah! Love you, honey!",
+   "clip": [
+    24.814,
+    27.025
+   ],
+   "start": 240.777,
+   "end": 242.988,
+   "speechStart": 240.777,
+   "speechEnd": 242.988,
+   "words": [
+    [
+     "Mwah!",
+     240.777,
+     241.103
+    ],
+    [
+     "Love",
+     241.821,
+     242.147
+    ],
+    [
+     "you,",
+     242.184,
+     242.445
+    ],
+    [
+     "honey!",
+     242.597,
+     242.988
+    ]
+   ]
+  },
+  {
+   "id": "04.7",
+   "take": "04",
+   "scene": "SC 04",
+   "idx": 7,
+   "speaker": "DARKBLADE",
+   "raw": "[mocking] Ha! The legend brought his MOMMY.",
+   "text": "Ha! The legend brought his MOMMY.",
+   "clip": [
+    27.205,
+    29.765
+   ],
+   "start": 243.168,
+   "end": 245.728,
+   "speechStart": 243.168,
+   "speechEnd": 245.728,
+   "words": [
+    [
+     "Ha!",
+     243.168,
+     243.364
+    ],
+    [
+     "The",
+     243.63,
+     243.891
+    ],
+    [
+     "legend",
+     243.928,
+     244.385
+    ],
+    [
+     "brought",
+     244.422,
+     244.943
+    ],
+    [
+     "his",
+     244.98,
+     245.241
+    ],
+    [
+     "MOMMY.",
+     245.278,
+     245.728
+    ]
+   ],
+   "beatAfter": 1.0
+  },
+  {
+   "id": "04.8",
+   "take": "04",
+   "scene": "SC 04",
+   "idx": 8,
+   "speaker": "DAD",
+   "raw": "[determined] Don't worry, son. Dad's got this. [pause] How do I jump?",
+   "text": "Don't worry, son. Dad's got this. How do I jump?",
+   "clip": [
+    30.945,
+    35.107
+   ],
+   "start": 246.908,
+   "end": 251.07,
+   "speechStart": 246.908,
+   "speechEnd": 251.07,
+   "words": [
+    [
+     "Don't",
+     246.908,
+     247.234
+    ],
+    [
+     "worry,",
+     247.271,
+     247.662
+    ],
+    [
+     "son.",
+     247.814,
+     248.075
+    ],
+    [
+     "Dad's",
+     248.341,
+     248.668
+    ],
+    [
+     "got",
+     248.705,
+     248.965
+    ],
+    [
+     "this.",
+     249.002,
+     249.329
+    ],
+    [
+     "How",
+     250.046,
+     250.307
+    ],
+    [
+     "do",
+     250.344,
+     250.54
+    ],
+    [
+     "I",
+     250.577,
+     250.707
+    ],
+    [
+     "jump?",
+     250.744,
+     251.07
+    ]
+   ]
+  },
+  {
+   "id": "04.9",
+   "take": "04",
+   "scene": "SC 04",
+   "idx": 9,
+   "speaker": "YOU",
+   "raw": "[whisper-shouting] Spacebar!",
+   "text": "Spacebar!",
+   "clip": [
+    35.287,
+    35.874
+   ],
+   "start": 251.25,
+   "end": 251.837,
+   "speechStart": 251.25,
+   "speechEnd": 251.837,
+   "words": [
+    [
+     "Spacebar!",
+     251.25,
+     251.837
+    ]
+   ],
+   "beatAfter": 0.8
+  },
+  {
+   "id": "04.10",
+   "take": "04",
+   "scene": "SC 04",
+   "idx": 10,
+   "speaker": "DAD",
+   "raw": "[shouting at the screen] SPACE! [pause] BAR!",
+   "text": "SPACE! BAR!",
+   "clip": [
+    36.854,
+    38.322
+   ],
+   "start": 252.817,
+   "end": 254.285,
+   "speechStart": 252.817,
+   "speechEnd": 254.285,
+   "words": [
+    [
+     "SPACE!",
+     252.817,
+     253.267
+    ],
+    [
+     "BAR!",
+     253.985,
+     254.285
+    ]
+   ]
+  },
+  {
+   "id": "04.11",
+   "take": "04",
+   "scene": "SC 04",
+   "idx": 11,
+   "speaker": "NARRATOR",
+   "raw": "[deadpan] He did not press the spacebar. [pause] He said it. Very loudly. To the computer.",
+   "text": "He did not press the spacebar. He said it. Very loudly. To the computer.",
+   "clip": [
+    38.502,
+    44.622
+   ],
+   "start": 254.465,
+   "end": 260.585,
+   "speechStart": 254.465,
+   "speechEnd": 260.585,
+   "words": [
+    [
+     "He",
+     254.465,
+     254.661
+    ],
+    [
+     "did",
+     254.698,
+     254.959
+    ],
+    [
+     "not",
+     254.996,
+     255.256
+    ],
+    [
+     "press",
+     255.293,
+     255.684
+    ],
+    [
+     "the",
+     255.721,
+     255.983
+    ],
+    [
+     "spacebar.",
+     256.02,
+     256.607
+    ],
+    [
+     "He",
+     257.324,
+     257.519
+    ],
+    [
+     "said",
+     257.556,
+     257.883
+    ],
+    [
+     "it.",
+     257.92,
+     258.116
+    ],
+    [
+     "Very",
+     258.382,
+     258.708
+    ],
+    [
+     "loudly.",
+     258.745,
+     259.201
+    ],
+    [
+     "To",
+     259.468,
+     259.664
+    ],
+    [
+     "the",
+     259.701,
+     259.961
+    ],
+    [
+     "computer.",
+     259.998,
+     260.585
+    ]
+   ]
+  },
+  {
+   "id": "04.12",
+   "take": "04",
+   "scene": "SC 04",
+   "idx": 12,
+   "speaker": "DAD",
+   "raw": "[typing slowly] DEAR EVERYONE. [pause] WHERE IS THE JUMP BUTTON.",
+   "text": "DEAR EVERYONE. WHERE IS THE JUMP BUTTON.",
+   "clip": [
+    44.802,
+    48.6
+   ],
+   "start": 260.765,
+   "end": 264.563,
+   "speechStart": 260.765,
+   "speechEnd": 264.563,
+   "words": [
+    [
+     "DEAR",
+     260.765,
+     261.14
+    ],
+    [
+     "EVERYONE.",
+     261.177,
+     261.852
+    ],
+    [
+     "WHERE",
+     262.57,
+     263.02
+    ],
+    [
+     "IS",
+     263.057,
+     263.252
+    ],
+    [
+     "THE",
+     263.289,
+     263.589
+    ],
+    [
+     "JUMP",
+     263.626,
+     264.002
+    ],
+    [
+     "BUTTON.",
+     264.038,
+     264.563
+    ]
+   ]
+  },
+  {
+   "id": "04.13",
+   "take": "04",
+   "scene": "SC 04",
+   "idx": 13,
+   "speaker": "NARRATOR",
+   "raw": "Fifty players answered at the same time. [pause] Fifty players said \"SPACEBAR.\"",
+   "text": "Fifty players answered at the same time. Fifty players said \"SPACEBAR.\"",
+   "clip": [
+    48.78,
+    54.354
+   ],
+   "start": 264.743,
+   "end": 270.317,
+   "speechStart": 264.743,
+   "speechEnd": 270.317,
+   "words": [
+    [
+     "Fifty",
+     264.743,
+     265.134
+    ],
+    [
+     "players",
+     265.171,
+     265.693
+    ],
+    [
+     "answered",
+     265.73,
+     266.317
+    ],
+    [
+     "at",
+     266.354,
+     266.549
+    ],
+    [
+     "the",
+     266.586,
+     266.847
+    ],
+    [
+     "same",
+     266.884,
+     267.21
+    ],
+    [
+     "time.",
+     267.247,
+     267.574
+    ],
+    [
+     "Fifty",
+     268.291,
+     268.682
+    ],
+    [
+     "players",
+     268.719,
+     269.242
+    ],
+    [
+     "said",
+     269.278,
+     269.604
+    ],
+    [
+     "\"SPACEBAR.\"",
+     269.641,
+     270.317
+    ]
+   ]
+  },
+  {
+   "id": "04.14",
+   "take": "04",
+   "scene": "SC 04",
+   "idx": 14,
+   "speaker": "YOU",
+   "raw": "[whispering] Nobody look at me. [pause] I'm a tree. I'm a tree.",
+   "text": "Nobody look at me. I'm a tree. I'm a tree.",
+   "clip": [
+    54.534,
+    58.255
+   ],
+   "start": 270.497,
+   "end": 274.218,
+   "speechStart": 270.497,
+   "speechEnd": 274.218,
+   "words": [
+    [
+     "Nobody",
+     270.497,
+     270.954
+    ],
+    [
+     "look",
+     270.991,
+     271.317
+    ],
+    [
+     "at",
+     271.354,
+     271.549
+    ],
+    [
+     "me.",
+     271.586,
+     271.782
+    ],
+    [
+     "I'm",
+     272.499,
+     272.695
+    ],
+    [
+     "a",
+     272.732,
+     272.863
+    ],
+    [
+     "tree.",
+     272.9,
+     273.225
+    ],
+    [
+     "I'm",
+     273.492,
+     273.688
+    ],
+    [
+     "a",
+     273.725,
+     273.855
+    ],
+    [
+     "tree.",
+     273.892,
+     274.218
+    ]
+   ],
+   "beatAfter": 1.0
+  },
+  {
+   "id": "05.0",
+   "take": "05",
+   "scene": "SC 05",
+   "idx": 0,
+   "speaker": "YOU",
+   "raw": "[quickly] Okay! You guys... stay here! Practice jumping! [pause] I'll be in the arena!",
+   "text": "Okay! You guys... stay here! Practice jumping! I'll be in the arena!",
+   "clip": [
+    -0.0,
+    5.788
+   ],
+   "start": 276.318,
+   "end": 282.106,
+   "speechStart": 276.318,
+   "speechEnd": 282.106,
+   "words": [
+    [
+     "Okay!",
+     276.318,
+     276.644
+    ],
+    [
+     "You",
+     276.911,
+     277.172
+    ],
+    [
+     "guys...",
+     277.209,
+     277.535
+    ],
+    [
+     "stay",
+     277.834,
+     278.16
+    ],
+    [
+     "here!",
+     278.197,
+     278.523
+    ],
+    [
+     "Practice",
+     278.789,
+     279.377
+    ],
+    [
+     "jumping!",
+     279.413,
+     279.936
+    ],
+    [
+     "I'll",
+     280.653,
+     280.914
+    ],
+    [
+     "be",
+     280.951,
+     281.146
+    ],
+    [
+     "in",
+     281.183,
+     281.379
+    ],
+    [
+     "the",
+     281.416,
+     281.677
+    ],
+    [
+     "arena!",
+     281.714,
+     282.106
+    ]
+   ]
+  },
+  {
+   "id": "05.1",
+   "take": "05",
+   "scene": "SC 05",
+   "idx": 1,
+   "speaker": "NARRATOR",
+   "raw": "You ran to the Battle Arena, where nobody could embarrass you. [pause] But Mom followed you.",
+   "text": "You ran to the Battle Arena, where nobody could embarrass you. But Mom followed you.",
+   "clip": [
+    5.968,
+    12.629
+   ],
+   "start": 282.286,
+   "end": 288.947,
+   "speechStart": 282.286,
+   "speechEnd": 288.947,
+   "words": [
+    [
+     "You",
+     282.286,
+     282.547
+    ],
+    [
+     "ran",
+     282.584,
+     282.844
+    ],
+    [
+     "to",
+     282.881,
+     283.077
+    ],
+    [
+     "the",
+     283.114,
+     283.375
+    ],
+    [
+     "Battle",
+     283.412,
+     283.869
+    ],
+    [
+     "Arena,",
+     283.906,
+     284.297
+    ],
+    [
+     "where",
+     284.448,
+     284.84
+    ],
+    [
+     "nobody",
+     284.877,
+     285.334
+    ],
+    [
+     "could",
+     285.371,
+     285.762
+    ],
+    [
+     "embarrass",
+     285.799,
+     286.451
+    ],
+    [
+     "you.",
+     286.488,
+     286.749
+    ],
+    [
+     "But",
+     287.467,
+     287.728
+    ],
+    [
+     "Mom",
+     287.764,
+     288.025
+    ],
+    [
+     "followed",
+     288.062,
+     288.649
+    ],
+    [
+     "you.",
+     288.686,
+     288.947
+    ]
+   ]
+  },
+  {
+   "id": "05.2",
+   "take": "05",
+   "scene": "SC 05",
+   "idx": 2,
+   "speaker": "MOM",
+   "raw": "[calm] Don't mind me, sweetie. I'm just watching.",
+   "text": "Don't mind me, sweetie. I'm just watching.",
+   "clip": [
+    12.809,
+    15.854
+   ],
+   "start": 289.127,
+   "end": 292.172,
+   "speechStart": 289.127,
+   "speechEnd": 292.172,
+   "words": [
+    [
+     "Don't",
+     289.127,
+     289.453
+    ],
+    [
+     "mind",
+     289.49,
+     289.816
+    ],
+    [
+     "me,",
+     289.853,
+     290.049
+    ],
+    [
+     "sweetie.",
+     290.2,
+     290.723
+    ],
+    [
+     "I'm",
+     290.989,
+     291.184
+    ],
+    [
+     "just",
+     291.221,
+     291.548
+    ],
+    [
+     "watching.",
+     291.585,
+     292.172
+    ]
+   ]
+  },
+  {
+   "id": "05.3",
+   "take": "05",
+   "scene": "SC 05",
+   "idx": 3,
+   "speaker": "NARRATOR",
+   "raw": "Then someone hit Mom with a sword. [pause] And Mom... hit back.",
+   "text": "Then someone hit Mom with a sword. And Mom... hit back.",
+   "clip": [
+    16.034,
+    20.673
+   ],
+   "start": 292.352,
+   "end": 296.991,
+   "speechStart": 292.352,
+   "speechEnd": 296.991,
+   "words": [
+    [
+     "Then",
+     292.352,
+     292.678
+    ],
+    [
+     "someone",
+     292.715,
+     293.237
+    ],
+    [
+     "hit",
+     293.274,
+     293.534
+    ],
+    [
+     "Mom",
+     293.571,
+     293.833
+    ],
+    [
+     "with",
+     293.87,
+     294.195
+    ],
+    [
+     "a",
+     294.232,
+     294.363
+    ],
+    [
+     "sword.",
+     294.4,
+     294.791
+    ],
+    [
+     "And",
+     295.509,
+     295.77
+    ],
+    [
+     "Mom...",
+     295.807,
+     296.067
+    ],
+    [
+     "hit",
+     296.367,
+     296.627
+    ],
+    [
+     "back.",
+     296.664,
+     296.991
+    ]
+   ],
+   "beatAfter": 3.0
+  },
+  {
+   "id": "05.4",
+   "take": "05",
+   "scene": "SC 05",
+   "idx": 4,
+   "speaker": "YOU",
+   "raw": "[stunned] Mom... how did you DO that?",
+   "text": "Mom... how did you DO that?",
+   "clip": [
+    23.853,
+    25.865
+   ],
+   "start": 300.171,
+   "end": 302.183,
+   "speechStart": 300.171,
+   "speechEnd": 302.183,
+   "words": [
+    [
+     "Mom...",
+     300.171,
+     300.432
+    ],
+    [
+     "how",
+     300.731,
+     300.992
+    ],
+    [
+     "did",
+     301.029,
+     301.29
+    ],
+    [
+     "you",
+     301.327,
+     301.588
+    ],
+    [
+     "DO",
+     301.625,
+     301.82
+    ],
+    [
+     "that?",
+     301.857,
+     302.183
+    ]
+   ]
+  },
+  {
+   "id": "05.5",
+   "take": "05",
+   "scene": "SC 05",
+   "idx": 5,
+   "speaker": "MOM",
+   "raw": "[modest] Oh. Muscle memory.",
+   "text": "Oh. Muscle memory.",
+   "clip": [
+    26.045,
+    27.457
+   ],
+   "start": 302.363,
+   "end": 303.775,
+   "speechStart": 302.363,
+   "speechEnd": 303.775,
+   "words": [
+    [
+     "Oh.",
+     302.363,
+     302.559
+    ],
+    [
+     "Muscle",
+     302.825,
+     303.281
+    ],
+    [
+     "memory.",
+     303.319,
+     303.775
+    ]
+   ]
+  },
+  {
+   "id": "05.6",
+   "take": "05",
+   "scene": "SC 05",
+   "idx": 6,
+   "speaker": "NARRATOR",
+   "raw": "That's when you learned the truth. [pause] In nineteen ninety-eight, your mom was the arcade champion of the whole state.",
+   "text": "That's when you learned the truth. In nineteen ninety-eight, your mom was the arcade champion of the whole state.",
+   "clip": [
+    27.637,
+    36.207
+   ],
+   "start": 303.955,
+   "end": 312.525,
+   "speechStart": 303.955,
+   "speechEnd": 312.525,
+   "words": [
+    [
+     "That's",
+     303.955,
+     304.346
+    ],
+    [
+     "when",
+     304.383,
+     304.709
+    ],
+    [
+     "you",
+     304.746,
+     305.007
+    ],
+    [
+     "learned",
+     305.044,
+     305.566
+    ],
+    [
+     "the",
+     305.603,
+     305.864
+    ],
+    [
+     "truth.",
+     305.901,
+     306.292
+    ],
+    [
+     "In",
+     307.01,
+     307.205
+    ],
+    [
+     "nineteen",
+     307.242,
+     307.829
+    ],
+    [
+     "ninety-eight,",
+     307.866,
+     308.649
+    ],
+    [
+     "your",
+     308.8,
+     309.127
+    ],
+    [
+     "mom",
+     309.164,
+     309.424
+    ],
+    [
+     "was",
+     309.461,
+     309.722
+    ],
+    [
+     "the",
+     309.759,
+     310.021
+    ],
+    [
+     "arcade",
+     310.057,
+     310.514
+    ],
+    [
+     "champion",
+     310.551,
+     311.137
+    ],
+    [
+     "of",
+     311.174,
+     311.37
+    ],
+    [
+     "the",
+     311.407,
+     311.668
+    ],
+    [
+     "whole",
+     311.705,
+     312.097
+    ],
+    [
+     "state.",
+     312.134,
+     312.525
+    ]
+   ]
+  },
+  {
+   "id": "05.7",
+   "take": "05",
+   "scene": "SC 05",
+   "idx": 7,
+   "speaker": "MOM",
+   "raw": "[laughing softly] They called me \"The Queen.\" [pause] I retired. For you.",
+   "text": "They called me \"The Queen.\" I retired. For you.",
+   "clip": [
+    36.387,
+    40.398
+   ],
+   "start": 312.705,
+   "end": 316.716,
+   "speechStart": 312.705,
+   "speechEnd": 316.716,
+   "words": [
+    [
+     "They",
+     312.705,
+     313.031
+    ],
+    [
+     "called",
+     313.068,
+     313.525
+    ],
+    [
+     "me",
+     313.562,
+     313.757
+    ],
+    [
+     "\"The",
+     313.794,
+     314.055
+    ],
+    [
+     "Queen.\"",
+     314.092,
+     314.484
+    ],
+    [
+     "I",
+     315.201,
+     315.331
+    ],
+    [
+     "retired.",
+     315.368,
+     315.89
+    ],
+    [
+     "For",
+     316.156,
+     316.417
+    ],
+    [
+     "you.",
+     316.454,
+     316.716
+    ]
+   ]
+  },
+  {
+   "id": "05.8",
+   "take": "05",
+   "scene": "SC 05",
+   "idx": 8,
+   "speaker": "NARRATOR",
+   "raw": "Ten minutes later... she was number one on the leaderboard.",
+   "text": "Ten minutes later... she was number one on the leaderboard.",
+   "clip": [
+    40.578,
+    44.826
+   ],
+   "start": 316.896,
+   "end": 321.144,
+   "speechStart": 316.896,
+   "speechEnd": 321.144,
+   "words": [
+    [
+     "Ten",
+     316.896,
+     317.157
+    ],
+    [
+     "minutes",
+     317.194,
+     317.716
+    ],
+    [
+     "later...",
+     317.753,
+     318.144
+    ],
+    [
+     "she",
+     318.443,
+     318.704
+    ],
+    [
+     "was",
+     318.741,
+     319.002
+    ],
+    [
+     "number",
+     319.039,
+     319.495
+    ],
+    [
+     "one",
+     319.532,
+     319.793
+    ],
+    [
+     "on",
+     319.83,
+     320.026
+    ],
+    [
+     "the",
+     320.063,
+     320.324
+    ],
+    [
+     "leaderboard.",
+     320.361,
+     321.144
+    ]
+   ],
+   "beatAfter": 1.0
+  },
+  {
+   "id": "05.9",
+   "take": "05",
+   "scene": "SC 05",
+   "idx": 9,
+   "speaker": "MOM",
+   "raw": "[sweetly] Nice try, honey! [pause] Sit up straight! [pause] Did you eat breakfast?",
+   "text": "Nice try, honey! Sit up straight! Did you eat breakfast?",
+   "clip": [
+    46.006,
+    51.271
+   ],
+   "start": 322.324,
+   "end": 327.589,
+   "speechStart": 322.324,
+   "speechEnd": 327.589,
+   "words": [
+    [
+     "Nice",
+     322.324,
+     322.65
+    ],
+    [
+     "try,",
+     322.687,
+     322.948
+    ],
+    [
+     "honey!",
+     323.1,
+     323.491
+    ],
+    [
+     "Sit",
+     324.208,
+     324.469
+    ],
+    [
+     "up",
+     324.506,
+     324.702
+    ],
+    [
+     "straight!",
+     324.739,
+     325.326
+    ],
+    [
+     "Did",
+     326.044,
+     326.304
+    ],
+    [
+     "you",
+     326.341,
+     326.602
+    ],
+    [
+     "eat",
+     326.639,
+     326.9
+    ],
+    [
+     "breakfast?",
+     326.937,
+     327.589
+    ]
+   ]
+  },
+  {
+   "id": "05.10",
+   "take": "05",
+   "scene": "SC 05",
+   "idx": 10,
+   "speaker": "NARRATOR",
+   "raw": "She defeated a hundred players. [pause] And she made sure every single one of them was hydrated.",
+   "text": "She defeated a hundred players. And she made sure every single one of them was hydrated.",
+   "clip": [
+    51.451,
+    58.36
+   ],
+   "start": 327.769,
+   "end": 334.678,
+   "speechStart": 327.769,
+   "speechEnd": 334.678,
+   "words": [
+    [
+     "She",
+     327.769,
+     328.03
+    ],
+    [
+     "defeated",
+     328.067,
+     328.654
+    ],
+    [
+     "a",
+     328.691,
+     328.821
+    ],
+    [
+     "hundred",
+     328.858,
+     329.38
+    ],
+    [
+     "players.",
+     329.417,
+     329.939
+    ],
+    [
+     "And",
+     330.656,
+     330.917
+    ],
+    [
+     "she",
+     330.954,
+     331.215
+    ],
+    [
+     "made",
+     331.252,
+     331.578
+    ],
+    [
+     "sure",
+     331.615,
+     331.941
+    ],
+    [
+     "every",
+     331.978,
+     332.369
+    ],
+    [
+     "single",
+     332.406,
+     332.863
+    ],
+    [
+     "one",
+     332.9,
+     333.161
+    ],
+    [
+     "of",
+     333.197,
+     333.393
+    ],
+    [
+     "them",
+     333.43,
+     333.757
+    ],
+    [
+     "was",
+     333.794,
+     334.054
+    ],
+    [
+     "hydrated.",
+     334.091,
+     334.678
+    ]
+   ]
+  },
+  {
+   "id": "05.11",
+   "take": "05",
+   "scene": "SC 05",
+   "idx": 11,
+   "speaker": "DARKBLADE",
+   "raw": "[angry] One on one, Mom! [pause] Right now!",
+   "text": "One on one, Mom! Right now!",
+   "clip": [
+    58.54,
+    61.151
+   ],
+   "start": 334.858,
+   "end": 337.469,
+   "speechStart": 334.858,
+   "speechEnd": 337.469,
+   "words": [
+    [
+     "One",
+     334.858,
+     335.119
+    ],
+    [
+     "on",
+     335.156,
+     335.352
+    ],
+    [
+     "one,",
+     335.389,
+     335.649
+    ],
+    [
+     "Mom!",
+     335.801,
+     336.062
+    ],
+    [
+     "Right",
+     336.779,
+     337.171
+    ],
+    [
+     "now!",
+     337.208,
+     337.469
+    ]
+   ]
+  },
+  {
+   "id": "05.12",
+   "take": "05",
+   "scene": "SC 05",
+   "idx": 12,
+   "speaker": "MOM",
+   "raw": "[sweetly] Okay, sweetie.",
+   "text": "Okay, sweetie.",
+   "clip": [
+    61.331,
+    62.331
+   ],
+   "start": 337.649,
+   "end": 338.649,
+   "speechStart": 337.649,
+   "speechEnd": 338.649,
+   "words": [
+    [
+     "Okay,",
+     337.649,
+     337.975
+    ],
+    [
+     "sweetie.",
+     338.127,
+     338.649
+    ]
+   ],
+   "beatAfter": 1.0
+  },
+  {
+   "id": "05.13",
+   "take": "05",
+   "scene": "SC 05",
+   "idx": 13,
+   "speaker": "MOM",
+   "raw": "[kind] Good game! [pause] Don't forget to stretch!",
+   "text": "Good game! Don't forget to stretch!",
+   "clip": [
+    63.551,
+    66.569
+   ],
+   "start": 339.869,
+   "end": 342.887,
+   "speechStart": 339.869,
+   "speechEnd": 342.887,
+   "words": [
+    [
+     "Good",
+     339.869,
+     340.195
+    ],
+    [
+     "game!",
+     340.232,
+     340.558
+    ],
+    [
+     "Don't",
+     341.275,
+     341.602
+    ],
+    [
+     "forget",
+     341.639,
+     342.095
+    ],
+    [
+     "to",
+     342.132,
+     342.328
+    ],
+    [
+     "stretch!",
+     342.365,
+     342.887
+    ]
+   ]
+  },
+  {
+   "id": "05.14",
+   "take": "05",
+   "scene": "SC 05",
+   "idx": 14,
+   "speaker": "NOODLE",
+   "raw": "[screaming] YOUR MOM IS A LEGEND!",
+   "text": "YOUR MOM IS A LEGEND!",
+   "clip": [
+    66.749,
+    68.423
+   ],
+   "start": 343.067,
+   "end": 344.741,
+   "speechStart": 343.067,
+   "speechEnd": 344.741,
+   "words": [
+    [
+     "YOUR",
+     343.067,
+     343.442
+    ],
+    [
+     "MOM",
+     343.479,
+     343.779
+    ],
+    [
+     "IS",
+     343.816,
+     344.012
+    ],
+    [
+     "A",
+     344.049,
+     344.179
+    ],
+    [
+     "LEGEND!",
+     344.216,
+     344.741
+    ]
+   ]
+  },
+  {
+   "id": "05.15",
+   "take": "05",
+   "scene": "SC 05",
+   "idx": 15,
+   "speaker": "YOU",
+   "raw": "[quietly] ...I'm the legend.",
+   "text": "...I'm the legend.",
+   "clip": [
+    68.603,
+    69.59
+   ],
+   "start": 344.921,
+   "end": 345.908,
+   "speechStart": 344.921,
+   "speechEnd": 345.908,
+   "words": [
+    [
+     "...I'm",
+     344.921,
+     345.117
+    ],
+    [
+     "the",
+     345.154,
+     345.415
+    ],
+    [
+     "legend.",
+     345.452,
+     345.908
+    ]
+   ]
+  },
+  {
+   "id": "06.0",
+   "take": "06",
+   "scene": "SC 06",
+   "idx": 0,
+   "speaker": "NARRATOR",
+   "raw": "Meanwhile, Granny opened a cookie stand. [pause] Just a little one.",
+   "text": "Meanwhile, Granny opened a cookie stand. Just a little one.",
+   "clip": [
+    -0.0,
+    4.845
+   ],
+   "start": 347.008,
+   "end": 351.853,
+   "speechStart": 347.008,
+   "speechEnd": 351.853,
+   "words": [
+    [
+     "Meanwhile,",
+     347.008,
+     347.661
+    ],
+    [
+     "Granny",
+     347.812,
+     348.268
+    ],
+    [
+     "opened",
+     348.305,
+     348.762
+    ],
+    [
+     "a",
+     348.799,
+     348.929
+    ],
+    [
+     "cookie",
+     348.966,
+     349.423
+    ],
+    [
+     "stand.",
+     349.46,
+     349.851
+    ],
+    [
+     "Just",
+     350.568,
+     350.895
+    ],
+    [
+     "a",
+     350.932,
+     351.062
+    ],
+    [
+     "little",
+     351.099,
+     351.556
+    ],
+    [
+     "one.",
+     351.593,
+     351.853
+    ]
+   ]
+  },
+  {
+   "id": "06.1",
+   "take": "06",
+   "scene": "SC 06",
+   "idx": 1,
+   "speaker": "GRANDMA",
+   "raw": "[sweet] Fresh cookies! Two coins! [pause] Three for the cute ones!",
+   "text": "Fresh cookies! Two coins! Three for the cute ones!",
+   "clip": [
+    5.025,
+    9.361
+   ],
+   "start": 352.033,
+   "end": 356.369,
+   "speechStart": 352.033,
+   "speechEnd": 356.369,
+   "words": [
+    [
+     "Fresh",
+     352.033,
+     352.424
+    ],
+    [
+     "cookies!",
+     352.461,
+     352.983
+    ],
+    [
+     "Two",
+     353.25,
+     353.511
+    ],
+    [
+     "coins!",
+     353.548,
+     353.939
+    ],
+    [
+     "Three",
+     354.656,
+     355.047
+    ],
+    [
+     "for",
+     355.084,
+     355.346
+    ],
+    [
+     "the",
+     355.383,
+     355.643
+    ],
+    [
+     "cute",
+     355.68,
+     356.007
+    ],
+    [
+     "ones!",
+     356.044,
+     356.369
+    ]
+   ]
+  },
+  {
+   "id": "06.2",
+   "take": "06",
+   "scene": "SC 06",
+   "idx": 2,
+   "speaker": "NARRATOR",
+   "raw": "Then a bakery. Then a factory. [pause] Then a skyscraper.",
+   "text": "Then a bakery. Then a factory. Then a skyscraper.",
+   "clip": [
+    9.541,
+    13.812
+   ],
+   "start": 356.549,
+   "end": 360.82,
+   "speechStart": 356.549,
+   "speechEnd": 360.82,
+   "words": [
+    [
+     "Then",
+     356.549,
+     356.875
+    ],
+    [
+     "a",
+     356.912,
+     357.043
+    ],
+    [
+     "bakery.",
+     357.08,
+     357.536
+    ],
+    [
+     "Then",
+     357.803,
+     358.128
+    ],
+    [
+     "a",
+     358.165,
+     358.296
+    ],
+    [
+     "factory.",
+     358.333,
+     358.855
+    ],
+    [
+     "Then",
+     359.572,
+     359.899
+    ],
+    [
+     "a",
+     359.936,
+     360.066
+    ],
+    [
+     "skyscraper.",
+     360.103,
+     360.82
+    ]
+   ],
+   "beatAfter": 1.0
+  },
+  {
+   "id": "06.3",
+   "take": "06",
+   "scene": "SC 06",
+   "idx": 3,
+   "speaker": "GRANDMA",
+   "raw": "[sweetly] Cookies are now five coins. [pause] Ten coins on weekends. [pause] Fifteen if you're rude.",
+   "text": "Cookies are now five coins. Ten coins on weekends. Fifteen if you're rude.",
+   "clip": [
+    14.992,
+    21.427
+   ],
+   "start": 362.0,
+   "end": 368.435,
+   "speechStart": 362.0,
+   "speechEnd": 368.435,
+   "words": [
+    [
+     "Cookies",
+     362.0,
+     362.522
+    ],
+    [
+     "are",
+     362.558,
+     362.82
+    ],
+    [
+     "now",
+     362.857,
+     363.118
+    ],
+    [
+     "five",
+     363.155,
+     363.481
+    ],
+    [
+     "coins.",
+     363.518,
+     363.909
+    ],
+    [
+     "Ten",
+     364.626,
+     364.887
+    ],
+    [
+     "coins",
+     364.924,
+     365.315
+    ],
+    [
+     "on",
+     365.352,
+     365.548
+    ],
+    [
+     "weekends.",
+     365.585,
+     366.172
+    ],
+    [
+     "Fifteen",
+     366.89,
+     367.411
+    ],
+    [
+     "if",
+     367.448,
+     367.644
+    ],
+    [
+     "you're",
+     367.681,
+     368.072
+    ],
+    [
+     "rude.",
+     368.109,
+     368.435
+    ]
+   ]
+  },
+  {
+   "id": "06.4",
+   "take": "06",
+   "scene": "SC 06",
+   "idx": 4,
+   "speaker": "NARRATOR",
+   "raw": "She hired your friends. [pause] Then she hired your friends' friends.",
+   "text": "She hired your friends. Then she hired your friends' friends.",
+   "clip": [
+    21.607,
+    26.468
+   ],
+   "start": 368.615,
+   "end": 373.476,
+   "speechStart": 368.615,
+   "speechEnd": 373.476,
+   "words": [
+    [
+     "She",
+     368.615,
+     368.876
+    ],
+    [
+     "hired",
+     368.913,
+     369.305
+    ],
+    [
+     "your",
+     369.341,
+     369.667
+    ],
+    [
+     "friends.",
+     369.704,
+     370.226
+    ],
+    [
+     "Then",
+     370.944,
+     371.269
+    ],
+    [
+     "she",
+     371.306,
+     371.568
+    ],
+    [
+     "hired",
+     371.605,
+     371.996
+    ],
+    [
+     "your",
+     372.033,
+     372.359
+    ],
+    [
+     "friends'",
+     372.396,
+     372.918
+    ],
+    [
+     "friends.",
+     372.954,
+     373.476
+    ]
+   ],
+   "beatAfter": 1.5
+  },
+  {
+   "id": "06.5",
+   "take": "06",
+   "scene": "SC 06",
+   "idx": 5,
+   "speaker": "NOODLE",
+   "raw": "[cheerful] Sorry, bro! She pays double! [pause] And there's dental!",
+   "text": "Sorry, bro! She pays double! And there's dental!",
+   "clip": [
+    28.148,
+    32.301
+   ],
+   "start": 375.156,
+   "end": 379.309,
+   "speechStart": 375.156,
+   "speechEnd": 379.309,
+   "words": [
+    [
+     "Sorry,",
+     375.156,
+     375.547
+    ],
+    [
+     "bro!",
+     375.699,
+     375.96
+    ],
+    [
+     "She",
+     376.226,
+     376.488
+    ],
+    [
+     "pays",
+     376.525,
+     376.85
+    ],
+    [
+     "double!",
+     376.887,
+     377.344
+    ],
+    [
+     "And",
+     378.061,
+     378.322
+    ],
+    [
+     "there's",
+     378.359,
+     378.816
+    ],
+    [
+     "dental!",
+     378.853,
+     379.309
+    ]
+   ]
+  },
+  {
+   "id": "06.6",
+   "take": "06",
+   "scene": "SC 06",
+   "idx": 6,
+   "speaker": "GRANDMA",
+   "raw": "[sweetly] I bought your castle, dear. [pause] It was a very good deal.",
+   "text": "I bought your castle, dear. It was a very good deal.",
+   "clip": [
+    32.481,
+    36.907
+   ],
+   "start": 379.489,
+   "end": 383.915,
+   "speechStart": 379.489,
+   "speechEnd": 383.915,
+   "words": [
+    [
+     "I",
+     379.489,
+     379.619
+    ],
+    [
+     "bought",
+     379.656,
+     380.113
+    ],
+    [
+     "your",
+     380.15,
+     380.476
+    ],
+    [
+     "castle,",
+     380.513,
+     380.97
+    ],
+    [
+     "dear.",
+     381.122,
+     381.447
+    ],
+    [
+     "It",
+     382.165,
+     382.361
+    ],
+    [
+     "was",
+     382.398,
+     382.658
+    ],
+    [
+     "a",
+     382.695,
+     382.826
+    ],
+    [
+     "very",
+     382.862,
+     383.189
+    ],
+    [
+     "good",
+     383.226,
+     383.552
+    ],
+    [
+     "deal.",
+     383.589,
+     383.915
+    ]
+   ]
+  },
+  {
+   "id": "06.7",
+   "take": "06",
+   "scene": "SC 06",
+   "idx": 7,
+   "speaker": "YOU",
+   "raw": "[shocked] You BOUGHT my base?!",
+   "text": "You BOUGHT my base?!",
+   "clip": [
+    37.087,
+    38.506
+   ],
+   "start": 384.095,
+   "end": 385.514,
+   "speechStart": 384.095,
+   "speechEnd": 385.514,
+   "words": [
+    [
+     "You",
+     384.095,
+     384.356
+    ],
+    [
+     "BOUGHT",
+     384.393,
+     384.918
+    ],
+    [
+     "my",
+     384.955,
+     385.15
+    ],
+    [
+     "base?!",
+     385.187,
+     385.514
+    ]
+   ]
+  },
+  {
+   "id": "06.8",
+   "take": "06",
+   "scene": "SC 06",
+   "idx": 8,
+   "speaker": "GRANDMA",
+   "raw": "[sweet, firm] You can still live there. [pause] Rent is fifty coins a week.",
+   "text": "You can still live there. Rent is fifty coins a week.",
+   "clip": [
+    38.686,
+    43.128
+   ],
+   "start": 385.694,
+   "end": 390.136,
+   "speechStart": 385.694,
+   "speechEnd": 390.136,
+   "words": [
+    [
+     "You",
+     385.694,
+     385.955
+    ],
+    [
+     "can",
+     385.992,
+     386.252
+    ],
+    [
+     "still",
+     386.289,
+     386.681
+    ],
+    [
+     "live",
+     386.718,
+     387.044
+    ],
+    [
+     "there.",
+     387.081,
+     387.473
+    ],
+    [
+     "Rent",
+     388.19,
+     388.516
+    ],
+    [
+     "is",
+     388.553,
+     388.748
+    ],
+    [
+     "fifty",
+     388.785,
+     389.177
+    ],
+    [
+     "coins",
+     389.213,
+     389.605
+    ],
+    [
+     "a",
+     389.642,
+     389.773
+    ],
+    [
+     "week.",
+     389.81,
+     390.136
+    ]
+   ],
+   "beatAfter": 1.0
+  },
+  {
+   "id": "06.9",
+   "take": "06",
+   "scene": "SC 06",
+   "idx": 9,
+   "speaker": "YOU",
+   "raw": "[pleading] Granny! I'm your grandson!",
+   "text": "Granny! I'm your grandson!",
+   "clip": [
+    44.308,
+    46.214
+   ],
+   "start": 391.316,
+   "end": 393.222,
+   "speechStart": 391.316,
+   "speechEnd": 393.222,
+   "words": [
+    [
+     "Granny!",
+     391.316,
+     391.773
+    ],
+    [
+     "I'm",
+     392.039,
+     392.235
+    ],
+    [
+     "your",
+     392.272,
+     392.598
+    ],
+    [
+     "grandson!",
+     392.635,
+     393.222
+    ]
+   ]
+  },
+  {
+   "id": "06.10",
+   "take": "06",
+   "scene": "SC 06",
+   "idx": 10,
+   "speaker": "GRANDMA",
+   "raw": "[sweetly] That's why it's only fifty, dear.",
+   "text": "That's why it's only fifty, dear.",
+   "clip": [
+    46.394,
+    48.65
+   ],
+   "start": 393.402,
+   "end": 395.658,
+   "speechStart": 393.402,
+   "speechEnd": 395.658,
+   "words": [
+    [
+     "That's",
+     393.402,
+     393.793
+    ],
+    [
+     "why",
+     393.83,
+     394.091
+    ],
+    [
+     "it's",
+     394.128,
+     394.389
+    ],
+    [
+     "only",
+     394.426,
+     394.752
+    ],
+    [
+     "fifty,",
+     394.789,
+     395.181
+    ],
+    [
+     "dear.",
+     395.332,
+     395.658
+    ]
+   ],
+   "beatAfter": 1.0
+  },
+  {
+   "id": "06.11",
+   "take": "06",
+   "scene": "SC 06",
+   "idx": 11,
+   "speaker": "NARRATOR",
+   "raw": "[deadpan] You had twelve coins.",
+   "text": "You had twelve coins.",
+   "clip": [
+    49.83,
+    51.311
+   ],
+   "start": 396.838,
+   "end": 398.319,
+   "speechStart": 396.838,
+   "speechEnd": 398.319,
+   "words": [
+    [
+     "You",
+     396.838,
+     397.099
+    ],
+    [
+     "had",
+     397.136,
+     397.396
+    ],
+    [
+     "twelve",
+     397.433,
+     397.89
+    ],
+    [
+     "coins.",
+     397.927,
+     398.319
+    ]
+   ]
+  },
+  {
+   "id": "07.0",
+   "take": "07",
+   "scene": "SC 07",
+   "idx": 0,
+   "speaker": "NARRATOR",
+   "raw": "And Dad? [pause] Dad was still trying the first jump. [pause] For almost three hours.",
+   "text": "And Dad? Dad was still trying the first jump. For almost three hours.",
+   "clip": [
+    -0.0,
+    6.175
+   ],
+   "start": 399.419,
+   "end": 405.594,
+   "speechStart": 399.419,
+   "speechEnd": 405.594,
+   "words": [
+    [
+     "And",
+     399.419,
+     399.68
+    ],
+    [
+     "Dad?",
+     399.717,
+     399.977
+    ],
+    [
+     "Dad",
+     400.695,
+     400.957
+    ],
+    [
+     "was",
+     400.993,
+     401.254
+    ],
+    [
+     "still",
+     401.291,
+     401.682
+    ],
+    [
+     "trying",
+     401.719,
+     402.176
+    ],
+    [
+     "the",
+     402.213,
+     402.474
+    ],
+    [
+     "first",
+     402.51,
+     402.902
+    ],
+    [
+     "jump.",
+     402.938,
+     403.265
+    ],
+    [
+     "For",
+     403.982,
+     404.243
+    ],
+    [
+     "almost",
+     404.28,
+     404.737
+    ],
+    [
+     "three",
+     404.774,
+     405.166
+    ],
+    [
+     "hours.",
+     405.202,
+     405.594
+    ]
+   ]
+  },
+  {
+   "id": "07.1",
+   "take": "07",
+   "scene": "SC 07",
+   "idx": 1,
+   "speaker": "DAD",
+   "raw": "[determined] Okay. Space... bar. [pause] Space... BAR!",
+   "text": "Okay. Space... bar. Space... BAR!",
+   "clip": [
+    6.355,
+    9.607
+   ],
+   "start": 405.774,
+   "end": 409.026,
+   "speechStart": 405.774,
+   "speechEnd": 409.026,
+   "words": [
+    [
+     "Okay.",
+     405.774,
+     406.1
+    ],
+    [
+     "Space...",
+     406.367,
+     406.758
+    ],
+    [
+     "bar.",
+     407.057,
+     407.318
+    ],
+    [
+     "Space...",
+     408.036,
+     408.428
+    ],
+    [
+     "BAR!",
+     408.727,
+     409.026
+    ]
+   ]
+  },
+  {
+   "id": "07.2",
+   "take": "07",
+   "scene": "SC 07",
+   "idx": 2,
+   "speaker": "NARRATOR",
+   "raw": "But then something strange happened. [pause] The new players... started gathering around him.",
+   "text": "But then something strange happened. The new players... started gathering around him.",
+   "clip": [
+    9.787,
+    16.42
+   ],
+   "start": 409.206,
+   "end": 415.839,
+   "speechStart": 409.206,
+   "speechEnd": 415.839,
+   "words": [
+    [
+     "But",
+     409.206,
+     409.467
+    ],
+    [
+     "then",
+     409.504,
+     409.83
+    ],
+    [
+     "something",
+     409.867,
+     410.519
+    ],
+    [
+     "strange",
+     410.556,
+     411.078
+    ],
+    [
+     "happened.",
+     411.115,
+     411.702
+    ],
+    [
+     "The",
+     412.42,
+     412.68
+    ],
+    [
+     "new",
+     412.717,
+     412.978
+    ],
+    [
+     "players...",
+     413.015,
+     413.537
+    ],
+    [
+     "started",
+     413.837,
+     414.358
+    ],
+    [
+     "gathering",
+     414.395,
+     415.047
+    ],
+    [
+     "around",
+     415.085,
+     415.541
+    ],
+    [
+     "him.",
+     415.577,
+     415.839
+    ]
+   ]
+  },
+  {
+   "id": "07.3",
+   "take": "07",
+   "scene": "SC 07",
+   "idx": 3,
+   "speaker": "DAD",
+   "raw": "[warm, encouraging] You can do it, kiddo! [pause] I believe in you! [pause] I don't believe in ME... but I believe in you!",
+   "text": "You can do it, kiddo! I believe in you! I don't believe in ME... but I believe in you!",
+   "clip": [
+    16.6,
+    24.185
+   ],
+   "start": 416.019,
+   "end": 423.604,
+   "speechStart": 416.019,
+   "speechEnd": 423.604,
+   "words": [
+    [
+     "You",
+     416.019,
+     416.28
+    ],
+    [
+     "can",
+     416.317,
+     416.577
+    ],
+    [
+     "do",
+     416.614,
+     416.81
+    ],
+    [
+     "it,",
+     416.847,
+     417.043
+    ],
+    [
+     "kiddo!",
+     417.195,
+     417.586
+    ],
+    [
+     "I",
+     418.304,
+     418.434
+    ],
+    [
+     "believe",
+     418.471,
+     418.992
+    ],
+    [
+     "in",
+     419.029,
+     419.225
+    ],
+    [
+     "you!",
+     419.262,
+     419.523
+    ],
+    [
+     "I",
+     420.24,
+     420.371
+    ],
+    [
+     "don't",
+     420.408,
+     420.734
+    ],
+    [
+     "believe",
+     420.771,
+     421.293
+    ],
+    [
+     "in",
+     421.33,
+     421.525
+    ],
+    [
+     "ME...",
+     421.562,
+     421.788
+    ],
+    [
+     "but",
+     422.087,
+     422.348
+    ],
+    [
+     "I",
+     422.385,
+     422.515
+    ],
+    [
+     "believe",
+     422.552,
+     423.073
+    ],
+    [
+     "in",
+     423.11,
+     423.306
+    ],
+    [
+     "you!",
+     423.343,
+     423.604
+    ]
+   ]
+  },
+  {
+   "id": "07.4",
+   "take": "07",
+   "scene": "SC 07",
+   "idx": 4,
+   "speaker": "NARRATOR",
+   "raw": "He cheered for every jump. [pause] He told terrible jokes.",
+   "text": "He cheered for every jump. He told terrible jokes.",
+   "clip": [
+    24.365,
+    28.537
+   ],
+   "start": 423.784,
+   "end": 427.956,
+   "speechStart": 423.784,
+   "speechEnd": 427.956,
+   "words": [
+    [
+     "He",
+     423.784,
+     423.98
+    ],
+    [
+     "cheered",
+     424.017,
+     424.538
+    ],
+    [
+     "for",
+     424.575,
+     424.836
+    ],
+    [
+     "every",
+     424.873,
+     425.265
+    ],
+    [
+     "jump.",
+     425.302,
+     425.627
+    ],
+    [
+     "He",
+     426.345,
+     426.541
+    ],
+    [
+     "told",
+     426.578,
+     426.904
+    ],
+    [
+     "terrible",
+     426.941,
+     427.528
+    ],
+    [
+     "jokes.",
+     427.565,
+     427.956
+    ]
+   ]
+  },
+  {
+   "id": "07.5",
+   "take": "07",
+   "scene": "SC 07",
+   "idx": 5,
+   "speaker": "DAD",
+   "raw": "[proud] Why did the noob cross the road? [pause] He couldn't! He was stuck in the lobby! [pause] Like me!",
+   "text": "Why did the noob cross the road? He couldn't! He was stuck in the lobby! Like me!",
+   "clip": [
+    28.717,
+    35.921
+   ],
+   "start": 428.136,
+   "end": 435.34,
+   "speechStart": 428.136,
+   "speechEnd": 435.34,
+   "words": [
+    [
+     "Why",
+     428.136,
+     428.397
+    ],
+    [
+     "did",
+     428.434,
+     428.694
+    ],
+    [
+     "the",
+     428.731,
+     428.993
+    ],
+    [
+     "noob",
+     429.03,
+     429.355
+    ],
+    [
+     "cross",
+     429.392,
+     429.784
+    ],
+    [
+     "the",
+     429.821,
+     430.082
+    ],
+    [
+     "road?",
+     430.119,
+     430.445
+    ],
+    [
+     "He",
+     431.163,
+     431.358
+    ],
+    [
+     "couldn't!",
+     431.395,
+     431.917
+    ],
+    [
+     "He",
+     432.184,
+     432.379
+    ],
+    [
+     "was",
+     432.416,
+     432.676
+    ],
+    [
+     "stuck",
+     432.714,
+     433.105
+    ],
+    [
+     "in",
+     433.142,
+     433.337
+    ],
+    [
+     "the",
+     433.374,
+     433.636
+    ],
+    [
+     "lobby!",
+     433.673,
+     434.064
+    ],
+    [
+     "Like",
+     434.781,
+     435.108
+    ],
+    [
+     "me!",
+     435.145,
+     435.34
+    ]
+   ],
+   "beatAfter": 1.5
+  },
+  {
+   "id": "07.6",
+   "take": "07",
+   "scene": "SC 07",
+   "idx": 6,
+   "speaker": "DAD",
+   "raw": "[inspiring] Listen up, kids! [pause] Falling is not failing! [pause] Failing is when you stop trying! [pause] I fell two hundred times today!",
+   "text": "Listen up, kids! Falling is not failing! Failing is when you stop trying! I fell two hundred times today!",
+   "clip": [
+    37.641,
+    47.051
+   ],
+   "start": 437.06,
+   "end": 446.47,
+   "speechStart": 437.06,
+   "speechEnd": 446.47,
+   "words": [
+    [
+     "Listen",
+     437.06,
+     437.517
+    ],
+    [
+     "up,",
+     437.554,
+     437.75
+    ],
+    [
+     "kids!",
+     437.901,
+     438.227
+    ],
+    [
+     "Falling",
+     438.944,
+     439.467
+    ],
+    [
+     "is",
+     439.504,
+     439.699
+    ],
+    [
+     "not",
+     439.736,
+     439.997
+    ],
+    [
+     "failing!",
+     440.034,
+     440.556
+    ],
+    [
+     "Failing",
+     441.273,
+     441.795
+    ],
+    [
+     "is",
+     441.832,
+     442.028
+    ],
+    [
+     "when",
+     442.064,
+     442.391
+    ],
+    [
+     "you",
+     442.428,
+     442.688
+    ],
+    [
+     "stop",
+     442.725,
+     443.052
+    ],
+    [
+     "trying!",
+     443.089,
+     443.545
+    ],
+    [
+     "I",
+     444.263,
+     444.393
+    ],
+    [
+     "fell",
+     444.43,
+     444.756
+    ],
+    [
+     "two",
+     444.793,
+     445.054
+    ],
+    [
+     "hundred",
+     445.091,
+     445.613
+    ],
+    [
+     "times",
+     445.65,
+     446.041
+    ],
+    [
+     "today!",
+     446.078,
+     446.47
+    ]
+   ]
+  },
+  {
+   "id": "07.7",
+   "take": "07",
+   "scene": "SC 07",
+   "idx": 7,
+   "speaker": "NARRATOR",
+   "raw": "By sunset... the whole server was calling him \"Dad.\"",
+   "text": "By sunset... the whole server was calling him \"Dad.\"",
+   "clip": [
+    47.231,
+    50.855
+   ],
+   "start": 446.65,
+   "end": 450.274,
+   "speechStart": 446.65,
+   "speechEnd": 450.274,
+   "words": [
+    [
+     "By",
+     446.65,
+     446.846
+    ],
+    [
+     "sunset...",
+     446.883,
+     447.34
+    ],
+    [
+     "the",
+     447.639,
+     447.9
+    ],
+    [
+     "whole",
+     447.937,
+     448.328
+    ],
+    [
+     "server",
+     448.365,
+     448.821
+    ],
+    [
+     "was",
+     448.858,
+     449.119
+    ],
+    [
+     "calling",
+     449.156,
+     449.677
+    ],
+    [
+     "him",
+     449.714,
+     449.976
+    ],
+    [
+     "\"Dad.\"",
+     450.013,
+     450.274
+    ]
+   ]
+  },
+  {
+   "id": "07.8",
+   "take": "07",
+   "scene": "SC 07",
+   "idx": 8,
+   "speaker": "KID",
+   "raw": "[shy] Mister Hot Dog? [pause] Can you be my dad too?",
+   "text": "Mister Hot Dog? Can you be my dad too?",
+   "clip": [
+    51.035,
+    54.424
+   ],
+   "start": 450.454,
+   "end": 453.843,
+   "speechStart": 450.454,
+   "speechEnd": 453.843,
+   "words": [
+    [
+     "Mister",
+     450.454,
+     450.911
+    ],
+    [
+     "Hot",
+     450.948,
+     451.208
+    ],
+    [
+     "Dog?",
+     451.245,
+     451.506
+    ],
+    [
+     "Can",
+     452.224,
+     452.484
+    ],
+    [
+     "you",
+     452.521,
+     452.783
+    ],
+    [
+     "be",
+     452.82,
+     453.015
+    ],
+    [
+     "my",
+     453.052,
+     453.248
+    ],
+    [
+     "dad",
+     453.285,
+     453.545
+    ],
+    [
+     "too?",
+     453.582,
+     453.843
+    ]
+   ],
+   "beatAfter": 0.5
+  },
+  {
+   "id": "07.9",
+   "take": "07",
+   "scene": "SC 07",
+   "idx": 9,
+   "speaker": "DAD",
+   "raw": "[touched] Of course, kiddo. [pause] Everybody gets a dad today!",
+   "text": "Of course, kiddo. Everybody gets a dad today!",
+   "clip": [
+    55.104,
+    58.963
+   ],
+   "start": 454.523,
+   "end": 458.382,
+   "speechStart": 454.523,
+   "speechEnd": 458.382,
+   "words": [
+    [
+     "Of",
+     454.523,
+     454.719
+    ],
+    [
+     "course,",
+     454.756,
+     455.213
+    ],
+    [
+     "kiddo.",
+     455.364,
+     455.755
+    ],
+    [
+     "Everybody",
+     456.473,
+     457.125
+    ],
+    [
+     "gets",
+     457.162,
+     457.488
+    ],
+    [
+     "a",
+     457.525,
+     457.655
+    ],
+    [
+     "dad",
+     457.692,
+     457.953
+    ],
+    [
+     "today!",
+     457.99,
+     458.382
+    ]
+   ]
+  },
+  {
+   "id": "07.10",
+   "take": "07",
+   "scene": "SC 07",
+   "idx": 10,
+   "speaker": "NOODLE",
+   "raw": "[happy] Your dad is so cool, bro. [pause] My dad never plays with me.",
+   "text": "Your dad is so cool, bro. My dad never plays with me.",
+   "clip": [
+    59.143,
+    63.671
+   ],
+   "start": 458.562,
+   "end": 463.09,
+   "speechStart": 458.562,
+   "speechEnd": 463.09,
+   "words": [
+    [
+     "Your",
+     458.562,
+     458.888
+    ],
+    [
+     "dad",
+     458.925,
+     459.186
+    ],
+    [
+     "is",
+     459.223,
+     459.419
+    ],
+    [
+     "so",
+     459.456,
+     459.651
+    ],
+    [
+     "cool,",
+     459.688,
+     460.014
+    ],
+    [
+     "bro.",
+     460.166,
+     460.427
+    ],
+    [
+     "My",
+     461.144,
+     461.34
+    ],
+    [
+     "dad",
+     461.377,
+     461.638
+    ],
+    [
+     "never",
+     461.675,
+     462.066
+    ],
+    [
+     "plays",
+     462.103,
+     462.495
+    ],
+    [
+     "with",
+     462.532,
+     462.857
+    ],
+    [
+     "me.",
+     462.894,
+     463.09
+    ]
+   ],
+   "beatAfter": 1.0
+  },
+  {
+   "id": "07.11",
+   "take": "07",
+   "scene": "SC 07",
+   "idx": 11,
+   "speaker": "YOU",
+   "raw": "[quietly, jealous] ...He's MY dad.",
+   "text": "...He's MY dad.",
+   "clip": [
+    64.851,
+    65.642
+   ],
+   "start": 464.27,
+   "end": 465.061,
+   "speechStart": 464.27,
+   "speechEnd": 465.061,
+   "words": [
+    [
+     "...He's",
+     464.27,
+     464.531
+    ],
+    [
+     "MY",
+     464.568,
+     464.764
+    ],
+    [
+     "dad.",
+     464.801,
+     465.061
+    ]
+   ]
+  },
+  {
+   "id": "08.0",
+   "take": "08",
+   "scene": "SC 08",
+   "idx": 0,
+   "speaker": "NARRATOR",
+   "raw": "Your mom was the best fighter. Your granny was the richest player. [pause] Your dad was everyone's favorite.",
+   "text": "Your mom was the best fighter. Your granny was the richest player. Your dad was everyone's favorite.",
+   "clip": [
+    0.0,
+    7.828
+   ],
+   "start": 466.161,
+   "end": 473.989,
+   "speechStart": 466.161,
+   "speechEnd": 473.989,
+   "words": [
+    [
+     "Your",
+     466.161,
+     466.487
+    ],
+    [
+     "mom",
+     466.524,
+     466.785
+    ],
+    [
+     "was",
+     466.822,
+     467.083
+    ],
+    [
+     "the",
+     467.12,
+     467.38
+    ],
+    [
+     "best",
+     467.417,
+     467.744
+    ],
+    [
+     "fighter.",
+     467.781,
+     468.302
+    ],
+    [
+     "Your",
+     468.569,
+     468.895
+    ],
+    [
+     "granny",
+     468.932,
+     469.389
+    ],
+    [
+     "was",
+     469.425,
+     469.686
+    ],
+    [
+     "the",
+     469.723,
+     469.984
+    ],
+    [
+     "richest",
+     470.021,
+     470.543
+    ],
+    [
+     "player.",
+     470.58,
+     471.037
+    ],
+    [
+     "Your",
+     471.754,
+     472.08
+    ],
+    [
+     "dad",
+     472.117,
+     472.378
+    ],
+    [
+     "was",
+     472.415,
+     472.676
+    ],
+    [
+     "everyone's",
+     472.713,
+     473.365
+    ],
+    [
+     "favorite.",
+     473.402,
+     473.989
+    ]
+   ]
+  },
+  {
+   "id": "08.1",
+   "take": "08",
+   "scene": "SC 08",
+   "idx": 1,
+   "speaker": "NARRATOR",
+   "raw": "[quietly] And you... were just \"the son.\"",
+   "text": "And you... were just \"the son.\"",
+   "clip": [
+    8.048,
+    10.191
+   ],
+   "start": 474.209,
+   "end": 476.352,
+   "speechStart": 474.209,
+   "speechEnd": 476.352,
+   "words": [
+    [
+     "And",
+     474.209,
+     474.47
+    ],
+    [
+     "you...",
+     474.507,
+     474.767
+    ],
+    [
+     "were",
+     475.067,
+     475.393
+    ],
+    [
+     "just",
+     475.43,
+     475.756
+    ],
+    [
+     "\"the",
+     475.793,
+     476.054
+    ],
+    [
+     "son.\"",
+     476.091,
+     476.352
+    ]
+   ],
+   "beatAfter": 1.0
+  },
+  {
+   "id": "08.2",
+   "take": "08",
+   "scene": "SC 08",
+   "idx": 2,
+   "speaker": "YOU",
+   "raw": "[angry] This is MY game! My friends! My server! [pause] You're taking EVERYTHING!",
+   "text": "This is MY game! My friends! My server! You're taking EVERYTHING!",
+   "clip": [
+    11.371,
+    16.967
+   ],
+   "start": 477.532,
+   "end": 483.128,
+   "speechStart": 477.532,
+   "speechEnd": 483.128,
+   "words": [
+    [
+     "This",
+     477.532,
+     477.858
+    ],
+    [
+     "is",
+     477.895,
+     478.09
+    ],
+    [
+     "MY",
+     478.127,
+     478.323
+    ],
+    [
+     "game!",
+     478.36,
+     478.687
+    ],
+    [
+     "My",
+     478.953,
+     479.148
+    ],
+    [
+     "friends!",
+     479.185,
+     479.707
+    ],
+    [
+     "My",
+     479.974,
+     480.169
+    ],
+    [
+     "server!",
+     480.206,
+     480.663
+    ],
+    [
+     "You're",
+     481.38,
+     481.772
+    ],
+    [
+     "taking",
+     481.809,
+     482.265
+    ],
+    [
+     "EVERYTHING!",
+     482.302,
+     483.128
+    ]
+   ]
+  },
+  {
+   "id": "08.3",
+   "take": "08",
+   "scene": "SC 08",
+   "idx": 3,
+   "speaker": "MOM",
+   "raw": "[surprised, soft] Sweetie...",
+   "text": "Sweetie...",
+   "clip": [
+    17.147,
+    17.669
+   ],
+   "start": 483.308,
+   "end": 483.83,
+   "speechStart": 483.308,
+   "speechEnd": 483.83,
+   "words": [
+    [
+     "Sweetie...",
+     483.308,
+     483.83
+    ]
+   ]
+  },
+  {
+   "id": "08.4",
+   "take": "08",
+   "scene": "SC 08",
+   "idx": 4,
+   "speaker": "YOU",
+   "raw": "[shouting] I wish you never joined!",
+   "text": "I wish you never joined!",
+   "clip": [
+    17.849,
+    19.562
+   ],
+   "start": 484.01,
+   "end": 485.723,
+   "speechStart": 484.01,
+   "speechEnd": 485.723,
+   "words": [
+    [
+     "I",
+     484.01,
+     484.14
+    ],
+    [
+     "wish",
+     484.177,
+     484.504
+    ],
+    [
+     "you",
+     484.541,
+     484.801
+    ],
+    [
+     "never",
+     484.838,
+     485.229
+    ],
+    [
+     "joined!",
+     485.266,
+     485.723
+    ]
+   ],
+   "beatAfter": 1.5
+  },
+  {
+   "id": "08.5",
+   "take": "08",
+   "scene": "SC 08",
+   "idx": 5,
+   "speaker": "MOM",
+   "raw": "[quietly] Maybe we pushed too hard.",
+   "text": "Maybe we pushed too hard.",
+   "clip": [
+    21.242,
+    23.021
+   ],
+   "start": 487.403,
+   "end": 489.182,
+   "speechStart": 487.403,
+   "speechEnd": 489.182,
+   "words": [
+    [
+     "Maybe",
+     487.403,
+     487.794
+    ],
+    [
+     "we",
+     487.831,
+     488.027
+    ],
+    [
+     "pushed",
+     488.064,
+     488.521
+    ],
+    [
+     "too",
+     488.558,
+     488.818
+    ],
+    [
+     "hard.",
+     488.855,
+     489.182
+    ]
+   ]
+  },
+  {
+   "id": "08.6",
+   "take": "08",
+   "scene": "SC 08",
+   "idx": 6,
+   "speaker": "GRANDMA",
+   "raw": "[softly] Go talk to him, dear. [pause] Not you. [pause] Him.",
+   "text": "Go talk to him, dear. Not you. Him.",
+   "clip": [
+    23.201,
+    27.023
+   ],
+   "start": 489.362,
+   "end": 493.184,
+   "speechStart": 489.362,
+   "speechEnd": 493.184,
+   "words": [
+    [
+     "Go",
+     489.362,
+     489.558
+    ],
+    [
+     "talk",
+     489.595,
+     489.92
+    ],
+    [
+     "to",
+     489.957,
+     490.153
+    ],
+    [
+     "him,",
+     490.19,
+     490.451
+    ],
+    [
+     "dear.",
+     490.603,
+     490.929
+    ],
+    [
+     "Not",
+     491.647,
+     491.907
+    ],
+    [
+     "you.",
+     491.944,
+     492.205
+    ],
+    [
+     "Him.",
+     492.922,
+     493.184
+    ]
+   ]
+  },
+  {
+   "id": "08.7",
+   "take": "08",
+   "scene": "SC 08",
+   "idx": 7,
+   "speaker": "DAD",
+   "raw": "[softly] Hey, champ. [pause] Can I tell you something?",
+   "text": "Hey, champ. Can I tell you something?",
+   "clip": [
+    27.203,
+    30.503
+   ],
+   "start": 493.364,
+   "end": 496.664,
+   "speechStart": 493.364,
+   "speechEnd": 496.664,
+   "words": [
+    [
+     "Hey,",
+     493.364,
+     493.625
+    ],
+    [
+     "champ.",
+     493.776,
+     494.168
+    ],
+    [
+     "Can",
+     494.885,
+     495.147
+    ],
+    [
+     "I",
+     495.184,
+     495.314
+    ],
+    [
+     "tell",
+     495.351,
+     495.677
+    ],
+    [
+     "you",
+     495.714,
+     495.975
+    ],
+    [
+     "something?",
+     496.012,
+     496.664
+    ]
+   ]
+  },
+  {
+   "id": "08.8",
+   "take": "08",
+   "scene": "SC 08",
+   "idx": 8,
+   "speaker": "DAD",
+   "raw": "[softly] I don't care about the game. [pause] I don't know how to jump. I don't even know what a \"noob\" is.",
+   "text": "I don't care about the game. I don't know how to jump. I don't even know what a \"noob\" is.",
+   "clip": [
+    30.723,
+    37.749
+   ],
+   "start": 496.884,
+   "end": 503.91,
+   "speechStart": 496.884,
+   "speechEnd": 503.91,
+   "words": [
+    [
+     "I",
+     496.884,
+     497.014
+    ],
+    [
+     "don't",
+     497.051,
+     497.378
+    ],
+    [
+     "care",
+     497.415,
+     497.741
+    ],
+    [
+     "about",
+     497.778,
+     498.169
+    ],
+    [
+     "the",
+     498.206,
+     498.467
+    ],
+    [
+     "game.",
+     498.503,
+     498.83
+    ],
+    [
+     "I",
+     499.547,
+     499.678
+    ],
+    [
+     "don't",
+     499.715,
+     500.041
+    ],
+    [
+     "know",
+     500.078,
+     500.403
+    ],
+    [
+     "how",
+     500.44,
+     500.702
+    ],
+    [
+     "to",
+     500.739,
+     500.934
+    ],
+    [
+     "jump.",
+     500.971,
+     501.297
+    ],
+    [
+     "I",
+     501.564,
+     501.694
+    ],
+    [
+     "don't",
+     501.731,
+     502.057
+    ],
+    [
+     "even",
+     502.094,
+     502.421
+    ],
+    [
+     "know",
+     502.458,
+     502.783
+    ],
+    [
+     "what",
+     502.82,
+     503.146
+    ],
+    [
+     "a",
+     503.183,
+     503.314
+    ],
+    [
+     "\"noob\"",
+     503.351,
+     503.677
+    ],
+    [
+     "is.",
+     503.714,
+     503.91
+    ]
+   ]
+  },
+  {
+   "id": "08.9",
+   "take": "08",
+   "scene": "SC 08",
+   "idx": 9,
+   "speaker": "DAD",
+   "raw": "[softly, sincere] You've been in that world for a whole year... [pause] and I just wanted to see it. With you.",
+   "text": "You've been in that world for a whole year... and I just wanted to see it. With you.",
+   "clip": [
+    37.969,
+    44.692
+   ],
+   "start": 504.13,
+   "end": 510.853,
+   "speechStart": 504.13,
+   "speechEnd": 510.853,
+   "words": [
+    [
+     "You've",
+     504.13,
+     504.521
+    ],
+    [
+     "been",
+     504.558,
+     504.884
+    ],
+    [
+     "in",
+     504.921,
+     505.117
+    ],
+    [
+     "that",
+     505.154,
+     505.48
+    ],
+    [
+     "world",
+     505.517,
+     505.909
+    ],
+    [
+     "for",
+     505.945,
+     506.206
+    ],
+    [
+     "a",
+     506.243,
+     506.374
+    ],
+    [
+     "whole",
+     506.41,
+     506.802
+    ],
+    [
+     "year...",
+     506.838,
+     507.165
+    ],
+    [
+     "and",
+     507.915,
+     508.176
+    ],
+    [
+     "I",
+     508.213,
+     508.343
+    ],
+    [
+     "just",
+     508.38,
+     508.706
+    ],
+    [
+     "wanted",
+     508.743,
+     509.2
+    ],
+    [
+     "to",
+     509.237,
+     509.433
+    ],
+    [
+     "see",
+     509.47,
+     509.731
+    ],
+    [
+     "it.",
+     509.767,
+     509.963
+    ],
+    [
+     "With",
+     510.229,
+     510.556
+    ],
+    [
+     "you.",
+     510.592,
+     510.853
+    ]
+   ]
+  },
+  {
+   "id": "08.10",
+   "take": "08",
+   "scene": "SC 08",
+   "idx": 10,
+   "speaker": "YOU",
+   "raw": "[quietly] ...You could've just asked.",
+   "text": "...You could've just asked.",
+   "clip": [
+    44.872,
+    46.483
+   ],
+   "start": 511.033,
+   "end": 512.644,
+   "speechStart": 511.033,
+   "speechEnd": 512.644,
+   "words": [
+    [
+     "...You",
+     511.033,
+     511.294
+    ],
+    [
+     "could've",
+     511.331,
+     511.853
+    ],
+    [
+     "just",
+     511.89,
+     512.215
+    ],
+    [
+     "asked.",
+     512.252,
+     512.644
+    ]
+   ]
+  },
+  {
+   "id": "08.11",
+   "take": "08",
+   "scene": "SC 08",
+   "idx": 11,
+   "speaker": "DAD",
+   "raw": "[small laugh] I did. [pause] You said, \"Not now, Dad.\" [pause] About two hundred times.",
+   "text": "I did. You said, \"Not now, Dad.\" About two hundred times.",
+   "clip": [
+    46.663,
+    51.95
+   ],
+   "start": 512.824,
+   "end": 518.111,
+   "speechStart": 512.824,
+   "speechEnd": 518.111,
+   "words": [
+    [
+     "I",
+     512.824,
+     512.954
+    ],
+    [
+     "did.",
+     512.991,
+     513.252
+    ],
+    [
+     "You",
+     513.97,
+     514.23
+    ],
+    [
+     "said,",
+     514.267,
+     514.594
+    ],
+    [
+     "\"Not",
+     514.745,
+     515.006
+    ],
+    [
+     "now,",
+     515.043,
+     515.305
+    ],
+    [
+     "Dad.\"",
+     515.456,
+     515.717
+    ],
+    [
+     "About",
+     516.434,
+     516.826
+    ],
+    [
+     "two",
+     516.862,
+     517.123
+    ],
+    [
+     "hundred",
+     517.16,
+     517.683
+    ],
+    [
+     "times.",
+     517.719,
+     518.111
+    ]
+   ],
+   "beatAfter": 1.0
+  },
+  {
+   "id": "08.12",
+   "take": "08",
+   "scene": "SC 08",
+   "idx": 12,
+   "speaker": "NARRATOR",
+   "raw": "And then... at eleven p.m.... the alarm went off.",
+   "text": "And then... at eleven p.m.... the alarm went off.",
+   "clip": [
+    53.13,
+    56.625
+   ],
+   "start": 519.291,
+   "end": 522.786,
+   "speechStart": 519.291,
+   "speechEnd": 522.786,
+   "words": [
+    [
+     "And",
+     519.291,
+     519.552
+    ],
+    [
+     "then...",
+     519.589,
+     519.915
+    ],
+    [
+     "at",
+     520.214,
+     520.41
+    ],
+    [
+     "eleven",
+     520.447,
+     520.903
+    ],
+    [
+     "p.m....",
+     520.94,
+     521.136
+    ],
+    [
+     "the",
+     521.435,
+     521.696
+    ],
+    [
+     "alarm",
+     521.733,
+     522.125
+    ],
+    [
+     "went",
+     522.162,
+     522.487
+    ],
+    [
+     "off.",
+     522.524,
+     522.786
+    ]
+   ],
+   "beatAfter": 1.0
+  },
+  {
+   "id": "08.13",
+   "take": "08",
+   "scene": "SC 08",
+   "idx": 13,
+   "speaker": "SYSTEM",
+   "raw": "[booming, alarm] Warning! The Block King has awakened! [pause] If the server falls... everything resets!",
+   "text": "Warning! The Block King has awakened! If the server falls... everything resets!",
+   "clip": [
+    57.805,
+    64.211
+   ],
+   "start": 523.966,
+   "end": 530.372,
+   "speechStart": 523.966,
+   "speechEnd": 530.372,
+   "words": [
+    [
+     "Warning!",
+     523.966,
+     524.488
+    ],
+    [
+     "The",
+     524.754,
+     525.016
+    ],
+    [
+     "Block",
+     525.053,
+     525.444
+    ],
+    [
+     "King",
+     525.481,
+     525.807
+    ],
+    [
+     "has",
+     525.844,
+     526.105
+    ],
+    [
+     "awakened!",
+     526.141,
+     526.729
+    ],
+    [
+     "If",
+     527.446,
+     527.641
+    ],
+    [
+     "the",
+     527.678,
+     527.94
+    ],
+    [
+     "server",
+     527.977,
+     528.433
+    ],
+    [
+     "falls...",
+     528.469,
+     528.861
+    ],
+    [
+     "everything",
+     529.161,
+     529.878
+    ],
+    [
+     "resets!",
+     529.915,
+     530.372
+    ]
+   ]
+  },
+  {
+   "id": "09.0",
+   "take": "09",
+   "scene": "SC 09",
+   "idx": 0,
+   "speaker": "NARRATOR",
+   "raw": "The Block King. The biggest boss in Cube City history.",
+   "text": "The Block King. The biggest boss in Cube City history.",
+   "clip": [
+    0.0,
+    4.019
+   ],
+   "start": 531.472,
+   "end": 535.491,
+   "speechStart": 531.472,
+   "speechEnd": 535.491,
+   "words": [
+    [
+     "The",
+     531.472,
+     531.733
+    ],
+    [
+     "Block",
+     531.77,
+     532.161
+    ],
+    [
+     "King.",
+     532.198,
+     532.524
+    ],
+    [
+     "The",
+     532.791,
+     533.051
+    ],
+    [
+     "biggest",
+     533.088,
+     533.611
+    ],
+    [
+     "boss",
+     533.647,
+     533.974
+    ],
+    [
+     "in",
+     534.011,
+     534.206
+    ],
+    [
+     "Cube",
+     534.243,
+     534.569
+    ],
+    [
+     "City",
+     534.606,
+     534.932
+    ],
+    [
+     "history.",
+     534.969,
+     535.491
+    ]
+   ]
+  },
+  {
+   "id": "09.1",
+   "take": "09",
+   "scene": "SC 09",
+   "idx": 1,
+   "speaker": "BOSS",
+   "raw": "[booming, echoing] CUBE CITY... [pause] IS MINE!",
+   "text": "CUBE CITY... IS MINE!",
+   "clip": [
+    4.199,
+    6.344
+   ],
+   "start": 535.671,
+   "end": 537.816,
+   "speechStart": 535.671,
+   "speechEnd": 537.816,
+   "words": [
+    [
+     "CUBE",
+     535.671,
+     536.046
+    ],
+    [
+     "CITY...",
+     536.083,
+     536.458
+    ],
+    [
+     "IS",
+     537.209,
+     537.404
+    ],
+    [
+     "MINE!",
+     537.441,
+     537.816
+    ]
+   ]
+  },
+  {
+   "id": "09.2",
+   "take": "09",
+   "scene": "SC 09",
+   "idx": 2,
+   "speaker": "NARRATOR",
+   "raw": "He smashed the arena. He smashed Tycoon Valley. [pause] He smashed Granny's cookie factory.",
+   "text": "He smashed the arena. He smashed Tycoon Valley. He smashed Granny's cookie factory.",
+   "clip": [
+    6.524,
+    13.095
+   ],
+   "start": 537.996,
+   "end": 544.567,
+   "speechStart": 537.996,
+   "speechEnd": 544.567,
+   "words": [
+    [
+     "He",
+     537.996,
+     538.192
+    ],
+    [
+     "smashed",
+     538.229,
+     538.75
+    ],
+    [
+     "the",
+     538.787,
+     539.048
+    ],
+    [
+     "arena.",
+     539.085,
+     539.477
+    ],
+    [
+     "He",
+     539.743,
+     539.939
+    ],
+    [
+     "smashed",
+     539.975,
+     540.498
+    ],
+    [
+     "Tycoon",
+     540.535,
+     540.991
+    ],
+    [
+     "Valley.",
+     541.028,
+     541.484
+    ],
+    [
+     "He",
+     542.202,
+     542.398
+    ],
+    [
+     "smashed",
+     542.435,
+     542.956
+    ],
+    [
+     "Granny's",
+     542.993,
+     543.515
+    ],
+    [
+     "cookie",
+     543.552,
+     544.009
+    ],
+    [
+     "factory.",
+     544.046,
+     544.567
+    ]
+   ]
+  },
+  {
+   "id": "09.3",
+   "take": "09",
+   "scene": "SC 09",
+   "idx": 3,
+   "speaker": "GRANDMA",
+   "raw": "[outraged] MY COOKIES!",
+   "text": "MY COOKIES!",
+   "clip": [
+    13.275,
+    14.108
+   ],
+   "start": 544.747,
+   "end": 545.58,
+   "speechStart": 544.747,
+   "speechEnd": 545.58,
+   "words": [
+    [
+     "MY",
+     544.747,
+     544.943
+    ],
+    [
+     "COOKIES!",
+     544.98,
+     545.58
+    ]
+   ]
+  },
+  {
+   "id": "09.4",
+   "take": "09",
+   "scene": "SC 09",
+   "idx": 4,
+   "speaker": "DARKBLADE",
+   "raw": "[panicked] Clan, attack! [pause] Clan? CLAN?!",
+   "text": "Clan, attack! Clan? CLAN?!",
+   "clip": [
+    14.288,
+    16.908
+   ],
+   "start": 545.76,
+   "end": 548.38,
+   "speechStart": 545.76,
+   "speechEnd": 548.38,
+   "words": [
+    [
+     "Clan,",
+     545.76,
+     546.086
+    ],
+    [
+     "attack!",
+     546.238,
+     546.695
+    ],
+    [
+     "Clan?",
+     547.412,
+     547.738
+    ],
+    [
+     "CLAN?!",
+     548.004,
+     548.38
+    ]
+   ]
+  },
+  {
+   "id": "09.5",
+   "take": "09",
+   "scene": "SC 09",
+   "idx": 5,
+   "speaker": "NOODLE",
+   "raw": "[panicked] Bro, where ARE you?! We need you!",
+   "text": "Bro, where ARE you?! We need you!",
+   "clip": [
+    17.088,
+    19.65
+   ],
+   "start": 548.56,
+   "end": 551.122,
+   "speechStart": 548.56,
+   "speechEnd": 551.122,
+   "words": [
+    [
+     "Bro,",
+     548.56,
+     548.821
+    ],
+    [
+     "where",
+     548.972,
+     549.364
+    ],
+    [
+     "ARE",
+     549.4,
+     549.701
+    ],
+    [
+     "you?!",
+     549.738,
+     549.999
+    ],
+    [
+     "We",
+     550.266,
+     550.461
+    ],
+    [
+     "need",
+     550.498,
+     550.824
+    ],
+    [
+     "you!",
+     550.861,
+     551.122
+    ]
+   ],
+   "beatAfter": 0.5
+  },
+  {
+   "id": "09.6",
+   "take": "09",
+   "scene": "SC 09",
+   "idx": 6,
+   "speaker": "NARRATOR",
+   "raw": "The server health bar was dropping. [pause] Ninety percent. Fifty. [pause] Twenty.",
+   "text": "The server health bar was dropping. Ninety percent. Fifty. Twenty.",
+   "clip": [
+    20.33,
+    26.363
+   ],
+   "start": 551.802,
+   "end": 557.835,
+   "speechStart": 551.802,
+   "speechEnd": 557.835,
+   "words": [
+    [
+     "The",
+     551.802,
+     552.063
+    ],
+    [
+     "server",
+     552.1,
+     552.556
+    ],
+    [
+     "health",
+     552.593,
+     553.05
+    ],
+    [
+     "bar",
+     553.087,
+     553.348
+    ],
+    [
+     "was",
+     553.385,
+     553.645
+    ],
+    [
+     "dropping.",
+     553.682,
+     554.269
+    ],
+    [
+     "Ninety",
+     554.987,
+     555.444
+    ],
+    [
+     "percent.",
+     555.481,
+     556.002
+    ],
+    [
+     "Fifty.",
+     556.269,
+     556.66
+    ],
+    [
+     "Twenty.",
+     557.378,
+     557.835
+    ]
+   ]
+  },
+  {
+   "id": "09.7",
+   "take": "09",
+   "scene": "SC 09",
+   "idx": 7,
+   "speaker": "YOU",
+   "raw": "[determined] Dad... [pause] I can't win this alone.",
+   "text": "Dad... I can't win this alone.",
+   "clip": [
+    26.543,
+    29.137
+   ],
+   "start": 558.015,
+   "end": 560.609,
+   "speechStart": 558.015,
+   "speechEnd": 560.609,
+   "words": [
+    [
+     "Dad...",
+     558.015,
+     558.276
+    ],
+    [
+     "I",
+     559.026,
+     559.156
+    ],
+    [
+     "can't",
+     559.193,
+     559.52
+    ],
+    [
+     "win",
+     559.557,
+     559.817
+    ],
+    [
+     "this",
+     559.854,
+     560.181
+    ],
+    [
+     "alone.",
+     560.218,
+     560.609
+    ]
+   ]
+  },
+  {
+   "id": "09.8",
+   "take": "09",
+   "scene": "SC 09",
+   "idx": 8,
+   "speaker": "DAD",
+   "raw": "[warm] Then don't.",
+   "text": "Then don't.",
+   "clip": [
+    29.317,
+    30.007
+   ],
+   "start": 560.789,
+   "end": 561.479,
+   "speechStart": 560.789,
+   "speechEnd": 561.479,
+   "words": [
+    [
+     "Then",
+     560.789,
+     561.115
+    ],
+    [
+     "don't.",
+     561.152,
+     561.479
+    ]
+   ],
+   "beatAfter": 1.5
+  },
+  {
+   "id": "09.9",
+   "take": "09",
+   "scene": "SC 09",
+   "idx": 9,
+   "speaker": "YOU",
+   "raw": "[urgent] Mom! Grandma! The server needs us!",
+   "text": "Mom! Grandma! The server needs us!",
+   "clip": [
+    31.687,
+    34.418
+   ],
+   "start": 563.159,
+   "end": 565.89,
+   "speechStart": 563.159,
+   "speechEnd": 565.89,
+   "words": [
+    [
+     "Mom!",
+     563.159,
+     563.42
+    ],
+    [
+     "Grandma!",
+     563.686,
+     564.209
+    ],
+    [
+     "The",
+     564.475,
+     564.736
+    ],
+    [
+     "server",
+     564.773,
+     565.229
+    ],
+    [
+     "needs",
+     565.266,
+     565.658
+    ],
+    [
+     "us!",
+     565.694,
+     565.89
+    ]
+   ]
+  },
+  {
+   "id": "09.10",
+   "take": "09",
+   "scene": "SC 09",
+   "idx": 10,
+   "speaker": "MOM",
+   "raw": "[stern] It's eleven p.m., young man. [pause] Bedtime.",
+   "text": "It's eleven p.m., young man. Bedtime.",
+   "clip": [
+    34.598,
+    37.666
+   ],
+   "start": 566.07,
+   "end": 569.138,
+   "speechStart": 566.07,
+   "speechEnd": 569.138,
+   "words": [
+    [
+     "It's",
+     566.07,
+     566.331
+    ],
+    [
+     "eleven",
+     566.368,
+     566.824
+    ],
+    [
+     "p.m.,",
+     566.861,
+     567.057
+    ],
+    [
+     "young",
+     567.209,
+     567.6
+    ],
+    [
+     "man.",
+     567.637,
+     567.898
+    ],
+    [
+     "Bedtime.",
+     568.615,
+     569.138
+    ]
+   ],
+   "beatAfter": 2.0
+  },
+  {
+   "id": "09.11",
+   "take": "09",
+   "scene": "SC 09",
+   "idx": 11,
+   "speaker": "MOM",
+   "raw": "[cold, focused] ...Five minutes. [pause] Let's go.",
+   "text": "...Five minutes. Let's go.",
+   "clip": [
+    39.886,
+    42.048
+   ],
+   "start": 571.358,
+   "end": 573.52,
+   "speechStart": 571.358,
+   "speechEnd": 573.52,
+   "words": [
+    [
+     "...Five",
+     571.358,
+     571.684
+    ],
+    [
+     "minutes.",
+     571.721,
+     572.243
+    ],
+    [
+     "Let's",
+     572.96,
+     573.287
+    ],
+    [
+     "go.",
+     573.324,
+     573.52
+    ]
+   ]
+  },
+  {
+   "id": "09.12",
+   "take": "09",
+   "scene": "SC 09",
+   "idx": 12,
+   "speaker": "GRANDMA",
+   "raw": "[cracking knuckles] Granny's coming, dear.",
+   "text": "Granny's coming, dear.",
+   "clip": [
+    42.228,
+    43.721
+   ],
+   "start": 573.7,
+   "end": 575.193,
+   "speechStart": 573.7,
+   "speechEnd": 575.193,
+   "words": [
+    [
+     "Granny's",
+     573.7,
+     574.222
+    ],
+    [
+     "coming,",
+     574.258,
+     574.715
+    ],
+    [
+     "dear.",
+     574.867,
+     575.193
+    ]
+   ]
+  },
+  {
+   "id": "09.13",
+   "take": "09",
+   "scene": "SC 09",
+   "idx": 13,
+   "speaker": "NARRATOR",
+   "raw": "[epic] And for the first time ever... your whole family logged in. Together.",
+   "text": "And for the first time ever... your whole family logged in. Together.",
+   "clip": [
+    43.901,
+    49.039
+   ],
+   "start": 575.373,
+   "end": 580.511,
+   "speechStart": 575.373,
+   "speechEnd": 580.511,
+   "words": [
+    [
+     "And",
+     575.373,
+     575.634
+    ],
+    [
+     "for",
+     575.671,
+     575.931
+    ],
+    [
+     "the",
+     575.968,
+     576.23
+    ],
+    [
+     "first",
+     576.267,
+     576.658
+    ],
+    [
+     "time",
+     576.695,
+     577.021
+    ],
+    [
+     "ever...",
+     577.058,
+     577.384
+    ],
+    [
+     "your",
+     577.683,
+     578.009
+    ],
+    [
+     "whole",
+     578.046,
+     578.437
+    ],
+    [
+     "family",
+     578.474,
+     578.931
+    ],
+    [
+     "logged",
+     578.968,
+     579.425
+    ],
+    [
+     "in.",
+     579.462,
+     579.657
+    ],
+    [
+     "Together.",
+     579.924,
+     580.511
+    ]
+   ]
+  },
+  {
+   "id": "10.0",
+   "take": "10",
+   "scene": "SC 10",
+   "idx": 0,
+   "speaker": "SYSTEM",
+   "raw": "[cheerful] Party formed. [pause] Party name: \"The Family.\"",
+   "text": "Party formed. Party name: \"The Family.\"",
+   "clip": [
+    0.0,
+    3.148
+   ],
+   "start": 581.611,
+   "end": 584.759,
+   "speechStart": 581.611,
+   "speechEnd": 584.759,
+   "words": [
+    [
+     "Party",
+     581.611,
+     582.002
+    ],
+    [
+     "formed.",
+     582.039,
+     582.496
+    ],
+    [
+     "Party",
+     583.213,
+     583.604
+    ],
+    [
+     "name:",
+     583.641,
+     583.968
+    ],
+    [
+     "\"The",
+     584.005,
+     584.265
+    ],
+    [
+     "Family.\"",
+     584.302,
+     584.759
+    ]
+   ]
+  },
+  {
+   "id": "10.1",
+   "take": "10",
+   "scene": "SC 10",
+   "idx": 1,
+   "speaker": "YOU",
+   "raw": "[commanding] Okay! Mom, you're the tank. [pause] Granny, we need gear!",
+   "text": "Okay! Mom, you're the tank. Granny, we need gear!",
+   "clip": [
+    3.328,
+    7.633
+   ],
+   "start": 584.939,
+   "end": 589.244,
+   "speechStart": 584.939,
+   "speechEnd": 589.244,
+   "words": [
+    [
+     "Okay!",
+     584.939,
+     585.265
+    ],
+    [
+     "Mom,",
+     585.532,
+     585.793
+    ],
+    [
+     "you're",
+     585.944,
+     586.335
+    ],
+    [
+     "the",
+     586.372,
+     586.633
+    ],
+    [
+     "tank.",
+     586.67,
+     586.996
+    ],
+    [
+     "Granny,",
+     587.714,
+     588.171
+    ],
+    [
+     "we",
+     588.322,
+     588.518
+    ],
+    [
+     "need",
+     588.555,
+     588.881
+    ],
+    [
+     "gear!",
+     588.918,
+     589.244
+    ]
+   ]
+  },
+  {
+   "id": "10.2",
+   "take": "10",
+   "scene": "SC 10",
+   "idx": 2,
+   "speaker": "GRANDMA",
+   "raw": "[proud] Swords for everyone! [pause] Put it on my tab!",
+   "text": "Swords for everyone! Put it on my tab!",
+   "clip": [
+    7.813,
+    11.165
+   ],
+   "start": 589.424,
+   "end": 592.776,
+   "speechStart": 589.424,
+   "speechEnd": 592.776,
+   "words": [
+    [
+     "Swords",
+     589.424,
+     589.881
+    ],
+    [
+     "for",
+     589.918,
+     590.178
+    ],
+    [
+     "everyone!",
+     590.215,
+     590.802
+    ],
+    [
+     "Put",
+     591.52,
+     591.781
+    ],
+    [
+     "it",
+     591.818,
+     592.014
+    ],
+    [
+     "on",
+     592.05,
+     592.246
+    ],
+    [
+     "my",
+     592.283,
+     592.478
+    ],
+    [
+     "tab!",
+     592.515,
+     592.776
+    ]
+   ]
+  },
+  {
+   "id": "10.3",
+   "take": "10",
+   "scene": "SC 10",
+   "idx": 3,
+   "speaker": "MOM",
+   "raw": "[battle cry] Kids! Formation! [pause] And wear your helmets!",
+   "text": "Kids! Formation! And wear your helmets!",
+   "clip": [
+    11.345,
+    14.853
+   ],
+   "start": 592.956,
+   "end": 596.464,
+   "speechStart": 592.956,
+   "speechEnd": 596.464,
+   "words": [
+    [
+     "Kids!",
+     592.956,
+     593.282
+    ],
+    [
+     "Formation!",
+     593.549,
+     594.201
+    ],
+    [
+     "And",
+     594.918,
+     595.179
+    ],
+    [
+     "wear",
+     595.216,
+     595.542
+    ],
+    [
+     "your",
+     595.579,
+     595.906
+    ],
+    [
+     "helmets!",
+     595.942,
+     596.464
+    ]
+   ]
+  },
+  {
+   "id": "10.4",
+   "take": "10",
+   "scene": "SC 10",
+   "idx": 4,
+   "speaker": "MOM",
+   "raw": "[fierce] Mommy's got you! [pause] Everybody behind me!",
+   "text": "Mommy's got you! Everybody behind me!",
+   "clip": [
+    15.073,
+    18.221
+   ],
+   "start": 596.684,
+   "end": 599.832,
+   "speechStart": 596.684,
+   "speechEnd": 599.832,
+   "words": [
+    [
+     "Mommy's",
+     596.684,
+     597.141
+    ],
+    [
+     "got",
+     597.178,
+     597.438
+    ],
+    [
+     "you!",
+     597.475,
+     597.736
+    ],
+    [
+     "Everybody",
+     598.454,
+     599.106
+    ],
+    [
+     "behind",
+     599.143,
+     599.6
+    ],
+    [
+     "me!",
+     599.637,
+     599.832
+    ]
+   ],
+   "beatAfter": 1.0
+  },
+  {
+   "id": "10.5",
+   "take": "10",
+   "scene": "SC 10",
+   "idx": 5,
+   "speaker": "NARRATOR",
+   "raw": "Mom blocked the punches. You led the attack. [pause] Even DarkBlade joined your team.",
+   "text": "Mom blocked the punches. You led the attack. Even DarkBlade joined your team.",
+   "clip": [
+    19.401,
+    25.646
+   ],
+   "start": 601.012,
+   "end": 607.257,
+   "speechStart": 601.012,
+   "speechEnd": 607.257,
+   "words": [
+    [
+     "Mom",
+     601.012,
+     601.273
+    ],
+    [
+     "blocked",
+     601.31,
+     601.832
+    ],
+    [
+     "the",
+     601.869,
+     602.13
+    ],
+    [
+     "punches.",
+     602.167,
+     602.688
+    ],
+    [
+     "You",
+     602.955,
+     603.215
+    ],
+    [
+     "led",
+     603.252,
+     603.514
+    ],
+    [
+     "the",
+     603.551,
+     603.811
+    ],
+    [
+     "attack.",
+     603.848,
+     604.305
+    ],
+    [
+     "Even",
+     605.023,
+     605.348
+    ],
+    [
+     "DarkBlade",
+     605.385,
+     606.038
+    ],
+    [
+     "joined",
+     606.075,
+     606.531
+    ],
+    [
+     "your",
+     606.568,
+     606.895
+    ],
+    [
+     "team.",
+     606.932,
+     607.257
+    ]
+   ]
+  },
+  {
+   "id": "10.6",
+   "take": "10",
+   "scene": "SC 10",
+   "idx": 6,
+   "speaker": "DARKBLADE",
+   "raw": "[grudging] Just this once.",
+   "text": "Just this once.",
+   "clip": [
+    25.826,
+    26.878
+   ],
+   "start": 607.437,
+   "end": 608.489,
+   "speechStart": 607.437,
+   "speechEnd": 608.489,
+   "words": [
+    [
+     "Just",
+     607.437,
+     607.763
+    ],
+    [
+     "this",
+     607.8,
+     608.126
+    ],
+    [
+     "once.",
+     608.163,
+     608.489
+    ]
+   ]
+  },
+  {
+   "id": "10.7",
+   "take": "10",
+   "scene": "SC 10",
+   "idx": 7,
+   "speaker": "GRANDMA",
+   "raw": "[shouting] Healing potions! A hundred of them! [pause] Family discount!",
+   "text": "Healing potions! A hundred of them! Family discount!",
+   "clip": [
+    27.058,
+    31.488
+   ],
+   "start": 608.669,
+   "end": 613.099,
+   "speechStart": 608.669,
+   "speechEnd": 613.099,
+   "words": [
+    [
+     "Healing",
+     608.669,
+     609.191
+    ],
+    [
+     "potions!",
+     609.227,
+     609.75
+    ],
+    [
+     "A",
+     610.016,
+     610.147
+    ],
+    [
+     "hundred",
+     610.184,
+     610.705
+    ],
+    [
+     "of",
+     610.742,
+     610.938
+    ],
+    [
+     "them!",
+     610.975,
+     611.301
+    ],
+    [
+     "Family",
+     612.019,
+     612.475
+    ],
+    [
+     "discount!",
+     612.512,
+     613.099
+    ]
+   ]
+  },
+  {
+   "id": "10.8",
+   "take": "10",
+   "scene": "SC 10",
+   "idx": 8,
+   "speaker": "YOU",
+   "raw": "[commanding] Noodle, left side! DarkBlade, right side! [pause] Everybody, ATTACK!",
+   "text": "Noodle, left side! DarkBlade, right side! Everybody, ATTACK!",
+   "clip": [
+    31.668,
+    36.837
+   ],
+   "start": 613.279,
+   "end": 618.448,
+   "speechStart": 613.279,
+   "speechEnd": 618.448,
+   "words": [
+    [
+     "Noodle,",
+     613.279,
+     613.736
+    ],
+    [
+     "left",
+     613.887,
+     614.214
+    ],
+    [
+     "side!",
+     614.251,
+     614.576
+    ],
+    [
+     "DarkBlade,",
+     614.843,
+     615.495
+    ],
+    [
+     "right",
+     615.647,
+     616.038
+    ],
+    [
+     "side!",
+     616.075,
+     616.402
+    ],
+    [
+     "Everybody,",
+     617.119,
+     617.771
+    ],
+    [
+     "ATTACK!",
+     617.923,
+     618.448
+    ]
+   ]
+  },
+  {
+   "id": "10.9",
+   "take": "10",
+   "scene": "SC 10",
+   "idx": 9,
+   "speaker": "BOSS",
+   "raw": "[booming, laughing] FOOLS! [pause] My shield cannot break!",
+   "text": "FOOLS! My shield cannot break!",
+   "clip": [
+    37.017,
+    39.796
+   ],
+   "start": 618.628,
+   "end": 621.407,
+   "speechStart": 618.628,
+   "speechEnd": 621.407,
+   "words": [
+    [
+     "FOOLS!",
+     618.628,
+     619.078
+    ],
+    [
+     "My",
+     619.796,
+     619.992
+    ],
+    [
+     "shield",
+     620.029,
+     620.484
+    ],
+    [
+     "cannot",
+     620.521,
+     620.978
+    ],
+    [
+     "break!",
+     621.015,
+     621.407
+    ]
+   ],
+   "beatAfter": 1.5
+  },
+  {
+   "id": "10.10",
+   "take": "10",
+   "scene": "SC 10",
+   "idx": 10,
+   "speaker": "NOODLE",
+   "raw": "[urgent] The crystal! On top of the obby tower! [pause] Someone has to jump up there and break it!",
+   "text": "The crystal! On top of the obby tower! Someone has to jump up there and break it!",
+   "clip": [
+    41.476,
+    48.129
+   ],
+   "start": 623.087,
+   "end": 629.74,
+   "speechStart": 623.087,
+   "speechEnd": 629.74,
+   "words": [
+    [
+     "The",
+     623.087,
+     623.348
+    ],
+    [
+     "crystal!",
+     623.385,
+     623.907
+    ],
+    [
+     "On",
+     624.173,
+     624.369
+    ],
+    [
+     "top",
+     624.406,
+     624.666
+    ],
+    [
+     "of",
+     624.703,
+     624.899
+    ],
+    [
+     "the",
+     624.936,
+     625.197
+    ],
+    [
+     "obby",
+     625.234,
+     625.56
+    ],
+    [
+     "tower!",
+     625.597,
+     625.988
+    ],
+    [
+     "Someone",
+     626.706,
+     627.228
+    ],
+    [
+     "has",
+     627.265,
+     627.526
+    ],
+    [
+     "to",
+     627.563,
+     627.759
+    ],
+    [
+     "jump",
+     627.795,
+     628.121
+    ],
+    [
+     "up",
+     628.158,
+     628.354
+    ],
+    [
+     "there",
+     628.391,
+     628.782
+    ],
+    [
+     "and",
+     628.819,
+     629.08
+    ],
+    [
+     "break",
+     629.116,
+     629.508
+    ],
+    [
+     "it!",
+     629.545,
+     629.74
+    ]
+   ]
+  },
+  {
+   "id": "10.11",
+   "take": "10",
+   "scene": "SC 10",
+   "idx": 11,
+   "speaker": "YOU",
+   "raw": "[panicked] I can't! If I leave, the whole team falls apart!",
+   "text": "I can't! If I leave, the whole team falls apart!",
+   "clip": [
+    48.309,
+    51.921
+   ],
+   "start": 629.92,
+   "end": 633.532,
+   "speechStart": 629.92,
+   "speechEnd": 633.532,
+   "words": [
+    [
+     "I",
+     629.92,
+     630.05
+    ],
+    [
+     "can't!",
+     630.087,
+     630.414
+    ],
+    [
+     "If",
+     630.68,
+     630.876
+    ],
+    [
+     "I",
+     630.912,
+     631.043
+    ],
+    [
+     "leave,",
+     631.08,
+     631.471
+    ],
+    [
+     "the",
+     631.623,
+     631.884
+    ],
+    [
+     "whole",
+     631.921,
+     632.312
+    ],
+    [
+     "team",
+     632.349,
+     632.675
+    ],
+    [
+     "falls",
+     632.712,
+     633.103
+    ],
+    [
+     "apart!",
+     633.14,
+     633.532
+    ]
+   ]
+  },
+  {
+   "id": "10.12",
+   "take": "10",
+   "scene": "SC 10",
+   "idx": 12,
+   "speaker": "NARRATOR",
+   "raw": "Everybody was fighting. [pause] Everybody... except one.",
+   "text": "Everybody was fighting. Everybody... except one.",
+   "clip": [
+    52.101,
+    56.098
+   ],
+   "start": 633.712,
+   "end": 637.709,
+   "speechStart": 633.712,
+   "speechEnd": 637.709,
+   "words": [
+    [
+     "Everybody",
+     633.712,
+     634.364
+    ],
+    [
+     "was",
+     634.402,
+     634.662
+    ],
+    [
+     "fighting.",
+     634.699,
+     635.286
+    ],
+    [
+     "Everybody...",
+     636.004,
+     636.656
+    ],
+    [
+     "except",
+     636.955,
+     637.412
+    ],
+    [
+     "one.",
+     637.449,
+     637.709
+    ]
+   ]
+  },
+  {
+   "id": "10.13",
+   "take": "10",
+   "scene": "SC 10",
+   "idx": 13,
+   "speaker": "DAD",
+   "raw": "[quietly, determined] Son. [pause] I've been practicing.",
+   "text": "Son. I've been practicing.",
+   "clip": [
+    56.278,
+    58.635
+   ],
+   "start": 637.889,
+   "end": 640.246,
+   "speechStart": 637.889,
+   "speechEnd": 640.246,
+   "words": [
+    [
+     "Son.",
+     637.889,
+     638.15
+    ],
+    [
+     "I've",
+     638.867,
+     639.128
+    ],
+    [
+     "been",
+     639.165,
+     639.491
+    ],
+    [
+     "practicing.",
+     639.528,
+     640.246
+    ]
+   ],
+   "beatAfter": 1.0
+  },
+  {
+   "id": "11.0",
+   "take": "11",
+   "scene": "SC 11",
+   "idx": 0,
+   "speaker": "NARRATOR",
+   "raw": "Dad. The man who couldn't jump. [pause] Versus one hundred floors of obby.",
+   "text": "Dad. The man who couldn't jump. Versus one hundred floors of obby.",
+   "clip": [
+    0.0,
+    5.426
+   ],
+   "start": 642.346,
+   "end": 647.772,
+   "speechStart": 642.346,
+   "speechEnd": 647.772,
+   "words": [
+    [
+     "Dad.",
+     642.346,
+     642.607
+    ],
+    [
+     "The",
+     642.873,
+     643.134
+    ],
+    [
+     "man",
+     643.171,
+     643.433
+    ],
+    [
+     "who",
+     643.469,
+     643.73
+    ],
+    [
+     "couldn't",
+     643.767,
+     644.289
+    ],
+    [
+     "jump.",
+     644.325,
+     644.652
+    ],
+    [
+     "Versus",
+     645.369,
+     645.826
+    ],
+    [
+     "one",
+     645.863,
+     646.124
+    ],
+    [
+     "hundred",
+     646.161,
+     646.682
+    ],
+    [
+     "floors",
+     646.719,
+     647.176
+    ],
+    [
+     "of",
+     647.213,
+     647.409
+    ],
+    [
+     "obby.",
+     647.446,
+     647.772
+    ]
+   ]
+  },
+  {
+   "id": "11.1",
+   "take": "11",
+   "scene": "SC 11",
+   "idx": 1,
+   "speaker": "DAD",
+   "raw": "[nervous] Space... bar.",
+   "text": "Space... bar.",
+   "clip": [
+    5.606,
+    6.558
+   ],
+   "start": 647.952,
+   "end": 648.904,
+   "speechStart": 647.952,
+   "speechEnd": 648.904,
+   "words": [
+    [
+     "Space...",
+     647.952,
+     648.343
+    ],
+    [
+     "bar.",
+     648.642,
+     648.904
+    ]
+   ]
+  },
+  {
+   "id": "11.2",
+   "take": "11",
+   "scene": "SC 11",
+   "idx": 2,
+   "speaker": "NARRATOR",
+   "raw": "He jumped. [pause] He jumped again. [pause] He slipped... and didn't fall.",
+   "text": "He jumped. He jumped again. He slipped... and didn't fall.",
+   "clip": [
+    6.738,
+    12.086
+   ],
+   "start": 649.084,
+   "end": 654.432,
+   "speechStart": 649.084,
+   "speechEnd": 654.432,
+   "words": [
+    [
+     "He",
+     649.084,
+     649.28
+    ],
+    [
+     "jumped.",
+     649.317,
+     649.773
+    ],
+    [
+     "He",
+     650.49,
+     650.686
+    ],
+    [
+     "jumped",
+     650.723,
+     651.18
+    ],
+    [
+     "again.",
+     651.217,
+     651.608
+    ],
+    [
+     "He",
+     652.325,
+     652.521
+    ],
+    [
+     "slipped...",
+     652.558,
+     653.08
+    ],
+    [
+     "and",
+     653.379,
+     653.641
+    ],
+    [
+     "didn't",
+     653.678,
+     654.069
+    ],
+    [
+     "fall.",
+     654.106,
+     654.432
+    ]
+   ]
+  },
+  {
+   "id": "11.3",
+   "take": "11",
+   "scene": "SC 11",
+   "idx": 3,
+   "speaker": "NOODLE",
+   "raw": "[chanting] Jump, Dad! [pause] Jump, Dad!",
+   "text": "Jump, Dad! Jump, Dad!",
+   "clip": [
+    12.266,
+    14.461
+   ],
+   "start": 654.612,
+   "end": 656.807,
+   "speechStart": 654.612,
+   "speechEnd": 656.807,
+   "words": [
+    [
+     "Jump,",
+     654.612,
+     654.938
+    ],
+    [
+     "Dad!",
+     655.09,
+     655.351
+    ],
+    [
+     "Jump,",
+     656.068,
+     656.395
+    ],
+    [
+     "Dad!",
+     656.546,
+     656.807
+    ]
+   ]
+  },
+  {
+   "id": "11.4",
+   "take": "11",
+   "scene": "SC 11",
+   "idx": 4,
+   "speaker": "NARRATOR",
+   "raw": "And then the whole server started chanting.",
+   "text": "And then the whole server started chanting.",
+   "clip": [
+    14.641,
+    17.668
+   ],
+   "start": 656.987,
+   "end": 660.014,
+   "speechStart": 656.987,
+   "speechEnd": 660.014,
+   "words": [
+    [
+     "And",
+     656.987,
+     657.248
+    ],
+    [
+     "then",
+     657.285,
+     657.611
+    ],
+    [
+     "the",
+     657.648,
+     657.909
+    ],
+    [
+     "whole",
+     657.946,
+     658.337
+    ],
+    [
+     "server",
+     658.374,
+     658.83
+    ],
+    [
+     "started",
+     658.867,
+     659.39
+    ],
+    [
+     "chanting.",
+     659.427,
+     660.014
+    ]
+   ]
+  },
+  {
+   "id": "11.5",
+   "take": "11",
+   "scene": "SC 11",
+   "idx": 5,
+   "speaker": "DARKBLADE",
+   "raw": "[shouting] Jump, Mister Hot Dog! JUMP!",
+   "text": "Jump, Mister Hot Dog! JUMP!",
+   "clip": [
+    17.848,
+    20.019
+   ],
+   "start": 660.194,
+   "end": 662.365,
+   "speechStart": 660.194,
+   "speechEnd": 662.365,
+   "words": [
+    [
+     "Jump,",
+     660.194,
+     660.52
+    ],
+    [
+     "Mister",
+     660.672,
+     661.129
+    ],
+    [
+     "Hot",
+     661.166,
+     661.426
+    ],
+    [
+     "Dog!",
+     661.463,
+     661.724
+    ],
+    [
+     "JUMP!",
+     661.991,
+     662.365
+    ]
+   ]
+  },
+  {
+   "id": "11.6",
+   "take": "11",
+   "scene": "SC 11",
+   "idx": 6,
+   "speaker": "DAD",
+   "raw": "[panicking] No no no no no... [pause] Okay. Okay! I'm okay!",
+   "text": "No no no no no... Okay. Okay! I'm okay!",
+   "clip": [
+    20.199,
+    23.819
+   ],
+   "start": 662.545,
+   "end": 666.165,
+   "speechStart": 662.545,
+   "speechEnd": 666.165,
+   "words": [
+    [
+     "No",
+     662.545,
+     662.741
+    ],
+    [
+     "no",
+     662.778,
+     662.973
+    ],
+    [
+     "no",
+     663.01,
+     663.206
+    ],
+    [
+     "no",
+     663.243,
+     663.439
+    ],
+    [
+     "no...",
+     663.476,
+     663.671
+    ],
+    [
+     "Okay.",
+     664.421,
+     664.748
+    ],
+    [
+     "Okay!",
+     665.014,
+     665.34
+    ],
+    [
+     "I'm",
+     665.607,
+     665.802
+    ],
+    [
+     "okay!",
+     665.839,
+     666.165
+    ]
+   ]
+  },
+  {
+   "id": "11.7",
+   "take": "11",
+   "scene": "SC 11",
+   "idx": 7,
+   "speaker": "YOU",
+   "raw": "[shouting] JUMP, DAD, JUMP!",
+   "text": "JUMP, DAD, JUMP!",
+   "clip": [
+    23.999,
+    25.353
+   ],
+   "start": 666.345,
+   "end": 667.699,
+   "speechStart": 666.345,
+   "speechEnd": 667.699,
+   "words": [
+    [
+     "JUMP,",
+     666.345,
+     666.72
+    ],
+    [
+     "DAD,",
+     666.871,
+     667.172
+    ],
+    [
+     "JUMP!",
+     667.323,
+     667.699
+    ]
+   ]
+  },
+  {
+   "id": "11.8",
+   "take": "11",
+   "scene": "SC 11",
+   "idx": 8,
+   "speaker": "DAD",
+   "raw": "[whispering] For my son.",
+   "text": "For my son.",
+   "clip": [
+    25.533,
+    26.324
+   ],
+   "start": 667.879,
+   "end": 668.67,
+   "speechStart": 667.879,
+   "speechEnd": 668.67,
+   "words": [
+    [
+     "For",
+     667.879,
+     668.14
+    ],
+    [
+     "my",
+     668.177,
+     668.373
+    ],
+    [
+     "son.",
+     668.41,
+     668.67
+    ]
+   ],
+   "beatAfter": 2.5
+  },
+  {
+   "id": "11.9",
+   "take": "11",
+   "scene": "SC 11",
+   "idx": 9,
+   "speaker": "BOSS",
+   "raw": "[booming, shocked] NO! [pause] Defeated... by a HOT DOG?!",
+   "text": "NO! Defeated... by a HOT DOG?!",
+   "clip": [
+    29.004,
+    31.87
+   ],
+   "start": 671.35,
+   "end": 674.216,
+   "speechStart": 671.35,
+   "speechEnd": 674.216,
+   "words": [
+    [
+     "NO!",
+     671.35,
+     671.575
+    ],
+    [
+     "Defeated...",
+     672.292,
+     672.879
+    ],
+    [
+     "by",
+     673.179,
+     673.375
+    ],
+    [
+     "a",
+     673.411,
+     673.542
+    ],
+    [
+     "HOT",
+     673.579,
+     673.879
+    ],
+    [
+     "DOG?!",
+     673.916,
+     674.216
+    ]
+   ]
+  },
+  {
+   "id": "11.10",
+   "take": "11",
+   "scene": "SC 11",
+   "idx": 10,
+   "speaker": "SYSTEM",
+   "raw": "[booming, triumphant] VICTORY! [pause] Server saved!",
+   "text": "VICTORY! Server saved!",
+   "clip": [
+    32.05,
+    34.253
+   ],
+   "start": 674.396,
+   "end": 676.599,
+   "speechStart": 674.396,
+   "speechEnd": 676.599,
+   "words": [
+    [
+     "VICTORY!",
+     674.396,
+     674.996
+    ],
+    [
+     "Server",
+     675.714,
+     676.17
+    ],
+    [
+     "saved!",
+     676.207,
+     676.599
+    ]
+   ]
+  },
+  {
+   "id": "11.11",
+   "take": "11",
+   "scene": "SC 11",
+   "idx": 11,
+   "speaker": "MOM",
+   "raw": "[proud, shouting] That's my husband! [pause] THAT'S MY HUSBAND!",
+   "text": "That's my husband! THAT'S MY HUSBAND!",
+   "clip": [
+    34.433,
+    37.653
+   ],
+   "start": 676.779,
+   "end": 679.999,
+   "speechStart": 676.779,
+   "speechEnd": 679.999,
+   "words": [
+    [
+     "That's",
+     676.779,
+     677.17
+    ],
+    [
+     "my",
+     677.207,
+     677.403
+    ],
+    [
+     "husband!",
+     677.44,
+     677.961
+    ],
+    [
+     "THAT'S",
+     678.679,
+     679.129
+    ],
+    [
+     "MY",
+     679.166,
+     679.362
+    ],
+    [
+     "HUSBAND!",
+     679.399,
+     679.999
+    ]
+   ]
+  },
+  {
+   "id": "11.12",
+   "take": "11",
+   "scene": "SC 11",
+   "idx": 12,
+   "speaker": "DAD",
+   "raw": "[laughing, emotional] I did a jump! [pause] Son, I did a JUMP!",
+   "text": "I did a jump! Son, I did a JUMP!",
+   "clip": [
+    37.833,
+    40.929
+   ],
+   "start": 680.179,
+   "end": 683.275,
+   "speechStart": 680.179,
+   "speechEnd": 683.275,
+   "words": [
+    [
+     "I",
+     680.179,
+     680.309
+    ],
+    [
+     "did",
+     680.346,
+     680.607
+    ],
+    [
+     "a",
+     680.644,
+     680.774
+    ],
+    [
+     "jump!",
+     680.811,
+     681.138
+    ],
+    [
+     "Son,",
+     681.855,
+     682.116
+    ],
+    [
+     "I",
+     682.268,
+     682.398
+    ],
+    [
+     "did",
+     682.435,
+     682.696
+    ],
+    [
+     "a",
+     682.733,
+     682.864
+    ],
+    [
+     "JUMP!",
+     682.901,
+     683.275
+    ]
+   ]
+  },
+  {
+   "id": "11.13",
+   "take": "11",
+   "scene": "SC 11",
+   "idx": 13,
+   "speaker": "YOU",
+   "raw": "[laughing] You did a HUNDRED jumps, Dad!",
+   "text": "You did a HUNDRED jumps, Dad!",
+   "clip": [
+    41.109,
+    43.313
+   ],
+   "start": 683.455,
+   "end": 685.659,
+   "speechStart": 683.455,
+   "speechEnd": 685.659,
+   "words": [
+    [
+     "You",
+     683.455,
+     683.716
+    ],
+    [
+     "did",
+     683.753,
+     684.013
+    ],
+    [
+     "a",
+     684.05,
+     684.181
+    ],
+    [
+     "HUNDRED",
+     684.218,
+     684.818
+    ],
+    [
+     "jumps,",
+     684.855,
+     685.247
+    ],
+    [
+     "Dad!",
+     685.398,
+     685.659
+    ]
+   ]
+  },
+  {
+   "id": "11.14",
+   "take": "11",
+   "scene": "SC 11",
+   "idx": 14,
+   "speaker": "SYSTEM",
+   "raw": "[cheerful] Most valuable player: DadBod1978.",
+   "text": "Most valuable player: DadBod1978.",
+   "clip": [
+    43.493,
+    45.691
+   ],
+   "start": 685.839,
+   "end": 688.037,
+   "speechStart": 685.839,
+   "speechEnd": 688.037,
+   "words": [
+    [
+     "Most",
+     685.839,
+     686.165
+    ],
+    [
+     "valuable",
+     686.202,
+     686.789
+    ],
+    [
+     "player:",
+     686.826,
+     687.283
+    ],
+    [
+     "DadBod1978.",
+     687.32,
+     688.037
+    ]
+   ]
+  },
+  {
+   "id": "12.0",
+   "take": "12",
+   "scene": "SC 12",
+   "idx": 0,
+   "speaker": "NARRATOR",
+   "raw": "That night, nobody went to bed at eleven. [pause] Not even Mom.",
+   "text": "That night, nobody went to bed at eleven. Not even Mom.",
+   "clip": [
+    -0.0,
+    4.622
+   ],
+   "start": 689.137,
+   "end": 693.759,
+   "speechStart": 689.137,
+   "speechEnd": 693.759,
+   "words": [
+    [
+     "That",
+     689.137,
+     689.463
+    ],
+    [
+     "night,",
+     689.5,
+     689.891
+    ],
+    [
+     "nobody",
+     690.043,
+     690.5
+    ],
+    [
+     "went",
+     690.537,
+     690.863
+    ],
+    [
+     "to",
+     690.9,
+     691.095
+    ],
+    [
+     "bed",
+     691.132,
+     691.394
+    ],
+    [
+     "at",
+     691.431,
+     691.626
+    ],
+    [
+     "eleven.",
+     691.663,
+     692.119
+    ],
+    [
+     "Not",
+     692.837,
+     693.098
+    ],
+    [
+     "even",
+     693.135,
+     693.461
+    ],
+    [
+     "Mom.",
+     693.498,
+     693.759
+    ]
+   ]
+  },
+  {
+   "id": "12.1",
+   "take": "12",
+   "scene": "SC 12",
+   "idx": 1,
+   "speaker": "MOM",
+   "raw": "[sleepy] Five more minutes...",
+   "text": "Five more minutes...",
+   "clip": [
+    4.802,
+    6.05
+   ],
+   "start": 693.939,
+   "end": 695.187,
+   "speechStart": 693.939,
+   "speechEnd": 695.187,
+   "words": [
+    [
+     "Five",
+     693.939,
+     694.265
+    ],
+    [
+     "more",
+     694.302,
+     694.628
+    ],
+    [
+     "minutes...",
+     694.666,
+     695.187
+    ]
+   ]
+  },
+  {
+   "id": "12.2",
+   "take": "12",
+   "scene": "SC 12",
+   "idx": 2,
+   "speaker": "DAD",
+   "raw": "[sleepy, smiling] Same time next week, champ?",
+   "text": "Same time next week, champ?",
+   "clip": [
+    6.23,
+    8.188
+   ],
+   "start": 695.367,
+   "end": 697.325,
+   "speechStart": 695.367,
+   "speechEnd": 697.325,
+   "words": [
+    [
+     "Same",
+     695.367,
+     695.693
+    ],
+    [
+     "time",
+     695.73,
+     696.056
+    ],
+    [
+     "next",
+     696.094,
+     696.419
+    ],
+    [
+     "week,",
+     696.456,
+     696.782
+    ],
+    [
+     "champ?",
+     696.934,
+     697.325
+    ]
+   ],
+   "beatAfter": 8.0
+  },
+  {
+   "id": "12.3",
+   "take": "12",
+   "scene": "SC 12",
+   "idx": 3,
+   "speaker": "YOU",
+   "raw": "[softly] Same time, Dad. [pause] Every week.",
+   "text": "Same time, Dad. Every week.",
+   "clip": [
+    16.368,
+    18.942
+   ],
+   "start": 705.505,
+   "end": 708.079,
+   "speechStart": 705.505,
+   "speechEnd": 708.079,
+   "words": [
+    [
+     "Same",
+     705.505,
+     705.831
+    ],
+    [
+     "time,",
+     705.868,
+     706.195
+    ],
+    [
+     "Dad.",
+     706.346,
+     706.607
+    ],
+    [
+     "Every",
+     707.325,
+     707.716
+    ],
+    [
+     "week.",
+     707.753,
+     708.079
+    ]
+   ]
+  },
+  {
+   "id": "12.4",
+   "take": "12",
+   "scene": "SC 12",
+   "idx": 4,
+   "speaker": "NARRATOR",
+   "raw": "And the next Saturday... YOU called the family meeting.",
+   "text": "And the next Saturday... YOU called the family meeting.",
+   "clip": [
+    19.122,
+    23.11
+   ],
+   "start": 708.259,
+   "end": 712.247,
+   "speechStart": 708.259,
+   "speechEnd": 712.247,
+   "words": [
+    [
+     "And",
+     708.259,
+     708.52
+    ],
+    [
+     "the",
+     708.557,
+     708.817
+    ],
+    [
+     "next",
+     708.854,
+     709.181
+    ],
+    [
+     "Saturday...",
+     709.218,
+     709.805
+    ],
+    [
+     "YOU",
+     710.104,
+     710.404
+    ],
+    [
+     "called",
+     710.441,
+     710.898
+    ],
+    [
+     "the",
+     710.935,
+     711.195
+    ],
+    [
+     "family",
+     711.232,
+     711.689
+    ],
+    [
+     "meeting.",
+     711.726,
+     712.247
+    ]
+   ]
+  },
+  {
+   "id": "12.5",
+   "take": "12",
+   "scene": "SC 12",
+   "idx": 5,
+   "speaker": "YOU",
+   "raw": "[cheerful] Family Game Night! [pause] Same server! Same time!",
+   "text": "Family Game Night! Same server! Same time!",
+   "clip": [
+    23.29,
+    27.031
+   ],
+   "start": 712.427,
+   "end": 716.168,
+   "speechStart": 712.427,
+   "speechEnd": 716.168,
+   "words": [
+    [
+     "Family",
+     712.427,
+     712.884
+    ],
+    [
+     "Game",
+     712.921,
+     713.247
+    ],
+    [
+     "Night!",
+     713.284,
+     713.675
+    ],
+    [
+     "Same",
+     714.393,
+     714.719
+    ],
+    [
+     "server!",
+     714.756,
+     715.212
+    ],
+    [
+     "Same",
+     715.478,
+     715.805
+    ],
+    [
+     "time!",
+     715.841,
+     716.168
+    ]
+   ]
+  },
+  {
+   "id": "12.6",
+   "take": "12",
+   "scene": "SC 12",
+   "idx": 6,
+   "speaker": "GRANDMA",
+   "raw": "[sweetly] And don't forget your rent, dear.",
+   "text": "And don't forget your rent, dear.",
+   "clip": [
+    27.211,
+    29.532
+   ],
+   "start": 716.348,
+   "end": 718.669,
+   "speechStart": 716.348,
+   "speechEnd": 718.669,
+   "words": [
+    [
+     "And",
+     716.348,
+     716.609
+    ],
+    [
+     "don't",
+     716.646,
+     716.972
+    ],
+    [
+     "forget",
+     717.009,
+     717.466
+    ],
+    [
+     "your",
+     717.503,
+     717.829
+    ],
+    [
+     "rent,",
+     717.866,
+     718.191
+    ],
+    [
+     "dear.",
+     718.343,
+     718.669
+    ]
+   ]
+  },
+  {
+   "id": "12.7",
+   "take": "12",
+   "scene": "SC 12",
+   "idx": 7,
+   "speaker": "NARRATOR",
+   "raw": "Dad still can't do a double jump. [pause] Mom started a training class. [pause] DarkBlade signed up first.",
+   "text": "Dad still can't do a double jump. Mom started a training class. DarkBlade signed up first.",
+   "clip": [
+    29.712,
+    37.302
+   ],
+   "start": 718.849,
+   "end": 726.439,
+   "speechStart": 718.849,
+   "speechEnd": 726.439,
+   "words": [
+    [
+     "Dad",
+     718.849,
+     719.11
+    ],
+    [
+     "still",
+     719.147,
+     719.538
+    ],
+    [
+     "can't",
+     719.575,
+     719.901
+    ],
+    [
+     "do",
+     719.938,
+     720.134
+    ],
+    [
+     "a",
+     720.171,
+     720.301
+    ],
+    [
+     "double",
+     720.338,
+     720.795
+    ],
+    [
+     "jump.",
+     720.832,
+     721.158
+    ],
+    [
+     "Mom",
+     721.876,
+     722.136
+    ],
+    [
+     "started",
+     722.173,
+     722.695
+    ],
+    [
+     "a",
+     722.732,
+     722.862
+    ],
+    [
+     "training",
+     722.899,
+     723.486
+    ],
+    [
+     "class.",
+     723.523,
+     723.915
+    ],
+    [
+     "DarkBlade",
+     724.632,
+     725.284
+    ],
+    [
+     "signed",
+     725.321,
+     725.778
+    ],
+    [
+     "up",
+     725.815,
+     726.011
+    ],
+    [
+     "first.",
+     726.048,
+     726.439
+    ]
+   ]
+  },
+  {
+   "id": "12.8",
+   "take": "12",
+   "scene": "SC 12",
+   "idx": 8,
+   "speaker": "DARKBLADE",
+   "raw": "[shy] Thank you, Mrs. Mom.",
+   "text": "Thank you, Mrs. Mom.",
+   "clip": [
+    37.482,
+    39.111
+   ],
+   "start": 726.619,
+   "end": 728.248,
+   "speechStart": 726.619,
+   "speechEnd": 728.248,
+   "words": [
+    [
+     "Thank",
+     726.619,
+     727.01
+    ],
+    [
+     "you,",
+     727.047,
+     727.308
+    ],
+    [
+     "Mrs.",
+     727.459,
+     727.721
+    ],
+    [
+     "Mom.",
+     727.988,
+     728.248
+    ]
+   ]
+  },
+  {
+   "id": "12.9",
+   "take": "12",
+   "scene": "SC 12",
+   "idx": 9,
+   "speaker": "NARRATOR",
+   "raw": "And Granny bought the Block King's castle. [pause] It's a cookie museum now. [pause] Tickets are ten coins.",
+   "text": "And Granny bought the Block King's castle. It's a cookie museum now. Tickets are ten coins.",
+   "clip": [
+    39.291,
+    46.881
+   ],
+   "start": 728.428,
+   "end": 736.018,
+   "speechStart": 728.428,
+   "speechEnd": 736.018,
+   "words": [
+    [
+     "And",
+     728.428,
+     728.689
+    ],
+    [
+     "Granny",
+     728.726,
+     729.182
+    ],
+    [
+     "bought",
+     729.219,
+     729.676
+    ],
+    [
+     "the",
+     729.713,
+     729.974
+    ],
+    [
+     "Block",
+     730.011,
+     730.402
+    ],
+    [
+     "King's",
+     730.439,
+     730.831
+    ],
+    [
+     "castle.",
+     730.868,
+     731.324
+    ],
+    [
+     "It's",
+     732.042,
+     732.303
+    ],
+    [
+     "a",
+     732.339,
+     732.47
+    ],
+    [
+     "cookie",
+     732.507,
+     732.963
+    ],
+    [
+     "museum",
+     733.0,
+     733.457
+    ],
+    [
+     "now.",
+     733.494,
+     733.755
+    ],
+    [
+     "Tickets",
+     734.472,
+     734.994
+    ],
+    [
+     "are",
+     735.031,
+     735.291
+    ],
+    [
+     "ten",
+     735.328,
+     735.59
+    ],
+    [
+     "coins.",
+     735.627,
+     736.018
+    ]
+   ]
+  },
+  {
+   "id": "12.10",
+   "take": "12",
+   "scene": "SC 12",
+   "idx": 10,
+   "speaker": "SYSTEM",
+   "raw": "[cheerful] DarkBlade's mom joined the server.",
+   "text": "DarkBlade's mom joined the server.",
+   "clip": [
+    47.061,
+    49.361
+   ],
+   "start": 736.198,
+   "end": 738.498,
+   "speechStart": 736.198,
+   "speechEnd": 738.498,
+   "words": [
+    [
+     "DarkBlade's",
+     736.198,
+     736.915
+    ],
+    [
+     "mom",
+     736.952,
+     737.213
+    ],
+    [
+     "joined",
+     737.25,
+     737.707
+    ],
+    [
+     "the",
+     737.744,
+     738.004
+    ],
+    [
+     "server.",
+     738.041,
+     738.498
+    ]
+   ]
+  },
+  {
+   "id": "12.11",
+   "take": "12",
+   "scene": "SC 12",
+   "idx": 11,
+   "speaker": "DARKBLADE",
+   "raw": "[horrified] ...MOM?!",
+   "text": "...MOM?!",
+   "clip": [
+    49.541,
+    49.841
+   ],
+   "start": 738.678,
+   "end": 738.978,
+   "speechStart": 738.678,
+   "speechEnd": 738.978,
+   "words": [
+    [
+     "...MOM?!",
+     738.678,
+     738.978
+    ]
+   ]
+  },
+  {
+   "id": "12.12",
+   "take": "12",
+   "scene": "SC 12",
+   "idx": 12,
+   "speaker": "NARRATOR",
+   "raw": "[warmly] So... if YOUR parents joined your server, who would be the noob? [pause] Tell me in the comments!",
+   "text": "So... if YOUR parents joined your server, who would be the noob? Tell me in the comments!",
+   "clip": [
+    50.021,
+    57.198
+   ],
+   "start": 739.158,
+   "end": 746.335,
+   "speechStart": 739.158,
+   "speechEnd": 746.335,
+   "words": [
+    [
+     "So...",
+     739.158,
+     739.354
+    ],
+    [
+     "if",
+     739.653,
+     739.848
+    ],
+    [
+     "YOUR",
+     739.885,
+     740.261
+    ],
+    [
+     "parents",
+     740.298,
+     740.819
+    ],
+    [
+     "joined",
+     740.856,
+     741.313
+    ],
+    [
+     "your",
+     741.35,
+     741.676
+    ],
+    [
+     "server,",
+     741.713,
+     742.17
+    ],
+    [
+     "who",
+     742.322,
+     742.582
+    ],
+    [
+     "would",
+     742.619,
+     743.01
+    ],
+    [
+     "be",
+     743.047,
+     743.243
+    ],
+    [
+     "the",
+     743.28,
+     743.541
+    ],
+    [
+     "noob?",
+     743.578,
+     743.904
+    ],
+    [
+     "Tell",
+     744.622,
+     744.947
+    ],
+    [
+     "me",
+     744.984,
+     745.18
+    ],
+    [
+     "in",
+     745.217,
+     745.413
+    ],
+    [
+     "the",
+     745.45,
+     745.711
+    ],
+    [
+     "comments!",
+     745.748,
+     746.335
+    ]
+   ]
+  }
+ ],
+ "takes": [
+  {
+   "id": "01",
+   "scene": "SC 01",
+   "start": 0.35,
+   "end": 38.695,
+   "file": null
+  },
+  {
+   "id": "02",
+   "scene": "SC 02",
+   "start": 39.795,
+   "end": 146.138,
+   "file": null
+  },
+  {
+   "id": "03",
+   "scene": "SC 03",
+   "start": 147.238,
+   "end": 214.863,
+   "file": null
+  },
+  {
+   "id": "04",
+   "scene": "SC 04",
+   "start": 215.963,
+   "end": 275.218,
+   "file": null
+  },
+  {
+   "id": "05",
+   "scene": "SC 05",
+   "start": 276.318,
+   "end": 345.908,
+   "file": null
+  },
+  {
+   "id": "06",
+   "scene": "SC 06",
+   "start": 347.008,
+   "end": 398.319,
+   "file": null
+  },
+  {
+   "id": "07",
+   "scene": "SC 07",
+   "start": 399.419,
+   "end": 465.061,
+   "file": null
+  },
+  {
+   "id": "08",
+   "scene": "SC 08",
+   "start": 466.161,
+   "end": 530.372,
+   "file": null
+  },
+  {
+   "id": "09",
+   "scene": "SC 09",
+   "start": 531.472,
+   "end": 580.511,
+   "file": null
+  },
+  {
+   "id": "10",
+   "scene": "SC 10",
+   "start": 581.611,
+   "end": 641.246,
+   "file": null
+  },
+  {
+   "id": "11",
+   "scene": "SC 11",
+   "start": 642.346,
+   "end": 688.037,
+   "file": null
+  },
+  {
+   "id": "12",
+   "scene": "SC 12",
+   "start": 689.137,
+   "end": 746.335,
+   "file": null
+  }
+ ],
+ "scenes": {
+  "SC 01": {
+   "start": 0.35,
+   "end": 38.695
+  },
+  "SC 02": {
+   "start": 39.795,
+   "end": 146.138
+  },
+  "SC 03": {
+   "start": 147.238,
+   "end": 214.863
+  },
+  "SC 04": {
+   "start": 215.963,
+   "end": 275.218
+  },
+  "SC 05": {
+   "start": 276.318,
+   "end": 345.908
+  },
+  "SC 06": {
+   "start": 347.008,
+   "end": 398.319
+  },
+  "SC 07": {
+   "start": 399.419,
+   "end": 465.061
+  },
+  "SC 08": {
+   "start": 466.161,
+   "end": 530.372
+  },
+  "SC 09": {
+   "start": 531.472,
+   "end": 580.511
+  },
+  "SC 10": {
+   "start": 581.611,
+   "end": 641.246
+  },
+  "SC 11": {
+   "start": 642.346,
+   "end": 688.037
+  },
+  "SC 12": {
+   "start": 689.137,
+   "end": 746.335
+  }
+ }
+}

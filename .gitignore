@@ -25,3 +25,7 @@ respawn/out/*.mp4
 respawn/out/audio/
 respawn/out/*.log
 respawn/out/*.txt
+parents/out/*.mp4
+parents/out/audio/
+parents/out/*.log
+parents/out/*.txt

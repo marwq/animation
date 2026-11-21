@@ -1,0 +1,355 @@
+// Shared toolkit for the Parents scenes (game UI lives in scenes/gameui.js; scenes/respawn.js = FX kit from the Respawn video): camera keys, actors with auto-acting, Robux props, particles, UI cards.
+'use strict';
+
+const S = require('../rig/svg');
+const F = require('../rig/face');
+const E = require('./env');
+const C = require('./common');
+const V = require('./vo');
+const { draw, NAMES } = require('../rig/cast');
+const { f, clamp, lerp, inv, ease } = S;
+
+const W = 1920, H = 1080;
+const LINE = '#151515';
+const ol = (fill, w = 6) => ({ fill, stroke: LINE, 'stroke-width': w, 'stroke-linejoin': 'round', 'stroke-linecap': 'round' });
+const ln = (w, c = LINE, op) => ({ fill: 'none', stroke: c, 'stroke-width': w, 'stroke-linecap': 'round', 'stroke-linejoin': 'round', ...(op !== undefined ? { opacity: op } : {}) });
+const T = (s, x, y, size, fill, extra = {}) => S.el('text', { x, y, 'font-family': 'Lilita One, sans-serif', 'font-size': size, fill, 'text-anchor': 'middle', ...extra }, s);
+const TF = (s, x, y, size, fill, extra = {}) => S.el('text', { x, y, 'font-family': 'Fredoka, sans-serif', 'font-weight': 700, 'font-size': size, fill, 'text-anchor': 'middle', ...extra }, s);
+const hash = (n) => { const v = Math.sin(n * 127.1 + 311.7) * 43758.5453; return v - Math.floor(v); };
+const bump = (t, a, b) => Math.sin(clamp((t - a) / (b - a), 0, 1) * Math.PI);
+const seg = (t, a, b) => clamp((t - a) / (b - a), 0, 1);
+
+// ---------------------------------------------------------------- camera
+// keys: [[t, {zoom, x, y, rot}], ...]; eased between keys. Returns cam for E.camTf / E.layer.
+function camKeys(t, keys, easing = ease.inOut) {
+  if (t <= keys[0][0]) return { ...keys[0][1] };
+  for (let i = 0; i < keys.length - 1; i++) {
+    const [t0, a] = keys[i], [t1, b] = keys[i + 1];
+    if (t <= t1) {
+      const u = easing(seg(t, t0, t1));
+      const o = {};
+      for (const k of new Set([...Object.keys(a), ...Object.keys(b)])) o[k] = lerp(a[k] ?? b[k], b[k] ?? a[k], u);
+      return o;
+    }
+  }
+  return { ...keys[keys.length - 1][1] };
+}
+// world-space group seen through cam (parallax k=1)
+const view = (cam, inner, k = 1) => S.g(inner, E.camTf(cam, k));
+function shake(t, a, dur = 0.4, amp = 14) {
+  if (t < a || t > a + dur) return { sx: 0, sy: 0 };
+  const k = 1 - (t - a) / dur;
+  return { sx: Math.sin(t * 97) * amp * k, sy: Math.cos(t * 83) * amp * 0.7 * k };
+}
+const shaken = (t, a, inner, dur, amp) => { const s = shake(t, a, dur, amp); return s.sx || s.sy ? S.g(inner, `translate(${f(s.sx)} ${f(s.sy)})`) : inner; };
+
+// ---------------------------------------------------------------- actors
+// actor('ty', t, { x, y, s, ...pose }, { face, energy, arms }) — auto lip-sync/blinks/gestures from the voice timeline
+const SPEAKER = { you: 'YOU', dad: 'DAD', mom: 'MOM', grandma: 'GRANDMA', noodle: 'NOODLE', darkblade: 'DARKBLADE', boss: 'BOSS', kid: 'KID',
+  dadAvatar: 'DAD', momAvatar: 'MOM', grandmaAvatar: 'GRANDMA', momTeen: 'MOM' };
+function actor(name, t, pose = {}, act = {}) {
+  pose = Object.fromEntries(Object.entries(pose).filter(([, v]) => v !== undefined));   // an explicit undefined must not override auto-acting
+  const sp = SPEAKER[name];
+  const auto = sp ? V.perform(sp, t, { seed: name.length * 3.7 + (act.seed || 0), ...act }) : {};
+  const p = { shade: true, shadow: true, ...auto, ...pose };
+  if (pose.face && auto.face) {
+    // keep the explicit face but still lip-sync / blink
+    const fo = typeof pose.face === 'string' ? { name: pose.face } : { ...pose.face };
+    if (auto.face.mouth && V.talking(sp, t) && fo.mouth === undefined) fo.mouth = auto.face.mouth;
+    if (auto.face.blink && fo.blink === undefined) fo.blink = auto.face.blink;
+    p.face = fo;
+  }
+  return draw[name](p);
+}
+const nameTag = (txt, x, y, col = '#FFFFFF') => S.g(S.rect(-110, -30, 220, 50, 14, { fill: '#000', opacity: 0.35 }) + TF(txt, 0, 8, 30, col), `translate(${f(x)} ${f(y)})`);
+
+// ---------------------------------------------------------------- Robux props
+// the Robux coin: gold disc with a tilted rounded-square mark
+function coin(x, y, r = 40, rot = 0, spin = 0, col = '#FFC93C') {
+  const sx = Math.max(0.12, Math.abs(Math.cos(spin)));
+  let o = S.ellipse(0, 0, r, r, ol(col, Math.max(3, r * 0.12)));
+  o += S.ellipse(0, 0, r * 0.78, r * 0.78, { fill: 'none', stroke: '#E0A21A', 'stroke-width': r * 0.08 });
+  o += S.g(S.path(S.roundedPath([[-r * 0.38, -r * 0.38], [r * 0.38, -r * 0.38], [r * 0.38, r * 0.38], [-r * 0.38, r * 0.38]], r * 0.1), { fill: 'none', stroke: '#B97A0E', 'stroke-width': r * 0.13 }) +
+    S.rect(-r * 0.12, -r * 0.12, r * 0.24, r * 0.24, r * 0.04, { fill: '#B97A0E' }), 'rotate(15)');
+  o += S.path(`M${f(-r * 0.55)} ${f(-r * 0.35)} Q${f(-r * 0.3)} ${f(-r * 0.7)} ${f(r * 0.1)} ${f(-r * 0.72)}`, ln(r * 0.1, '#FFF4C4'));
+  return S.g(o, `translate(${f(x)} ${f(y)}) rotate(${f(rot)}) scale(${f(sx)} 1)`);
+}
+const grayCoin = (x, y, r, rot, spin) => coin(x, y, r, rot, spin, '#9AA0AE');
+// Robux mark + amount, e.g. price tags: robuxText(x, y, '5,000', size)
+function robuxText(x, y, amount, size = 60, fill = '#FFFFFF', anchor = 'middle') {
+  const w = (String(amount).length * 0.56 + 1.1) * size;
+  const x0 = anchor === 'middle' ? x - w / 2 : x;
+  return coin(x0 + size * 0.45, y - size * 0.34, size * 0.42) + T(String(amount), x0 + size * 1.0, y, size, fill, { 'text-anchor': 'start', stroke: LINE, 'stroke-width': size * 0.12, 'paint-order': 'stroke' });
+}
+function priceTag(x, y, amount, s = 1, rot = 0, col = '#FFE14D') {
+  let o = S.path('M-120 -48 L90 -48 L130 0 L90 48 L-120 48 Z', ol(col, 6)) + S.circle(96, 0, 10, ol('#FFFFFF', 4));
+  o += robuxText(-14, 22, amount, 52, '#2A1640');
+  return S.g(o, `translate(${f(x)} ${f(y)}) rotate(${f(rot)}) scale(${f(s)})`);
+}
+// game-pass popup card (Roblox-store style, original layout)
+function gamePass(x, y, title, price, s = 1, k = 1, icon = '') {
+  const sc = s * ease.outBack(clamp(k, 0, 1));
+  if (sc < 0.01) return '';
+  let o = S.rect(-260, -170, 520, 340, 34, ol('#232A3D', 8)) + S.rect(-260, -170, 520, 70, 34, { fill: '#2E7BFF' }) + S.rect(-260, -130, 520, 30, 0, { fill: '#2E7BFF' });
+  o += T('GAME PASS', 0, -122, 40, '#FFFFFF');
+  o += icon || S.rect(-60, -80, 120, 100, 22, ol('#FFD21F', 5));
+  o += TF(title, 0, 70, 42, '#FFFFFF');
+  o += S.rect(-130, 96, 260, 58, 22, ol('#3BD16F', 5)) + robuxText(0, 140, price, 40, '#FFFFFF');
+  return S.g(o, `translate(${f(x)} ${f(y)}) scale(${f(sc)})`);
+}
+// smartphone (held or full-screen); screen(svg) drawn inside a 300x560 screen box
+function phone(x, y, s = 1, rot = 0, screen = '') {
+  const id = S.uid('ph');
+  let o = S.rect(-170, -320, 340, 640, 46, ol('#20232E', 8)) + S.clipDef(id, S.rect(-150, -280, 300, 560, 26));
+  o += S.g(S.rect(-150, -280, 300, 560, 0, { fill: '#0E1220' }) + screen, null, { 'clip-path': `url(#${id})` });
+  o += S.rect(-40, -306, 80, 12, 6, { fill: '#0B0C10' });
+  return S.g(o, `translate(${f(x)} ${f(y)}) rotate(${f(rot)}) scale(${f(s)})`);
+}
+// TV set with news lower-third; inner(svg) is drawn in a 1600x900 screen box at (-800,-450)
+function tv(x, y, s, inner, ticker = '', t = 0) {
+  const id = S.uid('tv');
+  let o = S.rect(-860, -510, 1720, 1020, 60, ol('#1A1A22', 14)) + S.clipDef(id, S.rect(-800, -450, 1600, 900, 20));
+  let scr = S.rect(-800, -450, 1600, 900, 0, { fill: '#123' }) + inner;
+  if (ticker) {
+    scr += S.rect(-800, 260, 1600, 110, 0, { fill: '#D7263D' }) + S.rect(-800, 370, 1600, 80, 0, { fill: '#10162A' });
+    scr += T('BREAKING NEWS', -560, 336, 64, '#FFFFFF');
+    const tx = -800 + 1600 - ((t * 260) % 3200);
+    scr += TF(ticker, tx, 425, 44, '#FFE14D', { 'text-anchor': 'start' });
+  }
+  o += S.g(scr, null, { 'clip-path': `url(#${id})` });
+  o += S.rect(-800, -450, 1600, 900, 20, { fill: 'none', stroke: '#000', 'stroke-width': 6 });
+  return S.g(o, `translate(${f(x)} ${f(y)}) scale(${f(s)})`);
+}
+// stock-style chart line from points [[0..1, 0..1]] inside a box
+function chart(x, y, w, h, pts, k = 1, col = '#3BD16F', label = '') {
+  const n = Math.max(2, Math.floor(pts.length * clamp(k, 0, 1)));
+  const P = pts.slice(0, n).map(([u, v]) => [x + u * w, y + h - v * h]);
+  let o = S.rect(x - 30, y - 30, w + 60, h + 60, 22, ol('#10162A', 6));
+  for (let i = 1; i < 5; i++) o += S.path(`M${x} ${f(y + (h * i) / 5)} L${x + w} ${f(y + (h * i) / 5)}`, ln(2, '#FFFFFF', 0.12));
+  o += S.path('M' + P.map(([a, b]) => `${f(a)} ${f(b)}`).join(' L'), ln(10, col));
+  const e = P[P.length - 1];
+  o += S.circle(e[0], e[1], 12, ol(col, 4));
+  if (label) o += T(label, x + w - 20, y + 60, 72, col, { 'text-anchor': 'end', stroke: LINE, 'stroke-width': 8, 'paint-order': 'stroke' });
+  return o;
+}
+// money counter HUD
+function counter(x, y, value, s = 1, col = '#3BD16F') {
+  const txt = Math.round(value).toLocaleString('en-US');
+  const w = 120 + txt.length * 38;
+  return S.g(S.rect(-w / 2, -50, w, 100, 30, ol('#14182A', 6)) + robuxText(0, 22, txt, 62, col), `translate(${f(x)} ${f(y)}) scale(${f(s)})`);
+}
+
+// ---------------------------------------------------------------- particles
+// coins falling from the sky: deterministic per index
+function coinRain(t, n = 40, opts = {}) {
+  const { x0 = -100, x1 = 2020, y0 = -150, y1 = 1250, speed = 520, r = 30, gray = false, seed = 1 } = opts;
+  let o = '';
+  for (let i = 0; i < n; i++) {
+    const h1 = hash(i * 7.1 + seed), h2 = hash(i * 3.3 + seed * 2), h3 = hash(i * 1.7 + seed * 5);
+    const span = y1 - y0;
+    const y = y0 + ((t * speed * (0.7 + 0.6 * h2) + h1 * span) % span);
+    const x = lerp(x0, x1, h3) + Math.sin(t * 2 + i) * 20;
+    o += (gray ? grayCoin : coin)(x, y, r * (0.7 + 0.6 * h2), h1 * 360, t * (4 + 6 * h1) + i);
+  }
+  return o;
+}
+// burst of coins from a point (fountain); k = time since burst start (s)
+function coinBurst(x, y, k, n = 28, power = 900, r = 28, seed = 3) {
+  if (k < 0) return '';
+  let o = '';
+  for (let i = 0; i < n; i++) {
+    const a = -Math.PI / 2 + (hash(i + seed) - 0.5) * 2.0;
+    const v = power * (0.5 + 0.6 * hash(i * 2 + seed));
+    const px = x + Math.cos(a) * v * k, py = y + Math.sin(a) * v * k + 0.5 * 1900 * k * k;
+    if (py > 1400) continue;
+    o += coin(px, py, r * (0.7 + 0.6 * hash(i * 5 + seed)), i * 40, k * 10 + i);
+  }
+  return o;
+}
+function rain(t, n = 140, opts = {}) {
+  const { col = '#A9C7FF', op = 0.55, speed = 1900, len = 46, angle = 12 } = opts;
+  let o = '';
+  const dx = Math.tan((angle * Math.PI) / 180) * len;
+  for (let i = 0; i < n; i++) {
+    const x = hash(i * 1.3) * 2200 - 140 + ((t * speed * Math.tan((angle * Math.PI) / 180)) % 200);
+    const y = ((t * speed + hash(i * 7.7) * 1300) % 1300) - 120;
+    o += S.path(`M${f(x)} ${f(y)} l${f(-dx)} ${len}`, ln(4, col, op));
+  }
+  return o;
+}
+function confetti(t, t0, n = 60, seed = 9) {
+  const k = t - t0;
+  if (k < 0) return '';
+  const cols = ['#FF5A5A', '#FFD21F', '#3BD16F', '#34C3FF', '#B06BFF', '#FF6FB5'];
+  let o = '';
+  for (let i = 0; i < n; i++) {
+    const a = hash(i + seed) * Math.PI * 2;
+    const v = 500 + 700 * hash(i * 3 + seed);
+    const x = 960 + Math.cos(a) * v * k * 0.9, y = 460 + Math.sin(a) * v * k * 0.6 + 400 * k * k;
+    o += S.rect(x, y, 16, 26, 4, { fill: cols[i % cols.length], transform: `rotate(${f(k * 500 + i * 40)} ${f(x + 8)} ${f(y + 13)})` });
+  }
+  return o;
+}
+function sparkles(pts, t) {
+  return pts.map(([x, y, r], i) => F.sparkle(x, y, r * (0.6 + 0.4 * Math.abs(Math.sin(t * 5 + i))))).join('');
+}
+
+// ---------------------------------------------------------------- simple sky + ground helpers
+function sky(top, bottom, id) {
+  return `<defs><linearGradient id="${id}" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="${top}"/><stop offset="1" stop-color="${bottom}"/></linearGradient></defs>` + S.rect(-800, -800, 3520, 2680, 0, { fill: `url(#${id})` });
+}
+function rays(cx, cy, n, r, col, op, rot = 0) {
+  let o = '';
+  for (let i = 0; i < n; i++) {
+    const a0 = ((i / n) * 360 + rot) * Math.PI / 180, a1 = (((i + 0.5) / n) * 360 + rot) * Math.PI / 180;
+    o += S.path(`M${cx} ${cy} L${f(cx + r * Math.cos(a0))} ${f(cy + r * Math.sin(a0))} L${f(cx + r * Math.cos(a1))} ${f(cy + r * Math.sin(a1))} Z`, { fill: col, opacity: op });
+  }
+  return o;
+}
+// big punchy on-screen word (sound-effect lettering)
+function bang(txt, x, y, k, size = 120, rot = -6, col = '#FFD21F') {
+  return C.sfx(txt, x, y, k, size, rot, col);
+}
+
+// ---------------------------------------------------------------- Shutdown video: countdown HUD, loading wheels, pop-ups, lag effects
+const pad2 = (n) => String(Math.max(0, Math.floor(n))).padStart(2, '0');
+// "HH:MM:SS" from seconds left
+function clock(sec) {
+  const s = Math.max(0, Math.ceil(sec - 1e-6));
+  return `${pad2(s / 3600)}:${pad2((s % 3600) / 60)}:${pad2(s % 60)}`;
+}
+// the countdown pill at the top of the frame (main.js draws it when a scene exports timer(t))
+// opts: { y, s, label, glitch 0..1, t }
+function timerHUD(sec, opts = {}) {
+  const { y = 64, s = 1, label = 'SHUTDOWN IN', glitch = 0, t = 0 } = opts;
+  const urgent = sec < 60;
+  const pulse = urgent ? 0.5 + 0.5 * Math.sin(t * 12) : 0;
+  const col = urgent ? '#FF3B4E' : '#FFFFFF';
+  let o = S.rect(-210, -44, 420, 88, 44, { fill: '#10131C', opacity: 0.82, stroke: urgent ? '#FF3B4E' : '#3A4560', 'stroke-width': 5 });
+  if (urgent) o += S.rect(-210, -44, 420, 88, 44, { fill: '#FF3B4E', opacity: f(0.18 * pulse) });
+  o += TF(label, 0, -14, 20, '#9AA6C0', { 'letter-spacing': 3 });
+  const txt = clock(sec);
+  if (glitch > 0) {
+    const gx = (hash(Math.floor(t * 20)) - 0.5) * 16 * glitch;
+    o += T(txt, gx - 4, 30, 50, '#FF2E63', { opacity: f(0.6 * glitch) }) + T(txt, -gx + 4, 30, 50, '#2EE6FF', { opacity: f(0.6 * glitch) });
+  }
+  o += T(txt, 0, 30, 50, col, { 'letter-spacing': 2 });
+  for (const sx of [-1, 1]) o += loadingWheel(sx * 172, 0, 15, t, urgent ? '#FF3B4E' : '#7CF7FF', 8, 5);
+  return S.g(o, `translate(960 ${f(y)}) scale(${f(s)})`);
+}
+// the classic spinner: n dots around a ring, fading behind the head
+function loadingWheel(x, y, r, t, col = '#B9C0CC', n = 8, dot = null, speed = 1.6) {
+  const d = dot || r * 0.22;
+  const head = Math.floor(t * speed * n) % n;
+  let o = '';
+  for (let i = 0; i < n; i++) {
+    const a = (i / n) * Math.PI * 2 - Math.PI / 2;
+    const age = (head - i + n) % n;
+    o += S.circle(x + Math.cos(a) * r, y + Math.sin(a) * r, d * (1 - age * 0.05), { fill: col, opacity: f(1 - age / n * 0.85) });
+  }
+  return o;
+}
+// grey system pop-up window (the shutdown notice); k = pop-in 0..1
+function popup(x, y, w, h, title, lines = [], k = 1, opts = {}) {
+  const sc = ease.outBack(clamp(k, 0, 1));
+  if (sc < 0.01) return '';
+  const { size = 40, accent = '#5A6478', icon = '!' } = opts;
+  let o = S.rect(-w / 2 + 10, -h / 2 + 14, w, h, 26, { fill: '#000', opacity: 0.25 });
+  o += S.rect(-w / 2, -h / 2, w, h, 26, ol('#E9EDF3', 7)) + S.rect(-w / 2, -h / 2, w, 64, 26, { fill: accent }) + S.rect(-w / 2, -h / 2 + 34, w, 30, 0, { fill: accent });
+  o += TF(title, 0, -h / 2 + 44, 30, '#FFFFFF');
+  o += S.circle(w / 2 - 36, -h / 2 + 32, 15, { fill: '#FF5A5A', stroke: '#151515', 'stroke-width': 4 });
+  if (icon) o += S.circle(-w / 2 + 70, 14 - (lines.length - 1) * size * 0.6, 36, ol('#FFD21F', 6)) + T(icon, -w / 2 + 70, 34 - (lines.length - 1) * size * 0.6, 54, '#151515');
+  lines.forEach((ln_, i) => { o += TF(ln_, icon ? 50 : 0, 26 + (i - (lines.length - 1) / 2) * size * 1.25, size, '#2A3140'); });
+  return S.g(o, `translate(${f(x)} ${f(y)}) scale(${f(sc)})`);
+}
+// golden "badge earned" toast; k = pop-in 0..1
+function badge(x, y, title, sub = 'BADGE EARNED!', k = 1, t = 0) {
+  const sc = ease.outBack(clamp(k, 0, 1));
+  if (sc < 0.01) return '';
+  let o = rays(0, 0, 14, 230, '#FFE88A', 0.22, t * 20);
+  o += S.rect(-300, -80, 600, 160, 40, ol('#2A2246', 8)) + S.rect(-290, -70, 580, 140, 34, { fill: 'none', stroke: '#FFD21F', 'stroke-width': 5 });
+  o += S.circle(-215, 0, 56, ol('#FFD21F', 7)) + S.path('M-235 0 L-220 16 L-192 -16', ln(10, '#151515'));
+  o += TF(sub, 55, -18, 30, '#FFD21F') + T(title, 55, 40, 58, '#FFFFFF');
+  return S.g(o, `translate(${f(x)} ${f(y)}) scale(${f(sc)})`);
+}
+// lag helpers
+const stutterT = (t, fps = 5) => Math.floor(t * fps) / fps;                 // choppy time: animate with stutterT(t) to "lag"
+function rubber(t, t0, dur = 0.8, amp = 120, n = 3) {                        // rubber-band x offset: snaps back and forth n times
+  const u = (t - t0) / dur;
+  if (u < 0 || u > 1) return 0;
+  const step = Math.floor(u * n * 2);
+  return step % 2 ? -amp * (1 - u) : amp * 0.4 * (1 - u);
+}
+function pixelBlocks(x, y, w, h, t, k = 1, col = '#8A93A6', size = 60, seed = 1) {   // grey squares: "texture still loading"
+  let o = '';
+  for (let yy = 0; yy < h; yy += size) for (let xx = 0; xx < w; xx += size) {
+    const r = hash(seed + xx * 0.13 + yy * 0.71 + Math.floor(t * 3) * 0.37);
+    if (r < k * 0.85) o += S.rect(x + xx, y + yy, size - 2, size - 2, 4, { fill: col, opacity: f(0.35 + 0.5 * r) });
+  }
+  return o;
+}
+const ghost = (inner, dx, k = 0.35) => (k > 0 ? S.g(inner, `translate(${f(dx)} 0)`, { opacity: f(k) }) + S.g(inner, `translate(${f(-dx)} 0)`, { opacity: f(k * 0.8) }) : '') + inner;
+
+// ---------------------------------------------------------------- Admin Commands video: chat-command UI
+// a command being typed in a chat bar: text like ';fly me', progress 0..1 (letters typed), opts { w, s, theme: 'dark'|'admin'|'light', enter: 0..1 flash, user }
+function chatCommand(x, y, text, progress = 1, opts = {}) {
+  const { s = 1, theme = 'dark', enter = 0, user = 'you', cursor = true, t = 0 } = opts;
+  const n = Math.round(clamp(progress, 0, 1) * text.length);
+  const shown = text.slice(0, n);
+  const w = opts.w || Math.max(360, 70 + (user.length + 3) * 15 + text.length * 16.5 + 60);
+  const th = theme === 'admin' ? { bg: '#FFFFFF', fg: '#1B1E2B', acc: '#E8B400', user: '#C08A00', line: '#E8B400' }
+    : theme === 'light' ? { bg: '#F4F6FB', fg: '#1B1E2B', acc: '#3A7BFF', user: '#3A7BFF', line: '#151515' }
+      : { bg: '#141824', fg: '#EAF2FF', acc: '#3DFF9A', user: '#FFB13B', line: '#151515' };
+  let o = S.rect(-w / 2 + 6, -38, w, 84, 22, { fill: '#000', opacity: 0.25 });
+  o += S.rect(-w / 2, -44, w, 84, 22, { fill: th.bg, stroke: th.line, 'stroke-width': 6 });
+  o += TF(`[${user}]:`, -w / 2 + 24, 10, 30, th.user, { 'text-anchor': 'start' });
+  const ux = -w / 2 + 34 + (user.length + 3) * 15;
+  o += S.el('text', { x: ux, y: 11, 'font-family': 'Fredoka, sans-serif', 'font-weight': 700, 'font-size': 38, fill: th.fg, 'text-anchor': 'start' }, shown.replace(/&/g, '&amp;').replace(/</g, '&lt;'));
+  if (cursor && n < text.length + 1 && Math.floor(t * 3) % 2 === 0) o += S.rect(ux + shown.length * 16.2 + 6, -18, 4, 38, 2, { fill: th.acc });
+  if (enter > 0) o += S.rect(-w / 2, -44, w, 84, 22, { fill: th.acc, opacity: f(0.55 * (1 - enter)) }) + S.rect(-w / 2 - 14 * enter, -44 - 14 * enter, w + 28 * enter, 84 + 28 * enter, 30, { fill: 'none', stroke: th.acc, 'stroke-width': 6, opacity: f(1 - enter) });
+  return S.g(o, `translate(${f(x)} ${f(y)}) scale(${f(s)})`);
+}
+// progress of typing a command spoken by a line: letters follow the spoken words of [w0, w1] (word strings or indices)
+function typeProgress(t, line, fromWord = 0, toWord = null) {
+  const ws = line.words;
+  const norm = (x) => String(x).toLowerCase().replace(/[^a-z0-9]/g, '');   // "Un-fly" matches the spoken word "Un-fly"
+  const i0 = typeof fromWord === 'number' ? fromWord : ws.findIndex((w) => norm(w[0]) === norm(fromWord));
+  const i1 = toWord === null ? ws.length - 1 : typeof toWord === 'number' ? toWord : ws.findIndex((w, i) => i >= i0 && norm(w[0]) === norm(toWord));
+  const a = ws[Math.max(0, i0)][1], b = ws[Math.max(0, i1)][2];
+  return clamp((t - a) / Math.max(0.05, b - a), 0, 1);
+}
+// red "PERMISSION DENIED" / green "Command accepted" stamps; k = pop-in 0..1
+function denied(x, y, k = 1, s = 1, text = 'PERMISSION DENIED') {
+  const sc = ease.outBack(clamp(k, 0, 1));
+  if (sc < 0.01) return '';
+  let o = S.rect(-360, -70, 720, 140, 30, ol('#2A0C12', 8)) + S.rect(-348, -58, 696, 116, 22, { fill: 'none', stroke: '#FF3B4E', 'stroke-width': 6 });
+  o += S.circle(-280, 0, 40, ol('#FF3B4E', 6)) + S.path('M-300 -20 L-260 20 M-260 -20 L-300 20', ln(10, '#FFFFFF'));
+  o += T(text, 45, 18, 50, '#FF3B4E');
+  return S.g(o, `translate(${f(x)} ${f(y)}) scale(${f(sc * s)})`);
+}
+function accepted(x, y, k = 1, s = 1, text = 'Command accepted') {
+  const sc = ease.outBack(clamp(k, 0, 1));
+  if (sc < 0.01) return '';
+  let o = S.rect(-300, -56, 600, 112, 28, ol('#0E241A', 7)) + S.circle(-230, 0, 32, ol('#3DFF9A', 6)) + S.path('M-246 0 L-234 13 L-214 -12', ln(9, '#0E241A'));
+  o += TF(text, 40, 14, 42, '#3DFF9A');
+  return S.g(o, `translate(${f(x)} ${f(y)}) scale(${f(sc * s)})`);
+}
+// burst of command energy at the target when a command fires (coloured ring + sparks); age in seconds
+function commandBurst(x, y, age, col = '#3DFF9A', r = 160) {
+  if (age < 0 || age > 0.6) return '';
+  const u = age / 0.6;
+  let o = S.circle(x, y, r * ease.out(u), { fill: 'none', stroke: col, 'stroke-width': f(18 * (1 - u)), opacity: f(1 - u) });
+  for (let i = 0; i < 10; i++) {
+    const a = (i / 10) * Math.PI * 2 + 0.3, d = r * 0.5 + r * 0.9 * ease.out(u);
+    o += S.rect(x + Math.cos(a) * d - 7, y + Math.sin(a) * d - 7, 14, 14, 3, { fill: col, opacity: f(1 - u), transform: `rotate(45 ${f(x + Math.cos(a) * d)} ${f(y + Math.sin(a) * d)})` });
+  }
+  return o;
+}
+
+module.exports = {
+  W, H, LINE, ol, ln, T, TF, hash, bump, seg, camKeys, view, shake, shaken, actor, nameTag, NAMES,
+  clock, timerHUD, loadingWheel, popup, badge, stutterT, rubber, pixelBlocks, ghost,
+  chatCommand, typeProgress, denied, accepted, commandBurst,
+  coin, grayCoin, robuxText, priceTag, gamePass, phone, tv, chart, counter, coinRain, coinBurst, rain, confetti, sparkles, sky, rays, bang,
+  E, C, V, S, F, f, clamp, lerp, inv, ease, draw,
+};
