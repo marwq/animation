@@ -27,7 +27,7 @@ D.you = makeDesign({
 // Dad — accountant: chubby, receding grey-brown hair, big walrus moustache, thick brows, reading glasses pushed up on the forehead,
 // light-blue shirt under a mustard argyle sweater vest (two pens), khakis, white socks in brown sandals
 const DAD = {
-  hair: 'dadRecede', eyeStyle: 'dot', top: 'vestDad', sleeve: 'long', pantsShape: 'straight', size: 1.1, torsoW: 118, taper: -12, armW: 1.12, legW: 1.1, hipK: 1.12,
+  hair: 'dadRecede', eyeStyle: 'dot', top: 'vestDad', sleeve: 'long', pantsShape: 'straight', size: 1.1, torsoW: 118, taper: -22, armW: 1.12, legW: 1.1, hipK: 1.12,
   shoe: 'sandal', socks: '#FFFFFF', sockH: 58, sockRib: '#D8DCE6',
   eye: { pupil: 1.0 }, brows: false, browBase: { L: [-2, 0], R: [-2, 0] }, neutralMouth: 'smile',
   acc: { walrus: true, thickBrows: '#5E4432', cheekBlush: '#FF9F8F' },
@@ -92,16 +92,16 @@ D.momTeen = design({
 // DadBod1978 — the HOT DOG costume: tall sausage (mustard zigzags) between two bun halves, a blocky avatar face with Dad's moustache
 // in the face hole, bun-coloured sleeves, khakis + white socks in sandals (just like the real Dad)
 const HOTDOG = makeStyle({
-  top: 'tee6', sleeve: 'short', pantsShape: 'straight', shoe: 'sandal', socks: '#FFFFFF', sockH: 70, sockRib: '#D8DCE6', armW: 1.06, legW: 1.06, size: 1.06,
+  top: 'tee6', sleeve: 'long', pantsShape: 'straight', shoe: 'sandal', socks: '#FFFFFF', sockH: 70, sockRib: '#D8DCE6', armW: 1.06, legW: 1.06, size: 1.06,
   col: {
-    skin: '#FFD7A8', skinShade: '#F0C090', sleeve: '#F2B45C', top: '#F2B45C', bun: '#F2B45C', bunHi: '#FCD592', bunDark: '#D48A38',
+    skin: '#FFD7A8', skinShade: '#F0C090', sleeve: '#BFD9F2', cuff: '#9FC0E0', top: '#F2B45C', bun: '#F2B45C', bunHi: '#FCD592', bunDark: '#D48A38',
     sausage: '#D9573E', sausageHi: '#F28A6E', sausageShade: '#B4412C', mustard: '#FFD21F', stache: '#6B4E3A', hair: '#6B4E3A',
     pants: '#C2A57A', pantsShade: '#A88C62', sole: '#7A4A26', soleShade: '#5A3418', toe: '#7A4A26', strap: '#8A5A30',
   },
 });
 D.dadAvatar = {
   style: HOTDOG,
-  dims: { ...BASE_DIMS, size: 1.06, shoulderX: 214, shoulderY: -566, sideShoulder: [24, -560], hipX: 56, nametagY: -1235, shadowR: 250 },
+  dims: { ...BASE_DIMS, size: 1.06, shoulderX: 214, shoulderY: -566, sideShoulder: [24, -560], hipX: 56, nametagY: -1205, shadowR: 250 },
   leg: L6.makeLeg6(HOTDOG), legSide: L6.makeLegSide6(HOTDOG), arm: L6.makeArm6(HOTDOG),
   torso: L6.hotdogTorso(HOTDOG), torsoSide: L6.hotdogTorsoSide(HOTDOG),
   head: () => '', headSide: () => '', headBack: () => '',
@@ -119,6 +119,7 @@ const MA = {
 };
 D.momAvatar0 = design(MA);
 D.momAvatar0nog = design({ ...MA, acc: { avatarShine: true } });
+D.momAvatar0.dims.nametagY = D.momAvatar0nog.dims.nametagY = -950;
 const GOLD = { gold: '#F2C230', goldHi: '#FFE58A', goldShade: '#C98E12', gem: '#FF4F7A', plume: '#E8456A' };
 const MA1 = {
   ...MA, top: 'goldArmor', armor: { kind: 'gold', col: GOLD.gold, hi: GOLD.goldHi, shade: GOLD.goldShade, trim: GOLD.goldShade, gem: GOLD.gem },
@@ -128,6 +129,7 @@ const MA1 = {
 };
 D.momAvatar1 = design(MA1);
 D.momAvatar1nog = design({ ...MA1, acc: { avatarShine: true } });
+D.momAvatar1.dims.nametagY = D.momAvatar1nog.dims.nametagY = -1240;
 
 // GrannyGoodies — the billionaire: cream fur coat (fluffy collar + cuffs, knee-length, open over a purple dress), big pearls,
 // gold monocle on a chain, pink lipstick, white curls, gold flats; golden cane + money bag
@@ -153,7 +155,7 @@ const NOODLE = makeStyle({
 });
 D.noodle = design(NOODLE);
 Object.assign(D.noodle, { head: L6.noodleHead(D.noodle.style), headSide: L6.noodleHeadSide(D.noodle.style), headBack: L6.noodleHeadBack(D.noodle.style) });
-D.noodle.dims.nametagY = -1250;
+D.noodle.dims.nametagY = -1235;
 
 // xX_DarkBlade_Xx — black spiky armour with red trim, a helmet with five spikes and a T-visor (glowing red eyes, no mouth),
 // spiky pauldrons, gauntlets, jagged tassets, spiked boots, tattered maroon cape, big black sword
@@ -172,7 +174,7 @@ const DBS = {
 function darkDesign(style) {
   const d = design(style);
   Object.assign(d, { head: L6.darkHead(d.style), headSide: L6.darkHeadSide(d.style), headBack: L6.darkHeadBack(d.style) });
-  d.dims.nametagY = -1110;
+  d.dims.nametagY = style.helm && style.helm.horns ? -1090 : -1070;
   return d;
 }
 D.darkblade = darkDesign(DBS);
@@ -296,7 +298,7 @@ function tagFor(dsg, pose, opts) {
   if (!opts || !opts.name) return '';
   const p = { ...BASE_DEFAULTS, ...(dsg.defaults || {}), ...pose };
   const Z = (dsg.dims && dsg.dims.size) || 1;
-  const ny = ((dsg.dims && dsg.dims.nametagY) || -1035) + p.bodyY + p.headY - 70;
+  const ny = ((dsg.dims && dsg.dims.nametagY) || -1035) + p.bodyY + p.headY + (opts.dy || 0);
   return L6.gameTag(p.x, p.y - p.lift + ny * p.sy * Z * p.s, p.s * (opts.scale || 1), opts);
 }
 // resolve a nametag option: undefined -> default, false -> none, string -> that name
@@ -310,7 +312,8 @@ function drawWith(dsg, pose, props) {
 const draw = {};
 
 // YOU: nametag 'YOU'|true|string (floating game nametag + LVL tag; lvl: 99), crown: true (LVL-99 crown), sword: true|'gold'|'dark',
-// hood: true (red hood over the bob), headset: true|0..1 (gaming headset; a number animates putting it on), headphones (old option)
+// hood: true (red hood over the bob), headset: true|0..1 (gaming headset; a number animates putting it on), headphones (old option),
+// tablet: true (held in both hands; tabletFace 'back'|'screen', screen, glow)
 draw.you = (pose = {}) => {
   const view = viewOf(pose);
   let d = D.you, p = pose;
@@ -329,11 +332,16 @@ draw.you = (pose = {}) => {
     const rot = pose.swordRot ?? (view === 'side' ? -lerp(30, a - 90, clamp((a - 60) / 70, 0, 1)) : swordRot(a, side));
     props.push({ svg: X.goldSword({ x: h[0], y: h[1], s: 0.95, rot, kind: pose.sword === true ? 'steel' : pose.sword, glow: pose.swordGlow || 0 }), layer: view === 'back' ? 'back' : 'front' });
   }
+  if (pose.tablet) {
+    p = { armL: view === 'side' ? 40 : 26, armR: view === 'side' ? 50 : 26, ...p };
+    props.push({ svg: X.tablet({ x: view === 'side' ? -150 : turnOf(p) * 40, y: -380, s: 0.6, rot: view === 'side' ? 0 : 4, col: '#2A2E3A', sticker: 'bolt', face: pose.tabletFace || 'back', screen: pose.screen || null, glow: pose.glow || 0 }), layer: view === 'back' ? 'back' : 'front' });
+  }
   const name = tagName(pose.nametag, 'YOU');
-  return drawWith(d, p, props) + (pose.nametag ? tagFor(d, p, { name, lvl: pose.lvl ?? 99, col: '#FFE14D', mvp: pose.mvp }) : '');
+  return drawWith(d, p, props) + (pose.nametag ? tagFor(D.you, p, { name, lvl: pose.lvl ?? 99, col: '#FFE14D', mvp: pose.mvp, dy: pose.crown ? -118 : pose.hood ? -60 : 0 }) : '');
 };
 
 // Dad: glasses 'up' (default, pushed up on the forehead) | 'on' | 'off'; mouse: true (holds a computer mouse to his ear like a phone);
+// newspaper: true|'back'|{title, headline, fold} (held open with both hands — Saturday breakfast);
 // blanket: true (asleep under a quilt; pair with face 'sleepy' or sleepy: true); sleepy: true (sleepy face + zzz)
 draw.dad = (pose = {}) => {
   const view = viewOf(pose);
@@ -349,6 +357,11 @@ draw.dad = (pose = {}) => {
     const h = handAt(d, p, view === 'side' ? -1 : 1, 224);
     props.push({ svg: X.computerMouse({ x: h[0] + (view === 'side' ? 10 : -14), y: h[1] + 30, s: 0.85, rot: view === 'side' ? -20 : 12, t: pose.t || 0 }), layer: view === 'back' ? 'back' : 'front' });
     void side;
+  }
+  if (pose.newspaper) {
+    p = { armL: view === 'side' ? 50 : 30, armR: view === 'side' ? 60 : 30, ...p };
+    const np = typeof pose.newspaper === 'object' ? pose.newspaper : {};
+    props.push({ svg: X.newspaper({ x: view === 'side' ? -190 : turnOf(p) * 40, y: view === 'side' ? -420 : -400, s: view === 'side' ? 0.6 : 0.95, rot: view === 'side' ? 0 : -2, back: view === 'side' || pose.newspaper === 'back', fold: view === 'side' ? 1 : 0, ...np }), layer: view === 'back' ? 'back' : 'front' });
   }
   if (pose.blanket) {
     p = { armL: 6, armR: 6, ...p };
@@ -412,7 +425,11 @@ draw.grandma = (pose = {}) => {
     p = { armL: -26, armR: -26, ...p };
     const h = handAt(d, p, 1);
     let fx = '';
-    if (k > 0.05) for (let i = 0; i < 5; i++) { const a = (i / 5) * Math.PI * 2 + 0.4, r0 = 50 + 40 * k, r1 = r0 + 40 * k; fx += S.path(`M${f(h[0] - 10 + Math.cos(a) * r0)} ${f(h[1] + Math.sin(a) * r0)} L${f(h[0] - 10 + Math.cos(a) * r1)} ${f(h[1] + Math.sin(a) * r1)}`, { fill: 'none', stroke: '#FFD21F', 'stroke-width': 10, 'stroke-linecap': 'round', opacity: f(k) }); }
+    if (k > 0.05) {
+      let d = '';
+      for (let i = 0; i < 6; i++) { const a = (i / 6) * Math.PI * 2 + 0.3, r0 = 60 + 30 * k, r1 = r0 + 56 * k; d += `M${f(h[0] - 8 + Math.cos(a) * r0)} ${f(h[1] + Math.sin(a) * r0)} L${f(h[0] - 8 + Math.cos(a) * r1)} ${f(h[1] + Math.sin(a) * r1)} `; }
+      fx += S.g(S.path(d, { fill: 'none', stroke: '#151515', 'stroke-width': 17, 'stroke-linecap': 'round' }) + S.path(d, { fill: 'none', stroke: '#FFD21F', 'stroke-width': 9, 'stroke-linecap': 'round' }), null, { opacity: f(Math.min(1, k * 1.5)) });
+    }
     props.push({ svg: fx, layer: 'front' });
   }
   return drawWith(d, p, props);
@@ -497,6 +514,7 @@ draw.grandmaAvatar = (pose = {}) => {
     const h = handAt(D.grandmaAvatar, p, view === 'side' ? -1 : 1, 240);
     props.push({ svg: X.coinBag({ x: h[0] + (view === 'side' ? 0 : 6), y: h[1] - 6, s: 0.5, coins: pose.coins || 0 }), layer: lay });
   }
+  props.push({ svg: L6.furStole(view, turnOf(p)), layer: view === 'back' ? 'front' : 'front' });
   L6.STATE.apron = pose.apron ? L6.APRON_GG : false;
   const out = drawWith(D.grandmaAvatar, p, props) + tagFor(D.grandmaAvatar, p, { name: tagName(pose.nametag, 'GrannyGoodies'), col: '#FFE14D', mvp: pose.mvp });
   L6.STATE.apron = false;
@@ -530,7 +548,7 @@ draw.darkblade = (pose = {}) => {
   }
   if (pose.sword !== false && !pose.shy) {
     if (pose.sword === 'back') {
-      const sv = X.goldSword({ x: view === 'side' ? 90 : -70, y: -330, s: 1.15, rot: view === 'side' ? 200 : 155, kind: 'dark' });
+      const sv = X.goldSword({ x: view === 'side' ? 70 : view === 'back' ? 60 : -60, y: -600, s: 1.1, rot: view === 'side' ? 170 : view === 'back' ? 200 : 160, kind: 'dark' });
       if (view === 'back') props.push({ svg: sv, layer: 'front' }); else props.push({ svg: sv, layer: 'back' });
     } else {
       p = { armR: view === 'side' ? 60 : 50, ...p };

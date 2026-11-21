@@ -80,6 +80,7 @@ const livSleep = () => LS ? sit('grandma', LS.asleep.grandma, { face: 'sleepy', 
 const BS = SP.bedroom;
 const bedLie = (p = {}) => (BS ? refOnly(BS.bed.lie.x, BS.bed.lie.y, BS.bed.lie.s, { view: 'back', rot: BS.bed.lie.rot, shadow: false, ...p }) : '');
 const bedSit = (face = 'sad') => (BS ? sit('dad', BS.bed.sit, { face, armL: 20, armR: 30 }) : '');
+const userScreen = (w, h) => `<rect x="${-w / 2}" y="${-h / 2}" width="${w}" height="${h}" fill="#2E6FD8"/><rect x="${-w * 0.3}" y="${h * 0.05}" width="${w * 0.6}" height="${h * 0.3}" rx="16" fill="#FFFFFF" stroke="#151515" stroke-width="5"/><text x="0" y="${h * 0.15}" font-family="Fredoka" font-weight="700" font-size="34" fill="#5A6070" text-anchor="middle">USERNAME</text><text x="0" y="${h * 0.28}" font-family="Lilita One" font-size="56" fill="#151515" text-anchor="middle">DAD_</text>`;
 const TILES = [
   ['kitchen', 'kitchen · morning, the family seated (seatPose), YOU on FLOOR', (t) => L(X.kitchen, t, {}, kitFam(), ref(1700, FL.kitchen, 0.5))],
   ['kitchen_meeting', 'kitchen · meeting (bunting + Dad\'s pie chart), presenter spot', (t) => L(X.kitchen, t, { meeting: true }, kitFam({ youFace: 'shocked' }), stand('dad', SP.kitchen.presenter.x, SP.kitchen.presenter.y, SP.kitchen.presenter.s, { face: 'excited', armR: 120 }))],
@@ -97,6 +98,12 @@ const TILES = [
   ['stairs', 'stairs · night 11 p.m., heroDoor 1 (red alarm light), YOU running down step 5', (t) => L(X.stairs, t, { heroDoor: 1 }, '', SP.stairs.steps.map((p, i) => mark(p.x, p.y, '#FF2E63')).join('') + refOnly(SP.stairs.steps[5].x, SP.stairs.steps[5].y, SP.stairs.s, { view: 'side', legL: 40, legR: -30, kneeL: 20, kneeR: 60, armL: 50, armR: -40, face: 'determined', lean: -8 }) + refOnly(SP.stairs.landing.x, SP.stairs.landing.y, SP.stairs.s, { view: 'side' }))],
   ['stairs_eve', 'stairs · evening, lights on, YOU at the bottom (FLOOR) + the arch', (t) => L(X.stairs, t, { time: 'evening' }, '', ref(SP.stairs.bottom.x + 200, FL.stairs, SP.stairs.s) + mark(SP.stairs.arch.enter.x, SP.stairs.arch.enter.y, '#3DFF9A'))],
   ['stairs_day', 'stairs · day / night tvGlow 0 + door closed', (t) => quad4([L(X.stairs, t, { time: 'day' }), L(X.stairs, t, { tvGlow: 0 }), L(X.stairs, t, { heroDoor: 0.6, heroLight: 'warm', time: 'evening' }), L(X.stairs, t, { heroDoor: 1, heroLight: 'blue' })])],
+  ['exterior', 'houseExterior · Saturday morning, cam x 0 (hero s .25 on the sidewalk)', (t) => LC(X.houseExterior, t, { x: 0 }, {}, ref(600, FL.houseExterior, SP.houseExterior.s))],
+  ['exterior_eve', 'houseExterior · evening: TV glow in the bay window + silhouettes', (t) => LC(X.houseExterior, t, { x: 0 }, { time: 'evening', silhouettes: true })],
+  ['exterior_night', 'houseExterior · 11 p.m.: heroWindow alarm, TV glow, zoom .8', (t) => LC(X.houseExterior, t, { x: 0, zoom: 0.8 }, { time: 'night', heroWindow: 'alarm', silhouettes: true })],
+  ['exterior_quad', 'houseExterior · day x 1700 / push-in bay window / hero window / morning zoom .6', (t) => quad4([LC(X.houseExterior, t, { x: 1700 }, { time: 'day' }), LC(X.houseExterior, t, { zoom: 2.4, x: -230, y: 50 }, { time: 'night', silhouettes: true }), LC(X.houseExterior, t, { zoom: 2.6, x: 232, y: -190 }, { time: 'night', heroWindow: 'glow' }), LC(X.houseExterior, t, { zoom: 0.6 }, {})])],
+  ['keyboard', 'keyboardClose · evening: "Where\'s the B?" (highlight B, finger + hand marks)', (t) => L(X.keyboardClose, t, { screen: userScreen, highlight: 'B' }, '', mark(SP.keyboardClose.finger.x, SP.keyboardClose.finger.y) + mark(SP.keyboardClose.hand.x, SP.keyboardClose.hand.y - 20, '#3DFF9A') + box(SP.keyboardClose.screen, '#33D6FF'))],
+  ['keyboard_space', 'keyboardClose · night: press SPACE .8, caps, jumpLabel, crumbs', (t) => L(X.keyboardClose, t, { time: 'night', screen: demoScreen('JUMP!'), press: { key: 'SPACE', k: 0.8 }, caps: true, jumpLabel: true, crumbs: true }, '', mark(SP.keyboardClose.space.x, SP.keyboardClose.space.y))],
 ];
 
 (async () => {

@@ -114,6 +114,11 @@ const DEFS = `<defs>
 <radialGradient id="guGlowC"><stop offset="0" stop-color="#FFFFFF" stop-opacity="0.95"/><stop offset="0.35" stop-color="#7CF3FF" stop-opacity="0.5"/><stop offset="1" stop-color="#7C5CFF" stop-opacity="0"/></radialGradient>
 <radialGradient id="guGlowGold"><stop offset="0" stop-color="#FFFBE0" stop-opacity="0.95"/><stop offset="0.45" stop-color="#FFD23F" stop-opacity="0.4"/><stop offset="1" stop-color="#FFB020" stop-opacity="0"/></radialGradient>
 <radialGradient id="guGlowP"><stop offset="0" stop-color="#F3E6FF" stop-opacity="0.9"/><stop offset="0.45" stop-color="#B57BFF" stop-opacity="0.4"/><stop offset="1" stop-color="#7A2CFF" stop-opacity="0"/></radialGradient>
+<radialGradient id="guFaceB"><stop offset="0" stop-color="#BFF2FF" stop-opacity="0.55"/><stop offset="0.5" stop-color="#7FD8FF" stop-opacity="0.25"/><stop offset="1" stop-color="#7FD8FF" stop-opacity="0"/></radialGradient>
+<radialGradient id="guFaceW"><stop offset="0" stop-color="#FFE7B8" stop-opacity="0.55"/><stop offset="0.5" stop-color="#FFC46B" stop-opacity="0.25"/><stop offset="1" stop-color="#FFC46B" stop-opacity="0"/></radialGradient>
+<radialGradient id="guFaceR"><stop offset="0" stop-color="#FF9AA5" stop-opacity="0.55"/><stop offset="0.5" stop-color="#FF3B4E" stop-opacity="0.25"/><stop offset="1" stop-color="#FF3B4E" stop-opacity="0"/></radialGradient>
+<radialGradient id="guFaceP"><stop offset="0" stop-color="#E2CCFF" stop-opacity="0.55"/><stop offset="0.5" stop-color="#B57BFF" stop-opacity="0.25"/><stop offset="1" stop-color="#B57BFF" stop-opacity="0"/></radialGradient>
+<radialGradient id="guFaceG"><stop offset="0" stop-color="#C8FFD8" stop-opacity="0.55"/><stop offset="0.5" stop-color="#5CFF9D" stop-opacity="0.25"/><stop offset="1" stop-color="#5CFF9D" stop-opacity="0"/></radialGradient>
 <radialGradient id="guGlowW"><stop offset="0" stop-color="#FFFFFF" stop-opacity="1"/><stop offset="0.4" stop-color="#FFFFFF" stop-opacity="0.5"/><stop offset="1" stop-color="#FFFFFF" stop-opacity="0"/></radialGradient>
 <pattern id="guHazard" width="56" height="56" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><rect width="56" height="56" fill="#FFD23F"/><rect width="28" height="56" fill="#151515"/></pattern>
 <pattern id="guHex" width="30" height="52" patternUnits="userSpaceOnUse"><path d="M15 0 L30 8.66 L30 25.98 L15 34.64 L0 25.98 L0 8.66 Z M15 34.64 L15 52" fill="none" stroke="#FFFFFF" stroke-width="2" opacity="0.55"/></pattern>
@@ -352,7 +357,7 @@ function chatBubble(o = {}) {
           body = shown.slice(0, -1);
           const lx = tx0 + textW(body, size, font);
           const ch = shown.slice(-1);
-          const sc = 1 + 0.9 * jolt;
+          const sc = 1 + 0.45 * jolt;
           txt += S.g((caps ? T : TF)(ch, 0, 0, size, ink, { 'text-anchor': 'start' }), `translate(${f(lx)} ${f(yy)}) scale(${f(sc)})`);
         }
         if (body) txt += (caps ? T : TF)(body, tx0, yy, size, ink, { 'text-anchor': 'start', ...(caps ? { 'letter-spacing': 1 } : {}) });
@@ -514,7 +519,8 @@ function chatLog(o = {}) {
 // joinToast({ x, y, k, user, text, t, out, s, anchor, col, who, icon, big })
 //   "DadBod1978 joined the server": navy glass card, portrait + green "+" badge, user in colour. (x, y) = the anchor edge
 //   centre (anchor 'right' default = slides in from the right edge; 'left'; 'center' pops). k 0..1 in; out 0..1 away.
-//   icon: svg drawn in the 100-unit portrait circle instead of the portrait. ~0.35 s in.
+//   icon: a portrait key ('dad', 'mom', 'cube'...) or an svg drawn in the 100-unit circle (centre 0,0) instead of the
+//   portrait (default: the user's portrait if known, else a generic head). ~0.35 s in.
 function joinToast(o = {}) {
   const { x = 1880, y = 140, user = 'DadBod1978', text = 'joined the server', t = 0, s = 1, anchor = 'right', size = 36 } = o;
   const k = clamp(o.k ?? 1, 0, 1), out = clamp(o.out || 0, 0, 1);
@@ -527,7 +533,7 @@ function joinToast(o = {}) {
   c += S.rect(x0, -Hh / 2, Wd, Hh, 26, { fill: P.navy, opacity: 0.93, stroke: LINE, 'stroke-width': 6 });
   c += S.rect(x0 + 7, -Hh / 2 + 7, Wd - 14, Hh - 14, 20, { fill: 'none', stroke: P.teal, 'stroke-width': 3.5, opacity: 0.7 });
   c += S.rect(x0, -Hh / 2, 16, Hh, 0, { fill: uc, opacity: 0.0 });
-  c += o.icon ? S.g(S.circle(0, 0, 50, ol(PORTRAIT_BG.cube, 6)) + o.icon, tr(x0 + 62, 0, 0.72)) : portrait(who, x0 + 62, 0, 36, { col: uc });
+  c += o.icon && String(o.icon).includes('<') ? S.g(S.circle(0, 0, 50, ol(PORTRAIT_BG.cube, 6)) + o.icon, tr(x0 + 62, 0, 0.72)) : portrait(o.icon || who, x0 + 62, 0, 36, { col: uc });
   const bk = ease.outBack(seg(k, 0.35, 0.75));
   if (bk > 0) c += S.g(S.circle(0, 0, 16, ol(P.green, 4)) + S.path('M-8 0 H8 M0 -8 V8', ln(5, '#FFFFFF')), tr(x0 + 92, 26, bk));
   c += T(user, x0 + 118, size * 0.36, size, uc, stroked(size * 0.2, '#0B1020', { 'text-anchor': 'start' }));
@@ -585,7 +591,7 @@ function systemBanner(o = {}) {
   const lsz = lines.map((l, i) => (lines.length > 1 && i === 0 ? size * 1.25 : size));
   const tw = Math.max(...lines.map((l, i) => textW(l, lsz[i], 'L')), sub ? textW(sub, size * 0.56, 'F') : 0);
   const padY = theme === 'alarm' ? 64 : 40;
-  const Wd = o.w || Math.max(900, tw + 330), Hh = lsz.reduce((a, b) => a + b * 1.08, 0) + (sub ? size * 0.8 : 0) + padY * 2 - size * 0.12;
+  const Wd = o.w || Math.max(900, tw + 420), Hh = lsz.reduce((a, b) => a + b * 1.08, 0) + (sub ? size * 0.8 : 0) + padY * 2 - size * 0.12;
   const un = ease.outBack(seg(k, 0, 0.55)), tk = pop(seg(k, 0.3, 0.8));
   const alarm = theme === 'alarm';
   const blink = alarm ? (Math.floor(t * 5) % 2 ? 1 : 0.55) : 1;
@@ -628,9 +634,17 @@ function systemBanner(o = {}) {
 }
 
 // ================================================================ 3. NAMETAGS
-// overHead(x, y, s) -> { head, tag, chat } y positions over an actor (feet x, y, actor scale s): the head top, a nametag centre,
-// and a chat-bubble tail tip (above the nametag). Tune per character (the hot dog is taller: pass a bigger s or add -60*s).
-const overHead = (x, y, s = 0.5, o = {}) => ({ x, head: y - 950 * s, tag: y - 950 * s - (o.tagGap ?? 46), chat: y - 950 * s - (o.chatGap ?? 100) });
+// head tops above the feet in body units (actor s 1, built-in nametag off) — measured from rig/cast.js; re-measure if the
+// cast changes (tools/gameui_sheet.js renders them together)
+const HEAD_TOP = { you: 946, dad: 1062, mom: 1118, grandma: 956, darkbladeMom: 1228, clan: 958, dadAvatar: 1238, momAvatar: 906, grandmaAvatar: 988, noodle: 1158, darkblade: 1018, player: 972, noob: 704, kid: 700 };
+// overHead(x, y, s, who | { who, tagGap, chatGap, lift }) -> { x, head, tag, chat }: y positions over an actor (feet x, y,
+// actor scale s, cast key who): the head top, a nametag centre and a chat-bubble tail tip (above the nametag). Gaps are in
+// screen px (for a nametag at s ≈ 0.8–1); scale them with the UI if you zoom.
+function overHead(x, y, s = 0.5, o = {}) {
+  if (typeof o === 'string') o = { who: o };
+  const head = y - (o.lift || 0) - (HEAD_TOP[o.who] ?? 950) * s;
+  return { x, head, tag: head - (o.tagGap ?? 40), chat: head - (o.chatGap ?? 96) };
+}
 // nametag({ x, y, s, name, level, col, k, t, crown, hp, who, bob, portrait })
 //   Floating name over an avatar: navy pill, name in white, coloured underline + rim, gold LVL chip, optional crown
 //   (YOU · LVL 99), hp 0..1 bar under it, a mini portrait. who: 'you'|'dad'|'mom'|'granny'|'noodle'|'darkblade' fills
@@ -969,7 +983,7 @@ function serverHealth(o = {}) {
     c += S.rect(x0, by, w, bh, 20, { fill: '#FF2B3E', opacity: f(0.15 * blink) });
     for (const sd of [-1, 1]) c += S.g(S.path('M0 -30 L33 26 L-33 26 Z', ol(P.gold, 5)) + S.path('M0 -10 V8', ln(7)) + S.circle(0, 17, 4, { fill: LINE }), tr(sd * (w / 2 + 70), by + bh / 2 - 4, 1 + 0.12 * blink));
   }
-  if (hit > 0 && hit < 1) c += S.rect(x0 - 30, -60, w + 60, 170, 32, { fill: '#FFFFFF', opacity: f(0.75 * (1 - hit)) });
+  if (hit > 0 && hit < 1) c += S.rect(x0 - 30, -60, w + 60, 170, 32, { fill: '#FFFFFF', opacity: f(0.65 * (1 - hit) * (1 - hit)) });
   const sh = hit > 0 && hit < 1 ? Math.sin(hit * 70) * 16 * (1 - hit) : 0;
   return S.g(c, `translate(${f(x + sh)} ${f(y - (1 - ease.out(k)) * 140)}) scale(${f(s)})`, k < 1 ? { opacity: f(seg(k, 0, 0.4)) } : {});
 }
@@ -1332,7 +1346,7 @@ function bossBar(o = {}) {
   if (sh > 0.002) c += S.g(S.rect(-84, -27, 168, 54, 27, ol('#2A6E8A', 5)) + lockIcon(-50, -1, 17, '#BFF8FF') + TF('SHIELD', 12, 10, 27, '#FFFFFF'), tr(x0 + w - 70, by - 16, 1 + 0.05 * Math.sin(t * 6), 4));
   else c += T(`${Math.round(v * 100)}%`, x0 + w - 18, by + bh / 2 + 15, 40, '#FFFFFF', stroked(8, LINE, { 'text-anchor': 'end' }));
   if (sub) c += TF(sub, 0, by + bh + 50, 28, P.purpleL, stroked(7, LINE, { 'letter-spacing': 3 }));
-  if (hit > 0 && hit < 1) c += S.rect(x0 - 10, by - 10, w + 20, bh + 20, 26, { fill: '#FFFFFF', opacity: f(0.8 * (1 - hit)) });
+  if (hit > 0 && hit < 1) c += S.rect(x0 - 10, by - 10, w + 20, bh + 20, 26, { fill: '#FFFFFF', opacity: f(0.7 * (1 - hit) * (1 - hit)) });
   const shx = hit > 0 && hit < 1 ? Math.sin(hit * 70) * 14 * (1 - hit) : 0;
   return S.g(c, `translate(${f(x + shx)} ${f(y - (1 - ease.out(k)) * 200)}) scale(${f(s)})`, k < 1 ? { opacity: f(seg(k, 0, 0.4)) } : {});
 }
@@ -1394,7 +1408,7 @@ function shieldDome(o = {}) {
   if (lines) out += S.path(lines, { fill: 'none', stroke: lighter(col, 0.5), 'stroke-width': 2.5, opacity: f(0.5 * vis), 'stroke-linejoin': 'round' });
   if (lit) out += S.path(lit, { fill: '#FFFFFF', opacity: 0.16, stroke: '#FFFFFF', 'stroke-width': 3 });
   if (hot) out += S.path(hot, { fill: lighter(col, 0.6), opacity: f(0.55 * (1 - Math.max(...hits.map((h) => h.age)) / 0.6)), stroke: '#FFFFFF', 'stroke-width': 4 });
-  if (shards) out += S.g(shards, null, { fill: lighter(col, 0.55), stroke: '#FFFFFF', 'stroke-width': 3, opacity: f(0.8 * (1 - seg(shatter, 0.5, 1))) });
+  if (shards) { const so = f(0.8 * (1 - seg(shatter, 0.5, 1))); out += S.g(shards, null, { fill: lighter(col, 0.55), stroke: '#FFFFFF', 'stroke-width': 3, 'fill-opacity': so, 'stroke-opacity': so }); }
   // rim + gloss
   out += S.path(`M${f(x - R_)} ${f(y)} A${f(R_)} ${f(R_)} 0 0 1 ${f(x + R_)} ${f(y)}`, ln(14, col, 0.45 * vis)) + S.path(`M${f(x - R_)} ${f(y)} A${f(R_)} ${f(R_)} 0 0 1 ${f(x + R_)} ${f(y)}`, ln(4, '#FFFFFF', 0.8 * vis));
   out += S.path(`M${f(x - R_ * 0.78)} ${f(y - R_ * 0.42)} A${f(R_ * 0.88)} ${f(R_ * 0.88)} 0 0 1 ${f(x - R_ * 0.3)} ${f(y - R_ * 0.83)}`, ln(f(R_ * 0.035), '#FFFFFF', 0.45 * vis));
@@ -1508,7 +1522,7 @@ function crystalShatter(o = {}) {
     const cl = i % 3 === 0 ? '#FFFFFF' : i % 3 === 1 ? col : col2;
     sh += `<path d="M0 ${f(-r)} L${f(r * 0.6)} ${f(r * 0.3)} L${f(-r * 0.5)} ${f(r * 0.6)} Z" fill="${cl}" transform="translate(${f(px)} ${f(py)}) rotate(${f(rot)})"/>`;
   }
-  out += S.g(sh, null, { stroke: LINE, 'stroke-width': f(3 * s), 'stroke-linejoin': 'round', opacity: f(gl) });
+  out += S.g(sh, null, { stroke: LINE, 'stroke-width': f(3 * s), 'stroke-linejoin': 'round', 'fill-opacity': f(gl), 'stroke-opacity': f(gl) });
   return out;
 }
 const STONE = ['#8A909E', '#737A8A', '#9DA3B0', '#666C7C'];
@@ -1638,7 +1652,7 @@ function victoryCard(o = {}) {
   const rk = ease.out(seg(k, 0, 0.5));
   let rays = '';
   for (let i = 0; i < 18; i++) { const a0 = (i / 18) * Math.PI * 2 + t * 0.35, a1 = a0 + 0.12; rays += `M0 0 L${f(Math.cos(a0) * 1000)} ${f(Math.sin(a0) * 1000)} L${f(Math.cos(a1) * 1000)} ${f(Math.sin(a1) * 1000)} Z`; }
-  c += S.g(S.path(rays, { fill: '#FFF3B0', opacity: 0.32 }), `scale(${f(rk)})`);
+  c += S.g(S.path(rays, { fill: '#FFD86B', opacity: 0.3 }), `scale(${f(rk)})`);
   c += S.ellipse(0, 0, 620 * rk, 330 * rk, { fill: 'url(#guGlowGold)', opacity: 0.85 });
   const swk = ease.outBack(seg(k, 0.1, 0.45));
   if (swk > 0) c += S.g(sword(-60, 230, 1.9, -38) + sword(60, 230, 1.9, 38), `scale(${f(swk)})`);
@@ -1666,7 +1680,7 @@ function mvpCard(o = {}) {
   const rk = ease.out(seg(k, 0, 0.4));
   let rays = '';
   for (let i = 0; i < 20; i++) { const a0 = (i / 20) * Math.PI * 2 + t * 0.4, a1 = a0 + 0.11; rays += `M0 -80 L${f(Math.cos(a0) * 1100)} ${f(-80 + Math.sin(a0) * 1100)} L${f(Math.cos(a1) * 1100)} ${f(-80 + Math.sin(a1) * 1100)} Z`; }
-  c += S.g(S.path(rays, { fill: '#FFE88A', opacity: 0.3 }), `scale(${f(rk)})`);
+  c += S.g(S.path(rays, { fill: '#FFD86B', opacity: 0.3 }), `scale(${f(rk)})`);
   c += S.ellipse(0, -60, 560 * rk, 560 * rk, { fill: 'url(#guGlowGold)', opacity: 0.7 });
   // card (flips in)
   const fk = seg(k, 0.05, 0.55), flip = Math.cos((1 - ease.out(fk)) * Math.PI * 0.5) * (fk > 0 ? 1 : 0);
@@ -1728,6 +1742,8 @@ function itemIcon(id, s = 1) {
     case 'pizza': c = S.path('M0 70 L-60 -44 Q0 -74 60 -44 Z', ol('#FFC85A', 6)) + S.path('M-60 -44 Q0 -74 60 -44 L54 -32 Q0 -60 -54 -32 Z', ol('#D9893A', 4)) + [[-18, -24], [16, -18], [0, 16], [-6, -46]].map(([a, b]) => S.circle(a, b, 10, ol('#E0533F', 3))).join(''); break;
     case 'banana': c = S.path('M-40 -60 Q-74 10 -20 60 Q30 90 60 50 Q10 50 -10 10 Q-26 -30 -24 -62 Z', ol('#FFE14D', 6)) + S.path('M-34 -66 L-24 -62', ln(10, '#6B4A1E')) + S.path('M-30 -20 Q-34 20 0 46', ln(4, '#E0B020')); break;
     case 'dino': c = S.path('M-56 50 V-10 Q-56 -60 0 -60 Q50 -60 60 -20 L60 20 Q60 50 30 50 Z', ol('#5CC96B', 6)) + S.path('M-40 -50 L-30 -74 L-16 -56 L-2 -78 L10 -58 L26 -72 L30 -50', ol('#3E9B4F', 4)) + S.circle(20, -16, 9, ol('#FFFFFF', 3)) + S.circle(22, -16, 4, { fill: LINE }) + S.path('M30 20 L38 12 L44 22 L50 12', ln(4, '#FFFFFF')); break;
+    case 'shark': c = S.path('M-58 56 V-6 Q-58 -64 0 -64 Q58 -64 58 -6 V56 Z', ol('#6FA8DC', 6)) + S.path('M0 -64 L14 -88 L22 -60', ol('#5A8FC2', 5)) + S.path('M-40 6 L-30 22 L-20 6 L-10 22 L0 6 L10 22 L20 6 L30 22 L40 6 Q40 44 0 46 Q-40 44 -40 6 Z', ol('#FFFFFF', 4)) + S.ellipse(0, 24, 30, 14, { fill: '#FFD9B8' }) + S.circle(-30, -22, 8, { fill: LINE }) + S.circle(30, -22, 8, { fill: LINE }); break;
+    case 'robot': c = S.rect(-50, -50, 100, 96, 16, ol('#B9C0CC', 6)) + S.rect(-36, -30, 72, 34, 10, ol('#2A2D3A', 4)) + S.circle(-16, -13, 8, { fill: '#7CF3FF' }) + S.circle(16, -13, 8, { fill: '#7CF3FF' }) + S.path('M-24 24 H24 M-24 24 v6 M-8 24 v6 M8 24 v6 M24 24 v6', ln(4)) + S.path('M0 -50 V-70', ln(6)) + S.circle(0, -74, 9, ol(P.red, 4)) + S.rect(-62, -14, 12, 30, 4, ol('#8A93A6', 4)) + S.rect(50, -14, 12, 30, 4, ol('#8A93A6', 4)); break;
     case 'tutu': c = S.rect(-34, -40, 68, 30, 8, ol(P.pink, 5)) + S.path('M-34 -14 L-70 30 Q-50 40 -40 26 Q-30 44 -14 30 Q0 46 14 30 Q30 44 40 26 Q50 40 70 30 L34 -14 Z', ol('#FFB8DA', 6)); break;
     case 'wings': c = S.path('M-6 0 Q-30 -60 -76 -50 Q-60 -36 -70 -26 Q-50 -20 -62 -6 Q-40 -4 -48 10 Q-24 14 -6 0 Z', ol('#FFFFFF', 5)) + S.path('M6 0 Q30 -60 76 -50 Q60 -36 70 -26 Q50 -20 62 -6 Q40 -4 48 10 Q24 14 6 0 Z', ol('#FFFFFF', 5)) + S.ellipse(0, -66, 30, 9, { fill: 'none', stroke: P.gold, 'stroke-width': 6 }); break;
     case 'dragonwings': c = S.path('M-6 10 L-30 -60 L-80 -40 L-66 -14 L-80 0 L-58 6 L-64 26 Z', ol('#9B5CFF', 5)) + S.path('M6 10 L30 -60 L80 -40 L66 -14 L80 0 L58 6 L64 26 Z', ol('#9B5CFF', 5)) + S.path('M-30 -60 L-46 -4 M30 -60 L46 -4', ln(4, '#5B26C2')); break;
@@ -1750,6 +1766,7 @@ const ITEMS = [
   { id: 'sunglasses', name: 'Cool Shades', price: 75, tab: 'FACES' }, { id: 'mustache', name: 'Mustache', price: 40, tab: 'FACES' }, { id: 'monocle', name: 'Monocle', price: 500, tab: 'FACES' }, { id: 'face', name: 'Big Smile', price: 0, tab: 'FACES' },
   { id: 'hotdog', name: 'HOT DOG SUIT', price: 250, tab: 'COSTUMES' }, { id: 'pizza', name: 'Pizza Suit', price: 250, tab: 'COSTUMES' }, { id: 'banana', name: 'Banana Suit', price: 200, tab: 'COSTUMES' },
   { id: 'dino', name: 'Dino Hoodie', price: 180, tab: 'COSTUMES' }, { id: 'tutu', name: 'Tutu Skirt', price: 50, tab: 'COSTUMES' }, { id: 'armor', name: 'Gold Armor', price: 2000, tab: 'COSTUMES' },
+  { id: 'shark', name: 'Shark Suit', price: 220, tab: 'COSTUMES' }, { id: 'robot', name: 'Robot Suit', price: 300, tab: 'COSTUMES' },
   { id: 'wings', name: 'Angel Wings', price: 400, tab: 'EXTRAS' }, { id: 'dragonwings', name: 'Dragon Wings', price: 650, tab: 'EXTRAS' }, { id: 'cape', name: 'Hero Cape', price: 150, tab: 'EXTRAS' },
   { id: 'potlid', name: 'Pot Lid Shield', price: 5, tab: 'EXTRAS' }, { id: 'pearls', name: 'Pearl Necklace', price: 5000, tab: 'EXTRAS' }, { id: 'furcoat', name: 'Fur Coat', price: 8000, tab: 'EXTRAS' }, { id: 'cane', name: 'Golden Cane', price: 7500, tab: 'EXTRAS' },
   { id: 'shirt', name: 'Cube Tee', price: 30, tab: 'SHIRTS' },
@@ -1763,7 +1780,7 @@ function editorLayout(o) {
   const cw = (gx1 - gx0 - gap * (cols - 1)) / cols, ch = (gy1 - gy0 - gap * (rows - 1)) / rows;
   return { w, h, leftW, gx0, gx1, gy0, gy1, cols, rows, gap, cw, ch };
 }
-const editorItems = (o) => (o.items || ITEMS.filter((it) => it.tab === (o.tab || 'COSTUMES'))).slice(0, (o.cols || 4) * (o.rows || 2));
+const editorItems = (o) => (o.items || ITEMS.filter((it) => it.tab === (o.tab || 'COSTUMES'))).map((it) => (typeof it === 'string' ? ITEMS.find((q) => q.id === it) || { id: it, name: it, price: 0 } : it)).slice(0, (o.cols || 4) * (o.rows || 2));
 // editorCard(opts, idOrIndex) -> { x, y, bx, by }: absolute centre of a card and of its BUY button for the same opts you pass
 // to avatarEditor (aim the pointer / Dad's clicks at it).
 function editorCard(o = {}, which = 0) {
@@ -1857,12 +1874,13 @@ function avatarEditor(o = {}) {
     const yb = Lo.ch - 36;
     if (isOwned) cc += S.rect(Lo.cw / 2 - 70, yb - 22, 140, 44, 22, ol(P.green, 4)) + TF('OWNED', Lo.cw / 2, yb + 9, 24, '#FFFFFF');
     else {
-      cc += coinIcon(30, yb, 15, 0) + T(it.price ? R.fmt(it.price) : 'FREE', 52, yb + 11, 30, P.ink, { 'text-anchor': 'start' });
+      const pf = fitText(it.price ? R.fmt(it.price) : 'FREE', Lo.cw - 118 - 56, 30, 'L', 0.6);
+      cc += coinIcon(30, yb, 15, 0) + T(pf.text, 50, yb + pf.size * 0.36, pf.size, P.ink, { 'text-anchor': 'start' });
       const pr = on ? clamp(o.press || 0, 0, 1) : 0, d = 5 * bumpK(pr * 1.4);
       cc += S.rect(Lo.cw - 118, yb - 22 + 4, 104, 46, 23, { fill: P.orangeD, stroke: LINE, 'stroke-width': 4 }) + S.rect(Lo.cw - 118, yb - 22 + d, 104, 44, 22, { fill: 'url(#guOrangeV)', stroke: LINE, 'stroke-width': 4 }) + TF('BUY', Lo.cw - 66, yb + 9 + d, 24, '#FFFFFF', stroked(4));
       if (pr > 0 && pr < 1) cc += S.circle(Lo.cw - 66, yb, 20 + 60 * pr, { fill: 'none', stroke: P.orange, 'stroke-width': f(8 * (1 - pr)) });
     }
-    if (on && o.purchased > 0) cc += stamp({ text: 'PURCHASED!', k: o.purchased, x: Lo.cw / 2, y: Lo.ch * 0.42, s: Math.min(0.62, Lo.cw / 560), rot: -14, col: P.green });
+    if (on && o.purchased > 0) cc += stamp({ text: 'PURCHASED!', k: o.purchased, x: Lo.cw / 2, y: Lo.ch * 0.4, s: Math.min(0.62, (Lo.cw * 1.02) / (textW('PURCHASED!', 120, 'L', 7.2) + 132)), rot: -14, col: P.greenD });
     c += S.g(cc, tr(cx, cy + lift));
   });
   // bottom bar: cart + save
@@ -1884,10 +1902,11 @@ const DEVICE = {
   phone: { sw: 380, sh: 790 },
   pc: { sw: 1120, sh: 630 },
 };
-// deviceFrame({ type, x, y, s, screen, glow, glowCol, k, t, rot, sticker, base, landscape }) — a device showing game footage;
-// (x, y) = the SCREEN centre. Screen sizes at s 1: laptopOld 960x600 (Dad's ancient beige laptop + sticker + keyboard deck),
-// tablet 1000x690 (Mom's lilac case), phone 380x790 (Granny's rose-gold phone; landscape: true = 790x380), pc 1120x630
-// (the hero's gaming monitor with an RGB strip + stand). screen = svg authored for 1920x1080 (scaled to cover, cropped) or a
+// deviceFrame({ type, x, y, s, screen, glow, glowCol, k, t, rot, sticker, base, landscape, col }) — a device showing game
+// footage, for UI-style / full-screen shots (the props characters HOLD are rig/extras.js laptopOld/tablet/phone/gamingPC —
+// same colours). (x, y) = the SCREEN centre. Screen sizes at s 1: laptopOld 960x600 (Dad's ancient grey laptop, "#1 DAD"
+// star sticker, keyboard deck; base: false hides the deck), tablet 1000x690 (Mom's teal case), phone 380x790 (Granny's pink
+// phone; landscape: true = 790x380), pc 1120x630 (the hero's gaming monitor with an RGB strip + stand). screen = svg authored for 1920x1080 (scaled to cover, cropped) or a
 // function (w, h) -> svg in screen px (0,0 = top-left). glow 0..1 = light spill around it; k 0..1 = power on (CRT line for
 // laptop/pc, fade for the others). deviceSize(type, landscape) -> { sw, sh }.
 function deviceSize(type, landscape = false) {
@@ -1900,38 +1919,39 @@ function deviceFrame(o = {}) {
   const { sw, sh } = deviceSize(type, landscape);
   const L = -sw / 2, Tt = -sh / 2;
   let back = '', front = '';
-  if (glow > 0) for (let i = 3; i >= 1; i--) back += S.rect(L - 60 * i, Tt - 60 * i, sw + 120 * i, sh + 120 * i, 80 * i, { fill: glowCol, opacity: f(0.07 * glow) });
+  if (glow > 0) for (let i = 5; i >= 1; i--) back += S.rect(L - 40 * i, Tt - 40 * i, sw + 80 * i, sh + 80 * i, 40 + 40 * i, { fill: glowCol, opacity: f(0.045 * glow) });
   if (type === 'laptopOld') {
     const bz = 58;
     if (o.base !== false) {
       const by = sh / 2 + bz + 6;
-      back += S.path(`M${f(L - bz - 10)} ${f(by)} H${f(-L + bz + 10)} L${f(-L + bz + 90)} ${f(by + 170)} H${f(L - bz - 90)} Z`, ol('#CBC2AE', 8));
-      back += S.path(`M${f(L - bz + 30)} ${f(by + 20)} H${f(-L + bz - 30)} L${f(-L + bz + 10)} ${f(by + 110)} H${f(L - bz - 10)} Z`, { fill: '#3A3833', stroke: LINE, 'stroke-width': 5 });
+      back += S.path(`M${f(L - bz - 10)} ${f(by)} H${f(-L + bz + 10)} L${f(-L + bz + 90)} ${f(by + 170)} H${f(L - bz - 90)} Z`, ol('#7A808E', 8));
+      back += S.path(`M${f(L - bz + 30)} ${f(by + 20)} H${f(-L + bz - 30)} L${f(-L + bz + 10)} ${f(by + 110)} H${f(L - bz - 10)} Z`, { fill: '#3A3F4E', stroke: LINE, 'stroke-width': 5 });
       let keys = '';
       for (let r = 0; r < 4; r++) {
         const yy = by + 28 + r * 21, wrow = lerp(sw + bz * 2 - 70, sw + bz * 2 + 10, (r + 0.5) / 4), n = 15, kw = wrow / n;
         for (let q = 0; q < n; q++) keys += `M${f(-wrow / 2 + q * kw + 3)} ${f(yy)} h${f(kw - 6)} v15 h${f(-(kw - 6))} Z`;
       }
-      back += S.path(keys, { fill: '#E9E3D2', opacity: 0.85 });
-      back += S.path(`M${f(-170)} ${f(by + 116)} H170 L180 ${f(by + 160)} H-180 Z`, { fill: '#BDB39C', stroke: LINE, 'stroke-width': 4 });
+      back += S.path(keys, { fill: '#C9CED8', opacity: 0.9 });
+      back += S.path(`M${f(-170)} ${f(by + 116)} H170 L180 ${f(by + 160)} H-180 Z`, { fill: '#8A909E', stroke: LINE, 'stroke-width': 4 });
     }
-    back += S.rect(L - bz, Tt - bz, sw + bz * 2, sh + bz * 2 + 12, 34, ol('#D8CFBC', 8));
-    back += S.rect(L - 22, Tt - 22, sw + 44, sh + 44, 14, { fill: '#34343B', stroke: LINE, 'stroke-width': 5 });
-    back += S.circle(0, Tt - 38, 7, { fill: '#2A2A30' }) + TF('DELUXE 2003', 0, sh / 2 + 46, 24, '#9A917C', { 'letter-spacing': 4 });
-    const st = o.sticker ?? 'I  TAXES';
-    if (st) front += S.g(S.rect(-86, -30, 172, 60, 14, ol('#FFE14D', 4)) + TF(st, 0, 9, 24, P.ink) + (st === 'I  TAXES' ? heart(-26, 0, 9, P.red, 2) : ''), tr(L - 10, sh / 2 + 34, 0.9, -8));
+    back += S.rect(L - bz, Tt - bz, sw + bz * 2, sh + bz * 2 + 12, 34, ol('#9AA0AE', 8));
+    back += S.path(`M${f(L - bz + 26)} ${f(Tt - bz + 16)} H${f(L + sw * 0.3)}`, ln(10, '#FFFFFF', 0.3));
+    back += S.rect(L - 22, Tt - 22, sw + 44, sh + 44, 14, { fill: '#2E323E', stroke: LINE, 'stroke-width': 5 });
+    back += S.circle(0, Tt - 38, 7, { fill: '#3A3F4E' });
+    const st = o.sticker ?? '#1 DAD';
+    if (st) front += S.g(S.path(star5(0, 0, 62, 42), { fill: '#FFD23F', stroke: LINE, 'stroke-width': 6, 'stroke-linejoin': 'round' }) + T(st, 0, 10, st.length > 4 ? 24 : 30, '#E8453C', stroked(6, '#FFFFFF')), tr(-L + bz - 4, Tt - bz + 8, 1, 14));
   } else if (type === 'tablet') {
     const bz = 46;
-    back += S.rect(L - bz - 14, Tt - bz - 14, sw + bz * 2 + 28, sh + bz * 2 + 28, 70, ol('#C9B6F2', 8));
+    back += S.rect(L - bz - 14, Tt - bz - 14, sw + bz * 2 + 28, sh + bz * 2 + 28, 70, ol(o.col || '#3FB8A8', 8));
     back += S.rect(L - bz, Tt - bz, sw + bz * 2, sh + bz * 2, 56, { fill: '#1E1E26', stroke: LINE, 'stroke-width': 5 });
     back += S.circle(L - bz / 2, 0, 7, { fill: '#3A3A48' });
-    front += S.path(`M${f(-L + bz + 6)} ${f(Tt - 40)} V${f(Tt + 60)}`, ln(10, '#B7A2E6'));
+    front += S.path(`M${f(-L + bz + 6)} ${f(Tt - 40)} V${f(Tt + 60)}`, ln(10, lighter(o.col || '#3FB8A8', 0.35)));
   } else if (type === 'phone') {
     const bz = 22, rr = landscape ? 50 : 54;
-    back += S.rect(L - bz - 16, Tt - bz - 16, sw + bz * 2 + 32, sh + bz * 2 + 32, rr + 20, ol('#F2B8A8', 8));
+    back += S.rect(L - bz - 16, Tt - bz - 16, sw + bz * 2 + 32, sh + bz * 2 + 32, rr + 20, ol(o.col || '#FF9FC4', 8));
     back += S.rect(L - bz, Tt - bz, sw + bz * 2, sh + bz * 2, rr, { fill: '#16161C', stroke: LINE, 'stroke-width': 5 });
     front += landscape ? S.rect(L - 12, -40, 14, 80, 7, { fill: '#16161C' }) : S.rect(-50, Tt - 12, 100, 18, 9, { fill: '#16161C' });
-    front += S.rect(landscape ? -sw / 2 + 8 : sw / 2 + bz + 10, landscape ? -sh / 2 - bz - 22 : -140, landscape ? 90 : 10, landscape ? 10 : 90, 5, { fill: '#D8968A' });
+    front += S.rect(landscape ? -sw / 2 + 8 : sw / 2 + bz + 10, landscape ? -sh / 2 - bz - 22 : -140, landscape ? 90 : 10, landscape ? 10 : 90, 5, { fill: darker(o.col || '#FF9FC4', 0.2) });
   } else {
     const bz = 24;
     if (o.base !== false) {
@@ -1958,11 +1978,14 @@ function deviceFrame(o = {}) {
   sc += S.path(`M${f(L)} ${f(Tt)} H${f(L + sw * 0.55)} L${f(L + sw * 0.25)} ${f(Tt + sh)} H${f(L)} Z`, { fill: 'url(#guGlare)' });
   return S.g(back + sc + S.rect(L, Tt, sw, sh, type === 'phone' ? 30 : type === 'tablet' ? 18 : 6, { fill: 'none', stroke: '#000000', 'stroke-width': 4 }) + front, tr(x, y, s, rot));
 }
-// screenGlow(x, y, w, h, col, k, { flicker, t }) — cheap screen light on a face / wall: three nested soft ellipses (no
-// radial gradient), (x, y) = centre. Draw over the character (it brightens) — e.g. laptop blue on Dad's face at night.
-function screenGlow(x, y, w, h, col = '#9FE8FF', k = 1, o = {}) {
+// screenGlow(x, y, w, h, col, k, { flicker, t }) — cheap screen light on a face / wall, (x, y) = centre, w x h ≤ ~600 px.
+// col 'blue' | 'warm' | 'red' | 'purple' | 'green' | 'white' = a soft radial gradient (static defs); any hex colour = three
+// nested flat ellipses. Draw OVER the character (it brightens) — e.g. laptop blue on Dad's face at night; flicker: true + t.
+const GLOW_GRAD = { blue: 'guFaceB', warm: 'guFaceW', red: 'guFaceR', purple: 'guFaceP', green: 'guFaceG', white: 'guGlowW' };
+function screenGlow(x, y, w, h, col = 'blue', k = 1, o = {}) {
   if (k <= 0) return '';
   const fl = o.flicker ? 0.85 + 0.15 * Math.sin((o.t || 0) * 23) * Math.sin((o.t || 0) * 7) : 1;
+  if (GLOW_GRAD[col]) return S.ellipse(x, y, w / 2, h / 2, { fill: `url(#${GLOW_GRAD[col]})`, opacity: f(clamp(0.75 * k * fl, 0, 1)) });
   const a = 0.11 * k * fl;
   return S.ellipse(x, y, w / 2, h / 2, { fill: col, opacity: f(a) }) + S.ellipse(x, y, w * 0.36, h * 0.36, { fill: col, opacity: f(a) }) + S.ellipse(x, y, w * 0.22, h * 0.22, { fill: col, opacity: f(a * 1.1) });
 }
@@ -2017,7 +2040,7 @@ function stamp(o = {}) {
   const k = clamp(o.k ?? 1, 0, 1), out = clamp(o.out || 0, 0, 1);
   if (k <= 0.001 || out >= 1) return '';
   const tw = textW(text, size, 'L', size * 0.06);
-  const Wd = tw + size * 0.9, Hh = size * 1.35;
+  const Wd = tw + size * 1.1, Hh = size * 1.45;
   const sl = k < 0.3 ? lerp(2.4, 0.94, ease.in(k / 0.3)) : lerp(0.94, 1, ease.outBack(seg(k, 0.3, 0.6)));
   let c = '';
   const ink = { fill: 'none', stroke: col, 'stroke-linejoin': 'round' };
@@ -2069,18 +2092,23 @@ function tumbleweed(o = {}) {
 function wallet(o = {}) {
   const { x = 960, y = 600, s = 1, t = 0, coins = 12 } = o;
   const k = clamp(o.k ?? 1, 0, 1), moth = clamp(o.moth || 0, 0, 1);
-  let c = S.rect(-180, -40, 360, 210, 30, ol('#8A5524', 8)) + S.path('M-160 -20 H160', ln(5, '#6B3A1E', 0.6)) + S.path('M-170 150 H170', ln(4, '#FFFFFF', 0.15));
-  c += S.rect(-150, -70, 300, 90, 16, ol('#5A3216', 6));
-  for (let i = 0; i < 3; i++) c += coinIcon(-50 + i * 50, -40 + (i % 2) * 6, 26, 0.2 * i);
   const fl = ease.outBack(k);
-  c += S.g(S.rect(-180, -110, 360, 120, 30, ol('#A86A30', 8)) + S.path('M-150 -10 Q0 30 150 -10', ln(5, '#6B3A1E', 0.7)) + S.circle(0, 10, 16, ol(P.gold, 5)), `translate(0 -40) scale(1 ${f(1 - 1.8 * fl)}) translate(0 40)`);
-  c += S.path('M-160 120 l10 6 l10 -6 l10 6 l10 -6 l10 6 l10 -6 l10 6 l10 -6 l10 6 l10 -6 l10 6 l10 -6 l10 6 l10 -6 l10 6 l10 -6 l10 6 l10 -6 l10 6 l10 -6 l10 6 l10 -6 l10 6 l10 -6 l10 6 l10 -6 l10 6 l10 -6 l10 6 l10 -6 l10 6 l10 -6', ln(3, '#E9C07A', 0.6));
+  // the flap: hinged at the top edge; it swings up and BACK (behind the coins) once past halfway (k)
+  const flap = S.g(S.path('M-180 -36 H180 V40 Q180 70 150 76 L0 104 L-150 76 Q-180 70 -180 40 Z', ol(fl > 0.5 ? '#7A4520' : '#A86A30', 8)) + (fl > 0.5 ? '' : S.path('M-150 30 Q0 70 150 30', ln(5, '#6B3A1E', 0.6)) + S.circle(0, 82, 16, ol(P.gold, 5))),
+    `translate(0 -36) scale(1 ${f(1 - 2 * fl)}) translate(0 36)`);
+  let c = fl > 0.5 ? flap : '';
+  c += S.rect(-180, -50, 360, 220, 30, ol('#6B3A1E', 8));                          // back panel
+  c += S.rect(-150, -62, 300, 40, 14, { fill: '#2A160A', stroke: LINE, 'stroke-width': 6 });   // the open slot
+  for (let i = 0; i < 3; i++) c += coinIcon(-56 + i * 56, -54 - 26 * fl + (i % 2) * 8, 28, 0.25 * i);
+  c += S.rect(-180, -36, 360, 206, 30, ol('#8A5524', 8)) + S.path('M-158 -12 H158', ln(5, '#6B3A1E', 0.6));
+  c += S.path('M-156 140 ' + Array.from({ length: 31 }, (_, i) => `l10 ${i % 2 ? -6 : 6}`).join(' '), ln(3, '#E9C07A', 0.6));
+  if (fl <= 0.5) c += flap;
   const tk = pop(seg(k, 0.4, 0.8));
-  if (tk > 0) c += S.g(S.rect(-120, -36, 240, 72, 36, ol(P.navy, 6)) + coinIcon(-80, 0, 22, t * 2) + T(`${coins} COINS`, 18, 16, 42, P.gold), tr(0, 230, tk));
+  if (tk > 0) c += S.g(S.rect(-130, -38, 260, 76, 38, ol(P.navy, 6)) + coinIcon(-88, 0, 24, t * 2) + T(`${coins} COINS`, 20, 16, 44, P.gold), tr(0, 240, tk));
   if (moth > 0) {
-    const mx = Math.sin(moth * 9) * 80 + moth * 260, my = -90 - moth * 520 + Math.sin(moth * 20) * 20;
+    const mx = Math.sin(moth * 9) * 80 + moth * 260, my = -110 - moth * 520 + Math.sin(moth * 20) * 20;
     const fla = Math.abs(Math.sin(t * 30));
-    const wing = (sd) => S.path(`M0 0 Q${sd * 40} ${-50 * fla - 10} ${sd * 62} -8 Q${sd * 48} 24 0 8 Z`, ol('#C9C2B4', 4));
+    const wing = (sd) => S.path(`M0 0 Q${sd * 40} ${f(-50 * fla - 10)} ${sd * 62} -8 Q${sd * 48} 24 0 8 Z`, ol('#C9C2B4', 4));
     c += S.g(wing(-1) + wing(1) + S.ellipse(0, 4, 9, 22, ol('#8A8070', 4)) + S.path('M-4 -16 Q-12 -32 -20 -34 M4 -16 Q12 -32 20 -34', ln(3)), tr(mx, my, 0.9, Math.sin(moth * 12) * 20), op(1 - seg(moth, 0.8, 1)));
     let dust = '';
     for (let i = 0; i < 6; i++) dust += ring(mx + (hash(i) - 0.5) * 60, my + 30 + i * 18, 4);
@@ -2098,7 +2126,7 @@ module.exports = {
   // 2 server messages
   joinToast, joinStack, systemBanner, alarmEdges,
   // 3 nametags
-  nametag, overHead,
+  nametag, overHead, HEAD_TOP,
   // 4 leaderboard
   leaderboard, rankClimb, rankBadge,
   // 5 HUD

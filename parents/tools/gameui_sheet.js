@@ -80,7 +80,10 @@ function bgLava() {
   o += `<path d="M0 1000 Q200 970 400 1000 T800 1000 T1200 1000 T1600 1000 T1920 1000 V1080 H0Z" fill="#FF6A1F"/><path d="M0 1020 Q240 1000 480 1025 T960 1020 T1440 1025 T1920 1015 V1080 H0Z" fill="#FFC43D"/>`;
   return o;
 }
-const hero = (t, pose = {}, act = {}) => K.actor('you', t, { s: 0.5, ...pose }, act);
+const hero = (t, pose = {}, act = {}) => K.actor('you', t, { s: 0.5, nametag: false, ...pose }, act);
+// cast avatars from rig/cast.js when they exist (the cast is being built in parallel), stand-ins otherwise; built-in tags off
+const av = (name, t, pose = {}, fallback = '') => { try { return K.draw[name] ? K.actor(name, t, { s: 0.5, nametag: false, ...pose }) : fallback; } catch (e) { return fallback; } };
+const OH = (name, x, y, s = 0.5) => G.overHead(x, y, s, K.draw[name] ? name : 'you');
 // stand-in for the cast's hot-dog avatar (the real one is actor('dadAvatar'))
 const hotdog = (x, y, s = 0.5, rot = 0) => `<g transform="translate(${x} ${y}) rotate(${rot}) scale(${s * 3.4})"><g transform="translate(0 -95)">${G.itemIcon('hotdog')}</g><circle cx="-12" cy="-150" r="5" fill="#151515"/><circle cx="12" cy="-150" r="5" fill="#151515"/><path d="M-14 -136 Q0 -144 14 -136" stroke="#4A2A16" stroke-width="5" fill="none" stroke-linecap="round"/></g>`;
 const noob = (x, y, s = 0.5, col = '#3A8DFF') => G.knockoutFly({ x0: x, y0: y, age: 0, s, x1: x, y1: y }).replace('#3A8DFF', col);
@@ -100,27 +103,30 @@ const TILES = [
   // ---------------- OVERVIEW (composed in-context shots)
   ['ov_lobby', 'overview', 'SC04 lobby: joinStack · nametags · caps chatBubble synced · chatLog · kissEmote', (t) => {
     let o = bgPlaza();
-    o += hero(t, { x: 620, y: 930, face: 'scared', armL: 20, armR: 20 }) + G.nametag({ who: 'you', x: 620, y: 930 - 475 - 40, s: 0.9, t });
-    o += hotdog(1200, 930, 0.5) + G.nametag({ who: 'dad', x: 1200, y: 600, s: 0.9, t });
-    o += G.chatBubble({ x: 1200, y: 550, text: 'HELLO SON. IT IS DAD. LOVE, DAD.', caps: true, typed: 0.72, t });
-    o += G.emoteHearts({ x: 1500, y: 560, age: 0.7, to: [640, 470] }) + noob(1560, 930, 0.42, '#FF6FB5') + G.nametag({ who: 'mom', x: 1560, y: 500, s: 0.8, t });
-    o += G.joinStack(3.2, [{ user: 'DadBod1978', at: 0 }, { user: 'MOM_OFFICIAL', at: 1.2 }, { user: 'GrannyGoodies', at: 2.6 }], { x: 1890, y: 80, s: 0.8, gap: 110 });
+    const h1 = OH('you', 560, 930), h2 = OH('dadAvatar', 1100, 930, 0.45), h3 = OH('momAvatar', 1560, 930, 0.45);
+    o += hero(t, { x: 560, y: 930, face: 'scared', armL: 20, armR: 20 }) + G.nametag({ who: 'you', x: 560, y: h1.tag, s: 0.85, t });
+    o += av('dadAvatar', t, { x: 1100, y: 930, s: 0.45, armR: 40 }, hotdog(1100, 930, 0.5)) + G.nametag({ who: 'dad', x: 1100, y: h2.tag, s: 0.85, t });
+    o += G.chatBubble({ x: 1100, y: h2.chat, text: 'HELLO SON. IT IS DAD. LOVE, DAD.', caps: true, typed: 0.72, t, s: 0.95 });
+    o += av('momAvatar', t, { x: 1560, y: 930, s: 0.45, armR: 150, face: 'happy' }, noob(1560, 930, 0.42, '#9AA0AE')) + G.nametag({ who: 'mom', x: 1560, y: h3.tag, s: 0.8, t }) + G.kissEmote({ x: 1420, y: h3.head + 90, age: 0.3, s: 0.6 }) + G.emoteHearts({ x: 1500, y: 560, age: 0.7, to: [600, 520] });
+    o += G.joinStack(3.2, [{ user: 'DadBod1978', at: 0 }, { user: 'MOM_OFFICIAL', at: 1.2 }, { user: 'GrannyGoodies', at: 2.6 }], { x: 1890, y: 70, s: 0.72, gap: 104 });
     o += G.chatLog({ x: 30, y: 620, w: 600, h: 330, t: 5, lines: [{ sys: true, text: 'DadBod1978 joined the server' }, { user: 'NoodleBoi', text: 'Bro... is that your DAD?!' }, { user: 'xX_DarkBlade_Xx', text: 'lol' }, { user: 'DadBod1978', text: 'HELLO SON. IT IS DAD.', at: 4.85 }], s: 0.95 });
     return o;
   }],
   ['ov_arena', 'overview', 'SC05 arena: leaderboard HUD · comboText · slash · hitSpark · damageNumber · knockoutFly · koStars', (t) => {
     let o = bgArena();
-    o += noob(1150, 900, 0.45, '#5B6684') + G.koStars({ x: 1150, y: 640, t, s: 0.8 });
-    o += hero(t, { x: 500, y: 900, face: 'shocked' });
-    o += G.slash({ x: 1050, y: 600, age: 0.07, angle: -20, s: 1.1 }) + G.hitSpark({ x: 1180, y: 620, age: 0.09 }) + G.damageNumber({ x: 1220, y: 500, age: 0.35, value: 999, crit: true });
-    o += G.knockoutFly({ x0: 1300, y0: 900, age: 0.42, dir: 1, x1: 1500, y1: 420 }) + G.knockoutFly({ x0: 1300, y0: 900, age: 1.35, dir: 1, x1: 1500, y1: 420 });
-    o += G.comboText({ x: 820, y: 260, k: 1, text: 'TRIPLE COMBO!', count: 3, t });
+    const ko = OH('player', 1450, 900, 0.42);
+    o += av('player', t, { x: 1450, y: 900, s: 0.42, rot: 8, face: 'dizzy' }, noob(1450, 900, 0.45, '#5B6684')) + G.koStars({ x: 1450, y: ko.head - 10, t, s: 0.7 });
+    o += hero(t, { x: 260, y: 900, s: 0.42, face: 'shocked' });
+    o += av('momAvatar', t, { x: 900, y: 900, s: 0.5, view: 'side', flip: true, armR: 110, armL: 40, lean: 8, face: 'determined' }, noob(900, 900, 0.5, '#9AA0AE'));
+    o += G.slash({ x: 1130, y: 560, age: 0.07, angle: -20, s: 1.1 }) + G.hitSpark({ x: 1250, y: 600, age: 0.09 }) + G.damageNumber({ x: 1290, y: 470, age: 0.35, value: 999, crit: true });
+    o += G.knockoutFly({ x0: 1400, y0: 900, age: 0.5, dir: 1, x1: 1700, y1: 160, svg: av('darkblade', t, { x: 0, y: 0, s: 0.4, face: 'scream' }, '') || undefined, cy: 200 });
+    o += G.comboText({ x: 700, y: 250, k: 1, text: 'TRIPLE COMBO!', count: 3, t, s: 0.9 });
     o += G.leaderboard({ style: 'hud', rows: [{ rank: 1, from: 50, name: 'MOM_OFFICIAL', score: 2104 }, { rank: 2, from: 1, name: 'YOU', score: 2001 }, { rank: 3, from: 2, name: 'xX_DarkBlade_Xx', score: 1530 }, { rank: 4, from: 3, name: 'NoodleBoi', score: 1288 }], highlight: 'MOM_OFFICIAL', roll: 0.7, t, x: 1890, y: 30 });
     return o;
   }],
   ['ov_boss', 'overview', 'SC09–10 boss fight HUD: bossBar + shield · shieldDome hits · serverHealth · partyPanel · swordRain', (t) => {
     let o = bgNight();
-    o += `<g transform="translate(1180 980)"><rect x="-200" y="-640" width="400" height="640" rx="30" fill="#7D8494" stroke="#151515" stroke-width="9"/><path d="M-200 -320 H200 M0 -640 V-320 M-100 -320 V0 M100 -320 V0" stroke="#5A6070" stroke-width="6"/><path d="M-130 -520 L-40 -480 L-130 -450 Z M130 -520 L40 -480 L130 -450 Z" fill="#D47CFF"/></g>` + G.crown(1180, 350, 90);
+    o += av('boss', t, { x: 1180, y: 980, s: 0.62 }, `<g transform="translate(1180 980)"><rect x="-200" y="-640" width="400" height="640" rx="30" fill="#7D8494" stroke="#151515" stroke-width="9"/></g>`);
     o += G.shieldDome({ x: 1180, y: 980, r: 520, t, hits: [{ x: 900, y: 640, age: 0.15 }] });
     o += hero(t, { x: 560, y: 980, s: 0.42, face: 'determined', armR: 120 }) + G.swordRain({ age: 0.5, t, targets: [[700, 760]], s: 0.9 });
     o += G.bossBar({ value: 0.94, shield: 1, t, sub: 'SHIELD UP · BREAK THE CRYSTAL' }) + G.serverHealth({ x: 1340, y: 1000, w: 560, value: 0.2, trail: 0.5, t, s: 0.8 });
@@ -128,19 +134,20 @@ const TILES = [
     return o;
   }],
   ['ov_mvp', 'overview', 'SC11 finale: crystalShatter light · victoryCard · mvpCard (portrait slot) · confetti', (t) => quad4([
-    bgLava() + G.crystal({ x: 960, y: 300, s: 0.8, t, crack: 0.75, beam: true }) + hotdog(1060, 420, 0.3, 25),
+    bgLava() + G.crystal({ x: 960, y: 300, s: 0.8, t, crack: 0.75, beam: true }) + av('dadAvatar', t, { x: 1150, y: 640, s: 0.3, rot: -25, armL: 170, armR: 170, face: 'determined' }, hotdog(1060, 420, 0.3, 25)),
     bgLava() + G.crystalShatter({ x: 960, y: 300, age: 0.18 }),
     bgNight() + R.blockConfettiRain(t, { n: 40 }) + G.victoryCard({ k: 1, t, y: 440 }),
-    bgNight() + G.mvpCard({ k: 1, t, s: 0.95, portrait: hotdog(0, 260, 0.62) }),
+    bgNight() + G.mvpCard({ k: 1, t, s: 0.95, portrait: av('dadAvatar', t, { x: 0, y: 390, s: 0.5, face: 'joy' }, hotdog(0, 260, 0.62)) }),
   ])],
   // ---------------- CHAT
   ['chat_bubbles', 'chat', 'chatBubble over heads: hero (normal) · DadBod1978 CAPS typing · user tab · typing dots · tail -1/1', (t) => {
     let o = bgPlaza();
-    const h1 = G.overHead(400, 930, 0.5), h2 = G.overHead(1000, 930, 0.5);
+    const h1 = OH('you', 400, 930);
     o += hero(t, { x: 400, y: 930, face: 'angry', armL: 60, armR: 60 }) + G.nametag({ who: 'you', x: 400, y: h1.tag, s: 0.85, t });
     o += G.chatBubble({ x: 400, y: h1.chat, text: 'This is MY server! How did this even HAPPEN?!', t, s: 0.9 });
-    o += hotdog(1000, 930, 0.5) + G.nametag({ who: 'dad', x: 1000, y: 600, s: 0.85, t }) + G.chatBubble({ x: 1000, y: 550, text: 'JUMP! COMPUTER, I SAID JUMP!', caps: true, typed: 0.55, t: 0.2 });
-    o += noob(1560, 930, 0.42, '#17C3B2') + G.nametag({ who: 'noodle', x: 1560, y: 500, s: 0.8, t }) + G.chatBubble({ x: 1560, y: 460, text: '', typed: 0, t: 0.3 });
+    const h2 = OH('dadAvatar', 1000, 930, 0.45), h3 = OH('noodle', 1560, 930, 0.42);
+    o += av('dadAvatar', t, { x: 1000, y: 930, s: 0.45 }, hotdog(1000, 930, 0.5)) + G.nametag({ who: 'dad', x: 1000, y: h2.tag, s: 0.85, t }) + G.chatBubble({ x: 1000, y: h2.chat, text: 'JUMP! COMPUTER, I SAID JUMP!', caps: true, typed: 0.55, t: 0.2 });
+    o += av('noodle', t, { x: 1560, y: 930, s: 0.42 }, noob(1560, 930, 0.42, '#17C3B2')) + G.nametag({ who: 'noodle', x: 1560, y: h3.tag, s: 0.8, t }) + G.chatBubble({ x: 1560, y: h3.chat, text: '', typed: 0, t: 0.3 });
     o += G.chatBubble({ x: 1560, y: 250, text: 'Bro... is that your DAD?!', user: 'NoodleBoi', t, tail: 1, s: 0.85 });
     o += G.chatBubble({ x: 300, y: 180, text: 'lol is that ur dad', user: 'PizzaKid', t, tail: -1, s: 0.8 });
     return o;
@@ -148,7 +155,7 @@ const TILES = [
   ['chat_caps', 'chat', 'CAPS typing synced to DAD 04.2 (chatLine): t = a-0.2 · first word · "IT IS" · "LOVE" · done · out', (t) => {
     const l = K.V.L('04.2');
     const ts = [l.a - 0.2, l.word('HELLO').t1 - 0.05, l.word('IS').t1, l.word('LOVE').t1, l.b + 0.3, l.b + 1.75];
-    return cropGrid(ts.map((tt) => bgPlaza() + hotdog(960, 930, 0.5) + G.nametag({ who: 'dad', x: 960, y: 600, s: 0.85, t: tt }) + G.chatBubble({ x: 960, y: 550, caps: true, t: tt, ...G.chatLine(tt, '04.2') }) + LBL(`typed ${G.chatSync(tt, '04.2').toFixed(2)}`, 960, 150, 50)), 3, [960, 520, 1100], ts.map((x) => `t ${x.toFixed(2)}`));
+    return cropGrid(ts.map((tt) => bgPlaza() + av('dadAvatar', tt, { x: 960, y: 980, s: 0.42 }, hotdog(960, 930, 0.5)) + G.nametag({ who: 'dad', x: 960, y: OH('dadAvatar', 960, 980, 0.42).tag, s: 0.85, t: tt }) + G.chatBubble({ x: 960, y: OH('dadAvatar', 960, 980, 0.42).chat, caps: true, t: tt, ...G.chatLine(tt, '04.2') }) + LBL(`typed ${G.chatSync(tt, '04.2').toFixed(2)}`, 960, 160, 50)), 3, [960, 560, 1100], ts.map((x) => `t ${x.toFixed(2)}`));
   }],
   ['chat_log', 'chat', 'chatLog: lines + system joins + arriving line (at) + input typing (CAPS) · send flash', (t) => {
     let o = bgPlaza();
@@ -168,7 +175,7 @@ const TILES = [
   ['nametags', 'hud', 'nametag presets (who) · hp bar · portrait · bob', (t) => {
     let o = bgPlaza();
     o += hero(t, { x: 300, y: 930, face: 'smug' }) + G.nametag({ who: 'you', x: 300, y: G.overHead(300, 930, 0.5).tag, t });
-    o += hotdog(760, 930, 0.5) + G.nametag({ who: 'dad', x: 760, y: 600, t });
+    o += av('dadAvatar', t, { x: 760, y: 930, s: 0.42 }, hotdog(760, 930, 0.5)) + G.nametag({ who: 'dad', x: 760, y: OH('dadAvatar', 760, 930, 0.42).tag, t });
     o += G.nametag({ who: 'mom', x: 1280, y: 220, t }) + G.nametag({ who: 'granny', x: 1280, y: 330, t }) + G.nametag({ who: 'noodle', x: 1280, y: 440, t }) + G.nametag({ who: 'darkblade', x: 1280, y: 550, t, hp: 0.35 });
     o += G.nametag({ who: 'mom', x: 1280, y: 680, t, portrait: true, hp: 1, level: 99, crown: true }) + G.nametag({ name: 'noob_2011', level: 1, x: 1280, y: 800, t, s: 0.8 });
     return o;
@@ -210,9 +217,9 @@ const TILES = [
   ['emotes', 'fx', 'emoteHearts to a target · kissEmote · emoteWheel (kiss selected) · danceNotes', (t) => {
     let o = bgPlaza();
     o += hero(t, { x: 1500, y: 930, face: { name: 'shocked', fx: ['blush'] } });
-    o += noob(300, 930, 0.45, '#FF6FB5') + G.kissEmote({ x: 380, y: 400, age: 0.45, to: [1500, 520] }) + G.emoteHearts({ x: 420, y: 420, age: 0.9, to: [1500, 520], n: 10 });
+    o += av('momAvatar', t, { x: 300, y: 930, s: 0.5, armR: 140, face: 'happy' }, noob(300, 930, 0.45, '#FF6FB5')) + G.kissEmote({ x: 380, y: 440, age: 0.45, to: [1500, 520] }) + G.emoteHearts({ x: 420, y: 460, age: 0.9, to: [1500, 520], n: 10 });
     o += G.emoteWheel({ x: 1700, y: 260, selected: 'kiss', t, s: 0.75 });
-    o += hotdog(1000, 930, 0.4, -8) + G.danceNotes({ x: 1000, y: 700, t, s: 1.1 });
+    o += av('dadAvatar', t, { x: 1000, y: 930, s: 0.38, rot: -6, armL: 150, armR: 150, face: 'joy' }, hotdog(1000, 930, 0.4, -8)) + G.danceNotes({ x: 1000, y: 520, t, s: 1.1 });
     return o;
   }],
   ['combat', 'fx', 'slash (angles) · hitSpark POW · damageNumber normal/crit/heal · comboText · koStars', (t) => {
@@ -226,13 +233,14 @@ const TILES = [
   }],
   ['knockout', 'fx', 'knockoutFly: one flight sampled at ages .0 .15 .3 .5 .75 1.0 + twinkle 1.25', (t) => {
     let o = bgArena();
-    for (const a of [0, 0.15, 0.3, 0.5, 0.75, 1.0, 1.25]) o += G.knockoutFly({ x0: 400, y0: 900, age: a, dir: 1, x1: 1700, y1: 140 });
+    const db = av('darkblade', t, { x: 0, y: 0, s: 0.45, face: 'scream' }, '') || undefined;
+    for (const a of [0, 0.15, 0.3, 0.5, 0.75, 1.0, 1.25]) o += G.knockoutFly({ x0: 400, y0: 900, age: a, dir: 1, x1: 1700, y1: 160, svg: db, cy: 230 });
     return o + G.hitSpark({ x: 420, y: 650, age: 0.08, text: 'BONK!' });
   }],
   ['swords', 'fx', 'swordRain into hands (targets) · into the ground · potionPop .3/.8 · potion prop', (t) => {
     let o = bgArena();
     const hands = [[337, 823], [557, 823], [777, 823], [997, 823]];
-    o += hands.map(([x, y], i) => noob(x, 900, 0.36, ['#3A8DFF', '#FF6FB5', '#17C3B2', '#FF8A2B'][i])).join('');
+    o += hands.map(([x, y], i) => noob(x - 37, 900, 0.36, ['#3A8DFF', '#FF6FB5', '#17C3B2', '#FF8A2B'][i])).join('');
     o += G.swordRain({ age: 1.25, t, targets: hands, s: 0.8, stagger: 0.6 });
     o += G.swordRain({ age: 0.9, t, x0: 1150, x1: 1850, n: 8, floorY: 880, seed: 3 });
     o += G.potionPop({ x: 1300, y: 420, age: 0.3 }) + G.potionPop({ x: 1650, y: 420, age: 0.85 }) + G.potion(1100, 300, 0.8, -12);
@@ -297,10 +305,18 @@ const TILES = [
     bgNight() + R.blockConfettiRain(t, { n: 50 }) + G.victoryCard({ k: 1, t }), bgNight() + G.victoryCard({ k: 1, t, title: 'GG!', sub: 'BOSS DEFEATED' }),
   ])],
   ['mvp', 'results', 'mvpCard k .25 / .55 / 1 (portrait slot = hot dog) · partyPanel', (t) => quad4([
-    bgNight() + G.mvpCard({ k: 0.25, t, portrait: hotdog(0, 260, 0.62) }), bgNight() + G.mvpCard({ k: 0.55, t, portrait: hotdog(0, 260, 0.62) }),
-    bgNight() + G.mvpCard({ k: 1, t, portrait: hotdog(0, 260, 0.62), s: 0.95 }),
+    bgNight() + G.mvpCard({ k: 0.25, t, portrait: av('dadAvatar', t, { x: 0, y: 390, s: 0.5, face: 'joy' }, hotdog(0, 260, 0.62)) }), bgNight() + G.mvpCard({ k: 0.55, t, portrait: av('dadAvatar', t, { x: 0, y: 390, s: 0.5, face: 'joy' }, hotdog(0, 260, 0.62)) }),
+    bgNight() + G.mvpCard({ k: 1, t, portrait: av('dadAvatar', t, { x: 0, y: 390, s: 0.5, face: 'joy' }, hotdog(0, 260, 0.62)), s: 0.95 }),
     bgNight() + G.partyPanel({ x: 60, y: 120, t, s: 1.25, members: [{ name: 'YOU', role: 'leader', hp: 0.9 }, { name: 'MOM_OFFICIAL', role: 'tank', hp: 0.5, gold: true }, { name: 'GrannyGoodies', role: 'gear', hp: 1 }, { name: 'DadBod1978', role: 'noob', hp: 1 }, { name: 'NoodleBoi', role: 'dps', hp: 0.2 }] }),
   ])],
+  ['mvp_moment', 'results', 'composed: SYSTEM "Most valuable player" banner · stamp MVP · hot dog tossed · confetti · chat flood dad', (t) => {
+    let o = bgNight() + R.blockConfettiRain(t, { n: 50 });
+    o += av('dadAvatar', t, { x: 1100, y: 760, s: 0.42, rot: -18, lift: 0, armL: 170, armR: 170, face: 'joy' }, hotdog(1100, 560, 0.62, -20)) + G.danceNotes({ x: 1100, y: 300, t }) + G.nametag({ who: 'dad', x: 1100, y: 200 + 60, t, crown: true, s: 0.9 });
+    o += [[700, '#3A8DFF'], [880, '#FF6FB5'], [1320, '#17C3B2'], [1500, '#FF8A2B']].map(([x, c]) => noob(x, 1000, 0.4, c)).join('') + hero(t, { x: 560, y: 1000, s: 0.45, face: 'joy', armL: 160, armR: 160 });
+    o += G.systemBanner({ theme: 'victory', text: 'MOST VALUABLE PLAYER', sub: 'DadBod1978', t, y: 140, s: 0.8 }) + G.stamp({ text: 'MVP', x: 1450, y: 420, k: 1, col: G.P.goldD, rot: 12, s: 0.9 });
+    o += G.chatLog({ x: 30, y: 640, w: 520, h: 300, t, flood: 0.7, floodSet: 'dad', s: 0.9 });
+    return o;
+  }],
   ['titles', 'results', 'bigTitle gold FAMILY GAME NIGHT · retro ARCADE QUEEN 1998 · teal · night', (t) => quad4([
     bgRoom() + G.bigTitle({ text: 'FAMILY\nGAME NIGHT', sub: 'TONIGHT 7 PM', t }),
     `<rect width="1920" height="1080" fill="#1A0A3A"/>` + G.bigTitle({ text: 'ARCADE QUEEN', sub: 'STATE CHAMPION 1998', theme: 'retro', t, size: 190 }),
@@ -311,13 +327,13 @@ const TILES = [
   ['editor', 'editor', 'avatarEditor: COSTUMES tab · hot dog selected + PURCHASED! · username typed .7 · password WEAK! · pointer', (t) => {
     const o0 = { t, tab: 'COSTUMES', selected: 'hotdog', hover: 'pizza', purchased: 0.7, username: 'DadBod1978', typed: 0.7, password: { text: 'password', typed: 1, warn: 1 }, bought: 37, coins: 1000 };
     const cpos = G.editorCard(o0, 'pizza');
-    return bgRoom() + G.avatarEditor({ ...o0, preview: hotdog(0, 0, 0.5), pointer: { x: cpos.bx, y: cpos.by, press: 0.3 } });
+    return bgRoom() + G.avatarEditor({ ...o0, preview: av('dadAvatar', t, { x: 0, y: 0, s: 0.4, face: 'confused' }, hotdog(0, 0, 0.5)), pointer: { x: cpos.bx, y: cpos.by, press: 0.3 } });
   }],
   ['editor2', 'editor', 'avatarEditor k .5 · HATS tab, hero preview, username typed 0 · EXTRAS owned', (t) => quad4([
     bgRoom() + G.avatarEditor({ t, k: 0.5, username: '', typed: 0 }),
     bgRoom() + G.avatarEditor({ t, tab: 'HATS', selected: 'crown', press: 0.3, username: 'D', typed: 1, nameOk: 0, preview: hero(t, { x: 0, y: 0, s: 0.5, face: 'happy' }) }),
     bgRoom() + G.avatarEditor({ t, tab: 'EXTRAS', owned: ['pearls', 'furcoat', 'cane'], selected: 'potlid', coins: 9999999, username: 'GrannyGoodies' }),
-    bgRoom() + G.avatarEditor({ t, tab: 'FACES', selected: 0, username: 'MOM_OFFICIAL', preview: noob(0, 0, 0.5, '#9AA0AE') }),
+    bgRoom() + G.avatarEditor({ t, tab: 'FACES', selected: 0, username: 'MOM_OFFICIAL', preview: av('momAvatar', t, { x: 0, y: 0, s: 0.5 }, noob(0, 0, 0.5, '#9AA0AE')) }),
   ])],
   // ---------------- DEVICES
   ['devices', 'devices', 'deviceFrame laptopOld · tablet · phone · pc — showing game footage (svg) · screenGlow · power-on', (t) => {
@@ -327,7 +343,7 @@ const TILES = [
       bgRoom() + G.deviceFrame({ type: 'tablet', x: 960, y: 520, s: 1.1, screen: game, glow: 0.6, t, rot: -4 }),
       bgRoom() + G.deviceFrame({ type: 'phone', x: 700, y: 540, s: 1, screen: (w, h) => `<svg width="${w}" height="${h}" viewBox="0 0 1920 1080" preserveAspectRatio="xMidYMid slice">${game}</svg>` + `<rect x="20" y="${h - 160}" width="${w - 40}" height="120" rx="20" fill="#FFFFFF" stroke="#151515" stroke-width="5"/><text x="${w / 2}" y="${h - 88}" font-family="Fredoka" font-weight="700" font-size="22" fill="#1E2A44" text-anchor="middle">HELLO PHONE MAKE ME</text><text x="${w / 2}" y="${h - 58}" font-family="Fredoka" font-weight="700" font-size="22" fill="#1E2A44" text-anchor="middle">A GAME PERSON</text>`, t }) +
         G.deviceFrame({ type: 'phone', x: 1400, y: 540, s: 0.8, landscape: true, screen: game, t, rot: 8 }),
-      bgRoom() + G.deviceFrame({ type: 'pc', x: 960, y: 440, s: 1, screen: game, glow: 0.8, t, k: 0.5 }) + G.screenGlow(1600, 500, 360, 420, '#9FE8FF', 1),
+      bgRoom() + G.deviceFrame({ type: 'pc', x: 960, y: 440, s: 1, screen: game, glow: 0.8, t, k: 0.5 }) + hero(t, { x: 1700, y: 1060, s: 0.42, view: 'side', face: 'amazed' }) + G.screenGlow(1680, 700, 420, 460, 'blue', 1),
     ], ['laptopOld (Dad)', 'tablet (Mom)', 'phone (Granny) + landscape', 'pc k .5 power-on + screenGlow']);
   }],
   // ---------------- MISC

@@ -115,17 +115,22 @@ function laptopOld(...args) {
   g += spill(-sw / 2, -440, sw, sh, '#9FD8FF', o.glow);
   return place(o, g);
 }
-// Mom's tablet in a teal case. Anchor = centre. face 'screen' (screen 300 x 420, portrait) | 'back'; landscape: true rotates it 90°
+// Mom's tablet in a teal case. Anchor = centre. face 'screen' (screen 300 x 420, portrait) | 'back'; landscape: true rotates it 90°;
+// sticker on the back: 'library' (default) | 'bolt' | null; col = case colour
 function tablet(...args) {
-  const o = A(args, ['x', 'y', 's', 'rot'], { face: 'screen', screen: null, glow: 0, col: '#3FB8A8', landscape: false, off: 0 });
+  const o = A(args, ['x', 'y', 's', 'rot'], { face: 'screen', screen: null, glow: 0, col: '#3FB8A8', landscape: false, off: 0, sticker: 'library' });
   const [sw, sh] = DEVICE_SCREENS.tablet;
   let g = '';
   if (o.face === 'back') {
     g += S.path(poly([[-180, -250], [180, -250], [180, 250], [-180, 250]], 40), ol(o.col, 8));
     g += S.path(poly([[-160, -230], [160, -230], [160, 230], [-160, 230]], 30), { fill: 'none', stroke: '#FFFFFF', 'stroke-width': 4, 'stroke-dasharray': '10 8', opacity: 0.6 });
     g += S.circle(-118, -196, 20, ol('#1E2230', 5)) + S.circle(-118, -196, 8, { fill: '#4A6AB8' });
-    g += S.g(S.path('M-40 -22 Q-20 -32 0 -22 Q20 -32 40 -22 L40 26 Q20 16 0 26 Q-20 16 -40 26 Z', ol('#FFFFFF', 4)) + S.path('M0 -22 L0 26', ln(3)), 'translate(40 60) rotate(-6)');
-    g += TF('LIBRARY', 40, 130, 26, '#FFFFFF', { stroke: LINE, 'stroke-width': 4, 'paint-order': 'stroke' });
+    if (o.sticker === 'library') {
+      g += S.g(S.path('M-40 -22 Q-20 -32 0 -22 Q20 -32 40 -22 L40 26 Q20 16 0 26 Q-20 16 -40 26 Z', ol('#FFFFFF', 4)) + S.path('M0 -22 L0 26', ln(3)), 'translate(40 60) rotate(-6)');
+      g += TF('LIBRARY', 40, 130, 26, '#FFFFFF', { stroke: LINE, 'stroke-width': 4, 'paint-order': 'stroke' });
+    } else if (o.sticker === 'bolt') {
+      g += S.g(S.path('M10 -60 L-34 8 L-4 8 L-16 60 L36 -12 L6 -12 Z', ol('#FFD23F', 6)), 'translate(30 40) rotate(8)') + S.g(S.path(F.starPath(0, 0, 30, 14), ol('#FF4FD8', 5)), 'translate(-90 150) rotate(-12)');
+    }
   } else {
     g += S.path(poly([[-180, -250], [180, -250], [180, 250], [-180, 250]], 40), ol(o.col, 8));
     g += S.rect(-166, -236, 332, 472, 30, { fill: '#1E2230' });
@@ -369,6 +374,29 @@ function familyPhoto(...args) {
   return place({ ...o, rot: o.rot + o.crooked }, g);
 }
 
+// Dad's morning newspaper held open with both hands: anchor = centre, 440 x 300 at s 1. title, headline, fold 0..1 (folds it in half)
+function newspaper(...args) {
+  const o = A(args, ['x', 'y', 's', 'rot'], { title: 'THE DAILY NEWS', headline: 'TAX SEASON IS HERE!', fold: 0, back: false });
+  const w = 440 * (1 - 0.5 * clamp(o.fold, 0, 1)), h = 300;
+  let g = S.path(poly([[-w / 2, -h / 2], [w / 2, -h / 2 + 6], [w / 2 - 4, h / 2], [-w / 2 + 4, h / 2 - 6]], 6), ol('#F4F1E8', 6));
+  if (o.fold < 0.5) g += S.path(`M0 ${-h / 2 + 3} L0 ${h / 2 - 3}`, ln(4, '#C9C2B0'));
+  if (!o.back) {
+    g += T(esc(o.title), o.fold < 0.5 ? -w / 4 : 0, -h / 2 + 46, 30, '#2A2A33') + S.path(`M${-w / 2 + 16} ${-h / 2 + 58} L${o.fold < 0.5 ? -12 : w / 2 - 16} ${-h / 2 + 58}`, ln(4, '#2A2A33'));
+    g += TF(esc(o.headline), o.fold < 0.5 ? -w / 4 : 0, -h / 2 + 92, 19, '#2A2A33');
+    g += S.rect(-w / 2 + 20, -h / 2 + 108, 90, 70, 4, ol('#BFD3E6', 3)) + S.path(`M${-w / 2 + 36} ${-h / 2 + 168} l22 -30 l16 18 l12 -10 l18 22`, ln(4, '#7A8AA0'));
+    let lines = '';
+    for (let i = 0; i < 6; i++) lines += `M${-w / 2 + 124} ${-h / 2 + 116 + i * 12} L${o.fold < 0.5 ? -16 : w / 2 - 20} ${-h / 2 + 116 + i * 12} `;
+    for (let i = 0; i < 7; i++) lines += `M${-w / 2 + 20} ${-h / 2 + 196 + i * 12} L${o.fold < 0.5 ? -16 : w / 2 - 20} ${-h / 2 + 196 + i * 12} `;
+    if (o.fold < 0.5) for (let i = 0; i < 18; i++) lines += `M16 ${-h / 2 + 40 + i * 13} L${w / 2 - 20} ${-h / 2 + 40 + i * 13} `;
+    g += S.path(lines, ln(4, '#A8A294'));
+  } else {
+    let lines = '';
+    for (let i = 0; i < 18; i++) lines += `M${-w / 2 + 20} ${-h / 2 + 40 + i * 13} L${w / 2 - 20} ${-h / 2 + 40 + i * 13} `;
+    g += S.path(lines, ln(4, '#A8A294')) + S.rect(-w / 2 + 30, -h / 2 + 60, 120, 90, 4, ol('#E8D8B0', 3)) + TF('SPORTS', -w / 2 + 90, -h / 2 + 110, 18, '#7A5A3A');
+  }
+  return place(o, g);
+}
+
 // ====================================================================== HAND PROPS FOR THE CAST
 // a computer mouse held like a phone: anchor = grip centre; cord 0..1 dangles the cable
 function computerMouse(...args) {
@@ -454,5 +482,5 @@ module.exports = {
   DEFS, A, DEVICE_SCREENS, screenBox, cubeIdle,
   laptopOld, tablet, phone, gamingPC,
   teaMug, teaCup, cookie, cookieTray, coinBag, goldSword, potion, knittingYarn, blanket, cereal, familyPhoto,
-  computerMouse, potLid, cane, rollingPin, arcadeTrophy, axe, mvpMedal, employeeFrame,
+  newspaper, computerMouse, potLid, cane, rollingPin, arcadeTrophy, axe, mvpMedal, employeeFrame,
 };

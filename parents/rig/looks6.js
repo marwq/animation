@@ -161,25 +161,28 @@ Object.assign(L.HAIR, {
     backOver(c) { return S.path('M-120 -660 Q-80 -860 -20 -960 M120 -660 Q80 -860 20 -960 M0 -600 L0 -960', lineOnly(4.5, c.hairShade)) + teenPony(ID, c, true); },
   },
 
-  // DarkBlade's mom (avatar): tall dark-plum beehive bun
+  // DarkBlade's mom (avatar): a big rounded dark-plum beehive with a hair band
   hiveBun: {
-    browY: -800, nametagY: -1260,
+    browY: -800, nametagY: -1240,
     behind(hair, feat, c, shade) {
       let o = S.path(mapPoly(hair, [[-162, -880], [162, -880], [166, -716], [140, -696], [-140, -696], [-166, -716]], 34), outline(c.hair));
-      const b = hair([0, -1060]);
-      o += S.path(`M${f(b[0] - 112)} ${f(b[1] + 120)} Q${f(b[0] - 130)} ${f(b[1] - 70)} ${f(b[0])} ${f(b[1] - 120)} Q${f(b[0] + 130)} ${f(b[1] - 70)} ${f(b[0] + 112)} ${f(b[1] + 120)} Z`, outline(c.hair));
-      o += S.path(`M${f(b[0] - 70)} ${f(b[1] + 60)} Q${f(b[0])} ${f(b[1] - 90)} ${f(b[0] + 70)} ${f(b[1] + 60)} M${f(b[0] - 40)} ${f(b[1] + 90)} Q${f(b[0])} ${f(b[1] - 20)} ${f(b[0] + 40)} ${f(b[1] + 90)}`, lineOnly(4.5, c.hairShade));
-      if (shade) o += S.path(`M${f(b[0] - 70)} ${f(b[1] - 40)} Q${f(b[0] - 20)} ${f(b[1] - 100)} ${f(b[0] + 40)} ${f(b[1] - 84)}`, lineOnly(14, c.hairHi));
+      const b = hair([0, -1040]);
+      const d = `M${f(b[0] - 118)} ${f(b[1] + 150)} C${f(b[0] - 190)} ${f(b[1] + 10)} ${f(b[0] - 120)} ${f(b[1] - 150)} ${f(b[0])} ${f(b[1] - 150)} C${f(b[0] + 120)} ${f(b[1] - 150)} ${f(b[0] + 190)} ${f(b[1] + 10)} ${f(b[0] + 118)} ${f(b[1] + 150)} Z`;
+      let inner = S.path(`M${f(b[0] - 100)} ${f(b[1] + 80)} Q${f(b[0] - 110)} ${f(b[1] - 90)} ${f(b[0] + 10)} ${f(b[1] - 110)} Q${f(b[0] + 100)} ${f(b[1] - 100)} ${f(b[0] + 90)} ${f(b[1] - 10)} Q${f(b[0] + 70)} ${f(b[1] + 60)} ${f(b[0] - 10)} ${f(b[1] + 40)} Q${f(b[0] - 60)} ${f(b[1] + 20)} ${f(b[0] - 40)} ${f(b[1] - 30)}`, lineOnly(5, c.hairShade));
+      if (shade) inner += S.path(`M${f(b[0] - 90)} ${f(b[1] - 50)} Q${f(b[0] - 60)} ${f(b[1] - 120)} ${f(b[0] + 10)} ${f(b[1] - 130)}`, lineOnly(16, c.hairHi));
+      o += clipped(d, c.hair, inner);
+      o += band(`M${f(b[0] - 124)} ${f(b[1] + 132)} Q${f(b[0])} ${f(b[1] + 112)} ${f(b[0] + 124)} ${f(b[1] + 132)}`, 12, c.accent || '#FF6FB5');
       return o;
     },
     front: (hair, feat) => poly([...SLEEK_OUT.map(hair), ...SIDEPART_LINE.map(feat)], 16),
     details: (hair, feat, c, shade) => (shade ? S.path(`M${P(hair([10, -968]))} Q${P(hair([76, -960]))} ${P(hair([126, -920]))}`, lineOnly(12, c.hairHi)) : ''),
     side: () => poly([[-174, -806], [-150, -930], [-40, -984], [90, -966], [160, -884], [164, -712], [120, -698], [64, -780], [-90, -832], [-140, -824]], 22),
-    sideBehind: (c) => S.path('M-70 -940 Q-90 -1120 30 -1180 Q150 -1120 130 -940 Z', outline(c.hair)) + S.path('M-30 -980 Q20 -1110 90 -980', lineOnly(4.5, c.hairShade)),
+    sideBehind: (c) => clipped('M-90 -900 C-170 -1040 -90 -1190 20 -1190 C130 -1190 190 -1040 120 -900 Z', c.hair, S.path('M-60 -960 Q-40 -1140 60 -1120 Q140 -1080 90 -980', lineOnly(5, c.hairShade))) + band('M-96 -912 Q20 -930 126 -912', 12, c.accent || '#FF6FB5'),
     back: () => poly([[-162, -712], [-166, -872], [-96, -970], [96, -970], [166, -872], [162, -712], [80, -698], [0, -706], [-80, -698]], 28),
-    backOver: (c) => S.path('M-112 -940 Q-130 -1130 0 -1180 Q130 -1130 112 -940 Z', outline(c.hair)) + S.path('M-60 -980 Q0 -1110 60 -980', lineOnly(4.5, c.hairShade)),
+    backOver: (c) => clipped('M-118 -890 C-190 -1030 -120 -1190 0 -1190 C120 -1190 190 -1030 118 -890 Z', c.hair, S.path('M-80 -940 Q-90 -1120 10 -1150 Q100 -1130 90 -1000 Q60 -930 0 -960', lineOnly(5, c.hairShade))) + band('M-124 -908 Q0 -928 124 -908', 12, c.accent || '#FF6FB5'),
   },
 });
+
 
 // ====================================================================== FACE ACCESSORIES
 // Dad's big walrus moustache (front: centre m on the upper lip)
@@ -1057,7 +1060,7 @@ function heroCape(view, col, lining, t = 0, len = 440) {
 
 // ====================================================================== THE HOT DOG COSTUME (DadBod1978)
 // body space; the face is read from STATE.face (set by cast.draw.dadAvatar). c: bun, bunHi, bunDark, sausage, sausageHi, sausageShade, mustard, skin, stache
-const HD = { sx: 124, sTop: -1150, sBot: -232, bx0: 98, bx1: 228, bTop: -1010, bBot: -262, holeX: 88, holeT: -846, holeB: -604 };
+const HD = { sx: 126, sTop: -1150, sBot: -232, bx0: 100, bx1: 230, bTop: -1010, bBot: -262, holeX: 96, holeT: -862, holeB: -598 };
 function mustardZig(x0, y0, y1, n, amp) {
   let d = `M${f(x0 - amp)} ${f(y0)}`;
   for (let i = 1; i <= n; i++) d += ` L${f(x0 + (i % 2 ? amp : -amp))} ${f(y0 + ((y1 - y0) * i) / n)}`;
@@ -1069,10 +1072,10 @@ function hotdogFace(cx, c, face, headRot = 0) {
   const hole = S.roundedPath([[cx - HD.holeX, HD.holeT], [cx + HD.holeX, HD.holeT], [cx + HD.holeX, HD.holeB], [cx - HD.holeX, HD.holeB]], 38);
   let inner = S.rect(cx - 140, HD.holeT - 20, 280, HD.holeB - HD.holeT + 40, 0, { fill: c.skin });
   let feat = '';
-  feat += L.dotEye(cx - 42, -768, withBlinkE(fr.eyeL, blink), -1) + L.dotEye(cx + 42, -768, withBlinkE(fr.eyeR, blink), 1);
-  feat += L.strokeBrows(([x, y]) => [cx + x * 0.62, y], -822, fr.brows, {}, c.stache || LINE, 12);
-  feat += F.mouth(fr.mouth, cx, -650, 0.72, 0.8);
-  feat += walrusFront([cx, -684], c, 0.62);
+  feat += L.dotEye(cx - 46, -772, withBlinkE(fr.eyeL, blink), -1) + L.dotEye(cx + 46, -772, withBlinkE(fr.eyeR, blink), 1);
+  feat += L.strokeBrows(([x, y]) => [cx + x * 0.66, y], -830, fr.brows, {}, c.stache || LINE, 12);
+  feat += F.mouth(fr.mouth, cx, -646, 0.76, 0.82);
+  feat += walrusFront([cx, -686], c, 0.68);
   inner += S.g(feat, headRot ? `rotate(${f(headRot * 0.5)} ${f(cx)} -700)` : null);
   // inner shadow of the costume rim
   inner += S.path(`M${f(cx - HD.holeX - 10)} ${HD.holeT - 10} L${f(cx + HD.holeX + 10)} ${HD.holeT - 10} L${f(cx + HD.holeX + 10)} ${HD.holeT + 18} Q${f(cx)} ${HD.holeT + 6} ${f(cx - HD.holeX - 10)} ${HD.holeT + 18} Z`, { fill: '#000', opacity: 0.22 });
@@ -1273,6 +1276,20 @@ function dizzyStars(t = 0, n = 3, y = -1010, rx = 190) {
   return o;
 }
 
+// GrannyGoodies' fur stole across the shoulders (body space; front layer — it sits just under the chin)
+function furStole(view, turn = 0, col = '#F6EDE0', shade = '#D2BFA6') {
+  const cs = [];
+  if (view === 'side') {
+    for (let i = 0; i <= 5; i++) { const u = i / 5; cs.push([-70 + 150 * u, -540 + 30 * Math.sin(u * Math.PI), 30 + 6 * Math.sin(u * Math.PI)]); }
+    cs.push([-80, -500, 26], [-86, -462, 22]);
+  } else {
+    const cx = view === 'back' ? 0 : turn * 30;
+    for (let i = 0; i <= 8; i++) { const u = i / 8; cs.push([cx - 176 + 352 * u, -548 + (view === 'back' ? 20 : 50) * Math.sin(u * Math.PI), 30 + 6 * Math.sin(u * Math.PI)]); }
+    if (view !== 'back') for (let i = 1; i <= 4; i++) cs.push([cx - 132 + i * 4, -540 + i * 40, 28 - i * 2]);
+  }
+  return puffs(cs, col, 6) + curlMarks(cs.filter((_, i) => i % 2 === 0), 26, 3.5, shade);
+}
+
 // ====================================================================== GAME NAMETAG (screen space; drawn by cast.js above a head)
 // opts: { name, col, lvl (number|string), mvp, sub, alpha }
 function gameTag(x, y, s, opts = {}) {
@@ -1471,7 +1488,11 @@ const BK_POSES = {
 function blockKing(p = {}) {
   const pre = (BK_POSES[p.pose] || BK_POSES.idle)(p.k ?? 0);
   const q = { armL: 16, armR: 16, bendL: 10, bendR: 10, lean: 0, headRot: 0, headY: 0, bodyY: 0, fist: 1, hurt: 0, ...pre };
-  for (const kk of ['armL', 'armR', 'bendL', 'bendR', 'lean', 'headRot', 'headY', 'bodyY', 'fist', 'hurt']) if (p[kk] !== undefined) q[kk] = p[kk];
+  // a named preset keeps its arms (auto-acting gestures from actor('boss') must not break 'smash'/'roar'); freeArms: true lets armL.. through.
+  // bodyY / headY / headRot always add on top (voice bob)
+  const named = p.pose && p.pose !== 'idle' && !p.freeArms;
+  for (const kk of ['armL', 'armR', 'bendL', 'bendR', 'lean', 'fist', 'hurt']) if (p[kk] !== undefined && !(named && kk !== 'fist' && kk !== 'hurt')) q[kk] = p[kk];
+  for (const kk of ['headRot', 'headY', 'bodyY']) if (p[kk] !== undefined) q[kk] += p[kk];
   const t = p.t || 0;
   const idle = p.idle === false ? 0 : 1;
   q.bodyY += idle * 8 * Math.sin(t * 1.6);
@@ -1582,5 +1603,5 @@ module.exports = {
   dress6, makeTorso6, makeTorsoSide6, makeArm6, makeLeg6, makeLegSide6, outfit6, TOPS6, STATE, APRON_GG,
   noodleHead, noodleHeadSide, noodleHeadBack, darkHead, darkHeadSide, darkHeadBack, tatteredCape, heroCape,
   hotdogTorso, hotdogTorsoSide, HD, crown99, heroHood, gamingHeadset, readers, curlers, goldHelmet, dizzyStars, gameTag,
-  liteDesign, liteHat, blockKing, bkCube, BK_POSES, BK, MOUTH_OPEN, cookieIcon, rosette, nigiri, maki, flower, walrusFront, shadeHex, mixHex, band,
+  furStole, liteDesign, liteHat, blockKing, bkCube, BK_POSES, BK, MOUTH_OPEN, cookieIcon, rosette, nigiri, maki, flower, walrusFront, shadeHex, mixHex, band,
 };
