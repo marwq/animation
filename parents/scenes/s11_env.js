@@ -147,7 +147,7 @@ function route(TM) {
   auto(21, 25, C.climb2, C.climb2b + 0.02);
   auto(37, 41, C.climb2b + 0.02, C.chant + 0.05);
   auto(41, 52, C.chant + 0.05, C.climb3);
-  auto(57, 60, C.climb3, C.dark - 0.12);
+  auto(57, 60, C.climb3, C.dark - 0.4);
   auto(60, 87, C.dark - 0.12, B.go88 - 0.05);
   add(87, 88, B.go88, B.land88);
   auto(88, 98, B.okay3 + 0.75, B.go99 - 0.02);
@@ -241,7 +241,7 @@ function focusLines(x, y, k, seed = 2, col = '#FFFFFF') {
 // ================================================================ HUD: the floor counter (top-left)
 function floorHUD(t, n, o = {}) {
   const icon = S.g(S.rect(-14, -26, 28, 52, 4, ol('#B98CFF', 4)) + S.rect(-22, -34, 44, 12, 3, ol('#FF6FD0', 4)) + S.rect(-6, 4, 12, 16, 2, { fill: '#151515' }), 'scale(0.95)');
-  return G.statPill({ x: o.x ?? 44, y: o.y ?? 82, s: o.s ?? 0.9, t, label: 'FLOOR', value: `${n}/100`, icon, rim: o.rim || '#B98CFF', k: o.k ?? 1, bump: o.bump || 0, col: n >= 100 ? '#FFD21F' : '#FFFFFF' });
+  return G.statPill({ x: o.x ?? 44, y: o.y ?? 82, s: o.s ?? 1, t, label: 'FLOOR', value: `${n}/100`, icon, rim: o.rim || '#B98CFF', k: o.k ?? 1, bump: o.bump || 0, col: n >= 100 ? '#FFD21F' : '#FFFFFF' });
 }
 
 // ================================================================ Dad's real hand over the keyboard (keyboardClose space)
@@ -313,7 +313,7 @@ function vsTower(t) {
   o += S.rect(1440, 330, 100, 760, 0, ol('#3A2A70', 8));
   for (let i = 0; i < 12; i++) {
     const y = 1040 - i * 62, w = 170 - i * 6, x = 1490 + (i % 2 ? 1 : -1) * (70 - i * 3);
-    o += S.rect(x - w / 2, y, w, 34, 8, ol(cols[i % cols.length], 6)) + TF(String(i === 11 ? 100 : i + 1 + (i > 8 ? (i - 8) * 30 : 0)), x, y + 27, 24, '#FFFFFF', { stroke: '#151515', 'stroke-width': 5, 'paint-order': 'stroke' });
+    o += S.rect(x - w / 2, y, w, 34, 8, ol(cols[i % cols.length], 6)) + TF(String([1, 2, 3, 4, 5, 6, 7, 8, 25, 50, 75, 100][i]), x, y + 27, 24, '#FFFFFF', { stroke: '#151515', 'stroke-width': 5, 'paint-order': 'stroke' });
   }
   o += G.crystal({ x: 1490, y: 320, s: 0.5, t, beam: true, pedestal: false });
   return o;

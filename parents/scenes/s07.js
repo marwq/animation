@@ -108,6 +108,11 @@ function hud(t, o = {}) {
     G.statPill({ x, y: y + 84 * s / 0.78 * (o.gap ?? 1), s: s * (o.fs ?? 1), k, t, icon: dropIcon, label: 'FALLS', value: falls(t), rim: '#5BD0FF', bump: fb });
 }
 
+// chat bubble with its tail tip at world point (wx, wy) seen through cam; drawn in screen space, kept inside the frame
+function sBubble(cam, wx, wy, o = {}) {
+  const q = GS.toScreen(cam, wx, wy);
+  return G.chatBubble({ s: 1, ...o, x: clamp(q.x + (o.dx || 0), 260, 1660), y: clamp(q.y + (o.dy || 0), o.minY ?? 230, 880) });
+}
 // ---------------------------------------------------------------- actors
 const DS = 0.4;                                     // the hot dog on the plaza floor / start block
 const EDGE = { x: 2832, y: SP.start.y };            // Dad's feet at the edge of the start block
@@ -198,7 +203,7 @@ function shOkay(t) {
   const cam = camKeys(t, [[CUT.okay, camAt(EDGE.x - 40, EDGE.y - 330, 2.25)], [CUT.key, camAt(EDGE.x - 40, EDGE.y - 340, 2.4)]], ease.out);
   const crack = bump(t, w(1, 'Okay') + 0.2, w1(1, 'Okay') + 0.1);
   const ch = dad(t, { x: EDGE.x - 40, y: EDGE.y, turn: 0.35, volume: false, nametag: false, face: { name: 'determined' }, armL: 70 + 40 * crack, armR: 70 + 40 * crack + 10 * Math.sin(t * 40) * crack, headY: 8 * bump(t, w(1, 'Okay'), w(1, 'Okay') + 0.25) }, { arms: false, energy: 1.2 });
-  let o = E.plaza(t, cam, { veil: 0.38 }, '', ch);
+  let o = E.plaza(t, cam, { dof: 0.42 }, '', ch);
   o += K.bang('CRACK!', 1460, 330, pop(t, w(1, 'Okay') + 0.35, 0.2) * (1 - seg(t, CUT.key - 0.25, CUT.key)), 70, 10, '#FFFFFF');
   return o + hud(t);
 }
@@ -336,7 +341,7 @@ function shSit(t) {
 const GATHER = Array.from({ length: 14 }, (_, j) => {
   const side = j % 2 ? 1 : -1;
   const y = [960, 1010, 900, 1050, 940, 1000, 880, 1030, 970, 920, 1060, 990, 910, 1040][j];
-  const x = 2740 + side * (90 + ((j * 97) % 330)) + (j === 0 ? 0 : 0);
+  const x = side < 0 ? 2560 - ((j * 97) % 300) : 2620 + ((j * 113) % 260);
   return { i: NOOB_I[j], x, y, s: sAt(y), from: side * (900 + 300 * hash(j)), delay: 0.25 * j * 0.6 + hash(j * 3.3) * 0.4, ph: j * 1.7 };
 });
 function gathering(t, t0, mood = 'watch', o = {}) {
@@ -349,7 +354,7 @@ function gathering(t, t0, mood = 'watch', o = {}) {
     const kk = o.walkIn ? k : 1;
     const x = g.x + g.from * (1 - ease.out(kk));
     if (kk < 1) out += noob(g.i, t, { x, y: g.y, s: g.s, view: 'side', flip: g.from < 0, ...AC.walk(t * 10 + g.ph) }, 'idle', g.ph);
-    else out += noob(g.i, t, { x, y: g.y, s: g.s, turn: g.x < 2740 ? 0.35 : -0.35, over: o.over }, typeof mood === 'function' ? mood(g) : mood, g.ph);
+    else out += noob(g.i, t, { x, y: g.y, s: g.s, turn: g.x < 2600 ? 0.4 : -0.3, over: o.over }, typeof mood === 'function' ? mood(g) : mood, g.ph);
   }
   return out;
 }
@@ -377,9 +382,8 @@ function shKiddo(t) {
   const ch = dad(t, { x: dx, y: EDGE.y, turn: 0.45, face: still('happy'), armL: 60 + 30 * Math.abs(Math.sin(t * 6)), armR: 80 + 30 * Math.abs(Math.sin(t * 6 + 1)), nametag: false }, { arms: false });
   const jm = noob(JUMPER.i, t, { x: JUMPER.x, y: JUMPER.y, s: DS, view: 'side', flip: true }, 'shake', 0);
   const crowd = gathering(t, -99, 'watch', {});
-  const oh = G.overHead(dx, EDGE.y, DS, 'dadAvatar');
-  const bub = G.chatBubble({ x: dx + 20, y: oh.chat, caps: true, t, tail: 0.5, s: 0.9, ...G.chatLine(t, '07.3', { to: 'kiddo', pre: 0.25, text: 'You can do it, kiddo!' }) });
-  let o = E.plaza(t, cam, {}, '', crowd + ch + jm, bub);
+  let o = E.plaza(t, cam, {}, '', crowd + ch + jm);
+  o += sBubble(cam, dx - 40, EDGE.y - 500, { caps: true, t, tail: 0.6, s: 0.9, ...G.chatLine(t, '07.3', { to: 'kiddo', pre: 0.25, text: 'You can do it, kiddo!' }) });
   return o + hud(t);
 }
 
@@ -389,7 +393,7 @@ function shBelieve(t) {
   const up = ease.outBack(seg(t, w(3, 'believe') - 0.05, w(3, 'believe') + 0.2));
   const rays = S.g(K.rays(2700, 330, 14, 900, '#FFF3B0', 0.22, t * 12), null, {});
   const ch = dad(t, { x: 2700, y: EDGE.y, turn: 0.2, volume: false, nametag: false, face: { name: 'joy', fx: up > 0.5 ? ['sparkles'] : [] }, armL: lerp(20, 150, up), armR: lerp(20, 150, up) }, { arms: false });
-  let o = E.plaza(t, cam, {}, '', rays + ch);
+  let o = E.plaza(t, cam, { dof: 0.4 }, '', rays + ch);
   o += K.C.burst(960, 300, seg(t, w(3, 'believe'), w(3, 'believe') + 0.5), '#FFE27A');
   return o + hud(t);
 }
@@ -402,17 +406,17 @@ function shNotMe(t) {
   const ck = pop(t, w(3, 'ME') - 0.05, 0.3);
   let cloud = '';
   if (ck > 0) {
-    const cx = 2700, cy = EDGE.y - 600 * DS * 1.06 - 80;
+    const cx = 1250, cy = 150 + 6 * Math.sin(t * 3);
     let rain = '';
-    for (let i = 0; i < 7; i++) { const ph = (t * 2.2 + hash(i)) % 1; rain += `M${f(cx - 70 + i * 22)} ${f(cy + 20 + ph * 70)} l-4 14`; }
-    cloud = S.g(S.circle(-40, 0, 34, ol('#8A93A8', 5)) + S.circle(0, -16, 42, ol('#8A93A8', 5)) + S.circle(42, 0, 32, ol('#8A93A8', 5)) + S.rect(-70, 0, 140, 30, 15, { fill: '#8A93A8' }), tf(cx, cy, 0.8 * ck)) + S.path(rain, ln(4, '#7FC6FF', 0.9 * ck));
+    for (let i = 0; i < 8; i++) { const ph = (t * 2.2 + hash(i)) % 1; rain += `M${f(cx - 90 + i * 26)} ${f(cy + 50 + ph * 140)} l-6 22`; }
+    cloud = S.path(rain, ln(7, '#7FC6FF', 0.9 * ck)) + S.g(S.circle(-50, 0, 44, ol('#8A93A8', 6)) + S.circle(0, -22, 56, ol('#8A93A8', 6)) + S.circle(54, 0, 42, ol('#8A93A8', 6)) + S.rect(-92, 0, 184, 40, 20, { fill: '#8A93A8' }), tf(cx, cy, ck));
   }
-  return E.plaza(t, cam, {}, '', ch, cloud) + hud(t);
+  return E.plaza(t, cam, { dof: 0.42 }, '', ch) + cloud + hud(t);
 }
 
 // 14. "...but I believe in you!" — the noob runs, JUMPS on "you!", lands on the red platform: NICE!
 function shJump(t) {
-  const cam = camKeys(t, [[CUT.jump, camAt(2840, 520, 1.3)], [tJump, camAt(2900, 520, 1.25)], [tLandJ, camAt(3060, 540, 1.3)], [CUT.cheer, camAt(3040, 540, 1.32)]], ease.inOut);
+  const cam = camKeys(t, [[CUT.jump, camAt(2820, 500, 1.3)], [tJump, camAt(2880, 480, 1.38)], [tLandJ, camAt(3120, 520, 1.5)], [CUT.cheer, camAt(3110, 520, 1.55)]], ease.inOut);
   const plat = SP.platforms[0];
   let jm;
   if (t < tJump - 0.3) jm = noob(JUMPER.i, t, { x: JUMPER.x - 40, y: JUMPER.y, s: DS, view: 'side', flip: true, over: { face: { name: 'determined' } } }, 'idle');
@@ -435,14 +439,14 @@ function jumpPanel(t, t0, i, col, seed) {
   let o = S.rect(0, 0, 1920, 1080, 0, { fill: '#FFB08A' }) + S.rect(0, 0, 1920, 500, 0, { fill: '#C978C8', opacity: 0.6 }) + S.circle(1500, 560, 120, { fill: '#FFD06A' });
   o += S.rect(0, 760, 1920, 320, 0, { fill: '#3FA7C9' }) + S.path('M0 780 Q240 760 480 780 T960 780 T1440 780 T1920 780', ln(8, '#BDF0FF'));
   o += S.rect(760, 640, 420, 440, 18, ol(col, 10)) + S.rect(760, 640, 420, 60, 18, { fill: '#FFFFFF', opacity: 0.3 });
-  const x = lerp(300, 970, ease.out(k)), y = k < 1 ? 650 - 520 * 4 * k * (1 - k) : 650;
-  o += noob(i, t, { x, y, s: 0.75, ...(k < 1 ? { view: 'side', flip: true, armL: 150, armR: 150, legL: 30, legR: -30 } : { ...boing(t, t0 + 0.45, 0.3), over: { armL: 150, armR: 150, face: { name: 'excited' } } }) }, 'idle', seed);
+  const x = lerp(250, 970, ease.out(k)), y = k < 1 ? 650 - 420 * 4 * k * (1 - k) : 650;
+  o += noob(i, t, { x, y, s: 1.05, ...(k < 1 ? { view: 'side', flip: true, armL: 150, armR: 150, legL: 30, legR: -30 } : { ...boing(t, t0 + 0.45, 0.3), over: { armL: 150, armR: 150, face: { name: 'excited' } } }) }, 'idle', seed);
   if (k >= 1) o += K.bang('+1', 1300, 300, pop(t, t0 + 0.45, 0.2), 150, 8, '#3DDC84');
   return o;
 }
 // 15. "He cheered for every jump." — Dad's happy dance + three jump panels popping on the words
 function shCheer(t) {
-  const cam = camKeys(t, [[CUT.cheer, camAt(2700, 450, 1.55)], [CUT.jokes, camAt(2700, 440, 1.6)]], ease.inOut);
+  const cam = camKeys(t, [[CUT.cheer, camAt(2700, 330, 1.25)], [CUT.jokes, camAt(2700, 320, 1.32)]], ease.inOut);
   const dance = Math.sin(t * 9);
   const ch = dad(t, { x: 2700, y: EDGE.y, rot: 9 * dance, lift: 14 * Math.abs(dance), armL: 90 + 70 * dance, armR: 90 - 70 * dance, face: { name: 'joy', mouth: 'bigGrin', eyes: { type: 'happy' } }, nametag: false }, { arms: false });
   const crowd = gathering(t, -99, 'clap', {});
@@ -473,9 +477,8 @@ function shJokes(t) {
   const conf = seg(t, w(5, 'road') - 0.1, w(5, 'road') + 0.3);
   const ch = dad(t, { x: 2740, y: EDGE.y, face: { name: 'smug' }, armR: 40, armL: 20 + 20 * Math.sin(t * 3), props: micPose(40), nametag: false }, { arms: false, energy: 1.2 });
   const aud = audience(t, conf > 0.5 ? 'confused' : 'watch');
-  const oh = G.overHead(2740, EDGE.y, DS, 'dadAvatar');
-  const bub = G.chatBubble({ x: 2740, y: oh.chat + 20, caps: true, t, s: 0.85, ...G.chatLine(t, '07.5', { to: 'road', hold: 0.2, pre: 0.2, text: 'Why did the noob cross the road?' }) });
-  let o = E.plaza(t, cam, {}, '', spotlight(2740, EDGE.y, spot) + ch, aud + bub);
+  let o = E.plaza(t, cam, {}, '', spotlight(2740, EDGE.y, spot) + ch, aud);
+  o += sBubble(cam, 2820, EDGE.y - 470, { caps: true, t, tail: -0.7, s: 0.9, ...G.chatLine(t, '07.5', { to: 'road', hold: 0.2, pre: 0.2, text: 'Why did the noob cross the road?' }) });
   o += S.rect(0, 0, 1920, 1080, 0, { fill: '#1A0A2A', opacity: f(0.25 * spot) });
   o += G.nametag({ x: 960, y: 110, name: 'COMEDY NIGHT', level: null, col: '#FF5FA8', t, s: 1.1, k: pop(t, CUT.jokes + 0.1, 0.3), bob: false, crown: false });
   return o;
@@ -485,7 +488,7 @@ function shPunch(t) {
   const cam = camKeys(t, [[CUT.punch, camAt(2740, 380, 2.0)], [CUT.deadpan, camAt(2740, 370, 2.15)]], ease.out);
   const lp = Math.abs(Math.sin(t * 10));
   const ch = dad(t, { x: 2740, y: EDGE.y, turn: 0.15, volume: false, face: { name: 'joy', fx: lp > 0.6 ? ['tears'] : [] }, armR: 40, armL: 40 + 40 * lp, bodyY: 8 * lp, props: micPose(40), nametag: false }, { arms: false, energy: 1.4 });
-  let o = E.plaza(t, cam, {}, '', spotlight(2740, EDGE.y, 1) + ch);
+  let o = E.plaza(t, cam, { dof: 0.3 }, '', spotlight(2740, EDGE.y, 1) + ch);
   o += S.rect(0, 0, 1920, 1080, 0, { fill: '#1A0A2A', opacity: 0.22 });
   o += E.TS('HA', 1500, 330, 90, '#FFD23F', { opacity: f(bump(t, w(5, 'couldn\'t') - 0.1, w(5, 'couldn\'t') + 0.6)), transform: 'rotate(10 1500 330)' });
   return o;
@@ -504,7 +507,7 @@ function shLikeMe(t) {
   const cam = shakeAll(camKeys(t, [[CUT.likeme, camAt(2740, 400, 1.7)], [tL + 0.08, camAt(2740, 360, 2.25)], [CUT.lol, camAt(2740, 360, 2.3)]], ease.out), t, [[tRim, 0.3, 10]]);
   const ta = ease.outBack(seg(t, tL - 0.05, tL + 0.18));
   const ch = dad(t, { x: 2740, y: EDGE.y, volume: false, face: { name: 'joy', fx: ['sparkles'] }, armL: lerp(30, 130, ta), armR: lerp(40, 130, ta), props: micPose(lerp(40, 130, ta)), nametag: false }, { arms: false });
-  let o = E.plaza(t, cam, {}, '', spotlight(2740, EDGE.y, 1) + ch);
+  let o = E.plaza(t, cam, { dof: 0.3 }, '', spotlight(2740, EDGE.y, 1) + ch);
   o += S.rect(0, 0, 1920, 1080, 0, { fill: '#1A0A2A', opacity: 0.2 });
   const dk = ease.outBack(seg(t, tRim - 0.3, tRim));
   o += drumKit(1560, 1080 + 260 * (1 - dk), 1.25, seg(t, tRim, tRim + 0.6), t);
@@ -521,10 +524,10 @@ function shLol(t) {
   // over-head reply bubbles
   let bubs = '';
   [[2470, 1040, 'LOL', 0.1], [2900, 1062, 'XD', 0.3], [3030, 1045, 'DAD JOKE!!', 0.5], [2620, 985, 'LMAO', 0.7]].forEach(([x, y, txt, d], j) => {
-    const oh = G.overHead(x, y, sAt(y), 'noob');
-    bubs += G.chatBubble({ x, y: oh.chat + 30, text: txt, user: G.FLOOD_USERS[j * 5 + 2], t, s: 0.85, k: seg(t, CUT.lol + d, CUT.lol + d + 0.3), size: 44 });
+    bubs += sBubble(cam, x, y - 704 * sAt(y) - 20, { text: txt, user: G.FLOOD_USERS[j * 5 + 2], t, s: 0.9, k: seg(t, CUT.lol + d, CUT.lol + d + 0.3), size: 44, minY: 200 });
   });
-  let o = E.plaza(t, cam, {}, '', ch + crowd + aud, bubs);
+  let o = E.plaza(t, cam, {}, '', ch + crowd + aud);
+  o += bubs;
   o += G.chatLog({ x: 30, y: 520, w: 600, h: 400, t, lines: [{ user: 'DadBod1978', text: 'WHY DID THE NOOB CROSS THE ROAD? HE COULDNT! HE WAS STUCK IN THE LOBBY! LIKE ME!' }], flood: seg(t, CUT.lol, CUT.crate + 0.2), floodSet: 'lol', floodN: 40, k: pop(t, CUT.lol - 0.05, 0.25) });
   return o + hud(t);
 }
@@ -548,9 +551,8 @@ function shCrate(t) {
   if (climb < 1) ch = dad(t, { x: lerp(2200, CR.x, ease.inOut(climb)), y: lerp(CR.base, CR.y, ease.outBack(climb)), s: CS, view: 'side', flip: true, legL: 70 * bump(climb, 0, 1), kneeL: 80 * bump(climb, 0, 1), rot: -12 * bump(climb, 0.2, 0.8), armL: 120, armR: 100, face: still('determined', { fx: ['sweat'] }), nametag: false }, { arms: false });
   else ch = crateDad(t, { face: { name: 'determined' }, armR: 150, armL: 20, ...boing(t, CUT.crate + 0.5, 0.2), nametag: false }, { arms: false, energy: 1.3 });
   const crowd = speechCrowd(t, 'watch', 'back');
-  const oh = G.overHead(CR.x, CR.y, CS, 'dadAvatar');
-  const bub = G.chatBubble({ x: CR.x, y: oh.chat + 10, caps: true, t, s: 0.85, ...G.chatLine(t, '07.6', { to: 'kids', hold: 0.2, pre: 0.1, text: 'Listen up, kids!' }) });
-  return E.plaza(t, cam, {}, '', ch + crowd, bub) + hud(t);
+  const bub = sBubble(cam, CR.x + 90, CR.y - 520, { caps: true, t, s: 0.9, tail: -0.7, ...G.chatLine(t, '07.6', { to: 'kids', hold: 0.2, pre: 0.1, text: 'Listen up, kids!' }) });
+  return E.plaza(t, cam, {}, '', ch + crowd) + bub + hud(t);
 }
 // 21. "Falling is not failing!" — heroic low angle, sun rays, the crowd's heads at the bottom
 function shNotFail(t) {

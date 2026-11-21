@@ -113,10 +113,10 @@ function memberPose(m, t, mode, o = {}) {
   return { ...p, ...(o.over && o.over[m.k] ? o.over[m.k] : {}) };
 }
 function crowd(t, mode, o = {}) {
-  const list = CROWD.filter((m) => !(o.skip || []).includes(m.k)).sort((a, b) => a.y - b.y);
+  const list = CROWD.filter((m) => !(o.skip || []).includes(m.k) && (!o.filter || o.filter(m))).map((m) => ({ m, p: memberPose(m, t, typeof mode === 'function' ? mode(m) : mode, o) })).sort((a, b) => a.p.y - b.p.y);
   let out = '';
-  for (const m of list) {
-    const p = memberPose(m, t, typeof mode === 'function' ? mode(m) : mode, o);
+  for (const { m, p } of list) {
+    if (p.y !== m.y && p.s === SP.sAt(m.y)) p.s = SP.sAt(p.y);
     out += m.k === 'player' ? K.draw.player(m.i, { shade: true, shadow: true, ...p }) : m.k === 'clan' ? actor('clan', t, p, { arms: false }) : actor(m.k, t, p, { arms: false, energy: 1.2 });
   }
   return out;
@@ -139,7 +139,7 @@ function chat(t, o = {}) {
     { user: 'NoodleBoi', text: 'JUMP DAD!!', at: B.chant[0] },
     ...(o.lines || []),
   ];
-  return G.chatLog({ x: 34, y: o.y ?? 600, w: o.w ?? 560, h: o.h ?? 300, t, lines, flood: o.flood || 0, floodSet: 'jump', floodN: 60, k: o.k ?? 1, s: o.s ?? 0.9 });
+  return G.chatLog({ x: o.x ?? 34, y: o.y ?? 600, w: o.w ?? 560, h: o.h ?? 300, t, lines, flood: o.flood || 0, floodSet: 'jump', floodN: 60, k: o.k ?? 1, s: o.s ?? 0.9 });
 }
 
 // ================================================================ the real living room (night, game night)
@@ -176,7 +176,7 @@ function shotDad(t) {
   const u = seg(t, C.dad, C.replay);
   const cam = camLerp(camAt(640, 640, 1.85, 1060, 560), camAt(620, 610, 2.15, 1040, 560), u);
   const gulp = bump(t, C.dad + 0.45, C.dad + 0.75);
-  const d = actor('dadAvatar', t, { x: SP.base.x, y: SP.base.y, s: 0.36, t, view: 'side', flip: true, headRot: -6, sy: 1 - 0.04 * gulp, nametag: false, armL: 10, armR: 16,
+  const d = actor('dadAvatar', t, { x: SP.base.x, y: SP.base.y, s: 0.36, t, turn: 0.6, headRot: -5, sy: 1 - 0.04 * gulp, nametag: false, armL: 12, armR: 18,
     face: { name: 'determined', eyes: { look: [0.6, -0.9] }, fx: gulp > 0.2 ? ['sweat'] : [] } }, { arms: false });
   return towerFrame(t, cam, {}, d) + whip(t, C.dad, 'up', 0.1);
 }
@@ -209,14 +209,15 @@ function shotReplay(t) {
   const x = lerp(P.start.edge - 40, P.gap.mid, ease.out(u)), y = lerp(P.start.y, P.water.y + 240, ease.in(u)) - 90 * Math.sin(Math.PI * Math.min(1, u * 1.6));
   let d = t < B.splash + 0.05 ? actor('dadAvatar', t, { x, y, s: 0.4, t, view: 'side', flip: true, armL: 170, armR: 160, legL: -20, legR: 30, rot: 20 * u, nametag: false, face: { name: 'scared', mouth: 'scream' } }, { arms: false }) : '';
   let o = Ly.bg + Ly.mid + view(cam, d) + Ly.front + view(cam, R.foamSplash(P.water.splash.x, P.water.splash.y, t - B.splash, { s: 1.4, n: 16, seed: 4 })) + Ly.fg + Ly.light;
+  o += replayFX(t, 'REPLAY');
   o += K.bang('SPLASH!', 1180, 330, seg(t, B.splash, B.splash + 0.15), 110, -8, '#7FD8FF');
-  o += G.stamp({ text: "CAN'T JUMP", k: seg(t, B.splash + 0.08, B.splash + 0.4), x: 640, y: 360, s: 0.9, rot: -10, col: '#FF3B4E' });
-  return o + replayFX(t, 'REPLAY') + flashAt(t, C.splash, 0.08, 0.6);
+  o += G.stamp({ text: "CAN'T JUMP", k: seg(t, B.splash + 0.08, B.splash + 0.4), x: 640, y: 420, s: 0.9, rot: -10, col: '#FF3B4E' });
+  return o + flashAt(t, C.splash, 0.08, 0.6);
 }
 // 3 — the beat: back at the foot; he looks all the way up (the tower disappears into the night)
 function shotLook(t) {
   const u = seg(t, C.look, C.vs);
-  const cam = camLerp(camAt(900, 560, 0.78), camAt(980, 380, 0.74), u);
+  const cam = camLerp(camAt(900, 650, 0.8), camAt(960, 560, 0.74), u);
   const d = actor('dadAvatar', t, { x: SP.base.x, y: SP.base.y, s: 0.36, t, turn: 0.5, headRot: -6, nametag: false, face: { name: 'nervous', eyes: { look: [0.8, -1] }, fx: ['sweat'] } }, { arms: false });
   return towerFrame(t, cam, {}, d) + whip(t, C.look, -1, 0.1);
 }
@@ -280,7 +281,7 @@ function shotKeys(t) {
 // 8 — "He jumped." base -> floor 1: he LANDS
 function shotJump1(t) {
   const u = seg(t, C.jump1, C.gasp);
-  const cam = shook(camLerp(camAt(850, 660, 1.0), camAt(940, 560, 1.12), u), t, [[B.land1, 0.25, 10]]);
+  const cam = shook(camLerp(camAt(860, 700, 1.12), camAt(980, 590, 1.25), u), t, [[B.land1, 0.25, 10]]);
   const st = dadState(t);
   let w = dadRoute(t) + landFX(t, st);
   let o = towerFrame(t, cam, {}, w);
@@ -365,7 +366,7 @@ function shotWatch(t) {
   // a tiny question mark over the Block King
   const [qx, qy] = toScr(cam, BOSS.x + 120, BOSS.y - 1450);
   if (t > C.watch + 0.5) o += K.bang('?', qx, qy, seg(t, C.watch + 0.5, C.watch + 0.7), 120, 10, '#FFFFFF');
-  o += chat(t, { k: seg(t, C.watch, C.watch + 0.3) });
+  o += chat(t, { k: seg(t, C.watch, C.watch + 0.3), x: 1330 });
   return o + whip(t, C.watch, -1, 0.1);
 }
 // 14 — "Jump, Dad!" #2: Noodle + the players next to him join in, fists on the beat
@@ -378,7 +379,7 @@ function shotNoodle(t) {
   o += G.chatBubble({ x: nx, y: ny, t, text: 'Jump, Dad!', typed: G.chatSync(t, '11.3', { from: 2 }), k: seg(t, C.noodle, C.noodle + 0.2), out: seg(t, L(3).b + 0.5, L(3).b + 0.8), user: 'NoodleBoi', s: 0.95 });
   o += K.bang('JUMP!', 1500, 300, seg(t, B.chant[2], B.chant[2] + 0.1) * (1 - seg(t, B.chant[3] - 0.05, B.chant[3])), 120, 8, '#FFD21F');
   o += K.bang('DAD!', 1540, 320, seg(t, B.chant[3], B.chant[3] + 0.1), 140, -6, '#FF8A2B');
-  return o + chat(t, { lines: [{ user: 'Kitty4Ever', text: 'JUMP DAD!', at: B.chant[2] }, { user: 'CubeKid9', text: 'JUMP DAD', at: B.chant[3] }] }) + whip(t, C.noodle, 1, 0.08);
+  return o + whip(t, C.noodle, 1, 0.08);
 }
 // 15 — montage: floors 21 -> 25, whip, 37 -> 41 (the chat floods JUMP DAD)
 function shotClimb2(t) {
@@ -391,12 +392,12 @@ function shotClimb2(t) {
 // 16 — "...started chanting." EVERYONE: fists on the beat, the chat at full flood, JUMP! DAD! in the sky
 function shotChant(t) {
   const u = seg(t, C.chant, C.climb3);
-  const cam = camLerp(camAt(-420, 640, 0.66), camAt(-380, 560, 0.72), u);
+  const cam = camLerp(camAt(-420, 700, 0.8), camAt(-380, 650, 0.88), u);
   const bossPose = { pose: 'idle', face: { name: 'shocked', eyes: { look: [0.8, -0.2] } } };
   let o = battleFrame(t, cam, { mode: 'chant', bossPose, set: { lava: 1 } });
   const beat = (t * 1.85) % 1, bi = Math.floor(t * 1.85);
   if (beat < 0.5) o += K.bang(bi % 2 ? 'DAD!' : 'JUMP!', 960 + (bi % 2 ? 260 : -220), 250 + (bi % 3) * 20, seg(beat, 0, 0.12) * (1 - seg(beat, 0.38, 0.5)), 150, bi % 2 ? 7 : -7, bi % 2 ? '#FF8A2B' : '#FFD21F');
-  o += chat(t, { flood: lerp(0.6, 1, u), lines: [{ user: 'Kitty4Ever', text: 'JUMP DAD!', at: B.chant[2] }] });
+  o += chat(t, { flood: lerp(0.6, 1, u), x: 1330, y: 560, lines: [{ user: 'Kitty4Ever', text: 'JUMP DAD!', at: B.chant[2] }] });
   return o + whip(t, C.chant, -1, 0.1);
 }
 // 17 — montage: 57 -> 60 checkpoint above the clouds
@@ -410,25 +411,27 @@ function shotClimb3(t) {
 }
 // 18 — DarkBlade: "Jump, Mister Hot Dog!" (chat bubble: no mouth), sword pumping, the clan behind
 const DBM = () => memberBy('darkblade');
+const DBY = 1004;
 function darkFrame(t, cam, smash = 0) {
   const db = DBM();
   const mode = (m) => (m.k === 'darkblade' || m.k === 'clan' || m.k === 'player' ? 'chant' : 'watch');
   const pu = chantPump(t, 0.4);
-  const over = { darkblade: { armR: smash > 0 ? lerp(130, 178, smash) : 120 + 50 * pu, swordRot: smash > 0 ? 0 : undefined, swordGlow: 0.4 + 0.6 * smash, lift: 0, turn: 0.2, volume: false } };
-  let o = battleFrame(t, cam, { mode, crowd: { t0: C.watch + 0.05, over }, boss: false });
-  const [bx, by] = toScr(cam, db.x + 20, db.y - 1018 * SP.sAt(db.y) - 40);
+  const over = { darkblade: { y: DBY, armR: smash > 0 ? lerp(130, 178, smash) : 120 + 50 * pu, swordRot: smash > 0 ? 0 : undefined, swordGlow: 0.4 + 0.6 * smash, lift: 0, turn: 0.2, volume: false } };
+  const filter = (m) => m.k === 'darkblade' || m.k === 'clan' || (m.k === 'player' && m.y < 900) || m.k === 'grandmaAvatar';
+  let o = battleFrame(t, cam, { mode, crowd: { t0: C.watch + 0.05, over, filter }, boss: false });
+  const [bx, by] = toScr(cam, db.x + 20, DBY - 1018 * SP.sAt(DBY) - 40);
   o += G.chatBubble({ x: bx, y: by, t, ...G.chatLine(t, '11.5', { hold: 0.6 }), user: 'xX_DarkBlade_Xx', s: 0.95, tail: 0.3, caps: smash > 0 });
   return o;
 }
 function shotDark(t) {
   const db = DBM();
-  const cam = camLerp(camAt(db.x + 60, 680, 1.45, 960, 600), camAt(db.x + 40, 670, 1.6, 960, 600), seg(t, C.dark, C.dark2));
+  const cam = camLerp(camAt(db.x + 40, 720, 1.5, 960, 600), camAt(db.x + 30, 710, 1.65, 960, 600), seg(t, C.dark, C.dark2));
   return darkFrame(t, cam) + whip(t, C.dark, 1, 0.08);
 }
 function shotDark2(t) {
   const db = DBM();
   const sm = ease.out(seg(t, B.darkJump - 0.06, B.darkJump + 0.06));
-  const cam = shook({ ...camAt(db.x + 20, 640, 1.6 + 0.8 * sm, 960, 600) }, t, [[B.darkJump, 0.35, 16]]);
+  const cam = shook({ ...camAt(db.x + 20, 680, 1.65 + 0.75 * sm, 960, 600) }, t, [[B.darkJump, 0.35, 16]]);
   let o = darkFrame(t, cam, sm);
   o += focusLines(960, 500, sm * (1 - seg(t, B.darkJump + 0.3, B.darkJump + 0.6)), 7, '#FF4B5C');
   o += K.bang('JUMP!!', 1450, 300, seg(t, B.darkJump, B.darkJump + 0.12), 170, 8, '#FF4B5C');
@@ -512,10 +515,10 @@ function shotYou(t) {
   const yu = memberBy('you');
   const steps = B.youW.map((w) => ease.out(seg(t, w - 0.04, w + 0.08)));
   const z = 1.45 + 0.28 * steps[0] + 0.28 * steps[1] + 0.32 * steps[2];
-  const cam = shook(camAt(yu.x + 10, 700 - 60 * steps[2], z, 960, 600), t, B.youW.map((w) => [w, 0.22, 10]));
-  const over = { you: { turn: 0.35, armR: 160, armL: 150, sword: false, face: { name: 'determined', eyes: { look: [0.6, -0.9] } }, volume: false, lift: 0 } };
+  const cam = shook(camAt(yu.x + 10, 740 - 50 * steps[2], z, 960, 620), t, B.youW.map((w) => [w, 0.22, 10]));
+  const over = { you: { y: 1016, turn: 0.35, armR: 160, armL: 150, sword: false, face: { name: 'determined', eyes: { look: [0.6, -0.9] } }, volume: false, lift: 0 } };
   let o = battleFrame(t, cam, { mode: 'chant', crowd: { over }, boss: false });
-  const [bx, by] = toScr(cam, yu.x, yu.y - 946 * SP.sAt(yu.y) - 70);
+  const [bx, by] = toScr(cam, yu.x, 1016 - 946 * SP.sAt(1016) - 70);
   o += G.chatBubble({ x: bx, y: by, t, caps: true, ...G.chatLine(t, '11.7', { hold: 0.3 }), s: 0.9, tail: -0.4 });
   const fk = Math.max(...steps.map((s_, i) => s_ * (1 - seg(t, B.youW[i] + 0.15, B.youW[i] + 0.35))));
   o += focusLines(960, 520, fk, 11, '#FFD21F');
@@ -539,7 +542,7 @@ function shotSon1(t) {
 function shotSon2(t) {
   const u = seg(t, C.son2, C.press2);
   const cam = camLerp({ zoom: 2.15, x: 80, y: -110 }, { zoom: 2.35, x: 70, y: -120 }, u);
-  const stand = actor('grandma', t, { x: 790, y: 1000, s: 0.5, curlers: true, turn: 0.5, rot: 8, armL: 30, armR: 30, face: { name: 'scared', eyes: { look: [0.9, 0.2] } } }, { arms: false });
+  const stand = actor('grandma', t, { x: 780, y: 880, s: 0.5, curlers: true, turn: 0.5, rot: 8, armL: 30, armR: 30, face: { name: 'scared', eyes: { look: [0.9, 0.2] } } }, { arms: false });
   const o = living(t, cam, {
     laptopY: 900,
     dad: { face: { name: 'determined', eyes: { look: [0, 0.5] }, fx: ['sweat', 'tears'] }, armL: 34, armR: 34 },
@@ -667,7 +670,7 @@ function shotNo(t) {
 const HITS = (() => { const a = []; for (let i = 0; i < 9; i++) a.push({ dt: 0.25 + i * 0.13, x: -1750 + (hash(i * 3.1) - 0.5) * 700, y: 830 - 300 - hash(i * 5.3) * 800, v: Math.round(800 + 1200 * hash(i * 2.2)), crit: i % 4 === 3 }); return a; })();
 function shotAttack(t) {
   const u = seg(t, C.attack, C.defeat);
-  const cam = camLerp(camAt(-300, 520, 0.62), camAt(-1300, 470, 0.66), u, ease.inOut);
+  const cam = camLerp(camAt(-500, 440, 0.62), camAt(-1350, 400, 0.66), u, ease.inOut);
   const bossPose = { pose: 'hit', crack: bossCrackAt(t), face: { name: 'shocked' } };
   let fx = '';
   for (const h of HITS) {
@@ -695,14 +698,14 @@ function specCam(t, x, y, r, k) {
 }
 function shotDefeat(t) {
   const u = seg(t, C.defeat, C.crumble);
-  const hy = BOSS.y - 1150;
-  const cam = shook(camLerp(camAt(BOSS.x + 60, hy + 120, 1.25, 860, 560), camAt(BOSS.x + 40, hy + 100, 1.45, 860, 560), u), t, [[B.hotdog + 0.3, 0.4, 10]]);
+  const hy = BOSS.y - 1350 * BOSS.s;
+  const cam = shook(camLerp(camAt(BOSS.x + 40, hy + 300, 1.3, 820, 560), camAt(BOSS.x + 30, hy + 290, 1.5, 820, 560), u), t, [[B.hotdog + 0.3, 0.4, 10]]);
   const dog = t >= B.hotdog + 0.3;
   const bossPose = { pose: 'hit', crack: bossCrackAt(t), face: dog ? { name: 'dizzy' } : { name: 'shocked', eyes: { look: [0.9, -0.3] } }, volume: false };
   let fx = '';
-  for (let i = 0; i < 4; i++) { const age = (t - C.defeat - i * 0.37) % 1.5; const x = BOSS.x + (hash(i * 3.3) - 0.5) * 500, y = hy + 200 + hash(i * 1.7) * 500; fx += G.hitSpark({ x, y, age, s: 1.3, seed: i }); }
+  for (let i = 0; i < 4; i++) { const age = (t - C.defeat - i * 0.37) % 1.5; const x = BOSS.x + (hash(i * 3.3) - 0.5) * 420, y = hy + 260 + hash(i * 1.7) * 420; fx += G.hitSpark({ x, y, age, s: 1.3, seed: i }); }
   let o = towerFrame(t, cam, {}, bossW(t, bossPose) + fx);
-  o += specCam(t, 1500, 380, 210, seg(t, B.hotdog - 0.35, B.hotdog));
+  o += specCam(t, 1540, 500, 210, seg(t, B.hotdog - 0.35, B.hotdog));
   o += bossHUD(t, {});
   return o + whip(t, C.defeat, 1, 0.08);
 }
@@ -813,7 +816,7 @@ function tossLift(t) {
 }
 function shotToss(t) {
   const lift = tossLift(t);
-  const cam = camAt(1420, TOPY - 330 - lift * 0.45, 0.98, 960, 560);
+  const cam = camAt(1420, TOPY - 260 - lift * 0.3, 0.95, 960, 560);
   const spin = B.toss.reduce((r, t0) => (t > t0 && t < t0 + 1.05 ? 360 * ease.inOut((t - t0) / 1.05) : r), 0);
   let w = summitProps(t) + summitCrowd(t, 'toss', { over: { momAvatar: { armR: 150, armL: 40, turn: 0.4, face: { name: 'love' } } } });
   w += actor('dadAvatar', t, { ...SUM.dad, s: 0.3, t, lift, rot: spin, armL: 150, armR: 160, legL: -20, legR: 20, nametag: false, shadow: lift < 20, face: { name: 'joy' } }, { arms: false });
@@ -884,7 +887,7 @@ function hugPair(t, o = {}) {
 }
 function shotHug(t) {
   const u = seg(t, C.hug, C.mvp);
-  const cam = camLerp(camAt(1500, TOPY - 200, 1.35, 960, 600), camAt(1480, TOPY - 190, 1.75, 960, 600), u);
+  const cam = camLerp(camAt(1500, TOPY - 200, 1.4, 960, 600), camAt(1475, TOPY - 185, 1.95, 960, 600), u);
   let w = summitProps(t) + summitCrowd(t, t > B.hug + 0.2 ? 'aww' : 'cheer', { you: false }) + hugPair(t);
   let o = towerFrame(t, cam, { set: { dawn: 1 } }, w);
   const [hx, hy] = toScr(cam, SUM.dad.x + 50, TOPY - 380);
@@ -896,7 +899,7 @@ function shotHug(t) {
 // 43 — MVP: DadBod1978 (the card over the hugging pair at sunrise) -> pull back -> dip to night (SC 12)
 function shotMVP(t) {
   const pull = ease.inOut(seg(t, B.out - 0.2, END));
-  const cam = camLerp(camAt(1480, TOPY - 190, 1.75, 960, 600), camAt(1300, TOPY - 900, 0.6, 960, 600), pull);
+  const cam = camLerp(camAt(1475, TOPY - 185, 1.95, 960, 600), camAt(1420, TOPY - 330, 0.62, 960, 600), pull);
   let w = summitProps(t) + summitCrowd(t, 'cheer', { you: false }) + hugPair(t, { mvp: t > B.mvpName });
   let o = towerFrame(t, cam, { set: { dawn: 1 } }, w);
   const kc = 0.5 * seg(t, B.mvpA, B.mvpA + 0.7) + 0.5 * seg(t, B.mvpName - 0.1, B.mvpName + 0.6);
