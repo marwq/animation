@@ -130,10 +130,11 @@ function room(t, cam, o = {}) {
   if (o.you !== false) mid += actor('you', t, seat('you', 1, { ...FROG, turn: 0.42, volume: vol, ...(o.you || {}) }), o.youAct || {});
   if (o.dad !== false) mid += actor('dad', t, seat('dad', 1.1, { volume: vol, glasses: 'on', ...(o.dad || {}) }), o.dadAct || {});
   if (o.mom !== false) mid += actor('mom', t, seat('mom', 1.04, { mug: true, t, volume: vol, ...(o.mom || {}) }), o.momAct || {});
-  if (o.gran !== false) mid += actor('grandma', t, seat('grandma', 0.9, { knitting: true, armL: 36, armR: 34, t, volume: vol, ...(o.gran || {}) }), o.granAct || {});
+  // Granny sits forward on the armchair's edge (frog-sit drawn after the chair front) so her knitting stays in view
+  const gran = o.gran !== false ? actor('grandma', t, seat('grandma', 0.9, { ...FROG, knitting: true, t, volume: vol, ...(o.gran || {}) }), o.granAct || {}) : '';
   if (o.dad !== false) dev += X.laptopOld({ ...LRS.devices.laptop, face: 'lid' });
   if (o.mom !== false) dev += X.tablet({ x: LRS.seats.mom.x - 18, y: 772, s: 0.4, rot: -4, face: 'back', landscape: true });
-  if (o.gran !== false) dev += grannyPhone(t, o.phoneScreen);
+  if (o.gran !== false) dev += grannyPhone(t, o.phoneScreen) + gran;
   return view(cam, L.bg, 0.8) + view(cam, L.mid + mid + L.front + dev + L.table + (o.over || '') + L.fg + L.light);
 }
 // Granny's phone propped up on a little stand on the armchair's left arm, screen to camera (her empire on it)
@@ -148,6 +149,7 @@ function phoneShop(w, h, t, o = {}) {
   let g = S.rect(0, 0, w, h, 0, { fill: '#FFE3F0' }) + S.rect(0, 0, w, 54, 0, { fill: '#FF6FB0' });
   g += TF("GRANNY'S", w / 2, 24, 18, '#FFFFFF') + TF('GOODIES', w / 2, 46, 18, '#FFFFFF');
   g += S.circle(w / 2, 136, 48, ol('#E0A35A', 5)) + [[-16, -12], [12, -18], [6, 14], [-14, 16], [22, 6]].map(([a, b]) => S.circle(w / 2 + a, 136 + b, 6, { fill: '#6B3A1E' })).join('');
+  if (o.label) g += TF(o.label, w / 2, 200, 16, '#B0306A');
   const v = o.coins ?? Math.floor(1200 + t * 37) % 99999;
   g += S.rect(14, 214, w - 28, 44, 22, ol('#1E2A44', 4)) + G.coinIcon(38, 236, 14, t * 3) + TF(String(v), w / 2 + 14, 246, 24, '#FFC83D');
   g += S.rect(24, 276, w - 48, 40, 14, ol('#3BD16F', 4)) + TF('SELL!', w / 2, 304, 22, '#FFFFFF');

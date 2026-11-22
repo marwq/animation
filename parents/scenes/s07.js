@@ -111,7 +111,7 @@ function hud(t, o = {}) {
 // chat bubble with its tail tip at world point (wx, wy) seen through cam; drawn in screen space, kept inside the frame
 function sBubble(cam, wx, wy, o = {}) {
   const q = GS.toScreen(cam, wx, wy);
-  return G.chatBubble({ s: 1, ...o, x: clamp(q.x + (o.dx || 0), 260, 1660), y: clamp(q.y + (o.dy || 0), o.minY ?? 230, 880) });
+  return G.chatBubble({ s: 1, ...o, tail: 0, x: clamp(q.x + (o.dx || 0), o.caps ? 420 : 330, o.caps ? 1500 : 1590), y: clamp(q.y + (o.dy || 0), o.minY ?? (o.caps ? 300 : 230), 880) });
 }
 // ---------------------------------------------------------------- actors
 const DS = 0.4;                                     // the hot dog on the plaza floor / start block
@@ -144,7 +144,7 @@ function shOpen(t) {
   let o = E.plaza(t, cam, {}, '', ch);
   const q = GS.toScreen(cam, EDGE.x, EDGE.y - 560);
   o += K.bang('?', q.x + 30, q.y - 20, pop(t, w(0, 'Dad'), 0.3) * (1 - seg(t, CUT.edge - 0.3, CUT.edge)), 120, 8, '#FFFFFF');
-  return o + whip(t, T0, 1, 0.14);
+  return o + (t < T0 + 0.32 ? K.C.pixelWipe(seg(t, T0, T0 + 0.32), 'reveal') : '');
 }
 
 // 2. "Dad was still trying the first jump." — at the edge, peeking down; the jump guide arc over the gap
@@ -339,10 +339,10 @@ function shSit(t) {
 
 // the crowd gathering around the start block (shots 10, 11, 14): destinations + walk-in times
 const GATHER = Array.from({ length: 14 }, (_, j) => {
-  const side = j % 2 ? 1 : -1;
+  const side = j % 2 ? 1 : -1, from = -(900 + 300 * hash(j));
   const y = [960, 1010, 900, 1050, 940, 1000, 880, 1030, 970, 920, 1060, 990, 910, 1040][j];
   const x = side < 0 ? 2560 - ((j * 97) % 300) : 2620 + ((j * 113) % 260);
-  return { i: NOOB_I[j], x, y, s: sAt(y), from: side * (900 + 300 * hash(j)), delay: 0.25 * j * 0.6 + hash(j * 3.3) * 0.4, ph: j * 1.7 };
+  return { i: NOOB_I[j], x, y, s: sAt(y), from, delay: 0.25 * j * 0.6 + hash(j * 3.3) * 0.4, ph: j * 1.7 };
 });
 function gathering(t, t0, mood = 'watch', o = {}) {
   const list = GATHER.map((g, j) => ({ ...g, j })).sort((a, b) => a.y - b.y);
@@ -470,7 +470,7 @@ function spotlight(x, y, k = 1) {
   if (k <= 0) return '';
   return S.path(`M${f(x - 70)} -400 L${f(x + 70)} -400 L${f(x + 300)} ${f(y + 20)} L${f(x - 300)} ${f(y + 20)} Z`, { fill: 'url(#s07Spot)', opacity: f(k) }) + S.ellipse(x, y + 8, 300, 46, { fill: '#FFF6C8', opacity: f(0.35 * k) });
 }
-const micPose = (armR) => { const h = CAST.handAt(CAST.D.dadAvatar, { armR }, 1); return [{ svg: mic(h[0], h[1], 2.2, -150 + armR * 0.6), layer: 'front' }]; };
+const micPose = (armR) => { const h = CAST.handAt(CAST.D.dadAvatar, { armR }, 1); return [{ svg: mic(h[0], h[1], 1.5, -150 + armR * 0.6), layer: 'front' }]; };
 function shJokes(t) {
   const cam = camKeys(t, [[CUT.jokes, camAt(2740, 600, 1.05)], [A[5].a, camAt(2740, 560, 1.22)], [CUT.punch, camAt(2740, 540, 1.32)]], ease.inOut);
   const spot = seg(t, CUT.jokes, CUT.jokes + 0.3);
@@ -480,7 +480,7 @@ function shJokes(t) {
   let o = E.plaza(t, cam, {}, '', spotlight(2740, EDGE.y, spot) + ch, aud);
   o += sBubble(cam, 2820, EDGE.y - 470, { caps: true, t, tail: -0.7, s: 0.9, ...G.chatLine(t, '07.5', { to: 'road', hold: 0.2, pre: 0.2, text: 'Why did the noob cross the road?' }) });
   o += S.rect(0, 0, 1920, 1080, 0, { fill: '#1A0A2A', opacity: f(0.25 * spot) });
-  o += G.nametag({ x: 960, y: 110, name: 'COMEDY NIGHT', level: null, col: '#FF5FA8', t, s: 1.1, k: pop(t, CUT.jokes + 0.1, 0.3), bob: false, crown: false });
+  o += G.nametag({ x: 250, y: 90, name: 'COMEDY NIGHT', level: null, col: '#FF5FA8', t, s: 1.1, k: pop(t, CUT.jokes + 0.1, 0.3), bob: false, crown: false });
   return o;
 }
 // 17. "He couldn't! He was stuck in the lobby!" — close: Dad cracking himself up
@@ -535,7 +535,7 @@ function shLol(t) {
 // the crate: Dad climbs up (can't jump), the speech
 const CR = SP.crate;                           // {x 2330, y 854 (feet on top), base 990, s .438}
 const CS = CR.s;
-const SPEECH = [[2060, 1010, 3], [2170, 1060, 5], [2300, 1040, 0], [2440, 1065, 9], [2570, 1020, 11], [2120, 950, 13], [2520, 960, 2], [2640, 980, 7], [2000, 960, 15], [2700, 1050, 6], [1960, 1050, 14], [2380, 975, 10]];
+const SPEECH = [[2060, 1010, 3], [2160, 1062, 5], [2510, 1045, 0], [2600, 1068, 9], [2700, 1020, 11], [2110, 950, 13], [2540, 960, 2], [2660, 975, 7], [1990, 960, 15], [2780, 1050, 6], [1960, 1050, 14], [2830, 965, 10]];
 function speechCrowd(t, mood = 'watch', view = 'front', skip = []) {
   return SPEECH.map((p, j) => [...p, j]).filter((p) => !skip.includes(p[2])).sort((a, b) => a[1] - b[1]).map(([x, y, i, j]) => {
     if (i === 0) return KID0(t, { x, y, s: sAt(y), view, face: view === 'back' ? undefined : (mood === 'cheer' ? 'excited' : { name: 'amazed', mouth: 'o', eyes: { look: [0, -0.6] } }), armL: mood === 'cheer' ? 150 : 8, armR: mood === 'cheer' ? 150 : 8, lift: mood === 'cheer' ? 20 * Math.abs(Math.sin(t * 9)) : 0 });
@@ -591,7 +591,7 @@ const DADF = { x: 2470, y: 990 };
 const DFS = sAt(DADF.y);
 const NOOD = { x: CR.x, hip: CR.y + 8 };
 const KIDP = { x: 2620, y: 1010 };
-const EVE = [[2050, 900, 4, 'player'], [2180, 960, 5], [2260, 1050, 7], [2600, 940, 2, 'player'], [2700, 1000, 9], [2800, 1060, 11], [2900, 960, 6, 'player'], [1980, 1010, 13], [2120, 1070, 14], [2960, 1040, 15], [2760, 900, 1], [2020, 1065, 8, 'player'], [2860, 990, 12], [1900, 940, 10, 'player'], [3050, 980, 3]];
+const EVE = [[1960, 890, 4, 'player'], [2110, 880, 5], [2560, 895, 2, 'player'], [2680, 905, 9], [2800, 880, 1], [2150, 955, 13], [2010, 965, 7], [2640, 955, 11], [2770, 965, 6, 'player'], [1880, 950, 10, 'player'], [1950, 1040, 14], [2100, 1062, 8, 'player'], [2740, 1050, 12], [2860, 1015, 15]];
 function eveCrowd(t, mood = 'love', k = 1, cam = null) {
   return EVE.map((p, j) => [...p, j]).sort((a, b) => a[1] - b[1]).map(([x, y, i, kind, j]) => {
     if (k < 1 && hash(j * 7.7) > k) return '';
@@ -623,7 +623,7 @@ function shSunset(t) {
 }
 // 25. "...the whole server was calling him 'Dad.'" — the crowd, the DAD!! flood, his nametag becomes DAD
 function shDadName(t) {
-  const cam = camKeys(t, [[CUT.dadname, camAt(2400, 560, 0.78)], [tDadName, camAt(2440, 590, 0.95)], [CUT.tug, camAt(2460, 610, 1.02)]], ease.inOut);
+  const cam = camKeys(t, [[CUT.dadname, camAt(2400, 560, 0.78)], [tDadName - 0.1, camAt(2440, 620, 0.98)], [tDadName + 0.15, camAt(2470, 700, 1.18)], [CUT.tug, camAt(2470, 710, 1.24)]], ease.inOut);
   const hug = 0;
   const ch = dad(t, { x: DADF.x, y: DADF.y, s: DFS, face: { name: 'joy', eyes: { type: 'happy' } }, armL: 60 + 20 * Math.sin(t * 4), armR: 60 + 20 * Math.sin(t * 4 + 2), nametag: false }, { arms: false });
   const nd = noodleSit(t, { face: { name: 'joy' }, armL: 30, armR: 140 + 20 * Math.sin(t * 7) });
@@ -654,9 +654,8 @@ function shTug(t) {
   const ch = dad(t, { x: DADF.x, y: DADF.y, s: DFS, turn: lerp(0, 0.35, lookD), headRot: 10 * lookD, armR: 26 + 6 * tug, armL: 10, face: still(lookD > 0.5 ? 'happy' : 'joy', { eyes: { look: [0.7 * lookD, 0.8 * lookD] } }), nametag: false }, { arms: false });
   const kd = KID0(t, { x: KIDP.x - 30, y: KIDP.y, s: sAt(KIDP.y), turn: -0.55, armR: 8, armL: 118 + 6 * tug, face: { name: 'cute', eyes: { look: [-0.6, -0.7] }, fx: ['blush'] } }, { arms: false });
   const crowd = eveCrowd(t, 'love');
-  const ohk = G.overHead(KIDP.x - 30, KIDP.y, sAt(KIDP.y), 'kid');
-  const bub = G.chatBubble({ x: KIDP.x - 10, y: ohk.chat + 50, t, s: 0.7, size: 40, user: 'lil_noob_7', ...G.chatLine(t, '07.8', { to: 'Dog', hold: 0.6, pre: 0.2, text: 'Mister Hot Dog?' }) });
-  return E.plaza(t, cam, { deep: 1 }, '', crowd + ch + kd, bub);
+  const bub = sBubble(cam, KIDP.x + 40, KIDP.y - 330, { t, size: 44, user: 'lil_noob_7', ...G.chatLine(t, '07.8', { to: 'Dog', hold: 0.6, pre: 0.2, text: 'Mister Hot Dog?' }) });
+  return E.plaza(t, cam, { deep: 1, dof: 0.35 }, crowd, ch + kd) + bub;
 }
 // 27. "Can you be my dad too?" — the KID's close-up: big eyes, propeller turning slowly, warm bokeh
 function shKidCU(t) {
@@ -687,7 +686,7 @@ function shOfc(t) {
 }
 // 29. "Everybody gets a dad today!" — arms wide, the crowd piles in for a group hug, hearts everywhere
 function shEveryb(t) {
-  const cam = camKeys(t, [[CUT.everyb, camAt(2470, 620, 1.0)], [CUT.noodle, camAt(2460, 640, 1.1)]], ease.inOut);
+  const cam = camKeys(t, [[CUT.everyb, camAt(2450, 640, 1.15)], [CUT.noodle, camAt(2450, 660, 1.24)]], ease.inOut);
   const tE = w(9, 'Everybody');
   const wide = ease.outBack(seg(t, tE - 0.1, tE + 0.25));
   const ch = dad(t, { x: DADF.x, y: DADF.y, s: DFS, armL: lerp(20, 125, wide), armR: lerp(20, 125, wide), face: still('joy', { fx: ['sparkles'] }), nametag: false }, { arms: false });
@@ -702,8 +701,7 @@ function shEveryb(t) {
   const oh = G.overHead(DADF.x, DADF.y, DFS, 'dadAvatar');
   let over = G.emoteHearts({ x: DADF.x, y: oh.head + 120, age: t - tE, n: 24, s: 1.4, seed: 2, spread: 1.6 });
   over += G.nametag({ x: DADF.x, y: oh.tag, name: 'DAD', level: 99, col: '#FF5FA8', crown: true, t, s: 1.1 });
-  over += G.chatBubble({ x: DADF.x, y: oh.chat - 20, caps: true, t, s: 0.85, ...G.chatLine(t, '07.9', { from: 'Everybody', hold: 0.3, pre: 0.15, text: 'Everybody gets a dad today!' }) });
-  return E.plaza(t, cam, { deep: 1 }, '', crowd + kd + nd + ch, over);
+  return E.plaza(t, cam, { deep: 1 }, '', crowd + kd + nd + ch, over) + sBubble(cam, DADF.x, oh.tag - 50, { caps: true, t, minY: 170, ...G.chatLine(t, '07.9', { from: 'Everybody', hold: 0.3, pre: 0.15, text: 'Everybody gets a dad today!' }), minY: 330 });
 }
 // 30. NOODLE: "Your dad is so cool, bro." — on the crate next to Dad, happy, legs swinging
 function shNoodle(t) {
@@ -713,9 +711,8 @@ function shNoodle(t) {
   const ch = dad(t, { x: DADF.x, y: DADF.y, s: DFS, turn: -0.35, face: still('happy', { eyes: { look: [-0.8, -0.2] } }), armL: 14, armR: 14, nametag: false }, { arms: false });
   const kd = KID0(t, { x: KIDP.x, y: KIDP.y, s: sAt(KIDP.y), turn: -0.5, face: { name: 'happy', eyes: { look: [-0.6, -0.6] } }, armL: 100, armR: 8 }, { arms: false });
   const crowd = eveCrowd(t, 'love');
-  const oh = G.overHead(NOOD.x, NOOD.hip + 306 * CS * 0.98, CS, 'noodle');
-  const bub = G.chatBubble({ x: NOOD.x - 30, y: oh.chat + 150, t, s: 0.85, user: 'NoodleBoi', ...G.chatLine(t, '07.10', { to: 'bro', hold: 0.5, pre: 0.2, text: 'Your dad is so cool, bro.' }) });
-  return E.plaza(t, cam, { deep: 1 }, '', crowd + nd + ch + kd, bub);
+  const bub = sBubble(cam, NOOD.x - 20, NOOD.hip - 420, { t, user: 'NoodleBoi', ...G.chatLine(t, '07.10', { to: 'bro', hold: 0.5, pre: 0.2, text: 'Your dad is so cool, bro.' }) });
+  return E.plaza(t, cam, { deep: 1, dof: 0.3 }, crowd, nd + ch + kd) + bub;
 }
 // 31. "My dad never plays with me." — closer: Noodle's small sad smile; Dad's hand pats his bowl
 function shNoDad(t) {
@@ -723,14 +720,16 @@ function shNoDad(t) {
   const tP = w(10, 'plays');
   const pat = seg(t, tP, tP + 0.3);
   const patY = Math.abs(Math.sin(t * 10)) * pat;
-  const nd = noodleSit(t, { face: { name: 'sad', mouth: 'smallSmile', eyes: { look: [0, 0.4] } }, armL: 14, armR: 14, turn: 0.15, headY: 6 * patY, volume: false }, { arms: false, energy: 0.6 });
-  const ch = dad(t, { x: DADF.x, y: DADF.y, s: DFS, turn: -0.4, face: still('sad', { eyes: { look: [-0.8, 0] } }), armR: 14, armL: lerp(14, 150, ease.inOut(seg(t, tP - 0.4, tP))) - 8 * patY, nametag: false, volume: false }, { arms: false });
-  return E.plaza(t, cam, { deep: 1 }, '', ch + nd);
+  const nd = noodleSit(t, { face: { name: 'sad', mouth: 'smallSmile', eyes: { look: [0, 0.4] } }, armL: 14, armR: 14, turn: 0.15, headY: 6 * patY, volume: false, nametag: false }, { arms: false, energy: 0.6 });
+  // (Noodle first: Dad's patting hand goes over his bowl)
+  const reach = ease.inOut(seg(t, tP - 0.4, tP));
+  const ch = dad(t, { x: DADF.x, y: DADF.y, s: DFS, turn: -0.4 * (1 - reach), face: still('sad', { eyes: { look: [-0.8, 0] } }), armR: 14, armL: lerp(14, 158, reach) - 8 * patY, nametag: false, volume: false }, { arms: false });
+  return E.plaza(t, cam, { deep: 1, dof: 0.25 }, '', nd + ch);
 }
 // 32. (beat) the hero, far away, alone — from behind him: the warm crowd in the distance
-const HERO = { x: 1500, y: 1050 };
+const HERO = { x: 1180, y: 1055 };
 function shFar(t) {
-  const cam = camKeys(t, [[CUT.far, camAt(1950, 700, 0.92)], [CUT.mine, camAt(1900, 690, 0.98)]], ease.inOut);
+  const cam = camKeys(t, [[CUT.far, camAt(1800, 690, 0.86)], [CUT.mine, camAt(1760, 680, 0.92)]], ease.inOut);
   const crowd = eveCrowd(t, 'love');
   const ch = dad(t, { x: DADF.x, y: DADF.y, s: DFS, face: still('joy'), armL: 30, armR: 30, nametag: false }, { arms: false });
   const kd = KID0(t, { x: KIDP.x, y: KIDP.y, s: sAt(KIDP.y), turn: -0.5, armL: 100 }, { arms: false });
@@ -742,11 +741,12 @@ function shFar(t) {
 }
 // 33. "...He's MY dad." — close on the hero, jealous; the crowd blurred in the warm distance behind
 function shMine(t) {
-  const cam = camKeys(t, [[CUT.mine, camAt(1640, 640, 2.0)], [CUT.real, camAt(1640, 630, 2.25)]], ease.inOut);
+  const cam = camKeys(t, [[CUT.mine, camAt(HERO.x + 230, 650, 2.0)], [CUT.real, camAt(HERO.x + 210, 640, 2.25)]], ease.inOut);
   const crowd = eveCrowd(t, 'love');
   const ch = dad(t, { x: DADF.x, y: DADF.y, s: DFS, face: still('joy'), armL: 30, armR: 30, nametag: false }, { arms: false });
-  const hero = actor('you', t, { x: HERO.x + 90, y: HERO.y, s: sAt(HERO.y), turn: 0.55, volume: false, face: { name: 'angry', eyes: { look: [1, -0.1], upper: 0.35 } }, armL: 10, armR: 10, headRot: -3, nametag: 'YOU', crown: true }, { arms: false, energy: 0.4 });
-  let o = E.plaza(t, cam, { deep: 1 }, '', crowd + ch, hero);
+  const hero = actor('you', t, { x: HERO.x + 90, y: HERO.y, s: sAt(HERO.y), turn: 0.55, volume: false, face: { name: 'sad', eyes: { look: [1, -0.05], upper: 0.5 }, fx: ['anger'] }, armL: 10, armR: 10, headRot: -3, nametag: 'YOU', crown: true }, { arms: false, energy: 0.3 });
+  const hearts = G.emoteHearts({ x: 1880, y: 520, age: (t - CUT.mine) % 1.9, n: 7, s: 0.8, seed: 13 });
+  let o = E.plaza(t, cam, { deep: 1, dof: 0.35 }, crowd + ch, hero, hearts);
   o += E.letterbox(seg(t, CUT.mine, CUT.mine + 0.4), 64);
   return o;
 }
@@ -787,5 +787,13 @@ function look(t) {
   return { grade: 'warm', vignette: 0.45 };
 }
 
+// the evening crowd shot for SC 08's "your dad was everyone's favorite" panel
+function eveShot(t, cam) {
+  const ch = dad(t, { x: DADF.x, y: DADF.y, s: DFS, face: still('joy', { eyes: { type: 'happy' } }), armL: 120 + 20 * Math.sin(t * 6), armR: 120 + 20 * Math.sin(t * 6 + 2), nametag: false }, { arms: false });
+  const kd = KID0(t, { x: KIDP.x, y: KIDP.y, s: sAt(KIDP.y), turn: -0.5, face: 'joy', armL: 120, armR: 120 }, { arms: false });
+  const oh = G.overHead(DADF.x, DADF.y, DFS, 'dadAvatar');
+  const over = G.nametag({ x: DADF.x, y: oh.tag, name: 'DAD', level: 99, col: '#FF5FA8', crown: true, t, s: 1.1 }) + G.emoteHearts({ x: DADF.x, y: oh.tag - 30, age: (t - T0) % 1.7, n: 14, s: 1.2, seed: 4 });
+  return E.plaza(t, cam, { deep: 1 }, '', eveCrowd(t, 'cheer') + kd + noodleSit(t, { face: 'joy', armL: 140, armR: 140 }) + ch, over);
+}
 const BEATS = { T0, END, tPress1, tHop1, tTopple1, tSplash1, tResp1, tLeap, tApex, tDrop, tSplash2, tResp2, tJump, tLandJ, tRim, tDadName, tFF0, tFF1, tSun0, tSun1 };
-module.exports = { scene, look, SHOTS, CUT, BEATS, DEFS: E.DEFS };
+module.exports = { scene, look, SHOTS, CUT, BEATS, DEFS: E.DEFS, eveShot, DADF, camAt };

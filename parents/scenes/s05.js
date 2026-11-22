@@ -141,7 +141,7 @@ function shTree(t) {
   const hero = you(t, pose, { arms: false });
   let fam = '';
   const ds = pzS(FAMILY.dad.y), ms = pzS(FAMILY.mom.y), gs = pzS(FAMILY.gran.y);
-  fam += actor('dadAvatar', t, { x: FAMILY.dad.x, y: FAMILY.dad.y, s: ds, turn: -0.35, armR: 120 * seg(t, w(0, 'here'), w(0, 'here') + 0.2), face: 'happy' });
+  fam += actor('dadAvatar', t, { x: FAMILY.dad.x, y: FAMILY.dad.y, s: ds, turn: -0.4, armR: 120 * seg(t, w(0, 'here'), w(0, 'here') + 0.2), face: 'happy' });
   fam += momG(t, { x: FAMILY.mom.x, y: FAMILY.mom.y, s: ms, turn: -0.4, armR: 140 + 20 * Math.sin(t * 9), face: 'happy' });
   fam += actor('grandmaAvatar', t, { x: FAMILY.gran.x, y: FAMILY.gran.y, s: gs, turn: -0.4, face: 'happy', headRot: 6 * Math.sin(t * 3) });
   let fx = '';
@@ -150,7 +150,7 @@ function shTree(t) {
   const behind = t < tOut + 0.16 ? hero : '';
   const rustle = 1 - seg(t, tOut + 0.1, tOut + 0.4);
   const frontTf = rustle > 0 ? `translate(${f(7 * rustle * Math.sin(t * 60))} ${f(3 * rustle * Math.sin(t * 47))})` : null;
-  return plazaShot(t, cam, behind, fam + (behind ? '' : hero), fx, frontTf) + K.C.whiteFlash(0.65 * (1 - seg(t, T0, T0 + 0.16)));
+  return plazaShot(t, cam, behind, fam + (behind ? '' : hero), fx, frontTf);
 }
 
 // ---- 2. "Practice jumping!" — Mom and Granny hop high, the hot dog manages 6 px
@@ -336,11 +336,11 @@ function shHits(t) {
   let fx = '';
   fx += G.slash({ x: hx, y: hy, age: t - tH1, angle: 170, s: 0.8 }) + G.hitSpark({ x: hx, y: hy, age: t - tH1 - 0.05, s: 0.8, text: 'POW!' }) + G.damageNumber({ x: hx - 40, y: hy - 90, age: t - tH1 - 0.08, value: -25, s: 0.85 });
   fx += G.slash({ x: hx, y: hy + 40, age: t - tH2, angle: 10, dir: -1, s: 0.8, col: '#FFD23F' }) + G.hitSpark({ x: hx, y: hy + 40, age: t - tH2 - 0.05, s: 0.8, seed: 3 }) + G.damageNumber({ x: hx - 70, y: hy - 60, age: t - tH2 - 0.08, value: -40, s: 0.85, seed: 2 });
-  fx += G.slash({ x: hx + 10, y: hy - 30, age: t - tH3, angle: 120, s: 1.1, col: '#FF8A2B', r: 220 }) + G.hitSpark({ x: hx, y: hy - 40, age: t - tH3 - 0.03, s: 1.2, seed: 5, text: 'CRIT!' }) + G.damageNumber({ x: hx - 230, y: hy - 30, age: t - tH3 - 0.06, value: -999, crit: true, s: 1.0, seed: 4 });
+  fx += G.slash({ x: hx + 10, y: hy - 30, age: t - tH3, angle: 120, s: 1.1, col: '#FF8A2B', r: 220 }) + G.hitSpark({ x: hx, y: hy - 40, age: t - tH3 - 0.03, s: 1.2, seed: 5 }) + G.damageNumber({ x: hx - 120, y: hy - 230, age: t - tH3 - 0.06, value: -999, crit: true, s: 1.0, seed: 4 });
   let o = arenaShot(t, cam, { cheer: 0 }, att + mom, fx);
   const slowK = 1 - seg(t, tH3, tH3 + 0.15);
   o += coolTint(slowK) + letterbox(slowK);
-  o += G.comboText({ x: 1320, y: 330, k: seg(t, tH3, tH3 + 0.4), t, count: 3, s: 0.95 });
+  o += G.comboText({ x: 1460, y: 300, k: seg(t, tH3, tH3 + 0.4), t, count: 3, s: 0.78 });
   return o + smash(t, tH3, 0.12, 0.85);
 }
 
@@ -460,7 +460,7 @@ function shVhs2(t) {
   let o = Ly.bg + Ly.mid + view(cam, chars);
   return vhsFrame(t, o) + whip(t, CUT.vhs2, 1, 0.08);
 }
-function vhs3Picture(t) {
+function vhs3Picture(t, lite = false) {
   const st = E.ARC.stage;
   const cam = handheld(t, camKeys(t, [[CUT.vhs3, camAt(st.x - 330, 470, 0.95)], [CUT.photo, camAt(st.x - 300, 470, 1.04)]]), 0.8);
   const Ly = E.arcade(t, cam);
@@ -474,7 +474,7 @@ function vhs3Picture(t) {
     if (a > 0 && a < 1) { const p = toScr(cam, st.x - 500 + hash(i * 3) * 1000, 820 + hash(i * 7) * 120); o += K.F.sparkle(p.x, p.y, 90 * (1 - a)) + S.circle(p.x, p.y, 60 * (1 - a) + 10, { fill: '#FFFFFF', opacity: f(0.8 * (1 - a)) }); }
   }
   o += G.bigTitle({ text: 'ARCADE\nQUEEN', theme: 'retro', sub: 'STATE CHAMPION 1998', k: seg(t, w(6, 'champion') - 0.05, w(6, 'champion') + 0.9), t, x: 560, y: 260, s: 0.72 });
-  o += R.blockConfettiRain(t, { t0: w(6, 'champion') - 0.2 });
+  if (!lite) o += R.blockConfettiRain(t, { t0: w(6, 'champion') - 0.2 });
   return o;
 }
 function shVhs3(t) {
@@ -484,7 +484,7 @@ function shVhs3(t) {
 const QCAM0 = camAt(1240, 552, 1.3, 960, 560), QCAM1 = camAt(1300, 552, 1.55, 960, 520);
 function shPhoto(t) {
   const tFreeze = CUT.photo, tFlash = CUT.photo + 0.18, tFly = CUT.queen - 0.55;
-  const frozen = vhs3Picture(tFreeze - 0.02);
+  const frozen = vhs3Picture(tFreeze - 0.02, t >= CUT.photo + 0.18);
   if (t < tFlash) return vhsFrame(t, frozen, 'pause') + K.C.whiteFlash(seg(t, tFlash - 0.08, tFlash));
   const bgRoom = room(t, QCAM0, { mom: {}, momAct: { face: 'happy' } });
   const fly = ease.inOut(seg(t, tFly, CUT.queen));
@@ -758,8 +758,8 @@ function shLegend(t) {
   let chars = '';
   // Mom crowd-surfing in the back
   const lift = 140 + 20 * Math.sin(t * 7);
-  for (const [x, i] of [[820, 3], [960, 6], [1100, 14]]) chars += ply(i, t, { x, y: 760, s: arS(760), armL: 170, armR: 170, face: 'excited', bodyY: -6 * Math.abs(Math.sin(t * 8 + x)), nametag: false });
-  chars += momA(t, { x: 960, y: 760, s: arS(760), lift, rot: 80 + 8 * Math.sin(t * 3), armL: 160, armR: 160, face: 'joy', nametag: false, shield: false });
+  for (const [x, i] of [[1300, 3], [1440, 6], [1580, 14]]) chars += ply(i, t, { x, y: 760, s: arS(760), armL: 170, armR: 170, face: 'excited', bodyY: -6 * Math.abs(Math.sin(t * 8 + x)), nametag: false });
+  chars += momA(t, { x: 1440, y: 760, s: arS(760), lift, rot: 80 + 8 * Math.sin(t * 3), armL: 160, armR: 160, face: 'joy', nametag: false, shield: false });
   chars += you(t, { x: 800 + 10 * sh, y: ys, s, turn: 0.3, headRot: 10 * sh, armL: 12, armR: 12, face: { name: 'deadpan', fx: ['sweat'] }, nametag: false }, { arms: false });
   chars += actor('noodle', t, { x: 1010, y: ys, s, turn: -0.35, armL: 78 + 6 * sh, armR: 120 + 40 * Math.sin(t * 20), lean: -4, face: 'scream', nametag: false }, { energy: 1.6, arms: false });
   let o = arenaShot(t, cam, { cheer: 1, signs: ['GO MOM!', 'MOM #1', 'LEGEND'] }, chars);
@@ -789,7 +789,7 @@ function shTea(t) {
   const p = toScr(cam, 1322, 760);
   o += E.floatTag(p.x - 60, p.y - 40, seg(t, CUT.tea + 0.45, CUT.tea + 1.6), '+1 WIN', '#3BD16F', 44);
   o += E.floatTag(p.x + 90, p.y - 20, seg(t, CUT.tea + 1.0, CUT.tea + 2.1), '+1 WIN', '#3BD16F', 44);
-  return o + whip(t, CUT.tea, -1, 0.1);
+  return o + whip(t, CUT.tea, -1, 0.1) + whip(t, END, 1, 0.12);
 }
 
 // ================================================================= dispatch

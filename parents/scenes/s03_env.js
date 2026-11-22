@@ -391,3 +391,49 @@ module.exports = {
   panel, panelTag, splitBg, hand, hunt, nameScreen, chatScreen, voiceScreen, buyScreen, playScreen, GRAN_ITEMS,
   LR, inView, room, seat, SIZE, plaza, PZ, sAt, ITEM_AT, itemsLayer, dressedNoob, shoutWaves, mark, loadoutCard, starD, poof, sparkleRing,
 };
+
+// ---------------------------------------------------------------- SC 04 helpers: the family in the living room, keyboard POV
+const LAP4 = { x: LR.devices.laptop.x, y: 870, s: 0.46 };
+const lap4 = (o = {}) => X.laptopOld({ x: LAP4.x, y: o.y ?? LAP4.y, s: o.s ?? LAP4.s, face: 'lid' });
+// o.you (pose extras, drawn only when given; chair 'front' = frog sit facing camera) / o.dad / o.mom / o.gran
+function famRoom(t, cam, o = {}) {
+  let seated = '', devices = '';
+  if (o.you && inView(cam, LR.seats.you.x, 1000, 0.5)) seated += actor('you', t, seat('you', 1, { legL: 90, legR: 90, kneeL: 90, kneeR: 90, ...o.you }), o.youAct || { arms: false });
+  if (o.dad !== false && inView(cam, 1000, 930, 0.55)) { seated += actor('dad', t, seat('dad', 1.1, { glasses: 'on', ...(o.dad || {}) }), o.dadAct || {}); if (o.laptop !== false) devices += lap4(o.lap || {}); }
+  if (o.mom !== false && inView(cam, 1340, 930, 0.55)) seated += actor('mom', t, seat('mom', 1.04, o.mom || { tablet: true }), o.momAct || {});
+  if (o.gran !== false && inView(cam, 1752, 930, 0.5)) seated += actor('grandma', t, seat('grandma', 0.9, { flip: true, turn: 0.2, ...(o.gran || { phone: 'arm' }) }), o.granAct || {});
+  return room(t, cam, { set: { glow: o.glow ?? H.deviceGlows(o.you ? ['you', 'dad', 'mom', 'grandma'] : ['dad', 'mom', 'grandma'], 1), chair: o.you ? 'front' : 'back', ...(o.set || {}) }, seated: seated + (o.seated || ''), devices: devices + (o.devices || ''), standing: o.standing, over: o.over });
+}
+function keyboardShot(t, cam, o = {}) {
+  const Ly = H.keyboardClose.layers(t, { screen: o.screen, highlight: o.highlight, press: o.pressKeys, caps: o.caps, time: o.time });
+  let s = view(cam, Ly.bg + Ly.mid + Ly.front);
+  if (o.hands) s += view(cam, o.hands);
+  s += view(cam, Ly.light);
+  if (o.over) s += view(cam, o.over);
+  return s;
+}
+// a finger typing a text: typed 0..1 of text -> { x, y, pr, key } moving between the letter keys (spaces / unknown = hover)
+const KBK = H.SPOTS.keyboardClose.keys;
+const keyOf = (c) => (c === '.' ? KBK['.'] : c === ',' ? KBK[','] : KBK[String(c).toUpperCase()] || null);
+function typingFinger(text, typed, t, rest = [800, 470]) {
+  const n = text.length, v = clamp(typed, 0, 1) * n, i = Math.floor(v), fr = v - i;
+  const kNow = i > 0 ? keyOf(text[i - 1]) : null, kNext = i < n ? keyOf(text[i]) : null;
+  const pA = kNow ? [kNow.x, kNow.y - 4] : rest, pB = kNext ? [kNext.x, kNext.y - 4] : rest;
+  const u = ease.inOut(clamp((fr - 0.25) / 0.6, 0, 1));
+  const lift = 40 * Math.sin(clamp(fr, 0, 1) * Math.PI);
+  const pr = typed > 0 && typed < 1.001 && kNow && fr < 0.25 ? 1 - fr / 0.25 : 0;
+  return { x: lerp(pA[0], pB[0], u), y: lerp(pA[1], pB[1], u) - lift, pr, key: kNow && fr < 0.25 ? text[i - 1] : null };
+}
+// a cobweb in a corner (x, y) = corner, size r, dir = 1 opens to the right/down
+function cobweb(x, y, r = 60, sx = 1, sy = 1) {
+  let d = '';
+  for (let i = 0; i <= 4; i++) { const a = (i / 4) * Math.PI / 2; d += `M${f(x)} ${f(y)} L${f(x + sx * Math.cos(a) * r)} ${f(y + sy * Math.sin(a) * r)}`; }
+  for (let j = 1; j <= 3; j++) { const rr = (j / 3.3) * r; let p = ''; for (let i = 0; i <= 4; i++) { const a = (i / 4) * Math.PI / 2; p += (i ? ' Q' + f(x + sx * Math.cos(a - 0.2) * rr * 0.8) + ' ' + f(y + sy * Math.sin(a - 0.2) * rr * 0.8) + ' ' : 'M') + f(x + sx * Math.cos(a) * rr) + ' ' + f(y + sy * Math.sin(a) * rr); } d += p; }
+  return S.path(d, { fill: 'none', stroke: '#FFFFFF', 'stroke-width': 2.5, opacity: 0.75 });
+}
+module.exports.famRoom = famRoom;
+module.exports.keyboardShot = keyboardShot;
+module.exports.typingFinger = typingFinger;
+module.exports.keyOf = keyOf;
+module.exports.cobweb = cobweb;
+module.exports.lap4 = lap4;

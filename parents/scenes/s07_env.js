@@ -217,7 +217,7 @@ function heartPop(x, y, k, s = 1) {
 // ---------------------------------------------------------------- set composers
 // the plaza at sunset; behind = before L.front (sinking into the water), chars after it; over = FX after chars (world, k 1)
 function plaza(t, cam, o = {}, behind = '', chars = '', over = '') {
-  const Lp = GS.plaza.layers(o.tSet ?? t, cam, { time: 'sunset', ...o });
+  const Lp = GS.plaza.layers(o.tSet ?? t, cam, { time: 'sunset', skyscraper: true, ...o });
   const veil = o.veil ?? 0.16;
   const vr = (k) => S.rect(-10, -10, W + 20, HH + 20, 0, { fill: o.veilCol || '#FFC4B4', opacity: f(k) });
   let out = Lp.bg + (veil > 0 ? vr(veil) : '') + Lp.mid + (behind ? view(cam, behind) : '') + Lp.front + (o.dof ? vr(o.dof) : '') + (chars ? view(cam, chars) : '') + (over ? view(cam, over) : '') + Lp.fg + Lp.light;

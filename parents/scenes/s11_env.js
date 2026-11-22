@@ -142,15 +142,15 @@ function route(TM) {
   add(6, 7, B.go7, B.slip);
   add(9, 10, B.go10, B.land10);
   // auto climbs (even hops) — the montage cuts look at them
-  const auto = (i0, i1, ta, tb) => { const p = (tb - ta) / (i1 - i0); for (let i = i0; i < i1; i++) add(i, i + 1, ta + (i - i0) * p + p * 0.18, ta + (i - i0 + 1) * p - p * 0.04); };
+  // (the first hop starts exactly at ta, so a cut at ta finds him on floor i0; each hop leaves ~22 % of its period standing)
+  const auto = (i0, i1, ta, tb) => { const p = (tb - ta) / (i1 - i0); for (let i = i0; i < i1; i++) add(i, i + 1, ta + (i - i0) * p, ta + (i - i0 + 1) * p - p * 0.22); };
   auto(10, 16, B.land10 + 0.25, C.noodle + 0.6);
-  auto(21, 25, C.climb2, C.climb2b + 0.02);
-  auto(37, 41, C.climb2b + 0.02, C.chant + 0.05);
+  auto(21, 25, C.climb2, C.climb2b);
+  auto(37, 41, C.climb2b, C.chant + 0.05);
   auto(41, 52, C.chant + 0.05, C.climb3);
   auto(57, 60, C.climb3, C.dark - 0.4);
   auto(60, 87, C.dark - 0.12, B.go88 - 0.05);
   add(87, 88, B.go88, B.land88);
-  auto(88, 98, B.okay3 + 0.75, B.go99 - 0.02);
   add(98, 99, B.go99, B.land99);
   hops.sort((a, b) => a.t0 - b.t0);
   return hops;
@@ -206,7 +206,7 @@ const roll = (cam, svg) => (cam.rot ? S.g(svg, `rotate(${f(cam.rot)} 960 540) sc
 function whip(t, t0, dir = 1, dur = 0.12) {
   const u = (t - t0) / dur;
   if (u < 0 || u > 1) return '';
-  let o = S.rect(0, 0, 1920, 1080, 0, { fill: '#FFFFFF', opacity: f(0.75 * (1 - u)) });
+  let o = S.rect(0, 0, 1920, 1080, 0, { fill: '#FFFFFF', opacity: f(0.5 * (1 - u) * (1 - u)) });
   let d = '';
   for (let i = 0; i < 18; i++) {
     const a = hash(i * 3.3 + t0), b = hash(i * 7.7 + t0);

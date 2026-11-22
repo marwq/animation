@@ -83,7 +83,6 @@ function timing() {
   C.taunt = A[8].a - 0.25;               // standoff: "You got lucky last time, YOU."
   C.little = b.enjoy - 0.22;             // "Enjoy your little castle."
   C.streak = A[9].a - 0.2;               // the hero: "Enjoy your little losing streak." — BURN
-  C.leave = A[9].b + 0.15;               // DarkBlade storms off (poof)
   C.sat = b.but10 - 0.3;                 // pull out of the tablet: the kitchen, Saturday morning
   C.dad = A[11].a - 0.05;                // Dad portrait, freeze + DAD card
   C.dadNin = b.he - 0.14;                // Dad's thought: every game = NINTENDO
@@ -361,9 +360,10 @@ function wordChart(t, x, y, k, grow, o = {}) {
   rows.forEach(([w_, v], i) => {
     const ry = 110 + i * 74;
     g += TF(w_, 150, ry + 14, 34, '#2A2A30', { 'text-anchor': 'end' });
-    const len = (i === 0 ? lerp(40, 2400, ease.in(clamp(grow, 0, 1))) * (o.cap ? 0 : 1) : 470 * v) * clamp(k * 1.5, 0, 1);
+    const len = (i === 0 ? lerp(40, 1500, ease.inOut(clamp(grow, 0, 1))) : 470 * v) * clamp(k * 1.5, 0, 1);
     const cl = i === 0 ? '#E86A8A' : '#7FC8E8';
-    g += S.rect(166, ry - 20, Math.max(10, i === 0 ? Math.min(len, 470) : len), 44, 10, ol(cl, 5));
+    g += S.rect(166, ry - 20, Math.max(10, len), 44, 10, ol(cl, 5));
+    if (i === 0 && len > 520) g += TS('!!!', 166 + len - 60, ry - 34, 54, '#FFD21F');
   });
   return S.g(g, tf(x, y, ease.outBack(clamp(k, 0, 1)), o.rot || 2));
 }

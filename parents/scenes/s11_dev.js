@@ -52,15 +52,20 @@ function dadState(t) {
 const dadRoute = (t, o = {}) => actor('dadAvatar', t, E.dadPose(t, dadState(t), o), { arms: false });
 const camOnDad = (t, z = 1, sx = 960, sy = 640, dy = 0) => { const st = dadState(t); return camAt(st.x, st.y - 120 + dy, z, sx, sy); };
 // smooth camera that follows the route (averages the hot dog's position over a short window)
-function camFollow(t, z = 1, sx = 960, sy = 640, win = 0.25) {
+function camFollow(t, z = 1, sx = 960, sy = 640, win = 0.25, t0 = -1e9) {
   let x = 0, y = 0;
-  for (let i = 0; i < 5; i++) { const st = dadState(t - win * (i / 4)); x += st.x; y += st.y; }
+  for (let i = 0; i < 5; i++) { const st = dadState(Math.max(t0, t - win * (i / 4))); x += st.x; y += st.y; }
   return camAt(x / 5, y / 5 - 120, z, sx, sy);
 }
-const landFX = (t, st, cam) => {
-  if (st.air || st.landAge < 0 || st.landAge > 0.45) return '';
-  return K.C.dust(st.x - 70, st.y - 6, st.hop.t1, t) + K.C.dust(st.x + 10, st.y - 6, st.hop.t1 + 0.02, t);
-};
+// soft landing puff (two little clouds sliding out from the feet)
+function puff(x, y, age, s = 1) {
+  if (age < 0 || age > 0.45) return '';
+  const u = age / 0.45;
+  let o = '';
+  for (const d of [-1, 1]) for (let i = 0; i < 3; i++) { const r = (14 + 18 * u) * s * (1 - i * 0.22); o += S.ellipse(x + d * (34 + 80 * u + i * 20) * s, y - (6 + 8 * i * u) * s, r * 1.3, r * 0.8, { fill: '#EDE8FA', opacity: f(0.85 * (1 - u)) }); }
+  return o;
+}
+const landFX = (t, st) => (st.air || st.landAge < 0 || st.landAge > 0.45 ? '' : puff(st.x, st.y + 4, st.landAge));
 const floorNow = (t) => { const st = dadState(t); return st.air ? (typeof st.hop.a === 'number' ? st.hop.a : 0) : typeof st.floor === 'number' ? st.floor : 0; };
 const hud = (t, o = {}) => { const n = o.n ?? floorNow(t); const st = dadState(t); const bp = !st.air && st.landAge >= 0 && st.landAge < 0.45 ? seg(st.landAge, 0, 0.45) : 0; return n > 0 ? E.floorHUD(t, n, { bump: bp, ...o }) : ''; };
 
@@ -146,7 +151,7 @@ function chat(t, o = {}) {
 const gameScreen = (w, h) => S.rect(0, 0, w, h, 0, { fill: '#2A1A5E' }) + S.circle(w * 0.78, h * 0.25, h * 0.12, { fill: '#FFF4D0' }) + S.rect(w * 0.45, h * 0.1, w * 0.1, h, 0, { fill: '#5B3FA8' }) +
   S.rect(w * 0.32, h * 0.55, w * 0.14, h * 0.06, 3, { fill: '#3BD16F' }) + S.rect(w * 0.55, h * 0.35, w * 0.14, h * 0.06, 3, { fill: '#FF6FB5' }) + S.rect(w * 0.37, h * 0.42, w * 0.035, h * 0.13, 4, { fill: '#E8453C' }) + S.rect(0, h * 0.88, w, h * 0.12, 0, { fill: '#FF6A1F' });
 function living(t, cam, o = {}) {
-  const Ly = H.livingRoom.layers(t, { time: 'night', glow: 'all', glowK: o.glowK ?? 1, chair: o.chair || 'back', pcScreen: gameScreen, tvScreen: gameScreen });
+  const Ly = H.livingRoom.layers(t, { time: 'night', glow: o.glow || 'all', glowK: o.glowK ?? 1, chair: o.chair || 'back', pcScreen: gameScreen, tvScreen: gameScreen });
   let out = view(cam, Ly.bg, 0.8) + view(cam, Ly.mid);
   const youP = o.chair === 'front' ? H.seatPose(LR.seats.you, 1, { legL: 90, legR: 90, kneeL: 90, kneeR: 90, headset: true, ...(o.you || {}) }) : H.seatPose(LR.seats.you, 1, { view: 'back', headset: true, ...(o.you || {}) });
   let seated = o.you === false ? '' : actor('you', t, youP, { arms: !(o.you && o.you.armL !== undefined) });
@@ -285,10 +290,10 @@ function shotJump1(t) {
   const st = dadState(t);
   let w = dadRoute(t) + landFX(t, st);
   let o = towerFrame(t, cam, {}, w);
-  const [lx, ly] = toScr(cam, FL(1).x, FL(1).y - 200);
+  const [lx, ly] = toScr(cam, FL(1).x, FL(1).y - 430);
   const lk = seg(t, B.land1, B.land1 + 0.6);
   if (lk > 0 && lk < 1) o += K.C.burst(lx, ly, lk, '#FFE14D') + K.sparkles([[lx - 150, ly - 60, 34 * (1 - lk)], [lx + 160, ly - 20, 28 * (1 - lk)]], t);
-  o += K.bang('!!!', lx + 210, ly - 150, seg(t, B.land1, B.land1 + 0.12), 120, 10, '#FFD21F');
+  o += K.bang('!!!', lx + 230, ly + 40, seg(t, B.land1, B.land1 + 0.12), 120, 10, '#FFD21F');
   return o + hud(t, { k: seg(t, B.land1 - 0.1, B.land1 + 0.2) }) + whip(t, C.jump1, 1, 0.1);
 }
 // 9 — the gasp: the fighters freeze and turn (jaws drop)
@@ -301,7 +306,7 @@ function shotGasp(t) {
 }
 // 10 — "He jumped again." floors 1 -> 2 -> 3, the camera rides up with him
 function shotAgain(t) {
-  const cam = camFollow(t, 1.0, 960, 660, 0.3);
+  const cam = camFollow(t, 1.0, 960, 660, 0.3, C.again);
   const st = dadState(t);
   const pump = st.floor === 3 && !st.air ? bump(st.landAge, 0.05, 0.45) : 0;
   let w = dadRoute(t, pump > 0 ? { armR: 40 + 120 * pump, face: { name: 'joy' } } : {}) + landFX(t, st);
@@ -326,11 +331,11 @@ function slipState(t) {
 function shotSlip(t) {
   const S7 = slipState(t);
   const p = FL(7);
-  let cam = t < B.slip ? camFollow(t, 1.2, 960, 640, 0.2) : camLerp(camAt(p.x + 30, p.y - 150, 1.35, 1000, 620), camAt(p.x - 10, p.y - 140, 1.55, 1000, 600), seg(t, B.slip, B.catch));
+  let cam = t < B.slip ? camFollow(t, 1.2, 960, 640, 0.2, C.slip) : camLerp(camAt(p.x + 30, p.y - 150, 1.35, 1000, 620), camAt(p.x - 10, p.y - 140, 1.55, 1000, 600), seg(t, B.slip, B.catch));
   cam = { ...cam, rot: t < B.catch ? -3 * seg(t, B.slip, B.slip + 0.4) + 1.5 * (S7.wob || 0) : -3 * (1 - seg(t, B.catch, B.catch + 0.3)) };
   let w;
   if (t < B.slip) w = dadRoute(t);
-  else w = actor('dadAvatar', t, { x: S7.x, y: S7.y, s: 0.3, t, ...S7.pose }, { arms: false }) + (t < B.slip + 0.5 ? K.C.dust(S7.x + 40, p.y - 4, B.slip, t) : '');
+  else w = actor('dadAvatar', t, { x: S7.x, y: S7.y, s: 0.3, t, ...S7.pose }, { arms: false }) + puff(S7.x + 20, p.y + 4, t - B.slip);
   // ice sparkles under the feet while sliding
   let o = towerFrame(t, cam, {}, w);
   if (t > B.slip && t < B.slip + 0.6) { const [sx, sy] = toScr(cam, S7.x + 30, p.y); o += K.sparkles([[sx, sy, 26], [sx + 60, sy - 10, 18]], t); }
@@ -341,7 +346,7 @@ function shotSlip(t) {
 // 12 — checkpoint 10: the flag + "Checkpoint saved"
 function shotCP10(t) {
   const p = FL(10);
-  const cam = camLerp(camFollow(t, 1.05, 960, 640, 0.25), camAt(p.x, p.y - 140, 1.15, 960, 620), seg(t, B.land10, C.watch));
+  const cam = camLerp(camFollow(t, 1.05, 960, 640, 0.25, C.cp10), camAt(p.x, p.y - 140, 1.15, 960, 620), seg(t, B.land10, C.watch));
   const st = dadState(t);
   const pump = !st.air && st.floor === 10 ? bump(st.landAge, 0, 0.5) : 0;
   let w = dadRoute(t, pump > 0 ? { armL: 20 + 140 * pump, armR: 20 + 140 * pump, face: 'joy' } : {}) + landFX(t, st);
@@ -366,7 +371,7 @@ function shotWatch(t) {
   // a tiny question mark over the Block King
   const [qx, qy] = toScr(cam, BOSS.x + 120, BOSS.y - 1450);
   if (t > C.watch + 0.5) o += K.bang('?', qx, qy, seg(t, C.watch + 0.5, C.watch + 0.7), 120, 10, '#FFFFFF');
-  o += chat(t, { k: seg(t, C.watch, C.watch + 0.3), x: 1330 });
+  o += chat(t, { k: seg(t, C.watch, C.watch + 0.3), x: 1330, y: 170 });
   return o + whip(t, C.watch, -1, 0.1);
 }
 // 14 — "Jump, Dad!" #2: Noodle + the players next to him join in, fists on the beat
@@ -383,7 +388,7 @@ function shotNoodle(t) {
 }
 // 15 — montage: floors 21 -> 25, whip, 37 -> 41 (the chat floods JUMP DAD)
 function shotClimb2(t) {
-  const cam = camFollow(t, 0.95, 960, 640, 0.2);
+  const cam = camFollow(t, 0.95, 960, 640, 0.2, t >= C.climb2b ? C.climb2b : C.climb2);
   const st = dadState(t);
   let o = towerFrame(t, cam, {}, dadRoute(t) + landFX(t, st));
   o += chat(t, { flood: seg(t, C.climb2, C.chant + 1.2) * 0.6, lines: [{ user: 'Kitty4Ever', text: 'JUMP DAD!', at: B.chant[2] }, { user: 'CubeKid9', text: 'JUMP DAD', at: B.chant[3] }] });
@@ -397,12 +402,12 @@ function shotChant(t) {
   let o = battleFrame(t, cam, { mode: 'chant', bossPose, set: { lava: 1 } });
   const beat = (t * 1.85) % 1, bi = Math.floor(t * 1.85);
   if (beat < 0.5) o += K.bang(bi % 2 ? 'DAD!' : 'JUMP!', 960 + (bi % 2 ? 260 : -220), 250 + (bi % 3) * 20, seg(beat, 0, 0.12) * (1 - seg(beat, 0.38, 0.5)), 150, bi % 2 ? 7 : -7, bi % 2 ? '#FF8A2B' : '#FFD21F');
-  o += chat(t, { flood: lerp(0.6, 1, u), x: 1330, y: 560, lines: [{ user: 'Kitty4Ever', text: 'JUMP DAD!', at: B.chant[2] }] });
+  o += chat(t, { flood: lerp(0.6, 1, u), x: 1330, y: 170, lines: [{ user: 'Kitty4Ever', text: 'JUMP DAD!', at: B.chant[2] }] });
   return o + whip(t, C.chant, -1, 0.1);
 }
 // 17 — montage: 57 -> 60 checkpoint above the clouds
 function shotClimb3(t) {
-  const cam = camFollow(t, 0.9, 960, 660, 0.25);
+  const cam = camFollow(t, 0.9, 960, 660, 0.25, C.climb3);
   const st = dadState(t);
   let o = towerFrame(t, cam, {}, dadRoute(t) + landFX(t, st));
   const cp = HOPS.find((h) => h.b === 60);
@@ -444,7 +449,7 @@ function wobState(t) {
   const sl = ease.out(seg(t, B.land88, B.land88 + 0.6));
   const ok1 = seg(t, B.okay1, B.okay1 + 0.6), ok2 = ease.outBack(seg(t, B.okay2, B.okay2 + 0.45)), ok3 = seg(t, B.okay3, B.okay3 + 0.3);
   const wob = Math.sin((t - B.land88) * 12) * (1 - 0.6 * ok1) * (1 - ok2);
-  const x = lerp(lerp(p.x + 10, p.x1 - 6, sl), p.x + 20, ok2);
+  const x = lerp(lerp(p.x + 10, p.x1 + 6, sl), p.x + 20, ok2);
   const rot = (14 + 10 * wob) * seg(t, B.land88 + 0.3, B.land88 + 0.6) * (1 - ok2);
   const flail = 1 - ok2;
   return { x, y: p.y, rot, wob, ok2, ok3,
@@ -468,7 +473,7 @@ function capsChat(t, cam, x, y, part) {
 function shotWobble(t) {
   const p = FL(88);
   const W = wobState(t);
-  let cam = camLerp(camFollow(t, 1.25, 900, 640, 0.15), camAt(p.x1 - 60, p.y - 140, 1.45, 880, 620), seg(t, B.land88, B.land88 + 0.4));
+  let cam = camLerp(camFollow(t, 1.25, 900, 640, 0.15, C.wobble), camAt(p.x1 - 60, p.y - 140, 1.45, 880, 620), seg(t, B.land88, B.land88 + 0.4));
   cam = { ...cam, rot: W ? 4 + 2 * W.wob : 0 };
   let o = towerFrame(t, cam, {}, dadWob(t));
   o += capsChat(t, cam, W ? W.x : p.x, p.y - 420, 1);
@@ -492,7 +497,7 @@ function shotRealWob(t) {
 function shotOkay(t) {
   const p = FL(88);
   const W = wobState(t);
-  let cam = camLerp(camAt(p.x1 - 40, p.y - 40, 1.2, 760, 560), camAt(p.x1 - 120, p.y - 120, 1.4, 820, 600), seg(t, C.okay, C.gap));
+  let cam = camLerp(camAt(p.x1 - 40, p.y - 220, 1.2, 760, 600), camAt(p.x1 - 110, p.y - 210, 1.4, 820, 620), seg(t, C.okay, C.gap));
   cam = { ...cam, rot: W ? -3 - 3 * W.wob * (1 - W.ok2) : 0 };
   let o = towerFrame(t, cam, {}, dadWob(t));
   o += capsChat(t, cam, W ? W.x : p.x, p.y - 420, 2);
@@ -503,7 +508,7 @@ function shotOkay(t) {
 function shotGap(t) {
   const u = ease.inOut(seg(t, B.land99, C.you));
   const p = FL(99);
-  const cam = camLerp(camFollow(t, 1.15, 860, 640, 0.2), camAt(720, p.y - 160, 0.62, 960, 600), u, (x) => x);
+  const cam = camLerp(camAt(520, p.y - 170, 1.05, 960, 640), camAt(720, p.y - 160, 0.62, 960, 600), u, (x) => x);
   const st = dadState(t);
   const d = st.air ? dadRoute(t) : actor('dadAvatar', t, { x: p.x, y: p.y, s: 0.3, t, turn: 0.6, nametag: false, face: { name: 'nervous', eyes: { look: [0.9, -0.2] }, fx: ['sweat'] } }, { arms: false });
   let o = towerFrame(t, cam, {}, crystalW(t) + d + landFX(t, st));
@@ -536,13 +541,13 @@ function shotSon1(t) {
   const u = seg(t, C.son1, C.son2);
   const cam = camLerp(camAt(p.x + 30, p.y - 290, 2.4, 900, 560), camAt(p.x + 34, p.y - 300, 2.7, 900, 560), u);
   const d = actor('dadAvatar', t, { x: p.x + 60, y: p.y, s: 0.3, t, turn: 0.55, nametag: false, volume: false, face: { name: 'determined', eyes: { look: [0.9, -0.1] } }, armL: 20, armR: 26 }, { arms: false, energy: 0.3 });
-  return towerFrame(t, cam, {}, d) + windStreaks(t) + letterbox(LB(t)) + whip(t, C.son1, 1, 0.08);
+  return towerFrame(t, cam, {}, d) + windStreaks(t) + letterbox(LB(t));
 }
 // 25 — "...son." the real Dad whispering, Mom and Granny leaning in behind him
 function shotSon2(t) {
   const u = seg(t, C.son2, C.press2);
   const cam = camLerp({ zoom: 2.15, x: 80, y: -110 }, { zoom: 2.35, x: 70, y: -120 }, u);
-  const stand = actor('grandma', t, { x: 780, y: 880, s: 0.5, curlers: true, turn: 0.5, rot: 8, armL: 30, armR: 30, face: { name: 'scared', eyes: { look: [0.9, 0.2] } } }, { arms: false });
+  const stand = actor('grandma', t, { x: 800, y: 845, s: 0.5, curlers: true, turn: 0.5, rot: 8, armL: 30, armR: 30, face: { name: 'scared', eyes: { look: [0.9, 0.2] } } }, { arms: false });
   const o = living(t, cam, {
     laptopY: 900,
     dad: { face: { name: 'determined', eyes: { look: [0, 0.5] }, fx: ['sweat', 'tears'] }, armL: 34, armR: 34 },
@@ -660,14 +665,14 @@ function bossHUD(t, o = {}) {
 function shotNo(t) {
   const u = seg(t, C.no, C.attack);
   const cam = shook(camLerp(camAt(BOSS.x + 300, 180, 0.62, 960, 520), camAt(BOSS.x + 200, 120, 0.72, 960, 500), u), t, [[C.no + 0.1, 0.6, 18]]);
-  const bossPose = { pose: 'hit', face: { name: 'shocked' }, shield: 1 - seg(t, C.no, C.no + 0.5) };
+  const bossPose = { pose: 'idle', freeArms: true, armL: lerp(20, 150, ease.outBack(seg(t, C.no, C.no + 0.3))), armR: lerp(20, 140, ease.outBack(seg(t, C.no, C.no + 0.3))), bendL: 70, bendR: 60, lean: -7 * seg(t, C.no, C.no + 0.3), face: { name: 'shocked' }, shield: 1 - seg(t, C.no, C.no + 0.5) };
   let o = battleFrame(t, cam, { mode: 'watch', crowd: { t0: C.no - 0.5 }, bossPose, domeO: { shatter: seg(t, C.no + 0.05, C.no + 0.95) } });
   o += lightWave(t, C.no - 0.1);
   o += bossHUD(t, { hit: seg(t, C.no + 0.1, C.no + 0.5) });
   return o + flashAt(t, C.no, 0.2, 0.9, '#F2FDFF');
 }
 // 32 — everyone ATTACKS: the charge from the right, slashes, sparks, damage numbers
-const HITS = (() => { const a = []; for (let i = 0; i < 9; i++) a.push({ dt: 0.25 + i * 0.13, x: -1750 + (hash(i * 3.1) - 0.5) * 700, y: 830 - 300 - hash(i * 5.3) * 800, v: Math.round(800 + 1200 * hash(i * 2.2)), crit: i % 4 === 3 }); return a; })();
+const HITS = (() => { const a = []; for (let i = 0; i < 9; i++) a.push({ dt: 0.25 + i * 0.13, x: -1750 + (hash(i * 3.1) - 0.5) * 600, y: 830 - 250 - hash(i * 5.3) * 520, v: Math.round(800 + 1200 * hash(i * 2.2)), crit: i % 4 === 3 }); return a; })();
 function shotAttack(t) {
   const u = seg(t, C.attack, C.defeat);
   const cam = camLerp(camAt(-500, 440, 0.62), camAt(-1350, 400, 0.66), u, ease.inOut);
@@ -677,7 +682,7 @@ function shotAttack(t) {
     const age = t - C.attack - h.dt;
     if (age < 0 || age > 1) continue;
     fx += G.slash({ x: h.x, y: h.y, age, s: 1.6, angle: 160, col: h.crit ? '#FF8A2B' : '#FFD21F' }) + G.hitSpark({ x: h.x, y: h.y, age: age - 0.05, s: 1.5 });
-    fx += G.damageNumber({ x: h.x + 60, y: h.y - 80, age: age - 0.08, value: h.v, crit: h.crit, s: 1.6 });
+    fx += G.damageNumber({ x: h.x + 60, y: h.y + 60, age: age - 0.08, value: h.v, crit: h.crit, s: 1.35 });
   }
   let o = battleFrame(t, cam, { mode: 'attack', crowd: { t0: C.attack, speed: 640 }, bossPose, dome: false }, fx);
   o += bossHUD(t, { hit: (t - C.attack) % 0.26 < 0.12 ? 0.3 : 0 });
@@ -701,9 +706,9 @@ function shotDefeat(t) {
   const hy = BOSS.y - 1350 * BOSS.s;
   const cam = shook(camLerp(camAt(BOSS.x + 40, hy + 300, 1.3, 820, 560), camAt(BOSS.x + 30, hy + 290, 1.5, 820, 560), u), t, [[B.hotdog + 0.3, 0.4, 10]]);
   const dog = t >= B.hotdog + 0.3;
-  const bossPose = { pose: 'hit', crack: bossCrackAt(t), face: dog ? { name: 'dizzy' } : { name: 'shocked', eyes: { look: [0.9, -0.3] } }, volume: false };
+  const bossPose = dog ? { pose: 'hit', crack: bossCrackAt(t), face: { name: 'dizzy' } } : { pose: 'idle', freeArms: true, armL: 150, armR: 140, bendL: 60, bendR: 70, lean: -5, crack: bossCrackAt(t), face: { name: 'shocked', eyes: { look: [0.9, -0.3] } } };
   let fx = '';
-  for (let i = 0; i < 4; i++) { const age = (t - C.defeat - i * 0.37) % 1.5; const x = BOSS.x + (hash(i * 3.3) - 0.5) * 420, y = hy + 260 + hash(i * 1.7) * 420; fx += G.hitSpark({ x, y, age, s: 1.3, seed: i }); }
+  for (let i = 0; i < 4; i++) { const age = (t - C.defeat - i * 0.37) % 1.5; const x = BOSS.x + (hash(i * 3.3) - 0.5) * 560, y = hy + 520 + hash(i * 1.7) * 300; fx += G.hitSpark({ x, y, age, s: 1.3, seed: i }); }
   let o = towerFrame(t, cam, {}, bossW(t, bossPose) + fx);
   o += specCam(t, 1540, 500, 210, seg(t, B.hotdog - 0.35, B.hotdog));
   o += bossHUD(t, {});
@@ -851,7 +856,7 @@ function shotSonReal(t) {
   const cam = camLerp({ zoom: 1.55, x: -160, y: -40 }, { zoom: 1.7, x: -150, y: -60 }, u);
   const up = ease.outBack(seg(t, C.sonReal + 0.5, C.sonReal + 0.9));
   const o = living(t, cam, {
-    chair: 'front',
+    chair: 'front', glow: H.deviceGlows(['dad', 'mom']),
     you: { turn: 0.5, armL: 30, armR: 30 + 120 * up, face: { name: 'joy', fx: ['tears'] } },
     dad: { turn: -0.6, armL: 40 + 110 * up, armR: 40 + 110 * up, face: { name: 'joy', fx: ['tears'] } },
     laptopY: 880,
