@@ -1,0 +1,1264 @@
+{
+ "scene": "SC 07",
+ "start": 419.55,
+ "end": 488.19,
+ "music": [
+  {
+   "start": 419.55,
+   "end": 424.17,
+   "mood": "lobby",
+   "energy": 0.45,
+   "in": "fade",
+   "out": "cut"
+  },
+  {
+   "start": 424.17,
+   "end": 426.36,
+   "mood": "montage",
+   "energy": 0.85,
+   "in": "cut",
+   "out": "sting"
+  },
+  {
+   "start": 426.36,
+   "end": 429.83,
+   "mood": "epic",
+   "energy": 0.4,
+   "in": "swell",
+   "out": "scratch"
+  },
+  {
+   "start": 429.83,
+   "end": 431.63,
+   "mood": "playful",
+   "energy": 0.55,
+   "in": "cut",
+   "out": "cut"
+  },
+  {
+   "start": 431.63,
+   "end": 432.25,
+   "mood": "silence",
+   "energy": 0,
+   "in": "cut",
+   "out": "cut"
+  },
+  {
+   "start": 432.25,
+   "end": 433.27,
+   "mood": "playful",
+   "energy": 0.5,
+   "in": "cut",
+   "out": "fade"
+  },
+  {
+   "start": 433.27,
+   "end": 439.57,
+   "mood": "mystery",
+   "energy": 0.35,
+   "in": "fade",
+   "out": "cut"
+  },
+  {
+   "start": 439.57,
+   "end": 446,
+   "mood": "warm",
+   "energy": 0.45,
+   "in": "swell",
+   "out": "cut"
+  },
+  {
+   "start": 446,
+   "end": 449.53,
+   "mood": "family",
+   "energy": 0.75,
+   "in": "cut",
+   "out": "cut"
+  },
+  {
+   "start": 449.53,
+   "end": 455.7,
+   "mood": "playful",
+   "energy": 0.45,
+   "in": "cut",
+   "out": "cut"
+  },
+  {
+   "start": 455.7,
+   "end": 457.11,
+   "mood": "silence",
+   "energy": 0,
+   "in": "cut",
+   "out": "cut"
+  },
+  {
+   "start": 457.11,
+   "end": 458.514,
+   "mood": "playful",
+   "energy": 0.7,
+   "in": "cut",
+   "out": "cut"
+  },
+  {
+   "start": 458.514,
+   "end": 466.95,
+   "mood": "epic",
+   "energy": 0.6,
+   "in": "swell",
+   "out": "sting"
+  },
+  {
+   "start": 466.95,
+   "end": 471.5,
+   "mood": "warm",
+   "energy": 0.75,
+   "in": "swell",
+   "out": "fade"
+  },
+  {
+   "start": 471.5,
+   "end": 483.47,
+   "mood": "tender",
+   "energy": 0.45,
+   "in": "fade",
+   "out": "fade"
+  },
+  {
+   "start": 483.47,
+   "end": 488.19,
+   "mood": "sad",
+   "energy": 0.35,
+   "in": "fade",
+   "out": "cut"
+  }
+ ],
+ "ambience": [
+  {
+   "start": 419.55,
+   "end": 427.45,
+   "name": "town",
+   "gain_db": -18
+  },
+  {
+   "start": 427.45,
+   "end": 429.07,
+   "name": "room",
+   "gain_db": -14
+  },
+  {
+   "start": 429.07,
+   "end": 429.93,
+   "name": "town",
+   "gain_db": -18
+  },
+  {
+   "start": 429.93,
+   "end": 431.13,
+   "name": "room",
+   "gain_db": -14
+  },
+  {
+   "start": 431.13,
+   "end": 475.62,
+   "name": "town",
+   "gain_db": -18
+  },
+  {
+   "start": 475.62,
+   "end": 477.13,
+   "name": "room",
+   "gain_db": -14
+  },
+  {
+   "start": 477.13,
+   "end": 486.39,
+   "name": "town",
+   "gain_db": -18
+  },
+  {
+   "start": 486.39,
+   "end": 488.19,
+   "name": "room",
+   "gain_db": -14
+  },
+  {
+   "start": 436.404,
+   "end": 471.5,
+   "name": "crowd",
+   "gain_db": -16
+  },
+  {
+   "start": 471.5,
+   "end": 486.39,
+   "name": "crowd",
+   "gain_db": -20
+  },
+  {
+   "start": 419.55,
+   "end": 436.404,
+   "name": "ocean",
+   "gain_db": -20
+  }
+ ],
+ "footsteps": [
+  {
+   "start": 424.17,
+   "end": 425.44,
+   "interval": 0.18,
+   "surface": "hard",
+   "gain_db": -14,
+   "pan": -0.3
+  },
+  {
+   "start": 430.36,
+   "end": 431.17,
+   "interval": 0.349,
+   "surface": "hard",
+   "gain_db": -12,
+   "pan": 0.5
+  },
+  {
+   "start": 431.13,
+   "end": 431.29,
+   "interval": 0.131,
+   "surface": "hard",
+   "gain_db": -8,
+   "pan": 0
+  },
+  {
+   "start": 434.81,
+   "end": 435.71,
+   "interval": 0.314,
+   "surface": "hard",
+   "gain_db": -14,
+   "pan": -0.2
+  },
+  {
+   "start": 436.404,
+   "end": 439.204,
+   "interval": 0.16,
+   "surface": "hard",
+   "gain_db": -12,
+   "pan": 0
+  },
+  {
+   "start": 445.7,
+   "end": 446,
+   "interval": 0.121,
+   "surface": "hard",
+   "gain_db": -10,
+   "pan": -0.1
+  },
+  {
+   "start": 477.35,
+   "end": 478.15,
+   "interval": 0.12,
+   "surface": "hard",
+   "gain_db": -12,
+   "pan": 0
+  }
+ ],
+ "sfx": [
+  [
+   419.55,
+   "pixel_wipe",
+   -6,
+   0,
+   "pixel wipe in from SC 06"
+  ],
+  [
+   419.65,
+   "whoosh_down",
+   -8,
+   0,
+   "tilt down from the sunset sky"
+  ],
+  [
+   419.79,
+   "pop",
+   -8,
+   0.102,
+   "\"?\" pops over the hot dog"
+  ],
+  [
+   421.35,
+   "whoosh",
+   -10,
+   0,
+   "cut to the edge"
+  ],
+  [
+   421.7,
+   "gulp",
+   -6,
+   -0.044,
+   "peeks down at the water"
+  ],
+  [
+   422.73,
+   "tap",
+   -14,
+   -0.117,
+   "jump guide dot"
+  ],
+  [
+   422.85,
+   "tap",
+   -14,
+   -0.058,
+   "jump guide dot"
+  ],
+  [
+   422.97,
+   "tap",
+   -14,
+   0,
+   "jump guide dot"
+  ],
+  [
+   423.09,
+   "tap",
+   -14,
+   0.058,
+   "jump guide dot"
+  ],
+  [
+   423.21,
+   "tap",
+   -14,
+   0.117,
+   "jump guide dot"
+  ],
+  [
+   423.4,
+   "ui_pop",
+   -6,
+   0.321,
+   "JUMP! arrow"
+  ],
+  [
+   424.17,
+   "vhs_clunk",
+   -6,
+   0,
+   "fast-forward x600"
+  ],
+  [
+   424.22,
+   "money_counter",
+   -8,
+   0.335,
+   "TIME ON STAGE 1 rolling"
+  ],
+  [
+   424.408,
+   "splash",
+   -10,
+   -0.292,
+   "fast-forward splash #1"
+  ],
+  [
+   424.77,
+   "money_counter",
+   -10,
+   0.335,
+   "counter rolling"
+  ],
+  [
+   424.793,
+   "splash",
+   -11,
+   -0.292,
+   "fast-forward splash #2"
+  ],
+  [
+   425.178,
+   "splash",
+   -12,
+   -0.292,
+   "fast-forward splash #3"
+  ],
+  [
+   425.44,
+   "boom",
+   -2,
+   0.335,
+   "2:47:00 lands, FALLS 198"
+  ],
+  [
+   426.36,
+   "whoosh",
+   -10,
+   0,
+   "close on the hot dog"
+  ],
+  [
+   426.76,
+   "egg_crack",
+   -6,
+   -0.19,
+   "bun-arm crack"
+  ],
+  [
+   426.89,
+   "egg_crack",
+   -8,
+   0.211,
+   "CRACK!"
+  ],
+  [
+   427.45,
+   "whoosh",
+   -8,
+   0,
+   "cut to the real keyboard"
+  ],
+  [
+   428.95,
+   "click",
+   0,
+   0.029,
+   "the SPACE BAR press"
+  ],
+  [
+   428.97,
+   "zoom_in",
+   -8,
+   0,
+   "PRESS smash"
+  ],
+  [
+   429.11,
+   "jump_game",
+   -4,
+   -0.102,
+   "a tiny hop"
+  ],
+  [
+   429.37,
+   "slip",
+   -6,
+   -0.073,
+   "windmilling on the edge"
+  ],
+  [
+   429.53,
+   "whoosh_down",
+   -6,
+   -0.044,
+   "topples off"
+  ],
+  [
+   429.83,
+   "splash",
+   0,
+   0.029,
+   "SPLASH!"
+  ],
+  [
+   429.88,
+   "pop",
+   -10,
+   -0.591,
+   "FALLS 199"
+  ],
+  [
+   429.93,
+   "whoosh",
+   -6,
+   -0.5,
+   "real Dad panel slides in"
+  ],
+  [
+   429.99,
+   "whoosh",
+   -6,
+   0.5,
+   "game panel slides in"
+  ],
+  [
+   430.01,
+   "respawn",
+   -4,
+   0.394,
+   "the hot dog respawns"
+  ],
+  [
+   430.03,
+   "impact",
+   -8,
+   -0.357,
+   "SPACE..."
+  ],
+  [
+   430.13,
+   "bubbles",
+   -10,
+   0.029,
+   "bubbles"
+  ],
+  [
+   431.27,
+   "boom",
+   -2,
+   -0.321,
+   "BAR!"
+  ],
+  [
+   431.29,
+   "jump_game",
+   -2,
+   -0.044,
+   "the leap"
+  ],
+  [
+   431.31,
+   "whoosh_up",
+   -6,
+   -0.044,
+   "up"
+  ],
+  [
+   431.63,
+   "squeak",
+   -4,
+   0,
+   "stops in mid-air"
+  ],
+  [
+   431.83,
+   "cricket",
+   -10,
+   0.175,
+   "the hang: he looks at us"
+  ],
+  [
+   432.25,
+   "whoosh_down",
+   -2,
+   0,
+   "drops"
+  ],
+  [
+   432.55,
+   "big_splash",
+   2,
+   0,
+   "SPLASH!!"
+  ],
+  [
+   432.6,
+   "pop",
+   -10,
+   -0.591,
+   "FALLS 200"
+  ],
+  [
+   432.9,
+   "bubbles",
+   -8,
+   0,
+   "bubbles"
+  ],
+  [
+   433.05,
+   "boing",
+   -12,
+   0.066,
+   "a sandal floats up"
+  ],
+  [
+   433.37,
+   "respawn",
+   -6,
+   -0.044,
+   "respawn"
+  ],
+  [
+   434.37,
+   "cloth",
+   -12,
+   -0.044,
+   "the sigh"
+  ],
+  [
+   434.81,
+   "pop",
+   -8,
+   0.102,
+   "\"?\""
+  ],
+  [
+   436.404,
+   "whoosh",
+   -10,
+   0,
+   "crane wide"
+  ],
+  [
+   436.55,
+   "notify",
+   -6,
+   0.6,
+   "Guest_3217 joined the server"
+  ],
+  [
+   437.71,
+   "notify",
+   -7,
+   0.6,
+   "lil_noob_7 joined the server"
+  ],
+  [
+   438.69,
+   "notify",
+   -8,
+   0.6,
+   "Guest_8846 joined the server"
+  ],
+  [
+   439.52,
+   "chat_pop",
+   -6,
+   -0.262,
+   "caps bubble"
+  ],
+  [
+   439.57,
+   "whoosh",
+   -10,
+   0,
+   "cut"
+  ],
+  [
+   439.72,
+   "typing",
+   -10,
+   -0.262,
+   "CAPS typing"
+  ],
+  [
+   441.478,
+   "zoom_in",
+   -10,
+   0,
+   "push in"
+  ],
+  [
+   441.69,
+   "shine",
+   -4,
+   0,
+   "two thumbs up"
+  ],
+  [
+   441.74,
+   "sparkle",
+   -8,
+   0,
+   "burst"
+  ],
+  [
+   443.8,
+   "poof",
+   -6,
+   0.102,
+   "the rain cloud pops"
+  ],
+  [
+   446,
+   "jump_game",
+   -2,
+   -0.117,
+   "the noob jumps"
+  ],
+  [
+   446.5,
+   "land",
+   -4,
+   0.175,
+   "lands on the red platform"
+  ],
+  [
+   446.52,
+   "confirm",
+   -4,
+   0.248,
+   "NICE! check"
+  ],
+  [
+   446.6,
+   "crowd_cheer",
+   -8,
+   0,
+   "the noobs cheer"
+  ],
+  [
+   447,
+   "whoosh",
+   -10,
+   0,
+   "cut to the dance"
+  ],
+  [
+   447.52,
+   "ui_pop",
+   -6,
+   -0.459,
+   "jump panel 1"
+  ],
+  [
+   447.92,
+   "jump_game",
+   -10,
+   -0.459,
+   "panel noob lands"
+  ],
+  [
+   447.97,
+   "coin",
+   -10,
+   -0.459,
+   "+1"
+  ],
+  [
+   448.16,
+   "ui_pop",
+   -6,
+   0,
+   "jump panel 2"
+  ],
+  [
+   448.56,
+   "jump_game",
+   -10,
+   0,
+   "panel noob lands"
+  ],
+  [
+   448.56,
+   "ui_pop",
+   -6,
+   0.459,
+   "jump panel 3"
+  ],
+  [
+   448.61,
+   "coin",
+   -10,
+   0,
+   "+1"
+  ],
+  [
+   448.96,
+   "jump_game",
+   -10,
+   0.459,
+   "panel noob lands"
+  ],
+  [
+   449.01,
+   "coin",
+   -10,
+   0.459,
+   "+1"
+  ],
+  [
+   449.53,
+   "toggle",
+   -4,
+   0,
+   "spotlight on"
+  ],
+  [
+   449.63,
+   "ui_pop",
+   -8,
+   -0.518,
+   "COMEDY NIGHT tag"
+  ],
+  [
+   451.53,
+   "chat_pop",
+   -8,
+   0.029,
+   "caps bubble"
+  ],
+  [
+   451.73,
+   "typing",
+   -12,
+   0.029,
+   "typing the joke"
+  ],
+  [
+   453.03,
+   "blink",
+   -8,
+   0,
+   "confused noobs"
+  ],
+  [
+   453.898,
+   "zoom_in",
+   -8,
+   0,
+   "close on Dad"
+  ],
+  [
+   455.8,
+   "cricket",
+   -2,
+   0,
+   "nobody laughs"
+  ],
+  [
+   455.85,
+   "wind_gust",
+   -12,
+   -0.4,
+   "the cube tumbleweed rolls through"
+  ],
+  [
+   456.53,
+   "zoom_in",
+   -4,
+   0,
+   "smash zoom"
+  ],
+  [
+   456.81,
+   "whoosh_up",
+   -10,
+   0.438,
+   "the drum kit rises"
+  ],
+  [
+   457.11,
+   "rimshot",
+   2,
+   0.438,
+   "BA-DUM TSS!"
+  ],
+  [
+   457.33,
+   "kids_laugh",
+   0,
+   0,
+   "the noobs crack up"
+  ],
+  [
+   457.43,
+   "chat_pop",
+   -12,
+   0.383,
+   "LOL / XD / DAD JOKE!!"
+  ],
+  [
+   457.54,
+   "chat_pop",
+   -13,
+   0.146,
+   "LOL / XD / DAD JOKE!!"
+  ],
+  [
+   457.65,
+   "chat_pop",
+   -14,
+   0.104,
+   "LOL / XD / DAD JOKE!!"
+  ],
+  [
+   457.76,
+   "chat_pop",
+   -12,
+   -0.051,
+   "LOL / XD / DAD JOKE!!"
+  ],
+  [
+   457.87,
+   "chat_pop",
+   -13,
+   0.186,
+   "LOL / XD / DAD JOKE!!"
+  ],
+  [
+   457.98,
+   "chat_pop",
+   -14,
+   0.194,
+   "LOL / XD / DAD JOKE!!"
+  ],
+  [
+   458.09,
+   "chat_pop",
+   -12,
+   -0.556,
+   "LOL / XD / DAD JOKE!!"
+  ],
+  [
+   458.2,
+   "chat_pop",
+   -13,
+   -0.262,
+   "LOL / XD / DAD JOKE!!"
+  ],
+  [
+   458.31,
+   "chat_pop",
+   -14,
+   -0.546,
+   "LOL / XD / DAD JOKE!!"
+  ],
+  [
+   458.42,
+   "chat_pop",
+   -12,
+   -0.535,
+   "LOL / XD / DAD JOKE!!"
+  ],
+  [
+   458.514,
+   "whoosh",
+   -10,
+   0,
+   "cut to the crate"
+  ],
+  [
+   458.614,
+   "cloth",
+   -8,
+   0,
+   "climbs"
+  ],
+  [
+   458.614,
+   "chat_pop",
+   -8,
+   0.102,
+   "caps bubble"
+  ],
+  [
+   459.014,
+   "land",
+   -6,
+   0,
+   "on top of the crate"
+  ],
+  [
+   460.11,
+   "whoosh",
+   -10,
+   0,
+   "low angle"
+  ],
+  [
+   461.05,
+   "orch_hit",
+   -2,
+   0.029,
+   "fist up, burst"
+  ],
+  [
+   462.39,
+   "sparkle",
+   -10,
+   0,
+   "star eyes"
+  ],
+  [
+   465.53,
+   "pop",
+   -2,
+   -0.518,
+   "FALLS 200 bumps"
+  ],
+  [
+   466.25,
+   "crowd_cheer",
+   -2,
+   0,
+   "the crowd cheers"
+  ],
+  [
+   466.35,
+   "applause",
+   -8,
+   0,
+   "applause"
+  ],
+  [
+   466.95,
+   "whoosh_long",
+   -6,
+   0,
+   "time-lapse, crane up"
+  ],
+  [
+   467,
+   "vhs_clunk",
+   -10,
+   0,
+   "fast-forward"
+  ],
+  [
+   467.05,
+   "money_counter",
+   -12,
+   -0.518,
+   "the clock flies"
+  ],
+  [
+   468.27,
+   "crowd_cheer",
+   -6,
+   0,
+   "\"DAD!!\""
+  ],
+  [
+   468.37,
+   "chat_pop",
+   -12,
+   0.383,
+   "DAD!! bubble"
+  ],
+  [
+   468.62,
+   "chat_pop",
+   -13,
+   -0.003,
+   "DAD!! bubble"
+  ],
+  [
+   468.87,
+   "chat_pop",
+   -14,
+   0.57,
+   "DAD!! bubble"
+  ],
+  [
+   469.12,
+   "chat_pop",
+   -12,
+   0.537,
+   "DAD!! bubble"
+  ],
+  [
+   469.37,
+   "chat_pop",
+   -13,
+   -0.407,
+   "DAD!! bubble"
+  ],
+  [
+   469.62,
+   "chat_pop",
+   -14,
+   -0.477,
+   "DAD!! bubble"
+  ],
+  [
+   469.87,
+   "chat_pop",
+   -12,
+   -0.177,
+   "DAD!! bubble"
+  ],
+  [
+   470.01,
+   "achievement",
+   -2,
+   0,
+   "nametag DadBod1978 -> DAD"
+  ],
+  [
+   470.11,
+   "heart_pop",
+   -6,
+   0,
+   "hearts"
+  ],
+  [
+   470.12,
+   "chat_pop",
+   -13,
+   0.526,
+   "DAD!! bubble"
+  ],
+  [
+   470.37,
+   "chat_pop",
+   -14,
+   -0.156,
+   "DAD!! bubble"
+  ],
+  [
+   470.62,
+   "chat_pop",
+   -12,
+   -0.33,
+   "DAD!! bubble"
+  ],
+  [
+   470.87,
+   "chat_pop",
+   -13,
+   -0.216,
+   "DAD!! bubble"
+  ],
+  [
+   471.12,
+   "chat_pop",
+   -14,
+   0.202,
+   "DAD!! bubble"
+  ],
+  [
+   471.5,
+   "whoosh",
+   -12,
+   0,
+   "low cut"
+  ],
+  [
+   471.75,
+   "cloth",
+   -12,
+   0.211,
+   "tug on the sleeve"
+  ],
+  [
+   471.85,
+   "chat_pop",
+   -8,
+   0.248,
+   "lil_noob_7 bubble"
+  ],
+  [
+   472.01,
+   "cloth",
+   -12,
+   0.211,
+   "tug on the sleeve"
+  ],
+  [
+   472.27,
+   "cloth",
+   -12,
+   0.211,
+   "tug on the sleeve"
+  ],
+  [
+   473.788,
+   "music_box",
+   -10,
+   0,
+   "the KID close-up"
+  ],
+  [
+   475.62,
+   "whoosh",
+   -8,
+   0,
+   "split"
+  ],
+  [
+   475.62,
+   "chat_pop",
+   -10,
+   0,
+   "caps bubble"
+  ],
+  [
+   475.72,
+   "blush",
+   -8,
+   -0.35,
+   "the real Dad tears up"
+  ],
+  [
+   475.92,
+   "heart_pop",
+   -4,
+   0.394,
+   "hearts"
+  ],
+  [
+   477.25,
+   "cloth",
+   -6,
+   0,
+   "arms wide"
+  ],
+  [
+   477.35,
+   "crowd_cheer",
+   -6,
+   0,
+   "everyone piles in"
+  ],
+  [
+   477.45,
+   "heart_pop",
+   -4,
+   0,
+   "hearts everywhere"
+  ],
+  [
+   478.97,
+   "whoosh",
+   -12,
+   0,
+   "cut to Noodle"
+  ],
+  [
+   478.97,
+   "chat_pop",
+   -8,
+   -0.19,
+   "NoodleBoi bubble"
+  ],
+  [
+   482.05,
+   "cloth",
+   -10,
+   -0.044,
+   "Dad's arm round Noodle"
+  ],
+  [
+   482.75,
+   "sparkle",
+   -14,
+   -0.044,
+   "warm sparkle"
+  ],
+  [
+   483.47,
+   "wind_gust",
+   -12,
+   -0.3,
+   "the hero, alone, far away"
+  ],
+  [
+   484.5,
+   "heartbeat",
+   -10,
+   0,
+   "letterbox, jealous"
+  ],
+  [
+   486.39,
+   "whoosh",
+   -8,
+   0,
+   "match cut to the real hero"
+  ],
+  [
+   486.64,
+   "giggle",
+   -6,
+   0.4,
+   "the family laughing at their screens"
+  ]
+ ]
+}

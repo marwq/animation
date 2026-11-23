@@ -1,0 +1,1086 @@
+{
+ "scene": "SC 08",
+ "start": 488.19,
+ "end": 555.77,
+ "music": [
+  {
+   "start": 488.19,
+   "end": 496.14,
+   "mood": "family",
+   "energy": 0.5,
+   "in": "cut",
+   "out": "fade"
+  },
+  {
+   "start": 496.14,
+   "end": 499.543,
+   "mood": "sad",
+   "energy": 0.35,
+   "in": "fade",
+   "out": "cut"
+  },
+  {
+   "start": 499.543,
+   "end": 499.903,
+   "mood": "silence",
+   "energy": 0,
+   "in": "cut",
+   "out": "cut"
+  },
+  {
+   "start": 499.903,
+   "end": 505.5,
+   "mood": "epic",
+   "energy": 0.55,
+   "in": "cut",
+   "out": "cut"
+  },
+  {
+   "start": 505.5,
+   "end": 509.03,
+   "mood": "sad",
+   "energy": 0.4,
+   "in": "fade",
+   "out": "cut"
+  },
+  {
+   "start": 509.03,
+   "end": 511.79,
+   "mood": "silence",
+   "energy": 0,
+   "in": "cut",
+   "out": "cut"
+  },
+  {
+   "start": 511.79,
+   "end": 516.17,
+   "mood": "tender",
+   "energy": 0.25,
+   "in": "fade",
+   "out": "fade"
+  },
+  {
+   "start": 516.17,
+   "end": 543.53,
+   "mood": "tender",
+   "energy": 0.4,
+   "in": "fade",
+   "out": "fade"
+  },
+  {
+   "start": 543.53,
+   "end": 545.37,
+   "mood": "mystery",
+   "energy": 0.35,
+   "in": "fade",
+   "out": "cut"
+  },
+  {
+   "start": 545.37,
+   "end": 555.77,
+   "mood": "boss",
+   "energy": 0.85,
+   "in": "cut",
+   "out": "cut"
+  }
+ ],
+ "ambience": [
+  {
+   "start": 488.19,
+   "end": 508.39,
+   "name": "room",
+   "gain_db": -14
+  },
+  {
+   "start": 508.39,
+   "end": 509.33,
+   "name": "room",
+   "gain_db": -16
+  },
+  {
+   "start": 509.33,
+   "end": 516.17,
+   "name": "night",
+   "gain_db": -12
+  },
+  {
+   "start": 516.17,
+   "end": 555.77,
+   "name": "night",
+   "gain_db": -12
+  }
+ ],
+ "footsteps": [
+  {
+   "start": 508.23,
+   "end": 508.39,
+   "interval": 0.143,
+   "surface": "wood",
+   "gain_db": -6,
+   "pan": 0.5
+  },
+  {
+   "start": 508.39,
+   "end": 508.91,
+   "interval": 0.09,
+   "surface": "wood",
+   "gain_db": -4,
+   "pan": 0.3
+  },
+  {
+   "start": 518.188,
+   "end": 519.638,
+   "interval": 0.449,
+   "surface": "wood",
+   "gain_db": -12,
+   "pan": 0.2
+  }
+ ],
+ "sfx": [
+  [
+   488.19,
+   "whoosh",
+   -8,
+   0,
+   "cut into the living room (white smash)"
+  ],
+  [
+   488.29,
+   "giggle",
+   -10,
+   0,
+   "the family laughing at their screens"
+  ],
+  [
+   488.34,
+   "ui_pop",
+   -4,
+   0.343,
+   "BEST FIGHTER panel"
+  ],
+  [
+   488.49,
+   "punch",
+   -10,
+   0.343,
+   "KO in the arena"
+  ],
+  [
+   489.23,
+   "achievement",
+   -6,
+   0.583,
+   "#1"
+  ],
+  [
+   490.55,
+   "whoosh",
+   -6,
+   0.4,
+   "whip-pan to Granny"
+  ],
+  [
+   490.67,
+   "ui_pop",
+   -4,
+   -0.343,
+   "RICHEST PLAYER panel"
+  ],
+  [
+   491.71,
+   "ka_ching",
+   -2,
+   -0.343,
+   "the coins"
+  ],
+  [
+   491.81,
+   "coins",
+   -8,
+   0.503,
+   "$$$"
+  ],
+  [
+   493.59,
+   "whoosh",
+   -6,
+   -0.4,
+   "whip-pan to Dad"
+  ],
+  [
+   493.71,
+   "ui_pop",
+   -4,
+   0.343,
+   "EVERYONE'S FAVORITE panel"
+  ],
+  [
+   493.89,
+   "crowd_cheer",
+   -14,
+   0.343,
+   "the DAD crowd (inside the game)"
+  ],
+  [
+   494.59,
+   "heart_pop",
+   -6,
+   -0.292,
+   "hearts over the real Dad"
+  ],
+  [
+   496.14,
+   "whoosh_long",
+   -14,
+   0,
+   "slow push from behind the hero"
+  ],
+  [
+   496.34,
+   "giggle",
+   -14,
+   0.3,
+   "laughing, far away"
+  ],
+  [
+   497.19,
+   "click",
+   -10,
+   0,
+   "the monitor"
+  ],
+  [
+   497.34,
+   "slide_down",
+   -6,
+   0,
+   "YOU slides down the board"
+  ],
+  [
+   497.39,
+   "powerdown",
+   -10,
+   0,
+   "#2 -> #47"
+  ],
+  [
+   498.19,
+   "stamp",
+   0,
+   0.088,
+   "THE SON stamp"
+  ],
+  [
+   498.79,
+   "heartbeat",
+   -4,
+   0,
+   "he boils"
+  ],
+  [
+   499.04,
+   "steam_hiss",
+   -6,
+   -0.262,
+   "steam"
+  ],
+  [
+   499.303,
+   "whoosh",
+   -8,
+   0,
+   "hands grab the monitor"
+  ],
+  [
+   499.443,
+   "whoosh_down",
+   -6,
+   0,
+   "down it goes"
+  ],
+  [
+   499.543,
+   "impact",
+   3,
+   0,
+   "SLAM! the monitor face-down"
+  ],
+  [
+   499.553,
+   "thud",
+   0,
+   0,
+   "desk hit"
+  ],
+  [
+   499.593,
+   "click",
+   -10,
+   0.192,
+   "keycaps flying"
+  ],
+  [
+   499.663,
+   "click",
+   -10,
+   -0.237,
+   "keycaps flying"
+  ],
+  [
+   499.663,
+   "bonk",
+   -12,
+   0.3,
+   "the mouse jumps"
+  ],
+  [
+   499.663,
+   "swish",
+   -6,
+   0.029,
+   "Dad turns"
+  ],
+  [
+   499.703,
+   "swish",
+   -7,
+   0.277,
+   "Mom turns"
+  ],
+  [
+   499.733,
+   "click",
+   -10,
+   0.18,
+   "keycaps flying"
+  ],
+  [
+   499.743,
+   "swish",
+   -8,
+   0.576,
+   "Granny turns"
+  ],
+  [
+   499.763,
+   "crowd_gasp",
+   -10,
+   0.4,
+   "the family gasps"
+  ],
+  [
+   499.803,
+   "click",
+   -10,
+   0.078,
+   "keycaps flying"
+  ],
+  [
+   499.903,
+   "jump",
+   -6,
+   -0.19,
+   "he jumps out of the chair"
+  ],
+  [
+   500.07,
+   "boom",
+   -4,
+   0.015,
+   "MY GAME!"
+  ],
+  [
+   501.28,
+   "ui_pop",
+   -4,
+   0.35,
+   "Noodle at the factory"
+  ],
+  [
+   501.86,
+   "stamp",
+   -2,
+   0.357,
+   "HIRED!"
+  ],
+  [
+   502.32,
+   "ui_pop",
+   -4,
+   0.394,
+   "the DAD crowd"
+  ],
+  [
+   502.9,
+   "stamp",
+   -2,
+   0.394,
+   "TAKEN!"
+  ],
+  [
+   504.17,
+   "zoom_in",
+   -2,
+   0,
+   "smash zoom"
+  ],
+  [
+   504.23,
+   "boom",
+   0,
+   0,
+   "EVERYTHING!"
+  ],
+  [
+   504.33,
+   "steam_hiss",
+   -6,
+   -0.19,
+   "steam"
+  ],
+  [
+   505.5,
+   "cloth",
+   -12,
+   0.102,
+   "Mom lowers her tablet"
+  ],
+  [
+   507.51,
+   "zoom_in",
+   -8,
+   0,
+   "push in on \"joined\""
+  ],
+  [
+   508.23,
+   "skid",
+   -6,
+   -0.19,
+   "spins round"
+  ],
+  [
+   508.28,
+   "whoosh",
+   -4,
+   0.5,
+   "bolts out of frame"
+  ],
+  [
+   508.39,
+   "whoosh",
+   -6,
+   0.3,
+   "whip to the stairs"
+  ],
+  [
+   509.03,
+   "door_close",
+   4,
+   0.438,
+   "the door SLAMS"
+  ],
+  [
+   509.05,
+   "impact",
+   -4,
+   0.438,
+   "SLAM!!"
+  ],
+  [
+   509.43,
+   "countdown_tick",
+   -16,
+   0.576,
+   "the wall clock ticks"
+  ],
+  [
+   509.78,
+   "cloth",
+   -12,
+   0.029,
+   "Dad raises his hand"
+  ],
+  [
+   509.93,
+   "countdown_tick",
+   -16,
+   0.576,
+   "the wall clock ticks"
+  ],
+  [
+   510.43,
+   "countdown_tick",
+   -16,
+   0.576,
+   "the wall clock ticks"
+  ],
+  [
+   510.53,
+   "glass",
+   -10,
+   0.029,
+   "the glasses come off"
+  ],
+  [
+   510.73,
+   "cloth",
+   -14,
+   0.029,
+   "lowers them"
+  ],
+  [
+   510.93,
+   "countdown_tick",
+   -16,
+   0.576,
+   "the wall clock ticks"
+  ],
+  [
+   511.94,
+   "click",
+   -18,
+   0.211,
+   "knitting needles"
+  ],
+  [
+   512.3,
+   "click",
+   -18,
+   0.211,
+   "knitting needles"
+  ],
+  [
+   512.66,
+   "click",
+   -18,
+   0.211,
+   "knitting needles"
+  ],
+  [
+   513.02,
+   "click",
+   -18,
+   0.211,
+   "knitting needles"
+  ],
+  [
+   513.38,
+   "click",
+   -18,
+   0.211,
+   "knitting needles"
+  ],
+  [
+   513.74,
+   "click",
+   -18,
+   0.211,
+   "knitting needles"
+  ],
+  [
+   513.96,
+   "cloth",
+   -8,
+   0.029,
+   "Mom starts to get up"
+  ],
+  [
+   514.08,
+   "swish",
+   -6,
+   0.394,
+   "the needle comes up"
+  ],
+  [
+   514.89,
+   "thud",
+   -14,
+   0.029,
+   "Mom sits back down"
+  ],
+  [
+   515.14,
+   "swish",
+   -4,
+   0.248,
+   "the needle swings to Dad"
+  ],
+  [
+   515.39,
+   "zoom_in",
+   -4,
+   0,
+   "snap zoom onto Dad"
+  ],
+  [
+   515.69,
+   "gulp",
+   -4,
+   -0.146,
+   "Dad gulps"
+  ],
+  [
+   516.13,
+   "door_knock",
+   -4,
+   0.5,
+   "knock knock"
+  ],
+  [
+   516.29,
+   "door_open",
+   -6,
+   0.6,
+   "the door opens, hall light"
+  ],
+  [
+   516.63,
+   "cloth",
+   -14,
+   -0.4,
+   "the hero pulls the duvet up"
+  ],
+  [
+   519.988,
+   "squeak",
+   -12,
+   0,
+   "the bed creaks"
+  ],
+  [
+   520.088,
+   "cloth",
+   -12,
+   0,
+   "sits"
+  ],
+  [
+   525.15,
+   "pop",
+   -8,
+   0.175,
+   "\"noob?\" thought pops"
+  ],
+  [
+   527.15,
+   "camera_flash",
+   -10,
+   -0.357,
+   "polaroid 1"
+  ],
+  [
+   527.35,
+   "paper",
+   -12,
+   -0.357,
+   "lands"
+  ],
+  [
+   527.6,
+   "camera_flash",
+   -10,
+   0,
+   "polaroid 2"
+  ],
+  [
+   527.8,
+   "paper",
+   -12,
+   0,
+   "lands"
+  ],
+  [
+   528.19,
+   "camera_flash",
+   -10,
+   0.357,
+   "polaroid 3"
+  ],
+  [
+   528.39,
+   "paper",
+   -12,
+   0.357,
+   "lands"
+  ],
+  [
+   528.59,
+   "chime",
+   -10,
+   0,
+   "365 DAYS"
+  ],
+  [
+   531.35,
+   "harp_up",
+   -14,
+   0,
+   "the warm glow"
+  ],
+  [
+   537.108,
+   "camera_flash",
+   -10,
+   -0.19,
+   "the first memory"
+  ],
+  [
+   538.73,
+   "money_counter",
+   -12,
+   0,
+   "the counter rolls"
+  ],
+  [
+   538.83,
+   "paper",
+   -14.05,
+   0.24,
+   "snapshot #2"
+  ],
+  [
+   538.89,
+   "paper",
+   -14.075,
+   0.104,
+   "snapshot #3"
+  ],
+  [
+   538.93,
+   "paper",
+   -14.1,
+   0.223,
+   "snapshot #4"
+  ],
+  [
+   538.95,
+   "paper",
+   -14.125,
+   0.05,
+   "snapshot #5"
+  ],
+  [
+   538.97,
+   "paper",
+   -14.15,
+   0.386,
+   "snapshot #6"
+  ],
+  [
+   539.01,
+   "paper",
+   -14.175,
+   0.334,
+   "snapshot #7"
+  ],
+  [
+   539.03,
+   "paper",
+   -14.225,
+   0.359,
+   "snapshot #9"
+  ],
+  [
+   539.05,
+   "paper",
+   -14.25,
+   0.2,
+   "snapshot #10"
+  ],
+  [
+   539.07,
+   "paper",
+   -14.275,
+   0.12,
+   "snapshot #11"
+  ],
+  [
+   539.11,
+   "paper",
+   -14.35,
+   -0.303,
+   "snapshot #14"
+  ],
+  [
+   539.15,
+   "paper",
+   -14.425,
+   -0.346,
+   "snapshot #17"
+  ],
+  [
+   539.19,
+   "paper",
+   -14.5,
+   0.183,
+   "snapshot #20"
+  ],
+  [
+   539.23,
+   "paper",
+   -14.6,
+   -0.218,
+   "snapshot #24"
+  ],
+  [
+   539.27,
+   "paper",
+   -14.7,
+   -0.357,
+   "snapshot #28"
+  ],
+  [
+   539.31,
+   "paper",
+   -14.825,
+   -0.112,
+   "snapshot #33"
+  ],
+  [
+   539.37,
+   "paper",
+   -15.025,
+   0.051,
+   "snapshot #41"
+  ],
+  [
+   539.43,
+   "paper",
+   -15.225,
+   0.082,
+   "snapshot #49"
+  ],
+  [
+   539.49,
+   "paper",
+   -15.475,
+   0.303,
+   "snapshot #59"
+  ],
+  [
+   539.55,
+   "paper",
+   -15.75,
+   0.318,
+   "snapshot #70"
+  ],
+  [
+   539.63,
+   "paper",
+   -16.125,
+   -0.364,
+   "snapshot #85"
+  ],
+  [
+   539.71,
+   "paper",
+   -16.575,
+   -0.33,
+   "snapshot #103"
+  ],
+  [
+   539.81,
+   "paper",
+   -17.175,
+   0.29,
+   "snapshot #127"
+  ],
+  [
+   539.91,
+   "paper",
+   -17.85,
+   0.14,
+   "snapshot #154"
+  ],
+  [
+   540.01,
+   "paper",
+   -18.6,
+   -0.127,
+   "snapshot #184"
+  ],
+  [
+   540.01,
+   "pop",
+   -4,
+   0,
+   "x200"
+  ],
+  [
+   542.19,
+   "cloth",
+   -10,
+   -0.4,
+   "the hero rolls over to face Dad"
+  ],
+  [
+   543.03,
+   "electric",
+   -16,
+   0.7,
+   "the first red flicker"
+  ],
+  [
+   543.53,
+   "whoosh",
+   -12,
+   0,
+   "cut to the bedside clock"
+  ],
+  [
+   544.13,
+   "beep",
+   -4,
+   0,
+   "11:00"
+  ],
+  [
+   545.37,
+   "alarm",
+   2,
+   0.6,
+   "the PC flashes red"
+  ],
+  [
+   545.39,
+   "sub_drop",
+   2,
+   0,
+   "the alarm hit"
+  ],
+  [
+   545.49,
+   "cloth",
+   -8,
+   -0.2,
+   "the hero sits bolt upright"
+  ],
+  [
+   545.67,
+   "whoosh_long",
+   -8,
+   0.4,
+   "push to the monitor"
+  ],
+  [
+   546.33,
+   "glitch",
+   -6,
+   0,
+   "WARNING banner"
+  ],
+  [
+   546.43,
+   "siren",
+   -6,
+   0,
+   "siren"
+  ],
+  [
+   547.79,
+   "monster_growl",
+   -4,
+   0,
+   "the Block King on the monitor"
+  ],
+  [
+   548.45,
+   "boom",
+   0,
+   0,
+   "his eyes ignite"
+  ],
+  [
+   548.55,
+   "rumble",
+   -6,
+   0,
+   "rumble"
+  ],
+  [
+   549.978,
+   "heartbeat",
+   -6,
+   0,
+   "scared"
+  ],
+  [
+   550.878,
+   "siren",
+   -8,
+   0,
+   "siren"
+  ],
+  [
+   551.81,
+   "pop",
+   -8,
+   -0.306,
+   "record tile"
+  ],
+  [
+   551.89,
+   "pop",
+   -8,
+   0.306,
+   "record tile"
+  ],
+  [
+   551.97,
+   "pop",
+   -8,
+   -0.306,
+   "record tile"
+  ],
+  [
+   552.05,
+   "pop",
+   -8,
+   0.306,
+   "record tile"
+  ],
+  [
+   552.22,
+   "money_counter",
+   -8,
+   0,
+   "everything rolls back to zero"
+  ],
+  [
+   552.37,
+   "glitch_long",
+   -2,
+   0,
+   "pixel glitch"
+  ],
+  [
+   552.47,
+   "powerdown",
+   -6,
+   0,
+   "reset"
+  ],
+  [
+   552.67,
+   "stamp",
+   0,
+   0,
+   "RESET"
+  ],
+  [
+   553.42,
+   "zoom_in",
+   -10,
+   0,
+   "push in on the hero"
+  ],
+  [
+   553.77,
+   "riser",
+   -4,
+   0,
+   "into SC 09 (red flash)"
+  ]
+ ]
+}

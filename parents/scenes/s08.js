@@ -97,6 +97,12 @@ const tAlarm = w(12, 'alarm');
 const tSitUp = tAlarm + 0.12;
 const tKing = w(13, 'King'), tAwake = w(13, 'awakened'), tResets = w(13, 'resets');
 
+// a soft warm glow: nested flat ellipses (no radial gradient: cheap and no hard edge)
+function softGlow(x, y, rx, ry, col, op) {
+  let o = '';
+  for (let i = 0; i < 4; i++) { const k = 1 - i * 0.22; o += S.ellipse(x, y, rx * k, ry * k, { fill: col, opacity: f(op / 4) }); }
+  return o;
+}
 // ---------------------------------------------------------------- the living room
 const LS = H.SPOTS.livingRoom.seats, LD = H.SPOTS.livingRoom.devices;
 const MON = { cx: 598, cy: 378, w: 290, h: 168 }, DESK = { x0: 440, x1: 760, top: 632 };
@@ -166,10 +172,10 @@ function devices(o = {}) {
 }
 // living-room frame: o = set options (+ glowK, chair), parts = { seated (after the monitor), standing, over, mon (monitor opts), devices }
 function room(t, cam, o = {}, parts = {}) {
-  const glow = o.glow ?? H.deviceGlows(['dad', 'mom', 'grandma'], o.glowK ?? 1);
+  const glow = o.glow ?? H.deviceGlows(['dad', 'mom', 'grandma'], o.glowK ?? 1);   // lamp .45 = the same room as SC 09
   const mon = parts.mon === false ? '' : monitor(t, parts.mon || {});
   const monGlow = parts.mon && (parts.mon.fold || 0) >= 1 ? '' : H.glow(MON.cx, MON.cy, 240, 'hsGlowPurple', 0.5);
-  return E.living(t, cam, { time: 'night', pc: false, chair: o.chair ?? 'back', glow, clock: '10:40', lamp: o.lamp ?? 0, ...(o.set || {}) },
+  return E.living(t, cam, { time: 'night', pc: false, chair: o.chair ?? 'back', glow, clock: '10:40', lamp: o.lamp ?? 0.45, ...(o.set || {}) },
     { seated: mon + (parts.seated || ''), devices: parts.devices ?? devices(parts.dev || {}), standing: parts.standing || '', over: (parts.mon === false ? '' : monGlow) + (parts.over || '') });
 }
 const heroSeat = (t, pose = {}, act) => actor('you', t, H.seatPose(LS.you, 1, { view: 'back', t, ...pose }), act || { arms: false, energy: 0 });
@@ -420,7 +426,7 @@ function famTurned(t, t0, extra = {}) {
 function shMyGame(t) {
   const cam = shakeAll(camKeys(t, [[CUT.mygame, { zoom: 1.12, x: 60, y: 30 }], [CUT.friends, { zoom: 1.2, x: 20, y: 20 }]], ease.out), t, [[w(2, 'MY'), 0.3, 8]]);
   const up = ease.outBack(seg(t, CUT.mygame, CUT.mygame + 0.25));
-  const seated = famTurned(t, tTurnFam, { cam });
+  const seated = famTurned(t, tTurnFam, { cam, dad: { volume: false }, mom: { volume: false }, gran: { volume: false } });
   const hero = actor('you', t, { x: STAND.x, y: STAND.y, s: 0.5, turn: 0.55, lift: 40 * bump(t, CUT.mygame, CUT.mygame + 0.3), ...boing(t, CUT.mygame + 0.25, 0.25), face: { name: 'angry', fx: ['anger'] }, armL: 30 + 20 * up, armR: 30 + 20 * up }, { energy: 2 });
   let o = room(t, cam, { glowK: 0.9 }, { seated, standing: hero, mon: { fold: 1 } });
   return o + K.bang('MY GAME!', 980, 220, pop(t, w(2, 'MY'), 0.2) * (1 - seg(t, CUT.friends - 0.15, CUT.friends)), 110, -5, '#FF5A4A');
@@ -524,7 +530,7 @@ function granKnit(t, extra = {}) {
 function shGTalk(t) {
   const cam = camKeys(t, [[CUT.gtalk, camAt(1745, 600, 2.4, 1250, 560)], [CUT.notyou, camAt(1745, 596, 2.55, 1250, 560)]], ease.inOut);
   const seated = family(t, { cam, dad: dadGlassesPose(t, { turn: -0.1 }), mom: { face: { name: 'sad', eyes: { look: [1, 0] } }, turn: 0.3 }, gran: granKnit(t), granAct: { energy: 0.5, arms: false } });
-  return room(t, cam, { glowK: 0.6, set: { lamp: 0.4 } }, { seated, mon: { fold: 1 } }) + letterbox(1, 60);
+  return room(t, cam, { glowK: 0.6, set: {} }, { seated, mon: { fold: 1 } }) + letterbox(1, 60);
 }
 // 16. "Not you." — Mom half-way up, Granny's needle stops her; Mom sits back down
 function shNotYou(t) {
@@ -540,7 +546,7 @@ function shNotYou(t) {
     mom: { y: H.seatPose(LS.mom, 1.04).y - 90 * rise, lean: 14 * rise, face: { name: rise > 0.5 && t > w(6, 'you', 1) ? 'nervous' : 'sad', eyes: { look: [1, 0] } }, turn: 0.3, armL: 20 + 30 * rise, armR: 20 + 30 * rise },
     gran: gp, granAct: { energy: 0.5, arms: false },
   });
-  return room(t, cam, { glowK: 0.6, set: { lamp: 0.4 } }, { seated, mon: { fold: 1 } }) + letterbox(1, 60);
+  return room(t, cam, { glowK: 0.6, set: {} }, { seated, mon: { fold: 1 } }) + letterbox(1, 60);
 }
 // 17. "Him." — the needle swings to Dad; snap-zoom onto Dad (holding his glasses): gulp
 function shHim(t) {
@@ -556,7 +562,7 @@ function shHim(t) {
     mom: { face: { name: 'happy', eyes: { look: [-1, 0] } }, turn: -0.3 },
     gran: gp, granAct: { energy: 0.5, arms: false },
   });
-  let o = room(t, cam, { glowK: 0.6, set: { lamp: 0.4 } }, { seated, mon: { fold: 1 } });
+  let o = room(t, cam, { glowK: 0.6, set: {} }, { seated, mon: { fold: 1 } });
   o += K.bang('!', 760, 210, pop(t, tHim + 0.05, 0.2), 150, 8, '#FFFFFF');
   return o + letterbox(1, 60) + smash(t, tHim, 0.08, 0.35);
 }
@@ -591,7 +597,7 @@ function shCare(t) {
   const lookUp = seg(t, w(8, 'game') - 0.2, w(8, 'game') + 0.2);
   const dd = dadBed(t, { face: { name: 'sad', mouth: 'smallSmile', eyes: { look: lookUp > 0.5 ? [-0.8, 0] : [0, 0.7] } } });
   let o = bed(t, cam, { door: 0.9, tuck: 0.9 }, { behind: heroLie(t, { view: 'back' }), front: dd });
-  o += S.ellipse(300, 400, 520, 420, { fill: '#FFC872', opacity: 0.08 });
+  o += softGlow(300, 420, 620, 480, '#FFC872', 0.12);
   return o + letterbox(1, 60);
 }
 // 21. "I don't know how to jump." — the wall side: the hero's face on the pillow, eyes open, listening
@@ -639,7 +645,7 @@ function shSee(t) {
   const dd = dadBed(t, { face: { name: 'sad', mouth: 'smallSmile', eyes: { look: [-0.9, 0] } }, armL: lerp(22, 52, reach), turn: -0.45 });
   let o = bed(t, cam, { door: 0.9, tuck: 0.9 }, { behind: heroLie(t, { view: 'back' }), front: dd });
   const q = GS.toScreen(cam, 420, 560);
-  o += S.ellipse(q.x + 200, q.y + 60, 700, 520, { fill: '#FFC872', opacity: f(0.04 + 0.1 * warm) });
+  o += softGlow(q.x + 200, q.y + 60, 760, 560, '#FFC872', 0.06 + 0.16 * warm);
   if (warm > 0 && warm < 1) o += K.sparkles([[q.x + 80, q.y - 120, 24 * Math.sin(Math.PI * warm)], [q.x + 420, q.y - 40, 18 * Math.sin(Math.PI * warm)]], t);
   return o + letterbox(1, 60);
 }
@@ -754,7 +760,7 @@ function shResets(t) {
   let o = S.rect(0, 0, 1920, 1080, 0, { fill: '#2A0610' }) + S.rect(0, 0, 1920, 1080, 0, { fill: '#FF1E3C', opacity: f(0.2 + 0.1 * Math.sin(t * 9)) });
   const tiles = [
     (x, y) => G.statPill({ x, y, s: 1.5, t, anchor: 'center', icon: G.crown(0, 6, 26, '#FFD23F', 4), label: 'MOM RANK', value: '#' + Math.round(lerp(1, 999, r)), rim: '#FF5FA8', bump: seg(t, tResets, tResets + 0.45) }),
-    (x, y) => G.coinCounter({ x, y, s: 1.6, value: 0, from: 9999999, roll: r, t, anchor: 'center' }),
+    (x, y) => G.coinCounter({ x, y, s: 1.6, value: Math.round(lerp(9999999, 0, r)), t, anchor: 'center' }),
     (x, y) => G.nametag({ x, y, name: r > 0.5 ? 'DadBod1978' : 'DAD', level: r > 0.5 ? 1 : 99, col: r > 0.5 ? '#F2B705' : '#FF5FA8', crown: r <= 0.5, t, s: 2.2 }),
     (x, y) => G.levelBadge({ x, y, level: Math.round(lerp(99, 1, r)), t, s: 1.6, bump: seg(t, tResets, tResets + 0.45) }),
   ];
@@ -803,15 +809,16 @@ function scene(t) {
   try { return fn(t); } finally { VOL_OFF = false; }
 }
 function look(t) {
+  // the house sets already carry their night tone: no extra grade (a 'night' grade double-darkens them)
   if (t >= CUT.board && t < CUT.seethe) return { grade: null, vignette: 0.55 };
   if (t >= CUT.resets && t < CUT.final) return { grade: null, vignette: 0.6 };
-  if (t >= CUT.alarm) return { grade: 'night', vignette: 0.65 };
-  if (t >= CUT.door) return { grade: 'night', vignette: 0.55 };
-  if (t >= CUT.silent) return { grade: 'night', vignette: 0.65 };
-  return { grade: 'night', vignette: 0.5 };
+  if (t >= CUT.alarm) return { grade: null, vignette: 0.62 };
+  if (t >= CUT.door) return { grade: null, vignette: 0.58 };
+  if (t >= CUT.silent) return { grade: null, vignette: 0.6 };
+  return { grade: null, vignette: 0.5 };
 }
 const DEFS = `<defs>
 <linearGradient id="s08Cold" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#0A1030" stop-opacity="0.45"/><stop offset="0.45" stop-color="#0A1030" stop-opacity="0.15"/><stop offset="1" stop-color="#0A1030" stop-opacity="0"/></linearGradient>
 </defs>`;
-const BEATS = { T0, END, tSlam, tTurnFam, tFriends, tServer, tEvery, tJoined, tDoor, tGlass0, tGlassOff, tGlassDown, tHim, tOpen, tSit0, tSit1, tNoob, tWith, tHundred, tTimes, tRoll, tPM, tAlarm, tSitUp, tKing, tAwake, tResets, tSon, tBest, tRich, tFav };
+const BEATS = { tGo: A[4].b - 0.08, T0, END, tSlam, tTurnFam, tFriends, tServer, tEvery, tJoined, tDoor, tGlass0, tGlassOff, tGlassDown, tHim, tOpen, tSit0, tSit1, tNoob, tWith, tHundred, tTimes, tRoll, tPM, tAlarm, tSitUp, tKing, tAwake, tResets, tSon, tBest, tRich, tFav };
 module.exports = { scene, look, DEFS, SHOTS, CUT, BEATS, nnCount };

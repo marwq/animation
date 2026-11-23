@@ -707,8 +707,8 @@ function shEveryb(t) {
 function shNoodle(t) {
   const cam = camKeys(t, [[CUT.noodle, camAt(2400, 650, 1.55)], [CUT.nodad, camAt(2390, 640, 1.62)]], ease.inOut);
   const swing = Math.sin(t * 4);
-  const nd = noodleSit(t, { face: 'joy', kneeL: 90 + 18 * swing, kneeR: 90 - 18 * swing, armL: 20, armR: 30, turn: 0.3 }, { arms: true, energy: 1 });
-  const ch = dad(t, { x: DADF.x, y: DADF.y, s: DFS, turn: -0.35, face: still('happy', { eyes: { look: [-0.8, -0.2] } }), armL: 14, armR: 14, nametag: false }, { arms: false });
+  const nd = noodleSit(t, { face: 'joy', volume: false, kneeL: 90 + 18 * swing, kneeR: 90 - 18 * swing, armL: 20, armR: 30, turn: 0.3 }, { arms: true, energy: 1 });
+  const ch = dad(t, { x: DADF.x, y: DADF.y, s: DFS, volume: false, turn: -0.35, face: still('happy', { eyes: { look: [-0.8, -0.2] } }), armL: 14, armR: 14, nametag: false }, { arms: false });
   const kd = KID0(t, { x: KIDP.x, y: KIDP.y, s: sAt(KIDP.y), turn: -0.5, face: { name: 'happy', eyes: { look: [-0.6, -0.6] } }, armL: 100, armR: 8 }, { arms: false });
   const crowd = eveCrowd(t, 'love');
   const bub = sBubble(cam, NOOD.x - 20, NOOD.hip - 420, { t, user: 'NoodleBoi', ...G.chatLine(t, '07.10', { to: 'bro', hold: 0.5, pre: 0.2, text: 'Your dad is so cool, bro.' }) });
@@ -793,8 +793,8 @@ function scene(t) {
   return SHOTS[shotAt(t)][1](t);
 }
 function look(t) {
-  if (t >= CUT.key && t < CUT.hop1) return { grade: 'night', vignette: 0.6 };
-  if (t >= CUT.real) return { grade: 'night', vignette: 0.55 };
+  if (t >= CUT.key && t < CUT.hop1) return { grade: null, vignette: 0.55 };
+  if (t >= CUT.real) return { grade: null, vignette: 0.5 };
   if (t >= CUT.mine) return { grade: 'warm', vignette: 0.75 };
   return { grade: 'warm', vignette: 0.45 };
 }
