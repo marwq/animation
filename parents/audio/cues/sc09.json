@@ -1,0 +1,1104 @@
+{
+ "scene": "SC 09",
+ "start": 555.77,
+ "end": 611.45,
+ "music": [
+  {
+   "start": 555.77,
+   "end": 565.03,
+   "mood": "boss",
+   "energy": 0.7,
+   "in": "swell",
+   "out": "cut"
+  },
+  {
+   "start": 565.03,
+   "end": 573.11,
+   "mood": "boss",
+   "energy": 0.85,
+   "in": "cut",
+   "out": "scratch"
+  },
+  {
+   "start": 573.11,
+   "end": 574.63,
+   "mood": "silence",
+   "energy": 0,
+   "in": "cut",
+   "out": "cut"
+  },
+  {
+   "start": 574.63,
+   "end": 577.97,
+   "mood": "boss",
+   "energy": 0.65,
+   "in": "cut",
+   "out": "tapestop"
+  },
+  {
+   "start": 577.97,
+   "end": 580.07,
+   "mood": "silence",
+   "energy": 0,
+   "in": "cut",
+   "out": "cut"
+  },
+  {
+   "start": 580.07,
+   "end": 588.22,
+   "mood": "boss",
+   "energy": 0.8,
+   "in": "cut",
+   "out": "cut"
+  },
+  {
+   "start": 588.22,
+   "end": 591.87,
+   "mood": "tender",
+   "energy": 0.35,
+   "in": "fade",
+   "out": "cut"
+  },
+  {
+   "start": 591.87,
+   "end": 594.717,
+   "mood": "epic",
+   "energy": 0.6,
+   "in": "swell",
+   "out": "scratch"
+  },
+  {
+   "start": 594.717,
+   "end": 598.21,
+   "mood": "playful",
+   "energy": 0.3,
+   "in": "cut",
+   "out": "cut"
+  },
+  {
+   "start": 598.21,
+   "end": 599.241,
+   "mood": "silence",
+   "energy": 0,
+   "in": "cut",
+   "out": "cut"
+  },
+  {
+   "start": 599.241,
+   "end": 600.45,
+   "mood": "epic",
+   "energy": 0.4,
+   "in": "swell",
+   "out": "cut"
+  },
+  {
+   "start": 600.45,
+   "end": 603.863,
+   "mood": "epic",
+   "energy": 0.9,
+   "in": "cut",
+   "out": "cut"
+  },
+  {
+   "start": 603.863,
+   "end": 611.45,
+   "mood": "family",
+   "energy": 0.75,
+   "in": "swell",
+   "out": "sting"
+  }
+ ],
+ "ambience": [
+  {
+   "start": 555.77,
+   "end": 573.11,
+   "name": "wind",
+   "gain_db": -12
+  },
+  {
+   "start": 555.77,
+   "end": 573.11,
+   "name": "town",
+   "gain_db": -18
+  },
+  {
+   "start": 573.11,
+   "end": 574.63,
+   "name": "night",
+   "gain_db": -14
+  },
+  {
+   "start": 574.63,
+   "end": 588.22,
+   "name": "wind",
+   "gain_db": -12
+  },
+  {
+   "start": 588.22,
+   "end": 611.45,
+   "name": "night",
+   "gain_db": -14
+  }
+ ],
+ "footsteps": [
+  {
+   "start": 562.41,
+   "end": 565.03,
+   "interval": 0.196,
+   "surface": "hard",
+   "gain_db": -12,
+   "pan": 0
+  },
+  {
+   "start": 576.374,
+   "end": 576.724,
+   "interval": 0.175,
+   "surface": "hard",
+   "gain_db": -14,
+   "pan": 0.3
+  },
+  {
+   "start": 591.87,
+   "end": 593.13,
+   "interval": 0.209,
+   "surface": "wood",
+   "gain_db": -6,
+   "pan": 0
+  },
+  {
+   "start": 592.42,
+   "end": 593.13,
+   "interval": 0.262,
+   "surface": "wood",
+   "gain_db": -10,
+   "pan": 0.3
+  },
+  {
+   "start": 592.93,
+   "end": 593.63,
+   "interval": 0.209,
+   "surface": "wood",
+   "gain_db": -6,
+   "pan": 0.4
+  }
+ ],
+ "sfx": [
+  [
+   555.77,
+   "sub_drop",
+   -2,
+   0,
+   "red flash: the alarm becomes the night city"
+  ],
+  [
+   555.82,
+   "rumble",
+   -2,
+   0,
+   "the ground shakes, rubble rising behind the city"
+  ],
+  [
+   556.27,
+   "stone",
+   -8,
+   0.25,
+   "cubes tumbling off his crown"
+  ],
+  [
+   556.41,
+   "boom",
+   -2,
+   0,
+   "the purple eyes ignite on \"King\""
+  ],
+  [
+   556.66,
+   "crowd_gasp",
+   -10,
+   0.4,
+   "the players on the ledge flinch"
+  ],
+  [
+   557.17,
+   "rumble",
+   -4,
+   0,
+   "he keeps rising, tilt up"
+  ],
+  [
+   557.29,
+   "riser",
+   -6,
+   0,
+   "the rise builds to his full height"
+  ],
+  [
+   557.38,
+   "dramatic",
+   -4,
+   0,
+   "THE BLOCK KING title drops in"
+  ],
+  [
+   559.34,
+   "ui_pop",
+   -6,
+   0,
+   "boss bar drops in"
+  ],
+  [
+   559.39,
+   "impact",
+   -2,
+   0,
+   "fully risen: purple flash"
+  ],
+  [
+   560.1,
+   "whoosh",
+   -6,
+   0.3,
+   "whip to the face close-up"
+  ],
+  [
+   560.25,
+   "monster_growl",
+   -8,
+   0,
+   "the jaw grinds"
+  ],
+  [
+   561.83,
+   "zoom_in",
+   -6,
+   0,
+   "smash-zoom out"
+  ],
+  [
+   562.36,
+   "thunder",
+   -4,
+   -0.3,
+   "lightning on MINE"
+  ],
+  [
+   562.41,
+   "monster_roar",
+   -6,
+   0,
+   "the roar (softened under the voice)"
+  ],
+  [
+   562.43,
+   "impact",
+   0,
+   0,
+   "shockwave across the city"
+  ],
+  [
+   562.66,
+   "rock_drop",
+   -6,
+   0.3,
+   "debris raining down"
+  ],
+  [
+   562.71,
+   "crowd_gasp",
+   -8,
+   -0.4,
+   "players flee across the ledge"
+  ],
+  [
+   563.99,
+   "stone",
+   -6,
+   0,
+   "the fists go up, aiming at the arena"
+  ],
+  [
+   565.03,
+   "whoosh",
+   -6,
+   -0.3,
+   "whip-pan to the arena"
+  ],
+  [
+   565.88,
+   "crowd_gasp",
+   -8,
+   0,
+   "the arena crowd sees the shadow"
+  ],
+  [
+   565.89,
+   "whoosh_down",
+   -4,
+   0,
+   "the giant fist falls on the arena"
+  ],
+  [
+   566.23,
+   "explosion",
+   0,
+   0,
+   "the arena smashed"
+  ],
+  [
+   566.25,
+   "boom",
+   -4,
+   0,
+   "shockwave + white flash"
+  ],
+  [
+   566.41,
+   "rock_drop",
+   -6,
+   0.1,
+   "cubes and rubble"
+  ],
+  [
+   566.95,
+   "whoosh",
+   -6,
+   0.3,
+   "whip-pan to Tycoon Valley (castle towers)"
+  ],
+  [
+   566.98,
+   "stone",
+   -10,
+   0,
+   "the fist lifts away"
+  ],
+  [
+   567.49,
+   "whoosh_down",
+   -4,
+   -0.044,
+   "the giant fist falls on Tycoon Valley (castle towers)"
+  ],
+  [
+   567.83,
+   "explosion",
+   0,
+   -0.044,
+   "Tycoon Valley (castle towers) smashed"
+  ],
+  [
+   567.85,
+   "boom",
+   -4,
+   -0.044,
+   "shockwave + white flash"
+  ],
+  [
+   568.01,
+   "rock_drop",
+   -6,
+   0.05600000000000001,
+   "cubes and rubble"
+  ],
+  [
+   568.58,
+   "stone",
+   -10,
+   -0.044,
+   "the fist lifts away"
+  ],
+  [
+   569.15,
+   "whoosh",
+   -6,
+   -0.3,
+   "whip-pan to Granny's cookie factory"
+  ],
+  [
+   570.45,
+   "whoosh_down",
+   -4,
+   0.029,
+   "the giant fist falls on Granny's cookie factory"
+  ],
+  [
+   570.79,
+   "explosion",
+   0,
+   0.029,
+   "Granny's cookie factory smashed"
+  ],
+  [
+   570.81,
+   "boom",
+   -4,
+   0.029,
+   "shockwave + white flash"
+  ],
+  [
+   570.89,
+   "pop",
+   -12,
+   -0.117,
+   "cookies flying"
+  ],
+  [
+   570.97,
+   "rock_drop",
+   -6,
+   0.129,
+   "cubes and rubble"
+  ],
+  [
+   571.02,
+   "pop",
+   -12,
+   -0.029,
+   "cookies flying"
+  ],
+  [
+   571.15,
+   "pop",
+   -12,
+   0.058,
+   "cookies flying"
+  ],
+  [
+   571.28,
+   "pop",
+   -12,
+   0.146,
+   "cookies flying"
+  ],
+  [
+   571.41,
+   "pop",
+   -12,
+   0.233,
+   "cookies flying"
+  ],
+  [
+   571.54,
+   "stone",
+   -10,
+   0.029,
+   "the fist lifts away"
+  ],
+  [
+   571.74,
+   "whoosh",
+   -4,
+   0.2,
+   "one cookie flies at the camera (slow motion)"
+  ],
+  [
+   572.84,
+   "egg_crack",
+   -2,
+   0.2,
+   "the cookie cracks on the lens"
+  ],
+  [
+   573.11,
+   "whoosh",
+   -8,
+   0.3,
+   "cut to the real living room"
+  ],
+  [
+   573.73,
+   "boom",
+   0,
+   0.3,
+   "MY COOKIES! punch-in on Granny"
+  ],
+  [
+   573.88,
+   "steam_hiss",
+   -6,
+   0.35,
+   "steam off her curlers"
+  ],
+  [
+   574.47,
+   "chat_pop",
+   -8,
+   -0.175,
+   "\"Clan, attack!\" bubble"
+  ],
+  [
+   574.63,
+   "whoosh",
+   -6,
+   -0.3,
+   "whip to DarkBlade on the roof"
+  ],
+  [
+   574.67,
+   "shine",
+   -6,
+   -0.131,
+   "sword raised, red glint"
+  ],
+  [
+   574.77,
+   "typing",
+   -14,
+   -0.175,
+   "typing"
+  ],
+  [
+   575.73,
+   "whoosh_up",
+   -6,
+   0.029,
+   "the clan leaps off the roof"
+  ],
+  [
+   575.83,
+   "jump",
+   -10,
+   0.117,
+   "the clan leaps off the roof"
+  ],
+  [
+   575.93,
+   "jump",
+   -10,
+   0.204,
+   "the clan leaps off the roof"
+  ],
+  [
+   576.03,
+   "jump",
+   -10,
+   0.292,
+   "the clan leaps off the roof"
+  ],
+  [
+   576.674,
+   "swish",
+   -6,
+   0.3,
+   "the boss winds up the flick"
+  ],
+  [
+   576.724,
+   "slap",
+   0,
+   0.3,
+   "FLICK"
+  ],
+  [
+   576.744,
+   "whoosh_up",
+   -10,
+   -0.532,
+   "clan member flies away"
+  ],
+  [
+   576.754,
+   "boing",
+   -4,
+   0.3,
+   "the clan launched"
+  ],
+  [
+   576.76,
+   "chat_pop",
+   -10,
+   -0.481,
+   "\"Clan?\" bubble"
+  ],
+  [
+   576.794,
+   "whoosh_up",
+   -10,
+   -0.19,
+   "clan member flies away"
+  ],
+  [
+   576.844,
+   "whoosh_up",
+   -10,
+   0.241,
+   "clan member flies away"
+  ],
+  [
+   576.894,
+   "whoosh_up",
+   -10,
+   0.554,
+   "clan member flies away"
+  ],
+  [
+   577.524,
+   "shine",
+   -8,
+   -0.532,
+   "twinkle in the sky"
+  ],
+  [
+   577.574,
+   "shine",
+   -8,
+   -0.19,
+   "twinkle in the sky"
+  ],
+  [
+   577.624,
+   "shine",
+   -8,
+   0.241,
+   "twinkle in the sky"
+  ],
+  [
+   577.674,
+   "shine",
+   -8,
+   0.554,
+   "twinkle in the sky"
+  ],
+  [
+   577.93,
+   "chat_pop",
+   -6,
+   0,
+   "\"CLAN?!\" bubble"
+  ],
+  [
+   577.97,
+   "whoosh",
+   -8,
+   0.3,
+   "whip to DarkBlade alone"
+  ],
+  [
+   578.91,
+   "wind_gust",
+   -10,
+   0.4,
+   "a tumbleweed rolls by"
+  ],
+  [
+   579.31,
+   "cricket",
+   -6,
+   0,
+   "awkward silence"
+  ],
+  [
+   579.91,
+   "chat_pop",
+   -8,
+   0.1,
+   "Noodle's bubble"
+  ],
+  [
+   580.07,
+   "whoosh",
+   -6,
+   -0.3,
+   "whip to Noodle"
+  ],
+  [
+   580.21,
+   "typing",
+   -12,
+   0.1,
+   "typing"
+  ],
+  [
+   580.27,
+   "ui_pop",
+   -8,
+   -0.7,
+   "FRIENDS card: YOU offline"
+  ],
+  [
+   580.81,
+   "notify",
+   -4,
+   -0.6,
+   "@YOU ping"
+  ],
+  [
+   581.47,
+   "whoosh_down",
+   -6,
+   0.3,
+   "a stone block falls"
+  ],
+  [
+   581.77,
+   "rock_drop",
+   0,
+   0.3,
+   "the block crashes next to Noodle"
+  ],
+  [
+   581.79,
+   "notify",
+   -6,
+   -0.6,
+   "@YOU ping again"
+  ],
+  [
+   582.63,
+   "whoosh",
+   -6,
+   0.3,
+   "whip to the city wide"
+  ],
+  [
+   582.73,
+   "ui_pop",
+   -4,
+   0,
+   "SERVER HEALTH bar in"
+  ],
+  [
+   583.18,
+   "boom",
+   -4,
+   0,
+   "double-fist slam"
+  ],
+  [
+   583.28,
+   "rock_drop",
+   -10,
+   0.2,
+   "debris"
+  ],
+  [
+   584.08,
+   "boom",
+   -4,
+   0,
+   "double-fist slam"
+  ],
+  [
+   584.18,
+   "rock_drop",
+   -10,
+   0.2,
+   "debris"
+  ],
+  [
+   585.13,
+   "impact",
+   -2,
+   0,
+   "90 % (the arena wreck)"
+  ],
+  [
+   585.15,
+   "glitch",
+   -8,
+   0,
+   "bar flash"
+  ],
+  [
+   586.45,
+   "impact",
+   0,
+   0,
+   "50 % (the factory wreck)"
+  ],
+  [
+   586.47,
+   "glitch",
+   -6,
+   0,
+   "bar flash"
+  ],
+  [
+   587.77,
+   "explosion",
+   0,
+   0,
+   "20 %: red alarm, the boss roars"
+  ],
+  [
+   587.82,
+   "alarm",
+   -6,
+   0,
+   "warning edges pulse"
+  ],
+  [
+   588.22,
+   "alarm_beep",
+   -16,
+   0.4,
+   "the red PC warning in the bedroom"
+  ],
+  [
+   588.32,
+   "cloth",
+   -10,
+   0.2,
+   "he turns to Dad"
+  ],
+  [
+   590.8,
+   "cloth",
+   -10,
+   0.2,
+   "Dad puts his glasses back on"
+  ],
+  [
+   591.1,
+   "shine",
+   -6,
+   0.25,
+   "sparkle on \"don't\""
+  ],
+  [
+   591.87,
+   "whoosh",
+   -6,
+   -0.3,
+   "whip to the stairs"
+  ],
+  [
+   593.13,
+   "whoosh",
+   -6,
+   -0.3,
+   "he bursts into the living room"
+  ],
+  [
+   593.63,
+   "skid",
+   -4,
+   0.3,
+   "skid stop"
+  ],
+  [
+   594.717,
+   "whoosh",
+   -8,
+   0.3,
+   "whip to the wall clock"
+  ],
+  [
+   594.97,
+   "countdown_tick",
+   -4,
+   0.3,
+   "the clock ticks to 11:00"
+  ],
+  [
+   595.02,
+   "bell",
+   -12,
+   0.3,
+   "11 o'clock"
+  ],
+  [
+   597.162,
+   "boom",
+   -2,
+   -0.3,
+   "BEDTIME. punch-in"
+  ],
+  [
+   597.312,
+   "slide_down",
+   -8,
+   0.4,
+   "the hero deflates"
+  ],
+  [
+   598.59,
+   "glass",
+   -2,
+   0.1,
+   "the tea cup clinks down on the table"
+  ],
+  [
+   598.81,
+   "cloth",
+   -12,
+   0,
+   "the headset lowers into frame"
+  ],
+  [
+   599.57,
+   "click",
+   -2,
+   0,
+   "the headset clicks on"
+  ],
+  [
+   599.59,
+   "tv_on",
+   -8,
+   0,
+   "the cups light up"
+  ],
+  [
+   599.72,
+   "shine",
+   -4,
+   0.1,
+   "glint on her glasses"
+  ],
+  [
+   600.45,
+   "whoosh_up",
+   -4,
+   0,
+   "low angle, rays"
+  ],
+  [
+   600.77,
+   "orch_hit",
+   2,
+   0,
+   "LET'S GO."
+  ],
+  [
+   600.79,
+   "impact",
+   -2,
+   0,
+   "smash-zoom"
+  ],
+  [
+   601.91,
+   "whoosh",
+   -6,
+   0.3,
+   "whip to Granny"
+  ],
+  [
+   602.53,
+   "egg_crack",
+   -2,
+   0.35,
+   "CRACK!"
+  ],
+  [
+   603.01,
+   "egg_crack",
+   -2,
+   -0.2,
+   "CRACK!"
+  ],
+  [
+   603.863,
+   "whoosh",
+   -8,
+   -0.3,
+   "cut to the wide living room"
+  ],
+  [
+   604.163,
+   "tv_on",
+   -6,
+   0,
+   "the screens light up"
+  ],
+  [
+   604.213,
+   "thud",
+   -6,
+   -0.05,
+   "Dad flops onto the couch"
+  ],
+  [
+   604.243,
+   "boing",
+   -12,
+   -0.05,
+   "couch squash"
+  ],
+  [
+   604.563,
+   "loading",
+   -10,
+   -0.4,
+   "JOINING SERVER..."
+  ],
+  [
+   605.83,
+   "ui_pop",
+   -4,
+   -0.33,
+   "face panel pops in"
+  ],
+  [
+   606.03,
+   "ui_pop",
+   -4,
+   0.33,
+   "face panel pops in"
+  ],
+  [
+   606.55,
+   "ui_pop",
+   -4,
+   -0.33,
+   "face panel pops in"
+  ],
+  [
+   606.83,
+   "ui_pop",
+   -4,
+   0.33,
+   "face panel pops in"
+  ],
+  [
+   606.93,
+   "notify",
+   -6,
+   -0.33,
+   "\"joined the server\" toast"
+  ],
+  [
+   607.05,
+   "notify",
+   -6,
+   0.33,
+   "\"joined the server\" toast"
+  ],
+  [
+   607.17,
+   "notify",
+   -6,
+   -0.33,
+   "\"joined the server\" toast"
+  ],
+  [
+   607.29,
+   "notify",
+   -6,
+   0.33,
+   "\"joined the server\" toast"
+  ],
+  [
+   608.2,
+   "level_up",
+   -2,
+   0,
+   "THE FAMILY IS ONLINE"
+  ],
+  [
+   610.7,
+   "whoosh_long",
+   -4,
+   0,
+   "push into the screen"
+  ],
+  [
+   611,
+   "portal_enter",
+   -4,
+   0,
+   "into the game -> white"
+  ]
+ ]
+}

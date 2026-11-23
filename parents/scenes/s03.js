@@ -162,7 +162,8 @@ function shExt(t) {
   const win = H.toScreen(cam, { x: 736, y: 584 });
   o += K.sparkles([[win.x - 80, win.y - 60, 30 * bump(t, CUT.ext + 0.3, CUT.setup)], [win.x + 90, win.y - 20, 22 * bump(t, CUT.ext + 0.45, CUT.setup)]], t);
   o += panelTag(60, 60, '7:00 PM · GAME NIGHT', '#2A1640', '#FFE14D', 1.1);
-  return o + K.C.whiteFlash(0.8 * (1 - seg(t, CUT.ext, CUT.ext + 0.18))) + whip(t, CUT.setup, 1, 0.1) + zoomLines(960, 540, seg(u, 0.6, 1) * 0.6, t);
+  // opens with the mirror half of SC 02's closing whip-pan (streaks moving right, fading down over 0.1 s)
+  return o + whip(t, CUT.ext, 1, 0.1) + K.C.whiteFlash(0.35 * (1 - seg(t, CUT.ext, CUT.ext + 0.14))) + whip(t, CUT.setup, 1, 0.1) + zoomLines(960, 540, seg(u, 0.6, 1) * 0.6, t);
 }
 
 // 2. "the living room turned into a gaming setup" — devices pop in on the words

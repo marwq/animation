@@ -34,7 +34,7 @@ const add = (t, name, g, pan, note) => { if (t >= T0 - 0.3 && t < END) sfx.push(
 
 // ================================================================= SFX, shot by shot (same order as scenes/s03.js)
 // ---- 1. "That evening," — the house at dusk, push into the bay window
-add(T0, 'whoosh', -6, 0, 'white flash in from the Saturday kitchen');
+add(T0, 'whoosh', -6, 0.3, 'whip-pan in from the Saturday kitchen (mirror half of the SC 02 whip)');
 add(T0 + 0.45, 'sparkle', -12, P(700), 'the window twinkles');
 add(C.setup, 'whoosh', -4, 0.2, 'whip into the living room');
 // ---- 2. "…turned into a gaming setup" — the devices pop in on the words

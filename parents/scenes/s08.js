@@ -137,7 +137,7 @@ const BOARD_ROWS = [
 ];
 function boardSvg(t, roll, stamp = 0, s = 1) {
   let o = G.leaderboard({ rows: BOARD_ROWS, nShow: 6, roll, t, highlight: 'YOU', title: 'TOP PLAYERS', unit: 'FANS', x: 0, y: 0, s: 1 });
-  if (stamp > 0) o += G.stamp({ text: 'THE SON', k: stamp, x: 120, y: 340, s: 0.9, rot: -7, col: '#9AA3B8', size: 110 });
+  if (stamp > 0) o += G.stamp({ text: 'THE SON', k: stamp, x: 120, y: 340, s: 0.9, rot: -7, col: '#1E2448', size: 110 });
   return S.g(o, `scale(${f(s)})`);
 }
 const boardScreen = (t, roll, stamp) => (w_, h_) => boardSvg(t, roll, stamp, h_ / 900);
@@ -198,7 +198,7 @@ function grannyPanel(t) {
   const Lt = GS.tycoon.layers(t, cam, { time: 'day', granny: 4, billboard: 0, neon: 1 });
   const ch = actor('grandmaAvatar', t, { x: 1520, y: 930, s: 0.42, coins: 0.5 + 0.5 * Math.abs(Math.sin(t * 4)), armR: 120, face: { name: 'rich' }, nametag: false }, { arms: false, energy: 0 });
   let o = Lt.bg + Lt.mid + view(cam, ch) + Lt.front + Lt.light;
-  o += G.coinCounter({ x: 960, y: 150, s: 2.1, value: 9999999, from: 9999000, roll: (t * 0.8) % 1, rocket: 1, t, anchor: 'center' });
+  o += G.coinCounter({ x: 960, y: 150, s: 2.1, value: 9999999, rocket: 1, t, anchor: 'center' });
   return o;
 }
 function dadPanel(t) {
@@ -244,23 +244,26 @@ const heroLie = (t, pose = {}, act = {}) => actor('you', t, { ...LIE, t, ...pose
 // "wall side": the hero's face on the pillow, seen from the wall (tight; Dad an out-of-focus warm shape behind him)
 function heroWall(t, o = {}) {
   const k = o.k ?? 0;                                     // slow push 0..1
+  const s = lerp(1.18, 1.3, ease.inOut(k));
+  const hx = 820 - 40 * ease.inOut(k), hy = 500 + 6 * Math.sin(t * 1.3);   // the centre of his head
   let out = S.rect(0, 0, 1920, 1080, 0, { fill: '#232A5C' });
-  out += S.ellipse(1500, 300, 700, 520, { fill: '#3A3F78', opacity: 0.8 }) + S.ellipse(1560, 360, 360, 300, { fill: '#FFC872', opacity: 0.16 });
+  out += S.ellipse(1480, 260, 760, 520, { fill: '#3A3F78', opacity: 0.8 }) + S.ellipse(1520, 300, 380, 300, { fill: '#FFC872', opacity: 0.14 });
   // Dad, out of focus, sitting behind him (soft blob silhouette with a warm rim)
-  const dx = 1470, dy = 760;
-  out += S.g(S.rect(dx - 230, dy - 330, 460, 520, 120, { fill: '#5A4A6A' }) + S.rect(dx - 170, dy - 720, 340, 400, 110, { fill: '#6A5868' }) + S.rect(dx - 150, dy - 520, 300, 60, 30, { fill: '#4A3A3A' }), null, { opacity: 0.55 });
-  out += S.rect(dx - 150, dy - 712, 300, 40, 20, { fill: '#FFC872', opacity: 0.25 });
-  const s = lerp(1.55, 1.68, ease.inOut(k));
-  const hx = 1980, hy = 690 + 10 * Math.sin(t * 1.3);
-  // pillow
-  out += S.rect(-80, hy - 40, 1100, 520, 120, { fill: '#E9ECF8', stroke: '#151515', 'stroke-width': 8 }) + S.path(`M40 ${hy + 60} Q400 ${hy + 20} 900 ${hy + 70}`, ln(6, '#C9CCE0'));
-  out += actor('you', t, { x: hx, y: hy, s, rot: -90, view: 'front', volume: false, armL: 6, armR: 6, face: o.face || { name: 'sad', eyes: { look: [0, 0] } }, ...(o.pose || {}) }, o.act || { energy: 0.3, arms: false });
-  // the duvet over his shoulder
-  out += S.path(`M760 1090 Q820 ${hy + 160} 1150 ${hy + 120} Q1500 ${hy + 90} 1960 ${hy + 140} L1960 1090 Z`, { fill: '#2E8C8A', stroke: '#151515', 'stroke-width': 8 });
-  out += S.path(`M900 ${hy + 250} l40 -30 l40 30 l-40 30 Z M1300 ${hy + 220} l40 -30 l40 30 l-40 30 Z M1700 ${hy + 260} l40 -30 l40 30 l-40 30 Z`, { fill: 'none', stroke: '#5FC4C0', 'stroke-width': 5 });
+  const dx = 1500, dy = 520;
+  out += S.g(S.rect(dx - 260, dy - 180, 520, 600, 130, { fill: '#5A4A6A' }) + S.rect(dx - 175, dy - 560, 350, 400, 110, { fill: '#6A5868' }) + S.rect(dx - 150, dy - 360, 300, 60, 30, { fill: '#4A3A3A' }), null, { opacity: 0.55 });
+  out += S.rect(dx - 160, dy - 552, 320, 44, 22, { fill: '#FFC872', opacity: 0.22 });
+  // the pillow under his head
+  out += S.rect(-120, hy + 230 * s / 1.25, 1260, 640, 140, { fill: '#E9ECF8', stroke: '#151515', 'stroke-width': 8 }) + S.path(`M20 ${f(hy + 330)} Q420 ${f(hy + 290)} 980 ${f(hy + 345)}`, ln(6, '#C9CCE0'));
+  out += actor('you', t, { x: hx + 262 * s, y: hy + 481 * s, s, rot: -90, view: 'front', volume: false, armL: 6, armR: 6, face: o.face || { name: 'sad', eyes: { look: [0, 0] } }, ...(o.pose || {}) }, o.act || { energy: 0.3, arms: false });
+  // the duvet pulled up over his shoulder
+  const dt = hy - 150;
+  out += S.path(`M${f(hx + 170 * s)} 1090 Q${f(hx + 150 * s)} ${f(dt + 60)} ${f(hx + 300 * s)} ${f(dt)} Q${f(hx + 700)} ${f(dt - 40)} 1960 ${f(dt + 20)} L1960 1090 Z`, { fill: '#2E8C8A', stroke: '#151515', 'stroke-width': 8 });
+  let dd = '';
+  for (let i = 0; i < 5; i++) { const x = hx + 330 * s + i * 230, y = dt + 150 + (i % 2) * 140; dd += `M${f(x)} ${f(y)} l40 -30 l40 30 l-40 30 Z `; }
+  out += S.path(dd, { fill: 'none', stroke: '#5FC4C0', 'stroke-width': 5 });
   // lamp warmth on his face side + night blue
-  out += S.ellipse(560, 420, 620, 420, { fill: '#FFC872', opacity: 0.12 });
-  out += S.rect(0, 0, 1920, 1080, 0, { fill: '#1A2050', opacity: 0.18 });
+  out += S.ellipse(hx - 260, hy - 80, 620, 420, { fill: '#FFC872', opacity: 0.12 });
+  out += S.rect(0, 0, 1920, 1080, 0, { fill: '#1A2050', opacity: 0.16 });
   return out + letterbox(1, 70);
 }
 // polaroid memory: the hero at his desk (back view) and Dad in the open door, one season. cheap-ish (bedroom set + 2 actors)
@@ -336,7 +339,7 @@ function shBoard(t) {
   const roll = seg(t, CUT.board + 0.15, tSon - 0.05);
   const st = seg(t, tSon, tSon + 0.3);
   let o = S.rect(0, 0, 1920, 1080, 0, { fill: '#0E1230' });
-  o += G.deviceFrame({ type: 'pc', x: 960, y: 540, s: lerp(1.5, 1.62, ease.inOut(u)), t, glow: 0.6, screen: (w_, h_) => S.rect(0, 0, w_, h_, 0, { fill: '#0B1A3A' }) + S.g(boardSvg(t, roll, st, h_ / 920), `translate(${f(w_ / 2)} ${f(h_ / 2 + 8)})`) });
+  o += G.deviceFrame({ type: 'pc', x: 960, y: 500, s: lerp(1.36, 1.46, ease.inOut(u)), t, glow: 0.6, screen: (w_, h_) => S.rect(0, 0, w_, h_, 0, { fill: '#0B1A3A' }) + S.g(boardSvg(t, roll, st, h_ / 920), `translate(${f(w_ / 2)} ${f(h_ / 2 + 8)})`) });
   o += S.rect(0, 0, 1920, 1080, 0, { fill: 'url(#s08Cold)' });
   return o;
 }
@@ -374,7 +377,7 @@ function shSlam(t) {
   if (t < tSlam + 0.3) {
     const pL = GS.toScreen(cam, MON.cx - MON.w / 2 + 10, ty), pR = GS.toScreen(cam, MON.cx + MON.w / 2 - 10, ty);
     const lift = t > tSlam ? 120 * ease.out(seg(t, tSlam + 0.05, tSlam + 0.3)) : 0;
-    o += heroArm(lerp(-200, 140, inK), 1250, lerp(-100, pL.x, inK), pL.y - 20 + lift, 170) + heroArm(lerp(2120, 1780, inK), 1250, lerp(2020, pR.x, inK), pR.y - 20 + lift, 170);
+    o += heroArm(560, lerp(1500, 1230, inK), lerp(500, pL.x, inK), lerp(1300, pL.y - 20, inK) + lift, 160) + heroArm(1360, lerp(1500, 1230, inK), lerp(1420, pR.x, inK), lerp(1300, pR.y - 20, inK) + lift, 160);
   }
   o += K.bang('SLAM!', 960, 330, pop(t, tSlam, 0.16), 200, -6, '#FF5A4A');
   o += smash(t, tSlam, 0.1, 0.8);
@@ -415,7 +418,7 @@ function shFriends(t) {
 }
 // 10. "You're taking EVERYTHING!" — smash zoom: the scream, red zoom lines, shake
 function shEvery(t) {
-  const cam = shakeAll(camKeys(t, [[CUT.every, camAt(STAND.x + 10, 560, 2.6)], [tEvery - 0.06, camAt(STAND.x + 10, 545, 2.75)], [tEvery + 0.06, camAt(STAND.x + 10, 520, 3.4)], [CUT.sweetie, camAt(STAND.x + 10, 515, 3.5)]], ease.out), t, [[tEvery, 0.6, 18]]);
+  const cam = shakeAll(camKeys(t, [[CUT.every, camAt(STAND.x + 10, 636, 2.6)], [tEvery - 0.06, camAt(STAND.x + 10, 634, 2.75)], [tEvery + 0.06, camAt(STAND.x + 10, 628, 3.4)], [CUT.sweetie, camAt(STAND.x + 10, 627, 3.5)]], ease.out), t, [[tEvery, 0.6, 18]]);
   const seated = famTurned(t, tTurnFam - 5);
   const hero = actor('you', t, { x: STAND.x, y: STAND.y, s: 0.5, turn: 0.3, volume: false, face: t > tEvery - 0.1 ? { name: 'scream', fx: ['anger', 'steam'] } : { name: 'angry', fx: ['anger'] }, armL: 40 + 40 * bump(t, tEvery - 0.1, A[2].b), armR: 40 + 40 * bump(t, tEvery - 0.1, A[2].b) }, { energy: 2 });
   let o = room(t, cam, { glowK: 0.9 }, { seated, standing: hero, mon: { fold: 1 } });
@@ -432,7 +435,7 @@ function shSweetie(t) {
 // 12. "I wish you never joined!" — close on him: the tears, the scream; he spins and bolts
 function shNever(t) {
   const tGo = A[4].b - 0.08;
-  const cam = shakeAll(camKeys(t, [[CUT.never, camAt(STAND.x, 545, 2.7)], [tJoined, camAt(STAND.x, 540, 2.9)], [CUT.stairs, camAt(STAND.x + 60, 540, 3.0)]], ease.out), t, [[tJoined, 0.4, 12]]);
+  const cam = shakeAll(camKeys(t, [[CUT.never, camAt(STAND.x, 634, 2.7)], [tJoined, camAt(STAND.x, 631, 2.9)], [CUT.stairs, camAt(STAND.x + 60, 630, 3.0)]], ease.out), t, [[tJoined, 0.4, 12]]);
   const go = seg(t, tGo, CUT.stairs);
   const seated = famTurned(t, tTurnFam - 5);
   const face = { name: 'angry', mouth: t > w(4, 'never') ? 'scream' : 'teeth', fx: ['tears', 'anger'] };
@@ -446,7 +449,7 @@ function shNever(t) {
 // 13. the run up the stairs (a blur) and the door SLAM
 function stairsY(x) { return x >= 1380 ? 420 : x <= 420 ? 940 : Math.min(940, 460 + (1340 - x) * 0.5); }
 function shStairs(t) {
-  const cam = shakeAll({ zoom: 0.98, x: 10, y: -30 }, t, [[tDoor, 0.45, 20]]);
+  const cam = shakeAll(camKeys(t, [[CUT.stairs, { zoom: 1.12, x: -60, y: -20 }], [tDoor, { zoom: 1.2, x: 150, y: -90 }]], ease.inOut), t, [[tDoor, 0.45, 20]]);
   const u = seg(t, CUT.stairs, tDoor - 0.1);
   const doorK = t < tDoor - 0.04 ? 1 : 1 - ease.in(seg(t, tDoor - 0.04, tDoor));
   const Ls = H.stairs.layers(t, { time: 'night', heroDoor: doorK, heroLight: 'warm', tvGlow: 1 });
@@ -469,9 +472,9 @@ function shStairs(t) {
 function dadGlassesPose(t, base = {}) {
   const up = ease.inOut(seg(t, tGlass0, tGlassOff));
   const down = ease.inOut(seg(t, tGlassOff + 0.15, tGlassDown));
-  const armR = lerp(lerp(24, 168, up), 30, down);
+  const armR = lerp(lerp(24, 168, up), 64, down);
   const off = t >= tGlassOff;
-  const p = { ...base, glasses: off ? 'off' : 'up', armR, armL: 22, face: { name: 'sad', eyes: { look: off ? [0.2, 0.7] : [0.6, -0.1] } }, headY: 10 * down, headRot: -3 * down };
+  const p = { glasses: off ? 'off' : 'up', armR, armL: 22, face: { name: 'sad', eyes: { look: off ? [0.2, 0.7] : [0.6, -0.1] } }, headY: 10 * down, headRot: -3 * down, ...base };
   if (off) {
     const h = CAST.handAt(CAST.D.dad, { armR }, 1);
     const sl = ease.out(seg(t, tGlassOff, tGlassOff + 0.25));
@@ -481,7 +484,7 @@ function dadGlassesPose(t, base = {}) {
   return p;
 }
 function shSilent(t) {
-  const cam = camKeys(t, [[CUT.silent, { zoom: 1.04, x: 100, y: 20 }], [CUT.silent + 0.5, { zoom: 1.06, x: 110, y: 18 }], [CUT.gtalk, { zoom: 1.72, x: 215, y: -40 }]], ease.inOut);
+  const cam = camKeys(t, [[CUT.silent, { zoom: 1.04, x: 100, y: 20 }], [CUT.silent + 0.35, { zoom: 1.06, x: 110, y: 18 }], [tGlassOff, { zoom: 1.66, x: 200, y: -36 }], [CUT.gtalk, { zoom: 1.78, x: 210, y: -44 }]], ease.inOut);
   const seated = family(t, {
     dad: dadGlassesPose(t, { turn: -0.15 }), dadAct: { energy: 0, arms: false },
     mom: { face: { name: 'sad', eyes: { look: t > A[5].a - 0.3 ? [-0.9, 0.1] : [1, -0.1] } }, turn: t > A[5].a - 0.3 ? -0.35 : 0.2 }, momAct: { energy: 0.4, arms: false },
@@ -582,7 +585,7 @@ function shNoob(t) {
   let o = bed(t, cam, { door: 0.9, tuck: 0.9 }, { behind: heroLie(t, { view: 'back' }), front: dd });
   const nk = seg(t, tNoob - 0.1, tNoob + 0.2) * (1 - seg(t, CUT.year - 0.3, CUT.year));
   if (nk > 0) {
-    const q = GS.toScreen(cam, SIT.x + 150, SIT.hip - 520);
+    const q0 = GS.toScreen(cam, SIT.x + 150, 300), q = { x: q0.x, y: clamp(q0.y, 230, 900) };
     let th = S.circle(-120, 170, 14, ol('#FFFFFF', 5)) + S.circle(-80, 120, 22, ol('#FFFFFF', 5)) + S.ellipse(0, 0, 150, 120, ol('#FFFFFF', 7));
     th += CAST.draw.noob(3, { x: -20, y: 80, s: 0.2, face: 'confused', shadow: false }) + TS('?', 80, 30, 90, '#FFD23F');
     o += S.g(th, tf(q.x + 60, q.y - 40, ease.outBack(nk)));
@@ -777,7 +780,7 @@ function look(t) {
   if (t >= CUT.board && t < CUT.seethe) return { grade: null, vignette: 0.55 };
   if (t >= CUT.resets && t < CUT.final) return { grade: null, vignette: 0.6 };
   if (t >= CUT.alarm) return { grade: 'night', vignette: 0.65 };
-  if (t >= CUT.door) return { grade: 'night', vignette: 0.7 };
+  if (t >= CUT.door) return { grade: 'night', vignette: 0.55 };
   if (t >= CUT.silent) return { grade: 'night', vignette: 0.65 };
   return { grade: 'night', vignette: 0.5 };
 }

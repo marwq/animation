@@ -138,6 +138,8 @@ function realGrannyPip(t) {
 function boardSvg(t, o = {}) {
   return G.leaderboard({ rows: o.rows || ROWS_FINAL.map((r) => ({ ...r, from: undefined })), x: o.x ?? BOARD.x, y: o.y ?? BOARD.y, s: o.s ?? BOARD.s, t, highlight: 'MOM_OFFICIAL', stand: o.stand ?? 560, roll: o.roll ?? 1 });
 }
+// the party fireworks over the night city: [x, y (k .3 world), burst time after C.open, seed, radius]
+const ROCKETS = [[1180, 170, 1.35, 3], [280, 210, 2.05, 7], [1350, 330, 2.6, 11, 150], [120, 120, 3.1, 5, 240], [1040, 80, 3.3, 2, 220]];
 function shCity(t) {
   const bx = (BOARD.x - 960) / BOARD.k, by = (BOARD.y - 540) / BOARD.k;
   const cam = camKeys(t, [
@@ -147,7 +149,7 @@ function shCity(t) {
   shakeAll(cam, t, [[b.server, 0.3, 8]]);
   // glow + fireworks behind the board (k .3), the board itself (k .38)
   let fw = GS.glow(BOARD.x, BOARD.y - 20, 430, 'gsGlowGold', 0.32 + 0.08 * Math.sin(t * 5));
-  fw += rocket(t, 1180, 170, 1.35, 3) + rocket(t, 280, 210, 2.05, 7) + rocket(t, 1350, 330, 2.6, 11, { r: 150 }) + rocket(t, 120, 120, 3.1, 5, { r: 240 }) + rocket(t, 1040, 80, 3.3, 2, { r: 220 });
+  for (const [x, y, d, seed, r] of ROCKETS) fw += rocket(t, x, y, C.open + d, seed, r ? { r } : {});
   const city = E.nightCity(t, cam, { board: boardSvg(t) });
   let o = city.sky + E.V(cam, fw, 0.3) + city.board + city.row + city.front;
   // the hero on the rooftop ledge, from behind, looking up at the board
@@ -750,4 +752,4 @@ function look(t) {
 function captionY(t) { return 1010; }
 
 const DEFS = E.DEFS;
-module.exports = { scene, look, captionY, DEFS, CUT: C, BEATS: b, timing };
+module.exports = { scene, look, captionY, DEFS, CUT: C, BEATS: b, timing, ROCKETS, BONK, CHAT_LINES, REW };

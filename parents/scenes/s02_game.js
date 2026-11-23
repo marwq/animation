@@ -493,7 +493,7 @@ function shWho(t) {
     const k = pop(t, [b.who, b.really, b.is7][i] - 0.05, 0.25);
     if (k <= 0.01) continue;
     const a = t * 1.6 + (i * Math.PI * 2) / 3;
-    o += S.g(TS('?', 0, 40, 130, '#FFE14D'), tf(620 + Math.cos(a) * 380, 300 + Math.sin(a) * 120, k, 12 * Math.sin(a)));
+    o += S.g(TS('?', 0, 40, 130, '#FFE14D'), tf(620 + Math.cos(a) * 400, 215 + Math.sin(a) * 75, k, 12 * Math.sin(a)));
   }
   o += infoCard(t, 1110, 170, 700, 'PLAYER PROFILE', [
     { label: 'NAME', value: 'xX_DarkBlade_Xx', at: C.who + 0.15, size: 40, col: '#FF6A78' },
