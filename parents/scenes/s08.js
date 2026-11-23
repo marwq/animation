@@ -53,7 +53,7 @@ const tDoor = CUT.stairs + 0.64;
 CUT.silent = tDoor + 0.3;
 CUT.gtalk = A[6].a - 0.1;
 CUT.notyou = w(6, 'Not') - 0.12;
-CUT.him = w(6, 'Him') - 0.3;
+CUT.him = w(6, 'Him', 1) - 0.3;
 CUT.door = A[6].b + 0.04;
 CUT.walk = w(7, 'Can') - 0.15;
 CUT.care = A[8].a - 0.15;
@@ -82,7 +82,7 @@ const tTurnFam = tSlam + 0.12;                         // everyone turns to the 
 const tFriends = w(2, 'friends'), tServer = w(2, 'server'), tEvery = w(2, 'EVERYTHING');
 const tJoined = w(4, 'joined');
 const tGlass0 = CUT.silent + 0.45, tGlassOff = tGlass0 + 0.75, tGlassDown = tGlassOff + 1.05;
-const tHim = w(6, 'Him');
+const tHim = w(6, 'Him', 1);
 const tOpen = CUT.door + 0.12;
 const tSit0 = CUT.walk + 1.45, tSit1 = tSit0 + 0.45;
 const tNoob = w(8, 'noob');
@@ -225,8 +225,7 @@ function serverPanel(t) {
 }
 
 // ---------------------------------------------------------------- the bedroom
-const SIT = SPB_SIT();
-function SPB_SIT() { return H.SPOTS.bedroom.bed.sit; }
+const SIT = H.SPOTS.bedroom.bed.sit;
 const LIE = H.SPOTS.bedroom.bed.lie;
 const DOOR = H.SPOTS.bedroom.door;
 const HSIT = { x: 600, hip: 726, s: 0.5, pose: { legL: 90, legR: 90, kneeL: 90, kneeR: 90 } };   // the hero sitting up on the bed edge
@@ -293,8 +292,8 @@ function snapDad(seed) {
 // 1. "Your mom was the best fighter." — Mom cracking up at her tablet; her game window pops out: BEST FIGHTER
 function shMom(t) {
   const cam = camKeys(t, [[CUT.mom, camAt(1340, 560, 1.95, 560, 600)], [CUT.granny, camAt(1340, 555, 2.1, 560, 600)]], ease.inOut);
-  const seated = family(t, { mom: { face: LAUGH, ...lb(1, t) }, dad: { face: LAUGH, ...lb(0, t) }, gran: { phone: 'arm', face: LAUGH, ...lb(2, t) } }) + heroSeat(t);
-  let o = room(t, cam, {}, { seated, mon: { screen: monScreen(t) } });
+  const seated = family(t, { mom: { face: LAUGH, ...lb(1, t) }, dad: { face: LAUGH, ...lb(0, t) }, gran: { phone: 'arm', face: LAUGH, ...lb(2, t) } });
+  let o = room(t, cam, {}, { seated, mon: false });
   const k = seg(t, CUT.mom + 0.15, CUT.mom + 0.5);
   o += panel(1010, 120, 840, 472, momPanel(t), { k, rot: 3, label: 'BEST FIGHTER', labelCol: '#FF5FA8', ly: 600 });
   o += K.bang('#1', 1760, 150, pop(t, tBest, 0.25), 120, 12, '#FFD23F');
@@ -440,7 +439,6 @@ function shNever(t) {
   const hero = go <= 0 ? actor('you', t, { x: STAND.x, y: STAND.y, s: 0.5, turn: 0.25, volume: false, face, headRot: 2 * Math.sin(t * 40) }, { energy: 1.8 })
     : actor('you', t, { x: STAND.x + 900 * ease.in(go), y: STAND.y, s: 0.5, view: 'side', flip: true, volume: false, ...AC.run(t * 22), lean: 14, face: { name: 'crying' } }, { arms: false });
   let o = room(t, cam, { glowK: 0.8 }, { seated, standing: hero, mon: { fold: 1 } });
-  if (go > 0) o += K.C.speedLines ? '' : '';
   // tears flying off as he turns
   if (go > 0) { let d = ''; for (let i = 0; i < 6; i++) { const a = go + i * 0.05; d += `M${f(700 - 600 * a + i * 30)} ${f(330 + i * 18 + 200 * a * a)} m-12 0 a12 16 0 1 0 24 0 a12 16 0 1 0 -24 0`; } o += S.path(d, { fill: '#9FE3FF', stroke: '#151515', 'stroke-width': 4 }); }
   return o + whip(t, CUT.stairs, 1, 0.1);
@@ -463,8 +461,6 @@ function shStairs(t) {
     if (hx > 1600) ch = '';
   }
   let o = view(cam, (Ls.bg || '') , 0.8) + view(cam, Ls.mid + ch + Ls.front + Ls.light);
-  if (u > 0 && u < 1) o += E.vStreaks ? '' : '';
-  const q = H.toScreen ? null : null;
   o += K.bang('SLAM!!', 1560, 170, pop(t, tDoor, 0.16), 140, 8, '#FFFFFF');
   return o + smash(t, tDoor, 0.08, 0.5) + whip(t, CUT.stairs, 1, 0.1);
 }
@@ -559,7 +555,6 @@ function shWalk(t) {
   } else {
     const k = ease.inOut(seg(t, tSit0, tSit1));
     const sp = H.seatPose(SIT, 1.1);
-    dd = dadBed(t, { x: lerp(SIT.x + 70, sp.x, k), y: lerp(990, sp.y, k), legL: 90 * k, legR: 90 * k, kneeL: 90 * k, kneeR: 90 * k, turn: lerp(-0.2, -0.4, k), face: { name: 'sad', mouth: 'smallSmile', eyes: { look: [-0.9, 0.2] } }, hold: k > 0.6 });
     dd = actor('dad', t, H.seatPose(SIT, 1.1, { x: lerp(SIT.x + 70, sp.x, k), y: lerp(990, sp.y, k), legL: 90 * k, legR: 90 * k, kneeL: 90 * k, kneeR: 90 * k, turn: lerp(-0.2, -0.4, k), glasses: 'off', t, armL: 22, armR: 22, face: { name: 'sad', mouth: 'smallSmile', eyes: { look: [-0.9, 0.2] } }, ...boing(t, tSit1, 0.12), props: [{ svg: glassesProp(0, -350, 1.0, -6, 0.7), layer: 'front' }] }), { energy: 0.5, arms: false });
   }
   return bed(t, cam, { door: 0.9, tuck: 0.9 }, { behind: heroLie(t, { view: 'back' }), front: dd }) + letterbox(1, 60);
@@ -713,7 +708,9 @@ function banner(t) {
 function shWarn(t) {
   const cam = shakeAll(camKeys(t, [[CUT.warn, { zoom: 2.3, x: 380, y: -50 }], [tKing, { zoom: 2.75, x: 438, y: -64 }], [CUT.faces, { zoom: 2.95, x: 440, y: -62 }]], ease.inOut), t, [[tAwake, 0.5, 10]]);
   const showKing = t >= tKing - 0.1;
-  let o = bed(t, cam, { door: 0.9, tuck: 0.2, alarm: 1, clock: '11:00', ...(showKing ? { monitor: kingScreen(t) } : {}) }, { front: heroSitUp(t, { face: { name: 'scared', eyes: { look: [1, -0.1] } } }) + dadBed(t, { face: { name: 'shocked', eyes: { look: [1, -0.1] } }, turn: 0.35 }) });
+  const BM = { cx: 1398, cy: 476, w: 296, h: 172 };
+  const ks = showKing ? `<svg x="${BM.cx - BM.w / 2}" y="${BM.cy - BM.h / 2}" width="${BM.w}" height="${BM.h}" viewBox="${-BM.w / 2} ${-BM.h / 2} ${BM.w} ${BM.h}">${kingScreen(t)(BM.w, BM.h)}</svg>` + S.rect(BM.cx - BM.w / 2, BM.cy - BM.h / 2, BM.w, BM.h, 4, { fill: 'none', stroke: '#0A0B10', 'stroke-width': 3 }) : '';
+  let o = bed(t, cam, { door: 0.9, tuck: 0.2, alarm: 1, clock: '11:00' }, { front: heroSitUp(t, { face: { name: 'scared', eyes: { look: [1, -0.1] } } }) + dadBed(t, { face: { name: 'shocked', eyes: { look: [1, -0.1] } }, turn: 0.35 }), over: ks + S.rect(BM.cx - BM.w / 2, BM.cy - BM.h / 2, BM.w, BM.h, 0, { fill: '#FFFFFF', opacity: f(0.6 * bump(t, tKing - 0.1, tKing + 0.1)) }) });
   return o + banner(t);
 }
 // 32. "If the server falls..." — the two of them in the red light, scared
@@ -730,7 +727,7 @@ function shResets(t) {
   const r = ease.inOut(seg(t, tResets - 0.15, tResets + 0.45));
   let o = S.rect(0, 0, 1920, 1080, 0, { fill: '#2A0610' }) + S.rect(0, 0, 1920, 1080, 0, { fill: '#FF1E3C', opacity: f(0.2 + 0.1 * Math.sin(t * 9)) });
   const tiles = [
-    (x, y) => G.rankClimb({ x, y, from: 1, to: 999, roll: r, k: 1, t, s: 0.62, name: 'MOM_OFFICIAL' }),
+    (x, y) => G.statPill({ x, y, s: 1.5, t, anchor: 'center', icon: G.crown(0, 6, 26, '#FFD23F', 4), label: 'MOM RANK', value: '#' + Math.round(lerp(1, 999, r)), rim: '#FF5FA8', bump: seg(t, tResets, tResets + 0.45) }),
     (x, y) => G.coinCounter({ x, y, s: 1.6, value: 0, from: 9999999, roll: r, t, anchor: 'center' }),
     (x, y) => G.nametag({ x, y, name: r > 0.5 ? 'DadBod1978' : 'DAD', level: r > 0.5 ? 1 : 99, col: r > 0.5 ? '#F2B705' : '#FF5FA8', crown: r <= 0.5, t, s: 2.2 }),
     (x, y) => G.levelBadge({ x, y, level: Math.round(lerp(99, 1, r)), t, s: 1.6, bump: seg(t, tResets, tResets + 0.45) }),
@@ -746,7 +743,7 @@ function shResets(t) {
   const gk = seg(t, tResets, tResets + 0.5);
   if (gk > 0) o += K.pixelBlocks(0, 0, 1920, 1080, t, gk * 0.8, '#151515', 80, 7);
   o += G.stamp({ text: 'RESET', k: seg(t, tResets + 0.15, tResets + 0.45), x: 960, y: 560, s: 1.2, rot: -8, col: '#FF3A4A', size: 170 });
-  return o + banner(t) + G.flash ? o + banner(t) : o;
+  return o + banner(t);
 }
 // 34. (beat) the hero's face in the red light: scared -> set. Red flash into SC 09.
 function shFinal(t) {

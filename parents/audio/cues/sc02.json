@@ -1,0 +1,2024 @@
+{
+ "scene": "SC 02",
+ "start": 36.93,
+ "end": 148.63,
+ "music": [
+  {
+   "start": 36.93,
+   "end": 37.87,
+   "mood": "lobby",
+   "energy": 0.6,
+   "in": "cut",
+   "out": "scratch"
+  },
+  {
+   "start": 37.87,
+   "end": 41.15,
+   "mood": "playful",
+   "energy": 0.35,
+   "in": "cut",
+   "out": "cut"
+  },
+  {
+   "start": 41.15,
+   "end": 44.97,
+   "mood": "epic",
+   "energy": 0.75,
+   "in": "swell",
+   "out": "cut"
+  },
+  {
+   "start": 44.97,
+   "end": 54.15,
+   "mood": "montage",
+   "energy": 0.85,
+   "in": "cut",
+   "out": "sting"
+  },
+  {
+   "start": 54.15,
+   "end": 62.754,
+   "mood": "lobby",
+   "energy": 0.55,
+   "in": "cut",
+   "out": "scratch"
+  },
+  {
+   "start": 62.754,
+   "end": 65.114,
+   "mood": "silence",
+   "energy": 0,
+   "in": "cut",
+   "out": "cut"
+  },
+  {
+   "start": 65.114,
+   "end": 67.33,
+   "mood": "playful",
+   "energy": 0.4,
+   "in": "cut",
+   "out": "cut"
+  },
+  {
+   "start": 67.33,
+   "end": 69.54,
+   "mood": "playful",
+   "energy": 0.6,
+   "in": "cut",
+   "out": "cut"
+  },
+  {
+   "start": 69.54,
+   "end": 71.49,
+   "mood": "warm",
+   "energy": 0.4,
+   "in": "fade",
+   "out": "cut"
+  },
+  {
+   "start": 71.49,
+   "end": 77.234,
+   "mood": "montage",
+   "energy": 0.85,
+   "in": "cut",
+   "out": "cut"
+  },
+  {
+   "start": 77.234,
+   "end": 79.83,
+   "mood": "boss",
+   "energy": 0.7,
+   "in": "swell",
+   "out": "sting"
+  },
+  {
+   "start": 79.83,
+   "end": 92.61,
+   "mood": "mystery",
+   "energy": 0.55,
+   "in": "cut",
+   "out": "cut"
+  },
+  {
+   "start": 92.61,
+   "end": 95.91,
+   "mood": "playful",
+   "energy": 0.5,
+   "in": "cut",
+   "out": "tapestop"
+  },
+  {
+   "start": 95.91,
+   "end": 118.17,
+   "mood": "family",
+   "energy": 0.45,
+   "in": "fade",
+   "out": "cut"
+  },
+  {
+   "start": 118.17,
+   "end": 128.93,
+   "mood": "showtime",
+   "energy": 0.55,
+   "in": "cut",
+   "out": "cut"
+  },
+  {
+   "start": 128.93,
+   "end": 131.01,
+   "mood": "mystery",
+   "energy": 0.35,
+   "in": "cut",
+   "out": "cut"
+  },
+  {
+   "start": 131.01,
+   "end": 133.46,
+   "mood": "family",
+   "energy": 0.8,
+   "in": "cut",
+   "out": "cut"
+  },
+  {
+   "start": 133.46,
+   "end": 136.69,
+   "mood": "warm",
+   "energy": 0.4,
+   "in": "cut",
+   "out": "scratch"
+  },
+  {
+   "start": 136.69,
+   "end": 137.924,
+   "mood": "silence",
+   "energy": 0,
+   "in": "cut",
+   "out": "cut"
+  },
+  {
+   "start": 137.924,
+   "end": 139.99,
+   "mood": "epic",
+   "energy": 0.7,
+   "in": "cut",
+   "out": "cut"
+  },
+  {
+   "start": 139.99,
+   "end": 140.91,
+   "mood": "silence",
+   "energy": 0,
+   "in": "cut",
+   "out": "cut"
+  },
+  {
+   "start": 140.91,
+   "end": 143.363,
+   "mood": "chaos",
+   "energy": 0.75,
+   "in": "cut",
+   "out": "cut"
+  },
+  {
+   "start": 143.363,
+   "end": 145.83,
+   "mood": "mystery",
+   "energy": 0.5,
+   "in": "swell",
+   "out": "sting"
+  },
+  {
+   "start": 145.83,
+   "end": 148.63,
+   "mood": "family",
+   "energy": 0.6,
+   "in": "cut",
+   "out": "fade"
+  }
+ ],
+ "ambience": [
+  {
+   "start": 36.93,
+   "end": 38.47,
+   "name": "town",
+   "gain_db": -12
+  },
+  {
+   "start": 41.15,
+   "end": 44.97,
+   "name": "wind",
+   "gain_db": -14
+  },
+  {
+   "start": 47.59,
+   "end": 49.9,
+   "name": "wind",
+   "gain_db": -14
+  },
+  {
+   "start": 49.9,
+   "end": 54.15,
+   "name": "crowd",
+   "gain_db": -10
+  },
+  {
+   "start": 54.15,
+   "end": 56.41,
+   "name": "birds",
+   "gain_db": -14
+  },
+  {
+   "start": 56.41,
+   "end": 69.54,
+   "name": "room",
+   "gain_db": -14
+  },
+  {
+   "start": 69.54,
+   "end": 71.49,
+   "name": "night",
+   "gain_db": -16
+  },
+  {
+   "start": 74.426,
+   "end": 77.234,
+   "name": "room",
+   "gain_db": -14
+  },
+  {
+   "start": 77.234,
+   "end": 79.18,
+   "name": "wind",
+   "gain_db": -10
+  },
+  {
+   "start": 79.18,
+   "end": 79.83,
+   "name": "room",
+   "gain_db": -14
+  },
+  {
+   "start": 79.83,
+   "end": 81.35,
+   "name": "wind",
+   "gain_db": -12
+  },
+  {
+   "start": 83.62,
+   "end": 95.91,
+   "name": "birds",
+   "gain_db": -14
+  },
+  {
+   "start": 95.91,
+   "end": 148.63,
+   "name": "kitchen",
+   "gain_db": -12
+  },
+  {
+   "start": 95.91,
+   "end": 128.93,
+   "name": "birds",
+   "gain_db": -18
+  }
+ ],
+ "footsteps": [
+  {
+   "start": 50.65,
+   "end": 51.51,
+   "interval": 0.196,
+   "surface": "soft",
+   "gain_db": -8,
+   "pan": 0
+  },
+  {
+   "start": 59.078,
+   "end": 60.2,
+   "interval": 0.349,
+   "surface": "hard",
+   "gain_db": -8,
+   "pan": 0.1
+  },
+  {
+   "start": 67.33,
+   "end": 67.85,
+   "interval": 0.224,
+   "surface": "hard",
+   "gain_db": -8,
+   "pan": -0.4
+  },
+  {
+   "start": 68.41,
+   "end": 68.93,
+   "interval": 0.224,
+   "surface": "hard",
+   "gain_db": -8,
+   "pan": 0
+  },
+  {
+   "start": 83.62,
+   "end": 84.26,
+   "interval": 0.286,
+   "surface": "soft",
+   "gain_db": -10,
+   "pan": 0.4
+  },
+  {
+   "start": 85.56,
+   "end": 86.4,
+   "interval": 0.175,
+   "surface": "soft",
+   "gain_db": -10,
+   "pan": 0.6
+  }
+ ],
+ "sfx": [
+  [
+   36.93,
+   "vhs_clunk",
+   -8,
+   -0.6,
+   "▶ PLAY: the rewind from SC 01 lands on Cube City by day"
+  ],
+  [
+   36.98,
+   "whoosh_down",
+   -4,
+   0,
+   "the hero drops in from the sky"
+  ],
+  [
+   37.35,
+   "land",
+   0,
+   0,
+   "lands on the plaza (dust puffs)"
+  ],
+  [
+   37.37,
+   "thud",
+   -6,
+   0,
+   "camera shake"
+  ],
+  [
+   37.65,
+   "jump_game",
+   -4,
+   0,
+   "he turns and hops: arms up"
+  ],
+  [
+   37.87,
+   "record_scratch",
+   -2,
+   0,
+   "freeze-frame \"this is you\""
+  ],
+  [
+   37.9,
+   "swish",
+   -6,
+   0.5,
+   "YOU · LVL 99 card slams in"
+  ],
+  [
+   37.99,
+   "sparkle",
+   -8,
+   0.5,
+   "card sparkles"
+  ],
+  [
+   38.47,
+   "whoosh",
+   -8,
+   0,
+   "the taped photo spins in"
+  ],
+  [
+   40.17,
+   "camera_flash",
+   0,
+   0,
+   "the photographer's flash on \"kid\""
+  ],
+  [
+   40.41,
+   "stamp",
+   -2,
+   0.3,
+   "JUST A KID stamp"
+  ],
+  [
+   41.06,
+   "whoosh",
+   -7,
+   -0.3,
+   "whip-pan"
+  ],
+  [
+   41.25,
+   "whoosh_long",
+   -6,
+   0,
+   "crane up the castle"
+  ],
+  [
+   41.91,
+   "reverse_swell",
+   -6,
+   0,
+   "into LEGEND"
+  ],
+  [
+   43.19,
+   "swish",
+   -4,
+   -0.2,
+   "sword up"
+  ],
+  [
+   43.41,
+   "impact",
+   0,
+   0,
+   "LEGEND title slams in (shake)"
+  ],
+  [
+   43.43,
+   "shine",
+   -3,
+   -0.2,
+   "the sword glints"
+  ],
+  [
+   43.46,
+   "confetti",
+   -4,
+   0,
+   "confetti"
+  ],
+  [
+   44.88,
+   "whoosh",
+   -7,
+   0.3,
+   "whip-pan"
+  ],
+  [
+   44.97,
+   "jump_game",
+   -4,
+   -0.6,
+   "the hero leaps in"
+  ],
+  [
+   45.27,
+   "money_counter",
+   -8,
+   0.4,
+   "level counter rolls up"
+  ],
+  [
+   45.39,
+   "land",
+   -4,
+   -0.4,
+   "lands"
+  ],
+  [
+   45.87,
+   "money_counter",
+   -8,
+   0.4,
+   "level counter rolls up"
+  ],
+  [
+   46.45,
+   "level_up",
+   0,
+   0.4,
+   "LVL 99!"
+  ],
+  [
+   46.47,
+   "money_counter",
+   -8,
+   0.4,
+   "level counter rolls up"
+  ],
+  [
+   46.47,
+   "confetti",
+   -6,
+   0,
+   "confetti"
+  ],
+  [
+   46.7,
+   "ui_pop",
+   -4,
+   0.4,
+   "MAX LEVEL ribbon"
+  ],
+  [
+   47.5,
+   "whoosh",
+   -7,
+   -0.3,
+   "whip-pan"
+  ],
+  [
+   47.76,
+   "achievement",
+   -2,
+   0,
+   "#1 BASE badge"
+  ],
+  [
+   48.77,
+   "pop",
+   -10,
+   -0.146,
+   "star 1"
+  ],
+  [
+   48.88,
+   "pop",
+   -10,
+   -0.073,
+   "star 2"
+  ],
+  [
+   48.99,
+   "pop",
+   -10,
+   0,
+   "star 3"
+  ],
+  [
+   49.1,
+   "pop",
+   -10,
+   0.073,
+   "star 4"
+  ],
+  [
+   49.21,
+   "pop",
+   -10,
+   0.146,
+   "star 5"
+  ],
+  [
+   49.25,
+   "sparkle",
+   -6,
+   0,
+   "the castle sparkles"
+  ],
+  [
+   49.9,
+   "crowd_cheer",
+   -8,
+   0,
+   "arena stands"
+  ],
+  [
+   49.95,
+   "ui_pop",
+   -8,
+   -0.9,
+   "WINS counter"
+  ],
+  [
+   50.05,
+   "money_counter",
+   -8,
+   -0.9,
+   "wins roll to 2,000"
+  ],
+  [
+   50.65,
+   "whoosh",
+   -6,
+   0,
+   "the hero dashes in"
+  ],
+  [
+   51.55,
+   "swish",
+   -4,
+   0.2,
+   "golden slash"
+  ],
+  [
+   51.63,
+   "punch",
+   2,
+   0.25,
+   "POW!"
+  ],
+  [
+   51.65,
+   "boing",
+   -4,
+   0.3,
+   "the opponent flies out of the arena"
+  ],
+  [
+   51.68,
+   "whoosh_up",
+   -6,
+   0.5,
+   "KO flight"
+  ],
+  [
+   51.73,
+   "crowd_cheer",
+   -2,
+   0,
+   "the crowd erupts"
+  ],
+  [
+   53.39,
+   "sparkle",
+   -6,
+   0.7,
+   "the KO'd player twinkles in the sky"
+  ],
+  [
+   53.49,
+   "ka_ching",
+   -2,
+   0.5,
+   "WINS 2,001"
+  ],
+  [
+   53.51,
+   "pop",
+   -6,
+   0.3,
+   "+1"
+  ],
+  [
+   54.06,
+   "whoosh",
+   -7,
+   0.3,
+   "whip-pan"
+  ],
+  [
+   54.2,
+   "whoosh_long",
+   -8,
+   0,
+   "the red carpet unrolls"
+  ],
+  [
+   55.41,
+   "harp_up",
+   -6,
+   0,
+   "the castle sparkles"
+  ],
+  [
+   56.32,
+   "whoosh",
+   -7,
+   0.3,
+   "whip-pan"
+  ],
+  [
+   56.759,
+   "boing",
+   -12,
+   -0.6,
+   "the noob bounces on the diving board"
+  ],
+  [
+   56.88,
+   "jump_game",
+   -4,
+   -0.6,
+   "the noob dives"
+  ],
+  [
+   56.93,
+   "whoosh",
+   -8,
+   -0.7,
+   "backflip"
+  ],
+  [
+   57.38,
+   "splat",
+   -2,
+   -0.9,
+   "into the lava"
+  ],
+  [
+   57.4,
+   "sizzle",
+   -4,
+   -0.9,
+   "sizzle"
+  ],
+  [
+   57.83,
+   "squeak",
+   -12,
+   0.3,
+   "polishing the #1 cup"
+  ],
+  [
+   58.19,
+   "shine",
+   -4,
+   0,
+   "shine sweeps across 400 cups"
+  ],
+  [
+   58.23,
+   "squeak",
+   -12,
+   0.3,
+   "polishing the #1 cup"
+  ],
+  [
+   58.63,
+   "squeak",
+   -12,
+   0.3,
+   "polishing the #1 cup"
+  ],
+  [
+   60.2,
+   "jump_game",
+   -4,
+   0.2,
+   "the hop onto the throne"
+  ],
+  [
+   60.87,
+   "land",
+   -4,
+   0.2,
+   "lands on the cushion"
+  ],
+  [
+   60.9,
+   "angel",
+   -4,
+   0.2,
+   "spotlight + choir"
+  ],
+  [
+   62.754,
+   "record_scratch",
+   0,
+   0,
+   "deadpan: grey, the music stops"
+  ],
+  [
+   64.12,
+   "ui_pop",
+   -6,
+   0.6,
+   "museum label: FIG. 1 — A CHAIR"
+  ],
+  [
+   65.114,
+   "zoom_in",
+   -6,
+   0,
+   "push in on the price tag"
+  ],
+  [
+   65.27,
+   "ui_pop",
+   -8,
+   -0.9,
+   "COINS counter"
+  ],
+  [
+   65.69,
+   "coins",
+   0,
+   0.4,
+   "coins burst out of the wallet"
+  ],
+  [
+   65.74,
+   "money_counter",
+   -6,
+   -0.9,
+   "99,999 -> 1"
+  ],
+  [
+   65.77,
+   "powerdown",
+   -6,
+   0.5,
+   "-99,999"
+  ],
+  [
+   66.48,
+   "gulp",
+   -4,
+   0,
+   "the hero sweats"
+  ],
+  [
+   67.24,
+   "whoosh",
+   -7,
+   -0.3,
+   "whip-pan"
+  ],
+  [
+   67.85,
+   "record_scratch",
+   -4,
+   -0.4,
+   "freeze on Noodle"
+  ],
+  [
+   67.88,
+   "swish",
+   -6,
+   0,
+   "NOODLE card"
+  ],
+  [
+   68.96,
+   "punch",
+   -4,
+   0.4,
+   "fist bump"
+  ],
+  [
+   69.01,
+   "pop",
+   -6,
+   0.4,
+   "BFF!"
+  ],
+  [
+   69.03,
+   "sparkle",
+   -8,
+   0.4,
+   "burst"
+  ],
+  [
+   69.54,
+   "whoosh",
+   -6,
+   -0.4,
+   "left panel slides in"
+  ],
+  [
+   69.58,
+   "whoosh",
+   -6,
+   0.4,
+   "right panel slides in"
+  ],
+  [
+   69.69,
+   "ui_pop",
+   -10,
+   0,
+   "REAL LIFE labels"
+  ],
+  [
+   70.57,
+   "pop",
+   -6,
+   0.5,
+   "??? over the silhouette"
+  ],
+  [
+   71.54,
+   "ui_pop",
+   -8,
+   0,
+   "BOSSES BEATEN pill"
+  ],
+  [
+   71.66,
+   "stamp",
+   -8,
+   -0.481,
+   "boss card 1: DEFEATED"
+  ],
+  [
+   71.931,
+   "stamp",
+   -8,
+   0.481,
+   "boss card 2: DEFEATED"
+  ],
+  [
+   72.203,
+   "stamp",
+   -8,
+   -0.51,
+   "boss card 3: DEFEATED"
+  ],
+  [
+   72.26,
+   "money_counter",
+   -8,
+   0,
+   "boss counter rolls to 400"
+  ],
+  [
+   72.474,
+   "stamp",
+   -8,
+   0.51,
+   "boss card 4: DEFEATED"
+  ],
+  [
+   72.746,
+   "stamp",
+   -8,
+   -0.248,
+   "boss card 5: DEFEATED"
+  ],
+  [
+   73.017,
+   "stamp",
+   -8,
+   0.248,
+   "boss card 6: DEFEATED"
+  ],
+  [
+   73.289,
+   "stamp",
+   -8,
+   -0.605,
+   "boss card 7: DEFEATED"
+  ],
+  [
+   73.49,
+   "jump_game",
+   -6,
+   0,
+   "they hop for the high five"
+  ],
+  [
+   73.56,
+   "stamp",
+   -8,
+   0.605,
+   "boss card 8: DEFEATED"
+  ],
+  [
+   73.61,
+   "slap",
+   0,
+   0,
+   "high five"
+  ],
+  [
+   73.63,
+   "crowd_cheer",
+   -8,
+   0,
+   "TEAM!"
+  ],
+  [
+   74.336,
+   "whoosh",
+   -7,
+   0.3,
+   "whip-pan"
+  ],
+  [
+   74.546,
+   "jump_game",
+   -8,
+   0,
+   "hop 1"
+  ],
+  [
+   74.586,
+   "pop",
+   -6,
+   -0.394,
+   "BRO! 1"
+  ],
+  [
+   74.93,
+   "jump_game",
+   -8,
+   0,
+   "hop 2"
+  ],
+  [
+   74.97,
+   "pop",
+   -6,
+   0.394,
+   "BRO! 2"
+  ],
+  [
+   75.197,
+   "jump_game",
+   -8,
+   0,
+   "hop 3"
+  ],
+  [
+   75.237,
+   "pop",
+   -6,
+   -0.423,
+   "BRO! 3"
+  ],
+  [
+   75.49,
+   "jump_game",
+   -8,
+   0,
+   "hop 4"
+  ],
+  [
+   75.53,
+   "pop",
+   -6,
+   0.423,
+   "BRO! 4"
+  ],
+  [
+   75.97,
+   "jump_game",
+   -8,
+   -0.3,
+   "Noodle hops"
+  ],
+  [
+   75.99,
+   "notify",
+   0,
+   0,
+   "NEW UPDATE banner"
+  ],
+  [
+   77.144,
+   "whoosh",
+   -7,
+   0.3,
+   "whip-pan"
+  ],
+  [
+   77.234,
+   "rumble",
+   -2,
+   0.2,
+   "the Block King rises over the city"
+  ],
+  [
+   77.37,
+   "impact",
+   -2,
+   0,
+   "THE BLOCK KING title"
+  ],
+  [
+   77.85,
+   "thunder",
+   -4,
+   -0.5,
+   "lightning left"
+  ],
+  [
+   78.2,
+   "thunder",
+   0,
+   0.5,
+   "lightning right + flash"
+  ],
+  [
+   78.35,
+   "monster_growl",
+   -6,
+   0.2,
+   "his eyes glow"
+  ],
+  [
+   79.28,
+   "gulp",
+   0,
+   0.2,
+   "gulp"
+  ],
+  [
+   79.74,
+   "whoosh",
+   -7,
+   -0.3,
+   "whip-pan"
+  ],
+  [
+   79.88,
+   "whoosh_down",
+   -4,
+   0,
+   "DarkBlade falls from the sky"
+  ],
+  [
+   80.29,
+   "impact",
+   2,
+   0,
+   "superhero landing"
+  ],
+  [
+   80.3,
+   "rock_drop",
+   -6,
+   0,
+   "the ground cracks"
+  ],
+  [
+   80.41,
+   "land",
+   -8,
+   0.248,
+   "clan member 1 lands"
+  ],
+  [
+   80.53,
+   "land",
+   -8,
+   0.467,
+   "clan member 2 lands"
+  ],
+  [
+   80.59,
+   "record_scratch",
+   -4,
+   0,
+   "freeze"
+  ],
+  [
+   80.62,
+   "swish",
+   -6,
+   -0.4,
+   "DARKBLADE card"
+  ],
+  [
+   80.65,
+   "land",
+   -8,
+   0.612,
+   "clan member 3 lands"
+  ],
+  [
+   80.77,
+   "land",
+   -8,
+   -0.117,
+   "clan member 4 lands"
+  ],
+  [
+   81.4,
+   "ui_pop",
+   -4,
+   0.5,
+   "PLAYER PROFILE card"
+  ],
+  [
+   81.5,
+   "blink",
+   -8,
+   0.6,
+   "profile row: ???"
+  ],
+  [
+   82.2,
+   "blink",
+   -8,
+   0.6,
+   "profile row: ???"
+  ],
+  [
+   82.2,
+   "pop",
+   -12,
+   -0.3,
+   "a ? orbits"
+  ],
+  [
+   82.52,
+   "blink",
+   -8,
+   0.6,
+   "profile row: ???"
+  ],
+  [
+   82.52,
+   "pop",
+   -12,
+   -0.3,
+   "a ? orbits"
+  ],
+  [
+   82.92,
+   "blink",
+   -8,
+   0.6,
+   "profile row: ???"
+  ],
+  [
+   82.92,
+   "pop",
+   -12,
+   -0.3,
+   "a ? orbits"
+  ],
+  [
+   84.26,
+   "chat_pop",
+   -4,
+   0.5,
+   "\"hi :)\""
+  ],
+  [
+   84.87,
+   "steam_hiss",
+   -6,
+   -0.1,
+   "DarkBlade's eyes flare, steam"
+  ],
+  [
+   85.51,
+   "ui_pop",
+   -8,
+   0.9,
+   "MOOD: ANGRY 24/7"
+  ],
+  [
+   85.56,
+   "squeak",
+   -6,
+   0.5,
+   "the noob bolts"
+  ],
+  [
+   85.59,
+   "whoosh",
+   -8,
+   0.7,
+   "runs off"
+  ],
+  [
+   86.31,
+   "whoosh",
+   -7,
+   0.3,
+   "whip-pan"
+  ],
+  [
+   86.35,
+   "chat_pop",
+   -4,
+   -0.1,
+   "DarkBlade's chat bubble"
+  ],
+  [
+   86.65,
+   "typing",
+   -12,
+   -0.1,
+   "typed letter by letter"
+  ],
+  [
+   89.06,
+   "swish",
+   -4,
+   0.4,
+   "the sword points at YOU"
+  ],
+  [
+   89.13,
+   "zoom_in",
+   -4,
+   0,
+   "smash-in on \"YOU\""
+  ],
+  [
+   89.18,
+   "pop",
+   -8,
+   -0.5,
+   "! over the hero"
+  ],
+  [
+   90.11,
+   "chat_pop",
+   -4,
+   0.3,
+   "bubble"
+  ],
+  [
+   90.41,
+   "typing",
+   -12,
+   0.3,
+   "typed"
+  ],
+  [
+   91.24,
+   "slide_down",
+   -6,
+   0,
+   "the castle shrinks"
+  ],
+  [
+   91.87,
+   "crowd_laugh",
+   -10,
+   -0.4,
+   "the clan: HAHA / lol"
+  ],
+  [
+   93.8,
+   "ui_pop",
+   -4,
+   0.5,
+   "LOSING STREAK x47 badge"
+  ],
+  [
+   94.33,
+   "sad_trombone",
+   -8,
+   0.5,
+   "losing streak"
+  ],
+  [
+   94.53,
+   "crowd_gasp",
+   -4,
+   -0.6,
+   "Noodle: OOOOH!"
+  ],
+  [
+   94.68,
+   "boom",
+   -2,
+   0.5,
+   "BURN!"
+  ],
+  [
+   94.7,
+   "sizzle",
+   -8,
+   0.5,
+   "the BURN badge flames"
+  ],
+  [
+   95.23,
+   "steam_hiss",
+   -2,
+   0,
+   "DarkBlade fumes"
+  ],
+  [
+   95.35,
+   "giggle",
+   -6,
+   0.6,
+   "clan: lol"
+  ],
+  [
+   95.49,
+   "giggle",
+   -8,
+   0.8,
+   "clan: hehe"
+  ],
+  [
+   95.91,
+   "whoosh_long",
+   -4,
+   0,
+   "pull out of the tablet into the kitchen"
+  ],
+  [
+   96.53,
+   "ui_pop",
+   -6,
+   0,
+   "SATURDAY · 8:00 AM"
+  ],
+  [
+   97.31,
+   "paper",
+   -10,
+   0.1,
+   "Dad turns a page"
+  ],
+  [
+   98.72,
+   "squeak",
+   -6,
+   -0.4,
+   "the hero notices: !"
+  ],
+  [
+   100.05,
+   "record_scratch",
+   -4,
+   0,
+   "freeze on Dad"
+  ],
+  [
+   100.08,
+   "swish",
+   -6,
+   -0.4,
+   "DAD card"
+  ],
+  [
+   100.84,
+   "ui_pop",
+   -8,
+   -0.4,
+   "ACCOUNTANT ribbon"
+  ],
+  [
+   100.94,
+   "ka_ching",
+   -6,
+   0,
+   "star eyes"
+  ],
+  [
+   101.56,
+   "pop",
+   -4,
+   0.4,
+   "thought bubble"
+  ],
+  [
+   102.16,
+   "pop",
+   -8,
+   0.124,
+   "game card 1"
+  ],
+  [
+   102.48,
+   "pop",
+   -8,
+   0.43,
+   "game card 2"
+  ],
+  [
+   102.88,
+   "pop",
+   -8,
+   0.124,
+   "game card 3"
+  ],
+  [
+   103.36,
+   "pop",
+   -8,
+   0.43,
+   "game card 4"
+  ],
+  [
+   104.05,
+   "stamp",
+   -4,
+   0.124,
+   "NINTENDO stamp 1"
+  ],
+  [
+   104.15,
+   "stamp",
+   -4,
+   0.43,
+   "NINTENDO stamp 2"
+  ],
+  [
+   104.25,
+   "stamp",
+   -4,
+   0.124,
+   "NINTENDO stamp 3"
+  ],
+  [
+   104.35,
+   "stamp",
+   -4,
+   0.43,
+   "NINTENDO stamp 4"
+  ],
+  [
+   105.73,
+   "record_scratch",
+   -4,
+   0,
+   "freeze on Mom"
+  ],
+  [
+   105.76,
+   "swish",
+   -6,
+   -0.4,
+   "MOM card"
+  ],
+  [
+   106.75,
+   "ui_pop",
+   -8,
+   0.6,
+   "VOLUME OSD"
+  ],
+  [
+   106.85,
+   "beep",
+   -14,
+   0.6,
+   "volume steps down"
+  ],
+  [
+   106.97,
+   "beep",
+   -14,
+   0.6,
+   "volume steps down"
+  ],
+  [
+   107.09,
+   "beep",
+   -14,
+   0.6,
+   "volume steps down"
+  ],
+  [
+   107.21,
+   "beep",
+   -14,
+   0.6,
+   "volume steps down"
+  ],
+  [
+   108.97,
+   "swish",
+   -6,
+   -0.4,
+   "the finger goes up"
+  ],
+  [
+   109.53,
+   "ui_pop",
+   -6,
+   0.4,
+   "MOM'S TOP WORDS chart"
+  ],
+  [
+   109.73,
+   "slide_up",
+   -8,
+   0.5,
+   "the SHH bar grows off the chart"
+  ],
+  [
+   112.21,
+   "record_scratch",
+   -4,
+   0,
+   "freeze on Granny"
+  ],
+  [
+   112.24,
+   "swish",
+   -6,
+   0.5,
+   "GRANNY card"
+  ],
+  [
+   113.12,
+   "typing",
+   -6,
+   0,
+   "needles clicking in a frenzy"
+  ],
+  [
+   113.22,
+   "whoosh_up",
+   -8,
+   0.3,
+   "a scarf shoots out"
+  ],
+  [
+   113.87,
+   "whoosh",
+   -8,
+   0.8,
+   "the cookie tray slides in"
+  ],
+  [
+   114.12,
+   "bell",
+   -2,
+   0.6,
+   "DING!"
+  ],
+  [
+   114.848,
+   "ui_pop",
+   -4,
+   -0.4,
+   "ARGUMENTS scoreboard"
+  ],
+  [
+   114.898,
+   "money_counter",
+   -8,
+   -0.4,
+   "WON rolls to 9,999"
+  ],
+  [
+   115.73,
+   "boing",
+   -8,
+   -0.3,
+   "LOST: 0"
+  ],
+  [
+   116.88,
+   "stamp",
+   0,
+   -0.4,
+   "UNDEFEATED"
+  ],
+  [
+   117.28,
+   "shine",
+   -4,
+   0.1,
+   "glint on her glasses"
+  ],
+  [
+   118.08,
+   "whoosh",
+   -7,
+   0.3,
+   "whip-pan"
+  ],
+  [
+   118.22,
+   "boing",
+   -4,
+   -0.4,
+   "Dad pops up at the flip chart"
+  ],
+  [
+   118.92,
+   "paper",
+   -8,
+   0,
+   "the FAMILY MEETING bunting drops"
+  ],
+  [
+   118.97,
+   "confetti",
+   -2,
+   -0.2,
+   "confetti"
+  ],
+  [
+   118.99,
+   "tada",
+   -6,
+   -0.2,
+   "party!"
+  ],
+  [
+   121.37,
+   "paper",
+   -4,
+   -0.5,
+   "the chart page flips"
+  ],
+  [
+   122.14,
+   "squeak",
+   -8,
+   -0.5,
+   "marker circles 11 HRS/DAY"
+  ],
+  [
+   122.17,
+   "tap",
+   -12,
+   -0.5,
+   "pointer taps"
+  ],
+  [
+   122.484,
+   "tap",
+   -12,
+   -0.5,
+   "pointer taps"
+  ],
+  [
+   122.65,
+   "pop",
+   -6,
+   -0.7,
+   "!!"
+  ],
+  [
+   122.798,
+   "tap",
+   -12,
+   -0.5,
+   "pointer taps"
+  ],
+  [
+   124.46,
+   "zoom_in",
+   -4,
+   0,
+   "smash zoom"
+  ],
+  [
+   124.49,
+   "boom",
+   0,
+   0,
+   "NINTENDO 90%"
+  ],
+  [
+   124.577,
+   "tap",
+   -10,
+   0.2,
+   "pointer taps the pie"
+  ],
+  [
+   124.926,
+   "tap",
+   -10,
+   0.2,
+   "pointer taps the pie"
+  ],
+  [
+   125.275,
+   "tap",
+   -10,
+   0.2,
+   "pointer taps the pie"
+  ],
+  [
+   125.563,
+   "swish",
+   -6,
+   -0.2,
+   "the tablet goes up"
+  ],
+  [
+   127.88,
+   "shine",
+   -4,
+   -0.1,
+   "the tablet glows: CUBE CITY"
+  ],
+  [
+   128.03,
+   "blink",
+   -10,
+   -0.5,
+   "Dad: ?"
+  ],
+  [
+   129.83,
+   "dramatic",
+   -4,
+   0.3,
+   "the room dims"
+  ],
+  [
+   131.21,
+   "stamp",
+   0,
+   0.5,
+   "TONIGHT"
+  ],
+  [
+   132.13,
+   "orch_hit",
+   -2,
+   0,
+   "FAMILY GAME NIGHT title"
+  ],
+  [
+   132.15,
+   "jump",
+   -8,
+   -0.5,
+   "Dad's jazz hands"
+  ],
+  [
+   132.89,
+   "confetti",
+   -4,
+   0,
+   "confetti"
+  ],
+  [
+   134.15,
+   "pop",
+   -6,
+   0.4,
+   "thought bubble: board game"
+  ],
+  [
+   135.47,
+   "harp_up",
+   -8,
+   -0.5,
+   "phew~"
+  ],
+  [
+   136.6,
+   "whoosh",
+   -7,
+   -0.3,
+   "whip-pan"
+  ],
+  [
+   136.69,
+   "record_scratch",
+   0,
+   0,
+   "everything stops"
+  ],
+  [
+   136.76,
+   "metal_clank",
+   -10,
+   0.6,
+   "clink: the needles stop"
+  ],
+  [
+   138.014,
+   "whoosh_down",
+   -6,
+   -0.467,
+   "a panel slams down"
+  ],
+  [
+   138.264,
+   "impact",
+   -4,
+   -0.467,
+   "panel lands"
+  ],
+  [
+   138.294,
+   "tv_on",
+   -8,
+   -0.467,
+   "the device lights up: CUBE CITY"
+  ],
+  [
+   138.79,
+   "whoosh_down",
+   -6,
+   0,
+   "a panel slams down"
+  ],
+  [
+   139.04,
+   "impact",
+   -4,
+   0,
+   "panel lands"
+  ],
+  [
+   139.07,
+   "tv_on",
+   -8,
+   0,
+   "the device lights up: CUBE CITY"
+  ],
+  [
+   139.11,
+   "whoosh_down",
+   -6,
+   0.467,
+   "a panel slams down"
+  ],
+  [
+   139.36,
+   "impact",
+   -4,
+   0.467,
+   "panel lands"
+  ],
+  [
+   139.39,
+   "tv_on",
+   -8,
+   0.467,
+   "the device lights up: CUBE CITY"
+  ],
+  [
+   140.05,
+   "slide_down",
+   -14,
+   0.1,
+   "the flake slips off the spoon"
+  ],
+  [
+   140.61,
+   "splat",
+   -10,
+   0.2,
+   "plip."
+  ],
+  [
+   142.42,
+   "zoom_in",
+   -4,
+   0,
+   "smash zoom"
+  ],
+  [
+   142.45,
+   "boom",
+   2,
+   0,
+   "my SERVER?!"
+  ],
+  [
+   143.363,
+   "riser",
+   -8,
+   0,
+   "dolly zoom"
+  ],
+  [
+   143.84,
+   "thunder",
+   -2,
+   0,
+   "lightning outside"
+  ],
+  [
+   145.49,
+   "heartbeat",
+   -6,
+   0,
+   "heartbeat"
+  ],
+  [
+   145.83,
+   "tv_on",
+   -8,
+   0.3,
+   "the devices light up"
+  ],
+  [
+   145.88,
+   "jump",
+   -10,
+   -0.7,
+   "Dad bounces"
+  ],
+  [
+   145.93,
+   "sparkle",
+   -8,
+   0.4,
+   "sparkles"
+  ],
+  [
+   146.63,
+   "gulp",
+   -2,
+   -0.4,
+   "the hero gulps"
+  ],
+  [
+   148.54,
+   "whoosh",
+   -7,
+   0.3,
+   "whip-pan"
+  ]
+ ]
+}

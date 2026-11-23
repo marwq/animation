@@ -262,7 +262,7 @@ function shArena(t) {
   w += G.nametag({ who: 'mom', x: MOMP.x, y: oh.tag, s: 0.8, t, crown: true, k: 1 - seg(t, b.spin - 0.1, b.spin) + seg(t, b.hit + 0.3, b.hit + 0.5) });
   let o = view(cam, l.bg + l.mid + w + l.front + l.fg + l.light, 1);
   const [bx, by] = toScr(cam, MOMP.x, oh.chat);
-  o += G.chatBubble({ x: bx + 40, y: Math.max(250, by), t, maxW: 520, tail: -0.5, ...G.chatLine(t, '01.2', { to: 'sweetie', text: 'Good game, sweetie!', hold: 0.6 }) });
+  o += G.chatBubble({ x: bx - 110, y: Math.max(300, by + 90), t, maxW: 520, tail: 0.8, ...G.chatLine(t, '01.2', { to: 'sweetie', text: 'Good game, sweetie!', hold: 0.6 }) });
   o += G.comboText({ x: 1420, y: 170, k: seg(t, b.hit + 0.12, b.hit + 0.5), out: seg(t, C.momClose - 0.25, C.momClose), text: 'TRIPLE K.O.!', count: 3, t, s: 0.62, rot: 6 });
   o += smash(t, b.hit, 0.14, 0.7) + whip(t, C.arena, 1);
   return o;
@@ -310,7 +310,7 @@ function shWater(t) {
     w += lying(FLAT.i, FLAT.x, FLAT.y, FLAT.s, { face: 'dizzy' });
     w += G.koStars({ x: FLAT.x - 470 * FLAT.s, y: FLAT.y - 70, t, s: 0.6 });
   } else {
-    w += player(FLAT.i, { x: FLAT.x - 90, y: FLAT.y, s: FLAT.s, turn: -0.4, armR: lerp(20, 165, ease.outBack(sit)), armL: 15, face: { name: 'happy', eyes: { type: 'happy' } }, ...boing(t, b.sitUp, 0.25) });
+    w += player(FLAT.i, { x: FLAT.x - 90, y: FLAT.y, s: FLAT.s, turn: -0.4, armR: lerp(20, 140, ease.outBack(sit)), armL: 15, face: { name: 'happy', eyes: { type: 'happy' } }, ...boing(t, b.sitUp, 0.25) });
     w += S.g(S.circle(0, 0, 26, ol('#FFD23F', 4)) + S.path('M-8 4 v-16 q0 -8 8 -8 v12 h10 q8 0 6 8 l-4 14 h-20 Z', ol('#FFFFFF', 3)), tf(FLAT.x - 90 + 140, FLAT.y - 470, pop(t, b.sitUp + 0.2, 0.3)));
   }
   const pk = t - b.potion;

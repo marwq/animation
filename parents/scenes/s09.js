@@ -384,10 +384,11 @@ function shotG4(t) {
 // H — the bedroom (continues SC 08): the monitor shows 20 %; "Dad... I can't win this alone." / "Then don't."
 const HERO_B = { x: 1180, y: 985, s: 0.5 };
 function bedroom(t, cam, chars, o = {}) {
-  const Ly = H.bedroom.layers(t, { time: 'night', alarm: 0.75, clock: '11:00', ...o });
+  const Ly = H.bedroom.layers(t, { time: 'night', alarm: 0.75, clock: '11:00', door: 0.9, ...o });
   return view(cam, Ly.bg, 0.8) + view(cam, Ly.mid + Ly.front + chars + Ly.light, 1);
 }
-const dadBed = (t, extra = {}, act = {}) => actor('dad', t, H.seatPose(SPB.bed.sit, 1.1, { glasses: 'on', t, ...extra }), { energy: 0.8, ...act });
+// Dad on the bed edge (SC 08 left him with his glasses off; he puts them back on with "Then don't.")
+const dadBed = (t, extra = {}, act = {}) => actor('dad', t, H.seatPose(SPB.bed.sit, 1.1, { glasses: 'off', t, ...extra }), { energy: 0.8, ...act });
 function shotH1(t) {
   const u = seg(t, C.h1, C.h2);
   const cam = camLerp({ zoom: 1.3, x: 60, y: 135 }, { zoom: 1.42, x: 35, y: 118 }, u, ease.out);
@@ -406,7 +407,8 @@ function shotH3(t) {
   const u = seg(t, C.h3, C.i1);
   const cam = camLerp(camAt(860, 520, 2.3), camAt(870, 530, 2.5), u, ease.out);
   const nod = bump(t, B.dont, B.dont + 0.35);
-  const chars = dadBed(t, { face: { name: 'happy', eyes: { look: [0.6, 0] } }, turn: -0.05, headY: 10 * nod, armR: 40 + 30 * seg(t, C.h3, C.h3 + 0.3), armL: 20 }, { arms: false });
+  const gl = bump(t, B.dont - 0.28, B.dont + 0.3);
+  const chars = dadBed(t, { face: { name: 'happy', eyes: { look: [0.6, 0] } }, turn: -0.05, headY: 10 * nod, glasses: t < B.dont ? 'off' : 'on', armR: 40 + 110 * gl, armL: 20 }, { arms: false });
   let o = bedroom(t, cam, chars, { alarm: 0.55 });
   const p = scr(cam, 860, 520);
   o += S.ellipse(p.x, p.y, 520, 420, { fill: '#FFC872', opacity: f(0.12 + 0.06 * nod) });

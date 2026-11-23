@@ -427,11 +427,11 @@ function shTruth(t) {
 
 // ---- 17-19. 1998 — the camcorder tape: the finals, NEW RECORD!, the trophy on the stage (ARCADE QUEEN)
 const KIDS_L = [[520, 905, 0, 0.36], [380, 930, 3, 0.38], [660, 925, 5, 0.37]], KIDS_R = [[1400, 905, 1, 0.36], [1540, 930, 4, 0.38], [1260, 925, 6, 0.37]];
-function kidCrowd(t, list, mood, look = 0) {
+function kidCrowd(t, list, mood, look = 0, flat = false) {
   return list.map(([x, y, i, s], j) => {
     const b = Math.abs(Math.sin(t * 9 + j * 1.7));
     const pose = mood === 'cheer' ? { armL: 150 + 20 * b, armR: 140 + 20 * Math.abs(Math.sin(t * 9 + j)), lift: 26 * b, face: j % 2 ? 'excited' : 'joy' } : { armL: 14, armR: 14, face: { name: 'amazed', mouth: 'O' }, turn: look };
-    return CAST.draw.humanKid(i, { x, y, s, ...pose });
+    return CAST.draw.humanKid(i, { x, y, s, ...pose, ...(flat ? { volume: false } : {}) });
   }).join('');
 }
 function handheld(t, cam, amp = 1) {
@@ -472,9 +472,9 @@ function vhs3Picture(t, lite = false) {
   const st = E.ARC.stage;
   const cam = handheld(t, camKeys(t, [[CUT.vhs3, camAt(st.x - 330, 470, 0.95)], [w(6, 'champion') + 0.2, camAt(st.x - 260, 450, 1.18)], [CUT.photo, camAt(st.x - 250, 445, 1.24)]], ease.inOut), 0.8);
   const Ly = E.arcade(t, cam);
-  let chars = actor('momTeen', t, { x: st.x, y: st.top + 4, s: 0.48, trophy: 'up', face: { name: 'joy', fx: ['sparkles'] }, bodyY: 6 * Math.abs(Math.sin(t * 6)) }, { arms: false });
+  let chars = actor('momTeen', t, { x: st.x, y: st.top + 4, s: 0.48, trophy: 'up', face: { name: 'joy', fx: ['sparkles'] }, bodyY: 6 * Math.abs(Math.sin(t * 6)), ...(lite ? { volume: false } : {}) }, { arms: false });
   const front = [[st.x - 900, 1000, 5, 0.46], [st.x - 640, 1030, 2, 0.48], [st.x - 330, 1040, 7, 0.5], [st.x + 280, 1030, 3, 0.5], [st.x + 560, 1010, 0, 0.48]];
-  chars += kidCrowd(t, front, 'cheer');
+  chars += kidCrowd(t, front, 'cheer', 0, lite);
   let o = Ly.bg + Ly.mid + view(cam, chars);
   // camera flashes from the crowd
   for (let i = 0; i < 4; i++) {
@@ -494,7 +494,7 @@ function shPhoto(t) {
   const tFreeze = CUT.photo, tFlash = CUT.photo + 0.18, tFly = CUT.queen - 0.55;
   const frozen = vhs3Picture(tFreeze - 0.02, t >= CUT.photo + 0.18);
   if (t < tFlash) return vhsFrame(t, frozen, 'pause') + K.C.whiteFlash(seg(t, tFlash - 0.08, tFlash));
-  const bgRoom = room(t, QCAM0, { mom: {}, momAct: { face: 'happy' } });
+  const bgRoom = room(t, QCAM0, { mom: {}, momAct: { face: 'happy' }, vol: false });
   const fly = ease.inOut(seg(t, tFly, CUT.queen));
   const wall = toScr(QCAM0, PHOTO.x, PHOTO.y);
   const s0 = 1.45 - 0.25 * ease.out(seg(t, tFlash, tFlash + 0.5));
@@ -781,7 +781,7 @@ function shLegend(t) {
   // Mom crowd-surfing in the back
   const lift = 140 + 20 * Math.sin(t * 7);
   for (const [x, i] of [[1300, 3], [1440, 6], [1580, 14]]) chars += ply(i, t, { x, y: 760, s: arS(760), armL: 170, armR: 170, face: 'excited', bodyY: -6 * Math.abs(Math.sin(t * 8 + x)), nametag: false });
-  chars += momA(t, { x: 1440, y: 760, s: arS(760), lift, rot: 80 + 8 * Math.sin(t * 3), armL: 160, armR: 160, face: 'joy', nametag: false, shield: false });
+  chars += momA(t, { x: 1440, y: 760, s: arS(760), lift, rot: 80 + 8 * Math.sin(t * 3), armL: 160, armR: 160, face: 'joy', nametag: false, shield: false, volume: false });
   chars += you(t, { x: 800 + 10 * sh, y: ys, s, turn: 0.3, headRot: 10 * sh, armL: 12, armR: 12, face: { name: 'deadpan', fx: ['sweat'] }, nametag: false }, { arms: false });
   chars += actor('noodle', t, { x: 1010, y: ys, s, turn: -0.35, armL: 78 + 6 * sh, armR: 120 + 40 * Math.sin(t * 20), lean: -4, face: 'scream', nametag: false }, { energy: 1.6, arms: false });
   let o = arenaShot(t, cam, { cheer: 1, signs: ['GO MOM!', 'MOM #1', 'LEGEND'] }, chars);

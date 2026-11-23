@@ -121,7 +121,7 @@ function panelTag(x, y, text, col = '#151A26', fg = '#FFFFFF', s = 1) {
 const LRS = H.SPOTS.livingRoom;
 const FROG = { legL: 90, legR: 90, kneeL: 90, kneeR: 90 };
 function room(t, cam, o = {}) {
-  const z = cam.zoom ?? 1, vol = z >= 1.75 ? false : undefined;
+  const z = cam.zoom ?? 1, vol = o.vol === false || z >= 1.75 ? false : undefined;   // o.vol false = flat bodies (cheap backgrounds)
   const gk = o.glow ?? 0.55;
   const glows = H.deviceGlows(['dad', 'mom', 'grandma'], gk);
   const L = H.livingRoom.layers(t, { time: o.time || 'evening', chair: 'front', glow: glows, lamp: o.lamp, pcScreen: o.pcScreen });
