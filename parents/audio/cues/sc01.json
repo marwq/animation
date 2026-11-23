@@ -1,0 +1,1408 @@
+{
+ "scene": "SC 01",
+ "start": 0,
+ "end": 36.93,
+ "music": [
+  {
+   "start": 0,
+   "end": 5.5,
+   "mood": "hook",
+   "energy": 0.55,
+   "in": "swell",
+   "out": "cut"
+  },
+  {
+   "start": 5.5,
+   "end": 10.2,
+   "mood": "arena",
+   "energy": 0.7,
+   "in": "cut",
+   "out": "sting"
+  },
+  {
+   "start": 10.2,
+   "end": 18.55,
+   "mood": "tycoon",
+   "energy": 0.65,
+   "in": "cut",
+   "out": "sting"
+  },
+  {
+   "start": 18.55,
+   "end": 26.418,
+   "mood": "playful",
+   "energy": 0.45,
+   "in": "cut",
+   "out": "cut"
+  },
+  {
+   "start": 26.418,
+   "end": 31.61,
+   "mood": "chaos",
+   "energy": 0.75,
+   "in": "cut",
+   "out": "scratch"
+  },
+  {
+   "start": 31.61,
+   "end": 32.398,
+   "mood": "silence",
+   "energy": 0,
+   "in": "cut",
+   "out": "cut"
+  },
+  {
+   "start": 32.398,
+   "end": 33.53,
+   "mood": "glitch_build",
+   "energy": 0.5,
+   "in": "cut",
+   "out": "tapestop"
+  },
+  {
+   "start": 33.53,
+   "end": 36.93,
+   "mood": "family",
+   "energy": 0.4,
+   "in": "fade",
+   "out": "cut"
+  }
+ ],
+ "ambience": [
+  {
+   "start": 0,
+   "end": 5.5,
+   "name": "night",
+   "gain_db": -14
+  },
+  {
+   "start": 0,
+   "end": 5.5,
+   "name": "town",
+   "gain_db": -18
+  },
+  {
+   "start": 5.5,
+   "end": 10.2,
+   "name": "crowd",
+   "gain_db": -12
+  },
+  {
+   "start": 10.2,
+   "end": 18.55,
+   "name": "wind",
+   "gain_db": -18
+  },
+  {
+   "start": 18.55,
+   "end": 22.97,
+   "name": "night",
+   "gain_db": -16
+  },
+  {
+   "start": 22.97,
+   "end": 26.418,
+   "name": "room",
+   "gain_db": -14
+  },
+  {
+   "start": 26.418,
+   "end": 31.61,
+   "name": "crowd",
+   "gain_db": -12
+  },
+  {
+   "start": 32.398,
+   "end": 33.53,
+   "name": "static",
+   "gain_db": -16
+  },
+  {
+   "start": 33.53,
+   "end": 35.78,
+   "name": "kitchen",
+   "gain_db": -14
+  },
+  {
+   "start": 33.53,
+   "end": 35.78,
+   "name": "birds",
+   "gain_db": -18
+  },
+  {
+   "start": 35.78,
+   "end": 36.93,
+   "name": "town",
+   "gain_db": -16
+  }
+ ],
+ "footsteps": [
+  {
+   "start": 5.5,
+   "end": 6.15,
+   "interval": 0.196,
+   "surface": "hard",
+   "gain_db": -8,
+   "pan": 0
+  },
+  {
+   "start": 12.858,
+   "end": 14.56,
+   "interval": 0.349,
+   "surface": "hard",
+   "gain_db": -10,
+   "pan": -0.2
+  },
+  {
+   "start": 15.61,
+   "end": 17.027,
+   "interval": 0.143,
+   "surface": "hard",
+   "gain_db": -8,
+   "pan": 0
+  },
+  {
+   "start": 18.55,
+   "end": 22.97,
+   "interval": 0.275,
+   "surface": "hard",
+   "gain_db": -12,
+   "pan": 0.25
+  },
+  {
+   "start": 24.1,
+   "end": 24.694,
+   "interval": 0.275,
+   "surface": "hard",
+   "gain_db": -12,
+   "pan": 0.25
+  }
+ ],
+ "sfx": [
+  [
+   0.05,
+   "reverse_swell",
+   -8,
+   0,
+   "fade up from black over the night city"
+  ],
+  [
+   0.4,
+   "whoosh_down",
+   -10,
+   0,
+   "the camera cranes down"
+  ],
+  [
+   0.9,
+   "whoosh_up",
+   -14,
+   0.16,
+   "firework rocket rises"
+  ],
+  [
+   1.27,
+   "notify",
+   -4,
+   0.54,
+   "\"... joined the server\" toast"
+  ],
+  [
+   1.35,
+   "explosion_small",
+   -9,
+   0.16,
+   "firework burst"
+  ],
+  [
+   1.6,
+   "whoosh_up",
+   -14,
+   -0.496,
+   "firework rocket rises"
+  ],
+  [
+   1.87,
+   "notify",
+   -4,
+   0.54,
+   "\"... joined the server\" toast"
+  ],
+  [
+   2.05,
+   "explosion_small",
+   -9,
+   -0.496,
+   "firework burst"
+  ],
+  [
+   2.15,
+   "whoosh_up",
+   -14,
+   0.284,
+   "firework rocket rises"
+  ],
+  [
+   2.47,
+   "notify",
+   -4,
+   0.54,
+   "\"... joined the server\" toast"
+  ],
+  [
+   2.6,
+   "explosion_small",
+   -9,
+   0.284,
+   "firework burst"
+  ],
+  [
+   2.65,
+   "whoosh_up",
+   -14,
+   -0.612,
+   "firework rocket rises"
+  ],
+  [
+   2.85,
+   "whoosh_up",
+   -14,
+   0.058,
+   "firework rocket rises"
+  ],
+  [
+   2.94,
+   "zoom_in",
+   -6,
+   0,
+   "push toward the billboard"
+  ],
+  [
+   2.99,
+   "impact",
+   -6,
+   0,
+   "shake on \"server\""
+  ],
+  [
+   3.1,
+   "explosion_small",
+   -9,
+   -0.612,
+   "firework burst"
+  ],
+  [
+   3.3,
+   "explosion_small",
+   -9,
+   0.058,
+   "firework burst"
+  ],
+  [
+   3.83,
+   "whoosh",
+   -6,
+   0,
+   "smash cut to the board"
+  ],
+  [
+   4.73,
+   "slide_up",
+   -4,
+   -0.1,
+   "MOM_OFFICIAL rolls up past YOU"
+  ],
+  [
+   5.07,
+   "orch_hit",
+   2,
+   0,
+   "#1! — the board punches in"
+  ],
+  [
+   5.09,
+   "level_up",
+   -4,
+   0.4,
+   "rank #1"
+  ],
+  [
+   5.09,
+   "explosion_small",
+   -10,
+   -0.6,
+   "fireworks behind the board"
+  ],
+  [
+   5.12,
+   "shine",
+   -6,
+   0,
+   "golden rays"
+  ],
+  [
+   5.21,
+   "explosion_small",
+   -10,
+   -0.3,
+   "fireworks behind the board"
+  ],
+  [
+   5.33,
+   "explosion_small",
+   -10,
+   0,
+   "fireworks behind the board"
+  ],
+  [
+   5.45,
+   "explosion_small",
+   -10,
+   0.3,
+   "fireworks behind the board"
+  ],
+  [
+   5.5,
+   "whoosh",
+   -4,
+   -0.3,
+   "whip to the arena"
+  ],
+  [
+   5.55,
+   "crowd_cheer",
+   -12,
+   0,
+   "the stands"
+  ],
+  [
+   5.57,
+   "explosion_small",
+   -10,
+   0.6,
+   "fireworks behind the board"
+  ],
+  [
+   5.87,
+   "cloth",
+   -10,
+   0,
+   "Mom winds up"
+  ],
+  [
+   6.05,
+   "swish",
+   0,
+   -0.2,
+   "golden spin slash"
+  ],
+  [
+   6.15,
+   "swish",
+   -2,
+   0.2,
+   "second slash"
+  ],
+  [
+   6.15,
+   "impact",
+   2,
+   0,
+   "triple hit"
+  ],
+  [
+   6.16,
+   "punch",
+   0,
+   -0.16,
+   "POW!"
+  ],
+  [
+   6.18,
+   "bonk",
+   -2,
+   0.168,
+   "BONK!"
+  ],
+  [
+   6.2,
+   "punch",
+   -4,
+   0.146,
+   "the third one"
+  ],
+  [
+   6.21,
+   "ui_pop",
+   -10,
+   -0.2,
+   "-999 damage numbers"
+  ],
+  [
+   6.21,
+   "chat_pop",
+   -4,
+   -0.1,
+   "\"Good game, sweetie!\" bubble"
+  ],
+  [
+   6.23,
+   "boing",
+   -4,
+   -0.5,
+   "player 1 launched out of the arena"
+  ],
+  [
+   6.25,
+   "boing",
+   -4,
+   0.5,
+   "player 2 launched out of the arena"
+  ],
+  [
+   6.25,
+   "body_fall",
+   -6,
+   0.27,
+   "player 3 bonked flat into the sand"
+  ],
+  [
+   6.27,
+   "whoosh_up",
+   -6,
+   0,
+   "they fly away"
+  ],
+  [
+   6.33,
+   "orch_hit",
+   0,
+   0.4,
+   "TRIPLE K.O.!"
+  ],
+  [
+   6.4,
+   "crowd_cheer",
+   -4,
+   0,
+   "the crowd erupts"
+  ],
+  [
+   6.45,
+   "dizzy",
+   -10,
+   0.139,
+   "KO stars"
+  ],
+  [
+   6.51,
+   "typing",
+   -12,
+   -0.1,
+   "the bubble types along"
+  ],
+  [
+   7.05,
+   "whoosh",
+   -8,
+   0,
+   "smash in on Mom"
+  ],
+  [
+   7.1,
+   "heart_pop",
+   -4,
+   -0.1,
+   "emote hearts"
+  ],
+  [
+   7.15,
+   "sparkle",
+   -6,
+   -0.7,
+   "KO player twinkles away (left)"
+  ],
+  [
+   7.27,
+   "sparkle",
+   -6,
+   0.7,
+   "KO player twinkles away (right)"
+  ],
+  [
+   7.97,
+   "chat_pop",
+   -4,
+   -0.4,
+   "\"Drink some water!\" bubble"
+  ],
+  [
+   8.02,
+   "whoosh",
+   -8,
+   0,
+   "cut: Mom + the flattened player"
+  ],
+  [
+   8.07,
+   "tv_on",
+   -10,
+   0.5,
+   "REAL LIFE cam pops in"
+  ],
+  [
+   8.12,
+   "ui_pop",
+   -8,
+   0.5,
+   "REAL LIFE label"
+  ],
+  [
+   8.57,
+   "whoosh",
+   -6,
+   0.1,
+   "she tosses the water bottle"
+  ],
+  [
+   9.12,
+   "gulp",
+   -2,
+   0.19,
+   "the bottle pops on him"
+  ],
+  [
+   9.14,
+   "magic",
+   -6,
+   0.19,
+   "+HP"
+  ],
+  [
+   9.22,
+   "sparkle",
+   -8,
+   0.19,
+   "green crosses"
+  ],
+  [
+   9.44,
+   "ui_close",
+   -10,
+   0.5,
+   "REAL LIFE cam closes"
+  ],
+  [
+   9.74,
+   "boing",
+   -4,
+   0.211,
+   "he pops back up"
+  ],
+  [
+   9.94,
+   "pop",
+   -8,
+   0.35,
+   "thumbs up"
+  ],
+  [
+   10.2,
+   "whoosh",
+   -6,
+   0.3,
+   "smash to the neon cookie"
+  ],
+  [
+   10.55,
+   "whoosh_down",
+   -4,
+   0.3,
+   "tilt down the skyscraper"
+  ],
+  [
+   11.27,
+   "ui_pop",
+   -4,
+   0.5,
+   "SERVER OWNERSHIP card"
+  ],
+  [
+   11.39,
+   "money_counter",
+   -8,
+   0.5,
+   "the ring fills to 50 %"
+  ],
+  [
+   11.82,
+   "stamp",
+   0,
+   0.3,
+   "HALF! stamp"
+  ],
+  [
+   12.858,
+   "whoosh",
+   -6,
+   -0.3,
+   "whip to the workers"
+  ],
+  [
+   13.02,
+   "ui_pop",
+   -8,
+   -0.6,
+   "GRANNY'S STAFF sign"
+  ],
+  [
+   13.85,
+   "pop",
+   -8,
+   -0.6,
+   "EMPLOYEES: 5"
+  ],
+  [
+   14.36,
+   "chat_pop",
+   -4,
+   0.2,
+   "\"Faster, boys!\" bubble"
+  ],
+  [
+   14.56,
+   "whoosh",
+   -8,
+   0.4,
+   "smash in on Granny"
+  ],
+  [
+   15.07,
+   "thud",
+   0,
+   -0.2,
+   "the cane TAP!"
+  ],
+  [
+   15.08,
+   "impact",
+   -4,
+   0,
+   "shake"
+  ],
+  [
+   15.56,
+   "chat_pop",
+   -6,
+   -0.4,
+   "\"Those cookies won't sell themselves!\""
+  ],
+  [
+   15.61,
+   "whoosh_long",
+   -4,
+   -0.5,
+   "whip: they sprint"
+  ],
+  [
+   15.66,
+   "ui_pop",
+   -8,
+   0.5,
+   "REAL LIFE cam: Granny"
+  ],
+  [
+   16.777,
+   "ui_close",
+   -10,
+   0.5,
+   "REAL LIFE cam closes"
+  ],
+  [
+   17.027,
+   "whoosh",
+   -8,
+   0,
+   "smash: Granny rich"
+  ],
+  [
+   17.047,
+   "ui_pop",
+   -6,
+   -0.8,
+   "coin counter"
+  ],
+  [
+   17.077,
+   "money_counter",
+   -2,
+   -0.8,
+   "the counter rockets to 9,999,999"
+  ],
+  [
+   17.277,
+   "ka_ching",
+   2,
+   0.4,
+   "KA-CHING!"
+  ],
+  [
+   17.327,
+   "coins",
+   -2,
+   0.1,
+   "coin burst"
+  ],
+  [
+   18.55,
+   "whoosh",
+   -6,
+   0.5,
+   "whip to the plaza"
+  ],
+  [
+   18.981,
+   "bonk",
+   -10,
+   0.25,
+   "BONK — the hot dog walks into the wall"
+  ],
+  [
+   19.531,
+   "bonk",
+   -10,
+   0.25,
+   "BONK — the hot dog walks into the wall"
+  ],
+  [
+   19.69,
+   "zoom_in",
+   -8,
+   0.2,
+   "close on the hot dog"
+  ],
+  [
+   19.79,
+   "pop",
+   -10,
+   -0.3,
+   "DadBod1978 LVL 1 nametag"
+  ],
+  [
+   20.081,
+   "bonk",
+   -6,
+   0.25,
+   "BONK — the hot dog walks into the wall"
+  ],
+  [
+   20.631,
+   "bonk",
+   -6,
+   0.25,
+   "BONK — the hot dog walks into the wall"
+  ],
+  [
+   21.181,
+   "bonk",
+   -6,
+   0.25,
+   "BONK — the hot dog walks into the wall"
+  ],
+  [
+   21.57,
+   "whoosh",
+   -8,
+   0,
+   "pull back"
+  ],
+  [
+   21.731,
+   "bonk",
+   -10,
+   0.25,
+   "BONK — the hot dog walks into the wall"
+  ],
+  [
+   21.87,
+   "impact",
+   -2,
+   0,
+   "TIME 3:12:45 slams big"
+  ],
+  [
+   21.95,
+   "countdown_tick",
+   -6,
+   0,
+   "timer tick"
+  ],
+  [
+   22.25,
+   "whoosh_long",
+   -6,
+   0,
+   "time-lapse: players zip past"
+  ],
+  [
+   22.281,
+   "bonk",
+   -10,
+   0.25,
+   "BONK — the hot dog walks into the wall"
+  ],
+  [
+   22.35,
+   "ui_pop",
+   -10,
+   0,
+   "TIME-LAPSE label"
+  ],
+  [
+   22.35,
+   "countdown_tick",
+   -12,
+   0,
+   "the timer races"
+  ],
+  [
+   22.45,
+   "countdown_tick",
+   -12,
+   0,
+   "the timer races"
+  ],
+  [
+   22.55,
+   "countdown_tick",
+   -12,
+   0,
+   "the timer races"
+  ],
+  [
+   22.65,
+   "countdown_tick",
+   -12,
+   0,
+   "the timer races"
+  ],
+  [
+   22.7,
+   "cricket",
+   -6,
+   0.3,
+   "a cobweb on the hot dog"
+  ],
+  [
+   22.75,
+   "countdown_tick",
+   -12,
+   0,
+   "the timer races"
+  ],
+  [
+   22.82,
+   "click",
+   -6,
+   0,
+   "Dad mashes the mouse"
+  ],
+  [
+   22.831,
+   "bonk",
+   -10,
+   0.25,
+   "BONK — the hot dog walks into the wall"
+  ],
+  [
+   22.85,
+   "countdown_tick",
+   -12,
+   0,
+   "the timer races"
+  ],
+  [
+   22.92,
+   "click",
+   -6,
+   0,
+   "Dad mashes the mouse"
+  ],
+  [
+   22.97,
+   "whoosh",
+   -6,
+   0,
+   "smash to the living room"
+  ],
+  [
+   23.02,
+   "click",
+   -6,
+   0,
+   "Dad mashes the mouse"
+  ],
+  [
+   23.07,
+   "impact",
+   0,
+   0,
+   "\"JUMP!\" shake + zoom"
+  ],
+  [
+   23.09,
+   "zoom_in",
+   -6,
+   0,
+   "smash zoom on Dad"
+  ],
+  [
+   24.1,
+   "whoosh",
+   -8,
+   0,
+   "cut back to the hot dog"
+  ],
+  [
+   24.22,
+   "notify",
+   -4,
+   0,
+   "PRESS SPACE TO JUMP"
+  ],
+  [
+   24.45,
+   "pop",
+   -8,
+   -0.3,
+   "?"
+  ],
+  [
+   24.481,
+   "bonk",
+   -6,
+   0.25,
+   "BONK — the hot dog walks into the wall"
+  ],
+  [
+   24.694,
+   "vhs_clunk",
+   -8,
+   0,
+   "webcam view"
+  ],
+  [
+   24.794,
+   "beep",
+   -12,
+   -0.7,
+   "REC"
+  ],
+  [
+   25.87,
+   "impact",
+   2,
+   0,
+   "\"JUMP!\" — webcam shake"
+  ],
+  [
+   25.89,
+   "zoom_in",
+   -4,
+   0,
+   "zoom lines"
+  ],
+  [
+   26.418,
+   "whoosh",
+   -8,
+   0.3,
+   "cut to the plaza"
+  ],
+  [
+   26.518,
+   "chat_pop",
+   -10,
+   -0.7,
+   "chat: PizzaKid: lol is that ur dad"
+  ],
+  [
+   26.538,
+   "equip",
+   -4,
+   0.4,
+   "EMOTE: FLOSS"
+  ],
+  [
+   26.568,
+   "kids_laugh",
+   -6,
+   -0.4,
+   "the players laugh"
+  ],
+  [
+   26.618,
+   "boing",
+   -8,
+   0.4,
+   "he flosses"
+  ],
+  [
+   26.868,
+   "chat_pop",
+   -10,
+   -0.7,
+   "chat: CubeKid9: XD"
+  ],
+  [
+   27.34,
+   "whoosh",
+   -6,
+   -0.4,
+   "whip to the hero"
+  ],
+  [
+   27.34,
+   "typing",
+   -10,
+   -0.2,
+   "\"lol is that ur dad\" types"
+  ],
+  [
+   27.39,
+   "chat_pop",
+   -6,
+   -0.2,
+   "PizzaKid bubble"
+  ],
+  [
+   27.54,
+   "chat_pop",
+   -10,
+   -0.7,
+   "chat: SkyRunner: hot dog guy LVL 1 lmao"
+  ],
+  [
+   27.97,
+   "chat_pop",
+   -10,
+   -0.7,
+   "chat: ToastMan: DAD JUMP"
+  ],
+  [
+   28.07,
+   "impact",
+   0,
+   0,
+   "\"This is MY server!\" smash"
+  ],
+  [
+   28.09,
+   "zoom_in",
+   -6,
+   0,
+   "zoom lines"
+  ],
+  [
+   28.27,
+   "crowd_laugh",
+   -8,
+   0,
+   "the plaza laughs"
+  ],
+  [
+   28.59,
+   "chat_pop",
+   -10,
+   -0.7,
+   "chat: BloxyBea: lol is that ur dad"
+  ],
+  [
+   29.09,
+   "whoosh",
+   -8,
+   0,
+   "smash close"
+  ],
+  [
+   29.29,
+   "chat_pop",
+   -10,
+   -0.7,
+   "chat: xX_DarkBlade_Xx: LOL"
+  ],
+  [
+   29.91,
+   "impact",
+   0,
+   0,
+   "\"HAPPEN?!\" shake"
+  ],
+  [
+   29.91,
+   "chat_pop",
+   -6,
+   -0.5,
+   "LOL / XD / DAD!! bubbles"
+  ],
+  [
+   29.93,
+   "whoosh_long",
+   -4,
+   0,
+   "pull back to the whole plaza"
+  ],
+  [
+   30.01,
+   "chat_pop",
+   -6,
+   -0.25,
+   "LOL / XD / DAD!! bubbles"
+  ],
+  [
+   30.11,
+   "chat_pop",
+   -6,
+   0,
+   "LOL / XD / DAD!! bubbles"
+  ],
+  [
+   30.21,
+   "chat_pop",
+   -6,
+   0.25,
+   "LOL / XD / DAD!! bubbles"
+  ],
+  [
+   30.21,
+   "kids_laugh",
+   -6,
+   0,
+   "everyone laughs"
+  ],
+  [
+   30.31,
+   "chat_pop",
+   -6,
+   0.5,
+   "LOL / XD / DAD!! bubbles"
+  ],
+  [
+   30.41,
+   "chat_pop",
+   -14,
+   -0.8,
+   "chat flood"
+  ],
+  [
+   30.51,
+   "chat_pop",
+   -14,
+   -0.5,
+   "chat flood"
+  ],
+  [
+   30.61,
+   "chat_pop",
+   -14,
+   -0.2,
+   "chat flood"
+  ],
+  [
+   30.71,
+   "chat_pop",
+   -14,
+   -0.65,
+   "chat flood"
+  ],
+  [
+   30.81,
+   "chat_pop",
+   -14,
+   -0.35,
+   "chat flood"
+  ],
+  [
+   30.91,
+   "chat_pop",
+   -14,
+   -0.8,
+   "chat flood"
+  ],
+  [
+   31.01,
+   "chat_pop",
+   -14,
+   -0.5,
+   "chat flood"
+  ],
+  [
+   31.11,
+   "chat_pop",
+   -14,
+   -0.2,
+   "chat flood"
+  ],
+  [
+   31.21,
+   "chat_pop",
+   -14,
+   -0.65,
+   "chat flood"
+  ],
+  [
+   31.31,
+   "chat_pop",
+   -14,
+   -0.35,
+   "chat flood"
+  ],
+  [
+   31.41,
+   "chat_pop",
+   -14,
+   -0.8,
+   "chat flood"
+  ],
+  [
+   31.51,
+   "chat_pop",
+   -14,
+   -0.5,
+   "chat flood"
+  ],
+  [
+   31.61,
+   "record_scratch",
+   2,
+   0,
+   "record scratch: freeze"
+  ],
+  [
+   31.63,
+   "camera_flash",
+   -6,
+   0,
+   "the frame becomes a photo"
+  ],
+  [
+   31.81,
+   "pop",
+   -6,
+   0.2,
+   "THE LEGEND? tag"
+  ],
+  [
+   32.398,
+   "vhs_clunk",
+   -4,
+   0,
+   "REWIND"
+  ],
+  [
+   32.418,
+   "rewind",
+   0,
+   0,
+   "tape rewinds"
+  ],
+  [
+   32.498,
+   "static",
+   -12,
+   0,
+   "tape noise"
+  ],
+  [
+   32.587,
+   "glitch",
+   -10,
+   0,
+   "jump to the previous shot"
+  ],
+  [
+   32.775,
+   "glitch",
+   -10,
+   0,
+   "jump to the previous shot"
+  ],
+  [
+   32.964,
+   "glitch",
+   -10,
+   0,
+   "jump to the previous shot"
+  ],
+  [
+   33.153,
+   "glitch",
+   -10,
+   0,
+   "jump to the previous shot"
+  ],
+  [
+   33.341,
+   "glitch",
+   -10,
+   0,
+   "jump to the previous shot"
+  ],
+  [
+   33.53,
+   "impact",
+   -8,
+   0,
+   "the rewind stops"
+  ],
+  [
+   33.83,
+   "vhs_clunk",
+   -6,
+   0,
+   "PAUSE"
+  ],
+  [
+   33.88,
+   "ui_pop",
+   -6,
+   0,
+   "FAMILY BREAKFAST title"
+  ],
+  [
+   33.93,
+   "chime",
+   -10,
+   0,
+   "Saturday morning"
+  ],
+  [
+   35.28,
+   "pixel_wipe",
+   -4,
+   0,
+   "pixel wipe covers"
+  ],
+  [
+   35.83,
+   "pixel_wipe",
+   -6,
+   0,
+   "pixel wipe reveals Cube City by day"
+  ],
+  [
+   36.38,
+   "vhs_clunk",
+   -8,
+   -0.6,
+   "PLAY"
+  ],
+  [
+   36.73,
+   "whoosh",
+   -6,
+   0,
+   "white flash into SC 02"
+  ]
+ ]
+}
