@@ -51,7 +51,7 @@ const flakeLand = C.server - 0.3;
 
 // ================================================================= SFX, shot by shot (same order as scenes/s02.js SHOTS)
 // ---- whip-pans (white streak flash) on these cuts — scenes/s02.js WHIPS
-for (const [tc, dir] of [[C.legend, -1], [C.level, 1], [C.base, -1], [C.welcome, 1], [C.lava, 1], [C.noodle, -1], [C.bro, 1], [C.king, 1], [C.dark, -1], [C.taunt, 1], [C.meeting, 1], [C.no, -1], [END, 1]]) {
+for (const [tc, dir] of [[C.legend, -1], [C.level, 1], [C.base, -1], [C.welcome, 1], [C.lava, 1], [C.noodle, -1], [C.bro, 1], [C.king, 1], [C.dark, -1], [C.taunt, 1], [C.meeting, 1], [C.no, -1]]) {   // the END whip's whoosh is in SC 03's sheet (148.63)
   add(tc - 0.09, 'whoosh', -7, 0.3 * dir, 'whip-pan');
 }
 // ---- 1. "This is you." — PLAY, the hero drops onto the plaza, hop, freeze + YOU card
