@@ -55,6 +55,7 @@ CUT.vhs2 = w(6, 'your') - 0.1;
 CUT.vhs3 = w(6, 'champion') - 0.4;
 CUT.photo = A[6].b + 0.05;
 CUT.queen = A[7].a - 0.45;
+CUT.retired = w(7, 'retired') - 0.3;
 CUT.forYou = w(7, 'For') - 0.1;
 CUT.later = A[8].a - 0.05;
 CUT.board = w(8, 'later') - 0.02;
@@ -223,7 +224,7 @@ function shRelax(t) {
 function shMomIn(t) {
   const tMom = w(1, 'Mom'), tSnap = w(1, 'followed');
   const hx = 1180, hy = 880, hs = arS(hy);
-  const cam = shakeAll(camKeys(t, [[CUT.momIn, camAt(880, 640, 1.22)], [tSnap - 0.02, camAt(900, 640, 1.26)], [tSnap + 0.08, camAt(1180, 560, 2.05)], [A[1].b + 0.1, camAt(1180, 560, 2.1)], [A[1].b + 0.55, camAt(900, 640, 1.3)], [CUT.split, camAt(880, 640, 1.34)]], ease.out), t, [[tSnap, 0.3, 12]]);
+  const cam = shakeAll(camKeys(t, [[CUT.momIn, camAt(880, 640, 1.22)], [tSnap - 0.02, camAt(900, 640, 1.26)], [tSnap + 0.08, camAt(1180, 560, 2.05)], [A[1].b + 0.1, camAt(1180, 560, 2.1)], [A[1].b + 0.55, camAt(830, 640, 1.22)], [CUT.split, camAt(810, 640, 1.26)]], ease.out), t, [[tSnap, 0.3, 12]]);
   const walk = seg(t, A[1].b + 0.2, CUT.split);
   const mx = lerp(470, 700, walk), my = lerp(770, 820, walk), ms = arS(my);
   let chars = '';
@@ -247,14 +248,17 @@ function shMomIn(t) {
 
 // ---- 7. MOM: "Don't mind me, sweetie. I'm just watching." — split: real Mom on the couch | her grey avatar at the ring
 function shSplit(t) {
-  const roomIn = room(t, camAt(1320, 560, 1.95), { mom: { mugUp: t > w(2, 'watching') - 0.1 && t < A[2].b + 0.6 }, momAct: { face: 'happy' }, you: false, dad: false });
-  const cam = camAt(1010, 620, 1.5);
+  const sipS = t > w(2, 'watching') - 0.1 && t < A[2].b + 0.6;
+  const roomIn = room(t, camAt(1320, 560, 1.95), { mom: { mugUp: sipS }, momAct: { face: 'happy', arms: !sipS }, you: false, dad: false });
+  const cam = camKeys(t, [[CUT.split, camAt(1060, 660, 1.36)], [CUT.sneak, camAt(1060, 650, 1.44)]]);
   let chars = '';
-  chars += you(t, { x: 1250, y: 800, s: arS(800), turn: -0.3, armR: 165, armL: 20, headRot: 10, face: { name: 'deadpan', fx: ['sweat'] }, nametag: false }, { arms: false });
+  // the hero (back to the ring) slowly face-palms while Mom waves at him
+  const palm = ease.inOut(seg(t, A[2].a + 0.6, A[2].a + 1.3));
+  chars += you(t, { x: 1270, y: 820, s: arS(820), turn: -0.3, armR: lerp(20, 165, palm), armL: 20, headRot: 10 * palm, face: { name: palm > 0.5 ? 'deadpan' : 'nervous', fx: ['sweat'] }, nametag: false }, { arms: false });
   chars += momG(t, { x: 930, y: 900, s: arS(900), turn: 0.2, armR: 120 + 20 * Math.sin(t * 9), face: { name: 'happy', mouth: 'smile' }, nametag: false }, { arms: false });
   let gameIn = arenaShot(t, cam, { cheer: 0.25 }, chars);
   gameIn += G.nametag({ who: 'mom', ...(() => { const p = toScr(cam, 930, 900 - MOM_H * arS(900)); return { x: p.x, y: p.y - 30 }; })(), s: 0.9, t });
-  gameIn += bubbleAt(t, cam, 930, 900 - MOM_H * arS(900), '05.2', { gap: 100, s: 1.2, tail: 0.3, hold: 1.0 });
+  gameIn += bubbleAt(t, cam, 930, 900 - MOM_H * arS(900), '05.2', { gap: 96, s: 0.95, tail: -0.55, hold: 1.0 });
   const k0 = seg(t, CUT.split, CUT.split + 0.3), k1 = seg(t, CUT.split + 0.1, CUT.split + 0.4);
   let o = S.rect(0, 0, 1920, 1080, 0, { fill: '#1E2A44' }) + S.path(Array.from({ length: 16 }, (_, i) => `M${i * 160 - 400} 1080 L${i * 160 + 200} 0`).join(' '), ln(40, '#24345A'));
   o += panel(36, 36, 912, 900, roomIn, { k: k0, dx: 0, dy: -40 }) + panel(972, 36, 912, 900, gameIn, { k: k1, dy: -40 });
@@ -277,7 +281,7 @@ function shSneak(t) {
   const raise = seg(t, tHitMom - 0.42, tHitMom - 0.08), swing = seg(t, tHitMom - 0.08, tHitMom + 0.05);
   const armR = t < tHitMom - 0.08 ? lerp(40, 175, raise) : lerp(175, 50, ease.in(swing));
   const tiptoe = t < tHitMom - 0.4 ? AC.walk((t - CUT.sneak) * 7, 1.2) : {};
-  chars += ply(11, t, { x: ax, y: my, s: ms, view: 'side', flip: true, sword: true, ...tiptoe, armR, armL: tiptoe.armL ?? 30, face: after ? 'smug' : 'sneaky', nametag: false, bodyY: (tiptoe.bodyY || 0) - 10 });
+  chars += ply(11, t, { x: ax, y: my, s: ms, view: 'side', flip: true, sword: true, ...tiptoe, armL: armR, armR: tiptoe.armR ?? 30, face: after ? 'smug' : 'sneaky', nametag: false, bodyY: (tiptoe.bodyY || 0) - 10 });
   const hx = mx - 30, hy = my - MOM_H * ms + 40;
   let fx = G.slash({ x: hx, y: hy + 20, age: t - tHitMom + 0.06, angle: 200, s: 0.9 }) + G.hitSpark({ x: hx, y: hy, age: t - tHitMom, text: 'BONK!', s: 0.9 }) + G.damageNumber({ x: hx + 90, y: hy - 30, age: t - tHitMom - 0.05, value: -10, s: 0.85 });
   return arenaShot(t, cam, { cheer: 0.25 }, chars, fx);
@@ -308,7 +312,7 @@ function shSlow(t) {
   const dodge = ease.inOut(seg(t, tSwing2 + 0.05, tSwing2 + 0.5)) * (1 - ease.inOut(seg(t, CUT.hits - 0.15, CUT.hits)));
   const mom = (tt, d) => momG(tt, { x: 720 + 30 * d, y: my, s: ms, view: 'side', lean: 42 * d, bodyY: 30 * d, kneeL: 30 * d, kneeR: 30 * d, legL: 10 * d, legR: -14 * d, armL: -40 * d, armR: 60 * d, face: 'determined', nametag: false }, { arms: false });
   let chars = '';
-  chars += ply(11, t, { x: 470, y: my, s: ms, view: 'side', flip: true, sword: true, armR: lerp(170, 20, ease.inOut(sw)), lean: 10 * sw, face: 'angry', nametag: false });
+  chars += ply(11, t, { x: 470, y: my, s: ms, view: 'side', flip: true, sword: true, armL: lerp(170, 20, ease.inOut(sw)), armR: 30, lean: 10 * sw, face: 'angry', nametag: false });
   // afterimages of Mom (ghosts at earlier dodge values)
   for (const [lag, op] of [[0.18, 0.18], [0.09, 0.3]]) {
     const d2 = ease.inOut(seg(t - lag, tSwing2 + 0.05, tSwing2 + 0.5));
@@ -340,7 +344,7 @@ function shHits(t) {
   let o = arenaShot(t, cam, { cheer: 0 }, att + mom, fx);
   const slowK = 1 - seg(t, tH3, tH3 + 0.15);
   o += coolTint(slowK) + letterbox(slowK);
-  o += G.comboText({ x: 1460, y: 300, k: seg(t, tH3, tH3 + 0.4), t, count: 3, s: 0.78 });
+  o += G.comboText({ x: 1220, y: 250, k: seg(t, tH3, tH3 + 0.4), t, count: 3, s: 0.66 });
   return o + smash(t, tH3, 0.12, 0.85);
 }
 
@@ -357,6 +361,7 @@ function shFly(t) {
   const fx = G.knockoutFly({ x0: 470, y0: my - 40, age: t - tFly, dir: 1, svg: flyer, cy: 260 * ms / 0.5, x1: 1520, y1: 150, s: ms, arc: 60 });
   let o = arenaShot(t, cam, { cheer: 0 }, chars, fx);
   o += K.bang('K.O.!', 470, 420, pop(t, tFly + 0.05, 0.25) * (1 - seg(t, CUT.stick - 0.3, CUT.stick)), 150, -8, '#FF4B5C');
+  o += G.comboText({ x: 860, y: 190, k: seg(t, tH3, tH3 + 0.4), out: seg(t, CUT.stick - 0.35, CUT.stick), t, count: 3, s: 0.6 });
   return o;
 }
 
@@ -396,8 +401,10 @@ function shMuscle(t) {
   const shrug = bump(t, w(5, 'Oh') - 0.05, tM);
   const push = seg(t, tM, tM + 0.25) * (1 - seg(t, A[5].b - 0.1, A[5].b + 0.2));
   let chars = '';
-  chars += ply(3, t, { x: 470, y: 820, s: arS(820), turn: 0.5, lean: 34 * seg(t, CUT.muscle, CUT.muscle + 0.4), headRot: 10, face: 'amazed', armL: 10, armR: 10, nametag: false });
-  chars += ply(14, t, { x: 1200, y: 830, s: arS(830), turn: -0.5, lean: 34 * seg(t, CUT.muscle + 0.15, CUT.muscle + 0.55), headRot: -10, face: 'amazed', armL: 10, armR: 10, nametag: false });
+  // two players bow to her (side view, facing her, bending forward)
+  const bow1 = ease.inOut(seg(t, CUT.muscle + 0.1, CUT.muscle + 0.5)), bow2 = ease.inOut(seg(t, CUT.muscle + 0.3, CUT.muscle + 0.7));
+  chars += ply(3, t, { x: 450, y: 820, s: arS(820), view: 'side', flip: true, lean: 38 * bow1, headRot: 12 * bow1, bodyY: 10 * bow1, face: 'amazed', armL: -20 * bow1, armR: -20 * bow1, nametag: false });
+  chars += ply(14, t, { x: 1210, y: 830, s: arS(830), view: 'side', lean: -38 * bow2, headRot: -12 * bow2, bodyY: 10 * bow2, face: 'amazed', armL: -20 * bow2, armR: -20 * bow2, nametag: false });
   chars += momG(t, { x: mx, y: my, s: ms, turn: 0.1, armL: 20 + 25 * shrug, armR: lerp(20 + 25 * shrug, 158, push), headRot: -6 * shrug, face: { name: 'happy', fx: push > 0.5 ? ['blush'] : [] }, nametag: false }, { arms: false });
   let o = arenaShot(t, cam, { cheer: 0.1 }, chars, push > 0.5 ? K.F.sparkle(mx + 40, my - 700 * ms, 26 * Math.abs(Math.sin(t * 9))) : '');
   o += bubbleAt(t, cam, mx, my - MOM_H * ms, '05.5', { gap: 70, s: 1.2, tail: 0.2, hold: 1 });
@@ -406,6 +413,7 @@ function shMuscle(t) {
 
 // ---- 16. "That's when you learned the truth." — real life: the hero turns to Mom (tea); push into the ARCADE QUEEN photo
 const PHOTO = { x: 1112, y: 196 };
+const LRS_YOU = E.LRS.seats.you;
 function shTruth(t) {
   const cam = camKeys(t, [[CUT.truth, camAt(980, 560, 1.22)], [tGlint - 0.05, camAt(1040, 470, 1.4)], [tGlint + 0.12, camAt(PHOTO.x, PHOTO.y + 10, 2.7)], [CUT.vhs1 - 0.25, camAt(PHOTO.x, PHOTO.y, 4.2)], [CUT.vhs1, camAt(PHOTO.x, PHOTO.y, 8.5)]], ease.inOut);
   const turn = lerp(0.42, 0.85, ease.inOut(seg(t, CUT.truth + 0.1, CUT.truth + 0.8)));
@@ -462,7 +470,7 @@ function shVhs2(t) {
 }
 function vhs3Picture(t, lite = false) {
   const st = E.ARC.stage;
-  const cam = handheld(t, camKeys(t, [[CUT.vhs3, camAt(st.x - 330, 470, 0.95)], [CUT.photo, camAt(st.x - 300, 470, 1.04)]]), 0.8);
+  const cam = handheld(t, camKeys(t, [[CUT.vhs3, camAt(st.x - 330, 470, 0.95)], [w(6, 'champion') + 0.2, camAt(st.x - 260, 450, 1.18)], [CUT.photo, camAt(st.x - 250, 445, 1.24)]], ease.inOut), 0.8);
   const Ly = E.arcade(t, cam);
   let chars = actor('momTeen', t, { x: st.x, y: st.top + 4, s: 0.48, trophy: 'up', face: { name: 'joy', fx: ['sparkles'] }, bodyY: 6 * Math.abs(Math.sin(t * 6)) }, { arms: false });
   const front = [[st.x - 900, 1000, 5, 0.46], [st.x - 640, 1030, 2, 0.48], [st.x - 330, 1040, 7, 0.5], [st.x + 280, 1030, 3, 0.5], [st.x + 560, 1010, 0, 0.48]];
@@ -498,21 +506,30 @@ function shPhoto(t) {
 
 // ---- 21. MOM: "They called me 'The Queen.' I retired." — a little crown pops over her bun; a sip of tea
 function shQueen(t) {
-  const cam = camKeys(t, [[CUT.queen, QCAM0], [CUT.forYou, QCAM1]]);
-  const tQ = w(7, 'Queen'), tR = w(7, 'retired');
-  const sip = t > tR - 0.15 && t < w(7, 'For') - 0.1;
-  const over = E.crownPop(1338, 364, seg(t, tQ - 0.05, tQ + 0.3) * (1 - seg(t, tR - 0.3, tR)), t, 44);
-  let o = room(t, cam, { mom: { mugUp: sip }, momAct: { face: 'happy' }, over });
+  const cam = camKeys(t, [[CUT.queen, QCAM0], [CUT.retired, QCAM1]]);
+  const tQ = w(7, 'Queen');
+  const over = E.crownPop(1338, 364, seg(t, tQ - 0.05, tQ + 0.3), t, 44);
+  let o = room(t, cam, { mom: {}, momAct: { face: 'happy' }, over });
   const g = seg(t, tQ, tQ + 0.6);
   if (g > 0 && g < 1) { const p = toScr(cam, PHOTO.x, PHOTO.y); o += K.F.sparkle(p.x + 30, p.y - 40, 60 * Math.sin(g * Math.PI)); }
   return o;
+}
+// ---- 21b. "I retired." — close-up: real Mom takes a slow, dignified sip of tea; the glasses glint (a legend at rest)
+function shRetired(t) {
+  const tR = w(7, 'retired');
+  const cam = camKeys(t, [[CUT.retired, camAt(1336, 560, 2.15, 960, 560)], [CUT.forYou, camAt(1336, 552, 2.4, 960, 560)]], ease.inOut);
+  const sip = t > tR - 0.1 && t < w(7, 'For') - 0.35;
+  let o = room(t, cam, { you: false, mom: { mugUp: sip, face: sip ? { name: 'happy', eyes: { type: 'closed' } } : undefined }, momAct: { face: 'happy', arms: !sip }, glow: 0.7 });
+  const g = seg(t, w(7, 'For') - 0.45, w(7, 'For') - 0.1);
+  if (g > 0 && g < 1) { const p = toScr(cam, 1300, 520); o += K.F.sparkle(p.x - 40 + 120 * g, p.y, 50 * Math.sin(g * Math.PI)); }
+  return o + whip(t, CUT.retired, 1, 0.08);
 }
 // ---- 22. "For you." — the hero (real) at his desk: blush
 function shForYou(t) {
   const cam = camKeys(t, [[CUT.forYou, camAt(1100, 552, 1.6, 960, 520)], [CUT.forYou + 0.4, camAt(640, 566, 2.0, 960, 500)], [CUT.later, camAt(630, 566, 2.1, 960, 500)]], ease.inOut);
   let o = room(t, cam, { you: { turn: 0.8, face: { name: 'cute', fx: ['blush'] } }, mom: { turn: -0.5 }, momAct: { face: 'happy' } });
-  const p = toScr(cam, 1300, 380);
-  o += G.emoteHearts({ x: p.x, y: p.y, age: t - w(7, 'For'), n: 5, s: 0.8, life: 1.2 });
+  const face = toScr(cam, LRS_YOU.x, 560);
+  o += G.emoteHearts({ x: 2000, y: 420, age: t - w(7, 'For') + 0.1, n: 6, s: 0.9, life: 1.3, to: [face.x + 40, face.y], spread: 120 });
   return o + whip(t, CUT.later, 1);
 }
 
@@ -591,7 +608,7 @@ function shNice(t) {
   let chars = momA(t, { x: mx, y: my, s: ms, turn: 0.55, shieldUp: bash > 0.3, armL: 30 + 80 * bash, armR: 40, lean: 6 * bash, face: { name: 'happy' }, nametag: false }, { arms: false });
   const ax = lerp(1600, 870, ease.in(seg(t, CUT.nice, tNice)));
   let fx = '';
-  if (t < tNice) chars += ply(13, t, { x: ax, y: my, s: ms, view: 'side', sword: true, ...AC.run((t - CUT.nice) * 20), armR: 140, face: 'angry', nametag: false });
+  if (t < tNice) chars += ply(13, t, { x: ax, y: my, s: ms, view: 'side', sword: true, ...AC.run((t - CUT.nice) * 20), armL: 150, face: 'angry', nametag: false });
   else fx += G.knockoutFly({ x0: 870, y0: my - 30, age: t - tNice, dir: 1, svg: ply(13, t, { x: 0, y: 0, s: ms, face: 'dizzy', nametag: false, armL: 150, armR: 150 }), cy: 220, x1: 1560, y1: 260, s: ms, arc: 60 });
   fx += G.hitSpark({ x: 850, y: my - 560 * ms, age: t - tNice, text: 'BONK!', s: 1 }) + G.damageNumber({ x: 900, y: my - 760 * ms, age: t - tNice - 0.05, value: -50, s: 0.9 });
   let o = arenaShot(t, cam, { cheer: 0.8, signs: ['GO MOM!', 'MOM #1'] }, chars, fx);
@@ -637,16 +654,21 @@ function shHundred(t) {
   const mx = 960, my = 880, ms = arS(my);
   const spin = Math.floor(t * 9) % 2;
   let chars = momA(t, { x: mx, y: my, s: ms, view: spin ? 'side' : 'front', flip: !!spin, armR: 100, armL: 60, swordGlow: 1, face: 'determined', nametag: false }, { arms: false });
-  let fx = '';
+  let fx = '', run = '';
   for (let i = 0; i < 34; i++) {
     const t0 = KO0 + i * ((KO1 - KO0) / 34), age = t - t0;
-    if (age < 0 || age > 1.9) continue;
     const dir = i % 2 ? 1 : -1;
+    // the next challengers sprint in from both sides (cheap noobs)
+    if (age >= -0.7 && age < 0) {
+      const u = (age + 0.7) / 0.7, rx = mx + dir * lerp(1150, 110, u), ry = my + 6 - 18 * hash(i * 2.3);
+      run += K.draw.kid(1 + (i % 15), { x: rx, y: ry, s: 0.3, view: 'side', flip: dir < 0, ...AC.run(t * 24 + i), armR: 150, face: 'angry', nametag: false, sword: i % 3 === 0 });
+    }
+    if (age < 0 || age > 1.9) continue;
     fx += G.knockoutFly({ x0: mx + dir * 70, y0: my - 20, age, dir, s: 0.3, x1: mx + dir * (420 + hash(i) * 420), y1: 140 + hash(i * 3) * 160, arc: 40 + 60 * hash(i * 5) });
   }
   const rp = ((t * 3) % 1);
   fx += S.ellipse(mx, my - 300 * ms, 260 + 140 * rp, 90 + 50 * rp, { fill: 'none', stroke: '#FFE14D', 'stroke-width': f(14 * (1 - rp)), opacity: f(0.8 * (1 - rp)) });
-  let o = arenaShot(t, cam, { cheer: 1, signs: ['GO MOM!', 'MOM #1', 'QUEEN'] }, chars, fx);
+  let o = arenaShot(t, cam, { cheer: 1, signs: ['GO MOM!', 'MOM #1', 'QUEEN'] }, run + chars, fx);
   const n = Math.round(lerp(1, 100, ease.inOut(seg(t, KO0, KO1))));
   o += E.pill({ x: 50, y: 90, label: 'K.O.s', value: n, rim: '#FF4B5C', col: '#FFFFFF', t, bump: seg(t, KO1, KO1 + 0.45), icon: S.circle(0, 0, 33, { fill: '#3B2A20', stroke: '#151515', 'stroke-width': 4 }) + G.sword(0, 26, 0.18, 30) });
   return o;
@@ -656,7 +678,7 @@ function shHundred(t) {
 const BENCH = [300, 520, 740, 960, 1180, 1400], BENCH_I = [2, 7, 10, 11, 13, 15], BENCH_Y = 860;
 const benchT = (j) => lerp(CUT.hydra + 0.55, tHydra, j / (BENCH.length - 1));
 function shHydra(t) {
-  const cam = camKeys(t, [[CUT.hydra, camAt(560, 650, 1.28)], [tHydra + 0.2, camAt(1250, 650, 1.28)], [CUT.dark, camAt(1290, 640, 1.3)]], ease.inOut);
+  const cam = camKeys(t, [[CUT.hydra, camAt(560, 630, 1.28)], [tHydra + 0.2, camAt(1250, 630, 1.28)], [CUT.dark, camAt(1290, 620, 1.3)]], ease.inOut);
   const bs = arS(BENCH_Y), seatY = BENCH_Y - 306 * bs;
   let chars = '';
   chars += GS.brick(120, seatY, 1500, BENCH_Y - seatY, 24, '#B9A88C', GS.tone({}), { studs: false });
@@ -668,7 +690,7 @@ function shHydra(t) {
     if (got) pose.props = [{ svg: E.waterBottle(h[0], h[1] - 40, 0.9, -20), layer: 'front' }];
     chars += ply(i, t, pose);
   });
-  const mx = lerp(200, 1560, ease.inOut(seg(t, CUT.hydra + 0.1, tHydra + 0.2))), my = 975, ms = arS(my);
+  const mx = lerp(200, 1560, ease.inOut(seg(t, CUT.hydra + 0.1, tHydra + 0.2))), my = 935, ms = arS(my);
   chars += momA(t, { x: mx, y: my, s: ms, view: 'side', flip: true, ...AC.walk((t - CUT.hydra) * 11, 0.8), armL: 70, face: 'happy', nametag: false, props: [{ svg: E.waterBottle(-10, -330, 0.9, 10), layer: 'front' }] }, { arms: false });
   let fx = '';
   BENCH.forEach((x, j) => {
@@ -728,7 +750,7 @@ function shDuel(t) {
   let chars = momA(t, { x: mx, y: my, s: ms, turn: wave ? 0.2 : 0.5, armR: wave ? 150 + 20 * Math.sin(t * 11) : 30 + 60 * flick, armL: 24, face: { name: 'happy' }, nametag: false }, { arms: false });
   const dx = lerp(1280, 790, ease.in(seg(t, tCharge, tPunch)));
   let fx = '';
-  if (t < tPunch) chars += actor('darkblade', t, t < tCharge ? { x: 1280, y: my, s: ms, view: 'side', armR: 60, t, nametag: false } : { x: dx, y: my, s: ms, view: 'side', ...AC.run((t - tCharge) * 22), armR: 130, lean: 12, t, nametag: false }, { arms: false });
+  if (t < tPunch) chars += actor('darkblade', t, t < tCharge ? { x: 1280, y: my, s: ms, view: 'side', armL: 60, armR: 20, t, nametag: false } : { x: dx, y: my, s: ms, view: 'side', ...AC.run((t - tCharge) * 22), armL: 150, lean: -12, t, nametag: false }, { arms: false });
   else fx += G.knockoutFly({ x0: 790, y0: my - 40, age: t - tPunch, dir: 1, svg: actor('darkblade', t, { x: 0, y: 0, s: ms, nametag: false, stars: true, t }), cy: 210, x1: 1700, y1: 70, s: ms, arc: 120 });
   if (t > tCharge - 0.3 && t < tPunch) fx += G.tumbleweed({ x: lerp(1500, 300, seg(t, tCharge - 0.3, tPunch)), y: my - 10, s: 0.5, t });
   fx += G.hitSpark({ x: 780, y: my - 640 * ms, age: t - tPunch, text: 'BONK!', s: 1.6 }) + G.damageNumber({ x: 860, y: my - 860 * ms, age: t - tPunch - 0.05, value: -9999, crit: true, s: 1.2, seed: 7 });
@@ -787,8 +809,9 @@ function shTea(t) {
   const cam = camKeys(t, [[CUT.tea, camAt(1330, 560, 2.15)], [END, camAt(1330, 560, 2.25)]], ease.linear);
   let o = room(t, cam, { mom: { mugUp: t > CUT.tea + 0.35, face: { name: 'happy', eyes: { type: 'closed' } } }, momAct: { face: 'happy' }, glow: 0.8 });
   const p = toScr(cam, 1322, 760);
-  o += E.floatTag(p.x - 60, p.y - 40, seg(t, CUT.tea + 0.45, CUT.tea + 1.6), '+1 WIN', '#3BD16F', 44);
-  o += E.floatTag(p.x + 90, p.y - 20, seg(t, CUT.tea + 1.0, CUT.tea + 2.1), '+1 WIN', '#3BD16F', 44);
+  o += E.floatTag(p.x - 70, p.y - 60, seg(t, CUT.tea + 0.35, CUT.tea + 1.5), '+1 WIN', '#3BD16F', 64);
+  o += E.floatTag(p.x + 130, p.y - 30, seg(t, CUT.tea + 0.8, CUT.tea + 1.9), '+1 WIN', '#3BD16F', 64);
+  o += E.floatTag(p.x - 200, p.y - 10, seg(t, CUT.tea + 1.15, CUT.tea + 2.2), 'MOM #1', '#FFC83D', 58);
   return o + whip(t, CUT.tea, -1, 0.1) + whip(t, END, 1, 0.12);
 }
 
@@ -796,7 +819,7 @@ function shTea(t) {
 const SHOTS = [
   [CUT.tree, shTree], [CUT.jump, shJump], [CUT.run, shRun], [CUT.arena, shArena], [CUT.relax, shRelax], [CUT.momIn, shMomIn], [CUT.split, shSplit],
   [CUT.sneak, shSneak], [CUT.glare, shGlare], [CUT.slow, shSlow], [CUT.hits, shHits], [CUT.fly, shFly], [CUT.stick, shStick], [CUT.how, shHow], [CUT.muscle, shMuscle],
-  [CUT.truth, shTruth], [CUT.vhs1, shVhs1], [CUT.vhs2, shVhs2], [CUT.vhs3, shVhs3], [CUT.photo, shPhoto], [CUT.queen, shQueen], [CUT.forYou, shForYou],
+  [CUT.truth, shTruth], [CUT.vhs1, shVhs1], [CUT.vhs2, shVhs2], [CUT.vhs3, shVhs3], [CUT.photo, shPhoto], [CUT.queen, shQueen], [CUT.retired, shRetired], [CUT.forYou, shForYou],
   [CUT.later, shLater], [CUT.board, shBoard], [CUT.pose, shPose], [CUT.nice, shNice], [CUT.sit, shSit], [CUT.bfast, shBfast], [CUT.hundred, shHundred], [CUT.hydra, shHydra],
   [CUT.dark, shDark], [CUT.now, shNow], [CUT.okay, shOkay], [CUT.duel, shDuel], [CUT.stretch, shStretch], [CUT.legend, shLegend], [CUT.me, shMe], [CUT.tea, shTea],
 ].sort((a, b) => a[0] - b[0]);

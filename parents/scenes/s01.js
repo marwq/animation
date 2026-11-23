@@ -68,7 +68,7 @@ function timing() {
   };
   b.cashHit = C.cash + 0.25;
   b.potion = b.water + 0.45;
-  b.sitUp = b.water + 0.85;
+  b.sitUp = b.potion + 0.62;
   b.spin = b.hit - 0.1;
   return { A, C, b, T0, END };
 }
@@ -125,13 +125,13 @@ function livingNight(t, o = {}) {
 function realMomPip(t) {
   const l = livingNight(t, { glows: ['mom'] });
   const p = H.seatPose(LS.seats.mom, 1.04, { shadow: false, tablet: true, tabletFace: 'back', face: { name: 'happy', eyes: { type: 'happy' } }, headRot: 4 + 3 * Math.sin(t * 2) });
-  return l.bg + l.mid + actor('mom', t, p) + l.front + X.tablet({ ...LS.devices.tablet, face: 'back', landscape: true }) + l.light + G.screenGlow(1340, 560, 420, 380, 'white', 0.55);
+  return l.bg + l.mid + actor('mom', t, p) + l.front + X.tablet({ ...LS.devices.tablet, face: 'back', landscape: true }) + l.light + G.screenGlow(1340, 560, 420, 380, 'white', 0.22);
 }
 function realGrannyPip(t) {
   const l = livingNight(t, { glows: ['grandma'] });
   const shout = V.talking('GRANDMA', t) ? 1 : 0;
   const p = H.seatPose(LS.seats.grandma, 0.9, { shadow: false, phone: 'arm', face: { name: 'angry', fx: [] }, lean: -4 + 3 * shout * Math.sin(t * 16) });
-  return l.bg + l.mid + actor('grandma', t, p) + l.front + l.light + G.screenGlow(1720, 590, 440, 400, 'white', 0.6);
+  return l.bg + l.mid + actor('grandma', t, p) + l.front + l.light + G.screenGlow(1720, 590, 440, 400, 'white', 0.25);
 }
 
 // ================================================================= 1. night Cube City: crane down to the billboard
@@ -262,7 +262,7 @@ function shArena(t) {
   w += G.nametag({ who: 'mom', x: MOMP.x, y: oh.tag, s: 0.8, t, crown: true, k: 1 - seg(t, b.spin - 0.1, b.spin) + seg(t, b.hit + 0.3, b.hit + 0.5) });
   let o = view(cam, l.bg + l.mid + w + l.front + l.fg + l.light, 1);
   const [bx, by] = toScr(cam, MOMP.x, oh.chat);
-  o += G.chatBubble({ x: bx + 40, y: by, t, maxW: 520, tail: -0.5, ...G.chatLine(t, '01.2', { to: 'sweetie', text: 'Good game, sweetie!', hold: 0.6 }) });
+  o += G.chatBubble({ x: bx + 40, y: Math.max(250, by), t, maxW: 520, tail: -0.5, ...G.chatLine(t, '01.2', { to: 'sweetie', text: 'Good game, sweetie!', hold: 0.6 }) });
   o += G.comboText({ x: 1420, y: 170, k: seg(t, b.hit + 0.12, b.hit + 0.5), out: seg(t, C.momClose - 0.25, C.momClose), text: 'TRIPLE K.O.!', count: 3, t, s: 0.62, rot: 6 });
   o += smash(t, b.hit, 0.14, 0.7) + whip(t, C.arena, 1);
   return o;
@@ -314,7 +314,7 @@ function shWater(t) {
     w += S.g(S.circle(0, 0, 26, ol('#FFD23F', 4)) + S.path('M-8 4 v-16 q0 -8 8 -8 v12 h10 q8 0 6 8 l-4 14 h-20 Z', ol('#FFFFFF', 3)), tf(FLAT.x - 90 + 140, FLAT.y - 470, pop(t, b.sitUp + 0.2, 0.3)));
   }
   const pk = t - b.potion;
-  if (pk > 0) w += G.potionPop({ x: FLAT.x - 110, y: FLAT.y - 120, age: pk, s: 1, col: '#5CC8FF', text: '+HP' });
+  if (pk > 0 && t < b.sitUp + 0.05) w += G.potionPop({ x: FLAT.x - 110, y: FLAT.y - 120, age: pk, s: 1, col: '#5CC8FF', text: '+HP' });
   if (throwK > 0 && throwK < 1) { const bx = lerp(hd[0] * MOMP.s + 830, FLAT.x - 110, throwK), by = lerp(MOMP.y - 300, FLAT.y - 120, throwK) - 160 * Math.sin(throwK * Math.PI); w += waterBottle(bx, by, MOMP.s * 1.2, 400 * throwK); }
   const oh = G.overHead(830, MOMP.y, MOMP.s, { who: 'momAvatar', lift: 290 * MOMP.s });
   w += G.nametag({ who: 'mom', x: 830, y: oh.tag, s: 0.7, t, crown: true });
@@ -322,7 +322,7 @@ function shWater(t) {
   const [bx, by] = toScr(cam, 830, oh.chat);
   o += G.chatBubble({ x: bx + 40, y: Math.max(230, by + 10), t, s: 1, maxW: 520, tail: -0.5, ...G.chatLine(t, '01.2', { from: 'Drink', text: 'Drink some water!', hold: 0.6 }) });
   // REAL LIFE cam: the real Mom, calm on the couch
-  const pk2 = seg(t, C.water + 0.05, C.water + 0.4) * (1 - seg(t, C.granny - 0.3, C.granny - 0.05));
+  const pk2 = seg(t, C.water + 0.05, C.water + 0.4) * (1 - seg(t, b.sitUp - 0.3, b.sitUp - 0.05));
   o += pip(realMomPip(t), 1240, 70, 620, pk2, { vx: 1340 - 330, vy: 552 - 220, vw: 660, t, label: 'REAL LIFE', labelCol: '#FF5FA8' });
   return o;
 }
@@ -465,7 +465,7 @@ function shWallWide(t) {
   return o + whip(t, C.dad, -1, 0.14);
 }
 function shWallClose(t) {
-  const cam = camKeys(t, [[C.wallClose, GS.camAt(2470, 640, 2.0)], [C.timer, GS.camAt(2490, 630, 2.25)]]);
+  const cam = camKeys(t, [[C.wallClose, GS.camAt(2500, 690, 1.62)], [C.timer, GS.camAt(2515, 680, 1.8)]]);
   const bp = bonkPose(t);
   shakeAll(cam, t, [[Math.floor(t / BONK) * BONK + 0.45 * BONK, 0.12, 8 * (bp.hit > 0 ? 1 : 0)]]);
   const l = plazaNight(t, cam);
@@ -494,7 +494,7 @@ function shTimer(t) {
   if (web > 0) w += S.g(S.path('M0 0 L120 0 M0 0 L0 120 M0 0 L95 95 M30 0 Q22 22 0 30 M70 0 Q52 52 0 70 M110 0 Q80 80 0 110', { fill: 'none', stroke: '#FFFFFF', 'stroke-width': 5, opacity: 0.85 }), tf(DADW.x - 70, DADW.y - 1240 * DADW.s + 10, web * 0.9));
   let o = l.bg + l.mid + view(cam, w, 1) + l.front + l.light;
   const tk = pop(t, b.three - 0.08, 0.3);
-  const sec = t < b.three ? SECS0 - 4 + Math.floor((t - C.timer) * 10) : wallSec(t) + (lapse > 0 ? Math.floor((t - b.hours) * 400) : 0);
+  const sec = wallSec(t) + (lapse > 0 ? Math.floor((t - b.hours) * 400) : 0);
   o += timerPill(t, Math.min(sec, SECS0 + 400), lerp(960, 960, tk), lerp(76, 330, tk), lerp(0.9, 2.3, tk), bump(t, b.three, b.three + 0.25));
   if (lapse > 0) o += S.g(S.rect(-170, -32, 340, 64, 20, ol('#1E2546', 6)) + TF('TIME-LAPSE ▸▸', 0, 12, 34, '#FFE14D'), tf(960, 470, pop(t, b.hours, 0.25)));
   return o + smash(t, b.three, 0.1, 0.4) + whip(t, C.timer, 1);

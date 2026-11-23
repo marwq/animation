@@ -141,7 +141,7 @@ function times10(V) {
   C.f4 = n[5].b + 0.15;
   // --- G: "Just this once."
   C.g1 = n[6].a - 0.15;
-  B.bump = n[6].b + 0.08;
+  B.bump = w(6, 'once') + 0.1;                    // the fist bump lands on "once"
   // --- H: potions
   C.h1 = n[7].a - 0.12;
   B.potions = w(7, 'potions'); B.hundred = w(7, 'hundred');

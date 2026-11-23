@@ -1,0 +1,2306 @@
+{
+ "scene": "SC 11",
+ "start": 676.85,
+ "end": 742.41,
+ "music": [
+  {
+   "start": 676.85,
+   "end": 677.81,
+   "mood": "epic",
+   "energy": 0.4,
+   "in": "swell",
+   "out": "cut"
+  },
+  {
+   "start": 677.81,
+   "end": 679.61,
+   "mood": "playful",
+   "energy": 0.5,
+   "in": "cut",
+   "out": "scratch"
+  },
+  {
+   "start": 679.61,
+   "end": 680.55,
+   "mood": "silence",
+   "energy": 0,
+   "in": "cut",
+   "out": "cut"
+  },
+  {
+   "start": 680.55,
+   "end": 683.33,
+   "mood": "epic",
+   "energy": 0.9,
+   "in": "cut",
+   "out": "sting"
+  },
+  {
+   "start": 683.33,
+   "end": 686.51,
+   "mood": "mystery",
+   "energy": 0.3,
+   "in": "fade",
+   "out": "cut"
+  },
+  {
+   "start": 686.51,
+   "end": 693.47,
+   "mood": "anthem",
+   "energy": 0.55,
+   "in": "swell",
+   "out": "cut"
+  },
+  {
+   "start": 693.47,
+   "end": 704.03,
+   "mood": "anthem",
+   "energy": 0.85,
+   "in": "cut",
+   "out": "cut"
+  },
+  {
+   "start": 704.03,
+   "end": 704.79,
+   "mood": "chaos",
+   "energy": 0.6,
+   "in": "cut",
+   "out": "cut"
+  },
+  {
+   "start": 704.79,
+   "end": 708.37,
+   "mood": "playful",
+   "energy": 0.45,
+   "in": "cut",
+   "out": "sting"
+  },
+  {
+   "start": 708.37,
+   "end": 711.21,
+   "mood": "climax",
+   "energy": 0.75,
+   "in": "swell",
+   "out": "cut"
+  },
+  {
+   "start": 711.21,
+   "end": 712.69,
+   "mood": "tender",
+   "energy": 0.35,
+   "in": "fade",
+   "out": "cut"
+  },
+  {
+   "start": 712.69,
+   "end": 715.37,
+   "mood": "silence",
+   "energy": 0,
+   "in": "cut",
+   "out": "cut"
+  },
+  {
+   "start": 715.37,
+   "end": 720.07,
+   "mood": "climax",
+   "energy": 1,
+   "in": "cut",
+   "out": "cut"
+  },
+  {
+   "start": 720.07,
+   "end": 721.47,
+   "mood": "epic",
+   "energy": 0.85,
+   "in": "cut",
+   "out": "sting"
+  },
+  {
+   "start": 721.47,
+   "end": 725.37,
+   "mood": "anthem",
+   "energy": 1,
+   "in": "cut",
+   "out": "cut"
+  },
+  {
+   "start": 725.37,
+   "end": 734.09,
+   "mood": "family",
+   "energy": 0.75,
+   "in": "cut",
+   "out": "cut"
+  },
+  {
+   "start": 734.09,
+   "end": 737.23,
+   "mood": "warm",
+   "energy": 0.5,
+   "in": "fade",
+   "out": "cut"
+  },
+  {
+   "start": 737.23,
+   "end": 742.41,
+   "mood": "anthem",
+   "energy": 0.8,
+   "in": "swell",
+   "out": "fade"
+  }
+ ],
+ "ambience": [
+  {
+   "start": 676.85,
+   "end": 677.81,
+   "name": "wind",
+   "gain_db": -14
+  },
+  {
+   "start": 677.81,
+   "end": 679.61,
+   "name": "town",
+   "gain_db": -16
+  },
+  {
+   "start": 679.61,
+   "end": 683.33,
+   "name": "wind",
+   "gain_db": -14
+  },
+  {
+   "start": 683.33,
+   "end": 686.51,
+   "name": "room",
+   "gain_db": -14
+  },
+  {
+   "start": 686.51,
+   "end": 704.79,
+   "name": "wind",
+   "gain_db": -14
+  },
+  {
+   "start": 704.79,
+   "end": 705.77,
+   "name": "room",
+   "gain_db": -14
+  },
+  {
+   "start": 705.77,
+   "end": 711.75,
+   "name": "wind",
+   "gain_db": -14
+  },
+  {
+   "start": 711.75,
+   "end": 712.99,
+   "name": "room",
+   "gain_db": -14
+  },
+  {
+   "start": 712.99,
+   "end": 725.37,
+   "name": "wind",
+   "gain_db": -14
+  },
+  {
+   "start": 725.37,
+   "end": 727.274,
+   "name": "room",
+   "gain_db": -14
+  },
+  {
+   "start": 727.274,
+   "end": 731.37,
+   "name": "wind",
+   "gain_db": -14
+  },
+  {
+   "start": 731.37,
+   "end": 732.63,
+   "name": "room",
+   "gain_db": -14
+  },
+  {
+   "start": 732.63,
+   "end": 742.41,
+   "name": "wind",
+   "gain_db": -16
+  },
+  {
+   "start": 693.47,
+   "end": 704.03,
+   "name": "crowd",
+   "gain_db": -10
+  },
+  {
+   "start": 709.23,
+   "end": 711.21,
+   "name": "crowd",
+   "gain_db": -8
+  },
+  {
+   "start": 715.71,
+   "end": 725.37,
+   "name": "crowd",
+   "gain_db": -10
+  },
+  {
+   "start": 727.274,
+   "end": 731.37,
+   "name": "crowd",
+   "gain_db": -12
+  },
+  {
+   "start": 732.63,
+   "end": 742.41,
+   "name": "crowd",
+   "gain_db": -13
+  }
+ ],
+ "footsteps": [
+  {
+   "start": 677.81,
+   "end": 678.97,
+   "interval": 0.286,
+   "surface": "hard",
+   "gain_db": -10,
+   "pan": 0
+  },
+  {
+   "start": 716.93,
+   "end": 718.41,
+   "interval": 0.209,
+   "surface": "hard",
+   "gain_db": -8,
+   "pan": 0.2
+  },
+  {
+   "start": 729.99,
+   "end": 731.37,
+   "interval": 0.224,
+   "surface": "hard",
+   "gain_db": -10,
+   "pan": 0.4
+  },
+  {
+   "start": 734.09,
+   "end": 734.49,
+   "interval": 0.224,
+   "surface": "hard",
+   "gain_db": -10,
+   "pan": 0.3
+  }
+ ],
+ "sfx": [
+  [
+   676.85,
+   "whoosh_up",
+   -8,
+   0,
+   "whip-tilt in from SC 10"
+  ],
+  [
+   677.35,
+   "gulp",
+   -4,
+   0.1,
+   "the hot dog gulps, looking up"
+  ],
+  [
+   677.81,
+   "rewind",
+   -6,
+   0,
+   "grey REPLAY flashback"
+  ],
+  [
+   677.86,
+   "vhs_clunk",
+   -10,
+   -0.4,
+   "VHS overlay"
+  ],
+  [
+   678.74,
+   "bonk",
+   0,
+   0.05,
+   "BONK! the hot dog walks into the wall"
+  ],
+  [
+   678.97,
+   "whoosh_down",
+   -6,
+   0.1,
+   "off the start block"
+  ],
+  [
+   679.31,
+   "big_splash",
+   0,
+   0.05,
+   "SPLASH! into the water"
+  ],
+  [
+   679.41,
+   "stamp",
+   -2,
+   -0.25,
+   "CAN'T JUMP stamp"
+  ],
+  [
+   679.61,
+   "whoosh",
+   -8,
+   0,
+   "cut back to the tower"
+  ],
+  [
+   679.81,
+   "wind_gust",
+   -8,
+   0,
+   "the tower disappears into the night"
+  ],
+  [
+   680.55,
+   "whoosh",
+   -4,
+   -0.5,
+   "the hot dog panel slides in"
+  ],
+  [
+   680.63,
+   "whoosh",
+   -4,
+   0.5,
+   "the tower panel slides in"
+  ],
+  [
+   680.86,
+   "orch_hit",
+   2,
+   0,
+   "VS slams in"
+  ],
+  [
+   680.88,
+   "impact",
+   -4,
+   0,
+   "VS shake"
+  ],
+  [
+   681.21,
+   "whoosh_long",
+   -2,
+   0,
+   "whip-tilt up the tower"
+  ],
+  [
+   681.26,
+   "riser",
+   -4,
+   0,
+   "floor counter rolling 1 -> 100"
+  ],
+  [
+   681.31,
+   "tap",
+   -14,
+   -0.6,
+   "counter tick"
+  ],
+  [
+   681.454,
+   "tap",
+   -14,
+   -0.6,
+   "counter tick"
+  ],
+  [
+   681.599,
+   "tap",
+   -14,
+   -0.6,
+   "counter tick"
+  ],
+  [
+   681.743,
+   "tap",
+   -14,
+   -0.6,
+   "counter tick"
+  ],
+  [
+   681.888,
+   "tap",
+   -14,
+   -0.6,
+   "counter tick"
+  ],
+  [
+   682.032,
+   "tap",
+   -14,
+   -0.6,
+   "counter tick"
+  ],
+  [
+   682.177,
+   "tap",
+   -14,
+   -0.6,
+   "counter tick"
+  ],
+  [
+   682.321,
+   "tap",
+   -14,
+   -0.6,
+   "counter tick"
+  ],
+  [
+   682.466,
+   "tap",
+   -14,
+   -0.6,
+   "counter tick"
+  ],
+  [
+   682.61,
+   "tap",
+   -14,
+   -0.6,
+   "counter tick"
+  ],
+  [
+   682.66,
+   "impact",
+   -2,
+   0,
+   "100! arrives at the summit"
+  ],
+  [
+   682.69,
+   "shine",
+   -2,
+   0.1,
+   "the crystal glints"
+  ],
+  [
+   682.86,
+   "magic",
+   -8,
+   0.1,
+   "crystal hum"
+  ],
+  [
+   683.33,
+   "whoosh",
+   -8,
+   0,
+   "cut to the living room"
+  ],
+  [
+   683.53,
+   "heartbeat",
+   -6,
+   0,
+   "tension"
+  ],
+  [
+   683.93,
+   "cloth",
+   -12,
+   -0.1,
+   "Dad flexes his fingers"
+  ],
+  [
+   684.38,
+   "heartbeat",
+   -6,
+   0,
+   "tension"
+  ],
+  [
+   684.766,
+   "zoom_in",
+   -10,
+   0.2,
+   "push in on the space bar"
+  ],
+  [
+   685.566,
+   "tap",
+   -10,
+   -0.2,
+   "a sweat drop lands on a key"
+  ],
+  [
+   686.016,
+   "tap",
+   -10,
+   0.3,
+   "a sweat drop lands on a key"
+  ],
+  [
+   686.21,
+   "click",
+   2,
+   0,
+   "CLICK! the space bar"
+  ],
+  [
+   686.22,
+   "impact",
+   -4,
+   0,
+   "smash zoom"
+  ],
+  [
+   686.366,
+   "tap",
+   -10,
+   0,
+   "a sweat drop lands on a key"
+  ],
+  [
+   686.63,
+   "jump_game",
+   -2,
+   0,
+   "jump base -> 1"
+  ],
+  [
+   687.43,
+   "land",
+   -4,
+   0,
+   "lands on 1"
+  ],
+  [
+   687.45,
+   "sparkle",
+   -6,
+   0,
+   "he LANDED (burst + !!!)"
+  ],
+  [
+   687.48,
+   "ui_pop",
+   -10,
+   -0.8,
+   "FLOOR 1/100 HUD pops in"
+  ],
+  [
+   688.11,
+   "crowd_gasp",
+   0,
+   0,
+   "the fighters freeze and gasp"
+  ],
+  [
+   688.19,
+   "chat_pop",
+   -6,
+   -0.3,
+   "\"HE JUMPED?!\""
+  ],
+  [
+   688.59,
+   "whoosh",
+   -10,
+   0,
+   "whip cut"
+  ],
+  [
+   688.69,
+   "jump_game",
+   -2,
+   0,
+   "jump 1 -> 2"
+  ],
+  [
+   689.13,
+   "land",
+   -4,
+   0,
+   "lands on 2"
+  ],
+  [
+   689.41,
+   "jump_game",
+   -2,
+   0,
+   "jump 2 -> 3"
+  ],
+  [
+   689.79,
+   "land",
+   -4,
+   0,
+   "lands on 3"
+  ],
+  [
+   689.87,
+   "confirm",
+   -10,
+   0,
+   "fist pump on floor 3"
+  ],
+  [
+   690.25,
+   "jump_game",
+   -2,
+   0,
+   "jump 6 -> 7"
+  ],
+  [
+   690.258,
+   "whoosh",
+   -10,
+   0,
+   "whip cut"
+  ],
+  [
+   690.65,
+   "land",
+   -4,
+   0,
+   "lands on 7"
+  ],
+  [
+   690.65,
+   "slip",
+   0,
+   0,
+   "he lands on the ice and slips"
+  ],
+  [
+   690.7,
+   "skid",
+   -4,
+   0.1,
+   "SKRRT! sliding to the edge"
+  ],
+  [
+   691.25,
+   "whoosh",
+   -10,
+   -0.1,
+   "windmilling arms"
+  ],
+  [
+   691.75,
+   "whoosh",
+   -10,
+   0.1,
+   "windmilling arms"
+  ],
+  [
+   692.33,
+   "harp_up",
+   -6,
+   0,
+   "...and didn't fall (PHEW!)"
+  ],
+  [
+   692.74,
+   "jump_game",
+   -8,
+   0,
+   "jump 9 -> 10"
+  ],
+  [
+   692.79,
+   "whoosh",
+   -10,
+   0,
+   "whip cut"
+  ],
+  [
+   693.09,
+   "land",
+   -12,
+   0,
+   "lands on 10"
+  ],
+  [
+   693.09,
+   "level_up",
+   -2,
+   0,
+   "checkpoint 10 saved (green wave)"
+  ],
+  [
+   693.14,
+   "ui_pop",
+   -8,
+   -0.8,
+   "Checkpoint saved toast"
+  ],
+  [
+   693.34,
+   "jump_game",
+   -2,
+   0,
+   "jump 10 -> 11"
+  ],
+  [
+   693.47,
+   "whoosh",
+   -8,
+   0,
+   "cut to the battlefield"
+  ],
+  [
+   693.57,
+   "crowd_gasp",
+   -4,
+   0,
+   "everyone turns to the tower"
+  ],
+  [
+   693.72,
+   "chat_pop",
+   -8,
+   0.6,
+   "chat: is that the hot dog??"
+  ],
+  [
+   693.97,
+   "squeak",
+   -12,
+   -0.7,
+   "the Block King: ?"
+  ],
+  [
+   694.12,
+   "chat_pop",
+   -8,
+   0.6,
+   "chat: HE JUMPED"
+  ],
+  [
+   694.426,
+   "chat_pop",
+   -6,
+   0,
+   "Noodle's bubble"
+  ],
+  [
+   695.69,
+   "whoosh",
+   -10,
+   0,
+   "whip cut"
+  ],
+  [
+   695.99,
+   "impact",
+   -8,
+   0.5,
+   "JUMP! bang"
+  ],
+  [
+   696.04,
+   "crowd_cheer",
+   -6,
+   0,
+   "the players join the chant"
+  ],
+  [
+   696.39,
+   "impact",
+   -6,
+   0.5,
+   "DAD! bang"
+  ],
+  [
+   697.25,
+   "jump_game",
+   -8,
+   0,
+   "jump 21 -> 22"
+  ],
+  [
+   697.25,
+   "whoosh_up",
+   -6,
+   0,
+   "whip up to floor 21"
+  ],
+  [
+   697.391,
+   "chat_pop",
+   -14,
+   0.383,
+   "chat flood: JUMP DAD"
+  ],
+  [
+   697.424,
+   "land",
+   -12,
+   0,
+   "lands on 22"
+  ],
+  [
+   697.473,
+   "jump_game",
+   -8,
+   0,
+   "jump 22 -> 23"
+  ],
+  [
+   697.572,
+   "chat_pop",
+   -14,
+   -0.434,
+   "chat flood: JUMP DAD"
+  ],
+  [
+   697.646,
+   "land",
+   -12,
+   0,
+   "lands on 23"
+  ],
+  [
+   697.695,
+   "jump_game",
+   -8,
+   0,
+   "jump 23 -> 24"
+  ],
+  [
+   697.824,
+   "chat_pop",
+   -14,
+   0.191,
+   "chat flood: JUMP DAD"
+  ],
+  [
+   697.869,
+   "land",
+   -12,
+   0,
+   "lands on 24"
+  ],
+  [
+   697.918,
+   "jump_game",
+   -8,
+   0,
+   "jump 24 -> 25"
+  ],
+  [
+   698.032,
+   "chat_pop",
+   -14,
+   -0.256,
+   "chat flood: JUMP DAD"
+  ],
+  [
+   698.091,
+   "land",
+   -12,
+   0,
+   "lands on 25"
+  ],
+  [
+   698.14,
+   "jump_game",
+   -8,
+   0,
+   "jump 37 -> 38"
+  ],
+  [
+   698.14,
+   "whoosh_up",
+   -6,
+   0,
+   "whip up to floor 37"
+  ],
+  [
+   698.257,
+   "chat_pop",
+   -14,
+   -0.552,
+   "chat flood: JUMP DAD"
+  ],
+  [
+   698.269,
+   "land",
+   -12,
+   0,
+   "lands on 38"
+  ],
+  [
+   698.305,
+   "jump_game",
+   -8,
+   0,
+   "jump 38 -> 39"
+  ],
+  [
+   698.434,
+   "land",
+   -12,
+   0,
+   "lands on 39"
+  ],
+  [
+   698.463,
+   "chat_pop",
+   -14,
+   0.122,
+   "chat flood: JUMP DAD"
+  ],
+  [
+   698.47,
+   "jump_game",
+   -8,
+   0,
+   "jump 39 -> 40"
+  ],
+  [
+   698.599,
+   "land",
+   -12,
+   0,
+   "lands on 40"
+  ],
+  [
+   698.635,
+   "jump_game",
+   -8,
+   0,
+   "jump 40 -> 41"
+  ],
+  [
+   698.701,
+   "chat_pop",
+   -14,
+   0.477,
+   "chat flood: JUMP DAD"
+  ],
+  [
+   698.75,
+   "crowd_cheer",
+   0,
+   0,
+   "the whole server chants"
+  ],
+  [
+   698.914,
+   "chat_pop",
+   -14,
+   -0.497,
+   "chat flood: JUMP DAD"
+  ],
+  [
+   698.919,
+   "impact",
+   -9,
+   0.036,
+   "DAD! (chant beat)"
+  ],
+  [
+   699.127,
+   "chat_pop",
+   -14,
+   -0.081,
+   "chat flood: JUMP DAD"
+  ],
+  [
+   699.35,
+   "chat_pop",
+   -14,
+   -0.562,
+   "chat flood: JUMP DAD"
+  ],
+  [
+   699.459,
+   "impact",
+   -9,
+   -0.292,
+   "JUMP! (chant beat)"
+  ],
+  [
+   699.557,
+   "chat_pop",
+   -14,
+   -0.168,
+   "chat flood: JUMP DAD"
+  ],
+  [
+   699.769,
+   "chat_pop",
+   -14,
+   -0.106,
+   "chat flood: JUMP DAD"
+  ],
+  [
+   699.963,
+   "chat_pop",
+   -14,
+   -0.568,
+   "chat flood: JUMP DAD"
+  ],
+  [
+   700,
+   "impact",
+   -9,
+   0.036,
+   "DAD! (chant beat)"
+  ],
+  [
+   700.217,
+   "chat_pop",
+   -14,
+   -0.058,
+   "chat flood: JUMP DAD"
+  ],
+  [
+   700.27,
+   "jump_game",
+   -8,
+   0,
+   "jump 57 -> 58"
+  ],
+  [
+   700.27,
+   "whoosh_up",
+   -6,
+   0,
+   "whip up to floor 57"
+  ],
+  [
+   700.488,
+   "land",
+   -12,
+   0,
+   "lands on 58"
+  ],
+  [
+   700.55,
+   "jump_game",
+   -8,
+   0,
+   "jump 58 -> 59"
+  ],
+  [
+   700.768,
+   "land",
+   -12,
+   0,
+   "lands on 59"
+  ],
+  [
+   700.83,
+   "jump_game",
+   -8,
+   0,
+   "jump 59 -> 60"
+  ],
+  [
+   701.048,
+   "land",
+   -12,
+   0,
+   "lands on 60"
+  ],
+  [
+   701.048,
+   "level_up",
+   -6,
+   0,
+   "checkpoint 60"
+  ],
+  [
+   701.098,
+   "ui_pop",
+   -10,
+   -0.8,
+   "toast"
+  ],
+  [
+   701.39,
+   "jump_game",
+   -8,
+   0,
+   "jump 60 -> 61"
+  ],
+  [
+   701.43,
+   "chat_pop",
+   -6,
+   0,
+   "DarkBlade's bubble"
+  ],
+  [
+   701.464,
+   "land",
+   -12,
+   0,
+   "lands on 61"
+  ],
+  [
+   701.485,
+   "jump_game",
+   -8,
+   0,
+   "jump 61 -> 62"
+  ],
+  [
+   701.51,
+   "whoosh",
+   -8,
+   0,
+   "cut to DarkBlade"
+  ],
+  [
+   701.73,
+   "swish",
+   -8,
+   0.2,
+   "sword pump"
+  ],
+  [
+   703.29,
+   "zoom_in",
+   -6,
+   0,
+   "smash zoom"
+  ],
+  [
+   703.33,
+   "metal_hit",
+   -2,
+   0,
+   "JUMP!! sword thrust to the sky"
+  ],
+  [
+   703.35,
+   "crowd_cheer",
+   -6,
+   0.3,
+   "the clan roars"
+  ],
+  [
+   703.96,
+   "chat_pop",
+   -8,
+   0.1,
+   "CAPS bubble pops"
+  ],
+  [
+   704.03,
+   "whoosh",
+   -10,
+   0,
+   "whip cut"
+  ],
+  [
+   704.31,
+   "land",
+   -12,
+   0,
+   "lands on 88"
+  ],
+  [
+   704.31,
+   "slip",
+   0,
+   0.2,
+   "lands on the ice of floor 88"
+  ],
+  [
+   704.36,
+   "skid",
+   -4,
+   0.3,
+   "sliding to the edge"
+  ],
+  [
+   704.56,
+   "whoosh",
+   -12,
+   0.3,
+   "windmilling"
+  ],
+  [
+   704.79,
+   "whoosh",
+   -8,
+   0,
+   "cut to the real Dad leaning"
+  ],
+  [
+   704.82,
+   "whoosh",
+   -12,
+   0.3,
+   "windmilling"
+  ],
+  [
+   704.89,
+   "cloth",
+   -8,
+   0.2,
+   "the whole family leans right"
+  ],
+  [
+   705.08,
+   "whoosh",
+   -12,
+   0.3,
+   "windmilling"
+  ],
+  [
+   705.77,
+   "wind_gust",
+   -8,
+   0.3,
+   "teetering over the abyss"
+  ],
+  [
+   705.77,
+   "whoosh",
+   -10,
+   0,
+   "whip cut"
+  ],
+  [
+   705.89,
+   "typing",
+   -12,
+   0,
+   "caps typing"
+  ],
+  [
+   706.81,
+   "land",
+   -6,
+   0,
+   "back onto the ice"
+  ],
+  [
+   707.57,
+   "sparkle",
+   -8,
+   0,
+   "thumbs-up: I'm okay!"
+  ],
+  [
+   708.37,
+   "whoosh",
+   -10,
+   0,
+   "whip cut"
+  ],
+  [
+   708.39,
+   "jump_game",
+   -2,
+   0,
+   "jump 98 -> 99"
+  ],
+  [
+   708.42,
+   "notify",
+   -6,
+   0,
+   "FINAL JUMP banner unfurls"
+  ],
+  [
+   708.77,
+   "land",
+   -4,
+   0,
+   "lands on 99"
+  ],
+  [
+   709.12,
+   "dramatic",
+   -2,
+   0.3,
+   "the gap revealed"
+  ],
+  [
+   709.23,
+   "whoosh",
+   -8,
+   0,
+   "cut to the hero"
+  ],
+  [
+   709.33,
+   "zoom_in",
+   -8,
+   0,
+   "smash zoom 1"
+  ],
+  [
+   709.33,
+   "crowd_cheer",
+   -6,
+   0,
+   "the crowd behind him"
+  ],
+  [
+   709.37,
+   "impact",
+   -6,
+   0,
+   "\"JUMP\""
+  ],
+  [
+   709.73,
+   "zoom_in",
+   -8,
+   0,
+   "smash zoom 2"
+  ],
+  [
+   709.77,
+   "impact",
+   -4,
+   0,
+   "\"DAD\""
+  ],
+  [
+   710.37,
+   "zoom_in",
+   -8,
+   0,
+   "smash zoom 3"
+  ],
+  [
+   710.41,
+   "impact",
+   -2,
+   0,
+   "\"JUMP\""
+  ],
+  [
+   711.21,
+   "wind_gust",
+   -8,
+   -0.2,
+   "wind at the edge of floor 99 (letterbox)"
+  ],
+  [
+   711.41,
+   "heartbeat",
+   -4,
+   0,
+   "heartbeat"
+  ],
+  [
+   711.85,
+   "heartbeat",
+   -4,
+   0,
+   "heartbeat"
+  ],
+  [
+   712.81,
+   "click",
+   3,
+   0,
+   "the space bar SLAMMED"
+  ],
+  [
+   712.83,
+   "sub_drop",
+   -2,
+   0,
+   "smash zoom + white flash"
+  ],
+  [
+   713.05,
+   "jump_game",
+   0,
+   -0.2,
+   "the final jump"
+  ],
+  [
+   713.1,
+   "whoosh_long",
+   -4,
+   0.2,
+   "slow-motion flight across the giant moon"
+  ],
+  [
+   713.2,
+   "wind_gust",
+   -8,
+   0,
+   "slow-mo wind"
+  ],
+  [
+   713.4,
+   "heartbeat",
+   -2,
+   0,
+   "slow-mo heartbeat"
+  ],
+  [
+   713.85,
+   "heartbeat",
+   -2,
+   0,
+   "slow-mo heartbeat"
+  ],
+  [
+   714.04,
+   "fall_whistle",
+   -8,
+   0.4,
+   "he's short..."
+  ],
+  [
+   714.29,
+   "slap",
+   2,
+   0.2,
+   "GRAB! hands slap the lip"
+  ],
+  [
+   714.31,
+   "crowd_gasp",
+   -6,
+   0,
+   "the server gasps"
+  ],
+  [
+   714.37,
+   "rock_drop",
+   -10,
+   -0.2,
+   "pebbles knocked off the lip fall into the abyss"
+  ],
+  [
+   714.44,
+   "squeak",
+   -12,
+   -0.1,
+   "fingers slipping on the lip"
+  ],
+  [
+   714.7,
+   "cloth",
+   -8,
+   -0.1,
+   "hauling himself up (HNNG!)"
+  ],
+  [
+   714.73,
+   "impact",
+   -10,
+   -0.3,
+   "HNNG! bang"
+  ],
+  [
+   714.82,
+   "reverse_swell",
+   -2,
+   0,
+   "into the impact"
+  ],
+  [
+   715.03,
+   "thud",
+   -4,
+   -0.1,
+   "feet on the summit"
+  ],
+  [
+   715.06,
+   "step",
+   -8,
+   0,
+   "two steps run-up"
+  ],
+  [
+   715.183,
+   "whoosh",
+   -2,
+   0.2,
+   "the hot dog dives head-first"
+  ],
+  [
+   715.37,
+   "glass",
+   4,
+   0.2,
+   "the crystal shatters"
+  ],
+  [
+   715.38,
+   "explosion",
+   0,
+   0,
+   "full-frame light burst"
+  ],
+  [
+   715.42,
+   "shine",
+   -2,
+   0,
+   "light"
+  ],
+  [
+   715.79,
+   "glass",
+   0,
+   -0.4,
+   "the shield dome shatters"
+  ],
+  [
+   715.81,
+   "powerdown",
+   -4,
+   -0.4,
+   "the shield is gone"
+  ],
+  [
+   715.86,
+   "rumble",
+   -6,
+   -0.4,
+   "the Block King recoils"
+  ],
+  [
+   716.01,
+   "ui_close",
+   -8,
+   0,
+   "boss bar: SHIELD BROKEN"
+  ],
+  [
+   716.93,
+   "crowd_cheer",
+   2,
+   0.3,
+   "CHARGE!"
+  ],
+  [
+   717.18,
+   "swish",
+   -6,
+   -0.4,
+   "slash 1"
+  ],
+  [
+   717.23,
+   "punch",
+   -5,
+   -0.4,
+   "hit"
+  ],
+  [
+   717.31,
+   "swish",
+   -6,
+   -0.4,
+   "slash 2"
+  ],
+  [
+   717.36,
+   "punch",
+   -5,
+   -0.4,
+   "hit"
+  ],
+  [
+   717.44,
+   "swish",
+   -6,
+   -0.4,
+   "slash 3"
+  ],
+  [
+   717.49,
+   "punch",
+   -5,
+   -0.4,
+   "hit"
+  ],
+  [
+   717.53,
+   "stone",
+   -6,
+   -0.5,
+   "stone chips fly"
+  ],
+  [
+   717.57,
+   "swish",
+   -6,
+   -0.4,
+   "slash 4"
+  ],
+  [
+   717.62,
+   "impact",
+   0,
+   -0.4,
+   "CRIT hit"
+  ],
+  [
+   717.7,
+   "swish",
+   -6,
+   -0.4,
+   "slash 5"
+  ],
+  [
+   717.75,
+   "punch",
+   -5,
+   -0.4,
+   "hit"
+  ],
+  [
+   717.83,
+   "swish",
+   -6,
+   -0.4,
+   "slash 6"
+  ],
+  [
+   717.88,
+   "punch",
+   -5,
+   -0.4,
+   "hit"
+  ],
+  [
+   717.96,
+   "swish",
+   -6,
+   -0.4,
+   "slash 7"
+  ],
+  [
+   718.01,
+   "punch",
+   -5,
+   -0.4,
+   "hit"
+  ],
+  [
+   718.09,
+   "swish",
+   -6,
+   -0.4,
+   "slash 8"
+  ],
+  [
+   718.14,
+   "impact",
+   0,
+   -0.4,
+   "CRIT hit"
+  ],
+  [
+   718.22,
+   "swish",
+   -6,
+   -0.4,
+   "slash 9"
+  ],
+  [
+   718.27,
+   "punch",
+   -5,
+   -0.4,
+   "hit"
+  ],
+  [
+   718.41,
+   "punch",
+   -9,
+   -0.2,
+   "hits keep landing"
+  ],
+  [
+   718.41,
+   "whoosh",
+   -10,
+   0,
+   "whip cut"
+  ],
+  [
+   718.58,
+   "ui_pop",
+   -4,
+   0.6,
+   "spectator cam: LIVE hot dog"
+  ],
+  [
+   718.78,
+   "punch",
+   -9,
+   -0.2,
+   "hits keep landing"
+  ],
+  [
+   719.15,
+   "punch",
+   -9,
+   -0.2,
+   "hits keep landing"
+  ],
+  [
+   719.23,
+   "dizzy",
+   -4,
+   -0.2,
+   "X eyes on \"DOG?!\""
+  ],
+  [
+   719.52,
+   "punch",
+   -9,
+   -0.2,
+   "hits keep landing"
+  ],
+  [
+   719.91,
+   "punch",
+   -9,
+   -0.2,
+   "hits keep landing"
+  ],
+  [
+   720.07,
+   "rumble",
+   -4,
+   -0.5,
+   "cracks glowing"
+  ],
+  [
+   720.17,
+   "explosion",
+   2,
+   -0.5,
+   "the Block King bursts"
+  ],
+  [
+   720.22,
+   "rock_drop",
+   -2,
+   -0.5,
+   "stone cubes tumble"
+  ],
+  [
+   720.28,
+   "punch",
+   -9,
+   -0.2,
+   "hits keep landing"
+  ],
+  [
+   720.42,
+   "crowd_cheer",
+   0,
+   0,
+   "the server cheers"
+  ],
+  [
+   720.52,
+   "confetti",
+   -2,
+   -0.4,
+   "cube confetti burst"
+  ],
+  [
+   720.65,
+   "punch",
+   -9,
+   -0.2,
+   "hits keep landing"
+  ],
+  [
+   720.67,
+   "stone",
+   -6,
+   -0.5,
+   "cubes land"
+  ],
+  [
+   721.02,
+   "punch",
+   -9,
+   -0.2,
+   "hits keep landing"
+  ],
+  [
+   721.22,
+   "metal_clank",
+   -4,
+   -0.3,
+   "the crown hits the ground"
+  ],
+  [
+   721.53,
+   "orch_hit",
+   2,
+   0,
+   "VICTORY!"
+  ],
+  [
+   721.63,
+   "tada",
+   0,
+   0,
+   "victory card"
+  ],
+  [
+   721.68,
+   "confetti",
+   -4,
+   0,
+   "confetti rain"
+  ],
+  [
+   722.03,
+   "harp_up",
+   -6,
+   -0.5,
+   "dawn: the sky turns gold"
+  ],
+  [
+   722.81,
+   "upgrade",
+   -4,
+   0,
+   "SERVER HEALTH refills"
+  ],
+  [
+   724.01,
+   "achievement",
+   -4,
+   0,
+   "server saved 100%"
+  ],
+  [
+   724.43,
+   "whoosh_up",
+   -6,
+   0,
+   "whip up to the summit"
+  ],
+  [
+   724.49,
+   "teleport",
+   -9,
+   0.319,
+   "player 1 teleports in"
+  ],
+  [
+   724.55,
+   "notify",
+   -6,
+   0,
+   "\"Everyone teleported to the summit!\""
+  ],
+  [
+   724.58,
+   "teleport",
+   -9,
+   0.314,
+   "player 2 teleports in"
+  ],
+  [
+   724.67,
+   "teleport",
+   -9,
+   0.17,
+   "player 3 teleports in"
+  ],
+  [
+   724.76,
+   "teleport",
+   -9,
+   -0.004,
+   "player 4 teleports in"
+  ],
+  [
+   724.85,
+   "teleport",
+   -9,
+   -0.092,
+   "player 5 teleports in"
+  ],
+  [
+   724.94,
+   "teleport",
+   -9,
+   -0.353,
+   "player 6 teleports in"
+  ],
+  [
+   725.03,
+   "teleport",
+   -9,
+   -0.131,
+   "player 7 teleports in"
+  ],
+  [
+   725.12,
+   "teleport",
+   -9,
+   -0.388,
+   "player 8 teleports in"
+  ],
+  [
+   725.13,
+   "crowd_cheer",
+   -2,
+   0,
+   "they lift him up"
+  ],
+  [
+   725.21,
+   "teleport",
+   -9,
+   -0.401,
+   "player 9 teleports in"
+  ],
+  [
+   725.37,
+   "whoosh",
+   -8,
+   0,
+   "cut to the living room"
+  ],
+  [
+   725.51,
+   "boing",
+   -2,
+   0.3,
+   "Mom springs up onto the couch"
+  ],
+  [
+   725.74,
+   "boing",
+   -10,
+   0.3,
+   "bouncing on the cushions"
+  ],
+  [
+   726.223,
+   "boing",
+   -10,
+   0.3,
+   "bouncing on the cushions"
+  ],
+  [
+   726.707,
+   "boing",
+   -10,
+   0.3,
+   "bouncing on the cushions"
+  ],
+  [
+   727.19,
+   "boing",
+   -10,
+   0.3,
+   "bouncing on the cushions"
+  ],
+  [
+   727.324,
+   "chat_pop",
+   -6,
+   -0.4,
+   "Mom's CAPS bubble"
+  ],
+  [
+   727.354,
+   "whoosh_up",
+   -2,
+   0,
+   "tossed into the sunrise"
+  ],
+  [
+   727.374,
+   "crowd_cheer",
+   -4,
+   0,
+   "WOOO"
+  ],
+  [
+   727.374,
+   "heart_pop",
+   -8,
+   -0.4,
+   "hearts from Mom"
+  ],
+  [
+   727.414,
+   "typing",
+   -10,
+   -0.4,
+   "caps typing"
+  ],
+  [
+   727.974,
+   "heart_pop",
+   -8,
+   -0.4,
+   "hearts from Mom"
+  ],
+  [
+   728.404,
+   "land",
+   -8,
+   0,
+   "caught"
+  ],
+  [
+   728.524,
+   "whoosh_up",
+   -2,
+   0,
+   "tossed into the sunrise"
+  ],
+  [
+   728.544,
+   "crowd_cheer",
+   -4,
+   0,
+   "WOOO"
+  ],
+  [
+   728.574,
+   "heart_pop",
+   -8,
+   -0.4,
+   "hearts from Mom"
+  ],
+  [
+   729.574,
+   "land",
+   -8,
+   0,
+   "caught"
+  ],
+  [
+   729.59,
+   "whoosh",
+   -10,
+   0,
+   "whip cut"
+  ],
+  [
+   729.64,
+   "chat_pop",
+   -6,
+   0,
+   "I DID A JUMP! bubble"
+  ],
+  [
+   729.89,
+   "jump_game",
+   -12,
+   0,
+   "happy hops"
+  ],
+  [
+   730.309,
+   "jump_game",
+   -12,
+   0,
+   "happy hops"
+  ],
+  [
+   730.728,
+   "jump_game",
+   -12,
+   0,
+   "happy hops"
+  ],
+  [
+   731.147,
+   "jump_game",
+   -12,
+   0,
+   "happy hops"
+  ],
+  [
+   731.37,
+   "whoosh",
+   -8,
+   0,
+   "cut to the living room"
+  ],
+  [
+   731.92,
+   "cloth",
+   -8,
+   0.1,
+   "arms up"
+  ],
+  [
+   732.63,
+   "whoosh",
+   -10,
+   0,
+   "whip cut"
+  ],
+  [
+   732.81,
+   "jump_game",
+   0,
+   0,
+   "the giant jump"
+  ],
+  [
+   732.85,
+   "whoosh_up",
+   -2,
+   0,
+   "up into the sunrise"
+  ],
+  [
+   732.93,
+   "crowd_cheer",
+   -2,
+   0,
+   "the crowd cheers"
+  ],
+  [
+   732.95,
+   "sparkle",
+   -4,
+   0,
+   "JUMP! sparkles"
+  ],
+  [
+   733.83,
+   "land",
+   -4,
+   0,
+   "lands"
+  ],
+  [
+   734.09,
+   "whoosh",
+   -10,
+   0,
+   "whip cut"
+  ],
+  [
+   734.24,
+   "cloth",
+   -10,
+   0,
+   "Dad opens his arms"
+  ],
+  [
+   734.49,
+   "thud",
+   -6,
+   0.1,
+   "the hero jumps into the hug"
+  ],
+  [
+   734.54,
+   "heart_pop",
+   -6,
+   0,
+   "hearts"
+  ],
+  [
+   734.69,
+   "kids_laugh",
+   -12,
+   0,
+   "awww"
+  ],
+  [
+   734.923,
+   "stamp",
+   0,
+   0.5,
+   "100 JUMPS stamp"
+  ],
+  [
+   734.973,
+   "achievement",
+   -4,
+   -0.8,
+   "FLOOR 100/100"
+  ],
+  [
+   737.23,
+   "whoosh",
+   -10,
+   0,
+   "whip cut"
+  ],
+  [
+   737.4,
+   "whoosh",
+   -4,
+   -0.292,
+   "MVP card flips in (left)"
+  ],
+  [
+   737.7,
+   "achievement",
+   0,
+   -0.292,
+   "MVP medal pops"
+  ],
+  [
+   738,
+   "heart_pop",
+   -10,
+   0.248,
+   "hearts over the hug"
+  ],
+  [
+   739.14,
+   "tada",
+   -2,
+   -0.292,
+   "DadBod1978 ribbon"
+  ],
+  [
+   739.44,
+   "pop",
+   -8,
+   -0.357,
+   "stat chip JUMPS 100"
+  ],
+  [
+   739.59,
+   "pop",
+   -8,
+   -0.226,
+   "stat chip CRYSTALS 1"
+  ],
+  [
+   741.61,
+   "whoosh_down",
+   -6,
+   0,
+   "the card leaves"
+  ],
+  [
+   741.81,
+   "whoosh_long",
+   -10,
+   0,
+   "pull back, dip to night"
+  ]
+ ]
+}

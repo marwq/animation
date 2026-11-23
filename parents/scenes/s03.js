@@ -99,12 +99,15 @@ const granP = (extra = {}) => seat('grandma', 0.9, { flip: true, turn: 0.2, ...e
 const lapSvg = (o = {}) => X.laptopOld({ x: LAP.x, y: o.y ?? LAP.y, s: o.s ?? LAP.s, face: 'lid', rot: o.rot || 0 });
 const GLOWS = (k = 1, who = ['dad', 'mom', 'grandma']) => H.deviceGlows(who, k);
 // the whole family on their seats (culling by cam); o.dad / o.mom / o.gran / o.you = pose extras or false
+// close-ups (zoom >= 1.55) drop the per-part volume filter: it doubles the raster cost of big characters
+const NV = (cam) => ((cam && cam.zoom) || 1) >= 1.55 ? { volume: false } : {};
 function family(t, cam, o = {}) {
   let seated = '', devices = '';
-  if (o.you && E.inView(cam, LR.seats.you.x, 1000, 0.5)) seated += actor('you', t, seat('you', 1, { view: 'back', ...(o.you || {}) }), { arms: false });
-  if (o.dad !== false && E.inView(cam, 1000, 930, 0.55)) { seated += actor('dad', t, dadP(o.dad || {}), o.dadAct || {}); if (o.laptop !== false) devices += lapSvg(o.lap || {}); }
-  if (o.mom !== false && E.inView(cam, 1340, 930, 0.55)) seated += actor('mom', t, momP(o.mom || { tablet: true }), o.momAct || {});
-  if (o.gran !== false && E.inView(cam, 1752, 930, 0.5)) seated += actor('grandma', t, granP(o.gran || { phone: 'arm' }), o.granAct || {});
+  const nv = NV(cam);
+  if (o.you && E.inView(cam, LR.seats.you.x, 1000, 0.5)) seated += actor('you', t, seat('you', 1, { view: 'back', ...nv, ...(o.you || {}) }), { arms: false });
+  if (o.dad !== false && E.inView(cam, 1000, 930, 0.55)) { seated += actor('dad', t, dadP({ ...nv, ...(o.dad || {}) }), o.dadAct || {}); if (o.laptop !== false) devices += lapSvg(o.lap || {}); }
+  if (o.mom !== false && E.inView(cam, 1340, 930, 0.55)) seated += actor('mom', t, momP({ ...nv, ...(o.mom || { tablet: true }) }), o.momAct || {});
+  if (o.gran !== false && E.inView(cam, 1752, 930, 0.5)) seated += actor('grandma', t, granP({ ...nv, ...(o.gran || { phone: 'arm' }) }), o.granAct || {});
   return { seated, devices };
 }
 function livingShot(t, cam, o = {}) {
@@ -248,7 +251,7 @@ function keyboardShot(t, cam, o = {}) {
 
 // 5. "D… A… D… Where's the B?"
 function shKeys(t) {
-  const cam = camKeys(t, [[CUT.keys, { zoom: 1.08, x: -70, y: -30 }], [A[1].b - 1.0, { zoom: 1.14, x: -40, y: -10 }], [CUT.heroB, { zoom: 1.26, x: -40, y: 40 }]]);
+  const cam = camKeys(t, [[CUT.keys, { zoom: 1.08, x: -70, y: -30 }], [A[1].b - 1.0, { zoom: 1.14, x: -40, y: -40 }], [CUT.heroB, { zoom: 1.24, x: -40, y: -55 }]]);
   const presses = [{ t: B.pD1, key: 'D' }, { t: B.pA, key: 'A' }, { t: B.pD2, key: 'D' }];
   const lost = seg(t, w(1, 'Where\'s') - 0.3, A[1].b);
   const centre = [lerp(560, 900, lost), lerp(470, 560, lost)];
@@ -266,7 +269,7 @@ function shKeys(t) {
 // 6. "Dad, it's…" — the hero leans in by the couch, pointing
 function shHeroB(t) {
   const cam = camKeys(t, [[CUT.heroB, camAt(880, 600, 1.75)], [CUT.keysB, camAt(900, 610, 1.9)]]);
-  const hero = heroStand(t, 745, 1004, { turn: 0.55, armR: 105 + 10 * Math.sin(t * 14), armL: 12, lean: 4, face: 'angry' }, { arms: false });
+  const hero = heroStand(t, 745, 1004, { volume: false, turn: 0.55, armR: 105 + 10 * Math.sin(t * 14), armL: 12, lean: 4, face: 'angry' }, { arms: false });
   return livingShot(t, cam, { dad: { face: { name: 'confused', eyes: { upper: 0.4 } }, headY: 20, bodyY: 8 }, standing: hero, mom: { tablet: true, face: 'neutral' } }) + whip(t, CUT.heroB, -1, 0.08);
 }
 
@@ -319,6 +322,18 @@ function shAge(t) {
   r += S.ellipse(c78 + 6, 528, w78 / 2 + 30, 100, { fill: 'none', stroke: '#FF2E4E', 'stroke-width': 16, 'stroke-dasharray': `${f(per * ck)} ${per}`, transform: `rotate(-8 ${f(c78)} 528)`, 'stroke-linecap': 'round' });
   const ak = pop(t, B.age, 0.3);
   if (ak > 0) r += S.g(S.path('M0 0 L-80 -160', ln(16, '#FF2E4E')) + S.path('M-80 -160 l-6 46 M-80 -160 l40 22', ln(16, '#FF2E4E')) + TS('AGE: 48', -120, -190, 96, '#FF2E4E', { 'stroke-width': 0, stroke: 'none' }), tf(c78 - 40, 410, ak, 0));
+  // "everyone" can see it: the PUBLIC pill + little watching eyes
+  const pk = pop(t, w(4, 'everyone'), 0.3);
+  if (pk > 0) {
+    let pill = S.rect(-360, -56, 720, 112, 56, ol('#14182A', 7));
+    pill += S.ellipse(-280, 0, 40, 24, ol('#FFFFFF', 5)) + S.circle(-280, 0, 13, { fill: '#2A3140' });
+    pill += TF('VISIBLE TO: EVERYONE', 30, 18, 50, '#FFE14D', { 'letter-spacing': 1 });
+    r += S.g(pill, tf(1180, 790, pk));
+    for (let i = 0; i < 5; i++) {
+      const ek = pop(t, w(4, 'everyone') + 0.12 + i * 0.07, 0.25), ex = 760 + i * 210, look = 8 * Math.sin(t * 3 + i);
+      if (ek > 0) r += S.g(S.circle(-26, 0, 24, ol('#FFFFFF', 5)) + S.circle(26, 0, 24, ol('#FFFFFF', 5)) + S.circle(-26 + look, 4, 10, { fill: '#2A3140' }) + S.circle(26 + look, 4, 10, { fill: '#2A3140' }), tf(ex, 960, ek));
+    }
+  }
   let o = splitBg();
   o += panel(0, 0, 960, 1080, left, { border: 8 }) + panel(960, 0, 960, 1080, r, { border: 8, dx: 220, dy: -30, zoom: 0.74 });
   return o + smash(t, CUT.age, 0.1, 0.5);
@@ -350,8 +365,8 @@ function shPass2(t) {
 // 12. "Dad. NO." — facepalm, then the smash
 function shNo(t) {
   const smashed = t >= B.no2 - 0.04;
-  const cam = shakeCam(smashed ? camAt(760, 580, 3.1) : camKeys(t, [[CUT.no, camAt(760, 640, 2.2)], [B.no2, camAt(760, 620, 2.45)]]), t, [[B.no2, 0.4, 18]]);
-  const hero = heroStand(t, 760, 1004, smashed ? { armL: 40, armR: 40, face: 'angry', turn: 0, lean: 0 } : { armR: 168, headRot: 9, face: 'deadpan', turn: 0.1 }, { arms: false });
+  const cam = shakeCam(smashed ? camAt(760, 645, 3.1) : camKeys(t, [[CUT.no, camAt(760, 640, 2.2)], [B.no2, camAt(760, 620, 2.45)]]), t, [[B.no2, 0.4, 18]]);
+  const hero = heroStand(t, 760, 1004, { volume: false, ...(smashed ? { armL: 40, armR: 40, face: 'angry', turn: 0, lean: 0 } : { armR: 168, headRot: 9, face: 'deadpan', turn: 0.1 }) }, { arms: false });
   let o = livingShot(t, cam, { standing: hero });
   if (smashed) o += tint('#FF2E4E', 0.18) + zoomLines(960, 420, 0.8, t, '#FFFFFF', 24, 420) + K.C.sfx('NO.', 1420, 330, seg(t, B.no2, B.no2 + 0.25), 170, -8, '#FF4B5C');
   return o + smash(t, B.no2 - 0.04, 0.12, 0.8);
@@ -394,7 +409,7 @@ function shClick(t) {
   const ed = G.avatarEditor({ ...opts, t, username: 'DadBod1978', typed: 1, coins, preview: dadNoob(t, spreeItems(t), { face: i > 8 ? 'excited' : 'happy' }), selected: sel, purchased: cur ? seg(t, cur.t, cur.t + 0.3) : 0, press: bump(t, (cur || { t: -9 }).t - 0.03, (cur || { t: -9 }).t + 0.12), owned, bought: cur ? cur.cart : 0, pointer: { x: px, y: py, press } });
   let o = S.rect(0, 0, 1920, 1080, 0, { fill: '#2A2236' }) + view(cam, ed);
   // "CLICK!" marks
-  for (const c of SPREE) { const k = seg(t, c.t, c.t + 0.35); if (k > 0 && k < 1) { const p = E.toScr(cam, G.editorCard({ ...ED, tab: c.tab }, c.id).bx, G.editorCard({ ...ED, tab: c.tab }, c.id).by); o += S.g(TS('CLICK!', 0, 0, 46, '#FFFFFF'), tf(p.x + 60, p.y - 60 - 40 * k, 0.8 + 0.4 * ease.outBack(k), -10 + 20 * hash(c.t)), { opacity: f(1 - k) }); } }
+  for (const c of SPREE) { const k = seg(t, c.t, c.t + 0.35); if (k > 0 && k < 1) { const p = E.toScr(cam, G.editorCard({ ...ED, tab: c.tab }, c.id).bx, G.editorCard({ ...ED, tab: c.tab }, c.id).by); o += S.g(TS('CLICK!', 0, 0, 60, '#FFE14D', { 'stroke-width': 10 }), tf(p.x + 60, p.y - 60 - 40 * k, 0.8 + 0.4 * ease.outBack(k), -10 + 20 * hash(c.t)), { opacity: f(1 - k) }); } }
   // PiP: the real Dad, clicking like mad
   const pk = pop(t, w(7, 'everything') + 0.1, 0.3) * (1 - seg(t, last.t - 0.15, last.t));
   if (pk > 0) {
@@ -402,8 +417,25 @@ function shClick(t) {
     const pip = S.rect(0, 0, 1920, 1080, 0, { fill: '#3A5A86' }) + G.screenGlow(960, 520, 900, 700, 'blue', 0.6) + actor('dad', t, { x: 960, y: 1500 + 20 * bob, s: 1.15, glasses: 'on', face: { name: 'excited', mouth: 'bigGrin', eyes: { type: 'star' } }, volume: false, armL: 30 + 20 * bob, armR: 30 + 20 * Math.abs(Math.sin(t * 22 + 1)) });
     o += S.g(panel(1530, 700, 330, 330, pip, { r: 165, zoom: 2.3, dy: -30 }) + panelTag(1560, 990, 'CLICK CLICK', '#F2B705', '#2A1640', 0.85), `translate(1695 865) scale(${f(pk)}) translate(-1695 -865)`);
   }
-  // the hot dog: big stamp
-  if (t >= last.t) { const k = seg(t, last.t, last.t + 0.3); o += zoomLines(1300, 420, 0.7 * k, t, '#FFE45C', 22, 260); }
+  // the cart HUD: counts up with every click (screen space, top left)
+  const cartN = cur ? cur.cart : 0;
+  if (cartN > 0) {
+    const bk = cur ? 1 + 0.25 * bump(t, cur.t, cur.t + 0.2) : 1;
+    const cp = S.path('M-34 -22 H-22 L-12 16 H24 L32 -10 H-18', ln(7, '#FFFFFF')) + S.circle(-8, 28, 7, { fill: '#FFFFFF' }) + S.circle(20, 28, 7, { fill: '#FFFFFF' });
+    let pill = S.rect(0, -44, 300, 88, 44, { fill: '#14182A', opacity: 0.92, stroke: '#36CFC0', 'stroke-width': 6 }) + S.g(cp, tf(62, 2, 1.1));
+    pill += S.g(S.circle(0, 0, 34, ol('#FF4B5C', 5)) + T(String(cartN), 0, 14, 40, '#FFFFFF'), tf(130, -30, bk)) + TF('IN CART', 222, 14, 32, '#FFFFFF');
+    o += S.g(pill, tf(810, 66, pop(t, SPREE[0].t, 0.3)));
+  }
+  // the hot dog: zoom lines + the 37 ITEMS IN CART slam
+  if (t >= last.t) {
+    const k = seg(t, last.t, last.t + 0.3);
+    o += zoomLines(1300, 420, 0.7 * k, t, '#FFE45C', 22, 260);
+    const ck = pop(t, last.t + 0.12, 0.3);
+    let c = S.rect(-330, -62, 660, 124, 30, ol('#FF4B5C', 9)) + S.rect(-318, -50, 636, 26, 13, { fill: '#FFFFFF', opacity: 0.25 });
+    c += TS('37 ITEMS IN CART', 0, 26, 76, '#FFFFFF', { 'stroke-width': 10 });
+    o += S.g(c, tf(620, 900 - 20 * Math.sin(t * 9), ck * (1 + 0.04 * Math.sin(t * 14)), -6));
+    o += S.g(TS('+ 1 HOT DOG SUIT', 0, 0, 44, '#FFE14D', { 'stroke-width': 8 }), tf(620, 790, pop(t, last.t + 0.3, 0.25), -6));
+  }
   return o + smash(t, last.t, 0.1, 0.6);
 }
 
@@ -442,14 +474,14 @@ function shWhy(t) {
 function shDid(t) {
   const cam = camKeys(t, [[CUT.did, camAt(740, 640, 2.1)], [CUT.know, camAt(740, 610, 2.45)]]);
   const point = seg(t, w(9, 'You') - 0.1, w(9, 'You') + 0.15);
-  const hero = heroStand(t, 740, 1004, { turn: 0.15, armR: 12 + 78 * point, armL: 10, face: { name: 'deadpan', eyes: { upper: 0.5 } } }, { arms: false });
+  const hero = heroStand(t, 740, 1004, { volume: false, turn: 0.15, armR: 12 + 78 * point, armL: 10, face: { name: 'deadpan', eyes: { upper: 0.5 } } }, { arms: false });
   return livingShot(t, cam, { standing: hero, dad: { face: { name: 'confused' } } });
 }
 
 // 18. "You know what?" — Dad thinks it over
 function shKnow(t) {
   const cam = camKeys(t, [[CUT.know, camAt(1000, 540, 2.3)], [CUT.like, camAt(1000, 530, 2.5)]]);
-  const dad = { armR: 140 + 6 * Math.sin(t * 6), armL: 16, headRot: -6, face: { name: 'confused', eyes: { look: [0.4, -0.6] } } };
+  const dad = { armR: 166 + 4 * Math.sin(t * 6), armL: 16, headRot: -6, face: { name: 'confused', eyes: { look: [0.4, -0.6] } } };
   return livingShot(t, cam, { dad, dadAct: { arms: false } });
 }
 
@@ -489,9 +521,9 @@ function shMom(t) {
 
 // 21. "Mom…" — the hero picks up the tablet, confused
 function shGrey(t) {
-  const cam = camKeys(t, [[CUT.grey, camAt(1250, 705, 1.95)], [CUT.grey2, camAt(1250, 690, 2.15)]]);
-  const hero = heroStand(t, 1250, 1010, { tablet: true, tabletFace: 'screen', screen: momTabletScreen(t), glow: 0.6, face: 'confused', headRot: -6 }, { arms: false });
-  let over = mark('?', 1380, 500, seg(t, CUT.grey + 0.2, CUT.grey + 0.45), 80, 10, '#FFFFFF');
+  const cam = camKeys(t, [[CUT.grey, camAt(1230, 705, 1.95)], [CUT.grey2, camAt(1235, 690, 2.15)]]);
+  const hero = heroStand(t, 1150, 1010, { volume: false, tablet: true, tabletFace: 'screen', screen: momTabletScreen(t), glow: 0.6, face: 'confused', headRot: -6 }, { arms: false });
+  let over = mark('?', 1270, 470, seg(t, CUT.grey + 0.2, CUT.grey + 0.45), 80, 10, '#FFFFFF');
   return livingShot(t, cam, { standing: hero, over, mom: { mug: true, face: 'happy' } });
 }
 
@@ -587,7 +619,7 @@ function shWhich(t) {
   fx = lerp(fx, tgt[0], dive); fy = lerp(fy, tgt[1], dive);
   const press = bump(t, B.press1 - 0.04, B.press1 + 0.18);
   const scr = E.buyScreen({ t, bought: { furcoat: seg(t, B.press1, B.press1 + 0.4) }, note: seg(t, B.goQ + 0.3, B.goQ + 0.6) });
-  const over = mark('?', fx - 200, fy - 220, seg(t, B.goQ, B.goQ + 0.25), 110, -10, '#FFFFFF');
+  const over = mark('?', fx - 200, Math.max(150, fy - 220), seg(t, B.goQ, B.goQ + 0.25), 110, -10, '#FFFFFF');
   return phonePOV(t, scr, [fx, fy], press, { over, cam: camKeys(t, [[CUT.which, { zoom: 1.0, x: 0, y: 0 }], [CUT.oh, { zoom: 1.12, x: 0, y: -20 }]]) }) + whip(t, CUT.which, 1, 0.08);
 }
 
@@ -632,7 +664,7 @@ function shTrans(t) {
   const TI = [['furcoat', w(16, 'buttons')], ['pearls', w(16, 'random')], ['monocle', w(16, 'somehow')], ['cane', w(16, 'ended')], ['bag', w(16, 'looking')]];
   const tR = B.reveal - 0.05;
   const revealed = t >= tR;
-  const cam = shakeCam(camKeys(t, [[CUT.trans, { x: 0, y: 40, zoom: 1.5 }], [tR - 0.05, { x: 0, y: 50, zoom: 2.0 }], [tR + 0.25, { x: 0, y: 40, zoom: 1.38 }], [CUT.rule, { x: 0, y: 30, zoom: 1.45 }]], ease.inOut), t, [[tR, 0.5, 20]]);
+  const cam = shakeCam(camKeys(t, [[CUT.trans, { x: 0, y: 40, zoom: 1.5 }], [tR - 0.05, { x: 0, y: 15, zoom: 1.95 }], [tR + 0.25, { x: 0, y: 40, zoom: 1.38 }], [CUT.rule, { x: 0, y: 30, zoom: 1.45 }]], ease.inOut), t, [[tR, 0.5, 20]]);
   const u = Math.max(0, t - CUT.trans);
   const phase = 2 * Math.PI * (0.5 * u + 0.32 * u * u);
   let ch = '', behind = '';
@@ -692,9 +724,9 @@ function shRule(t) {
 // 31. "Do NOT talk to my friends."
 function shRule2(t) {
   const sm = t >= B.not;
-  const cam = shakeCam(sm ? camKeys(t, [[B.not, camAt(720, 560, 2.9)], [CUT.champ, camAt(720, 575, 2.7)]], ease.out) : camAt(720, 600, 2.3), t, [[B.not, 0.45, 20]]);
+  const cam = shakeCam(sm ? camKeys(t, [[B.not, camAt(720, 650, 2.9)], [CUT.champ, camAt(720, 655, 2.7)]], ease.out) : camAt(720, 640, 2.3), t, [[B.not, 0.45, 20]]);
   const wag = Math.sin(t * 16);
-  const hero = heroStand(t, 720, 1006, { turn: 0.3, armR: 150 + 12 * wag, armL: 12, headRot: 4 * wag, face: sm ? 'angry' : 'determined' }, { arms: false });
+  const hero = heroStand(t, 720, 1006, { volume: false, turn: 0.3, armR: 150 + 12 * wag, armL: 12, headRot: 4 * wag, face: sm ? 'angry' : 'determined' }, { arms: false });
   let o = livingShot(t, cam, { standing: hero });
   if (sm) o += tint('#FF2E4E', 0.15 * (1 - seg(t, B.not, B.not + 0.8))) + zoomLines(960, 400, 0.6 * (1 - seg(t, B.not, B.not + 0.6)), t);
   o += G.bigTitle({ text: 'RULE #1', k: 1, t, theme: 'alarm', x: 960, y: 120, size: 96, sub: t >= B.talk - 0.1 ? 'DO NOT TALK TO MY FRIENDS' : undefined });
@@ -703,7 +735,7 @@ function shRule2(t) {
 
 // 32. "Got it, champ!" — thumbs up all round
 function shChamp(t) {
-  const cam = camKeys(t, [[CUT.champ, camAt(1360, 600, 1.5)], [CUT.play, camAt(1330, 590, 1.6)]]);
+  const cam = camKeys(t, [[CUT.champ, camAt(1360, 600, 1.58)], [CUT.play, camAt(1330, 590, 1.68)]]);
   const up = ease.outBack(seg(t, A[18].a, A[18].a + 0.3));
   const ding = bump(t, B.champ, B.champ + 0.5);
   let o = livingShot(t, cam, {

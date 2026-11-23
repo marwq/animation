@@ -236,6 +236,34 @@ function bedroom(t, cam, o = {}, parts = {}) {
     view(cam, Lb.fg || '', 1.2) + view(cam, Lb.light) + (parts.over ? view(cam, parts.over) : '');
 }
 
+// the "monitor POV" on the REAL hero at his PC: the living-room plate behind him (the family laughing at their screens, out of
+// focus), the hero big in the foreground looking into his monitor, lit blue by it. o: { face, s, x, y, act, pose, fam(t) svg,
+// camP, veil, red 0..1 (anger tint on his face), laugh (HA HA bob), plateOver }
+function heroPOV(t, o = {}) {
+  const LS = H.SPOTS.livingRoom.seats, D = H.SPOTS.livingRoom.devices;
+  const X = require('../rig/extras');
+  const lp = (ph) => ({ bodyY: 6 * Math.abs(Math.sin(t * 10 + ph)), headRot: 5 * Math.sin(t * 10 + ph) });
+  const fam = o.fam ? o.fam(t) :
+    actor('dad', t, H.seatPose(LS.dad, 1.1, { face: { name: 'joy', eyes: { type: 'happy' } }, ...lp(0) }), { energy: 0 }) +
+    actor('mom', t, H.seatPose(LS.mom, 1.04, { face: { name: 'joy', mouth: 'bigGrin', eyes: { type: 'happy' } }, ...lp(1.3) }), { energy: 0 }) +
+    actor('grandma', t, H.seatPose(LS.grandma, 0.9, { face: { name: 'joy', eyes: { type: 'happy' } }, phone: 'arm', ...lp(2.1) }), { energy: 0 });
+  const devices = X.laptopOld({ ...D.laptop, face: 'lid' }) + X.tablet({ ...D.tablet, face: 'back', landscape: true });
+  const camP = o.camP || GS.camAt(1330, 560, 1.3);
+  let out = living(t, camP, { chair: false, glow: H.deviceGlows(['dad', 'mom', 'grandma'], 1) }, { seated: fam, devices });
+  out += S.rect(0, 0, W, HH, 0, { fill: '#141A3A', opacity: f(o.veil ?? 0.34) });
+  if (o.plateOver) out += o.plateOver;
+  // the gaming chair's headrest behind him
+  const s = o.s ?? 1.15, x = o.x ?? 600, y = o.y ?? 1320;
+  out += S.path(`M${f(x - 250 * s)} ${f(y)} L${f(x - 236 * s)} ${f(y - 900 * s)} Q${f(x - 220 * s)} ${f(y - 1010 * s)} ${f(x)} ${f(y - 1016 * s)} Q${f(x + 220 * s)} ${f(y - 1010 * s)} ${f(x + 236 * s)} ${f(y - 900 * s)} L${f(x + 250 * s)} ${f(y)} Z`, { fill: '#1E2029', stroke: LINE, 'stroke-width': 8 });
+  out += S.path(`M${f(x - 96 * s)} ${f(y - 990 * s)} V${f(y)} M${f(x + 96 * s)} ${f(y - 990 * s)} V${f(y)}`, ln(26 * s, '#B88A2E'));
+  out += actor('you', t, { x, y, s, volume: false, turn: 0, armL: 12, armR: 12, face: o.face || { name: 'angry', eyes: { upper: 0.35, look: [0, 0] } }, ...(o.pose || {}) }, o.act || { arms: false, energy: 0.4 });
+  // monitor light on the face (+ the anger tint)
+  const fx = x, fy = y - 700 * s;
+  out += G.screenGlow(fx, fy, 640 * s, 560 * s, 'blue', 0.75);
+  if (o.red) out += S.ellipse(fx, fy + 20 * s, 190 * s, 150 * s, { fill: '#FF3A3A', opacity: f(0.22 * o.red) });
+  return out;
+}
+
 // ---------------------------------------------------------------- the noob crowd
 // noob i drawn with a mood: 'idle' | 'watch' | 'cheer' | 'laugh' | 'clap' | 'nod' | 'amazed' | 'sit' | 'love' | 'shake'
 const NOOB_I = [3, 5, 7, 9, 11, 13, 2, 4, 6, 8, 10, 12, 14, 15, 1, 16, 17, 18, 19, 20, 21, 22, 23, 24];
@@ -260,5 +288,5 @@ function noob(i, t, pose, mood = 'idle', ph = 0) {
 
 module.exports = {
   DEFS, LINE, W, HH, tf, TS, TFS, pop, shakeAll, boing, whip, smash, fadeIn, fadeOut, zoomLines, vStreaks, letterbox,
-  panel, polaroid, splash, bubbles, drumKit, mic, glassesProp, dadArm, heartPop, plaza, living, bedroom, noob, NOOB_I,
+  panel, polaroid, splash, bubbles, drumKit, mic, glassesProp, dadArm, heartPop, plaza, living, bedroom, heroPOV, noob, NOOB_I,
 };

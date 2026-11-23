@@ -35,6 +35,8 @@ CUT.cute = w(1, 'Three') - 0.3;
 CUT.grow = A[2].a - 0.05;
 CUT.top = A[2].b + 0.15;
 CUT.board = A[3].a - 1.45;
+CUT.five = A[3].a - 0.12;
+CUT.weekend = w(3, 'Ten') - 0.15;
 CUT.rude = w(3, 'Fifteen') - 0.12;
 CUT.rudeReal = w(3, 'if') - 0.08;
 CUT.hired = A[4].a - 0.05;
@@ -96,13 +98,32 @@ function coinArc(t, t0, a, b, d = 0.45, r = 22, h = 160) {
   if (u <= 0 || u >= 1) return '';
   return G.coinIcon(lerp(a[0], b[0], u), lerp(a[1], b[1], u) - h * Math.sin(u * Math.PI), r, t * 14);
 }
+// Granny's money pill (top-left) with our own rocket arrow placed after the digits (label 'GRANNY' is wider than 'COINS')
+function grannyCash(t, o) {
+  const { x = 50, y = 80, s = 1, rocket = 0 } = o;
+  let g = G.coinCounter({ ...o, x, y, s, rocket: 0, label: 'GRANNY' });
+  if (rocket > 0) {
+    const vw = String(Math.round(o.value)).replace(/\B(?=(\d{3})+(?!\d))/g, ',').length * 36;
+    const ax = x + (205 + vw) * s, ap = Math.sin(t * 14) * 6;
+    g += S.g(S.path('M0 -40 L32 0 H14 V36 H-14 V0 H-32 Z', ol('#3DDC84', 6)), tf(ax, y - ap * s, s * ease.outBack(seg(rocket, 0, 0.3))));
+    // a fountain of coins spurting out of the arrow and raining down the frame
+    let cs = '';
+    for (let i = 0; i < 12; i++) {
+      const ph = (((t * 1.3 + i / 12 + hash(i) * 0.05) % 1) + 1) % 1, vx = 160 + 420 * hash(i * 3.3);
+      const cx = ax + vx * ph * s, cy = y - 20 * s - 360 * ph * s + 1100 * ph * ph * s;
+      cs += G.coinIcon(cx, cy, 20 * s, t * 6 + i);
+    }
+    g = S.g(cs, null, { opacity: f(rocket * 0.9) }) + g;
+  }
+  return g;
+}
 // the hero's coin pill (top-left) + Granny's coins (top-right)
 const myCoins = (t, o = {}) => G.coinCounter({ x: 50, y: 80, value: 12, t, s: 0.9, label: 'COINS', ...o });
 // real Granny in her armchair (living room), knitting; phone screen shows her shop
 function realGranny(t, cam, o = {}) {
-  return room(t, cam, { you: o.you ?? { turn: 0.75, face: 'neutral' }, gran: { face: { name: 'happy' }, ...(o.gran || {}) }, granAct: o.granAct || { face: 'happy' }, mom: o.mom, phoneScreen: (pw, ph) => E.phoneShop(pw, ph, t, { coins: o.coins, label: o.label }), glow: 0.5, over: o.over });
+  return room(t, cam, { you: o.you ?? { turn: 0.75, face: 'neutral' }, gran: { face: { name: 'happy' }, ...(o.gran || {}) }, granAct: o.granAct || { face: 'happy' }, mom: o.mom, momAct: o.momAct, phoneScreen: (pw, ph) => E.phoneShop(pw, ph, t, { coins: o.coins, label: o.label }), glow: 0.5, over: o.over });
 }
-const GCAM = camAt(1745, 610, 2.15, 960, 520);                  // real Granny close-up
+const GCAM = camAt(1600, 600, 2.0, 960, 520);                   // real Granny (+ Mom on the couch at the left) two-shot
 
 // ================================================================= SHOTS
 // ---- 1. "Meanwhile, Granny opened a cookie stand." — MEANWHILE banner, the valley; the stand pops up brick by brick
@@ -182,7 +203,7 @@ function shGrow(t) {
   // day/night flicker of the time-lapse
   o += S.rect(0, 0, 1920, 1080, 0, { fill: '#1A1050', opacity: f(0.18 * Math.max(0, Math.sin(t * 9))) });
   o += E.ffOSD(t, seg(t, CUT.grow, CUT.grow + 0.2), '▶▶ x1000');
-  o += G.coinCounter({ x: 50, y: 80, value: 9999999, from: 5, roll: ease.in(seg(t, CUT.grow + 0.2, CUT.top)), rocket: seg(t, CUT.grow, CUT.grow + 0.4), t, label: 'GRANNY' });
+  o += grannyCash(t, { x: 50, y: 80, value: 9999999, from: 5, roll: ease.in(seg(t, CUT.grow + 0.2, CUT.top)), rocket: seg(t, CUT.grow, CUT.grow + 0.4), t });
   for (const tt of [tBak, tFac, tSky]) o += smash(t, tt, 0.08, 0.35);
   return o;
 }
@@ -196,18 +217,69 @@ function shTop(t) {
   o += K.C.burst(p.x, p.y, seg(t, tNeon + 0.5, tNeon + 1.0), '#FFB04A');
   return o + whip(t, CUT.top, -1, 0.1);
 }
-// ---- 7. (billboard rises) GRANDMA: "Cookies are now five coins. Ten coins on weekends." — her face lip-syncs on it
+// ---- 7. (billboard rises) — the giant billboard with Granny's face climbs up beside the tower (drawn by us, in front of
+// the tower so the portrait is never hidden); her face on it lip-syncs her prices
+const BB = { x: 2200, y: 140 };                                 // board centre (world, k 1); portrait centre = x − 230
+const BBP = { x: BB.x - 230, y: BB.y };
 function billboardFace(t) {
-  const face = actor('grandmaAvatar', t, { x: 0, y: 650, s: 0.85, nametag: false, volume: false, bag: false, cane: false, face: { name: 'happy' } }, { energy: 0.8 });
+  const face = actor('grandmaAvatar', t, { x: 0, y: BB_FACE.y, s: BB_FACE.s, nametag: false, volume: false, bag: false, cane: false, face: { name: 'happy' } }, { energy: 0.8 });
   return clipTo(-190, -205, 380, 410, S.rect(-190, -205, 380, 410, 0, { fill: '#FFD1E6' }) + face, 30);
 }
+const BB_FACE = { s: 0.62, y: 500 };
+const myBillboard = (t, k) => GS.grannyBillboard(BB.x, BB.y, GS.tone({}), t, k, billboardFace(t), 770);
 function shBoard(t) {
-  const up = ease.out(seg(t, CUT.board + 0.1, CUT.board + 1.1));
-  const cam = shakeAll(camKeys(t, [[CUT.board, camAt(2130, 330, 0.9)], [A[3].a, camAt(2130, 200, 1.0)], [CUT.rude, camAt(2100, 230, 1.12)]], ease.inOut), t, [[CUT.board + 1.05, 0.3, 10], [tFive, 0.25, 8], [tTen, 0.25, 8]]);
-  let o = tycoonShot(t, cam, { granny: 4, neon: 1, billboard: up, billboardFace: billboardFace(t) });
-  o += G.stamp({ text: '5 COINS', x: 700, y: 820, k: seg(t, tFive, tFive + 0.45), col: '#FF4B5C', size: 96, rot: -10 });
-  o += G.stamp({ text: '10 ON WEEKENDS', x: 1360, y: 880, k: seg(t, tTen, tTen + 0.45), col: '#7A3CC8', size: 74, rot: 6 });
+  const up = seg(t, CUT.board + 0.15, CUT.board + 1.05);
+  const cam = shakeAll(camKeys(t, [[CUT.board, camAt(1900, 420, 0.72)], [CUT.board + 0.5, camAt(1950, 380, 0.76)], [CUT.five, camAt(2050, 300, 0.86)]], ease.inOut), t, [[CUT.board + 1.0, 0.35, 12]]);
+  let o = tycoonShot(t, cam, { granny: 4, neon: 1, billboard: 0 }, myBillboard(t, up));
+  // dust where the legs slam home
+  if (t > CUT.board + 0.95) { const p1 = toScr(cam, BB.x - 260, 770), p2 = toScr(cam, BB.x + 60, 770); o += K.C.dust(p1.x, p1.y, CUT.board + 0.95, t) + K.C.dust(p2.x, p2.y, CUT.board + 1.0, t); }
   return o + whip(t, CUT.board, 1, 0.1);
+}
+// ---- 7b. GRANDMA: "Cookies are now five coins." — on the billboard: her face talks, a price sticker slaps on
+function priceSticker(x, y, k, t, big, small, col = '#FF4B5C', rot = -10) {
+  if (k <= 0) return '';
+  const e = ease.outBack(clamp(k, 0, 1)) * (1 + 1.4 * (1 - seg(k, 0, 0.35)));
+  let g = S.path('M0 -150 L36 -112 L88 -122 L96 -70 L144 -46 L120 0 L144 46 L96 70 L88 122 L36 112 L0 150 L-36 112 L-88 122 L-96 70 L-144 46 L-120 0 L-144 -46 L-96 -70 L-88 -122 L-36 -112 Z', ol(col, 8));
+  g += TS(big, 0, 30, 110, '#FFFFFF') + TF(small, 0, 80, 34, '#FFFFFF');
+  return S.g(g, tf(x, y, e, rot + 6 * Math.sin(t * 3)));
+}
+function shFive(t) {
+  const tF = w(3, 'five');
+  const cam = shakeAll(camKeys(t, [[CUT.five, camAt(BB.x - 60, 150, 1.32)], [tF, camAt(BB.x - 80, 150, 1.42)], [CUT.weekend, camAt(BB.x - 90, 150, 1.5)]], ease.inOut), t, [[tF + 0.12, 0.3, 12]]);
+  let o = tycoonShot(t, cam, { granny: 4, neon: 1, billboard: 0 }, myBillboard(t, 1));
+  const p = toScr(cam, BB.x + 330, BB.y + 200);
+  o += priceSticker(p.x, p.y, seg(t, tF, tF + 0.35), t, '5', 'COINS');
+  const q = toScr(cam, BBP.x, BBP.y - 210);
+  o += K.bang('NEW PRICE!', q.x, q.y, pop(t, tF + 0.2, 0.25), 54, -6, '#FFE14D');
+  return o + whip(t, CUT.five, -1, 0.08);
+}
+// ---- 7c. "Ten coins on weekends." — low angle from the queue: noobs look up as the board's sticker flips to 10 (SAT·SUN)
+const QBACK = [[1560, 960, 3, 1], [1760, 945, 7, 1.04], [1960, 965, 11, 0.98], [2160, 950, 5, 1.02], [2360, 962, 13, 1], [1660, 900, 9, 0.92], [2060, 905, 2, 0.94], [2460, 900, 14, 0.92]];
+function shWeekend(t) {
+  const tT = w(3, 'Ten'), tW = w(3, 'weekends');
+  const cam = camKeys(t, [[CUT.weekend, camAt(2020, 470, 0.86)], [CUT.rude, camAt(2040, 440, 0.92)]], ease.inOut);
+  let chars = '';
+  QBACK.slice().sort((a, b) => a[1] - b[1]).forEach(([x, y, i, sz], j) => {
+    const shock = seg(t, tT + 0.1 + j * 0.04, tT + 0.3 + j * 0.04);
+    chars += K.draw.kid(i, { x, y, s: tyS(y) * 0.9 * sz, view: 'back', armL: 10 + 150 * shock * (j % 3 === 0 ? 1 : 0), armR: 10 + 150 * shock * (j % 3 === 0 ? 1 : 0), lift: 24 * bump(t, tT + 0.1 + j * 0.04, tT + 0.45 + j * 0.04), nametag: false });
+  });
+  let o = tycoonShot(t, cam, { granny: 4, neon: 1, billboard: 0 }, myBillboard(t, 1), chars);
+  const p = toScr(cam, BB.x + 330, BB.y + 200);
+  const flip = seg(t, tT - 0.05, tT + 0.25);
+  o += flip < 0.5 ? priceSticker(p.x, p.y, 1, t, '5', 'COINS') : priceSticker(p.x, p.y, 1, t, '10', 'WEEKENDS', '#7A3CC8', 8);
+  if (flip > 0 && flip < 1) o += K.C.burst(p.x, p.y, flip, '#FFE14D');
+  // the calendar page: SAT / SUN circled
+  const ck = seg(t, tW - 0.1, tW + 0.25);
+  if (ck > 0) {
+    let c = S.rect(-120, -100, 240, 200, 18, ol('#FFFFFF', 7)) + S.rect(-120, -100, 240, 56, 18, { fill: '#FF4B5C', stroke: '#151515', 'stroke-width': 7 }) + TS('WEEKEND', 0, -58, 34, '#FFFFFF');
+    c += TF('SAT', -54, 30, 42, '#1E2A44') + TF('SUN', 54, 30, 42, '#1E2A44') + S.ellipse(-54, 16, 50, 34, { fill: 'none', stroke: '#FF4B5C', 'stroke-width': 6 }) + S.ellipse(54, 16, 50, 34, { fill: 'none', stroke: '#FF4B5C', 'stroke-width': 6 });
+    c += TF('x2 PRICE', 0, 82, 30, '#7A3CC8');
+    o += S.g(c, tf(330, 300, ease.outBack(ck), -8));
+  }
+  // a groan from the crowd
+  const g = toScr(cam, 1960, 965 - 640 * tyS(965));
+  o += K.bang('awww...', g.x, g.y - 40, pop(t, tT + 0.3, 0.25) * (1 - seg(t, CUT.rude - 0.25, CUT.rude)), 50, 6, '#FFFFFF');
+  return o + whip(t, CUT.weekend, 1, 0.08);
 }
 // ---- 8. "Fifteen..." — a rude player at the tower door: the price board flips to 15, RUDE TAX
 function priceBoard(x, y, k15, t) {
@@ -225,13 +297,14 @@ function shRude(t) {
   let o = tycoonShot(t, cam, { granny: 4, neon: 1, billboard: 0 }, '', chars);
   const p = toScr(cam, 1380, 935 - 1000 * tyS(935));
   o += G.chatBubble({ x: p.x, y: p.y - 20, t, user: 'BloxyBob', col: '#FFE3E6', s: 1.15, text: 'gimme a cookie >:(', typed: 1, k: seg(t, CUT.rude - 0.1, CUT.rude + 0.15) });
-  o += G.stamp({ text: 'RUDE TAX +5', x: 640, y: 380, k: seg(t, tRudeTag, tRudeTag + 0.4), col: '#FF4B5C', size: 82, rot: -12 });
+  o += G.stamp({ text: 'RUDE TAX +5', x: 1450, y: 640, k: seg(t, tRudeTag, tRudeTag + 0.4), col: '#FF4B5C', size: 78, rot: -12 });
   return o;
 }
 // ---- 9. "...if you're rude." — real Granny, sweetly, needles clicking; a glint on her glasses
 function shRudeReal(t) {
-  const cam = camKeys(t, [[CUT.rudeReal, GCAM], [CUT.hired, camAt(1745, 600, 2.3, 960, 520)]]);
-  let o = realGranny(t, cam, { coins: 9999999, label: 'RUDE TAX: ON' });
+  const cam = camKeys(t, [[CUT.rudeReal, GCAM], [CUT.hired, camAt(1630, 600, 2.15, 960, 520)]]);
+  const peek = seg(t, w(3, 'rude') - 0.2, w(3, 'rude') + 0.1);
+  let o = realGranny(t, cam, { coins: 9999999, label: 'RUDE TAX: ON', mom: { face: { name: peek > 0.5 ? 'shocked' : 'neutral', eyes: { look: [lerp(0, 0.9, peek), 0.2] } } } });
   const g = seg(t, A[3].b - 0.5, A[3].b - 0.1);
   if (g > 0 && g < 1) { const p = toScr(cam, 1745, 590); o += K.F.sparkle(p.x - 60 + 120 * g, p.y - 20, 60 * Math.sin(g * Math.PI)); }
   return o;
@@ -286,7 +359,7 @@ function shNoodle(t) {
   const wk = FI.workers[2];
   const shrug = bump(t, A[5].a, w1(5, 'bro'));
   const nArms = [20 + 60 * shrug + 120 * bump(t, tDouble - 0.1, tDouble + 0.6), 20 + 60 * shrug + 110 * bump(t, tDental - 0.1, A[5].b)];
-  const behind = beltWorkers(t, { noodleFace: t > tDental ? { name: 'happy', mouth: 'teeth', fx: ['sparkles'] } : 'happy', noodleAct: { energy: 1.4 }, noodleArms: nArms });
+  const behind = beltWorkers(t, { noodleFace: t > tDental ? { name: 'excited', mouth: 'bigGrin', fx: ['sparkles'] } : t > tDouble ? 'excited' : 'happy', noodleAct: { energy: 1.4 }, noodleArms: nArms });
   const hero = you(t, { x: 620, y: 1000, s: 0.5, turn: 0.7, armL: 14, armR: 14, face: t > tDouble ? { name: 'shocked', fx: ['sweat'] } : 'confused', nametag: false }, { arms: false });
   let over = '';
   const dk = seg(t, tDouble, tDouble + 0.3);
@@ -298,13 +371,13 @@ function shNoodle(t) {
 }
 // ---- 13. (beat) EMPLOYEE OF THE MONTH: Noodle poses by the frame; camera flash
 function noodlePhoto(t) {
-  return (pw, ph) => S.rect(0, 0, pw, ph, 0, { fill: '#BFE6FF' }) + clipTo(0, 0, pw, ph, actor('noodle', t, { x: pw / 2, y: ph + 230, s: 0.38, hairnet: true, apron: true, badge: true, face: { name: 'happy', mouth: 'teeth' }, nametag: false, volume: false }));
+  return (pw, ph) => S.g(S.rect(0, 0, pw, ph, 0, { fill: '#BFE6FF' }) + clipTo(0, 0, pw, ph, actor('noodle', t, { x: pw / 2, y: ph + 250, s: 0.4, hairnet: true, apron: true, badge: true, face: { name: 'joy', mouth: 'bigGrin' }, nametag: false, volume: false })), `translate(${f(-pw / 2)} ${f(-ph / 2)})`);
 }
 function shEmployee(t) {
-  const cam = camKeys(t, [[CUT.employee, camAt(1440, 520, 1.2)], [CUT.bought, camAt(1470, 480, 1.32)]]);
+  const cam = camKeys(t, [[CUT.employee, camAt(1450, 540, 1.0)], [CUT.bought, camAt(1480, 520, 1.1)]], ease.inOut);
   const ps = FI.pose;
   const flashed = t >= tFlash;
-  const noodle = actor('noodle', t, { x: ps.x, y: ps.y, s: ps.s, turn: 0.4, hairnet: true, apron: true, badge: 'EMPLOYEE OF THE MONTH', armR: 150, armL: 20, face: { name: 'happy', mouth: 'teeth', fx: ['sparkles'] }, nametag: false, ...boing(t, tFlash, 0.15) }, { arms: false });
+  const noodle = actor('noodle', t, { x: ps.x, y: ps.y, s: ps.s, turn: 0.4, hairnet: true, apron: true, badge: 'EMPLOYEE OF THE MONTH', armR: 150, armL: 20 + 120 * seg(t, tFlash - 0.3, tFlash), face: { name: 'joy', mouth: 'bigGrin', fx: ['sparkles'] }, nametag: false, ...boing(t, tFlash, 0.15) }, { arms: false });
   let o = factoryShot(t, cam, { employee: flashed ? noodlePhoto(t) : undefined }, '', noodle);
   const p = toScr(cam, FI.employee.x, FI.employee.y);
   if (flashed) o += K.F.sparkle(p.x + 140, p.y - 130, 40 * Math.abs(Math.sin(t * 8))) + K.F.sparkle(p.x - 150, p.y + 90, 28 * Math.abs(Math.sin(t * 7 + 1)));
@@ -343,10 +416,10 @@ function leaseCard(t, k, hi) {
   g += TF('TENANT: YOU', -280, -90, 40, '#1E2A44', { 'text-anchor': 'start' }) + TF('PROPERTY: YOUR CASTLE', -280, -36, 40, '#1E2A44', { 'text-anchor': 'start' });
   g += S.g(S.rect(-290, 0, 580, 84, 20, { fill: '#FFE14D', opacity: f(0.6 * hi) }) + G.coinIcon(-240, 42, 28, t * 3) + TS('50 COINS / WEEK', 30, 66, 56, '#FF4B5C'), tf(0, 0, 1 + 0.08 * bump(hi, 0, 1)));
   g += TF('LANDLORD:', -280, 150, 32, '#5B6684', { 'text-anchor': 'start' }) + S.path('M-90 150 q20 -40 40 0 t40 0 t40 -10 q10 30 40 0', ln(6, '#7A3CC8')) + G.heart(160, 138, 18, '#FF6FB0');
-  return S.g(g, tf(1340, 470, ease.outBack(clamp(k, 0, 1)), 4));
+  return S.g(g, tf(1520, 640, 0.86 * ease.outBack(clamp(k, 0, 1)), 4));
 }
 function shRent(t) {
-  const cam = camKeys(t, [[CUT.rent, camAt(-330, 640, 1.18)], [tLease, camAt(-380, 640, 1.22)], [CUT.grandson, camAt(-400, 640, 1.26)]]);
+  const cam = camKeys(t, [[CUT.rent, camAt(-300, 640, 1.18)], [tLease, camAt(-230, 650, 1.22)], [CUT.grandson, camAt(-220, 650, 1.26)]], ease.inOut);
   const gx = -150, gy = 935, gs = tyS(gy);
   const point = bump(t, A[8].a, w1(8, 'there') + 0.2);
   let chars = '';
@@ -366,9 +439,9 @@ function shGrandson(t) {
 }
 // ---- 18. GRANDMA: "That's why it's only fifty, dear." — sweetly, over her glasses; a heart on "dear"
 function shDear(t) {
-  const cam = camKeys(t, [[CUT.dear, GCAM], [CUT.alone, camAt(1745, 600, 2.35, 960, 520)]]);
+  const cam = camKeys(t, [[CUT.dear, GCAM], [CUT.alone, camAt(1640, 595, 2.2, 960, 520)]]);
   const tD = w(10, 'dear');
-  let o = realGranny(t, cam, { coins: 9999999, label: 'RENT DUE: 50', gran: { face: { name: 'happy', eyes: { look: [-0.6, 0.1] } } } });
+  let o = realGranny(t, cam, { coins: 9999999, label: 'RENT DUE: 50', gran: { face: { name: 'happy', eyes: { look: [-0.6, 0.1] } } }, mom: { mugUp: true, face: { name: 'smug', eyes: { look: [0.8, 0] } } }, momAct: { arms: false } });
   const p = toScr(cam, 1700, 470);
   o += G.emoteHearts({ x: p.x, y: p.y, age: t - tD, n: 5, s: 0.9, life: 1.3 });
   return o;
@@ -383,13 +456,16 @@ function shAlone(t) {
   let o = tycoonShot(t, cam, { granny: 4, neon: 1, billboard: 1, sold: 1 }, '', chars);
   return o;
 }
-// ---- 20. "You had twelve coins." — the wallet opens: 12 COINS; a moth flutters out
+// ---- 20. "You had twelve coins." — he looks down at his wallet (held at his chest): it opens on 12 COINS; a moth flutters out
 function shWallet(t) {
-  const cam = camAt(-560, 520, 2.1);
-  let o = tycoonShot(t, cam, { granny: 4, neon: 1, billboard: 1, sold: 1 }, '', you(t, { x: -560, y: 940, s: tyS(940), armL: 40, armR: 40, nametag: false, volume: false, face: { name: 'deadpan' } }, { arms: false }));
-  o += S.rect(0, 0, 1920, 1080, 0, { fill: '#10162A', opacity: 0.35 });
+  const hx = -560, hy = 940, hs = tyS(hy);
+  const cam = camKeys(t, [[CUT.wallet, camAt(hx, 740, 1.85)], [CUT.face, camAt(hx, 750, 1.95)]], ease.inOut);
+  const hero = you(t, { x: hx, y: hy, s: hs, armL: 46, armR: 46, nametag: false, volume: false, face: { name: 'deadpan', eyes: { look: [0, 0.9] } } }, { arms: false });
+  let o = tycoonShot(t, cam, { granny: 4, neon: 1, billboard: 1, sold: 1 }, '', hero);
+  o += S.rect(0, 0, 1920, 1080, 0, { fill: '#10162A', opacity: 0.3 });
   const k = seg(t, tWallet - 0.15, tWallet + 0.45);
-  o += G.wallet({ x: 960, y: 560, s: 1.35, k, t, coins: 12, moth: seg(t, tMoth, tMoth + 1.6) });
+  const rise = ease.outBack(seg(t, CUT.wallet, CUT.wallet + 0.35));
+  o += G.wallet({ x: 960, y: 650 + 260 * (1 - rise), s: 0.95, k, t, coins: 12, moth: seg(t, tMoth, tMoth + 1.6) });
   return o + whip(t, CUT.wallet, 1, 0.08);
 }
 // ---- 21. (beat) his deadpan face; the moth circles his crown; cricket… → whip to SC 07
@@ -409,7 +485,7 @@ function shFace(t) {
 
 // ================================================================= dispatch
 const SHOTS = [
-  [CUT.valley, shValley], [CUT.little, shLittle], [CUT.stand, shStand], [CUT.cute, shCute], [CUT.grow, shGrow], [CUT.top, shTop], [CUT.board, shBoard],
+  [CUT.valley, shValley], [CUT.little, shLittle], [CUT.stand, shStand], [CUT.cute, shCute], [CUT.grow, shGrow], [CUT.top, shTop], [CUT.board, shBoard], [CUT.five, shFive], [CUT.weekend, shWeekend],
   [CUT.rude, shRude], [CUT.rudeReal, shRudeReal], [CUT.hired, shHired], [CUT.more, shMore], [CUT.noodle, shNoodle], [CUT.employee, shEmployee],
   [CUT.bought, shBought], [CUT.base, shBase], [CUT.rent, shRent], [CUT.grandson, shGrandson], [CUT.dear, shDear], [CUT.alone, shAlone], [CUT.wallet, shWallet], [CUT.face, shFace],
 ].sort((a, b) => a[0] - b[0]);

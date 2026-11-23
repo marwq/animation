@@ -169,7 +169,7 @@ function shEdge(t) {
 
 // 3. "For almost three hours." — time-lapse: ▶▶ fast-forward falls, the clock rolls to 2:47:00, FALLS 198
 function shLapse(t) {
-  const cam = camKeys(t, [[CUT.lapse, camAt(3000, 600, 1.12)], [CUT.okay, camAt(2980, 590, 1.18)]], ease.inOut);
+  const cam = camKeys(t, [[CUT.lapse, camAt(3120, 545, 1.1)], [CUT.okay, camAt(3060, 535, 1.16)]], ease.inOut);
   const ff = t < tFF1;
   const tSet = ff ? t + 40 * (t - CUT.lapse) : t + 40 * (tFF1 - CUT.lapse);
   let behind = '', chars = '', over = '';
@@ -193,8 +193,8 @@ function shLapse(t) {
   // the big clock in the middle, rolling; it flies to its corner at the end of the shot
   const fly = ease.inOut(seg(t, CUT.okay - 0.35, CUT.okay));
   const bigK = pop(t, CUT.lapse, 0.3);
-  o += G.timerHUD({ x: lerp(960, 34 + 230, fly), y: lerp(420, 62, fly), s: lerp(1.6, 0.78, fly), k: bigK, t: ff ? t * 30 : t, sec: timerSec(t), label: 'TIME ON STAGE 1', anchor: 'center', bump: seg(t, tFF1, tFF1 + 0.45) });
-  o += G.statPill({ x: lerp(960, 34 + 150, fly), y: lerp(560, 146, fly), s: lerp(1.25, 0.78, fly), k: pop(t, CUT.lapse + 0.15, 0.3), t, icon: dropIcon, label: 'FALLS', value: falls(t), rim: '#5BD0FF', anchor: 'center', bump: seg(t, tFF1, tFF1 + 0.45) });
+  o += G.timerHUD({ x: lerp(1420, 34 + 230, fly), y: lerp(250, 62, fly), s: lerp(1.45, 0.78, fly), k: bigK, t: ff ? t * 30 : t, sec: timerSec(t), label: 'TIME ON STAGE 1', anchor: 'center', bump: seg(t, tFF1, tFF1 + 0.45) });
+  o += G.statPill({ x: lerp(1420, 34 + 150, fly), y: lerp(380, 146, fly), s: lerp(1.15, 0.78, fly), k: pop(t, CUT.lapse + 0.15, 0.3), t, icon: dropIcon, label: 'FALLS', value: falls(t), rim: '#5BD0FF', anchor: 'center', bump: seg(t, tFF1, tFF1 + 0.45) });
   return o + smash(t, tFF1, 0.12, 0.5);
 }
 
@@ -262,7 +262,7 @@ function realDad(t, pose = {}, o = {}) {
 function shYell(t) {
   const tB = w(1, 'bar', 1);
   const shout = seg(t, w(1, 'Space', 1), tB);
-  const camR = shakeAll(camAt(1000, 520, 2.3 + 0.25 * shout), t, [[tB, 0.4, 12]]);
+  const camR = shakeAll(camAt(1000, 470, 2.3 + 0.25 * shout), t, [[tB, 0.4, 12]]);
   const left = realDad(t, { face: { name: 'determined', fx: shout > 0.5 ? ['anger'] : [] }, armL: 40 + 30 * shout, armR: 40 + 30 * shout, glasses: 'up' }, { cam: camR, mom: true, act: { energy: 1.6 } });
   // right: the game
   const camG = camAt(2760, 540, 1.3);
@@ -271,7 +271,7 @@ function shYell(t) {
   let ch = R.respawnPop({ x: 2760, y: EDGE.y, s: DS, age: t - tResp1, part: 'back' });
   if (!pp.hidden) ch += dad(t, { x: lerp(2760, 2650, back), y: EDGE.y, view: 'side', flip: true, ...AC.walk(-t * 9, back > 0 && back < 1 ? 1 : 0), face: still('determined'), nametag: false, sx: pp.sx, sy: pp.sy, lift: pp.lift }, { arms: false });
   ch += R.respawnPop({ x: 2760, y: EDGE.y, s: DS, age: t - tResp1, part: 'front' });
-  const right = E.plaza(t, camG, {}, '', ch) + hud(t, { s: 0.9 });
+  const right = E.plaza(t, camG, {}, '', ch) + hud(t, { s: 0.9, x: 505, y: 70 });
   let o = S.rect(0, 0, 1920, 1080, 0, { fill: '#151515' });
   const sl = ease.out(seg(t, CUT.yell, CUT.yell + 0.25));
   o += panel(lerp(-980, 16, sl), 16, 940, 1048, left, { border: 0, shadow: false });
@@ -406,10 +406,10 @@ function shNotMe(t) {
   const ck = pop(t, w(3, 'ME') - 0.05, 0.3);
   let cloud = '';
   if (ck > 0) {
-    const cx = 1250, cy = 150 + 6 * Math.sin(t * 3);
+    const qh = GS.toScreen(cam, 2700, EDGE.y - 470), cx = qh.x + 120, cy = Math.max(120, qh.y - 40) + 6 * Math.sin(t * 3);
     let rain = '';
-    for (let i = 0; i < 8; i++) { const ph = (t * 2.2 + hash(i)) % 1; rain += `M${f(cx - 90 + i * 26)} ${f(cy + 50 + ph * 140)} l-6 22`; }
-    cloud = S.path(rain, ln(7, '#7FC6FF', 0.9 * ck)) + S.g(S.circle(-50, 0, 44, ol('#8A93A8', 6)) + S.circle(0, -22, 56, ol('#8A93A8', 6)) + S.circle(54, 0, 42, ol('#8A93A8', 6)) + S.rect(-92, 0, 184, 40, 20, { fill: '#8A93A8' }), tf(cx, cy, ck));
+    for (let i = 0; i < 8; i++) { const ph = (t * 2.2 + hash(i)) % 1; rain += `M${f(cx - 110 + i * 32)} ${f(cy + 66 + ph * 170)} l-7 26`; }
+    cloud = S.path(rain, ln(7, '#7FC6FF', 0.9 * ck)) + S.g(S.circle(-50, 0, 44, ol('#8A93A8', 6)) + S.circle(0, -22, 56, ol('#8A93A8', 6)) + S.circle(54, 0, 42, ol('#8A93A8', 6)) + S.rect(-92, 0, 184, 40, 20, { fill: '#8A93A8' }), tf(cx, cy, 1.35 * ck));
   }
   return E.plaza(t, cam, { dof: 0.42 }, '', ch) + cloud + hud(t);
 }
@@ -470,7 +470,7 @@ function spotlight(x, y, k = 1) {
   if (k <= 0) return '';
   return S.path(`M${f(x - 70)} -400 L${f(x + 70)} -400 L${f(x + 300)} ${f(y + 20)} L${f(x - 300)} ${f(y + 20)} Z`, { fill: 'url(#s07Spot)', opacity: f(k) }) + S.ellipse(x, y + 8, 300, 46, { fill: '#FFF6C8', opacity: f(0.35 * k) });
 }
-const micPose = (armR) => { const h = CAST.handAt(CAST.D.dadAvatar, { armR }, 1); return [{ svg: mic(h[0], h[1], 1.5, -150 + armR * 0.6), layer: 'front' }]; };
+const micPose = (armR) => { const h = CAST.handAt(CAST.D.dadAvatar, { armR }, 1); return [{ svg: mic(h[0], h[1] - 10, 1.5, -28 - Math.max(0, armR - 40) * 0.3), layer: 'front' }]; };
 function shJokes(t) {
   const cam = camKeys(t, [[CUT.jokes, camAt(2740, 600, 1.05)], [A[5].a, camAt(2740, 560, 1.22)], [CUT.punch, camAt(2740, 540, 1.32)]], ease.inOut);
   const spot = seg(t, CUT.jokes, CUT.jokes + 0.3);
@@ -648,13 +648,13 @@ function shDadName(t) {
 
 // 26. "Mister Hot Dog?" — low, at the kid's height: the KID tugs the hot dog's sleeve; Dad looks down
 function shTug(t) {
-  const cam = camKeys(t, [[CUT.tug, camAt(2545, 820, 2.0)], [CUT.kidcu, camAt(2540, 760, 2.1)]], ease.inOut);
+  const cam = camKeys(t, [[CUT.tug, camAt(2610, 820, 2.0)], [CUT.kidcu, camAt(2605, 765, 2.1)]], ease.inOut);
   const tug = Math.sin(t * 12) * bump(t, CUT.tug + 0.2, w(8, 'Dog') + 0.2);
   const lookD = seg(t, w(8, 'Hot') - 0.1, w(8, 'Hot') + 0.3);
-  const ch = dad(t, { x: DADF.x, y: DADF.y, s: DFS, turn: lerp(0, 0.35, lookD), headRot: 10 * lookD, armR: 26 + 6 * tug, armL: 10, face: still(lookD > 0.5 ? 'happy' : 'joy', { eyes: { look: [0.7 * lookD, 0.8 * lookD] } }), nametag: false }, { arms: false });
-  const kd = KID0(t, { x: KIDP.x - 30, y: KIDP.y, s: sAt(KIDP.y), turn: -0.55, armR: 8, armL: 118 + 6 * tug, face: { name: 'cute', eyes: { look: [-0.6, -0.7] }, fx: ['blush'] } }, { arms: false });
+  const ch = dad(t, { x: DADF.x, y: DADF.y, s: DFS, turn: lerp(0, 0.35, lookD), headRot: 10 * lookD, armR: 24 + 5 * tug, armL: 10, face: still(lookD > 0.5 ? 'happy' : 'joy', { eyes: { look: [0.7 * lookD, 0.8 * lookD] } }), nametag: false }, { arms: false });
+  const kd = KID0(t, { x: 2748 - 6 * tug, y: KIDP.y, s: sAt(KIDP.y), turn: -0.55, armR: 8, armL: 74 + 8 * tug, face: { name: 'cute', eyes: { look: [-0.6, -0.7] }, fx: ['blush'] } }, { arms: false });
   const crowd = eveCrowd(t, 'love');
-  const bub = sBubble(cam, KIDP.x + 40, KIDP.y - 330, { t, size: 44, user: 'lil_noob_7', ...G.chatLine(t, '07.8', { to: 'Dog', hold: 0.6, pre: 0.2, text: 'Mister Hot Dog?' }) });
+  const bub = sBubble(cam, 2790, KIDP.y - 330, { t, size: 44, user: 'lil_noob_7', ...G.chatLine(t, '07.8', { to: 'Dog', hold: 0.6, pre: 0.2, text: 'Mister Hot Dog?' }) });
   return E.plaza(t, cam, { deep: 1, dof: 0.35 }, crowd, ch + kd) + bub;
 }
 // 27. "Can you be my dad too?" — the KID's close-up: big eyes, propeller turning slowly, warm bokeh
@@ -671,10 +671,10 @@ function shKidCU(t) {
 }
 // 28. "Of course, kiddo." — split: real Dad touched at his laptop | the hot dog kneels to the kid, hearts
 function shOfc(t) {
-  const camR = camAt(1000, 520, 2.4);
-  const left = realDad(t, { face: { name: 'love', fx: ['tears'] }, armL: 30, armR: 30 }, { cam: camR, mom: true, momPose: { face: { name: 'happy', eyes: { look: [-0.6, 0] } } } });
+  const camR = camAt(1000, 470, 2.4);
+  const left = realDad(t, { face: { name: 'happy', eyes: { type: 'happy' }, mouth: 'smallSmile', fx: ['tears', 'blush'] }, armL: 30, armR: 30, glasses: 'up', headRot: -6 }, { cam: camR, mom: true, momPose: { face: { name: 'happy', eyes: { look: [-0.6, 0] } } } });
   const kneel = ease.inOut(seg(t, CUT.ofc, CUT.ofc + 0.5));
-  const camG = camAt(2560, 860, 1.75);
+  const camG = camAt(2560, 770, 1.6);
   const ch = dad(t, { x: DADF.x + 20, y: DADF.y, s: DFS, turn: 0.4, bodyY: 60 * kneel, legL: 0, kneeL: 0, armR: lerp(20, 120, kneel), armL: 15, face: still('love', { fx: ['blush'] }), nametag: false }, { arms: false });
   const kd = KID0(t, { x: KIDP.x - 30, y: KIDP.y, s: sAt(KIDP.y), turn: -0.5, face: { name: 'happy', eyes: { type: 'happy' }, fx: ['blush'] }, armL: 30, armR: 10, ...boing(t, CUT.ofc + 0.5, 0.15) }, { arms: false });
   const hearts = G.emoteHearts({ x: 2560, y: 640, age: t - CUT.ofc - 0.3, n: 10, s: 1, seed: 9 });
@@ -718,13 +718,15 @@ function shNoodle(t) {
 function shNoDad(t) {
   const cam = camKeys(t, [[CUT.nodad, camAt(2380, 560, 2.15)], [CUT.far, camAt(2390, 560, 2.3)]], ease.inOut);
   const tP = w(10, 'plays');
-  const pat = seg(t, tP, tP + 0.3);
-  const patY = Math.abs(Math.sin(t * 10)) * pat;
-  const nd = noodleSit(t, { face: { name: 'sad', mouth: 'smallSmile', eyes: { look: [0, 0.4] } }, armL: 14, armR: 14, turn: 0.15, headY: 6 * patY, volume: false, nametag: false }, { arms: false, energy: 0.6 });
-  // (Noodle first: Dad's patting hand goes over his bowl)
-  const reach = ease.inOut(seg(t, tP - 0.4, tP));
-  const ch = dad(t, { x: DADF.x, y: DADF.y, s: DFS, turn: -0.4 * (1 - reach), face: still('sad', { eyes: { look: [-0.8, 0] } }), armR: 14, armL: lerp(14, 158, reach) - 8 * patY, nametag: false, volume: false }, { arms: false });
-  return E.plaza(t, cam, { deep: 1, dof: 0.25 }, '', nd + ch);
+  // Dad's arm goes round Noodle's shoulders on "plays" (a side hug); Noodle leans into it
+  const reach = ease.inOut(seg(t, tP - 0.45, tP + 0.05));
+  const lean = ease.inOut(seg(t, tP, tP + 0.5));
+  const nd = noodleSit(t, { face: { name: 'sad', mouth: 'smallSmile', eyes: { look: [0.3, 0.4] } }, armL: 14, armR: 14, turn: 0.15 + 0.2 * lean, rot: 5 * lean, headRot: 6 * lean, volume: false, nametag: false }, { arms: false, energy: 0.6 });
+  const ch = dad(t, { x: DADF.x, y: DADF.y, s: DFS, turn: -0.4 * (1 - reach), face: still('sad', { eyes: { look: [-0.8, 0.1] } }), armR: 14, armL: lerp(14, 96, reach), nametag: false, volume: false }, { arms: false });
+  const sk = seg(t, tP + 0.2, tP + 1.0);
+  const q = GS.toScreen(cam, NOOD.x + 20, NOOD.hip - 330);
+  const glow = sk > 0 && sk < 1 ? K.sparkles([[q.x - 140, q.y - 40, 26 * Math.sin(Math.PI * sk)], [q.x + 170, q.y + 30, 20 * Math.sin(Math.PI * sk)]], t) : '';
+  return E.plaza(t, cam, { deep: 1, dof: 0.25 }, '', nd + ch) + glow;
 }
 // 32. (beat) the hero, far away, alone — from behind him: the warm crowd in the distance
 const HERO = { x: 1180, y: 1055 };
@@ -740,27 +742,37 @@ function shFar(t) {
   return E.plaza(t, cam, { deep: 1 }, '', crowd + kd + nd + ch + shadow + hero, hearts);
 }
 // 33. "...He's MY dad." — close on the hero, jealous; the crowd blurred in the warm distance behind
+// (a fake telephoto: the warm crowd plate far behind, a soft veil, the hero big in the foreground, screen space)
 function shMine(t) {
-  const cam = camKeys(t, [[CUT.mine, camAt(HERO.x + 230, 650, 2.0)], [CUT.real, camAt(HERO.x + 210, 640, 2.25)]], ease.inOut);
+  const u = seg(t, CUT.mine, CUT.real);
+  const camB = camAt(lerp(2330, 2360, u), 760, 1.02, 1250, 560);
   const crowd = eveCrowd(t, 'love');
-  const ch = dad(t, { x: DADF.x, y: DADF.y, s: DFS, face: still('joy'), armL: 30, armR: 30, nametag: false }, { arms: false });
-  const hero = actor('you', t, { x: HERO.x + 90, y: HERO.y, s: sAt(HERO.y), turn: 0.55, volume: false, face: { name: 'sad', eyes: { look: [1, -0.05], upper: 0.5 }, fx: ['anger'] }, armL: 10, armR: 10, headRot: -3, nametag: 'YOU', crown: true }, { arms: false, energy: 0.3 });
-  const hearts = G.emoteHearts({ x: 1880, y: 520, age: (t - CUT.mine) % 1.9, n: 7, s: 0.8, seed: 13 });
-  let o = E.plaza(t, cam, { deep: 1, dof: 0.35 }, crowd + ch, hero, hearts);
+  const ch = dad(t, { x: DADF.x, y: DADF.y, s: DFS, face: still('joy', { eyes: { type: 'happy' } }), armL: 60 + 20 * Math.sin(t * 4), armR: 60 + 20 * Math.sin(t * 4 + 2), nametag: false }, { arms: false });
+  const kd = KID0(t, { x: KIDP.x, y: KIDP.y, s: sAt(KIDP.y), turn: -0.5, armL: 100, armR: 20, face: 'joy' }, { arms: false });
+  const nd = noodleSit(t, { face: 'happy', armL: 120, armR: 30 });
+  const oh = G.overHead(DADF.x, DADF.y, DFS, 'dadAvatar');
+  const over = G.nametag({ x: DADF.x, y: oh.tag, name: 'DAD', level: 99, col: '#FF5FA8', crown: true, t, s: 1.0 }) + G.emoteHearts({ x: DADF.x, y: oh.tag - 30, age: (t - CUT.mine) % 1.7, n: 10, s: 1, seed: 13 });
+  let o = E.plaza(t, camB, { deep: 1 }, '', crowd + kd + nd + ch, over);
+  o += S.rect(0, 0, 1920, 1080, 0, { fill: '#FFC4B4', opacity: 0.38 }) + S.rect(0, 0, 1920, 1080, 0, { fill: '#4A2A5A', opacity: 0.16 });
+  // the hero: shoulders up, left third, turned to the crowd; the light is behind him (rim + a cool shadow side)
+  const push = ease.inOut(u);
+  const hs = lerp(1.18, 1.28, push);
+  const hx = lerp(560, 600, push), hy = 1290 + 40 * push;
+  const tMy = w(11, 'MY');
+  const clench = seg(t, tMy - 0.1, tMy + 0.2);
+  o += S.ellipse(hx + 60, hy - 760 * hs, 330 * hs, 360 * hs, { fill: '#FFB07A', opacity: 0.22 });
+  o += actor('you', t, { x: hx, y: hy, s: hs, turn: 0.55, volume: false, face: { name: 'sad', eyes: { look: [1, -0.05], upper: 0.45 + 0.15 * clench }, fx: clench > 0.5 ? ['anger'] : [] }, armL: 8, armR: 8 + 6 * clench, headRot: -3 + 2 * clench, nametag: false }, { arms: false, energy: 0.35 });
   o += E.letterbox(seg(t, CUT.mine, CUT.mine + 0.4), 64);
   return o;
 }
 // 34. match cut — the REAL hero at his PC, same frown, lit gold by the sunset game; behind him the family laughing
+// (the monitor POV: he stares into his screen; behind him, out of focus, Dad, Mom and Granny crack up at their devices)
 function shReal(t) {
-  const LS = H.SPOTS.livingRoom.seats, D = H.SPOTS.livingRoom.devices;
-  const cam = camKeys(t, [[CUT.real, camAt(700, 470, 2.4)], [END, camAt(820, 520, 1.55)]], ease.inOut);
-  const lp = (ph) => ({ bodyY: 6 * Math.abs(Math.sin(t * 10 + ph)), headRot: 5 * Math.sin(t * 10 + ph) });
-  const seated = actor('dad', t, H.seatPose(LS.dad, 1.1, { face: { name: 'joy', eyes: { type: 'happy' } }, ...lp(0) })) + actor('mom', t, H.seatPose(LS.mom, 1.04, { face: 'joy', ...lp(1) })) + actor('grandma', t, H.seatPose(LS.grandma, 0.9, { face: 'joy', phone: 'arm', ...lp(2) })) +
-    actor('you', t, H.seatPose(LS.you, 1, { legL: 90, legR: 90, kneeL: 90, kneeR: 90, volume: false, face: { name: 'angry', eyes: { upper: 0.35, look: [0.2, 0] } } }), { arms: false });
-  const devices = X.laptopOld({ ...D.laptop, face: 'lid' }) + X.tablet({ ...D.tablet, face: 'back', landscape: true });
-  const over = G.screenGlow(598, 560, 360, 300, '#FFB05A', 1.2);
-  let o = E.living(t, cam, { chair: 'front', glow: H.deviceGlows(['dad', 'mom', 'grandma'], 1) }, { seated, devices, over });
-  o += E.TS('HA HA HA', 1500, 300, 70, '#FFD23F', { opacity: f(0.8 * seg(t, CUT.real + 0.3, CUT.real + 0.6)), transform: 'rotate(8 1500 300)' });
+  const u = ease.inOut(seg(t, CUT.real, END));
+  const camP = camAt(lerp(1360, 1320, u), 560, lerp(1.26, 1.32, u));
+  let o = E.heroPOV(t, { camP, s: lerp(1.12, 1.2, u), x: lerp(610, 590, u), y: lerp(1310, 1340, u), face: { name: 'angry', mouth: 'frown', eyes: { upper: 0.4, look: [0, 0.05] } }, pose: { headRot: -2 } });
+  const ha = (txt, x, y, ph, r) => E.TS(txt, x, y + 8 * Math.sin(t * 9 + ph), 64, '#FFD23F', { opacity: f(0.85 * seg(t, CUT.real + 0.25 + ph * 0.1, CUT.real + 0.5 + ph * 0.1)), transform: `rotate(${r} ${x} ${y})` });
+  o += ha('HA HA!', 1230, 250, 0, -8) + ha('HEE HEE', 1560, 330, 2, 6) + ha('HO HO HO', 1500, 150, 4, -4);
   return o + smash(t, CUT.real, 0.12, 0.6);
 }
 

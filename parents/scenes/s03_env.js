@@ -398,11 +398,12 @@ const lap4 = (o = {}) => X.laptopOld({ x: LAP4.x, y: o.y ?? LAP4.y, s: o.s ?? LA
 // o.you (pose extras, drawn only when given; chair 'front' = frog sit facing camera) / o.dad / o.mom / o.gran
 function famRoom(t, cam, o = {}) {
   let seated = '', devices = '';
-  if (o.you && inView(cam, LR.seats.you.x, 1000, 0.5)) seated += actor('you', t, seat('you', 1, { legL: 90, legR: 90, kneeL: 90, kneeR: 90, ...o.you }), o.youAct || { arms: false });
-  if (o.dad !== false && inView(cam, 1000, 930, 0.55)) { seated += actor('dad', t, seat('dad', 1.1, { glasses: 'on', ...(o.dad || {}) }), o.dadAct || {}); if (o.laptop !== false) devices += lap4(o.lap || {}); }
-  if (o.mom !== false && inView(cam, 1340, 930, 0.55)) seated += actor('mom', t, seat('mom', 1.04, o.mom || { tablet: true }), o.momAct || {});
-  if (o.gran !== false && inView(cam, 1752, 930, 0.5)) seated += actor('grandma', t, seat('grandma', 0.9, { flip: true, turn: 0.2, ...(o.gran || { phone: 'arm' }) }), o.granAct || {});
-  return room(t, cam, { set: { glow: o.glow ?? H.deviceGlows(o.you ? ['you', 'dad', 'mom', 'grandma'] : ['dad', 'mom', 'grandma'], 1), chair: o.you ? 'front' : 'back', ...(o.set || {}) }, seated: seated + (o.seated || ''), devices: devices + (o.devices || ''), standing: o.standing, over: o.over });
+  const nv = (cam.zoom || 1) >= 1.55 ? { volume: false } : {};      // close-ups: skip the volume filter (raster cost)
+  if (o.you && inView(cam, LR.seats.you.x, 1000, 0.5)) seated += actor('you', t, seat('you', 1, { legL: 90, legR: 90, kneeL: 90, kneeR: 90, ...nv, ...o.you }), o.youAct || { arms: false });
+  if (o.dad !== false && inView(cam, 1000, 930, 0.55)) { seated += actor('dad', t, seat('dad', 1.1, { glasses: 'on', ...nv, ...(o.dad || {}) }), o.dadAct || {}); if (o.laptop !== false) devices += lap4(o.lap || {}); }
+  if (o.mom !== false && inView(cam, 1340, 930, 0.55)) seated += actor('mom', t, seat('mom', 1.04, { ...nv, ...(o.mom || { tablet: true }) }), o.momAct || {});
+  if (o.gran !== false && inView(cam, 1752, 930, 0.5)) seated += actor('grandma', t, seat('grandma', 0.9, { flip: true, turn: 0.2, ...nv, ...(o.gran || { phone: 'arm' }) }), o.granAct || {});
+  return room(t, cam, { set: { glow: o.glow ?? H.deviceGlows(['dad', 'mom', 'grandma'], 1), chair: o.you ? 'front' : 'back', ...(o.set || {}) }, seated: seated + (o.seated || ''), devices: devices + (o.devices || ''), standing: o.standing, over: o.over });
 }
 function keyboardShot(t, cam, o = {}) {
   const Ly = H.keyboardClose.layers(t, { screen: o.screen, highlight: o.highlight, press: o.pressKeys, caps: o.caps, time: o.time });

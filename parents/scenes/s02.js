@@ -31,7 +31,9 @@ const PRES = H.SPOTS.kitchen.presenter;            // Dad at the flip chart (392
 const CHART = { x: 220, y: 884, s: 0.86 };
 const chartPt = (lx, ly) => [CHART.x + lx * CHART.s, CHART.y + ly * CHART.s];
 const TAB = { x: 657.9, y: 674.1 };                // YOUR tablet's screen centre on the table (world)
-const seat = (who, t, pose = {}, act) => actor(who, t, H.seatPose(KS[who], SIZE[who], pose), act);
+// NOVOL: no body-volume filter (huge zooms, where the filter regions cost hundreds of ms)
+let NOVOL = false;
+const seat = (who, t, pose = {}, act) => actor(who, t, H.seatPose(KS[who], SIZE[who], NOVOL ? { ...pose, volume: false } : pose), act);
 const seatXY = (who) => H.seatPose(KS[who], SIZE[who], {});
 // the cereal-eating arm + look at the tablet
 const eating = (t) => ({ armR: 34 + 26 * Math.max(0, Math.sin(t * 3.2)), armL: 20 });
@@ -101,6 +103,10 @@ const knitAt = (t, speed = 1, lowered = 0) => { const p = seatXY('grandma'); ret
 // ================================================================= 27. "But on Saturday morning..." — pull out of the tablet
 function shSat(t) {
   const u = seg(t, C.sat, b.morning + 0.4);
+  NOVOL = u < 0.75;
+  try { return satFrame(t, u); } finally { NOVOL = false; }
+}
+function satFrame(t, u) {
   const e = ease.inOut(u);
   const z = Math.exp(lerp(Math.log(25.3), Math.log(1.06), e));
   const px = lerp(TAB.x, 950, ease.in(u)), py = lerp(TAB.y, 548, ease.in(u));
@@ -109,7 +115,7 @@ function shSat(t) {
   let inner = '';
   if (z > 1.6) {
     const sc = 48 / 1080;
-    inner = S.g(clipTo(105, 0, 1710, 1080, GA.shStreak(t)), `translate(${f(TAB.x)} ${f(TAB.y)}) rotate(-4) scale(${f(sc)}) translate(-960 -540)`);
+    inner = S.g(clipTo(105, 0, 1710, 1080, GA.shFume(t, true)), `translate(${f(TAB.x)} ${f(TAB.y)}) rotate(-4) scale(${f(sc)}) translate(-960 -540)`);
   } else inner = S.g(S.rect(-38, -54, 76, 48, 4, { fill: '#6FC3FF' }) + G.cubeLogo(0, -30, 0.12), `translate(660 704) rotate(-4)`);
   const look = seg(t, b.happened - 0.05, b.happened + 0.15);
   const lk = (x) => ({ look: [lerp(x, -1, look), lerp(0.2, 0, look)] });
@@ -134,7 +140,7 @@ function shDad(t) {
   const seated = famSeated(tt, { dad: { props: paperProp(), armL: 52, armR: 52, face: stars ? { name: 'excited', eyes: { type: 'star' } } : { name: 'happy', eyes: { look: [0, 0.6] } }, headRot: stars ? 4 * Math.sin(t * 10) : 0 } });
   let o = kitchen(tt, cam, { paper: false }, seated, knitAt(tt));
   o = freeze(o, t < fz1 ? seg(t, fz0, fz0 + 0.12) : 1 - seg(t, fz1, fz1 + 0.1), -2.5);
-  o += nameCard(t, fz0 + 0.02, 1430, 250, 'DAD', 'ACCOUNTANT', '#D9A13A', { subAt: b.accountant - 0.05, rot: 4 });
+  o += nameCard(t, fz0 + 0.02, 600, 180, 'DAD', 'ACCOUNTANT', '#D9A13A', { subAt: b.accountant - 0.05, rot: -4, ax: 850, ay: 360 });
   if (stars) for (let i = 0; i < 4; i++) o += K.F.sparkle(700 + i * 160, 250 + (i % 2) * 90, 30 * bump(t, b.accountant + 0.05 + i * 0.08, b.accountant + 0.7 + i * 0.08), '#FFE14D');
   return o + smash(t, fz0, 0.1, 0.55);
 }
@@ -163,34 +169,38 @@ function shMom(t) {
   const seated = famSeated(tt, { mom: { props: mugProp(tt, sip), armR: 150, armL: 18, face: { name: 'neutral', eyes: { look: [0, 0.2] }, mouth: sip > 0.7 ? 'o' : 'smallSmile' } } });
   let o = kitchen(tt, cam, {}, seated, knitAt(tt));
   o = freeze(o, t < fz1 ? seg(t, fz0, fz0 + 0.12) : 1 - seg(t, fz1, fz1 + 0.1), 2.5);
-  o += nameCard(t, fz0 + 0.02, 520, 250, 'MOM', 'LIBRARIAN', '#6FAE9C', { subAt: b.librarian - 0.05, rot: -4 });
+  o += nameCard(t, fz0 + 0.02, 560, 160, 'MOM', 'LIBRARIAN', '#6FAE9C', { subAt: b.librarian - 0.05, rot: -4, ax: 840, ay: 330 });
   o += volumeOSD(1480, 180, pop(t, b.quiet - 0.1, 0.25), lerp(0.6, 0.1, seg(t, b.quiet, b.librarian + 0.2)), t);
   return o + smash(t, fz0, 0.1, 0.55);
 }
 
 // ================================================================= 31. "She says 'shh' more than any other word." — SHH! + the chart
+// the raised index finger (body space, hand centre hx, hy) — the R6 fist can't reach the lips, so it's the librarian's "one finger up"
+const shhFinger = ([hx, hy], wag = 0) => S.g(S.rect(-14, -96, 28, 84, 14, ol('#F6D5BC', 5)) + S.path('M-6 -84 h12', ln(3, '#E6BC9E')), `translate(${f(hx - 6)} ${f(hy - 18)}) rotate(${f(-8 + wag)})`);
 function shShh(t) {
   const cam = camKeys(t, [[C.shh, at(1120, 505, 1.95, 560, 560)], [C.granny, at(1120, 505, 2.05, 560, 560)]]);
   const sh = seg(t, b.shh - 0.15, b.shh + 0.1);
-  const seated = famSeated(t, { mom: { armR: lerp(22, 158, ease.outBack(sh)), armL: 18, lean: 3 * sh, turn: 0.1, face: sh > 0.5 ? { name: 'determined', mouth: 'o', eyes: { look: [0, 0] } } : { name: 'neutral' } } });
+  const mp = { armR: lerp(22, 146, ease.outBack(sh)), armL: 18, lean: 3 * sh, turn: 0.1, face: sh > 0.5 ? { name: 'determined', mouth: 'o', eyes: { look: [0, 0] } } : { name: 'neutral' } };
+  if (sh > 0.35) mp.props = [{ svg: shhFinger(CAST.handAt(CAST.D.mom, mp, 1), 4 * Math.sin(Math.max(0, t - b.shh) * 14) * Math.exp(-Math.max(0, t - b.shh) * 2)), layer: 'front' }];
+  const seated = famSeated(t, { mom: mp });
   let o = kitchen(t, cam, {}, seated, knitAt(t));
   o += speech(860, 230, 'SHH!', pop(t, b.shh, 0.22), { size: 96, tail: -1 });
   const wa = t - b.shh;
   if (wa > 0 && wa < 1.2) for (let i = 0; i < 3; i++) { const r = 60 + (wa * 400 + i * 60); o += S.path(`M${f(560 + r * 0.7)} ${f(420 - r * 0.5)} A${f(r)} ${f(r)} 0 0 1 ${f(560 + r * 0.7)} ${f(420 + r * 0.5)}`, ln(6, '#FFFFFF', f(0.7 * (1 - wa / 1.2)))); }
-  o += wordChart(t, 1100, 440, pop(t, b.more - 0.2, 0.3), seg(t, b.more, b.word + 0.4));
+  o += E.zoomAbout(wordChart(t, 1290, 470, pop(t, b.more - 0.2, 0.3), seg(t, b.more, b.word + 0.4)), 1290, 470, 0.84);
   return o;
 }
 
 // ================================================================= 32. "And there's Granny. She knits. She bakes." — freeze, scarf, cookies
 function scarf(x, y, k, t) {
   if (k <= 0.01) return '';
-  const n = Math.floor(16 * ease.out(clamp(k, 0, 1)));
+  const N = 20, n = Math.floor(N * ease.out(clamp(k, 0, 1)));
+  const pt = (u) => [x + 20 + 420 * u + 10 * Math.sin(u * 8 + t * 9) * u, y + 12 + 40 * u - 340 * u * u];
   let d = '', d2 = '';
   for (let i = 0; i < n; i++) {
-    const u = i / 16, a = -1.9 + 2.2 * u;
-    const cx = x + 240 * u + 40 * Math.sin(u * 6 + t * 5) * u, cy = y - 360 * Math.sin(u * Math.PI * 0.9) - 60 * u;
-    const nx = Math.cos(a) * 30, ny = Math.sin(a) * 30, tx = -ny * 0.75, ty = nx * 0.75;
-    const q = `M${f(cx - nx - tx)} ${f(cy - ny - ty)} L${f(cx + nx - tx)} ${f(cy + ny - ty)} L${f(cx + nx + tx)} ${f(cy + ny + ty)} L${f(cx - nx + tx)} ${f(cy - ny + ty)} Z`;
+    const [ax, ay] = pt(i / N), [bx, by] = pt((i + 1) / N);
+    const len = Math.hypot(bx - ax, by - ay) || 1, nx = (-(by - ay) / len) * 28, ny = ((bx - ax) / len) * 28;
+    const q = `M${f(ax - nx)} ${f(ay - ny)} L${f(ax + nx)} ${f(ay + ny)} L${f(bx + nx)} ${f(by + ny)} L${f(bx - nx)} ${f(by - ny)} Z`;
     if (i % 2) d2 += q; else d += q;
   }
   return S.path(d, ol('#E8456A', 3)) + S.path(d2, ol('#7FC8B8', 3));
@@ -208,8 +218,8 @@ function shGranny(t) {
   if (ck > 0.01) front += X.cookieTray({ x: lerp(1900, p.x + 110, ck), y: 700, s: 0.42, steam: 1, t });
   let o = kitchen(tt, cam, {}, seated, front);
   o = freeze(o, t < fz1 ? seg(t, fz0, fz0 + 0.12) : 1 - seg(t, fz1, fz1 + 0.1), -2.5);
-  o += nameCard(t, fz0 + 0.02, 560, 250, 'GRANNY', 'KNITS · BAKES · WINS', '#B57BFF', { rot: -4 });
-  if (t > b.knits) o += K.bang('KNIT!', 1500, 280, pop(t, b.knits, 0.18), 96, 8, '#FF6FB5');
+  o += nameCard(t, fz0 + 0.02, 1490, 170, 'GRANNY', 'KNITS · BAKES · WINS', '#B57BFF', { rot: 4, ax: 1150, ay: 360 });
+  if (t > b.knits) o += K.bang('KNIT!', 690, 330, pop(t, b.knits, 0.18), 88, -8, '#FF6FB5');
   if (t > b.bakes) o += K.bang('DING!', 1560, 560, pop(t, b.bakes + 0.15, 0.18), 90, -6, '#FFD21F');
   return o + smash(t, fz0, 0.1, 0.55);
 }
@@ -251,12 +261,12 @@ const dadHand = (pose) => { const s = PRES.s, h = CAST.handAt(CAST.D.dad, { ...p
 function shNotice(t) {
   const cam = camKeys(t, [[C.notice, at(330, 560, 1.55)], [b.noticed, at(300, 545, 1.75)], [b.eleven, at(260, 500, 2.05)], [C.nin, at(250, 490, 2.15)]]);
   const flip = seg(t, b.noticed, b.noticed + 0.35);
-  const target = t < b.eleven - 0.1 ? chartPt(-20, -560) : chartPt(56 + 10 * Math.max(0, Math.sin((t - b.eleven) * 20)) * (t < b.hours + 0.3 ? 1 : 0), -404);
+  const target = t < b.eleven - 0.1 ? chartPt(-20, -560) : chartPt(118 + 8 * Math.max(0, Math.sin((t - b.eleven) * 20)) * (t < b.hours + 0.3 ? 1 : 0), -392);
   const dp = { armL: 118, armR: 24, turn: -0.35, face: { name: 'happy', eyes: { look: [-0.8, -0.2] } } };
   const hand = dadHand(dp);
   const seated = famSeated(t, { dad: false, you: { turn: -0.2, face: { name: 'deadpan', eyes: { look: [-0.7, -0.2] } } } });
   let o = kitchen(t, cam, {}, seated, dadStand(t, dp) + stickTo(hand, target), flipChartMine(t, flip, { circle: seg(t, b.eleven + 0.05, b.day) }) + buntingDrop(1));
-  if (t > b.eleven) { const [sx, sy] = toScr(cam, ...chartPt(110, -440)); o += K.bang('!!', sx + 30, sy - 20, pop(t, b.hours, 0.2), 90, 10, '#E04848'); }
+  if (t > b.eleven) { const [sx, sy] = toScr(cam, ...chartPt(-150, -640)); o += K.bang('!!', sx - 10, sy, pop(t, b.hours, 0.2), 90, -10, '#E04848'); }
   return o;
 }
 
@@ -266,7 +276,7 @@ function shNin(t) {
   cam = shakeAll(cam, t, [[b.nintendo14, 0.35, 12]]);
   const tap = Math.max(0, Math.sin((t - b.nintendo14) * 18)) * (t > b.nintendo14 && t < b.nintendo14 + 0.6 ? 1 : 0);
   const dp = { armL: 118, armR: 24, turn: -0.35, face: { name: 'excited' } };
-  const target = chartPt(-86 + 6 * tap, -478);
+  const target = chartPt(8 + 5 * tap, -394 + 5 * tap);
   let o = kitchen(t, cam, {}, famSeated(t, { dad: false }), dadStand(t, dp) + stickTo(dadHand(dp), target), flipChartMine(t, 1) + buntingDrop(1));
   o += zoomLines(960, 540, seg(t, b.nintendo14, b.nintendo14 + 0.2), t, '#FFFFFF', 22, 520);
   return o + smash(t, b.nintendo14, 0.1, 0.5);
@@ -359,9 +369,10 @@ function shJoining(t) {
   o += S.rect(0, 0, W, H_, 0, { fill: '#1A1030', opacity: 0.35 });
   const gk = seg(t, tg, tg + 0.3), dk = seg(t, td, td + 0.3), mk = seg(t, tm, tm + 0.3);
   const gl = (t0) => bump(t, t0, t0 + 0.8);
-  const gran = actor('grandma', t, { x: 280, y: faceAt(430, 0.78, 0.9), s: 0.78, phone: 'arm', phoneFace: 'screen', screen: cubeScreen(gl(tg)), glow: gl(tg), face: { name: 'smug' }, volume: false }, { arms: false });
-  const dad = actor('dad', t, { x: 960, y: faceAt(400, 0.66, 1.1), s: 0.66, armL: 40, armR: 40, props: deviceProp('laptop', gl(td), -600), face: { name: 'excited' }, volume: false }, { arms: false });
-  const mom = actor('mom', t, { x: 1600, y: faceAt(400, 0.66, 1.04), s: 0.66, armL: 36, armR: 36, props: deviceProp('tablet', gl(tm), -420), face: { name: 'smug' }, volume: false }, { arms: false });
+  // medium shots (waist up): each one slams in on its word with a little squash, the device lights up
+  const gran = actor('grandma', t, { x: 250, y: faceAt(400, 1.0, 0.9), s: 1.0, phone: 'arm', phoneFace: 'screen', screen: cubeScreen(gl(tg)), glow: gl(tg), face: { name: 'smug' }, volume: false, ...boing(t, tg + 0.28, 0.08) }, { arms: false });
+  const dad = actor('dad', t, { x: 960, y: faceAt(370, 0.84, 1.1), s: 0.84, armL: 46, armR: 46, props: deviceProp('laptop', gl(td), -430), face: { name: 'excited' }, volume: false, ...boing(t, td + 0.28, 0.08) }, { arms: false });
+  const mom = actor('mom', t, { x: 1600, y: faceAt(370, 0.84, 1.04), s: 0.84, armL: 36, armR: 36, props: deviceProp('tablet', gl(tm), -400), face: { name: 'smug' }, volume: false, ...boing(t, tm + 0.28, 0.08) }, { arms: false });
   o += panel(0, gk, gran, '#C9A6FF') + panel(1, dk, dad, '#FFD27A') + panel(2, mk, mom, '#8FE0C8');
   for (const [t0, x] of [[tg, 320], [td, 960], [tm, 1600]]) { const fk = seg(t, t0 + 0.24, t0 + 0.36); if (fk > 0 && fk < 1) o += S.rect(x - 320, 0, 640, H_, 0, { fill: '#FFFFFF', opacity: f(0.6 * (1 - fk)) }); }
   return o;
@@ -372,8 +383,10 @@ function shFlake(t) {
   const camB = at(600, 690, 3.4);
   let o = kitchen(t, camB, { tablet: false, bowls: false }, '', '') + S.rect(0, 0, W, H_, 0, { fill: '#FFF0D8', opacity: 0.45 });
   const z = lerp(1, 1.08, seg(t, C.flake, C.server));
-  const fall = ease.in(seg(t, C.flake + 0.12, C.server - 0.12));
+  const tLand = C.server - 0.3;
+  const fall = ease.in(seg(t, C.flake + 0.06, tLand));
   o += E.zoomAbout(X.cereal({ x: 980, y: 930, s: 1.75, fall, spoonY: 30 }), 960, 600, z);
+  o += K.bang('plip.', 1250, 560, pop(t, tLand, 0.16), 58, -6, '#FFFFFF');
   return o;
 }
 
@@ -382,7 +395,7 @@ function shServer(t) {
   let cam = camKeys(t, [[C.server, at(560, 530, 2.15, 960, 500)], [b.server - 0.03, at(560, 530, 2.35, 960, 500)], [b.server + 0.08, at(560, 525, 3.2, 960, 470)], [C.scary, at(560, 525, 3.3, 960, 470)]], ease.out);
   cam = shakeAll(cam, t, [[b.server, 0.5, 20]]);
   const scream = t > b.server - 0.04;
-  const yp = { turn: 0, armL: scream ? 150 : 14, armR: scream ? 150 : 14, ...boing(t, b.server, 0.2), face: scream ? { name: 'scream' } : { name: 'shocked', eyes: { pupil: 0.35 }, fx: ['sweat'] } };
+  const yp = { turn: 0, armL: scream ? 150 : 14, armR: scream ? 150 : 14, ...boing(t, b.server, 0.2), face: scream ? { name: 'scream', mouth: 'scream', eyes: { pupil: 0.3 }, fx: ['sweat2'] } : { name: 'shocked', eyes: { pupil: 0.35 }, fx: ['sweat'] } };
   let o = kitchen(t, cam, { tablet: false }, famSeated(t, { dad: false, you: yp, grandma: { face: { name: 'happy' } } }), knitAt(t, 0, 1));
   o += zoomLines(960, 470, scream ? 1 : 0, t, '#FFFFFF', 24, 480);
   return o + smash(t, b.server, 0.12, 0.6);
@@ -409,17 +422,23 @@ function shScary(t) {
 
 // ================================================================= 46. the family beams with their devices — whip out to SC 03
 function shFamily(t) {
-  const cam = camKeys(t, [[C.family, at(860, 570, 1.06)], [END, at(860, 550, 1.16)]]);
+  const cam = camKeys(t, [[C.family, at(890, 470, 1.42)], [END, at(890, 455, 1.56)]]);
   const g = 0.6 + 0.4 * Math.sin(t * 5);
+  const up = ease.outBack(seg(t, C.family, C.family + 0.35));
+  const momP = { armL: 20, armR: lerp(30, 125, up), face: { name: 'joy' } };
+  const mh = CAST.handAt(CAST.D.mom, momP, 1);
+  momP.props = [{ svg: X.tablet({ x: mh[0] + 30, y: mh[1] - 70, s: 0.5, rot: 10, face: 'screen', screen: cubeScreen(g), glow: g }), layer: 'front' }];
   const seated = famSeated(t, {
     dad: false,
-    mom: { armL: 40, armR: 40, props: deviceProp('tablet', g, -520), face: { name: 'joy' } },
-    grandma: { phone: 'arm', phoneFace: 'screen', screen: cubeScreen(g), glow: g, face: { name: 'joy' } },
+    mom: momP,
+    grandma: { phone: 'arm', phoneFace: 'screen', screen: cubeScreen(g), glow: g, face: { name: 'joy' }, ...boing(t, C.family + 0.1, 0.1) },
     you: { x: KS.you.x + 3 * Math.sin(t * 60), turn: 0.1, armL: 10, armR: 10, face: { name: 'scared', eyes: { pupil: 0.3 }, fx: ['sweat2'] } },
   });
-  const dp = { armL: 42, armR: 42, props: deviceProp('laptop', g, -560), face: { name: 'joy' } };
+  const dp = { armL: lerp(30, 60, up), armR: lerp(30, 60, up), props: deviceProp('laptop', g, -500), face: { name: 'joy' }, lift: hop(t, C.family + 0.05, 0.35, 26) };
   let o = kitchen(t, cam, { tablet: false }, seated, dadStand(t, dp, { arms: false }), flipChartMine(t, 1) + buntingDrop(1));
-  o += K.F.sparkle(1400, 300, 30 * Math.abs(Math.sin(t * 4)), '#FFFFFF') + K.F.sparkle(520, 330, 24 * Math.abs(Math.sin(t * 5 + 1)), '#FFE14D');
+  o += K.F.sparkle(1500, 240, 30 * Math.abs(Math.sin(t * 4)), '#FFFFFF') + K.F.sparkle(330, 260, 24 * Math.abs(Math.sin(t * 5 + 1)), '#FFE14D') + K.F.sparkle(1180, 300, 20 * Math.abs(Math.sin(t * 6 + 2)), '#FFFFFF');
+  const [hx, hy] = toScr(cam, KS.you.x, 430);
+  o += K.bang('gulp', hx + 40, hy - 150, pop(t, C.family + 0.8, 0.2), 70, 8, '#FFFFFF');
   return o;
 }
 
@@ -428,7 +447,7 @@ const SHOTS = [
   [C.open, GA.shOpen], [C.photo, GA.shPhoto], [C.legend, GA.shLegend], [C.level, GA.shLevel], [C.base, GA.shBase], [C.arena, GA.shArena], [C.one, GA.shOne],
   [C.welcome, GA.shWelcome], [C.lava, GA.shLava], [C.trophy, GA.shTrophy], [C.throne, GA.shThrone], [C.chair, GA.shChair], [C.tag, GA.shTag],
   [C.noodle, GA.shNoodle], [C.met, GA.shMet], [C.bosses, GA.shBosses], [C.bro, GA.shBro], [C.update, GA.shUpdate], [C.king, GA.shKing], [C.gulp, GA.shGulp],
-  [C.dark, GA.shDark], [C.who, GA.shWho], [C.angry, GA.shAngry], [C.taunt, GA.shTaunt], [C.little, GA.shLittle], [C.streak, GA.shStreak],
+  [C.dark, GA.shDark], [C.who, GA.shWho], [C.angry, GA.shAngry], [C.taunt, GA.shTaunt], [C.little, GA.shLittle], [C.streak, GA.shStreak], [C.fume, GA.shFume],
   [C.sat, shSat], [C.dad, shDad], [C.dadNin, shDadNin], [C.mom, shMom], [C.shh, shShh], [C.granny, shGranny], [C.argue, shArgue],
   [C.meeting, shMeeting], [C.notice, shNotice], [C.nin, shNin], [C.notNin, shNotNin], [C.decision, shDecision], [C.tonight, shTonight],
   [C.boardG, shBoardG], [C.no, shNo], [C.joining, shJoining], [C.flake, shFlake], [C.server, shServer], [C.scary, shScary], [C.family, shFamily],

@@ -40,7 +40,7 @@ const TOPY = SP.top.y;                                         // feet on the su
 const EDGE = SP.finalGap.edge;                                  // the summit's lip (hands grab here)
 function towerFrame(t, cam, o = {}, chars = '', over = '') {
   const Ly = GS.tower.layers(o.tw ?? t, cam, o.set || {});
-  return E.roll(cam, Ly.bg + (o.bgx ? view(cam, o.bgx, o.bgk ?? 0.02) : '') + Ly.mid + view(cam, chars) + Ly.fg + Ly.light) + over;
+  return E.roll(cam, Ly.bg + (o.bgx ? view(cam, o.bgx, o.bgk ?? 0.02) : '') + (o.bgs || '') + Ly.mid + view(cam, chars) + Ly.fg + Ly.light) + over;
 }
 const crystalW = (t, o = {}) => G.crystal({ x: CRY.x, y: CRY.y, s: CRY.s, t, beam: true, ...o });
 // the hot dog on the route
@@ -151,7 +151,7 @@ function chat(t, o = {}) {
 const gameScreen = (w, h) => S.rect(0, 0, w, h, 0, { fill: '#2A1A5E' }) + S.circle(w * 0.78, h * 0.25, h * 0.12, { fill: '#FFF4D0' }) + S.rect(w * 0.45, h * 0.1, w * 0.1, h, 0, { fill: '#5B3FA8' }) +
   S.rect(w * 0.32, h * 0.55, w * 0.14, h * 0.06, 3, { fill: '#3BD16F' }) + S.rect(w * 0.55, h * 0.35, w * 0.14, h * 0.06, 3, { fill: '#FF6FB5' }) + S.rect(w * 0.37, h * 0.42, w * 0.035, h * 0.13, 4, { fill: '#E8453C' }) + S.rect(0, h * 0.88, w, h * 0.12, 0, { fill: '#FF6A1F' });
 function living(t, cam, o = {}) {
-  const Ly = H.livingRoom.layers(t, { time: 'night', glow: 'all', glowK: o.glowK ?? 1, chair: o.chair || 'back', pcScreen: gameScreen, tvScreen: gameScreen });
+  const Ly = H.livingRoom.layers(t, { time: 'night', glow: o.glow || 'all', glowK: o.glowK ?? 1, chair: o.chair || 'back', pcScreen: gameScreen, tvScreen: gameScreen });
   let out = view(cam, Ly.bg, 0.8) + view(cam, Ly.mid);
   const youP = o.chair === 'front' ? H.seatPose(LR.seats.you, 1, { legL: 90, legR: 90, kneeL: 90, kneeR: 90, headset: true, ...(o.you || {}) }) : H.seatPose(LR.seats.you, 1, { view: 'back', headset: true, ...(o.you || {}) });
   let seated = o.you === false ? '' : actor('you', t, youP, { arms: !(o.you && o.you.armL !== undefined) });
@@ -208,7 +208,7 @@ function shotReplay(t) {
   }
   // the splash: off the start block, straight down into the water
   const P = GS.SPOTS.plaza;
-  const cam = camAt(3000, 700, 1.15);
+  const cam = camAt(2960, 560, 0.85);
   const Ly = GS.plaza.layers(t, cam, { time: 'day' });
   const u = seg(t, C.splash, B.splash);
   const x = lerp(P.start.edge - 40, P.gap.mid, ease.out(u)), y = lerp(P.start.y, P.water.y + 240, ease.in(u)) - 90 * Math.sin(Math.PI * Math.min(1, u * 1.6));
@@ -286,7 +286,7 @@ function shotKeys(t) {
 // 8 — "He jumped." base -> floor 1: he LANDS
 function shotJump1(t) {
   const u = seg(t, C.jump1, C.gasp);
-  const cam = shook(camLerp(camAt(860, 700, 1.12), camAt(980, 590, 1.25), u), t, [[B.land1, 0.25, 10]]);
+  const cam = shook(camLerp(camFollow(t, 1.06, 900, 650, 0.3, C.jump1), camAt(FL(1).x - 40, FL(1).y - 150, 1.22, 960, 620), seg(t, B.land1, C.gasp)), t, [[B.land1, 0.25, 10]]);
   const st = dadState(t);
   let w = dadRoute(t) + landFX(t, st);
   let o = towerFrame(t, cam, {}, w);
@@ -324,8 +324,8 @@ function slipState(t) {
   const wob = Math.sin((t - B.slip) * 13) * (1 - ok);
   const rot = (-18 - 10 * wob) * seg(t, B.slip + 0.3, B.slip + 0.55) * (1 - ok);
   return { st, x: lerp(x, p.x0 + 40, ok), y: p.y, rot, wob, ok, tee,
-    pose: { view: ok > 0.5 ? 'front' : 'side', flip: false, armL: ok > 0.5 ? 20 + 130 * bump(t, B.catch + 0.1, B.catch + 0.9) : 120 + 60 * Math.sin((t - B.slip) * 16), armR: ok > 0.5 ? 20 : 100 + 70 * Math.sin((t - B.slip) * 16 + 2),
-      legL: ok > 0.5 ? 0 : -30 - 15 * wob, legR: ok > 0.5 ? 0 : 22, kneeL: ok > 0.5 ? 0 : 30, rot, nametag: false,
+    pose: { turn: ok > 0.5 ? 0.25 : -0.45, armL: ok > 0.5 ? 20 + 130 * bump(t, B.catch + 0.1, B.catch + 0.9) : 125 + 55 * Math.sin((t - B.slip) * 16), armR: ok > 0.5 ? 22 : 95 + 70 * Math.sin((t - B.slip) * 16 + 2),
+      legL: ok > 0.5 ? 0 : 24 + 12 * wob, legR: ok > 0.5 ? 0 : -14, kneeL: ok > 0.5 ? 0 : 24, rot, nametag: false,
       face: ok > 0.5 ? { name: 'happy', eyes: { type: 'closed' }, fx: ['sweat'] } : { name: 'scared', mouth: 'scream', fx: ['sweat2'] } } };
 }
 function shotSlip(t) {
@@ -401,7 +401,7 @@ function shotChant(t) {
   const bossPose = { pose: 'idle', face: { name: 'shocked', eyes: { look: [0.8, -0.2] } } };
   let o = battleFrame(t, cam, { mode: 'chant', bossPose, set: { lava: 1 } });
   const beat = (t * 1.85) % 1, bi = Math.floor(t * 1.85);
-  if (beat < 0.5) o += K.bang(bi % 2 ? 'DAD!' : 'JUMP!', 960 + (bi % 2 ? 260 : -220), 250 + (bi % 3) * 20, seg(beat, 0, 0.12) * (1 - seg(beat, 0.38, 0.5)), 150, bi % 2 ? 7 : -7, bi % 2 ? '#FF8A2B' : '#FFD21F');
+  if (beat < 0.5) o += K.bang(bi % 2 ? 'DAD!' : 'JUMP!', (bi % 2 ? 1010 : 560), 250 + (bi % 3) * 20, seg(beat, 0, 0.12) * (1 - seg(beat, 0.38, 0.5)), 150, bi % 2 ? 7 : -7, bi % 2 ? '#FF8A2B' : '#FFD21F');
   o += chat(t, { flood: lerp(0.6, 1, u), x: 1330, y: 170, lines: [{ user: 'Kitty4Ever', text: 'JUMP DAD!', at: B.chant[2] }] });
   return o + whip(t, C.chant, -1, 0.1);
 }
@@ -453,8 +453,8 @@ function wobState(t) {
   const rot = (14 + 10 * wob) * seg(t, B.land88 + 0.3, B.land88 + 0.6) * (1 - ok2);
   const flail = 1 - ok2;
   return { x, y: p.y, rot, wob, ok2, ok3,
-    pose: { view: ok2 > 0.5 ? 'front' : 'side', flip: true, rot, armL: ok2 > 0.5 ? 20 + 8 * Math.sin(t * 20) : 120 + 60 * Math.sin((t - B.land88) * 17), armR: ok2 > 0.5 ? (ok3 > 0 ? 20 + 130 * ok3 : 24) : 100 + 70 * Math.sin((t - B.land88) * 17 + 2),
-      legL: ok2 > 0.5 ? 0 : 28 + 12 * wob, kneeL: ok2 > 0.5 ? 0 : 20, legR: ok2 > 0.5 ? 0 : -10, nametag: false, sy: ok2 > 0.5 ? 1 - 0.05 * Math.abs(Math.sin(t * 20)) : 1,
+    pose: { turn: ok2 > 0.5 ? 0.15 : 0.45, rot, armL: ok2 > 0.5 ? 20 + 8 * Math.sin(t * 20) : 100 + 70 * Math.sin((t - B.land88) * 17 + 2), armR: ok2 > 0.5 ? (ok3 > 0 ? 20 + 130 * ok3 : 24) : 125 + 55 * Math.sin((t - B.land88) * 17),
+      legL: ok2 > 0.5 ? 0 : 14, kneeL: ok2 > 0.5 ? 0 : 20, legR: ok2 > 0.5 ? 0 : -24 - 12 * wob, nametag: false, sy: ok2 > 0.5 ? 1 - 0.05 * Math.abs(Math.sin(t * 20)) : 1,
       face: ok2 > 0.5 ? { name: ok3 > 0 ? 'happy' : 'nervous', fx: ['sweat', 'sweat2'] } : { name: 'scared', fx: ['sweat2'] } } };
 }
 function dadWob(t) {
@@ -497,7 +497,7 @@ function shotRealWob(t) {
 function shotOkay(t) {
   const p = FL(88);
   const W = wobState(t);
-  let cam = camLerp(camAt(p.x1 - 40, p.y - 220, 1.2, 760, 600), camAt(p.x1 - 110, p.y - 210, 1.4, 820, 620), seg(t, C.okay, C.gap));
+  let cam = camLerp(camAt(p.x1 - 40, p.y - 220, 1.2, 760, 520), camAt(p.x1 - 110, p.y - 210, 1.4, 820, 540), seg(t, C.okay, C.gap));
   cam = { ...cam, rot: W ? -3 - 3 * W.wob * (1 - W.ok2) : 0 };
   let o = towerFrame(t, cam, {}, dadWob(t));
   o += capsChat(t, cam, W ? W.x : p.x, p.y - 420, 2);
@@ -512,7 +512,7 @@ function shotGap(t) {
   const st = dadState(t);
   const d = st.air ? dadRoute(t) : actor('dadAvatar', t, { x: p.x, y: p.y, s: 0.3, t, turn: 0.6, nametag: false, face: { name: 'nervous', eyes: { look: [0.9, -0.2] }, fx: ['sweat'] } }, { arms: false });
   let o = towerFrame(t, cam, {}, crystalW(t) + d + landFX(t, st));
-  o += G.systemBanner({ theme: 'info', text: 'FINAL JUMP', sub: 'FLOOR 99 -> 100', k: seg(t, B.land99 + 0.1, B.land99 + 0.6), out: seg(t, C.you - 0.25, C.you), t, size: 66, y: 170 });
+  o += G.systemBanner({ theme: 'info', text: 'FINAL JUMP', sub: 'FLOOR 99 -> 100', k: seg(t, C.gap - 0.02, C.gap + 0.34), out: seg(t, C.you - 0.1, C.you), t, size: 66, y: 170 });
   return o + hud(t, { n: st.air ? 98 : 99 }) + whip(t, C.gap, 'up', 0.08);
 }
 // 23 — "JUMP, DAD, JUMP!" the hero at the foot of the tower, three smash-zooms
@@ -566,9 +566,10 @@ function shotPress2(t) {
   o += focusLines(960, 560, sm, 9);
   return o + letterbox(LB(t)) + flashAt(t, B.press2, 0.14, 0.9);
 }
-// 27 — THE LEAP: slow motion past a giant moon; he's short...
-const LEAP = { a: { x: FL(99).x1 - 20, y: FL(99).y }, b: { x: EDGE.x - 36, y: EDGE.y + 252 }, apex: -20090 };
-const slowU = (p) => (p < 0.18 ? lerp(0, 0.32, p / 0.18) : p < 0.82 ? lerp(0.32, 0.7, (p - 0.18) / 0.64) : lerp(0.7, 1, (p - 0.82) / 0.18));
+// 27 — THE LEAP: slow motion, side-on, the hot dog sails across a GIANT moon ... and he's short
+const GRIP = { x: EDGE.x - 8, y: EDGE.y + 2 };                 // where his hands catch the summit's lip
+const LEAP = { a: { x: FL(99).x1 - 20, y: FL(99).y }, b: { x: GRIP.x - 20, y: GRIP.y + 234 }, apex: -20090 };
+const slowU = (p) => (p < 0.14 ? lerp(0, 0.3, p / 0.14) : p < 0.74 ? lerp(0.3, 0.6, (p - 0.14) / 0.6) : lerp(0.6, 1, ease.in((p - 0.74) / 0.26)));
 function leapAt(t) {
   const p = seg(t, B.launch, B.grab), u = slowU(p);
   const cy = 2 * LEAP.apex - (LEAP.a.y + LEAP.b.y) / 2;
@@ -577,50 +578,96 @@ function leapAt(t) {
 }
 function leapDad(t, o = {}) {
   const q = leapAt(t);
-  const short = seg(q.u, 0.62, 0.8);
-  const run = AC.run((t - B.launch) * 6, 0.7);
-  return actor('dadAvatar', t, { x: q.x, y: q.y, s: 0.3, t, view: 'side', flip: true, ...run, armL: lerp(150, 175, short), armR: lerp(130, 172, short), rot: lerp(-4, 10, q.u), shadow: false, nametag: false,
-    face: short > 0.3 ? { name: 'scared', mouth: 'scream' } : { name: 'determined', mouth: 'O' }, ...o }, { arms: false });
+  const crouch = t < B.launch ? bump(t, C.leap - 0.02, B.launch + 0.02) : 0;
+  const short = seg(q.u, 0.6, 0.82);
+  const kick = Math.sin((t - B.launch) * 5);
+  return actor('dadAvatar', t, { x: q.x, y: q.y, s: 0.3, t, view: 'side', flip: true, legL: lerp(-40, 30, short) + 8 * kick, kneeL: 50, legR: lerp(40, -10, short) - 8 * kick, kneeR: 20,
+    armL: lerp(150, 132, short), armR: lerp(165, 140, short), rot: lerp(-6, 8, q.u), sy: 1 - 0.12 * crouch + 0.1 * bump(q.p, 0, 0.12), sx: 1 + 0.08 * crouch, shadow: false, nametag: false,
+    face: short > 0.3 ? { name: 'scared', mouth: 'scream', fx: ['sweat2'] } : { name: 'determined', mouth: 'teeth' }, ...o }, { arms: false });
+}
+// the camera rides along: the hot dog's feet move across the screen on a designed path (left -> apex -> right)
+function leapCam(t) {
+  const q = leapAt(Math.max(t, B.launch));
+  const z = 1.16 + 0.12 * q.p;
+  const sx = lerp(640, 1230, q.u);
+  const sy = q.u < 0.44 ? lerp(790, 600, ease.out(q.u / 0.44)) : lerp(600, 740, ease.in((q.u - 0.44) / 0.56));
+  return camAt(q.x, q.y, z, sx, sy);
+}
+// a flat giant moon in screen space (no big radial glow: rings), covering the set's own moon
+function giantMoon(x, y, r) {
+  let o = '';
+  for (let i = 3; i >= 1; i--) o += S.circle(x, y, r + i * 46, { fill: '#FFF4D0', opacity: f(0.05 + 0.03 * (3 - i)) });
+  o += S.circle(x, y, r, { fill: '#FFF2C8', stroke: '#151515', 'stroke-width': 8 });
+  o += S.path(`M${f(x - r * 0.62)} ${f(y - r * 0.34)} h${f(r * 0.3)} v${f(r * 0.3)} h${f(-r * 0.3)} Z M${f(x + r * 0.1)} ${f(y + r * 0.18)} h${f(r * 0.24)} v${f(r * 0.24)} h${f(-r * 0.24)} Z M${f(x + r * 0.28)} ${f(y - r * 0.6)} h${f(r * 0.16)} v${f(r * 0.16)} h${f(-r * 0.16)} Z M${f(x - r * 0.3)} ${f(y + r * 0.52)} h${f(r * 0.12)} v${f(r * 0.12)} h${f(-r * 0.12)} Z`, { fill: '#EAD69E' });
+  return o;
 }
 function shotLeap(t) {
-  const q = leapAt(t);
-  const tn = GS.tone({ night: 0.2 });
-  const bigMoon = GS.moon(1500, 210, 330, tn);
-  // the camera drifts with him; the apex passes in front of the big moon
-  const cam = camLerp(camAt(560, -20150, 0.82, 1250, 520), camAt(900, -20000, 0.86, 1450, 560), q.p, (x) => x);
+  const cam = leapCam(t);
   let w = '';
-  // a faint slow-mo trail
-  for (let i = 3; i >= 1; i--) { const tt = t - i * 0.07; if (tt > B.launch) w += S.g(leapDad(tt, { face: 'determined' }), null, { opacity: f(0.12 * (4 - i)) }); }
-  w += crystalW(t * 0.3) + leapDad(t);
-  let o = towerFrame(t, cam, { tw: lerp(C.leap, t, 0.3), bgx: bigMoon, bgk: 0.02 }, w);
+  // a slow-mo ghost trail
+  for (let i = 3; i >= 1; i--) { const tt = t - i * 0.06; if (tt > B.launch + 0.05) w += S.g(leapDad(tt, { face: 'determined' }), null, { opacity: f(0.1 * (4 - i)) }); }
+  w += leapDad(t);
+  let o = towerFrame(t, cam, { tw: lerp(C.leap, t, 0.3), bgs: giantMoon(1150, 470, 480) }, crystalW(lerp(C.leap, t, 0.3)) + w);
+  o += windStreaks(t * 0.5, 0.8);
   o += letterbox(1);
-  o += TF('SLOW-MO', 1780, 1040, 30, '#FFFFFF', { opacity: f(0.6 * (Math.floor(t * 3) % 2)), 'text-anchor': 'end' });
+  o += TF('SLOW-MO', 1800, 1046, 30, '#FFFFFF', { opacity: f(0.75 * (Math.floor(t * 3) % 2)), 'text-anchor': 'end' });
   return o + flashAt(t, C.leap, 0.12, 0.6);
 }
-// 28 — GRAB! fingertips on the summit's lip, dangling over the abyss
+// 28 — GRAB! fingertips on the summit's lip, swinging over the abyss, legs kicking
 function hangPose(t, k = 0) {
-  const kick = Math.sin((t - B.grab) * 14);
-  return { x: EDGE.x - 36, y: EDGE.y + 252 - 230 * k, s: 0.3, t, view: 'side', flip: true, armL: 172, armR: 176 - 20 * k, legL: 20 * kick, legR: -20 * kick, kneeL: 30 + 20 * k, kneeR: 20, rot: 4 - 20 * k, shadow: false, nametag: false };
+  const a = Math.max(0, t - B.grab);
+  const kick = Math.sin(a * 15) * (1 - k);
+  return { x: GRIP.x - 20, y: GRIP.y + 234 - 228 * k, s: 0.3, t, view: 'side', flip: true, armL: lerp(162, 70, k), armR: lerp(168, 80, k), legL: 28 * kick + 60 * k, legR: -28 * kick, kneeL: 30 + 50 * k, kneeR: 20,
+    shadow: false, nametag: false };
+}
+const hangSwing = (t, k = 0) => { const a = t - B.grab; return a < 0 ? 0 : (1 - k) * 15 * Math.sin(a * 7.5 + 0.5) * Math.exp(-a * 1.8); };
+function hangDad(t, k, face) {
+  return S.g(actor('dadAvatar', t, { ...hangPose(t, k), face }, { arms: false }), `rotate(${f(hangSwing(t, k))} ${f(GRIP.x)} ${f(GRIP.y)})`);
+}
+// the fingers curled over the lip (drawn over the platform)
+function gripFingers(t, k = 1) {
+  if (k <= 0) return '';
+  const slip = 4 * Math.max(0, Math.sin((t - B.grab) * 9)) * (1 - seg(t, B.grab + 0.3, B.grab + 0.4));
+  let o = '';
+  for (const [dx, dy] of [[-16, 0], [12, -2]]) {
+    const x = GRIP.x + dx, y = GRIP.y + dy + slip * (dx < 0 ? 1 : 0.4);
+    o += S.rect(x - 15, y - 11, 30, 19, 8, ol('#F4CDAE', 4)) + S.path(`M${f(x - 5)} ${f(y - 11)} v10 M${f(x + 5)} ${f(y - 11)} v10`, ln(3, '#C98F66'));
+  }
+  return o;
+}
+// pebbles knocked off the lip, tumbling into the abyss
+function pebbles(t, t0) {
+  let o = '';
+  for (let i = 0; i < 6; i++) {
+    const a = t - t0 - i * 0.04;
+    if (a < 0 || a > 1.4) continue;
+    const x = GRIP.x - 30 + hash(i * 3.7) * 70 + (hash(i) - 0.5) * 60 * a, y = GRIP.y + 6 + 900 * a * a;
+    o += S.rect(x - 7, y - 7, 14, 14, 3, { ...ol('#7A5B2E', 3), transform: `rotate(${f(300 * a + i * 40)} ${f(x)} ${f(y)})` });
+  }
+  return o;
 }
 function shotGrab(t) {
-  const cam = shook(camAt(EDGE.x - 20, EDGE.y + 60, 1.9, 900, 520), t, [[B.grab, 0.35, 22]]);
+  // low angle under the lip: the summit above, the abyss (floors 98 / 97) far below
+  const u = seg(t, B.grab, C.pull);
+  const cam = shook(camLerp(camAt(GRIP.x - 60, GRIP.y + 120, 1.5, 900, 520), camAt(GRIP.x - 50, GRIP.y + 110, 1.62, 900, 500), u), t, [[B.grab, 0.4, 24]]);
   let d;
   if (t < B.grab) d = leapDad(t);
-  else d = actor('dadAvatar', t, { ...hangPose(t), face: { name: 'scared', mouth: 'O', fx: ['sweat2'] } }, { arms: false });
-  let o = towerFrame(t, cam, { tw: lerp(C.leap, t, 0.3) }, crystalW(t * 0.3) + d);
-  const [gx, gy] = toScr(cam, EDGE.x - 30, EDGE.y);
-  o += G.hitSpark({ x: gx, y: gy, age: t - B.grab, s: 0.9, col: '#FFD21F' });
-  o += K.bang('GRAB!', gx - 260, gy - 180, seg(t, B.grab, B.grab + 0.1), 120, -10, '#FFD21F');
+  else d = hangDad(t, 0, { name: 'scared', mouth: 'O', fx: ['sweat2'] });
+  let o = towerFrame(t, cam, { tw: lerp(C.leap, t, 0.3) }, crystalW(lerp(C.leap, t, 0.3)) + d + (t >= B.grab ? gripFingers(t) + pebbles(t, B.grab) : ''));
+  const [gx, gy] = toScr(cam, GRIP.x, GRIP.y);
+  o += G.hitSpark({ x: gx, y: gy - 10, age: t - B.grab, s: 0.9, col: '#FFD21F' });
+  o += K.bang('GRAB!', gx - 330, gy - 60, seg(t, B.grab, B.grab + 0.1), 130, -10, '#FFD21F');
   return o + letterbox(1) + flashAt(t, B.grab, 0.08, 0.5);
 }
 // 29 — he hauls himself up onto the summit
 function shotPull(t) {
-  const k = ease.inOut(seg(t, C.pull, B.up));
-  const cam = camLerp(camAt(EDGE.x + 120, EDGE.y - 80, 1.45, 820, 560), camAt(EDGE.x + 200, EDGE.y - 140, 1.4, 820, 580), k);
+  const k = ease.inOut(seg(t, C.pull + 0.04, B.up));
+  const cam = camLerp(camAt(EDGE.x + 120, EDGE.y - 60, 1.45, 820, 520), camAt(EDGE.x + 200, EDGE.y - 140, 1.4, 820, 580), k);
   let d;
-  if (k < 0.75) d = actor('dadAvatar', t, { ...hangPose(t, k), x: EDGE.x - 36 + 120 * k, face: { name: 'determined', mouth: 'teeth', fx: ['sweat'] } }, { arms: false });
+  if (k < 0.75) d = hangDad(t, k / 0.75 * 0.85, { name: 'determined', mouth: 'teeth', fx: ['sweat'] }) + (k < 0.4 ? gripFingers(t) : '');
   else d = actor('dadAvatar', t, { x: EDGE.x + 100, y: TOPY, s: 0.3, t, view: 'side', flip: true, armL: 40, armR: 60, lean: 6, nametag: false, sy: 0.92 + 0.08 * seg(k, 0.75, 1), face: { name: 'determined' } }, { arms: false });
-  return towerFrame(t, cam, {}, crystalW(t, { crack: 0.1 }) + d) + letterbox(1);
+  const [ex, ey] = toScr(cam, EDGE.x + 20, EDGE.y);
+  return towerFrame(t, cam, {}, crystalW(t, { crack: 0.1 }) + d) + K.bang('HNNG!', ex - 300, ey - 230, seg(t, C.pull + 0.05, C.pull + 0.15) * (1 - seg(t, B.up - 0.1, B.up)), 80, -8, '#FFFFFF') + letterbox(1);
 }
 // 30 — the run and the DIVE: the hot dog hits the crystal head-first -> it shatters, full-frame light
 function diveAt(t) {
@@ -672,7 +719,7 @@ function shotNo(t) {
   return o + flashAt(t, C.no, 0.2, 0.9, '#F2FDFF');
 }
 // 32 — everyone ATTACKS: the charge from the right, slashes, sparks, damage numbers
-const HITS = (() => { const a = []; for (let i = 0; i < 9; i++) a.push({ dt: 0.25 + i * 0.13, x: -1750 + (hash(i * 3.1) - 0.5) * 600, y: 830 - 250 - hash(i * 5.3) * 520, v: Math.round(800 + 1200 * hash(i * 2.2)), crit: i % 4 === 3 }); return a; })();
+const HITS = (() => { const a = []; for (let i = 0; i < 9; i++) a.push({ dt: 0.25 + i * 0.13, x: -1750 + (hash(i * 3.1) - 0.5) * 720, y: 640 - hash(i * 5.3) * 420, v: Math.round(800 + 1200 * hash(i * 2.2)), crit: i % 4 === 3 }); return a; })();
 function shotAttack(t) {
   const u = seg(t, C.attack, C.defeat);
   const cam = camLerp(camAt(-500, 440, 0.62), camAt(-1350, 400, 0.66), u, ease.inOut);
@@ -682,7 +729,7 @@ function shotAttack(t) {
     const age = t - C.attack - h.dt;
     if (age < 0 || age > 1) continue;
     fx += G.slash({ x: h.x, y: h.y, age, s: 1.6, angle: 160, col: h.crit ? '#FF8A2B' : '#FFD21F' }) + G.hitSpark({ x: h.x, y: h.y, age: age - 0.05, s: 1.5 });
-    fx += G.damageNumber({ x: h.x + 60, y: h.y - 80, age: age - 0.08, value: h.v, crit: h.crit, s: 1.6 });
+    fx += G.damageNumber({ x: h.x + 60, y: h.y + 60, age: age - 0.08, value: h.v, crit: h.crit, s: 1.35 });
   }
   let o = battleFrame(t, cam, { mode: 'attack', crowd: { t0: C.attack, speed: 640 }, bossPose, dome: false }, fx);
   o += bossHUD(t, { hit: (t - C.attack) % 0.26 < 0.12 ? 0.3 : 0 });
@@ -746,7 +793,7 @@ function shotVictory(t) {
   let o = towerFrame(t, cam, { set: { dawn: DAWN(t) } }, w);
   o += R.blockConfettiRain(t, { t0: B.victory - 0.2, n: 55, s: 1.2 });
   o += G.victoryCard({ k: seg(t, B.victory - 0.1, B.victory + 1.1), t, y: 360, s: 0.9 });
-  o += G.serverHealth({ value: lerp(0.2, 1, ease.out(seg(t, B.saved, B.saved + 1.2))), trail: 0.2, t, y: 880, w: 1000, s: 0.85, k: seg(t, B.saved - 0.2, B.saved + 0.1) });
+  o += G.serverHealth({ value: lerp(0.2, 1, ease.out(seg(t, B.saved, B.saved + 1.2))), trail: 0.2, t, y: 790, w: 960, s: 0.85, k: seg(t, B.saved - 0.2, B.saved + 0.1) });
   return o + flashAt(t, B.victory, 0.2, 0.7, '#FFF4C0');
 }
 // the summit at dawn (world): everyone teleported up, the broken pedestal, shards
@@ -781,6 +828,7 @@ function summitCrowd(t, mode, o = {}) {
     const age = o.pops ? pop(it.base, it.i) : 9;
     if (age < -0.32) continue;
     let p = pose(it.key, it.base, { ...it.extra, ...((o.over || {})[it.key] || {}) });
+    if (o.step) p.x += o.step(it);
     if (o.pops && age < 1) out += R.respawnPop({ x: p.x, y: p.y, s: 0.3, age, part: 'back' });
     if (age >= 0) { const pp = R.popPose(age, 0.3); p = { ...p, sx: pp.sx, sy: pp.sy, lift: (p.lift || 0) + pp.lift }; out += it.key === 'player' ? K.draw.player(p.i, { shade: true, shadow: true, ...p }) : actor(it.key, t, p, { arms: false, energy: 1.2 }); }
     if (o.pops && age < 1) out += R.respawnPop({ x: p.x, y: p.y, s: 0.3, age, part: 'front' });
@@ -803,7 +851,7 @@ function shotMom(t) {
   const u = seg(t, C.mom, C.toss);
   const jumpK = seg(t, B.momJump, B.momJump + 0.25);
   const bounce = t > B.momJump + 0.25 ? Math.abs(Math.sin((t - B.momJump - 0.25) * 6.5)) : 0;
-  const cam = shook(camLerp({ zoom: 1.32, x: 330, y: -40 }, { zoom: 1.5, x: 330, y: -90 }, u), t, [[B.momJump + 0.25, 0.3, 10]]);
+  const cam = shook(camLerp({ zoom: 1.2, x: 330, y: -150 }, { zoom: 1.32, x: 330, y: -175 }, u), t, [[B.momJump + 0.25, 0.3, 10]]);
   const standing = t >= B.momJump;
   const o = living(t, cam, {
     dad: { turn: 0.5, armL: 40 + 30 * Math.abs(Math.sin(t * 10)), armR: 120, face: { name: 'joy', eyes: { type: 'happy' } } },
@@ -816,12 +864,12 @@ function shotMom(t) {
 // 38 — "THAT'S MY HUSBAND!" the server tosses the hot dog into the sunrise; Mom's avatar types it in CAPS
 function tossLift(t) {
   let l = 0;
-  for (const t0 of B.toss) { const a = (t - t0) / 1.05; if (a > 0 && a < 1) l = Math.max(l, 520 * 4 * a * (1 - a)); }
+  for (const t0 of B.toss) { const a = (t - t0) / 1.05; if (a > 0 && a < 1) l = Math.max(l, 430 * 4 * a * (1 - a)); }
   return l;
 }
 function shotToss(t) {
   const lift = tossLift(t);
-  const cam = camAt(1420, TOPY - 260 - lift * 0.3, 0.95, 960, 560);
+  const cam = camAt(1450, TOPY - 330 - lift * 0.4, 1.1, 960, 440);
   const spin = B.toss.reduce((r, t0) => (t > t0 && t < t0 + 1.05 ? 360 * ease.inOut((t - t0) / 1.05) : r), 0);
   let w = summitProps(t) + summitCrowd(t, 'toss', { over: { momAvatar: { armR: 150, armL: 40, turn: 0.4, face: { name: 'love' } } } });
   w += actor('dadAvatar', t, { ...SUM.dad, s: 0.3, t, lift, rot: spin, armL: 150, armR: 160, legL: -20, legR: 20, nametag: false, shadow: lift < 20, face: { name: 'joy' } }, { arms: false });
@@ -856,7 +904,7 @@ function shotSonReal(t) {
   const cam = camLerp({ zoom: 1.55, x: -160, y: -40 }, { zoom: 1.7, x: -150, y: -60 }, u);
   const up = ease.outBack(seg(t, C.sonReal + 0.5, C.sonReal + 0.9));
   const o = living(t, cam, {
-    chair: 'front',
+    chair: 'front', glow: H.deviceGlows(['dad', 'mom']),
     you: { turn: 0.5, armL: 30, armR: 30 + 120 * up, face: { name: 'joy', fx: ['tears'] } },
     dad: { turn: -0.6, armL: 40 + 110 * up, armR: 40 + 110 * up, face: { name: 'joy', fx: ['tears'] } },
     laptopY: 880,
@@ -869,7 +917,7 @@ function shotSonReal(t) {
 function shotBigJump(t) {
   const a = seg(t, B.bigJump, B.bigJump + 1.0);
   const lift = 420 * 4 * a * (1 - a);
-  const cam = camAt(1460, TOPY - 300 - lift * 0.4, 1.05, 960, 600);
+  const cam = camAt(1460, TOPY - 300 - lift * 0.4, 1.05, 960, 470);
   let w = summitProps(t) + summitCrowd(t, 'cheer', { you: false });
   w += actor('you', t, { x: 1620, y: TOPY + 4, s: 0.3, t, nametag: 'YOU', crown: true, turn: -0.5, armL: 150, armR: 160, face: { name: 'joy' } }, { arms: false });
   w += actor('dadAvatar', t, { ...SUM.dad, s: 0.3, t, lift, rot: 360 * ease.inOut(seg(a, 0.1, 0.8)), armL: 170, armR: 170, sy: 1 - 0.15 * bump(t, B.bigJump - 0.15, B.bigJump), nametag: false, face: { name: 'joy' } }, { arms: false });
@@ -881,36 +929,49 @@ function shotBigJump(t) {
 }
 // 42 — the hug: "You did a HUNDRED jumps, Dad!" (the hero hits him at a run; the crowd goes awww)
 function hugPair(t, o = {}) {
-  const run = heroRun(t, 1700, 1520, C.hug, B.hug);
-  const hk = seg(t, B.hug, B.hug + 0.25);
+  const run = heroRun(t, 1740, 1575, C.hug, B.hug);
+  const open = ease.out(seg(t, C.hug + 0.1, B.hug - 0.05));
+  const hk = seg(t, B.hug, B.hug + 0.25), squeeze = bump(t, B.hug, B.hug + 0.35);
   const sway = Math.sin((t - B.hug) * 3) * 3 * hk;
   let w = '';
-  w += actor('dadAvatar', t, { x: SUM.dad.x, y: TOPY, s: 0.3, t, view: 'side', flip: true, armL: lerp(30, 75, hk), armR: lerp(30, 82, hk), rot: sway - 6 * hk, nametag: false, mvp: o.mvp, face: { name: 'joy', fx: hk > 0 ? ['tears'] : [] } }, { arms: false });
+  // Dad turns to the hero, opens his arms ... and wraps them round him (his far arm goes behind the hero)
+  w += actor('dadAvatar', t, { x: SUM.dad.x, y: TOPY, s: 0.3, t, turn: 0.45, armL: lerp(lerp(20, 120, open), 16, hk), armR: lerp(lerp(20, 130, open), 84, hk), rot: sway + 7 * hk,
+    sx: 1 + 0.04 * squeeze, sy: 1 - 0.05 * squeeze, nametag: false, mvp: o.mvp, face: { name: 'joy', fx: hk > 0 ? ['tears'] : [] } }, { arms: false });
   if (run) w += actor('you', t, { x: run.x, y: TOPY + 4, s: 0.3, t, nametag: 'YOU', crown: true, ...run }, { arms: false });
-  else w += actor('you', t, { x: SUM.dad.x + 100, y: TOPY + 4, s: 0.3, t, view: 'side', armL: 80, armR: 86, rot: sway + 8, lift: 18 * (1 - hk), nametag: false, crown: true, face: { name: 'joy', fx: ['tears'] } }, { arms: false });
+  else w += actor('you', t, { x: SUM.dad.x + 148, y: TOPY + 4, s: 0.3, t, turn: -0.55, armL: 96, armR: 34 + 10 * squeeze, rot: sway - 11, lift: 26 * (1 - ease.out(hk)), sx: 1 + 0.05 * squeeze, sy: 1 - 0.06 * squeeze,
+    nametag: false, crown: true, face: { name: 'joy', fx: ['tears'] } }, { arms: false });
   return w;
 }
+// the summit crowd makes room around the hugging pair (Granny and the two players next to them step aside)
+const STEP = { grandmaAvatar: -80, momAvatar: -30, player1560: 110, player1640: 85, noodle: 30 };
+const stepAside = (t) => { const k = ease.inOut(seg(t, B.hug - 0.3, B.hug + 0.5)); return (it) => k * (STEP[it.key === 'player' ? 'player' + it.base.x : it.key] || 0); };
 function shotHug(t) {
   const u = seg(t, C.hug, C.mvp);
   const cam = camLerp(camAt(1500, TOPY - 200, 1.4, 960, 600), camAt(1475, TOPY - 185, 1.95, 960, 600), u);
-  let w = summitProps(t) + summitCrowd(t, t > B.hug + 0.2 ? 'aww' : 'cheer', { you: false }) + hugPair(t);
+  let w = summitProps(t) + summitCrowd(t, t > B.hug + 0.2 ? 'aww' : 'cheer', { you: false, step: stepAside(t) }) + hugPair(t);
   let o = towerFrame(t, cam, { set: { dawn: 1 } }, w);
   const [hx, hy] = toScr(cam, SUM.dad.x + 50, TOPY - 380);
   if (t > B.hug) o += G.emoteHearts({ x: hx, y: hy, age: (t - B.hug) % 1.7, n: 12, s: 1.1 });
-  o += G.stamp({ text: '100 JUMPS', k: seg(t, B.hundred, B.hundred + 0.4), x: 1480, y: 250, s: 0.95, rot: -8, col: '#FFB000' });
+  o += G.stamp({ text: '100 JUMPS', k: seg(t, B.hundred, B.hundred + 0.4), x: 1520, y: 170, s: 0.8, rot: -8, col: '#FFB000' });
   o += E.floorHUD(t, 100, { bump: seg(t, B.hundred, B.hundred + 0.45), rim: '#FFD21F' });
   return o + whip(t, C.hug, 1, 0.08);
 }
 // 43 — MVP: DadBod1978 (the card over the hugging pair at sunrise) -> pull back -> dip to night (SC 12)
 function shotMVP(t) {
+  const push = ease.inOut(seg(t, C.mvp, B.out));
   const pull = ease.inOut(seg(t, B.out - 0.2, END));
-  const cam = camLerp(camAt(1475, TOPY - 185, 1.95, 960, 600), camAt(1420, TOPY - 330, 0.62, 960, 600), pull);
-  let w = summitProps(t) + summitCrowd(t, 'cheer', { you: false }) + hugPair(t, { mvp: t > B.mvpName });
+  const near = camLerp(camAt(1470, TOPY - 190, 1.62, 1330, 600), camAt(1470, TOPY - 195, 1.85, 1330, 610), push);
+  const cam = camLerp(near, camAt(1420, TOPY - 330, 0.62, 960, 600), pull);
+  let w = summitProps(t) + summitCrowd(t, 'aww', { you: false, step: stepAside(t) }) + hugPair(t, { mvp: t > B.mvpName });
   let o = towerFrame(t, cam, { set: { dawn: 1 } }, w);
   const kc = 0.5 * seg(t, B.mvpA, B.mvpA + 0.7) + 0.5 * seg(t, B.mvpName - 0.1, B.mvpName + 0.6);
-  o += S.rect(0, 0, 1920, 1080, 0, { fill: '#160C2E', opacity: f(0.45 * seg(t, B.mvpA, B.mvpA + 0.4) * (1 - seg(t, B.out, B.out + 0.3))) });
+  // a soft dark panel behind the card (left half), not over the hug
+  const dk = seg(t, B.mvpA, B.mvpA + 0.4) * (1 - seg(t, B.out, B.out + 0.3));
+  if (dk > 0) o += S.path('M0 0 H1020 L860 1080 H0 Z', { fill: '#160C2E', opacity: f(0.42 * dk) });
   const portrait = actor('dadAvatar', t, { x: 0, y: 390, s: 0.5, t, nametag: false, mvp: true, volume: false, face: { name: 'joy' } }, { arms: false });
-  o += G.mvpCard({ k: kc, out: seg(t, B.out, B.out + 0.35), t, y: 520, s: 0.95, portrait, stats: [{ label: 'JUMPS', value: '100' }, { label: 'CRYSTALS', value: '1' }] });
+  o += G.mvpCard({ k: kc, out: seg(t, B.out, B.out + 0.35), t, x: 560, y: 520, s: 0.92, portrait, stats: [{ label: 'JUMPS', value: '100' }, { label: 'CRYSTALS', value: '1' }] });
+  const [hx, hy] = toScr(cam, SUM.dad.x + 50, TOPY - 380);
+  if (pull < 0.5) o += G.emoteHearts({ x: hx, y: hy, age: (t - B.hug) % 1.7, n: 10, s: 1.1 });
   o += R.blockConfettiRain(t, { t0: B.victory - 0.2, n: 40, s: 1.1 });
   o += S.rect(0, 0, 1920, 1080, 0, { fill: '#0B0E2A', opacity: f(ease.in(seg(t, END - 0.4, END))) });
   return o + whip(t, C.mvp, -1, 0.08);

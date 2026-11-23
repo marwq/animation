@@ -77,7 +77,8 @@ function streaks(k, seed = 1, col = '#FFFFFF', y0 = 0, y1 = H) {
 function freezeFrame(svg, k, o = {}) {
   if (k <= 0) return svg;
   const sc = lerp(1, o.scale ?? 0.86, k), rot = lerp(0, o.rot ?? -3, k);
-  let g = S.rect(-18, -18, W + 36, H + 36, 8, { fill: '#FFFFFF' }) + svg;
+  // the print: a white border + the frame clipped to 1920x1080 (a nested <svg> clips its content)
+  let g = S.rect(-18, -18, W + 36, H + 36, 8, { fill: '#FFFFFF' }) + S.el('svg', { x: 0, y: 0, width: W, height: H, viewBox: `0 0 ${W} ${H}` }, svg);
   if (o.tint !== false) g += S.rect(0, 0, W, H, 0, { fill: o.tintCol || '#E8D8B8', opacity: f((o.tintK ?? 0.22) * k) });
   return S.rect(0, 0, W, H, 0, { fill: o.bg || '#1A1230' }) + S.g(g, `translate(960 540) rotate(${f(rot)}) scale(${f(sc)}) translate(-960 -540)`);
 }

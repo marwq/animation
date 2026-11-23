@@ -178,7 +178,7 @@ function logLines(t) {
 // ---------------------------------------------------------------- shots
 // 1. "DadBod1978 joined the server." — pixel wipe in; pad 0 flashes, the hot dog pops in
 function shSpawnDad(t) {
-  const cam = camKeys(t, [[CUT.spawnDad, camAt(350, 600, 1.12)], [B.dad - 0.05, camAt(220, 620, 1.3)], [CUT.spawnMom, camAt(160, 640, 1.42)]]);
+  const cam = camKeys(t, [[CUT.spawnDad, camAt(380, 600, 1.12)], [B.dad - 0.05, camAt(300, 620, 1.3)], [CUT.spawnMom, camAt(260, 640, 1.38)]]);
   const pads = [Math.max(seg(t, B.dad - 0.35, B.dad), 1 - seg(t, B.dad + 0.2, B.dad + 1.2)) * (t < B.dad + 1.2 ? 1 : 0), 0, 0, 0];
   const worried = { face: { name: 'nervous', eyes: { look: [-0.7, 0] } }, ...AC.breathe(t, 1) };
   let chars = crowdBack(t, cam, 'idle') + family(t, { mom: false, gran: false }) + crowdFront(t, cam, 'idle');
@@ -270,7 +270,7 @@ function bubbleOver(t, x, y, s, who, id, o = {}) {
   return G.chatBubble({ x: x + (o.dx || 0), y: oh.chat - (o.dy || 0), caps: o.caps, t, s: o.bs || 1, user: o.user, tail: o.tail ?? 0, maxW: o.maxW, ...G.chatLine(t, id, o.line || {}) });
 }
 function shHello(t) {
-  const cam = camKeys(t, [[CUT.hello, camAt(60, 560, 1.55)], [CUT.itIsDad, camAt(40, 540, 1.65)]]);
+  const cam = camKeys(t, [[CUT.hello, camAt(-40, 480, 1.4)], [CUT.itIsDad, camAt(-60, 470, 1.5)]]);
   let chars = crowdBack(t, cam, 'stare', { tx: PAD.dad.x }) + family(t, { dad: { face: { name: 'happy', mouth: 'smile' }, armL: 18 + 6 * Math.sin(t * 3), armR: 18 } });
   const bub = bubbleOver(t, PAD.dad.x, PAD.dad.y, PAD.dad.s, 'dadAvatar', '04.2', { caps: true, bs: 0.9, dx: 140, tail: -0.6 });
   return E.plaza(t, cam, { chars, over: bub }) + whip(t, CUT.hello, -1, 0.08);
@@ -280,10 +280,10 @@ function shHello(t) {
 function shItIsDad(t) {
   const peck = Math.abs(Math.sin(t * 9));
   const left = famRoom(t, camAt(1000, 560, 2.15), { dad: { face: { name: 'determined', fx: ['sweat'] }, headY: 18, bodyY: 6 * peck, armL: 16, armR: 26 + 14 * peck }, dadAct: { arms: false }, mom: { tablet: true, face: 'neutral' }, over: G.screenGlow(1000, 520, 320, 260, 'blue', 0.7, { flicker: true, t }) + K.C.sfx('tap', 1150, 700, peck > 0.9 ? 1 : 0, 34, -10, '#FFFFFF') });
-  const camR = camAt(40, 560, 1.55);
+  const camR = camAt(-110, 470, 1.45);
   let chars = crowdBack(t, camR, 'stare', { tx: PAD.dad.x }) + family(t, { mom: false, gran: false, dad: { face: { name: 'happy', mouth: 'smile' } } });
-  const right = E.plaza(t, camR, { chars, over: bubbleOver(t, PAD.dad.x, PAD.dad.y, PAD.dad.s, 'dadAvatar', '04.2', { caps: true, bs: 0.9, dx: 140, tail: -0.6 }) });
-  let o = splitBg('#1E1430', '#F2B705') + panel(0, 0, 960, 1080, left, { border: 8 }) + panel(960, 0, 960, 1080, right, { border: 8, dx: 120 });
+  const right = E.plaza(t, camR, { chars, over: bubbleOver(t, PAD.dad.x, PAD.dad.y, PAD.dad.s, 'dadAvatar', '04.2', { caps: true, bs: 0.8, dx: 40, tail: 0 }) });
+  let o = splitBg('#1E1430', '#F2B705') + panel(0, 0, 960, 1080, left, { border: 8 }) + panel(960, 0, 960, 1080, right, { border: 8, dx: 0 });
   o += panelTag(30, 30, 'REAL DAD', '#151A26', '#FFFFFF') + panelTag(990, 30, 'DadBod1978', '#F2B705', '#2A1640');
   return o + whip(t, CUT.itIsDad, 1, 0.08);
 }
@@ -296,18 +296,18 @@ function shLoveDad(t) {
   chars += heroAv(t, { armR: 166, headRot: 9, face: { name: 'deadpan', eyes: { upper: 0.55 }, fx: ['sweat'] } }) + noodleAv(t, { face: { name: 'joy', mouth: 'bigGrin' } });
   let over = bubbleOver(t, PAD.dad.x, PAD.dad.y, PAD.dad.s, 'dadAvatar', '04.2', { caps: true, bs: 0.82, dx: 150, tail: -0.6 });
   const p1 = CROWD.find((p) => p.y < 720 && p.x > 400 && p.x < 900) || CROWD[3], p2 = CROWD.find((p) => p.y > 760 && p.x > 1100) || CROWD[8];
-  over += G.chatBubble({ x: p1.x, y: G.overHead(p1.x, p1.y, p1.s, 'player').chat, t, s: 0.75, user: 'PizzaKid', text: 'lol', k: seg(t, B.lol1, B.lol1 + 0.3), tail: 0 });
-  over += G.chatBubble({ x: p2.x, y: G.overHead(p2.x, p2.y, p2.s, 'player').chat, t, s: 0.75, user: 'ObbyQueen', text: 'is that ur DAD lmao', k: seg(t, B.lol2, B.lol2 + 0.3), tail: 0.5 });
+  over += G.chatBubble({ x: p1.x, y: G.overHead(p1.x, p1.y, p1.s, 'player').chat, t, s: 0.95, user: 'PizzaKid', text: 'lol', k: seg(t, B.lol1, B.lol1 + 0.3), tail: 0 });
+  over += G.chatBubble({ x: p2.x, y: G.overHead(p2.x, p2.y, p2.s, 'player').chat, t, s: 0.95, user: 'ObbyQueen', text: 'is that ur DAD lmao', k: seg(t, B.lol2, B.lol2 + 0.3), tail: 0.5 });
   return E.plaza(t, cam, { chars, over });
 }
 
 // 11. Noodle: "Bro... is that your DAD?!"
 function shNoodle(t) {
-  const cam = camKeys(t, [[CUT.noodle, camAt(900, 640, 1.85)], [CUT.whisper, camAt(920, 645, 2.0)]]);
+  const cam = camKeys(t, [[CUT.noodle, camAt(930, 545, 1.6)], [CUT.whisper, camAt(940, 540, 1.72)]]);
   const point = ease.outBack(seg(t, w(3, 'that') - 0.2, w(3, 'that')));
   const laugh = Math.abs(Math.sin(t * 12));
-  let chars = heroAv(t, { face: { name: 'nervous', fx: ['sweat', 'sweat2'], eyes: { look: [0.5, 0] } }, armL: 12, armR: 12, headRot: -4 });
-  chars += noodleAv(t, { armL: lerp(20, 100, point), armR: 25 + 30 * laugh, bodyY: 8 * laugh, headRot: 5 * Math.sin(t * 12) }, { arms: false, face: 'joy' });
+  let chars = heroAv(t, { volume: false, face: { name: 'nervous', fx: ['sweat', 'sweat2'], eyes: { look: [0.5, 0] } }, armL: 12, armR: 12, headRot: -4 });
+  chars += noodleAv(t, { volume: false, armL: lerp(20, 100, point), armR: 25 + 30 * laugh, bodyY: 8 * laugh, headRot: 5 * Math.sin(t * 12) }, { arms: false, face: 'joy' });
   const over = bubbleOver(t, NOODLE.x, NOODLE.y, NOODLE.s, 'noodle', '04.3', { bs: 0.85, user: 'NoodleBoi', tail: 0.4, dx: 60 });
   return E.plaza(t, cam, { chars, over }) + whip(t, CUT.noodle, 1, 0.08);
 }
@@ -348,7 +348,7 @@ function shWheel(t) {
   const camIn = camAt(300, 600, 1.7);
   const wk = seg(t, CUT.wheel + 0.05, CUT.wheel + 0.55);
   const inner = (() => {
-    let s = E.plaza(t, camIn, { chars: family(t, { gran: false, dad: { face: HAPPY } }) + heroAv(t, { face: 'nervous' }) });
+    let s = E.plaza(t, camIn, { chars: family(t, { gran: false, dad: { face: HAPPY, volume: false }, mom: { volume: false } }) + heroAv(t, { face: 'nervous', volume: false }) });
     s += G.emoteWheel({ x: 1280, y: 520, k: wk, t, s: 1.05, selected: t >= B.btn - 0.25 ? 'kiss' : undefined, press: seg(t, B.btn, B.btn + 0.4) });
     return s;
   })();
@@ -384,14 +384,14 @@ function shKiss(t) {
 
 // 17. "Love you, honey!" + the beat — "awww"
 function shLove(t) {
-  const cam = camKeys(t, [[CUT.love, camAt(560, 600, 1.0)], [CUT.dark, camAt(600, 590, 0.94)]]);
+  const cam = camKeys(t, [[CUT.love, camAt(470, 600, 1.3)], [CUT.dark, camAt(520, 595, 1.22)]]);
   const aw = t > B.aww - 0.6 ? 'aww' : 'stare';
   let chars = crowdBack(t, cam, aw, { tx: HERO.x }) + family(t, { mom: { armR: 30 + 20 * Math.sin(t * 4), face: { name: 'happy', eyes: { type: 'happy' }, mouth: 'smile', fx: ['blush'] } }, dad: { face: HAPPY } }) + crowdFront(t, cam, aw, { tx: HERO.x });
   chars += heroAv(t, { face: { name: 'yuck', fx: ['blush', 'sweat'] }, headRot: -6 }) + noodleAv(t, { face: { name: 'joy', mouth: 'bigGrin' }, armL: 30, armR: 30 });
   let over = bubbleOver(t, PAD.mom.x, PAD.mom.y, PAD.mom.s, 'momAvatar', '04.6', { bs: 0.8, user: 'MOM_OFFICIAL', tail: -0.4, dx: 110, line: { from: 'Love', text: 'Love you, honey! <3' } });
   const [hx, hy] = heroFace();
   over += G.emoteHearts({ x: hx, y: hy - 30, age: (t - CUT.love) % 1.6, n: 6, s: 0.55, seed: 9 });
-  const awws = CROWD.filter((p) => p.x > -300 && p.x < 1600).filter((_, j) => j % 4 === 1).slice(0, 5);
+  const awws = CROWD.filter((p) => p.x > -230 && p.x < 1150 && p.y < 860 && Math.abs(p.x - 300) > 280).slice(0, 5);
   awws.forEach((p, j) => {
     const ta = B.aww - 0.5 + j * 0.18;
     over += G.chatBubble({ x: p.x, y: G.overHead(p.x, p.y, p.s, 'player').chat, t, s: 0.62, text: ['awww', 'so cute', 'aww mom!!', 'awwwww', 'wholesome'][j], user: G.FLOOD_USERS[j * 3 % G.FLOOD_USERS.length], k: seg(t, ta, ta + 0.3), tail: 0 });
@@ -403,7 +403,7 @@ function shLove(t) {
 // 18. DarkBlade: "Ha! The legend brought his MOMMY."
 function shDark(t) {
   const sm = t >= B.mommy - 0.05;
-  const cam = shakeCam(sm ? camKeys(t, [[B.mommy - 0.05, camAt(DB.x, 600, 2.3)], [CUT.silence, camAt(DB.x, 610, 2.15)]], ease.out) : camKeys(t, [[CUT.dark, camAt(1320, 620, 1.25)], [B.mommy - 0.05, camAt(1260, 620, 1.45)]]), t, [[B.mommy, 0.35, 16]]);
+  const cam = shakeCam(sm ? camKeys(t, [[B.mommy - 0.05, camAt(DB.x, 560, 2.0)], [CUT.silence, camAt(DB.x, 565, 1.9)]], ease.out) : camKeys(t, [[CUT.dark, camAt(1320, 620, 1.25)], [B.mommy - 0.05, camAt(1260, 620, 1.45)]]), t, [[B.mommy, 0.35, 16]]);
   const walkU = ease.out(seg(t, CUT.dark, CUT.dark + 0.7));
   const walking = walkU < 1;
   const dbx = lerp(DB.x + 500, DB.x, walkU);
@@ -427,7 +427,7 @@ function shSilence(t) {
   chars += heroAv(t, { face: { name: 'deadpan', eyes: { upper: 0.5 } } }) + noodleAv(t, { face: { name: 'neutral', mouth: 'line' } });
   chars += actor('darkblade', t, { ...DB, volume: false, armL: 14, armR: 20 }) + CLAN.map((c) => actor('clan', t, { i: c.i, x: c.x, y: c.y, s: c.s, volume: false })).join('');
   const twx = lerp(-900, 2000, seg(t, CUT.silence, CUT.dadGot));
-  chars += G.tumbleweed({ x: twx, y: 1060, s: 0.7, t });
+  chars += G.tumbleweed({ x: twx, y: 1040, s: 1.15, t });
   const mp = [PAD.mom.x + 40, PAD.mom.y - 690 * PAD.mom.s];
   const over = K.F.sparkle(mp[0], mp[1], 40 * glint);
   return E.plaza(t, cam, { chars, over }) + whip(t, CUT.silence, 1, 0.06);
@@ -500,7 +500,7 @@ function shNotPress(t) {
 
 // 25. "He said it. Very loudly. To the computer." — the family covers their ears
 function shSaidIt(t) {
-  const cam = shakeCam(camKeys(t, [[CUT.saidIt, camAt(1290, 600, 1.42)], [CUT.toComp, camAt(1300, 600, 1.55)]]), t, [[B.loud, 0.5, 12]]);
+  const cam = shakeCam(camKeys(t, [[CUT.saidIt, camAt(1290, 600, 1.42)], [CUT.toComp, camAt(1300, 600, 1.52)]]), t, [[B.loud, 0.5, 12]]);
   const yell = 0.6 + 0.4 * Math.abs(Math.sin(t * 7));
   const ears = seg(t, B.loud - 0.15, B.loud + 0.15);
   const dad = { face: { name: 'angry', mouth: 'scream' }, headY: 18 * yell, armL: 30 + 30 * yell, armR: 30 + 30 * yell };
@@ -546,15 +546,15 @@ function shWhere(t) {
 
 // 29. "Fifty players answered at the same time." — typing dots over every head, then SPACEBAR everywhere
 function shFlood(t) {
-  const cam = camKeys(t, [[CUT.flood, camAt(1700, 560, 0.8)], [CUT.flood2, camAt(1760, 570, 0.86)]]);
+  const cam = camKeys(t, [[CUT.flood, camAt(1640, 560, 0.92)], [CUT.flood2, camAt(1680, 565, 0.98)]]);
   const typing = t >= B.answered - 0.3;
   let chars = crowdBack(t, cam, typing ? 'type' : 'stare', { tx: WALLD.x }) + bleacherNoobs(t, typing ? 'type' : 'stare') + hotdogAtWall(t, null, { face: HAPPY }) + crowdFront(t, cam, typing ? 'type' : 'stare', { tx: WALLD.x });
   let over = '';
-  const ps = CROWD.filter((p) => E.inView(cam, p.x, p.y, p.s, 1000)).filter((_, j) => j % 2 === 0).slice(0, 14);
+  const ps = CROWD.filter((p) => E.inView(cam, p.x, p.y, p.s, 1000)).filter((_, j) => j % 2 === 0).slice(0, 11);
   ps.forEach((p, j) => {
     const ta = B.answered - 0.1 + 0.06 * j, tb = B.same + 0.04 * j;
     const oh = G.overHead(p.x, p.y, p.s, 'player');
-    if (t >= ta) over += G.chatBubble({ x: p.x, y: oh.chat, t, s: 0.6, user: G.FLOOD_USERS[(j * 5) % G.FLOOD_USERS.length], text: t >= tb ? ['SPACEBAR', 'SPACE', 'spacebar!!', 'press SPACE', 'SPACEBAR', 'the BIG one', 'SPACE BAR'][j % 7] : '', typed: t >= tb ? 1 : 0, k: seg(t, ta, ta + 0.25), tail: 0 });
+    if (t >= ta) over += G.chatBubble({ x: p.x, y: oh.chat - (j % 2) * 70, t, s: 0.88, user: G.FLOOD_USERS[(j * 5) % G.FLOOD_USERS.length], text: t >= tb ? ['SPACEBAR', 'SPACE', 'spacebar!!', 'press SPACE', 'SPACEBAR', 'the BIG one', 'SPACE BAR'][j % 7] : '', typed: t >= tb ? 1 : 0, k: seg(t, ta, ta + 0.25), tail: 0 });
   });
   let o = E.plaza(t, cam, { chars, over });
   const flood = seg(t, B.same - 0.2, CUT.flood2) * 0.45;
@@ -572,7 +572,7 @@ function shFlood2(t) {
   const flood = lerp(0.45, 1, seg(t, CUT.flood2 + 0.05, B.spacebarW));
   const log = G.chatLog({ x: 0, y: 0, w: 680, h: 420, t, lines: logLines(t), flood, floodSet: 'spacebar', shake: 0.6 });
   o += S.g(log, `translate(${f(960 + (cam.sx || 0))} ${f(500 + (cam.sy || 0))}) scale(${f(s)}) translate(-340 -210)`);
-  if (big) o += S.g(TS('SPACEBAR', 0, 0, 230, '#FFE14D', { 'stroke-width': 26 }), tf(960, 930, pop(t, B.spacebarW, 0.25) * (1 + 0.03 * Math.sin(t * 20)), -5)) + zoomLines(960, 540, 0.6 * (1 - seg(t, B.spacebarW, B.spacebarW + 0.8)), t, '#FFFFFF', 22, 520);
+  if (big) o += S.g(TS('SPACEBAR', 0, 0, 230, '#FFE14D', { 'stroke-width': 26 }), tf(960, 640, pop(t, B.spacebarW, 0.25) * (1 + 0.03 * Math.sin(t * 20)), -5)) + zoomLines(960, 540, 0.6 * (1 - seg(t, B.spacebarW, B.spacebarW + 0.8)), t, '#FFFFFF', 22, 520);
   return o + smash(t, CUT.flood2, 0.1, 0.5) + smash(t, B.spacebarW - 0.04, 0.12, 0.7);
 }
 
@@ -598,7 +598,7 @@ function shTree(t) {
   const outK = ease.inOut(stepOut) * (1 - ease.inOut(back));
   const hx = lerp(TREE.peekR.x + 40, -380, outK);
   const peekK = t < B.tree1 - 0.35 ? ease.inOut(seg(t, CUT.tree, CUT.tree + 0.4)) : 0;
-  const cam = camKeys(t, [[CUT.tree, camAt(-560, 640, 1.25)], [B.tree1, camAt(-480, 630, 1.4)], [B.tree2 - 0.1, camAt(-440, 600, 1.45)], [B.tree2 + 0.3, camAt(-400, 520, 2.3)], [B.famIn + 0.2, camAt(-400, 525, 2.35)], [B.famIn + 0.75, camAt(-480, 650, 1.32)], [END, camAt(-560, 650, 1.32)]], ease.inOut);
+  const cam = camKeys(t, [[CUT.tree, camAt(-560, 640, 1.25)], [B.tree1, camAt(-480, 630, 1.4)], [B.tree2 - 0.1, camAt(-440, 600, 1.45)], [B.tree2 + 0.3, camAt(-400, 585, 2.3)], [B.famIn + 0.2, camAt(-400, 590, 2.35)], [B.famIn + 0.75, camAt(-480, 650, 1.32)], [END, camAt(-560, 650, 1.32)]], ease.inOut);
   const branches = outK > 0.5;
   const sway = Math.sin(t * 3);
   const heroP = outK > 0.02

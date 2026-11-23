@@ -47,41 +47,39 @@ function dome(t, o = {}) { const k = o.k ?? domeK(t); return k > 0 ? G.shieldDom
 // hand point (world) for a front-view R6 avatar at (x, y, s) with the right arm at angle a
 const handW = (x, y, s, a = 60, side = 1) => [x + side * s * (100 + 250 * Math.sin((a * Math.PI) / 180)), y + s * (-515 + 250 * Math.cos((a * Math.PI) / 180))];
 
-// the cheering server: players + noobs spread over the right half of the battlefield (fixed layout)
+// the cheering server: a back row + two wings round the family's rally point (x -90), an aisle in the middle (fixed layout)
 const CROWD = (() => {
-  const out = [];
-  const lines = [[862, 9, -560, 520], [905, 8, -620, 560], [948, 7, -380, 600]];
-  let n = 0;
-  for (const [y, cnt, x0, x1] of lines) for (let i = 0; i < cnt; i++) {
-    const x = lerp(x0, x1, (i + 0.5) / cnt) + (hash(n * 3.7) - 0.5) * 60;
-    out.push({ n, i: 3 + ((n * 7) % 37), x, y: y + (hash(n * 1.3) - 0.5) * 14, s: sAt(y), noob: n % 4 === 2 });
-    n++;
-  }
-  return out.sort((a, b) => a.y - b.y);
+  const spots = [];
+  for (let i = 0; i < 9; i++) spots.push([lerp(-900, 540, i / 8), 812]);
+  for (const xy of [[-960, 866], [-850, 872], [-740, 864], [-630, 874], [-920, 928], [-790, 934], [-660, 926],
+    [380, 868], [470, 874], [565, 864], [640, 872], [410, 930], [530, 926], [640, 934]]) spots.push(xy);
+  return spots.map(([x, y], n) => ({ n, i: 3 + ((n * 7) % 37), x: x + (hash(n * 3.7) - 0.5) * 30, y, s: sAt(y), noob: n % 4 === 2 })).sort((a, b) => a.y - b.y);
 })();
 function crowd(t, o = {}) {
   let s = '';
-  const cheer = o.cheer ?? 1, swords = o.swords ?? 0, look = o.look ?? 0;
+  const cheer = o.cheer ?? 1, swords = o.swords ?? 0;
   for (const c of CROWD) {
     if (o.skip && o.skip(c)) continue;
     const ph = t * 9 + c.n * 1.7, up = cheer * (0.5 + 0.5 * Math.sin(ph));
-    const pose = { x: c.x + (o.dx ? o.dx(c) : 0), y: c.y, s: c.s, armL: lerp(18, 150, up * (c.n % 2 ? 1 : 0.6)), armR: o.armR ?? (swords > 0 ? 60 + 70 * up : lerp(18, 160, up)), lift: 14 * cheer * Math.abs(Math.sin(ph)), turn: look, nametag: false, face: cheer > 0.3 ? 'excited' : 'happy' };
+    const turn = o.turn ? o.turn(c) : (c.x < -400 ? 0.35 : c.x > 300 ? -0.35 : 0);
+    const pose = { x: c.x + (o.dx ? o.dx(c) : 0), y: c.y, s: c.s, t, armL: lerp(18, 150, up * (c.n % 2 ? 1 : 0.6)), armR: o.armR ?? (swords > 0 ? 70 + 80 * up : lerp(18, 160, up)), lift: 14 * cheer * Math.abs(Math.sin(ph)), turn, nametag: false, face: o.face || (cheer > 0.3 ? 'excited' : 'happy') };
     s += c.noob ? noob(c.n % 12 + 1, pose) : player(c.i, { ...pose, sword: swords > 0 && t >= (o.swordAt?.(c) ?? 0) ? 'gold' : undefined });
   }
   return s;
 }
-// little cheering chat bubbles over the crowd (screen space), each with a user tab
-const CHEERS = ['THE FAMILY!!', 'GO MOM!!', 'is that a HOT DOG', 'GRANNY!!!', 'LETS GOOO', 'YOU IS BACK!', 'family raid??', 'GG KING', 'w family', 'MOM OP'];
-function cheers(t, t0, n = 6, cam, seed = 1) {
+// little cheering chat bubbles over the wings (screen space), each with a user tab
+const CHEERS = ['THE FAMILY!!', 'GO MOM!!', 'is that a HOT DOG', 'GRANNY!!!', 'LETS GOOO', 'YOU IS BACK!', 'family raid??', 'w family'];
+function cheers(t, t0, n, cam, seed = 1) {
   let o = '';
+  const wings = CROWD.filter((c) => c.y > 850);
   for (let i = 0; i < n; i++) {
-    const c = CROWD[(i * 5 + seed) % CROWD.length];
-    const a = t0 + i * 0.32 + hash(i + seed) * 0.2;
-    const k = seg(t, a, a + 0.25), out = seg(t, a + 1.4, a + 1.7);
+    const c = wings[(i * 5 + seed) % wings.length];
+    const a = t0 + i * 0.42 + hash(i + seed) * 0.2;
+    const k = seg(t, a, a + 0.25), out = seg(t, a + 1.5, a + 1.8);
     if (k <= 0 || out >= 1) continue;
-    const p = scr(cam, c.x, c.y - c.s * 1000);
-    if (p.x < 60 || p.x > 1860) continue;
-    o += G.chatBubble({ x: p.x, y: p.y, text: CHEERS[(i + seed) % CHEERS.length], k, out, t, s: 0.72, user: G.FLOOD_USERS[(i * 3 + seed) % G.FLOOD_USERS.length] });
+    const p = scr(cam, c.x, c.y - c.s * 1050);
+    if (p.x < 140 || p.x > 1780) continue;
+    o += G.chatBubble({ x: p.x, y: p.y, text: CHEERS[(i + seed) % CHEERS.length], k, out, t, s: 0.78, tail: p.x < 960 ? 0.5 : -0.5, user: G.FLOOD_USERS[(i * 3 + seed) % G.FLOOD_USERS.length] });
   }
   return o;
 }
@@ -113,12 +111,12 @@ const PARTY = (o = {}) => {
   return m.map((x) => ({ ...x, heal: o.heal || x.heal }));
 };
 const party = (t, k = 1, o = {}) => G.partyPanel({ x: 24, y: 120, s: 0.62, k, t, members: PARTY(o) });
+const bossHP = (t) => (t < B.attackSlash ? 1 : 0.96);
 const bossHud = (t, o = {}) => G.bossBar({ k: o.k ?? 1, value: o.value ?? bossHP(t), trail: o.trail, shield: o.shield ?? seg(t, B.dome, B.dome + 0.6), t, y: 76, s: 0.78, hit: o.hit || 0, sub: o.sub ?? (t >= TM.n[10].b ? 'BREAK THE CRYSTAL!' : '') });
-const bossHP = (t) => (t < B.attackSlash ? 1 : t < B.dome ? 0.96 : 0.96);
 
 // ================================================================ SHOTS
-// A1 — "Party formed." white in from SC 09: four spawn pops on the battlefield, the party banner unfurls
-const SPAWN = [{ who: 'you', x: -60, y: 880 }, { who: 'mom', x: -270, y: 880 }, { who: 'gran', x: 150, y: 880 }, { who: 'dad', x: 360, y: 880 }];
+// A1 — "Party formed." white in from SC 09: four spawn pops in the aisle of the cheering server, the party banner unfurls
+const SPAWN = [{ who: 'you', x: -210, y: 880 }, { who: 'mom', x: -420, y: 884 }, { who: 'gran', x: 10, y: 878 }, { who: 'dad', x: 220, y: 882 }];
 const SPAWN_COL = ['#FF8A2B', '#FF5FA8', '#B57BFF', '#F2B705'];
 function famPose(t, i, x, y, s, extra = {}) {
   const w = SPAWN[i].who;
@@ -129,9 +127,10 @@ function famPose(t, i, x, y, s, extra = {}) {
 }
 function shotA1(t) {
   const u = seg(t, C.a1, C.a2);
-  const cam = camLerp(camAt(80, 640, 1.3), camAt(60, 650, 1.4), u, ease.out);
+  const cam = camLerp(camAt(-100, 650, 1.22), camAt(-100, 660, 1.32), u, ease.out);
   let back = '', chars = '', top = '';
-  chars += crowd(t, { cheer: seg(t, B.pops[3], B.pops[3] + 0.6), skip: (c) => c.y > 920 || (c.x > -330 && c.x < 420 && c.y > 870) });
+  const cheer = seg(t, B.pops[3], B.pops[3] + 0.6);
+  chars += crowd(t, { cheer, face: cheer > 0.3 ? 'excited' : 'amazed' });
   SPAWN.forEach((sp, i) => {
     const s = sAt(sp.y), age = t - B.pops[i];
     back += R.respawnPop({ x: sp.x, y: sp.y, s, age, col: SPAWN_COL[i], part: 'back', height: 1400 });
@@ -143,13 +142,13 @@ function shotA1(t) {
   o += G.systemBanner({ theme: 'party', text: 'PARTY FORMED', sub: 'THE FAMILY · 4 PLAYERS', k: seg(t, B.formed - 0.1, B.formed + 0.45), out: seg(t, C.a2 - 0.25, C.a2), t, y: 150, s: 0.85 });
   return o + flash(1 - seg(t, C.a1, C.a1 + 0.3));
 }
-// A2 — "Party name: 'The Family.'" the slow-motion formation walk toward camera; the server cheers; party frames slide in
+// A2 — "Party name: 'The Family.'" the slow-motion formation walk down the aisle toward camera; the server cheers
 function shotA2(t) {
   const u = seg(t, C.a2, C.b1);
   const wk = ease.inOut(seg(t, C.a2, C.b1 + 0.3));
-  const cam = camLerp(camAt(40, 700, 1.15, 2), camAt(40, 735, 1.32, -2), u, ease.inOut);
-  const FORM = [[-60, 0], [-300, -20], [180, -14], [420, -26]];        // x and depth offset per member (V formation)
-  let chars = crowd(t, { cheer: 1, skip: (c) => c.y > 935 || (c.x > -360 && c.x < 520 && c.y > 880) });
+  const cam = camLerp(camAt(-110, 690, 1.1, 2), camAt(-110, 760, 1.34, -2), u, ease.inOut);
+  const FORM = [[-200, 0], [-420, -16], [20, -10], [235, -22]];          // x and depth offset per member (V formation)
+  let chars = crowd(t, { cheer: 1 });
   const arr = FORM.map(([x, dy], i) => {
     const y = lerp(880 + dy, 1000 + dy, wk), s = sAt(y), ph = t * 4.2 + i * 0.9;
     const wf = AC.walkFront(ph, 0.9);
@@ -160,88 +159,98 @@ function shotA2(t) {
   }).sort((a, b) => a[0] - b[0]);
   for (const [, fn] of arr) chars += fn();
   let o = tower(t, cam, {}, { chars });
-  o += cheers(t, C.a2 + 0.2, 8, cam, 2);
+  o += cheers(t, C.a2 + 0.15, 6, cam, 2);
   o += E.embers(t, 1, 22, 4);
   o += party(t, seg(t, B.name - 0.1, B.name + 1.1));
   const fk = seg(t, B.family - 0.05, B.family + 0.3);
-  if (fk > 0) o += G.bigTitle({ text: 'THE FAMILY', theme: 'gold', k: fk * 1, out: seg(t, C.b1 - 0.3, C.b1), t, x: 1180, y: 250, s: 0.55, rays: false });
+  if (fk > 0) o += G.bigTitle({ text: 'THE FAMILY', theme: 'gold', k: fk, out: seg(t, C.b1 - 0.3, C.b1), t, x: 1060, y: 190, s: 0.6, rays: false });
   return o + letterbox(1 - seg(t, C.b1 - 0.2, C.b1));
 }
-// B1 — "Okay! Mom, you're the tank." the hero points the sword at Mom; CLANG on the pot lid; TANK
+// B1 — "Okay! Mom, you're the tank." the hero points at Mom; CLANG on the pot lid; TANK
 function shotB1(t) {
   const u = seg(t, C.b1, C.b2);
-  let cam = camLerp(camAt(-170, 720, 1.95), camAt(-180, 710, 2.1), u, ease.out);
+  let cam = camLerp(camAt(-300, 720, 1.95), camAt(-305, 710, 2.1), u, ease.out);
   cam = shook(cam, t, [[B.tank, 0.25, 8]]);
   const pt = ease.outBack(seg(t, LN[1].word('Mom').t0 - 0.15, LN[1].word('Mom').t0 + 0.1));
   const clang = bump(t, B.tank - 0.12, B.tank + 0.25);
-  let chars = mom(t, { x: -330, y: 985, s: 0.38, turn: 0.35, shieldUp: clang > 0.2, shieldFlash: prog(t, B.tank, 0.3) > 0 ? 1 - prog(t, B.tank, 0.3) : 0, armR: lerp(30, 130, clang), face: { name: 'determined', eyes: { look: [0.6, 0] } }, nametag: false }, { arms: false });
-  chars += hero(t, { x: -20, y: 990, s: 0.39, turn: -0.5, armR: 20, armL: lerp(20, 100, pt), sword: 'gold', face: { name: 'determined', eyes: { look: [-0.8, 0] } }, nametag: false }, { arms: false });
+  let chars = mom(t, { x: -460, y: 985, s: 0.38, turn: 0.35, shieldUp: clang > 0.2, shieldFlash: prog(t, B.tank, 0.3) > 0 ? 1 - prog(t, B.tank, 0.3) : 0, armR: lerp(30, 130, clang), face: { name: 'determined', eyes: { look: [0.6, 0] } }, nametag: false }, { arms: false });
+  chars += hero(t, { x: -150, y: 990, s: 0.39, turn: -0.5, armR: 20, armL: lerp(20, 100, pt), sword: 'gold', face: { name: 'determined', eyes: { look: [-0.8, 0] } }, nametag: false }, { arms: false });
   let o = tower(t, cam, {}, { chars });
-  const ps = scr(cam, -330 - 120, 985 - 0.38 * 600);
+  const ps = scr(cam, -460 - 120, 985 - 0.38 * 600);
   o += G.hitSpark({ x: ps.x, y: ps.y, age: t - B.tank, s: 1.2, text: 'CLANG!' });
-  o += G.stamp({ text: 'TANK', k: seg(t, B.tank + 0.05, B.tank + 0.55), x: 470, y: 290, s: 0.9, rot: -10, col: '#3FA9F5' });
+  o += G.stamp({ text: 'TANK', k: seg(t, B.tank + 0.05, B.tank + 0.55), x: 270, y: 330, s: 0.8, rot: -12, col: '#3FA9F5' });
   return o + whip(t, C.b1, 1, 0.1);
 }
 // B2 — "Granny, we need gear!" Granny grins; her money bag spits coins
 function shotB2(t) {
   const u = seg(t, C.b2, C.c1);
-  const cam = camLerp(camAt(170, 690, 2.25), camAt(170, 680, 2.45), u, ease.out);
+  const cam = camLerp(camAt(60, 745, 2.0), camAt(55, 735, 2.2), u, ease.out);
   const ck = seg(t, B.gear - 0.1, B.gear + 0.8);
-  let chars = gran(t, { x: 170, y: 975, s: 0.38, coins: ck, armR: 30 + 40 * bump(t, B.gear - 0.1, B.gear + 0.6), face: t > B.gear - 0.1 ? { name: 'rich' } : { name: 'smug', eyes: { look: [-0.6, 0] } }, nametag: false }, { arms: false });
+  let chars = gran(t, { x: 40, y: 975, s: 0.38, coins: ck, armR: 30 + 40 * bump(t, B.gear - 0.1, B.gear + 0.6), face: t > B.gear - 0.1 ? { name: 'rich' } : { name: 'smug', eyes: { look: [-0.6, 0] } }, nametag: false }, { arms: false });
   let o = tower(t, cam, {}, { chars });
   o += G.coinCounter({ x: 1880, y: 70, anchor: 'right', value: 9999999, k: seg(t, B.gear - 0.2, B.gear + 0.2), t, s: 1, bump: prog(t, B.gear, 0.45) });
   return o + whip(t, C.b2, -1, 0.1);
 }
-// C1 — "Swords for everyone!" Granny raises the cane: golden swords rain into every hand
+// C1 — "Swords for everyone!" Granny raises the cane: golden swords rain into every hand (one lands next to the hot dog)
 const SWORD_HANDS = () => CROWD.filter((c) => !c.noob).map((c) => handW(c.x, c.y, c.s, 70));
 function shotC1(t) {
   const u = seg(t, C.c1, C.c2);
-  const cam = camLerp({ x: -840, y: -60, zoom: 0.9 }, { x: -860, y: -80, zoom: 0.96 }, u, ease.out);
+  let cam = camLerp(camAt(-110, 700, 1.08), camAt(-110, 690, 1.16), u, ease.out);
   const age = t - B.swords;
-  const raise = ease.outBack(seg(t, B.swords - 0.2, B.swords + 0.1));
-  let chars = crowd(t, { cheer: 0.4, swords: 0, armR: 70 });
-  chars += hero(t, { x: -620, y: 990, s: sAt(990), turn: 0.3, face: 'amazed', armR: 70, sword: t > B.swords + 0.9 ? 'gold' : false }, { arms: false });
-  chars += mom(t, { x: -820, y: 980, s: sAt(980), turn: 0.3, face: 'happy' }, { arms: false });
-  chars += gran(t, { x: -420, y: 985, s: sAt(985), turn: -0.2, armL: lerp(20, 165, raise), face: { name: 'rich' } }, { arms: false });
+  const raise = ease.outBack(seg(t, B.swords - 0.25, B.swords + 0.1));
+  const thunk = B.swords + 1.25;
+  cam = shook(cam, t, [[thunk, 0.25, 6]]);
+  let chars = crowd(t, { cheer: 0.35 + 0.5 * seg(t, B.swords + 0.5, B.swords + 1.5), swords: 0, armR: 70, face: 'amazed' });
+  chars += mom(t, { x: -450, y: 995, s: sAt(995), turn: 0.3, face: 'happy' }, { arms: false });
+  chars += hero(t, { x: -210, y: 1000, s: sAt(1000), turn: 0.3, face: 'amazed', armR: 70, sword: t > B.swords + 0.9 ? 'gold' : false }, { arms: false });
+  chars += gran(t, { x: 30, y: 990, s: sAt(990), turn: -0.1, armL: lerp(20, 165, raise), face: { name: 'rich' } }, { arms: false });
+  const dadLook = t > thunk ? { name: 'shocked', fx: ['sweat'], eyes: { look: [0.8, 0.3] } } : { name: 'amazed', eyes: { look: [0, -0.8] } };
+  chars += hotdog(t, { x: 270, y: 995, s: sAt(995), armL: 20, armR: 60, sy: 1 - 0.05 * bump(t, thunk, thunk + 0.25), face: dadLook, nametag: false }, { arms: false });
+  // Dad's sword misses his hand and sticks in the floor beside him
+  const sf = seg(t, thunk - 0.35, thunk);
   let top = G.swordRain({ t, age, targets: SWORD_HANDS(), s: 0.55, dur: 0.75, stagger: 1.0, y0: -260 });
+  if (sf > 0) top += X.goldSword({ x: 370, y: lerp(200, 870, ease.in(sf)), s: 0.42, rot: 180 + 8 * Math.sin((t - thunk) * 40) * (1 - seg(t, thunk, thunk + 0.5)) * (t > thunk ? 1 : 0) }) + (t > thunk ? E.dustPuff(360, 1000, t - thunk, { r: 40, n: 5, col: '#8A7A9A' }) : '');
   let o = tower(t, cam, {}, { chars, top });
-  const pg = scr(cam, -420, 985 - 380);
+  const pt = scr(cam, 370, 990);
+  o += G.hitSpark({ x: pt.x, y: pt.y, age: t - thunk, s: 0.8, text: 'THUNK!' });
   o += G.coinCounter({ x: 1880, y: 70, anchor: 'right', value: 9975000, from: 9999999, roll: seg(t, B.swords + 0.2, B.swords + 1.6), t, s: 1 });
   return o + whip(t, C.c1, 1, 0.1);
 }
 // C2 — "Put it on my tab!" Granny's receipt unrolls from her bag; then (the beat) the server raises its new swords
 function shotC2(t) {
   const u = seg(t, C.c2, C.d1);
-  const cam = camLerp(camAt(-380, 700, 2.0), camAt(-390, 690, 2.2), u, ease.out);
+  const cam = camLerp(camAt(0, 735, 1.95), camAt(-5, 725, 2.15), u, ease.out);
   const wink = t > B.tab - 0.05 && t < B.tab + 0.5;
-  let chars = crowd(t, { cheer: 1, swords: 1, dx: () => 0 });
-  chars += gran(t, { x: -420, y: 985, s: sAt(985), turn: 0.2, armR: 40, face: wink ? { name: 'happy', eyes: { type: 'happy' } } : { name: 'rich' } }, { arms: false });
+  let chars = crowd(t, { cheer: 1, swords: 1 });
+  chars += gran(t, { x: -60, y: 985, s: sAt(985), turn: 0.2, armR: 40, face: wink ? { name: 'happy', eyes: { type: 'happy' } } : { name: 'rich' }, nametag: false }, { arms: false });
   let o = tower(t, cam, {}, { chars });
-  const ph = scr(cam, -420 + 0.38 * 300, 985 - 0.38 * 300);
-  o += E.receipt(ph.x + 40, ph.y - 60, seg(t, LN[2].word('Put').t0, LN[2].b + 0.9), { t, len: 640, w: 280, rot: 8, lines: [['GOLD SWORD x1', '50'], ['GOLD SWORD x1', '50'], ['GOLD SWORD x1', '50'], ['GOLD SWORD x1', '50'], ['GOLD SWORD x1', '50'], ['...x500', '...'], ['TOTAL', '25,000']] });
+  const ph = scr(cam, -60 + 0.38 * 300, 985 - 0.38 * 380);
+  o += E.receipt(ph.x + 150, 170, seg(t, LN[2].word('Put').t0, LN[2].b + 0.9), { t, len: 640, w: 280, rot: 8, lines: [['GOLD SWORD x1', '50'], ['GOLD SWORD x1', '50'], ['GOLD SWORD x1', '50'], ['GOLD SWORD x1', '50'], ['GOLD SWORD x1', '50'], ['...x500', '...'], ['TOTAL', '25,000']] });
   const sk = seg(t, LN[2].b + 0.3, C.d1);
   if (sk > 0) o += K.sparkles([[300, 320, 30 * Math.sin(Math.PI * sk)], [1560, 260, 26 * Math.sin(Math.PI * sk)], [1200, 420, 22 * Math.sin(Math.PI * seg(sk, 0.3, 1))]], t);
   o += G.coinCounter({ x: 1880, y: 70, anchor: 'right', value: 9975000, t, s: 1 });
   return o + whip(t, C.c2, -1, 0.1);
 }
-// D1 — "Kids! Formation!" Mom raises her sword; the scattered players snap into neat rows behind her
+// D1 — "Kids! Formation!" Mom raises her sword; the scattered server snaps into neat rows beside her
 function shotD1(t) {
   const u = seg(t, C.d1, C.d2);
-  const cam = camLerp({ x: -760, y: -10, zoom: 0.98 }, { x: -760, y: -30, zoom: 1.06 }, u, ease.out);
+  const cam = camLerp(camAt(-130, 720, 1.02), camAt(-150, 710, 1.1), u, ease.out);
   const snap = ease.outBack(seg(t, B.formation - 0.05, B.formation + 0.4));
   const raise = ease.outBack(seg(t, B.kids - 0.15, B.kids + 0.15));
   let chars = '';
   CROWD.forEach((c, j) => {
     const col = j % 6, row = Math.floor(j / 6);
-    const fx = -520 + col * 150 + row * 30, fy = 880 + row * 36;
+    const fx = -390 + col * 150 + row * 24, fy = 836 + row * 40;
     const x = lerp(c.x, fx, snap), y = lerp(c.y, fy, clamp(snap, 0, 1)), s = sAt(y);
-    const pose = { x, y, s, turn: -0.3, armR: 60 + 20 * Math.sin(t * 9 + j), armL: 20, lift: 30 * bump(t, B.formation + j * 0.02, B.formation + 0.3 + j * 0.02), nametag: false, face: 'excited' };
+    const pose = { x, y, s, t, turn: -0.3, armR: 60 + 20 * Math.sin(t * 9 + j), armL: 20, lift: 30 * bump(t, B.formation + j * 0.02, B.formation + 0.3 + j * 0.02), nametag: false, face: snap > 0.5 ? 'determined' : 'excited' };
     chars += c.noob ? noob(c.n % 12 + 1, pose) : player(c.i, { ...pose, sword: 'gold' });
   });
-  chars += mom(t, { x: -820, y: 1000, s: sAt(1000), turn: 0.4, armR: lerp(30, 165, raise), swordGlow: raise, face: { name: 'determined', eyes: { look: [0.8, 0] } } }, { arms: false });
+  chars += mom(t, { x: -660, y: 1000, s: sAt(1000), turn: 0.45, armR: lerp(30, 165, raise), swordGlow: raise, face: { name: 'determined', eyes: { look: [0.8, 0] } } }, { arms: false });
   let o = tower(t, cam, {}, { chars });
   const fk = seg(t, B.formation, B.formation + 0.6);
-  if (fk > 0 && fk < 1) o += K.C.burst(scr(cam, -820, 1000 - 0.39 * 1300).x, scr(cam, -820, 1000 - 0.39 * 1300).y, fk, '#FFE14D');
+  const pb = scr(cam, -660 + sAt(1000) * 340, 1000 - sAt(1000) * 1240);
+  if (fk > 0 && fk < 1) o += K.C.burst(pb.x, pb.y, fk, '#FFE14D');
+  o += K.bang('FORMATION!', 1240, 250, ease.outBack(seg(t, B.formation, B.formation + 0.25)) * (1 - seg(t, C.d2 - 0.15, C.d2)), 96, -5, '#FFD23F');
   return o + party(t, 1) + whip(t, C.d1, 1, 0.1);
 }
 // D2 — "And wear your helmets!" three noobs in a row: plop, plop, plop (the KID's propeller sticks out of his)
@@ -261,77 +270,107 @@ function shotD2(t) {
   let o = tower(t, cam, {}, { chars, top });
   return o + whip(t, C.d2, -1, 0.1);
 }
-// E1 — "Mommy's got you!" the giant fist comes down on the pot-lid shield: BLOCKED
-function fistOn(t, tHit, x, y, s, o = {}) {
-  const fall = seg(t, tHit - 0.28, tHit), back = seg(t, tHit + (o.hold ?? 0.4), tHit + (o.hold ?? 0.4) + 0.5);
-  if (fall <= 0 || back >= 1) return '';
-  const press = t > tHit && back <= 0 ? 10 * Math.sin((t - tHit) * 40) * (1 - seg(t, tHit, tHit + 0.3)) : 0;
-  const yy = back > 0 ? lerp(y, y - 1600, ease.in(back)) : lerp(y - 1500, y, ease.in(fall));
-  const xx = back > 0 ? lerp(x, x - 900, ease.in(back)) : lerp(x - 1000, x, ease.in(fall));
-  return E.giantFist(xx + press, yy, s, { rot: -32, armRot: 0, lw: 9 });
+// E1 — "Mommy's got you!" the Block King's punch comes down on the pot-lid shield: BLOCKED (wide -> smash-zoom on the hit)
+const MOMX = -1210, MOMY = 900, MOMS = sAt(900);
+const SHIELD = [MOMX - MOMS * 205, MOMY - MOMS * 702];            // the pot lid's centre with armL 150 (world)
+const PUNCH = { a: 30, b: 0 };                                        // boss right arm angle / bend that lands the fist on the lid
+// the boss's right arm punching at each hit time (wind-up, strike, hold on the lid, retract) -> freeArms pose
+function punchPose(t, hits, hold = 0.25) {
+  let a = 40, b = 30, lean = 0;
+  for (let i = 0; i < hits.length; i++) {
+    const h = hits[i], s0 = i ? Math.max(hits[i - 1] + hold, h - 0.5) : h - 0.5;
+    if (t < s0) break;
+    const ws = Math.min(h - 0.13, s0 + 0.35);
+    if (t < ws) { const w = ease.out(seg(t, s0, ws)); a = lerp(i ? PUNCH.a : 40, 150, w); b = lerp(i ? PUNCH.b : 30, 50, w); lean = -3 * w; }
+    else if (t < h - 0.13) { a = 150; b = 50; lean = -3; }
+    else if (t < h) { const k = ease.in(seg(t, h - 0.13, h)); a = lerp(150, PUNCH.a, k); b = lerp(50, PUNCH.b, k); lean = lerp(-3, 5, k); }
+    else if (t < h + hold) { a = PUNCH.a + 1.5 * Math.sin(t * 40); b = PUNCH.b; lean = 5; }
+    else { const k = ease.inOut(seg(t, h + hold, h + hold + 0.4)); a = lerp(PUNCH.a, 40, k); b = lerp(PUNCH.b, 30, k); lean = 5 * (1 - k); }
+  }
+  return { freeArms: true, armR: a, bendR: b, armL: 30, bendL: 40, lean, jaw: 0.55 };
+}
+// the noobs hiding behind Mom (they flinch at every hit)
+const HIDERS = [[-1090, 912, 0], [-1010, 944, 3], [-930, 918, 7]];
+function hiders(t, hits, o = {}) {
+  let s = '';
+  HIDERS.forEach(([x, y, i], j) => {
+    const fl = Math.max(0, ...hits.map((h) => bump(t, h, h + 0.3)));
+    s += noob(i, { x: x + (o.dx || 0), y, s: sAt(y) * 1.05, t, turn: -0.3, armL: 160 - 20 * fl, armR: 165 - 20 * fl, sy: 1 - 0.1 * fl, bodyY: 10 * fl, nametag: false, face: { name: 'scared', fx: j === 1 ? ['sweat2'] : [] } });
+  });
+  return s;
+}
+function momTank(t, hits, o = {}) {
+  const up = ease.outBack(seg(t, o.up ?? LN[4].a - 0.15, (o.up ?? LN[4].a - 0.15) + 0.3));
+  const sq = Math.max(0, ...hits.map((h) => bump(t, h, h + 0.25)));
+  const fl = Math.max(0, ...hits.map((h) => (t > h && t < h + 0.35 ? 1 - (t - h) / 0.35 : 0)));
+  return mom(t, { x: MOMX + 10 * sq, y: MOMY, s: MOMS, turn: o.turn ?? -0.3, shieldUp: true, armL: lerp(24, 150, up), shieldFlash: fl, sy: 1 - 0.07 * sq, sx: 1 + 0.05 * sq, lean: 6 * sq, face: o.face || { name: 'determined', eyes: { look: [-0.6, -0.5] } }, nametag: false }, { arms: false });
+}
+function blockFx(cam, t, h, big = 1) {
+  const age = t - h;
+  if (age < 0) return '';
+  const p = scr(cam, SHIELD[0], SHIELD[1]);
+  return E.impactStar(p.x, p.y, age, 240 * big) + G.hitSpark({ x: p.x, y: p.y, age: age - 0.02, s: 1.3 * big }) + G.damageNumber({ x: p.x - 40, y: p.y - 150 * big, age, text: 'BLOCKED!', crit: true, s: big });
 }
 function shotE1(t) {
-  const u = seg(t, C.e1, C.e2);
-  let cam = camLerp(camAt(-760, 640, 1.8, -3), camAt(-770, 650, 1.95, -3), u, ease.out);
-  cam = punch(cam, t, B.block, 0.08, 0.08);
-  cam = shook(cam, t, [[B.block, 0.6, 24]]);
-  const up = ease.outBack(seg(t, LN[4].a - 0.1, LN[4].a + 0.2));
-  const sq = bump(t, B.block, B.block + 0.25);
-  const mx = -760, my = 990, ms = sAt(990);
-  let chars = mom(t, { x: mx + 10 * sq, y: my, s: ms, turn: -0.35, shieldUp: up > 0.3, shieldFlash: prog(t, B.block, 0.35) ? 1 - prog(t, B.block, 0.35) : 0, sy: 1 - 0.07 * sq, sx: 1 + 0.05 * sq, lean: 6 * sq, face: { name: 'determined', eyes: { look: [-0.6, -0.6] } }, nametag: false }, { arms: false });
-  const hitP = [mx - 150, my - ms * 820];
-  let top = fistOn(t, B.block, hitP[0] - 90, hitP[1] - 150, 0.8, { hold: 0.9 });
-  const age = t - B.block;
-  top += E.shockRing(mx, my, age, 700, { col: '#FFE9A8', w: 22 }) + E.dustPuff(mx, my, age, { r: 120, col: '#8A7A9A', n: 7 }) + E.cubeDebris(mx - 60, my - 10, age, { n: 10, s: 0.7, floorY: my + 10, seed: 3 });
-  let o = tower(t, cam, {}, { chars, top });
-  const ph = scr(cam, hitP[0], hitP[1]);
-  o += E.impactStar(ph.x, ph.y, age, 260) + G.hitSpark({ x: ph.x, y: ph.y, age: age - 0.02, s: 1.4 }) + G.damageNumber({ x: ph.x + 60, y: ph.y - 140, age, text: 'BLOCKED!', crit: true, s: 1.1 });
-  return o + flashAt(t, B.block, 0.12, 0.7) + whip(t, C.e1, -1, 0.1);
+  const h = B.block;
+  const zk = ease.out(seg(t, h - 0.08, h + 0.06));
+  let cam = camLerp(camAt(-1400, 470, 0.84), camAt(-1250, 690, 1.5), zk, (x) => x);
+  cam = { ...cam, zoom: cam.zoom * (1 + 0.04 * seg(t, h + 0.06, C.e2)) };
+  cam = shook(cam, t, [[h, 0.6, 26]]);
+  const back = boss(t, { ...punchPose(t, [h], 2), face: { name: 'angry', mouth: 'O' } });
+  let chars = hiders(t, [h]) + momTank(t, [h]);
+  const age = t - h;
+  const top = E.shockRing(MOMX, MOMY, age, 520, { col: '#FFE9A8', w: 18 }) + E.dustPuff(MOMX, MOMY, age, { r: 90, col: '#8A7A9A', n: 7 }) + E.cubeDebris(SHIELD[0] - 30, SHIELD[1], age, { n: 10, s: 0.5, floorY: MOMY + 10, seed: 3 });
+  let o = tower(t, cam, {}, { back, chars, top });
+  o += blockFx(cam, t, h, 1.1);
+  if (t < h - 0.08) o += zoomLines(scr(cam, SHIELD[0], SHIELD[1]).x, scr(cam, SHIELD[0], SHIELD[1]).y, seg(t, h - 0.5, h - 0.08) * 0.6, t, '#FFFFFF', 22, 300);
+  return o + flashAt(t, h, 0.12, 0.7) + whip(t, C.e1, -1, 0.1);
 }
-// E2 — "Everybody behind me!" the fist presses down, Mom holds; the players scramble behind her; a sweet look back
+// E2 — "Everybody behind me!" the fist keeps pressing, Mom holds; the server scrambles behind her; a sweet look back
 function shotE2(t) {
   const u = seg(t, C.e2, C.f1);
-  let cam = camLerp({ x: -1180, y: -40, zoom: 1.04 }, { x: -1160, y: -50, zoom: 1.1 }, u, ease.out);
+  let cam = camLerp(camAt(-1030, 690, 1.16), camAt(-1060, 690, 1.24), u, ease.out);
   cam = { ...cam, sx: Math.sin(t * 50) * 3, sy: Math.cos(t * 43) * 3 };
-  const mx = -1240, my = 990, ms = sAt(990);
-  const back = seg(t, LN[4].word('behind').t0, LN[4].word('behind').t0 + 0.6);
+  const lookBack = seg(t, LN[4].word('behind').t0 - 0.1, LN[4].word('behind').t0 + 0.35);
+  const back = boss(t, { ...punchPose(t, [B.block], 9), face: { name: 'angry', mouth: 'teeth' } });
   let chars = '';
-  CROWD.slice(0, 14).forEach((c, j) => {
-    const r = seg(t, C.e2 + j * 0.05, C.e2 + 0.9 + j * 0.05);
-    const x = lerp(-1700 + (j % 5) * 140, -1000 + (j % 7) * 150, ease.out(r)), y = 880 + (j % 4) * 35, s = sAt(y);
-    const pose = { x, y, s, view: r < 1 ? 'side' : 'front', flip: true, ...(r < 1 ? AC.run(t * 16 + j) : {}), armL: 150, armR: 150, nametag: false, face: { name: 'scared' } };
+  CROWD.slice(0, 12).forEach((c, j) => {
+    const r = seg(t, C.e2 + j * 0.06, C.e2 + 0.85 + j * 0.06);
+    const x1 = -1120 + (j % 4) * 75 + Math.floor(j / 4) * 70, y = 842 + (j % 4) * 11 + Math.floor(j / 4) * 4;
+    const x = lerp(-120 - (j % 3) * 90, x1, ease.out(r)), s = sAt(y);
+    const hide = r >= 1;
+    const pose = { x, y, s, t, view: hide ? 'front' : 'side', turn: hide ? -0.3 : 0, ...(hide ? {} : AC.run(t * 16 + j)), armL: 160, armR: 160, sy: hide ? 0.92 : 1, nametag: false, face: { name: 'scared' } };
     chars += c.noob ? noob(c.n % 12 + 1, pose) : player(c.i, pose);
   });
-  chars += mom(t, { x: mx, y: my, s: ms, turn: lerp(-0.35, 0.5, back), shieldUp: true, shieldFlash: 0.3 + 0.3 * Math.sin(t * 30), lean: 5, face: back > 0.4 ? { name: 'happy', eyes: { type: 'happy' } } : { name: 'determined' } }, { arms: false });
-  const hp = [mx - 160, my - ms * 820];
-  const top = E.giantFist(hp[0] - 90 + 6 * Math.sin(t * 40), hp[1] - 150, 0.8, { rot: -32, lw: 9 });
-  let o = tower(t, cam, {}, { chars, top });
-  const ph = scr(cam, hp[0], hp[1]);
-  if (Math.floor(t * 12) % 3 === 0) o += G.hitSpark({ x: ph.x, y: ph.y, age: (t * 12 % 1) * 0.3, s: 0.8, seed: Math.floor(t * 12) });
-  return o + bossHud(t) + party(t, 1, { momHit: 0.3 + 0.3 * Math.sin(t * 20) }) + whip(t, C.e2, 1, 0.1);
+  chars += hiders(t, []);
+  chars += momTank(t, [], { up: C.e2 - 1, turn: lerp(-0.3, 0.55, lookBack), face: lookBack > 0.4 ? { name: 'happy', eyes: { type: 'happy' }, fx: ['blush'] } : { name: 'determined', eyes: { look: [-0.6, -0.5] } } });
+  let o = tower(t, cam, {}, { back, chars });
+  const ph = scr(cam, SHIELD[0], SHIELD[1]);
+  const fr = Math.floor(t * 12);
+  if (fr % 3 === 0) o += G.hitSpark({ x: ph.x - 30, y: ph.y - 20, age: ((t * 12) % 1) * 0.3, s: 0.7, seed: fr });
+  const hk = seg(t, LN[4].word('behind').t0 + 0.1, LN[4].word('behind').t0 + 0.6);
+  if (hk > 0) { const pm = scr(cam, MOMX + 30, MOMY - MOMS * 1300); o += G.emoteHearts({ x: pm.x, y: pm.y, age: t - LN[4].word('behind').t0 - 0.1, n: 6, s: 0.8, seed: 3 }); }
+  return o + bossHud(t) + party(t, 1, { momHit: 0.3 + 0.3 * Math.sin(t * 20), hpMom: 0.86 }) + whip(t, C.e2, 1, 0.1);
 }
-// F1 — "Mom blocked the punches." two punches, two blocks (whip between)
+// F1 — "Mom blocked the punches." punch, punch: two blocks from two angles (whip between)
 function shotF1(t) {
-  const second = t >= lerp(B.blocked, B.punches, 0.55);
-  const tHit = second ? B.punches + 0.05 : B.blocked + 0.05;
-  let cam = second ? camAt(-760, 660, 2.0, 4) : camAt(-760, 640, 1.7, -4);
+  const h1 = B.blocked + 0.05, h2 = B.punches + 0.05, mid = lerp(h1, h2, 0.55);
+  const second = t >= mid;
+  const tHit = second ? h2 : h1;
+  let cam = second ? camAt(-1240, 690, 1.95, 5) : camAt(-1330, 600, 1.35, -4);
   cam = punch(cam, t, tHit, 0.07, 0.08);
   cam = shook(cam, t, [[tHit, 0.4, 20]]);
-  const mx = -760, my = 990, ms = sAt(990);
-  const sq = bump(t, tHit, tHit + 0.25);
-  let chars = mom(t, { x: mx, y: my, s: ms, turn: second ? 0.35 : -0.35, shieldUp: true, shieldFlash: prog(t, tHit, 0.3) ? 1 - prog(t, tHit, 0.3) : 0, sy: 1 - 0.06 * sq, face: { name: 'determined' }, nametag: false }, { arms: false });
-  const hitP = second ? [mx + 150, my - ms * 800] : [mx - 150, my - ms * 820];
-  let top = second ? (() => { const fall = seg(t, tHit - 0.25, tHit); return fall > 0 ? E.giantFist(lerp(hitP[0] + 900, hitP[0] + 110, ease.in(fall)), lerp(hitP[1] - 700, hitP[1] - 60, ease.in(fall)), 0.8, { rot: 70, lw: 9, side: -1 }) : ''; })() : fistOn(t, tHit, hitP[0] - 90, hitP[1] - 150, 0.8, { hold: 0.3 });
-  let o = tower(t, cam, {}, { chars, top });
-  const ph = scr(cam, hitP[0], hitP[1]);
-  o += E.impactStar(ph.x, ph.y, t - tHit, 220) + G.damageNumber({ x: ph.x, y: ph.y - 120, age: t - tHit, text: 'BLOCKED!', crit: true });
-  return rotFrame(o, 0) + whip(t, C.f1, 1, 0.1) + whip(t, lerp(B.blocked, B.punches, 0.55), -1, 0.08);
+  const back = boss(t, { ...punchPose(t, [h1, h2], 0.12), face: { name: 'angry', mouth: 'teeth' } });
+  let chars = hiders(t, [h1, h2]) + momTank(t, [h1, h2], { up: C.f1 - 1 });
+  let o = tower(t, cam, {}, { back, chars });
+  o += blockFx(cam, t, tHit, second ? 1.2 : 1);
+  o = rotFrame(o, cam.rot);
+  return o + bossHud(t) + party(t, 1, { momHit: prog(t, tHit, 0.4), hpMom: 0.82 }) + whip(t, C.f1, 1, 0.1) + whip(t, mid, -1, 0.08);
 }
-// F2 — "You led the attack." the hero charges with the army behind him; slash on the boss's foot
+// F2 — "You led the attack." the hero charges with the army behind him; slash on the boss's leg
 function shotF2(t) {
-  const u = seg(t, C.f2, C.f3);
-  const hx = lerp(-300, -1080, ease.inOut(seg(t, C.f2, B.attackSlash)));
-  let cam = camAt(hx - 260, 700, 1.15);
+  const hx = lerp(-650, -1440, ease.inOut(seg(t, C.f2, B.attackSlash)));
+  let cam = camAt(hx - 120, 660, 1.12);
   cam = shook(cam, t, [[B.attackSlash, 0.4, 16]]);
   const hs = sAt(990);
   const atk = t >= B.attackSlash - 0.12;
@@ -339,14 +378,14 @@ function shotF2(t) {
   for (let j = 0; j < 9; j++) {
     const c = CROWD[j * 2];
     const x = hx + 220 + j * 120 + 30 * Math.sin(j), y = 900 + (j % 3) * 35, s = sAt(y);
-    chars += (c.noob ? noob : player)(c.noob ? c.n % 12 + 1 : c.i, { x, y, s, view: 'side', ...AC.run(t * 16 + j), armR: 150, sword: c.noob ? undefined : 'gold', nametag: false });
+    chars += (c.noob ? noob : player)(c.noob ? c.n % 12 + 1 : c.i, { x, y, s, t, view: 'side', ...AC.run(t * 16 + j), armR: 150, sword: c.noob ? undefined : 'gold', nametag: false, face: { name: 'determined', mouth: 'scream' } });
   }
   const sw = atk ? ease.out(seg(t, B.attackSlash - 0.12, B.attackSlash + 0.05)) : 0;
   chars += hero(t, { x: hx, y: 990, s: hs, view: 'side', ...(atk ? {} : AC.run(t * 16)), armR: atk ? lerp(160, 30, sw) : 150, armL: atk ? -40 : undefined, lean: 8, face: { name: 'determined', mouth: 'scream' }, nametag: false }, { arms: false });
-  const back = boss(t, t > B.attackSlash ? { pose: 'hit' } : {});
+  const back = boss(t, t > B.attackSlash ? { pose: 'hit' } : { ...punchPose(t, [C.f2 - 2], 0) });
   let o = tower(t, cam, {}, { back, chars });
-  const pS = scr(cam, hx - 160, 990 - hs * 500);
-  o += G.slash({ x: pS.x, y: pS.y, age: t - B.attackSlash + 0.06, angle: 200, s: 1.3, col: '#FFD23F' }) + G.hitSpark({ x: pS.x - 60, y: pS.y, age: t - B.attackSlash, s: 1.3 }) + G.damageNumber({ x: pS.x - 120, y: pS.y - 120, age: t - B.attackSlash, value: -250, crit: true });
+  const pS = scr(cam, -1600, 780);
+  o += G.slash({ x: pS.x, y: pS.y, age: t - B.attackSlash + 0.06, angle: 200, s: 1.3, col: '#FFD23F' }) + G.hitSpark({ x: pS.x - 30, y: pS.y, age: t - B.attackSlash, s: 1.3 }) + G.damageNumber({ x: pS.x - 60, y: pS.y - 140, age: t - B.attackSlash, value: -250, crit: true });
   o += E.streaks(t, 0.7, 1, '#FFFFFF', 10, 5);
   return o + bossHud(t, { value: t < B.attackSlash ? 1 : 0.96, trail: t < B.attackSlash + 0.5 ? 1 : 0.96, hit: prog(t, B.attackSlash, 0.4) }) + whip(t, C.f2, -1, 0.1);
 }
@@ -370,9 +409,9 @@ function shotF3(t) {
 // F4 — the beat: the two rivals look at each other; DarkBlade slowly holds out a fist
 function shotF4(t) {
   const u = seg(t, C.f4, C.g1);
-  const cam = camLerp(camAt(-870, 650, 2.0), camAt(-870, 640, 2.35), u, ease.inOut);
+  const cam = camLerp(camAt(-870, 700, 2.0), camAt(-870, 705, 2.3), u, ease.inOut);
   const ext = ease.inOut(seg(t, C.f4 + 0.8, C.g1));
-  let chars = hero(t, { x: HX, y: 990, s: sAt(990), turn: 0.55, armR: 30, face: { name: 'deadpan', eyes: { look: [0.8, 0], upper: 0.35 } }, nametag: false }, { arms: false });
+  let chars = hero(t, { x: HX, y: 990, s: sAt(990), turn: 0.55, armR: 30, sword: false, face: { name: 'deadpan', eyes: { look: [0.8, 0], upper: 0.35 } }, nametag: false }, { arms: false });
   chars += dark(t, { x: DBX2, y: 990, s: sAt(990), turn: -0.55, armL: lerp(20, 80, ext), armR: 30, nametag: false }, { arms: false });
   let o = tower(t, cam, {}, { back: boss(t, {}), chars });
   return o + letterbox(1) + whip(t, C.f4, -1, 0.08);
@@ -380,11 +419,11 @@ function shotF4(t) {
 // G1 — "Just this once." DarkBlade close-up; the fist bump
 function shotG1(t) {
   const u = seg(t, C.g1, C.h1);
-  let cam = camLerp(camAt(-800, 640, 2.6), camAt(-830, 640, 2.8), u, ease.inOut);
+  let cam = camLerp(camAt(-860, 715, 2.45), camAt(-870, 712, 2.7), u, ease.inOut);
   const bk = t >= B.bump;
   let chars = dark(t, { x: DBX2, y: 990, s: sAt(990), turn: -0.45, armL: 80, armR: 30, nametag: false, headRot: t < LN[6].b ? -6 : 0 }, { arms: false });
   const hin = ease.out(seg(t, B.bump - 0.35, B.bump));
-  chars += hero(t, { x: HX, y: 990, s: sAt(990), turn: 0.55, armR: lerp(20, 80, hin), face: { name: bk ? 'smug' : 'deadpan', eyes: { look: [0.8, 0] } }, nametag: false }, { arms: false });
+  chars += hero(t, { x: HX, y: 990, s: sAt(990), turn: 0.55, armR: lerp(20, 80, hin), sword: false, face: { name: bk ? 'smug' : 'deadpan', eyes: { look: [0.8, 0] } }, nametag: false }, { arms: false });
   let o = tower(t, cam, {}, { back: boss(t, {}), chars });
   o += E.bubbleAt(cam, DBX2 + 30, 990 - sAt(990) * 1050, { ...G.chatLine(t, '10.6', { hold: 2 }), t, s: 1.15, tail: 0, user: 'xX_DarkBlade_Xx' });
   const pb = scr(cam, (HX + DBX2) / 2, 990 - sAt(990) * 470);
@@ -392,26 +431,31 @@ function shotG1(t) {
   if (ba > 0) o += G.hitSpark({ x: pb.x, y: pb.y, age: ba, s: 1.4, text: 'BUMP!' }) + E.glint(pb.x, pb.y - 40, seg(ba, 0, 0.5), 110);
   return o + letterbox(1 - seg(t, C.h1 - 0.2, C.h1));
 }
-// H1 — "Healing potions! A hundred of them!" Granny hurls potions over the crowd: pop, pop, pop, +HP
+// H1 — "Healing potions! A hundred of them!" Granny hurls potions over the server: pop, pop, pop, +HP; the party heals
 function shotH1(t) {
   const u = seg(t, C.h1, C.h2);
-  const cam = camLerp({ x: -760, y: -60, zoom: 0.94 }, { x: -740, y: -70, zoom: 1.0 }, u, ease.out);
+  const cam = camLerp(camAt(-170, 690, 1.08), camAt(-150, 680, 1.16), u, ease.out);
   const thr = Math.sin(t * 14);
-  let chars = crowd(t, { cheer: 0.6, swords: 1 });
-  chars += mom(t, { x: -900, y: 985, s: sAt(985), turn: 0.3, shieldUp: true, face: 'happy' }, { arms: false });
-  chars += hero(t, { x: -700, y: 995, s: sAt(995), turn: 0.3, armR: 60, face: 'happy' }, { arms: false });
-  chars += gran(t, { x: -460, y: 990, s: sAt(990), turn: -0.2, armR: 90 + 60 * thr, coins: 0.4, face: { name: 'excited' } }, { arms: false });
+  let chars = crowd(t, { cheer: 0.6, swords: 1, skip: (c) => c.x < -560 && c.y > 850 });
+  chars += mom(t, { x: -780, y: 990, s: sAt(990), turn: 0.3, shieldUp: true, face: 'happy' }, { arms: false });
+  chars += hero(t, { x: -600, y: 1000, s: sAt(1000), turn: 0.3, armR: 60, face: { name: 'happy', eyes: { look: [0.6, -0.4] } } }, { arms: false });
+  chars += gran(t, { x: -380, y: 995, s: sAt(995), turn: 0.15, armR: 90 + 60 * thr, coins: 0.4, face: { name: 'excited' } }, { arms: false });
   let top = '';
   const t0 = B.potions - 0.2;
-  for (let i = 0; i < 14; i++) {
-    const a0 = t0 + i * 0.16;
-    const c = CROWD[(i * 3) % CROWD.length];
+  const tg = CROWD.filter((c) => c.x > -560 || c.y < 850);
+  const hand = [-380 + sAt(995) * 330, 995 - sAt(995) * 640];
+  for (let i = 0; i < 16; i++) {
+    const a0 = t0 + i * 0.15;
+    const c = tg[(i * 5) % tg.length];
     const [ex, ey] = [c.x, c.y - c.s * 1100];
     const fly = seg(t, a0, a0 + 0.45);
-    if (fly > 0 && fly < 1) { const px = lerp(-460, ex, fly), py = lerp(990 - 400, ey, fly) - 280 * Math.sin(Math.PI * fly); top += X.potion({ x: px, y: py, s: 0.45, rot: fly * 540, t }); }
-    top += G.potionPop({ x: ex, y: ey, age: t - (a0 + 0.45), s: 0.7, seed: i });
+    if (fly > 0 && fly < 1) { const px = lerp(hand[0], ex, fly), py = lerp(hand[1], ey, fly) - 260 * Math.sin(Math.PI * fly); top += X.potion({ x: px, y: py, s: 0.4, rot: fly * 540, t }); }
+    top += G.potionPop({ x: ex, y: ey, age: t - (a0 + 0.45), s: 0.62, seed: i });
   }
+  // the family drinks too: green pluses over Mom and the hero on "hundred"
+  top += G.potionPop({ x: -780, y: 990 - sAt(990) * 1300, age: t - B.hundred, s: 0.7, seed: 21 }) + G.potionPop({ x: -600, y: 1000 - sAt(1000) * 1150, age: t - B.hundred - 0.15, s: 0.7, seed: 22 });
   let o = tower(t, cam, {}, { chars, top });
+  o += K.bang('x100!', 1500, 260, ease.outBack(seg(t, B.hundred, B.hundred + 0.25)) * (1 - seg(t, C.h2 - 0.15, C.h2)), 110, 8, '#5CFF8A');
   return o + party(t, 1, { dark: true, heal: bump(t, B.hundred, B.hundred + 1.2) }) + whip(t, C.h1, 1, 0.1);
 }
 // H2 — "Family discount!" Granny holds up the deal: FAMILY DISCOUNT 5% OFF (stamp); the hero's deadpan
@@ -481,10 +525,10 @@ function orderShot(t, side) {
 const shotI1 = (t) => orderShot(t, -1);
 const shotI2 = (t) => orderShot(t, 1);
 // I3 — "Everybody, ATTACK!" the whole server charges the Block King (Noodle's squad from the left, DarkBlade's from the right)
-function charger(t, j, x0, x1, y, dir, t0, kind) {
-  const r = seg(t, t0, t0 + 2.4);
+function charger(t, j, x0, x1, y, dir, t0, kind, dur = 2.2) {
+  const r = seg(t, t0, t0 + dur);
   const x = lerp(x0, x1, r), s = sAt(y);
-  const pose = { x, y, s, view: 'side', flip: dir > 0, ...AC.run(t * 16 + j), armR: 150, nametag: false, face: { name: 'determined', mouth: 'scream' } };
+  const pose = { x, y, s, t, view: 'side', flip: dir > 0, ...AC.run(t * 16 + j), armR: 150, nametag: false, face: { name: 'determined', mouth: 'scream' } };
   if (kind === 'noodle') return noodle(t, { ...pose, sword: true }, { arms: false });
   if (kind === 'dark') return dark(t, pose, { arms: false });
   if (kind === 'clan') return actor('clan', t, { ...pose, i: j % 5 }, { arms: false });
@@ -493,87 +537,93 @@ function charger(t, j, x0, x1, y, dir, t0, kind) {
 }
 function shotI3(t) {
   const u = seg(t, C.i3, C.j1);
-  let cam = camLerp({ x: -1700, y: -170, zoom: 0.66 }, { x: -1700, y: -190, zoom: 0.72 }, u, ease.out);
+  let cam = camLerp(camAt(-1150, 430, 0.7), camAt(-1190, 440, 0.76), u, ease.out);
   cam = punch(cam, t, B.attack, 0.06, 0.08);
   cam = shook(cam, t, [[B.attack, 0.5, 16]]);
   const go = LN[8].word('Everybody').t0;
   let chars = '';
-  // right flank (DarkBlade + clan + players), running left
-  for (let j = 0; j < 10; j++) chars += charger(t, j, 150 + (j % 5) * 130, -900 + (j % 5) * 90, 870 + (j % 4) * 38, -1, go + j * 0.05, j === 2 ? 'dark' : j % 3 === 0 ? 'clan' : 'p');
+  const ys = [870, 905, 940, 975, 1005];
+  // right flank (DarkBlade + clan + players), running left toward the boss
+  for (let j = 0; j < 10; j++) chars += charger(t, j, -260 + (j % 5) * 110 + Math.floor(j / 5) * 60, -1000 + (j % 5) * 90, ys[j % 5], -1, go + j * 0.05, j === 2 ? 'dark' : j % 3 === 0 ? 'clan' : 'p');
   // left flank (Noodle + players), running right
-  for (let j = 0; j < 6; j++) chars += charger(t, 20 + j, -3500 + (j % 3) * 140, -2600 + (j % 3) * 90, 880 + (j % 3) * 40, 1, go + j * 0.06, j === 1 ? 'noodle' : 'p');
+  for (let j = 0; j < 6; j++) chars += charger(t, 20 + j, -2950 + (j % 3) * 120, -2450 + (j % 3) * 90, ys[(j + 1) % 5], 1, go - 0.3 + j * 0.06, j === 1 ? 'noodle' : 'p');
   // the family in front
-  const fr = seg(t, go, go + 2.4);
-  chars += mom(t, { x: lerp(-200, -900, fr), y: 995, s: sAt(995), view: 'side', ...AC.run(t * 14), shieldUp: true, nametag: false }, { arms: false });
-  chars += hero(t, { x: lerp(-40, -760, fr), y: 1000, s: sAt(1000), view: 'side', ...AC.run(t * 16), armR: 160, nametag: false, face: { name: 'determined', mouth: 'scream' } }, { arms: false });
-  chars += gran(t, { x: lerp(200, -420, fr * 0.8), y: 985, s: sAt(985), view: 'side', ...AC.run(t * 12, 0.7), armL: 150, nametag: false }, { arms: false });
+  const fr = seg(t, go, go + 2.2);
+  chars += mom(t, { x: lerp(-420, -1000, fr), y: 990, s: sAt(990), view: 'side', ...AC.run(t * 14), shieldUp: true, nametag: false }, { arms: false });
+  chars += hero(t, { x: lerp(-250, -860, fr), y: 1002, s: sAt(1002), view: 'side', ...AC.run(t * 16), armR: 160, nametag: false, face: { name: 'determined', mouth: 'scream' } }, { arms: false });
+  chars += gran(t, { x: lerp(-60, -620, fr * 0.8), y: 985, s: sAt(985), view: 'side', ...AC.run(t * 12, 0.7), armL: 150, nametag: false }, { arms: false });
   let o = tower(t, cam, {}, { back: boss(t, { pose: 'roar' }), chars });
-  o += K.bang('ATTACK!', 960, 300, ease.outBack(seg(t, B.attack, B.attack + 0.25)) * (1 - seg(t, C.j1 - 0.2, C.j1)), 150, -6, '#FFD23F');
-  o += E.streaks(t, 0.5, 1, '#FFFFFF', 8, 9);
+  o += K.bang('ATTACK!', 1430, 330, ease.outBack(seg(t, B.attack, B.attack + 0.25)) * (1 - seg(t, C.j1 - 0.2, C.j1)), 150, -6, '#FFD23F');
+  o += E.streaks(t, 0.5, -1, '#FFFFFF', 8, 9);
   return o + bossHud(t) + whip(t, C.i3, 1, 0.12);
 }
-// J1 — the dome rises out of the ground; every hit bounces off: IMMUNE, IMMUNE, IMMUNE; players fly back
-const HITS = (t) => B.hits.map((h, i) => ({ x: DOME.x + [960, 900, 980, 820, 940, 870][i % 6], y: [700, 560, 820, 460, 640, 760][i % 6], age: t - h }));
+// the attackers pressed against both sides of the dome; each bounces back when its hit lands (hits: [{side, age}] per fighter)
+const EDGE_R = [[-800, 905, 'hero'], [-860, 975, 'mom'], [-700, 950, 'dark'], [-640, 880, 'p', 9], [-760, 1005, 'p', 14], [-600, 990, 'clan']];
+const EDGE_L = [[-2690, 900, 'noodle'], [-2760, 965, 'p', 4], [-2630, 1000, 'gran'], [-2800, 880, 'p', 18]];
+function edgeFighters(t, ageOf, o = {}) {
+  let s = '';
+  const draw = (arr, side) => arr.forEach(([x, y, k, i], j) => {
+    const a = ageOf(side, j), kb = a > 0 && a < 0.65 ? Math.sin(Math.PI * a / 0.65) : 0;
+    const sw = o.swing ? Math.sin(t * 9 + j * 1.3) : 0;
+    const pose = { x: x + (side > 0 ? 1 : -1) * 130 * kb, y, s: sAt(y), t, view: 'side', flip: side < 0, armR: (k === 'gran' ? undefined : 150 - 110 * kb + 30 * sw), lift: 70 * kb, rot: (side > 0 ? 12 : -12) * kb, nametag: false, face: kb > 0.25 ? { name: 'dizzy' } : { name: 'determined', mouth: 'scream' } };
+    if (k === 'hero') s += hero(t, { ...pose, face: kb > 0.25 ? { name: 'shocked' } : pose.face }, { arms: false });
+    else if (k === 'mom') s += mom(t, { ...pose, shieldUp: true }, { arms: false });
+    else if (k === 'dark') s += dark(t, pose, { arms: false });
+    else if (k === 'clan') s += actor('clan', t, { ...pose, i: 1 }, { arms: false });
+    else if (k === 'noodle') s += noodle(t, { ...pose, sword: true }, { arms: false });
+    else if (k === 'gran') s += gran(t, { ...pose, armL: 120 + 40 * sw, face: kb > 0.25 ? { name: 'dizzy' } : { name: 'angry' } }, { arms: false });
+    else s += player(i, { ...pose, sword: 'gold' });
+  });
+  draw(EDGE_L, -1); draw(EDGE_R, 1);
+  return s;
+}
+// points on the dome where swords land: side +1 = right, a = elevation (deg)
+const domePt = (side, a) => [DOME.x + side * DOME.r * Math.cos((a * Math.PI) / 180), DOME.y - DOME.r * Math.sin((a * Math.PI) / 180)];
+// J1 — the dome rises out of the ground as the charge lands; every hit bounces off: IMMUNE, IMMUNE, IMMUNE
 function shotJ1(t) {
   const u = seg(t, C.j1, C.k1);
-  let cam = camLerp({ x: -1580, y: -120, zoom: 0.78 }, { x: -1520, y: -140, zoom: 0.84 }, u, ease.out);
+  let cam = camLerp(camAt(-1720, 420, 0.7), camAt(-1730, 400, 0.76), u, ease.out);
   cam = shook(cam, t, [[B.dome, 0.5, 18], ...B.hits.map((h) => [h, 0.2, 8])]);
-  const hits = HITS(t).filter((h) => h.age > -0.01);
-  let chars = '';
-  // attackers pressed against the dome's right edge, bouncing off at each hit
-  const edge = [[-700, 900], [-740, 950], [-660, 990], [-780, 870], [-620, 940], [-720, 1000]];
-  edge.forEach(([x, y], j) => {
-    const hAge = t - (B.hits[j % B.hits.length] || 1e9);
-    const kb = hAge > 0 && hAge < 0.7 ? Math.sin(Math.PI * hAge / 0.7) : 0;
-    const pose = { x: x + 140 * kb + (j % 2) * 20, y, s: sAt(y), view: 'side', armR: 160 - 120 * kb, lift: 90 * kb, rot: 14 * kb, nametag: false, face: kb > 0.2 ? { name: 'dizzy' } : { name: 'determined' } };
-    if (j === 0) chars += hero(t, { ...pose, x: pose.x - 60, face: kb > 0.2 ? { name: 'shocked' } : { name: 'determined' } }, { arms: false });
-    else if (j === 1) chars += mom(t, { ...pose, shieldUp: true }, { arms: false });
-    else if (j === 3) chars += dark(t, pose, { arms: false });
-    else chars += player(CROWD[j * 4].i, { ...pose, sword: 'gold' });
-  });
-  const back = boss(t, { pose: 'idle', shield: domeK(t) }) + dome(t, { hits });
-  let o = tower(t, cam, {}, { back, chars });
-  for (const h of hits) {
-    const p = scr(cam, h.x, h.y);
-    o += G.slash({ x: p.x, y: p.y, age: h.age + 0.05, angle: 180, s: 1, col: '#FFD23F' }) + G.hitSpark({ x: p.x, y: p.y, age: h.age, s: 1, col: '#C77DFF' }) + G.damageNumber({ x: p.x + 40, y: p.y - 80, age: h.age, text: 'IMMUNE', col: '#C77DFF' });
+  const HT = B.hits.map((h, i) => ({ h, side: i % 2 ? -1 : 1, j: Math.floor(i / 2), a: [14, 24, 9][Math.floor(i / 2) % 3] }));
+  const ageOf = (side, j) => { const e = HT.find((q) => q.side === side && q.j === j); return e ? t - e.h : -1; };
+  const hits = HT.filter((q) => t > q.h - 0.01).map((q) => { const [x, y] = domePt(q.side, q.a); return { x, y, age: t - q.h }; });
+  const back = boss(t, { pose: 'idle', shield: domeK(t), face: t > B.dome ? { name: 'smug' } : { name: 'angry' } }) + dome(t, { hits });
+  let o = tower(t, cam, {}, { back, chars: edgeFighters(t, ageOf) });
+  for (const hh of hits) {
+    const p = scr(cam, hh.x, hh.y);
+    o += G.slash({ x: p.x, y: p.y, age: hh.age + 0.05, angle: hh.x > DOME.x ? 180 : 0, s: 0.9, col: '#FFD23F' }) + G.hitSpark({ x: p.x, y: p.y, age: hh.age, s: 0.9, col: '#C77DFF' }) + G.damageNumber({ x: p.x + (hh.x > DOME.x ? 50 : -50), y: p.y - 70, age: hh.age, text: 'IMMUNE', col: '#C77DFF' });
   }
   const dk = seg(t, B.dome, B.dome + 0.4);
-  return o + bossHud(t) + flashAt(t, B.dome, 0.2, 0.6, '#E7C8FF') + (dk > 0 && dk < 1 ? zoomLines(scr(cam, DOME.x, DOME.y - 400).x, scr(cam, DOME.x, DOME.y - 400).y, 1 - dk, t, '#E7C8FF') : '') + whip(t, C.j1, -1, 0.1);
-}
-// K1 — "FOOLS!" the Block King laughs inside his dome
-function shotK1(t) {
-  const u = seg(t, C.k1, C.k2);
-  let cam = camLerp(camAt(TB.x, 380, 1.7, -3), camAt(TB.x, 370, 1.95, -4), u, ease.out);
-  cam = shook(cam, t, [[LN[9].a, 0.5, 16]]);
-  const laugh = Math.sin(t * 22);
-  const back = boss(t, { ...bkRoar(), headRot: 5 * laugh, bodyY: 10 * Math.abs(laugh), shield: 1, glow: 1.3 }) + dome(t, { k: 1 });
-  let o = tower(t, cam, {}, { back });
-  o += E.embers(t, 0.7, 14, 8, ['#C77DFF', '#FF5FA8', '#FFFFFF']);
-  return rotFrame(o, cam.rot) + flashAt(t, LN[9].a, 0.12, 0.4, '#E7C8FF');
+  const pc = scr(cam, DOME.x, DOME.y - 500);
+  return o + bossHud(t) + flashAt(t, B.dome, 0.2, 0.6, '#E7C8FF') + (dk > 0 && dk < 1 ? zoomLines(pc.x, pc.y, 1 - dk, t, '#E7C8FF') : '') + whip(t, C.j1, -1, 0.1);
 }
 const bkRoar = () => ({ freeArms: true, armL: 72, armR: 72, bendL: 84, bendR: 84, lean: -3 });
-// K2 — "My shield cannot break!" wide: hits ripple all over the dome; the bar says SHIELD
+// K1 — "FOOLS!" the Block King laughs inside his dome (low close-up, dutch)
+function shotK1(t) {
+  const u = seg(t, C.k1, C.k2);
+  let cam = camLerp(camAt(-1750, 190, 1.45, -3), camAt(-1750, 175, 1.62, -4), u, ease.out);
+  cam = shook(cam, t, [[LN[9].a, 0.5, 16]]);
+  const laugh = Math.sin(t * 22);
+  const back = boss(t, { ...bkRoar(), headRot: 5 * laugh, bodyY: 10 * Math.abs(laugh), shield: 1, glow: 1.3, face: { name: 'happy', eyes: { type: 'happy' } } }) + dome(t, { k: 1 });
+  let o = tower(t, cam, {}, { back });
+  o += E.embers(t, 0.7, 14, 8, ['#C77DFF', '#FF5FA8', '#FFFFFF']);
+  o = rotFrame(o, cam.rot);
+  const hk = seg(t, LN[9].a, LN[9].a + 0.2);
+  if (hk > 0) { for (const [x, y, r, d] of [[380, 330, -14, 0], [1540, 300, 12, 0.18], [1420, 760, 8, 0.36]]) o += K.bang('HA', x, y, ease.outBack(seg(t, LN[9].a + d, LN[9].a + d + 0.2)) * (1 - seg(t, C.k2 - 0.15, C.k2)), 90, r, '#E7C8FF'); }
+  return o + flashAt(t, LN[9].a, 0.12, 0.4, '#E7C8FF');
+}
+// K2 — "My shield cannot break!" wide: hits ripple all over the dome on every word; the bar says SHIELD
 function shotK2(t) {
   const u = seg(t, C.k2, C.l1);
-  const cam = camLerp({ x: -1650, y: -160, zoom: 0.7 }, { x: -1650, y: -170, zoom: 0.76 }, u, ease.inOut);
-  const ws = [B.shield, B.cannot, B.break, LN[9].b + 0.4, LN[9].b + 0.8];
-  const hits = ws.map((w, i) => ({ x: DOME.x + [900, -880, 760, -700, 950][i], y: [640, 700, 420, 520, 820][i], age: t - w })).filter((h) => h.age > -0.01);
-  let chars = '';
-  const att = [[-750, 940, 'hero'], [-2780, 930, 'noodle'], [-820, 990, 'mom'], [-2700, 990, 'p'], [-680, 880, 'dark']];
-  att.forEach(([x, y, k], j) => {
-    const dir = x < DOME.x ? 1 : -1;
-    const hA = hits[j] ? hits[j].age : -1, kb = hA > 0 && hA < 0.6 ? Math.sin(Math.PI * hA / 0.6) : 0;
-    const pose = { x: x - dir * 110 * kb, y, s: sAt(y), view: 'side', flip: dir > 0, armR: 150 - 100 * kb, lift: 60 * kb, nametag: false };
-    if (k === 'hero') chars += hero(t, pose, { arms: false });
-    else if (k === 'mom') chars += mom(t, { ...pose, shieldUp: true }, { arms: false });
-    else if (k === 'dark') chars += dark(t, pose, { arms: false });
-    else if (k === 'noodle') chars += noodle(t, { ...pose, sword: true }, { arms: false });
-    else chars += player(11, { ...pose, sword: 'gold' });
-  });
+  const cam = camLerp(camAt(-1740, 420, 0.68), camAt(-1745, 410, 0.73), u, ease.inOut);
+  const ws = [B.shield, B.cannot, B.break, LN[9].b + 0.35, LN[9].b + 0.75, LN[9].b + 1.1];
+  const HT = ws.map((h, i) => ({ h, side: i % 2 ? -1 : 1, j: Math.floor(i / 2) + 1, a: [18, 30, 11][i % 3] }));
+  const ageOf = (side, j) => { const e = HT.find((q) => q.side === side && q.j === j); return e ? t - e.h : -1; };
+  const hits = HT.filter((q) => t > q.h - 0.01).map((q) => { const [x, y] = domePt(q.side, q.a); return { x, y, age: t - q.h }; });
   const chest = bump(t, B.break - 0.1, B.break + 0.3);
   const back = boss(t, { ...bkRoar(), shield: 1, headRot: 4 * Math.sin(t * 18), armL: 72 - 30 * chest, armR: 72 - 30 * chest }) + dome(t, { k: 1, hits });
-  let o = tower(t, cam, {}, { back, chars });
-  for (const h of hits) { const p = scr(cam, h.x, h.y); o += G.hitSpark({ x: p.x, y: p.y, age: h.age, s: 0.9, col: '#C77DFF' }) + G.damageNumber({ x: p.x, y: p.y - 70, age: h.age, text: 'IMMUNE', col: '#C77DFF', s: 0.9 }); }
+  let o = tower(t, cam, {}, { back, chars: edgeFighters(t, ageOf, { swing: true }) });
+  for (const hh of hits) { const p = scr(cam, hh.x, hh.y); o += G.hitSpark({ x: p.x, y: p.y, age: hh.age, s: 0.9, col: '#C77DFF' }) + G.damageNumber({ x: p.x, y: p.y - 70, age: hh.age, text: 'IMMUNE', col: '#C77DFF', s: 0.9 }); }
   return o + bossHud(t, { shield: 1 }) + party(t, 1, { dark: true }) + whip(t, C.k2, 1, 0.1);
 }
 // L1 — "The crystal!" Noodle points up, starry-eyed
@@ -603,23 +653,23 @@ function shotL2(t) {
   }
   return o + whip(t, C.l2, 1, 0.12);
 }
-// L3 — "Someone has to jump up there and break it!" back down: everyone turns to the hero
+// L3 — "Someone has to jump up there and break it!" back down at the dome: one by one everyone turns to the hero
 function shotL3(t) {
   const u = seg(t, C.l3, C.m1);
-  const cam = camLerp({ x: -1180, y: -10, zoom: 1.25 }, { x: -1170, y: -20, zoom: 1.38 }, u, ease.inOut);
-  const look = seg(t, B.jump - 0.4, B.jump);
-  const hx = -760;
+  const cam = camLerp(camAt(-860, 720, 1.22), camAt(-860, 715, 1.36), u, ease.inOut);
+  const look = (d) => ease.inOut(seg(t, B.jump - 0.5 + d, B.jump - 0.2 + d));
+  const hx = -860;
   let chars = '';
-  chars += dark(t, { x: -980, y: 900, s: sAt(900), turn: lerp(-0.5, 0.5, look), nametag: false }, { arms: false });
-  chars += noodle(t, { x: -560, y: 905, s: sAt(905), turn: lerp(0.4, -0.5, look), armR: 160 - 120 * look, nametag: false }, { arms: false });
-  chars += mom(t, { x: -1000, y: 985, s: sAt(985), turn: lerp(-0.4, 0.5, look), shieldUp: true, face: { name: 'neutral', eyes: { look: [0.6, 0] } }, nametag: false }, { arms: false });
-  chars += gran(t, { x: -520, y: 990, s: sAt(990), turn: lerp(0.2, -0.5, look), face: { name: 'neutral', eyes: { look: [-0.6, 0] } }, nametag: false }, { arms: false });
+  chars += dark(t, { x: -1290, y: 905, s: sAt(900), turn: lerp(-0.5, 0.55, look(0.1)), armR: 30, nametag: false }, { arms: false });
+  chars += noodle(t, { x: -440, y: 905, s: sAt(905), turn: lerp(0.4, -0.55, look(0)), armR: lerp(160, 40, look(0)), sword: true, nametag: false }, { arms: false });
+  chars += mom(t, { x: -1080, y: 985, s: sAt(985), turn: lerp(-0.4, 0.5, look(0.2)), shieldUp: true, face: { name: 'neutral', eyes: { look: [0.6, 0] } }, nametag: false }, { arms: false });
+  chars += gran(t, { x: -640, y: 990, s: sAt(990), turn: lerp(0.2, -0.5, look(0.3)), face: { name: 'neutral', eyes: { look: [-0.6, 0] } }, nametag: false }, { arms: false });
   chars += hero(t, { x: hx, y: 1000, s: sAt(1000), face: t > B.jump ? { name: 'shocked', fx: ['sweat'] } : { name: 'determined' }, armR: 40, nametag: false }, { arms: false });
-  let o = tower(t, cam, {}, { back: dome(t, { k: 1 }), chars });
+  let o = tower(t, cam, {}, { back: boss(t, { ...bkRoar(), shield: 1 }) + dome(t, { k: 1 }), chars });
   const ph = scr(cam, hx, 1000 - sAt(1000) * 1150);
   const qk = seg(t, B.jump, B.jump + 0.3);
-  if (qk > 0) o += S.g(T('?', 0, 0, 160, '#FFD23F', { stroke: '#151515', 'stroke-width': 14, 'paint-order': 'stroke' }), `translate(${f(ph.x + 150)} ${f(ph.y)}) rotate(12) scale(${f(ease.outBack(qk))})`);
-  return o + whip(t, C.l3, -1, 0.1);
+  if (qk > 0) o += S.g(T('?', 0, 0, 160, '#FFD23F', { stroke: '#151515', 'stroke-width': 14, 'paint-order': 'stroke' }), `translate(${f(ph.x + 170)} ${f(ph.y)}) rotate(12) scale(${f(ease.outBack(qk))})`);
+  return o + bossHud(t, { shield: 1 }) + whip(t, C.l3, -1, 0.1);
 }
 // M1 — "I can't! If I leave," the hero holds a fist off with his sword, straining
 function shotM1(t) {
@@ -654,31 +704,22 @@ function shotM2(t) {
   let chars = hero(t, { x: -1080, y: 1000, s: sAt(1000), turn: 0.3, armR: 150, armL: 100, face: { name: 'scared', fx: ['sweat'], eyes: { look: [0.8, -0.5] } }, nametag: false }, { arms: false });
   let o = tower(t, cam, {}, { back: dome(t, { k: 1 }), chars });
   o += wash('#0A0414', 0.25);
-  const fall = seg(t, B.falls - 0.1, LN[11].b + 0.4);
+  const fall = seg(t, B.falls - 0.15, B.falls + 0.95);
   const hp = scr(cam, -1080, 1000 - sAt(1000) * 1000);
   o += E.thoughtBubble(1250, 420, 470, 300, S.g(teamMini(t, fall), 'scale(0.88)'), seg(t, C.m2, C.m2 + 0.3), hp.x + 60, hp.y);
   return o;
 }
-// N1 — "Everybody was fighting." a pan across the fight
+// N1 — "Everybody was fighting." a slow pan across the fight round the dome
+const N_END = camAt(-1150, 470, 0.78);
 function shotN1(t) {
   const u = seg(t, C.n1, C.n2);
-  const cam = camLerp({ x: -2200, y: -140, zoom: 0.74 }, { x: -1300, y: -140, zoom: 0.74 }, u, ease.inOut);
-  const ph = (t - C.n1) * 1.6;
-  const hits = [0, 1, 2, 3, 4].map((i) => ({ x: DOME.x + [-900, 860, 940, -820, 700][i], y: [760, 620, 820, 560, 450][i], age: (ph + i * 0.37) % 0.8 }));
-  let chars = '';
-  const F = [[-2800, 950, 'noodle', 1], [-2680, 900, 'p', 1], [-2720, 1000, 'p', 1], [-760, 990, 'mom', -1], [-700, 920, 'dark', -1], [-620, 960, 'hero', -1], [-560, 880, 'p', -1], [-520, 1000, 'p', -1], [-380, 950, 'gran', -1]];
-  F.forEach(([x, y, k, dir], j) => {
-    const sw = Math.sin(t * 9 + j * 1.3);
-    const pose = { x, y, s: sAt(y), view: 'side', flip: dir > 0, armR: 100 + 60 * sw, nametag: false };
-    if (k === 'hero') chars += hero(t, pose, { arms: false });
-    else if (k === 'mom') chars += mom(t, { ...pose, shieldUp: true }, { arms: false });
-    else if (k === 'dark') chars += dark(t, pose, { arms: false });
-    else if (k === 'noodle') chars += noodle(t, { ...pose, sword: true }, { arms: false });
-    else if (k === 'gran') chars += gran(t, { ...pose, armR: undefined, armL: 90 + 50 * sw }, { arms: false });
-    else chars += player(5 + j, { ...pose, sword: 'gold' });
-  });
-  const back = boss(t, { ...bkRoar(), shield: 1 }) + dome(t, { k: 1, hits });
-  let o = tower(t, cam, {}, { back, chars });
+  const cam = camLerp(camAt(-2350, 480, 0.8), N_END, u, ease.inOut);
+  const ageOf = (side, j) => ((t - C.n1) * 1.2 + j * 0.41 + (side > 0 ? 0 : 0.55)) % 1.25;
+  const hits = [];
+  for (const side of [-1, 1]) for (let j = 0; j < 3; j++) { const a = ageOf(side, j); if (a < 0.6) { const [x, y] = domePt(side, [12, 22, 8][j]); hits.push({ x, y, age: a }); } }
+  const back = boss(t, { ...bkRoar(), shield: 1, headRot: 4 * Math.sin(t * 6) }) + dome(t, { k: 1, hits });
+  let o = tower(t, cam, {}, { back, chars: edgeFighters(t, ageOf, { swing: true }) });
+  for (const hh of hits) { const p = scr(cam, hh.x, hh.y); o += G.hitSpark({ x: p.x, y: p.y, age: hh.age, s: 0.8, col: '#C77DFF' }); }
   return o + bossHud(t, { shield: 1 }) + whip(t, C.n1, 1, 0.1);
 }
 // N2 — "Everybody... except one." the pan drifts away from the fight, over the lava, to the foot of the tower:
@@ -686,11 +727,11 @@ function shotN1(t) {
 function shotN2(t) {
   const u = seg(t, C.n2, C.o1);
   const pan = ease.inOut(seg(t, C.n2, B.one + 0.3));
-  let cam = camLerp({ x: -1300, y: -140, zoom: 0.74 }, { ...TW.cams.base, x: TW.cams.base.x - 40 }, pan, ease.inOut);
+  let cam = camLerp(N_END, { ...TW.cams.base, x: TW.cams.base.x - 40 }, pan, ease.inOut);
   cam = { ...cam, zoom: cam.zoom * (1 + 0.12 * ease.inOut(seg(t, B.one + 0.3, C.o1))) };
   const back = boss(t, { ...bkRoar(), shield: 1 }) + dome(t, { k: 1 });
-  let chars = '';
-  for (const [x, y, j] of [[-760, 990, 0], [-620, 960, 1], [-700, 920, 2]]) chars += player(5 + j, { x, y, s: sAt(y), view: 'side', armR: 100 + 60 * Math.sin(t * 9 + j), sword: 'gold', nametag: false });
+  const ageOf = (side, j) => ((t - C.n1) * 1.2 + j * 0.41 + (side > 0 ? 0 : 0.55)) % 1.25;
+  let chars = edgeFighters(t, ageOf, { swing: true });
   const bs = TW.base;
   chars += E.moonBeam(bs.x + 260, -300, bs.x, bs.y, 30, 150, 0.16);
   chars += hotdog(t, { x: bs.x, y: bs.y, s: bs.s, view: 'back', armL: 10, armR: 10, nametag: false }, { arms: false, energy: 0 });
@@ -726,7 +767,7 @@ function dadFace(t) {
 }
 function hotdogMoon(t) {
   const bs = TW.base;
-  const cam = camAt(bs.x + 40, bs.y - 260, 2.1);
+  const cam = camAt(bs.x + 20, bs.y - 360, 1.9);
   const back = E.moonBeam(bs.x + 260, -300, bs.x, bs.y, 30, 150, 0.2);
   const ch = hotdog(t, { x: bs.x, y: bs.y, s: bs.s, turn: -0.3, armL: 12, armR: 12, face: { name: 'determined', mouth: 'smallSmile' }, nametag: false }, { arms: false, energy: 0 });
   return { svg: tower(t, cam, {}, { back, chars: ch }), cam };
@@ -736,9 +777,9 @@ function shotO2(t) {
   const k1 = seg(t, C.o2, C.o2 + 0.3), k2 = seg(t, C.o2 + 0.15, C.o2 + 0.45);
   o += E.panel(30, 60, 920, 840, dadFace(t), { k: k1, col: '#F2B705', sc: 0.82, ox: -60, oy: -20 });
   const HD = hotdogMoon(t);
-  o += E.panel(970, 60, 920, 840, HD.svg, { k: k2, col: '#7FD3FF', sc: 0.82, ox: -330, oy: 0 });
+  o += E.panel(970, 60, 920, 840, HD.svg, { k: k2, col: '#7FD3FF', sc: 0.82, ox: 40, oy: 0 });
   const cl = G.chatLine(t, '10.13', { from: "I've", hold: 3, text: "I'VE BEEN PRACTICING." });
-  if (k2 > 0.9) o += G.chatBubble({ x: 1430, y: 300, caps: true, ...cl, typed: G.chatSync(t, '10.13', { from: "I've" }), k: seg(t, C.o2, C.o2 + 0.3), t, s: 0.9, tail: 0, user: 'DadBod1978' });
+  if (k2 > 0.9) o += G.chatBubble({ x: 1440, y: 318, caps: true, ...cl, typed: G.chatSync(t, '10.13', { from: "I've" }), k: seg(t, C.o2, C.o2 + 0.3), t, s: 0.9, tail: 0, user: 'DadBod1978' });
   return o + flashAt(t, C.o2, 0.1, 0.5);
 }
 // O3 — the hot dog turns to the tower, takes a step; the camera tilts up the tower toward the moon -> SC 11

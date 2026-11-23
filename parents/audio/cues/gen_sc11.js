@@ -100,7 +100,7 @@ add(C.climb2, 'whoosh_up', -6, 0, 'whip up to floor 21');
 add(C.climb2b, 'whoosh_up', -6, 0, 'whip up to floor 37');
 for (let i = 0; i < 14; i++) add(lerp(C.climb2 + 0.1, C.climb3 - 0.1, i / 13) + 0.05 * hash(i), 'chat_pop', -14, r3((hash(i * 3.3) - 0.5) * 1.2), 'chat flood: JUMP DAD');
 add(C.chant, 'crowd_cheer', 0, 0, 'the whole server chants');
-for (let k = Math.ceil(C.chant * 1.85); k / 1.85 < C.climb3; k++) add(k / 1.85, 'impact', -9, k % 2 ? 0.3 : -0.3, k % 2 ? 'DAD! (chant beat)' : 'JUMP! (chant beat)');
+for (let k = Math.ceil(C.chant * 1.85); k / 1.85 < C.climb3; k++) add(k / 1.85, 'impact', -9, k % 2 ? P(1010) : P(560), k % 2 ? 'DAD! (chant beat)' : 'JUMP! (chant beat)');
 add(C.climb3, 'whoosh_up', -6, 0, 'whip up to floor 57');
 { const cp = HOPS.find((h) => h.b === 60); if (cp) { add(cp.t1, 'level_up', -6, 0, 'checkpoint 60'); add(cp.t1 + 0.05, 'ui_pop', -10, -0.8, 'toast'); } }
 // ---- 18. DarkBlade
@@ -122,7 +122,7 @@ add(B.okay2, 'land', -6, 0, 'back onto the ice');
 add(B.okay3, 'sparkle', -8, 0, "thumbs-up: I'm okay!");
 add(l(6).word('Okay').t0, 'typing', -12, 0, 'caps typing');
 // ---- 22. floor 99, the final gap
-add(B.land99 + 0.1, 'notify', -6, 0, 'FINAL JUMP banner');
+add(C.gap + 0.05, 'notify', -6, 0, 'FINAL JUMP banner unfurls');
 add(B.land99 + 0.35, 'dramatic', -2, 0.3, 'the gap revealed');
 // ---- 23. "JUMP, DAD, JUMP!"
 add(C.you, 'whoosh', -8, 0, 'cut to the hero');
@@ -136,13 +136,17 @@ add(B.press2 - 0.02, 'click', 3, 0, 'the space bar SLAMMED');
 add(B.press2, 'sub_drop', -2, 0, 'smash zoom + white flash');
 // ---- 27-30. the slow-motion leap, GRAB, up, the dive, the crystal shatters
 add(B.launch, 'jump_game', 0, -0.2, 'the final jump');
-add(B.launch + 0.05, 'whoosh_long', -4, 0.2, 'slow-motion flight past the moon');
+add(B.launch + 0.05, 'whoosh_long', -4, 0.2, 'slow-motion flight across the giant moon');
+add(B.launch + 0.15, 'wind_gust', -8, 0, 'slow-mo wind');
 add(B.launch + 0.35, 'heartbeat', -2, 0, 'slow-mo heartbeat');
 add(B.launch + 0.8, 'heartbeat', -2, 0, 'slow-mo heartbeat');
 add(B.grab - 0.25, 'fall_whistle', -8, 0.4, "he's short...");
 add(B.grab, 'slap', 2, 0.2, 'GRAB! hands slap the lip');
 add(B.grab + 0.02, 'crowd_gasp', -6, 0, 'the server gasps');
-add(C.pull + 0.05, 'cloth', -8, -0.1, 'hauling himself up');
+add(B.grab + 0.08, 'rock_drop', -10, -0.2, 'pebbles knocked off the lip fall into the abyss');
+add(B.grab + 0.15, 'squeak', -12, -0.1, 'fingers slipping on the lip');
+add(C.pull + 0.05, 'cloth', -8, -0.1, 'hauling himself up (HNNG!)');
+add(C.pull + 0.08, 'impact', -10, -0.3, 'HNNG! bang');
 add(B.up, 'thud', -4, -0.1, 'feet on the summit');
 for (let t = C.dive + 0.05; t < B.dive; t += Math.PI / 16) add(t, 'step', -8, 0, 'two steps run-up');
 add(B.dive, 'whoosh', -2, 0.2, 'the hot dog dives head-first');
@@ -209,17 +213,19 @@ add(B.bigJump + 0.12, 'sparkle', -4, 0, 'JUMP! sparkles');
 add(B.bigJump + 1.0, 'land', -4, 0, 'lands');
 add(B.bigJump + 0.1, 'crowd_cheer', -2, 0, 'the crowd cheers');
 // ---- 42. the hug
-add(B.hug, 'thud', -6, 0, 'the hero hits him at a run (hug)');
+add(C.hug + 0.15, 'cloth', -10, 0, 'Dad opens his arms');
+add(B.hug, 'thud', -6, 0.1, 'the hero jumps into the hug');
 add(B.hug + 0.05, 'heart_pop', -6, 0, 'hearts');
 add(B.hug + 0.2, 'kids_laugh', -12, 0, 'awww');
 add(B.hundred, 'stamp', 0, 0.5, '100 JUMPS stamp');
 add(B.hundred + 0.05, 'achievement', -4, -0.8, 'FLOOR 100/100');
 // ---- 43. MVP + the dip to night
-add(B.mvpA, 'whoosh', -4, 0, 'MVP card flips in');
-add(B.mvpA + 0.3, 'achievement', 0, 0, 'MVP medal pops');
-add(B.mvpName - 0.05, 'tada', -2, 0, 'DadBod1978 ribbon');
-add(B.mvpName + 0.25, 'pop', -8, -0.2, 'stat chip JUMPS 100');
-add(B.mvpName + 0.4, 'pop', -8, 0.2, 'stat chip CRYSTALS 1');
+add(B.mvpA, 'whoosh', -4, P(560), 'MVP card flips in (left)');
+add(B.mvpA + 0.3, 'achievement', 0, P(560), 'MVP medal pops');
+add(B.mvpName - 0.05, 'tada', -2, P(560), 'DadBod1978 ribbon');
+add(B.mvpName + 0.25, 'pop', -8, P(470), 'stat chip JUMPS 100');
+add(B.mvpName + 0.4, 'pop', -8, P(650), 'stat chip CRYSTALS 1');
+add(B.mvpA + 0.6, 'heart_pop', -10, P(1300), 'hearts over the hug');
 add(B.out, 'whoosh_down', -6, 0, 'the card leaves');
 add(END - 0.6, 'whoosh_long', -10, 0, 'pull back, dip to night');
 // whip-cut whooshes on the remaining cuts

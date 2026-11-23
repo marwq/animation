@@ -86,10 +86,10 @@ function times(V) {
   B.hit = l(9).a - 0.44;                        // the crystal shatters (the light is still on screen for "NO!")
   C.leap = B.press2 + 0.16;
   B.launch = C.leap + 0.06;
-  B.grab = B.launch + 1.12;
+  B.grab = B.launch + 1.24;                     // slow motion: ~1.2 s in the air
   C.grab = B.grab - 0.06;
-  C.pull = B.grab + 0.38;
-  B.up = C.pull + 0.42;                          // standing on the top
+  C.pull = B.grab + 0.36;
+  B.up = C.pull + 0.38;                          // standing on the top
   C.dive = B.up - 0.02;
   B.dive = lerp(B.up, B.hit, 0.45);
   // -- the Block King

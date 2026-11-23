@@ -26,10 +26,13 @@ function camSet(set, t, cam, o, behind = '', floor = '', extraMid = '') {
 }
 const castleRoom = (t, cam, behind = '', floor = '', o = {}) => GS.castleInterior.compose(t, o, behind, floor, cam);
 // the hero in the game: crown + YOU · LVL 99 tag
-const hero = (t, pose, act) => actor('you', t, { crown: true, nametag: 'YOU', ...pose }, act);
-const noodle = (t, pose, act) => actor('noodle', t, pose, act);
-const blade = (t, pose, act) => actor('darkblade', t, pose, act);
-const clan = (t, i, pose) => actor('clan', t, { i, ...pose });
+// CHEAP: no body-volume filter (a game frame drawn inside a device screen at a huge zoom)
+let CHEAP = false;
+const nv = (pose) => (CHEAP ? { ...pose, volume: false } : pose);
+const hero = (t, pose, act) => actor('you', t, nv({ crown: true, nametag: 'YOU', ...pose }), act);
+const noodle = (t, pose, act) => actor('noodle', t, nv(pose), act);
+const blade = (t, pose, act) => actor('darkblade', t, nv(pose), act);
+const clan = (t, i, pose) => actor('clan', t, nv({ i, ...pose }));
 const sparkleAt = (x, y, r, col = '#FFFFFF') => (r > 0.5 ? K.F.sparkle(x, y, r, col) : '');
 // side-view walk / run poses
 const walkP = (t, k = 9, amp = 1) => AC.walk(t * k, amp);
@@ -123,7 +126,7 @@ function shLevel(t) {
   const jx = lerp(-260, 560, ease.out(seg(t, C.level, landT)));
   const lift = t < landT ? 320 * Math.sin(seg(t, C.level, landT) * Math.PI) : 0;
   const cheer = t > b.ninety;
-  const p = { x: jx, y: 1010, s: 0.62, nametag: false, sword: 'gold', armR: cheer ? 172 : 150 + 8 * Math.sin(t * 6), armL: cheer ? 150 : 40, lift, rot: t < landT ? lerp(-25, 0, seg(t, C.level, landT)) : 0, face: cheer ? { name: 'joy' } : { name: 'determined' }, ...boing(t, landT, 0.18), ...boing(t, b.ninety, 0.12) };
+  const p = { x: jx, y: 950, s: 0.6, nametag: false, sword: 'gold', armR: cheer ? 172 : 150 + 8 * Math.sin(t * 6), armL: cheer ? 150 : 40, lift, rot: t < landT ? lerp(-25, 0, seg(t, C.level, landT)) : 0, face: cheer ? { name: 'joy' } : { name: 'determined' }, ...boing(t, landT, 0.18), ...boing(t, b.ninety, 0.12) };
   let w = hero(t, p, { arms: false });
   w += G.levelBadge({ x: 1300, y: 470, s: 2.5, level: lv, xp: seg(t, b.level, b.ninety), bump: seg(t, b.ninety, b.ninety + 0.9), t, k: seg(t, C.level + 0.05, C.level + 0.45) });
   const mk = pop(t, b.ninety + 0.25, 0.3);
@@ -176,7 +179,7 @@ function shArena(t) {
 
 // ================================================================= 7. "Two thousand and ONE." — +1
 function shOne(t) {
-  let cam = camKeys(t, [[C.one, at(1060, 640, 1.9, 760, 560)], [C.welcome, at(1060, 640, 2.1, 760, 560)]]);
+  let cam = camKeys(t, [[C.one, at(1060, 690, 1.7, 760, 560)], [C.welcome, at(1060, 690, 1.82, 760, 560)]]);
   cam = shakeAll(cam, t, [[b.one, 0.3, 10]]);
   const upK = ease.outBack(seg(t, b.one - 0.12, b.one + 0.15));
   const hp = { x: 1060, y: 900, s: 0.42, turn: -0.15, sword: 'gold', armR: lerp(24, 172, upK), armL: 24, lean: -2, face: { name: 'smug', fx: t > b.one ? ['sparkles'] : [] }, ...boing(t, b.one, 0.12) };
@@ -320,7 +323,7 @@ function shNoodle(t) {
   const fk = t < fz1 ? seg(t, fz0, fz0 + 0.12) : 1 - seg(t, fz1, fz1 + 0.1);
   o = freeze(o, fk, 2.5);
   if (t > b.friend - 0.05) { const [sx, sy] = toScr(cam, 1852, 640); o += K.bang('BFF!', sx, sy - 330, pop(t, b.friend, 0.2), 110, -6, '#17C3B2'); }
-  o += nameCard(t, fz0 + 0.02, 520, 250, 'NOODLE', 'NoodleBoi · BEST FRIEND', '#17C3B2', { tOut: C.met - 0.2, rot: 4 });
+  o += nameCard(t, fz0 + 0.02, 1010, 190, 'NOODLE', 'NoodleBoi · BEST FRIEND', '#17C3B2', { tOut: fz1 + 0.3, rot: 4, ax: 560, ay: 250 });
   o += smash(t, fz0, 0.1, 0.6);
   return o;
 }
@@ -372,8 +375,8 @@ function shBosses(t) {
     np.props = nHand(np);
     w += noodle(t, np, { arms: false }) + hero(t, hp, { arms: false });
   } else {
-    const hp = { x: 870, y: 1020, s: 0.55, view: 'side', flip: true, armR: lerp(30, 165, hk), armL: 20, face: { name: 'joy' }, lift: hop(t, b.together - 0.12, 0.4, 50) };
-    const np = { x: 1060, y: 1020, s: 0.55, view: 'side', armR: lerp(30, 165, hk), armL: 20, face: { name: 'joy' }, lift: hop(t, b.together - 0.12, 0.4, 50) };
+    const hp = { x: 820, y: 1020, s: 0.55, view: 'side', flip: true, armR: lerp(30, 165, hk), armL: 20, face: { name: 'joy' }, lift: hop(t, b.together - 0.12, 0.4, 50) };
+    const np = { x: 1110, y: 1020, s: 0.55, view: 'side', armR: lerp(30, 165, hk), armL: 20, face: { name: 'joy' }, lift: hop(t, b.together - 0.12, 0.4, 50) };
     w += hero(t, hp, { arms: false }) + noodle(t, np, { arms: false });
     w += K.C.burst(965, 330, seg(t, b.together, b.together + 0.45), '#FFE14D');
     w += K.bang('TEAM!', 965, 230, pop(t, b.together + 0.02, 0.2), 110, -5, '#FFE14D');
@@ -455,7 +458,8 @@ function shDark(t) {
   const tLand = b.darkblade - 0.12;
   const fz = b.darkblade + 0.18;
   const ft = Math.min(t, fz);
-  let cam = camKeys(ft, [[C.dark, at(-250, 560, 0.95)], [fz, at(-180, 640, 1.08)]]);
+  // wide on the two friends -> DarkBlade crashes down -> the camera snaps in on him for the freeze
+  let cam = camKeys(ft, [[C.dark, at(-250, 560, 0.95)], [tLand, at(-170, 600, 1.02)], [tLand + 0.06, at(40, 690, 1.42)], [fz, at(60, 690, 1.5)]], ease.out);
   cam = shakeAll(cam, ft, [[tLand, 0.4, 18]]);
   const lift = Math.max(0, 1 - ease.in(seg(ft, C.dark, tLand))) * 1100;
   const dp = { ...DB, lift, armL: ft < tLand ? 160 : 40, armR: ft < tLand ? 120 : 60, legL: ft > tLand ? 30 : 0, legR: ft > tLand ? -20 : 0, kneeL: ft > tLand ? 40 : 0, bodyY: ft > tLand ? 30 * (1 - seg(ft, tLand, tLand + 0.4)) : 0, ...boing(ft, tLand, 0.25), face: { name: 'angry' } };
@@ -470,7 +474,10 @@ function shDark(t) {
   let o = camSet(GS.tycoon, ft, cam, {}, '', extra + floor);
   o += S.rect(0, 0, W, H_, 0, { fill: '#2A1640', opacity: f(0.22 * seg(t, C.dark, C.dark + 0.4)) });
   o = freeze(o, seg(t, fz, fz + 0.14), 2.5, '#1A0C14', '#FFD0D0');
-  if (t >= fz) o += nameCard(t, fz + 0.02, 1400, 260, 'DARKBLADE', 'xX_DarkBlade_Xx · RIVAL', '#FF4B5C', { rot: 4, size: 96 }) + smash(t, fz, 0.1, 0.6);
+  if (t >= fz) {
+    const [hx, hy] = toScr(cam, DB.x - 20, DB.y - 0.4 * 820);
+    o += nameCard(t, fz + 0.02, 560, 230, 'DARKBLADE', 'xX_DarkBlade_Xx · RIVAL', '#FF4B5C', { rot: -4, size: 96, ax: 960 + 0.9 * (hx - 960) - 80, ay: 540 + 0.9 * (hy - 540) }) + smash(t, fz, 0.1, 0.6);
+  }
   return o;
 }
 
@@ -523,15 +530,22 @@ function shAngry(t) {
 
 // ================================================================= 24. "You got lucky last time, YOU." — the standoff
 function shTaunt(t) {
-  const cam = camKeys(t, [[C.taunt, at(-300, 620, 0.95)], [b.YOU8, at(-200, 610, 1.08)], [C.little, at(-170, 600, 1.12)]]);
+  // wide standoff -> smash-in on "YOU": the sword points at the hero, the two friends tense up
+  const tP = b.YOU8 - 0.08;
+  let cam = t < tP ? camKeys(t, [[C.taunt, at(-300, 620, 0.95)], [tP, at(-250, 615, 1.05)]])
+    : camKeys(t, [[tP, at(-300, 668, 1.5)], [C.little, at(-300, 664, 1.58)]], ease.out);
+  cam = shakeAll(cam, t, [[tP, 0.3, 12]]);
   const point = ease.outBack(seg(t, b.YOU8 - 0.15, b.YOU8 + 0.15));
   const dp = { ...DB, view: point > 0.01 ? 'side' : 'front', turn: -0.45, armR: lerp(20, 86, point), armL: 14, swordRot: -70 * point, face: { name: 'angry' } };
   let floor = clanRow(t, { pose: {} }) + blade(t, dp, { arms: false });
-  floor += noodle(t, { x: -860, y: 930, s: 0.4, turn: 0.45, armL: 20, armR: 20, face: { name: 'nervous', eyes: { look: [0.8, 0] } } }) + hero(t, { x: -690, y: 930, s: 0.4, turn: 0.4, armL: 24, armR: 24, face: { name: t > b.YOU8 ? 'determined' : 'neutral', eyes: { look: [0.8, 0] } } }, { arms: false });
+  const tense = t > tP;
+  floor += noodle(t, { x: -860, y: 930, s: 0.4, turn: 0.45, armL: tense ? 40 : 20, armR: tense ? 40 : 20, face: { name: tense ? 'scared' : 'nervous', fx: tense ? ['sweat'] : [], eyes: { look: [0.8, 0] } }, ...boing(t, tP + 0.05, 0.12) }) +
+    hero(t, { x: -690, y: 930, s: 0.4, turn: 0.4, armL: 24, armR: 24, face: { name: tense ? 'determined' : 'neutral', eyes: { look: [0.8, 0] } }, ...boing(t, tP, 0.1) }, { arms: false });
   let o = camSet(GS.tycoon, t, cam, {}, '', floor);
   const oh = G.overHead(DB.x, DB.y, DB.s, 'darkblade');
   const [bx, by] = toScr(cam, DB.x, oh.chat - 30);
-  o += G.chatBubble({ x: bx, y: by, t, text: 'You got lucky last time, YOU.', typed: G.chatSync(t, '02.8', { to: 'YOU' }), k: seg(t, L8a() - 0.3, L8a()), user: 'xX_DarkBlade_Xx', col: '#2A1C24', textCol: '#FFFFFF', tail: 0.4 });
+  o += G.chatBubble({ x: Math.min(bx, 1560), y: Math.max(by, 150), t, text: 'You got lucky last time, YOU.', typed: G.chatSync(t, '02.8', { to: 'YOU' }), k: seg(t, L8a() - 0.3, L8a()), user: 'xX_DarkBlade_Xx', col: '#2A1C24', textCol: '#FFFFFF', tail: 0.4 });
+  if (tense) { const [hx, hy] = toScr(cam, -690, 930 - 0.4 * 1180); o += K.bang('!', hx, hy, pop(t, tP + 0.04, 0.2), 90, 8, '#FFE14D'); }
   return o;
 }
 const L8a = () => K.V.L('02.8').a;
@@ -559,14 +573,33 @@ function shStreak(t) {
   let o = camSet(GS.tycoon, t, cam, {}, '', noodle(t, np, { arms: false }) + hero(t, hp, { arms: false }));
   o += streakBadge(1440, 360, pop(t, b.losing - 0.05, 0.3), t);
   if (ooh) {
-    o += speech(330, 200, 'OOOOH!', pop(t, b.streak + 0.2, 0.22), { size: 64, tail: 1, rot: -5 });
+    o += speech(215, 330, 'OOOOH!', pop(t, b.streak + 0.2, 0.22), { size: 56, tail: 1, rot: -5 });
     const bk = pop(t, b.streak + 0.35, 0.22);
     if (bk > 0.01) { let st = S.rect(-190, -95, 380, 190, 60, ol('#2A0C12', 8)); for (let i = 0; i < 4; i++) st += GS.fire(-120 + i * 80, 70, 0.5, t, i + 2); st += TS('BURN!', 0, 30, 110, '#FF8A2B'); o += S.g(st, tf(1460, 640, bk, -6)); }
   }
   return o;
 }
 
+// ================================================================= 27. (beat) DarkBlade fumes — the clan snickers behind him
+function shFume(t, cheap = false) {
+  CHEAP = cheap;
+  try { return fumeFrame(t); } finally { CHEAP = false; }
+}
+function fumeFrame(t) {
+  const t0 = C.fume;
+  const c0 = at(DB.x, lerp(700, 690, seg(t, t0, C.sat)), lerp(2.15, 2.3, seg(t, t0, C.sat)));
+  let cam = { ...c0, x: c0.x + 2 * Math.sin(t * 70) };
+  cam = shakeAll(cam, t, [[t0 + 0.1, 0.4, 7]]);
+  const dp = { ...DB, turn: 0.1, armL: 22, armR: 30, sx: 1 + 0.03 * Math.sin(t * 40), face: { name: 'angry', fx: ['anger', 'steam'], eyes: { look: [-0.9, 0] } }, ...boing(t, t0 + 0.05, 0.08) };
+  const floor = clanRow(t, { laugh: true, pose: { volume: false } }) + blade(t, dp, { arms: false });
+  let o = camSet(GS.tycoon, t, cam, {}, '', floor);
+  o += S.rect(0, 0, W, H_, 0, { fill: '#FF2E3E', opacity: f(0.1 + 0.06 * Math.sin(t * 18)) });
+  o += speech(1560, 250, 'lol', pop(t, t0 + 0.12, 0.18), { size: 54, tail: -1, rot: 6 }) + speech(1760, 470, 'hehe', pop(t, t0 + 0.26, 0.18), { size: 44, tail: -1, rot: -5 });
+  o += K.bang('grrr', 960, 200, pop(t, t0 + 0.18, 0.2), 84, -6, '#FF4B5C');
+  return o;
+}
+
 module.exports = {
   shOpen, shPhoto, shLegend, shLevel, shBase, shArena, shOne, shWelcome, shLava, shTrophy, shThrone, shChair, shTag, shNoodle, shMet,
-  shBosses, shBro, shUpdate, shKing, shGulp, shDark, shWho, shAngry, shTaunt, shLittle, shStreak,
+  shBosses, shBro, shUpdate, shKing, shGulp, shDark, shWho, shAngry, shTaunt, shLittle, shStreak, shFume,
 };
