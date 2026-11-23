@@ -1,0 +1,1775 @@
+{
+ "scene": "SC 10",
+ "start": 611.45,
+ "end": 676.85,
+ "music": [
+  {
+   "start": 611.45,
+   "end": 616.59,
+   "mood": "anthem",
+   "energy": 0.85,
+   "in": "cut",
+   "out": "cut"
+  },
+  {
+   "start": 616.59,
+   "end": 629.27,
+   "mood": "family",
+   "energy": 0.6,
+   "in": "cut",
+   "out": "cut"
+  },
+  {
+   "start": 629.27,
+   "end": 638.62,
+   "mood": "boss",
+   "energy": 0.85,
+   "in": "cut",
+   "out": "cut"
+  },
+  {
+   "start": 638.62,
+   "end": 641,
+   "mood": "silence",
+   "energy": 0,
+   "in": "cut",
+   "out": "cut"
+  },
+  {
+   "start": 641,
+   "end": 642.598,
+   "mood": "playful",
+   "energy": 0.35,
+   "in": "cut",
+   "out": "cut"
+  },
+  {
+   "start": 642.598,
+   "end": 650.278,
+   "mood": "family",
+   "energy": 0.6,
+   "in": "cut",
+   "out": "cut"
+  },
+  {
+   "start": 650.278,
+   "end": 654.83,
+   "mood": "boss",
+   "energy": 1,
+   "in": "cut",
+   "out": "sting"
+  },
+  {
+   "start": 654.83,
+   "end": 658.89,
+   "mood": "boss",
+   "energy": 0.7,
+   "in": "cut",
+   "out": "cut"
+  },
+  {
+   "start": 658.89,
+   "end": 663.534,
+   "mood": "epic",
+   "energy": 0.55,
+   "in": "cut",
+   "out": "cut"
+  },
+  {
+   "start": 663.534,
+   "end": 667.17,
+   "mood": "boss",
+   "energy": 0.6,
+   "in": "cut",
+   "out": "fade"
+  },
+  {
+   "start": 667.17,
+   "end": 672.39,
+   "mood": "tender",
+   "energy": 0.35,
+   "in": "fade",
+   "out": "cut"
+  },
+  {
+   "start": 672.39,
+   "end": 676.85,
+   "mood": "epic",
+   "energy": 0.45,
+   "in": "swell",
+   "out": "cut"
+  }
+ ],
+ "ambience": [
+  {
+   "start": 611.45,
+   "end": 672.39,
+   "name": "wind",
+   "gain_db": -14
+  },
+  {
+   "start": 611.45,
+   "end": 629.27,
+   "name": "crowd",
+   "gain_db": -10
+  },
+  {
+   "start": 650.278,
+   "end": 669.262,
+   "name": "crowd",
+   "gain_db": -10
+  },
+  {
+   "start": 672.39,
+   "end": 675.1,
+   "name": "night",
+   "gain_db": -14
+  },
+  {
+   "start": 675.1,
+   "end": 676.85,
+   "name": "wind",
+   "gain_db": -14
+  }
+ ],
+ "footsteps": [
+  {
+   "start": 613.186,
+   "end": 616.59,
+   "interval": 0.748,
+   "surface": "hard",
+   "gain_db": -8,
+   "pan": 0
+  },
+  {
+   "start": 630.994,
+   "end": 632.494,
+   "interval": 0.196,
+   "surface": "hard",
+   "gain_db": -12,
+   "pan": 0.3
+  },
+  {
+   "start": 634.55,
+   "end": 635.51,
+   "interval": 0.196,
+   "surface": "hard",
+   "gain_db": -8,
+   "pan": -0.1
+  },
+  {
+   "start": 650.398,
+   "end": 651.64,
+   "interval": 0.196,
+   "surface": "hard",
+   "gain_db": -6,
+   "pan": 0
+  },
+  {
+   "start": 675.35,
+   "end": 676.1,
+   "interval": 0.393,
+   "surface": "hard",
+   "gain_db": -10,
+   "pan": 0.1
+  }
+ ],
+ "sfx": [
+  [
+   611.43,
+   "level_up",
+   -2,
+   0,
+   "PARTY FORMED banner"
+  ],
+  [
+   611.45,
+   "teleport",
+   -2,
+   0,
+   "white in: into Cube City"
+  ],
+  [
+   611.51,
+   "respawn",
+   -2,
+   -0.098,
+   "family member spawns"
+  ],
+  [
+   611.56,
+   "sparkle",
+   -10,
+   -0.098,
+   "spawn light"
+  ],
+  [
+   611.75,
+   "respawn",
+   -2,
+   -0.285,
+   "family member spawns"
+  ],
+  [
+   611.8,
+   "sparkle",
+   -10,
+   -0.285,
+   "spawn light"
+  ],
+  [
+   611.99,
+   "respawn",
+   -2,
+   0.098,
+   "family member spawns"
+  ],
+  [
+   612.04,
+   "sparkle",
+   -10,
+   0.098,
+   "spawn light"
+  ],
+  [
+   612.23,
+   "respawn",
+   -2,
+   0.285,
+   "family member spawns"
+  ],
+  [
+   612.28,
+   "sparkle",
+   -10,
+   0.285,
+   "spawn light"
+  ],
+  [
+   612.33,
+   "crowd_cheer",
+   -4,
+   0,
+   "the server cheers"
+  ],
+  [
+   613.186,
+   "whoosh_long",
+   -10,
+   0,
+   "slow motion begins"
+  ],
+  [
+   613.43,
+   "ui_pop",
+   -6,
+   -0.8,
+   "party frames slide in"
+  ],
+  [
+   613.496,
+   "chat_pop",
+   -12,
+   -0.5,
+   "cheer bubble"
+  ],
+  [
+   613.63,
+   "pop",
+   -14,
+   -0.8,
+   "party card"
+  ],
+  [
+   613.85,
+   "pop",
+   -14,
+   -0.8,
+   "party card"
+  ],
+  [
+   613.882,
+   "chat_pop",
+   -12,
+   0.5,
+   "cheer bubble"
+  ],
+  [
+   614.07,
+   "pop",
+   -14,
+   -0.8,
+   "party card"
+  ],
+  [
+   614.28,
+   "orch_hit",
+   0,
+   0.1,
+   "THE FAMILY title"
+  ],
+  [
+   614.29,
+   "pop",
+   -14,
+   -0.8,
+   "party card"
+  ],
+  [
+   614.332,
+   "chat_pop",
+   -12,
+   -0.5,
+   "cheer bubble"
+  ],
+  [
+   614.38,
+   "shine",
+   -6,
+   0.2,
+   "gold glint"
+  ],
+  [
+   614.708,
+   "chat_pop",
+   -12,
+   0.5,
+   "cheer bubble"
+  ],
+  [
+   615.212,
+   "chat_pop",
+   -12,
+   -0.5,
+   "cheer bubble"
+  ],
+  [
+   615.62,
+   "chat_pop",
+   -12,
+   0.5,
+   "cheer bubble"
+  ],
+  [
+   616.59,
+   "whoosh",
+   -8,
+   0.3,
+   "whip to the hero and Mom"
+  ],
+  [
+   617.28,
+   "swish",
+   -8,
+   0.2,
+   "the hero points at Mom"
+  ],
+  [
+   618.31,
+   "pan_clang",
+   0,
+   -0.25,
+   "CLANG! on the pot lid"
+  ],
+  [
+   618.61,
+   "stamp",
+   -2,
+   -0.5,
+   "TANK stamp"
+  ],
+  [
+   619.038,
+   "whoosh",
+   -8,
+   -0.3,
+   "whip to Granny"
+  ],
+  [
+   619.87,
+   "ui_pop",
+   -8,
+   0.7,
+   "coin counter"
+  ],
+  [
+   620.02,
+   "coins",
+   -2,
+   0.1,
+   "coins pop out of her money bag"
+  ],
+  [
+   620.12,
+   "ka_ching",
+   -4,
+   0.1,
+   "ka-ching"
+  ],
+  [
+   620.7,
+   "magic",
+   -4,
+   0.1,
+   "Granny raises her cane"
+  ],
+  [
+   620.85,
+   "whoosh",
+   -8,
+   0.3,
+   "whip to the wide"
+  ],
+  [
+   620.95,
+   "whoosh_down",
+   -6,
+   0,
+   "golden swords rain down"
+  ],
+  [
+   621.15,
+   "money_counter",
+   -8,
+   0.8,
+   "coins rolling down"
+  ],
+  [
+   621.7,
+   "metal_clank",
+   -12,
+   0.383,
+   "a sword lands in a hand"
+  ],
+  [
+   621.81,
+   "metal_clank",
+   -12,
+   0.146,
+   "a sword lands in a hand"
+  ],
+  [
+   621.85,
+   "equip",
+   -6,
+   -0.2,
+   "the hero's sword"
+  ],
+  [
+   621.92,
+   "metal_clank",
+   -12,
+   0.104,
+   "a sword lands in a hand"
+  ],
+  [
+   621.95,
+   "money_counter",
+   -10,
+   0.8,
+   "coins rolling down"
+  ],
+  [
+   622.03,
+   "metal_clank",
+   -12,
+   -0.051,
+   "a sword lands in a hand"
+  ],
+  [
+   622.14,
+   "metal_clank",
+   -12,
+   0.186,
+   "a sword lands in a hand"
+  ],
+  [
+   622.2,
+   "metal_hit",
+   -2,
+   0.4,
+   "THUNK! a sword misses the hot dog's hand"
+  ],
+  [
+   622.22,
+   "boing",
+   -8,
+   0.4,
+   "blade wobbles in the floor"
+  ],
+  [
+   622.25,
+   "metal_clank",
+   -12,
+   0.194,
+   "a sword lands in a hand"
+  ],
+  [
+   622.36,
+   "metal_clank",
+   -12,
+   -0.556,
+   "a sword lands in a hand"
+  ],
+  [
+   622.47,
+   "metal_clank",
+   -12,
+   -0.262,
+   "a sword lands in a hand"
+  ],
+  [
+   622.58,
+   "metal_clank",
+   -12,
+   -0.546,
+   "a sword lands in a hand"
+  ],
+  [
+   622.914,
+   "whoosh",
+   -8,
+   -0.3,
+   "whip to Granny"
+  ],
+  [
+   623.014,
+   "crowd_cheer",
+   -6,
+   0,
+   "the server raises its swords"
+  ],
+  [
+   623.014,
+   "paper",
+   -4,
+   0.4,
+   "the receipt unrolls"
+  ],
+  [
+   623.59,
+   "ka_ching",
+   -2,
+   0.2,
+   "put it on my tab"
+  ],
+  [
+   623.64,
+   "shine",
+   -8,
+   0,
+   "wink"
+  ],
+  [
+   624.45,
+   "sparkle",
+   -8,
+   0,
+   "sparkles over the swords"
+  ],
+  [
+   625.8,
+   "swish",
+   -4,
+   -0.4,
+   "Mom raises her sword"
+  ],
+  [
+   625.83,
+   "whoosh",
+   -8,
+   0.3,
+   "whip to Mom"
+  ],
+  [
+   625.95,
+   "shine",
+   -6,
+   -0.4,
+   "sword glow"
+  ],
+  [
+   626.57,
+   "whoosh",
+   -4,
+   0.2,
+   "everyone snaps into rows"
+  ],
+  [
+   626.59,
+   "orch_hit",
+   -2,
+   0.3,
+   "FORMATION!"
+  ],
+  [
+   626.64,
+   "jump",
+   -10,
+   0.3,
+   "the rows hop"
+  ],
+  [
+   627.718,
+   "whoosh",
+   -8,
+   -0.3,
+   "whip to the three noobs"
+  ],
+  [
+   628,
+   "pop",
+   -4,
+   -0.3,
+   "helmet plops on"
+  ],
+  [
+   628.24,
+   "pop",
+   -4,
+   0,
+   "helmet plops on"
+  ],
+  [
+   628.52,
+   "pop",
+   -4,
+   0.3,
+   "helmet plops on"
+  ],
+  [
+   628.57,
+   "bonk",
+   -6,
+   0.3,
+   "last helmet bonk"
+  ],
+  [
+   629.27,
+   "whoosh",
+   -6,
+   -0.3,
+   "whip to the wide: the boss winds up"
+  ],
+  [
+   629.61,
+   "monster_growl",
+   -6,
+   -0.4,
+   "wind-up"
+  ],
+  [
+   629.66,
+   "stone",
+   -8,
+   -0.3,
+   "stone arm grinding"
+  ],
+  [
+   629.96,
+   "whoosh_down",
+   -4,
+   -0.1,
+   "the fist comes down"
+  ],
+  [
+   630.03,
+   "zoom_in",
+   -6,
+   0,
+   "smash-zoom"
+  ],
+  [
+   630.11,
+   "metal_hit",
+   2,
+   -0.1,
+   "BLOCKED! fist on the pot lid"
+  ],
+  [
+   630.12,
+   "impact",
+   -2,
+   0,
+   "shockwave"
+  ],
+  [
+   630.16,
+   "crowd_gasp",
+   -10,
+   0.3,
+   "the noobs behind her flinch"
+  ],
+  [
+   630.31,
+   "rock_drop",
+   -8,
+   -0.2,
+   "stone chips"
+  ],
+  [
+   630.994,
+   "whoosh",
+   -8,
+   0.3,
+   "cut: the fist keeps pressing"
+  ],
+  [
+   631.044,
+   "stone",
+   -10,
+   -0.4,
+   "stone grinding on the lid"
+  ],
+  [
+   631.194,
+   "metal_clank",
+   -14,
+   -0.35,
+   "sparks on the lid"
+  ],
+  [
+   631.41,
+   "heart_pop",
+   -6,
+   -0.2,
+   "Mom's sweet look back"
+  ],
+  [
+   631.554,
+   "metal_clank",
+   -14,
+   -0.35,
+   "sparks on the lid"
+  ],
+  [
+   631.914,
+   "metal_clank",
+   -14,
+   -0.35,
+   "sparks on the lid"
+  ],
+  [
+   632.274,
+   "metal_clank",
+   -14,
+   -0.35,
+   "sparks on the lid"
+  ],
+  [
+   632.99,
+   "whoosh_down",
+   -6,
+   -0.2,
+   "punch"
+  ],
+  [
+   633.12,
+   "metal_hit",
+   0,
+   -0.1,
+   "BLOCKED!"
+  ],
+  [
+   633.13,
+   "impact",
+   -4,
+   0,
+   "block"
+  ],
+  [
+   633.384,
+   "whoosh",
+   -10,
+   -0.3,
+   "whip to the second angle"
+  ],
+  [
+   633.47,
+   "whoosh_down",
+   -6,
+   -0.2,
+   "punch"
+  ],
+  [
+   633.6,
+   "metal_hit",
+   0,
+   -0.1,
+   "BLOCKED!"
+  ],
+  [
+   633.61,
+   "impact",
+   -4,
+   0,
+   "block"
+  ],
+  [
+   634.55,
+   "whoosh",
+   -8,
+   -0.3,
+   "whip to the charge"
+  ],
+  [
+   635.46,
+   "swish",
+   0,
+   -0.1,
+   "the hero slashes"
+  ],
+  [
+   635.51,
+   "punch",
+   -2,
+   -0.2,
+   "hit on the leg"
+  ],
+  [
+   635.54,
+   "impact",
+   -4,
+   -0.2,
+   "-250 CRIT"
+  ],
+  [
+   635.63,
+   "monster_growl",
+   -8,
+   -0.5,
+   "the Block King recoils"
+  ],
+  [
+   636.486,
+   "whoosh_down",
+   -4,
+   0.2,
+   "DarkBlade drops from the sky"
+  ],
+  [
+   636.85,
+   "land",
+   0,
+   0.2,
+   "DarkBlade lands"
+  ],
+  [
+   636.87,
+   "boom",
+   -4,
+   0.2,
+   "red shockwave"
+  ],
+  [
+   637.41,
+   "notify",
+   -2,
+   0,
+   "joined the party"
+  ],
+  [
+   638.62,
+   "whoosh",
+   -12,
+   -0.2,
+   "the rivals face each other"
+  ],
+  [
+   639.52,
+   "cloth",
+   -10,
+   0.2,
+   "DarkBlade holds out a fist"
+  ],
+  [
+   640.85,
+   "chat_pop",
+   -8,
+   0.3,
+   "\"Just this once.\" bubble"
+  ],
+  [
+   641.15,
+   "typing",
+   -14,
+   0.3,
+   "typing"
+  ],
+  [
+   641.81,
+   "punch",
+   -4,
+   0,
+   "fist bump"
+  ],
+  [
+   641.84,
+   "shine",
+   -6,
+   0,
+   "BUMP!"
+  ],
+  [
+   642.598,
+   "whoosh",
+   -8,
+   0.3,
+   "whip to the wide"
+  ],
+  [
+   642.87,
+   "swish",
+   -14,
+   0.2,
+   "potion thrown"
+  ],
+  [
+   643.17,
+   "swish",
+   -14,
+   0.2,
+   "potion thrown"
+  ],
+  [
+   643.32,
+   "pop",
+   -11,
+   0.515,
+   "potion pops: +HP"
+  ],
+  [
+   643.47,
+   "pop",
+   -11,
+   -0.056,
+   "potion pops: +HP"
+  ],
+  [
+   643.47,
+   "swish",
+   -14,
+   0.2,
+   "potion thrown"
+  ],
+  [
+   643.62,
+   "pop",
+   -11,
+   0.5,
+   "potion pops: +HP"
+  ],
+  [
+   643.77,
+   "pop",
+   -11,
+   0.364,
+   "potion pops: +HP"
+  ],
+  [
+   643.77,
+   "swish",
+   -14,
+   0.2,
+   "potion thrown"
+  ],
+  [
+   643.92,
+   "pop",
+   -11,
+   0.483,
+   "potion pops: +HP"
+  ],
+  [
+   644.07,
+   "pop",
+   -11,
+   0.31,
+   "potion pops: +HP"
+  ],
+  [
+   644.07,
+   "swish",
+   -14,
+   0.2,
+   "potion thrown"
+  ],
+  [
+   644.11,
+   "magic",
+   -6,
+   0,
+   "the party heals"
+  ],
+  [
+   644.13,
+   "orch_hit",
+   -6,
+   0.4,
+   "x100!"
+  ],
+  [
+   644.21,
+   "level_up",
+   -8,
+   -0.8,
+   "party HP bars refill"
+  ],
+  [
+   644.22,
+   "pop",
+   -11,
+   0.646,
+   "potion pops: +HP"
+  ],
+  [
+   644.37,
+   "pop",
+   -11,
+   0.594,
+   "potion pops: +HP"
+  ],
+  [
+   644.37,
+   "swish",
+   -14,
+   0.2,
+   "potion thrown"
+  ],
+  [
+   644.52,
+   "pop",
+   -11,
+   0.518,
+   "potion pops: +HP"
+  ],
+  [
+   644.67,
+   "pop",
+   -11,
+   0.619,
+   "potion pops: +HP"
+  ],
+  [
+   644.67,
+   "swish",
+   -14,
+   0.2,
+   "potion thrown"
+  ],
+  [
+   644.82,
+   "pop",
+   -11,
+   0.46,
+   "potion pops: +HP"
+  ],
+  [
+   644.97,
+   "pop",
+   -11,
+   0.38,
+   "potion pops: +HP"
+  ],
+  [
+   644.97,
+   "swish",
+   -14,
+   0.2,
+   "potion thrown"
+  ],
+  [
+   645.12,
+   "pop",
+   -11,
+   0.025,
+   "potion pops: +HP"
+  ],
+  [
+   645.27,
+   "pop",
+   -11,
+   0.609,
+   "potion pops: +HP"
+  ],
+  [
+   645.42,
+   "pop",
+   -11,
+   -0.043,
+   "potion pops: +HP"
+  ],
+  [
+   645.51,
+   "whoosh",
+   -8,
+   -0.3,
+   "whip to Granny and the hero"
+  ],
+  [
+   645.57,
+   "pop",
+   -11,
+   0.524,
+   "potion pops: +HP"
+  ],
+  [
+   646.07,
+   "stamp",
+   0,
+   0.3,
+   "FAMILY DISCOUNT stamp"
+  ],
+  [
+   646.29,
+   "pop",
+   -4,
+   0.5,
+   "5% OFF"
+  ],
+  [
+   646.47,
+   "cricket",
+   -8,
+   -0.3,
+   "the hero's deadpan"
+  ],
+  [
+   646.784,
+   "whoosh",
+   -8,
+   0.3,
+   "whip: orders"
+  ],
+  [
+   646.834,
+   "ui_pop",
+   -4,
+   0.2,
+   "RAID PLAN map"
+  ],
+  [
+   647.19,
+   "whoosh",
+   -8,
+   -0.4,
+   "Noodle -> left flank arrow"
+  ],
+  [
+   647.39,
+   "pop",
+   -6,
+   -0.5,
+   "LEFT SIDE sign"
+  ],
+  [
+   648.08,
+   "whoosh",
+   -8,
+   -0.3,
+   "whip: right side"
+  ],
+  [
+   648.83,
+   "whoosh",
+   -8,
+   0.4,
+   "DarkBlade -> right flank arrow"
+  ],
+  [
+   649.03,
+   "pop",
+   -6,
+   0.5,
+   "RIGHT SIDE sign"
+  ],
+  [
+   650.278,
+   "whoosh",
+   -6,
+   0.3,
+   "whip to the wide battlefield"
+  ],
+  [
+   650.378,
+   "monster_roar",
+   -6,
+   -0.3,
+   "the Block King roars"
+  ],
+  [
+   650.49,
+   "reverse_swell",
+   -8,
+   0,
+   "the dome is coming"
+  ],
+  [
+   650.83,
+   "orch_hit",
+   2,
+   0.3,
+   "ATTACK!"
+  ],
+  [
+   650.88,
+   "crowd_cheer",
+   -2,
+   0.2,
+   "the whole server charges"
+  ],
+  [
+   651.99,
+   "forcefield",
+   2,
+   0,
+   "the shield dome rises"
+  ],
+  [
+   652.01,
+   "impact",
+   -4,
+   0,
+   "purple flash"
+  ],
+  [
+   652.39,
+   "metal_hit",
+   -4,
+   0.5,
+   "sword hits the dome: IMMUNE"
+  ],
+  [
+   652.43,
+   "boing",
+   -10,
+   0.5,
+   "bounced back"
+  ],
+  [
+   652.64,
+   "metal_hit",
+   -4,
+   -0.5,
+   "sword hits the dome: IMMUNE"
+  ],
+  [
+   652.68,
+   "boing",
+   -10,
+   -0.5,
+   "bounced back"
+  ],
+  [
+   652.89,
+   "metal_hit",
+   -4,
+   0.5,
+   "sword hits the dome: IMMUNE"
+  ],
+  [
+   652.93,
+   "boing",
+   -10,
+   0.5,
+   "bounced back"
+  ],
+  [
+   653.19,
+   "metal_hit",
+   -4,
+   -0.5,
+   "sword hits the dome: IMMUNE"
+  ],
+  [
+   653.23,
+   "boing",
+   -10,
+   -0.5,
+   "bounced back"
+  ],
+  [
+   653.44,
+   "metal_hit",
+   -4,
+   0.5,
+   "sword hits the dome: IMMUNE"
+  ],
+  [
+   653.48,
+   "boing",
+   -10,
+   0.5,
+   "bounced back"
+  ],
+  [
+   653.74,
+   "metal_hit",
+   -4,
+   -0.5,
+   "sword hits the dome: IMMUNE"
+  ],
+  [
+   653.78,
+   "boing",
+   -10,
+   -0.5,
+   "bounced back"
+  ],
+  [
+   654.83,
+   "whoosh",
+   -8,
+   0,
+   "cut to the laughing face"
+  ],
+  [
+   654.95,
+   "boom",
+   0,
+   0,
+   "FOOLS!"
+  ],
+  [
+   654.95,
+   "pop",
+   -10,
+   -0.4,
+   "HA"
+  ],
+  [
+   655,
+   "thunder",
+   -10,
+   0,
+   "rumbling laugh"
+  ],
+  [
+   655.13,
+   "pop",
+   -10,
+   0.4,
+   "HA"
+  ],
+  [
+   655.31,
+   "pop",
+   -10,
+   0.3,
+   "HA"
+  ],
+  [
+   655.942,
+   "whoosh",
+   -8,
+   0.3,
+   "whip to the wide"
+  ],
+  [
+   656.27,
+   "metal_hit",
+   -6,
+   0.5,
+   "IMMUNE"
+  ],
+  [
+   656.31,
+   "boing",
+   -12,
+   0.5,
+   "bounced back"
+  ],
+  [
+   656.75,
+   "metal_hit",
+   -6,
+   -0.5,
+   "IMMUNE"
+  ],
+  [
+   656.79,
+   "boing",
+   -12,
+   -0.5,
+   "bounced back"
+  ],
+  [
+   657.13,
+   "boom",
+   -6,
+   0,
+   "the boss thumps his chest"
+  ],
+  [
+   657.23,
+   "metal_hit",
+   -6,
+   0.5,
+   "IMMUNE"
+  ],
+  [
+   657.27,
+   "boing",
+   -12,
+   0.5,
+   "bounced back"
+  ],
+  [
+   658.06,
+   "metal_hit",
+   -6,
+   -0.5,
+   "IMMUNE"
+  ],
+  [
+   658.1,
+   "boing",
+   -12,
+   -0.5,
+   "bounced back"
+  ],
+  [
+   658.46,
+   "metal_hit",
+   -6,
+   0.5,
+   "IMMUNE"
+  ],
+  [
+   658.5,
+   "boing",
+   -12,
+   0.5,
+   "bounced back"
+  ],
+  [
+   658.81,
+   "metal_hit",
+   -6,
+   -0.5,
+   "IMMUNE"
+  ],
+  [
+   658.85,
+   "boing",
+   -12,
+   -0.5,
+   "bounced back"
+  ],
+  [
+   658.89,
+   "whoosh",
+   -8,
+   -0.3,
+   "whip to Noodle"
+  ],
+  [
+   658.99,
+   "shine",
+   -4,
+   0.1,
+   "Noodle points up, star eyes"
+  ],
+  [
+   659.73,
+   "whoosh_long",
+   -2,
+   0,
+   "whip-tilt up a hundred floors"
+  ],
+  [
+   660.82,
+   "beep",
+   -4,
+   0,
+   "TARGET: CRYSTAL"
+  ],
+  [
+   660.87,
+   "shine",
+   -4,
+   0,
+   "the crystal glints"
+  ],
+  [
+   660.97,
+   "magic",
+   -8,
+   0,
+   "crystal hum"
+  ],
+  [
+   661.646,
+   "whoosh_down",
+   -6,
+   0,
+   "back down to the team"
+  ],
+  [
+   661.65,
+   "swish",
+   -12,
+   -0.5,
+   "everyone turns to the hero"
+  ],
+  [
+   661.75,
+   "swish",
+   -12,
+   0.5,
+   "everyone turns to the hero"
+  ],
+  [
+   661.85,
+   "swish",
+   -12,
+   -0.3,
+   "everyone turns to the hero"
+  ],
+  [
+   661.95,
+   "swish",
+   -12,
+   0.3,
+   "everyone turns to the hero"
+  ],
+  [
+   662.15,
+   "squeak",
+   -6,
+   0.2,
+   "?"
+  ],
+  [
+   663.534,
+   "whoosh",
+   -8,
+   0.3,
+   "whip to the hero under the fist"
+  ],
+  [
+   663.584,
+   "stone",
+   -8,
+   0,
+   "the fist pressing on his sword"
+  ],
+  [
+   663.634,
+   "metal_clank",
+   -14,
+   0.1,
+   "sparks"
+  ],
+  [
+   663.884,
+   "metal_clank",
+   -14,
+   0.1,
+   "sparks"
+  ],
+  [
+   664.134,
+   "metal_clank",
+   -14,
+   0.1,
+   "sparks"
+  ],
+  [
+   664.384,
+   "metal_clank",
+   -14,
+   0.1,
+   "sparks"
+  ],
+  [
+   664.634,
+   "metal_clank",
+   -14,
+   0.1,
+   "sparks"
+  ],
+  [
+   664.884,
+   "metal_clank",
+   -14,
+   0.1,
+   "sparks"
+  ],
+  [
+   665.11,
+   "pop",
+   -4,
+   0.3,
+   "thought bubble"
+  ],
+  [
+   666.01,
+   "thud",
+   -10,
+   0.029,
+   "the mini team topples"
+  ],
+  [
+   666.14,
+   "thud",
+   -10,
+   0.139,
+   "the mini team topples"
+  ],
+  [
+   666.27,
+   "thud",
+   -10,
+   0.248,
+   "the mini team topples"
+  ],
+  [
+   666.4,
+   "thud",
+   -10,
+   0.357,
+   "the mini team topples"
+  ],
+  [
+   666.42,
+   "buzzer_wrong",
+   -6,
+   0.3,
+   "red X"
+  ],
+  [
+   667.17,
+   "whoosh",
+   -8,
+   0.3,
+   "whip to the pan across the fight"
+  ],
+  [
+   667.37,
+   "metal_hit",
+   -14,
+   0.5,
+   "hits on the dome"
+  ],
+  [
+   667.71,
+   "metal_hit",
+   -14,
+   -0.5,
+   "hits on the dome"
+  ],
+  [
+   668.05,
+   "metal_hit",
+   -14,
+   0.5,
+   "hits on the dome"
+  ],
+  [
+   668.39,
+   "metal_hit",
+   -14,
+   -0.5,
+   "hits on the dome"
+  ],
+  [
+   668.73,
+   "metal_hit",
+   -14,
+   0.5,
+   "hits on the dome"
+  ],
+  [
+   669.07,
+   "metal_hit",
+   -14,
+   -0.5,
+   "hits on the dome"
+  ],
+  [
+   669.262,
+   "whoosh_long",
+   -10,
+   0.4,
+   "the camera drifts away from the fight"
+  ],
+  [
+   670.19,
+   "wind_gust",
+   -10,
+   0.3,
+   "over the lava, moonlight"
+  ],
+  [
+   670.55,
+   "shine",
+   -8,
+   0.1,
+   "the hot dog in the moonbeam"
+  ],
+  [
+   672.39,
+   "whoosh",
+   -8,
+   -0.3,
+   "whip to the real living room"
+  ],
+  [
+   672.71,
+   "cloth",
+   -10,
+   -0.4,
+   "the hero turns to Dad"
+  ],
+  [
+   673.494,
+   "whoosh",
+   -6,
+   -0.5,
+   "split: the real Dad"
+  ],
+  [
+   673.594,
+   "chat_pop",
+   -8,
+   0.5,
+   "Dad's caps-lock bubble"
+  ],
+  [
+   673.614,
+   "typing",
+   -6,
+   0.5,
+   "CAPS LOCK typing"
+  ],
+  [
+   673.644,
+   "whoosh",
+   -6,
+   0.5,
+   "split: the hot dog"
+  ],
+  [
+   674.85,
+   "riser",
+   -8,
+   0,
+   "into SC 11"
+  ],
+  [
+   675.1,
+   "whoosh",
+   -8,
+   0.3,
+   "back to the tower"
+  ],
+  [
+   675.6,
+   "whoosh_up",
+   -6,
+   0,
+   "tilt up the tower toward the moon"
+  ]
+ ]
+}

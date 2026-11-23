@@ -658,7 +658,7 @@ function shNotNow(t) {
   }
   o += first + pile;
   const big = seg(t, tHundred, tHundred + 0.45);
-  o += G.statPill({ x: 960, y: 900, s: 1.25 + 0.35 * big, k: seg(t, NN.t0() - 0.1, NN.t0() + 0.2), t, anchor: 'center', label: 'NOT NOW, DAD', value: '×' + n, rim: '#FF8A2B', bump: big });
+  o += G.statPill({ x: 960, y: 150, s: 1.25 + 0.35 * big, k: seg(t, NN.t0() - 0.1, NN.t0() + 0.2), t, anchor: 'center', label: 'NOT NOW, DAD', value: '×' + n, rim: '#FF8A2B', bump: big });
   return o + letterbox(1, 60);
 }
 // 28. (beat) the hero slowly rolls over and looks at his Dad
