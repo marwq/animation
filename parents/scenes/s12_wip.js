@@ -469,13 +469,21 @@ function shSignup(t) {
 }
 // ---- 16. "Thank you, Mrs. Mom."
 function shThanks(t) {
-  const DK = { x: 860, y: 900, s: 0.44 }, MM = { x: 1120, y: 900, s: 0.44 };
-  const cam = camKeys(t, [[C.thanks, GS.camAt(990, 640, 1.9)], [C.castle, GS.camAt(990, 650, 2.05)]]);
+  // Mom offers him a water bottle (callback to "Drink some water!"); he takes it shyly on "Mrs. Mom"
+  const DK = { x: 880, y: 900, s: 0.44 }, MM = { x: 1095, y: 900, s: 0.44 };
+  const cam = camKeys(t, [[C.thanks, GS.camAt(990, 645, 1.9)], [C.castle, GS.camAt(990, 655, 2.05)]]);
   const l = GS.arena.layers(t, cam, { time: 'day', cheer: 0.2 });
-  const pat = Math.max(0, Math.sin((t - C.thanks) * 9)) * seg(t, b.mrs - 0.2, b.mrs);
-  const dk = actor('darkblade', t, { ...DK, shy: true, turn: 0.35, headRot: -8 + 4 * pat, armL: 25, armR: 25, bodyY: 6 * pat, face: { name: 'cute', fx: ['blush'] } });
-  const mom = actor('momAvatar', t, { ...MM, armor: 1, sword: false, turn: -0.45, armR: 20, armL: lerp(30, 115, seg(t, b.thank, b.mrs - 0.1)) + 6 * pat, face: { name: 'happy', mouth: 'smile', eyes: { type: 'happy' } } }, { arms: false });
-  let o = l.bg + l.mid + view(cam, mom + dk + G.emoteHearts({ x: DK.x + 30, y: DK.y - 470, age: t - (b.mrs + 0.1), n: 8, s: 0.6, seed: 4 }), 1) + l.front + l.light;
+  const offer = ease.inOut(seg(t, C.thanks + 0.05, b.thank + 0.35)), take = ease.inOut(seg(t, b.mrs - 0.35, b.mrs + 0.05));
+  const pass = t > b.mrs - 0.12;
+  const momP = { ...MM, armor: 1, sword: false, shield: false, turn: -0.45, armR: 20, armL: lerp(lerp(28, 72, offer), 30, pass ? seg(t, b.mrs, b.mrs + 0.35) : 0), face: { name: 'happy', mouth: 'smile', eyes: { type: 'happy' } } };
+  const hm = handAt(DSG.momAvatar1, momP, -1);
+  if (!pass) momP.props = [{ svg: E12.waterBottle(hm[0], hm[1] - 30, 0.9, -8), layer: 'front' }];
+  const dkP = { ...DK, shy: true, turn: 0.35, headRot: -8 + 3 * Math.sin(t * 4), armL: 22, armR: lerp(22, 62, take), bodyY: 3 * Math.abs(Math.sin(t * 7)) * take, face: { name: 'cute', fx: ['blush'] } };
+  const hd = handAt(DSG.darkblade, dkP, 1);
+  if (pass) dkP.props = [{ svg: E12.waterBottle(hd[0], hd[1] - 30, 0.9, 10), layer: 'front' }];
+  const dk = actor('darkblade', t, dkP, { arms: false });
+  const mom = actor('momAvatar', t, momP, { arms: false });
+  let o = l.bg + l.mid + view(cam, mom + dk + G.emoteHearts({ x: DK.x + 20, y: DK.y - 470, age: t - (b.mrs + 0.1), n: 8, s: 0.6, seed: 4 }), 1) + l.front + l.light;
   return o + smash(t, C.thanks, 0.08, 0.3);
 }
 // ---- 17. Granny buys the Block King's castle (SOLD) / 18. COOKIE MUSEUM / 19. TICKETS 10 COINS
