@@ -255,7 +255,7 @@ function shHop1(t) {
 // 7. "Space... BAR!" — split: the real Dad yelling at his laptop | the hot dog pops back and backs up for a run-up
 function realDad(t, pose = {}, o = {}) {
   const LS = H.SPOTS.livingRoom.seats, D = H.SPOTS.livingRoom.devices;
-  const seated = actor('dad', t, H.seatPose(LS.dad, 1.1, pose), o.act || {}) + (o.mom !== false ? actor('mom', t, H.seatPose(LS.mom, 1.04, { face: { name: 'happy', eyes: { look: [0.4, 0.3] } }, ...(o.momPose || {}) })) : '');
+  const seated = actor('dad', t, H.seatPose(LS.dad, 1.1, { volume: false, ...pose }), o.act || {}) + (o.mom !== false ? actor('mom', t, H.seatPose(LS.mom, 1.04, { volume: false, face: { name: 'happy', eyes: { look: [0.4, 0.3] } }, ...(o.momPose || {}) })) : '');
   const devices = X.laptopOld({ ...D.laptop, face: 'lid' }) + X.tablet({ ...D.tablet, face: 'back', landscape: true });
   return E.living(t, o.cam || camAt(1000, 560, 2.2), { glow: 'all' }, { seated, devices, over: o.over || '' });
 }
@@ -801,11 +801,11 @@ function look(t) {
 
 // the evening crowd shot for SC 08's "your dad was everyone's favorite" panel
 function eveShot(t, cam) {
-  const ch = dad(t, { x: DADF.x, y: DADF.y, s: DFS, face: still('joy', { eyes: { type: 'happy' } }), armL: 120 + 20 * Math.sin(t * 6), armR: 120 + 20 * Math.sin(t * 6 + 2), nametag: false }, { arms: false });
+  const ch = dad(t, { x: DADF.x, y: DADF.y, s: DFS, volume: false, face: still('joy', { eyes: { type: 'happy' } }), armL: 120 + 20 * Math.sin(t * 6), armR: 120 + 20 * Math.sin(t * 6 + 2), nametag: false }, { arms: false });
   const kd = KID0(t, { x: KIDP.x, y: KIDP.y, s: sAt(KIDP.y), turn: -0.5, face: 'joy', armL: 120, armR: 120 }, { arms: false });
   const oh = G.overHead(DADF.x, DADF.y, DFS, 'dadAvatar');
   const over = G.nametag({ x: DADF.x, y: oh.tag, name: 'DAD', level: 99, col: '#FF5FA8', crown: true, t, s: 1.1 }) + G.emoteHearts({ x: DADF.x, y: oh.tag - 30, age: (t - T0) % 1.7, n: 14, s: 1.2, seed: 4 });
-  return E.plaza(t, cam, { deep: 1 }, '', eveCrowd(t, 'cheer') + kd + noodleSit(t, { face: 'joy', armL: 140, armR: 140 }) + ch, over);
+  return E.plaza(t, cam, { deep: 1 }, '', eveCrowd(t, 'cheer') + kd + noodleSit(t, { face: 'joy', armL: 140, armR: 140, volume: false }) + ch, over);
 }
 const BEATS = { T0, END, tPress1, tHop1, tTopple1, tSplash1, tResp1, tLeap, tApex, tDrop, tSplash2, tResp2, tJump, tLandJ, tRim, tDadName, tFF0, tFF1, tSun0, tSun1 };
 module.exports = { scene, look, SHOTS, CUT, BEATS, DEFS: E.DEFS, eveShot, DADF, camAt };

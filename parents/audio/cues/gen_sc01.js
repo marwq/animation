@@ -204,7 +204,9 @@ bed(T0, C.arena, 'town', -18);
 bed(C.arena, C.granny, 'crowd', -12);
 bed(C.granny, C.dad, 'wind', -18);
 bed(C.dad, C.realDad, 'night', -16);
-bed(C.realDad, C.emote, 'room', -14);                                  // real Dad + the webcam (the plaza in between)
+bed(C.realDad, C.noJump, 'room', -14);                                 // real Dad
+bed(C.noJump, C.webcam, 'night', -16);                                 // the plaza: PRESS SPACE
+bed(C.webcam, C.emote, 'room', -14);                                   // the webcam
 bed(C.emote, C.freeze, 'crowd', -12);
 bed(C.rewind, C.breakfast, 'static', -16);
 bed(C.breakfast, C.toDay + 0.5, 'kitchen', -14);

@@ -244,9 +244,9 @@ function heroPOV(t, o = {}) {
   const X = require('../rig/extras');
   const lp = (ph) => ({ bodyY: 6 * Math.abs(Math.sin(t * 10 + ph)), headRot: 5 * Math.sin(t * 10 + ph) });
   const fam = o.fam ? o.fam(t) :
-    actor('dad', t, H.seatPose(LS.dad, 1.1, { face: { name: 'joy', eyes: { type: 'happy' } }, ...lp(0) }), { energy: 0 }) +
-    actor('mom', t, H.seatPose(LS.mom, 1.04, { face: { name: 'joy', mouth: 'bigGrin', eyes: { type: 'happy' } }, ...lp(1.3) }), { energy: 0 }) +
-    actor('grandma', t, H.seatPose(LS.grandma, 0.9, { face: { name: 'joy', eyes: { type: 'happy' } }, phone: 'arm', ...lp(2.1) }), { energy: 0 });
+    actor('dad', t, H.seatPose(LS.dad, 1.1, { volume: false, face: { name: 'joy', eyes: { type: 'happy' } }, ...lp(0) }), { energy: 0 }) +
+    actor('mom', t, H.seatPose(LS.mom, 1.04, { volume: false, face: { name: 'joy', mouth: 'bigGrin', eyes: { type: 'happy' } }, ...lp(1.3) }), { energy: 0 }) +
+    actor('grandma', t, H.seatPose(LS.grandma, 0.9, { volume: false, face: { name: 'joy', eyes: { type: 'happy' } }, phone: 'arm', ...lp(2.1) }), { energy: 0 });
   const devices = X.laptopOld({ ...D.laptop, face: 'lid' }) + X.tablet({ ...D.tablet, face: 'back', landscape: true });
   const camP = o.camP || GS.camAt(1330, 560, 1.3);
   let out = living(t, camP, { chair: false, glow: H.deviceGlows(['dad', 'mom', 'grandma'], 1) }, { seated: fam, devices });
@@ -259,7 +259,7 @@ function heroPOV(t, o = {}) {
   out += actor('you', t, { x, y, s, volume: false, turn: 0, armL: 12, armR: 12, face: o.face || { name: 'angry', eyes: { upper: 0.35, look: [0, 0] } }, ...(o.pose || {}) }, o.act || { arms: false, energy: 0.4 });
   // monitor light on the face (+ the anger tint)
   const fx = x, fy = y - 700 * s;
-  out += G.screenGlow(fx, fy, 640 * s, 560 * s, 'blue', 0.75);
+  out += G.screenGlow(fx, fy, 600 * s, 520 * s, '#8FB8FF', 0.55);
   if (o.red) out += S.ellipse(fx, fy + 20 * s, 190 * s, 150 * s, { fill: '#FF3A3A', opacity: f(0.22 * o.red) });
   return out;
 }

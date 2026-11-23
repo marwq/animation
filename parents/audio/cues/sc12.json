@@ -1,0 +1,1449 @@
+{
+ "scene": "SC 12",
+ "start": 742.41,
+ "end": 801.71,
+ "music": [
+  {
+   "start": 742.41,
+   "end": 755.51,
+   "mood": "tender",
+   "energy": 0.3,
+   "in": "fade",
+   "out": "fade"
+  },
+  {
+   "start": 755.51,
+   "end": 764.92,
+   "mood": "family",
+   "energy": 0.55,
+   "in": "swell",
+   "out": "sting"
+  },
+  {
+   "start": 764.92,
+   "end": 774.67,
+   "mood": "lobby",
+   "energy": 0.6,
+   "in": "cut",
+   "out": "cut"
+  },
+  {
+   "start": 774.67,
+   "end": 781.05,
+   "mood": "tycoon",
+   "energy": 0.6,
+   "in": "cut",
+   "out": "cut"
+  },
+  {
+   "start": 781.05,
+   "end": 781.81,
+   "mood": "lobby",
+   "energy": 0.5,
+   "in": "cut",
+   "out": "scratch"
+  },
+  {
+   "start": 781.81,
+   "end": 784.44,
+   "mood": "silence",
+   "energy": 0,
+   "in": "cut",
+   "out": "cut"
+  },
+  {
+   "start": 784.44,
+   "end": 785.93,
+   "mood": "chaos",
+   "energy": 0.6,
+   "in": "cut",
+   "out": "sting"
+  },
+  {
+   "start": 785.93,
+   "end": 792.26,
+   "mood": "family",
+   "energy": 0.5,
+   "in": "swell",
+   "out": "cut"
+  },
+  {
+   "start": 792.26,
+   "end": 801.71,
+   "mood": "outro",
+   "energy": 0.8,
+   "in": "cut",
+   "out": "fade"
+  }
+ ],
+ "ambience": [
+  {
+   "start": 742.41,
+   "end": 755.51,
+   "name": "room",
+   "gain_db": -16
+  },
+  {
+   "start": 742.41,
+   "end": 755.51,
+   "name": "night",
+   "gain_db": -20
+  },
+  {
+   "start": 755.51,
+   "end": 764.92,
+   "name": "kitchen",
+   "gain_db": -14
+  },
+  {
+   "start": 755.51,
+   "end": 764.92,
+   "name": "birds",
+   "gain_db": -18
+  },
+  {
+   "start": 764.92,
+   "end": 767.62,
+   "name": "town",
+   "gain_db": -16
+  },
+  {
+   "start": 767.62,
+   "end": 774.67,
+   "name": "crowd",
+   "gain_db": -14
+  },
+  {
+   "start": 774.67,
+   "end": 781.05,
+   "name": "wind",
+   "gain_db": -18
+  },
+  {
+   "start": 774.67,
+   "end": 781.05,
+   "name": "town",
+   "gain_db": -18
+  },
+  {
+   "start": 781.05,
+   "end": 785.93,
+   "name": "crowd",
+   "gain_db": -14
+  },
+  {
+   "start": 785.93,
+   "end": 801.71,
+   "name": "town",
+   "gain_db": -18
+  },
+  {
+   "start": 792.26,
+   "end": 801.71,
+   "name": "wind",
+   "gain_db": -20
+  }
+ ],
+ "footsteps": [
+  {
+   "start": 774.87,
+   "end": 775.26,
+   "interval": 0.349,
+   "surface": "hard",
+   "gain_db": -10,
+   "pan": 0.4
+  },
+  {
+   "start": 784.44,
+   "end": 785.19,
+   "interval": 0.349,
+   "surface": "hard",
+   "gain_db": -10,
+   "pan": -0.2
+  },
+  {
+   "start": 792.56,
+   "end": 801.31,
+   "interval": 0.196,
+   "surface": "hard",
+   "gain_db": -16,
+   "pan": -0.3
+  }
+ ],
+ "sfx": [
+  [
+   742.46,
+   "tv_on",
+   -14,
+   -0.5,
+   "the TV still shows MVP: DadBod1978"
+  ],
+  [
+   742.76,
+   "whoosh_long",
+   -12,
+   0,
+   "slow pull back from the TV"
+  ],
+  [
+   743.59,
+   "snore",
+   -10,
+   0.029,
+   "Dad snores"
+  ],
+  [
+   744.19,
+   "snore",
+   -14,
+   0.576,
+   "Granny snores"
+  ],
+  [
+   744.3,
+   "whoosh",
+   -10,
+   0.5,
+   "cut to Mom's BEDTIME note"
+  ],
+  [
+   744.5,
+   "countdown_tick",
+   -16,
+   0.6,
+   "the wall clock ticks"
+  ],
+  [
+   744.74,
+   "whoosh",
+   -10,
+   0.6,
+   "whip to the clock"
+  ],
+  [
+   744.92,
+   "paper",
+   -6,
+   0.3,
+   "BEDTIME 11 PM crossed out"
+  ],
+  [
+   744.93,
+   "ui_pop",
+   -8,
+   0.4,
+   "12:30 AM"
+  ],
+  [
+   745,
+   "countdown_tick",
+   -16,
+   0.6,
+   "the wall clock ticks"
+  ],
+  [
+   745.5,
+   "countdown_tick",
+   -16,
+   0.6,
+   "the wall clock ticks"
+  ],
+  [
+   745.81,
+   "whoosh",
+   -12,
+   0,
+   "push in on Mom"
+  ],
+  [
+   746.36,
+   "pop",
+   -8,
+   0.5,
+   "MOM: BEDTIME = 11 PM"
+  ],
+  [
+   746.81,
+   "snore",
+   -12,
+   0.241,
+   "Mom snores softly"
+  ],
+  [
+   747.727,
+   "tap",
+   -12,
+   0.211,
+   "Mom taps the tablet in her sleep"
+  ],
+  [
+   747.75,
+   "punch",
+   -20,
+   0.248,
+   "a tiny K.O. on her screen"
+  ],
+  [
+   748.182,
+   "tap",
+   -12,
+   0.211,
+   "Mom taps the tablet in her sleep"
+  ],
+  [
+   748.636,
+   "tap",
+   -12,
+   0.211,
+   "Mom taps the tablet in her sleep"
+  ],
+  [
+   749.091,
+   "tap",
+   -12,
+   0.211,
+   "Mom taps the tablet in her sleep"
+  ],
+  [
+   749.42,
+   "whoosh",
+   -12,
+   0,
+   "cut: the hero by the couch"
+  ],
+  [
+   749.52,
+   "cloth",
+   -4,
+   -0.044,
+   "he pulls the knitted throw up"
+  ],
+  [
+   750.52,
+   "sparkle",
+   -10,
+   0.029,
+   "tucked in"
+  ],
+  [
+   750.97,
+   "cloth",
+   -12,
+   0.102,
+   "Dad stirs"
+  ],
+  [
+   754.29,
+   "jump",
+   -10,
+   -0.117,
+   "the hero hops onto the couch"
+  ],
+  [
+   754.69,
+   "thud",
+   -12,
+   -0.073,
+   "lands on the cushion"
+  ],
+  [
+   754.71,
+   "cloth",
+   -10,
+   -0.073,
+   "snuggles under the throw"
+  ],
+  [
+   754.79,
+   "heart_pop",
+   -6,
+   -0.018,
+   "hearts"
+  ],
+  [
+   755.51,
+   "whoosh",
+   -6,
+   0,
+   "whip to the next Saturday"
+  ],
+  [
+   755.53,
+   "ui_pop",
+   -8,
+   0,
+   "the calendar pops"
+  ],
+  [
+   755.733,
+   "paper",
+   -8,
+   0,
+   "a page flips"
+  ],
+  [
+   755.75,
+   "whoosh",
+   -12,
+   0,
+   "NEXT SATURDAY"
+  ],
+  [
+   755.856,
+   "paper",
+   -8,
+   0,
+   "a page flips"
+  ],
+  [
+   755.979,
+   "paper",
+   -8,
+   0,
+   "a page flips"
+  ],
+  [
+   756.101,
+   "paper",
+   -8,
+   0,
+   "a page flips"
+  ],
+  [
+   756.224,
+   "paper",
+   -8,
+   0,
+   "a page flips"
+  ],
+  [
+   756.347,
+   "paper",
+   -8,
+   0,
+   "a page flips"
+  ],
+  [
+   756.52,
+   "paper",
+   -6,
+   0,
+   "SAT circled"
+  ],
+  [
+   756.66,
+   "whoosh_down",
+   -10,
+   0,
+   "the calendar drops away"
+  ],
+  [
+   756.82,
+   "pop",
+   -6,
+   0,
+   "GAME NIGHT! ♥"
+  ],
+  [
+   756.91,
+   "whoosh",
+   -8,
+   -0.3,
+   "whip to the kitchen"
+  ],
+  [
+   757.19,
+   "stamp",
+   -4,
+   0.5,
+   "CHAIRMAN: YOU"
+  ],
+  [
+   757.36,
+   "zoom_in",
+   -10,
+   -0.3,
+   "push in on the hero"
+  ],
+  [
+   757.561,
+   "bell",
+   -8,
+   -0.262,
+   "ding! — the spoon taps the glass"
+  ],
+  [
+   757.847,
+   "bell",
+   -8,
+   -0.262,
+   "ding! — the spoon taps the glass"
+  ],
+  [
+   758.133,
+   "bell",
+   -8,
+   -0.262,
+   "ding! — the spoon taps the glass"
+  ],
+  [
+   758.418,
+   "bell",
+   -8,
+   -0.262,
+   "ding! — the spoon taps the glass"
+  ],
+  [
+   758.704,
+   "bell",
+   -8,
+   -0.262,
+   "ding! — the spoon taps the glass"
+  ],
+  [
+   758.95,
+   "whoosh",
+   -10,
+   0,
+   "cut"
+  ],
+  [
+   758.95,
+   "tada",
+   -2,
+   0,
+   "FAMILY GAME NIGHT! title"
+  ],
+  [
+   759,
+   "jump",
+   -8,
+   -0.408,
+   "the hero jumps"
+  ],
+  [
+   759,
+   "confetti",
+   -4,
+   0,
+   "block confetti"
+  ],
+  [
+   760.64,
+   "whoosh",
+   -10,
+   0,
+   "whip to Dad"
+  ],
+  [
+   760.84,
+   "stamp",
+   0,
+   0.3,
+   "SAME SERVER!"
+  ],
+  [
+   760.89,
+   "cloth",
+   -10,
+   0,
+   "Dad throws his arm up"
+  ],
+  [
+   761.8,
+   "whoosh",
+   -10,
+   0.2,
+   "whip to Mom"
+  ],
+  [
+   761.8,
+   "stamp",
+   0,
+   -0.4,
+   "SAME TIME!"
+  ],
+  [
+   762.47,
+   "whoosh",
+   -10,
+   0.4,
+   "close on Granny"
+  ],
+  [
+   763.44,
+   "paper",
+   -4,
+   0.5,
+   "the INVOICE slides in"
+  ],
+  [
+   763.69,
+   "ui_pop",
+   -8,
+   0.5,
+   "CASTLE RENT 50"
+  ],
+  [
+   764.14,
+   "whoosh",
+   -8,
+   -0.3,
+   "whip to the hero"
+  ],
+  [
+   764.24,
+   "cricket",
+   -6,
+   -0.3,
+   "\"...\" the hero, deadpan"
+  ],
+  [
+   764.92,
+   "whoosh",
+   -6,
+   0.4,
+   "whip to Cube City"
+  ],
+  [
+   764.97,
+   "ui_pop",
+   -8,
+   -0.6,
+   "DOUBLE JUMP: SPACE SPACE panel"
+  ],
+  [
+   764.98,
+   "click",
+   -8,
+   -0.5,
+   "SPACE"
+  ],
+  [
+   765.02,
+   "jump_game",
+   -2,
+   0.05,
+   "jump 1"
+  ],
+  [
+   765.26,
+   "click",
+   -8,
+   -0.35,
+   "SPACE"
+  ],
+  [
+   765.3,
+   "jump_game",
+   0,
+   0.05,
+   "jump 2"
+  ],
+  [
+   765.32,
+   "whoosh",
+   -6,
+   0.05,
+   "the flip"
+  ],
+  [
+   765.35,
+   "sparkle",
+   -6,
+   0.3,
+   "x2!"
+  ],
+  [
+   766.04,
+   "land",
+   -4,
+   0.05,
+   "the hero lands"
+  ],
+  [
+   766.1,
+   "whoosh",
+   -8,
+   0,
+   "cut to Dad"
+  ],
+  [
+   766.22,
+   "jump_game",
+   -2,
+   -0.1,
+   "Dad's jump 1 (it works!)"
+  ],
+  [
+   766.37,
+   "confirm",
+   -6,
+   0.4,
+   "JUMP 1 OK!"
+  ],
+  [
+   766.6,
+   "jump_game",
+   -8,
+   -0.1,
+   "jump 2..."
+  ],
+  [
+   766.65,
+   "fall_whistle",
+   -6,
+   0.1,
+   "flailing over the gap"
+  ],
+  [
+   767.07,
+   "big_splash",
+   0,
+   0.15,
+   "SPLASH"
+  ],
+  [
+   767.12,
+   "sad_trombone",
+   -4,
+   0.3,
+   "DOUBLE JUMP: FAILED"
+  ],
+  [
+   767.47,
+   "bubbles",
+   -8,
+   0.15,
+   "he bobs back up"
+  ],
+  [
+   767.49,
+   "boing",
+   -10,
+   0.15,
+   "treading water, waving"
+  ],
+  [
+   767.62,
+   "whoosh",
+   -8,
+   -0.4,
+   "whip to the arena"
+  ],
+  [
+   768.119,
+   "swish",
+   -8,
+   0.248,
+   "Mom demonstrates a swing — the class copies her"
+  ],
+  [
+   768.47,
+   "ui_pop",
+   -6,
+   0,
+   "MOM'S TRAINING CLASS"
+  ],
+  [
+   768.97,
+   "pop",
+   -8,
+   0.6,
+   "FREE WATER!"
+  ],
+  [
+   769.376,
+   "swish",
+   -8,
+   0.248,
+   "Mom demonstrates a swing — the class copies her"
+  ],
+  [
+   769.94,
+   "whoosh",
+   -10,
+   0,
+   "close on DarkBlade"
+  ],
+  [
+   770.04,
+   "chat_pop",
+   -6,
+   -0.2,
+   "\"me first!!\""
+  ],
+  [
+   770.14,
+   "typing",
+   -10,
+   -0.2,
+   "he types it"
+  ],
+  [
+   770.43,
+   "paper",
+   -4,
+   0.5,
+   "the SIGN-UP SHEET slides in"
+  ],
+  [
+   770.73,
+   "typing",
+   -10,
+   0.5,
+   "names fill in"
+  ],
+  [
+   771.16,
+   "sparkle",
+   -6,
+   0.6,
+   "1st! star"
+  ],
+  [
+   772.62,
+   "whoosh",
+   -10,
+   0,
+   "two-shot"
+  ],
+  [
+   772.72,
+   "cloth",
+   -10,
+   0.1,
+   "Mom offers a water bottle"
+  ],
+  [
+   772.77,
+   "blush",
+   -8,
+   -0.1,
+   "DarkBlade blushes"
+  ],
+  [
+   773.49,
+   "pop",
+   -8,
+   0,
+   "he takes the bottle"
+  ],
+  [
+   773.71,
+   "heart_pop",
+   -6,
+   -0.1,
+   "hearts"
+  ],
+  [
+   774.67,
+   "whoosh",
+   -6,
+   0.4,
+   "whip to the Block King's castle"
+  ],
+  [
+   774.77,
+   "rumble",
+   -14,
+   0,
+   "the dark castle looms"
+  ],
+  [
+   774.97,
+   "whoosh_down",
+   -10,
+   0,
+   "tilt down from the stone crown"
+  ],
+  [
+   775.31,
+   "coins",
+   -2,
+   0.3,
+   "Granny pays"
+  ],
+  [
+   775.46,
+   "stamp",
+   2,
+   0.05,
+   "SOLD!"
+  ],
+  [
+   775.51,
+   "ka_ching",
+   -4,
+   0.3,
+   "ka-ching"
+  ],
+  [
+   776.35,
+   "ui_pop",
+   -8,
+   0.5,
+   "NEW OWNER: GrannyGoodies"
+  ],
+  [
+   777.47,
+   "whoosh",
+   -8,
+   0,
+   "wide on the castle"
+  ],
+  [
+   777.59,
+   "fall_whistle",
+   -6,
+   0,
+   "a giant cookie falls"
+  ],
+  [
+   777.77,
+   "stone",
+   -4,
+   0,
+   "the stone crown pops off"
+  ],
+  [
+   777.79,
+   "whoosh_up",
+   -6,
+   -0.3,
+   "it flies away"
+  ],
+  [
+   778.05,
+   "thud",
+   2,
+   0,
+   "THUD! on the keep"
+  ],
+  [
+   778.06,
+   "boom",
+   -6,
+   0,
+   "shake"
+  ],
+  [
+   778.09,
+   "magic",
+   -4,
+   0,
+   "the castle turns pink: COOKIE MUSEUM"
+  ],
+  [
+   778.16,
+   "tada",
+   -4,
+   0.5,
+   "COOKIE MUSEUM sign"
+  ],
+  [
+   779.61,
+   "whoosh",
+   -8,
+   -0.3,
+   "whip to the ticket booth"
+  ],
+  [
+   779.66,
+   "ui_pop",
+   -8,
+   -0.8,
+   "coin counter: 12"
+  ],
+  [
+   780.17,
+   "money_counter",
+   -6,
+   -0.8,
+   "12 -> 2"
+  ],
+  [
+   780.23,
+   "coin",
+   -6,
+   -0.1,
+   "a coin flies to Granny"
+  ],
+  [
+   780.3,
+   "coin",
+   -6,
+   -0.1,
+   "a coin flies to Granny"
+  ],
+  [
+   780.37,
+   "coin",
+   -6,
+   -0.1,
+   "a coin flies to Granny"
+  ],
+  [
+   780.44,
+   "coin",
+   -6,
+   -0.1,
+   "a coin flies to Granny"
+  ],
+  [
+   780.51,
+   "coin",
+   -6,
+   -0.1,
+   "a coin flies to Granny"
+  ],
+  [
+   780.67,
+   "squeak",
+   -8,
+   -0.2,
+   "two coins left"
+  ],
+  [
+   781.05,
+   "whoosh",
+   -8,
+   0,
+   "whip back to the class"
+  ],
+  [
+   781.1,
+   "notify",
+   2,
+   0.25,
+   "\"DarkBlade's mom joined the server\""
+  ],
+  [
+   781.81,
+   "dramatic",
+   0,
+   0,
+   "the class freezes"
+  ],
+  [
+   781.83,
+   "pop",
+   -6,
+   0,
+   "!"
+  ],
+  [
+   782.18,
+   "respawn",
+   -2,
+   -0.394,
+   "she spawns"
+  ],
+  [
+   782.28,
+   "sparkle",
+   -6,
+   -0.394,
+   "spawn light"
+  ],
+  [
+   783.25,
+   "impact",
+   0,
+   0,
+   "smash zoom on DarkBlade"
+  ],
+  [
+   783.27,
+   "zoom_in",
+   -6,
+   0,
+   "zoom lines"
+  ],
+  [
+   783.43,
+   "shock",
+   -6,
+   0.5,
+   "!!!"
+  ],
+  [
+   784.44,
+   "whoosh",
+   -10,
+   0,
+   "cut"
+  ],
+  [
+   784.59,
+   "swish",
+   -12,
+   -0.262,
+   "she shakes the rolling pin"
+  ],
+  [
+   784.81,
+   "swish",
+   -12,
+   -0.262,
+   "she shakes the rolling pin"
+  ],
+  [
+   785.03,
+   "swish",
+   -12,
+   -0.262,
+   "she shakes the rolling pin"
+  ],
+  [
+   785.29,
+   "slap",
+   2,
+   0.05,
+   "MOM HIGH FIVE!"
+  ],
+  [
+   785.31,
+   "sparkle",
+   -6,
+   0.05,
+   "burst"
+  ],
+  [
+   785.34,
+   "heart_pop",
+   -8,
+   0.05,
+   "hearts"
+  ],
+  [
+   785.39,
+   "crowd_cheer",
+   -10,
+   0,
+   "the stands"
+  ],
+  [
+   785.93,
+   "whoosh",
+   -6,
+   0,
+   "flash to the plaza at sunset"
+  ],
+  [
+   787.07,
+   "impact",
+   -4,
+   0,
+   "smash zoom: \"if YOUR parents...\""
+  ],
+  [
+   787.09,
+   "zoom_in",
+   -6,
+   0,
+   "zoom lines"
+  ],
+  [
+   787.46,
+   "pop",
+   -12,
+   -0.3,
+   "the parents wave"
+  ],
+  [
+   788.26,
+   "whoosh",
+   -10,
+   0,
+   "pull back"
+  ],
+  [
+   789.05,
+   "drumroll",
+   -4,
+   0,
+   "roulette spotlight"
+  ],
+  [
+   789.08,
+   "countdown_tick",
+   -10,
+   -0.321,
+   "the spotlight hops"
+  ],
+  [
+   789.113,
+   "countdown_tick",
+   -10,
+   -0.157,
+   "the spotlight hops"
+  ],
+  [
+   789.15,
+   "countdown_tick",
+   -10,
+   0.018,
+   "the spotlight hops"
+  ],
+  [
+   789.191,
+   "countdown_tick",
+   -10,
+   -0.481,
+   "the spotlight hops"
+  ],
+  [
+   789.237,
+   "countdown_tick",
+   -10,
+   -0.321,
+   "the spotlight hops"
+  ],
+  [
+   789.292,
+   "countdown_tick",
+   -10,
+   -0.157,
+   "the spotlight hops"
+  ],
+  [
+   789.361,
+   "countdown_tick",
+   -10,
+   0.018,
+   "the spotlight hops"
+  ],
+  [
+   789.46,
+   "countdown_tick",
+   -10,
+   -0.481,
+   "the spotlight hops"
+  ],
+  [
+   789.84,
+   "rimshot",
+   0,
+   0.018,
+   "it lands on the hot dog: NOOB?"
+  ],
+  [
+   789.89,
+   "pop",
+   -6,
+   0.018,
+   "NOOB? tag"
+  ],
+  [
+   789.99,
+   "kids_laugh",
+   -10,
+   0,
+   "the family laughs"
+  ],
+  [
+   790.65,
+   "ui_pop",
+   -6,
+   0,
+   "comment card"
+  ],
+  [
+   790.95,
+   "typing",
+   -6,
+   0,
+   "\"my dad. 100%\""
+  ],
+  [
+   791.61,
+   "heart_pop",
+   -4,
+   0.3,
+   "a like"
+  ],
+  [
+   792.26,
+   "whoosh",
+   -6,
+   0,
+   "flash to the rooftop: END SCREEN"
+  ],
+  [
+   792.51,
+   "ui_pop",
+   -6,
+   -0.6,
+   "subscribe circle"
+  ],
+  [
+   792.66,
+   "ui_pop",
+   -8,
+   0.5,
+   "video slot 1"
+  ],
+  [
+   792.81,
+   "ui_pop",
+   -8,
+   0.5,
+   "video slot 2"
+  ],
+  [
+   792.86,
+   "jump_game",
+   -8,
+   -0.044,
+   "Dad tries again"
+  ],
+  [
+   793.26,
+   "whoosh",
+   -10,
+   -0.044,
+   "...the second jump flips him"
+  ],
+  [
+   793.71,
+   "bonk",
+   -6,
+   -0.044,
+   "onto his head"
+  ],
+  [
+   793.76,
+   "dizzy",
+   -12,
+   -0.044,
+   "dizzy stars"
+  ],
+  [
+   794.51,
+   "boing",
+   -10,
+   -0.044,
+   "flips back up"
+  ],
+  [
+   795.26,
+   "jump_game",
+   -8,
+   -0.044,
+   "Dad tries again"
+  ],
+  [
+   795.66,
+   "whoosh",
+   -10,
+   -0.044,
+   "...the second jump flips him"
+  ],
+  [
+   796.11,
+   "bonk",
+   -6,
+   -0.044,
+   "onto his head"
+  ],
+  [
+   796.16,
+   "dizzy",
+   -12,
+   -0.044,
+   "dizzy stars"
+  ],
+  [
+   796.91,
+   "boing",
+   -10,
+   -0.044,
+   "flips back up"
+  ],
+  [
+   797.66,
+   "jump_game",
+   -8,
+   -0.044,
+   "Dad tries again"
+  ],
+  [
+   798.06,
+   "whoosh",
+   -10,
+   -0.044,
+   "...the second jump flips him"
+  ],
+  [
+   798.51,
+   "bonk",
+   -6,
+   -0.044,
+   "onto his head"
+  ],
+  [
+   798.56,
+   "dizzy",
+   -12,
+   -0.044,
+   "dizzy stars"
+  ],
+  [
+   799.31,
+   "boing",
+   -10,
+   -0.044,
+   "flips back up"
+  ],
+  [
+   799.41,
+   "jump_game",
+   -2,
+   -0.044,
+   "the last try: jump 1"
+  ],
+  [
+   799.66,
+   "jump_game",
+   0,
+   -0.044,
+   "jump 2 — a real DOUBLE JUMP"
+  ],
+  [
+   799.86,
+   "achievement",
+   0,
+   -0.3,
+   "DOUBLE JUMP!"
+  ],
+  [
+   800.26,
+   "land",
+   -2,
+   -0.044,
+   "he lands it"
+  ],
+  [
+   800.26,
+   "confetti",
+   -4,
+   0,
+   "confetti"
+  ],
+  [
+   800.31,
+   "crowd_cheer",
+   -8,
+   -0.3,
+   "the family cheers"
+  ],
+  [
+   801.26,
+   "whoosh_down",
+   -12,
+   0,
+   "fade to black"
+  ]
+ ]
+}

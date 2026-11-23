@@ -147,6 +147,12 @@ const monScreen = (t) => boardScreen(t, 1, 1);
 // the family on the couch + armchair. o.dad/o.mom/o.gran = pose extras, o.*Act = act
 function family(t, o = {}) {
   let s = '';
+  if (o.cam) {                                     // skip whoever is out of frame
+    const out = (x) => { const q = GS.toScreen(o.cam, x, 600); return q.x < -260 * o.cam.zoom || q.x > 1920 + 260 * o.cam.zoom; };
+    if (out(LS.dad.x)) o.dad = false;
+    if (out(LS.mom.x)) o.mom = false;
+    if (out(LS.grandma.x)) o.gran = false;
+  }
   if (o.dad !== false) s += actor('dad', t, H.seatPose(LS.dad, 1.1, { t, ...(o.dad || {}) }), o.dadAct || { energy: 0 });
   if (o.mom !== false) s += actor('mom', t, H.seatPose(LS.mom, 1.04, { t, ...(o.mom || {}) }), o.momAct || { energy: 0 });
   if (o.gran !== false) s += actor('grandma', t, H.seatPose(LS.grandma, 0.9, { t, ...(o.gran || {}) }), o.granAct || { energy: 0 });
@@ -182,27 +188,40 @@ function needle(x, y, a = 0, len = 300) {
 }
 
 // ---------------------------------------------------------------- game panels (full 1920x1080 frames, cropped by E.panel)
+// (cheap hand-made game frames: a full game set inside a panel costs a second frame)
 function momPanel(t) {
-  const cam = camAt(960, 660, 1.3);
-  const La = GS.arena.layers(t, cam, { time: 'day', cheer: 1, board: ['MOM_OFFICIAL', '#1'] });
+  let o = S.rect(0, 0, 1920, 1080, 0, { fill: '#7FC8FF' }) + S.rect(0, 0, 1920, 260, 0, { fill: '#A8DBFF' });
+  // the stands: a stone wall with a crowd band (one path of heads) and pennants
+  o += S.rect(-20, 250, 1960, 330, 0, { fill: '#8A7FA8', stroke: '#151515', 'stroke-width': 8 });
+  let heads = '';
+  for (let r = 0; r < 3; r++) for (let i = 0; i < 26; i++) { const x = 20 + i * 74 + (r % 2) * 37, y = 300 + r * 86 - 18 * Math.abs(Math.sin(t * 9 + i + r)); heads += `M${f(x - 26)} ${f(y)}a26 26 0 1 0 52 0a26 26 0 1 0 -52 0Z`; }
+  o += S.path(heads, { fill: '#5A4F78', opacity: 0.85 });
+  o += S.rect(560, 210, 800, 120, 24, ol('#2A2E4A', 8)) + TF('MOM_OFFICIAL  #1', 960, 292, 72, '#FFD23F');
+  o += S.rect(-20, 570, 1960, 60, 0, ol('#6A5F88', 8));
+  // the ring
+  o += S.ellipse(960, 900, 1100, 300, ol('#F2D9A0', 10)) + S.ellipse(960, 900, 760, 190, { fill: 'none', stroke: '#E8453C', 'stroke-width': 14 });
+  let ch = actor('player', t, { i: 6, x: 1350, y: 905, s: 0.62, volume: false, rot: -84, view: 'side', nametag: false, face: { name: 'dizzy' }, armL: 160, armR: 150, shadow: false });
   const sw = Math.sin(t * 5);
-  let ch = actor('player', t, { i: 6, x: 1330, y: 905, s: 0.4, rot: -84, view: 'side', nametag: false, face: { name: 'dizzy' }, armL: 160, armR: 150, shadow: false });
-  ch += actor('momAvatar', t, { x: 880, y: 905, s: 0.44, armor: 1, armR: 160 + 6 * sw, armL: 50, swordGlow: 1, face: { name: 'happy', eyes: { type: 'happy' } }, lift: 10 * Math.abs(sw), nametag: false }, { arms: false, energy: 0 });
-  let over = G.koStars({ x: 1250, y: 820, t, s: 0.9, text: 'K.O.' });
-  const oh = G.overHead(880, 905, 0.44, 'momAvatar');
-  over += G.nametag({ x: 880, y: oh.tag, who: 'mom', level: 99, crown: true, t, s: 1.25 });
-  return La.bg + La.mid + view(cam, ch + over) + La.front + La.fg + La.light;
+  ch += actor('momAvatar', t, { x: 820, y: 960, s: 0.62, volume: false, armor: 1, armR: 160 + 6 * sw, armL: 50, swordGlow: 1, face: { name: 'happy', eyes: { type: 'happy' } }, lift: 10 * Math.abs(sw), nametag: false }, { arms: false, energy: 0 });
+  o += ch + G.koStars({ x: 1240, y: 780, t, s: 1.2, text: 'K.O.' });
+  return o;
 }
 function grannyPanel(t) {
-  const cam = camAt(1520, 330, 0.62);
-  const Lt = GS.tycoon.layers(t, cam, { time: 'day', granny: 4, billboard: 0, neon: 1 });
-  const ch = actor('grandmaAvatar', t, { x: 1520, y: 930, s: 0.42, coins: 0.5 + 0.5 * Math.abs(Math.sin(t * 4)), armR: 120, face: { name: 'rich' }, nametag: false }, { arms: false, energy: 0 });
-  let o = Lt.bg + Lt.mid + view(cam, ch) + Lt.front + Lt.light;
-  o += G.coinCounter({ x: 960, y: 150, s: 2.1, value: 9999999, rocket: 1, t, anchor: 'center' });
+  let o = S.rect(0, 0, 1920, 1080, 0, { fill: '#8FD3FF' }) + S.rect(0, 700, 1920, 380, 0, { fill: '#BFE8FF' });
+  for (const [x, y, r] of [[300, 300, 90], [1650, 420, 70], [1200, 180, 60]]) o += S.rect(x - r * 1.6, y - r * 0.6, r * 3.2, r * 1.2, r * 0.3, { fill: '#FFFFFF', opacity: 0.9 });
+  // the floating plot + the glass tower
+  o += S.path('M300 900 L1620 900 L1500 1000 L1300 1060 L620 1060 L420 1000 Z', ol('#9A6A3A', 8)) + S.rect(300, 860, 1320, 60, 14, ol('#5FCB5A', 8));
+  o += S.rect(1240, -40, 300, 900, 0, ol('#7FC4E8', 8)) + S.rect(1290, -40, 200, 900, 0, { fill: '#A9E0FF' });
+  let win = '';
+  for (let r = 0; r < 12; r++) for (let c = 0; c < 3; c++) win += `M${1262 + c * 92} ${f(10 + r * 70)}h70v40h-70Z`;
+  o += S.path(win, { fill: '#E2F6FF', stroke: '#4A8AB0', 'stroke-width': 4 });
+  o += S.rect(1330, 260, 120, 420, 14, ol('#FF7AB8', 6)) + TF('GRANNY', 1390, 470, 40, '#FFFFFF', { transform: 'rotate(90 1390 470)' });
+  o += actor('grandmaAvatar', t, { x: 760, y: 900, s: 0.72, volume: false, coins: 0.5 + 0.5 * Math.abs(Math.sin(t * 4)), armR: 120, face: { name: 'rich' }, nametag: false }, { arms: false, energy: 0 });
+  o += G.coinCounter({ x: 640, y: 150, s: 2.1, value: 9999999, rocket: 1, t, anchor: 'center' });
   return o;
 }
 function dadPanel(t) {
-  return S7.eveShot(t, camAt(2400, 790, 1.08));
+  return serverPanel(t);
 }
 // cheap mini-panels for "My friends! My server!"
 function friendsPanel(t) {
@@ -272,7 +291,7 @@ function memory(t, kind = 'day', dadPose = {}) {
   const Lb = H.bedroom.layers(t, { time: kind === 'night' ? 'night' : kind === 'evening' ? 'evening' : 'day', door: 0.92, lamp: kind === 'night' ? 1 : 0, alarm: 0 });
   const hero = actor('you', 0, { x: 1420, y: 770 + 153, s: 0.5, view: 'back', headset: true, volume: false, armL: 30, armR: 30 }, { energy: 0 });
   const dd = actor('dad', 0, { x: DOOR.exit.x, y: DOOR.exit.y, s: 0.5, turn: -0.4, volume: false, glasses: 'up', armL: 10, armR: 120, face: { name: 'happy', mouth: 'smile' }, ...dadPose }, { energy: 0 });
-  return view(cam, Lb.bg, 0.8) + view(cam, Lb.mid + hero + Lb.front + dd + Lb.light);
+  return view(cam, Lb.mid + hero + Lb.front + dd + Lb.light);
 }
 // a cheap snapshot for the "Not now, Dad" pile: Dad in a doorway asking (flat shapes), the caption under it
 function snapDad(seed) {
@@ -295,7 +314,7 @@ function snapDad(seed) {
 // 1. "Your mom was the best fighter." — Mom cracking up at her tablet; her game window pops out: BEST FIGHTER
 function shMom(t) {
   const cam = camKeys(t, [[CUT.mom, camAt(1340, 560, 1.95, 560, 600)], [CUT.granny, camAt(1340, 555, 2.1, 560, 600)]], ease.inOut);
-  const seated = family(t, { mom: { face: LAUGH, ...lb(1, t) }, dad: { face: LAUGH, ...lb(0, t) }, gran: { phone: 'arm', face: LAUGH, ...lb(2, t) } });
+  const seated = family(t, { cam, mom: { face: LAUGH, ...lb(1, t) }, dad: { face: LAUGH, volume: false, ...lb(0, t) }, gran: { phone: 'arm', face: LAUGH, volume: false, ...lb(2, t) } });
   let o = room(t, cam, {}, { seated, mon: false });
   const k = seg(t, CUT.mom + 0.15, CUT.mom + 0.5);
   o += panel(1010, 120, 840, 472, momPanel(t), { k, rot: 3, label: 'BEST FIGHTER', labelCol: '#FF5FA8', ly: 600 });
@@ -306,7 +325,7 @@ function shMom(t) {
 // 2. "Your granny was the richest player." — whip right to Granny + her phone; RICHEST PLAYER (coins rocketing)
 function shGranny(t) {
   const cam = camKeys(t, [[CUT.granny, camAt(1752, 590, 2.0, 1380, 600)], [CUT.dad, camAt(1752, 585, 2.12, 1380, 600)]], ease.inOut);
-  const seated = family(t, { mom: { face: LAUGH, ...lb(1, t) }, dad: { face: LAUGH, ...lb(0, t) }, gran: { phone: 'arm', face: { name: 'joy', mouth: 'bigGrin', eyes: { type: 'robux' } }, ...lb(2, t) } });
+  const seated = family(t, { cam, mom: { face: LAUGH, volume: false, ...lb(1, t) }, dad: false, gran: { phone: 'arm', face: { name: 'joy', mouth: 'bigGrin', eyes: { type: 'robux' } }, ...lb(2, t) } });
   let o = room(t, cam, {}, { seated, mon: false });
   const k = seg(t, CUT.granny + 0.12, CUT.granny + 0.45);
   o += panel(70, 110, 840, 472, grannyPanel(t), { k, rot: -3, label: 'RICHEST PLAYER', labelCol: '#B57BFF', ly: 592 });
@@ -316,7 +335,7 @@ function shGranny(t) {
 // 3. "Your dad was everyone's favorite." — whip left to Dad laughing at his laptop; EVERYONE'S FAVORITE (the DAD crowd)
 function shDad(t) {
   const cam = camKeys(t, [[CUT.dad, camAt(1000, 560, 2.0, 560, 600)], [CUT.behind, camAt(1000, 556, 2.14, 560, 600)]], ease.inOut);
-  const seated = family(t, { mom: { face: LAUGH, ...lb(1, t) }, dad: { face: { name: 'joy', mouth: 'bigGrin', eyes: { type: 'happy' }, fx: ['blush'] }, ...lb(0, t, 1.3) }, gran: { phone: 'arm', face: LAUGH } });
+  const seated = family(t, { cam, mom: { face: LAUGH, volume: false, ...lb(1, t) }, dad: { face: { name: 'joy', mouth: 'bigGrin', eyes: { type: 'happy' }, fx: ['blush'] }, ...lb(0, t, 1.3) }, gran: false });
   let o = room(t, cam, {}, { seated, mon: { screen: monScreen(t) }, dev: { lap: { y: 846 } } });
   const k = seg(t, CUT.dad + 0.12, CUT.dad + 0.45);
   o += panel(1010, 110, 840, 472, dadPanel(t), { k, rot: 2, label: "EVERYONE'S FAVORITE", labelCol: '#FFD23F', ly: 592 });
@@ -326,7 +345,7 @@ function shDad(t) {
 // 4. "And you..." — from behind the hero at his PC: the family laughing in the screen glow; he sits alone in the dark
 function shBehind(t) {
   const cam = camKeys(t, [[CUT.behind, { zoom: 1.0, x: 40, y: 20 }], [CUT.board, { zoom: 1.24, x: -170, y: 30 }]], ease.inOut);
-  const seated = family(t, { mom: { face: LAUGH, ...lb(1, t) }, dad: { face: LAUGH, ...lb(0, t) }, gran: { phone: 'arm', face: LAUGH, ...lb(2, t) } }) + heroSeat(t, { headRot: -3 });
+  const seated = family(t, { cam, mom: { face: LAUGH, ...lb(1, t) }, dad: { face: LAUGH, ...lb(0, t) }, gran: { phone: 'arm', face: LAUGH, ...lb(2, t) } }) + heroSeat(t, { headRot: -3 });
   let o = room(t, cam, { glowK: 1.2 }, { seated, mon: { screen: monScreen(t) } });
   o += S.rect(0, 0, 1920, 1080, 0, { fill: 'url(#s08Cold)' });
   const ha = (txt, x, y, ph) => TS(txt, x, y + 6 * Math.sin(t * 9 + ph), 56, '#FFD23F', { opacity: 0.8 });
@@ -389,6 +408,7 @@ function famTurned(t, t0, extra = {}) {
   const jolt = boing(t, t0, 0.18);
   const shock = (look) => ({ name: 'shocked', eyes: { look }, fx: k > 0.5 ? ['exclaim'] : [] });
   return family(t, {
+    cam: extra.cam,
     dad: { face: k > 0.3 ? shock([-1, -0.1]) : LAUGH, turn: -0.35 * k, ...jolt, ...(extra.dad || {}) },
     mom: { face: k > 0.3 ? shock([-1, -0.1]) : LAUGH, turn: -0.45 * k, ...jolt, ...(extra.mom || {}) },
     gran: { phone: 'arm', face: k > 0.3 ? shock([-1, 0]) : LAUGH, turn: -0.25 - 0.35 * k, ...jolt, ...(extra.gran || {}) },
@@ -397,7 +417,7 @@ function famTurned(t, t0, extra = {}) {
 function shMyGame(t) {
   const cam = shakeAll(camKeys(t, [[CUT.mygame, { zoom: 1.12, x: 60, y: 30 }], [CUT.friends, { zoom: 1.2, x: 20, y: 20 }]], ease.out), t, [[w(2, 'MY'), 0.3, 8]]);
   const up = ease.outBack(seg(t, CUT.mygame, CUT.mygame + 0.25));
-  const seated = famTurned(t, tTurnFam);
+  const seated = famTurned(t, tTurnFam, { cam });
   const hero = actor('you', t, { x: STAND.x, y: STAND.y, s: 0.5, turn: 0.55, lift: 40 * bump(t, CUT.mygame, CUT.mygame + 0.3), ...boing(t, CUT.mygame + 0.25, 0.25), face: { name: 'angry', fx: ['anger'] }, armL: 30 + 20 * up, armR: 30 + 20 * up }, { energy: 2 });
   let o = room(t, cam, { glowK: 0.9 }, { seated, standing: hero, mon: { fold: 1 } });
   return o + K.bang('MY GAME!', 980, 220, pop(t, w(2, 'MY'), 0.2) * (1 - seg(t, CUT.friends - 0.15, CUT.friends)), 110, -5, '#FF5A4A');
@@ -405,7 +425,7 @@ function shMyGame(t) {
 // 9. "My friends! My server!" — medium on him; on each word a panel of what he lost pops, stamped
 function shFriends(t) {
   const cam = shakeAll(camKeys(t, [[CUT.friends, camAt(STAND.x + 40, 640, 2.05, 600, 560)], [tServer - 0.05, camAt(STAND.x + 40, 640, 2.12, 600, 560)], [tServer + 0.05, camAt(STAND.x + 40, 630, 2.3, 600, 560)], [CUT.every, camAt(STAND.x + 40, 628, 2.36, 600, 560)]], ease.out), t, [[tFriends, 0.25, 8], [tServer, 0.25, 10]]);
-  const seated = famTurned(t, tTurnFam - 5);
+  const seated = famTurned(t, tTurnFam - 5, { cam, dad: { volume: false }, mom: { volume: false }, gran: { volume: false } });
   const hero = actor('you', t, { x: STAND.x, y: STAND.y, s: 0.5, turn: 0.5, face: { name: 'angry', fx: ['anger'] } }, { energy: 2 });
   let o = room(t, cam, { glowK: 0.9 }, { seated, standing: hero, mon: { fold: 1 } });
   o += S.rect(0, 0, 1920, 1080, 0, { fill: '#2A0A1A', opacity: 0.25 });
@@ -419,7 +439,7 @@ function shFriends(t) {
 // 10. "You're taking EVERYTHING!" — smash zoom: the scream, red zoom lines, shake
 function shEvery(t) {
   const cam = shakeAll(camKeys(t, [[CUT.every, camAt(STAND.x + 10, 636, 2.6)], [tEvery - 0.06, camAt(STAND.x + 10, 634, 2.75)], [tEvery + 0.06, camAt(STAND.x + 10, 628, 3.4)], [CUT.sweetie, camAt(STAND.x + 10, 627, 3.5)]], ease.out), t, [[tEvery, 0.6, 18]]);
-  const seated = famTurned(t, tTurnFam - 5);
+  const seated = famTurned(t, tTurnFam - 5, { cam });
   const hero = actor('you', t, { x: STAND.x, y: STAND.y, s: 0.5, turn: 0.3, volume: false, face: t > tEvery - 0.1 ? { name: 'scream', fx: ['anger', 'steam'] } : { name: 'angry', fx: ['anger'] }, armL: 40 + 40 * bump(t, tEvery - 0.1, A[2].b), armR: 40 + 40 * bump(t, tEvery - 0.1, A[2].b) }, { energy: 2 });
   let o = room(t, cam, { glowK: 0.9 }, { seated, standing: hero, mon: { fold: 1 } });
   const zk = seg(t, tEvery - 0.06, tEvery + 0.1) * (1 - seg(t, A[2].b + 0.1, CUT.sweetie));
@@ -429,7 +449,7 @@ function shEvery(t) {
 // 11. MOM: "Sweetie..." — soft close on Mom, the tablet lowering, a hand reaching out
 function shSweetie(t) {
   const cam = camKeys(t, [[CUT.sweetie, camAt(1340, 540, 2.35, 1100, 560)], [CUT.never, camAt(1340, 535, 2.5, 1100, 560)]], ease.inOut);
-  const seated = family(t, { mom: { face: { name: 'sad', eyes: { look: [-1, -0.1] } }, turn: -0.45, armL: 40 + 20 * seg(t, CUT.sweetie, A[3].b) }, momAct: { energy: 0.5, arms: false }, dad: { face: { name: 'sad', eyes: { look: [-1, 0] } }, turn: -0.35 }, gran: { phone: 'arm', face: { name: 'sad', eyes: { look: [-1, 0] } }, turn: -0.6 } });
+  const seated = family(t, { cam, mom: { face: { name: 'sad', eyes: { look: [-1, -0.1] } }, turn: -0.45, armL: 40 + 20 * seg(t, CUT.sweetie, A[3].b) }, momAct: { energy: 0.5, arms: false }, dad: { face: { name: 'sad', eyes: { look: [-1, 0] } }, turn: -0.35 }, gran: { phone: 'arm', face: { name: 'sad', eyes: { look: [-1, 0] } }, turn: -0.6 } });
   return room(t, cam, { glowK: 0.7 }, { seated, mon: { fold: 1 }, dev: { tab: { y: 760, rot: -8 } } });
 }
 // 12. "I wish you never joined!" — close on him: the tears, the scream; he spins and bolts
@@ -437,7 +457,7 @@ function shNever(t) {
   const tGo = A[4].b - 0.08;
   const cam = shakeAll(camKeys(t, [[CUT.never, camAt(STAND.x, 634, 2.7)], [tJoined, camAt(STAND.x, 631, 2.9)], [CUT.stairs, camAt(STAND.x + 60, 630, 3.0)]], ease.out), t, [[tJoined, 0.4, 12]]);
   const go = seg(t, tGo, CUT.stairs);
-  const seated = famTurned(t, tTurnFam - 5);
+  const seated = famTurned(t, tTurnFam - 5, { cam });
   const face = { name: 'angry', mouth: t > w(4, 'never') ? 'scream' : 'teeth', fx: ['tears', 'anger'] };
   const hero = go <= 0 ? actor('you', t, { x: STAND.x, y: STAND.y, s: 0.5, turn: 0.25, volume: false, face, headRot: 2 * Math.sin(t * 40) }, { energy: 1.8 })
     : actor('you', t, { x: STAND.x + 900 * ease.in(go), y: STAND.y, s: 0.5, view: 'side', flip: true, volume: false, ...AC.run(t * 22), lean: 14, face: { name: 'crying' } }, { arms: false });
@@ -485,7 +505,7 @@ function dadGlassesPose(t, base = {}) {
 }
 function shSilent(t) {
   const cam = camKeys(t, [[CUT.silent, { zoom: 1.04, x: 100, y: 20 }], [CUT.silent + 0.35, { zoom: 1.06, x: 110, y: 18 }], [tGlassOff, { zoom: 1.66, x: 200, y: -36 }], [CUT.gtalk, { zoom: 1.78, x: 210, y: -44 }]], ease.inOut);
-  const seated = family(t, {
+  const seated = family(t, { cam,
     dad: dadGlassesPose(t, { turn: -0.15 }), dadAct: { energy: 0, arms: false },
     mom: { face: { name: 'sad', eyes: { look: t > A[5].a - 0.3 ? [-0.9, 0.1] : [1, -0.1] } }, turn: t > A[5].a - 0.3 ? -0.35 : 0.2 }, momAct: { energy: 0.4, arms: false },
     gran: { knitting: true, face: { name: 'sad', eyes: { look: [1, 0.1] } }, turn: 0.1 },
@@ -500,7 +520,7 @@ function granKnit(t, extra = {}) {
 }
 function shGTalk(t) {
   const cam = camKeys(t, [[CUT.gtalk, camAt(1745, 600, 2.4, 1250, 560)], [CUT.notyou, camAt(1745, 596, 2.55, 1250, 560)]], ease.inOut);
-  const seated = family(t, { dad: dadGlassesPose(t, { turn: -0.1 }), mom: { face: { name: 'sad', eyes: { look: [1, 0] } }, turn: 0.3 }, gran: granKnit(t), granAct: { energy: 0.5, arms: false } });
+  const seated = family(t, { cam, dad: dadGlassesPose(t, { turn: -0.1 }), mom: { face: { name: 'sad', eyes: { look: [1, 0] } }, turn: 0.3 }, gran: granKnit(t), granAct: { energy: 0.5, arms: false } });
   return room(t, cam, { glowK: 0.6, set: { lamp: 0.4 } }, { seated, mon: { fold: 1 } }) + letterbox(1, 60);
 }
 // 16. "Not you." — Mom half-way up, Granny's needle stops her; Mom sits back down
@@ -512,7 +532,7 @@ function shNotYou(t) {
   const gp = { knitting: false, armL: ga, armR: 24, face: { name: 'deadpan', eyes: { look: [-1, -0.2] } } };
   const h = CAST.handAt(CAST.D.grandma, { armL: ga, turn: -0.25 }, -1);
   gp.props = [{ svg: needle(h[0], h[1], -55 * nk + 0, 300) + X.knittingYarn({ x: 90, y: -300, s: 0.7, ball: [180, 200], needles: false }), layer: 'front' }];
-  const seated = family(t, {
+  const seated = family(t, { cam,
     dad: dadGlassesPose(t, { turn: 0.25, face: { name: 'sad', eyes: { look: [1, 0] } } }),
     mom: { y: H.seatPose(LS.mom, 1.04).y - 90 * rise, lean: 14 * rise, face: { name: rise > 0.5 && t > w(6, 'you', 1) ? 'nervous' : 'sad', eyes: { look: [1, 0] } }, turn: 0.3, armL: 20 + 30 * rise, armR: 20 + 30 * rise },
     gran: gp, granAct: { energy: 0.5, arms: false },
@@ -528,7 +548,7 @@ function shHim(t) {
   const h = CAST.handAt(CAST.D.grandma, { armL: ga, turn: -0.5 }, -1);
   gp.props = [{ svg: needle(h[0], h[1], lerp(-55, -4, sw), 320) + X.knittingYarn({ x: 90, y: -300, s: 0.7, ball: [180, 200], needles: false }), layer: 'front' }];
   const hit = t >= tHim;
-  const seated = family(t, {
+  const seated = family(t, { cam,
     dad: dadGlassesPose(t, { turn: hit ? 0.3 : 0.2, face: hit ? { name: 'shocked', eyes: { look: [1, 0] }, fx: ['sweat'] } : { name: 'sad', eyes: { look: [1, 0] } }, ...boing(t, tHim, 0.15) }),
     mom: { face: { name: 'happy', eyes: { look: [-1, 0] } }, turn: -0.3 },
     gran: gp, granAct: { energy: 0.5, arms: false },
@@ -595,7 +615,7 @@ function shNoob(t) {
 // 23. "You've been in that world for a whole year..." — a year of polaroids: always at the desk, Dad always at the door
 function shYear(t) {
   const cam = { zoom: 1.5, x: -210, y: 30 };
-  let o = bed(t, cam, { door: 0.9, tuck: 0.9 }, { behind: heroLie(t, { view: 'back' }), front: dadBed(t, { face: { name: 'sad', mouth: 'smallSmile', eyes: { look: [-0.9, 0] } } }, { energy: 0 }) });
+  let o = bed(t, cam, { door: 0.9, tuck: 0.9 }, { behind: heroLie(t, { view: 'back', volume: false }), front: dadBed(t, { volume: false, face: { name: 'sad', mouth: 'smallSmile', eyes: { look: [-0.9, 0] } } }, { energy: 0 }) });
   o += S.rect(0, 0, 1920, 1080, 0, { fill: '#0E1230', opacity: 0.62 });
   const P = [[w(9, 'been') - 0.1, 470, 470, -7, 'day', 'SPRING'], [w(9, 'world') - 0.05, 960, 430, 4, 'evening', 'SUMMER'], [w(9, 'whole') - 0.1, 1450, 480, -3, 'night', 'WINTER']];
   const out = seg(t, CUT.see - 0.35, CUT.see);
@@ -642,7 +662,7 @@ function nnCount(t) {
 }
 function shNotNow(t) {
   const cam = { zoom: 1.5, x: -210, y: 30 };
-  let o = bed(t, cam, { door: 0.9, tuck: 0.9 }, { behind: heroLie(t, { view: 'back' }), front: dadBed(t, { face: { name: 'happy', mouth: 'smallSmile', eyes: { look: [-0.8, 0] } } }, { energy: 0 }) });
+  let o = bed(t, cam, { door: 0.9, tuck: 0.9 }, { behind: heroLie(t, { view: 'back', volume: false }), front: dadBed(t, { volume: false, face: { name: 'happy', mouth: 'smallSmile', eyes: { look: [-0.8, 0] } } }, { energy: 0 }) });
   o += S.rect(0, 0, 1920, 1080, 0, { fill: '#0E1230', opacity: 0.66 });
   const n = nnCount(t);
   // the first one: a real memory (Dad at the door with a smile, the hero's back at the desk)
@@ -718,7 +738,7 @@ function shWarn(t) {
 }
 // 32. "If the server falls..." — the two of them in the red light, scared
 function shFaces(t) {
-  const cam = camKeys(t, [[CUT.faces, { zoom: 1.75, x: -230, y: 20 }], [CUT.resets, { zoom: 1.88, x: -250, y: 16 }]], ease.inOut);
+  const cam = camKeys(t, [[CUT.faces, { zoom: 1.6, x: -230, y: -120 }], [CUT.resets, { zoom: 1.72, x: -250, y: -125 }]], ease.inOut);
   const look = seg(t, w(13, 'falls') - 0.2, w(13, 'falls') + 0.2);
   const hero = heroSitUp(t, { turn: lerp(0.45, -0.1, look), face: { name: 'scared', eyes: { look: [lerp(1, 0.6, look), lerp(-0.1, -0.3, look)] }, fx: ['sweat'] } });
   const dd = dadBed(t, { face: { name: 'shocked', eyes: { look: [lerp(1, -0.8, look), -0.1] } }, turn: lerp(0.35, -0.3, look) });
@@ -735,17 +755,17 @@ function shResets(t) {
     (x, y) => G.nametag({ x, y, name: r > 0.5 ? 'DadBod1978' : 'DAD', level: r > 0.5 ? 1 : 99, col: r > 0.5 ? '#F2B705' : '#FF5FA8', crown: r <= 0.5, t, s: 2.2 }),
     (x, y) => G.levelBadge({ x, y, level: Math.round(lerp(99, 1, r)), t, s: 1.6, bump: seg(t, tResets, tResets + 0.45) }),
   ];
-  const pos = [[520, 330], [1400, 330], [520, 760], [1400, 760]];
+  const pos = [[540, 520], [1380, 520], [540, 850], [1380, 850]];
   tiles.forEach((fn, j) => {
     const k = seg(t, CUT.resets + j * 0.08, CUT.resets + j * 0.08 + 0.25);
     const [x, y] = pos[j];
-    o += panel(x - 400, y - 190, 800, 380, S.rect(0, 0, 1920, 1080, 0, { fill: ['#3A1A5A', '#1A3A2A', '#5A1A3A', '#1A2A5A'][j] }), { k, rot: [-2, 2, 1, -1][j], border: 8, shadow: true });
+    o += panel(x - 380, y - 145, 760, 290, S.rect(0, 0, 1920, 1080, 0, { fill: ['#3A1A5A', '#1A3A2A', '#5A1A3A', '#1A2A5A'][j] }), { k, rot: [-2, 2, 1, -1][j], border: 8, shadow: true });
     if (k > 0.3) o += fn(x, y);
   });
   // the glitch-out on "resets!"
   const gk = seg(t, tResets, tResets + 0.5);
   if (gk > 0) o += K.pixelBlocks(0, 0, 1920, 1080, t, gk * 0.8, '#151515', 80, 7);
-  o += G.stamp({ text: 'RESET', k: seg(t, tResets + 0.15, tResets + 0.45), x: 960, y: 560, s: 1.2, rot: -8, col: '#FF3A4A', size: 170 });
+  o += G.stamp({ text: 'RESET', k: seg(t, tResets + 0.15, tResets + 0.45), x: 960, y: 680, s: 1.2, rot: -8, col: '#FF3A4A', size: 170 });
   return o + banner(t);
 }
 // 34. (beat) the hero's face in the red light: scared -> set. Red flash into SC 09.

@@ -419,7 +419,7 @@ function shotF4(t) {
 // G1 — "Just this once." DarkBlade close-up; the fist bump
 function shotG1(t) {
   const u = seg(t, C.g1, C.h1);
-  let cam = camLerp(camAt(-860, 715, 2.45), camAt(-870, 712, 2.7), u, ease.inOut);
+  let cam = camLerp(camAt(-860, 690, 2.2), camAt(-870, 690, 2.4), u, ease.inOut);
   const bk = t >= B.bump;
   let chars = dark(t, { x: DBX2, y: 990, s: sAt(990), turn: -0.45, armL: 80, armR: 30, nametag: false, headRot: t < LN[6].b ? -6 : 0 }, { arms: false });
   const hin = ease.out(seg(t, B.bump - 0.35, B.bump));
@@ -559,7 +559,7 @@ function shotI3(t) {
 }
 // the attackers pressed against both sides of the dome; each bounces back when its hit lands (hits: [{side, age}] per fighter)
 const EDGE_R = [[-800, 905, 'hero'], [-860, 975, 'mom'], [-700, 950, 'dark'], [-640, 880, 'p', 9], [-760, 1005, 'p', 14], [-600, 990, 'clan']];
-const EDGE_L = [[-2690, 900, 'noodle'], [-2760, 965, 'p', 4], [-2630, 1000, 'gran'], [-2800, 880, 'p', 18]];
+const EDGE_L = [[-2620, 900, 'noodle'], [-2690, 965, 'p', 4], [-2560, 1000, 'gran'], [-2730, 880, 'p', 18]];
 function edgeFighters(t, ageOf, o = {}) {
   let s = '';
   const draw = (arr, side) => arr.forEach(([x, y, k, i], j) => {
@@ -703,7 +703,7 @@ function shotM2(t) {
   const cam = camLerp(camAt(-860, 620, 2.0), camAt(-860, 615, 2.1), u, ease.out);
   let chars = hero(t, { x: -1080, y: 1000, s: sAt(1000), turn: 0.3, armR: 150, armL: 100, face: { name: 'scared', fx: ['sweat'], eyes: { look: [0.8, -0.5] } }, nametag: false }, { arms: false });
   let o = tower(t, cam, {}, { back: dome(t, { k: 1 }), chars });
-  o += wash('#0A0414', 0.25);
+  o += wash('#0A0414', 0.08);
   const fall = seg(t, B.falls - 0.15, B.falls + 0.95);
   const hp = scr(cam, -1080, 1000 - sAt(1000) * 1000);
   o += E.thoughtBubble(1250, 420, 470, 300, S.g(teamMini(t, fall), 'scale(0.88)'), seg(t, C.m2, C.m2 + 0.3), hp.x + 60, hp.y);

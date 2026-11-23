@@ -85,6 +85,9 @@ function timing() {
   return { A, C, b, T0, END };
 }
 const { A, C, b, T0, END } = timing();
+// rhythm constants shared with audio/cues/gen_sc12.js: Mom's tablet taps / s, the glass dings (rad/s), the class swings (rad/s),
+// the roulette hops, the end-screen chase lap, Dad's end-screen attempt cycle + its offset after C.end
+const FX = { tap: 2.2, ding: 22, swing: 5, hops: 9, lap: 4.2, dadCycle: 2.4, dadOff: 0.6 };
 
 // ================================================================= the living room at 00:30
 const LS = H.SPOTS.livingRoom;
@@ -166,7 +169,7 @@ function shMom(t) {
 // ---- 4. "Five more minutes..." — the thumb still taps the tablet
 function momTabletScreen(t) {
   return (w, h) => {
-    const tap = mod(t * 2.2, 1);
+    const tap = mod(t * FX.tap, 1);
     let s = S.rect(-w / 2, -h / 2, w, h, 0, { fill: '#5A3A8A' }) + S.rect(-w / 2, h * 0.1, w, h * 0.4, 0, { fill: '#C9A26A' });
     s += S.rect(-w * 0.1, -h * 0.15, w * 0.12, h * 0.3, 4, { fill: '#FFD43B', stroke: '#151515', 'stroke-width': 3 }) + S.rect(w * 0.12, -h * 0.05, w * 0.1, h * 0.25, 4, { fill: '#8AD06A', stroke: '#151515', 'stroke-width': 3 });
     if (tap < 0.35) s += S.path(`M${f(-w * 0.02)} ${f(-h * 0.2)} Q${f(w * 0.12)} ${f(-h * 0.3)} ${f(w * 0.2)} ${f(h * 0.05)}`, { fill: 'none', stroke: '#FFFFFF', 'stroke-width': 8, opacity: f(1 - tap / 0.35) }) + TF('K.O.', w * 0.18, -h * 0.25, h * 0.14, '#FFE14D');
@@ -176,7 +179,7 @@ function momTabletScreen(t) {
 function shMomClose(t) {
   const cam = camKeys(t, [[C.momClose, { zoom: 2.9, x: 1268 - 960, y: 560 - 540 }], [C.blanket, { zoom: 3.1, x: 1268 - 960, y: 575 - 540 }]]);
   let o = roomScene(t, cam, { momScreen: momTabletScreen(t), glow: [{ x: 1300, y: 560, col: 'tablet', k: 1, r: 160 }] });
-  const tap = mod(t * 2.2, 1);
+  const tap = mod(t * FX.tap, 1);
   if (tap < 0.25) o += S.circle(1210, 860, 30 + 120 * tap, { fill: 'none', stroke: '#FFFFFF', 'stroke-width': 6, opacity: f(1 - tap / 0.25) });
   o += S.g(TF('tap', 0, 0, 40, '#FFFFFF', { opacity: f(tap < 0.3 ? 1 - tap / 0.3 : 0), stroke: '#151515', 'stroke-width': 6, 'paint-order': 'stroke' }), tf(1300, 820 - 40 * tap, 1, -8));
   return o;
@@ -269,7 +272,7 @@ function shMeeting(t) {
   const HD = H.SPOTS.kitchen.head;
   const cam = camKeys(t, [[C.meeting, { zoom: 1.0, x: 0, y: 0 }], [b.youW - 0.05, { zoom: 1.05, x: -40, y: 0 }], [b.youW + 0.15, { zoom: 1.7, x: HD.x - 960 + 150, y: 650 - 540 }], [C.gameNight, { zoom: 1.75, x: HD.x - 960 + 160, y: 650 - 540 }]]);
   // he taps a glass on the table with a spoon: ding ding ding
-  const ding = Math.max(0, Math.sin((t - b.called) * 22)) * (t > b.called - 0.05 && t < b.meetingW + 0.6 ? 1 : 0);
+  const ding = Math.max(0, Math.sin((t - b.called) * FX.ding)) * (t > b.called - 0.05 && t < b.meetingW + 0.6 ? 1 : 0);
   const hero = { armR: 66 - 10 * ding, armL: 24, face: { name: 'determined', mouth: 'smirk' }, ...boing(t, b.youW, 0.15) };
   const hd = handAt(DSG.you, { ...hero, turn: 0.35 }, 1), h0 = handAt(DSG.you, { ...hero, armR: 66, turn: 0.35 }, 1);
   const hx = HD.x + hd[0] * HD.s, hy = HD.y + hd[1] * HD.s, gx = HD.x + h0[0] * HD.s + 88;
@@ -385,7 +388,7 @@ function shDJDad(t) {
   const j1 = t < b.dadJ2 ? doubleJumpLift(t, b.dadJ1, 1e9, 800, 0, 3000) : 0;
   const fallU = seg(t, b.dadJ2, b.splash);
   let dx = 0, lift = j1, rot = 0;
-  if (t > b.dadJ2) { dx = lerp(0, PZ.gap.mid - (ST.x - 40), ease.inOut(fallU)); lift = 120 * Math.sin(Math.min(1, fallU * 1.6) * Math.PI) - 520 * ease.in(fallU); rot = 40 * fallU; }
+  if (t > b.dadJ2) { const h0 = doubleJumpLift(b.dadJ2, b.dadJ1, 1e9, 800, 0, 3000); dx = lerp(0, PZ.gap.mid - (ST.x - 40), ease.inOut(fallU)); lift = h0 + 120 * Math.sin(Math.min(1, fallU * 1.6) * Math.PI) - (520 + h0) * ease.in(fallU); rot = 40 * fallU; }
   const sunk = t > b.splash;
   const flail = t > b.dadJ2 ? Math.sin(t * 30) * 40 : 0;
   let w = '';
@@ -413,7 +416,7 @@ const KLASS = [   // [kind, i, x, y] back -> front; DarkBlade front row centre
 const KLASS_CAM = GS.camAt(960, 640, 1.0);
 function klassSvg(t, o = {}) {
   const swing = (ph) => 70 + 80 * Math.max(0, Math.sin(ph));
-  const ph = (o.freeze !== undefined ? o.freeze : t) * 5;
+  const ph = (o.freeze !== undefined ? o.freeze : t) * FX.swing;
   let w = '';
   for (const [kind, i, x, y] of KLASS) {
     const s = ARN.sAt ? ARN.sAt(y) : 0.42 * (y - 380) / 520;
@@ -423,13 +426,10 @@ function klassSvg(t, o = {}) {
   }
   return w;
 }
-function whistle(x, y, s, blow) {
-  return S.g(S.rect(-30, -14, 60, 28, 10, ol('#C9D3E6', 4)) + S.circle(26, 0, 18, ol('#C9D3E6', 4)) + (blow > 0 ? S.path('M-40 -10 l-40 -20 M-42 0 h-46 M-40 10 l-40 20', ln(6, '#FFFFFF', blow)) : ''), tf(x, y, s));
-}
 function shClass(t) {
   const cam = camKeys(t, [[C.klass, GS.camAt(960, 600, 0.95)], [C.signup, GS.camAt(1000, 620, 1.1)]]);
   const l = GS.arena.layers(t, cam, { time: 'day', cheer: 0.3, board: ["MOM'S CLASS", 'STRETCH FIRST!'] });
-  const demo = 70 + 80 * Math.max(0, Math.sin(t * 5));
+  const demo = 70 + 80 * Math.max(0, Math.sin(t * FX.swing));
   const mom = actor('momAvatar', t, { ...MOMT, armor: 1, turn: -0.5, armR: demo, armL: 30, swordGlow: 0.5, face: { name: 'happy' } }, { arms: false });
   let o = l.bg + l.mid + view(cam, klassSvg(t) + mom, 1) + l.front + l.light;
   const k = pop(t, b.training - 0.1, 0.3);
@@ -648,7 +648,7 @@ function shNoob(t) {
   const l = GS.plaza.layers(t, OUT_CAM, { time: 'sunset' });
   // the roulette spotlight: hops between the four, slows down, lands on the hot dog on "noob"
   const u = seg(t, C.noob, b.noob + 0.05);
-  const hops = Math.floor(ease.out(u) * 9);
+  const hops = Math.floor(ease.out(u) * FX.hops);
   const idx = u >= 1 ? 3 : hops % 4;
   const landed = u >= 1;
   const s = PZ.sAt(LINE_Y);
@@ -690,7 +690,7 @@ function endFamily(t) {
   const u = t - C.end;
   let w = '';
   // the chase across the roof behind the family: DarkBlade runs, his mom follows with the rolling pin
-  const lap = 4.2, cu = mod(u + 1.2, lap) / lap;
+  const lap = FX.lap, cu = mod(u + 1.2, lap) / lap;
   const dir = cu < 0.5 ? 1 : -1, cx = cu < 0.5 ? lerp(-180, 860, cu * 2) : lerp(860, -180, (cu - 0.5) * 2);
   const chaseY = 965, cs = 0.32;
   w += actor('darkblade', t, { x: cx, y: chaseY, s: cs, view: 'side', flip: dir > 0, shy: true, sword: false, ...AC.run(t * 16, 1), face: { name: 'scream' }, nametag: false });
@@ -708,7 +708,7 @@ function endFamily(t) {
   let dl = 0, drot = 0, dface = { name: 'determined' }, arms = { armL: 25, armR: 25 }, kick = 0;
   const dj = b.dadDJ;
   if (!won && t < dj) {
-    const pu = mod(u - 0.6, 2.4);
+    const pu = mod(u - FX.dadOff, FX.dadCycle);
     if (pu < 0.4) { dl = doubleJumpLift(pu, 0, 1e9, 760, 0, 3600); arms = { armL: 120, armR: 120 }; dface = { name: 'excited' }; }
     else if (pu < 0.85) { const q = (pu - 0.4) / 0.45; dl = 90 * Math.sin(q * Math.PI); drot = 180 * ease.inOut(q); arms = { armL: 60 + 60 * Math.sin(t * 30), armR: 60 - 60 * Math.sin(t * 30) }; dface = { name: 'scared', mouth: 'O' }; }
     else if (pu < 1.65) { drot = 180 + 7 * Math.sin(t * 14); kick = 1; dface = { name: 'dizzy' }; arms = { armL: 40, armR: 40 }; }
@@ -768,4 +768,4 @@ function look(t) {
 function captionY() { return 1010; }
 function noCaptions(t) { return t >= C.end; }
 
-module.exports = { scene, look, captionY, noCaptions, CUT: C, BEATS: b, timing, SLOT, SUB };
+module.exports = { scene, look, captionY, noCaptions, CUT: C, BEATS: b, timing, SLOT, SUB, FX, doubleJumpLift };
