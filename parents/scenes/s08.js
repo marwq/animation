@@ -23,7 +23,10 @@ const AC = require('./acting');
 const CAST = require('../rig/cast');
 const E = require('./s07_env');
 const S7 = require('./s07');
-const { S, f, clamp, lerp, ease, seg, bump, hash, ol, ln, T, TF, camKeys, view, actor } = K;
+const { S, f, clamp, lerp, ease, seg, bump, hash, ol, ln, T, TF, camKeys, view } = K;
+// close-ups render the rig characters without the body-volume filter (perf; ENGINE.md). The router sets VOL_OFF per shot.
+let VOL_OFF = false;
+const actor = (name, t, pose = {}, act) => K.actor(name, t, VOL_OFF && pose.volume === undefined ? { ...pose, volume: false } : pose, act);
 const { L } = K.V;
 const { tf, TS, pop, shakeAll, boing, whip, smash, zoomLines, panel, polaroid, glassesProp, letterbox } = E;
 const camAt = GS.camAt;
@@ -676,7 +679,7 @@ function shNotNow(t) {
     const x = 760 + (hash(i * 1.7) - 0.5) * 900, y = 470 + (hash(i * 2.9) - 0.5) * 300, r = (hash(i * 4.1) - 0.5) * 30;
     pile += polaroid(x, y, 330, snapDad(i), { k: i === nShow ? Math.min(1, 0.5 + age) : 1, rot: r, caption: 'NOT NOW, DAD.' });
   }
-  o += first + pile;
+  o += (n <= 7 ? first : '') + pile;
   const big = seg(t, tHundred, tHundred + 0.45);
   o += G.statPill({ x: 960, y: 150, s: 1.25 + 0.35 * big, k: seg(t, NN.t0() - 0.1, NN.t0() + 0.2), t, anchor: 'center', label: 'NOT NOW, DAD', value: '×' + n, rim: '#FF8A2B', bump: big });
   return o + letterbox(1, 60);
@@ -793,8 +796,11 @@ function shotAt(t) {
   while (i > 0 && t < SHOTS[i][0]) i--;
   return i;
 }
+const VOL_ON = new Set([shBehind, shMyGame, shStairs, shDoor, shWalk]);
 function scene(t) {
-  return SHOTS[shotAt(t)][1](t);
+  const fn = SHOTS[shotAt(t)][1];
+  VOL_OFF = !VOL_ON.has(fn);
+  try { return fn(t); } finally { VOL_OFF = false; }
 }
 function look(t) {
   if (t >= CUT.board && t < CUT.seethe) return { grade: null, vignette: 0.55 };

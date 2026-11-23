@@ -1,15 +1,19 @@
 // SC 12 · AFTER + FINALE + END SCREEN — up from SC 11's navy dip: the MVP screen on the TV, pull back: 00:30, the whole family
-// asleep on the couch with their devices (the BEDTIME 11 PM note next to the clock), Mom mumbling "Five more minutes..." while her
-// thumb still taps the tablet; the hero wakes, pulls Granny's knitted throw over Dad: "Same time next week, champ?" — "Same time,
-// Dad. Every week." The calendar flips to the next Saturday: the hero calls the family meeting (his crayon flip chart, FAMILY GAME
-// NIGHT!, SAME SERVER! SAME TIME! stamps), Granny's invoice: RENT 50 COINS. The Cube City montage: the hero shows Dad the double
-// jump — Dad does ONE jump (progress!) and flops into the water; Mom's training class in the arena, the sign-up sheet with
-// xX_DarkBlade_Xx first, his shy "Thank you, Mrs. Mom."; Granny buys the Block King's castle (SOLD) -> COOKIE MUSEUM (a giant
-// cookie lands on the keep) -> TICKETS 10 COINS (the hero pays: 12 -> 2). SYSTEM: "DarkBlade's mom joined the server" — the
-// class freezes, she spawns with a rolling pin — "...MOM?!" — the two moms high-five. The outro line-up at sunset: WHO'S THE NOOB?
-// (the roulette spotlight lands on the hot dog), "Tell me in the comments!" (a comment card), then the END SCREEN: two video slots
-// right, the subscribe circle top-left, and the family on the rooftop at sunset — Dad keeps trying the double jump and finally
-// lands it, DarkBlade's mom chases DarkBlade across the roof.
+// asleep with their devices (Dad's laptop low on his lap, Granny's phone on hers, the BEDTIME 11 PM note crossed out next to the
+// 0:30 clock), Mom mumbling "Five more minutes..." while her thumb still taps the tablet; the hero pulls Granny's knitted throw
+// over Dad (his hands ride up with it): "Same time next week, champ?" — "Same time, Dad. Every week." — and hops onto the couch
+// beside Dad, under the throw (hearts, pull back). The calendar flips to the next Saturday: the hero calls the family meeting
+// (spoon on a glass: ding ding, CHAIRMAN: YOU, his crayon flip chart, FAMILY GAME NIGHT!, SAME SERVER! / SAME TIME! stamps),
+// Granny's invoice: CASTLE RENT 50. The Cube City montage: the hero's double jump (+ flip) — Dad's jump 1 OK!, jump 2 -> SPLASH,
+// DOUBLE JUMP: FAILED, he treads water waving; Mom's training class in the arena, the sign-up sheet with xX_DarkBlade_Xx first,
+// "Thank you, Mrs. Mom." as she hands him a water bottle; Granny buys the BLOCK KING'S CASTLE (our own dark castle on the
+// mushroom plot, s12_env.js: SOLD!) -> its stone crown pops off, a giant cookie THUDs onto the keep -> COOKIE MUSEUM -> TICKETS
+// 10 COINS (Granny in the booth window, the hero pays: 12 -> 2). SYSTEM: "DarkBlade's mom joined the server" — the class
+// freezes, she spawns with a rolling pin — "...MOM?!" — the two moms high-five. The outro at sunset: a push-in on the hero
+// ("if YOUR parents..."), WHO'S THE NOOB? (the roulette spotlight lands on the hot dog), "Tell me in the comments!" (a comment
+// card), then the END SCREEN (~9.5 s, no captions): two video slots right, the subscribe circle top-left, the family on the
+// rooftop at sunset — Dad keeps trying the double jump (flips onto his head) and finally lands it, DarkBlade's mom chases
+// DarkBlade across the roof behind them.
 'use strict';
 
 const K = require('./kit');
@@ -300,7 +304,7 @@ function shGameNight(t) {
   o += G.bigTitle({ text: 'FAMILY GAME NIGHT!', k: seg(t, b.family - 0.1, b.night + 0.3), out: seg(t, b.server - 0.3, b.server - 0.1), t, theme: 'gold', x: 960, y: 260, s: 0.75 });
   o += G.stamp({ text: 'SAME SERVER!', k: seg(t, b.server - 0.05, b.server + 0.45), out: seg(t, b.time - 0.1, b.time + 0.05), x: 1350, y: 230, s: 0.8, rot: -8, col: '#2E9E5B' });
   o += G.stamp({ text: 'SAME TIME!', k: seg(t, b.time - 0.05, b.time + 0.45), out: seg(t, C.rent - 0.2, C.rent), x: 620, y: 230, s: 0.8, rot: 7, col: '#2E7BFF' });
-  o += R.blockConfetti({ x: 960, y: 520, age: t - (b.family - 0.05), n: 36, seed: 12, s: 0.8, power: 0.8 });
+  o += R.blockConfetti({ x: 960, y: 520, age: t - (b.family - 0.05), n: 22, seed: 12, s: 0.8, power: 0.8 });
   return o + smash(t, b.server, 0.08, 0.35) + smash(t, b.time, 0.08, 0.35);
 }
 // ---- 11. Granny: "And don't forget your rent, dear."
@@ -744,7 +748,7 @@ function shEnd(t) {
   // the payoff: DOUBLE JUMP! + confetti
   const dj = b.dadDJ;
   if (t > dj + 0.45) o += S.g(S.rect(-300, -56, 600, 112, 34, { fill: '#000', opacity: 0.3, transform: 'translate(10 12)' }) + S.rect(-300, -56, 600, 112, 34, ol('#3BD16F', 8)) + TS('DOUBLE JUMP!', 0, 24, 70, '#FFFFFF'), tf(600, 470, pop(t, dj + 0.45, 0.3), -5));
-  o += R.blockConfetti({ x: 900, y: 640, age: t - (dj + 0.85), n: 50, seed: 21, s: 0.8, power: 0.9 });
+  o += R.blockConfetti({ x: 900, y: 640, age: t - (dj + 0.85), n: 30, seed: 21, s: 0.8, power: 0.9 });
   o += K.C.whiteFlash(0.5 * (1 - seg(u, 0, 0.25)));
   o += S.rect(0, 0, 1920, 1080, 0, { fill: '#000000', opacity: f(ease.in(seg(t, END - 0.45, END))) });
   return o;
