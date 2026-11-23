@@ -190,8 +190,13 @@ function freeze(svg, k, rot = -2.5, ground = '#1E1A2E', tint = '#FFE8C8') {
   if (k <= 0.001) return svg;
   const e = ease.outBack(clamp(k, 0, 1));
   const sc = lerp(1, 0.9, e), r = lerp(0, rot, e);
-  // the sets are padded far beyond the frame: clip the picture to the frame so the still really reads as a photo
-  return S.rect(0, 0, W, H, 0, { fill: ground }) + S.g(S.rect(-18, -18, W + 36, H + 36, 8, { fill: '#FFFFFF', stroke: '#151515', 'stroke-width': 6 }) + clipTo(0, 0, W, H, svg) + S.rect(0, 0, W, H, 0, { fill: tint, opacity: f(0.12 * e) }), `translate(960 540) rotate(${f(r)}) scale(${f(sc)}) translate(-960 -540)`);
+  // the sets are padded far beyond the frame: instead of a (slow) clip-path, an even-odd ring in the ground colour hides
+  // everything outside the photo, then the white border ring — so the still really reads as a photo
+  const hole = `M0 0 V${H} H${W} V0 Z`;
+  let g = svg + S.rect(0, 0, W, H, 0, { fill: tint, opacity: f(0.12 * e) });
+  g += S.path(`M-4000 -4000 H${W + 4000} V${H + 4000} H-4000 Z ` + hole, { fill: ground, 'fill-rule': 'evenodd' });
+  g += S.path(`M-18 -18 H${W + 18} V${H + 18} H-18 Z ` + hole, { fill: '#FFFFFF', 'fill-rule': 'evenodd' }) + S.rect(-18, -18, W + 36, H + 36, 6, { fill: 'none', stroke: '#151515', 'stroke-width': 6 });
+  return S.g(g, `translate(960 540) rotate(${f(r)}) scale(${f(sc)}) translate(-960 -540)`);
 }
 
 // ---------------------------------------------------------------- intro name card (slams in, sub ribbon, optional pointer)

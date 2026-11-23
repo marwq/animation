@@ -1,0 +1,1767 @@
+{
+ "scene": "SC 03",
+ "start": 148.63,
+ "end": 224.81,
+ "music": [
+  {
+   "start": 148.63,
+   "end": 152.61,
+   "mood": "family",
+   "energy": 0.6,
+   "in": "swell",
+   "out": "scratch"
+  },
+  {
+   "start": 152.61,
+   "end": 155.38,
+   "mood": "playful",
+   "energy": 0.4,
+   "in": "cut",
+   "out": "cut"
+  },
+  {
+   "start": 155.38,
+   "end": 175.63,
+   "mood": "playful",
+   "energy": 0.45,
+   "in": "cut",
+   "out": "sting"
+  },
+  {
+   "start": 175.63,
+   "end": 176.74,
+   "mood": "silence",
+   "energy": 0,
+   "in": "cut",
+   "out": "cut"
+  },
+  {
+   "start": 176.74,
+   "end": 183.88,
+   "mood": "montage",
+   "energy": 0.9,
+   "in": "swell",
+   "out": "sting"
+  },
+  {
+   "start": 183.88,
+   "end": 192.334,
+   "mood": "playful",
+   "energy": 0.5,
+   "in": "cut",
+   "out": "fade"
+  },
+  {
+   "start": 192.334,
+   "end": 201.148,
+   "mood": "family",
+   "energy": 0.4,
+   "in": "fade",
+   "out": "cut"
+  },
+  {
+   "start": 201.148,
+   "end": 210.56,
+   "mood": "playful",
+   "energy": 0.55,
+   "in": "cut",
+   "out": "cut"
+  },
+  {
+   "start": 210.56,
+   "end": 212.53,
+   "mood": "chaos",
+   "energy": 0.7,
+   "in": "cut",
+   "out": "cut"
+  },
+  {
+   "start": 212.53,
+   "end": 217.13,
+   "mood": "tycoon",
+   "energy": 0.85,
+   "in": "swell",
+   "out": "sting"
+  },
+  {
+   "start": 217.13,
+   "end": 223.16,
+   "mood": "family",
+   "energy": 0.5,
+   "in": "cut",
+   "out": "cut"
+  },
+  {
+   "start": 223.16,
+   "end": 224.81,
+   "mood": "lobby",
+   "energy": 0.7,
+   "in": "swell",
+   "out": "cut"
+  }
+ ],
+ "ambience": [
+  {
+   "start": 148.63,
+   "end": 149.63,
+   "name": "town",
+   "gain_db": -16
+  },
+  {
+   "start": 149.63,
+   "end": 223.16,
+   "name": "room",
+   "gain_db": -15
+  }
+ ],
+ "footsteps": [
+  {
+   "start": 176.74,
+   "end": 178.55,
+   "interval": 0.349,
+   "surface": "hard",
+   "gain_db": -12,
+   "pan": -0.2
+  }
+ ],
+ "sfx": [
+  [
+   148.63,
+   "whoosh",
+   -6,
+   0,
+   "white flash in from the Saturday kitchen"
+  ],
+  [
+   149.08,
+   "sparkle",
+   -12,
+   -0.19,
+   "the window twinkles"
+  ],
+  [
+   149.63,
+   "whoosh",
+   -4,
+   0.2,
+   "whip into the living room"
+  ],
+  [
+   150.31,
+   "tv_on",
+   -4,
+   -0.264,
+   "the gaming PC screen flashes on"
+  ],
+  [
+   150.36,
+   "ui_pop",
+   -8,
+   -0.264,
+   "GAMING PC tag"
+  ],
+  [
+   150.71,
+   "pop",
+   -3,
+   0.029,
+   "Dad's laptop pops onto his lap"
+  ],
+  [
+   150.76,
+   "ui_pop",
+   -8,
+   0.029,
+   "LAPTOP tag"
+  ],
+  [
+   150.95,
+   "pop",
+   -4,
+   0.277,
+   "Mom's tablet pops in"
+  ],
+  [
+   151,
+   "ui_pop",
+   -8,
+   0.277,
+   "TABLET tag"
+  ],
+  [
+   151.11,
+   "pop",
+   -4,
+   0.481,
+   "Granny's phone at arm's length"
+  ],
+  [
+   151.16,
+   "ui_pop",
+   -8,
+   0.54,
+   "PHONE tag"
+  ],
+  [
+   151.51,
+   "orch_hit",
+   -3,
+   0,
+   "GAMING SETUP title slams in"
+  ],
+  [
+   151.61,
+   "sparkle",
+   -8,
+   0,
+   "title sparkles"
+  ],
+  [
+   152.61,
+   "record_scratch",
+   0,
+   0,
+   "Kind of. — smash cut to the loadout cards"
+  ],
+  [
+   152.66,
+   "level_up",
+   -6,
+   -0.492,
+   "YOUR PC card: five stars"
+  ],
+  [
+   152.83,
+   "buzzer_wrong",
+   -8,
+   -0.164,
+   "Dad's 1998 laptop card: one star"
+  ],
+  [
+   153.11,
+   "ui_pop",
+   -8,
+   0.164,
+   "Mom's library tablet card"
+  ],
+  [
+   153.33,
+   "ui_pop",
+   -8,
+   0.492,
+   "Granny's phone card"
+  ],
+  [
+   153.41,
+   "squeak",
+   -14,
+   0.164,
+   "\"meh\" tags"
+  ],
+  [
+   153.71,
+   "slide_down",
+   -12,
+   -0.164,
+   "Dad's card droops"
+  ],
+  [
+   154.48,
+   "loading",
+   -10,
+   -0.16,
+   "LOADING... 3%"
+  ],
+  [
+   155.38,
+   "whoosh",
+   -8,
+   0,
+   "cut to Dad"
+  ],
+  [
+   155.88,
+   "click",
+   -10,
+   0.029,
+   "glasses down onto the nose"
+  ],
+  [
+   157.15,
+   "cloth",
+   -12,
+   0.029,
+   "leans in to the screen"
+  ],
+  [
+   159.39,
+   "click",
+   -1,
+   -0.394,
+   "PECK: the D key"
+  ],
+  [
+   159.45,
+   "ui_pop",
+   -12,
+   -0.394,
+   "\"D\" pops above the key"
+  ],
+  [
+   160.39,
+   "click",
+   -1,
+   -0.459,
+   "PECK: the A key"
+  ],
+  [
+   160.45,
+   "ui_pop",
+   -12,
+   -0.459,
+   "\"A\" pops above the key"
+  ],
+  [
+   161.37,
+   "click",
+   -1,
+   -0.394,
+   "PECK: the D key"
+  ],
+  [
+   161.43,
+   "ui_pop",
+   -12,
+   -0.394,
+   "\"D\" pops above the key"
+  ],
+  [
+   162.203,
+   "squeak",
+   -9,
+   -0.044,
+   "\"?\" — the finger hovers, lost"
+  ],
+  [
+   162.55,
+   "squeak",
+   -11,
+   -0.146,
+   "second \"?\""
+  ],
+  [
+   163.11,
+   "whoosh",
+   -6,
+   -0.2,
+   "whip to the hero"
+  ],
+  [
+   163.97,
+   "zoom_in",
+   -4,
+   0,
+   "smash-zoom on the B key"
+  ],
+  [
+   164.02,
+   "shine",
+   -4,
+   0,
+   "the B lights up"
+  ],
+  [
+   164.07,
+   "tap",
+   -6,
+   -0.2,
+   "the hero's finger jabs at the B"
+  ],
+  [
+   164.31,
+   "tap",
+   -6,
+   -0.2,
+   "jab"
+  ],
+  [
+   164.69,
+   "tap",
+   -8,
+   -0.2,
+   "jab"
+  ],
+  [
+   165.238,
+   "click",
+   2,
+   0,
+   "Dad's finger SLAMS the B (shake)"
+  ],
+  [
+   165.278,
+   "confirm",
+   -4,
+   0,
+   "GOT IT!"
+  ],
+  [
+   165.298,
+   "ui_pop",
+   -6,
+   0.3,
+   "GOT IT! pops"
+  ],
+  [
+   165.61,
+   "whoosh",
+   -6,
+   0.2,
+   "whip to the avatar editor on the laptop"
+  ],
+  [
+   165.91,
+   "typing",
+   -6,
+   -0.3,
+   "typing \"Bod\""
+  ],
+  [
+   166.43,
+   "pop",
+   -8,
+   0.518,
+   "SO PROUD picture-in-picture"
+  ],
+  [
+   166.63,
+   "typing",
+   -6,
+   -0.3,
+   "typing \"19\""
+  ],
+  [
+   167.27,
+   "typing",
+   -6,
+   -0.3,
+   "typing \"78\""
+  ],
+  [
+   168.03,
+   "confirm",
+   -8,
+   -0.3,
+   "the name field checks green"
+  ],
+  [
+   168.91,
+   "zoom_in",
+   -4,
+   0,
+   "smash into the split screen"
+  ],
+  [
+   169.75,
+   "swish",
+   -6,
+   0.54,
+   "red marker circles \"1978\""
+  ],
+  [
+   169.75,
+   "ui_pop",
+   -6,
+   0.35,
+   "VISIBLE TO: EVERYONE pill"
+  ],
+  [
+   169.87,
+   "blink",
+   -14,
+   0.182,
+   "a pair of watching eyes pops"
+  ],
+  [
+   169.94,
+   "blink",
+   -14,
+   0.295,
+   "a pair of watching eyes pops"
+  ],
+  [
+   170.01,
+   "blink",
+   -14,
+   0.408,
+   "a pair of watching eyes pops"
+  ],
+  [
+   170.08,
+   "blink",
+   -14,
+   0.521,
+   "a pair of watching eyes pops"
+  ],
+  [
+   170.15,
+   "blink",
+   -14,
+   0.634,
+   "a pair of watching eyes pops"
+  ],
+  [
+   170.39,
+   "pop",
+   -2,
+   0.394,
+   "AGE: 48 arrow"
+  ],
+  [
+   170.39,
+   "boing",
+   -10,
+   -0.35,
+   "the hero throws his arms up"
+  ],
+  [
+   171.223,
+   "whoosh",
+   -8,
+   0,
+   "back to the keyboard"
+  ],
+  [
+   171.87,
+   "whoosh",
+   -10,
+   -0.3,
+   "the finger swings to the sticky note"
+  ],
+  [
+   172.27,
+   "tap",
+   -6,
+   -0.5,
+   "taps the PASSWORD: password note"
+  ],
+  [
+   172.32,
+   "sparkle",
+   -8,
+   -0.5,
+   "note sparkles, \"!!\""
+  ],
+  [
+   173.057,
+   "whoosh",
+   -6,
+   0.2,
+   "whip to the password field"
+  ],
+  [
+   173.177,
+   "click",
+   -10,
+   -0.2,
+   "password dot 1"
+  ],
+  [
+   173.282,
+   "click",
+   -10,
+   -0.2,
+   "password dot 2"
+  ],
+  [
+   173.388,
+   "click",
+   -10,
+   -0.2,
+   "password dot 3"
+  ],
+  [
+   173.493,
+   "click",
+   -10,
+   -0.2,
+   "password dot 4"
+  ],
+  [
+   173.599,
+   "click",
+   -10,
+   -0.2,
+   "password dot 5"
+  ],
+  [
+   173.704,
+   "click",
+   -10,
+   -0.2,
+   "password dot 6"
+  ],
+  [
+   173.809,
+   "click",
+   -10,
+   -0.2,
+   "password dot 7"
+  ],
+  [
+   173.915,
+   "click",
+   -10,
+   -0.2,
+   "password dot 8"
+  ],
+  [
+   174.09,
+   "buzzer_wrong",
+   -1,
+   0.2,
+   "WEAK! tag slams on (red flash, shake)"
+  ],
+  [
+   174.11,
+   "error",
+   -6,
+   0.2,
+   "red flash"
+  ],
+  [
+   174.61,
+   "whoosh",
+   -8,
+   0,
+   "cut to the hero"
+  ],
+  [
+   174.71,
+   "slap",
+   -6,
+   -0.2,
+   "facepalm"
+  ],
+  [
+   175.63,
+   "impact",
+   2,
+   0,
+   "NO. — smash-zoom (shake, red tint)"
+  ],
+  [
+   175.67,
+   "pop",
+   -4,
+   0.335,
+   "NO. bang"
+  ],
+  [
+   176.74,
+   "whoosh",
+   -4,
+   0.2,
+   "whip into the avatar shop"
+  ],
+  [
+   178.45,
+   "magic",
+   -6,
+   0,
+   "the podium spotlight switches on"
+  ],
+  [
+   178.55,
+   "sparkle",
+   -6,
+   0,
+   "sparkles round the podium"
+  ],
+  [
+   178.57,
+   "boing",
+   -10,
+   0,
+   "the noob hops onto the podium"
+  ],
+  [
+   179.47,
+   "whoosh",
+   -8,
+   0,
+   "cut to the editor"
+  ],
+  [
+   179.93,
+   "click",
+   -3,
+   -0.2,
+   "CLICK #1: tophat (cart 1)"
+  ],
+  [
+   179.96,
+   "ui_pop",
+   -8,
+   0,
+   "the IN CART counter pops in"
+  ],
+  [
+   180,
+   "equip",
+   -10,
+   -0.4,
+   "tophat drops onto the avatar"
+  ],
+  [
+   180.41,
+   "click",
+   -4,
+   0,
+   "CLICK #2: cowboy (cart 3)"
+  ],
+  [
+   180.48,
+   "coin",
+   -10,
+   -0.22500000000000003,
+   "cowboy drops onto the avatar"
+  ],
+  [
+   181.08,
+   "click",
+   -5,
+   0.2,
+   "CLICK #3: crown (cart 5)"
+  ],
+  [
+   181.15,
+   "equip",
+   -10,
+   -0.050000000000000044,
+   "crown drops onto the avatar"
+  ],
+  [
+   181.21,
+   "pop",
+   -8,
+   0.536,
+   "PiP: the real Dad clicking like mad"
+  ],
+  [
+   181.302,
+   "click",
+   -3,
+   0.4000000000000001,
+   "CLICK #4: propeller (cart 8)"
+  ],
+  [
+   181.372,
+   "coin",
+   -10,
+   0.12499999999999989,
+   "propeller drops onto the avatar"
+  ],
+  [
+   181.48,
+   "click",
+   -4,
+   -0.2,
+   "CLICK #5: chef (cart 10)"
+  ],
+  [
+   181.55,
+   "equip",
+   -10,
+   0.29999999999999993,
+   "chef drops onto the avatar"
+  ],
+  [
+   181.644,
+   "click",
+   -5,
+   0,
+   "CLICK #6: viking (cart 12)"
+  ],
+  [
+   181.714,
+   "coin",
+   -10,
+   -0.4,
+   "viking drops onto the avatar"
+  ],
+  [
+   181.801,
+   "click",
+   -3,
+   0.2,
+   "CLICK #7: sunglasses (cart 14)"
+  ],
+  [
+   181.871,
+   "equip",
+   -10,
+   -0.22500000000000003,
+   "sunglasses drops onto the avatar"
+  ],
+  [
+   181.951,
+   "click",
+   -4,
+   0.4000000000000001,
+   "CLICK #8: mustache (cart 16)"
+  ],
+  [
+   182.021,
+   "coin",
+   -10,
+   -0.050000000000000044,
+   "mustache drops onto the avatar"
+  ],
+  [
+   182.097,
+   "click",
+   -5,
+   -0.2,
+   "CLICK #9: monocle (cart 19)"
+  ],
+  [
+   182.167,
+   "equip",
+   -10,
+   0.12499999999999989,
+   "monocle drops onto the avatar"
+  ],
+  [
+   182.24,
+   "click",
+   -3,
+   0,
+   "CLICK #10: wings (cart 21)"
+  ],
+  [
+   182.31,
+   "coin",
+   -10,
+   0.29999999999999993,
+   "wings drops onto the avatar"
+  ],
+  [
+   182.379,
+   "click",
+   -4,
+   0.2,
+   "CLICK #11: cape (cart 23)"
+  ],
+  [
+   182.449,
+   "equip",
+   -10,
+   -0.4,
+   "cape drops onto the avatar"
+  ],
+  [
+   182.516,
+   "click",
+   -5,
+   0.4000000000000001,
+   "CLICK #12: pearls (cart 25)"
+  ],
+  [
+   182.586,
+   "coin",
+   -10,
+   -0.22500000000000003,
+   "pearls drops onto the avatar"
+  ],
+  [
+   182.65,
+   "click",
+   -3,
+   -0.2,
+   "CLICK #13: potlid (cart 27)"
+  ],
+  [
+   182.72,
+   "equip",
+   -10,
+   -0.050000000000000044,
+   "potlid drops onto the avatar"
+  ],
+  [
+   182.783,
+   "click",
+   -4,
+   0,
+   "CLICK #14: tutu (cart 29)"
+  ],
+  [
+   182.853,
+   "coin",
+   -10,
+   0.12499999999999989,
+   "tutu drops onto the avatar"
+  ],
+  [
+   182.913,
+   "click",
+   -5,
+   0.2,
+   "CLICK #15: banana (cart 32)"
+  ],
+  [
+   182.983,
+   "equip",
+   -10,
+   0.29999999999999993,
+   "banana drops onto the avatar"
+  ],
+  [
+   183.042,
+   "click",
+   -3,
+   0.4000000000000001,
+   "CLICK #16: shark (cart 34)"
+  ],
+  [
+   183.112,
+   "coin",
+   -10,
+   -0.4,
+   "shark drops onto the avatar"
+  ],
+  [
+   183.17,
+   "click",
+   0,
+   -0.2,
+   "CLICK #17: hotdog (cart 37)"
+  ],
+  [
+   183.2,
+   "ka_ching",
+   2,
+   0.248,
+   "the HOT DOG SUIT is bought (white flash)"
+  ],
+  [
+   183.22,
+   "zoom_in",
+   -6,
+   0.248,
+   "zoom lines on the hot dog card"
+  ],
+  [
+   183.32,
+   "stamp",
+   0,
+   -0.248,
+   "37 ITEMS IN CART slams in"
+  ],
+  [
+   183.5,
+   "ui_pop",
+   -6,
+   -0.248,
+   "+ 1 HOT DOG SUIT"
+  ],
+  [
+   183.63,
+   "boing",
+   -8,
+   0,
+   "the overloaded noob wobbles (hat tower)"
+  ],
+  [
+   183.88,
+   "poof",
+   2,
+   0,
+   "POOF!"
+  ],
+  [
+   183.9,
+   "impact",
+   -6,
+   0,
+   "poof shake"
+  ],
+  [
+   183.96,
+   "boing",
+   -4,
+   0,
+   "the hot dog pops out"
+  ],
+  [
+   184.03,
+   "sparkle",
+   -6,
+   0,
+   "sparkle ring"
+  ],
+  [
+   184.86,
+   "squeak",
+   -9,
+   0.16,
+   "\"?\" over the hot dog"
+  ],
+  [
+   185.03,
+   "whoosh",
+   -6,
+   0.2,
+   "whip into the split screen"
+  ],
+  [
+   185.75,
+   "zoom_in",
+   -8,
+   0.35,
+   "the right panel pushes in on the hot dog"
+  ],
+  [
+   185.75,
+   "pop",
+   -4,
+   0.35,
+   "HOT DOG?! bang"
+  ],
+  [
+   186.66,
+   "whoosh",
+   -10,
+   0,
+   "cut to the deadpan hero"
+  ],
+  [
+   187.81,
+   "swish",
+   -10,
+   -0.1,
+   "points at Dad"
+  ],
+  [
+   188.977,
+   "whoosh",
+   -10,
+   0,
+   "cut to Dad thinking"
+  ],
+  [
+   189.127,
+   "chime",
+   -10,
+   0.1,
+   "one finger up: an idea"
+  ],
+  [
+   190.114,
+   "whoosh",
+   -6,
+   0.2,
+   "whip back to the shop"
+  ],
+  [
+   190.31,
+   "boing",
+   -6,
+   0,
+   "the hot dog throws its arms up"
+  ],
+  [
+   190.36,
+   "sparkle",
+   -6,
+   0,
+   "sparkle ring"
+  ],
+  [
+   191.31,
+   "ui_pop",
+   -6,
+   0,
+   "DadBod1978 nametag pops"
+  ],
+  [
+   191.36,
+   "stamp",
+   0,
+   0.357,
+   "SAVED! stamp (shake)"
+  ],
+  [
+   191.46,
+   "confirm",
+   -6,
+   0.357,
+   "saved"
+  ],
+  [
+   191.61,
+   "chime",
+   -10,
+   0.146,
+   "little dance notes"
+  ],
+  [
+   192.334,
+   "whoosh",
+   -8,
+   -0.2,
+   "whip to Mom"
+  ],
+  [
+   195.004,
+   "slide_down",
+   -8,
+   0.321,
+   "slides the tablet onto the coffee table"
+  ],
+  [
+   195.47,
+   "gulp",
+   -10,
+   0.248,
+   "sips her tea"
+  ],
+  [
+   195.554,
+   "tap",
+   -10,
+   0.394,
+   "the tablet lands on the table"
+  ],
+  [
+   196.27,
+   "whoosh",
+   -8,
+   0,
+   "cut to the hero with the tablet"
+  ],
+  [
+   196.52,
+   "pop",
+   -12,
+   0.226,
+   "\"?\""
+  ],
+  [
+   197.47,
+   "whoosh",
+   -6,
+   0.2,
+   "whip to the editor"
+  ],
+  [
+   197.97,
+   "zoom_in",
+   -6,
+   -0.3,
+   "push in on the grey avatar"
+  ],
+  [
+   198.27,
+   "ui_pop",
+   -6,
+   0.35,
+   "the colour picker: everything greyed out but GREY"
+  ],
+  [
+   198.42,
+   "stamp",
+   -2,
+   0.015,
+   "100% GREY stamp"
+  ],
+  [
+   199.07,
+   "whoosh",
+   -6,
+   -0.2,
+   "whip into the split screen"
+  ],
+  [
+   199.15,
+   "gulp",
+   -10,
+   -0.3,
+   "both sip their tea"
+  ],
+  [
+   199.63,
+   "shine",
+   -4,
+   0.35,
+   "\"classy.\" sparkle"
+  ],
+  [
+   201.148,
+   "whoosh",
+   -6,
+   0.3,
+   "whip to Granny"
+  ],
+  [
+   201.298,
+   "impact",
+   -10,
+   0.532,
+   "HELLO! (camera shake)"
+  ],
+  [
+   201.498,
+   "cloth",
+   -10,
+   0.248,
+   "Mom covers her ears"
+  ],
+  [
+   201.87,
+   "impact",
+   -8,
+   0.532,
+   "PHONE! (shake)"
+  ],
+  [
+   201.92,
+   "pop",
+   -10,
+   0.459,
+   "\"!!\""
+  ],
+  [
+   203.222,
+   "whoosh",
+   -6,
+   0,
+   "smash into the phone screen"
+  ],
+  [
+   203.272,
+   "beep",
+   -10,
+   0,
+   "voice input listening"
+  ],
+  [
+   203.422,
+   "whoosh",
+   -10,
+   0.481,
+   "\"MAKE\" flies at the phone"
+  ],
+  [
+   203.63,
+   "whoosh",
+   -10,
+   0.481,
+   "\"ME\" flies at the phone"
+  ],
+  [
+   203.802,
+   "typing",
+   -10,
+   0,
+   "\"MAKE\" types into the box"
+  ],
+  [
+   204.01,
+   "typing",
+   -10,
+   0,
+   "\"ME\" types into the box"
+  ],
+  [
+   204.19,
+   "whoosh",
+   -10,
+   -0.481,
+   "\"A\" flies at the phone"
+  ],
+  [
+   204.43,
+   "whoosh",
+   -10,
+   0.481,
+   "\"GAME\" flies at the phone"
+  ],
+  [
+   204.57,
+   "typing",
+   -10,
+   0,
+   "\"A\" types into the box"
+  ],
+  [
+   204.81,
+   "typing",
+   -10,
+   0,
+   "\"GAME\" types into the box"
+  ],
+  [
+   204.83,
+   "whoosh",
+   -10,
+   0.481,
+   "\"PERSON\" flies at the phone"
+  ],
+  [
+   204.93,
+   "alarm_beep",
+   -12,
+   0,
+   "TOO LOUD!"
+  ],
+  [
+   205.21,
+   "typing",
+   -10,
+   0,
+   "\"PERSON\" types into the box"
+  ],
+  [
+   206.23,
+   "whoosh",
+   -6,
+   0.2,
+   "whip to the phone shop"
+  ],
+  [
+   207.15,
+   "squeak",
+   -8,
+   -0.19,
+   "\"?\""
+  ],
+  [
+   207.45,
+   "ui_pop",
+   -8,
+   0,
+   "NO \"GO\" BUTTON note"
+  ],
+  [
+   208.262,
+   "tap",
+   -2,
+   -0.1,
+   "jab: BUY fur coat"
+  ],
+  [
+   208.302,
+   "ka_ching",
+   -4,
+   -0.1,
+   "bought the fur coat"
+  ],
+  [
+   208.582,
+   "whoosh",
+   -8,
+   0,
+   "cut to Granny"
+  ],
+  [
+   208.702,
+   "pop",
+   -6,
+   0.211,
+   "\"!\" + shake"
+  ],
+  [
+   209.27,
+   "stamp",
+   -6,
+   -0.087,
+   "BOUGHT!"
+  ],
+  [
+   209.32,
+   "coin",
+   -8,
+   -0.073,
+   "a coin flies up"
+  ],
+  [
+   210.56,
+   "whoosh",
+   -6,
+   -0.2,
+   "whip to the phone"
+  ],
+  [
+   210.68,
+   "tap",
+   -3,
+   -0.15,
+   "random jab #1"
+  ],
+  [
+   210.73,
+   "ka_ching",
+   -6,
+   0,
+   "bought something (#1)"
+  ],
+  [
+   210.967,
+   "tap",
+   -3,
+   0,
+   "random jab #2"
+  ],
+  [
+   211.017,
+   "coins",
+   -6,
+   0,
+   "bought something (#2)"
+  ],
+  [
+   211.253,
+   "tap",
+   -3,
+   0.15,
+   "random jab #3"
+  ],
+  [
+   211.283,
+   "money_counter",
+   -10,
+   0.45,
+   "the coin balance rockets: 25,000 -> 9.99M"
+  ],
+  [
+   211.303,
+   "ka_ching",
+   -6,
+   0,
+   "bought something (#3)"
+  ],
+  [
+   211.54,
+   "tap",
+   -3,
+   -0.15,
+   "random jab #4"
+  ],
+  [
+   211.59,
+   "coins",
+   -6,
+   0,
+   "bought something (#4)"
+  ],
+  [
+   211.827,
+   "tap",
+   -3,
+   0,
+   "random jab #5"
+  ],
+  [
+   211.877,
+   "ka_ching",
+   -6,
+   0,
+   "bought something (#5)"
+  ],
+  [
+   212.113,
+   "tap",
+   -3,
+   0.15,
+   "random jab #6"
+  ],
+  [
+   212.163,
+   "coins",
+   -6,
+   0,
+   "bought something (#6)"
+  ],
+  [
+   212.28,
+   "whoosh",
+   -10,
+   0,
+   "the furcoat flies in"
+  ],
+  [
+   212.53,
+   "whoosh",
+   -6,
+   0.2,
+   "whip to the avatar shop"
+  ],
+  [
+   212.58,
+   "magic",
+   -4,
+   0,
+   "the noob starts spinning in a sparkle tornado"
+  ],
+  [
+   212.63,
+   "equip",
+   -4,
+   0,
+   "furcoat snaps on (burst)"
+  ],
+  [
+   212.72,
+   "whoosh",
+   -10,
+   0,
+   "the pearls flies in"
+  ],
+  [
+   212.93,
+   "riser_long",
+   -6,
+   0,
+   "spin accelerates"
+  ],
+  [
+   213.07,
+   "equip",
+   -4,
+   0,
+   "pearls snaps on (burst)"
+  ],
+  [
+   214,
+   "whoosh",
+   -10,
+   0,
+   "the monocle flies in"
+  ],
+  [
+   214.35,
+   "equip",
+   -4,
+   0,
+   "monocle snaps on (burst)"
+  ],
+  [
+   214.68,
+   "whoosh",
+   -10,
+   0,
+   "the cane flies in"
+  ],
+  [
+   215.03,
+   "equip",
+   -4,
+   0,
+   "cane snaps on (burst)"
+  ],
+  [
+   215.04,
+   "whoosh",
+   -10,
+   0,
+   "the coin bag flies in"
+  ],
+  [
+   215.39,
+   "equip",
+   -4,
+   0,
+   "coin bag snaps on (burst)"
+  ],
+  [
+   215.59,
+   "reverse_swell",
+   -4,
+   0,
+   "white-out builds"
+  ],
+  [
+   216.113,
+   "tada",
+   2,
+   0,
+   "REVEAL: the billionaire Granny (white flash, shake)"
+  ],
+  [
+   216.133,
+   "poof",
+   -2,
+   0,
+   "gold poof"
+  ],
+  [
+   216.213,
+   "coins",
+   -2,
+   0,
+   "coins rain down"
+  ],
+  [
+   216.263,
+   "ui_pop",
+   -6,
+   0,
+   "GrannyGoodies nametag"
+  ],
+  [
+   216.313,
+   "money_counter",
+   -4,
+   -0.5,
+   "the coin counter rolls to 9,999,999"
+  ],
+  [
+   216.713,
+   "coins",
+   -8,
+   0.3,
+   "more coins"
+  ],
+  [
+   217.13,
+   "whoosh",
+   -8,
+   -0.2,
+   "whip back to the living room"
+  ],
+  [
+   218.19,
+   "orch_hit",
+   -2,
+   0,
+   "RULE #1 title slams in"
+  ],
+  [
+   218.21,
+   "alarm_beep",
+   -10,
+   0,
+   "alarm-red title"
+  ],
+  [
+   220.03,
+   "impact",
+   1,
+   -0.3,
+   "NOT — smash-zoom (shake)"
+  ],
+  [
+   220.57,
+   "ui_pop",
+   -6,
+   0,
+   "DO NOT TALK TO MY FRIENDS ribbon"
+  ],
+  [
+   221.85,
+   "whoosh",
+   -6,
+   0.3,
+   "whip to the family"
+  ],
+  [
+   221.95,
+   "swish",
+   -8,
+   0.029,
+   "thumbs up"
+  ],
+  [
+   222.31,
+   "shine",
+   -4,
+   0.073,
+   "ding: the thumbs-up sparkles"
+  ],
+  [
+   223.16,
+   "whoosh",
+   -6,
+   0.2,
+   "cut to the three devices"
+  ],
+  [
+   223.16,
+   "ui_pop",
+   -8,
+   -0.423,
+   "device 1 pops in"
+  ],
+  [
+   223.24,
+   "ui_pop",
+   -8,
+   0.073,
+   "device 2 pops in"
+  ],
+  [
+   223.32,
+   "ui_pop",
+   -8,
+   0.503,
+   "device 3 pops in"
+  ],
+  [
+   223.32,
+   "click",
+   -2,
+   -0.423,
+   "Dad presses PLAY"
+  ],
+  [
+   223.52,
+   "loading",
+   -12,
+   -0.423,
+   "JOINING..."
+  ],
+  [
+   223.56,
+   "click",
+   -2,
+   0.073,
+   "Mom presses PLAY"
+  ],
+  [
+   223.76,
+   "loading",
+   -12,
+   0.073,
+   "JOINING..."
+  ],
+  [
+   223.8,
+   "click",
+   -2,
+   0.503,
+   "Granny presses PLAY"
+  ],
+  [
+   223.94,
+   "whoosh_long",
+   -4,
+   0,
+   "zoom into the laptop screen"
+  ],
+  [
+   224,
+   "loading",
+   -12,
+   0.503,
+   "JOINING..."
+  ],
+  [
+   224.49,
+   "pixel_wipe",
+   -2,
+   0,
+   "pixel wipe into Cube City"
+  ]
+ ]
+}

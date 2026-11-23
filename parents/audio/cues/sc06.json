@@ -1,0 +1,1091 @@
+{
+ "scene": "SC 06",
+ "start": 366.11,
+ "end": 419.55,
+ "music": [
+  {
+   "start": 366.11,
+   "end": 376.1,
+   "mood": "playful",
+   "energy": 0.45,
+   "in": "cut",
+   "out": "cut"
+  },
+  {
+   "start": 376.1,
+   "end": 381.38,
+   "mood": "tycoon",
+   "energy": 1,
+   "in": "cut",
+   "out": "sting"
+  },
+  {
+   "start": 381.38,
+   "end": 383,
+   "mood": "wonder",
+   "energy": 0.6,
+   "in": "swell",
+   "out": "cut"
+  },
+  {
+   "start": 383,
+   "end": 390.92,
+   "mood": "tycoon",
+   "energy": 0.6,
+   "in": "cut",
+   "out": "cut"
+  },
+  {
+   "start": 390.92,
+   "end": 400.36,
+   "mood": "tycoon",
+   "energy": 0.55,
+   "in": "cut",
+   "out": "cut"
+  },
+  {
+   "start": 400.36,
+   "end": 410.078,
+   "mood": "heist",
+   "energy": 0.45,
+   "in": "cut",
+   "out": "cut"
+  },
+  {
+   "start": 410.078,
+   "end": 414.84,
+   "mood": "playful",
+   "energy": 0.35,
+   "in": "cut",
+   "out": "fade"
+  },
+  {
+   "start": 414.84,
+   "end": 415.52,
+   "mood": "sad",
+   "energy": 0.25,
+   "in": "fade",
+   "out": "cut"
+  },
+  {
+   "start": 415.52,
+   "end": 419.55,
+   "mood": "silence",
+   "energy": 0,
+   "in": "cut",
+   "out": "cut"
+  }
+ ],
+ "ambience": [
+  {
+   "start": 366.11,
+   "end": 368.98,
+   "name": "wind",
+   "gain_db": -20
+  },
+  {
+   "start": 366.11,
+   "end": 368.98,
+   "name": "town",
+   "gain_db": -18
+  },
+  {
+   "start": 368.98,
+   "end": 370.76,
+   "name": "room",
+   "gain_db": -14
+  },
+  {
+   "start": 370.76,
+   "end": 389.53,
+   "name": "wind",
+   "gain_db": -22
+  },
+  {
+   "start": 370.76,
+   "end": 389.53,
+   "name": "town",
+   "gain_db": -16
+  },
+  {
+   "start": 389.53,
+   "end": 390.92,
+   "name": "room",
+   "gain_db": -14
+  },
+  {
+   "start": 390.92,
+   "end": 400.36,
+   "name": "conveyor",
+   "gain_db": -14
+  },
+  {
+   "start": 400.36,
+   "end": 410.078,
+   "name": "town",
+   "gain_db": -18
+  },
+  {
+   "start": 400.36,
+   "end": 410.078,
+   "name": "wind",
+   "gain_db": -22
+  },
+  {
+   "start": 410.078,
+   "end": 414.84,
+   "name": "room",
+   "gain_db": -14
+  },
+  {
+   "start": 414.84,
+   "end": 419.55,
+   "name": "wind",
+   "gain_db": -20
+  },
+  {
+   "start": 415.52,
+   "end": 419.55,
+   "name": "town",
+   "gain_db": -26
+  }
+ ],
+ "footsteps": [
+  {
+   "start": 393.05,
+   "end": 395.38,
+   "interval": 0.314,
+   "surface": "hard",
+   "gain_db": -12,
+   "pan": 0
+  },
+  {
+   "start": 400.36,
+   "end": 400.77,
+   "interval": 0.314,
+   "surface": "soft",
+   "gain_db": -10,
+   "pan": -0.4
+  },
+  {
+   "start": 414.84,
+   "end": 415.52,
+   "interval": 0.393,
+   "surface": "soft",
+   "gain_db": -14,
+   "pan": 0.2
+  }
+ ],
+ "sfx": [
+  [
+   366.13,
+   "whoosh",
+   -6,
+   0.4,
+   "whip in from the arena"
+  ],
+  [
+   366.21,
+   "ui_pop",
+   -4,
+   0,
+   "MEANWHILE... banner unfurls"
+  ],
+  [
+   366.26,
+   "notify",
+   -10,
+   0,
+   "banner"
+  ],
+  [
+   367.39,
+   "pop",
+   -8,
+   0.321,
+   "a brick of the cookie stand pops in"
+  ],
+  [
+   367.51,
+   "pop",
+   -10,
+   0.321,
+   "a brick of the cookie stand pops in"
+  ],
+  [
+   367.63,
+   "pop",
+   -8,
+   0.321,
+   "a brick of the cookie stand pops in"
+  ],
+  [
+   367.75,
+   "pop",
+   -10,
+   0.321,
+   "a brick of the cookie stand pops in"
+  ],
+  [
+   367.87,
+   "pop",
+   -8,
+   0.321,
+   "a brick of the cookie stand pops in"
+  ],
+  [
+   367.94,
+   "teleport",
+   -6,
+   0.321,
+   "Granny pops in behind the counter"
+  ],
+  [
+   367.99,
+   "pop",
+   -10,
+   0.321,
+   "a brick of the cookie stand pops in"
+  ],
+  [
+   367.99,
+   "sparkle",
+   -10,
+   0.321,
+   "pink burst"
+  ],
+  [
+   368.95,
+   "whoosh",
+   -12,
+   0.3,
+   "cut to the living room"
+  ],
+  [
+   369.28,
+   "tap",
+   -20,
+   0.4,
+   "knitting needles click"
+  ],
+  [
+   369.68,
+   "tap",
+   -20,
+   0.4,
+   "knitting needles click"
+  ],
+  [
+   369.71,
+   "squeak",
+   -8,
+   0.1,
+   "\"tiny!\""
+  ],
+  [
+   370.08,
+   "tap",
+   -20,
+   0.4,
+   "knitting needles click"
+  ],
+  [
+   370.48,
+   "tap",
+   -20,
+   0.4,
+   "knitting needles click"
+  ],
+  [
+   370.76,
+   "whoosh",
+   -10,
+   0.2,
+   "back to the stand"
+  ],
+  [
+   370.81,
+   "ui_pop",
+   -10,
+   0.8,
+   "GRANNY coin pill"
+  ],
+  [
+   371.21,
+   "chat_pop",
+   -6,
+   0.3,
+   "Granny's bubble"
+  ],
+  [
+   373.438,
+   "coin",
+   -4,
+   0.1,
+   "the first noob pays: coin"
+  ],
+  [
+   373.538,
+   "coin",
+   -6,
+   0.15,
+   "coin 2"
+  ],
+  [
+   373.738,
+   "whoosh",
+   -14,
+   0,
+   "a cookie tossed back"
+  ],
+  [
+   373.888,
+   "ka_ching",
+   -4,
+   0.8,
+   "GRANNY 2"
+  ],
+  [
+   374.238,
+   "chomp",
+   -10,
+   -0.1,
+   "he bites the cookie"
+  ],
+  [
+   374.69,
+   "pop",
+   -8,
+   0.1,
+   "cookie 1 for the KID"
+  ],
+  [
+   374.87,
+   "pop",
+   -8,
+   0.1,
+   "cookie 2 for the KID"
+  ],
+  [
+   375.05,
+   "pop",
+   -8,
+   0.1,
+   "cookie 3 for the KID"
+  ],
+  [
+   375.14,
+   "buzzer_wrong",
+   -14,
+   -0.3,
+   "the grumpy noob gets none"
+  ],
+  [
+   375.19,
+   "heart_pop",
+   -6,
+   0,
+   "hearts for the cute one"
+  ],
+  [
+   375.19,
+   "ka_ching",
+   -6,
+   0.8,
+   "GRANNY 5"
+  ],
+  [
+   376.1,
+   "riser_long",
+   -4,
+   0,
+   "time-lapse"
+  ],
+  [
+   376.15,
+   "ui_pop",
+   -8,
+   0.7,
+   "▶▶ x1000"
+  ],
+  [
+   376.3,
+   "money_counter",
+   -6,
+   -0.6,
+   "GRANNY coins skyrocketing"
+  ],
+  [
+   376.4,
+   "coins",
+   -8,
+   -0.6,
+   "coins fountain"
+  ],
+  [
+   376.55,
+   "whoosh",
+   -6,
+   0,
+   "smash: bakery"
+  ],
+  [
+   376.7,
+   "pop",
+   -12,
+   -0.3,
+   "bakery bricks pop in"
+  ],
+  [
+   376.83,
+   "pop",
+   -12,
+   -0.15,
+   "bakery bricks pop in"
+  ],
+  [
+   376.96,
+   "pop",
+   -12,
+   0,
+   "bakery bricks pop in"
+  ],
+  [
+   377.09,
+   "pop",
+   -12,
+   0.15,
+   "bakery bricks pop in"
+  ],
+  [
+   377.22,
+   "pop",
+   -12,
+   0.3,
+   "bakery bricks pop in"
+  ],
+  [
+   378.39,
+   "whoosh",
+   -6,
+   0,
+   "smash: factory"
+  ],
+  [
+   378.54,
+   "pop",
+   -12,
+   -0.3,
+   "factory bricks pop in"
+  ],
+  [
+   378.67,
+   "pop",
+   -12,
+   -0.15,
+   "factory bricks pop in"
+  ],
+  [
+   378.7,
+   "money_counter",
+   -8,
+   -0.6,
+   "still rolling"
+  ],
+  [
+   378.8,
+   "pop",
+   -12,
+   0,
+   "factory bricks pop in"
+  ],
+  [
+   378.9,
+   "coins",
+   -10,
+   -0.6,
+   "coins"
+  ],
+  [
+   378.93,
+   "pop",
+   -12,
+   0.15,
+   "factory bricks pop in"
+  ],
+  [
+   378.99,
+   "steam_hiss",
+   -14,
+   0.1,
+   "factory chimneys"
+  ],
+  [
+   379.06,
+   "pop",
+   -12,
+   0.3,
+   "factory bricks pop in"
+  ],
+  [
+   380.23,
+   "whoosh",
+   -6,
+   0,
+   "smash: skyscraper"
+  ],
+  [
+   380.38,
+   "pop",
+   -12,
+   -0.3,
+   "skyscraper bricks pop in"
+  ],
+  [
+   380.43,
+   "rumble",
+   -4,
+   0,
+   "the skyscraper grows to the clouds"
+  ],
+  [
+   380.51,
+   "pop",
+   -12,
+   -0.15,
+   "skyscraper bricks pop in"
+  ],
+  [
+   380.64,
+   "pop",
+   -12,
+   0,
+   "skyscraper bricks pop in"
+  ],
+  [
+   380.77,
+   "pop",
+   -12,
+   0.15,
+   "skyscraper bricks pop in"
+  ],
+  [
+   380.9,
+   "pop",
+   -12,
+   0.3,
+   "skyscraper bricks pop in"
+  ],
+  [
+   381.34,
+   "whoosh_up",
+   -6,
+   0,
+   "tilt up to the top"
+  ],
+  [
+   381.83,
+   "electric",
+   -6,
+   0,
+   "neon flicker"
+  ],
+  [
+   382.33,
+   "ka_ching",
+   0,
+   0,
+   "the neon cookie lights up"
+  ],
+  [
+   382.35,
+   "sparkle",
+   -6,
+   0,
+   "sparkles"
+  ],
+  [
+   382.97,
+   "whoosh",
+   -8,
+   0.3,
+   "whip to the billboard"
+  ],
+  [
+   383.15,
+   "rumble",
+   -4,
+   0.3,
+   "the billboard rises"
+  ],
+  [
+   383.95,
+   "thud",
+   -2,
+   0.3,
+   "legs slam home"
+  ],
+  [
+   384,
+   "impact",
+   -8,
+   0.3,
+   "shake"
+  ],
+  [
+   384.3,
+   "whoosh",
+   -10,
+   -0.3,
+   "close-up"
+  ],
+  [
+   385.34,
+   "ka_ching",
+   -6,
+   0.5,
+   "price up"
+  ],
+  [
+   385.41,
+   "stamp",
+   0,
+   0.5,
+   "5 COINS sticker slaps on"
+  ],
+  [
+   385.49,
+   "ui_pop",
+   -8,
+   -0.2,
+   "NEW PRICE!"
+  ],
+  [
+   386.822,
+   "whoosh",
+   -8,
+   0.3,
+   "whip to the queue"
+  ],
+  [
+   387.052,
+   "paper",
+   -4,
+   0.4,
+   "the sticker flips to 10"
+  ],
+  [
+   387.302,
+   "crowd_gasp",
+   -8,
+   0,
+   "\"awww...\""
+  ],
+  [
+   387.64,
+   "pop",
+   -6,
+   -0.6,
+   "the SAT/SUN calendar"
+  ],
+  [
+   388.67,
+   "chat_pop",
+   -6,
+   0,
+   "\"gimme a cookie >:(\""
+  ],
+  [
+   389.04,
+   "buzzer_wrong",
+   -8,
+   0.1,
+   "IF RUDE ... 15"
+  ],
+  [
+   389.11,
+   "stamp",
+   0,
+   0.5,
+   "RUDE TAX +5 (stamp slams at k .3)"
+  ],
+  [
+   389.5,
+   "whoosh",
+   -12,
+   0.3,
+   "cut to the living room"
+  ],
+  [
+   389.73,
+   "tap",
+   -20,
+   0.3,
+   "knitting needles"
+  ],
+  [
+   390.13,
+   "tap",
+   -20,
+   0.3,
+   "knitting needles"
+  ],
+  [
+   390.53,
+   "tap",
+   -20,
+   0.3,
+   "knitting needles"
+  ],
+  [
+   390.57,
+   "shine",
+   -6,
+   0.3,
+   "a glint on her glasses"
+  ],
+  [
+   390.89,
+   "whoosh",
+   -6,
+   -0.2,
+   "whip into the factory"
+  ],
+  [
+   391.39,
+   "stamp",
+   0,
+   -0.6,
+   "HIRED! stamp"
+  ],
+  [
+   393,
+   "whoosh",
+   -10,
+   0,
+   "pull out wide"
+  ],
+  [
+   393.61,
+   "click",
+   -16,
+   -0.7,
+   "STAFF counter ticks"
+  ],
+  [
+   393.762,
+   "click",
+   -16,
+   -0.7,
+   "STAFF counter ticks"
+  ],
+  [
+   393.914,
+   "click",
+   -16,
+   -0.7,
+   "STAFF counter ticks"
+  ],
+  [
+   394.067,
+   "click",
+   -16,
+   -0.7,
+   "STAFF counter ticks"
+  ],
+  [
+   394.219,
+   "click",
+   -16,
+   -0.7,
+   "STAFF counter ticks"
+  ],
+  [
+   394.371,
+   "click",
+   -16,
+   -0.7,
+   "STAFF counter ticks"
+  ],
+  [
+   394.523,
+   "click",
+   -16,
+   -0.7,
+   "STAFF counter ticks"
+  ],
+  [
+   394.676,
+   "click",
+   -16,
+   -0.7,
+   "STAFF counter ticks"
+  ],
+  [
+   394.828,
+   "click",
+   -16,
+   -0.7,
+   "STAFF counter ticks"
+  ],
+  [
+   394.98,
+   "click",
+   -16,
+   -0.7,
+   "STAFF counter ticks"
+  ],
+  [
+   394.98,
+   "level_up",
+   -6,
+   -0.7,
+   "STAFF 48"
+  ],
+  [
+   395.23,
+   "chat_pop",
+   -6,
+   0,
+   "Noodle's bubble"
+  ],
+  [
+   397.25,
+   "coins",
+   -4,
+   0,
+   "double pay"
+  ],
+  [
+   397.3,
+   "ka_ching",
+   -6,
+   0,
+   "x2!"
+  ],
+  [
+   398.65,
+   "chime",
+   -4,
+   0.5,
+   "BENEFITS: DENTAL card"
+  ],
+  [
+   398.7,
+   "shine",
+   -2,
+   0,
+   "his teeth sparkle"
+  ],
+  [
+   399.36,
+   "whoosh",
+   -10,
+   0.2,
+   "to the frame"
+  ],
+  [
+   399.59,
+   "camera_flash",
+   0,
+   0.3,
+   "photo flash"
+  ],
+  [
+   399.69,
+   "tada",
+   -6,
+   0.3,
+   "EMPLOYEE OF THE MONTH: NoodleBoi"
+  ],
+  [
+   400.31,
+   "chat_pop",
+   -6,
+   0.1,
+   "Granny's bubble"
+  ],
+  [
+   400.33,
+   "whoosh",
+   -6,
+   -0.3,
+   "whip to the castle"
+  ],
+  [
+   400.77,
+   "stamp",
+   2,
+   -0.1,
+   "SOLD!"
+  ],
+  [
+   400.89,
+   "impact",
+   -4,
+   -0.1,
+   "the sign swings, shake"
+  ],
+  [
+   400.92,
+   "shock",
+   -6,
+   -0.4,
+   "the hero freezes"
+  ],
+  [
+   403.83,
+   "coins",
+   -6,
+   0.1,
+   "coins pop out of her money bag"
+  ],
+  [
+   404.77,
+   "zoom_in",
+   -2,
+   0,
+   "smash-zoom on BOUGHT"
+  ],
+  [
+   404.79,
+   "impact",
+   -6,
+   0,
+   "shake"
+  ],
+  [
+   405.99,
+   "chat_pop",
+   -6,
+   0.1,
+   "Granny's bubble"
+  ],
+  [
+   406.49,
+   "ui_pop",
+   -8,
+   -0.8,
+   "COINS 12 pill"
+  ],
+  [
+   408,
+   "paper",
+   -2,
+   0.6,
+   "RENT AGREEMENT"
+  ],
+  [
+   408.69,
+   "ka_ching",
+   -6,
+   0.6,
+   "50 COINS / WEEK"
+  ],
+  [
+   410.048,
+   "whoosh",
+   -12,
+   0,
+   "cut to the living room"
+  ],
+  [
+   410.228,
+   "squeak",
+   -12,
+   -0.5,
+   "the gaming chair swivels"
+  ],
+  [
+   413.97,
+   "heart_pop",
+   -6,
+   0.3,
+   "a heart on \"dear\""
+  ],
+  [
+   414.84,
+   "whoosh",
+   -14,
+   0,
+   "back to the castle"
+  ],
+  [
+   414.99,
+   "coins",
+   -16,
+   0.2,
+   "her money bag jingles"
+  ],
+  [
+   415.24,
+   "coins",
+   -16,
+   0.3,
+   "her money bag jingles"
+  ],
+  [
+   415.49,
+   "coins",
+   -16,
+   0.4,
+   "her money bag jingles"
+  ],
+  [
+   415.5,
+   "whoosh",
+   -10,
+   0,
+   "insert: the wallet"
+  ],
+  [
+   415.78,
+   "cloth",
+   -4,
+   0,
+   "the wallet opens"
+  ],
+  [
+   416.13,
+   "coin",
+   -10,
+   0,
+   "three lonely coins"
+  ],
+  [
+   416.23,
+   "ui_pop",
+   -10,
+   0,
+   "12 COINS"
+  ],
+  [
+   417.15,
+   "cricket",
+   -6,
+   0.2,
+   "a moth flutters out"
+  ],
+  [
+   418.05,
+   "cricket",
+   -8,
+   -0.2,
+   "crickets"
+  ],
+  [
+   418.25,
+   "sad_trombone",
+   -10,
+   0,
+   "twelve coins"
+  ],
+  [
+   419.45,
+   "pixel_wipe",
+   -6,
+   0,
+   "hand-over to the lobby"
+  ]
+ ]
+}

@@ -837,5 +837,12 @@ function look(t) {
   if (t >= CUT.dark && t < CUT.okay) return { grade: 'warm', vignette: 0.8 };
   return { grade: 'warm', vignette: 0.45 };
 }
-const BEATS = { T0, END, tOut, tHood, tHitMom, tSwing2, tH1, tH2, tH3, tFly, tStick, tGlint, tRoll0, tRoll1, tOne, tNice, tTap, tStraight, tTopple, tBowl, KO0, KO1, tHydra, tCharge, tPunch, benchT: BENCH.map((_, j) => benchT(j)) };
+const BEATS = {
+  T0, END, tOut, tHood, tHitMom, tSwing2, tH1, tH2, tH3, tFly, tStick, tGlint, tRoll0, tRoll1, tOne, tNice, tTap, tStraight, tTopple, tBowl, KO0, KO1, tHydra, tCharge, tPunch,
+  benchT: BENCH.map((_, j) => benchT(j)),
+  koT: Array.from({ length: 34 }, (_, i) => KO0 + i * ((KO1 - KO0) / 34)),                       // shHundred launches (dir: odd = right)
+  flashT: Array.from({ length: 4 }, (_, i) => CUT.vhs3 + 0.25 + i * 0.42 + hash(i) * 0.15),     // 1998 crowd camera flashes
+  tStop: CUT.arena + 1.45, tPose: w(1, 'embarrass') - 0.05, tMom: w(1, 'Mom'), tSnap: w(1, 'followed'), tJ: w(0, 'jumping'),
+  tPalm: A[2].a + 1.3, tRecord: CUT.vhs2 - 0.35, tLand: A[15].b - 0.4,
+};
 module.exports = { scene, look, SHOTS, CUT, BEATS };

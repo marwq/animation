@@ -1,0 +1,2002 @@
+{
+ "scene": "SC 04",
+ "start": 224.81,
+ "end": 295.63,
+ "music": [
+  {
+   "start": 224.81,
+   "end": 233.43,
+   "mood": "lobby",
+   "energy": 0.6,
+   "in": "cut",
+   "out": "cut"
+  },
+  {
+   "start": 233.43,
+   "end": 234.63,
+   "mood": "silence",
+   "energy": 0,
+   "in": "cut",
+   "out": "cut"
+  },
+  {
+   "start": 234.63,
+   "end": 239.61,
+   "mood": "mystery",
+   "energy": 0.35,
+   "in": "fade",
+   "out": "sting"
+  },
+  {
+   "start": 239.61,
+   "end": 253.35,
+   "mood": "playful",
+   "energy": 0.45,
+   "in": "cut",
+   "out": "cut"
+  },
+  {
+   "start": 253.35,
+   "end": 259.42,
+   "mood": "warm",
+   "energy": 0.45,
+   "in": "cut",
+   "out": "cut"
+  },
+  {
+   "start": 259.42,
+   "end": 262.42,
+   "mood": "mystery",
+   "energy": 0.55,
+   "in": "cut",
+   "out": "scratch"
+  },
+  {
+   "start": 262.42,
+   "end": 263.65,
+   "mood": "silence",
+   "energy": 0,
+   "in": "cut",
+   "out": "cut"
+  },
+  {
+   "start": 263.65,
+   "end": 283.23,
+   "mood": "playful",
+   "energy": 0.5,
+   "in": "cut",
+   "out": "cut"
+  },
+  {
+   "start": 283.23,
+   "end": 288.9,
+   "mood": "chaos",
+   "energy": 0.85,
+   "in": "cut",
+   "out": "sting"
+  },
+  {
+   "start": 288.9,
+   "end": 295.63,
+   "mood": "lobby",
+   "energy": 0.45,
+   "in": "cut",
+   "out": "fade"
+  }
+ ],
+ "ambience": [
+  {
+   "start": 224.81,
+   "end": 239.61,
+   "name": "town",
+   "gain_db": -16
+  },
+  {
+   "start": 239.61,
+   "end": 240.46,
+   "name": "room",
+   "gain_db": -14
+  },
+  {
+   "start": 240.46,
+   "end": 250.07,
+   "name": "town",
+   "gain_db": -16
+  },
+  {
+   "start": 250.07,
+   "end": 256.1,
+   "name": "room",
+   "gain_db": -14
+  },
+  {
+   "start": 256.1,
+   "end": 263.65,
+   "name": "town",
+   "gain_db": -16
+  },
+  {
+   "start": 263.65,
+   "end": 264.74,
+   "name": "room",
+   "gain_db": -14
+  },
+  {
+   "start": 264.74,
+   "end": 267.99,
+   "name": "town",
+   "gain_db": -16
+  },
+  {
+   "start": 267.99,
+   "end": 276.53,
+   "name": "room",
+   "gain_db": -14
+  },
+  {
+   "start": 276.53,
+   "end": 278.53,
+   "name": "town",
+   "gain_db": -16
+  },
+  {
+   "start": 278.53,
+   "end": 280.96,
+   "name": "room",
+   "gain_db": -14
+  },
+  {
+   "start": 280.96,
+   "end": 295.63,
+   "name": "town",
+   "gain_db": -16
+  },
+  {
+   "start": 224.81,
+   "end": 239.61,
+   "name": "crowd",
+   "gain_db": -16
+  },
+  {
+   "start": 244.66,
+   "end": 250.07,
+   "name": "crowd",
+   "gain_db": -15
+  },
+  {
+   "start": 256.1,
+   "end": 262.42,
+   "name": "crowd",
+   "gain_db": -15
+  },
+  {
+   "start": 283.23,
+   "end": 288.9,
+   "name": "crowd",
+   "gain_db": -12
+  }
+ ],
+ "footsteps": [
+  {
+   "start": 259.42,
+   "end": 260.32,
+   "interval": 0.349,
+   "surface": "hard",
+   "gain_db": -6,
+   "pan": 0.4
+  },
+  {
+   "start": 264.74,
+   "end": 267.99,
+   "interval": 0.349,
+   "surface": "hard",
+   "gain_db": -12,
+   "pan": 0.3
+  },
+  {
+   "start": 276.53,
+   "end": 278.53,
+   "interval": 0.349,
+   "surface": "hard",
+   "gain_db": -14,
+   "pan": 0.1
+  },
+  {
+   "start": 280.96,
+   "end": 286.31,
+   "interval": 0.349,
+   "surface": "hard",
+   "gain_db": -16,
+   "pan": 0.3
+  },
+  {
+   "start": 289.45,
+   "end": 290.143,
+   "interval": 0.196,
+   "surface": "hard",
+   "gain_db": -8,
+   "pan": -0.3
+  },
+  {
+   "start": 293.58,
+   "end": 295.02,
+   "interval": 0.349,
+   "surface": "hard",
+   "gain_db": -10,
+   "pan": 0.5
+  }
+ ],
+ "sfx": [
+  [
+   224.64,
+   "forcefield",
+   -10,
+   -0.321,
+   "DadBod1978: the spawn pad lights up"
+  ],
+  [
+   224.81,
+   "pixel_wipe",
+   -3,
+   0,
+   "pixel wipe reveals the spawn plaza"
+  ],
+  [
+   224.89,
+   "notify",
+   -2,
+   0.6,
+   "\"DadBod1978 joined the server\" toast"
+  ],
+  [
+   224.99,
+   "respawn",
+   0,
+   -0.321,
+   "DadBod1978 pops in"
+  ],
+  [
+   225.04,
+   "sparkle",
+   -8,
+   -0.321,
+   "spawn sparkle"
+  ],
+  [
+   225.39,
+   "swish",
+   -10,
+   -0.321,
+   "the hot dog waves"
+  ],
+  [
+   225.59,
+   "gulp",
+   -8,
+   0.54,
+   "the hero, worried"
+  ],
+  [
+   227.77,
+   "whoosh",
+   -6,
+   0.2,
+   "whip to pad 2"
+  ],
+  [
+   227.84,
+   "forcefield",
+   -10,
+   -0.197,
+   "MOM_OFFICIAL: the spawn pad lights up"
+  ],
+  [
+   228.09,
+   "notify",
+   -2,
+   0.6,
+   "\"MOM_OFFICIAL joined the server\" toast"
+  ],
+  [
+   228.19,
+   "respawn",
+   0,
+   -0.197,
+   "MOM_OFFICIAL pops in"
+  ],
+  [
+   228.24,
+   "sparkle",
+   -8,
+   -0.197,
+   "spawn sparkle"
+  ],
+  [
+   231.09,
+   "whoosh",
+   -6,
+   0.2,
+   "whip to pad 3"
+  ],
+  [
+   231.16,
+   "forcefield",
+   -10,
+   0.022,
+   "GrannyGoodies: the spawn pad lights up"
+  ],
+  [
+   231.41,
+   "notify",
+   -2,
+   0.6,
+   "\"GrannyGoodies joined the server\" toast"
+  ],
+  [
+   231.51,
+   "respawn",
+   0,
+   0.022,
+   "GrannyGoodies pops in"
+  ],
+  [
+   231.56,
+   "sparkle",
+   -8,
+   0.022,
+   "spawn sparkle"
+  ],
+  [
+   231.56,
+   "coins",
+   -4,
+   0.029,
+   "Granny spawns in a spray of coins"
+  ],
+  [
+   233.43,
+   "zoom_in",
+   -4,
+   0,
+   "smash on the hero: oh no"
+  ],
+  [
+   233.48,
+   "heartbeat",
+   -6,
+   0,
+   "heart thumps"
+  ],
+  [
+   234.63,
+   "whoosh",
+   -8,
+   0,
+   "pull out to the wide"
+  ],
+  [
+   234.88,
+   "step_soft",
+   -16,
+   -0.6,
+   "players turn around (ripple)"
+  ],
+  [
+   235.1,
+   "step_soft",
+   -16,
+   -0.36,
+   "players turn around (ripple)"
+  ],
+  [
+   235.32,
+   "step_soft",
+   -16,
+   -0.12,
+   "players turn around (ripple)"
+  ],
+  [
+   235.54,
+   "step_soft",
+   -16,
+   0.12,
+   "players turn around (ripple)"
+  ],
+  [
+   235.76,
+   "step_soft",
+   -16,
+   0.36,
+   "players turn around (ripple)"
+  ],
+  [
+   235.98,
+   "step_soft",
+   -16,
+   0.6,
+   "players turn around (ripple)"
+  ],
+  [
+   236.13,
+   "crowd_gasp",
+   -8,
+   0,
+   "the server gasps"
+  ],
+  [
+   236.97,
+   "impact",
+   -2,
+   0,
+   "smash-zoom: EVERY. (DadBod1978)"
+  ],
+  [
+   237,
+   "ui_pop",
+   -6,
+   0,
+   "giant nametag pops"
+  ],
+  [
+   237.03,
+   "pop",
+   -8,
+   0.438,
+   "word bang"
+  ],
+  [
+   237.71,
+   "impact",
+   -1,
+   0,
+   "smash-zoom: SINGLE. (MOM_OFFICIAL)"
+  ],
+  [
+   237.74,
+   "ui_pop",
+   -6,
+   0,
+   "giant nametag pops"
+  ],
+  [
+   237.77,
+   "pop",
+   -8,
+   0.438,
+   "word bang"
+  ],
+  [
+   238.43,
+   "impact",
+   0,
+   0,
+   "smash-zoom: NAME. (GrannyGoodies)"
+  ],
+  [
+   238.46,
+   "ui_pop",
+   -6,
+   0,
+   "giant nametag pops"
+  ],
+  [
+   238.49,
+   "pop",
+   -8,
+   0.438,
+   "word bang"
+  ],
+  [
+   239.61,
+   "whoosh",
+   -8,
+   0,
+   "cut to the keyboard"
+  ],
+  [
+   239.78,
+   "click",
+   0,
+   -0.4,
+   "CAPS LOCK pressed"
+  ],
+  [
+   239.81,
+   "toggle",
+   -4,
+   -0.4,
+   "the CAPS LED goes green"
+  ],
+  [
+   239.81,
+   "chat_pop",
+   -4,
+   0,
+   "the hot dog's CAPS bubble pops"
+  ],
+  [
+   239.84,
+   "ui_pop",
+   -8,
+   -0.3,
+   "CAPS LOCK label"
+  ],
+  [
+   240.168,
+   "click",
+   -7,
+   0,
+   "caps key \"H\""
+  ],
+  [
+   240.277,
+   "click",
+   -7,
+   0,
+   "caps key \"E\""
+  ],
+  [
+   240.385,
+   "click",
+   -7,
+   0,
+   "caps key \"L\""
+  ],
+  [
+   240.46,
+   "whoosh",
+   -8,
+   -0.2,
+   "cut to the plaza"
+  ],
+  [
+   240.493,
+   "click",
+   -7,
+   0,
+   "caps key \"L\""
+  ],
+  [
+   240.602,
+   "click",
+   -7,
+   0,
+   "caps key \"O\""
+  ],
+  [
+   241.002,
+   "click",
+   -7,
+   0,
+   "caps key \"S\""
+  ],
+  [
+   241.227,
+   "click",
+   -7,
+   0,
+   "caps key \"O\""
+  ],
+  [
+   241.443,
+   "click",
+   -7,
+   0,
+   "caps key \"N\""
+  ],
+  [
+   241.668,
+   "click",
+   -11,
+   0,
+   "caps key \".\""
+  ],
+  [
+   242.21,
+   "whoosh",
+   -6,
+   0.2,
+   "split: the real Dad pecking | the bubble"
+  ],
+  [
+   242.393,
+   "click",
+   -7,
+   0,
+   "caps key \"I\""
+  ],
+  [
+   242.518,
+   "click",
+   -7,
+   0,
+   "caps key \"T\""
+  ],
+  [
+   242.952,
+   "click",
+   -7,
+   0,
+   "caps key \"I\""
+  ],
+  [
+   243.077,
+   "click",
+   -7,
+   0,
+   "caps key \"S\""
+  ],
+  [
+   243.418,
+   "click",
+   -7,
+   0,
+   "caps key \"D\""
+  ],
+  [
+   243.652,
+   "click",
+   -7,
+   0,
+   "caps key \"A\""
+  ],
+  [
+   243.893,
+   "click",
+   -7,
+   0,
+   "caps key \"D\""
+  ],
+  [
+   244.135,
+   "click",
+   -11,
+   0,
+   "caps key \".\""
+  ],
+  [
+   244.66,
+   "whoosh",
+   -8,
+   0,
+   "pull back to the plaza"
+  ],
+  [
+   244.852,
+   "click",
+   -7,
+   0,
+   "caps key \"L\""
+  ],
+  [
+   244.935,
+   "click",
+   -7,
+   0,
+   "caps key \"O\""
+  ],
+  [
+   244.96,
+   "slap",
+   -10,
+   0.2,
+   "the hero facepalms"
+  ],
+  [
+   245.018,
+   "click",
+   -7,
+   0,
+   "caps key \"V\""
+  ],
+  [
+   245.093,
+   "click",
+   -7,
+   0,
+   "caps key \"E\""
+  ],
+  [
+   245.177,
+   "click",
+   -11,
+   0,
+   "caps key \",\""
+  ],
+  [
+   245.618,
+   "click",
+   -7,
+   0,
+   "caps key \"D\""
+  ],
+  [
+   245.777,
+   "click",
+   -7,
+   0,
+   "caps key \"A\""
+  ],
+  [
+   245.935,
+   "click",
+   -7,
+   0,
+   "caps key \"D\""
+  ],
+  [
+   246.093,
+   "click",
+   -11,
+   0,
+   "caps key \".\""
+  ],
+  [
+   246.12,
+   "kids_laugh",
+   -6,
+   0,
+   "the players snicker"
+  ],
+  [
+   246.32,
+   "chat_pop",
+   -6,
+   0.1,
+   "\"lol\" bubble"
+  ],
+  [
+   246.77,
+   "chat_pop",
+   -6,
+   0.5,
+   "\"is that ur DAD lmao\" bubble"
+  ],
+  [
+   247.47,
+   "chat_pop",
+   -4,
+   0.102,
+   "Noodle's bubble"
+  ],
+  [
+   247.65,
+   "whoosh",
+   -6,
+   0.2,
+   "whip to Noodle"
+  ],
+  [
+   248.57,
+   "swish",
+   -10,
+   0,
+   "Noodle points"
+  ],
+  [
+   250.07,
+   "whoosh",
+   -8,
+   -0.2,
+   "cut to the hero at his PC"
+  ],
+  [
+   251.89,
+   "impact",
+   -3,
+   -0.4,
+   "RULE — smash zoom"
+  ],
+  [
+   251.93,
+   "pop",
+   -8,
+   -0.4,
+   "word bang"
+  ],
+  [
+   252.13,
+   "impact",
+   -1,
+   0.4,
+   "NUMBER — smash zoom"
+  ],
+  [
+   252.17,
+   "pop",
+   -8,
+   0.4,
+   "word bang"
+  ],
+  [
+   252.61,
+   "impact",
+   1,
+   0,
+   "ONE! — smash zoom"
+  ],
+  [
+   252.65,
+   "pop",
+   -8,
+   0,
+   "word bang"
+  ],
+  [
+   253.35,
+   "whoosh",
+   -6,
+   0.2,
+   "whip to Mom"
+  ],
+  [
+   254.41,
+   "sparkle",
+   -4,
+   0.248,
+   "Mom finds something (star eyes)"
+  ],
+  [
+   254.43,
+   "pop",
+   -10,
+   0.365,
+   "\"!\""
+  ],
+  [
+   254.64,
+   "whoosh",
+   -6,
+   0,
+   "smash into the tablet"
+  ],
+  [
+   254.69,
+   "ui_pop",
+   -4,
+   0.3,
+   "the emote wheel opens"
+  ],
+  [
+   254.94,
+   "whoosh",
+   -12,
+   0.5,
+   "Mom's finger reaches for the kiss"
+  ],
+  [
+   255.36,
+   "tap",
+   -2,
+   0.2,
+   "taps KISS"
+  ],
+  [
+   255.39,
+   "confirm",
+   -6,
+   0.2,
+   "kiss selected"
+  ],
+  [
+   256.1,
+   "whoosh",
+   -6,
+   0.2,
+   "cut to the plaza"
+  ],
+  [
+   256.25,
+   "heart_pop",
+   0,
+   -0.372,
+   "MWAH! the big lips slam"
+  ],
+  [
+   256.35,
+   "whoosh_up",
+   -10,
+   0,
+   "hearts arc towards the hero"
+  ],
+  [
+   257.07,
+   "chat_pop",
+   -4,
+   -0.321,
+   "\"Love you, honey! <3\" bubble"
+  ],
+  [
+   257.3,
+   "heart_pop",
+   -2,
+   0.321,
+   "the hearts pop on the hero's face"
+  ],
+  [
+   257.33,
+   "blush",
+   -4,
+   0.321,
+   "the hero blushes"
+  ],
+  [
+   258.09,
+   "chat_pop",
+   -11,
+   -0.5,
+   "\"aww\" bubble #1"
+  ],
+  [
+   258.19,
+   "heart_pop",
+   -14,
+   -0.5,
+   "little hearts"
+  ],
+  [
+   258.27,
+   "chat_pop",
+   -11,
+   -0.25,
+   "\"aww\" bubble #2"
+  ],
+  [
+   258.29,
+   "crowd_cheer",
+   -14,
+   0,
+   "the server goes \"awww\""
+  ],
+  [
+   258.37,
+   "heart_pop",
+   -14,
+   -0.25,
+   "little hearts"
+  ],
+  [
+   258.45,
+   "chat_pop",
+   -11,
+   0,
+   "\"aww\" bubble #3"
+  ],
+  [
+   258.55,
+   "heart_pop",
+   -14,
+   0,
+   "little hearts"
+  ],
+  [
+   258.63,
+   "chat_pop",
+   -11,
+   0.25,
+   "\"aww\" bubble #4"
+  ],
+  [
+   258.73,
+   "heart_pop",
+   -14,
+   0.25,
+   "little hearts"
+  ],
+  [
+   258.81,
+   "chat_pop",
+   -11,
+   0.5,
+   "\"aww\" bubble #5"
+  ],
+  [
+   258.91,
+   "heart_pop",
+   -14,
+   0.5,
+   "little hearts"
+  ],
+  [
+   259.37,
+   "chat_pop",
+   -4,
+   0.1,
+   "DarkBlade's bubble"
+  ],
+  [
+   259.42,
+   "whoosh",
+   -4,
+   -0.3,
+   "whip: DarkBlade and the clan stride in"
+  ],
+  [
+   259.52,
+   "cloth",
+   -8,
+   0.5,
+   "capes"
+  ],
+  [
+   259.67,
+   "crowd_laugh",
+   -10,
+   0.4,
+   "the clan: HA HA"
+  ],
+  [
+   260.17,
+   "metal_clank",
+   -6,
+   0.2,
+   "they stop, armour clanks"
+  ],
+  [
+   261.76,
+   "impact",
+   0,
+   0.1,
+   "MOMMY. — smash-zoom (shake)"
+  ],
+  [
+   261.81,
+   "dramatic",
+   -4,
+   0,
+   "dun-dun"
+  ],
+  [
+   262.42,
+   "whoosh",
+   -10,
+   0,
+   "pull out"
+  ],
+  [
+   262.52,
+   "cricket",
+   -4,
+   0.3,
+   "crickets"
+  ],
+  [
+   262.574,
+   "tap",
+   -14,
+   -0.964,
+   "tumbleweed cube bounce"
+  ],
+  [
+   262.62,
+   "wind_gust",
+   -6,
+   -0.6,
+   "the cube tumbleweed rolls across"
+  ],
+  [
+   262.881,
+   "tap",
+   -14,
+   -0.51,
+   "tumbleweed cube bounce"
+  ],
+  [
+   263.189,
+   "tap",
+   -14,
+   -0.055,
+   "tumbleweed cube bounce"
+  ],
+  [
+   263.3,
+   "shine",
+   -4,
+   -0.248,
+   "Mom's glasses glint"
+  ],
+  [
+   263.496,
+   "tap",
+   -14,
+   0.4,
+   "tumbleweed cube bounce"
+  ],
+  [
+   263.65,
+   "whoosh",
+   -8,
+   -0.2,
+   "cut to the real Dad"
+  ],
+  [
+   264.33,
+   "swish",
+   -10,
+   0,
+   "Dad rolls up his sleeves"
+  ],
+  [
+   264.74,
+   "whoosh",
+   -4,
+   0.2,
+   "whip to the obby"
+  ],
+  [
+   265.59,
+   "bonk",
+   2,
+   0.248,
+   "BONK! into the wall (shake)"
+  ],
+  [
+   265.64,
+   "dizzy",
+   -6,
+   0.248,
+   "KO stars"
+  ],
+  [
+   266.29,
+   "thud",
+   -16,
+   0.284,
+   "keeps walking into the wall"
+  ],
+  [
+   266.794,
+   "squeak",
+   -8,
+   0.175,
+   "\"?\""
+  ],
+  [
+   266.99,
+   "thud",
+   -16,
+   0.284,
+   "keeps walking into the wall"
+  ],
+  [
+   267.69,
+   "thud",
+   -16,
+   0.284,
+   "keeps walking into the wall"
+  ],
+  [
+   267.99,
+   "whoosh",
+   -8,
+   -0.2,
+   "cut to the hero"
+  ],
+  [
+   269.277,
+   "whoosh",
+   -8,
+   0.2,
+   "cut to Dad"
+  ],
+  [
+   269.397,
+   "impact",
+   -4,
+   -0.3,
+   "SPACE! (shake)"
+  ],
+  [
+   269.417,
+   "pop",
+   -8,
+   -0.321,
+   "SPACE! bang"
+  ],
+  [
+   270.514,
+   "impact",
+   1,
+   0.3,
+   "BAR! — smash-zoom (shake)"
+  ],
+  [
+   270.554,
+   "boom",
+   -8,
+   0,
+   "BAR! boom"
+  ],
+  [
+   271.2,
+   "cricket",
+   -10,
+   0.3,
+   "\"...\" — nothing happens"
+  ],
+  [
+   271.83,
+   "whoosh",
+   -8,
+   0,
+   "cut to the keyboard"
+  ],
+  [
+   271.93,
+   "shine",
+   -6,
+   0,
+   "spotlight on the untouched space bar"
+  ],
+  [
+   273.13,
+   "ui_pop",
+   -4,
+   0,
+   "TIMES PRESSED: 0"
+  ],
+  [
+   273.23,
+   "error",
+   -10,
+   0,
+   "zero"
+  ],
+  [
+   274.418,
+   "whoosh",
+   -8,
+   0.2,
+   "cut to the couch"
+  ],
+  [
+   275.3,
+   "cloth",
+   -8,
+   0.3,
+   "Mom and Granny cover their ears"
+  ],
+  [
+   275.45,
+   "impact",
+   -10,
+   0,
+   "shake"
+  ],
+  [
+   276.53,
+   "whoosh",
+   -8,
+   0.2,
+   "cut to the hot dog"
+  ],
+  [
+   276.73,
+   "thud",
+   -16,
+   0.029,
+   "walking into the wall"
+  ],
+  [
+   276.83,
+   "squeak",
+   -10,
+   0.102,
+   "\"?\""
+  ],
+  [
+   277.43,
+   "thud",
+   -16,
+   0.029,
+   "walking into the wall"
+  ],
+  [
+   278.13,
+   "thud",
+   -16,
+   0.029,
+   "walking into the wall"
+  ],
+  [
+   278.35,
+   "chat_pop",
+   -6,
+   0.2,
+   "the caps bubble pops over the hot dog"
+  ],
+  [
+   278.53,
+   "whoosh",
+   -8,
+   -0.2,
+   "cut to the keyboard"
+  ],
+  [
+   278.708,
+   "click",
+   -6,
+   -0.1,
+   "caps key \"D\""
+  ],
+  [
+   278.808,
+   "click",
+   -6,
+   -0.1,
+   "caps key \"E\""
+  ],
+  [
+   278.908,
+   "click",
+   -6,
+   -0.1,
+   "caps key \"A\""
+  ],
+  [
+   279.008,
+   "click",
+   -6,
+   -0.1,
+   "caps key \"R\""
+  ],
+  [
+   279.508,
+   "click",
+   -6,
+   -0.1,
+   "caps key \"E\""
+  ],
+  [
+   279.625,
+   "click",
+   -6,
+   -0.1,
+   "caps key \"V\""
+  ],
+  [
+   279.742,
+   "click",
+   -6,
+   -0.1,
+   "caps key \"E\""
+  ],
+  [
+   279.858,
+   "click",
+   -6,
+   -0.1,
+   "caps key \"R\""
+  ],
+  [
+   279.975,
+   "click",
+   -6,
+   -0.1,
+   "caps key \"Y\""
+  ],
+  [
+   280.092,
+   "click",
+   -6,
+   -0.1,
+   "caps key \"O\""
+  ],
+  [
+   280.208,
+   "click",
+   -6,
+   -0.1,
+   "caps key \"N\""
+  ],
+  [
+   280.325,
+   "click",
+   -6,
+   -0.1,
+   "caps key \"E\""
+  ],
+  [
+   280.433,
+   "click",
+   -10,
+   -0.1,
+   "caps key \".\""
+  ],
+  [
+   280.96,
+   "whoosh",
+   -6,
+   0.2,
+   "whip to the plaza wall"
+  ],
+  [
+   281.225,
+   "click",
+   -6,
+   -0.1,
+   "caps key \"W\""
+  ],
+  [
+   281.242,
+   "click",
+   -6,
+   -0.1,
+   "caps key \"H\""
+  ],
+  [
+   281.258,
+   "click",
+   -6,
+   -0.1,
+   "caps key \"E\""
+  ],
+  [
+   281.267,
+   "click",
+   -6,
+   -0.1,
+   "caps key \"R\""
+  ],
+  [
+   281.283,
+   "click",
+   -6,
+   -0.1,
+   "caps key \"E\""
+  ],
+  [
+   281.575,
+   "click",
+   -6,
+   -0.1,
+   "caps key \"I\""
+  ],
+  [
+   281.658,
+   "click",
+   -6,
+   -0.1,
+   "caps key \"S\""
+  ],
+  [
+   281.792,
+   "click",
+   -6,
+   -0.1,
+   "caps key \"T\""
+  ],
+  [
+   281.817,
+   "click",
+   -6,
+   -0.1,
+   "caps key \"H\""
+  ],
+  [
+   281.842,
+   "click",
+   -6,
+   -0.1,
+   "caps key \"E\""
+  ],
+  [
+   282.125,
+   "click",
+   -6,
+   -0.1,
+   "caps key \"J\""
+  ],
+  [
+   282.183,
+   "click",
+   -6,
+   -0.1,
+   "caps key \"U\""
+  ],
+  [
+   282.242,
+   "click",
+   -6,
+   -0.1,
+   "caps key \"M\""
+  ],
+  [
+   282.308,
+   "click",
+   -6,
+   -0.1,
+   "caps key \"P\""
+  ],
+  [
+   282.475,
+   "click",
+   -6,
+   -0.1,
+   "caps key \"B\""
+  ],
+  [
+   282.6,
+   "click",
+   -6,
+   -0.1,
+   "caps key \"U\""
+  ],
+  [
+   282.725,
+   "click",
+   -6,
+   -0.1,
+   "caps key \"T\""
+  ],
+  [
+   282.858,
+   "click",
+   -6,
+   -0.1,
+   "caps key \"T\""
+  ],
+  [
+   282.983,
+   "click",
+   -6,
+   -0.1,
+   "caps key \"O\""
+  ],
+  [
+   283.108,
+   "click",
+   -6,
+   -0.1,
+   "caps key \"N\""
+  ],
+  [
+   283.23,
+   "whoosh",
+   -6,
+   0.3,
+   "whip to the crowd"
+  ],
+  [
+   283.233,
+   "click",
+   -10,
+   -0.1,
+   "caps key \".\""
+  ],
+  [
+   283.34,
+   "confirm",
+   -2,
+   -0.6,
+   "SEND"
+  ],
+  [
+   283.36,
+   "chat_pop",
+   -2,
+   -0.6,
+   "the message lands in the chat log"
+  ],
+  [
+   284.07,
+   "typing",
+   -16,
+   0.383,
+   "player 1 starts typing (dots)"
+  ],
+  [
+   284.13,
+   "typing",
+   -16,
+   0.146,
+   "player 2 starts typing (dots)"
+  ],
+  [
+   284.19,
+   "typing",
+   -16,
+   0.104,
+   "player 3 starts typing (dots)"
+  ],
+  [
+   284.25,
+   "typing",
+   -16,
+   -0.051,
+   "player 4 starts typing (dots)"
+  ],
+  [
+   284.31,
+   "typing",
+   -16,
+   0.186,
+   "player 5 starts typing (dots)"
+  ],
+  [
+   284.37,
+   "typing",
+   -16,
+   0.194,
+   "player 6 starts typing (dots)"
+  ],
+  [
+   284.43,
+   "typing",
+   -16,
+   -0.556,
+   "player 7 starts typing (dots)"
+  ],
+  [
+   284.49,
+   "typing",
+   -16,
+   -0.262,
+   "player 8 starts typing (dots)"
+  ],
+  [
+   284.55,
+   "typing",
+   -16,
+   -0.546,
+   "player 9 starts typing (dots)"
+  ],
+  [
+   284.61,
+   "typing",
+   -16,
+   -0.535,
+   "player 10 starts typing (dots)"
+  ],
+  [
+   284.67,
+   "typing",
+   -16,
+   0.16,
+   "player 11 starts typing (dots)"
+  ],
+  [
+   284.97,
+   "chat_pop",
+   -9,
+   0.383,
+   "player 1: SPACEBAR"
+  ],
+  [
+   284.97,
+   "notify",
+   -6,
+   -0.6,
+   "chat log +N counter"
+  ],
+  [
+   285.01,
+   "chat_pop",
+   -9,
+   0.146,
+   "player 2: SPACEBAR"
+  ],
+  [
+   285.05,
+   "chat_pop",
+   -9,
+   0.104,
+   "player 3: SPACEBAR"
+  ],
+  [
+   285.09,
+   "chat_pop",
+   -9,
+   -0.051,
+   "player 4: SPACEBAR"
+  ],
+  [
+   285.13,
+   "chat_pop",
+   -9,
+   0.186,
+   "player 5: SPACEBAR"
+  ],
+  [
+   285.17,
+   "chat_pop",
+   -9,
+   0.194,
+   "player 6: SPACEBAR"
+  ],
+  [
+   285.21,
+   "chat_pop",
+   -9,
+   -0.556,
+   "player 7: SPACEBAR"
+  ],
+  [
+   285.25,
+   "chat_pop",
+   -9,
+   -0.262,
+   "player 8: SPACEBAR"
+  ],
+  [
+   285.29,
+   "chat_pop",
+   -9,
+   -0.546,
+   "player 9: SPACEBAR"
+  ],
+  [
+   285.33,
+   "chat_pop",
+   -9,
+   -0.535,
+   "player 10: SPACEBAR"
+  ],
+  [
+   285.37,
+   "chat_pop",
+   -9,
+   0.16,
+   "player 11: SPACEBAR"
+  ],
+  [
+   285.511,
+   "chat_pop",
+   -13,
+   0.447,
+   "the chat log floods"
+  ],
+  [
+   285.606,
+   "chat_pop",
+   -13,
+   -0.298,
+   "the chat log floods"
+  ],
+  [
+   285.771,
+   "chat_pop",
+   -13,
+   0.552,
+   "the chat log floods"
+  ],
+  [
+   285.893,
+   "chat_pop",
+   -13,
+   -0.579,
+   "the chat log floods"
+  ],
+  [
+   286.031,
+   "chat_pop",
+   -13,
+   -0.418,
+   "the chat log floods"
+  ],
+  [
+   286.151,
+   "chat_pop",
+   -13,
+   0.219,
+   "the chat log floods"
+  ],
+  [
+   286.302,
+   "chat_pop",
+   -13,
+   -0.102,
+   "the chat log floods"
+  ],
+  [
+   286.31,
+   "zoom_in",
+   -4,
+   0,
+   "smash-zoom on the flooded chat log"
+  ],
+  [
+   286.429,
+   "chat_pop",
+   -13,
+   -0.661,
+   "the chat log floods"
+  ],
+  [
+   286.555,
+   "chat_pop",
+   -13,
+   -0.27,
+   "the chat log floods"
+  ],
+  [
+   286.692,
+   "chat_pop",
+   -13,
+   0.121,
+   "the chat log floods"
+  ],
+  [
+   286.812,
+   "chat_pop",
+   -13,
+   0.263,
+   "the chat log floods"
+  ],
+  [
+   286.938,
+   "chat_pop",
+   -13,
+   0.433,
+   "the chat log floods"
+  ],
+  [
+   287.046,
+   "chat_pop",
+   -13,
+   0.254,
+   "the chat log floods"
+  ],
+  [
+   287.213,
+   "chat_pop",
+   -13,
+   -0.606,
+   "the chat log floods"
+  ],
+  [
+   287.303,
+   "chat_pop",
+   -13,
+   0.372,
+   "the chat log floods"
+  ],
+  [
+   287.469,
+   "chat_pop",
+   -13,
+   -0.199,
+   "the chat log floods"
+  ],
+  [
+   287.566,
+   "chat_pop",
+   -13,
+   -0.357,
+   "the chat log floods"
+  ],
+  [
+   287.57,
+   "orch_hit",
+   2,
+   0,
+   "SPACEBAR slams over the log (shake)"
+  ],
+  [
+   287.61,
+   "impact",
+   -2,
+   0,
+   "shake"
+  ],
+  [
+   287.691,
+   "chat_pop",
+   -13,
+   -0.676,
+   "the chat log floods"
+  ],
+  [
+   287.866,
+   "chat_pop",
+   -13,
+   0.204,
+   "the chat log floods"
+  ],
+  [
+   287.959,
+   "chat_pop",
+   -13,
+   0.024,
+   "the chat log floods"
+  ],
+  [
+   288.116,
+   "chat_pop",
+   -13,
+   0.244,
+   "the chat log floods"
+  ],
+  [
+   288.215,
+   "chat_pop",
+   -13,
+   -0.64,
+   "the chat log floods"
+  ],
+  [
+   288.9,
+   "zoom_in",
+   -8,
+   0,
+   "smash on the hero"
+  ],
+  [
+   288.95,
+   "cloth",
+   -2,
+   0,
+   "pulls up the hood"
+  ],
+  [
+   289.1,
+   "poof",
+   -8,
+   0,
+   "hood poof"
+  ],
+  [
+   289.45,
+   "whoosh",
+   -2,
+   -0.4,
+   "dashes off left"
+  ],
+  [
+   290.143,
+   "whoosh",
+   -6,
+   -0.3,
+   "whip to the hide tree"
+  ],
+  [
+   291.5,
+   "step_soft",
+   -8,
+   0,
+   "steps out from behind the tree"
+  ],
+  [
+   291.75,
+   "swish",
+   -6,
+   0,
+   "arms up: branches"
+  ],
+  [
+   291.8,
+   "cloth",
+   -10,
+   0,
+   "leaves rustle"
+  ],
+  [
+   293.09,
+   "pop",
+   -10,
+   0.248,
+   "(tree)"
+  ],
+  [
+   293.19,
+   "zoom_in",
+   -10,
+   0,
+   "push in on the sweating tree"
+  ],
+  [
+   293.338,
+   "squeak",
+   -10,
+   -0.6,
+   "the noob kid stops: \"?\""
+  ],
+  [
+   294.88,
+   "swish",
+   -6,
+   0,
+   "the hero ducks back behind the tree"
+  ]
+ ]
+}

@@ -78,9 +78,10 @@ function times09(V) {
   B.bedtime = w(10, 'Bedtime');
   // --- K: the silent beat: tea down, headset on, "...Five minutes. Let's go."
   C.k1 = n[10].b + 0.04;
-  B.clink = C.k1 + 0.42;
-  C.k2 = Math.min(C.k1 + 0.78, n[11].a - 0.2);
+  B.clink = C.k1 + 0.38;
+  C.k2 = Math.min(B.clink + 0.22, n[11].a - 0.2);
   B.five = w(11, 'Five');
+  B.click = w(11, 'minutes');                     // the headset clicks on
   C.k3 = w(11, "Let's") - 0.08;
   B.go = w(11, 'go');
   // --- L: Granny cracks her knuckles

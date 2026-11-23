@@ -1,0 +1,1814 @@
+{
+ "scene": "SC 05",
+ "start": 295.63,
+ "end": 366.11,
+ "music": [
+  {
+   "start": 295.63,
+   "end": 300.03,
+   "mood": "lobby",
+   "energy": 0.5,
+   "in": "cut",
+   "out": "cut"
+  },
+  {
+   "start": 300.03,
+   "end": 304.398,
+   "mood": "game",
+   "energy": 0.6,
+   "in": "cut",
+   "out": "sting"
+  },
+  {
+   "start": 304.398,
+   "end": 309.78,
+   "mood": "playful",
+   "energy": 0.4,
+   "in": "cut",
+   "out": "cut"
+  },
+  {
+   "start": 309.78,
+   "end": 312.85,
+   "mood": "mystery",
+   "energy": 0.4,
+   "in": "cut",
+   "out": "cut"
+  },
+  {
+   "start": 312.85,
+   "end": 314.84,
+   "mood": "silence",
+   "energy": 0,
+   "in": "cut",
+   "out": "cut"
+  },
+  {
+   "start": 314.84,
+   "end": 316.43,
+   "mood": "arena",
+   "energy": 1,
+   "in": "cut",
+   "out": "scratch"
+  },
+  {
+   "start": 316.43,
+   "end": 317.35,
+   "mood": "silence",
+   "energy": 0,
+   "in": "cut",
+   "out": "cut"
+  },
+  {
+   "start": 317.35,
+   "end": 321.8,
+   "mood": "playful",
+   "energy": 0.35,
+   "in": "fade",
+   "out": "cut"
+  },
+  {
+   "start": 321.8,
+   "end": 324.37,
+   "mood": "mystery",
+   "energy": 0.35,
+   "in": "cut",
+   "out": "cut"
+  },
+  {
+   "start": 324.37,
+   "end": 329.18,
+   "mood": "showtime",
+   "energy": 0.75,
+   "in": "cut",
+   "out": "tapestop"
+  },
+  {
+   "start": 329.18,
+   "end": 335.68,
+   "mood": "warm",
+   "energy": 0.35,
+   "in": "fade",
+   "out": "cut"
+  },
+  {
+   "start": 335.68,
+   "end": 339,
+   "mood": "montage",
+   "energy": 0.9,
+   "in": "cut",
+   "out": "sting"
+  },
+  {
+   "start": 339,
+   "end": 350.95,
+   "mood": "arena",
+   "energy": 0.85,
+   "in": "cut",
+   "out": "cut"
+  },
+  {
+   "start": 350.95,
+   "end": 355.88,
+   "mood": "mystery",
+   "energy": 0.45,
+   "in": "cut",
+   "out": "cut"
+  },
+  {
+   "start": 355.88,
+   "end": 356.628,
+   "mood": "silence",
+   "energy": 0,
+   "in": "cut",
+   "out": "cut"
+  },
+  {
+   "start": 356.628,
+   "end": 362.73,
+   "mood": "arena",
+   "energy": 1,
+   "in": "cut",
+   "out": "scratch"
+  },
+  {
+   "start": 362.73,
+   "end": 364.33,
+   "mood": "sad",
+   "energy": 0.2,
+   "in": "cut",
+   "out": "cut"
+  },
+  {
+   "start": 364.33,
+   "end": 366.11,
+   "mood": "warm",
+   "energy": 0.35,
+   "in": "fade",
+   "out": "fade"
+  }
+ ],
+ "ambience": [
+  {
+   "start": 295.63,
+   "end": 300.03,
+   "name": "town",
+   "gain_db": -16
+  },
+  {
+   "start": 300.03,
+   "end": 306.93,
+   "name": "crowd",
+   "gain_db": -14
+  },
+  {
+   "start": 306.93,
+   "end": 309.78,
+   "name": "room",
+   "gain_db": -18
+  },
+  {
+   "start": 306.93,
+   "end": 309.78,
+   "name": "crowd",
+   "gain_db": -20
+  },
+  {
+   "start": 309.78,
+   "end": 312.85,
+   "name": "crowd",
+   "gain_db": -14
+  },
+  {
+   "start": 312.85,
+   "end": 314.84,
+   "name": "wind",
+   "gain_db": -22
+  },
+  {
+   "start": 314.84,
+   "end": 316.43,
+   "name": "crowd",
+   "gain_db": -10
+  },
+  {
+   "start": 317.35,
+   "end": 321.8,
+   "name": "crowd",
+   "gain_db": -18
+  },
+  {
+   "start": 321.8,
+   "end": 324.37,
+   "name": "room",
+   "gain_db": -14
+  },
+  {
+   "start": 324.37,
+   "end": 329.18,
+   "name": "static",
+   "gain_db": -24
+  },
+  {
+   "start": 324.37,
+   "end": 329.18,
+   "name": "crowd",
+   "gain_db": -16
+  },
+  {
+   "start": 329.18,
+   "end": 335.68,
+   "name": "room",
+   "gain_db": -14
+  },
+  {
+   "start": 335.68,
+   "end": 350.95,
+   "name": "crowd",
+   "gain_db": -10
+  },
+  {
+   "start": 350.95,
+   "end": 355.88,
+   "name": "crowd",
+   "gain_db": -22
+  },
+  {
+   "start": 355.88,
+   "end": 356.628,
+   "name": "wind",
+   "gain_db": -14
+  },
+  {
+   "start": 356.628,
+   "end": 364.33,
+   "name": "crowd",
+   "gain_db": -10
+  },
+  {
+   "start": 364.33,
+   "end": 366.11,
+   "name": "room",
+   "gain_db": -14
+  }
+ ],
+ "footsteps": [
+  {
+   "start": 298.684,
+   "end": 300.03,
+   "interval": 0.165,
+   "surface": "hard",
+   "gain_db": -8,
+   "pan": -0.3
+  },
+  {
+   "start": 300.03,
+   "end": 301.38,
+   "interval": 0.175,
+   "surface": "soft",
+   "gain_db": -8,
+   "pan": -0.1
+  },
+  {
+   "start": 305.99,
+   "end": 306.93,
+   "interval": 0.349,
+   "surface": "soft",
+   "gain_db": -14,
+   "pan": -0.4
+  },
+  {
+   "start": 309.83,
+   "end": 310.43,
+   "interval": 0.449,
+   "surface": "soft",
+   "gain_db": -16,
+   "pan": -0.5
+  },
+  {
+   "start": 340.38,
+   "end": 340.83,
+   "interval": 0.157,
+   "surface": "soft",
+   "gain_db": -10,
+   "pan": 0.4
+  },
+  {
+   "start": 347.804,
+   "end": 350.39,
+   "interval": 0.286,
+   "surface": "soft",
+   "gain_db": -12,
+   "pan": 0
+  },
+  {
+   "start": 351.05,
+   "end": 352.31,
+   "interval": 0.449,
+   "surface": "hard",
+   "gain_db": -8,
+   "pan": 0
+  },
+  {
+   "start": 356.2,
+   "end": 356.628,
+   "interval": 0.143,
+   "surface": "hard",
+   "gain_db": -6,
+   "pan": 0.3
+  }
+ ],
+ "sfx": [
+  [
+   295.73,
+   "cloth",
+   -4,
+   0.029,
+   "bursts out of the tree (leaves rustle)"
+  ],
+  [
+   295.78,
+   "pop",
+   -6,
+   0.029,
+   "green leaf burst"
+  ],
+  [
+   296.22,
+   "whoosh",
+   -12,
+   0.102,
+   "pulls the hood off"
+  ],
+  [
+   296.24,
+   "cloth",
+   -10,
+   0.102,
+   "hood"
+  ],
+  [
+   298.01,
+   "jump_game",
+   -2,
+   0.139,
+   "Mom jumps"
+  ],
+  [
+   298.09,
+   "jump_game",
+   -4,
+   0.394,
+   "Granny jumps"
+  ],
+  [
+   298.13,
+   "coins",
+   -12,
+   0.394,
+   "coins pop out of Granny's bag mid-air"
+  ],
+  [
+   298.13,
+   "boing",
+   -4,
+   -0.19,
+   "the hot dog: a 6-px hop (\"boing.\")"
+  ],
+  [
+   298.3,
+   "ui_pop",
+   -8,
+   -0.19,
+   "\"SPACE?\" keycap over Dad"
+  ],
+  [
+   298.51,
+   "land",
+   -6,
+   0.139,
+   "Mom lands"
+  ],
+  [
+   298.59,
+   "land",
+   -8,
+   0.394,
+   "Granny lands"
+  ],
+  [
+   298.684,
+   "whoosh",
+   -8,
+   -0.3,
+   "takes off"
+  ],
+  [
+   299.99,
+   "whoosh_long",
+   -4,
+   -0.5,
+   "whip-pan to the arena"
+  ],
+  [
+   300.13,
+   "crowd_cheer",
+   -14,
+   0,
+   "arena crowd"
+  ],
+  [
+   300.43,
+   "metal_clank",
+   -18,
+   -0.4,
+   "sparring in the background"
+  ],
+  [
+   301.03,
+   "metal_clank",
+   -18,
+   0.4,
+   "sparring in the background"
+  ],
+  [
+   301.33,
+   "skid",
+   -4,
+   0,
+   "skids to a stop in the ring"
+  ],
+  [
+   301.63,
+   "metal_clank",
+   -18,
+   -0.4,
+   "sparring in the background"
+  ],
+  [
+   302.06,
+   "cloth",
+   -12,
+   0,
+   "big stretch"
+  ],
+  [
+   302.23,
+   "metal_clank",
+   -18,
+   0.4,
+   "sparring in the background"
+  ],
+  [
+   302.69,
+   "equip",
+   -6,
+   0.05,
+   "the gold sword out"
+  ],
+  [
+   302.74,
+   "shine",
+   -2,
+   0.05,
+   "LVL 99 pose + flash"
+  ],
+  [
+   302.79,
+   "crowd_cheer",
+   -6,
+   0,
+   "the stands cheer"
+  ],
+  [
+   302.99,
+   "metal_clank",
+   -18,
+   -0.5,
+   "sparring"
+  ],
+  [
+   303.54,
+   "metal_clank",
+   -18,
+   0.5,
+   "sparring"
+  ],
+  [
+   304.09,
+   "metal_clank",
+   -18,
+   -0.5,
+   "sparring"
+  ],
+  [
+   304.59,
+   "teleport",
+   -6,
+   -0.4,
+   "Mom pops in behind him"
+  ],
+  [
+   304.64,
+   "heart_pop",
+   -10,
+   -0.4,
+   "little hearts"
+  ],
+  [
+   304.99,
+   "shock",
+   -2,
+   0.1,
+   "the hero's eyes snap open (smash-zoom)"
+  ],
+  [
+   305.01,
+   "zoom_in",
+   -6,
+   0.1,
+   "zoom lines"
+  ],
+  [
+   306.81,
+   "chat_pop",
+   -6,
+   0.3,
+   "Mom's chat bubble"
+  ],
+  [
+   306.93,
+   "whoosh",
+   -8,
+   -0.4,
+   "REAL LIFE panel slides in"
+  ],
+  [
+   307.03,
+   "whoosh",
+   -8,
+   0.4,
+   "CUBE CITY panel slides in"
+  ],
+  [
+   307.11,
+   "typing",
+   -14,
+   -0.3,
+   "Mom types on the tablet"
+  ],
+  [
+   308.41,
+   "slap",
+   -10,
+   0.6,
+   "the hero face-palms"
+  ],
+  [
+   310.73,
+   "swish",
+   -4,
+   -0.2,
+   "sword swing"
+  ],
+  [
+   310.83,
+   "bonk",
+   0,
+   -0.1,
+   "BONK! on Mom's head"
+  ],
+  [
+   310.89,
+   "pop",
+   -12,
+   -0.05,
+   "-10"
+  ],
+  [
+   310.95,
+   "crowd_gasp",
+   -8,
+   0,
+   "the stands gasp"
+  ],
+  [
+   312.03,
+   "dramatic",
+   -4,
+   0,
+   "the smile is gone"
+  ],
+  [
+   312.36,
+   "shine",
+   -2,
+   -0.05,
+   "glint across the lenses"
+  ],
+  [
+   312.85,
+   "reverse_swell",
+   -6,
+   0,
+   "time slows down"
+  ],
+  [
+   312.95,
+   "whoosh_long",
+   -4,
+   -0.2,
+   "the slow swing over her"
+  ],
+  [
+   313,
+   "heartbeat",
+   -4,
+   0,
+   "slow-motion heartbeat"
+  ],
+  [
+   313.7,
+   "heartbeat",
+   -6,
+   0,
+   "heartbeat"
+  ],
+  [
+   313.89,
+   "swish",
+   -6,
+   -0.3,
+   "hit 1"
+  ],
+  [
+   313.95,
+   "punch",
+   0,
+   -0.35,
+   "POW! -25"
+  ],
+  [
+   314.335,
+   "swish",
+   -6,
+   -0.3,
+   "hit 2"
+  ],
+  [
+   314.395,
+   "punch",
+   1,
+   -0.35,
+   "-40"
+  ],
+  [
+   314.76,
+   "whoosh_up",
+   -4,
+   -0.3,
+   "the uppercut"
+  ],
+  [
+   314.84,
+   "impact",
+   3,
+   -0.35,
+   "CRIT -999"
+  ],
+  [
+   314.86,
+   "orch_hit",
+   2,
+   0,
+   "TRIPLE COMBO!"
+  ],
+  [
+   314.94,
+   "cymbal",
+   -6,
+   0.3,
+   "combo text slams in"
+  ],
+  [
+   314.98,
+   "whoosh_up",
+   0,
+   -0.2,
+   "launched out of the arena"
+  ],
+  [
+   315.06,
+   "boing",
+   -6,
+   -0.2,
+   "boing"
+  ],
+  [
+   315.21,
+   "crowd_gasp",
+   -6,
+   0,
+   "everyone freezes"
+  ],
+  [
+   316.08,
+   "sparkle",
+   -2,
+   0.55,
+   "twinkle star \"ping\""
+  ],
+  [
+   316.43,
+   "fall_whistle",
+   -8,
+   0.2,
+   "the sword falls"
+  ],
+  [
+   316.71,
+   "metal_hit",
+   0,
+   0.1,
+   "THUNK! into the sand"
+  ],
+  [
+   316.73,
+   "thud",
+   -6,
+   0.1,
+   "sand"
+  ],
+  [
+   317.16,
+   "metal_clank",
+   -6,
+   -0.3,
+   "another player's sword slips and clatters"
+  ],
+  [
+   317.31,
+   "cricket",
+   -12,
+   0.4,
+   "stunned silence"
+  ],
+  [
+   319.17,
+   "zoom_in",
+   -4,
+   0,
+   "smash-zoom on DO"
+  ],
+  [
+   319.79,
+   "chat_pop",
+   -6,
+   0,
+   "chat bubble"
+  ],
+  [
+   320.09,
+   "cloth",
+   -14,
+   -0.5,
+   "a player bows"
+  ],
+  [
+   320.29,
+   "cloth",
+   -14,
+   0.5,
+   "a player bows"
+  ],
+  [
+   320.73,
+   "sparkle",
+   -8,
+   0,
+   "pushes her glasses up"
+  ],
+  [
+   321.8,
+   "whoosh",
+   -10,
+   0,
+   "cut to the living room"
+  ],
+  [
+   323.21,
+   "shine",
+   -2,
+   0.2,
+   "the photo glints"
+  ],
+  [
+   323.31,
+   "zoom_in",
+   -4,
+   0.2,
+   "push into the photo"
+  ],
+  [
+   324.07,
+   "rewind",
+   -2,
+   0,
+   "back to 1998"
+  ],
+  [
+   324.37,
+   "vhs_clunk",
+   -4,
+   0,
+   "PLAY"
+  ],
+  [
+   324.47,
+   "money_counter",
+   -10,
+   0,
+   "the score rolls"
+  ],
+  [
+   324.52,
+   "beep",
+   -14,
+   0,
+   "arcade cabinet bleeps (button mashing)"
+  ],
+  [
+   324.74,
+   "laser_zap",
+   -14,
+   0,
+   "arcade cabinet bleeps (button mashing)"
+  ],
+  [
+   324.96,
+   "beep",
+   -14,
+   0,
+   "arcade cabinet bleeps (button mashing)"
+  ],
+  [
+   325.18,
+   "laser_zap",
+   -14,
+   0,
+   "arcade cabinet bleeps (button mashing)"
+  ],
+  [
+   325.4,
+   "beep",
+   -14,
+   0,
+   "arcade cabinet bleeps (button mashing)"
+  ],
+  [
+   325.48,
+   "level_up",
+   -2,
+   0,
+   "NEW RECORD! 999999"
+  ],
+  [
+   325.58,
+   "crowd_cheer",
+   -6,
+   0,
+   "the kids cheer"
+  ],
+  [
+   325.62,
+   "laser_zap",
+   -14,
+   0,
+   "arcade cabinet bleeps (button mashing)"
+  ],
+  [
+   325.83,
+   "whoosh",
+   -10,
+   0,
+   "whip to teen Mom"
+  ],
+  [
+   325.98,
+   "kids_laugh",
+   -10,
+   0.2,
+   "kids celebrating"
+  ],
+  [
+   326.03,
+   "paper",
+   -12,
+   0,
+   "prize tickets spill out"
+  ],
+  [
+   326.97,
+   "whoosh",
+   -10,
+   0.3,
+   "whip to the stage"
+  ],
+  [
+   327.17,
+   "confetti",
+   -8,
+   0,
+   "confetti rain"
+  ],
+  [
+   327.32,
+   "tada",
+   -2,
+   0.2,
+   "ARCADE QUEEN title"
+  ],
+  [
+   327.343,
+   "camera_flash",
+   -8,
+   -0.4,
+   "camera flash from the crowd"
+  ],
+  [
+   327.37,
+   "applause",
+   -6,
+   0,
+   "the hall applauds"
+  ],
+  [
+   327.656,
+   "camera_flash",
+   -8,
+   0.3,
+   "camera flash from the crowd"
+  ],
+  [
+   328.18,
+   "camera_flash",
+   -8,
+   -0.1,
+   "camera flash from the crowd"
+  ],
+  [
+   328.574,
+   "camera_flash",
+   -8,
+   0.5,
+   "camera flash from the crowd"
+  ],
+  [
+   329.18,
+   "vhs_clunk",
+   -6,
+   0,
+   "PAUSE"
+  ],
+  [
+   329.36,
+   "camera_flash",
+   0,
+   0,
+   "the frame becomes a polaroid"
+  ],
+  [
+   329.89,
+   "whoosh",
+   -6,
+   0.2,
+   "the polaroid flies onto the wall"
+  ],
+  [
+   330.42,
+   "tap",
+   -8,
+   0.2,
+   "it lands in the frame"
+  ],
+  [
+   332.05,
+   "sparkle",
+   -6,
+   0.4,
+   "a crown pops over her bun"
+  ],
+  [
+   332.08,
+   "chime",
+   -10,
+   0.4,
+   "crown"
+  ],
+  [
+   333.31,
+   "whoosh",
+   -12,
+   0,
+   "close-up"
+  ],
+  [
+   333.61,
+   "steam_hiss",
+   -18,
+   0.3,
+   "the tea steams"
+  ],
+  [
+   334.21,
+   "shine",
+   -10,
+   0,
+   "a glint on her glasses"
+  ],
+  [
+   334.81,
+   "heart_pop",
+   -8,
+   0.4,
+   "hearts fly in"
+  ],
+  [
+   334.91,
+   "blush",
+   -8,
+   -0.2,
+   "the hero blushes"
+  ],
+  [
+   335.21,
+   "heart_pop",
+   -10,
+   0.1,
+   "hearts"
+  ],
+  [
+   335.58,
+   "boing",
+   -16,
+   -0.5,
+   "fast-forward KOs"
+  ],
+  [
+   335.64,
+   "whoosh",
+   -6,
+   0.5,
+   "whip to the arena"
+  ],
+  [
+   335.7,
+   "pop",
+   -4,
+   0,
+   "10 MINUTES LATER card"
+  ],
+  [
+   335.74,
+   "boing",
+   -16,
+   0.5,
+   "fast-forward KOs"
+  ],
+  [
+   335.76,
+   "countdown_tick",
+   -12,
+   0,
+   "clock spins"
+  ],
+  [
+   335.88,
+   "countdown_tick",
+   -12,
+   0,
+   "clock spins"
+  ],
+  [
+   335.9,
+   "boing",
+   -16,
+   -0.5,
+   "fast-forward KOs"
+  ],
+  [
+   336,
+   "countdown_tick",
+   -12,
+   0,
+   "clock spins"
+  ],
+  [
+   336.06,
+   "boing",
+   -16,
+   0.5,
+   "fast-forward KOs"
+  ],
+  [
+   336.12,
+   "countdown_tick",
+   -12,
+   0,
+   "clock spins"
+  ],
+  [
+   336.27,
+   "whoosh",
+   -6,
+   0.3,
+   "leaderboard in"
+  ],
+  [
+   336.32,
+   "money_counter",
+   -8,
+   0.3,
+   "rank rolls #500 → #50"
+  ],
+  [
+   337.07,
+   "upgrade",
+   -4,
+   -0.6,
+   "upgrade: pot-lid shield + sword"
+  ],
+  [
+   337.12,
+   "money_counter",
+   -8,
+   0.3,
+   "rank rolls #50 → #1"
+  ],
+  [
+   337.97,
+   "achievement",
+   0,
+   0.3,
+   "#1 MOM_OFFICIAL"
+  ],
+  [
+   337.99,
+   "equip",
+   -2,
+   -0.6,
+   "golden armour"
+  ],
+  [
+   338.02,
+   "confetti",
+   -4,
+   0.3,
+   "confetti"
+  ],
+  [
+   338.07,
+   "crowd_cheer",
+   -2,
+   0,
+   "GO MOM!"
+  ],
+  [
+   339.05,
+   "land",
+   -6,
+   0,
+   "pose bounce"
+  ],
+  [
+   339.1,
+   "crowd_cheer",
+   -4,
+   0,
+   "the stands go wild"
+  ],
+  [
+   339.45,
+   "shine",
+   -4,
+   0,
+   "shield glint"
+  ],
+  [
+   340.34,
+   "whoosh",
+   -8,
+   0.5,
+   "whip"
+  ],
+  [
+   340.53,
+   "chat_pop",
+   -6,
+   -0.2,
+   "chat bubble"
+  ],
+  [
+   340.75,
+   "swish",
+   -6,
+   0,
+   "shield bash"
+  ],
+  [
+   340.83,
+   "pan_clang",
+   2,
+   -0.05,
+   "BONK! with the pot lid"
+  ],
+  [
+   340.88,
+   "whoosh_up",
+   -4,
+   0.2,
+   "he flies out"
+  ],
+  [
+   341.93,
+   "sparkle",
+   -6,
+   0.6,
+   "twinkle"
+  ],
+  [
+   342.198,
+   "whoosh",
+   -8,
+   -0.5,
+   "whip"
+  ],
+  [
+   342.578,
+   "tap",
+   -2,
+   0.05,
+   "TAP!"
+  ],
+  [
+   342.83,
+   "boing",
+   -6,
+   0.05,
+   "sits up straight"
+  ],
+  [
+   342.88,
+   "bell",
+   -8,
+   0.05,
+   "POSTURE +10"
+  ],
+  [
+   343.558,
+   "whoosh",
+   -8,
+   0.5,
+   "whip"
+  ],
+  [
+   343.71,
+   "body_fall",
+   -2,
+   0.1,
+   "topples over"
+  ],
+  [
+   343.81,
+   "dizzy",
+   -10,
+   0.1,
+   "K.O. stars"
+  ],
+  [
+   344.31,
+   "pop",
+   -4,
+   0.3,
+   "a bowl of cereal"
+  ],
+  [
+   344.36,
+   "dishes",
+   -10,
+   0.3,
+   "bowl clink"
+  ],
+  [
+   344.43,
+   "heart_pop",
+   -8,
+   0.3,
+   "hearts"
+  ],
+  [
+   344.81,
+   "chime",
+   -10,
+   0.1,
+   "thumbs-up"
+  ],
+  [
+   345.23,
+   "crowd_cheer",
+   -4,
+   0,
+   "the stands roar"
+  ],
+  [
+   345.33,
+   "bonk",
+   -10,
+   -0.45,
+   "KO #1"
+  ],
+  [
+   345.33,
+   "money_counter",
+   -10,
+   -0.7,
+   "K.O. counter rolls"
+  ],
+  [
+   345.38,
+   "whoosh_up",
+   -12,
+   -0.6,
+   "noobs launched out"
+  ],
+  [
+   345.393,
+   "punch",
+   -12,
+   0.45,
+   "KO #2"
+  ],
+  [
+   345.456,
+   "punch",
+   -14,
+   -0.45,
+   "KO #3"
+  ],
+  [
+   345.519,
+   "bonk",
+   -10,
+   0.45,
+   "KO #4"
+  ],
+  [
+   345.582,
+   "punch",
+   -12,
+   -0.45,
+   "KO #5"
+  ],
+  [
+   345.645,
+   "punch",
+   -14,
+   0.45,
+   "KO #6"
+  ],
+  [
+   345.708,
+   "bonk",
+   -10,
+   -0.45,
+   "KO #7"
+  ],
+  [
+   345.808,
+   "whoosh_up",
+   -12,
+   0.6,
+   "noobs launched out"
+  ],
+  [
+   345.834,
+   "punch",
+   -14,
+   -0.45,
+   "KO #9"
+  ],
+  [
+   345.959,
+   "punch",
+   -12,
+   -0.45,
+   "KO #11"
+  ],
+  [
+   346.085,
+   "bonk",
+   -10,
+   -0.45,
+   "KO #13"
+  ],
+  [
+   346.211,
+   "punch",
+   -14,
+   -0.45,
+   "KO #15"
+  ],
+  [
+   346.236,
+   "whoosh_up",
+   -12,
+   -0.6,
+   "noobs launched out"
+  ],
+  [
+   346.337,
+   "punch",
+   -12,
+   -0.45,
+   "KO #17"
+  ],
+  [
+   346.463,
+   "bonk",
+   -10,
+   -0.45,
+   "KO #19"
+  ],
+  [
+   346.589,
+   "punch",
+   -14,
+   -0.45,
+   "KO #21"
+  ],
+  [
+   346.664,
+   "whoosh_up",
+   -12,
+   0.6,
+   "noobs launched out"
+  ],
+  [
+   346.715,
+   "punch",
+   -12,
+   -0.45,
+   "KO #23"
+  ],
+  [
+   346.841,
+   "bonk",
+   -10,
+   -0.45,
+   "KO #25"
+  ],
+  [
+   346.966,
+   "punch",
+   -14,
+   -0.45,
+   "KO #27"
+  ],
+  [
+   347.092,
+   "punch",
+   -12,
+   -0.45,
+   "KO #29"
+  ],
+  [
+   347.092,
+   "whoosh_up",
+   -12,
+   -0.6,
+   "noobs launched out"
+  ],
+  [
+   347.218,
+   "bonk",
+   -10,
+   -0.45,
+   "KO #31"
+  ],
+  [
+   347.344,
+   "punch",
+   -14,
+   -0.45,
+   "KO #33"
+  ],
+  [
+   347.47,
+   "level_up",
+   -4,
+   -0.7,
+   "K.O.s 100"
+  ],
+  [
+   347.52,
+   "whoosh_up",
+   -12,
+   0.6,
+   "noobs launched out"
+  ],
+  [
+   348.254,
+   "bubbles",
+   -10,
+   -0.481,
+   "+H2O"
+  ],
+  [
+   348.641,
+   "bubbles",
+   -10,
+   -0.321,
+   "+H2O"
+  ],
+  [
+   348.891,
+   "gulp",
+   -12,
+   -0.321,
+   "a grateful sip"
+  ],
+  [
+   349.028,
+   "bubbles",
+   -10,
+   -0.16,
+   "+H2O"
+  ],
+  [
+   349.416,
+   "bubbles",
+   -10,
+   0,
+   "+H2O"
+  ],
+  [
+   349.666,
+   "gulp",
+   -12,
+   0,
+   "a grateful sip"
+  ],
+  [
+   349.803,
+   "bubbles",
+   -10,
+   0.16,
+   "+H2O"
+  ],
+  [
+   350.19,
+   "bubbles",
+   -10,
+   0.321,
+   "+H2O"
+  ],
+  [
+   350.34,
+   "stamp",
+   -2,
+   0,
+   "HYDRATED! (stamp slams at k .3)"
+  ],
+  [
+   350.44,
+   "gulp",
+   -12,
+   0.321,
+   "a grateful sip"
+  ],
+  [
+   350.95,
+   "dramatic",
+   -4,
+   0,
+   "hush — DarkBlade walks out"
+  ],
+  [
+   351.25,
+   "notify",
+   -10,
+   0,
+   "his nametag"
+  ],
+  [
+   352.01,
+   "chat_pop",
+   -4,
+   0,
+   "his chat bubble"
+  ],
+  [
+   352.31,
+   "typing",
+   -12,
+   0,
+   "typing"
+  ],
+  [
+   353.75,
+   "zoom_in",
+   -2,
+   0,
+   "smash-zoom"
+  ],
+  [
+   353.8,
+   "chat_pop",
+   -6,
+   0,
+   "CAPS bubble"
+  ],
+  [
+   354.07,
+   "impact",
+   -4,
+   0,
+   "red eyes flare"
+  ],
+  [
+   354.87,
+   "heart_pop",
+   -8,
+   0.1,
+   "sweet little hearts"
+  ],
+  [
+   355.88,
+   "wind_gust",
+   -6,
+   0,
+   "standoff"
+  ],
+  [
+   355.9,
+   "whistle",
+   -14,
+   0.4,
+   "a lonely tumbleweed rolls by"
+  ],
+  [
+   356.2,
+   "whoosh",
+   -6,
+   0.3,
+   "he charges"
+  ],
+  [
+   356.578,
+   "swish",
+   -4,
+   -0.1,
+   "the flick"
+  ],
+  [
+   356.628,
+   "bonk",
+   3,
+   -0.1,
+   "BONK! -9999"
+  ],
+  [
+   356.638,
+   "impact",
+   2,
+   -0.1,
+   "crit"
+  ],
+  [
+   356.648,
+   "orch_hit",
+   2,
+   0,
+   "one hit"
+  ],
+  [
+   356.708,
+   "whoosh_up",
+   0,
+   0.3,
+   "launched out of the arena"
+  ],
+  [
+   356.928,
+   "crowd_cheer",
+   0,
+   0,
+   "the crowd explodes"
+  ],
+  [
+   357.478,
+   "chat_pop",
+   -6,
+   -0.4,
+   "\"Good game!\""
+  ],
+  [
+   357.728,
+   "sparkle",
+   0,
+   0.7,
+   "DarkBlade twinkles away"
+  ],
+  [
+   358.85,
+   "cloth",
+   -10,
+   0,
+   "she stretches; two players copy her"
+  ],
+  [
+   359.25,
+   "crowd_laugh",
+   -10,
+   0,
+   "the stands laugh"
+  ],
+  [
+   360.07,
+   "chat_pop",
+   -4,
+   0.1,
+   "Noodle's CAPS bubble"
+  ],
+  [
+   360.27,
+   "crowd_cheer",
+   -2,
+   0.2,
+   "Mom crowd-surfs"
+  ],
+  [
+   360.37,
+   "confetti",
+   -8,
+   0,
+   "confetti"
+  ],
+  [
+   361.65,
+   "impact",
+   -6,
+   0,
+   "shake on LEGEND"
+  ],
+  [
+   363.81,
+   "tap",
+   -12,
+   0.1,
+   "one confetti cube lands on his crown"
+  ],
+  [
+   364.29,
+   "whoosh",
+   -10,
+   -0.3,
+   "cut to the living room"
+  ],
+  [
+   364.68,
+   "ui_pop",
+   -8,
+   -0.1,
+   "+1 WIN"
+  ],
+  [
+   364.73,
+   "gulp",
+   -10,
+   0.1,
+   "a calm sip of tea"
+  ],
+  [
+   365.13,
+   "ui_pop",
+   -8,
+   0.2,
+   "+1 WIN"
+  ],
+  [
+   365.48,
+   "ui_pop",
+   -8,
+   -0.3,
+   "MOM #1"
+  ],
+  [
+   366.01,
+   "whoosh",
+   -6,
+   0.5,
+   "whip out to Tycoon Valley"
+  ]
+ ]
+}

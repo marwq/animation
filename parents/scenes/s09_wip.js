@@ -128,9 +128,9 @@ function shotB2(t) {
   const far = E.shockRing(SB.x, SB.y - 10, age, 1500, { col: '#E7C8FF', w: 30, dur: 0.8 }) + E.cubeDebris(SB.x, SB.y - 300, age, { n: 12, s: 1.2, seed: 4, floorY: SB.y, power: 0.9 });
   let ledge = '';
   // two players flee across the ledge
-  for (const [i, x0, dir, dl] of [[5, -150, 1, 0], [10, 2100, -1, 0.2]]) {
+  for (const [i, x0, dir, dl, dy] of [[5, -150, 1, 0, 0], [10, 2100, -1, 0.2, -40]]) {
     const r = seg(t, B.mine + dl, C.c1);
-    if (r > 0) ledge += player(i, { x: x0 + dir * 1500 * r, y: CN.floor, s: 0.46, view: 'side', flip: dir > 0, ...AC.run(t * 16), armL: 150, armR: 150, face: { name: 'scream' }, nametag: false });
+    if (r > 0) ledge += player(i, { x: x0 + dir * 1500 * r, y: CN.floor + dy, s: 0.46 + dy * 0.002, view: 'side', flip: dir > 0, ...AC.run(t * 16), armL: 150, armR: 150, face: { name: 'scream' }, nametag: false });
   }
   let o = city(t, cam, { boss: lerp(0.2, 0.6, seg(t, B.mine, B.mine + 0.5)) }, { bossSvg, ledge, far });
   const p = scr(cam, SB.x, SB.y - 1000 * BS, SB.k);
@@ -221,13 +221,13 @@ function grannyPhoneScreen(t) {
 }
 function shotD1(t) {
   const u = seg(t, C.d1, C.e1);
-  let cam = camLerp(camAt(1690, 600, 2.15), camAt(1700, 590, 2.35), u, ease.out);
-  cam = punch(cam, t, B.cookies, 0.16, 0.08);
+  let cam = camLerp(camAt(1560, 570, 1.72), camAt(1600, 575, 1.85), u, ease.out);
+  cam = punch(cam, t, B.cookies, 0.22, 0.08);
   cam = shook(cam, t, [[B.cookies, 0.6, 18]]);
   const scream = t >= B.cookies - 0.1;
   const seated = actor('mom', t, momSeat({ turn: 0.5, face: { name: 'shocked', eyes: { look: [0.8, 0] } }, bodyY: -18 * bump(t, B.cookies, B.cookies + 0.3), steam: 1, t }), { arms: false, energy: 0 }) +
     actor('grandma', t, granSeat({ phone: 'arm', phoneFace: 'screen', screen: grannyPhoneScreen(t), glow: 1, armR: 104 + 6 * Math.sin(t * 40) * (scream ? 1 : 0.3), t,
-      face: scream ? { name: 'scream', fx: ['anger'] } : { name: 'shocked' }, headRot: scream ? 4 * Math.sin(t * 30) : 0 }), { arms: false, energy: 1.2 });
+      face: scream ? { name: 'angry', mouth: 'scream', eyes: { look: [0.4, -0.2] }, fx: ['anger', 'steam'] } : { name: 'shocked', eyes: { look: [0.8, 0] } }, headRot: scream ? 4 * Math.sin(t * 30) : 0, bodyY: scream ? -10 * Math.abs(Math.sin(t * 18)) : 0 }), { arms: false, energy: 1.2 });
   const glow = [{ x: SPL.faces.grandma.x, y: SPL.faces.grandma.y, col: scream ? 'red' : 'phone', k: 1, r: 150 }];
   let o = living(t, cam, { glow, lamp: 0.4 }, { seated });
   return o + whip(t, C.d1, 1, 0.12);
@@ -314,20 +314,20 @@ function friendsCard(t, k, ping) {
 }
 function shotF1(t) {
   const u = seg(t, C.f1, C.g1);
-  let cam = camLerp(camAt(960, 615, 1.35), camAt(960, 605, 1.46), u, ease.out);
+  let cam = camLerp(camAt(960, 590, 1.12), camAt(960, 585, 1.22), u, ease.out);
   const tc = B.need;
   cam = shook(cam, t, [[tc, 0.5, 18]]);
   const ph = (t - C.f1) * 1.4;
   const bk = (ph % 1);
   const bossSvg = boss(t, { ...bkMix('smash', 'smash', 0, Math.min(1, bk * 1.6), 0), glow: 1 });
   const hop = bump(t, tc, tc + 0.4);
-  let ledge = actor('noodle', t, { x: 960 - 40 * hop, y: CN.floor, s: 0.5, t, ...AC.walkFront(t * 22, 1.5), armL: 150 + 20 * Math.sin(t * 20), armR: 140 + 20 * Math.sin(t * 20 + 1), lift: 120 * hop, face: { name: 'scared', fx: ['sweat2'] }, nametag: false }, { arms: false, energy: 1.3 });
+  let ledge = actor('noodle', t, { x: 960 - 40 * hop, y: CN.floor - 30, s: 0.42, t, ...AC.walkFront(t * 22, 1.5), armL: 150 + 20 * Math.sin(t * 20), armR: 140 + 20 * Math.sin(t * 20 + 1), lift: 120 * hop, face: { name: 'scared', fx: ['sweat2'] }, nametag: false }, { arms: false, energy: 1.3 });
   // a block crashing down next to him
   const fall = seg(t, tc - 0.3, tc);
   if (fall > 0 && fall < 1) ledge += E.stoneCube(1320, lerp(-200, CN.floor - 60, ease.in(fall)), 150, 30 * fall, 7, 5);
   if (t >= tc) ledge += E.stoneCube(1320, CN.floor - 60 + 4 * bump(t, tc, tc + 0.2), 150, 30, 7, 5) + E.dustPuff(1320, CN.floor, t - tc, { r: 140, col: '#8A7A9A' }) + E.cubeDebris(1320, CN.floor - 40, t - tc, { n: 8, s: 0.6, floorY: CN.floor + 10, seed: 3 });
   let o = city(t, cam, { boss: 0.7 }, { bossSvg, ledge });
-  o += E.bubbleAt(cam, 960, CN.floor - 0.5 * 1160 - 20, { ...G.chatLine(t, '09.5', { hold: 3 }), t, s: 1, tail: 0, user: 'NoodleBoi' });
+  o += E.bubbleAt(cam, 960 - 40 * hop + 150, CN.floor - 30 - 0.42 * 1166 - 120 * hop + 60, { ...G.chatLine(t, '09.5', { hold: 3 }), t, s: 1, tail: -0.8, user: 'NoodleBoi' });
   o += friendsCard(t, seg(t, C.f1 + 0.2, C.f1 + 0.5), bump(t, LN[5].word('ARE').t0, LN[5].word('ARE').t0 + 0.5) + bump(t, tc, tc + 0.6));
   return o + whip(t, C.f1, -1, 0.1);
 }
@@ -339,7 +339,7 @@ function health(t, o = {}) {
 }
 function shotG1(t) {
   const u = seg(t, C.g1, C.g2);
-  let cam = camLerp({ x: 0, y: -310, zoom: 0.84 }, { x: 0, y: -280, zoom: 0.92 }, u);
+  let cam = camLerp({ x: 0, y: -215, zoom: 0.8 }, { x: 0, y: -195, zoom: 0.87 }, u);
   const slams = [C.g1 + 0.55, C.g1 + 1.45];
   cam = shook(cam, t, slams.map((x) => [x, 0.5, 16]));
   // smash cycle: raise 0.45 s, slam 0.12 s
@@ -350,7 +350,7 @@ function shotG1(t) {
   let far = '';
   for (const s0 of slams) far += E.cubeDebris(SB.x, SB.y - 60, t - s0, { n: 10, s: 1.3, seed: s0, floorY: SB.y, power: 1 }) + E.shockRing(SB.x, SB.y, t - s0, 1300, { col: '#FFE0F0', w: 24 });
   let o = city(t, cam, { boss: 1 }, { bossSvg, far });
-  o += health(t, { k: seg(t, C.g1 + 0.1, C.g1 + 0.5), y: 120 });
+  o += health(t, { k: seg(t, C.g1 + 0.1, C.g1 + 0.5), y: 74, s: 0.78 });
   return o + whip(t, C.g1, 1, 0.1);
 }
 function shotG2(t) {
@@ -390,7 +390,7 @@ function bedroom(t, cam, chars, o = {}) {
 const dadBed = (t, extra = {}, act = {}) => actor('dad', t, H.seatPose(SPB.bed.sit, 1.1, { glasses: 'on', t, ...extra }), { energy: 0.8, ...act });
 function shotH1(t) {
   const u = seg(t, C.h1, C.h2);
-  const cam = camLerp({ zoom: 1.3, x: 60, y: 70 }, { zoom: 1.45, x: 30, y: 45 }, u, ease.out);
+  const cam = camLerp({ zoom: 1.3, x: 60, y: 135 }, { zoom: 1.42, x: 35, y: 118 }, u, ease.out);
   const turn = lerp(0.1, -0.55, ease.inOut(seg(t, C.h1, C.h1 + 0.45)));
   const chars = dadBed(t, { face: { name: 'sad', eyes: { look: [0.7, -0.1] } }, turn: -0.2 }) + actor('you', t, { ...HERO_B, t, turn, armL: 14, armR: 14, face: { name: 'sad', eyes: { look: [-0.8, 0] } } }, { energy: 0.6 });
   return bedroom(t, cam, chars) + flashAt(t, C.h1, 0.12, 0.7, '#FFD0D8');
@@ -399,7 +399,7 @@ function shotH2(t) {
   const u = seg(t, C.h2, C.h3);
   const cam = camLerp(camAt(1150, 640, 2.35), camAt(1150, 630, 2.6), u, ease.out);
   const det = seg(t, LN[7].word('win').t0 - 0.2, LN[7].word('win').t0 + 0.2);
-  const chars = actor('you', t, { ...HERO_B, t, turn: -0.5, armL: 14 + 20 * det, armR: 14 + 10 * det, face: det > 0.5 ? { name: 'determined', eyes: { look: [-0.7, 0] }, fx: ['tears'] } : { name: 'sad', eyes: { look: [-0.7, 0.2] } } }, { arms: false, energy: 0.8 });
+  const chars = actor('you', t, { ...HERO_B, t, turn: -0.5, armL: 14 + 20 * det, armR: 14 + 10 * det, face: det > 0.5 ? { name: 'determined', eyes: { look: [-0.7, 0], upper: 0.15 } } : { name: 'sad', eyes: { look: [-0.7, 0.2] } } }, { arms: false, energy: 0.8 });
   return bedroom(t, cam, chars);
 }
 function shotH3(t) {
@@ -459,11 +459,18 @@ function shotJ1(t) {
   }
   return o + whip(t, C.j1, 1, 0.1);
 }
+// Mom's stern talking mouth: small shapes only (the full lip-sync set reads as a grin with angry brows)
+function sternMouth(t) {
+  const v = V.viseme('MOM', t);
+  if (!v || v === 'X' || v === 'A') return 'frown';
+  return v === 'D' || v === 'C' ? 'O' : v === 'G' || v === 'F' ? 'line' : 'o';
+}
 // J2 — "young man." Mom on the couch in pajamas, tea cup, one eyebrow
 function shotJ2(t) {
   const u = seg(t, C.j2, C.j3);
   const cam = camLerp(camAt(1330, 560, 2.25), camAt(1335, 555, 2.45), u, ease.out);
-  const seated = actor('mom', t, momSeat({ t, turn: 0.25, face: { name: 'deadpan', eyes: { look: [0.6, 0], upper: 0.4 } }, headRot: -4 }), { arms: false, energy: 0.5 });
+  const brow = bump(t, LN[10].word('young').t0 - 0.1, LN[10].word('man').t1 + 0.2);
+  const seated = actor('mom', t, momSeat({ t, turn: 0.25, face: { name: 'angry', mouth: sternMouth(t), eyes: { look: [0.6, 0], upper: 0.35 + 0.1 * brow } }, headRot: -4 - 3 * brow, lean: -2 * brow }), { arms: false, energy: 0.5 });
   let o = living(t, cam, {}, { seated });
   return o;
 }
@@ -473,46 +480,48 @@ function shotJ3(t) {
   let cam = camLerp(camAt(1420, 590, 1.85), camAt(1410, 580, 2.0), u, ease.out);
   cam = punch(cam, t, B.bedtime, 0.1, 0.08);
   const pt = ease.outBack(seg(t, B.bedtime - 0.15, B.bedtime + 0.15));
-  const seated = actor('mom', t, momSeat({ t, turn: 0.35, armR: lerp(20, 96, pt), lean: -3 * pt, face: { name: 'angry', eyes: { look: [0.8, -0.1] } } }), { arms: false, energy: 0.6 });
+  const seated = actor('mom', t, momSeat({ t, turn: 0.35, armR: lerp(20, 96, pt), lean: -3 * pt, face: { name: 'angry', mouth: sternMouth(t), eyes: { look: [0.8, -0.1] } } }), { arms: false, energy: 0.6 });
   const slump = seg(t, B.bedtime + 0.1, B.bedtime + 0.6);
   const hero = actor('you', t, { x: 1640, y: 1090, s: 0.62, t, view: 'back', armL: 14, armR: 14, bodyY: 14 * slump, headY: 10 * slump }, { arms: false });
   let o = living(t, cam, {}, { seated, standing: hero });
   o += K.bang('BEDTIME.', 470, 250, ease.outBack(seg(t, B.bedtime, B.bedtime + 0.25)), 104, -6, '#C9B8FF');
   return o;
 }
-// K1 — the silence: the tea cup goes down on the coffee table (clink)
+// K1 — the silence: insert on the coffee table — her hand sets the tea cup down (clink) and leaves the frame
+function pjArm(hx, hy, rot) {
+  // an R6 pajama sleeve + hand reaching down to (hx, hy) from the upper right (world units, Mom at s .5)
+  let c = S.rect(-27, -470, 54, 430, 10, ol('#B9A6E8', 6)) + S.rect(-27, -150, 54, 12, 3, { fill: '#FFF3B0', opacity: 0.8 }) + S.rect(-27, -330, 54, 12, 3, { fill: '#FFF3B0', opacity: 0.8 });
+  c += S.rect(-29, -64, 58, 26, 6, ol('#9A86CC', 6)) + S.rect(-24, -42, 48, 50, 12, ol('#F6D5BC', 6)) + S.path('M-12 -8 L-12 8 M2 -6 L2 10', ln(4, '#E6BC9E'));
+  return S.g(c, `translate(${f(hx)} ${f(hy)}) rotate(${f(rot)})`);
+}
 function shotK1(t) {
-  const cam = camLerp(camAt(1290, 830, 3.0), camAt(1290, 840, 3.2), seg(t, C.k1, C.k2), ease.out);
-  const dk = seg(t, C.k1, B.clink), lift = seg(t, B.clink + 0.12, C.k2);
-  const cx = SPL.tea.x, cy = lerp(820, SPL.tea.y - 4, ease.out(dk));
-  const seated = actor('mom', t, momSeat({ t, cup: false, armL: 40, face: 'deadpan' }), { arms: false, energy: 0 });
-  let top = X.teaCup({ x: cx, y: cy, s: 0.5, t, steam: 1 });
-  // her hand + sleeve (lavender pajamas) holding the saucer, then letting go
-  const hx = cx + 46 - 10 * lift, hy = cy - 18 - 60 * lift;
-  top += S.path(`M${f(hx + 170)} ${f(hy - 220)} L${f(hx + 10)} ${f(hy - 10)}`, { ...ln(58, '#151515') }) + S.path(`M${f(hx + 170)} ${f(hy - 220)} L${f(hx + 10)} ${f(hy - 10)}`, { ...ln(46, '#C9B8F0') });
-  top += S.ellipse(hx, hy, 26, 20, ol('#F2D2BE', 5));
-  let o = living(t, cam, { tea: false }, { seated, top });
+  const cam = camLerp(camAt(1300, 892, 3.1), camAt(1300, 898, 3.35), seg(t, C.k1, C.k2), ease.out);
+  const dk = seg(t, C.k1, B.clink), lift = seg(t, B.clink + 0.08, C.k2 + 0.1);
+  const cx = SPL.tea.x, cy = lerp(800, SPL.tea.y - 4, ease.inOut(dk));
+  let top = X.teaCup({ x: cx, y: cy, s: 0.5, t, steam: 1 - 0.6 * lift });
+  top += pjArm(cx + 34 + 60 * ease.in(lift), cy - 26 - 220 * ease.in(lift), 32);
+  let o = living(t, cam, { tea: false }, { top });
   const ck = seg(t, B.clink, B.clink + 0.35);
-  if (ck > 0 && ck < 1) { const p = scr(cam, cx, SPL.tea.y); o += S.ellipse(p.x, p.y + 20, 120 + 260 * ck, 30 + 60 * ck, { fill: 'none', stroke: '#FFFFFF', 'stroke-width': f(8 * (1 - ck)), opacity: f(1 - ck) }) + K.sparkles([[p.x + 120, p.y - 120, 30 * Math.sin(Math.PI * ck)]], t); }
+  if (ck > 0 && ck < 1) { const p = scr(cam, cx, SPL.tea.y); o += S.ellipse(p.x, p.y + 20, 120 + 260 * ck, 30 + 60 * ck, { fill: 'none', stroke: '#FFFFFF', 'stroke-width': f(8 * (1 - ck)), opacity: f(1 - ck) }) + K.sparkles([[p.x + 140, p.y - 140, 30 * Math.sin(Math.PI * ck)]], t); }
   return o + letterbox(1);
 }
-// K2 — she slowly puts the headset on... "...Five minutes." cold, focused
+// K2 — ECU: the headset slowly lowers into frame onto her head... "...Five minutes." cold, focused; it clicks on, the cups light up
 function shotK2(t) {
   const u = seg(t, C.k2, C.k3);
-  const cam = camLerp(camAt(1340, 545, 2.5), camAt(1340, 530, 2.9), u, ease.inOut);
-  const hk = ease.inOut(seg(t, C.k2 - 0.05, B.five + 0.25));
-  const arms = 150 * Math.sin(Math.PI * Math.min(1, hk * 1.05)) * (hk < 1 ? 1 : 0) + (hk >= 1 ? 0 : 0);
-  const cold = seg(t, B.five - 0.15, B.five + 0.2);
-  const face = cold > 0 ? { name: 'determined', eyes: { upper: 0.42 + 0.1 * cold, look: [0, 0] } } : { name: 'deadpan', eyes: { look: [0, 0.2] } };
-  const seated = actor('mom', t, momSeat({ t, cup: false, headset: hk, armL: lerp(18, 150, Math.sin(Math.PI * Math.min(1, hk))), armR: lerp(18, 150, Math.sin(Math.PI * Math.min(1, hk))), face }), { arms: false, energy: 0.3 });
+  let cam = camLerp(camAt(1340, 530, 3.0), camAt(1340, 528, 3.45), u, ease.inOut);
+  cam = shook(cam, t, [[B.click, 0.2, 6]]);
+  const hk = ease.inOut(seg(t, C.k2 - 0.05, B.click));
+  const cold = seg(t, B.five - 0.12, B.five + 0.15);
+  const face = cold > 0 ? { name: 'determined', eyes: { upper: 0.4 + 0.12 * cold, look: [0, 0] } } : { name: 'deadpan', eyes: { look: [0, 0.35], upper: 0.4 } };
+  const seated = actor('mom', t, momSeat({ t, cup: false, headset: hk, armL: 18, armR: 18, face }), { arms: false, energy: 0.2 });
   let o = living(t, cam, { lamp: lerp(0.55, 0.1, u), glowK: 0.6 }, { seated });
-  o += wash('#05030C', 0.3 * u);
-  // the headset cups light up when it clicks on
-  const on = seg(t, B.five + 0.05, B.five + 0.4);
-  if (on > 0) { const pl = scr(cam, 1340 - 90, 520), pr = scr(cam, 1340 + 90, 520); o += G.screenGlow(pl.x, pl.y, 300, 300, '#FF4FD8', 0.5 * on) + G.screenGlow(pr.x, pr.y, 300, 300, '#3DF2FF', 0.5 * on); }
-  const gl = seg(t, LN[11].word('minutes').t0, LN[11].word('minutes').t0 + 0.45);
+  o += wash('#05030C', 0.15 + 0.3 * u);
+  // the cups light up when it clicks on
+  const on = seg(t, B.click, B.click + 0.3);
+  if (on > 0) { const pl = scr(cam, 1340 - 100, 500), pr = scr(cam, 1340 + 100, 500); o += G.screenGlow(pl.x, pl.y, 420, 420, '#FF4FD8', 0.45 * on) + G.screenGlow(pr.x, pr.y, 420, 420, '#3DF2FF', 0.45 * on); }
+  const gl = seg(t, B.click + 0.15, B.click + 0.6);
   const pg = scr(cam, 1372, 512);
-  o += E.glint(pg.x, pg.y, gl, 150);
+  o += E.glint(pg.x, pg.y, gl, 160) + flashAt(t, B.click, 0.1, 0.25, '#FFE6FA');
   return o + letterbox(1);
 }
 // K3 — "Let's go." the EPIC: low angle, Mom standing, tablet up, headset blazing, rays, wind, smash-zoom
@@ -565,7 +574,7 @@ function pcGame(t, load = 1) {
   return (w, h) => {
     let o = S.rect(0, 0, w, h, 0, { fill: '#2A1450' }) + S.rect(0, h * 0.7, w, h * 0.3, 0, { fill: '#3E2370' });
     for (let i = 0; i < 9; i++) o += S.rect(i * w / 9, h * (0.45 + 0.2 * hash(i)), w / 9 - 3, h, 2, { fill: '#4A2C86' });
-    o += G.cubeLogo(w / 2, h * 0.36, w / 900);
+    o += G.cubeLogo(w / 2, h * 0.34, w / 600);
     o += S.rect(w * 0.2, h * 0.74, w * 0.6, h * 0.07, h * 0.035, { fill: '#120A24', stroke: '#FFFFFF', 'stroke-width': 2 }) + S.rect(w * 0.2, h * 0.74, w * 0.6 * clamp(load, 0, 1), h * 0.07, h * 0.035, { fill: '#17C3B2' });
     o += TF('JOINING SERVER...', w / 2, h * 0.92, h * 0.07, '#FFFFFF');
     return o;

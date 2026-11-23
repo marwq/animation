@@ -89,12 +89,14 @@ function kitchen(t, cam, o, seated = '', front = '', mid = '') {
   return view(cam, Lk.bg, 0.8) + view(cam, Lk.mid + mid + seated + Lk.front + front + (Lk.fg || '') + Lk.light, 1);
 }
 // default poses of the family at the table (overridable per shot)
+// o.vol: who keeps the body-volume filter in a close shot (the cut-off neighbours drop it: ~40 ms each at zoom 2)
 function famSeated(t, o = {}) {
   let s = '';
-  if (o.dad !== false) s += seat('dad', t, { turn: 0.05, ...(o.dad || {}) }, { arms: false });
-  if (o.mom !== false) s += seat('mom', t, { armL: 18, armR: 22, ...(o.mom || {}) }, { arms: false });
-  if (o.grandma !== false) s += seat('grandma', t, { armL: 26, armR: 26, ...(o.grandma || {}) }, { arms: false });
-  if (o.you !== false) s += seat('you', t, { ...eating(t), face: { name: 'neutral', eyes: { look: [0.6, 0.4] } }, ...(o.you || {}) }, { arms: false });
+  const v = (who) => (o.vol && !o.vol.includes(who) ? { volume: false } : {});
+  if (o.dad !== false) s += seat('dad', t, { turn: 0.05, ...v('dad'), ...(o.dad || {}) }, { arms: false });
+  if (o.mom !== false) s += seat('mom', t, { armL: 18, armR: 22, ...v('mom'), ...(o.mom || {}) }, { arms: false });
+  if (o.grandma !== false) s += seat('grandma', t, { armL: 26, armR: 26, ...v('grandma'), ...(o.grandma || {}) }, { arms: false });
+  if (o.you !== false) s += seat('you', t, { ...eating(t), face: { name: 'neutral', eyes: { look: [0.6, 0.4] } }, ...v('you'), ...(o.you || {}) }, { arms: false });
   return s;
 }
 const dadStand = (t, pose = {}, act = { arms: false, energy: 1.3 }) => actor('dad', t, { x: PRES.x, y: PRES.y, s: PRES.s, turn: -0.2, ...pose }, act);
@@ -137,7 +139,7 @@ function shDad(t) {
   const tt = t < fz0 ? t : t < fz1 ? fz0 : t - (fz1 - fz0);
   const cam = camKeys(tt, [[C.dad, at(800, 505, 2.2)], [C.dadNin, at(800, 500, 2.35)]]);
   const stars = t > b.accountant + 0.05;
-  const seated = famSeated(tt, { dad: { props: paperProp(), armL: 52, armR: 52, face: stars ? { name: 'excited', eyes: { type: 'star' } } : { name: 'happy', eyes: { look: [0, 0.6] } }, headRot: stars ? 4 * Math.sin(t * 10) : 0 } });
+  const seated = famSeated(tt, { vol: ['dad'], dad: { props: paperProp(), armL: 52, armR: 52, face: stars ? { name: 'excited', eyes: { type: 'star' } } : { name: 'happy', eyes: { look: [0, 0.6] } }, headRot: stars ? 4 * Math.sin(t * 10) : 0 } });
   let o = kitchen(tt, cam, { paper: false }, seated, knitAt(tt));
   o = freeze(o, t < fz1 ? seg(t, fz0, fz0 + 0.12) : 1 - seg(t, fz1, fz1 + 0.1), -2.5);
   o += nameCard(t, fz0 + 0.02, 600, 180, 'DAD', 'ACCOUNTANT', '#D9A13A', { subAt: b.accountant - 0.05, rot: -4, ax: 850, ay: 360 });
@@ -150,7 +152,7 @@ const GAME_CARDS = [['CUBE CITY', -190, -150], ['TURBO RACER', 190, -150], ['SOC
 function shDadNin(t) {
   const cam = camKeys(t, [[C.dadNin, at(800, 505, 1.95, 520, 560)], [C.mom, at(800, 505, 2.05, 520, 560)]]);
   const nod = t > b.nintendo ? 5 * Math.sin((t - b.nintendo) * 12) * Math.exp(-(t - b.nintendo) * 2) : 0;
-  const seated = famSeated(t, { dad: { props: paperProp({ fold: 1 }), armL: 40, armR: 40, headRot: nod, face: { name: 'smug', eyes: { look: [0.7, -0.6] } } } });
+  const seated = famSeated(t, { vol: ['dad'], dad: { props: paperProp({ fold: 1 }), armL: 40, armR: 40, headRot: nod, face: { name: 'smug', eyes: { look: [0.7, -0.6] } } } });
   let o = kitchen(t, cam, { paper: false }, seated, knitAt(t));
   const tk = pop(t, C.dadNin + 0.05, 0.3);
   const times = [b.every, b.video, b.game, b.called];
@@ -166,7 +168,7 @@ function shMom(t) {
   const tt = t < fz0 ? t : t < fz1 ? fz0 : t - (fz1 - fz0);
   const cam = camKeys(tt, [[C.mom, at(1120, 505, 2.2)], [C.shh, at(1120, 500, 2.35)]]);
   const sip = 0.5 + 0.5 * Math.sin(tt * 2.2);
-  const seated = famSeated(tt, { mom: { props: mugProp(tt, sip), armR: 150, armL: 18, face: { name: 'neutral', eyes: { look: [0, 0.2] }, mouth: sip > 0.7 ? 'o' : 'smallSmile' } } });
+  const seated = famSeated(tt, { vol: ['mom'], mom: { props: mugProp(tt, sip), armR: 150, armL: 18, face: { name: 'neutral', eyes: { look: [0, 0.2] }, mouth: sip > 0.7 ? 'o' : 'smallSmile' } } });
   let o = kitchen(tt, cam, {}, seated, knitAt(tt));
   o = freeze(o, t < fz1 ? seg(t, fz0, fz0 + 0.12) : 1 - seg(t, fz1, fz1 + 0.1), 2.5);
   o += nameCard(t, fz0 + 0.02, 560, 160, 'MOM', 'LIBRARIAN', '#6FAE9C', { subAt: b.librarian - 0.05, rot: -4, ax: 840, ay: 330 });
@@ -182,7 +184,7 @@ function shShh(t) {
   const sh = seg(t, b.shh - 0.15, b.shh + 0.1);
   const mp = { armR: lerp(22, 146, ease.outBack(sh)), armL: 18, lean: 3 * sh, turn: 0.1, face: sh > 0.5 ? { name: 'determined', mouth: 'o', eyes: { look: [0, 0] } } : { name: 'neutral' } };
   if (sh > 0.35) mp.props = [{ svg: shhFinger(CAST.handAt(CAST.D.mom, mp, 1), 4 * Math.sin(Math.max(0, t - b.shh) * 14) * Math.exp(-Math.max(0, t - b.shh) * 2)), layer: 'front' }];
-  const seated = famSeated(t, { mom: mp });
+  const seated = famSeated(t, { vol: ['mom'], mom: mp });
   let o = kitchen(t, cam, {}, seated, knitAt(t));
   o += speech(860, 230, 'SHH!', pop(t, b.shh, 0.22), { size: 96, tail: -1 });
   const wa = t - b.shh;
@@ -210,7 +212,7 @@ function shGranny(t) {
   const tt = t < fz0 ? t : t < fz1 ? fz0 : t - (fz1 - fz0);
   const cam = camKeys(tt, [[C.granny, at(1360, 545, 2.2)], [C.argue, at(1360, 540, 2.3)]]);
   const frenzy = t > b.knits - 0.05 ? 1 : 0;
-  const seated = famSeated(tt, { grandma: { armL: 30 + 8 * frenzy * Math.sin(t * 40), armR: 30 + 8 * frenzy * Math.sin(t * 43 + 1), face: frenzy ? { name: 'determined', eyes: { look: [0, 0.6] } } : { name: 'happy', eyes: { look: [-0.3, 0.4] } } } });
+  const seated = famSeated(tt, { vol: ['grandma'], grandma: { armL: 30 + 8 * frenzy * Math.sin(t * 40), armR: 30 + 8 * frenzy * Math.sin(t * 43 + 1), face: frenzy ? { name: 'determined', eyes: { look: [0, 0.6] } } : { name: 'happy', eyes: { look: [-0.3, 0.4] } } } });
   const p = seatXY('grandma');
   let front = knitFront(tt, p.x - 40, 676, 0.36, frenzy ? 6 : 1);
   front += scarf(p.x - 40, 680, seg(t, b.knits, b.knits + 0.6), t);
@@ -227,7 +229,7 @@ function shGranny(t) {
 // ================================================================= 33. "...never lost an argument in her life." — WON 9,999 · LOST 0
 function shArgue(t) {
   const cam = camKeys(t, [[C.argue, at(1360, 545, 2.0, 1320, 560)], [C.meeting, at(1355, 520, 2.9, 1260, 560)]]);
-  const seated = famSeated(t, { grandma: { armL: 26, armR: 26, headRot: -3, face: { name: t > b.life ? 'sneaky' : 'smug', eyes: { look: [0, 0] } } } });
+  const seated = famSeated(t, { vol: ['grandma'], grandma: { armL: 26, armR: 26, headRot: -3, face: { name: t > b.life ? 'sneaky' : 'smug', eyes: { look: [0, 0] } } } });
   let o = kitchen(t, cam, {}, seated, knitAt(t, 0.3));
   const won = lerp(0, 9999, ease.out(seg(t, b.and13, b.argument + 0.2)));
   o += argueBoard(t, 560, 470, pop(t, b.and13 - 0.05, 0.3), won, seg(t, b.lost, b.lost + 0.6));
@@ -277,7 +279,7 @@ function shNin(t) {
   const tap = Math.max(0, Math.sin((t - b.nintendo14) * 18)) * (t > b.nintendo14 && t < b.nintendo14 + 0.6 ? 1 : 0);
   const dp = { armL: 118, armR: 24, turn: -0.35, face: { name: 'excited' } };
   const target = chartPt(8 + 5 * tap, -394 + 5 * tap);
-  let o = kitchen(t, cam, {}, famSeated(t, { dad: false }), dadStand(t, dp) + stickTo(dadHand(dp), target), flipChartMine(t, 1) + buntingDrop(1));
+  let o = kitchen(t, cam, {}, famSeated(t, { vol: [], dad: false }), dadStand(t, dp) + stickTo(dadHand(dp), target), flipChartMine(t, 1) + buntingDrop(1));
   o += zoomLines(960, 540, seg(t, b.nintendo14, b.nintendo14 + 0.2), t, '#FFFFFF', 22, 520);
   return o + smash(t, b.nintendo14, 0.1, 0.5);
 }
@@ -289,7 +291,7 @@ function shNotNin(t) {
   const glow = bump(t, b.cube15 - 0.05, b.cube15 + 0.6);
   const yp = { turn: -0.2, armR: lerp(20, 122, up), armL: 22, face: { name: 'angry', eyes: { look: [-0.9, -0.1] } },
     props: up > 0.05 ? [{ svg: X.tablet({ x: 300, y: lerp(-380, -640, up), s: 0.55, rot: 8, face: 'screen', screen: cubeScreen(glow), glow }), layer: 'front' }] : [] };
-  const seated = famSeated(t, { dad: false, you: yp });
+  const seated = famSeated(t, { vol: ['you'], dad: false, you: yp });
   const dp = { armL: 20, armR: 20, turn: 0.2, face: { name: 'confused', fx: t > b.cube15 ? ['question'] : [], eyes: { look: [0.8, 0] } } };
   let o = kitchen(t, cam, { tablet: false }, seated, dadStand(t, dp, { arms: false }), flipChartMine(t, 1) + buntingDrop(1));
   if (glow > 0) { const [sx, sy] = toScr(cam, KS.you.x + 0.45 * 300, seatXY('you').y - 0.45 * 640); o += K.F.sparkle(sx - 90, sy - 130, 40 * glow, '#FFE14D') + K.F.sparkle(sx + 100, sy - 40, 28 * glow, '#FFFFFF'); }
@@ -301,7 +303,7 @@ const A15a = () => K.V.L('02.15').a;
 function shDecision(t) {
   const cam = camKeys(t, [[C.decision, at(1240, 520, 1.9)], [C.tonight, at(1230, 505, 2.2)]]);
   const dim = seg(t, b.decision - 0.1, b.decision + 0.4);
-  const seated = famSeated(t, {
+  const seated = famSeated(t, { vol: ['mom', 'grandma'],
     mom: { armL: 24, armR: 24, face: { name: 'determined', eyes: { look: [-0.4, 0] } } },
     grandma: { armL: 22, armR: 22, headRot: 6 * Math.sin(Math.max(0, t - b.decision) * 8) * Math.exp(-Math.max(0, t - b.decision) * 3), face: { name: 'smug', eyes: { look: [-0.9, 0] } } },
     dad: false,
@@ -336,7 +338,7 @@ function shBoardG(t) {
   const cam = camKeys(t, [[C.boardG, at(560, 470, 2.0, 760, 560)], [C.no, at(560, 465, 2.1, 760, 560)]]);
   const relax = seg(t, b.okay - 0.1, b.okay + 0.4);
   const yp = { turn: 0.15, armL: lerp(16, 34, relax), armR: lerp(16, 34, relax), lean: -6 * relax, headRot: -8 * relax, bodyY: 10 * seg(t, b.oh, b.oh + 0.3) + 14 * relax, face: { name: 'happy', eyes: relax > 0.6 ? { type: 'happy' } : { look: [0.3, 0] } } };
-  const seated = famSeated(t, { dad: false, you: yp });
+  const seated = famSeated(t, { vol: ['you'], dad: false, you: yp });
   let o = kitchen(t, cam, { tablet: false }, seated, knitAt(t), buntingDrop(1));
   o += thought(1380, 400, 760, 560, pop(t, b.board - 0.1, 0.3), boardGame(1.35), { tail: [-300, 360] });
   o += K.bang('phew~', 470, 300, pop(t, b.okay + 0.1, 0.25), 70, -8, '#FFFFFF');
@@ -347,7 +349,7 @@ function shBoardG(t) {
 function shNo(t) {
   const cam = camKeys(t, [[C.no, at(1360, 540, 2.45, 1100, 560)], [C.joining, at(1360, 530, 2.65, 1100, 560)]]);
   const stop = seg(t, b.no - 0.1, b.no + 0.2);
-  const seated = famSeated(t, { grandma: { armL: 26, armR: 26, headRot: -4, face: { name: 'sneaky', eyes: { look: [-0.6, -0.3] } } } });
+  const seated = famSeated(t, { vol: ['grandma'], grandma: { armL: 26, armR: 26, headRot: -4, face: { name: 'sneaky', eyes: { look: [-0.6, -0.3] } } } });
   let o = kitchen(t, cam, { tablet: false }, seated, knitAt(t, 1 - stop, stop));
   o += K.bang('clink', 1500, 760, pop(t, b.no - 0.05, 0.2) * (1 - seg(t, b.dear, b.dear + 0.3)), 60, 6, '#FFFFFF');
   return o;
@@ -365,7 +367,7 @@ function panel(i, k, inner, bg) {
 function shJoining(t) {
   const tg = b.were - 0.06, td = b.YOUR - 0.1, tm = b.game18 - 0.1;
   // under the panels: the kitchen wide, dimmed
-  let o = kitchen(t, at(960, 560, 1.0), { tablet: false }, famSeated(t, { dad: false, you: { face: { name: 'shocked' }, armL: 14, armR: 14 } }), dadStand(t, { armL: 24, armR: 24 }), flipChartMine(t, 1) + buntingDrop(1));
+  let o = kitchen(t, at(960, 560, 1.0), { tablet: false }, famSeated(t, { vol: [], dad: false, you: { face: { name: 'shocked' }, armL: 14, armR: 14 } }), dadStand(t, { armL: 24, armR: 24, volume: false }), flipChartMine(t, 1) + buntingDrop(1));
   o += S.rect(0, 0, W, H_, 0, { fill: '#1A1030', opacity: 0.35 });
   const gk = seg(t, tg, tg + 0.3), dk = seg(t, td, td + 0.3), mk = seg(t, tm, tm + 0.3);
   const gl = (t0) => bump(t, t0, t0 + 0.8);
@@ -396,7 +398,7 @@ function shServer(t) {
   cam = shakeAll(cam, t, [[b.server, 0.5, 20]]);
   const scream = t > b.server - 0.04;
   const yp = { turn: 0, armL: scream ? 150 : 14, armR: scream ? 150 : 14, ...boing(t, b.server, 0.2), face: scream ? { name: 'scream', mouth: 'scream', eyes: { pupil: 0.3 }, fx: ['sweat2'] } : { name: 'shocked', eyes: { pupil: 0.35 }, fx: ['sweat'] } };
-  let o = kitchen(t, cam, { tablet: false }, famSeated(t, { dad: false, you: yp, grandma: { face: { name: 'happy' } } }), knitAt(t, 0, 1));
+  let o = kitchen(t, cam, { tablet: false }, famSeated(t, { vol: ['you'], dad: false, you: yp, grandma: { face: { name: 'happy' } } }), knitAt(t, 0, 1));
   o += zoomLines(960, 470, scream ? 1 : 0, t, '#FFFFFF', 24, 480);
   return o + smash(t, b.server, 0.12, 0.6);
 }
@@ -409,7 +411,7 @@ function shScary(t) {
   const camB = at(ctr[0], ctr[1], zb, 960, 470), camH = at(ctr[0], ctr[1], zh, 960, 470);
   const Lk = H.kitchen.layers(t, { time: 'morning', meeting: false, chart: false, tablet: false });
   const tremble = 3 * Math.sin(t * 60);
-  const others = famSeated(t, { you: false, dad: false, mom: { face: { name: 'happy', eyes: { look: [-1, 0] } } }, grandma: { face: { name: 'happy', eyes: { look: [-1, 0] } } } });
+  const others = famSeated(t, { vol: [], you: false, dad: false, mom: { face: { name: 'happy', eyes: { look: [-1, 0] } } }, grandma: { face: { name: 'happy', eyes: { look: [-1, 0] } } } });
   const yp = { x: KS.you.x + tremble, turn: 0, armL: 12, armR: 12, face: { name: 'scared', eyes: { pupil: 0.25, look: [0, 0] }, fx: ['sweat2'] } };
   let o = view(camB, Lk.bg, 0.8) + view(camB, Lk.mid + buntingDrop(1) + others) + view(camH, seat('you', t, yp, { arms: false }) + Lk.front) + view(camB, Lk.light);
   // the lightning outside on "scariest"
