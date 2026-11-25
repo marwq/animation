@@ -46,11 +46,12 @@ const TH = {
   cyan: { glass: '#061624', op: 0.8, rim: '#3BE8FF', hi: '#C6FBFF', edge: '#020C16', text: '#F2FDFF', label: '#8BDCEB', badge: '#3BE8FF', badgeTx: '#04121E', dim: '#2A5566' },
   boss: { glass: '#26050D', op: 0.86, rim: '#FF3355', hi: '#FFC2CC', edge: '#14020A', text: '#FFF2F4', label: '#FF9DAD', badge: '#FF3355', badgeTx: '#FFF6D8', dim: '#6A1424' },
   gold: { glass: '#1E1404', op: 0.86, rim: '#FFC83A', hi: '#FFF1B8', edge: '#120A00', text: '#FFF8E6', label: '#FFD98A', badge: '#FFC83A', badgeTx: '#2A1A00', dim: '#6A5214' },
-  warm: { glass: '#3E1C0E', op: 0.6, rim: '#FFB45E', hi: '#FFE9CC', edge: '#2A1006', text: '#FFF7EC', label: '#FFD3A3', badge: '#FF7A6A', badgeTx: '#FFF7EC', dim: '#7A4A2A' },
+  warm: { glass: '#FF9A3D', op: 0.55, rim: '#FFF1D2', hi: '#FFFFFF', edge: '#7A2E08', text: '#FFFFFF', label: '#FFE3B8', badge: '#FF6B6B', badgeTx: '#FFFFFF', dim: '#B8703A' },
   cold: { glass: '#0B141E', op: 0.86, rim: '#7FA3BF', hi: '#D3E4F0', edge: '#050A10', text: '#DCE8F2', label: '#7F96AA', badge: '#7FA3BF', badgeTx: '#0B141E', dim: '#2E3E4C' },
   error: { glass: '#1C0519', op: 0.88, rim: '#FF2EA6', hi: '#FFC4E8', edge: '#0E020C', text: '#FFF0FA', label: '#FF8FD0', badge: '#FF2EA6', badgeTx: '#FFF0FA', dim: '#6A1450' },
   pet: { glass: '#220A1C', op: 0.82, rim: '#FF8AD8', hi: '#FFE0F4', edge: '#12040E', text: '#FFF4FB', label: '#FFB8E6', badge: '#FFC83A', badgeTx: '#2A1A00', dim: '#6A2A5A' },
   green: { glass: '#04180E', op: 0.86, rim: '#3DFF8F', hi: '#CFFFE2', edge: '#010C06', text: '#F0FFF6', label: '#8FE8B4', badge: '#3DFF8F', badgeTx: '#04180E', dim: '#1E5A36' },
+  warn: { glass: '#1E1404', op: 0.88, rim: '#FFB020', hi: '#FFE7B0', edge: '#120A00', text: '#FFF8E6', label: '#FFD07A', badge: '#FFB020', badgeTx: '#2A1A00', dim: '#6A4A14' },
 };
 const theme = (th) => (th && typeof th === 'object' ? { ...TH.cyan, ...th } : TH[th] || TH.cyan);
 function mixTheme(a, b, k) {
@@ -86,16 +87,11 @@ const DEFS = `<defs>
 <pattern id="hdScanD" width="6" height="6" patternUnits="userSpaceOnUse"><rect width="6" height="2" fill="#000000" opacity="0.35"/></pattern>
 <pattern id="hdHaz" width="20" height="20" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><rect width="10" height="20" fill="#000000" opacity="0.35"/></pattern>
 <pattern id="hdText" width="400" height="44" patternUnits="userSpaceOnUse"><rect x="0" y="10" width="230" height="9" rx="4" fill="#8BDCEB" opacity="0.32"/><rect x="242" y="10" width="120" height="9" rx="4" fill="#8BDCEB" opacity="0.32"/><rect x="0" y="30" width="96" height="9" rx="4" fill="#8BDCEB" opacity="0.32"/><rect x="108" y="30" width="270" height="9" rx="4" fill="#8BDCEB" opacity="0.32"/></pattern>
-<radialGradient id="hdGlowW"><stop offset="0" stop-color="#FFC27A" stop-opacity="0.62"/><stop offset="0.5" stop-color="#FFA54F" stop-opacity="0.22"/><stop offset="1" stop-color="#FFA54F" stop-opacity="0"/></radialGradient>
-<radialGradient id="hdGlowC"><stop offset="0" stop-color="#7FF4FF" stop-opacity="0.6"/><stop offset="0.5" stop-color="#3BE8FF" stop-opacity="0.18"/><stop offset="1" stop-color="#3BE8FF" stop-opacity="0"/></radialGradient>
-<radialGradient id="hdGlowG"><stop offset="0" stop-color="#FFF0A0" stop-opacity="0.75"/><stop offset="0.45" stop-color="#FFC83A" stop-opacity="0.25"/><stop offset="1" stop-color="#FFC83A" stop-opacity="0"/></radialGradient>
-<radialGradient id="hdGlowR"><stop offset="0" stop-color="#FF8A9A" stop-opacity="0.6"/><stop offset="0.5" stop-color="#FF3355" stop-opacity="0.2"/><stop offset="1" stop-color="#FF3355" stop-opacity="0"/></radialGradient>
-<linearGradient id="hdEdgeT" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#FF2E4E" stop-opacity="0.7"/><stop offset="1" stop-color="#FF2E4E" stop-opacity="0"/></linearGradient>
-<linearGradient id="hdEdgeB" x1="0" y1="1" x2="0" y2="0"><stop offset="0" stop-color="#FF2E4E" stop-opacity="0.7"/><stop offset="1" stop-color="#FF2E4E" stop-opacity="0"/></linearGradient>
-<linearGradient id="hdEdgeL" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#FF2E4E" stop-opacity="0.7"/><stop offset="1" stop-color="#FF2E4E" stop-opacity="0"/></linearGradient>
-<linearGradient id="hdEdgeR" x1="1" y1="0" x2="0" y2="0"><stop offset="0" stop-color="#FF2E4E" stop-opacity="0.7"/><stop offset="1" stop-color="#FF2E4E" stop-opacity="0"/></linearGradient>
+<style>
+.hdTR *{fill:#FF2E63!important;stroke:#FF2E63!important;fill-opacity:.5!important;stroke-opacity:.5!important}.hdTR [fill=none]{fill:none!important}
+.hdTC *{fill:#2EE6FF!important;stroke:#2EE6FF!important;fill-opacity:.5!important;stroke-opacity:.5!important}.hdTC [fill=none]{fill:none!important}
+</style>
 <linearGradient id="hdSheen" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#FFFFFF" stop-opacity="0"/><stop offset="0.5" stop-color="#FFFFFF" stop-opacity="0.32"/><stop offset="1" stop-color="#FFFFFF" stop-opacity="0"/></linearGradient>
-<linearGradient id="hdBoot" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#3BE8FF" stop-opacity="0"/><stop offset="0.85" stop-color="#3BE8FF" stop-opacity="0.22"/><stop offset="1" stop-color="#E8FFFF" stop-opacity="0.9"/></linearGradient>
 </defs>`;
 
 // ---------------------------------------------------------------- primitive shapes
@@ -128,6 +124,21 @@ function panel(x, y, w, h, th, o = {}) {
     s += S.path(`M${f(x - q + c * 0.2)} ${f(y + c * 0.8 - q)}L${f(x - q + c * 0.8)} ${f(y + c * 0.2 - q)}M${f(x + w + q - c2 * 0.2)} ${f(y + h - c2 * 0.8 + q)}L${f(x + w + q - c2 * 0.8)} ${f(y + h - c2 * 0.2 + q)}`, ln(3, th.rim, 0.9 * (o.brOp ?? 1)));
   }
   return s;
+}
+// soft glow without gradients: 4 stacked translucent ellipses (gradient fills cost ~0.08 ms per 1000 px here)
+function glow(x, y, rx, ry, col, op = 1, steps = 4) {
+  if (op <= 0) return '';
+  let o = '';
+  for (let i = 0; i < steps; i++) { const k = 1 - (i / steps) * 0.7; o += S.ellipse(x, y, rx * k, ry * k, { fill: col, opacity: f((0.08 + 0.1 * i / steps) * op) }); }
+  return o;
+}
+// rounded soft glass (the BIG BROTHER plate once revealed: no brackets, no cut corners)
+function softPanel(x, y, w, h, th, r = 22) {
+  th = theme(th);
+  return S.rect(x + 4, y + 7, w, h, r, { fill: '#000', opacity: 0.16 }) +
+    S.rect(x, y, w, h, r, { fill: th.glass, 'fill-opacity': f(th.op), stroke: th.edge, 'stroke-width': 5 }) +
+    S.rect(x + 6, y + 6, w - 12, h * 0.42, r * 0.7, { fill: '#FFFFFF', opacity: 0.16 }) +
+    S.rect(x + 4.5, y + 4.5, w - 9, h - 9, r - 4, { fill: 'none', stroke: th.rim, 'stroke-width': 2.6 });
 }
 // a moving sheen band across a panel (no clip: the band stays inside [x, x+w])
 function sheen(x, y, w, h, t, period = 4.2, seed = 0) {
@@ -162,7 +173,7 @@ const fitSize = (str, size, maxW, font = 'L', sp = 0) => { const w = richW(str, 
 
 // the "!" quest glyph (drawn, not a font): centre x, top y0, height h
 function bangGlyph(x, y, h, col = '#FFD21F', lw = null) {
-  const w = h * 0.34, lwv = lw ?? Math.max(3, h * 0.075);
+  const w = h * 0.42, lwv = lw ?? Math.max(3, h * 0.075);
   const bar = `M${f(x - w / 2)} ${f(y)}L${f(x + w / 2)} ${f(y)}L${f(x + w * 0.24)} ${f(y + h * 0.64)}L${f(x - w * 0.24)} ${f(y + h * 0.64)}Z`;
   const dot = S.circle(x, y + h * 0.86, w * 0.33, ol(col, lwv));
   return S.path(bar, { ...ol(col, lwv), 'stroke-linejoin': 'round' }) + dot +
@@ -305,14 +316,20 @@ function rays(x, y, n, r, col, op, rot = 0, r0 = 0) {
   }
   return S.path(d, { fill: col, opacity: f(op) });
 }
-// glitch wrapper used by several helpers: jitter + RGB split
+// RGB split: red / cyan tinted copies behind the group. CSS classes hdTR / hdTC set fill-/stroke-opacity instead of a group
+// opacity, so no offscreen layer is made (respawn.js rgbSplit costs ~40 ms for a full-frame HUD; this ~2 ms).
+function rgb(svg, dx = 10, dy = 0) {
+  if (!dx && !dy) return svg;
+  return S.g(svg, `translate(${f(-dx)} ${f(-dy)})`, { class: 'hdTR' }) + S.g(svg, `translate(${f(dx)} ${f(dy)})`, { class: 'hdTC' }) + svg;
+}
+// glitch wrapper used by several helpers: jitter + RGB split on most frames
 function glitchWrap(svg, t, g, seed = 1, dx = 10) {
   if (!(g > 0)) return svg;
   const st = Math.floor(t * 18);
   const on = hash(st * 0.91 + seed) < 0.35 + 0.6 * g;
   const jx = on ? (hash(st * 1.7 + seed) - 0.5) * 22 * g : 0, jy = on ? (hash(st * 2.3 + seed) - 0.5) * 8 * g : 0;
   const body = jx || jy ? S.g(svg, `translate(${f(jx)} ${f(jy)})`) : svg;
-  return on ? R.rgbSplit(body, Math.min(1, g * 1.2), { dx, t, op: 0.55 }) : body;
+  return on ? rgb(body, dx * Math.min(1, g * 1.2) * (0.55 + 0.9 * hash(st * 1.3 + seed))) : body;
 }
 
 // ================================================================= 1. STAT PLATE
@@ -442,14 +459,14 @@ function statPlate(o = {}) {
         fillP = disp / b.max;
         if (b.trail !== undefined) trailP = b.trail / b.max * clamp(bk * 2, 0, 1);
       }
-      const low = !b.inf && b.blink !== false && (b.blink || b.value / b.max <= 0.12);
+      const low = !b.inf && b.blink !== false && (b.blink || (b.roll !== undefined ? disp : b.value) / b.max <= 0.12);   // follows the rolling value
       const lx = left + padX;
       body += TF(b.label, lx, cy + 6.5, 18, low ? '#FF8A9A' : th.label, { 'text-anchor': 'start', 'letter-spacing': 1.5 });
       const bx0 = lx + labelCol, bx1 = -left - padX - valCol - 4;
       body += segBar(bx0, cy - 9, bx1 - bx0, 18, b.inf ? bk : fillP, b.col, { th, t, trail: trailP, ghost: ghostP, blink: low && bk > 0.5, inf: b.inf && bk > 0.9, cell: 15 });
       // value
       let vt = barText(b, disp);
-      if (glitch > 0) vt = scramble(vt, t, glitch, seed + i);
+      if (glitch > 0 && !b.inf) vt = scramble(vt, t, glitch, seed + i);
       const vcol = low ? (Math.floor(t * 4.5) % 2 === 0 ? '#FF4D66' : '#FFFFFF') : b.value > b.max * 1.02 ? b.col : th.text;
       const pop = 1 + 0.25 * bumpK(b.bump || 0) + (b.roll !== undefined ? 0.18 * bumpK(clamp(b.roll * 1.6, 0, 1)) : 0);
       const vx = -left - padX, vy = cy + 10;
@@ -587,12 +604,12 @@ function heroPlate(o = {}) {
   const uf = unfold(kO);
   let out = '';
   // warm glow behind (small radial gradient, only when revealed)
-  if (warm > 0) out += S.ellipse(0, top + Hd / 2, Wd * 0.95, Hd * 1.9, { fill: 'url(#hdGlowW)', opacity: f(warm * (0.85 + 0.15 * Math.sin(t * 2))) });
+  if (warm > 0) out += glow(0, top + Hd / 2, Wd * 0.68, Hd * 1.35, '#FFC46B', warm * (0.6 + 0.1 * Math.sin(t * 2)), 9);
   out += S.path(`M0 -6V${f(Math.min(-6, -lift * ease.out(kT) + 2))}`, ln(5.5, th.edge, 0.9)) + S.path(`M0 -6V${f(Math.min(-6, -lift * ease.out(kT) + 2))}`, ln(2.2, th.rim));
   out += S.path(diamondD(0, -2, 7 * ease.outBack(kT), 9 * ease.outBack(kT)), { fill: th.rim, stroke: th.edge, 'stroke-width': 3 });
   if (kO > 0) {
     const cy = top + Hd / 2;
-    let b = panel(left, top, Wd, Hd, th, { c: lerp(16, 8, warm), c2: lerp(16, 8, warm), brOp: 1 - warm * 0.85, scan: warm < 0.9 });
+    let b = rv < 0.47 ? panel(left, top, Wd, Hd, th, { c: lerp(16, 8, warm), c2: lerp(16, 8, warm), brOp: 1 - warm * 0.85, scan: warm < 0.9 }) : softPanel(left, top, Wd, Hd, th);
     b += sheen(left + 6, top + 4, Wd - 12, Hd - 8, t, 3.6, 5);
     // --- the "???" state
     const qa = (1 - seg(rv, 0.3, 0.48)) * kC;
@@ -632,7 +649,7 @@ function heroPlate(o = {}) {
         const cw = TW(ch, 50, 'L');
         if (li > 0 && ch !== ' ') {
           const sc = lerp(1.35, 1, ease.out(li));
-          b += S.g(TL(ch, 0, 0, 50, '#FFF7EC', { 'text-anchor': 'start', ...outl(6, '#6A2A0E') }), `translate(${f(lx)} ${f(top + Hd / 2 + 18 + 12 * (1 - ease.out(li)))}) scale(${f(sc)})`, { opacity: f(ease.out(li)) });
+          b += S.g(TL(ch, 0, 0, 50, '#FFFFFF', { 'text-anchor': 'start', ...outl(7, '#8A3208') }), `translate(${f(lx)} ${f(top + Hd / 2 + 18 + 12 * (1 - ease.out(li)))}) scale(${f(sc)})`, { opacity: f(ease.out(li)) });
         }
         lx += cw;
       });
@@ -650,7 +667,7 @@ function heroPlate(o = {}) {
         const u = mod(t * 0.35 + hash(i * 3.7), 1);
         d += star4(left + hash(i * 5.1) * Wd, top + Hd - u * (Hd + 90), (3 + 5 * hash(i)) * bumpK(u), t * 40 + i * 20);
       }
-      out += S.path(d, { fill: '#FFE7B8', opacity: f(warm) });
+      out += S.path(d, { fill: '#FFF1C8', opacity: f(warm) });
     }
   }
   const bob = Math.sin(t * 2.1) * 3.5;
@@ -658,7 +675,7 @@ function heroPlate(o = {}) {
   return S.g(out, `translate(${f(x)} ${f(y + bob)}) scale(${f(s)})`, op < 1 ? { opacity: f(op) } : {});
 }
 
-//@@PART2
+
 // ================================================================= 2. TOOLTIPS over objects
 // tooltip({ x, y, k, t, s, title, lines, rarity, pointer, side, dist, dx, theme, level, hp, w, out })
 // (x, y) = the point ON the object (the pin). The card floats `dist` px away on `side` ('up' | 'down' | 'left' | 'right'), shifted by dx.
@@ -666,14 +683,18 @@ function heroPlate(o = {}) {
 // objects { label, value, col } (value in Lilita, coloured). rarity: common uncommon rare epic legendary mystery cursed enemy boss.
 // Enemy/boss rarity -> red card with a skull chip, optional `level` badge and `hp` (0..1) mini bar.
 function parseLine(l) {
-  if (l && typeof l === 'object') return [[l.label || '', null], [l.value ?? '', l.col || '#FFD23F'], [l.rest || '', null]];
-  const str = clean(String(l)).toUpperCase();
-  const m = str.match(/^(.*?)([+–-]\s?\d[\d,.]*%?)(.*)$/) || str.match(/^(.*?)(\d[\d,.]*%)(.*)$/);
-  if (m) { const v = m[2]; const col = v[0] === '+' ? '#3DFF8F' : v[0] === '–' || v[0] === '-' ? '#FF4D66' : '#FFB020'; return [[m[1], null], [v, col], [m[3], null]]; }
-  return [[str, null]];
+  let ps;
+  if (l && typeof l === 'object') ps = [[String(l.label || ''), null], [String(l.value ?? ''), l.col || '#FFD23F'], [String(l.rest || ''), null]];
+  else {
+    const str = clean(String(l)).toUpperCase();
+    const m = str.match(/^(.*?)([+–-]\s?\d[\d,.]*%?)(.*)$/) || str.match(/^(.*?)(\d[\d,.]*%)(.*)$/);
+    if (m) { const v = m[2]; const col = v[0] === '+' ? '#3DFF8F' : v[0] === '–' || v[0] === '-' ? '#FF4D66' : '#FFB020'; ps = [[m[1], null], [v, col], [m[3], null]]; } else ps = [[str, null]];
+  }
+  return ps.map(([a, c]) => [clean(a).trim(), c]).filter(([a]) => a);   // SVG drops edge spaces: parts are trimmed, gaps added when drawn
 }
-const LBS = 23, LVS2 = 30;
+const LBS = 23, LVS2 = 30, PGAP = 9;
 const partW = (p) => (p[1] ? TW(p[0], LVS2, 'L') : TW(p[0], LBS, 'F', 0.5));
+const partsW = (ps) => ps.reduce((a, p) => a + partW(p), 0) + PGAP * Math.max(0, ps.length - 1);
 function tooltip(o = {}) {
   const { x = 960, y = 540, k = 1, t = 0, s = 1, side = 'up', out = 0 } = o;
   if (k <= 0 || out >= 1) return '';
@@ -685,9 +706,9 @@ function tooltip(o = {}) {
   const lines = (o.lines || []).map(parseLine);
   const TS = 32;
   const chipW = TW(rar.label, 13, 'F', 2) + 26;
-  const lvW = o.level !== undefined ? TW(String(o.level), 22, 'L') + 42 : 0;
-  const lineW = lines.length ? Math.max(...lines.map((ps) => ps.reduce((a, p) => a + partW(p), 0))) : 0;
-  const Wd = Math.max(o.w || 0, 230, 30 + lvW + TW(title, TS, 'L') + 14 + chipW + 16, 44 + lineW);
+  const lvW = o.level !== undefined ? TW(String(o.level), 22, 'L') + 54 : 0;
+  const lineW = lines.length ? Math.max(...lines.map(partsW)) : 0;
+  const Wd = Math.max(o.w || 0, 230, 30 + lvW + TW(title, TS, 'L') + 14 + (enemy ? 30 : 0) + chipW + 16, 50 + lineW);
   const LH = 38;
   const Hd = 16 + 38 + (o.hp !== undefined ? 18 : 0) + 10 + lines.length * LH + 8;
   const dist = o.dist ?? 64, dx = o.dx ?? 0;
@@ -719,14 +740,14 @@ function tooltip(o = {}) {
     c += sheen(bx + 6, by + 4, Wd - 12, Hd - 8, t, 5, seedOf(title));
     let hx = bx + 26;
     if (o.level !== undefined) {
-      c += S.path(para(hx, by + 16, lvW - 10, 30, 8), { fill: th.badge, stroke: th.edge, 'stroke-width': 3 }) + TF('LV', hx + 12, by + 36, 12, th.badgeTx, { 'text-anchor': 'start' }) + TL(String(o.level), hx + 30, by + 40, 22, th.badgeTx, { 'text-anchor': 'start' });
+      c += S.path(para(hx, by + 17, lvW - 12, 30, 8), { fill: th.badge, stroke: th.edge, 'stroke-width': 3 }) + TF('LV', hx + 13, by + 37, 13, th.badgeTx, { 'text-anchor': 'start' }) + TL(String(o.level), hx + 33, by + 41, 23, th.badgeTx, { 'text-anchor': 'start' });
       hx += lvW;
     }
     c += TL(title, hx, by + 46, TS, rar.col === '#DCE6EE' ? th.text : rar.col, { 'text-anchor': 'start', ...outl(5, th.edge) });
     // rarity chip (top right)
     const chx = bx + Wd - 16 - chipW;
     c += S.path(para(chx, by + 18, chipW, 24, 7), { fill: th.edge, stroke: rar.col, 'stroke-width': 2 }) + TF(rar.label, chx + chipW / 2, by + 35, 13, rar.col, { 'letter-spacing': 2 });
-    if (enemy) c += skullIcon(chx - 16, by + 30, 11, rar.col, th.edge);
+    if (enemy) c += skullIcon(chx - 18, by + 29, 12, rar.col, th.edge);
     let ly = by + 62;
     if (o.hp !== undefined) { c += segBar(bx + 26, ly - 4, Wd - 52, 10, o.hp, '#FF3355', { th, t, cell: 14 }); ly += 18; }
     c += S.path(`M${f(bx + 24)} ${f(ly)}H${f(bx + Wd - 22)}`, ln(1.5, th.rim, 0.45));
@@ -737,9 +758,8 @@ function tooltip(o = {}) {
       const yy = ly + 10 + i * LH + 26;
       let lt = '';
       for (const p of ps) {
-        if (!p[0]) continue;
         lt += p[1] ? TL(p[0], lx, yy + 2, LVS2, p[1], { 'text-anchor': 'start', ...outl(5, th.edge) }) : TF(p[0], lx, yy, LBS, th.text, { 'text-anchor': 'start', 'letter-spacing': 0.5 });
-        lx += partW(p);
+        lx += partW(p) + PGAP;
       }
       c += S.g(lt, null, { opacity: f(ease.out(li)) });
     });
@@ -853,7 +873,7 @@ function questMarker(o = {}) {
   // ground ring pulse + glow
   const pu = mod(t * 0.85 + seed, 1);
   g += S.ellipse(0, -6, 26 + 30 * pu, 8 + 9 * pu, { fill: 'none', stroke: col, 'stroke-width': f(3.5 * (1 - pu)), opacity: f(0.8 * (1 - pu) * clamp(k * 2, 0, 1)) });
-  if (o.glow !== false) g += S.circle(0, base - h * 0.5 + bob, 86, { fill: col === QGOLD ? 'url(#hdGlowG)' : 'url(#hdGlowC)', opacity: f(0.75 + 0.25 * Math.sin(t * 4 + seed)) });
+  if (o.glow !== false) g += glow(0, base - h * 0.5 + bob, 80, 80, col, 0.8 + 0.2 * Math.sin(t * 4 + seed));
   let glyph;
   if (kind === '?') glyph = TL('?', 0, 0, 132, col, { ...outl(13, INK) }) + TL('?', -3, -4, 132, 'none', { stroke: '#FFFFFF', 'stroke-width': 3, opacity: 0.35 });
   else glyph = bangGlyph(0, -h * 0.92, h, col, 7);
@@ -876,7 +896,7 @@ function questToast(o = {}) {
   const th = theme(o.theme || (kind === 'failed' ? 'boss' : 'gold'));
   const title = String(o.title || 'Find Max');
   const TS = 54;
-  const rw = o.reward ? TW(o.reward, 30, 'L') + 44 : 0;
+  const rw = o.reward ? TW(o.reward, 30, 'L') + 62 : 0;
   const Wd = Math.max(560, 150 + TW(title, TS, 'L') + (rw ? rw + 30 : 0) + 30), Hd = o.sub ? 138 : 118;
   const left = -Wd / 2, top = -Hd / 2;
   const kD = ease.outBack(seg(k, 0, 0.45)), kO = seg(k, 0.1, 0.6), kC = seg(k, 0.45, 1);
@@ -896,7 +916,7 @@ function questToast(o = {}) {
   if (o.reward) {
     const rk = ease.outBack(seg(kC, 0.5, 0.9));
     const rx = -left - 24 - rw / 2;
-    if (rk > 0) c += S.g(S.path(para(-rw / 2, -24, rw, 48, 12), ol('#2A1A00', 4, th.edge)) + S.path(para(-rw / 2 + 3, -21, rw - 6, 42, 10), { fill: 'none', stroke: QGOLD, 'stroke-width': 2.5 }) + S.path(star5(-rw / 2 + 24, 0, 11), { fill: QGOLD }) + TL(o.reward, 10, 11, 30, QGOLD), `translate(${f(rx)} 0) scale(${f(rk)})`);
+    if (rk > 0) c += S.g(S.path(para(-rw / 2, -24, rw, 48, 12), ol('#2A1A00', 4, th.edge)) + S.path(para(-rw / 2 + 3, -21, rw - 6, 42, 10), { fill: 'none', stroke: QGOLD, 'stroke-width': 2.5 }) + S.path(star5(-rw / 2 + 26, 0, 12), { fill: QGOLD }) + TL(o.reward, -rw / 2 + 44, 11, 30, QGOLD, { 'text-anchor': 'start' }), `translate(${f(rx)} 0) scale(${f(rk)})`);
   }
   if (kO < 1) c += S.path(cham(left, top, Wd, Hd, 20), { fill: '#FFFFFF', opacity: f(0.7 * (1 - seg(kO, 0.55, 1))) });
   let g = S.g(c, `scale(${f(uf.sx)} ${f(uf.sy)})`);
@@ -954,11 +974,11 @@ function questComplete(o = {}) {
       if (m) { const n = Number(m[2].replace(/,/g, '')); txt = `${m[1]}${Math.round(n * ease.out(seg(k, 0.6, 0.95)))} ${m[3]}`.trim(); }
       const isHP = /HP|HEALTH/i.test(reward);
       const rc = isHP ? '#3DFF8F' : QGOLD;
-      const rw = TW(String(reward), 60, 'L') + 70;
+      const tw_ = TW(String(reward), 60, 'L'), rw = tw_ + 110;
       const sc = rk < 0.5 ? lerp(2.4, 1, ease.in(rk * 2)) : 1 + 0.12 * Math.sin((rk - 0.5) * 2 * Math.PI * 2) * (1 - rk);
       let rc_ = S.path(para(-rw / 2, -40, rw, 80, 18), ol(isHP ? '#04180E' : '#1E1404', 5, th.edge)) + S.path(para(-rw / 2 + 4, -36, rw - 8, 72, 16), { fill: 'none', stroke: rc, 'stroke-width': 3 });
-      rc_ += isHP ? S.path(`M-${f(rw / 2 - 36)} 0h-0`, '') + S.g(S.path('M-9 -24H9V-9H24V9H9V24H-9V9H-24V-9H-9Z', ol(rc, 4, th.edge)), `translate(${f(-rw / 2 + 42)} 0) scale(0.8)`) : S.path(star5(-rw / 2 + 42, 0, 20), ol(rc, 4, th.edge));
-      rc_ += TL(txt, 18, 21, 60, rc, outl(7, th.edge));
+      rc_ += isHP ? S.path(heartD(-rw / 2 + 50, -2, 19), ol('#FF5F7A', 4, th.edge)) : S.path(star5(-rw / 2 + 50, 0, 21), ol(rc, 4, th.edge));
+      rc_ += TL(txt, -rw / 2 + 82, 21, 60, rc, { 'text-anchor': 'start', ...outl(7, th.edge) });
       g += S.g(rc_, `translate(0 ${f(Hd / 2 + 62)}) scale(${f(sc)})`, { opacity: f(clamp(rk * 4, 0, 1)) });
       g += impactTicks(0, Hd / 2 + 62, rw * 0.6, 70, seg(k, 0.66, 0.95), rc, 8);
     }
@@ -1011,7 +1031,7 @@ function epicQuest(o = {}) {
   if (k <= 0 || out >= 1) return '';
   const th = theme({ glass: '#1E0A30', op: 0.9, rim: '#C58BFF', hi: '#EBD8FF', edge: '#0E0418', text: '#FFFFFF', label: '#FFD84A', badge: '#FFC83A', badgeTx: '#2A1A00' });
   const title = String(o.title || 'BUILD THE BIGGEST PILLOW FORT EVER').toUpperCase();
-  const lines = R.wrap(title, 760, 50, 'L');
+  const lines = wrapBal(title, 760, 50);
   const Wd = Math.max(...lines.map((l) => TW(l, 50, 'L'))) + 120, Hd = 96 + lines.length * 56 + 70;
   const left = -Wd / 2, top = -Hd / 2;
   const kD = ease.outBack(seg(k, 0, 0.5)), kO = seg(k, 0.08, 0.55), kC = seg(k, 0.45, 1);
@@ -1039,6 +1059,18 @@ function epicQuest(o = {}) {
   const op = 1 - clamp(out, 0, 1);
   return S.g(g, `translate(${f(x)} ${f(y - 120 * (1 - kD) - 50 * ease.in(out))}) scale(${f(s)})`, op < 1 ? { opacity: f(op) } : {});
 }
+// balanced word wrap (Lilita): the fewest lines that fit maxW, with the line widths as even as possible
+function wrapBal(text, maxW, size) {
+  const words = String(text).split(/\s+/).filter(Boolean);
+  const n = R.wrap(text, maxW, size, 'L').length;
+  if (n <= 1 || words.length < 2) return [String(text)];
+  if (n === 2) {
+    let best = null;
+    for (let i = 1; i < words.length; i++) { const a = words.slice(0, i).join(' '), b = words.slice(i).join(' '); const m = Math.max(TW(a, size, 'L'), TW(b, size, 'L')); if (!best || m < best[0]) best = [m, [a, b]]; }
+    return best[1];
+  }
+  return R.wrap(text, maxW, size, 'L');
+}
 const pillowFort = (o = {}) => epicQuest({ title: 'BUILD THE BIGGEST PILLOW FORT EVER', reward: '+100 XP', ...o });
 
 // ================================================================= 4. THE HERO'S XP
@@ -1047,12 +1079,12 @@ const XP_FLY = 1.0;   // xpPop arrives at its target this many seconds after age
 // the very bottom of the frame (under the captions' baseline). value = progress inside the current level. roll + from: the fill
 // slides from `from` (with a white leading ghost). gain: a gold pulse when XP arrives. levelBump: the level hexagon pops.
 function xpBar(o = {}) {
-  const { x = 960, y = 1050, w = 1800, k = 1, t = 0, gain = 0, s = 1 } = o;
+  const { x = 960, y = 1050, w = 1640, k = 1, t = 0, gain = 0, s = 1 } = o;
   if (k <= 0) return '';
   const th = theme('gold');
   let v = clamp(o.value ?? 0.35, 0, 1), ghost;
   if (o.roll !== undefined) { const rp = rollPair(o.from ?? 0, v, clamp(o.roll, 0, 1)); ghost = rp.fast; v = rp.slow; }
-  const bx = -w / 2 + 70, bw = w - 70 - 150;
+  const bx = -w / 2 + 70, bw = w - 70 - 40 - (TW(o.text ?? '100%', 28, 'L') + 50);
   let g = '';
   const gl = bumpK(gain);
   // bar
@@ -1070,8 +1102,15 @@ function xpBar(o = {}) {
   g += S.g(hx, `translate(${f(-w / 2 + 30)} -14) scale(${f(lb)})`);
   // XP label at the right end
   const txt = o.text ?? `${Math.round(v * 100)}%`;
-  g += TF('XP', w / 2 - 128, 9, 20, '#FFD98A', { 'text-anchor': 'start', 'letter-spacing': 2, ...outl(4, th.edge) }) + TL(txt, w / 2 - 4, 11, 28, gl > 0.3 ? '#FFFFFF' : '#FFE9A0', { 'text-anchor': 'end', ...outl(5, th.edge) });
+  const txW = TW(txt, 28, 'L');
+  g += TF('XP', w / 2 - 4 - txW - 10, 9, 20, '#FFD98A', { 'text-anchor': 'end', 'letter-spacing': 2, ...outl(4, th.edge) }) + TL(txt, w / 2 - 4, 11, 28, gl > 0.3 ? '#FFFFFF' : '#FFE9A0', { 'text-anchor': 'end', ...outl(5, th.edge) });
   return S.g(g, `translate(${f(x)} ${f(y + 90 * (1 - ease.out(k)))}) scale(${f(s)})`);
+}
+// xpBarAt({ x, y, w, value, text }) -> [x, y]: the end of the XP fill for a bar drawn with the same options (the target for xpPop)
+function xpBarAt(o = {}) {
+  const { x = 960, y = 1050, w = 1640, s = 1 } = o;
+  const bw = w - 70 - 40 - (TW(o.text ?? '100%', 28, 'L') + 50);
+  return [x + (-w / 2 + 70 + bw * clamp(o.value ?? 0.35, 0, 1)) * s, y];
 }
 // xpPop({ x, y, age, amount = 10, to = [x, y] of the XP bar, text, col, s }) — "+10 XP" pops over a person (0-0.2 s), hangs, then flies in an
 // arc to `to` (default: the XP bar's middle) shrinking with a sparkle trail, arriving at XP_FLY (1.0 s) with a small burst (gone at 1.3 s).
@@ -1108,7 +1147,7 @@ function levelUp(o = {}) {
   const a = seg(k, 0, 0.2);
   g += rays(0, 0, 18, 600, '#FFE88A', 0.26 * a, t * 25, 80);
   g += S.circle(0, 0, 60 + 520 * ease.out(seg(k, 0, 0.4)), { fill: 'none', stroke: '#FFFFFF', 'stroke-width': f(22 * (1 - seg(k, 0, 0.4))), opacity: f(1 - seg(k, 0, 0.4)) });
-  g += S.circle(0, 0, 220, { fill: 'url(#hdGlowG)', opacity: f(a) });
+  g += glow(0, 0, 240, 240, '#FFD84A', a);
   // rising chevrons
   for (let i = 0; i < 6; i++) {
     const u = mod(t * 0.8 + i / 6, 1), cx = (i % 2 ? 1 : -1) * (300 + 60 * hash(i)), cy = 120 - u * 320;
@@ -1205,4 +1244,655 @@ function friendshipPop(o = {}) {
   return S.g(g, `translate(${f(x)} ${f(y + rise)}) scale(${f(s)})`, op < 1 ? { opacity: f(op) } : {});
 }
 
-//@@PART3
+
+// ================================================================= 6. UPDATE / BOOT / FRAME / SYSTEM
+// updateWindow({ k, t, scroll 0..1, accept 0..1, install 0..1, x = 960, y = 530, s, glitch, pointer: { x, y, press } (absolute px) })
+// "Update available: Reality HUD v1.0" — the terms box ("PAGE 1 / 4,812") scrolls as `scroll` goes 0 -> 1 (the page counter rolls,
+// lines streak, the tiny scrollbar thumb flies down), ACCEPT pulses; `accept` presses it (squash, flash, ripple, "ACCEPTED");
+// `install` swaps the buttons for "INSTALLING... REALITY" + progress. Page one (readable only at scroll ≈ 0) mentions the X. ~1160 x 740 at s 1.
+function updateWindow(o = {}) {
+  const { k = 1, t = 0, scroll = 0, accept = 0, install = 0, x = 960, y = 530, s = 1, glitch = 0 } = o;
+  if (k <= 0) return '';
+  const th = theme('cyan');
+  const Wd = 1160, Hd = 740, left = -Wd / 2, top = -Hd / 2;
+  const kO = seg(k, 0, 0.6), kC = seg(k, 0.45, 1), uf = unfold(kO);
+  let c = panel(left, top, Wd, Hd, th, { c: 30, br: 40, scan: true });
+  // title bar
+  c += S.path(`M${f(left + 30)} ${f(top)}H${f(-left)}V${f(top + 62)}H${f(left)}V${f(top + 30)}Z`, { fill: th.edge, opacity: 0.6 });
+  c += eyeLogo(left + 52, top + 32, 13, th.rim, t) + TF('SYSTEM UPDATE', left + 84, top + 41, 22, th.label, { 'text-anchor': 'start', 'letter-spacing': 5 });
+  c += closeX({ x: -left - 38, y: top + 31, t, s: 0.8, hint: false });   // it was there all along
+  const cc = (svg, a, b) => { const u = seg(kC, a, b); return u > 0 ? S.g(svg, `translate(${f(-24 * (1 - ease.out(u)))} 0)`, { opacity: f(u) }) : ''; };
+  // header
+  const ringR = 78;
+  let hd = glow(left + 140, top + 178, ringR, ringR, th.rim, 0.9) + S.circle(left + 140, top + 178, ringR, { fill: 'none', stroke: th.rim, 'stroke-width': 3, 'stroke-dasharray': '22 12', transform: `rotate(${f(t * 40)} ${f(left + 140)} ${f(top + 178)})` });
+  hd += eyeLogo(left + 140, top + 178, 46, th.rim, t);
+  c += cc(hd, 0, 0.4);
+  c += cc(TF('UPDATE AVAILABLE', left + 250, top + 132, 24, '#FFD21F', { 'text-anchor': 'start', 'letter-spacing': 5 }), 0.05, 0.4);
+  c += cc(TL('Reality HUD v1.0', left + 246, top + 212, 82, th.text, { 'text-anchor': 'start', ...outl(9, th.edge) }), 0.1, 0.45);
+  c += cc(TF("See everyone's stats. In real life.", left + 252, top + 256, 27, th.label, { 'text-anchor': 'start' }), 0.15, 0.5);
+  // terms box
+  const tx = left + 50, ty = top + 290, tw = Wd - 100, thh = 292;
+  let tb = S.path(cham(tx, ty, tw, thh, 14), { fill: '#000', 'fill-opacity': 0.45, stroke: th.rim, 'stroke-width': 1.5, 'stroke-opacity': 0.5 });
+  const pages = 4812, sc = ease.inOut(clamp(scroll, 0, 1)), page = Math.max(1, Math.round(1 + (pages - 1) * sc));
+  tb += TF('TERMS & CONDITIONS', tx + 26, ty + 36, 20, th.label, { 'text-anchor': 'start', 'letter-spacing': 3 });
+  tb += TL(`PAGE ${page.toLocaleString('en-US')} / ${pages.toLocaleString('en-US')}`, tx + tw - 64, ty + 38, 26, page > 1 ? '#FFD21F' : th.text, { 'text-anchor': 'end' });
+  // scrolling text (pattern) inside a clip
+  const rx = tx + 24, ry = ty + 54, rw = tw - 100, rh = thh - 72;
+  const cid = S.uid('hdTc');
+  const speed = scroll > 0.005 && scroll < 0.995 ? bumpK(clamp(scroll, 0, 1)) : 0;
+  const off = mod(sc * 44 * 900, 44);
+  let inner = '';
+  if (scroll < 0.02) {   // page one, readable
+    const l1 = ['1.1  Reality HUD shows the stats of everyone around you.', '1.2  To switch the HUD off, press the little X in the corner.', '1.3  Stats are not the whole truth. Results may vary.'];
+    l1.forEach((l, i) => { inner += TF(l, rx, ry + 30 + i * 36 - sc * 2000, 20, i === 1 ? '#FFFFFF' : th.label, { 'text-anchor': 'start', opacity: i === 1 ? 0.9 : 0.75 }); });
+    inner += S.g(S.rect(0, 0, rw, 120, 0, { fill: 'url(#hdText)' }), `translate(${f(rx)} ${f(ry + 118 - sc * 2000)})`);
+  } else {
+    inner += S.g(S.rect(0, -44, rw, rh + 120, 0, { fill: 'url(#hdText)' }), `translate(${f(rx)} ${f(ry - off)}) scale(1 ${f(1 + 2.5 * speed)})`);
+    if (speed > 0.05) inner += S.rect(rx, ry, rw, rh, 0, { fill: th.rim, opacity: f(0.08 * speed) });
+  }
+  tb += S.clipDef(cid, S.rect(rx, ry, rw, rh)) + S.g(inner, null, { 'clip-path': `url(#${cid})` });
+  // scrollbar: tiny thumb (4,812 pages) flying down, with a streak
+  const sbx = tx + tw - 40, sby = ry, sbh = rh;
+  tb += S.rect(sbx, sby, 14, sbh, 7, { fill: '#000', opacity: 0.5, stroke: th.rim, 'stroke-width': 1.2, 'stroke-opacity': 0.5 });
+  const thY = sby + 2 + (sbh - 16) * sc;
+  if (speed > 0.05) tb += S.rect(sbx + 3, Math.max(sby, thY - 120 * speed), 8, 120 * speed, 4, { fill: th.rim, opacity: f(0.4 * speed) });
+  tb += S.rect(sbx + 1, thY, 12, 12, 4, { fill: '#FFFFFF', stroke: th.rim, 'stroke-width': 2 });
+  c += cc(tb, 0.2, 0.6);
+  // buttons / install
+  const by = top + 660;
+  if (install > 0) {
+    const ik = ease.out(seg(install, 0, 0.12));
+    const pct = Math.round(100 * ease.inOut(seg(install, 0.05, 0.95)));
+    let ib = TL(pct >= 100 ? 'INSTALL COMPLETE' : 'INSTALLING... REALITY', left + 60, by - 22, 40, th.text, { 'text-anchor': 'start', ...outl(6, th.edge) });
+    ib += TL(`${pct}%`, -left - 60, by - 22, 40, '#FFD21F', { 'text-anchor': 'end', ...outl(6, th.edge) });
+    ib += segBar(left + 60, by - 2, Wd - 120, 30, pct / 100, th.rim, { th, t, cell: 26 });
+    ib += R.spinner(left + 30, by - 34, 12, t, th.rim);
+    c += S.g(ib, null, { opacity: f(ik) });
+  } else {
+    const btn = (bx, label, col, txtCol, pressK, glow) => {
+      const bw = 330, bh = 82;
+      const sq = 1 - 0.12 * bumpK(seg(pressK, 0, 0.35));
+      let b = '';
+      if (glow) b += S.path(cham(-bw / 2 - 10, -bh / 2 - 10, bw + 20, bh + 20, 22), { fill: 'none', stroke: col, 'stroke-width': 4, opacity: f(0.25 + 0.25 * Math.sin(t * 5)) });
+      b += S.path(cham(-bw / 2 + 4, -bh / 2 + 7, bw, bh, 18), { fill: '#000', opacity: 0.3 }) + S.path(cham(-bw / 2, -bh / 2, bw, bh, 18), { fill: col, stroke: th.edge, 'stroke-width': 5 });
+      b += S.path(`M${f(-bw / 2 + 24)} ${f(-bh / 2 + 10)}H${f(bw / 2 - 12)}`, ln(5, '#FFFFFF', 0.35));
+      b += TL(label, 0, 15, 42, txtCol, label === 'ACCEPTED' ? {} : {});
+      if (label === 'ACCEPTED') b += S.path(checkD(-bw / 2 + 44, 0, 18), ln(7, txtCol));
+      const fl = seg(pressK, 0.15, 0.5);
+      if (fl > 0 && fl < 1) b += S.path(cham(-bw / 2, -bh / 2, bw, bh, 18), { fill: '#FFFFFF', opacity: f(0.8 * (1 - fl)) });
+      const rp = seg(pressK, 0.1, 0.75);
+      if (rp > 0 && rp < 1) b += S.path(cham(-bw / 2 - 60 * rp, -bh / 2 - 40 * rp, bw + 120 * rp, bh + 80 * rp, 18 + 20 * rp), { fill: 'none', stroke: col, 'stroke-width': f(8 * (1 - rp)), opacity: f(1 - rp) });
+      return S.g(b, `translate(${f(bx)} ${f(by)}) scale(${f(sq)})`);
+    };
+    const done = accept > 0.35;
+    c += cc(btn(-200, 'DECLINE', '#2A3E4E', '#9FB6C6', 0, false) + btn(200, done ? 'ACCEPTED' : 'ACCEPT', done ? '#3DFF8F' : th.rim, th.edge, accept, !done), 0.35, 0.8);
+  }
+  if (kO < 1) c += S.path(cham(left, top, Wd, Hd, 30), { fill: '#FFFFFF', opacity: f(0.6 * (1 - seg(kO, 0.55, 1))) });
+  let g = S.g(c, `scale(${f(uf.sx)} ${f(uf.sy)})`);
+  if (uf.line > 0) g += S.path(`M${f(left * uf.sx)} 0H${f(-left * uf.sx)}`, ln(8, '#FFFFFF', uf.line));
+  g = glitchWrap(g, t, glitch, 11, 14);
+  let outS = S.g(g, `translate(${f(x)} ${f(y)}) scale(${f(s)})`);
+  if (o.pointer) outS += require('./gameui').pointer(o.pointer.x, o.pointer.y, o.pointer.s ?? 1, o.pointer.press || 0);
+  return outS;
+}
+// absolute centre of the ACCEPT button for a window drawn with the same x, y, s (aim a pointer at it)
+const updateAcceptAt = ({ x = 960, y = 530, s = 1 } = {}) => [x + 200 * s, y + (-370 + 660) * s];
+
+// bootSequence(t, t0, { dur = 3.4, k = 1, lines }) — full-frame "LOADING REALITY..." overlay over the (visible) room, starting at t0:
+// scan beam + scanlines, the percent stalls at 37 and 99 then hits 100 at ~0.62·dur, boot log types in the bottom-left
+// ("> self-scan ... ???"), white flash + "REALITY HUD v1.0 · ONLINE", the HUD frame assembles in the corners, overlay fades.
+// It draws hudFrame() itself until t0 + dur; from then on draw H.hudFrame({ t }) yourself. Returns '' outside [t0, t0 + dur + 0.6].
+const BOOT_LINES = ['> REALITY HUD v1.0', '> calibrating eyeballs ........ OK', '> scanning household .......... 4 FOUND', '> loading stats.dll ........... OK', '> spawning quests ............. OK', '> self-scan ................... ???'];
+function bootSequence(t, t0, o = {}) {
+  const dur = o.dur ?? 3.4, u = t - t0;
+  if (u < 0 || u > dur + 0.6) return '';
+  const th = theme('cyan');
+  const p100 = dur * 0.62;
+  const fade = seg(u, dur - 0.4, dur + 0.6);
+  const vis = (1 - fade) * (o.k ?? 1);
+  let g = '';
+  g += S.rect(0, 0, W, H, 0, { fill: '#03121E', opacity: f(0.42 * vis) }) + S.rect(0, 0, W, H, 0, { fill: 'url(#hdScanD)', opacity: f(0.6 * vis) });
+  // scan beams: boot sweep, then the reveal sweep at 100 %
+  const beam = (v, op) => {
+    if (v <= 0 || v >= 1) return '';
+    const by = lerp(-40, H + 40, ease.inOut(v));
+    let b = '';
+    [[170, 0.05], [110, 0.06], [60, 0.08], [24, 0.12]].forEach(([hh, a]) => { b += S.rect(0, by - hh, W, hh, 0, { fill: '#3BE8FF', opacity: f(a * op) }); });
+    return b + S.rect(0, by - 3, W, 6, 0, { fill: '#E8FFFF', opacity: f(op) });
+  };
+  g += beam(seg(u, 0, 0.7), 0.8 * vis) + beam(seg(u, p100, p100 + 0.6), 1);
+  // centre: LOADING REALITY... + percent + bar
+  const pct = Math.round(u < p100 ? (() => { const v = u / p100; return v < 0.3 ? lerp(0, 37, ease.out(v / 0.3)) : v < 0.42 ? 37 : v < 0.7 ? lerp(37, 84, ease.inOut((v - 0.42) / 0.28)) : v < 0.84 ? lerp(84, 99, ease.out((v - 0.7) / 0.14)) : 99; })() : 100);
+  const online = u >= p100;
+  const ck = seg(u, 0.1, 0.4);
+  if (ck > 0 && vis > 0) {
+    let c = '';
+    if (!online) {
+      const dots = '.'.repeat(1 + (Math.floor(u * 4) % 3));
+      c += TL('LOADING REALITY' + dots, -330, -40, 76, th.text, { 'text-anchor': 'start', ...outl(9, th.edge) });
+      c += TL(`${pct}%`, 0, 110, 120, pct >= 99 ? '#FFD21F' : th.rim, outl(11, th.edge));
+      c += segBar(-380, 0, 760, 30, pct / 100, th.rim, { th, t, cell: 26 });
+    } else {
+      const ok = ease.outBack(seg(u, p100, p100 + 0.3));
+      c += S.g(eyeLogo(-330, -60, 40, '#3DFF8F', t) + TL('REALITY HUD v1.0', -260, -40, 76, th.text, { 'text-anchor': 'start', ...outl(9, th.edge) }) + TL('ONLINE', 0, 70, 96, '#3DFF8F', outl(10, th.edge)) + S.path(checkD(-210, 38, 32), ln(12, '#3DFF8F')), `scale(${f(ok)})`);
+    }
+    g += S.g(c, `translate(960 ${f(470 + 30 * (1 - ease.out(ck)))})`, { opacity: f(ck * vis) });
+  }
+  // boot log (bottom-left)
+  const lines = o.lines || BOOT_LINES;
+  let lg = '';
+  lines.forEach((l, i) => {
+    const la = 0.15 + i * (p100 * 0.8 / lines.length);
+    const lu = seg(u, la, la + 0.25);
+    if (lu <= 0) return;
+    const shown = l.slice(0, Math.ceil(l.length * lu));
+    const last = i === lines.length - 1;
+    lg += TF(shown, 70, 700 + i * 34, 24, last ? '#FFD21F' : i === 0 ? th.text : th.label, { 'text-anchor': 'start', 'font-family': 'Fredoka, monospace', ...outl(4, th.edge) });
+  });
+  g += S.g(lg, null, { opacity: f(vis) });
+  // flash at 100 %
+  const fl = seg(u, p100, p100 + 0.35);
+  if (fl > 0 && fl < 1) g += S.rect(0, 0, W, H, 0, { fill: '#E8FFFF', opacity: f(0.55 * (1 - fl)) });
+  if (u < dur) g += hudFrame({ t, k: seg(u, p100 + 0.05, p100 + 0.75), clock: o.clock });
+  return g;
+}
+
+// hudFrame({ t, k, glitch, clock = '7:02 AM', day = 'MON', minimap = true, dots, quest, questSub, closeX = {} | false, theme, label })
+// The persistent chrome while the HUD is ON: corner brackets, "REALITY HUD v1.0 · LIVE" (top-left), clock (top-right), the minimap
+// radar with a sweep (people = dots, quests = yellow), an optional quest tracker and — subtle, top-right corner — the tiny X
+// (closeX options: { highlight, press, hint }). k assembles it (~0.7 s). Screen space; draw it last (after the world, before captions).
+function hudFrame(o = {}) {
+  const { t = 0, k = 1, glitch = 0, clock = '7:02 AM', day = 'MON', minimap = true } = o;
+  if (k <= 0) return '';
+  const th = theme(o.theme || 'cyan');
+  let g = '';
+  // corner brackets fly in
+  const corners = [[26, 26, 1, 1], [W - 26, 26, -1, 1], [26, H - 26, 1, -1], [W - 26, H - 26, -1, -1]];
+  corners.forEach(([cx, cy, sx, sy], i) => {
+    const ck = ease.outBack(seg(k, i * 0.07, 0.45 + i * 0.07));
+    if (ck <= 0) return;
+    const ox = -sx * 180 * (1 - ck), oy = -sy * 180 * (1 - ck), L = 92;
+    const d = `M${f(cx + ox)} ${f(cy + oy + sy * L)}V${f(cy + oy)}H${f(cx + ox + sx * L)}`;
+    let ticks = '';
+    for (let j = 1; j <= 3; j++) ticks += `M${f(cx + ox + sx * (L + 10 + j * 12))} ${f(cy + oy)}h${f(sx * 6)}M${f(cx + ox)} ${f(cy + oy + sy * (L + 10 + j * 12))}v${f(sy * 6)}`;
+    g += S.path(d, { fill: 'none', stroke: th.edge, 'stroke-width': 10, 'stroke-linecap': 'square', opacity: 0.6 }) + S.path(d, { fill: 'none', stroke: th.rim, 'stroke-width': 5, 'stroke-linecap': 'square' }) + S.path(ticks, ln(3, th.rim, 0.7));
+  });
+  const lk = seg(k, 0.25, 0.75);
+  if (lk > 0) {
+    // top-left: logo + label + LIVE
+    const lbl = String(o.label || 'REALITY HUD');
+    let tl = eyeLogo(66, 66, 15, th.rim, t) + TL(glitch > 0 ? scramble(lbl, t, glitch, 3) : lbl, 98, 76, 30, th.text, { 'text-anchor': 'start', ...outl(5, th.edge) });
+    const lx = 98 + TW(lbl, 30, 'L') + 10;
+    tl += TF('v1.0', lx, 76, 17, th.label, { 'text-anchor': 'start', ...outl(4, th.edge) });
+    const rec = Math.floor(t * 1.6) % 2 === 0;
+    tl += S.circle(108, 100, 6, { fill: rec ? '#FF3355' : '#5A1424', stroke: th.edge, 'stroke-width': 2 }) + TF('LIVE', 120, 106, 15, th.label, { 'text-anchor': 'start', 'letter-spacing': 2, ...outl(3.5, th.edge) });
+    for (let i = 0; i < 4; i++) tl += S.rect(170 + i * 9, 106 - 6 - i * 4, 6, 6 + i * 4, 1, { fill: th.rim, stroke: th.edge, 'stroke-width': 1.5, opacity: i < 3 ? 1 : 0.35 });
+    // top-right: clock pill
+    const cw = TW(clock, 30, 'L') + TW(day, 15, 'F', 2) + 46;
+    let tr_ = panel(1832 - cw, 28, cw, 46, th, { c: 10, br: 12, shadow: false, scan: false });
+    tr_ += TF(day, 1832 - cw + 18, 57, 15, th.label, { 'text-anchor': 'start', 'letter-spacing': 2 }) + TL(clock, 1818, 62, 30, th.text, { 'text-anchor': 'end' });
+    g += S.g(tl + tr_, null, { opacity: f(lk) });
+  }
+  // minimap radar
+  if (minimap) {
+    const mk = ease.outBack(seg(k, 0.35, 0.85));
+    if (mk > 0) {
+      const mx = 1752, my = 176, r = 74;
+      let m = S.circle(0, 0, r, { fill: th.glass, 'fill-opacity': th.op, stroke: th.edge, 'stroke-width': 7 }) + S.circle(0, 0, r - 5, { fill: 'none', stroke: th.rim, 'stroke-width': 2.5 });
+      m += S.circle(0, 0, r * 0.62, { fill: 'none', stroke: th.rim, 'stroke-width': 1.2, opacity: 0.4 }) + S.circle(0, 0, r * 0.3, { fill: 'none', stroke: th.rim, 'stroke-width': 1.2, opacity: 0.4 });
+      m += S.path(`M${-r + 8} 0H${r - 8}M0 ${-r + 8}V${r - 8}`, ln(1.2, th.rim, 0.35));
+      const sa = t * 2.2, sw = 0.9;
+      m += S.path(`M0 0L${f(Math.cos(sa - sw) * (r - 6))} ${f(Math.sin(sa - sw) * (r - 6))}A${r - 6} ${r - 6} 0 0 1 ${f(Math.cos(sa) * (r - 6))} ${f(Math.sin(sa) * (r - 6))}Z`, { fill: th.rim, opacity: 0.2 }) + S.path(`M0 0L${f(Math.cos(sa) * (r - 6))} ${f(Math.sin(sa) * (r - 6))}`, ln(2.5, th.rim, 0.8));
+      const dots = o.dots || [[-0.4, -0.3, '#FFD21F'], [0.35, -0.5, '#FFFFFF'], [0.55, 0.2, '#FFFFFF'], [-0.2, 0.5, '#FF4D66'], [0.1, -0.15, '#FFFFFF']];
+      dots.forEach(([dx, dy, col], i) => {
+        const a = Math.atan2(dy, dx), d = Math.hypot(dx, dy);
+        const lit = 0.45 + 0.55 * Math.max(0, Math.cos(mod(sa - a, Math.PI * 2)) ** 6);
+        m += S.circle(dx * (r - 14) + Math.sin(t * 0.7 + i) * 3, dy * (r - 14), col === '#FFD21F' ? 6 : 4.5, { fill: col, stroke: th.edge, 'stroke-width': 2, opacity: f(lit) });
+        if (d < 0) m += '';
+      });
+      m += S.path('M0 -11L8 8L0 3L-8 8Z', { fill: th.rim, stroke: th.edge, 'stroke-width': 2.5, 'stroke-linejoin': 'round' });
+      m += TF('N', 0, -r + 20, 13, th.label);
+      g += S.g(m, `translate(${mx} ${my}) scale(${f(mk)})`);
+    }
+  }
+  // quest tracker under the minimap
+  if (o.quest) {
+    const qk = seg(k, 0.5, 1);
+    const qw = Math.max(250, TW(o.quest, 26, 'L') + 70);
+    let q = panel(1832 - qw, 268, qw, o.questSub ? 82 : 58, theme('gold'), { c: 10, br: 12, shadow: false });
+    q += S.path(diamondD(1832 - qw + 24, 297, 9, 11), { fill: '#FFD21F', stroke: '#120A00', 'stroke-width': 2 });
+    q += TL(glitch > 0 ? scramble(o.quest, t, glitch, 5) : o.quest, 1832 - qw + 42, 306, 26, '#FFF8E6', { 'text-anchor': 'start' });
+    if (o.questSub) q += TF(glitch > 0 ? scramble(o.questSub, t, glitch, 6) : o.questSub, 1832 - qw + 42, 334, 17, '#FFD07A', { 'text-anchor': 'start', 'letter-spacing': 1 });
+    g += S.g(q, `translate(${f(60 * (1 - ease.out(qk)))} 0)`, { opacity: f(qk) });
+  }
+  if (o.closeX !== false) g += closeX({ t, k: seg(k, 0.6, 1), ...(o.closeX || {}) });
+  return glitch > 0 ? hudGlitch(g, t, glitch, { seed: 21 }) : g;
+}
+
+// systemMsg({ k, t, text, sub, theme 'info' | 'warn' | 'error' | 'ok' | 'off', icon, x = 960, y = 130, s, out, glitch, type, w })
+// The SYSTEM voice as a HUD pop-up ("Installing... reality.", "Warning. Too many players. HUD overload.", "Pet stats enabled.",
+// "Reality HUD... off."). k 0..1 (~0.5 s) unfolds it; `type` 0..1 types the text (default follows k); out folds it away.
+const SYS = { info: ['cyan', 'info'], warn: ['warn', 'warn'], error: ['error', 'warn'], ok: ['green', 'check'], off: ['cold', 'power'] };
+function systemMsg(o = {}) {
+  const { k = 1, t = 0, x = 960, y = 130, s = 1, out = 0, glitch = 0 } = o;
+  if (k <= 0 || out >= 1) return '';
+  const [thn, ic] = SYS[o.theme || 'info'] || SYS.info;
+  const th = theme(thn);
+  const text = String(o.text || 'SYSTEM MESSAGE');
+  const TS = 46;
+  const Wd = Math.max(o.w || 0, 480, 130 + TW(text, TS, 'L') + 44, o.sub ? 130 + TW(o.sub, 24, 'F') + 44 : 0), Hd = o.sub ? 122 : 92;
+  const left = -Wd / 2, top = -Hd / 2;
+  const kO = seg(k, 0, 0.6), kC = seg(k, 0.4, 1), uf = unfold(kO);
+  let c = panel(left, top, Wd, Hd, th, { c: 18, br: 24 });
+  if (thn === 'warn' || thn === 'error') c += S.path(para(left + 8, top + 8, 26, Hd - 16, 0), { fill: th.rim, opacity: 0.9 }) + S.path(para(left + 8, top + 8, 26, Hd - 16, 0), { fill: 'url(#hdHaz)' });
+  c += sheen(left + 6, top + 4, Wd - 12, Hd - 8, t, 3.4, 13);
+  // SYSTEM tab
+  c += S.path(para(left + 30, top - 18, 150, 30, 8), ol(th.rim, 3.5, th.edge)) + S.path(diamondD(left + 52, top - 3, 6, 8), { fill: th.edge }) + TF('SYSTEM', left + 112, top + 4, 17, th.edge, { 'letter-spacing': 4 });
+  // icon
+  const ix = left + 76, alarm = (thn === 'warn' || thn === 'error') && Math.floor(t * 4) % 2 === 0;
+  c += S.circle(ix, 0, 32, ol(th.edge, 4, th.rim)) + icon(o.icon || ic, ix, 0, 26, alarm ? '#FFFFFF' : th.rim, t);
+  const ty = seg(o.type ?? kC, 0, 1);
+  let tt = text.slice(0, Math.ceil(text.length * ty));
+  if (glitch > 0) tt = scramble(tt, t, glitch, 7);
+  if (tt) c += TL(tt, left + 128, (o.sub ? -4 : 16), TS, th.text, { 'text-anchor': 'start', ...outl(6, th.edge) });
+  if (ty > 0 && ty < 1) c += S.rect(left + 132 + TW(tt, TS, 'L'), (o.sub ? -40 : -20), 14, 40, 2, { fill: th.rim, opacity: f(Math.floor(t * 8) % 2 ? 1 : 0.3) });
+  if (o.sub) c += TF(glitch > 0 ? scramble(o.sub, t, glitch, 8) : o.sub, left + 130, 38, 24, th.label, { 'text-anchor': 'start', opacity: f(seg(kC, 0.5, 1)) });
+  if (kO < 1) c += S.path(cham(left, top, Wd, Hd, 18), { fill: '#FFFFFF', opacity: f(0.7 * (1 - seg(kO, 0.55, 1))) });
+  let g = S.g(c, `scale(${f(uf.sx)} ${f(uf.sy * (1 - out))})`);
+  if (uf.line > 0 || out > 0) g += S.path(`M${f(left * uf.sx)} 0H${f(-left * uf.sx)}`, ln(6, '#FFFFFF', Math.max(uf.line, out < 1 ? bumpK(out) : 0)));
+  g = glitchWrap(g, t, glitch, 15, 12);
+  return S.g(g, `translate(${f(x)} ${f(y)}) scale(${f(s)})`);
+}
+
+// bossBar({ k, t, name = 'MRS. KRUMP', sub = 'LV 99 · FINAL BOSS', value = 1, from, roll, trail, hit, x = 960, y = 96, w = 1000, s })
+// Top-of-frame boss health bar in the HUD style (red, skull hexagon, hazard notch). hit 0..1 = flash + shake.
+function bossBar(o = {}) {
+  const { k = 1, t = 0, x = 960, y = 96, w = 1000, s = 1 } = o;
+  if (k <= 0) return '';
+  const th = theme('boss');
+  const name = String(o.name || 'MRS. KRUMP').toUpperCase(), sub = o.sub ?? 'LV 99 · FINAL BOSS';
+  let v = clamp(o.value ?? 1, 0, 1), trail = o.trail, ghost;
+  if (o.roll !== undefined) { const rp = rollPair(o.from ?? 1, v, clamp(o.roll, 0, 1)); if (v < (o.from ?? 1)) { v = rp.fast; trail = rp.slow; } else { ghost = rp.fast; v = rp.slow; } }
+  const Hd = 100, left = -w / 2, top = -Hd / 2;
+  const hit = o.hit || 0, sh = hit > 0 && hit < 1 ? (hash(Math.floor(t * 40)) - 0.5) * 16 * (1 - hit) : 0;
+  let c = panel(left, top, w, Hd, th, { c: 18, br: 24 });
+  c += S.path(`M${f(left + 40)} ${f(top + 5)}H${f(-left - 40)}`, { stroke: 'url(#hdHaz)', 'stroke-width': 0 });
+  c += S.path(hexD(left + 56, 0, 40), ol('#C8102E', 5, th.edge)) + skullIcon(left + 56, 2, 24, '#FFF6D8', '#C8102E');
+  c += TL(name, left + 110, top + 44, 36, th.text, { 'text-anchor': 'start', ...outl(5, th.edge) });
+  if (sub) c += richText(sub, -left - 26, top + 40, 20, '#FF9DAD', 'F', 'end', { 'letter-spacing': 2 });
+  c += segBar(left + 110, top + 58, w - 140, 24, v, '#FF3355', { th, t, cell: 24, trail, ghost });
+  if (hit > 0 && hit < 1) c += S.path(cham(left, top, w, Hd, 18), { fill: '#FFFFFF', opacity: f(0.7 * (1 - hit)) });
+  const kk = ease.outBack(seg(k, 0, 1));
+  return S.g(c, `translate(${f(x + sh)} ${f(y - 160 * (1 - kk))}) scale(${f(s)})`, k < 0.3 ? { opacity: f(k / 0.3) } : {});
+}
+
+// pixelBurst({ x, y, age, n = 60 (<= 80), seed, spread, cols, dur = 1.2 }) — the update's pixels fly OUT of the screen into the room
+// (they grow as they come at the camera) — SC03 "the screen flashes, pixels fly into the room".
+function pixelBurst(o = {}) {
+  const { x = 960, y = 540, age = 0, seed = 1, spread = 1, dur = 1.2 } = o;
+  if (age < 0 || age > dur) return '';
+  const n = Math.min(80, o.n ?? 60);
+  const cols = o.cols || ['#3BE8FF', '#FFFFFF', '#7FF4FF', '#FFD21F', '#3BE8FF'];
+  const byCol = {};
+  for (let i = 0; i < n; i++) {
+    const d0 = hash(i * 0.37 + seed) * 0.25;
+    const u = (age - d0) / (dur - d0);
+    if (u <= 0 || u >= 1) continue;
+    const a = hash(i * 1.7 + seed) * Math.PI * 2, v = (500 + 1300 * hash(i * 2.9 + seed)) * spread;
+    const e = ease.out(u);
+    const px = x + Math.cos(a) * v * e, py = y + Math.sin(a) * v * e * 0.75 + 200 * u * u;
+    const sz = 6 + 34 * u * u * (0.5 + hash(i * 4.4 + seed));
+    const c = cols[i % cols.length];
+    byCol[c] = (byCol[c] || '') + `M${f(px - sz / 2)} ${f(py - sz / 2)}h${f(sz)}v${f(sz)}h${f(-sz)}Z`;
+  }
+  let g = '';
+  const op = 1 - seg(age, dur * 0.6, dur);
+  for (const c in byCol) g += S.path(byCol[c], { fill: c, stroke: '#020C16', 'stroke-width': 2, opacity: f(op) });
+  if (age < 0.2) g += S.circle(x, y, 40 + 300 * (age / 0.2), { fill: '#E8FFFF', opacity: f(0.8 * (1 - age / 0.2)) });
+  return g;
+}
+
+
+// ================================================================= 7. OVERLOAD + OFF
+const FLOOD_TXT = ['LV 12', 'LV 40', 'LV 8', '47', 'HP 80/100', '+5 XP', 'INT 95', 'LV 61', '999', 'LV 27', 'STR 44', '88%', 'LV 73', '–12', 'LV 5',
+  'LUCK 7', 'LV 34', '100', 'LV 2', 'HP 3/9', 'LV 56', '???', 'LV 90', 'LV 19', '+20', 'SPD 31', 'LV 3', '64%', 'LV 77', 'LV 14', '9999', 'LV 1',
+  'HP 51/100', 'LV 48', '–50', 'LV 66', 'XP', 'LV 21', '33', 'LV 99', 'LV 7', '12%', 'HP 9/10', 'LV 45', '+1'];
+const FLOOD_COL = ['#3BE8FF', '#FFFFFF', '#FFD21F', '#FF4D66', '#7FF4FF', '#3DFF8F', '#FFFFFF', '#3BE8FF'];
+// numbersFlood({ t, k, seed, faces: [{ x, y, r }], n = 90, tint = true, rect: [x, y, w, h] }) — SC08: numbers and mini plates swarm the frame;
+// k 0..1 = how many (they pop in in a stable order, drift, jitter harder as k rises). Every face gets up to 3 opaque plates
+// SLAMMED onto it (at k ≈ .22 / .42 / .62 + .04·i) so the faces disappear. k > .5: red edge pulse + static bars. ≤ 120 text items.
+function numbersFlood(o = {}) {
+  const { t = 0, k = 0, seed = 1, faces = [], tint = true } = o;
+  if (k <= 0) return '';
+  const [rx, ry, rw, rh] = o.rect || [0, 0, W, H];
+  const n = Math.min(90, o.n ?? 80);
+  let g = '';
+  if (tint) g += S.rect(rx, ry, rw, rh, 0, { fill: '#040A12', opacity: f(0.3 * k) }) + S.rect(rx, ry, rw, rh, 0, { fill: 'url(#hdScanD)', opacity: f(0.5 * k) });
+  const jit = k > 0.6 ? (k - 0.6) / 0.4 : 0, st = Math.floor(t * 20);
+  for (let i = 0; i < n; i++) {
+    const th_ = (i / n) * 0.9 + hash(i * 1.31 + seed) * 0.08;
+    const a = seg(k, th_, th_ + 0.06);
+    if (a <= 0) continue;
+    const px = rx + hash(i * 3.7 + seed) * rw + Math.sin(t * 0.6 + i) * 20 * (1 + k) + (hash(st + i * 1.9) - 0.5) * 10 * jit;
+    const py = ry + 30 + hash(i * 5.9 + seed) * (rh - 60) + Math.cos(t * 0.5 + i * 1.7) * 14 * (1 + k) + (hash(st * 1.3 + i) - 0.5) * 8 * jit;
+    const sz = (24 + hash(i * 2.2 + seed) * 58) * (0.7 + 0.5 * k);
+    const sc = ease.outBack(a);
+    const txt = FLOOD_TXT[Math.floor(hash(i * 4.4 + seed) * FLOOD_TXT.length)];
+    const col = FLOOD_COL[Math.floor(hash(i * 6.1 + seed) * FLOOD_COL.length)];
+    if (hash(i * 7.3 + seed) < 0.26) {   // a little plate
+      const pw = TW(txt, sz * 0.6, 'L') + 34, ph = sz * 0.6 + 22;
+      g += S.g(S.path(cham(-pw / 2, -ph / 2, pw, ph, 8), { fill: '#061624', 'fill-opacity': 0.85, stroke: '#020C16', 'stroke-width': 4 }) + S.path(cham(-pw / 2 + 3, -ph / 2 + 3, pw - 6, ph - 6, 6), { fill: 'none', stroke: col, 'stroke-width': 2 }) +
+        TL(txt, 0, sz * 0.21, sz * 0.6, col), `translate(${f(px)} ${f(py)}) scale(${f(sc)})`);
+    } else {
+      const rot = i % 3 === 0 ? (hash(i * 8.8 + seed) - 0.5) * 18 : 0;   // rotated text rasterizes slower: only every 3rd
+      g += S.g(TL(txt, 0, sz * 0.35, sz, col, outl(Math.max(4, sz * 0.11), '#020C16')), `translate(${f(px)} ${f(py)})${sc !== 1 ? ` scale(${f(sc)})` : ''}${rot ? ` rotate(${f(rot)})` : ''}`);
+    }
+  }
+  // plates slammed onto faces
+  faces.slice(0, 10).forEach((fc, fi) => {
+    for (let j = 0; j < 3; j++) {
+      const thr = 0.22 + j * 0.2 + fi * 0.04, a = seg(k, thr, thr + 0.05);
+      if (a <= 0) continue;
+      const r = fc.r || 60, pw = r * 2.5, ph = r * 1.45;
+      const lvl = 2 + Math.floor(hash(fi * 3.3 + j + seed) * 88);
+      const sc = lerp(1.7, 1, ease.out(a)), rot = (hash(fi * 5.1 + j * 2.3 + seed) - 0.5) * 18;
+      const dx = (hash(fi * 2.7 + j) - 0.5) * r * 0.5, dy = (j - 1) * r * 0.22;
+      let p = S.path(cham(-pw / 2, -ph / 2, pw, ph, r * 0.2), { fill: '#061624', 'fill-opacity': 0.96, stroke: '#020C16', 'stroke-width': 5 });
+      p += S.path(cham(-pw / 2 + 4, -ph / 2 + 4, pw - 8, ph - 8, r * 0.18), { fill: 'none', stroke: j === 2 ? '#FF4D66' : '#3BE8FF', 'stroke-width': 3 });
+      p += TL(`LV ${lvl}`, 0, r * 0.12, r * 0.62, '#FFFFFF', outl(r * 0.08, '#020C16'));
+      p += segBar(-pw / 2 + r * 0.25, r * 0.3, pw - r * 0.5, r * 0.18, hash(fi + j * 7), j === 2 ? '#FF3355' : '#3DFF8F', { t, cell: r * 0.22 });
+      if (a < 1) p += S.path(cham(-pw / 2, -ph / 2, pw, ph, r * 0.2), { fill: '#FFFFFF', opacity: f(0.8 * (1 - a)) });
+      g += S.g(p, `translate(${f(fc.x + dx)} ${f(fc.y + dy)}) rotate(${f(rot)}) scale(${f(sc)})`);
+    }
+  });
+  if (k > 0.5) {
+    const e = (k - 0.5) * 2 * (0.6 + 0.4 * Math.sin(t * 10));
+    g += edgePulse(rx, ry, rw, rh, e);
+    let d = '';
+    const nb = Math.floor(8 * (k - 0.5) * 2);
+    for (let i = 0; i < nb; i++) d += `M${f(rx + hash(st * 0.7 + i * 3) * rw - 200)} ${f(ry + hash(st * 1.1 + i * 5) * rh)}h${f(150 + hash(i + st) * 500)}v${f(3 + hash(i * 2 + st) * 6)}h${f(-650)}Z`;
+    if (d) g += S.path(d, { fill: '#FFFFFF', opacity: 0.55 });
+  }
+  return g;
+}
+
+// red alarm light on the 4 frame edges: nested frame-shaped paths (solid fills, no gradients)
+function edgePulse(x, y, w, h, e, col = '#FF2E4E') {
+  if (e <= 0) return '';
+  let o = '';
+  [[150, 0.12], [90, 0.14], [45, 0.18], [16, 0.25]].forEach(([d, a]) => {
+    o += S.path(`M${f(x)} ${f(y)}h${f(w)}v${f(h)}h${f(-w)}Z M${f(x + d)} ${f(y + d)}v${f(h - 2 * d)}h${f(w - 2 * d)}v${f(-(h - 2 * d))}Z`, { fill: col, opacity: f(a * e), 'fill-rule': 'evenodd' });
+  });
+  return o;
+}
+// hudGlitch(svg, t, k = 0.5, { seed, drop = true, x, y, w, h }) — glitch any HUD layer: horizontal slice offsets, RGB split, jitter,
+// coloured scan bars and (drop) whole-frame dropouts at high k. ~2-3x the cost of the wrapped svg while glitching.
+function hudGlitch(svg, t, k = 0.5, o = {}) {
+  if (!(k > 0) || !svg) return svg;
+  const seed = o.seed ?? 4, st = Math.floor(t * 15);
+  if (o.drop !== false && hash(st * 1.37 + seed) < k * 0.16) return '';
+  let out = R.glitchSlices(svg, t, Math.min(1, k * 1.2), seed, { x: o.x ?? 0, y: o.y ?? 0, w: o.w ?? W, h: o.h ?? H, maxDx: 30 + 80 * k, bars: false });
+  out = glitchWrap(out, t, k, seed, 14);
+  let d = '';
+  for (let i = 0; i < Math.round(4 * k); i++) if (hash(st * 2.1 + i * 7 + seed) < 0.5) d += `M0 ${f(hash(st + i * 3.3 + seed) * H)}h${W}v${f(2 + hash(i + st) * 5)}h-${W}Z`;
+  if (d) out += S.path(d, { fill: hash(st + seed) > 0.5 ? '#2EE6FF' : '#FF2E9A', opacity: f(0.45 * k) });
+  return out;
+}
+
+// closeX({ x = 1868, y = 50, k, t, highlight 0..1, press 0..1, s, hint = true }) — the tiny X in the top-right corner that nobody ever
+// noticed. Subtle by default (small, half transparent). highlight: it grows, a yellow ring pulses, chevrons point at it and (hint) a
+// "CLOSE HUD" chip appears (Grandpa: "What's that little X up in the corner?"). press: pushed in, turns red, flash + ripple.
+function closeX(o = {}) {
+  const { x = 1868, y = 50, k = 1, t = 0, highlight = 0, press = 0, s = 1 } = o;
+  if (k <= 0) return '';
+  const hl = clamp(highlight, 0, 1), pr = clamp(press, 0, 1);
+  const th = theme('cyan');
+  const sc = (1 + 1.2 * ease.out(hl) + 0.07 * Math.sin(t * 7) * hl) * (1 - 0.18 * bumpK(seg(pr, 0, 0.35)));
+  const red = pr > 0.2;
+  let g = '';
+  if (hl > 0) {
+    const pu = mod(t * 1.4, 1);
+    g += S.circle(0, 0, 26 + 40 * pu, { fill: 'none', stroke: '#FFD21F', 'stroke-width': f(5 * (1 - pu)), opacity: f(hl * (1 - pu)) });
+    g += S.circle(0, 0, 30, { fill: 'none', stroke: '#FFD21F', 'stroke-width': 4, opacity: f(hl) });
+    for (let i = 0; i < 3; i++) {   // chevrons pointing at it from the lower left
+      const u = mod(t * 1.6 + i / 3, 1), d = 92 - 34 * u;
+      g += S.path(`M${f(-d * 0.7 - 10)} ${f(d * 0.7 - 14)}L${f(-d * 0.7 + 4)} ${f(d * 0.7 + 4)}L${f(-d * 0.7 - 16)} ${f(d * 0.7 + 12)}`, { ...ln(6, '#FFD21F', hl * bumpK(u)) });
+    }
+  }
+  let b = S.path(cham(-15, -15, 30, 30, 7), { fill: red ? '#C8102E' : th.glass, 'fill-opacity': red ? 1 : 0.85, stroke: th.edge, 'stroke-width': 4 });
+  b += S.path(cham(-12, -12, 24, 24, 5), { fill: 'none', stroke: red ? '#FFB3C0' : th.rim, 'stroke-width': 1.8 });
+  b += S.path('M-6 -6L6 6M6 -6L-6 6', ln(3.6, red ? '#FFFFFF' : th.text));
+  const fl = seg(pr, 0.1, 0.45);
+  if (fl > 0 && fl < 1) b += S.path(cham(-15, -15, 30, 30, 7), { fill: '#FFFFFF', opacity: f(1 - fl) });
+  g += S.g(b, `scale(${f(sc)})`, { opacity: f(lerp(0.55, 1, Math.max(hl, pr > 0 ? 1 : 0))) });
+  const rp = seg(pr, 0.1, 0.8);
+  if (rp > 0 && rp < 1) g += S.circle(0, 0, 20 + 120 * ease.out(rp), { fill: 'none', stroke: '#FFFFFF', 'stroke-width': f(10 * (1 - rp)), opacity: f(1 - rp) });
+  if (o.hint !== false && hl > 0.4) {
+    const hk = ease.outBack(seg(hl, 0.4, 1));
+    const cw = 170;
+    g += S.g(panel(-cw, -22, cw, 44, theme('gold'), { c: 9, br: 12, shadow: false }) + TL('CLOSE HUD?', -cw / 2, 10, 24, '#FFF8E6') + S.path('M4 -10L18 0L4 10Z', ol('#FFD21F', 3, '#120A00')), `translate(${f(-34 - 26 * hl)} 0) scale(${f(hk)})`);
+  }
+  return S.g(g, `translate(${f(x)} ${f(y)}) scale(${f(s * ease.outBack(clamp(k, 0, 1)))})`);
+}
+
+// hudShatter({ age, svg, cx = 1868, cy = 50, seed = 1, cols, rows }) — the whole HUD breaks like glass from the X and falls away.
+// 0-0.25 s: impact flash + a crack web spreading from (cx, cy) over the frame; from 0.25 s shards (nearest first) fall, spin and
+// fade by ~1.7 s; glints; '' after 2.2 s -> clean silence. Pass the HUD layer as `svg` to shatter the HUD ITSELF (each shard clips
+// it; 5x3 grid = 30 shards) and stop drawing the HUD yourself from age 0; without `svg` it's a glass-only layer (8x5 = 80 shards)
+// to put over the HUD while you fade it out at ~0.25 s.
+const _shardCache = {};
+function shards(seed, cols, rows) {
+  const key = `${seed}|${cols}|${rows}`;
+  if (_shardCache[key]) return _shardCache[key];
+  const P = [];
+  for (let r = 0; r <= rows; r++) {
+    P.push([]);
+    for (let c = 0; c <= cols; c++) {
+      const jx = c > 0 && c < cols ? (hash(r * 13.1 + c * 7.7 + seed) - 0.5) * 0.7 : 0, jy = r > 0 && r < rows ? (hash(r * 5.3 + c * 11.9 + seed) - 0.5) * 0.7 : 0;
+      P[r].push([(c + jx) / cols * W, (r + jy) / rows * H]);
+    }
+  }
+  const out = [];
+  for (let r = 0; r < rows; r++) for (let c = 0; c < cols; c++) {
+    const a = P[r][c], b = P[r][c + 1], d = P[r + 1][c], e = P[r + 1][c + 1];
+    const tris = hash(r * 3.1 + c * 1.7 + seed) > 0.5 ? [[a, b, e], [a, e, d]] : [[a, b, d], [b, e, d]];
+    for (const tri of tris) out.push({ pts: tri, c: [(tri[0][0] + tri[1][0] + tri[2][0]) / 3, (tri[0][1] + tri[1][1] + tri[2][1]) / 3], i: out.length });
+  }
+  // unique edges (for the crack web): grid edges + each cell's diagonal
+  const edges = [];
+  for (let r = 0; r <= rows; r++) for (let c = 0; c <= cols; c++) {
+    if (c < cols) edges.push([P[r][c], P[r][c + 1]]);
+    if (r < rows) edges.push([P[r][c], P[r + 1][c]]);
+    if (r < rows && c < cols) edges.push(hash(r * 3.1 + c * 1.7 + seed) > 0.5 ? [P[r][c], P[r + 1][c + 1]] : [P[r][c + 1], P[r + 1][c]]);
+  }
+  out.edges = edges.map(([a, b]) => ({ a, b, m: [(a[0] + b[0]) / 2, (a[1] + b[1]) / 2] }));
+  _shardCache[key] = out;
+  return out;
+}
+function hudShatter(o = {}) {
+  const { age = 0, svg = null, cx = 1868, cy = 50, seed = 1 } = o;
+  if (age < 0 || age > 2.2) return '';
+  const cols = o.cols ?? (svg ? 5 : 6), rows = o.rows ?? (svg ? 3 : 4);
+  const SH = shards(seed, cols, rows);
+  const maxD = Math.hypot(W, H);
+  let g = '', srcId = null;
+  if (svg) { srcId = S.uid('hdShs'); g += `<defs><g id="${srcId}">${svg}</g></defs>`; }
+  const crackR = ease.out(seg(age, 0, 0.28)) * maxD * 1.05;
+  // crack web: shard edges near the impact + jagged radial lines
+  if (age < 0.6) {
+    // (long strokes are the expensive thing in this rasterizer: unique edges only, one pass, short radial cracks)
+    let d = '';
+    for (const e of SH.edges) {
+      if (Math.hypot(e.m[0] - cx, e.m[1] - cy) > crackR) continue;
+      d += `M${f(e.a[0])} ${f(e.a[1])}L${f(e.b[0])} ${f(e.b[1])}`;
+    }
+    let dr = '';
+    for (let i = 0; i < 8; i++) {
+      const a = Math.PI * 0.5 + (i / 7) * Math.PI * 0.6 + (hash(i + seed) - 0.5) * 0.15;
+      dr += `M${f(cx)} ${f(cy)}`;
+      for (let j = 1; j <= 4; j++) {
+        const L = Math.min(crackR, 700) * (j / 4);
+        const aj = a + (hash(i * 7 + j + seed) - 0.5) * 0.35;
+        dr += `L${f(cx + Math.cos(aj) * L)} ${f(cy + Math.sin(aj) * L)}`;
+      }
+    }
+    const op = 1 - seg(age, 0.3, 0.6);
+    if (svg && age < 0.25) g += `<use href="#${srcId}"/>`;
+    g += S.path(d + dr, { fill: 'none', stroke: '#E8FFFF', 'stroke-width': 2.6, 'stroke-opacity': f(0.95 * op) }) + S.path(dr, { fill: 'none', stroke: '#020C16', 'stroke-width': 5, 'stroke-opacity': f(0.4 * op) });
+    g += S.circle(cx, cy, 40 + 260 * seg(age, 0, 0.2), { fill: '#FFFFFF', opacity: f(0.85 * (1 - seg(age, 0, 0.2))) });
+  }
+  // falling shards
+  if (age >= 0.22) {
+    for (const sh of SH) {
+      const dist = Math.hypot(sh.c[0] - cx, sh.c[1] - cy);
+      const u = age - (0.22 + (dist / maxD) * 0.5);
+      if (u > 1.6) continue;
+      let tf = '';
+      let fade = 1;
+      if (u > 0) {
+        const dx = (sh.c[0] - cx) / (dist || 1), dy = (sh.c[1] - cy) / (dist || 1);
+        const v = 120 + 260 * hash(sh.i * 3.7 + seed);
+        const mx = dx * v * u + (hash(sh.i * 1.3 + seed) - 0.5) * 120 * u, my = dy * v * u * 0.5 - 140 * u + 0.5 * 2600 * u * u;
+        const rot = (hash(sh.i * 5.9 + seed) - 0.5) * 420 * u, scl = 1 + 0.12 * Math.min(u, 0.35);
+        tf = `translate(${f(sh.c[0] + mx)} ${f(sh.c[1] + my)}) rotate(${f(rot)}) scale(${f(scl)}) translate(${f(-sh.c[0])} ${f(-sh.c[1])})`;
+        fade = 1 - seg(u, 0.45, 1.05);
+        if (sh.c[1] + my > H + 600 || fade <= 0) continue;
+      } else if (!svg) continue;   // glass-only: intact shards are invisible (the HUD itself is still drawn under the cracks)
+      const pts = sh.pts.map((p) => `${f(p[0])},${f(p[1])}`).join(' ');
+      let s_ = '';
+      if (svg) {
+        const cid = S.uid('hdShc');
+        s_ += S.clipDef(cid, S.el('polygon', { points: pts })) + S.g(`<use href="#${srcId}"/>`, null, { 'clip-path': `url(#${cid})` });
+      }
+      // fade on the elements themselves (group opacity = an offscreen layer per shard: twice the cost)
+      // glass tint + a bright highlight on two of the three edges (full outlines on every shard cost too much stroke)
+      const [p0, p1, p2] = sh.pts;
+      s_ += S.el('polygon', { points: pts, fill: '#BFF8FF', 'fill-opacity': f((svg ? 0.1 : 0.16) * fade) }) +
+        S.path(`M${f(p2[0])} ${f(p2[1])}L${f(p0[0])} ${f(p0[1])}L${f(p1[0])} ${f(p1[1])}`, { fill: 'none', stroke: '#E8FFFF', 'stroke-width': 2.5, 'stroke-opacity': f(0.85 * fade), 'stroke-linejoin': 'round' });
+      g += S.g(s_, tf || null);
+    }
+    // glints
+    let d = '';
+    for (let i = 0; i < 10; i++) {
+      const u = seg(age, 0.3 + hash(i * 2.2 + seed) * 0.6, 0.6 + hash(i * 2.2 + seed) * 0.6);
+      if (u <= 0 || u >= 1) continue;
+      d += star4(hash(i * 3.3 + seed) * W, hash(i * 4.7 + seed) * H * 0.8 + u * 200, 18 * bumpK(u), u * 90);
+    }
+    if (d) g += S.path(d, { fill: '#FFFFFF' });
+  }
+  return g;
+}
+
+// ================================================================= 8. MONTAGE HELPERS
+// sortByStrength({ k, t, players: [{ name, str }], sort 0..1, pick (number of rows picked, fractional = the next one slamming), press 0..1,
+// highlight (a name), x = 960, y = 520, s, title = 'DODGEBALL · PICK TEAM' }) — the team list: SORT BY STRENGTH button, rows slide into
+// strength order (sort), picked rows get a green PICKED check one by one.
+const DEFAULT_PLAYERS = [{ name: 'KYLE', str: 41 }, { name: 'PRIYA', str: 72 }, { name: 'BENJI', str: 4 }, { name: 'QUIET KID', str: 85 }, { name: 'MARCUS', str: 63 }, { name: 'ZOE', str: 58 }];
+function sortByStrength(o = {}) {
+  const { k = 1, t = 0, sort = 0, pick = 0, press = 0, x = 960, y = 520, s = 1 } = o;
+  if (k <= 0) return '';
+  const th = theme('cyan');
+  const players = o.players || DEFAULT_PLAYERS;
+  const n = players.length;
+  const order = players.map((p, i) => i).sort((a, b) => players[b].str - players[a].str);
+  const rank = []; order.forEach((pi, r) => { rank[pi] = r; });
+  const RH = 64, Wd = 660, Hd = 132 + n * RH + 18, left = -Wd / 2, top = -Hd / 2;
+  const kO = seg(k, 0, 0.6), kC = seg(k, 0.4, 1), uf = unfold(kO);
+  let c = panel(left, top, Wd, Hd, th, { c: 22, br: 30 });
+  c += TL(o.title || 'DODGEBALL · PICK TEAM', left + 28, top + 52, 34, th.text, { 'text-anchor': 'start', ...outl(5, th.edge) });
+  // the SORT BY STRENGTH button
+  const bw = 330, bh = 50, bx = left + 28, by = top + 70;
+  const pq = 1 - 0.1 * bumpK(seg(press, 0, 0.4));
+  let b = S.path(cham(-bw / 2, -bh / 2, bw, bh, 12), { fill: sort > 0 || press > 0 ? th.rim : '#123447', stroke: th.edge, 'stroke-width': 4 });
+  b += TF('SORT BY STRENGTH', 18, 9, 22, sort > 0 || press > 0 ? th.edge : th.text, { 'letter-spacing': 1.5 });
+  b += S.path(`M${-bw / 2 + 22} -8L${-bw / 2 + 32} 6L${-bw / 2 + 42} -8`, ln(5, sort > 0 || press > 0 ? th.edge : th.rim));
+  const fl = seg(press, 0.15, 0.5);
+  if (fl > 0 && fl < 1) b += S.path(cham(-bw / 2, -bh / 2, bw, bh, 12), { fill: '#FFFFFF', opacity: f(0.8 * (1 - fl)) });
+  c += S.g(b, `translate(${f(bx + bw / 2)} ${f(by + bh / 2)}) scale(${f(pq)})`);
+  c += TF('STR', -left - 120, top + 104, 18, th.label, { 'letter-spacing': 3 });
+  // rows
+  const rowY = (r) => top + 140 + r * RH;
+  players.forEach((p, i) => {
+    const r = rank[i];
+    const u = ease.inOut(seg(sort, 0.04 * r, 0.6 + 0.04 * r));
+    const yy = lerp(rowY(i), rowY(r), u);
+    const moving = bumpK(seg(sort, 0.04 * r, 0.6 + 0.04 * r)) * (i !== r ? 1 : 0);
+    const ri = seg(kC, i * 0.08, 0.35 + i * 0.08);
+    if (ri <= 0) return;
+    const pk = clamp(pick - r, 0, 1) * (sort >= 0.6 ? 1 : 0);
+    const hl = o.highlight && o.highlight.toUpperCase() === p.name.toUpperCase();
+    const rth = pk > 0 ? theme('green') : hl ? theme('gold') : th;
+    let rw = S.path(cham(left + 22, 0, Wd - 44, RH - 10, 10), { fill: pk > 0 ? '#0A3A20' : '#0A2232', 'fill-opacity': 0.9, stroke: rth.rim, 'stroke-width': pk > 0 || hl ? 3 : 1.5, 'stroke-opacity': pk > 0 || hl ? 1 : 0.5 });
+    const pos = Math.round(lerp(i, r, u)) + 1;
+    rw += TL(`#${pos}`, left + 58, 39, 26, pos === 1 && sort > 0.6 ? '#FFD21F' : th.label);
+    rw += TL(p.name.toUpperCase(), left + 96, 41, 30, '#FFFFFF', { 'text-anchor': 'start', ...outl(4, th.edge) });
+    rw += segBar(-left - 290, 18, 160, 18, p.str / 100, p.str >= 80 ? '#FF7A3D' : '#FF9A2E', { th, t, cell: 14, blink: p.str < 10 });
+    rw += TL(String(p.str), -left - 104, 41, 30, p.str >= 80 ? '#FFD21F' : '#FFFFFF', { 'text-anchor': 'end', ...outl(4, th.edge) });
+    if (pk > 0) {
+      const sl = slap(pk, 18, -6);
+      rw += S.g(S.circle(0, 0, 20, ol('#3DFF8F', 4, th.edge)) + S.path(checkD(0, 1, 13), ln(5, th.edge)), `translate(${f(-left - 58)} ${f((RH - 10) / 2)}) rotate(${f(sl.rot)}) scale(${f(sl.sc)})`, { opacity: f(sl.op) });
+    }
+    if (hl && pk <= 0) rw += S.path(cham(left + 22, 0, Wd - 44, RH - 10, 10), { fill: 'none', stroke: '#FFD21F', 'stroke-width': 3, opacity: f(0.4 + 0.4 * Math.sin(t * 6)) });
+    c += S.g(rw, `translate(${f(16 * moving + 30 * (1 - ease.out(ri)))} ${f(yy)})`, { opacity: f(ri) });
+  });
+  if (kO < 1) c += S.path(cham(left, top, Wd, Hd, 22), { fill: '#FFFFFF', opacity: f(0.7 * (1 - seg(kO, 0.55, 1))) });
+  let g = S.g(c, `scale(${f(uf.sx)} ${f(uf.sy)})`);
+  if (uf.line > 0) g += S.path(`M${f(left * uf.sx)} 0H${f(-left * uf.sx)}`, ln(6, '#FFFFFF', uf.line));
+  return S.g(g, `translate(${f(x)} ${f(y)}) scale(${f(s)})`);
+}
+
+// statCompare({ k, t, left: { name, stat, value, level, sub }, right: {...}, choose -1..1, x = 960, y = 470, s, title }) — the VS card of
+// SC07: "INT 95" (the smart kids) vs "LV 4" (Benji). choose -1 → the left side wins (gold rim, PICKED, scale up), the other side dims
+// cold and shrinks; fractional values animate.
+function statCompare(o = {}) {
+  const { k = 1, t = 0, x = 960, y = 470, s = 1, choose = 0 } = o;
+  if (k <= 0) return '';
+  const L_ = { name: 'SMART KIDS', stat: 'INT', value: 95, col: '#5AA8FF', sub: 'GENIUS', ...(o.left || {}) };
+  const R_ = { name: 'BENJI', stat: 'LV', value: 4, col: '#9FB6C6', sub: 'CLUMSY', ...(o.right || {}) };
+  let g = '';
+  const card = (d, side) => {
+    const ch = clamp(choose * side, 0, 1), dim = clamp(-choose * side, 0, 1);
+    const th = mixTheme(ch > 0 ? mixTheme('cyan', 'gold', ch) : 'cyan', 'cold', dim);
+    const cw = 430, chh = 330;
+    let c = '';
+    if (ch > 0) c += rays(0, 0, 14, 340, '#FFE88A', 0.18 * ch, t * 20, 60);
+    c += panel(-cw / 2, -chh / 2, cw, chh, th, { c: 22, br: 30 });
+    c += TL(String(d.name).toUpperCase(), 0, -chh / 2 + 58, 38, th.text, outl(5, th.edge));
+    c += TF(String(d.stat).toUpperCase(), -cw / 2 + 50, 34, 34, th.label, { 'text-anchor': 'start', 'letter-spacing': 3 });
+    c += TL(String(d.value), cw / 2 - 40, 70, 140, dim > 0.5 ? mix(d.col, '#7F96AA', dim) : d.col, { 'text-anchor': 'end', ...outl(12, th.edge) });
+    c += segBar(-cw / 2 + 40, 104, cw - 80, 20, clamp(Number(d.value) / 100, 0.02, 1), mix(d.col, '#7F96AA', dim), { th, t, cell: 18 });
+    if (d.sub) c += TF(String(d.sub).toUpperCase(), 0, chh / 2 - 22, 20, th.label, { 'letter-spacing': 3 });
+    if (ch > 0.3) { const sl = slap(seg(ch, 0.3, 1), 20, -8); c += S.g(S.path(para(-80, -24, 160, 48, 12), ol('#FFD21F', 4, th.edge)) + TL('PICKED', 0, 15, 32, th.edge), `translate(${f(cw / 2 - 60)} ${f(-chh / 2 - 6)}) rotate(${f(sl.rot)}) scale(${f(sl.sc)})`, { opacity: f(sl.op) }); }
+    const kk = ease.outBack(seg(k, side < 0 ? 0 : 0.12, side < 0 ? 0.6 : 0.72));
+    const sc = (1 + 0.08 * ch - 0.1 * dim) * kk;
+    return S.g(c, `translate(${f(side * (290 + 600 * (1 - kk)))} ${f(20 * dim)}) scale(${f(sc)})`, { opacity: f(clamp(kk * 2, 0, 1) * (1 - 0.45 * dim)) });
+  };
+  g += card(L_, -1) + card(R_, 1);
+  const vk = seg(k, 0.5, 0.8);
+  if (vk > 0) g += S.g(S.path(diamondD(0, 0, 66, 66), ol('#FF3355', 6, INK)) + TL('VS', 0, 20, 58, '#FFFFFF', outl(7, INK)), `scale(${f(vk < 1 ? lerp(2.4, 1, ease.in(vk)) : 1)}) rotate(${f(-8)})`, { opacity: f(clamp(vk * 3, 0, 1)) });
+  if (o.title) g += TL(o.title, 0, -230, 46, '#FFFFFF', outl(8, INK));
+  return S.g(g, `translate(${f(x)} ${f(y)}) scale(${f(s)})`);
+}
+
+module.exports = {
+  DEFS, W, H, TH, theme, mixTheme, BAR_COL, TAG_COL, RARITY,
+  // 1 plates
+  statPlate, plate: statPlate, plateFor, PRESETS, miniPlate, heroPlate, overHead, HEAD_TOP,
+  // 2 objects
+  tooltip, tipFor, TIPS, lieMeter,
+  // 3 quests
+  questMarker, questToast, questComplete, questArrow, epicQuest, pillowFort,
+  // 4 xp
+  xpBar, xpBarAt, xpPop, levelUp, XP_FLY,
+  // 5 friendship
+  friendshipPop,
+  // 6 system
+  updateWindow, updateAcceptAt, bootSequence, BOOT_LINES, hudFrame, systemMsg, bossBar, pixelBurst,
+  // 7 overload + off
+  numbersFlood, hudGlitch, closeX, hudShatter,
+  // 8 montage
+  sortByStrength, statCompare, DEFAULT_PLAYERS,
+  // primitives (build your own HUD bits in the same look)
+  panel, softPanel, segBar, sheen, infinity, richText, richW, fitSize, bangGlyph, skullIcon, crownIcon, eyeLogo, icon, cham, para, diamondD, heartD, hexD,
+  rays, sparkleBurst, impactTicks, unfold, slap, rollPair, glitchWrap, rgb, glow, edgePulse, TL, TF, hash, seg, bumpK,
+};

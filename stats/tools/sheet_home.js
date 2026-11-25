@@ -41,7 +41,7 @@ const FAM = {
 let castDog = null;
 try {
   const CAST = require('../rig/cast');
-  for (const k of ['mom', 'grandpa', 'max']) if (CAST.draw[k] && CAST.NAMES && CAST.NAMES[k]) FAM[k] = { size: (CAST.D && CAST.D[k] && CAST.D[k].dims && CAST.D[k].dims.size) || FAM[k].size, draw: CAST.draw[k] };
+  if (CAST.NAMES && CAST.NAMES.max) for (const k of ['mom', 'grandpa', 'max']) if (CAST.draw[k]) FAM[k] = { size: (CAST.D && CAST.D[k] && CAST.D[k].dims && CAST.D[k].dims.size) || FAM[k].size, draw: CAST.draw[k] };
   if (CAST.draw.biscuit) castDog = CAST.draw.biscuit;
 } catch (e) { /* cast not ready: keep the look-alikes */ }
 const boxDog = (p) => `<g transform="translate(${p.x} ${p.y}) scale(${(p.s || 0.5) * 2})"><rect x="-70" y="-62" width="140" height="56" rx="26" fill="#E8A35A" stroke="#151515" stroke-width="5"/><rect x="40" y="-100" width="62" height="54" rx="18" fill="#E8A35A" stroke="#151515" stroke-width="5"/><circle cx="84" cy="-80" r="5" fill="#151515"/><path d="M-50 -6 v10 M50 -6 v10" stroke="#151515" stroke-width="10" stroke-linecap="round"/></g>`;
@@ -82,15 +82,37 @@ const BS = SP.bedroom || {};
 const bedLie = (p = {}) => (BS.bed ? refOnly(BS.bed.lie.x, BS.bed.lie.y, BS.bed.lie.s, { rot: BS.bed.lie.rot, shadow: false, face: 'sleepy', ...p }) : '');
 const bedSitUp = (p = {}) => (BS.bed ? sit('you', BS.bed.sitUp, { face: 'amazed', armL: 40, armR: 40, ...p }) : '');
 const inChair = (p = {}) => (BS.chair ? sit('you', BS.chair, { view: 'back', ...p }) : '');
+const KS2 = SP.kitchen || {};
+const kitFam = (f = {}) => (KS2.seats ? sit('max', KS2.seats.max, { face: f.max || 'excited', armL: 40 }) + sit('you', KS2.seats.you, { face: f.you || 'neutral' }) + sit('grandpa', KS2.seats.grandpa, { face: f.grandpa || 'happy', armR: 60 }) : '');
+const LS2 = SP.livingRoom || {};
+const SS = SP.street || {};
 const TILES = [
   ['bedroom', 'bedroom · night (default): YOU in the chair (back view), title screen, glow', (t) => L(X.bedroom, t, {}, inChair())],
   ['bedroom_update', 'bedroom · night, pcScreen = UPDATE, pixels .45 (the install burst)', (t) => L(X.bedroom, t, { pcScreen: demoScreen('ACCEPT?'), pixels: 0.45 }, inChair())],
   ['bedroom_morning', 'bedroom · morning: sitUp in bed, ring .8, tooltips on bed / sock / alarm', (t) => L(X.bedroom, t, { time: 'morning', ring: 0.8, tuck: 0.6 }, bedSitUp(), tip(BS.tips.bed, 'COMFORT +50') + tip(BS.tips.sock, 'SMELL +99', '#7CFF6A') + tip(BS.tips.alarm, 'ENEMY', '#FF4D6D'))],
-  ['bedroom_quad', 'bedroom · lie + tuck (night) / blackout .9 / day: YOU at the mirror / evening, chair front', (t) => quad4([
+  ['bedroom_quad', 'bedroom · lie + tuck .9 / blackout .9 / day: mirror + bed edge / evening, chair front', (t) => quad4([
     L(X.bedroom, t, { tuck: 0.9 }, bedLie()),
     L(X.bedroom, t, { blackout: 0.9 }, inChair()),
-    L(X.bedroom, t, { time: 'day', mirrorView: (w, h) => `<rect x="${-w / 2}" y="${-h / 2}" width="${w}" height="${h}" fill="#9FD0E0"/>` + hero({ x: 0, y: h / 2 + 40, s: 0.42, face: 'confused' }) }, '', refOnly(BS.mirror.stand.x, BS.mirror.stand.y, BS.mirror.stand.s, { view: 'back' }) + line(FL.bedroom)),
+    L(X.bedroom, t, { time: 'day', mirrorView: (w, h) => `<rect x="${-w / 2}" y="${-h / 2}" width="${w}" height="${h}" fill="#9FD0E0"/>` + hero({ x: 0, y: h / 2 + 40, s: 0.42, face: 'confused' }) }, '', refOnly(BS.mirror.stand.x, BS.mirror.stand.y, BS.mirror.stand.s, { view: 'back' }) + sit('you', BS.bed.edge, { face: 'sleepy', armL: 20, armR: 20 }) + line(FL.bedroom)),
     L(X.bedroom, t, { time: 'evening', chair: 'front', lamp: 1 }, sit('you', BS.chair, { legL: 90, legR: 90, kneeL: 90, kneeR: 90, face: 'happy' }), ref(600, FL.bedroom))])],
+  ['kitchen', 'kitchen · morning: Mom at the counter, Max / YOU / Grandpa seated, toast .35', (t) => L(X.kitchen, t, { toast: 0.35 }, kitFam(), stand('mom', KS2.counterStand.x, KS2.counterStand.y, KS2.counterStand.s, { face: 'happy', armL: 60, turn: 0.4 }) + ref(1760, FL.kitchen) + tip(KS2.toaster.tip, 'BURN 80%', '#FF4D6D'))],
+  ['kitchen_mess', 'kitchen · morning, mess 1 (Max\'s cereal splash), cups 4', (t) => L(X.kitchen, t, { mess: 1, cups: 4 }, kitFam({ max: 'joy', you: 'amazed' }) + sit('mom', KS2.seats.mom, { face: 'happy' }))],
+  ['kitchen_evening', 'kitchen · evening, dishes: Mom at the sink, lamp on', (t) => L(X.kitchen, t, { time: 'evening', dishes: true }, sit('grandpa', KS2.seats.grandpa, { face: 'sad' }), stand('mom', KS2.sinkStand.x, KS2.sinkStand.y, KS2.sinkStand.s, { view: 'back', armL: 50, armR: 50 }) + ref(1300, FL.kitchen, 0.5, { turn: -0.4 }))],
+  ['kitchen_pancakes', 'kitchen · SC11 pancakes, cam x -260: YOU at the stove, Mom seated', (t) => camG({ x: -260 }, L(X.kitchen, t, { pancakes: true }, sit('mom', KS2.seats.mom, { face: 'happy' }), stand('you', KS2.stoveStand.x, KS2.stoveStand.y, KS2.stoveStand.s, { face: 'happy', turn: 0.5, armR: 80 })))],
+  ['living', 'livingRoom · day: Grandpa in the recliner, Max on the rug, Biscuit on the bed, YOU on FLOOR', (t) => L(X.livingRoom, t, {}, LS2.seats ? sit('grandpa', LS2.seats.armchair, { face: 'happy' }) : '', (LS2.dogBed ? dog({ ...LS2.dogBed.dog }) : '') + (LS2.rugSit ? stand('max', LS2.rugSit.x, LS2.rugSit.y, LS2.rugSit.s, { face: 'excited', armR: 120 }) : '') + ref(900, FL.livingRoom) + tip({ x: SP.livingRoom.trophy.x, y: SP.livingRoom.trophy.y }, 'LEGEND', '#FFD23F'))],
+  ['living_fort', 'livingRoom · day, fort .9 (cushions gone) + the fort spot (extras pillowFort k .9)', (t) => L(X.livingRoom, t, { fort: 0.9 }, '', fortStandIn(LS2.fort, 0.9) + stand('max', 1240, 1000, 0.5, { face: 'joy', armL: 150, armR: 150 }) + ref(400, FL.livingRoom))],
+  ['living_evening', 'livingRoom · evening, lamps, the couch: Mom + YOU, TV on', (t) => L(X.livingRoom, t, { time: 'evening', tvScreen: demoScreen('TV', '#3A8A5A') }, sit('mom', LS2.seats.couchL, { face: 'sleepy' }) + sit('you', LS2.seats.couchM, { face: 'neutral' }) + sit('grandpa', LS2.seats.armchair, { face: 'sad' }), '')],
+  ['street', 'street · day, cam x 0: Mrs. Wells at her gate + bags, the oak with the ball, YOU s .4', (t) => LC(X.street, t, {}, {}, SS.wells ? stand('wells', SS.wells.x, SS.wells.y, SS.wells.s, { face: 'happy', turn: 0.3 }) + ref(1300, FL.street, SS.s, { armR: 160, face: 'determined' }) + tip(SS.ball, 'QUEST +10 XP', '#FFD23F') : '')],
+  ['street_sunset', 'street · sunset, cam x -1300: OUR HOUSE + the bakery van', (t) => LC(X.street, t, { x: -1300 }, { time: 'sunset' }, refOnly(-760 + 1300 - 1300 + 0, FL.street, SS.s))],
+  ['street_quad', 'street · shop x 2800 / zoom .6 / ball false, zoom 1.6 / morning x -2600', (t) => quad4([LC(X.street, t, { x: 2800 }, {}, refOnly(3720, FL.street, SS.s)), LC(X.street, t, { zoom: 0.6, x: 300 }, {}), LC(X.street, t, { zoom: 1.6, x: 420, y: -60 }, { ball: false }), LC(X.street, t, { x: -2600 }, { time: 'morning' })])],
+  ['exterior', 'houseExterior · night (the update night): YOUR window glowing blue', (t) => LC(X.houseExterior, t, {}, {}, refOnly(400, FL.houseExterior, 0.22))],
+  ['exterior_update', 'houseExterior · night, update .45: flash + pixels out of the window', (t) => LC(X.houseExterior, t, {}, { update: 0.45 })],
+  ['exterior_quad', 'houseExterior · morning / day zoom .6 / evening / night push-in window 2.4', (t) => quad4([LC(X.houseExterior, t, {}, { time: 'morning' }), LC(X.houseExterior, t, { zoom: 0.6 }, { time: 'day' }), LC(X.houseExterior, t, {}, { time: 'evening' }), LC(X.houseExterior, t, { zoom: 2.4, x: 210, y: -325 }, { update: 0.7 })])],
+  ['cams', 'camera tips · monitor fill 4.8 / toaster 2.6 (toast .7) / the 1979 photo 3.2 / fort reveal .85 (fort 1)', (t) => quad4([
+    camG({ zoom: 4.8, x: 365, y: -196 }, L(X.bedroom, t, { pcScreen: demoScreen('ACCEPT TERMS?') })),
+    camG({ zoom: 2.6, x: -320, y: -60 }, L(X.kitchen, t, { toast: 0.7 })),
+    camG({ zoom: 3.2, x: 612, y: -344 }, L(X.livingRoom, t, {})),
+    camG({ zoom: 0.85, x: -100, y: -60 }, L(X.livingRoom, t, { fort: 1 }, '', fortStandIn(LS2.fort, 1)))])],
 ];
 
 (async () => {
