@@ -85,6 +85,7 @@ const tPillow = w(12, 'pillow'), tEVER = w(12, 'EVER');
 const tEpic = w(13, 'complete'), tHundred = w(13, 'hundred');
 const tPop100 = w(13, 'Plus') - 0.1, tLand100 = tPop100 + H.XP_FLY, tLvl21 = tLand100 + 0.75;
 const tPoints50 = w(14, 'points') - 0.6;
+const tOneSpawn = w(10, 'Plus') - 0.05;                         // the tiny +1 XP
 // the deeds of the montage: [spawn time, amount] — each pop lands H.XP_FLY later
 const GRID = [0, 1, 2, 3].map((i) => CUT.grid + 0.2 + i * 0.42);
 const DEEDS = {
@@ -99,11 +100,11 @@ const XPE = [
   ...Object.values(DEEDS).map(([t0, add]) => ({ t: t0 + H.XP_FLY, add })),
   { t: tTwo - 0.1, add: 30 },
   { t: tFive - 0.12, set: { level: 5, xp: 40, need: 200 } },
-  { t: tTwenty - 0.12, set: { level: 20, xp: 60, need: 160 } },
-  { t: tOne - 0.1 + H.XP_FLY * 0.5, add: 1 },
+  { t: tTwenty - 0.12, set: { level: 20, xp: 59, need: 160 } },
+  { t: tOneSpawn + H.XP_FLY, add: 1 },
   { t: tLand100, add: 100 },
-  { t: tLvl21, set: { level: 21, xp: 1, need: 180 } },
-  { t: tPoints50 + H.XP_FLY, add: 50 },
+  { t: tLvl21, set: { level: 21, xp: 0, need: 500 } },
+  ...[0, 0.35, 0.7].map((d) => ({ t: tPoints50 + d + H.XP_FLY, add: 50 })),
 ].sort((a, b) => a.t - b.t);
 function xpState(t) {
   let lv = 1, xp = 50, need = 100, from = 50, u = 1, gain = 0, lb = 0;
@@ -358,7 +359,7 @@ function shTwenty(t) {
   let w_ = street(t, cam, { time: 'sunset' }, chars);
   const c = toScr(cam, -200, 600);
   let fx = fl > 0 ? S.path(`M${f(c.x - 120)} -20 L${f(c.x + 120)} -20 L${f(c.x + 220)} 1100 L${f(c.x - 220)} 1100 Z`, { fill: '#FFE88A', opacity: f(0.35 * fl) }) + H.glow(c.x, c.y, 300, 360, '#FFE88A', fl) : '';
-  const pop_ = E.dayStamp({ k: seg(t, CUT.twenty, CUT.twenty + 0.3), x: 230, y: 250, day: 'FRI', sub: 'LV 20', s: 0.9 }) + H.levelUp({ t, k: seg(t, tTwenty - 0.2, tTwenty + 1.3), from: 5, level: 20, x: 1250, y: 330, s: 0.95 }) + K.confetti(t, tTwenty + 0.1, 50, 4);
+  const pop_ = E.dayStamp({ k: seg(t, CUT.twenty, CUT.twenty + 0.3), x: 230, y: 250, day: 'FRI', sub: 'LV 20', s: 0.9 }) + H.levelUp({ t, k: seg(t, tTwenty - 0.2, tTwenty + 1.3), from: 5, level: 20, x: 1250, y: 330, s: 0.95, out: seg(t, tTwenty + 1.8, tTwenty + 2.2) }) + K.confetti(t, tTwenty + 0.1, 50, 4);
   return compose(t, w_, { fx, pop: pop_, clock: '6:58 PM', day: 'FRI' }) + smash(t, tTwenty, 0.12, 0.6);
 }
 // ---- the lunch table with Tank (days): Tank at Benji's seat, Benji further left, the hero splits his sandwich
@@ -414,7 +415,7 @@ const shEighty = (t) => shHP(t, 'THU', '12:05 PM', 2);
 function shGood(t) {
   const cam = camKeys(t, [[CUT.good, camAt(560, 560, 2.1)], [CUT.glasses, camAt(560, 555, 2.25)]], ease.linear);
   const th = ease.outBack(seg(t, w(7, 'good') - 0.2, w(7, 'good') + 0.1));
-  const tank = { turn: 0.15, sandwich: true, bite: 0.5, armL: lerp(10, 150, th), bendL: lerp(0, 50, th), face: { name: 'happy', mouth: 'smallSmile', eyes: { look: [0.6, 0] }, fx: ['blush'] } };
+  const tank = { turn: 0.15, sandwich: true, bite: 0.5, armL: lerp(10, 118, th), bendL: lerp(0, 74, th), face: { name: 'happy', mouth: 'smallSmile', eyes: { look: [0.6, 0] }, fx: ['blush'] } };
   const d = tankDay(t, cam, { tank, tankAct: { arms: false } });
   const plates = tankPlate(t, cam, d.tank, 1.3, 0.55);
   return compose(t, d.svg, { plates, clock: '12:07 PM', day: 'FRI' });
@@ -448,7 +449,7 @@ function shGramps(t) {
 }
 // ---- 23. "They're on your head." — Grandpa close: the tooltip pins the glasses on his forehead; his eyes roll up
 function shHead(t) {
-  const cam = camKeys(t, [[CUT.head, camAt(1430, 560, 2.1)], [CUT.qc, camAt(1430, 545, 2.3)]], ease.inOut);
+  const cam = camKeys(t, [[CUT.head, camAt(1430, 615, 2.1)], [CUT.qc, camAt(1430, 605, 2.3)]], ease.inOut);
   const up = seg(t, tHeadW - 0.1, tHeadW + 0.3);
   const gp = { face: { name: 'confused', eyes: { look: [0, lerp(0, -1, up)] } }, armL: 10, armR: 10 };
   const o = livingShot(t, cam, { gp, gpAct: { arms: false }, heroSeated: false });
@@ -465,18 +466,20 @@ function shQC(t) {
   const pop_ = H.questToast({ t, k: seg(t, tQC - 0.3, tQC + 0.4), kind: 'complete', title: "Find Grandpa's glasses", reward: '+1 XP', y: 150, s: 0.8 });
   return compose(t, o, { pop: pop_, clock: '6:16 PM', day: 'SAT' });
 }
-// ---- 25. "Plus one experience." — a tiny +1 XP; a magnifier on the bar: it moved... one pixel
+// ---- 25. "Plus one experience." — a tiny +1 XP; then a magnifier on the bar: it moved... barely
 function shTinyXP(t) {
   const cam = camAt(1300, 615, 1.62);
   const gp = { glasses: 'on', armR: 20, face: 'happy' };
   let o = livingShot(t, cam, { gp, gpAct: { arms: false }, hero: { face: 'deadpan' } });
   const st = xpState(t);
-  const mag = ease.out(seg(t, tOne + 0.55, tOne + 0.9));
-  let pop_ = H.xpPop({ x: 1180, y: 300, age: t - (tOne - 0.1), amount: 1, s: 0.55, to: barTo(tOne - 0.1 + H.XP_FLY) });
+  const mag = ease.out(seg(t, tOneSpawn + 0.8, tOneSpawn + 1.15));
+  let pop_ = H.xpPop({ x: 1180, y: 300, age: t - tOneSpawn, amount: 1, s: 0.6, to: barTo(tOneSpawn + H.XP_FLY) });
   if (mag > 0) {
-    pop_ += dim(0.45 * mag) + S.g(H.xpBar({ ...st, x: 0, y: 0, w: 1640 }), `translate(${f(lerp(960, 960, mag))} ${f(lerp(1050, 560, mag))}) scale(${f(lerp(1, 1.15, mag))})`);
-    pop_ += S.g(S.circle(0, 0, 110, { fill: 'none', stroke: '#FFFFFF', 'stroke-width': 14 }) + S.circle(0, 0, 110, { fill: 'none', stroke: LINE, 'stroke-width': 5 }) + S.path('M78 78 L150 150', ln(26, '#6A4A2A')) + S.path('M78 78 L150 150', { fill: 'none', stroke: LINE, 'stroke-width': 4 }), tf(H.xpBarAt({ value: st.value, text: st.text, x: 960, w: 1640 })[0] * 1.15 - 960 * 0.15, 560, mag));
-    pop_ += TFS('+0.6%', 1300, 470, 54, '#FFD84A', { opacity: f(mag) });
+    const Z = lerp(1, 2.6, mag), cur = st.from + (st.value - st.from) * ease.out(st.roll);
+    const end = H.xpBarAt({ value: cur, text: st.text, x: 0, y: 0, w: 1640 })[0];
+    pop_ += dim(0.5 * mag) + S.g(H.xpBar({ ...st, x: 0, y: 0, w: 1640 }), `translate(${f(lerp(960, 960 - end * Z, mag))} ${f(lerp(1050, 600, mag))}) scale(${f(Z)})`);
+    pop_ += S.g(S.circle(0, 0, 150, { fill: 'none', stroke: '#FFFFFF', 'stroke-width': 16 }) + S.circle(0, 0, 150, { fill: 'none', stroke: LINE, 'stroke-width': 5 }) + S.path('M106 106 L210 210', ln(30, '#6A4A2A')), tf(960, 600, mag));
+    pop_ += TFS('+1 XP = +0.6%', 960, 380, 64, '#FFD84A', { opacity: f(mag) });
   }
   return compose(t, o, { pop: pop_, clock: '6:16 PM', day: 'SAT' });
 }
@@ -505,7 +508,7 @@ function shMax(t) {
 function shEver(t) {
   const cam = shakeAll(camKeys(t, [[CUT.ever, camAt(1330, 760, 1.8)], [tEVER - 0.05, camAt(1330, 760, 1.85)], [tEVER + 0.12, camAt(1330, 730, 2.4)], [CUT.build, camAt(1330, 730, 2.45)]], ease.out), t, [[tEVER, 0.4, 14]]);
   const roar = t > tEVER - 0.1;
-  const mp = { x: 1330, y: 1000, s: 0.5, turn: -0.2, volume: false, ...(roar ? { roar: true } : { armL: 150, armR: 150, lift: 20 * Math.abs(Math.sin(t * 9)) }), face: roar ? undefined : 'excited' };
+  const mp = { x: 1330, y: 1000, s: 0.5, turn: -0.2, volume: false, ...(roar ? { roar: true } : { armL: 150, armR: 150, lift: 20 * Math.abs(Math.sin(t * 9)) }), face: roar ? { name: 'angry', mouth: 'scream', eyes: { type: 'star' } } : 'excited' };
   const o = livingShot(t, cam, { gramps: false, heroSeated: false, standing: actor('max', t, mp, { arms: false }) });
   const pop_ = H.pillowFort({ t, k: 1, x: 600, y: 330, s: 0.75 }) + K.bang('RAWR!', 1450, 330, pop(t, tEVER + 0.05, 0.2), 120, -8, '#7CFF6B');
   let fx = t > tEVER ? zoomLines(960, 500, 0.7 * (1 - seg(t, tEVER + 0.3, tEVER + 0.9)), t, '#C8FFB8') : '';
@@ -532,7 +535,7 @@ function shBuild(t) {
   const mp = { x: 520, y: 1000, s: 0.5, turn: 0.4, armL: 150 + 20 * Math.sin(t * 20), armR: 150 - 20 * Math.sin(t * 20), lift: 20 * Math.abs(Math.sin(t * 14)), face: 'joy' };
   const hp = { x: 1300, y: 1000, s: 0.5, turn: -0.4, armL: 90 + 70 * Math.sin(t * 16), armR: 90 - 70 * Math.sin(t * 16), face: 'determined' };
   const o = livingShot(t, cam, { fort: k, gramps: false, heroSeated: false, standing: fortX + actor('max', t, mp, { arms: false }) + actor('you', t, hp, { arms: false }), over: flyingCushions(t, CUT.build, CUT.reveal) });
-  const ff = S.g(S.path('M0 -30 L40 0 L0 30 Z M44 -30 L84 0 L44 30 Z', ol('#FFFFFF', 5)) + TFS('×8', 140, 22, 60, '#FFFFFF'), tf(1640, 230, 1));
+  const ff = S.g(S.path('M0 -30 L40 0 L0 30 Z M44 -30 L84 0 L44 30 Z', ol('#FFFFFF', 5)) + TFS('×8', 140, 22, 60, '#FFFFFF'), tf(1420, 120, 1));
   return compose(t, o, { fx: streaks(t, 120, 900, 8, 7, '#FFFFFF', 0.25, 3000, 1), pop: ff, clock: k > 0.5 ? '7:40 PM' : '6:55 PM', day: 'SAT' });
 }
 // ---- 30. "Epic quest complete!" — the reveal: the fort to the ceiling; Max at the door; EPIC QUEST COMPLETE!
@@ -552,26 +555,32 @@ function shHundred(t) {
   const dog = X.biscuit({ ...LV.dogBed.dog, pose: 'beg', t, face: 'happy' });
   const o = livingShot(t, cam, { fort: 1, gramps: false, heroSeated: false, seated: actor('grandpa', t, SH.seatPose(LV.seats.armchair, 1.12, { glasses: 'on', armL: 150, armR: 150, face: 'joy' }), { arms: false }), standing: X.pillowFort({ ...LV.fort, k: 1, t }) + dog + actor('max', t, mp, { arms: false }) + actor('you', t, hp, { arms: false }) });
   let pop_ = H.xpPop({ x: 860, y: 260, age: t - tPop100, amount: 100, s: 1.5, to: barTo(tLand100) });
-  pop_ += H.levelUp({ t, k: seg(t, tLvl21 - 0.1, tLvl21 + 1.2), from: 20, level: 21, x: 1300, y: 330, s: 0.8 }) + K.confetti(t, tLvl21, 60, 11);
+  pop_ += H.levelUp({ t, k: seg(t, tLvl21 - 0.1, tLvl21 + 1.2), from: 20, level: 21, x: 1300, y: 330, s: 0.8, out: seg(t, tLvl21 + 1.6, tLvl21 + 2.0) }) + K.confetti(t, tLvl21, 60, 11);
   return compose(t, o, { pop: pop_, clock: '7:41 PM', day: 'SAT' });
 }
 // ---- 32. (beat) the cheering fades: close on the hero staring down at his XP bar; the warmth drains out
 function shStare(t) {
-  const cam = camKeys(t, [[CUT.stare, camAt(1360, 560, 2.2)], [CUT.slowly, camAt(1360, 575, 2.5)]], ease.linear);
+  const cam = camKeys(t, [[CUT.stare, camAt(1360, 610, 2.3)], [CUT.slowly, camAt(1360, 612, 2.6)]], ease.linear);
   const cold = seg(t, CUT.stare + 0.4, CUT.slowly);
-  const hp = { x: 1360, y: 1000, s: 0.5, turn: -0.1, armL: 14, armR: 14, volume: false, face: { name: 'smug', mouth: 'smirk', eyes: { look: [0, 1], type: t < CUT.stare + 0.6 ? 'star' : undefined } } };
+  const hp = { x: 1360, y: 1000, s: 0.5, turn: 0, armL: 14, armR: 14, volume: false, face: { name: 'smug', mouth: 'smirk', eyes: { look: [0, 0.4], type: t < CUT.stare + 0.6 ? 'star' : undefined } } };
   const o = livingShot(t, cam, { fort: 1, gramps: false, heroSeated: false, standing: X.pillowFort({ ...LV.fort, k: 1, t }) + actor('you', t, hp, { arms: false }) });
-  // numbers reflected in his eyes
-  const e = toScr(cam, 1360, 1000 - 0.5 * 790);
-  const refl = cold > 0.2 ? S.g(TFS('+XP', -46, 0, 24, '#FFD84A') + TFS('+XP', 46, 0, 24, '#FFD84A'), tf(e.x, e.y, 1), { opacity: f(seg(cold, 0.2, 0.6)) }) : '';
+  // XP numbers reflected in his eyes
+  const e = toScr(cam, 1360, 1000 - 0.5 * 951 + 92);
+  const k = seg(cold, 0.15, 0.5);
+  const refl = k > 0 ? S.g(TFS('XP', -66 * cam.zoom / 2.3, 0, 30 * cam.zoom / 2.3, '#FFD84A') + TFS('XP', 66 * cam.zoom / 2.3, 0, 30 * cam.zoom / 2.3, '#FFD84A'), tf(e.x, e.y, 1), { opacity: f(k) }) : '';
   return compose(t, o, { fx: refl, cold: cold * 0.7, clock: '7:43 PM', day: 'SAT' }) + softEdge(cold);
 }
 // cold street people whose faces get swallowed by XP chips
 const CROWD = [[-260, 'adult', 2, '+5'], [200, 'kid', 10, '+2'], [700, 'adult', 6, '+8'], [1150, 'adult', 9, '+3'], [1700, 'kid', 12, '+5']];
+function faceChip(x, y, s, txt, k) {
+  if (k <= 0) return '';
+  const th = H.theme('cold'), w = 170, h = 96, u = ease.outBack(clamp(k, 0, 1));
+  let g = H.panel(-w / 2, -h / 2, w, h, th, { c: 14, br: 18, op: 1.15 }) + H.TL(txt, 0, 18, 50, '#DCE8F2', { stroke: th.edge, 'stroke-width': 6, 'paint-order': 'stroke' });
+  return S.g(g, tf(x, y, s * u));
+}
 function chipOver(cam, key, x, i, txt, k, s = 1) {
   const p = headAt(cam, key, { x, y: STY, s: heroS, i });
-  const fy = p.y + 190 * heroS * p.z * 0.5;
-  return H.miniPlate({ x: p.x, y: fy + 40 * p.z, s: s * p.z * 0.9, t: 0, k, name: `${txt} XP`, level: '', theme: 'cold', tether: false });
+  return faceChip(p.x, p.y + 92 * heroS * p.z, s * p.z * 0.55, `${txt} XP`, k);
 }
 // ---- 33. "But slowly..." — the cold street: he walks along, eyes on the numbers
 function shSlowly(t) {
@@ -590,30 +599,30 @@ function shSlowly(t) {
 function shPoints(t) {
   const cam = camKeys(t, [[CUT.points, camAt(2600, 680, 1.45)], [CUT.twoxp, camAt(2640, 680, 1.52)]], ease.linear);
   const hx = lerp(2450, 2600, seg(t, CUT.points, CUT.twoxp)), mx = hx + 240;
-  const box = S.g(S.rect(-90, -70, 180, 140, 8, ol('#C9A26A', 6)) + S.path('M-90 -20 H90', ln(5, '#A8824A')) + K.TF('FRAGILE', 0, 30, 26, '#C0303A'), tf(hx + 120, STY - 330, 0.7));
+  const box = S.g(S.rect(-90, -70, 180, 140, 8, ol('#C9A26A', 6)) + S.path('M-90 -20 H90', ln(5, '#A8824A')) + K.TF('FRAGILE', 0, 30, 26, '#C0303A'), tf(hx + 125, STY - 250, 0.62));
   let chars = K.draw.adult(4, { x: mx, y: STY, s: heroS, view: 'side', ...AC.walk((t - CUT.points) * 6, 0.6), armL: 60, face: 'happy' });
   chars += youSt(t, { x: hx, view: 'side', flip: true, ...AC.walk((t - CUT.points) * 6, 0.6), armL: 70, bendL: 30, face: { name: 'smug', eyes: { look: [0.7, -0.6], type: 'star' } } }, { arms: false }) + box;
   let o = street(t, cam, { time: 'day' }, chars);
   const p = headAt(cam, 'adult', { x: mx, y: STY, s: heroS, i: 4 });
-  const plates = H.questMarker({ x: p.x, y: p.y - 10, s: 0.9, t, reward: '+50 XP', col: '#C9D3DD' }) + H.miniPlate({ x: p.x, y: p.y + 120, s: 1.3, k: 1, name: '+50 XP', level: '', theme: 'cold', tether: false });
-  const pop_ = H.xpPop({ x: p.x, y: p.y - 120, age: t - tPoints50, amount: 50, to: barTo(tPoints50 + H.XP_FLY), col: '#D3E4F0' });
+  const plates = faceChip(p.x, p.y + 92 * heroS * p.z, 0.55 * p.z, '+50 XP', 1);
+  const pop_ = [0, 0.35, 0.7].map((d, j) => H.xpPop({ x: [p.x, 300, 1650][j], y: [p.y - 120, 420, 380][j], age: t - (tPoints50 + d), amount: 50, to: barTo(tPoints50 + d + H.XP_FLY), col: '#D3E4F0' })).join('');
   return compose(t, o, { plates, pop: pop_, cold: 0.85, clock: '4:25 PM', day: 'TUE', theme: 'cold' }) + softEdge(0.6);
 }
 // Mrs. Wells with her spilled groceries (apples on the sidewalk) + the grey +2 XP marker
 const WELLS_X = 1100;
 function wellsSpill(t, tilt = 0) {
-  let g = actor('neighbor', t, { x: WELLS_X, y: STY, s: heroS, bags: 1, spill: 1, turn: -0.3, lean: 6, armL: 40, face: { name: 'sad', eyes: { look: [-0.8, 0.4] }, fx: ['sweat'] } });
+  let g = actor('neighbor', t, { x: WELLS_X, y: STY - 16, s: heroS * 0.97, bags: 1, spill: 1, turn: -0.3, lean: 6, armL: 40, face: { name: 'sad', eyes: { look: [-0.8, 0.4] }, fx: ['sweat'] } });
   for (let i = 0; i < 5; i++) { const ax = WELLS_X - 140 - i * 70 - 30 * hash(i); g += S.circle(ax, STY - 14, 14, ol('#E8333C', 3.5)) + S.path(`M${ax} ${STY - 28} q3 -8 8 -10`, ln(3)); }
   return g;
 }
 // ---- 35. "Two XP?" — close on his face, cold; his eyes flick to the grey chip, not to her
 function shTwoXP(t) {
-  const cam = camKeys(t, [[CUT.twoxp, camAt(760, 600, 2.4)], [CUT.walk, camAt(760, 600, 2.6)]], ease.linear);
+  const cam = camKeys(t, [[CUT.twoxp, camAt(900, 640, 1.85)], [CUT.walk, camAt(905, 640, 2.0)]], ease.linear);
   const hp = { x: 760, view: 'front', turn: 0.45, armL: 10, armR: 10, volume: false, face: { name: 'deadpan', eyes: { look: [0.9, -0.7], upper: 0.35 } } };
   let chars = wellsSpill(t) + youSt(t, hp, { arms: false });
   let o = street(t, cam, { time: 'day', bags: false }, chars);
-  const p = headAt(cam, 'neighbor', { x: WELLS_X, y: STY, s: heroS });
-  const plates = H.questMarker({ x: Math.min(1820, p.x), y: Math.max(260, p.y), s: 1.1, t, reward: '+2 XP', col: '#C9D3DD' });
+  const p = headAt(cam, 'neighbor', { x: WELLS_X, y: STY - 16, s: heroS * 0.97 });
+  const plates = H.questMarker({ x: p.x, y: p.y, s: 1.0, t, reward: '+2 XP', col: '#C9D3DD' });
   return compose(t, o, { plates, cold: 1, clock: '5:02 PM', day: 'WED', theme: 'cold' }) + softEdge(0.7);
 }
 // ---- 36. "Not worth it." — wide and cold: he walks past without stopping, steps over an apple; she looks after him
@@ -622,10 +631,10 @@ function shWalk(t) {
   const hx = lerp(560, 1500, seg(t, CUT.walk - 0.6, END + 0.3));
   const step = bump(t, CUT.walk + 0.55, CUT.walk + 0.85);
   let chars = wellsSpill(t);
-  chars += youSt(t, { x: hx, view: 'side', flip: true, ...AC.walk((t - CUT.walk) * 7, 1), lift: 22 * step, face: { name: 'deadpan', eyes: { look: [1, 0] } } }, { arms: false });
+  chars += youSt(t, { x: hx, y: STY + 26, s: heroS * 1.03, view: 'side', flip: true, ...AC.walk((t - CUT.walk) * 7, 1), lift: 22 * step, face: { name: 'deadpan', eyes: { look: [1, 0] } } }, { arms: false });
   let o = street(t, cam, { time: 'day', bags: false }, chars);
-  const p = headAt(cam, 'neighbor', { x: WELLS_X, y: STY, s: heroS });
-  const plates = H.questMarker({ x: p.x, y: p.y, s: 0.8, t, reward: '+2 XP', col: '#C9D3DD' });
+  const p = headAt(cam, 'neighbor', { x: WELLS_X, y: STY - 16, s: heroS * 0.97 });
+  const plates = H.questMarker({ x: p.x, y: p.y, s: 0.95, t, reward: '+2 XP', col: '#C9D3DD' });
   return compose(t, o, { plates, cold: 1, clock: '5:02 PM', day: 'WED', theme: 'cold' }) + softEdge(0.8) + whip(t, END, 1, 0.12);
 }
 
@@ -654,6 +663,6 @@ function look(t) {
 }
 const BEATS = {
   T0, END, tPop50, tLand50, tLvl2, tUp, tNICE, tSpree, tCarried, tCompl, tRescued, tGrab, tHat, tSoup, tDog, GRID, DEEDS, tTwo, tFive, tTwenty,
-  tForty, tSixty, tEighty, tGlassesW, tHeadW, tQC, tOne, tPillow, tEVER, tEpic, tHundred, tPop100, tLand100, tLvl21, tPoints50, XPE,
+  tForty, tSixty, tEighty, tGlassesW, tHeadW, tQC, tOne, tOneSpawn, tPillow, tEVER, tEpic, tHundred, tPop100, tLand100, tLvl21, tPoints50, XPE,
 };
 module.exports = { scene, look, SHOTS, CUT, BEATS, xpState };
