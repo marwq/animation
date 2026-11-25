@@ -254,12 +254,12 @@ render at 1920×1080, median of 5) — the machine was shared with other agents'
 
 | set / framing | elements | build + render |
 |---|---|---|
-| fair main / cotton / teacups / ferris / dino / bench / arch / golden canopy | 440–800 | 30–70 ms |
-| fair wide (crowd .8 + packed .5) · dinoFar (crowd 1, packed .5) | 800–1000 | 65–85 ms |
-| fair crowd (crowd 1 + packed 1 + near) · over (packed 1, cheer) | 960–1080 | 68–90 ms |
-| worst: fair wide + crowd 1 + packed 1 + near + canopy + cheer 1 | ~1070 | 85–100 ms (don't stack all of it at zoom .55) |
-| fairBench | ~100 | 18–30 ms |
-| dinoTop close / wide | 400–430 | 45–60 ms |
+| fair main / cotton / teacups / ferris / dino / bench / arch / dinoHead / golden + canopy | 440–800 | 16–65 ms |
+| fair wide (crowd .8 + packed .5) · dinoFar (crowd .9–1, packed .4–.5) | 980–1000 | 64–80 ms |
+| fair crowd (crowd 1 + packed 1 + near) · over (packed 1, cheer .4) | 960–1080 | 72–91 ms (min-of-9 ≈ 75–85) |
+| worst: fair wide + crowd 1 + packed 1 + near + canopy + cheer 1 | ~1070 | 85–106 ms — don't stack all of it at zoom .55 |
+| fairBench (any cam) | ~100 | 16–30 ms |
+| dinoTop close / wide (+ confetti) | 400–430 | 45–67 ms |
 | fairEntrance wide / low | 440–480 | 40–65 ms |
 
 The four-in-one tiles on the sheet are 4 sets in one frame (not one set). Characters (~20 ms each at s .5) come on top —
