@@ -820,8 +820,8 @@ function mirrorLayers(t, o = {}) {
     m += G(R(-70, -60, 140, 110, 18, ol('#E8ECF2', 5)) + R(-50, 50, 100, 22, 6, ol('#BCC4D2', 4)) + TF('PUSH', 0, 0, 22, '#5A5470') + CI(0, 26, 8, { fill: '#5A5470' }), tr(1760, 470));
     m += G(R(-90, -40, 180, 80, 10, ol('#FFFFFF', 4)) + TF('WASH YOUR', 0, -6, 24, PUR) + TF('HANDS!', 0, 22, 24, PUR), tr(1060, 260, 1, -3));
     m += R(XL, YT, XR - XL, 60 - YT, 0, { fill: '#F2EEE7' }) + R(200, 20, 1500, 40, 10, { fill: '#FFFFFF', stroke: '#B7AECB', 'stroke-width': 4 });
-    let fr = R(XL, 900, XR - XL, 60, 0, ol('#F4F6FA', 6)) + R(XL, 960, XR - XL, 400, 0, ol('#E2E6EE', 6)) + E(960, 930, 260, 22, ol('#D3DAE4', 5)) + P('M940 930 V880 Q940 850 980 850 H1010', ln(20)) + P('M940 930 V880 Q940 850 980 850 H1010', ln(11, '#D8DEE8'));
-    fr += G(R(-30, -96, 60, 96, 12, ol('#FF8FB0', 4)) + R(-12, -120, 24, 26, 4, ol('#FFFFFF', 3)), tr(1420, 930));
+    let fr = R(XL, 920, XR - XL, 60, 0, ol('#F4F6FA', 6)) + R(XL, 980, XR - XL, 400, 0, ol('#E2E6EE', 6)) + E(960, 950, 300, 24, ol('#D3DAE4', 5)) + E(960, 954, 250, 14, { fill: '#B7C0CE' }) + P('M960 1060 V1000 Q960 974 930 974 H906', ln(20)) + P('M960 1060 V1000 Q960 974 930 974 H906', ln(11, '#D8DEE8'));
+    fr += G(R(-30, -96, 60, 96, 12, ol('#FF8FB0', 4)) + R(-12, -120, 24, 26, 4, ol('#FFFFFF', 3)), tr(1460, 950));
     const th = 70;
     let fg = P(`M-200 -200 H2120 V1280 H-200 Z M${th} ${th} V${1080 - th} H${1920 - th} V${th} Z`, { fill: '#C7CEDA', 'fill-rule': 'evenodd' }) + R(th, th, 1920 - 2 * th, 1080 - 2 * th, 18, ln(7)) + R(th - 20, th - 20, 1920 - 2 * th + 40, 1080 - 2 * th + 40, 26, ln(5, '#FFFFFF', 0.6));
     fg += P('M140 600 L420 120 L520 120 L240 600 Z M1500 1000 L1780 520 L1820 520 L1540 1000 Z', { fill: '#FFFFFF', opacity: 0.14 });
@@ -854,7 +854,7 @@ function mirrorLayers(t, o = {}) {
     if (sx === 1320) { const dr = md(t * 1.6, 1); ct += E(sx + 40, 584 + dr * 60, 5, 7, { fill: '#9FD8FF', opacity: f(1 - dr) }); }
     ct += P(`M${sx - 40} 814 V880 Q${sx - 40} 920 ${sx} 920 Q${sx + 40} 920 ${sx + 40} 880 V840 H${sx + 110}`, ln(16, '#9AA4B4')) ;
   }
-  ct += G(R(-28, -84, 56, 84, 10, ol('#FF8FB0', 4)) + R(-10, -108, 20, 26, 4, ol('#FFFFFF', 3)), tr(960, 642));
+  ct += G(R(-28, -84, 56, 84, 10, ol('#FF8FB0', 4)) + R(-10, -108, 20, 26, 4, ol('#FFFFFF', 3)), tr(790, 642, 0.85));
   ct += G(R(-90, -150, 180, 220, 14, ol('#F2F4F8', 5)) + R(-70, 50, 140, 24, 4, ol('#FFFFFF', 3)) + TF('PAPER', 0, -60, 26, '#8A93A6'), tr(1800, 430));
   let light = R(-500, -500, 2920, 2080, 0, { fill: '#DFF6EE', opacity: 0.06 }) + (flick ? R(-500, -500, 2920, 2080, 0, { fill: '#1A1630', opacity: 0.22 }) : '');
   return { bg: '', mid: m, front: frame + ct, fg: '', light, frontRows: [frame, ct] };
@@ -1399,19 +1399,19 @@ function marquee(x, y, s, lines) {
   let gr = '';
   for (let yy = -240; yy < -100; yy += 30) gr += `M-206 ${yy} H206 `;
   o += P(gr, ln(1.5, '#D8D2E6'));
-  lines.forEach((l, i) => { o += T(l, 0, -208 + i * 64, Math.min(48, 400 / (l.length * 0.56)), '#2A2246', { 'letter-spacing': 2 }); });
+  lines.forEach((l, i) => { o += T(l, 0, -196 + i * 64, Math.min(46, 370 / (l.length * 0.6 + 0.5)), '#2A2246', { 'letter-spacing': 2 }); });
   o += owl(-190, -330, 0.5) + bush(-120, 0, 0.5, '#5CB86A') + bush(140, 0, 0.45);
   return G(o, tr(x, y, s));
 }
 function extCrowd(t, o = {}) {
-  const k = bool01(o.crowd, 0.7);
+  const k = bool01(o.crowd, 0.6);
   if (k <= 0) return [];
   const out = [];
   // walking up the walkway toward the doors
-  for (let i = 0; i < 6; i++) {
+  for (let i = 0; i < 5; i++) {
     if (hash(i * 2.7 + 3) > k) continue;
     const u = md(i / 6 + t * 0.045, 1);
-    const y = lerp(990, 610, u), s = extScale(y);
+    const y = lerp(880, 610, u), s = extScale(y);
     out.push({ x: 960 + (hash(i * 4.1) - 0.5) * 900 * s, y, s, i: i * 13 + 1, pose: 'walk', ph: i * 1.7, view: 'back', speed: 6 });
   }
   // along the sidewalk
@@ -1439,7 +1439,7 @@ function exteriorLayers(t, cam = {}, o = {}) {
   far = G(far, null, { opacity: day ? 1 : 0.92 });
   // trees behind the roof (k .65)
   let back = '';
-  for (let i = 0; i < 14; i++) back += tree(-1400 + i * 360 + hash(i) * 100, 470 + hash(i * 2) * 40, 0.75 + hash(i * 3) * 0.25, { kind: i % 3 === 1 ? 'tall' : 'round', col: i % 2 ? '#56B060' : '#4CA85A', sway: Math.sin(t * 1.1 + i) * 1 });
+  for (let i = 0; i < 14; i++) back += tree(-1400 + i * 360 + hash(i) * 100, 430 + hash(i * 2) * 40, 0.42 + hash(i * 3) * 0.2, { kind: i % 3 === 1 ? 'tall' : 'round', col: i % 2 ? '#56B060' : '#4CA85A', sway: Math.sin(t * 1.1 + i) * 1 });
   // ---------- school + grounds (k 1)
   let m = '';
   m += R(-4000, EX.base - 20, 9000, 2400, 0, { fill: '#78C46E' }) + P(`M-4000 ${EX.base + 60} H5000`, ln(0));
@@ -1566,12 +1566,12 @@ const SPOTS = {
   },
   mirror: {
     hero: { x: 560, y: 1460, s: 0.82, view: 'back' },
-    reflection: { x: 1010, y: 700, s: 0.44, flip: true },
-    qmarks: { x: 1010, y: 215 },
+    reflection: { x: 1030, y: 780, s: 0.52, flip: true },
+    qmarks: { x: 1030, y: 215 },
     clip: 'stMirrorClip', glass: { ...MIR },
     sink: { x: 600, y: 650 }, sinkR: { x: 1320, y: 650 },
-    face: { hero: { x: 960, y: 1080, s: 0.62 }, qmarks: { x: 960, y: 380 } },
-    cams: { over: { x: 0, y: 0, zoom: 1 }, reflection: camAt(1010, 400, 1.7), qmarks: camAt(1010, 300, 2.2), face: { x: 0, y: 0, zoom: 1 }, faceClose: camAt(960, 560, 1.35) },
+    face: { hero: { x: 960, y: 1090, s: 0.7 }, qmarks: { x: 960, y: 330 } },
+    cams: { over: { x: 0, y: 0, zoom: 1 }, reflection: camAt(1030, 400, 1.7), qmarks: camAt(1030, 300, 2.2), face: { x: 0, y: 0, zoom: 1 }, faceClose: camAt(960, 560, 1.35) },
   },
   classroom: {
     rows: CLASS_SEATS,                                         // [row3, row2, row1] seats (back -> front), 2 per table

@@ -3,7 +3,8 @@
 Contact sheet: `concept/sets_home.png` (`node tools/sheet_home.js`; `--only kitchen,street` for some tiles, `--full DIR`
 for full-size PNGs, `--noref` hides the stand-ins / anchor marks). The sheet draws the hero (rig/r6) on every FLOOR line
 and seat, look-alike stand-ins for Mom / Grandpa / Max / Mrs. Wells (the real cast from rig/cast.js once it has `max`), and
-prints elements, JS build ms and browser render ms for every tile (the SET ALONE, all layers, no characters). The last
+prints elements, JS build ms and browser render ms for every tile (the SET ALONE, all layers, no characters). It uses the
+real cast (rig/cast.js: mom, grandpa, max, biscuit) and the real `X.pillowFort` from rig/extras.js. The last
 tile checks four documented camera framings (monitor fill, toaster, the 1979 photo, the fort reveal).
 
 ```js
@@ -139,7 +140,7 @@ a pot, the drying rack, yellow gloves; hides the toaster) · **`pancakes`** (SC1
 heart + butter, the **FOR MOM ♥** card, a dandelion in a glass and the syrup bottle at Mom's end; batter bowl + whisk, egg
 shells, flour puddles on the counter + floor; a pancake in the pan) · **`toast`** 0..1 (the toaster: 0 in the slots … .35
 popped up … 1 flying ~400 px high and spinning) · `burnt` 0..1 (default 1 — the HUD said 80 %) · `smoke` (default on when
-toast > .2 and burnt) · **`cups`** 0..4 (Mom's empty coffee mugs lined up at her end — "she drank four") · `coffee`
+toast > .2 and burnt) · `toaster` (default true; false hides it) · **`cups`** 0..4 (Mom's empty coffee mugs lined up at her end — "she drank four") · `coffee`
 (default true) · `boxes` (default true) · `bowls` · `steam` · `lamp` 0..1 (default 1 in the evening) · `clock 'H:MM'` ·
 `birds` · `chairs`.
 
@@ -273,6 +274,12 @@ inside (bedroom with `pixels`) — or the reverse. The morning establishing: `ti
 ---
 
 ## Props + helpers (exported)
+
+The sets draw their own built-in toaster, alarm clock and sock. `rig/extras.js` (scast) has hand-prop versions of the same
+objects (`toaster({pop, burn, t})`, `alarmClock({ring, t})`, `sock({smell, t})`, `cerealBowl({splash})`, `pancakes`,
+`coffeeMug`, `fryingPan`, `gamingPC`, `tablet`, `pillowFort`). When a character picks one up, hide the set's copy
+(`kitchen toaster: false`, `bedroom alarmClock: false` / `sock: false`) and draw the extras prop at the anchor.
+
 
 `dragonTitle(w, h, t)` (the DRAGON PEAK title screen for any screen box) · `mug(x, y, s, tn, {col, label, handle, steam: t,
 empty})` · `bowl(x, y, s, tn, {col, fill 'cereal'|'milk'|'empty', spoon, splash 0..1})` (splash = the milk crown for Max's

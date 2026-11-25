@@ -63,11 +63,17 @@ const hero = (t, pose = {}, act = {}) => K.actor('you', t, { s: 0.5, ...pose }, 
 // any cast key if it exists, else a generic human stand-in (the stats cast is being drawn in parallel)
 const STATS_CAST = !!(K.draw.grandpa && K.draw.benji && K.draw.tank);   // the new cast is in place
 function person(key, i, pose) {
-  if (STATS_CAST && K.draw[key] && key !== 'kid') { try { return K.actor(key, pose.t || 0, pose); } catch (e) { /* fall through */ } }
+  if (STATS_CAST && K.draw[key]) { try { return K.actor(key, pose.t || 0, ['kid', 'adult'].includes(key) ? { i, ...pose } : pose); } catch (e) { /* fall through */ } }
   const kid = ['benji', 'max', 'kid', 'tank'].includes(key);
   return (kid ? K.draw.humanKid : K.draw.adult)(i, { ...pose, s: (pose.s || 0.5) * (key === 'max' ? 0.72 : key === 'tank' ? 1.22 : 1) });
 }
 // tiles: svg strings or { svg, vb: [x, y, w, h] } (a crop of the 1920x1080 frame); labels at the top (or bottom with lblBottom)
+// a cast member + the head-top point for its plate (H.overHead asks rig/cast.js headTop when it exists)
+function cast(key, i, pose) {
+  const svg = person(key, i, pose);
+  const head = STATS_CAST ? H.overHead(key, pose.x, pose.y, pose.s, 0, ['kid', 'adult'].includes(key) ? { i, ...pose } : pose) : { x: pose.x, y: pose.y - 1000 * pose.s };
+  return { svg, head };
+}
 const grid = (svgs, cols, labels = [], lblBottom = false) => {
   const rows = Math.ceil(svgs.length / cols), w = 1920 / cols, h = 1080 / rows;
   return '<rect width="1920" height="1080" fill="#000"/>' + svgs.map((v, i) => `<svg x="${(i % cols) * w}" y="${Math.floor(i / cols) * h}" width="${w}" height="${h}" viewBox="${(v.vb || [0, 0, 1920, 1080]).join(' ')}" preserveAspectRatio="xMidYMid slice">${v.svg || v}</svg>` + (labels[i] ? LBL(labels[i], (i % cols) * w + w / 2, Math.floor(i / cols) * h + (lblBottom ? h - 62 : 34), 26) : '')).join('') +
@@ -89,37 +95,35 @@ SHEETS.plates = () => {
   const t = T0;
   const tile1 = () => {   // kitchen: mom 2% smiling, grandpa legend, max chaos
     let o = bgKitchen();
-    o += person('mom', 1, { x: 420, y: 960, s: 0.55, face: 'joy', t }) + person('grandpa', 2, { x: 980, y: 960, s: 0.55, t }) + person('max', 3, { x: 1500, y: 960, s: 0.55, t });
-    o += H.plateFor('mom', { x: 420, y: 330, s: 1.05, t });
-    o += H.plateFor('grandpa', { x: 980, y: 330, s: 1.05, t });
-    o += H.plateFor('max', { x: 1500, y: 360, s: 1.05, t });
+    const m = cast('mom', 1, { x: 420, y: 980, s: 0.55, face: 'joy', t }), g = cast('grandpa', 2, { x: 980, y: 980, s: 0.55, t }), x = cast('max', 3, { x: 1500, y: 980, s: 0.55, t });
+    o += m.svg + g.svg + x.svg;
+    o += H.plateFor('mom', { ...m.head, s: 1.0, t }) + H.plateFor('grandpa', { ...g.head, s: 1.0, t }) + H.plateFor('max', { ...x.head, s: 1.0, t });
     return o;
   };
   const tile2 = () => {   // school: krump boss, tank low + tags, benji clumsy
     let o = bgHall();
-    o += person('teacher', 4, { x: 380, y: 960, s: 0.6, t }) + person('tank', 5, { x: 1000, y: 960, s: 0.55, t }) + person('benji', 6, { x: 1560, y: 960, s: 0.5, t });
-    o += H.plateFor('teacher', { x: 380, y: 330, s: 1.05, t });
-    o += H.plateFor('tank', { x: 1000, y: 360, s: 1.05, t });
-    o += H.plateFor('benji', { x: 1560, y: 420, s: 1.05, t });
+    const k = cast('teacher', 4, { x: 360, y: 1000, s: 0.5, t }), tk = cast('tank', 5, { x: 1000, y: 1000, s: 0.5, t }), b = cast('benji', 6, { x: 1580, y: 1000, s: 0.5, t });
+    o += k.svg + tk.svg + b.svg;
+    o += H.plateFor('teacher', { ...k.head, s: 1.0, t }) + H.plateFor('tank', { ...tk.head, s: 1.0, t }) + H.plateFor('benji', { ...b.head, s: 1.0, t });
     return o;
   };
   const tile3 = () => {   // biscuit error -> LV 1000, lunch lady, benji best friend
     let o = bgKitchen();
-    o += H.plateFor('biscuitError', { x: 400, y: 420, s: 1.1, t });
-    o += H.plateFor('biscuit', { x: 400, y: 820, s: 1.1, t });
-    o += H.plateFor('lunchLady', { x: 1250, y: 330, s: 1.05, t });
-    o += H.plateFor('benjiBest', { x: 1250, y: 700, s: 1.05, t });
-    o += H.plateFor('smartKid', { x: 1250, y: 960, s: 0.9, t, theme: 'cold' });
+    const d1 = cast('biscuit', 0, { x: 330, y: 520, s: 0.6, t }), d2 = cast('biscuit', 0, { x: 330, y: 1000, s: 0.6, t, pose: 'beg' });
+    const ll = cast('lunchLady', 0, { x: 1000, y: 1000, s: 0.5, t }), b = cast('benji', 6, { x: 1580, y: 1000, s: 0.5, face: 'happy', t });
+    o += d1.svg + d2.svg + ll.svg + b.svg;
+    o += H.plateFor('biscuitError', { ...d1.head, s: 0.95, t }) + H.plateFor('biscuit', { ...d2.head, s: 0.95, t });
+    o += H.plateFor('lunchLady', { ...ll.head, s: 0.95, t }) + H.plateFor('benjiBest', { ...b.head, s: 0.95, t });
     return o;
   };
   const tile4 = () => {   // the hero: ??? and BIG BROTHER
     let o = bgHall();
-    o += hero(t, { x: 560, y: 980, s: 0.55, face: 'confused' }) + hero(t, { x: 1360, y: 980, s: 0.55, face: 'happy' });
-    o += H.heroPlate({ x: 560, y: 980 - 960 * 0.55 - 6, s: 1.15, t, reveal: 0 });
-    o += H.heroPlate({ x: 1360, y: 980 - 960 * 0.55 - 6, s: 1.15, t, reveal: 1 });
+    const a = cast('you', 0, { x: 560, y: 980, s: 0.55, face: 'confused', t }), b = cast('you', 0, { x: 1360, y: 980, s: 0.55, face: 'happy', t });
+    o += a.svg + b.svg;
+    o += H.heroPlate({ ...a.head, s: 1.15, t, reveal: 0 }) + H.heroPlate({ ...b.head, s: 1.15, t, reveal: 1 });
     return o;
   };
-  return grid([tile1(), tile2(), tile3(), tile4()], 2, ['Mom ENERGY 2% · Grandpa LEGEND · Max CHAOS 9999 HP ∞', 'Krump FINAL BOSS · Tank HP 3/100 + tags · Benji CLUMSY', 'Biscuit ERROR -> LV 1000 · lunch lady · BEST FRIEND: MAX · cold', 'the hero: ??? -> BIG BROTHER']);
+  return grid([tile1(), tile2(), tile3(), tile4()], 2, ['Mom ENERGY 2% · Grandpa LEGEND · Max CHAOS 9999 HP ∞', 'Krump FINAL BOSS · Tank HP 3/100 + tags · Benji CLUMSY', 'Biscuit ERROR -> LV 1000 · lunch lady · BEST FRIEND: MAX', 'the hero: ??? -> BIG BROTHER']);
 };
 
 // in-context overview: four shots across the story
@@ -127,29 +131,31 @@ SHEETS.overview = () => {
   const t = T0;
   const a = () => {   // SC03 kitchen: the HUD morning
     let o = bgKitchen();
-    o += person('mom', 1, { x: 640, y: 960, s: 0.58, face: 'joy', t }) + hero(t, { x: 1320, y: 980, s: 0.55, face: 'amazed' });
-    o += H.plateFor('mom', { x: 640, y: 960 - 1010 * 0.58 - 6, s: 1.1, t });
+    const m = cast('mom', 1, { x: 640, y: 980, s: 0.55, face: 'joy', t }), y = cast('you', 0, { x: 1320, y: 990, s: 0.55, face: 'amazed', t });
+    o += m.svg + y.svg;
+    o += H.plateFor('mom', { ...m.head, s: 1.0, t });
     o += H.tipFor('coffee', { x: 860, y: 640, t, dist: 70 });
     o += H.tipFor('toaster', { x: 220, y: 560, t, dist: 70 });
-    o += H.heroPlate({ x: 1320, y: 980 - 960 * 0.55 - 6, s: 0.9, t });
+    o += H.heroPlate({ ...y.head, s: 0.9, t });
     o += H.xpPop({ x: 860, y: 600, age: 0.25, amount: 1, text: '+1% ENERGY', col: '#FFD23F' });
     o += H.hudFrame({ t, clock: '7:02 AM' }) + H.xpBar({ t, value: 0.12, level: 1, text: '12 / 100' });
     return o;
   };
   const b = () => {   // SC04/05 school: boss, Tank, lie meter, quests
     let o = bgHall();
-    o += person('teacher', 4, { x: 300, y: 960, s: 0.6, t }) + person('kid', 7, { x: 860, y: 960, s: 0.5, face: 'nervous', t }) + person('tank', 5, { x: 1480, y: 960, s: 0.55, t });
-    o += H.plateFor('teacher', { x: 300, y: 330, s: 1.0, t });
-    o += H.lieMeter({ x: 860, y: 520, s: 0.95, t });
-    o += H.plateFor('tank', { x: 1480, y: 330, s: 1.05, t });
-    o += H.questMarker({ x: 1700, y: 400, t, kind: '?', s: 0.6 });
+    const k = cast('teacher', 4, { x: 300, y: 1000, s: 0.5, t }), kd = cast('kid', 3, { x: 860, y: 1000, s: 0.5, face: 'nervous', t }), tk = cast('tank', 5, { x: 1480, y: 1000, s: 0.5, t });
+    o += k.svg + kd.svg + tk.svg;
+    o += H.plateFor('teacher', { ...k.head, s: 0.95, t });
+    o += H.lieMeter({ ...kd.head, s: 0.95, t });
+    o += H.plateFor('tank', { ...tk.head, s: 0.95, t });
+    o += H.questMarker({ x: tk.head.x + 200, y: tk.head.y + 60, t, kind: '?', s: 0.55 });
     o += H.hudFrame({ t, clock: '10:15 AM', day: 'TUE' }) + H.xpBar({ t, value: 0.4, level: 3, text: '40 / 100' });
     return o;
   };
   const c = () => {   // SC08 fair: overload
     let o = bgFair();
     const faces = [];
-    for (let i = 0; i < 5; i++) { const x = 250 + i * 360, y = 1000; o += K.draw.adult(i + 2, { x, y, s: 0.5 }); faces.push({ x, y: y - 0.5 * 1043 + 105, r: 66 }); }
+    for (let i = 0; i < 5; i++) { const p = cast('adult', i + 2, { x: 250 + i * 360, y: 1000, s: 0.5, t }); o += p.svg; faces.push({ x: p.head.x, y: p.head.y + 75, r: 66 }); }
     o += hero(t, { x: 960, y: 1090, s: 0.6, face: 'scared' });
     o += H.numbersFlood({ t, k: 0.68, faces });
     o += H.questArrow({ x: 960, y: 1020, t, glitch: 1, s: 0.9 });
@@ -159,9 +165,10 @@ SHEETS.overview = () => {
   };
   const d = () => {   // SC12 living room: Biscuit + BIG BROTHER
     let o = bgKitchen();
-    o += hero(t, { x: 1250, y: 980, s: 0.58, face: 'happy' }) + person('max', 3, { x: 900, y: 980, s: 0.58, t });
-    o += H.plateFor('biscuit', { x: 420, y: 640, s: 1.05, t });
-    o += H.heroPlate({ x: 1250, y: 980 - 960 * 0.58 - 6, s: 1.1, t, reveal: 1 });
+    const y = cast('you', 0, { x: 1300, y: 990, s: 0.55, face: 'happy', t }), mx = cast('max', 3, { x: 900, y: 990, s: 0.55, t }), dg = cast('biscuit', 0, { x: 400, y: 990, s: 0.6, t });
+    o += y.svg + mx.svg + dg.svg;
+    o += H.plateFor('biscuit', { ...dg.head, s: 1.0, t });
+    o += H.heroPlate({ ...y.head, s: 1.1, t, reveal: 1 });
     return o;
   };
   return grid([a(), b(), c(), d()], 2, ['SC03 the HUD morning: Mom ENERGY 2% · tooltips · ??? · XP bar · frame', 'SC04-05 school: FINAL BOSS · LIE 99% · Tank HP 3/100 + tags · ? marker', 'SC08 overload: numbers flood over faces · arrow spins · glitch', 'SC12 finale: Biscuit LV 1000 · GOOD BOY ∞ · BIG BROTHER'], true);

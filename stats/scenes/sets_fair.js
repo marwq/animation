@@ -421,8 +421,9 @@ function crowdPeople(row, vx0, vx1, dens = 1) {
 }
 // draw crowd rows (world space). o: { tone, t, cheer 0..1, light 0..1 (0 = silhouette), sil (silhouette colour), dens, faces,
 //   zoom (screen scale of the layer: picks the level of detail), x0, x1 (visible range) }
-// One stroked silhouette per person (torso + arms as one shape), stroked head + hair/hat; legs/hands are plain fills.
-// LOD by on-screen scale: < .12 no outlines / faces, < .22 no leg outlines, else full.
+// Cheap outlines: per row ONE dark silhouette path (every part grown by half a line width) under unstroked colour parts that
+// leave small gaps, so the dark shows as lines between head / torso / arms; only hair + hats are stroked.
+// LOD by on-screen scale: < .12 no outlines / faces; < .22 no mouths; legs only on rows marked legs !== false.
 function crowd(rows, o = {}) {
   const tn = o.tone || tone(), t = o.t || 0, cheer = b01(o.cheer), lt_ = o.light ?? 1, sil = o.sil || '#2A1E44', zs = o.zoom ?? 1;
   const col = (c) => (lt_ >= 1 ? tn.c(c) : mix(tn.c(c), sil, 1 - lt_));
@@ -430,28 +431,33 @@ function crowd(rows, o = {}) {
   for (const row of rows) {
     const ppl = row.people || crowdPeople(row, o.x0 ?? -1e9, o.x1 ?? 1e9, o.dens ?? 1);
     if (!ppl.length) continue;
-    const ss = row.s * zs, lod = ss < 0.12 ? 0 : ss < 0.22 ? 1 : 2;
+    const ss = row.s * zs, lod = row.outline === false ? 0 : ss < 0.12 ? 0 : ss < 0.22 ? 1 : 2;
     const B = { legs: new Map(), body: new Map(), head: new Map(), hands: new Map(), hair: new Map(), hat: new Map(), ball: new Map() };
     const add = (m, c, d) => m.set(c, (m.get(c) || '') + d);
-    let eyes = '', mouth = '', strings = '', seams = '';
+    let eyes = '', mouth = '', strings = '', silD = '';
     const faces = o.faces !== false && lt_ > 0.45 && lod > 0;
+    const legs = row.legs !== false;
     for (const p of ppl) {
-      const s = p.s, x = p.x;
+      const s = p.s, x = p.x, e = 6 * s;
       const up = cheer * (p.up < 0.85 ? 1 : 0.15);
       const bob = up > 0.05 ? Math.abs(Math.sin(t * 7.5 + p.ph)) * 26 * s * up : Math.sin(t * 2.1 + p.ph) * 4 * s;
       const y = p.y - bob, X_ = (v) => f(x + v * s), Y_ = (v) => f(y + v * s);
-      if (row.legs !== false) add(B.legs, p.pants, `M${X_(-92)} ${Y_(-300)}H${X_(92)}V${f(p.y)}H${X_(10)}V${Y_(-150)}H${X_(-10)}V${f(p.y)}H${X_(-92)}Z`);
+      // a rect in body units (x0, y0, w, h) -> colour part + its grown silhouette
+      const part = (m, c, x0, y0, w, h) => { add(m, c, dR(x + x0 * s, y + y0 * s, w * s, h * s)); if (lod) silD += dR(x + x0 * s - e, y + y0 * s - e, w * s + 2 * e, h * s + 2 * e); };
+      if (legs) { add(B.legs, p.pants, `M${X_(-92)} ${Y_(-292)}H${X_(92)}V${f(p.y)}H${X_(8)}V${Y_(-150)}H${X_(-8)}V${f(p.y)}H${X_(-92)}Z`); if (lod) silD += dR(x - 92 * s - e, y - 292 * s, 184 * s + 2 * e, p.y - y + 292 * s + e); }
+      part(B.body, p.shirt, -104, -524, 208, 244);
       if (up > 0.05) {
         const sw = Math.sin(t * 6.5 + p.ph) * 22 * up, ah = 230 * up, tl = -520 - ah + sw, trr = -520 - ah - sw;
-        add(B.body, p.shirt, `M${X_(-158)} ${Y_(tl)}H${X_(-106)}V${Y_(-530)}H${X_(106)}V${Y_(trr)}H${X_(158)}V${Y_(-462)}H${X_(104)}V${Y_(-280)}H${X_(-104)}V${Y_(-462)}H${X_(-158)}Z`);
-        add(B.hands, p.skin, dR(x - 158 * s, y + (tl - 42) * s, 52 * s, 44 * s) + dR(x + 106 * s, y + (trr - 42) * s, 52 * s, 44 * s));
+        part(B.body, p.shirt, -162, tl, 50, -462 - tl); part(B.body, p.shirt, 112, trr, 50, -462 - trr);
+        part(B.hands, p.skin, -162, tl - 44, 50, 40); part(B.hands, p.skin, 112, trr - 44, 50, 40);
       } else {
-        add(B.body, p.shirt, `M${X_(-156)} ${Y_(-528)}H${X_(156)}V${Y_(-338)}H${X_(104)}V${Y_(-280)}H${X_(-104)}V${Y_(-338)}H${X_(-156)}Z`);
-        add(B.hands, p.skin, dR(x - 156 * s, y - 338 * s, 50 * s, 46 * s) + dR(x + 106 * s, y - 338 * s, 50 * s, 46 * s));
+        part(B.body, p.shirt, -162, -522, 50, 180); part(B.body, p.shirt, 112, -522, 50, 180);
+        part(B.hands, p.skin, -162, -336, 50, 44); part(B.hands, p.skin, 112, -336, 50, 44);
       }
       // head (R6 block) + hair / hat
-      const hw = 196 * s, hh = 210 * s, hx_ = x + Math.sin(t * 1.3 + p.ph) * 4 * s, ht = y - 540 * s - hh;
+      const hw = 196 * s, hh = 206 * s, hx_ = x + Math.sin(t * 1.3 + p.ph) * 4 * s, ht = y - 548 * s - hh;
       add(p.back ? B.hair : B.head, p.back ? p.hair : p.skin, lod === 0 ? dR(hx_ - hw / 2, ht, hw, hh) : dRR(hx_ - hw / 2, ht, hw, hh, 30 * s));
+      if (lod) silD += dRR(hx_ - hw / 2 - e, ht - e, hw + 2 * e, hh + 2 * e, 34 * s);
       if (p.hk === 0) add(B.hat, p.hat, `M${f(hx_ - hw / 2 - 4 * s)} ${f(ht - 26 * s)}H${f(hx_ + hw / 2 + 4 * s)}V${f(ht + 22 * s)}H${f(p.back ? hx_ + hw / 2 + 4 * s : hx_ + hw / 2 + 50 * s)}V${f(ht + 42 * s)}H${f(p.back ? hx_ - hw / 2 - 50 * s : hx_ - hw / 2 - 4 * s)}Z`);
       else if (p.hk === 1) add(B.hair, p.hair, `M${f(hx_ - hw / 2 - 8 * s)} ${f(ht + 80 * s)}V${f(ht - 14 * s)}H${f(hx_ + hw / 2 + 8 * s)}V${f(ht + 54 * s)}L${f(hx_ + hw * 0.12)} ${f(ht + 36 * s)}L${f(hx_ - hw * 0.28)} ${f(ht + 52 * s)}Z`);
       else if (p.hk === 2) add(B.hair, p.hair, `M${f(hx_ - hw / 2 - 6 * s)} ${f(ht + hh * 0.75)}V${f(ht - 22 * s)}H${f(hx_ + hw / 2 + 6 * s)}V${f(ht + hh * 0.75)}H${f(hx_ + hw / 2 - 28 * s)}V${f(ht + 36 * s)}H${f(hx_ - hw / 2 + 28 * s)}V${f(ht + hh * 0.75)}Z`);
@@ -467,21 +473,19 @@ function crowd(rows, o = {}) {
       }
       if (p.ball) {
         const bx = x + 150 * s + Math.sin(t * 1.7 + p.ph) * 18 * s, by = y - 1050 * s + Math.sin(t * 2.3 + p.ph) * 12 * s;
-        strings += `M${f(x + 132 * s)} ${f(y - 330 * s)}Q${f(x + 170 * s)} ${f(y - 640 * s)} ${f(bx)} ${f(by + 95 * s)}`;
+        strings += `M${f(x + 137 * s)} ${f(y - 300 * s)}Q${f(x + 170 * s)} ${f(y - 640 * s)} ${f(bx)} ${f(by + 95 * s)}`;
         add(B.ball, p.ball, dE(bx, by, 80 * s, 95 * s));
       }
     }
     const sw = Math.max(1.4, 12 * row.s);
-    const st = lod === 0 || row.outline === false ? null : { stroke: tn.line, 'stroke-width': f(sw), 'stroke-linejoin': 'miter' };
-    const fa = (c, stroke = true) => (stroke && st ? { fill: col(c), ...st } : { fill: col(c) });
-    for (const [c, d] of B.legs) out += P(d, fa(c, lod === 2));
-    for (const [c, d] of B.body) out += P(d, fa(c));
-    for (const [c, d] of B.hands) out += P(d, fa(c, false));
-    for (const k of ['head', 'hair', 'hat']) for (const [c, d] of B[k]) out += P(d, fa(c));
+    const st = lod ? { stroke: tn.line, 'stroke-width': f(sw), 'stroke-linejoin': 'miter' } : null;
+    if (silD) out += P(silD, { fill: tn.line });
+    for (const k of ['legs', 'body', 'hands', 'head']) for (const [c, d] of B[k]) out += P(d, { fill: col(c) });
+    for (const k of ['hair', 'hat']) for (const [c, d] of B[k]) out += P(d, st ? { fill: col(c), ...st } : { fill: col(c) });
     if (eyes) out += P(eyes, { fill: LINE });
     if (mouth) out += P(mouth, cheer > 0.3 ? { fill: '#6A1A2A' } : { fill: 'none', stroke: LINE, 'stroke-width': f(Math.max(1.4, 8 * row.s)), 'stroke-linecap': 'round' });
     if (strings) out += P(strings, { fill: 'none', stroke: col('#F6F0E2'), 'stroke-width': f(Math.max(1, 5 * row.s)) });
-    for (const [c, d] of B.ball) out += P(d, { ...fa(c), fill: lt_ >= 1 ? c : col(c) });
+    for (const [c, d] of B.ball) out += P(d, st ? { fill: lt_ >= 1 ? c : col(c), ...st } : { fill: lt_ >= 1 ? c : col(c) });
   }
   return out;
 }

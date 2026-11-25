@@ -555,11 +555,26 @@ function plateFor(who, over = {}) {
   return statPlate({ ...p, ...over });
 }
 
-// head-top anchors (body units: feet at 0; multiply by s). APPROXIMATE — docs/CAST.md (by the cast author) is authoritative;
-// `you` was measured (953). Pass dy to fine-tune: overHead('tank', x, y, s, -20).
-const HEAD_TOP = { you: 960, hero: 960, mom: 1010, grandpa: 1120, max: 640, benji: 1000, tank: 1200, teacher: 1160, krump: 1160, biscuit: 330, kid: 900, adult: 1050, humanKid: 880, lunchLady: 1080 };
-function overHead(who, x, y, s = 0.5, dy = 0) {
-  const h = typeof who === 'number' ? who : HEAD_TOP[who] ?? 980;
+// head-top anchors. overHead() asks the cast first: rig/cast.js headTop(key, pose) -> the exact screen point at the top of the head
+// (it knows sizes, hoods, sit/beg poses, kid/adult variants i). HEAD_TOP below is only the fallback (body units at s 1, from the cast v1 table).
+const HEAD_TOP = { you: 951, hero: 951, mom: 1110, grandpa: 1112, max: 640, benji: 1100, tank: 1300, teacher: 1328, krump: 1328, biscuit: 432, lunchLady: 1108, coach: 1090, neighbor: 1000, fairWorker: 1080, kid: 830, adult: 1080, humanKid: 880 };
+let _castHeadTop;
+function castHeadTop() {
+  if (_castHeadTop === undefined) { try { const c = require('../rig/cast'); _castHeadTop = typeof c.headTop === 'function' ? c.headTop : null; } catch (e) { _castHeadTop = null; } }
+  return _castHeadTop;
+}
+// overHead(who, x, y, s = 0.5, dy = 0, pose = {}) -> { x, y }: the head-top point (+6 px air) of an actor drawn with feet (x, y) and scale s.
+// pose = the extra pose fields you pass to actor() that move the head (lift, bodyY, headY, hood, dayoff, pose: 'sit'|'beg'..., i for kid/adult).
+// who may also be a number = head height in body units.
+function overHead(who, x, y, s = 0.5, dy = 0, pose = {}) {
+  if (typeof who !== 'number') {
+    const ht = castHeadTop();
+    if (ht && who !== 'humanKid') {
+      try { const p = ht(who === 'krump' ? 'teacher' : who === 'hero' ? 'you' : who, { ...pose, x, y, s }); if (p && Number.isFinite(p.y)) return { x: Number.isFinite(p.x) ? p.x : x, y: p.y - 6 + dy }; } catch (e) { /* fall back to the table */ }
+    }
+  }
+  const key = who === 'krump' ? 'teacher' : who === 'hero' ? 'you' : who;
+  const h = typeof who === 'number' ? who : HEAD_TOP[key] ?? 980;
   return { x, y: y - h * s - 6 + dy };
 }
 

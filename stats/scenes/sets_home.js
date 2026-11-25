@@ -828,7 +828,7 @@ const bedroom = makeSet(bedroomLayers);
 //   plates, pots, the drying rack), pancakes (SC11: YOUR messy breakfast for Mom — crooked pancake stack + syrup heart +
 //   FOR MOM card + OJ + a dandelion in a glass at Mom's seat, batter bowl + whisk + egg shells + flour on the counter, a
 //   pancake in the pan), toast 0..1 (the toaster: 0 down .. .35 popped .. 1 flying), burnt 0..1 (default 1), smoke (default
-//   true when toast > 0 and burnt), cups 0..4 (Mom's empty coffee mugs lined up at her seat), coffee (default true: the
+//   true when toast > 0 and burnt), toaster (default true; false = draw extras' toaster yourself), cups 0..4 (Mom's empty coffee mugs lined up at her seat), coffee (default true: the
 //   carafe half full + steam), boxes (default true: the cupcake box tower), bowls (default true), steam (default true),
 //   lamp 0..1 (pendant; default 1 in the evening), clock 'H:MM', birds (default true by day), chairs (default true) }
 const KT = {
@@ -960,7 +960,7 @@ function kitchenLayers(t, o = {}) {
     }
     // the toaster (SPOT) — unless dishes cover the right counter
     const tk = b01(o.toast);
-    if (!dishes) m += toaster(640, CT.top, 0.88, tn, { toast: tk, burnt: o.burnt, smoke: (o.smoke === undefined ? tk > 0.2 && (o.burnt === undefined || o.burnt > 0.5) : o.smoke) ? t : false, glow: tk > 0 && tk < 0.05 });
+    if (!dishes && o.toaster !== false) m += toaster(640, CT.top, 0.88, tn, { toast: tk, burnt: o.burnt, smoke: (o.smoke === undefined ? tk > 0.2 && (o.burnt === undefined || o.burnt > 0.5) : o.smoke) ? t : false, glow: tk > 0 && tk < 0.05 });
     // SC11 pancake making mess on the counter
     if (pc) {
       m += G(P('M-56 -50 Q-56 0 0 0 Q56 0 56 -50 Z', O('#FFFFFF', 4)) + E(0, -50, 56, 11, O('#F2E2B8', 3.5)) + P('M10 -56 L50 -120', LN(8)) + P('M10 -56 L50 -120', LN(4, '#C9CED8')) + P('M42 -108 q8 -30 22 -24 q-2 20 -14 34', LN(3, '#9AA4B4')), `translate(${KT.stove.x1 + 110} ${CT.top})`);
