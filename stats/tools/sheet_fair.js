@@ -29,14 +29,19 @@ const T0 = Number(arg('--t') || 2.3);
 const R6 = require('../rig/r6');
 const hero = R6.makeDraw(R6.makeDesign({ col: { jacket: '#D8262E', jacketLine: '#B01D24', shirt: '#F2D04A', shirtShade: '#D9B73A', pants: '#1F3B2A', pantsShade: '#162C1F' } }));
 const CAST = (() => { try { return require('../rig/cast').draw || {}; } catch (e) { return {}; } })();
-const maxDraw = (p) => (CAST.max ? CAST.max(p) : hero({ ...p, s: p.s * 0.66 }));
-const gpaDraw = (p) => (CAST.grandpa ? CAST.grandpa(p) : hero({ ...p, s: p.s * 1.08 }));
+// rig size factors (rig/cast.js): seated poses use X.seatPose(spot, size) -> hips on the seat for any character size
+const SIZE = { max: 0.56, grandpa: 1.1 };
+const maxDraw = (p) => (CAST.max ? CAST.max(p) : hero({ ...p, s: p.s * SIZE.max }));
+const gpaDraw = (p) => (CAST.grandpa ? CAST.grandpa(p) : hero({ ...p, s: p.s * SIZE.grandpa }));
 let refOn = true;
 const on = () => REF && refOn;
 const line = (y, col = '#FF2E63', x0 = -6000, x1 = 9000) => `<path d="M${x0} ${y} L${x1} ${y}" stroke="${col}" stroke-width="3" stroke-dasharray="14 10" opacity="0.8"/>`;
 const H = (x, y, s, pose = {}) => (on() ? hero({ x, y, s, shade: true, shadow: true, ...pose }) : '');
 const MAX = (x, y, s, pose = {}) => (on() ? maxDraw({ x, y, s, shade: true, shadow: true, ...pose }) : '');
 const GPA = (x, y, s, pose = {}) => (on() ? gpaDraw({ x, y, s, shade: true, shadow: true, ...pose }) : '');
+// seated: a hip anchor through X.seatPose with the character's size
+const SEAT = (who, spot, extra = {}) => { if (!on()) return ''; const p = { shade: true, shadow: false, ...X.seatPose(spot, who === 'you' ? 1 : SIZE[who], extra) }; return who === 'max' ? maxDraw(p) : who === 'grandpa' ? gpaDraw(p) : hero(p); };
+const SITMAX = (spot, extra = {}) => SEAT('max', { ...spot, pose: X.SIT }, { rot: spot.rot, ...extra });
 const mark = (x, y, col = '#FF2E63', r = 9) => (on() ? `<circle cx="${x}" cy="${y}" r="${r}" fill="none" stroke="${col}" stroke-width="4"/><path d="M${x - 16} ${y} h32 M${x} ${y - 16} v32" stroke="${col}" stroke-width="3"/>` : '');
 const bgCard = (c1 = '#2A2246', c2 = '#3E3366') => `<defs><linearGradient id="sheetBg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="${c1}"/><stop offset="1" stop-color="${c2}"/></linearGradient></defs><rect x="0" y="0" width="1920" height="1080" fill="url(#sheetBg)"/>`;
 const V = (cam, svg, k = 1) => (svg ? `<g transform="${X.camTf(cam, k)}">${svg}</g>` : '');
@@ -57,33 +62,33 @@ const tile = (key, label, fn) => TILES.push([key, label, fn]);
 {
   const Z = SP.fair, c = Z.cams;
   tile('fair', 'fair · dusk · cams.main (booth, balloon cart, Ferris wheel, cotton candy) · stand lines', (t) => LC(X.fair, t, c.main, {}, H(Z.booth.vendor.x, Z.booth.vendor.y, Z.booth.vendor.s) + H(Z.cotton.vendor.x, Z.cotton.vendor.y, Z.cotton.vendor.s), onLines(Z.lines.slice(1, 3), 900, 0)));
-  tile('fair_wide', 'fair · dusk · cams.wide · crowd .8', (t) => LC(X.fair, t, c.wide, { crowd: 0.8 }, '', H(1000, 960, 0.4) + H(2400, 960, 0.4)));
+  tile('fair_wide', 'fair · dusk · cams.wide · crowd .8 · packed .5', (t) => LC(X.fair, t, c.wide, { crowd: 0.8, packed: 0.5 }, '', H(1000, 960, 0.4) + H(2400, 960, 0.4)));
   tile('fair_crowd', 'fair · cams.crowd · crowd 1 + packed 1 + near (sea of heads) · crowdHeads marks', (t) => LC(X.fair, t, c.crowd, { crowd: 1, packed: 1, near: 1 }, '', H(1300, 960, 0.4, { face: 'scared' })) + X.crowdHeads(c.crowd, { crowd: 1, packed: 1 }, 'all').filter((_, i) => i % 9 === 0).map((h) => mark(h.x, h.y, '#3DFF9A', 6)).join(''));
   tile('fair_over', 'fair · cams.over · packed 1 · cheer .4 (the camera flies over the crowd)', (t) => LC(X.fair, t, c.over, { crowd: 1, packed: 1, cheer: 0.4 }));
-  tile('fair_bench', 'fair · cams.bench · SPOTS.fair.bench.seats (SIT) + lamp', (t) => LC(X.fair, t, c.bench, {}, '', H(Z.bench.seats[0].x, Z.bench.seats[0].y, Z.bench.seats[0].s, X.SIT) + GPA(Z.bench.seats[1].x, Z.bench.seats[1].y, Z.bench.seats[1].s, X.SIT)) + markA(c.bench, Z.bench.lamp, '#FFE14D'));
+  tile('fair_bench', 'fair · cams.bench · SPOTS.fair.bench.seats (SIT) + lamp', (t) => LC(X.fair, t, c.bench, {}, '', SEAT('you', Z.bench.seats[0]) + SEAT('grandpa', Z.bench.seats[1])) + markA(c.bench, Z.bench.lamp, '#FFE14D'));
   tile('fair_cotton', 'fair · cams.cotton · vendor behind the counter (before L.front) + hero at .front', (t) => LC(X.fair, t, c.cotton, {}, H(Z.cotton.vendor.x, Z.cotton.vendor.y, Z.cotton.vendor.s, { face: 'happy' }), H(Z.cotton.front.x, Z.cotton.front.y, Z.cotton.front.s, { turn: -0.5 }) + MAX(Z.cotton.front.x + 160, 980, 0.42)));
   tile('fair_teacups', 'fair · cams.teacups · gate + front spots (riders in the cups are drawn by the set)', (t) => LC(X.fair, t, c.teacups, {}, '', H(Z.teacups.gate.x, Z.teacups.gate.y, Z.teacups.gate.s) + H(Z.teacups.front.x + 300, Z.teacups.front.y, Z.teacups.front.s)));
   tile('fair_ferris', 'fair · cams.ferris · "I wanna go UP!" (ferris.stand + top mark, k .6)', (t) => LC(X.fair, t, c.ferris, {}, '', H(Z.ferris.stand.x - 200, Z.ferris.stand.y, Z.ferris.stand.s, { armR: 160, face: 'excited' }) + MAX(Z.ferris.stand.x + 120, Z.ferris.stand.y, Z.ferris.stand.s, { armL: 170 })) + markA(c.ferris, Z.ferris.top, '#FFE14D'));
-  tile('fair_dino', 'fair · cams.dino · wobble .5 · dino.seat(t) (Max) + climb path + climbAt(.45)', (t) => { const s = Z.dino.seat(t), cl = Z.dino.climbAt(0.45, t); return LC(X.fair, t, c.dino, { crowd: 0.8 }, '', MAX(s.x, s.y + 306 * s.s * 0.66, s.s, { ...X.SIT, rot: s.rot }) + H(cl.x, cl.y, cl.s, { view: 'side', lean: -10 })) + climbMarks(c.dino, (u) => Z.dino.climbAt(u, t)) + markA(c.dino, s, '#FFE14D'); });
-  tile('fair_dinoFar', 'fair · cams.dinoFar · "THERE! On top of the dinosaur!" (dusk, crowd .9)', (t) => { const s = Z.dino.seat(t); return LC(X.fair, t, c.dinoFar, { crowd: 0.9 }, '', MAX(s.x, s.y + 306 * s.s * 0.66, s.s, { ...X.SIT, armL: 160, armR: 160 }) + H(3900, 960, 0.4, { view: 'back' })); });
+  tile('fair_dino', 'fair · cams.dino · wobble .5 · dino.seat(t) (Max) + climb path + climbAt(.45)', (t) => { const s = Z.dino.seat(t), cl = Z.dino.climbAt(0.45, t); return LC(X.fair, t, c.dino, { crowd: 0.8 }, '', SITMAX(s) + H(cl.x, cl.y, cl.s, { view: 'side', lean: -10 })) + climbMarks(c.dino, (u) => Z.dino.climbAt(u, t)) + markA(c.dino, s, '#FFE14D'); });
+  tile('fair_dinoFar', 'fair · cams.dinoFar · "THERE! On top of the dinosaur!" (dusk, crowd .9, packed .4)', (t) => { const s = Z.dino.seat(t); return LC(X.fair, t, c.dinoFar, { crowd: 0.9, packed: 0.4 }, '', SITMAX(s, { armL: 160, armR: 160 }) + H(3900, 960, 0.4, { view: 'back' })); });
   tile('fair_golden', 'fair · golden · cams.run[1] · canopy lights · crowd .7 (HUD-off reunion light)', (t) => LC(X.fair, t, c.run[1], { time: 'golden', canopy: true, crowd: 0.7 }, '', H(1700, 960, 0.4, { view: 'side', flip: true })));
   tile('fair_arch', 'fair · afternoon · cams.arch (TOWN FAIR arch + ticket booth)', (t) => LC(X.fair, t, c.arch, { time: 'afternoon' }, '', H(Z.arch.under.x, Z.arch.under.y, Z.arch.under.s) + H(-2000, 960, 0.4) + MAX(-1900, 960, 0.4)));
   tile('fair_quiet', 'fair · quiet 0 / quiet 1 (HUD-off silence: crowd desaturates) · golden quiet .5 / afternoon', (t) => quad4([LC(X.fair, t, c.crowd, { crowd: 1, packed: 0.6 }), LC(X.fair, t, c.crowd, { crowd: 1, packed: 0.6, quiet: 1 }), LC(X.fair, t, c.crowd, { crowd: 1, packed: 0.6, quiet: 0.5, time: 'golden' }), LC(X.fair, t, c.main, { time: 'afternoon', crowd: 0.5 })]));
-  tile('fair_head', 'fair · golden · cams.dinoHead · hug(t) + seat(t) on the head', (t) => { const s = Z.dino.seat(t), hg = Z.dino.hug(t); return LC(X.fair, t, c.dinoHead, { time: 'golden', cheer: 1 }, '', MAX(s.x, s.y + 306 * s.s * 0.66, s.s, { ...X.SIT, rot: s.rot }) + H(hg.x, hg.y, hg.s, { rot: hg.rot, armL: 120 })); });
+  tile('fair_head', 'fair · golden · cams.dinoHead · hug(t) + seat(t) on the head', (t) => { const s = Z.dino.seat(t), hg = Z.dino.hug(t); return LC(X.fair, t, c.dinoHead, { time: 'golden', cheer: 1 }, '', SITMAX(s) + H(hg.x, hg.y, hg.s, { rot: hg.rot, armL: 120 })); });
 }
 // ---------------------------------------------------------------- BENCH
 {
   const Z = SP.fairBench, c = Z.cams;
-  const two = (t, o, cam, pose = {}) => X.fairBench.compose(t, o, '', H(Z.hero.x, Z.hero.y, Z.hero.s, { ...X.SIT, turn: 0.35, ...pose }) + GPA(Z.grandpa.x, Z.grandpa.y, Z.grandpa.s, { ...X.SIT, turn: -0.35 }), cam);
+  const two = (t, o, cam, pose = {}) => X.fairBench.compose(t, o, '', SEAT('you', Z.hero, pose) + SEAT('grandpa', Z.grandpa), cam);
   tile('bench', 'fairBench · dusk · SPOTS.fairBench.hero / .grandpa (SIT, hips on the seat) + lamp', (t) => two(t, {}, c.wide) + markA(c.wide, Z.lamp, '#FFE14D'));
   tile('bench_cams', 'fairBench · cams.two (golden) / .hero / .grandpa / .lamp (quiet 1)', (t) => quad4([two(t, { time: 'golden', balloon: true }, c.two), two(t, {}, c.hero, { face: 'sad' }), two(t, {}, c.grandpa), two(t, { quiet: 1 }, c.lamp)]));
 }
 // ---------------------------------------------------------------- DINO TOP
 {
   const Z = SP.dinoTop, c = Z.cams;
-  const scene = (t, o, cam, u = 0.55) => { const s = Z.seat(t, o.wobble ?? 0.5), cl = Z.climbAt(u, t, o.wobble ?? 0.5); return LC(X.dinoTop, t, cam, o, '', MAX(s.x, s.y + 306 * s.s * 0.66, s.s, { ...X.SIT, rot: s.rot, armL: 150, armR: 150 }) + (u >= 0 ? H(cl.x, cl.y, cl.s, { view: 'side', lean: -12, armL: 140, armR: 120 }) : '')) + climbMarks(cam, (k) => Z.climbAt(k, t, o.wobble ?? 0.5)); };
+  const scene = (t, o, cam, u = 0.55) => { const s = Z.seat(t, o.wobble ?? 0.5), cl = Z.climbAt(u, t, o.wobble ?? 0.5); return LC(X.dinoTop, t, cam, o, '', SITMAX(s, { armL: 150, armR: 150 }) + (u >= 0 ? H(cl.x, cl.y, cl.s, { view: 'side', lean: -12, armL: 140, armR: 120 }) : '')) + climbMarks(cam, (k) => Z.climbAt(k, t, o.wobble ?? 0.5)); };
   tile('dinoTop', 'dinoTop · golden · cams.close · seat(t) (Max) + climbAt(.55) + climb path · crowd cheering below', (t) => scene(t, {}, c.close));
-  tile('dinoTop_cams', 'dinoTop · cams.wide (dusk) / .hug (hug(t)) / .max / .below (wobble 1)', (t) => quad4([scene(t, { time: 'dusk' }, c.wide, 0.2), (() => { const s = Z.seat(t), hg = Z.hug(t); return LC(X.dinoTop, t, c.hug, { confetti: 1 }, '', MAX(s.x, s.y + 306 * s.s * 0.66, s.s, { ...X.SIT, rot: s.rot }) + H(hg.x, hg.y, hg.s, { rot: hg.rot, armL: 120, face: 'joy' })); })(), scene(t, {}, c.max, -1), scene(t, { wobble: 1 }, c.below, 0.05)]));
+  tile('dinoTop_cams', 'dinoTop · cams.wide (dusk) / .hug (hug(t)) / .max / .below (wobble 1)', (t) => quad4([scene(t, { time: 'dusk' }, c.wide, 0.2), (() => { const s = Z.seat(t), hg = Z.hug(t); return LC(X.dinoTop, t, c.hug, { confetti: 1 }, '', SITMAX(s) + H(hg.x, hg.y, hg.s, { rot: hg.rot, armL: 120, face: 'joy' })); })(), scene(t, {}, c.max, -1), scene(t, { wobble: 1 }, c.below, 0.05)]));
 }
 // ---------------------------------------------------------------- ENTRANCE
 {

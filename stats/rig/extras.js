@@ -705,7 +705,7 @@ function biscuit(...args) {
   return out;
 }
 // head top (ear tips) of Biscuit in body units at s 1 per pose — for HUD plates
-const BISCUIT_TOP = { sit: 432, beg: 540, walk: 380, sleep: 230 };
+const BISCUIT_TOP = { sit: 422, beg: 515, walk: 356, sleep: 240 };
 
 module.exports = {
   DEFS, A, DEVICE_SCREENS, screenBox, gameIdle,

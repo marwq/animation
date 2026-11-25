@@ -167,15 +167,10 @@ def(rg('sfGlowCyan', [[0, '#D6FFFF', 0.85], [0.4, '#6FE6FF', 0.3], [1, '#3AC8FF'
 def(rg('sfGlowGold', [[0, '#FFF6CC', 0.95], [0.4, '#FFD45A', 0.42], [1, '#FFB020', 0]]));
 def(rg('sfGlowWhite', [[0, '#FFFFFF', 0.95], [0.45, '#FFFFFF', 0.3], [1, '#FFFFFF', 0]]));
 def(lg('sfLampCone', [[0, '#FFE9A8', 0.42], [1, '#FFE9A8', 0]]));
-def(lg('sfRay', [[0, '#FFF1C0', 0.0], [0.25, '#FFE8A8', 0.5], [1, '#FFD890', 0]], 1, 0));
 def(lg('sfFloorFade', [[0, '#1A0E2E', 0], [1, '#1A0E2E', 0.32]]));
-def(lg('sfGlass', [[0, '#FFFFFF', 0.55], [0.5, '#FFFFFF', 0]], 1, 1));
 // textures (semi-transparent: they work on any toned colour)
 def(pat('sfGrassTex', 90, 50, '<path d="M10 36 l5 -14 l5 14 M52 22 l4 -11 l4 11" stroke="#1E6A30" stroke-width="3" fill="none" opacity="0.25" stroke-linejoin="round"/><rect x="72" y="34" width="6" height="6" rx="3" fill="#FFF" opacity="0.2"/>'));
 def(pat('sfPolka', 60, 60, '<circle cx="15" cy="15" r="7" fill="#FFF" opacity="0.5"/><circle cx="45" cy="45" r="7" fill="#FFF" opacity="0.5"/>'));
-def(pat('sfPolkaS', 36, 36, '<circle cx="9" cy="9" r="4.5" fill="#FFF" opacity="0.55"/><circle cx="27" cy="27" r="4.5" fill="#FFF" opacity="0.55"/>'));
-def(pat('sfPlank', 200, 50, '<rect width="200" height="50" fill="none" stroke="#000" stroke-width="4" opacity="0.12"/><line x1="100" y1="0" x2="100" y2="25" stroke="#000" stroke-width="4" opacity="0.12"/>'));
-def(pat('sfWinLit', 40, 46, '<rect x="9" y="9" width="20" height="24" fill="#FFE07A"/>'));
 
 // ---------------------------------------------------------------- camera helpers (same conventions as scenes/env.js)
 function camTf(cam = {}, k = 1) {
@@ -201,6 +196,10 @@ function toScreen(cam, a, y, k) {
   const kk = a.k ?? 1, z = 1 + ((cam.zoom ?? 1) - 1) * kk, fx = cam.fx ?? 960, fy = cam.fy ?? 540;
   return { x: fx + (cam.sx || 0) + z * (a.x - fx - (cam.x || 0) * kk), y: fy + (cam.sy || 0) + z * (a.y - fy - (cam.y || 0) * kk), z };
 }
+// layer-k y that lands at screen y sy (inverse of toScreen for y)
+function layerY(cam, k, sy) { cam = cam || {}; const z = 1 + ((cam.zoom ?? 1) - 1) * k, fy = cam.fy ?? 540; return (sy - fy - (cam.sy || 0)) / z + fy + (cam.y || 0) * k; }
+// how far down a far layer's ground band must reach: to just below where a nearer layer's opaque ground starts on screen
+const fillTo = (cam, kFar, kNear, yNear, pad = 50) => layerY(cam, kFar, toScreen(cam, { x: 0, y: yNear, k: kNear }).y + pad);
 // a cam that puts world point (x, y) of the k 1 plane at screen (sx, sy) with this zoom
 const camAt = (x, y, zoom = 1, sx = 960, sy = 540) => ({ x: Math.round(x - 960 - (sx - 960) / zoom), y: Math.round(y - 540 - (sy - 540) / zoom), zoom });
 // layers object whose String() is the whole picture
@@ -305,12 +304,12 @@ function clouds(v, st, t) {
   return P(b, { fill: under, opacity: 0.75 }) + P(a, { fill: col, opacity: 0.85 });
 }
 // far hills + the town on them (k .12): rolling silhouette, houses, a water tower, a church steeple; lit windows at dusk
-function farTown(v, st, t, base = 700) {
+function farTown(v, st, t, base = 700, bottom = null) {
   const tn = st.tnFar(0.55), lit = st.lights;
   const x0 = Math.floor((v.x0 - 400) / 120) * 120, x1 = v.x1 + 400;
   let hill = `M${f(x0)} ${f(base + 400)}`;
   for (let x = x0; x <= x1; x += 120) hill += `L${f(x)} ${f(base - 60 - 55 * Math.sin(x * 0.0021) - 35 * Math.sin(x * 0.0057 + 1))}`;
-  hill += `L${f(x1)} ${f(base + 400)}Z`;
+  hill += `L${f(x1)} ${f(bottom ?? base + 400)}Z`;
   let s = P(hill, tn.fl('#7A86B8'));
   let houses = '', roofs = '', wins = '';
   for (let i = Math.floor(x0 / 150); i * 150 < x1; i++) {
@@ -330,7 +329,7 @@ function farTown(v, st, t, base = 700) {
   return s;
 }
 // tree line (k .3): rounded blobs + trunks, hazed
-function treeLine(v, st, base = 720, seed = 3) {
+function treeLine(v, st, base = 720, seed = 3, bottom = null) {
   const tn = st.tnFar(0.36);
   let blobs = '', dark = '';
   for (let i = Math.floor((v.x0 - 300) / 110); i * 110 < v.x1 + 300; i++) {
@@ -338,7 +337,7 @@ function treeLine(v, st, base = 720, seed = 3) {
     blobs += dC(x, base - h - r * 0.6, r) + dC(x + r * 0.6, base - h - r * 0.2, r * 0.75);
     dark += dR(x - 10, base - h, 20, h + 40);
   }
-  return P(dark, tn.fl('#4A3E5E')) + P(blobs, tn.fl('#4E8C6A')) + R(v.x0 - 300, base - 20, v.x1 - v.x0 + 600, 1000, 0, tn.fl('#5B8A62'));
+  return P(dark, tn.fl('#4A3E5E')) + P(blobs, tn.fl('#4E8C6A')) + R(v.x0 - 300, base - 20, v.x1 - v.x0 + 600, Math.max(40, (bottom ?? base + 980) - base + 20), 0, tn.fl('#5B8A62'));
 }
 
 // ================================================================= STRING LIGHTS + BUNTING (batched)
@@ -399,7 +398,7 @@ const CR_PANTS = ['#2E3A5A', '#3A3040', '#5A4632', '#2A4A6A'];
 const CR_HAT = ['#EE3B4C', '#4A72E6', '#FFD23F', '#F6F0E2', '#3FB86A', '#FF6FAE'];
 const CR_BALL = ['#FF4D6D', '#FFD23F', '#4A9CFF', '#7AE05A', '#C77DFF', '#FF8A2E'];
 function crowdPeople(row, vx0, vx1, dens = 1) {
-  const s = row.s, dx = 268 * s, seed = row.seed ?? 1, out = [];
+  const s = row.s, dx = (row.dx ?? 268) * s, seed = row.seed ?? 1, out = [];
   const d = clamp(dens * (row.dens ?? 1), 0, 1);
   if (d <= 0.001) return out;
   const i0 = Math.floor((Math.max(vx0, row.x0 ?? -1e9) - 200 * s) / dx), i1 = Math.ceil((Math.min(vx1, row.x1 ?? 1e9) + 200 * s) / dx);
@@ -444,7 +443,9 @@ function crowd(rows, o = {}) {
       const y = p.y - bob, X_ = (v) => f(x + v * s), Y_ = (v) => f(y + v * s);
       // a rect in body units (x0, y0, w, h) -> colour part + its grown silhouette
       const part = (m, c, x0, y0, w, h) => { add(m, c, dR(x + x0 * s, y + y0 * s, w * s, h * s)); if (lod) silD += dR(x + x0 * s - e, y + y0 * s - e, w * s + 2 * e, h * s + 2 * e); };
-      if (legs) { add(B.legs, p.pants, `M${X_(-92)} ${Y_(-292)}H${X_(92)}V${f(p.y)}H${X_(8)}V${Y_(-150)}H${X_(-8)}V${f(p.y)}H${X_(-92)}Z`); if (lod) silD += dR(x - 92 * s - e, y - 292 * s, 184 * s + 2 * e, p.y - y + 292 * s + e); }
+      // legs: always filled (gaps in the row in front must not show floating torsos); outlined only on the front-most row
+      add(B.legs, p.pants, `M${X_(-92)} ${Y_(-292)}H${X_(92)}V${f(p.y)}H${X_(8)}V${Y_(-150)}H${X_(-8)}V${f(p.y)}H${X_(-92)}Z`);
+      if (legs && lod) silD += dR(x - 92 * s - e, y - 292 * s, 184 * s + 2 * e, p.y - y + 292 * s + e);
       part(B.body, p.shirt, -104, -524, 208, 244);
       if (up > 0.05) {
         const sw = Math.sin(t * 6.5 + p.ph) * 22 * up, ah = 230 * up, tl = -520 - ah + sw, trr = -520 - ah - sw;
@@ -1100,9 +1101,9 @@ const FA_SWING = { x: 2950, y: 760, k: 0.6 };
 // crowd fill rows (k 1): behind the stand lines (in mid) and the packed rows in front of it (L.crowd)
 const FA_BACK_ROWS = [752, 784, 816, 848];
 // the packed rows in front of the stand line: a fixed sequence (stable looks), only the visible ones are drawn
-const FA_FRONT_ROWS = (() => { const r = []; let y = 1010; while (y <= 1520) { r.push(Math.round(y)); y += 72 * faS(y) / faS(1010); } return r; })();
+const FA_FRONT_ROWS = (() => { const r = []; let y = 1010; while (y <= 1520) { r.push(Math.round(y)); y += 86 * faS(y) / faS(1010); } return r; })();
 const FA_GAPS = [[-1420, -560]];
-const rowFor = (y, i, front) => ({ y, s: faS(y), seed: 11 + i * 7 + (front ? 50 : 0), dens: front ? 0.94 : [0.6, 0.72, 0.8, 0.86][i] ?? 0.8, gaps: front ? [] : FA_GAPS, jit: 12 });
+const rowFor = (y, i, front) => ({ y, s: faS(y), dx: front ? 282 : 268, seed: 11 + i * 7 + (front ? 50 : 0), dens: front ? 0.9 : [0.6, 0.72, 0.8, 0.86][i] ?? 0.8, gaps: front ? [] : FA_GAPS, jit: 12 });
 // rows of one group that can be seen through this cam (head tops above the frame bottom, feet below the frame top)
 function fairRows(front, cam) {
   const v = vis(cam, 1);
@@ -1126,13 +1127,13 @@ function fairLayers(t, cam, o) {
   // ---- sky (k 0), sun/moon (k .02), clouds (k .04), far town (k .12), far rides + tree line (k .3)
   const v0 = vis(cam, 0);
   let bg = V(cam, sky(v0, st) + moon(st), 0) + V(cam, sunDisc(st), 0.02) + V(cam, clouds(vis(cam, 0.04), st, t), 0.04);
-  bg += V(cam, farTown(vis(cam, 0.12), st, t, 690), 0.12);
+  bg += V(cam, farTown(vis(cam, 0.12), st, t, 690, fillTo(cam, 0.12, 0.3, 730)), 0.12);
   const v3 = vis(cam, 0.3), tn3 = st.tnFar(0.42);
   let far = '';
   if (v3.x1 > -900 && v3.x0 < 500) { const a = lightsAcc(tn3, lit, t); far += G(dropTower(tn3, 6, lit, t, a) + a.out(2.4), tr(-380, 745, 0.7)); }
   if (v3.x1 > 1500 && v3.x0 < 2600) far += G(bigTop(tn3, 8, t), tr(2050, 742, 0.5));
   if (v3.x1 > 3500 && v3.x0 < 4300) far += G(bigTop(tn3, 8, t + 3), tr(3900, 745, 0.42));
-  bg += V(cam, treeLine(v3, st, 750) + far, 0.3);
+  bg += V(cam, treeLine(v3, st, 750, 3, fillTo(cam, 0.3, 0.6, 740)) + far, 0.3);
   // drifting balloons (k .45) — a few lost balloons rising into the evening
   const v45 = vis(cam, 0.45);
   let fl = '';
@@ -1144,13 +1145,13 @@ function fairLayers(t, cam, o) {
   bg += V(cam, fl, 0.45);
   // ---- Ferris wheel + swing ride (k .6)
   const v6 = vis(cam, 0.6), tn6 = st.tnFar(0.12);
-  let rides = R(v6.x0 - 300, 740, v6.x1 - v6.x0 + 600, 900, 0, tn6.fl('#6E5A8A'));
+  let rides = R(v6.x0 - 300, 740, v6.x1 - v6.x0 + 600, Math.max(40, fillTo(cam, 0.6, 0.8, 732) - 740), 0, tn6.fl('#6E5A8A'));
   if (v6.x1 > FA_FERRIS.x - 800 && v6.x0 < FA_FERRIS.x + 800) { const a = lightsAcc(tn6, lit, t); rides += G(ferrisWheel(FA_FERRIS.r, tn6, 4, lit, t, { acc: a, speed: o.wheel ?? 1 }) + a.out(2.4), tr(FA_FERRIS.x, FA_FERRIS.y)); }
   if (v6.x1 > FA_SWING.x - 600 && v6.x0 < FA_SWING.x + 600) { const a = lightsAcc(tn6, lit, t); rides += G(swingRide(tn6, 5, lit, t, a) + a.out(2.4), tr(FA_SWING.x, FA_SWING.y, 0.8)); }
   bg += V(cam, rides, 0.6);
   // ---- back row of tents + stalls + string lights (k .8)
   const v8 = vis(cam, 0.8), tn8 = st.tnFar(0.08), acc8 = lightsAcc(tn8, lit, t), sc8 = 0.27;
-  let row = R(v8.x0 - 300, 732, v8.x1 - v8.x0 + 600, 900, 0, tn8.fl(C.sandD));
+  let row = R(v8.x0 - 300, 732, v8.x1 - v8.x0 + 600, Math.max(40, fillTo(cam, 0.8, 1, FA.back) - 732), 0, tn8.fl(C.sandD));
   const step8 = 460;
   for (let i = Math.floor((v8.x0 - 400) / step8); i * step8 < v8.x1 + 400; i++) {
     const K_ = STALL_KINDS[md(i, STALL_KINDS.length)], x = i * step8 + 60 * hash(i * 1.7), lw8 = 6 / sc8;
@@ -1266,7 +1267,7 @@ function crowdHeads(cam, o = {}, which = 'all') {
 // the dinosaur in fair-world coords at time t: seat (Max on its head), climbAt(u), hug spot. All {x, y, rot, s, k: 1}
 const FA_DINO_S = rs(faS(FA_Y.dino));
 function fairDinoAt(fn, wob) {
-  return (t, w = wob) => { const pose = dinoPose(t, w); const p = fn(pose); return { x: Math.round(FA_X.dino + p.x), y: Math.round(FA_Y.dino + p.y), rot: rs(p.rot || 0), s: FA_DINO_S, k: 1 }; };
+  return (t, w = wob) => { const pose = dinoPose(t, w); const p = fn(pose); const y = Math.round(FA_Y.dino + p.y); return { x: Math.round(FA_X.dino + p.x), y, hip: y, rot: rs(p.rot || 0), s: FA_DINO_S, k: 1 }; };
 }
 const dinoLocalSpot = (pt) => (pose) => { const q = dinoPt(pt, 'head', pose); return { x: q[0], y: q[1], rot: pose.th }; };
 
@@ -1282,7 +1283,7 @@ function fairBenchLayers(t, o) {
   const soft = st.tnFar(0.42);
   const bok = b01(o.bokeh, 1);
   // ---- bg (blurred carnival; composed at parallax .6)
-  let bg = sky({ x0: -900, x1: 2820 }, st) + G(sunDisc(st), 'translate(380 -20)');
+  let bg = sky({ x0: -900, x1: 2820 }, st) + G(sunDisc(st), 'translate(500 110)');
   bg += P(`M-900 760 Q-300 690 300 730 T1500 720 T2820 740 V1400 H-900 Z`, soft.fl('#6E6A9A'));
   // soft Ferris wheel (no outline)
   const wc = soft.c('#E8C8F0'), a0 = t * 0.06;
@@ -1440,7 +1441,10 @@ const SIT = { legL: 45, legR: 45, kneeL: 60, kneeR: 60 };
 const SIT_SIDE = { view: 'side', legL: 90, legR: 90, kneeL: 90, kneeR: 90 };
 const line = (y, sAt, x0, x1, gaps = [], k = 1) => ({ y, k, s: rs(sAt(y)), x0, x1, gaps, sAt, jitter: 14 });
 const FLOOR = { fair: FA.floor, fairBench: BN.floor, dinoTop: Math.round(dtW(DN.seat)[1]), fairEntrance: FE.floor };
-const benchSeats = (cx, seatY, s, half) => [-1, 1].map((sx) => ({ x: Math.round(cx + sx * half), y: Math.round(seatY + 306 * s), seat: Math.round(seatY), s: rs(s), k: 1, ...SIT }));
+// seated characters (same convention as scenes/sets_home.js): an anchor { x, hip, s, turn?, rot?, pose? } = where the HIPS go;
+// seatPose(spot, size, extra) -> { x, y: hip + 306·s·size, s, ...pose } (size = the rig size factor: Grandpa 1.1, Max .56)
+const seatPose = (spot, size = 1, extra = {}) => ({ x: spot.x, y: +f(spot.hip + 306 * spot.s * size), s: spot.s, ...(spot.turn ? { turn: spot.turn } : {}), ...(spot.rot ? { rot: spot.rot } : {}), ...(spot.pose || {}), ...extra });
+const benchSeats = (cx, seatY, s, half) => [-1, 1].map((sx) => ({ x: Math.round(cx + sx * half), hip: Math.round(seatY), y: Math.round(seatY + 306 * s), s: rs(s), k: 1, turn: sx * -0.3, pose: SIT }));
 const FA_BSEAT = FA_Y.bench - SEAT_H * faS(FA_Y.bench);
 const SPOTS = {
   fair: {
@@ -1462,7 +1466,7 @@ const SPOTS = {
       base: { x: FA_X.dino + 930, y: FA_Y.dino, k: 1 }, front: { x: FA_X.dino - 300, y: 960, s: FA.s, k: 1 },
     },
     cams: {
-      main: { x: 0, y: 0, zoom: 1 }, wide: camAt(1700, 300, 0.5), crowd: camAt(1300, 720, 0.62), over: camAt(1500, 860, 0.75),
+      main: { x: 0, y: 0, zoom: 1 }, wide: camAt(1800, 430, 0.55), crowd: camAt(1300, 720, 0.62), over: camAt(1500, 860, 0.75),
       arch: camAt(-2250, 520, 0.85), bench: camAt(-1000, 650, 1.2), booth: camAt(250, 640, 1.05), ferris: camAt(1150, 520, 0.85, 960, 600),
       cotton: camAt(1800, 660, 1.1), teacups: camAt(3200, 600, 0.9), dino: camAt(5200, 240, 0.6), dinoFar: camAt(4100, 260, 0.42),
       dinoHead: camAt(4850, -560, 1.15), run: [camAt(800, 470, 0.8), camAt(1900, 470, 0.8), camAt(3300, 470, 0.8), camAt(4800, 420, 0.8)],
@@ -1479,8 +1483,8 @@ const SPOTS = {
   dinoTop: {
     s: DT_S, k: 1, sc: DT.sc,
     headTop: { x: Math.round(dtW(DN.seat)[0]), y: Math.round(dtW(DN.seat)[1]), k: 1 },
-    seat: (t = 0, w = 0.5) => { const pose = dinoPose(t, w), q = dinoPt(DN.seat, 'head', pose), p = dtW(q); return { x: Math.round(p[0]), y: Math.round(p[1]), rot: rs(pose.th), s: DT_S, k: 1 }; },
-    hug: (t = 0, w = 0.5) => { const pose = dinoPose(t, w), q = dinoPt(DN.hug, 'head', pose), p = dtW(q); return { x: Math.round(p[0]), y: Math.round(p[1]), rot: rs(pose.th), s: DT_S, k: 1 }; },
+    seat: (t = 0, w = 0.5) => { const pose = dinoPose(t, w), q = dinoPt(DN.seat, 'head', pose), p = dtW(q); return { x: Math.round(p[0]), y: Math.round(p[1]), hip: Math.round(p[1]), rot: rs(pose.th), s: DT_S, k: 1 }; },
+    hug: (t = 0, w = 0.5) => { const pose = dinoPose(t, w), q = dinoPt(DN.hug, 'head', pose), p = dtW(q); return { x: Math.round(p[0]), y: Math.round(p[1]), hip: Math.round(p[1]), rot: rs(pose.th), s: DT_S, k: 1 }; },
     climbAt: (u, t = 0, w = 0.5) => { const pose = dinoPose(t, w), c0 = DINO_CLIMB.find((q) => q.part === 'neck').u, q = dinoClimbLocal(lerp(c0 - 0.06, 1, clamp(u, 0, 1)), pose), p = dtW([q.x, q.y]); return { x: Math.round(p[0]), y: Math.round(p[1]), rot: rs(q.rot), s: DT_S, k: 1 }; },
     crowd: { y: 1030, k: 0.45, s: 0.13 },
     cams: { close: { x: 0, y: 0, zoom: 1 }, wide: camAt(1000, 620, 0.78), hug: camAt(860, 360, 1.35), max: camAt(780, 300, 1.7), below: camAt(1100, 900, 0.9) },
@@ -1500,7 +1504,7 @@ SPOTS.fairBench.grandpa = SPOTS.fairBench.seats[1];
 
 module.exports = {
   fair, fairBench, dinoTop, fairEntrance,
-  FLOOR, SPOTS, SIT, SIT_SIDE, DEFS: `<defs>${DEF.join('')}</defs>`,
+  FLOOR, SPOTS, SIT, SIT_SIDE, seatPose, DEFS: `<defs>${DEF.join('')}</defs>`,
   // props
   inflatableDino, dinoBalloon, balloon, cottonCandy, bench, lampPost, tent, stall, ferrisWheel, teacupsRide, teacup, teapot, cottonCandyStand, cottonCounter,
   gameBooth, gameCounter, balloonCart, ticketBooth, archSign, swingRide, dropTower, bigTop, bunting, lightsAcc, stripePole, awning, signBoard,

@@ -44,7 +44,8 @@ function bust(k, pose, cx, cy, sc = 0.5) {
   const d = k === 'kid' ? CAST.kidDesign(pose.i || 0) : k === 'adult' ? CAST.adultDesign(pose.i || 0) : D[k];
   const size = sizeOf(k, pose.i || 0), hk = (d && d.style && d.style.headK) || 1;
   const z = 1 / (size * hk);
-  return S.g(KIND(k, pose.i || 0, { x: 0, y: 0, s: z, shadow: false, t: 1.3, ...pose }), `translate(${cx} ${cy}) scale(${sc}) translate(0 ${560 * size * z + 560 * size * z * 0 + (1112 - 560) * 1})`);
+  // at s = z the head is drawn at its own size; its neck sits 560 / headK above the feet -> shift so every head lands in the same place
+  return S.g(KIND(k, pose.i || 0, { x: 0, y: 0, s: z, shadow: false, t: 1.3, ...pose }), `translate(${cx} ${cy}) scale(${sc}) translate(0 ${560 / hk + 552})`);
 }
 const pill = (s, x, y, w = 184) => S.rect(x - w / 2, y - 28, w, 40, 20, { fill: INK, opacity: 0.85 }) + TF(esc(s), x, y + 2, 26, '#FFFFFF');
 const label = (s, x, y, size = 40, col = INK) => T(esc(s), x, y, size, col, { 'text-anchor': 'start' });
@@ -90,7 +91,6 @@ const SHEETS = {
         o += KIND(k, 0, p) + plateMark(k, p, plate);
         o += T(esc(name), x, G + 84, name.length > 11 ? 36 : 42, INK) + TF(esc(sub), x, G + 124, 24, '#7A5A6A');
       }
-      for (let i = 0; i < 4; i++) { const p = { x: 3100 + i * 0, y: G, s }; void p; }
       return o;
     },
   },
@@ -171,7 +171,7 @@ const SHEETS = {
       let y = 190;
       o += sec('HOME: breakfast chaos, bedroom, living room', 20, y, 4760, 700);
       o += X.toaster({ x: 200, y: y + 560, s: 0.9, pop: 0, burn: 0 }) + cap('toaster', 200, y + 640);
-      o += X.toaster({ x: 520, y: y + 560, s: 0.9, pop: 0.6, burn: 0.9, t: 0.7 }) + cap('pop 0.6 · burn 0.9', 520, y + 640);
+      o += X.toaster({ x: 520, y: y + 560, s: 0.9, pop: 1, burn: 0.9, t: 0.7 }) + cap('pop 1 · burn 0.9', 520, y + 640);
       o += X.toast({ x: 760, y: y + 440, burnt: 0 }) + X.toast({ x: 920, y: y + 440, burnt: 1, t: 0.5 }) + cap('toast · burnt', 840, y + 640);
       o += X.cerealBowl({ x: 1170, y: y + 560, s: 0.8 }) + cap('cerealBowl', 1170, y + 640);
       o += X.cerealBowl({ x: 1500, y: y + 560, s: 0.8, splash: 0.7, t: 0.4 }) + cap('splash 0.7', 1500, y + 640);
@@ -217,17 +217,17 @@ const SHEETS = {
         ['mom', { coffee: true, face: 'happy', t: 0.5 }, 'coffee'], ['mom', { coffee: 'sip', face: 'happy', t: 0.5 }, "coffee 'sip'"], ['mom', { phone: 'ear', face: 'talkHappy' }, "phone 'ear'"], ['mom', { phone: true, face: 'neutral' }, 'phone'], ['mom', { asleep: true, coffee: true, t: 0.3 }, 'asleep'], ['mom', { tired: 1, face: 'happy', flour: 1 }, 'tired 1 · flour 1'], ['mom', { pan: true, face: 'shocked' }, 'pan'], ['mom', { dayoff: true, face: 'happy', view: 'side' }, 'dayoff side'],
         ['grandpa', { armwrestle: true }, 'armwrestle (flex)'], ['grandpa', { armwrestle: 'one', face: 'joy' }, "armwrestle 'one'"], ['grandpa', { sash: true, face: 'talkHappy' }, 'sash'], ['grandpa', { glasses: 'on', face: 'neutral' }, "glasses 'on'"], ['grandpa', { cane: true, face: 'happy' }, 'cane'], ['grandpa', { armL: 12, armR: 12, bendL: -104, bendR: -104, face: 'smug' }, 'arms crossed'],
         ['max', { roar: true }, 'roar'], ['max', { balloon: true, face: 'joy', t: 0.4 }, 'balloon'], ['max', { hood: 'down', face: 'happy' }, "hood 'down'"], ['max', { tablet: true, face: 'excited', screen: scr }, 'tablet'], ['max', { roar: true, view: 'side' }, 'roar side'],
-        ['benji', { books: true, face: 'happy' }, 'books'], ['benji', { books: 'drop', bookFall: 0.5, face: 'scared' }, "books 'drop'"], ['benji', { fallen: true }, 'fallen'], ['benji', { fallen: 'flat' }, "fallen 'flat'"], ['benji', { potato: true, face: 'excited', glow: 0.3, t: 0.3 }, 'potato'], ['benji', { map: true, face: 'determined' }, 'map'],
+        ['benji', { books: true, face: 'happy' }, 'books'], ['benji', { books: 'drop', bookFall: 0.5, face: 'scared' }, "books 'drop'"], ['benji', { fallen: true }, 'fallen'], ['benji', { potato: true, face: 'excited', glow: 0.3, t: 0.3 }, 'potato'], ['benji', { map: true, face: 'determined' }, 'map'],
         ['tank', { lunch: true, face: 'angry' }, 'lunch'], ['tank', { sandwich: true, face: 'confused' }, 'sandwich'], ['tank', { shy: true }, 'shy'], ['tank', { ketchupLunch: true, shy: true, face: 'happy' }, 'ketchupLunch'], ['tank', { carry: true, face: 'determined' }, 'carry (hero on shoulders)'],
         ['teacher', { pointer: true, face: 'angry' }, 'pointer'], ['teacher', { papers: true, face: 'neutral' }, 'papers'], ['teacher', { glare: 1, pointer: true }, 'glare'], ['teacher', { redPen: true, face: 'smug' }, 'redPen'],
-        ['lunchLady', { face: 'smug' }, 'ladle'], ['neighbor', { face: 'happy', bags: 1 }, 'bags 1'],
+        ['lunchLady', { face: 'smug' }, 'ladle'], ['neighbor', { face: 'happy', bags: 1 }, 'bags 1'], ['benji', { fallen: 'flat', x: 60 }, "fallen 'flat'"],
       ];
       const PER = 15;
       opts.forEach(([k, p, l], i) => {
         const c = i % PER, r = Math.floor(i / PER);
         const x = 180 + c * 310, yy = y + 650 + r * 720;
         const s = k === 'tank' ? 0.3 : 0.4;
-        o += KIND(k, 0, { x, y: yy, s, t: 0.7, ...p }) + cap(`${k} · ${l}`, x, yy + 46, INK, l.length > 18 ? 18 : 22);
+        o += KIND(k, 0, { t: 0.7, ...p, x: x + (p.x || 0), y: yy, s }) + cap(`${k} · ${l}`, x + (p.x || 0), yy + 46, INK, l.length > 18 ? 18 : 22);
       });
       return o;
     },

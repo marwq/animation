@@ -19,7 +19,6 @@ const F = require('./face');
 const L = require('./looks');
 const L2 = require('./looks2');
 const L3 = require('./looks3');
-const L4 = require('./looks4');
 const L5 = require('./looks5');
 const L6 = require('./looks6');
 const { bentLimb } = require('./body');
@@ -40,8 +39,8 @@ const clipped = (d, fill, inner, w = SW) => {
 };
 const txt = (s, x, y, size, fill, extra = {}) => S.el('text', { x, y, 'font-family': 'Lilita One, sans-serif', 'font-size': size, fill, 'text-anchor': 'middle', ...extra }, s);
 const hm = L5.hm;
-const { puffs, fluffy } = L3;
-const { shadeHex, mixHex, band } = L6;
+const { puffs } = L3;
+const { shadeHex, band } = L6;
 const curlMarks = (pts, r, w = 4.5, col = LINE) => S.path(pts.map(([x, y, rr = r]) => `M${f(x - rr * 0.42)} ${f(y + 3)} Q${f(x)} ${f(y - rr * 0.55)} ${f(x + rr * 0.4)} ${f(y + 5)}`).join(' '), lineOnly(w, col));
 const stitch = (col, w = 3.5, dash = '8 6') => ({ fill: 'none', stroke: col, 'stroke-width': w, 'stroke-dasharray': dash, 'stroke-linecap': 'round' });
 const dotD = (x, y, r) => `M${f(x - r)} ${f(y)} a${f(r)} ${f(r)} 0 1 0 ${f(2 * r)} 0 a${f(r)} ${f(r)} 0 1 0 ${f(-2 * r)} 0 Z `;
@@ -132,14 +131,31 @@ function redPen(x, y, rot, s = 1) {
     `translate(${f(x)} ${f(y)}) rotate(${f(rot)}) scale(${f(s)})`);
 }
 
-const HIVE_OUT = [[-158, -724], [-166, -866], [-150, -934], [-158, -1010], [-150, -1090], [-110, -1162], [-40, -1196], [40, -1196], [110, -1162], [150, -1090], [158, -1010], [150, -934], [166, -866], [158, -724], [136, -732], [134, -802]];
+// the beehive (head space): an egg-shaped dome wrapped in rings, a little bow; view 'front' (behind the head) | 'side' | 'back'
+function krumpHive(view, turn, c) {
+  const m = view === 'front' ? hm(turn) : { hair: ID };
+  const H = m.hair;
+  const out = view === 'side'
+    ? [[-130, -900], [-150, -1020], [-120, -1130], [-40, -1196], [70, -1196], [150, -1130], [176, -1020], [160, -900]]
+    : [[-150, -900], [-158, -1010], [-150, -1090], [-110, -1162], [-40, -1196], [40, -1196], [110, -1162], [150, -1090], [158, -1010], [150, -900]];
+  const d = poly(out.map(H), 26);
+  let inner = '';
+  inner += S.path(`M${P(H([-130, -1000]))} Q${P(H([-130, -1100]))} ${P(H([-60, -1160]))}`, lineOnly(18, c.hairHi));
+  inner += S.path(`M${P(H([120, -1040]))} Q${P(H([160, -980]))} ${P(H([150, -900]))}`, lineOnly(26, c.hairShade));
+  let rings = '';
+  for (const [y, w] of [[-960, 160], [-1036, 162], [-1108, 146]]) rings += `M${P(H([-w, y + 14]))} Q${P(H([view === 'side' ? 20 : 0, y - 26]))} ${P(H([w, y + 14]))} `;
+  inner += S.path(rings, lineOnly(5, c.hairShade)) + S.path(`M${P(H([-40, -1150]))} Q${P(H([20, -1186]))} ${P(H([70, -1150]))} Q${P(H([80, -1120]))} ${P(H([40, -1126]))}`, lineOnly(5, c.hairShade));
+  let o = clipped(d, c.hair, inner, SW);
+  if (view !== 'side') { const b = H([view === 'back' ? 112 : -112, -950]); o += S.g(S.path('M0 0 L-26 -16 L-26 16 Z M0 0 L26 -16 L26 16 Z', outline(c.hairBand || '#5A3A6A', 4)) + S.circle(0, 0, 8, outline(c.hairBand || '#5A3A6A', 4)), `translate(${P(b)}) rotate(${view === 'back' ? 20 : -20})`); }
+  return o;
+}
 // the lunch lady: big auburn curls in a hairnet
 const NET_CURLS = [[-140, -830, 34], [-110, -900, 42], [-46, -944, 44], [24, -950, 44], [92, -918, 42], [140, -850, 34], [-160, -770, 26], [160, -772, 26], [-70, -1000, 36], [10, -1012, 38], [80, -990, 34]];
 function netOver(cs, col = '#FFFFFF') {
   const id = S.uid('net');
   const ring = (x, y, r) => `M${f(x - r)} ${f(y)} a${f(r)} ${f(r)} 0 1 0 ${f(2 * r)} 0 a${f(r)} ${f(r)} 0 1 0 ${f(-2 * r)} 0 Z`;
   let d = '';
-  for (let x = -480; x <= 480; x += 40) d += `M${x} -1080 L${x + 300} -680 M${x} -1080 L${x - 300} -680 `;
+  for (let x = -360; x <= 360; x += 46) d += `M${x} -1060 L${x + 260} -700 M${x} -1060 L${x - 260} -700 `;
   return S.clipDef(id, S.path(cs.map(([x, y, r]) => ring(x, y, r)).join(' '))) + S.g(S.path(d, { fill: 'none', stroke: col, 'stroke-width': 2.5, opacity: 0.45 }), null, { 'clip-path': `url(#${id})` });
 }
 
@@ -316,29 +332,26 @@ Object.assign(L.HAIR, {
     backOver: (c) => S.path(scatter(-130, 130, -930, -780, 20, 9, (x, y) => dotD(x, y, 4)), { fill: c.hairShade }),
   },
 
+  // the beehive itself is NOT part of the hair (it would blow up the head's volume-filter area): cast.js draws krumpHive() as an
+  // unfiltered under-layer (front / side) or over-layer (back) on the teacher's design
   krumpHive: {
     browY: -804, nametagY: -1260,
     behind(hair, feat, c) { return S.path(mapPoly(hair, [[-162, -880], [162, -880], [166, -700], [140, -684], [-140, -684], [-166, -700]], 34), outline(c.hair)); },
-    front: (hair, feat) => poly([...HIVE_OUT.map(hair), ...[[112, -848], [56, -880], [0, -888], [-56, -880], [-112, -848], [-134, -802], [-136, -732]].map(feat)], 22),
+    front: (hair, feat) => poly([...[[-158, -724], [-166, -866], [-150, -934], [-120, -970], [-50, -990], [50, -990], [120, -970], [150, -934], [166, -866], [158, -724], [136, -732], [134, -802]].map(hair), ...[[112, -848], [56, -880], [0, -888], [-56, -880], [-112, -848], [-134, -802], [-136, -732]].map(feat)], 22),
     details(hair, feat, c, shade) {
       let o = '';
-      if (shade) o += S.path(`M${P(hair([-130, -880]))} Q${P(hair([-140, -1060]))} ${P(hair([-60, -1150]))}`, lineOnly(18, c.hairHi)) + S.path(`M${P(hair([100, -1000]))} Q${P(hair([150, -940]))} ${P(hair([156, -880]))}`, lineOnly(26, c.hairShade));
-      let rings = '';
-      for (const [y, w] of [[-960, 150], [-1036, 158], [-1108, 140]]) rings += `M${P(hair([-w, y + 14]))} Q${P(hair([0, y - 26]))} ${P(hair([w, y + 14]))} `;
-      o += S.path(rings, lineOnly(5, c.hairShade)) + S.path(`M${P(hair([-40, -1150]))} Q${P(hair([20, -1186]))} ${P(hair([70, -1150]))} Q${P(hair([80, -1120]))} ${P(hair([40, -1126]))}`, lineOnly(5, c.hairShade));
-      o += S.path(`M${P(feat([-80, -870]))} Q${P(hair([-80, -910]))} ${P(hair([-60, -944]))} M${P(feat([0, -886]))} L${P(hair([0, -936]))} M${P(feat([80, -870]))} Q${P(hair([80, -910]))} ${P(hair([60, -944]))}`, lineOnly(4, c.hairShade));
-      const b = hair([-112, -950]);
-      o += S.g(S.path('M0 0 L-26 -16 L-26 16 Z M0 0 L26 -16 L26 16 Z', outline(c.hairBand || '#5A3A6A', 4)) + S.circle(0, 0, 8, outline(c.hairBand || '#5A3A6A', 4)), `translate(${P(b)}) rotate(-20)`);
+      if (shade) o += S.path(`M${P(hair([-140, -870]))} Q${P(hair([-130, -950]))} ${P(hair([-60, -982]))}`, lineOnly(16, c.hairHi));
+      o += S.path(`M${P(feat([-80, -870]))} Q${P(hair([-80, -930]))} ${P(hair([-60, -976]))} M${P(feat([0, -886]))} L${P(hair([0, -986]))} M${P(feat([80, -870]))} Q${P(hair([80, -930]))} ${P(hair([60, -976]))}`, lineOnly(4, c.hairShade));
       return o;
     },
     over(hair) {
       const p = hair([156, -786]);
       return redPen(p[0] + 4, p[1] - 4, -26, 0.92) + S.path(`M${P(hair([132, -850]))} Q${P(hair([172, -820]))} ${P(hair([150, -740]))}`, lineOnly(16, LINE)) + S.path(`M${P(hair([132, -850]))} Q${P(hair([172, -820]))} ${P(hair([150, -740]))}`, lineOnly(8, '#B8BCC8'));
     },
-    side: () => poly([[-174, -806], [-150, -930], [-150, -1020], [-120, -1130], [-40, -1196], [70, -1196], [150, -1130], [176, -1020], [166, -930], [170, -820], [164, -712], [120, -698], [64, -780], [-90, -832], [-140, -824]], 24),
-    sideOver: (c) => S.path('M-150 -950 Q10 -990 170 -950 M-158 -1030 Q10 -1070 176 -1030 M-136 -1104 Q10 -1140 160 -1104', lineOnly(5, c.hairShade)) + S.path('M-60 -1150 Q20 -1190 90 -1150', lineOnly(5, c.hairShade)) + S.path('M-120 -1000 Q-110 -1100 -50 -1150', lineOnly(14, c.hairHi)) + redPen(22, -790, -28, 0.92) + S.path('M0 -846 Q36 -830 30 -760', lineOnly(16, LINE)) + S.path('M0 -846 Q36 -830 30 -760', lineOnly(8, '#B8BCC8')),
-    back: () => poly([[-162, -712], ...HIVE_OUT.slice(1, -4), [162, -712], [80, -698], [0, -706], [-80, -698]], 22),
-    backOver: (c) => S.path('M-110 -720 Q-60 -860 -10 -930 M110 -720 Q60 -860 10 -930 M-150 -946 Q0 -986 150 -946 M-158 -1022 Q0 -1062 158 -1022 M-140 -1094 Q0 -1134 140 -1094', lineOnly(5, c.hairShade)) + S.g(S.path('M0 0 L-26 -16 L-26 16 Z M0 0 L26 -16 L26 16 Z', outline(c.hairBand || '#5A3A6A', 4)) + S.circle(0, 0, 8, outline(c.hairBand || '#5A3A6A', 4)), 'translate(112 -950) rotate(20)') + redPen(-160, -790, 26, 0.9),
+    side: () => poly([[-174, -806], [-150, -930], [-40, -984], [90, -966], [160, -884], [164, -712], [120, -698], [64, -780], [-90, -832], [-140, -824]], 22),
+    sideOver: () => redPen(22, -790, -28, 0.92) + S.path('M0 -846 Q36 -830 30 -760', lineOnly(16, LINE)) + S.path('M0 -846 Q36 -830 30 -760', lineOnly(8, '#B8BCC8')),
+    back: () => poly([[-162, -712], [-166, -872], [-96, -970], [96, -970], [166, -872], [162, -712], [80, -698], [0, -706], [-80, -698]], 28),
+    backOver: (c) => S.path('M-110 -720 Q-60 -860 -10 -930 M110 -720 Q60 -860 10 -930', lineOnly(4, c.hairShade)) + redPen(-160, -790, 26, 0.9),
   },
 
   netCurls: {
@@ -1203,9 +1216,13 @@ function liteHuman(sp) {
   const feetF = (J) => S.g(S.path(S.roundedPath([[-44, -4], [94, -4], [94, 40], [-44, 40]], 14), shoe), `translate(${P(J.ankle)}) rotate(${f(J.foot)})`);
   const skirtF = sp.skirt ? S.path(S.roundedPath([[-104, -330], [104, -330], [134, sp.skirtLen || -150], [-134, sp.skirtLen || -150]], 12), st(sp.skirt)) : '';
   const tall = ['afro', 'bun'].includes(sp.hairStyle) || sp.hat === 'beanie';
+  // head top in body units (before size): hair style vs hat, whichever is higher
+  const HT = { crop: 940, buzz: 920, spiky: 1010, bob: 955, long: 955, pony: 950, pigtails: 945, curly: 998, afro: 1068, bun: 1054, bald: 890 };
+  const HAT = { cap: 1004, beanie: 1058, sunhat: 1004, headband: 945 };
+  const top = Math.max(HT[sp.hairStyle] || 940, HAT[sp.hat] || 0);
   return {
     style: { lite: true, size: sp.size || 1 },
-    dims: { size: sp.size || 1, nametagY: tall ? -1100 : -1040, top: tall ? 1060 : sp.hat === 'sunhat' ? 1010 : 1000 },
+    dims: { size: sp.size || 1, nametagY: tall ? -1100 : -1040, top },
     defaults: { volume: false },
     leg: ({ J }) => S.path(bentLimb(J, [42, 46, 54], [40, 40, 40], 24).d, pants) + feetF(J),
     legSide: ({ J }) => S.path(bentLimb(J, [62, 64, 68], [56, 58, 62], 24).d, pants) + S.g(S.path(S.roundedPath([[-138, -4], [88, -4], [88, 42], [-138, 42]], 16), shoe), `translate(${P(J.ankle)}) rotate(${f(J.foot)})`),
@@ -1246,6 +1263,6 @@ function liteHuman(sp) {
 
 module.exports = {
   dress7, makeTorso7, makeTorsoSide7, makeArm7, makeLeg7, makeLegSide7, outfit7, TOPS7, STATE,
-  sunhat, zzz, backpack, backpackBehind, heroApron, champSash, hoodDownBehind, hoodDownBack, dinoTail, dinoSpike, googly,
+  sunhat, zzz, krumpHive, backpack, backpackBehind, heroApron, champSash, hoodDownBehind, hoodDownBack, dinoTail, dinoSpike, googly,
   bigSpecsFront, braces, eyeBags, flourSmudge, redPen, cupcake, rocket, patch, liteHuman, liteHair, EL_F, EL_S,
 };
