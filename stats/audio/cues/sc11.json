@@ -1,0 +1,607 @@
+{
+ "scene": "SC 11",
+ "start": 716.24,
+ "end": 768.06,
+ "music": [
+  {
+   "start": 716.24,
+   "end": 726.232,
+   "mood": "homey",
+   "energy": 0.45,
+   "in": "swell",
+   "out": "cut"
+  },
+  {
+   "start": 726.232,
+   "end": 728.62,
+   "mood": "tender",
+   "energy": 0.3,
+   "in": "cut",
+   "out": "cut"
+  },
+  {
+   "start": 728.62,
+   "end": 735.5,
+   "mood": "playful",
+   "energy": 0.6,
+   "in": "cut",
+   "out": "cut"
+  },
+  {
+   "start": 735.5,
+   "end": 744.96,
+   "mood": "tender",
+   "energy": 0.32,
+   "in": "cut",
+   "out": "cut"
+  },
+  {
+   "start": 744.96,
+   "end": 746.953,
+   "mood": "playful",
+   "energy": 0.5,
+   "in": "cut",
+   "out": "sting"
+  },
+  {
+   "start": 746.953,
+   "end": 756.46,
+   "mood": "homey",
+   "energy": 0.45,
+   "in": "cut",
+   "out": "cut"
+  },
+  {
+   "start": 756.46,
+   "end": 760.94,
+   "mood": "tender",
+   "energy": 0.35,
+   "in": "fade",
+   "out": "fade"
+  },
+  {
+   "start": 760.94,
+   "end": 766.21,
+   "mood": "wonder",
+   "energy": 0.35,
+   "in": "fade",
+   "out": "cut"
+  },
+  {
+   "start": 766.21,
+   "end": 768.06,
+   "mood": "levelup",
+   "energy": 0.55,
+   "in": "cut",
+   "out": "cut"
+  }
+ ],
+ "ambience": [
+  {
+   "start": 716.24,
+   "end": 728.62,
+   "name": "birds",
+   "gain_db": -16
+  },
+  {
+   "start": 717.24,
+   "end": 728.62,
+   "name": "kitchen",
+   "gain_db": -16
+  },
+  {
+   "start": 728.62,
+   "end": 746.953,
+   "name": "crowd",
+   "gain_db": -20
+  },
+  {
+   "start": 746.953,
+   "end": 756.46,
+   "name": "crowd",
+   "gain_db": -14
+  },
+  {
+   "start": 756.46,
+   "end": 760.94,
+   "name": "kitchen",
+   "gain_db": -16
+  },
+  {
+   "start": 756.46,
+   "end": 768.06,
+   "name": "birds",
+   "gain_db": -22
+  },
+  {
+   "start": 760.94,
+   "end": 768.06,
+   "name": "room",
+   "gain_db": -18
+  }
+ ],
+ "footsteps": [
+  {
+   "start": 718.98,
+   "end": 720.08,
+   "interval": 0.449,
+   "surface": "soft",
+   "gain_db": -16,
+   "pan": 0.5
+  },
+  {
+   "start": 721.34,
+   "end": 722.66,
+   "interval": 0.393,
+   "surface": "soft",
+   "gain_db": -18,
+   "pan": 0.2
+  },
+  {
+   "start": 732.53,
+   "end": 733.44,
+   "interval": 0.209,
+   "surface": "wood",
+   "gain_db": -10,
+   "pan": 0
+  },
+  {
+   "start": 746.953,
+   "end": 747.653,
+   "interval": 0.449,
+   "surface": "hard",
+   "gain_db": -6,
+   "pan": 0.5
+  }
+ ],
+ "sfx": [
+  [
+   716.24,
+   "harp_up",
+   -6,
+   0,
+   "white fade into the morning (from the fair at dusk, SC 10)"
+  ],
+  [
+   716.54,
+   "chime",
+   -14,
+   0.3,
+   "a soft morning chime"
+  ],
+  [
+   717.24,
+   "sizzle",
+   -10,
+   -0.4,
+   "pancakes sizzling"
+  ],
+  [
+   717.44,
+   "pan_clang",
+   -10,
+   -0.4,
+   "the pan jerks up"
+  ],
+  [
+   717.5,
+   "whoosh_up",
+   -6,
+   -0.2,
+   "the pancake flies across the kitchen"
+  ],
+  [
+   718.12,
+   "splat",
+   -8,
+   0.321,
+   "plop! on top of the FOR MOM stack"
+  ],
+  [
+   718.17,
+   "sparkle",
+   -12,
+   0.321,
+   "perfect landing"
+  ],
+  [
+   719.18,
+   "sizzle",
+   -18,
+   -0.6,
+   "stove still going"
+  ],
+  [
+   719.56,
+   "blink",
+   -8,
+   -0.481,
+   "he checks above her head — no plate, no numbers"
+  ],
+  [
+   720.28,
+   "cloth",
+   -10,
+   0.248,
+   "Mom stretches with a giant yawn"
+  ],
+  [
+   721.24,
+   "whoosh",
+   -12,
+   0.2,
+   "cut"
+  ],
+  [
+   722.86,
+   "stone",
+   -22,
+   -0.2,
+   "the chair scrapes as she sits"
+  ],
+  [
+   724.788,
+   "zoom_in",
+   -6,
+   0,
+   "smash-zoom on the hero"
+  ],
+  [
+   725.36,
+   "shine",
+   -2,
+   0.1,
+   "twinkle in his eye"
+  ],
+  [
+   725.41,
+   "sparkle",
+   -10,
+   0.1,
+   "sparkles"
+  ],
+  [
+   726.532,
+   "blush",
+   -14,
+   0,
+   "happy tears"
+  ],
+  [
+   727.94,
+   "gulp",
+   -12,
+   0,
+   "a sip of coffee"
+  ],
+  [
+   728.62,
+   "whoosh",
+   -8,
+   0.3,
+   "cut to the science fair"
+  ],
+  [
+   728.88,
+   "electric",
+   -10,
+   0,
+   "the bulb sputters"
+  ],
+  [
+   729.16,
+   "electric",
+   -4,
+   0,
+   "the bulb lights up!"
+  ],
+  [
+   729.21,
+   "sparkle",
+   -8,
+   0,
+   "sparks"
+  ],
+  [
+   730.396,
+   "jump",
+   -12,
+   0.102,
+   "Benji bouncing"
+  ],
+  [
+   730.536,
+   "powerdown",
+   -14,
+   -0.19,
+   "the glow dims"
+  ],
+  [
+   731.4,
+   "electric",
+   -16,
+   -0.19,
+   "flicker"
+  ],
+  [
+   732.53,
+   "whoosh",
+   -10,
+   -0.2,
+   "he dashes round the table"
+  ],
+  [
+   733.51,
+   "slap",
+   -8,
+   0.029,
+   "arm round Benji (back slap)"
+  ],
+  [
+   733.66,
+   "giggle",
+   -6,
+   0,
+   "both laugh"
+  ],
+  [
+   740.56,
+   "harp_up",
+   -14,
+   0,
+   "\"best friend\" — Benji's eyes well up"
+  ],
+  [
+   741.5,
+   "blush",
+   -14,
+   -0.044,
+   "Benji wipes his eye"
+  ],
+  [
+   745.26,
+   "giggle",
+   -8,
+   0,
+   "they crack up"
+  ],
+  [
+   746.03,
+   "punch",
+   -10,
+   0,
+   "fist bump"
+  ],
+  [
+   746.05,
+   "electric",
+   -10,
+   -0.408,
+   "the bulb flares"
+  ],
+  [
+   746.08,
+   "sparkle",
+   -10,
+   0,
+   "sparks"
+  ],
+  [
+   746.953,
+   "whoosh",
+   -10,
+   0.5,
+   "cut to the cafeteria"
+  ],
+  [
+   747.703,
+   "cloth",
+   -14,
+   0.321,
+   "Tank fidgets with his hands"
+  ],
+  [
+   749.34,
+   "tap",
+   -10,
+   0.1,
+   "pat pat pat on the bench"
+  ],
+  [
+   749.654,
+   "tap",
+   -10,
+   0.1,
+   "pat pat pat on the bench"
+  ],
+  [
+   749.968,
+   "tap",
+   -10,
+   0.1,
+   "pat pat pat on the bench"
+  ],
+  [
+   750.16,
+   "whoosh",
+   -10,
+   0.3,
+   "cut: Tank sits with them"
+  ],
+  [
+   750.26,
+   "thud",
+   -14,
+   0.248,
+   "Tank sits down heavily"
+  ],
+  [
+   750.92,
+   "paper",
+   -8,
+   0.248,
+   "the paper bag opens"
+  ],
+  [
+   752.78,
+   "paper",
+   -10,
+   0.321,
+   "the sandwich comes out"
+  ],
+  [
+   752.83,
+   "pop",
+   -12,
+   0.321,
+   "ta-da (sandwich)"
+  ],
+  [
+   753.219,
+   "splat",
+   -14,
+   0.2,
+   "ketchup drip"
+  ],
+  [
+   753.538,
+   "whoosh_down",
+   -10,
+   0,
+   "insert on the sandwich"
+  ],
+  [
+   753.769,
+   "splat",
+   -14,
+   0.2,
+   "ketchup drip"
+  ],
+  [
+   754.319,
+   "splat",
+   -14,
+   0.2,
+   "ketchup drip"
+  ],
+  [
+   754.869,
+   "splat",
+   -2,
+   0.2,
+   "the big SPLAT on \"ketchup\""
+  ],
+  [
+   755.68,
+   "giggle",
+   -4,
+   0,
+   "Benji, the hero and Tank laugh together"
+  ],
+  [
+   756.46,
+   "whoosh",
+   -10,
+   -0.4,
+   "cut home"
+  ],
+  [
+   756.51,
+   "dishes",
+   -12,
+   -0.4,
+   "Mom washes, the hero dries"
+  ],
+  [
+   756.64,
+   "door_knock",
+   -6,
+   -0.372,
+   "Grandpa taps on the glass"
+  ],
+  [
+   760.14,
+   "shine",
+   -4,
+   0,
+   "the wink"
+  ],
+  [
+   760.19,
+   "sparkle",
+   -12,
+   0,
+   "twinkle"
+  ],
+  [
+   760.94,
+   "whoosh",
+   -12,
+   0.2,
+   "cut to the living room"
+  ],
+  [
+   761.22,
+   "cloth",
+   -12,
+   0.1,
+   "he picks the tablet up"
+  ],
+  [
+   761.52,
+   "swish",
+   -10,
+   0.1,
+   "tablet up"
+  ],
+  [
+   763.53,
+   "zoom_in",
+   -8,
+   0,
+   "insert on the screen"
+  ],
+  [
+   763.86,
+   "swish",
+   -12,
+   -0.4,
+   "his thumb reaches in"
+  ],
+  [
+   763.93,
+   "squeak",
+   -16,
+   0.6,
+   "Max climbs up to look"
+  ],
+  [
+   763.96,
+   "swish",
+   -12,
+   0.5,
+   "Max's dino claw reaches in"
+  ],
+  [
+   766.18,
+   "toggle",
+   0,
+   0,
+   "REALITY HUD: ON"
+  ],
+  [
+   766.21,
+   "tv_on",
+   -6,
+   0,
+   "the screen lights up"
+  ],
+  [
+   766.26,
+   "upgrade",
+   -6,
+   0,
+   "cyan glow -> SC 12 (pet stats)"
+  ]
+ ]
+}

@@ -483,4 +483,11 @@ function look(t) {
   return { grade: 'warm', vignette: 0.6 };
 }
 
-module.exports = { scene, look, times, TIMES: TM, CUT: C, BEATS: B };
+// when the ketchup drops of shotKetchup() hit the table (for the cue sheet)
+function ketchupSplats() {
+  const ts = tankSeated(B.made + 1);
+  const fall = Math.sqrt(Math.max(0, 872 - (ts.hand[1] + 18)) / 1400);
+  return [0, 1, 2, 3].map((i) => B.ketchup - 0.25 - (3 - i) * 0.55 + fall);
+}
+
+module.exports = { scene, look, times, ketchupSplats, TIMES: TM, CUT: C, BEATS: B };

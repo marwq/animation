@@ -1,0 +1,1376 @@
+{
+ "scene": "SC 10",
+ "start": 644.54,
+ "end": 716.24,
+ "music": [
+  {
+   "start": 644.54,
+   "end": 646.23,
+   "mood": "silence",
+   "energy": 0,
+   "in": "cut",
+   "out": "cut"
+  },
+  {
+   "start": 646.23,
+   "end": 650.8,
+   "mood": "wonder",
+   "energy": 0.5,
+   "in": "swell",
+   "out": "cut"
+  },
+  {
+   "start": 650.8,
+   "end": 653.95,
+   "mood": "tender",
+   "energy": 0.4,
+   "in": "fade",
+   "out": "cut"
+  },
+  {
+   "start": 653.95,
+   "end": 660.68,
+   "mood": "search",
+   "energy": 0.4,
+   "in": "fade",
+   "out": "cut"
+  },
+  {
+   "start": 660.68,
+   "end": 668,
+   "mood": "search",
+   "energy": 0.6,
+   "in": "cut",
+   "out": "cut"
+  },
+  {
+   "start": 668,
+   "end": 676.81,
+   "mood": "search",
+   "energy": 0.95,
+   "in": "swell",
+   "out": "cut"
+  },
+  {
+   "start": 676.81,
+   "end": 681.31,
+   "mood": "search",
+   "energy": 1,
+   "in": "swell",
+   "out": "cut"
+  },
+  {
+   "start": 681.31,
+   "end": 694.64,
+   "mood": "search",
+   "energy": 0.55,
+   "in": "cut",
+   "out": "sting"
+  },
+  {
+   "start": 694.64,
+   "end": 695.72,
+   "mood": "silence",
+   "energy": 0,
+   "in": "cut",
+   "out": "cut"
+  },
+  {
+   "start": 695.72,
+   "end": 701.52,
+   "mood": "search",
+   "energy": 1,
+   "in": "cut",
+   "out": "cut"
+  },
+  {
+   "start": 701.52,
+   "end": 708.77,
+   "mood": "anthem",
+   "energy": 0.9,
+   "in": "swell",
+   "out": "cut"
+  },
+  {
+   "start": 708.77,
+   "end": 713.26,
+   "mood": "anthem",
+   "energy": 0.55,
+   "in": "cut",
+   "out": "scratch"
+  },
+  {
+   "start": 713.26,
+   "end": 713.81,
+   "mood": "silence",
+   "energy": 0,
+   "in": "cut",
+   "out": "cut"
+  },
+  {
+   "start": 713.81,
+   "end": 716.24,
+   "mood": "homey",
+   "energy": 0.7,
+   "in": "cut",
+   "out": "fade"
+  }
+ ],
+ "ambience": [
+  {
+   "start": 646.33,
+   "end": 669.23,
+   "name": "crowd",
+   "gain_db": -16
+  },
+  {
+   "start": 669.23,
+   "end": 695.72,
+   "name": "crowd",
+   "gain_db": -11
+  },
+  {
+   "start": 695.72,
+   "end": 716.24,
+   "name": "crowd",
+   "gain_db": -9
+  },
+  {
+   "start": 646.83,
+   "end": 669.23,
+   "name": "birds",
+   "gain_db": -20
+  },
+  {
+   "start": 696.427,
+   "end": 701.52,
+   "name": "wind",
+   "gain_db": -18
+  }
+ ],
+ "footsteps": [
+  {
+   "start": 660.68,
+   "end": 661.1,
+   "interval": 0.209,
+   "surface": "soft",
+   "gain_db": -8,
+   "pan": 0.4
+  },
+  {
+   "start": 665.19,
+   "end": 665.64,
+   "interval": 0.393,
+   "surface": "soft",
+   "gain_db": -6,
+   "pan": 0
+  },
+  {
+   "start": 669.23,
+   "end": 671.34,
+   "interval": 0.224,
+   "surface": "soft",
+   "gain_db": -6,
+   "pan": 0
+  },
+  {
+   "start": 671.34,
+   "end": 675.21,
+   "interval": 0.242,
+   "surface": "soft",
+   "gain_db": -6,
+   "pan": 0
+  },
+  {
+   "start": 675.21,
+   "end": 676.81,
+   "interval": 0.262,
+   "surface": "soft",
+   "gain_db": -10,
+   "pan": 0
+  },
+  {
+   "start": 676.81,
+   "end": 681.31,
+   "interval": 0.924,
+   "surface": "soft",
+   "gain_db": -2,
+   "pan": 0
+  },
+  {
+   "start": 681.31,
+   "end": 682.86,
+   "interval": 0.349,
+   "surface": "soft",
+   "gain_db": -10,
+   "pan": -0.2
+  },
+  {
+   "start": 682.86,
+   "end": 684.5,
+   "interval": 0.393,
+   "surface": "soft",
+   "gain_db": -12,
+   "pan": 0.2
+  },
+  {
+   "start": 698.23,
+   "end": 698.73,
+   "interval": 0.224,
+   "surface": "soft",
+   "gain_db": -4,
+   "pan": -0.3
+  },
+  {
+   "start": 708.77,
+   "end": 709.12,
+   "interval": 0.224,
+   "surface": "soft",
+   "gain_db": -8,
+   "pan": -0.4
+  }
+ ],
+ "sfx": [
+  [
+   644.59,
+   "shine",
+   -14,
+   0.19,
+   "the last glint of HUD glass settles"
+  ],
+  [
+   644.89,
+   "sparkle",
+   -18,
+   -0.292,
+   "glints vanish"
+  ],
+  [
+   644.93,
+   "reverse_swell",
+   -8,
+   0,
+   "into the colour bloom"
+  ],
+  [
+   644.99,
+   "blink",
+   -8,
+   -0.19,
+   "he opens his eyes"
+  ],
+  [
+   645.89,
+   "blink",
+   -10,
+   0,
+   "eyelids open"
+  ],
+  [
+   646.33,
+   "harp_up",
+   -2,
+   0,
+   "COLOUR floods back"
+  ],
+  [
+   646.38,
+   "magic",
+   -8,
+   0,
+   "the warm ring of light spreads"
+  ],
+  [
+   646.63,
+   "sparkle",
+   -10,
+   0.3,
+   "motes in the golden light"
+  ],
+  [
+   647.22,
+   "whoosh",
+   -10,
+   0.3,
+   "whip to the booth"
+  ],
+  [
+   647.27,
+   "kids_laugh",
+   -8,
+   -0.598,
+   "a kid laughing and jumping"
+  ],
+  [
+   647.41,
+   "swish",
+   -10,
+   -0.4,
+   "a dart flies"
+  ],
+  [
+   647.66,
+   "pop",
+   0,
+   -0.4,
+   "the balloon pops"
+  ],
+  [
+   647.74,
+   "bell",
+   -6,
+   -0.4,
+   "booth bell: winner!"
+  ],
+  [
+   647.76,
+   "crowd_cheer",
+   -12,
+   0,
+   "the booth crowd cheers"
+  ],
+  [
+   648.5,
+   "whoosh",
+   -10,
+   0.4,
+   "whip to the faces"
+  ],
+  [
+   648.6,
+   "giggle",
+   -8,
+   0,
+   "people laughing"
+  ],
+  [
+   648.7,
+   "chime",
+   -10,
+   0.4,
+   "golden light"
+  ],
+  [
+   649.82,
+   "sparkle",
+   -8,
+   -0.19,
+   "eyes full of light"
+  ],
+  [
+   650.8,
+   "whoosh",
+   -12,
+   -0.3,
+   "cut back to the bench"
+  ],
+  [
+   652.04,
+   "cloth",
+   -8,
+   -0.19,
+   "he stands up"
+  ],
+  [
+   653.24,
+   "cloth",
+   -6,
+   -0.19,
+   "fist up, determined"
+  ],
+  [
+   653.29,
+   "shine",
+   -10,
+   -0.19,
+   "determination glint"
+  ],
+  [
+   655.01,
+   "pop",
+   -4,
+   0.27,
+   "memory bubble: Max loves dinosaurs"
+  ],
+  [
+   655.16,
+   "music_box",
+   -10,
+   0.27,
+   "memory"
+  ],
+  [
+   656.448,
+   "poof",
+   -10,
+   0.27,
+   "the bubble bursts"
+  ],
+  [
+   656.82,
+   "pop",
+   -4,
+   0.117,
+   "bubble: RAWR at Biscuit"
+  ],
+  [
+   656.94,
+   "monster_growl",
+   -12,
+   0.117,
+   "tiny RAWR"
+  ],
+  [
+   657.07,
+   "squeak",
+   -10,
+   0.19,
+   "Biscuit jumps"
+  ],
+  [
+   657.53,
+   "pop",
+   -4,
+   0.474,
+   "bubble: RAWR at the toaster"
+  ],
+  [
+   657.65,
+   "monster_growl",
+   -12,
+   0.474,
+   "tiny RAWR"
+  ],
+  [
+   657.73,
+   "pop",
+   -8,
+   0.54,
+   "the toast pops"
+  ],
+  [
+   657.9,
+   "pop",
+   -4,
+   0.292,
+   "bubble: RAWR at Grandpa"
+  ],
+  [
+   658.02,
+   "monster_growl",
+   -12,
+   0.292,
+   "tiny RAWR"
+  ],
+  [
+   658.12,
+   "slide_up",
+   -10,
+   0.365,
+   "Grandpa startled"
+  ],
+  [
+   658.787,
+   "poof",
+   -8,
+   0.292,
+   "the RAWR bubbles burst"
+  ],
+  [
+   659.14,
+   "pop",
+   -4,
+   0.277,
+   "bubble: Max on top of the pillow fort"
+  ],
+  [
+   659.29,
+   "harp_up",
+   -10,
+   0.277,
+   "up high"
+  ],
+  [
+   660.42,
+   "shine",
+   0,
+   -0.335,
+   "EUREKA: his eyes snap up"
+  ],
+  [
+   660.44,
+   "zoom_in",
+   -4,
+   0,
+   "camera punch"
+  ],
+  [
+   660.47,
+   "pop",
+   -6,
+   0.277,
+   "the bubble bursts into sparkles"
+  ],
+  [
+   660.68,
+   "whoosh",
+   -10,
+   0.3,
+   "whip"
+  ],
+  [
+   661.1,
+   "skid",
+   -2,
+   0.102,
+   "Benji skids to a stop"
+  ],
+  [
+   662.04,
+   "paper",
+   -4,
+   0.029,
+   "the map whipped out"
+  ],
+  [
+   662.29,
+   "paper",
+   -2,
+   0,
+   "the map unfolds"
+  ],
+  [
+   662.59,
+   "tap",
+   -14,
+   -0.2,
+   "finger traces the route"
+  ],
+  [
+   662.77,
+   "tap",
+   -14,
+   -0.08,
+   "finger traces the route"
+  ],
+  [
+   662.95,
+   "tap",
+   -14,
+   0.04,
+   "finger traces the route"
+  ],
+  [
+   663.13,
+   "tap",
+   -14,
+   0.16,
+   "finger traces the route"
+  ],
+  [
+   663.147,
+   "pop",
+   -10,
+   0.15,
+   "X marks the dinosaur"
+  ],
+  [
+   663.717,
+   "shine",
+   -4,
+   0.015,
+   "glasses glint"
+  ],
+  [
+   664.55,
+   "slip",
+   -8,
+   0.029,
+   "trips on his laces"
+  ],
+  [
+   664.67,
+   "squeak",
+   -12,
+   0.029,
+   "catches himself"
+  ],
+  [
+   665.19,
+   "sub_drop",
+   -6,
+   0,
+   "a huge shadow"
+  ],
+  [
+   665.24,
+   "step",
+   -6,
+   0,
+   "heavy step"
+  ],
+  [
+   665.39,
+   "angel",
+   -14,
+   0,
+   "sun halo behind his head"
+  ],
+  [
+   665.59,
+   "step",
+   -6,
+   0,
+   "heavy step"
+  ],
+  [
+   665.93,
+   "boom",
+   -6,
+   0,
+   "\"tall.\" (comedic boom)"
+  ],
+  [
+   666.898,
+   "whoosh",
+   -12,
+   -0.2,
+   "cut"
+  ],
+  [
+   667.198,
+   "thud",
+   -6,
+   0.088,
+   "Tank kneels"
+  ],
+  [
+   667.248,
+   "tap",
+   -10,
+   0.117,
+   "pat pat on the shoulder"
+  ],
+  [
+   667.498,
+   "tap",
+   -10,
+   0.117,
+   "pat pat on the shoulder"
+  ],
+  [
+   667.63,
+   "jump",
+   -4,
+   -0.117,
+   "the hero hops"
+  ],
+  [
+   667.65,
+   "whoosh_up",
+   -8,
+   -0.044,
+   "up"
+  ],
+  [
+   668,
+   "whoosh_up",
+   -2,
+   0,
+   "Tank rises — crane up"
+  ],
+  [
+   668.01,
+   "land",
+   -4,
+   0.088,
+   "onto Tank's shoulders"
+  ],
+  [
+   668.15,
+   "rumble",
+   -14,
+   0,
+   "the big guy stands"
+  ],
+  [
+   668.75,
+   "orch_hit",
+   -4,
+   0.1,
+   "the hero points: GO!"
+  ],
+  [
+   668.77,
+   "shine",
+   -6,
+   0.1,
+   "sun flare"
+  ],
+  [
+   669.23,
+   "whoosh_long",
+   -6,
+   0,
+   "the charge at the camera"
+  ],
+  [
+   671.34,
+   "whoosh",
+   -6,
+   0.5,
+   "whip: past the cotton candy"
+  ],
+  [
+   671.94,
+   "whoosh",
+   -12,
+   0.2,
+   "pass-by"
+  ],
+  [
+   673.1,
+   "whoosh",
+   -6,
+   0.5,
+   "whip: past the giant teacups"
+  ],
+  [
+   673.5,
+   "kids_laugh",
+   -14,
+   0.3,
+   "teacup riders"
+  ],
+  [
+   675.21,
+   "whoosh_up",
+   -8,
+   0,
+   "crane up over the fair"
+  ],
+  [
+   675.41,
+   "wind_gust",
+   -16,
+   0,
+   "high wide"
+  ],
+  [
+   676.79,
+   "impact",
+   -6,
+   0,
+   "slow motion hits"
+  ],
+  [
+   676.86,
+   "whoosh_long",
+   -10,
+   0,
+   "into slow motion"
+  ],
+  [
+   677.84,
+   "shine",
+   -2,
+   -0.117,
+   "Benji's glasses glint"
+  ],
+  [
+   679.39,
+   "cloth",
+   -8,
+   0.1,
+   "Tank sets his jaw"
+  ],
+  [
+   680.37,
+   "whoosh_up",
+   -8,
+   0,
+   "tilt up to the hero"
+  ],
+  [
+   680.52,
+   "orch_hit",
+   -2,
+   0,
+   "\"And you.\""
+  ],
+  [
+   680.54,
+   "shine",
+   -6,
+   0.2,
+   "sun flare"
+  ],
+  [
+   681.31,
+   "whoosh",
+   -10,
+   -0.3,
+   "cut"
+  ],
+  [
+   681.61,
+   "paper",
+   -10,
+   -0.044,
+   "map flaps"
+  ],
+  [
+   682.86,
+   "whoosh_up",
+   -10,
+   0,
+   "tilt up to the wheel"
+  ],
+  [
+   684.5,
+   "whoosh",
+   -10,
+   0.3,
+   "cut"
+  ],
+  [
+   684.65,
+   "snore",
+   -4,
+   0.1,
+   "the kid in the gondola snores"
+  ],
+  [
+   684.8,
+   "squeak",
+   -14,
+   0.1,
+   "slow creak of the wheel"
+  ],
+  [
+   685.82,
+   "skid",
+   -6,
+   -0.2,
+   "Tank stops by the stand"
+  ],
+  [
+   687.26,
+   "whoosh",
+   -10,
+   0.3,
+   "cut"
+  ],
+  [
+   687.31,
+   "kids_laugh",
+   -4,
+   0,
+   "a sugar-high swarm"
+  ],
+  [
+   687.56,
+   "giggle",
+   -10,
+   0.3,
+   "kids jumping"
+  ],
+  [
+   687.76,
+   "gulp",
+   -10,
+   0,
+   "the vendor is overwhelmed"
+  ],
+  [
+   689.47,
+   "whoosh",
+   -10,
+   0,
+   "cut"
+  ],
+  [
+   689.57,
+   "swish",
+   -10,
+   -0.1,
+   "head shake"
+  ],
+  [
+   689.75,
+   "swish",
+   -10,
+   0.1,
+   "head shake"
+  ],
+  [
+   690.652,
+   "zoom_in",
+   -10,
+   0,
+   "slow push"
+  ],
+  [
+   691.452,
+   "heartbeat",
+   -8,
+   0,
+   "thinking"
+  ],
+  [
+   693.42,
+   "zoom_in",
+   0,
+   0,
+   "SMASH ZOOM"
+  ],
+  [
+   693.44,
+   "boom",
+   -2,
+   0,
+   "DINOSAUR."
+  ],
+  [
+   693.47,
+   "shine",
+   -4,
+   0,
+   "eyes light up"
+  ],
+  [
+   693.72,
+   "riser",
+   -6,
+   0,
+   "he looks up... (build to THERE!)"
+  ],
+  [
+   695.72,
+   "whoosh",
+   0,
+   0.5,
+   "whip to the dinosaur"
+  ],
+  [
+   695.75,
+   "impact",
+   -2,
+   0.3,
+   "THERE!"
+  ],
+  [
+   695.92,
+   "crowd_cheer",
+   -12,
+   0.3,
+   "the crowd below the dino"
+  ],
+  [
+   696.427,
+   "whoosh",
+   -8,
+   0,
+   "cut to Max"
+  ],
+  [
+   696.827,
+   "squeak",
+   -12,
+   -0.1,
+   "inflatable squeaks"
+  ],
+  [
+   697.527,
+   "squeak",
+   -12,
+   0,
+   "inflatable squeaks"
+  ],
+  [
+   698.23,
+   "whoosh",
+   -6,
+   -0.4,
+   "cut: the charge"
+  ],
+  [
+   698.73,
+   "skid",
+   -4,
+   -0.044,
+   "Tank plants his feet"
+  ],
+  [
+   698.83,
+   "cloth",
+   -8,
+   -0.044,
+   "the hero stands up on his shoulders"
+  ],
+  [
+   698.95,
+   "jump",
+   -2,
+   -0.044,
+   "the LEAP"
+  ],
+  [
+   698.97,
+   "whoosh_up",
+   -4,
+   0.029,
+   "flying onto the dinosaur"
+  ],
+  [
+   699.05,
+   "crowd_gasp",
+   -8,
+   0.2,
+   "the crowd gasps"
+  ],
+  [
+   699.45,
+   "boing",
+   0,
+   0.102,
+   "BOING on the inflatable"
+  ],
+  [
+   699.5,
+   "squeak",
+   -6,
+   0.102,
+   "vinyl squeak"
+  ],
+  [
+   699.75,
+   "squeak",
+   -12,
+   0.139,
+   "climbing squeaks"
+  ],
+  [
+   699.96,
+   "whoosh_up",
+   -8,
+   0,
+   "cut to the head"
+  ],
+  [
+   700.11,
+   "squeak",
+   -12,
+   0.175,
+   "climbing up the neck"
+  ],
+  [
+   700.26,
+   "monster_growl",
+   -6,
+   -0.102,
+   "Max's RAWR (cute)"
+  ],
+  [
+   700.31,
+   "boing",
+   -10,
+   -0.102,
+   "the dino head wobbles"
+  ],
+  [
+   700.35,
+   "squeak",
+   -12,
+   0.175,
+   "climbing up the neck"
+  ],
+  [
+   700.59,
+   "squeak",
+   -12,
+   0.175,
+   "climbing up the neck"
+  ],
+  [
+   700.66,
+   "crowd_cheer",
+   -8,
+   0,
+   "the crowd cheers the climber"
+  ],
+  [
+   700.83,
+   "squeak",
+   -12,
+   0.175,
+   "climbing up the neck"
+  ],
+  [
+   701.07,
+   "squeak",
+   -12,
+   0.175,
+   "climbing up the neck"
+  ],
+  [
+   701.31,
+   "squeak",
+   -12,
+   0.175,
+   "climbing up the neck"
+  ],
+  [
+   701.52,
+   "whoosh",
+   -12,
+   -0.2,
+   "cut"
+  ],
+  [
+   701.67,
+   "cloth",
+   -4,
+   0,
+   "the hug"
+  ],
+  [
+   701.72,
+   "boing",
+   -12,
+   0,
+   "the inflatable squishes"
+  ],
+  [
+   701.87,
+   "sparkle",
+   -12,
+   0,
+   "golden light"
+  ],
+  [
+   703.04,
+   "whoosh",
+   -12,
+   0.2,
+   "cut"
+  ],
+  [
+   703.68,
+   "boing",
+   -8,
+   -0.1,
+   "Max stands up on the head"
+  ],
+  [
+   703.78,
+   "crowd_cheer",
+   -6,
+   0,
+   "cheers"
+  ],
+  [
+   703.88,
+   "confetti",
+   -10,
+   0,
+   "confetti from below"
+  ],
+  [
+   705.5,
+   "whoosh_down",
+   -6,
+   0,
+   "tilt down to the crowd"
+  ],
+  [
+   705.7,
+   "monster_growl",
+   -4,
+   -0.1,
+   "RAWR!"
+  ],
+  [
+   705.85,
+   "crowd_cheer",
+   2,
+   0,
+   "the whole crowd RAWRs back"
+  ],
+  [
+   706,
+   "applause",
+   -2,
+   0,
+   "applause"
+  ],
+  [
+   706.86,
+   "whoosh",
+   -8,
+   -0.4,
+   "cut down below"
+  ],
+  [
+   707.03,
+   "jump",
+   -8,
+   0.1,
+   "Benji jumps for it"
+  ],
+  [
+   707.18,
+   "slap",
+   2,
+   0.05,
+   "HIGH FIVE"
+  ],
+  [
+   707.33,
+   "whoosh_up",
+   -6,
+   0.1,
+   "Benji lifted into the air"
+  ],
+  [
+   707.48,
+   "giggle",
+   -8,
+   0.1,
+   "Benji, dangling, delighted"
+  ],
+  [
+   707.73,
+   "slide_down",
+   -2,
+   -0.3,
+   "WHEEE down the neck and the tail"
+  ],
+  [
+   707.78,
+   "whoosh_down",
+   -8,
+   0,
+   "cut wide"
+  ],
+  [
+   708.13,
+   "squeak",
+   -8,
+   0,
+   "vinyl squeak"
+  ],
+  [
+   708.6,
+   "boing",
+   -4,
+   0.5,
+   "off the tail tip"
+  ],
+  [
+   708.77,
+   "whoosh",
+   -10,
+   -0.4,
+   "cut: Mom runs in"
+  ],
+  [
+   708.9,
+   "land",
+   -6,
+   0.5,
+   "landing"
+  ],
+  [
+   709.12,
+   "thud",
+   -6,
+   0,
+   "she scoops them up"
+  ],
+  [
+   709.15,
+   "cloth",
+   -4,
+   0,
+   "the hug"
+  ],
+  [
+   709.72,
+   "applause",
+   -12,
+   0,
+   "the crowd: awww"
+  ],
+  [
+   709.94,
+   "cloth",
+   -6,
+   0,
+   "squeeze on EVER"
+  ],
+  [
+   711.489,
+   "zoom_in",
+   -10,
+   0.2,
+   "push in on Max"
+  ],
+  [
+   711.789,
+   "sparkle",
+   -8,
+   0.2,
+   "huge hopeful eyes"
+  ],
+  [
+   713.26,
+   "record_scratch",
+   -2,
+   0,
+   "Mom's deadpan stare"
+  ],
+  [
+   713.41,
+   "cricket",
+   -10,
+   0,
+   "beat"
+  ],
+  [
+   713.81,
+   "crowd_laugh",
+   -6,
+   0,
+   "everybody bursts out laughing"
+  ],
+  [
+   713.86,
+   "kids_laugh",
+   -8,
+   0,
+   "the boys laugh"
+  ],
+  [
+   714.31,
+   "whoosh_long",
+   -8,
+   0,
+   "crane back"
+  ],
+  [
+   714.61,
+   "harp_up",
+   -8,
+   0,
+   "balloons rise into the golden sky"
+  ],
+  [
+   715.79,
+   "chime",
+   -10,
+   0,
+   "warm white into the next morning"
+  ]
+ ]
+}

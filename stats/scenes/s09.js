@@ -282,7 +282,7 @@ function shotPage(t) {
   const u1 = ease.inOut(seg(t, C.page, B.pageOne + 0.5));
   const u2 = ease.inOut(seg(t, B.of - 0.2, B.of + 0.5));
   // window-local focus: first line 1.2, then the page counter
-  const cx = lerp(lerp(0, -210, u1), 400, u2), cy = lerp(lerp(0, 34, u1), -48, u2), z = lerp(lerp(1.2, 2.7, u1), 2.3, u2);
+  const cx = lerp(lerp(0, -210, u1), 400, u2), cy = lerp(lerp(30, 34, u1), -48, u2), z = lerp(lerp(1.05, 2.7, u1), 2.3, u2);
   let o = S.rect(0, 0, 1920, 1080, 0, { fill: '#0B1030' }) + S.rect(0, 0, 1920, 1080, 0, { fill: 'url(#hdScanD)', opacity: 0.4 });
   let win = H.updateWindow({ k: 1, t, scroll: 0, x: 0, y: 0, s: 1 });
   // the highlighter on line 1.2
@@ -297,7 +297,7 @@ function shotPage(t) {
   }
   o += S.g(win, `translate(960 540) scale(${f(z)}) translate(${f(-cx)} ${f(-cy)})`);
   o += K.C.vhs(t, '', 0.45);
-  o += K.TF('◀◀ THAT NIGHT', 150, 110, 34, '#FFFFFF', { 'text-anchor': 'start', 'letter-spacing': 3, opacity: 0.85 });
+  o += K.TF('◀◀ THAT NIGHT', 110, 76, 30, '#FFFFFF', { 'text-anchor': 'start', 'letter-spacing': 3, opacity: 0.85 });
   return o + whip(t, C.page, 1, 0.1, '#BFD8FF');
 }
 // 20 — "Reality HUD... off." he reaches up and presses the X; on "off" the whole HUD shatters like glass
@@ -330,12 +330,21 @@ function shotClean(t) {
   return o;
 }
 // 22 — over his shoulder: the fair, and faces — no numbers at all (hand-off to SC 10: "No numbers. Just colors...")
+const FACES = [
+  ['adult', 9, -760, 930, 'joy', 0.2], ['kid', 4, -630, 960, 'happy', 1.1], ['adult', 15, -470, 915, 'joy', 2.3], ['kid', 10, -330, 975, 'excited', 0.7],
+  ['adult', 3, -170, 935, 'happy', 1.7], ['kid', 21, -40, 965, 'joy', 2.9], ['adult', 20, 120, 925, 'happy', 0.4],
+];
 function shotLook(t) {
   const u = seg(t, C.look, END);
-  const cam = camLerp(camAt(-300, 640, 1.08), camAt(-260, 630, 1.16), u);
-  let o = E8.fairWith(t, cam, { crowd: 1, quiet: 1, cheer: 0.25 });
-  // the hero from behind (foreground), turning to look
-  o += actor('you', t, { x: 520, y: 1420, s: 0.95, t, view: 'back', headRot: 4, volume: false }, { arms: false });
+  const cam = camLerp(camAt(-330, 690, 1.42), camAt(-300, 680, 1.52), u);
+  let ppl = '';
+  for (const [kind, i, x, y, face, ph] of FACES) {
+    const s = E8.sAt(y), b = Math.abs(Math.sin(t * 5 + ph));
+    ppl += K.draw[kind](i, { x, y, s, t, turn: (hash(i) - 0.5) * 0.8, armR: face === 'joy' ? 30 + 30 * b : 12, lift: face === 'excited' ? 10 * b : 0, bodyY: 3 * b, face: { name: face, mouth: face === 'joy' ? 'bigGrin' : undefined } });
+  }
+  let o = E8.fairWith(t, cam, { crowd: 1, quiet: 1, cheer: 0.2 }, E.desat(ppl, 0.62));
+  // the hero from behind (foreground): he looks from face to face
+  o += actor('you', t, { x: 330, y: 1400, s: 0.8, t, view: 'back', headRot: 6 * Math.sin((t - C.look) * 1.6), volume: false }, { arms: false });
   return o;
 }
 

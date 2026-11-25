@@ -745,7 +745,7 @@ function hugGroup(t, o = {}) {
   }
   const bx = 165 * s / 0.4 * (1 - 0.15 * grab);
   const boysFace = o.boysFace || { name: 'joy' };
-  w += actor('you', t, { x: HUG.x - bx, y: HUG.y + 8, s, t, turn: 0.5 * grab, rot: rock - 4 * sq, armL: 20, armR: lerp(20, 62, grab), sx: 1 + 0.03 * sq, face: o.youFace || boysFace, shadow: true }, { arms: false });
+  w += actor('you', t, { x: HUG.x - bx, y: HUG.y + 8, s, t, turn: 0.5 * grab, rot: rock - 4 * sq, armL: 20, armR: lerp(20, 30, grab), sx: 1 + 0.03 * sq, face: o.youFace || boysFace, shadow: true }, { arms: false });
   w += actor('max', t, { x: HUG.x + bx * 0.9, y: HUG.y + 12, s, t, turn: -0.5 * grab, rot: rock + 4 * sq, armL: lerp(20, 70, grab), armR: 20, headY: o.maxPop || 0, face: o.maxFace || boysFace, shadow: true }, { arms: false });
   // Mom's hands on their far shoulders (over the boys)
   if (grab > 0.3) {
@@ -797,7 +797,7 @@ function shotPull(t) {
   w += actor('tank', t, { ...tp, t, armL: 166, armR: 166 }, { arms: false });
   w += actor('benji', t, { x: c.x, y: c.y, s: c.s, t, legL: 74, legR: 74, kneeL: 80, kneeR: 80, armL: 150 + 15 * Math.sin(t * 10), armR: 160, face: { name: 'joy' }, shadow: false }, { arms: false });
   w += hugGroup(t, { momFace: { name: 'joy', mouth: 'bigGrin' }, youFace: { name: 'joy', mouth: 'bigGrin' }, maxFace: { name: 'joy' } });
-  let out = fairFrame(t, cam, { ...GOLD, crowd: 0.9, cheer: 0.7, wobble: 0.5, canopy: u < 0.3 }, w);
+  let out = fairFrame(t, cam, { ...GOLD, crowd: 0.9, cheer: 0.7, wobble: 0.5 }, w);
   const [sx, sy] = toScr(cam, 4800, -400, 0.3);
   out += E.sunRays(sx, sy, t, 0.8 * u) + E.motes(t, 20, 31, u);
   for (let i = 0; i < 4; i++) { const k = t - C.pull - 0.3 - i * 0.25; if (k > 0) out += FS.balloon(500 + i * 330 + Math.sin(t + i) * 30, 1100 - k * 330, 0.7, ['#FF6FAE', '#FFD23F', '#5CC6F2', '#A6E05A'][i], t + i, { string: 200 }); }
@@ -814,7 +814,7 @@ const SHOTS = [
   [C.dash, shotTop], [C.rawr, shotDash], [C.found, shotRawr], [C.king, shotFound], [C.below, shotKing], [C.high5, shotBelow],
   [C.mom, shotHigh5], [C.again, shotMom], [C.react, shotAgain], [C.pull, shotReact], [Infinity, shotPull],
 ];
-const CLOSE = new Set([shotHeroFace, shotThink, shotEleven, shotRide, shotFound, shotAgain, shotReact, shotMom, shotWake, shotPull]);
+const CLOSE = new Set([shotHeroFace, shotThink, shotEleven, shotRide, shotFound, shotAgain, shotReact, shotMom, shotWake, shotPull, shotThere, shotTank, shotRise]);
 const shotAt = (t) => { for (const [end, g] of SHOTS) if (t < end) return g; return shotPull; };
 function scene(t) {
   const fn = shotAt(t);

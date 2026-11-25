@@ -317,7 +317,7 @@ function shGrid(t) {
   const boxes = [[70, 120, 870, 400], [980, 120, 870, 400], [70, 545, 870, 400], [980, 545, 870, 400]];
   const labels = ['+10 XP · BOAT FOR MAX', '+15 XP · LACES', '+20 XP · THE DOOR', '+25 XP · GOOD BOY'];
   boxes.forEach(([x, y, wd, ht], i) => { o += E.panelBox(x, y, wd, ht, seg(t, GRID[i] - 0.1, GRID[i] + 0.3), miniWorld(i, t), { label: labels[i], dir: i % 2 ? 1 : -1 }); });
-  const list = Object.entries(DEEDS).filter(([k]) => k[0] === 'g').map(([k, [t0, a]], i) => [boxes[i][0] + boxes[i][2] / 2, boxes[i][1] + 120, t0, a]);
+  const list = Object.entries(DEEDS).filter(([k]) => /^g\d$/.test(k)).map(([k, [t0, a]], i) => [boxes[i][0] + boxes[i][2] / 2, boxes[i][1] + 120, t0, a]);
   return compose(t, o, { pop: pops(t, list), clock: '6:40 PM', day: 'THU' }) + whip(t, CUT.grid, 1, 0.1);
 }
 // the time-lapse level shots (the same street spot, MON → WED → FRI)

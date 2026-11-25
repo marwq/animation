@@ -112,7 +112,7 @@ const XP_FROM = [430, 430];
 const XP_TO = HUD.xpBarAt({ value: 0.12, text: '12 / 100' });
 
 // ---------------------------------------------------------------- shared helpers
-const NV = (cam) => ((cam && cam.zoom) || 1) >= 1.4 ? { volume: false } : {};
+const NV = (cam) => ((cam && cam.zoom) || 1) >= 1.3 ? { volume: false } : {};
 const ps = (cam, base = 1) => clamp((0.38 + 0.4 * ((cam && cam.zoom) || 1)) * base, 0.72, 1.7);
 const headScr = (cam, who, pose) => { const p = HUD.overHead(who, pose.x, pose.y, pose.s, 0, pose); return toScr(cam, p.x, p.y); };
 const inView = (cam, x, pad = 160) => { const v = SH.vis(cam, 1); return x > v.x0 - pad && x < v.x1 + pad; };
@@ -148,7 +148,7 @@ const P = {
 };
 const MAXSTAND = { x: 948, y: 620, s: 0.45 };     // Max standing on his booster seat
 function family(t, cam, o = {}) {
-  const nv = NV(cam);
+  const nv = o.flat ? { volume: false } : NV(cam);
   let seated = '', standing = '';
   if (o.max !== false && inView(cam, 948)) seated += actor('max', t, P.max({ ...nv, ...(o.max || {}) }), o.maxAct || {});
   if (o.you !== false && inView(cam, 1205)) seated += actor('you', t, P.you({ ...nv, ...(o.you || {}) }), o.youAct || {});
@@ -606,7 +606,7 @@ function shGM(t) {
   const mom = P.mom({ turn: 0.45, face: 'joy' });
   const heroPose = { x: 1060, y: 998, s: 0.5, pajamas: true, turn: -0.55, face: { name: 'nervous', fx: ['sweat'], eyes: { look: [-0.7, -0.9] } }, armL: 12, armR: 30 + 30 * bump(t, A[9].a + 0.6, A[9].b), bendR: 40 };
   const fam = family(t, cam, { mom: { ...mom, ...NV(cam) }, momAct: { energy: 1.6 }, max: {}, you: false, gpa: false });
-  let o = kitchenShot(t, cam, { seated: fam.seated, standing: fam.standing + actor('you', t, heroPose, { arms: false }) });
+  let o = kitchenShot(t, cam, { seated: fam.seated, standing: fam.standing + actor('you', t, { ...heroPose, ...NV(cam) }, { arms: false }) });
   const h = headScr(cam, 'mom', mom);
   o += HUD.plateFor('mom', { ...h, s: ps(cam, 0.95), t, bars: [{ label: 'ENERGY', value: 2 }] });
   o += heroQ(t, cam, heroPose, 0.7);
@@ -813,9 +813,9 @@ function shWow(t) {
   const look = Math.sin((t - CUT.wow) * 2.2);
   const fam = family(t, cam, {
     max: false, you: { face: { name: 'amazed', eyes: { look: [look, -0.6] } }, headRot: 6 * look }, gpa: { face: { name: 'shocked', eyes: { look: [-0.6, 0] } } },
-    mom: { coffee: true, face: 'joy' }, dog: { face: 'happy', tongue: true, look: -0.4 },
+    mom: { coffee: true, face: 'joy' }, dog: { face: 'happy', tongue: true, look: -0.4 }, flat: true,
   });
-  const mx = { x: 952, y: 708, s: 0.45, armL: 140, armR: 140, face: 'joy', bodyY: -5 * Math.abs(Math.sin(t * 7)) };
+  const mx = { x: 952, y: 708, s: 0.45, volume: false, armL: 140, armR: 140, face: 'joy', bodyY: -5 * Math.abs(Math.sin(t * 7)) };
   let o = kitchenShot(t, cam, { mess: 1, toast: 0.35, burnt: 1, props: momMugs(t, 4), seated: fam.seated, standing: fam.standing + actor('max', t, mx, { arms: false }) + SH.bowl(952, 690, 1.25, TNK, { col: '#5FC46A', fill: 'milk' }) });
   const s = ps(cam, 0.8);
   o += HUD.plateFor('mom', { ...headScr(cam, 'mom', P.mom()), s, t, bars: [{ label: 'ENERGY', value: 6 }] });

@@ -98,6 +98,19 @@ function SEP(col) {
 const LINE = '#2C1B0E';
 // map every colour of an svg string onto the sepia ramp (characters, props, crowd — eye whites and blush included)
 const sepia = (svg) => svg.replace(/#[0-9A-Fa-f]{6}\b/g, SEP);
+// desaturate every colour of an svg string by k (the HUD-off silence for characters the set's `quiet` doesn't reach)
+const dsCache = new Map();
+function desat(svg, k = 0.6) {
+  return svg.replace(/#[0-9A-Fa-f]{6}\b/g, (m) => {
+    const key = m + k;
+    let v = dsCache.get(key);
+    if (v) return v;
+    const r = parseInt(m.slice(1, 3), 16), g = parseInt(m.slice(3, 5), 16), b = parseInt(m.slice(5, 7), 16), y = 0.3 * r + 0.59 * g + 0.11 * b;
+    v = '#' + [r, g, b].map((c) => Math.round(clamp(lerp(c, y, k) * 0.94, 0, 255)).toString(16).padStart(2, '0')).join('').toUpperCase();
+    dsCache.set(key, v);
+    return v;
+  });
+}
 function sepiaTone() {
   const c = (col) => (typeof col !== 'string' || col[0] === 'u' || col === 'none' ? col : SEP(col));
   const ol = (fill, w = 6, extra) => ({ fill: c(fill), stroke: LINE, 'stroke-width': f(w), 'stroke-linejoin': 'round', 'stroke-linecap': 'round', ...extra });
@@ -288,4 +301,4 @@ function heart79(x, y, k, s = 1) {
   return S.g(S.path(K.F.heartPath(0, 0, 60), { fill: SEP('#E8453C'), stroke: LINE, 'stroke-width': 7 }) + S.ellipse(-20, -22, 12, 8, { fill: SEP('#FFFFFF'), opacity: 0.7 }), `translate(${f(x)} ${f(y)}) scale(${f(sc * b)})`);
 }
 
-module.exports = { times, SEP, sepia, TN, LOU, GMA, MIKE, draw79, film, burn, stage79, crowd79, row79, armInsert, bench79, benchLight79, heart79, LINE };
+module.exports = { times, SEP, sepia, desat, TN, LOU, GMA, MIKE, draw79, film, burn, stage79, crowd79, row79, armInsert, bench79, benchLight79, heart79, LINE };

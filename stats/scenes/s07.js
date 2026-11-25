@@ -690,7 +690,7 @@ function shotOut(t) {
   const di = Math.min(DAYS.length - 1, Math.floor(dk * DAYS.length * 0.999 + (dk >= 1 ? 1 : 0)));
   const clock = dk > 0 && dk < 1 ? `${1 + Math.floor((t * 37) % 12)}:${String(Math.floor((t * 613) % 60)).padStart(2, '0')} ${Math.floor(t * 9) % 2 ? 'AM' : 'PM'}` : dk >= 1 ? '9:00 AM' : '6:45 PM';
   o += frame(t, { clock, day: DAYS[di] });
-  if (dk > 0) o += S.g(H.TL(DAYS[di], 0, 0, 120, '#DCE8F2', { stroke: '#050A10', 'stroke-width': 12, 'paint-order': 'stroke' }), `translate(1700 ${f(440)}) scale(${f(0.6 + 0.4 * ease.outBack(seg((dk * DAYS.length) % 1, 0, 0.3)))})`, { opacity: f(0.85 * (1 - seg(t, END - 0.3, END))) });
+  if (dk > 0) o += S.g(H.TL(DAYS[di], 0, 0, 120, '#DCE8F2', { stroke: '#050A10', 'stroke-width': 12, 'paint-order': 'stroke' }), `translate(330 ${f(330)}) scale(${f(0.6 + 0.4 * ease.outBack(seg((dk * DAYS.length) % 1, 0, 0.3)))})`, { opacity: f(0.85 * (1 - seg(t, END - 0.3, END))) });
   return o + E.fadeTo(t, B.flash, END, '#FFFFFF', 1);
 }
 

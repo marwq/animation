@@ -1,0 +1,1628 @@
+{
+ "scene": "SC 04",
+ "start": 242.74,
+ "end": 320.56,
+ "music": [
+  {
+   "start": 242.74,
+   "end": 252.14,
+   "mood": "quest",
+   "energy": 0.55,
+   "in": "swell",
+   "out": "tapestop"
+  },
+  {
+   "start": 252.14,
+   "end": 253,
+   "mood": "silence",
+   "energy": 0,
+   "in": "cut",
+   "out": "cut"
+  },
+  {
+   "start": 253,
+   "end": 255.11,
+   "mood": "playful",
+   "energy": 0.5,
+   "in": "cut",
+   "out": "cut"
+  },
+  {
+   "start": 255.11,
+   "end": 263.46,
+   "mood": "boss",
+   "energy": 0.4,
+   "in": "cut",
+   "out": "cut"
+  },
+  {
+   "start": 263.46,
+   "end": 267.74,
+   "mood": "boss",
+   "energy": 0.75,
+   "in": "cut",
+   "out": "sting"
+  },
+  {
+   "start": 267.74,
+   "end": 268.923,
+   "mood": "silence",
+   "energy": 0,
+   "in": "cut",
+   "out": "cut"
+  },
+  {
+   "start": 268.923,
+   "end": 277.08,
+   "mood": "playful",
+   "energy": 0.35,
+   "in": "fade",
+   "out": "cut"
+  },
+  {
+   "start": 277.08,
+   "end": 278.88,
+   "mood": "silence",
+   "energy": 0,
+   "in": "cut",
+   "out": "cut"
+  },
+  {
+   "start": 278.88,
+   "end": 294.15,
+   "mood": "quest",
+   "energy": 0.6,
+   "in": "cut",
+   "out": "cut"
+  },
+  {
+   "start": 294.15,
+   "end": 297,
+   "mood": "action",
+   "energy": 1,
+   "in": "swell",
+   "out": "sting"
+  },
+  {
+   "start": 297,
+   "end": 300.03,
+   "mood": "levelup",
+   "energy": 0.9,
+   "in": "cut",
+   "out": "scratch"
+  },
+  {
+   "start": 300.03,
+   "end": 301.38,
+   "mood": "silence",
+   "energy": 0,
+   "in": "cut",
+   "out": "cut"
+  },
+  {
+   "start": 301.38,
+   "end": 303.424,
+   "mood": "quest",
+   "energy": 0.5,
+   "in": "cut",
+   "out": "cut"
+  },
+  {
+   "start": 303.424,
+   "end": 310.15,
+   "mood": "mystery",
+   "energy": 0.4,
+   "in": "cut",
+   "out": "cut"
+  },
+  {
+   "start": 310.15,
+   "end": 320.56,
+   "mood": "wonder",
+   "energy": 0.55,
+   "in": "swell",
+   "out": "cut"
+  }
+ ],
+ "ambience": [
+  {
+   "start": 242.74,
+   "end": 255.11,
+   "name": "town",
+   "gain_db": -16
+  },
+  {
+   "start": 242.74,
+   "end": 255.11,
+   "name": "birds",
+   "gain_db": -20
+  },
+  {
+   "start": 255.11,
+   "end": 278.88,
+   "name": "room",
+   "gain_db": -14
+  },
+  {
+   "start": 278.88,
+   "end": 300.03,
+   "name": "crowd",
+   "gain_db": -16
+  },
+  {
+   "start": 301.38,
+   "end": 320.56,
+   "name": "crowd",
+   "gain_db": -12
+  },
+  {
+   "start": 301.38,
+   "end": 313.65,
+   "name": "kitchen",
+   "gain_db": -18
+  }
+ ],
+ "footsteps": [
+  {
+   "start": 242.74,
+   "end": 245.17,
+   "interval": 0.365,
+   "surface": "hard",
+   "gain_db": -14,
+   "pan": 0.1
+  },
+  {
+   "start": 245.17,
+   "end": 250.78,
+   "interval": 0.483,
+   "surface": "hard",
+   "gain_db": -12,
+   "pan": -0.3
+  },
+  {
+   "start": 250.78,
+   "end": 252.14,
+   "interval": 0.37,
+   "surface": "hard",
+   "gain_db": -12,
+   "pan": -0.1
+  }
+ ],
+ "sfx": [
+  [
+   242.74,
+   "whoosh",
+   -6,
+   0.4,
+   "whip in from the kitchen (white flash)"
+  ],
+  [
+   242.94,
+   "bell",
+   -12,
+   0.1,
+   "the school bell across the yard"
+  ],
+  [
+   243.04,
+   "ui_pop",
+   -16,
+   -0.335,
+   "mini plate #1 pops over a kid"
+  ],
+  [
+   243.17,
+   "ui_pop",
+   -14,
+   -0.197,
+   "mini plate #2 pops over a kid"
+  ],
+  [
+   243.3,
+   "ui_pop",
+   -16,
+   -0.058,
+   "mini plate #3 pops over a kid"
+  ],
+  [
+   243.4,
+   "notify",
+   -2,
+   0,
+   "NEW AREA DISCOVERED banner drops"
+  ],
+  [
+   243.43,
+   "ui_pop",
+   -14,
+   0.08,
+   "mini plate #4 pops over a kid"
+  ],
+  [
+   243.56,
+   "ui_pop",
+   -16,
+   0.219,
+   "mini plate #5 pops over a kid"
+  ],
+  [
+   243.69,
+   "ui_pop",
+   -14,
+   0.357,
+   "mini plate #6 pops over a kid"
+  ],
+  [
+   243.69,
+   "ui_pop",
+   -10,
+   0.05,
+   "the hero's \"???\" plate"
+  ],
+  [
+   243.7,
+   "shine",
+   -8,
+   0,
+   "banner sheen"
+  ],
+  [
+   243.84,
+   "glitch",
+   -18,
+   0.05,
+   "??? flickers"
+  ],
+  [
+   245.72,
+   "ui_pop",
+   -6,
+   -0.335,
+   "BENJI plate unfolds"
+  ],
+  [
+   246.07,
+   "money_counter",
+   -14,
+   -0.335,
+   "HP counts up to 100"
+  ],
+  [
+   246.34,
+   "zoom_in",
+   -8,
+   0,
+   "camera punch-in on \"four\""
+  ],
+  [
+   246.36,
+   "pop",
+   -12,
+   -0.335,
+   "LV 4"
+  ],
+  [
+   247.79,
+   "whoosh_down",
+   -12,
+   0,
+   "cut down to his feet"
+  ],
+  [
+   247.82,
+   "ui_pop",
+   -6,
+   0.15,
+   "SHOELACES · UNTIED tooltip"
+  ],
+  [
+   248.73,
+   "whoosh_up",
+   -12,
+   0,
+   "tilt up"
+  ],
+  [
+   249.36,
+   "ui_pop",
+   -4,
+   0.4,
+   "SPECIAL SKILL card unfolds"
+  ],
+  [
+   249.69,
+   "shine",
+   -6,
+   0.4,
+   "LEGENDARY chip"
+  ],
+  [
+   250.02,
+   "tap",
+   -4,
+   -0.2,
+   "CLUMSY tag slaps onto his plate"
+  ],
+  [
+   250.8,
+   "cloth",
+   -14,
+   -0.1,
+   "Benji waves"
+  ],
+  [
+   251.22,
+   "cloth",
+   -16,
+   0.4,
+   "the hero waves back"
+  ],
+  [
+   252.14,
+   "slip",
+   0,
+   0,
+   "the laces catch"
+  ],
+  [
+   252.18,
+   "whoosh_long",
+   -6,
+   0.1,
+   "slow-motion dive"
+  ],
+  [
+   252.2,
+   "paper",
+   -10,
+   0.1,
+   "the books burst out of his arms"
+  ],
+  [
+   253,
+   "body_fall",
+   0,
+   0.1,
+   "lands on his bottom"
+  ],
+  [
+   253.02,
+   "thud",
+   -4,
+   0.1,
+   "thud"
+  ],
+  [
+   253.03,
+   "pop",
+   -12,
+   0.3,
+   "-3 damage number"
+  ],
+  [
+   253.05,
+   "money_counter",
+   -16,
+   0.1,
+   "HP 100 -> 97"
+  ],
+  [
+   253.12,
+   "thud",
+   -12,
+   -0.3,
+   "book 1 lands"
+  ],
+  [
+   253.2,
+   "thud",
+   -12,
+   0.3,
+   "book 2 lands"
+  ],
+  [
+   253.3,
+   "thud",
+   -12,
+   -0.2,
+   "book 3 lands"
+  ],
+  [
+   253.38,
+   "thud",
+   -12,
+   0.2,
+   "book 4 lands"
+  ],
+  [
+   253.38,
+   "bonk",
+   -2,
+   0.05,
+   "the last book bonks his hat"
+  ],
+  [
+   253.42,
+   "dizzy",
+   -10,
+   0.05,
+   "dizzy stars"
+  ],
+  [
+   253.86,
+   "notify",
+   -6,
+   0,
+   "SKILL USED: FALLING DOWN"
+  ],
+  [
+   255.01,
+   "whoosh",
+   -6,
+   0.5,
+   "whip to Room 12"
+  ],
+  [
+   255.06,
+   "bell",
+   -6,
+   0,
+   "the bell rings for class"
+  ],
+  [
+   255.16,
+   "dramatic",
+   -6,
+   0.248,
+   "FINAL BOSS plate (boss sting)"
+  ],
+  [
+   255.21,
+   "ui_pop",
+   -6,
+   0.248,
+   "plate unfolds"
+  ],
+  [
+   255.41,
+   "tap",
+   -16,
+   0.394,
+   "pointer taps her palm"
+  ],
+  [
+   255.71,
+   "alarm_beep",
+   -16,
+   0.248,
+   "PATIENCE 0% blinks red"
+  ],
+  [
+   256.09,
+   "shine",
+   -8,
+   0.248,
+   "glasses glint"
+  ],
+  [
+   256.31,
+   "tap",
+   -16,
+   0.394,
+   "pointer taps her palm"
+  ],
+  [
+   257.22,
+   "cloth",
+   -10,
+   0,
+   "Kevin stands up"
+  ],
+  [
+   257.27,
+   "whoosh",
+   -14,
+   0.1,
+   "hand shoots up"
+  ],
+  [
+   257.35,
+   "ui_pop",
+   -12,
+   0,
+   "KEVIN mini plate"
+  ],
+  [
+   259.6,
+   "ui_pop",
+   -4,
+   0,
+   "LIE DETECTOR unfolds"
+  ],
+  [
+   260.02,
+   "money_counter",
+   -10,
+   0,
+   "the needle hunts, digits spin"
+  ],
+  [
+   260.22,
+   "beep",
+   -16,
+   0,
+   "measuring..."
+  ],
+  [
+   260.62,
+   "beep",
+   -16,
+   0,
+   "measuring..."
+  ],
+  [
+   261.02,
+   "beep",
+   -16,
+   0,
+   "measuring..."
+  ],
+  [
+   261.42,
+   "beep",
+   -16,
+   0,
+   "measuring..."
+  ],
+  [
+   261.63,
+   "zoom_in",
+   -8,
+   0,
+   "punch-in"
+  ],
+  [
+   262.03,
+   "buzzer_wrong",
+   0,
+   0,
+   "LOCK: LIE 99%"
+  ],
+  [
+   262.18,
+   "stamp",
+   -2,
+   0.25,
+   "LIAR! stamp"
+  ],
+  [
+   262.22,
+   "whoosh",
+   -8,
+   -0.5,
+   "MEANWHILE AT KEVIN'S HOUSE slides in"
+  ],
+  [
+   262.28,
+   "alarm_beep",
+   -12,
+   0,
+   "red alarm"
+  ],
+  [
+   262.32,
+   "snore",
+   -12,
+   -0.5,
+   "the dog snores next to the homework"
+  ],
+  [
+   262.44,
+   "ui_pop",
+   -10,
+   -0.5,
+   "EATEN BY DOG: 0%"
+  ],
+  [
+   262.68,
+   "slide_down",
+   -12,
+   0,
+   "Kevin sinks into his chair"
+  ],
+  [
+   263.46,
+   "dramatic",
+   -4,
+   0,
+   "the boss bar drops in"
+  ],
+  [
+   263.56,
+   "paper",
+   -10,
+   -0.2,
+   "she raises the stack"
+  ],
+  [
+   263.8,
+   "shine",
+   -4,
+   -0.2,
+   "glasses glint"
+  ],
+  [
+   263.9,
+   "orch_hit",
+   -2,
+   0.3,
+   "BOSS ATTACK: POP QUIZ!"
+  ],
+  [
+   263.92,
+   "impact",
+   -6,
+   0,
+   "hit"
+  ],
+  [
+   264.98,
+   "whoosh",
+   -10,
+   -0.4,
+   "paper flies in"
+  ],
+  [
+   265.14,
+   "whoosh",
+   -12,
+   -0.4,
+   "second paper"
+  ],
+  [
+   265.4,
+   "slap",
+   -4,
+   -0.131,
+   "slaps onto his desk"
+  ],
+  [
+   265.56,
+   "slap",
+   -6,
+   0.131,
+   "and Benji's"
+  ],
+  [
+   265.62,
+   "stamp",
+   -6,
+   -0.4,
+   "20 QUESTIONS"
+  ],
+  [
+   266.39,
+   "ui_pop",
+   -6,
+   -0.3,
+   "POP QUIZ tooltip"
+  ],
+  [
+   266.61,
+   "tap",
+   -16,
+   -0.3,
+   "difficulty roulette tick"
+  ],
+  [
+   266.79,
+   "tap",
+   -16,
+   -0.3,
+   "difficulty roulette tick"
+  ],
+  [
+   266.97,
+   "tap",
+   -16,
+   -0.3,
+   "difficulty roulette tick"
+  ],
+  [
+   267.15,
+   "tap",
+   -16,
+   -0.3,
+   "difficulty roulette tick"
+  ],
+  [
+   267.33,
+   "tap",
+   -16,
+   -0.3,
+   "difficulty roulette tick"
+  ],
+  [
+   267.51,
+   "tap",
+   -16,
+   -0.3,
+   "difficulty roulette tick"
+  ],
+  [
+   267.74,
+   "sub_drop",
+   -2,
+   0,
+   "IMPOSSIBLE"
+  ],
+  [
+   267.76,
+   "orch_hit",
+   -6,
+   -0.3,
+   "boss card turns red (skull)"
+  ],
+  [
+   267.84,
+   "alarm_beep",
+   -14,
+   0,
+   "red edge pulse"
+  ],
+  [
+   270.86,
+   "tap",
+   -4,
+   0.139,
+   "NERVOUS slaps onto Benji's plate"
+  ],
+  [
+   271.12,
+   "pop",
+   -10,
+   0.284,
+   "-7 HP (stress)"
+  ],
+  [
+   271.15,
+   "money_counter",
+   -16,
+   0.139,
+   "HP 97 -> 90"
+  ],
+  [
+   271.78,
+   "step_wood",
+   -12,
+   -0.4,
+   "Mrs. Krump at his desk"
+  ],
+  [
+   272.28,
+   "gulp",
+   -6,
+   0.2,
+   "the hero gulps"
+  ],
+  [
+   272.44,
+   "cloth",
+   -14,
+   -0.4,
+   "she touches her beehive"
+  ],
+  [
+   274.09,
+   "swish",
+   -10,
+   0.05,
+   "head shake"
+  ],
+  [
+   274.34,
+   "swish",
+   -12,
+   0.05,
+   "hands waving"
+  ],
+  [
+   275.18,
+   "shine",
+   -12,
+   -0.3,
+   "his eyes flick up to her plate"
+  ],
+  [
+   276.12,
+   "pop",
+   -12,
+   0.3,
+   "a sweaty thumbs-up"
+  ],
+  [
+   277.08,
+   "shock",
+   -2,
+   0,
+   "smash on her face"
+  ],
+  [
+   277.14,
+   "shine",
+   -4,
+   -0.2,
+   "glasses glint"
+  ],
+  [
+   277.23,
+   "slide_down",
+   -4,
+   0.5,
+   "PATIENCE rolls below zero"
+  ],
+  [
+   277.38,
+   "alarm_beep",
+   -10,
+   0.5,
+   "red edge pulse"
+  ],
+  [
+   277.68,
+   "stamp",
+   -2,
+   0.5,
+   "ENRAGED tag"
+  ],
+  [
+   277.78,
+   "steam_hiss",
+   -8,
+   -0.2,
+   "anger marks"
+  ],
+  [
+   277.88,
+   "heartbeat",
+   -6,
+   0,
+   "silence... heartbeat"
+  ],
+  [
+   278.98,
+   "whistle",
+   -2,
+   -0.7,
+   "the coach blows the whistle"
+  ],
+  [
+   280.94,
+   "ui_pop",
+   -14,
+   -0.335,
+   "STR chip #1"
+  ],
+  [
+   281.03,
+   "ui_pop",
+   -14,
+   -0.19,
+   "STR chip #2"
+  ],
+  [
+   281.12,
+   "ui_pop",
+   -14,
+   -0.044,
+   "STR chip #3"
+  ],
+  [
+   281.21,
+   "ui_pop",
+   -14,
+   0.102,
+   "STR chip #4"
+  ],
+  [
+   281.3,
+   "ui_pop",
+   -14,
+   0.248,
+   "STR chip #5"
+  ],
+  [
+   281.39,
+   "ui_pop",
+   -14,
+   0.394,
+   "STR chip #6"
+  ],
+  [
+   282.54,
+   "ui_pop",
+   -4,
+   -0.3,
+   "DODGEBALL · PICK TEAM panel"
+  ],
+  [
+   282.84,
+   "click",
+   -2,
+   -0.3,
+   "SORT BY STRENGTH pressed"
+  ],
+  [
+   282.99,
+   "whoosh",
+   -10,
+   -0.3,
+   "rows sort"
+  ],
+  [
+   283.04,
+   "money_counter",
+   -14,
+   -0.3,
+   "ranks re-number"
+  ],
+  [
+   283.38,
+   "stamp",
+   -4,
+   0.3,
+   "PURE SCIENCE"
+  ],
+  [
+   283.78,
+   "shine",
+   -10,
+   -0.3,
+   "QUIET KID #1 highlight"
+  ],
+  [
+   284.93,
+   "swish",
+   -10,
+   0.5,
+   "he points"
+  ],
+  [
+   285.08,
+   "confirm",
+   -4,
+   -0.044,
+   "QUIET KID picked ✓"
+  ],
+  [
+   285.38,
+   "squeak",
+   -14,
+   -0.044,
+   "who, me?"
+  ],
+  [
+   285.97,
+   "swish",
+   -10,
+   0.5,
+   "points again"
+  ],
+  [
+   286.12,
+   "confirm",
+   -6,
+   -0.19,
+   "PRIYA picked ✓"
+  ],
+  [
+   286.12,
+   "jump",
+   -12,
+   -0.19,
+   "she hops out of the line"
+  ],
+  [
+   286.47,
+   "land",
+   -14,
+   -0.131,
+   "lands"
+  ],
+  [
+   286.92,
+   "ui_pop",
+   -6,
+   0,
+   "QUIET KID plate"
+  ],
+  [
+   288.34,
+   "shine",
+   -2,
+   0,
+   "STR 85 glows gold"
+  ],
+  [
+   288.36,
+   "zoom_in",
+   -12,
+   0,
+   "zoom lines"
+  ],
+  [
+   288.64,
+   "stamp",
+   -6,
+   0,
+   "PICKED"
+  ],
+  [
+   290.9,
+   "zoom_in",
+   -4,
+   -0.3,
+   "smash-zoom on \"FIRST\""
+  ],
+  [
+   290.92,
+   "shock",
+   -10,
+   -0.3,
+   "his arms fly out"
+  ],
+  [
+   291.953,
+   "cloth",
+   -16,
+   0.1,
+   "hand on heart"
+  ],
+  [
+   293.22,
+   "magic",
+   -6,
+   0.4,
+   "HIDDEN STAT: ???"
+  ],
+  [
+   293.32,
+   "sparkle",
+   -12,
+   0.2,
+   "sly sparkle"
+  ],
+  [
+   294.15,
+   "whoosh_down",
+   -10,
+   0,
+   "letterbox + low dutch angle"
+  ],
+  [
+   294.2,
+   "riser",
+   -4,
+   0,
+   "wind-up"
+  ],
+  [
+   294.45,
+   "stamp",
+   -4,
+   0.3,
+   "SECRET: CANNON ARM"
+  ],
+  [
+   294.6,
+   "money_counter",
+   -6,
+   0.3,
+   "STR 85 -> 185"
+  ],
+  [
+   295.1,
+   "electric",
+   -10,
+   0.3,
+   "STR overflow sparks"
+  ],
+  [
+   295.46,
+   "whoosh",
+   -2,
+   0.175,
+   "throw 1"
+  ],
+  [
+   295.68,
+   "bonk",
+   0,
+   -0.051,
+   "hit 1"
+  ],
+  [
+   295.72,
+   "pop",
+   -10,
+   -0.051,
+   "-85"
+  ],
+  [
+   295.73,
+   "crowd_cheer",
+   -10,
+   -0.5,
+   "the bleachers"
+  ],
+  [
+   295.8,
+   "stamp",
+   -8,
+   -0.051,
+   "OUT!"
+  ],
+  [
+   295.86,
+   "whoosh",
+   -8,
+   0.6,
+   "a ball flies at Benji"
+  ],
+  [
+   295.88,
+   "whoosh",
+   -2,
+   0.175,
+   "throw 2"
+  ],
+  [
+   296.01,
+   "slip",
+   -4,
+   0.7,
+   "he trips (special skill)"
+  ],
+  [
+   296.06,
+   "body_fall",
+   -6,
+   0.7,
+   "and sits down hard"
+  ],
+  [
+   296.1,
+   "bonk",
+   0,
+   -0.219,
+   "hit 2"
+  ],
+  [
+   296.13,
+   "confirm",
+   -6,
+   0.6,
+   "DODGE!"
+  ],
+  [
+   296.14,
+   "pop",
+   -10,
+   -0.219,
+   "-85"
+  ],
+  [
+   296.15,
+   "crowd_cheer",
+   -8,
+   -0.5,
+   "the bleachers"
+  ],
+  [
+   296.22,
+   "stamp",
+   -8,
+   -0.219,
+   "OUT!"
+  ],
+  [
+   296.3,
+   "whoosh",
+   -2,
+   0.175,
+   "throw 3"
+  ],
+  [
+   296.52,
+   "punch",
+   2,
+   -0.386,
+   "hit 3 (CRIT!)"
+  ],
+  [
+   296.56,
+   "pop",
+   -10,
+   -0.386,
+   "-85"
+  ],
+  [
+   296.57,
+   "crowd_cheer",
+   -6,
+   -0.5,
+   "the bleachers"
+  ],
+  [
+   296.64,
+   "stamp",
+   -8,
+   -0.386,
+   "OUT!"
+  ],
+  [
+   297,
+   "beep",
+   -12,
+   0,
+   "scoreboard"
+  ],
+  [
+   297.4,
+   "tada",
+   0,
+   0,
+   "VICTORY!"
+  ],
+  [
+   297.42,
+   "confetti",
+   -4,
+   0,
+   "confetti"
+  ],
+  [
+   297.47,
+   "crowd_cheer",
+   0,
+   0,
+   "the gym erupts"
+  ],
+  [
+   298.17,
+   "applause",
+   -8,
+   0,
+   "bleachers"
+  ],
+  [
+   298.2,
+   "stamp",
+   -2,
+   -0.321,
+   "WIN ×5"
+  ],
+  [
+   298.27,
+   "beep",
+   -14,
+   0,
+   "scoreboard ticks up"
+  ],
+  [
+   298.76,
+   "stamp",
+   -2,
+   0,
+   "WIN ×9"
+  ],
+  [
+   298.83,
+   "beep",
+   -14,
+   0,
+   "scoreboard ticks up"
+  ],
+  [
+   299.08,
+   "stamp",
+   -2,
+   0.321,
+   "WIN ×12"
+  ],
+  [
+   299.15,
+   "beep",
+   -14,
+   0,
+   "scoreboard ticks up"
+  ],
+  [
+   300.08,
+   "ui_pop",
+   -8,
+   0.4,
+   "COACH plate"
+  ],
+  [
+   300.48,
+   "tap",
+   -4,
+   0.4,
+   "SPEECHLESS"
+  ],
+  [
+   300.53,
+   "cricket",
+   -10,
+   0,
+   "crickets"
+  ],
+  [
+   301.28,
+   "whoosh",
+   -6,
+   0.5,
+   "whip to the cafeteria"
+  ],
+  [
+   301.3,
+   "ui_pop",
+   -6,
+   -0.4,
+   "PIZZA +20 HAPPINESS"
+  ],
+  [
+   301.5,
+   "ui_pop",
+   -10,
+   0,
+   "LUNCH LADY plate"
+  ],
+  [
+   301.76,
+   "ui_pop",
+   -6,
+   -0.05,
+   "BROCCOLI +50 HEALTH −50 FUN"
+  ],
+  [
+   302.5,
+   "ui_pop",
+   -6,
+   0.4,
+   "MASHED POTATO COMFORT +30"
+  ],
+  [
+   303.424,
+   "bubbles",
+   -8,
+   0,
+   "the mystery meat bubbles"
+  ],
+  [
+   303.54,
+   "ui_pop",
+   -6,
+   0.3,
+   "MYSTERY MEAT tooltip"
+  ],
+  [
+   303.62,
+   "glitch",
+   -10,
+   0.3,
+   "\"???\""
+  ],
+  [
+   304.52,
+   "splat",
+   -12,
+   -0.2,
+   "the lunch lady's ladle plops"
+  ],
+  [
+   305.08,
+   "pop",
+   -8,
+   0.211,
+   "\"?\" 1 bubbles up"
+  ],
+  [
+   305.3,
+   "pop",
+   -8,
+   0.321,
+   "\"?\" 2 bubbles up"
+  ],
+  [
+   305.64,
+   "pop",
+   -8,
+   0.43,
+   "\"?\" 3 bubbles up"
+  ],
+  [
+   306.62,
+   "squeak",
+   -12,
+   -0.2,
+   "the spoonful wobbles"
+  ],
+  [
+   306.72,
+   "ui_pop",
+   -10,
+   -0.4,
+   "\"???\" over the spoon"
+  ],
+  [
+   307.89,
+   "slap",
+   -10,
+   -0.1,
+   "he catches Benji's wrist"
+  ],
+  [
+   308.6,
+   "metal_clank",
+   -14,
+   -0.2,
+   "the spoon goes down"
+  ],
+  [
+   308.88,
+   "zoom_in",
+   -4,
+   0,
+   "smash into his tray"
+  ],
+  [
+   309,
+   "glitch",
+   -6,
+   -0.3,
+   "??? flashes red"
+  ],
+  [
+   309.73,
+   "squeak",
+   -4,
+   0.3,
+   "the meat opens one eye"
+  ],
+  [
+   309.78,
+   "blink",
+   -8,
+   0.3,
+   "blink"
+  ],
+  [
+   310.25,
+   "sparkle",
+   -14,
+   0,
+   "markers shimmer"
+  ],
+  [
+   310.38,
+   "blink",
+   -10,
+   0.3,
+   "it blinks"
+  ],
+  [
+   311.2,
+   "notify",
+   -4,
+   -0.1,
+   "\"!\" drops over alone at the back table"
+  ],
+  [
+   312.3,
+   "notify",
+   -5,
+   0.521,
+   "\"!\" drops over the lunch lady"
+  ],
+  [
+   312.52,
+   "notify",
+   -6,
+   0.757,
+   "\"!\" drops over the janitor"
+  ],
+  [
+   312.93,
+   "notify",
+   -7,
+   0.329,
+   "\"!\" drops over a kid in the lunch line"
+  ],
+  [
+   313.28,
+   "notify",
+   -8,
+   -0.614,
+   "\"!\" drops over a kid at the back table"
+  ],
+  [
+   313.65,
+   "whoosh",
+   -8,
+   -0.5,
+   "IN GAMES panel"
+  ],
+  [
+   313.77,
+   "whoosh",
+   -8,
+   0.5,
+   "REAL LIFE panel"
+  ],
+  [
+   313.95,
+   "jump_game",
+   -8,
+   -0.5,
+   "8-bit blip: the villager's \"!\""
+  ],
+  [
+   314,
+   "pop",
+   -6,
+   0,
+   "="
+  ],
+  [
+   314.1,
+   "notify",
+   -6,
+   0.5,
+   "the lunch lady's \"!\""
+  ],
+  [
+   314.78,
+   "jump",
+   -8,
+   -0.1,
+   "he springs up, arms wide"
+  ],
+  [
+   314.83,
+   "whoosh_up",
+   -10,
+   -0.1,
+   "whoosh"
+  ],
+  [
+   315.2,
+   "sparkle",
+   -4,
+   0,
+   "star eyes"
+  ],
+  [
+   315.23,
+   "shine",
+   -8,
+   0,
+   "shine"
+  ],
+  [
+   318.36,
+   "magic",
+   -12,
+   0,
+   "the room glitters with quests"
+  ],
+  [
+   318.56,
+   "notify",
+   -6,
+   -0.6,
+   "one more \"!\" pops at the front table"
+  ]
+ ]
+}

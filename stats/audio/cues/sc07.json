@@ -1,0 +1,812 @@
+{
+ "scene": "SC 07",
+ "start": 458.04,
+ "end": 520.26,
+ "music": [
+  {
+   "start": 458.04,
+   "end": 469.928,
+   "mood": "quest",
+   "energy": 0.45,
+   "in": "cut",
+   "out": "cut"
+  },
+  {
+   "start": 469.928,
+   "end": 474.62,
+   "mood": "cold",
+   "energy": 0.5,
+   "in": "cut",
+   "out": "cut"
+  },
+  {
+   "start": 474.62,
+   "end": 476.54,
+   "mood": "silence",
+   "energy": 0,
+   "in": "cut",
+   "out": "cut"
+  },
+  {
+   "start": 476.54,
+   "end": 478.4,
+   "mood": "sad",
+   "energy": 0.25,
+   "in": "fade",
+   "out": "fade"
+  },
+  {
+   "start": 478.4,
+   "end": 485.14,
+   "mood": "cold",
+   "energy": 0.5,
+   "in": "cut",
+   "out": "tapestop"
+  },
+  {
+   "start": 485.14,
+   "end": 488.46,
+   "mood": "silence",
+   "energy": 0,
+   "in": "cut",
+   "out": "cut"
+  },
+  {
+   "start": 488.46,
+   "end": 498.26,
+   "mood": "cold",
+   "energy": 0.35,
+   "in": "fade",
+   "out": "cut"
+  },
+  {
+   "start": 498.26,
+   "end": 507.297,
+   "mood": "sad",
+   "energy": 0.28,
+   "in": "cut",
+   "out": "fade"
+  },
+  {
+   "start": 507.297,
+   "end": 517.36,
+   "mood": "tender",
+   "energy": 0.3,
+   "in": "fade",
+   "out": "cut"
+  },
+  {
+   "start": 517.36,
+   "end": 520.26,
+   "mood": "cold",
+   "energy": 0.45,
+   "in": "swell",
+   "out": "fade"
+  }
+ ],
+ "ambience": [
+  {
+   "start": 458.04,
+   "end": 488.46,
+   "name": "room",
+   "gain_db": -18
+  },
+  {
+   "start": 458.04,
+   "end": 488.46,
+   "name": "crowd",
+   "gain_db": -30
+  },
+  {
+   "start": 488.46,
+   "end": 507.297,
+   "name": "kitchen",
+   "gain_db": -16
+  },
+  {
+   "start": 488.46,
+   "end": 520.26,
+   "name": "night",
+   "gain_db": -26
+  },
+  {
+   "start": 507.297,
+   "end": 520.26,
+   "name": "room",
+   "gain_db": -18
+  }
+ ],
+ "footsteps": [
+  {
+   "start": 488.46,
+   "end": 489.76,
+   "interval": 0.349,
+   "surface": "hard",
+   "gain_db": -12,
+   "pan": 0.5
+  },
+  {
+   "start": 494.2,
+   "end": 495.708,
+   "interval": 0.349,
+   "surface": "hard",
+   "gain_db": -16,
+   "pan": 0.4
+  },
+  {
+   "start": 507.297,
+   "end": 507.58,
+   "interval": 0.196,
+   "surface": "wood",
+   "gain_db": -8,
+   "pan": 0.1
+  }
+ ],
+ "sfx": [
+  [
+   458.04,
+   "whoosh",
+   -6,
+   0,
+   "white whip in from the street (SC 06)"
+  ],
+  [
+   458.09,
+   "bell",
+   -12,
+   0.3,
+   "school bell"
+  ],
+  [
+   458.19,
+   "ui_pop",
+   -8,
+   -0.335,
+   "Mrs. Krump's boss plate pops"
+  ],
+  [
+   458.28,
+   "tap",
+   -2,
+   -0.292,
+   "pointer TAP on \"Science fair\""
+  ],
+  [
+   458.31,
+   "poof",
+   -16,
+   -0.292,
+   "chalk dust"
+  ],
+  [
+   458.54,
+   "ui_pop",
+   -12,
+   0.54,
+   "Benji's plate pops (cold)"
+  ],
+  [
+   459.8,
+   "tap",
+   -2,
+   -0.262,
+   "pointer TAP on \"Partners\""
+  ],
+  [
+   459.83,
+   "poof",
+   -16,
+   -0.262,
+   "chalk dust"
+  ],
+  [
+   460.94,
+   "zoom_in",
+   -4,
+   -0.19,
+   "smash-zoom on Mrs. Krump"
+  ],
+  [
+   461.62,
+   "dramatic",
+   -10,
+   0,
+   "dun dun DUNN under \"wisely\""
+  ],
+  [
+   461.72,
+   "shine",
+   -2,
+   -0.117,
+   "glare glint across her glasses"
+  ],
+  [
+   462.46,
+   "whoosh",
+   -10,
+   0.3,
+   "whip to the shared desk"
+  ],
+  [
+   462.6,
+   "cloth",
+   -14,
+   0.248,
+   "Benji waving"
+  ],
+  [
+   462.66,
+   "ui_pop",
+   -14,
+   -0.19,
+   "??? over the hero"
+  ],
+  [
+   463.9,
+   "jump",
+   -8,
+   0.029,
+   "Benji jumps up from his seat"
+  ],
+  [
+   463.95,
+   "squeak",
+   -14,
+   0.029,
+   "chair squeak"
+  ],
+  [
+   464.31,
+   "chime",
+   -6,
+   0.321,
+   "idea bulb!"
+  ],
+  [
+   464.36,
+   "pop",
+   -10,
+   0.321,
+   "bulb pops in"
+  ],
+  [
+   465.19,
+   "pop",
+   -4,
+   0,
+   "the potato battery pops into his hands"
+  ],
+  [
+   465.24,
+   "sparkle",
+   -10,
+   0,
+   "sparkles"
+  ],
+  [
+   465.75,
+   "ui_pop",
+   -8,
+   0.321,
+   "tooltip: POTATO BATTERY · SUCCESS 3%"
+  ],
+  [
+   465.9,
+   "electric",
+   -18,
+   0,
+   "the tiny bulb buzzes"
+  ],
+  [
+   466.73,
+   "cloth",
+   -14,
+   -0.117,
+   "nervous collar tug"
+  ],
+  [
+   467.18,
+   "gulp",
+   -10,
+   -0.117,
+   "awkward gulp"
+  ],
+  [
+   468.65,
+   "whoosh",
+   -6,
+   0.5,
+   "whip-pan to the smart kids"
+  ],
+  [
+   469.19,
+   "ui_pop",
+   -8,
+   -0.262,
+   "ADA · INT 95"
+  ],
+  [
+   469.31,
+   "ui_pop",
+   -8,
+   0.248,
+   "ISAAC · INT 95"
+  ],
+  [
+   469.39,
+   "money_counter",
+   -14,
+   0,
+   "INT counts up to 95"
+  ],
+  [
+   469.46,
+   "shine",
+   -4,
+   0,
+   "glasses glint in sync"
+  ],
+  [
+   469.928,
+   "whoosh",
+   -8,
+   -0.3,
+   "whip back + dim"
+  ],
+  [
+   470.028,
+   "swish",
+   -6,
+   -0.4,
+   "SMART KIDS card slides in"
+  ],
+  [
+   470.128,
+   "swish",
+   -6,
+   0.4,
+   "BENJI card slides in"
+  ],
+  [
+   470.378,
+   "boom",
+   -8,
+   0,
+   "VS slams"
+  ],
+  [
+   470.6,
+   "stamp",
+   -2,
+   -0.3,
+   "PICKED stamp on \"ninety-five\""
+  ],
+  [
+   470.75,
+   "powerdown",
+   -12,
+   0.35,
+   "Benji's card goes cold and dim"
+  ],
+  [
+   471.24,
+   "confirm",
+   -10,
+   -0.3,
+   "choice confirmed"
+  ],
+  [
+   474.62,
+   "heart_pop",
+   -6,
+   0,
+   "a red heart pops between them"
+  ],
+  [
+   475.07,
+   "glass",
+   -2,
+   0,
+   "the heart CRACKS"
+  ],
+  [
+   475.12,
+   "error",
+   -16,
+   0,
+   "FRIENDSHIP −50 chip shakes on"
+  ],
+  [
+   475.12,
+   "heartbeat",
+   -14,
+   -0.19,
+   "the hero flinches"
+  ],
+  [
+   475.36,
+   "glass",
+   0,
+   0,
+   "it splits in two"
+  ],
+  [
+   475.38,
+   "sub_drop",
+   -4,
+   0,
+   "heavy drop (music out)"
+  ],
+  [
+   477.14,
+   "electric",
+   -14,
+   0.015,
+   "the potato bulb fizzles"
+  ],
+  [
+   477.34,
+   "powerdown",
+   -14,
+   0.015,
+   "...and goes out"
+  ],
+  [
+   478.4,
+   "whoosh",
+   -10,
+   0.4,
+   "cut to the MATHLETES table"
+  ],
+  [
+   480.66,
+   "shine",
+   -6,
+   0,
+   "glasses glint"
+  ],
+  [
+   481.778,
+   "chat_pop",
+   -8,
+   -0.35,
+   "number bubble 1"
+  ],
+  [
+   482.148,
+   "chat_pop",
+   -8,
+   0.35,
+   "number bubble 2"
+  ],
+  [
+   482.518,
+   "chat_pop",
+   -8,
+   -0.35,
+   "number bubble 3"
+  ],
+  [
+   482.888,
+   "chat_pop",
+   -8,
+   0.35,
+   "number bubble 4"
+  ],
+  [
+   483.258,
+   "chat_pop",
+   -8,
+   -0.35,
+   "number bubble 5"
+  ],
+  [
+   483.628,
+   "chat_pop",
+   -8,
+   0.35,
+   "number bubble 6"
+  ],
+  [
+   484.228,
+   "boing",
+   -14,
+   0,
+   "his forced laugh (shoulders bounce)"
+  ],
+  [
+   484.428,
+   "swish",
+   -12,
+   -0.3,
+   "ADA turns to stare"
+  ],
+  [
+   484.478,
+   "swish",
+   -12,
+   0.3,
+   "ISAAC turns to stare"
+  ],
+  [
+   485.04,
+   "ui_pop",
+   -8,
+   0,
+   "tooltip: LAUGHS 0 · FUN 0%"
+  ],
+  [
+   485.29,
+   "error",
+   -14,
+   0,
+   "FUN: 0%"
+  ],
+  [
+   485.54,
+   "cricket",
+   -8,
+   0.2,
+   "awkward silence"
+  ],
+  [
+   486.164,
+   "snore",
+   -18,
+   0.102,
+   "a bored half-snore (zzz)"
+  ],
+  [
+   487.74,
+   "blink",
+   -8,
+   0.102,
+   "he glances at the window: Benji alone"
+  ],
+  [
+   488.46,
+   "whoosh",
+   -6,
+   -0.5,
+   "whip home"
+  ],
+  [
+   488.51,
+   "door_open",
+   -12,
+   0.6,
+   "he comes in through the doorway"
+  ],
+  [
+   489.06,
+   "dishes",
+   -12,
+   -0.5,
+   "Mom at the sink"
+  ],
+  [
+   489.91,
+   "notify",
+   -6,
+   -0.5,
+   "quest marker \"!\" over Mom"
+  ],
+  [
+   491.174,
+   "ui_pop",
+   -6,
+   0.3,
+   "NEW QUEST toast drops in"
+  ],
+  [
+   491.424,
+   "typing",
+   -16,
+   0.3,
+   "title types in"
+  ],
+  [
+   492.48,
+   "coin",
+   -12,
+   0.5,
+   "the tiny +5 XP chip"
+  ],
+  [
+   492.484,
+   "dishes",
+   -14,
+   -0.6,
+   "scrubbing"
+  ],
+  [
+   494.1,
+   "swish",
+   -12,
+   -0.6,
+   "Mom looks over her shoulder"
+  ],
+  [
+   495.1,
+   "swish",
+   -10,
+   0.4,
+   "thumb over the shoulder"
+  ],
+  [
+   495.708,
+   "whoosh",
+   -8,
+   0.4,
+   "cut wide"
+  ],
+  [
+   495.98,
+   "robux",
+   -4,
+   0.7,
+   "+50 XP waypoint glows in the doorway"
+  ],
+  [
+   496.18,
+   "notify",
+   -6,
+   0.7,
+   "quest tracker: MOVE MR. PIKE'S COUCH"
+  ],
+  [
+   496.23,
+   "ui_pop",
+   -10,
+   0.5,
+   "quest arrow at his feet"
+  ],
+  [
+   496.48,
+   "powerdown",
+   -12,
+   -0.8,
+   "Mom's marker greys out"
+  ],
+  [
+   501.95,
+   "door_close",
+   -10,
+   0.8,
+   "he is gone"
+  ],
+  [
+   502.9,
+   "dishes",
+   -12,
+   -0.4,
+   "she turns back to the dishes"
+  ],
+  [
+   503.8,
+   "dishes",
+   -16,
+   -0.4,
+   "washing"
+  ],
+  [
+   505.02,
+   "ui_pop",
+   -8,
+   -0.2,
+   "Mom's plate pops (cold)"
+  ],
+  [
+   506.07,
+   "money_counter",
+   -12,
+   -0.2,
+   "ENERGY rolls 2% -> 1%"
+  ],
+  [
+   506.42,
+   "alarm_beep",
+   -14,
+   -0.2,
+   "1% blinks red"
+  ],
+  [
+   507.297,
+   "whoosh",
+   -10,
+   0.3,
+   "cut: the hero rushes through"
+  ],
+  [
+   507.397,
+   "ui_pop",
+   -14,
+   0.321,
+   "Grandpa's plate"
+  ],
+  [
+   507.63,
+   "skid",
+   -2,
+   0.139,
+   "skids to a stop on \"Kid.\""
+  ],
+  [
+   510.56,
+   "whoosh",
+   -10,
+   -0.3,
+   "whip to the hero"
+  ],
+  [
+   510.66,
+   "ui_pop",
+   -10,
+   0.394,
+   "GRANDPA LOU · LV 87"
+  ],
+  [
+   512.13,
+   "swish",
+   -8,
+   0.248,
+   "he points at the plate"
+  ],
+  [
+   515.8,
+   "glitch",
+   -8,
+   0.102,
+   "Grandpa's plate flickers"
+  ],
+  [
+   516.3,
+   "ui_close",
+   -12,
+   0.102,
+   "the plate fades"
+  ],
+  [
+   517.76,
+   "blink",
+   -10,
+   0,
+   "he looks up at his own ???"
+  ],
+  [
+   518.47,
+   "countdown_tick",
+   -8,
+   0.6,
+   "WED"
+  ],
+  [
+   518.76,
+   "reverse_swell",
+   -6,
+   0,
+   "swell into the white (SC 08: Saturday, the fair)"
+  ],
+  [
+   518.83,
+   "countdown_tick",
+   -8,
+   0.6,
+   "THU"
+  ],
+  [
+   519.19,
+   "countdown_tick",
+   -8,
+   0.6,
+   "FRI"
+  ],
+  [
+   519.55,
+   "countdown_tick",
+   -8,
+   0.6,
+   "SAT"
+  ]
+ ]
+}

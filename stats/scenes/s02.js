@@ -860,11 +860,12 @@ function shEveryday(t) {
 function shE(t) {
   const n = t < CUT.e2 ? 0 : t < CUT.e3 ? 1 : 2;
   const t0 = [CUT.e1, CUT.e2, CUT.e3][n];
-  const z = [2.7, 3.5, 4.6][n], dx = [-20, 30, 0][n], rot = [-3, 4, 0][n];
-  const cam = { ...camKeys(t, [[t0, camAt(1205 + dx, 450 - n * 8, z)], [t0 + 0.7, camAt(1205 + dx, 448 - n * 8, z * 1.04)]], ease.out) };
+  const z = [2.6, 3.3, 4.2][n], dx = [-20, 30, 0][n], rot = [-3, 4, 0][n];
+  const cam = { ...camKeys(t, [[t0, camAt(1205 + dx, 490 + n * 6, z)], [t0 + 0.7, camAt(1205 + dx, 490 + n * 6, z * 1.04)]], ease.out) };
   let o = heroTable(t, cam, { name: 'deadpan', eyes: { upper: 0.45 + 0.12 * n } });
   if (rot) o = S.g(o, `rotate(${f(rot)} 960 540)`);
   o += zoomLines(960, 450, 0.35 + 0.2 * n, t, '#FFFFFF', 18, 480 - 40 * n);
+  if (t > CUT.school - 0.3) o += K.C.pixelWipe(seg(t, CUT.school - 0.3, CUT.school), 'cover');
   return o + smash(t, t0, 0.1, 0.55);
 }
 
@@ -880,7 +881,7 @@ function shSchool(t) {
   let main = wk < 1 ? actor('you', tt, { x: hx, y: 960, s: 0.5, view: 'side', flip: true, backpack: true, ...AC.walk((tt - CUT.school) * 9), face: 'happy' }, { arms: false })
     : actor('you', tt, { x: hx, y: 960, s: 0.5, turn: 0.5, backpack: true, face: 'happy', armR: t > tBenOut ? 120 + 20 * Math.sin(t * 10) : 20 });
   main += actor('benji', tt, { x: 1160, y: 960, s: 0.5, turn: -0.45, books: true, t: tt, face: { name: 'joy' }, ...boing(tt, CUT.school + 0.7, 0.15), ...(t > tBenOut ? boing(t, tBenOut, 0.25) : {}) });
-  let live = hallShot(tt, cam, { crowd: 0.7 }, '', main) + K.C.pixelWipe(1 - seg(t, CUT.school, CUT.school + 0.35), 'reveal');
+  let live = hallShot(tt, cam, { crowd: 0.7 }, '', main) + K.C.pixelWipe(seg(t, CUT.school, CUT.school + 0.4), 'reveal');
   if (t > tBenOut) {
     const p = scr(cam, 980, 460);
     live += S.g(G.heart(0, 0, 50, '#FF6FB5'), tf(p[0], p[1] - 60 * seg(t, tBenOut, tBenOut + 0.6), ease.outBack(seg(t, tBenOut, tBenOut + 0.25))));
@@ -907,16 +908,16 @@ function shSports(t) {
 }
 // ---- 41. "Bad at math." — at the board: 2 + 2 = 22, very proud; Mrs. Krump's red pen circles it
 function shMath(t) {
-  const cam = camKeys(t, [[CUT.math, camAt(560, 500, 1.28)], [CUT.laces, camAt(570, 495, 1.36)]], ease.inOut);
-  const teach = actor('teacher', t, { ...CR.teacher, armR: 150, bendR: -130, face: { name: 'deadpan' }, glare: 0.6 });
-  const benji = actor('benji', t, { x: 900, y: 1000, s: 0.52, turn: -0.35, armL: 120, armR: 30, face: { name: 'joy' }, t, ...boing(t, tMath, 0.12) }, { arms: false });
-  let o = ST.classroom.compose(t, { board: ['MATH QUIZ', '2 + 2 = 22'], quiz: true }, ['', teach, ''], benji, cam);
+  const cam = camKeys(t, [[CUT.math, camAt(800, 540, 1.24)], [CUT.laces, camAt(790, 530, 1.32)]], ease.inOut);
+  const teach = actor('teacher', t, { x: 1180, y: 1000, s: 0.52, turn: -0.35, armR: 150, bendR: -130, face: { name: 'deadpan' }, glare: 0.6 });
+  const benji = actor('benji', t, { x: 660, y: 1000, s: 0.52, turn: 0.25, armL: 125, armR: 30, face: { name: 'joy' }, t, ...boing(t, tMath, 0.12) }, { arms: false });
+  let o = ST.classroom.compose(t, { board: ['MATH QUIZ', '2 + 2 = 22'], quiz: true }, ['', '', ''], benji + teach, cam);
   const k = seg(t, tMath - 0.05, tMath + 0.4);
   if (k > 0) {
-    const p = scr(cam, 600, 370);
+    const p = scr(cam, 600, 372);
     const L_ = 760;
-    o += S.ellipse(p[0], p[1], 150, 62, { fill: 'none', stroke: '#E8243A', 'stroke-width': 12, 'stroke-dasharray': `${f(L_ * k)} ${L_}`, transform: `rotate(-6 ${f(p[0])} ${f(p[1])})` });
-    o += TS('?!', p[0] + 190, p[1] - 40, 90 * ease.outBack(seg(t, tMath + 0.3, tMath + 0.5)), '#E8243A');
+    o += S.ellipse(p[0], p[1], 130, 58, { fill: 'none', stroke: '#E8243A', 'stroke-width': 12, 'stroke-dasharray': `${f(L_ * k)} ${L_}`, transform: `rotate(-6 ${f(p[0])} ${f(p[1])})` });
+    o += TS('?!', p[0] + 170, p[1] - 40, 90 * ease.outBack(seg(t, tMath + 0.3, tMath + 0.5)), '#E8243A');
   }
   return o + whip(t, CUT.math, -1, 0.1);
 }
@@ -930,7 +931,8 @@ function benjiTrip(t, x0) {
 }
 function shLaces(t) {
   const x0 = 380;
-  const cam = camKeys(t, [[CUT.laces, camAt(560, 800, 1.45)], [tLace, camAt(840, 790, 1.5)], [CUT.okay, camAt(980, 720, 1.25)]], ease.inOut);
+  const fx_ = lerp(x0, x0 + 520, seg(t, CUT.laces, tLace));
+  const cam = t < tLace ? camAt(fx_ + 60, 880, 2.3) : camKeys(t, [[tLace, camAt(fx_ + 60, 880, 2.3)], [tLace + 0.35, camAt(980, 760, 1.4)], [CUT.okay, camAt(990, 750, 1.38)]], ease.out);
   const b = benjiTrip(t, x0);
   let o = hallShot(t, cam, { crowd: 0.5 }, '', b.svg);
   if (t > tLace) o += smash(t, tLace, 0.1, 0.3);
@@ -955,7 +957,7 @@ function shOkay(t) {
   const cam = camKeys(t, [[CUT.okay, camAt(980, 700, 1.55)], [CUT.meant, camAt(990, 690, 1.7)]], ease.out);
   const thumb = ease.outBack(seg(t, B[5].a - 0.1, B[5].a + 0.2));
   const benji = actor('benji', t, { x: 980, y: 960, s: 0.5, fallen: 'sit', freeArms: true, armR: lerp(60, 160, thumb), armL: 80, face: { name: 'dizzy' }, t }, { arms: false });
-  let o = hallShot(t, cam, { crowd: 0.5 }, '', benji + fallingBooks(t, CUT.okay - 0.25, 980, 958, 3));
+  let o = hallShot(t, cam, { crowd: 0.25 }, '', benji + fallingBooks(t, CUT.okay - 0.25, 980, 900, 3));
   o += G.koStars({ x: scr(cam, 980, 0)[0], y: scr(cam, 0, 960 - 700 * 0.5)[1], t, s: 0.9, k: 1, birds: true });
   return o;
 }
@@ -986,7 +988,7 @@ function shNice(t) {
   const hb = CAST.handPos('benji', { x: 1040, y: 960, s: 0.5, turn: 0.35, lean: 8 * (1 - give * 0.5), armR: lerp(30, 75, give), bendR: lerp(0, -40, give) }, 1);
   main += S.g(S.rect(-50, -36, 100, 72, 6, ol('#FFFFFF', 4)) + S.path('M-34 -14 h68 M-34 4 h56 M-34 20 h44', ln(4, '#9AA0AE')), tf(hb[0] + 14, hb[1] - 6, 0.9, -8));
   main += K.draw.kid(9, { x: 1320, y: 960, s: 0.4, turn: -0.5, face: give > 0.7 ? 'happy' : 'sad', armL: give > 0.7 ? 60 : 20 });
-  let o = hallShot(t, cam, { crowd: 0.4 }, '', main);
+  let o = hallShot(t, cam, { crowd: 0.1 }, '', main);
   o += S.rect(0, 0, 1920, 1080, 0, { fill: '#FFD08A', opacity: 0.12 });
   const p = scr(cam, 1180, 520);
   o += G.emoteHearts({ x: p[0], y: p[1], age: t - B[6].a - 0.4, n: 6, s: 0.9, life: 1.6 }) + K.sparkles([[p[0] - 260, p[1] - 120, 22], [p[0] + 300, p[1] - 80, 26]], t);
@@ -1038,8 +1040,9 @@ function shFile(t) {
 }
 // ---- 48. "Except that he's big." — tilt from the boots to the head; BIG stamped on the file
 function shBig(t) {
-  const cam = camKeys(t, [[CUT.big, camAt(1080, 920, 2.0)], [tBig - 0.05, camAt(1080, 470, 1.35)], [CUT.hungry, camAt(1080, 460, 1.3)]], ease.inOut);
-  let o = tankLow(t, cam, { face: { name: 'angry' }, ...boing(t, tBig, 0.08) });
+  const cam = camKeys(t, [[CUT.big, camAt(1080, 930, 2.1)], [tBig - 0.05, camAt(1080, 520, 1.7)], [CUT.hungry, camAt(1080, 510, 1.62)]], ease.inOut);
+  const gb = boing(t, tBig, 0.12);
+  let o = tankLow(t, cam, { face: { name: 'angry' }, sx: gb.sx * (t > tBig ? 1.05 : 1), sy: gb.sy * (t > tBig ? 1.05 : 1) });
   o += S.g(tankFile({ x: 0, y: 0, t, k: 1, rows: 4, big: seg(t, tBig - 0.05, tBig + 0.4) }), 'translate(1610 330) scale(0.62)');
   return o + smash(t, tBig, 0.1, 0.3);
 }
@@ -1090,9 +1093,10 @@ function shTurkey(t) {
   const front = tableKids(t, { bag: false, yFace: { name: 'happy', fx: ['sweat'] }, bFace: { name: 'scared' }, y: { armR: hp.armR, bendR: hp.bendR, armL: 100, bendL: 60 }, yAct: { arms: false } });
   const hh = CAST.handPos('you', hp, 1);
   let props = '';
-  if (take < 1) props += X.sandwich({ x: lerp(hh[0] + 30, 1010, take), y: lerp(hh[1] - 30, 640, take), s: 0.5 });
+  if (take < 1) props += X.sandwich({ x: lerp(hh[0] + 40, 1010, take), y: lerp(hh[1] - 40, 640, take), s: 0.72, rot: -8 + 8 * Math.sin(t * 6) });
+  if (take < 1 && t > wb(9, 'Enjoy')) props += K.sparkles([[hh[0] + 120, hh[1] - 110, 18], [hh[0] - 20, hh[1] - 120, 14]], t);
   const lane = actor('tank', t, take >= 1 ? { ...TANK_C, turn: -0.4, sandwich: true, face: { name: 'confused' } } : { ...TANK_C, turn: -0.4, lunch: true, lunchName: 'YOU', face: { name: 'confused' }, headRot: -6 * bump(t, wb(9, 'turkey') - 0.3, wb(9, 'turkey') + 0.3) });
-  return cafShot(t, cam, { front: front + props, lane }) + S.rect(0, 0, 1920, 1080, 0, { fill: '#1A1030', opacity: 0.15 });
+  return cafShot(t, cam, { front, lane: lane + props }) + S.rect(0, 0, 1920, 1080, 0, { fill: '#1A1030', opacity: 0.15 });
 }
 // ---- 54. (beat) Tank walks off with the lunch, CHOMP; they watch him go
 function shWalk(t) {
@@ -1114,7 +1118,7 @@ function shOneday(t) {
 }
 // ---- 56. "Probably not today. But one day." — Tank glances back → they drop behind the table; two fists pop up
 function shNotToday(t) {
-  const cam = camKeys(t, [[CUT.notToday, camAt(1300, 650, 1.0)], [CUT.night, camAt(1330, 650, 1.04)]], ease.inOut);
+  const cam = camKeys(t, [[CUT.notToday, camAt(1060, 700, 1.28)], [CUT.night, camAt(1090, 700, 1.32)]], ease.inOut);
   const glance = bump(t, wb(10, 'Probably') - 0.2, wb(10, 'today') + 0.5);
   const duck = ease.inOut(seg(t, wb(10, 'Probably'), wb(10, 'Probably') + 0.25));
   const pop1 = ease.outBack(seg(t, wb(10, 'But') - 0.05, wb(10, 'But') + 0.2)), pop2 = ease.outBack(seg(t, wb(10, 'one', 1) - 0.05, wb(10, 'one', 1) + 0.2));
@@ -1122,13 +1126,13 @@ function shNotToday(t) {
   let front = actor('benji', t, { ...BEN_C, y: BEN_C.y + sink, turn: 0.5, face: { name: 'scared' }, laces: true, t });
   front += actor('you', t, { ...HERO_C, y: HERO_C.y + sink, turn: 0.5, face: { name: 'scared', fx: ['sweat'] } });
   // fists over the table edge
-  const fistSvg = (x, k) => (k > 0.01 ? S.g(S.rect(-34, -34, 68, 68, 16, ol('#B07450', 6)) + S.path('M-20 -10 h40 M-20 6 h40', ln(4, '#8A5A3A')), tf(x, 874 - 50 * k, k)) : '');
-  front += fistSvg(560, pop1) + fistSvg(780, pop2);
-  const tx = lerp(2100, 2700, seg(t, CUT.notToday, CUT.night - 0.4));
+  const fistSvg = (x, k) => (k > 0.01 ? S.g(S.rect(-34, -40, 68, 80, 16, ol(x < 650 ? '#B07450' : '#FFFFFF', 6)) + S.path('M-20 -14 h40 M-20 4 h40 M-20 22 h40', ln(4, '#8A5A3A', 0.6)), tf(x, 860 - 50 * k, k * 1.3)) : '');
+  let fists = fistSvg(560, pop1) + fistSvg(770, pop2);
+  if (pop2 > 0.5) fists += K.sparkles([[520, 700, 20], [820, 690, 22]], t);
+  const tx = lerp(1560, 1900, seg(t, CUT.notToday, CUT.night - 0.3));
   const lane = actor('tank', t, glance > 0.3 ? { ...TANK_C, x: tx, turn: -0.7, sandwich: true, bite: 0.4, face: { name: 'sneaky' } } : { ...TANK_C, x: tx, view: 'side', flip: true, ...AC.walk(t * 7), sandwich: true, bite: 0.4 });
-  return cafShot(t, cam, { front, lane });
+  return cafShot(t, cam, { front, lane: lane + fists }) + (t > CUT.night - 0.3 ? K.C.pixelWipe(seg(t, CUT.night - 0.3, CUT.night), 'cover', true) : '');
 }
-
 // ================================================================= night: the wish
 // ---- 57. YOU: "If only I knew how strong everyone REALLY was." — night POV, blue light, the game's tidy levels on his face
 function shNight(t) {
@@ -1136,7 +1140,7 @@ function shNight(t) {
   const flop = ease.out(seg(t, tReally - 0.1, tReally + 0.35));
   const pose = { armL: 24, armR: 24, bendL: -118, bendR: -118, lean: -5 * flop, bodyY: 16 * flop, headRot: lerp(-4, 8, flop), face: { name: flop > 0.5 ? 'angry' : 'sad' } };
   let o = povShot(t, cam, { time: 'night', pose, light: '#4A8CFF', lk: 0.22, act: { energy: 0.9 } });
-  o += K.C.pixelWipe(1 - seg(t, CUT.night, CUT.night + 0.4), 'reveal', true);
+  o += K.C.pixelWipe(seg(t, CUT.night, CUT.night + 0.4), 'reveal', true);
   return o;
 }
 // ---- 58. NARRATOR (ominous): "Be careful what you wish for." — wide from behind; the monitor flickers; slow push in (→ SC 03)
