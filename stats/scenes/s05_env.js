@@ -118,7 +118,8 @@ function choiceMenu(o = {}) {
   const rowH = 96, hd = 70, Hd = hd + rowH * items.length + 26;
   const uf = H.unfold(seg(k, 0, 0.6));
   let c = H.panel(0, 0, w, Hd, th, { c: 20, br: 26 });
-  c += S.path(H.para(26, -20, 260, 36, 10), ol(th.rim, 3.5, th.edge)) + H.TF(title, 156, 6, 19, th.edge, { 'letter-spacing': 4 });
+  const tw = H.richW(title, 19, 'F', 4) + 56;
+  c += S.path(H.para(26, -20, tw, 36, 10), ol(th.rim, 3.5, th.edge)) + H.TF(title, 26 + tw / 2, 6, 19, th.edge, { 'letter-spacing': 4 });
   items.forEach((it, i) => {
     const ik = ease.outBack(seg(it.k ?? 1, 0, 1));
     if (ik <= 0) return;

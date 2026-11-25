@@ -174,15 +174,15 @@ function shNice(t) {
   return compose(t, o, { fx, clock: '12:06 PM', top }) + smash(t, tNICE + 0.02, 0.1, 0.4);
 }
 // people around the cafeteria who suddenly have quests (far table head tops, the lunch lady, a kid at the back table)
-const MARKS = [[-551, 514, '+5 XP'], [104, 514, '+10 XP'], [-858, 560, '+20 XP'], [541, 514, '+5 XP'], [1730, 360, '+10 XP'], [-1180, 514, '+15 XP'], [963, 514, '+5 XP']];
+const MARKS = [[104, 514, '+10 XP'], [541, 514, '+5 XP'], [1730, 360, '+10 XP'], [-119, 514, '+15 XP'], [963, 514, '+5 XP'], [316, 514, '+20 XP'], [739, 514, '+5 XP']];
 // ---- 4. (beat) he turns: yellow "!" markers pop up over half the room
 function shMarks(t) {
   const u = ease.inOut(seg(t, CUT.marks, CUT.spree));
-  const cam = { x: lerp(300, 80, u), y: -60, zoom: lerp(0.86, 0.8, u) };
+  const cam = { x: lerp(330, 120, u), y: -40, zoom: lerp(1.0, 0.92, u) };
   const hero = { y: 950, view: 'back', armL: 20, armR: 20 };
   const o = cafWorld(t, cam, { hero, heroAct: { arms: false }, benjiPose: { face: 'confused' }, tank: false, sandwich: false, bagOpen: true, over: towerTop(t) });
   let plates = '';
-  MARKS.forEach(([x, y, r], i) => { const p = toScr(cam, x, y); plates += H.questMarker({ x: p.x, y: p.y, s: 0.75, t, k: seg(t, CUT.marks + 0.1 + i * 0.12, CUT.marks + 0.5 + i * 0.12), reward: r, seed: i }); });
+  MARKS.forEach(([x, y, r], i) => { const p = toScr(cam, x, y); plates += H.questMarker({ x: p.x, y: p.y, s: 0.95, t, k: seg(t, CUT.marks + 0.1 + i * 0.12, CUT.marks + 0.5 + i * 0.12), reward: r, seed: i }); });
   return compose(t, o, { plates, clock: '12:07 PM' });
 }
 // street extras with quests (for the wide SPREE shot)

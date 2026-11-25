@@ -748,8 +748,8 @@ function shFive(t) {
   const mp = seatPos('max', 'max');
   const h = CAST.handPos('max', { ...mp, armR: 165, bendR: 0 }, 1);
   const p = scr(cam, h[0], h[1]);
-  o += doodleArrow(p[0] + 300, p[1] + 40, p[0] + 60, p[1] + 10, seg(t, CUT.five + 0.35, CUT.five + 0.7), { bend: 0.25 });
-  o += doodleNote('close enough', p[0] + 420, p[1] + 90, pop(t, CUT.five + 0.6, 0.3), 46, -6);
+  o += doodleArrow(p[0] - 330, p[1] + 60, p[0] - 70, p[1] + 10, seg(t, CUT.five + 0.35, CUT.five + 0.7), { bend: -0.25 });
+  o += doodleNote('close enough', p[0] - 420, p[1] + 130, pop(t, CUT.five + 0.6, 0.3), 46, -6);
   o += K.sparkles([[p[0] - 60, p[1] - 40, 20], [p[0] + 40, p[1] - 80, 16]], t);
   return o;
 }

@@ -416,16 +416,16 @@ function shotFaces(t) {
 // 25 — "He's wearing a dinosaur suit!" Mom grabs him — and even her face is a plate (flickering)
 function shotDino(t) {
   const u = seg(t, C.dino, C.green);
-  const cam = camLerp(camAt(2330, 720, 1.55), camAt(2340, 710, 1.7), u);
+  const cam = camLerp(camAt(2340, 700, 1.85), camAt(2345, 690, 2.0), u);
   const grab = ease.outBack(seg(t, B.grab - 0.2, B.grab + 0.15));
   const mx = lerp(2120, 2250, ease.out(seg(t, C.dino, B.grab + 0.1)));
   const ms = sAt(995);
   let w = actor('mom', t, { x: mx, y: 995, s: ms, t, dayoff: true, turn: 0.7, armR: lerp(20, 78, grab), armL: lerp(20, 60, grab), bendR: -20 * grab, lean: 4 * grab, face: { name: 'scared', fx: ['sweat'] } }, { arms: false, energy: 1.5 });
   w += actor('you', t, { ...famPose(t, 'you'), x: 2440, turn: -0.6, face: { name: 'scared', eyes: { look: [-0.8, -0.2] } } }, { arms: false });
-  let o = crowdShot(t, cam, { back: [row(935, 90, 1), row(965, 93, 1)], front: [row(1080, 91, 1, [[2100, 2600]]), row(1150, 92, 1)], glitch: 0.35, chars: w, under: H.numbersFlood({ t, k: 0.55, seed: 17, n: 50 }) });
+  let o = crowdShot(t, cam, { back: [row(935, 90, 1), row(965, 93, 1)], front: [row(1080, 91, 1, [[2080, 2620]]), row(1150, 92, 1, [[2120, 2580]])], glitch: 0.35, chars: w, under: H.numbersFlood({ t, k: 0.45, seed: 17, n: 40 }) });
   // Mom's face: her own plate, flickering on/off
   const mh = H.overHead('mom', mx, 995, ms, 0, { dayoff: true });
-  const [mfx, mfy] = toScr(cam, mh.x + 18, mh.y + 250 * ms);
+  const [mfx, mfy] = toScr(cam, mh.x + 30, mh.y + 300 * ms);
   if (hash(Math.floor(t * 9) * 1.37) > 0.22) o += facePlates([{ x: mfx, y: mfy, r: 118 * ms * cam.zoom, i: 3, lv: 38 }], { t, glitch: 0.3 });
   return o + hud(t, { quest: true, glitch: 0.35, crowdDots: 60 }) + whip(t, C.dino, -1, 0.08);
 }
@@ -473,7 +473,7 @@ function shotEars(t) {
     face: { name: 'scared', eyes: { type: 'closed' }, mouth: 'wavy', fx: ['sweat', 'sweat2'] } };
   let o = crowdShot(t, cam, { back: RING_B, front: RING_F, glitch: 0.6, chars: actor('you', t, pose, { arms: false }), under: dark(0.35, '#040A12') + H.numbersFlood({ t, k: lerp(0.85, 1, u), seed: 31, n: 60, tint: false }) });
   // a second, thinner layer of numbers in front (the edges only — his face stays visible)
-  o += H.numbersFlood({ t, k: 0.5 + 0.4 * u, seed: 32, n: 18, tint: false, rect: [0, 0, 560, 1080] }) + H.numbersFlood({ t, k: 0.5 + 0.4 * u, seed: 33, n: 18, tint: false, rect: [1360, 0, 560, 1080] });
+  o += H.numbersFlood({ t, k: 0.5 + 0.4 * u, seed: 32, n: 18, tint: false, rect: [0, 0, 400, 1080] }) + H.numbersFlood({ t, k: 0.5 + 0.4 * u, seed: 33, n: 18, tint: false, rect: [1520, 0, 400, 1080] });
   o += H.edgePulse(0, 0, 1920, 1080, 0.5 + 0.4 * Math.sin(t * 10));
   return o + hud(t, { quest: true, glitch: 0.3, crowdDots: 80 });
 }
