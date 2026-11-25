@@ -13,7 +13,7 @@ The video runs **13:35**. Thumbnails: `thumbs/thumb_1…4.jpg` (1280×720, under
 | # | Title | Thumbnail |
 |---|---|---|
 | A | What If You Could See Everyone's STATS in Real Life? 📊 | `thumb_1`: I CAN SEE STATS?! (plates over everyone, "???" over the hero) |
-| B | My Teacher Is LEVEL 99… (Final Boss) 😱 | `thumb_2`: LV 99 TEACHER! (Mrs. Krump, red FINAL BOSS plate) |
+| B | My Teacher Is LEVEL 99… (Final Boss) 😱 | `thumb_2`: LV 99 TEACHER?! (Mrs. Krump, red FINAL BOSS plate) |
 | C | The School Bully Had 3 HP… 💔 | `thumb_3`: HE HAS 3 HP?! (Tank, HUNGRY · LONELY tags) |
 | D | I Turned On Stats… and Lost My Brother 🦖 | `thumb_4`: WHERE'S MAX?! (numbers flood at the fair) |
 
