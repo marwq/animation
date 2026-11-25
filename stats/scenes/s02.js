@@ -696,8 +696,8 @@ function shFinals(t) {
   // the two wrestlers + table
   const trem = 10 * Math.sin(t * 38) + 6 * Math.sin(t * 23);
   const cx = 960 + trem + lerp(0, 40, seg(t, tFin, tFin + 0.6)), cy = 630;
-  w += youngLou({ x: 600, y: 1110, s: 0.54, turn: 0.6, armR: 10, armL: 8, face: { name: 'determined', mouth: 'teeth' }, lean: 8 });
-  w += K.draw.adult(23, { x: 1330, y: 1110, s: 0.56, turn: -0.6, face: { name: 'angry', mouth: 'teeth' }, armL: 10, armR: 8, lean: -8 });
+  w += youngLou({ x: 500, y: 1110, s: 0.54, turn: 0.6, armR: 10, armL: 8, face: { name: 'determined', mouth: 'teeth' }, lean: 8 });
+  w += K.draw.adult(23, { x: 1420, y: 1110, s: 0.56, turn: -0.6, face: { name: 'angry', mouth: 'teeth' }, armL: 10, armR: 8, lean: -8 });
   w += S.rect(500, 760, 920, 56, 12, ol('#8A5A34', 7)) + S.rect(540, 816, 840, 300, 0, ol('#6E4626', 7));
   // the locked forearms (elbows on the table)
   w += S.path(`M800 768 L${f(cx - 16)} ${f(cy)}`, ln(64, LINE_)) + S.path(`M800 768 L${f(cx - 16)} ${f(cy)}`, ln(50, '#F2C29E'));
@@ -721,7 +721,7 @@ function shLegend(t) {
   if (t > tLegend - 0.05) {
     const p = scr(cam, LOU_STAND.x, LOU_STAND.y - 560 * 0.46 * 1.1);
     o += K.sparkles([[p[0] - 300, p[1] - 120, 34], [p[0] + 300, p[1] - 120, 34], [p[0] - 260, p[1] + 90, 22], [p[0] + 280, p[1] + 80, 24]], t);
-    o += G.stamp({ text: 'LEGEND', x: p[0] - 520, y: p[1] - 150, k: seg(t, tLegend, tLegend + 0.5), col: '#D7263D', size: 90, rot: -12 });
+    o += G.stamp({ text: 'LEGEND', x: 380, y: 190, k: seg(t, tLegend, tLegend + 0.5), col: '#D7263D', size: 90, rot: -12 });
   }
   return o + whip(t, CUT.legend, 1, 0.1);
 }
@@ -781,18 +781,18 @@ function shTornado(t) {
   return o;
 }
 // ---- 29. MAX: "I'm a T-rex!" — on the table, tiny T-rex arms, chest out
-const MAX_TABLE = { x: 960, y: 690, s: 0.45 };
+const MAX_TABLE = { x: 1070, y: 700, s: 0.45 };
 function shTrex(t) {
-  const cam = camKeys(t, [[CUT.trex, camAt(1000, 520, 1.75)], [CUT.rawr, camAt(990, 510, 1.95)]], ease.inOut);
-  const seated = seatedFamily(t, { max: false, you: { face: 'deadpan', armR: 20, bendR: -100 }, grandpa: { face: 'joy' } });
-  const max = actor('max', t, { ...MAX_TABLE, armL: 20, armR: 20, bendL: -118, bendR: -118, face: { name: 'excited' }, ...boing(t, CUT.trex + 0.05, 0.25) }, { arms: false, energy: 1.4 });
+  const cam = camKeys(t, [[CUT.trex, camAt(1100, 520, 1.7)], [CUT.rawr, camAt(1090, 510, 1.9)]], ease.inOut);
+  const seated = seatedFamily(t, { max: false, you: { face: { name: 'shocked', fx: ['sweat'] }, armR: 20, bendR: -100, lean: 9, turn: -0.3 }, grandpa: { face: 'joy' } });
+  const max = S.ellipse(MAX_TABLE.x, MAX_TABLE.y, 70, 12, { fill: '#000', opacity: 0.18 }) + actor('max', t, { ...MAX_TABLE, armL: 20, armR: 20, bendL: -118, bendR: -118, face: { name: 'excited' }, ...boing(t, CUT.trex + 0.05, 0.25) }, { arms: false, energy: 1.4 });
   return kitchenShot(t, cam, { set: { mess: 1 }, seated, chars: max });
 }
 // ---- 30. "RAWR!" — smash-zoom, claws up, zoom lines; the cereal shakes off the lamp
 function shRawr(t) {
-  const cam = shakeAll(camKeys(t, [[CUT.rawr, camAt(960, 470, 2.9)], [CUT.biscuit, camAt(960, 460, 3.1)]], ease.out), t, [[tRawr, 0.6, 16]]);
+  const cam = shakeAll(camKeys(t, [[CUT.rawr, camAt(1060, 480, 2.9)], [CUT.biscuit, camAt(1060, 470, 3.1)]], ease.out), t, [[tRawr, 0.6, 16]]);
   const max = actor('max', t, { ...MAX_TABLE, roar: t > tRawr - 0.1, volume: false, armL: 20, armR: 20, bendL: -118, bendR: -118, face: t > tRawr - 0.1 ? undefined : { name: 'excited' } }, { arms: false, energy: 1.6 });
-  let o = kitchenShot(t, cam, { set: { mess: 1 }, seated: seatedFamily(t, { max: false }), chars: max });
+  let o = kitchenShot(t, cam, { set: { mess: 1 }, seated: seatedFamily(t, { max: false, you: { face: { name: 'scared', fx: ['sweat'] }, lean: 9, turn: -0.3 } }), chars: max });
   o += zoomLines(960, 420, seg(t, tRawr - 0.05, tRawr + 0.1) * (1 - seg(t, CUT.biscuit - 0.2, CUT.biscuit)), t, '#FFFFFF', 22, 420);
   o += K.bang('RAWR!', 1420, 260, pop(t, tRawr, 0.25), 150, -10, '#7CFF6B');
   return o + smash(t, tRawr, 0.1, 0.4);
@@ -829,10 +829,10 @@ function shJob(t) {
   const cam = camKeys(t, [[CUT.job, camAt(1080, 830, 2.3)], [CUT.again, camAt(1080, 830, 2.4)]], ease.inOut);
   const nod = Math.sin((t - CUT.job) * 9) * bump(t, CUT.job + 0.3, CUT.job + 1.1);
   let dog = actor('biscuit', t, { ...BIS, t, face: 'good', wag: 0.4, rot: 4 * nod });
-  dog += S.path(`M${BIS.x - 14} ${BIS.y - 132} L${BIS.x + 14} ${BIS.y - 132} L${BIS.x + 8} ${BIS.y - 70} L${BIS.x} ${BIS.y - 58} L${BIS.x - 8} ${BIS.y - 70} Z`, ol('#D7263D', 4));
-  let desk = S.rect(BIS.x - 190, BIS.y - 110, 380, 120, 8, ol('#A8703A', 6)) + S.rect(BIS.x - 200, BIS.y - 124, 400, 26, 6, ol('#C9884A', 6));
-  desk += S.g(S.path('M-110 -30 L110 -30 L120 20 L-120 20 Z', ol('#2A2A36', 5)) + TF('GOOD BOY', 0, 2, 26, '#FFD21F') + TF('ON DUTY', 0, 16, 11, '#FFFFFF'), tf(BIS.x - 30, BIS.y - 132, 0.9));
-  desk += SH.mug(BIS.x + 130, BIS.y - 124, 0.7, undefined, { col: '#FFFFFF', label: '#1' });
+  dog += S.path(`M${BIS.x - 14} ${BIS.y - 158} L${BIS.x + 14} ${BIS.y - 158} L${BIS.x + 9} ${BIS.y - 100} L${BIS.x} ${BIS.y - 88} L${BIS.x - 9} ${BIS.y - 100} Z`, ol('#D7263D', 4)) + S.path(`M${BIS.x - 16} ${BIS.y - 164} L${BIS.x + 16} ${BIS.y - 164} L${BIS.x + 10} ${BIS.y - 150} L${BIS.x - 10} ${BIS.y - 150} Z`, ol('#B01D2A', 4));
+  let desk = S.rect(BIS.x - 190, BIS.y - 80, 380, 90, 8, ol('#A8703A', 6)) + S.rect(BIS.x - 200, BIS.y - 94, 400, 26, 6, ol('#C9884A', 6));
+  desk += S.g(S.path('M-110 -30 L110 -30 L120 20 L-120 20 Z', ol('#2A2A36', 5)) + TF('GOOD BOY', 0, 2, 26, '#FFD21F') + TF('ON DUTY', 0, 16, 11, '#FFFFFF'), tf(BIS.x - 40, BIS.y - 102, 0.9));
+  desk += SH.mug(BIS.x + 140, BIS.y - 94, 0.7, undefined, { col: '#FFFFFF', label: '#1' });
   let o = kitchenShot(t, cam, { set: { mess: 1 }, chars: dog + desk });
   return o + whip(t, CUT.job, -1, 0.1);
 }
@@ -844,7 +844,7 @@ function shAgain(t) {
   const seated = seatedFamily(t, {
     max: { face: { name: 'neutral', eyes: { upper: 0.5 }, mouth: v ? ({ A: 'line', B: 'smallSmile', C: 'o', D: 'O', E: 'O', F: 'o', G: 'line', H: 'smallSmile', X: 'line' }[v] || 'o') : 'line' }, headRot: 4 * Math.sin(t * 6) },
     you: { face: { name: 'deadpan' }, armR: 20, bendR: -100 },
-    grandpa: { lean: -12 * lean, headRot: -6 * lean, armR: 150, bendR: -10, face: { name: 'sneaky' }, glasses: 'up' }, louAct: { arms: false, energy: 1.2 },
+    grandpa: { lean: -7 * lean, headRot: -6 * lean, armR: 150, bendR: -10, face: { name: 'sneaky' }, glasses: 'up' }, louAct: { arms: false, energy: 1.2 },
   });
   return kitchenShot(t, cam, { seated }) + whip(t, CUT.again, 1, 0.1);
 }
