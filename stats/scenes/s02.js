@@ -24,7 +24,10 @@ const X = require('../rig/extras');
 const CAST = require('../rig/cast');
 const AC = require('./acting');
 const E = require('./s02_env');
-const { S, f, clamp, lerp, ease, seg, bump, hash, ol, ln, T, TF, camKeys, view, actor } = K;
+const { S, f, clamp, lerp, ease, seg, bump, hash, ol, ln, T, TF, camKeys, view } = K;
+// per-shot volume policy: medium / close shots draw the rig flat (volume: false) to stay inside the frame budget
+const VOL = { low: false };
+const actor = (n, t, p = {}, a) => K.actor(n, t, VOL.low && p.volume === undefined ? { ...p, volume: false } : p, a);
 const { L } = K.V;
 const { tf, TS, TFS, pop, scAt, op, shakeAll, boing, clipTo, dim, whip, smash, zoomLines, streaks, iris, rewindTail, crtOff,
   snapshot, snapPoint, nameCard, doodleArrow, doodleNote, thought, controller, facecam, tornado, youngLou, oldFilm, tankFile } = E;
@@ -1187,8 +1190,12 @@ function shotAt(t) {
   while (i > 0 && t < SHOTS[i][0]) i--;
   return i;
 }
+const LOWVOL = new Set([shDive, shReal, shMom, shSmile, shMorning, shProb, shAsked, shLou, shSame, shG79, shLegend, shMax, shFive, shTrex, shRawr, shAgain, shEveryday, shE,
+  shSchool, shSports, shMath, shLaces, shOkay, shMeant, shNice, shTank, shFile, shBig, shHungry, shLunch, shSure, shTurkey, shWalk, shOneday, shNotToday, shCareful]);
 function scene(t) {
-  return SHOTS[shotAt(t)][1](t);
+  const fn = SHOTS[shotAt(t)][1];
+  VOL.low = LOWVOL.has(fn) && !process.env.S02_VOL;
+  try { return fn(t); } finally { VOL.low = false; }
 }
 function look(t) {
   if (t < CUT.dive) return { grade: 'warm', vignette: 0.55 };

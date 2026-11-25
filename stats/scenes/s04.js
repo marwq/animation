@@ -592,9 +592,9 @@ function shScience(t) {
   const goggles = seg(t, tPure - 0.2, tPure + 0.1);
   let chars = '';
   for (let j = 3; j < 6; j++) chars += lineKid(t, j);
-  chars += you(t, { x: CAPT.x - 60, y: CAPT.y, s: CAPT.s, turn: -0.35, armL: lerp(lerp(10, 92, tap), 20, goggles), bendL: lerp(0, 150, goggles), armR: 12, face: { name: 'smug', eyes: goggles > 0.5 ? { type: 'closed' } : undefined } }, { arms: false });
+  chars += you(t, { x: CAPT.x + 50, y: CAPT.y, s: CAPT.s, turn: -0.35, armL: lerp(lerp(10, 92, tap), 20, goggles), bendL: lerp(0, 150, goggles), armR: 12, face: { name: 'smug', eyes: goggles > 0.5 ? { type: 'closed' } : undefined } }, { arms: false });
   let o = gymShot(t, cam, { crowd: 0.8 }, chars);
-  o += dim(0.32);
+  o += S.rect(-20, -20, 920, 1120, 0, { fill: '#0B1020', opacity: 0.3 }) + S.rect(900, -20, 110, 1120, 0, { fill: '#0B1020', opacity: 0.12 });
   o += H.sortByStrength({ k: seg(t, c0 - 0.05, c0 + 0.5), t, players: PLAYERS, press, sort: seg(t, tSci + 0.15, tPure + 0.4), pick: 0, highlight: t > tPure + 0.4 ? 'QUIET KID' : undefined, x: 560, y: 545, s: 1.02 });
   o += stamp(1240, 250, seg(t, tPure - 0.05, tPure + 0.3), 'PURE SCIENCE', '#3BE8FF', 1.45, -6, '#03101B');
   return o + hud(t, CLOCK.gym);
@@ -654,7 +654,7 @@ function shSecret(t) {
   const sly = seg(t, tSecret - 0.35, tSecret);
   const hero = you(t, { x: CAPT.x, y: CAPT.y, s: CAPT.s, volume: false, turn: lerp(-0.15, -0.35, sly), lean: -4 * sly, armR: lerp(22, 10, sly), bendR: lerp(-128, 0, sly), armL: lerp(8, 34, sly), bendL: lerp(0, -140, sly), face: sly > 0.5 ? { name: 'sneaky' } : { name: 'smug' } }, { arms: false, energy: 0.6 });
   let o = gymShot(t, cam, { crowd: 0.8 }, lineKid(t, 5) + hero);
-  o += stamp(1400, 300, seg(t, tSecret, tSecret + 0.3), 'HIDDEN STAT: ???', '#8A5CFF', 0.95, -6, '#FFFFFF');
+  o += stamp(1330, 175, seg(t, tSecret, tSecret + 0.3), 'HIDDEN STAT: ???', '#8A5CFF', 0.9, -6, '#FFFFFF');
   if (sly > 0.5) o += K.sparkles([[1190, 420, 26], [1290, 380, 18]], t);
   return o + hud(t, CLOCK.gym);
 }
@@ -800,12 +800,13 @@ function shMeat(t) {
   const dip = bump(t, tSaid - 0.25, tSaid + 0.45);
   let o = cafShot(t, cam, {}, { lady: lunchLady(t, { armR: 30 + 30 * dip, headRot: -6 * dip }) });
   const q = toScr(cam, F.x, F.y - 30);
-  o += H.tipFor('mysteryMeat', { x: q.x + 60, y: q.y, t, k: seg(t, tMystery - 0.2, tMystery + 0.3), s: 1.3, side: 'right', dist: 180, dy: -120 });
+  o += H.tipFor('mysteryMeat', { x: q.x + 60, y: q.y, t, k: seg(t, tMystery - 0.2, tMystery + 0.3), s: 1.3, side: 'right', dist: 180, dy: -270 });
   [tQuestion, tQuestion + 0.22, tMark].forEach((t0, j) => {
     const a = t - t0;
     if (a < 0 || a > 1.6) return;
     const u = a / 1.6;
-    o += S.g(TS('?', 0, 0, 120, '#B9AA8A'), `translate(${f(q.x + 230 + j * 150 + 30 * Math.sin(a * 5 + j))} ${f(q.y + 60 - 300 * ease.out(u))}) rotate(${f(-15 + j * 15)}) scale(${f(0.5 + 0.7 * ease.outBack(seg(a, 0, 0.25)))})`, { opacity: f(1 - seg(u, 0.6, 1)) });
+    const e = ease.out(seg(a, 0, 0.7));
+    o += S.g(TS('?', 0, 0, 110, '#B9AA8A'), `translate(${f(lerp(q.x + 40, q.x + 380 + j * 150, e) + 20 * Math.sin(a * 5 + j))} ${f(lerp(q.y + 20, q.y + 90 - 35 * j, e) - 90 * Math.sin(e * Math.PI) - 20 * u)}) rotate(${f(-15 + j * 15)}) scale(${f(0.5 + 0.7 * ease.outBack(seg(a, 0, 0.25)))})`, { opacity: f(1 - seg(u, 0.6, 1)) });
   });
   return o + hud(t, CLOCK.caf);
 }
