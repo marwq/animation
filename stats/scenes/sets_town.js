@@ -1245,17 +1245,20 @@ const gym = makeSet(gymLayers);
 // o: { quiet 0..1 (noise drops: room dims + desaturates, crowd stops talking and looks right at Tank, soft light on Tank),
 //      crowd 0..1 (cheap kids at the far + back tables, default 1), trays (default true), heroTray (default true: pizza,
 //      broccoli, mystery meat, milk), steam (default true), menu [lines], clock ('12:05') }
-const CF = { floor: 640, far: { top: 668, s: 0.32, x0: -1300, x1: 1120 }, back: { top: 752, s: 0.4, x0: -1300, x1: 1080 }, front: { top: 874, s: 0.5, x0: -1400, x1: 900 }, counter: { x0: 1240, x1: 2660, top: 712 } };
+const CF = { floor: 640, far: { top: 668, s: 0.32, x0: -1300, x1: 1120 }, back: { top: 752, s: 0.4, x0: -1300, x1: 1080 }, front: { top: 874, s: 0.5, x0: -1400, x1: 900 }, counter: { x0: 1180, x1: 2600, top: 712 } };
 const CAF_WIN = [[-760, -420], [-360, -20], [40, 380]];
 function lunchTable(x0, x1, top, k, o = {}) {
-  const c = o.col || '#B9A6F0', ed = mix(c, '#2A1A60', 0.3), st = o.stool || GOLD;
-  let s = R(x0 + 20 * k, top + 10 * k, x1 - x0 - 40 * k, 150 * k, 0, { fill: '#2A2440', opacity: 0.32 });
+  // long table with an attached near bench; the dark space under the top hides the seated kids' legs
+  const c = o.col || '#B9A6F0', ed = mix(c, '#2A1A60', 0.3), bc = o.stool || GOLD, bd = mix(bc, '#5A3A10', 0.28);
+  let s = R(x0 + 16 * k, top, x1 - x0 - 32 * k, 150 * k, 0, { fill: '#4A4268' });
   let lg_ = '';
-  for (let x = x0 + 140 * k; x < x1 - 60 * k; x += 520 * k) lg_ += `M${f(x - 50 * k)} ${f(top + 150 * k)} Q${f(x)} ${f(top + 30 * k)} ${f(x + 50 * k)} ${f(top + 150 * k)} `;
-  s += P(lg_, ln(14 * k, LINE)) + P(lg_, ln(8 * k, '#8A86A0'));
-  let posts = '', seats = '';
-  for (let x = x0 + 120 * k; x < x1 - 50 * k; x += 230 * k) { posts += `M${f(x)} ${f(top + 40 * k)} V${f(top + 150 * k)} `; seats += elD(x, top + 150 * k, 50 * k, 15 * k) + ' '; }
-  s += P(posts, ln(10 * k, LINE)) + P(posts, ln(5 * k, '#8A86A0')) + P(seats, ol(st, 4 * Math.max(0.8, k)));
+  for (let x = x0 + 150 * k; x < x1 - 60 * k; x += 520 * k) lg_ += `M${f(x - 46 * k)} ${f(top + 140 * k)} Q${f(x)} ${f(top + 30 * k)} ${f(x + 46 * k)} ${f(top + 140 * k)} `;
+  s += P(lg_, ln(9 * k, '#8A86A0', 0.8));
+  s += R(x0 + 30 * k, top + 128 * k, x1 - x0 - 60 * k, 26 * k, 9 * k, ol(bc, 5)) + P(`M${f(x0 + 44 * k)} ${f(top + 136 * k)} H${f(x1 - 44 * k)}`, ln(4 * k, '#FFFFFF', 0.4));
+  s += R(x0 + 46 * k, top + 154 * k, x1 - x0 - 92 * k, 90 * k, 6 * k, ol(bd, 5)) + R(x0 + 46 * k, top + 154 * k, x1 - x0 - 92 * k, 14 * k, 0, { fill: '#000000', opacity: 0.15 });
+  let ft = '';
+  for (let x = x0 + 120 * k; x < x1 - 60 * k; x += 520 * k) ft += rrD(x - 30 * k, top + 236 * k, 60 * k, 16 * k, 5 * k) + ' ';
+  s += P(ft, ol('#6A6488', 4));
   s += R(x0, top - 30 * k, x1 - x0, 36 * k, 12 * k, ol(c, 5)) + R(x0, top + 4 * k, x1 - x0, 18 * k, 6 * k, ol(ed, 5)) + P(`M${f(x0 + 18)} ${f(top - 20 * k)} H${f(x1 - 18)}`, ln(4, '#FFFFFF', 0.45));
   return s;
 }
@@ -1294,7 +1297,7 @@ function cafeteriaLayers(t, o = {}) {
   // mural + clock + recycling
   m += G(R(-230, -150, 460, 290, 30, ol('#FFF6DE', 5)) + owl(-110, 0, 1.25) + P('M-30 30 L40 -60', ln(8, '#C9CED8')) + P('M34 -76 l12 20 M42 -80 l12 20 M50 -84 l12 20', ln(5, '#C9CED8')) + T('FUEL UP,', 110, -10, 50, PUR) + T('OWLS!', 110, 46, 56, GOLD, OUTL(7, PUR_D)) + G(icon('star'), 'translate(196 96) scale(0.6)'), tr(780, 250, 1, -2));
   m += wallClock(1120, 140, 44, o.clock ?? '12:05', { t });
-  m += G(R(-60, -130, 120, 130, 10, ol('#3E7BD8', 4)) + R(-50, -150, 100, 26, 6, ol('#2E5EB0', 4)) + TF('RECYCLE', 0, -60, 18, '#FFFFFF') + R(70, -120, 110, 120, 10, ol('#5A5470', 4)) + R(78, -140, 94, 26, 6, ol('#3A3456', 4)) + TF('TRASH', 125, -54, 18, '#FFFFFF'), tr(1080, CF.floor));
+  m += G(R(-60, -130, 120, 130, 10, ol('#3E7BD8', 4)) + R(-50, -150, 100, 26, 6, ol('#2E5EB0', 4)) + TF('RECYCLE', 0, -60, 18, '#FFFFFF') + R(70, -120, 110, 120, 10, ol('#5A5470', 4)) + R(78, -140, 94, 26, 6, ol('#3A3456', 4)) + TF('TRASH', 125, -54, 18, '#FFFFFF'), tr(920, CF.floor));
   // lunch line: kitchen pass-through, menu letter board
   const C = CF.counter;
   m += R(C.x0, 320, C.x1 - C.x0, C.top - 320, 0, { fill: '#C9D0DC' }) + R(C.x0, 320, C.x1 - C.x0, C.top - 320, 0, { fill: 'url(#stCafTile)', opacity: 0.35 });
@@ -1304,13 +1307,13 @@ function cafeteriaLayers(t, o = {}) {
   m += G(R(-110, -150, 220, 150, 14, ol('#AEB6C4', 6)) + R(-126, -166, 252, 26, 10, ol('#C9D0DC', 5)) + R(-140, 0, 280, 30, 4, ol('#3A3456', 4)), tr(C.x0 + 1250, 600));
   if (o.steam !== false) for (let i = 0; i < 3; i++) { const ph = md(t * 0.5 + i * 0.33, 1); m += P(`M${f(C.x0 + 1210 + i * 40)} ${f(430 - ph * 80)} q-14 -30 0 -60 q14 -30 0 -60`, ln(10, '#FFFFFF', f(0.5 * (1 - ph)))); }
   {
-    const menu = o.menu || ["TODAY'S LUNCH", 'PIZZA ........ $2', 'BROCCOLI .... FREE', 'MYSTERY MEAT .. ???'];
+    const menu = o.menu || ["TODAY'S LUNCH", 'PIZZA · $2', 'BROCCOLI · FREE', 'MYSTERY MEAT · ???'];
     let mb = R(-420, -120, 840, 240, 12, ol('#3A3456', 7)) + R(-404, -104, 808, 208, 6, { fill: '#1E1A2C' });
     let gr = '';
     for (let y = -96; y < 104; y += 12) gr += `M-404 ${y} H404 `;
     mb += P(gr, ln(1.5, '#2C2640')) + R(-404, -104, 808, 56, 6, { fill: PUR }) + T(menu[0], 0, -62, 44, GOLD, { 'letter-spacing': 3 });
     menu.slice(1).forEach((l, i) => { mb += TF(l, 0, -6 + i * 44, 34, i === 2 ? '#FFB3C6' : '#F4F1FA', { 'letter-spacing': 2 }); });
-    m += G(mb, tr(1950, 170));
+    m += G(mb, tr(1760, 170));
   }
   // floor
   m += band(CF.floor, YB, 'url(#stCafFloor)') + band(CF.floor - 4, CF.floor + 10, '#4E7A56') + R(XL, CF.floor + 10, XR - XL, 40, 0, { fill: '#000', opacity: 0.06 });
@@ -1337,7 +1340,7 @@ function cafeteriaLayers(t, o = {}) {
   }
   // counter (front of the lunch line)
   let fr2 = '';
-  const pans = [[1440, 'pizza'], [1680, 'broccoli'], [1920, 'meat'], [2160, 'potato'], [2400, 'corn']];
+  const pans = [[1360, 'pizza'], [1580, 'broccoli'], [1800, 'meat'], [2020, 'potato'], [2240, 'corn']];
   for (const [px, kind] of pans) {
     const py = C.top - 6;
     fr2 += R(px - 100, py - 10, 200, 30, 6, ol('#C9D0DC', 4));
@@ -1357,8 +1360,8 @@ function cafeteriaLayers(t, o = {}) {
   for (let x = C.x0 + 20; x < C.x1 - 100; x += 240) fr2 += R(x, C.top + 80, 210, 110, 8, { fill: 'none', stroke: '#7F8EA8', 'stroke-width': 4 });
   fr2 += R(C.x0 - 30, C.top + 48, C.x1 - C.x0 + 60, 26, 6, ol('#C9D0DC', 5)) + P(`M${C.x0 - 20} ${C.top + 58} H${C.x1 + 20}`, ln(3, '#FFFFFF', 0.7));
   const tag = (x, txt, col) => G(P('M-60 0 L-50 -40 L50 -40 L60 0 Z', ol('#FFFFFF', 3)) + TF(txt, 0, -12, txt.length > 8 ? 16 : 20, col), tr(x, C.top + 48));
-  fr2 += tag(1440, 'PIZZA', '#E8573C') + tag(1680, 'BROCCOLI', '#3E9E5A') + tag(1920, '???', '#8A7A6A') + tag(2160, 'MASH', '#9A8A6A') + tag(2400, 'CORN', '#C89A10');
-  if (q > 0) fr2 = G(fr2, null, { opacity: f(1 - 0.25 * q) });
+  fr2 += tag(1360, 'PIZZA', '#E8573C') + tag(1580, 'BROCCOLI', '#3E9E5A') + tag(1800, '???', '#8A7A6A') + tag(2020, 'MASH', '#9A8A6A') + tag(2240, 'CORN', '#C89A10');
+  if (q > 0) fr2 += R(C.x0 - 40, C.top - 140, C.x1 - C.x0 + 80, 360, 0, { fill: '#2A2346', opacity: f(0.22 * q) });
   let light = R(XL, YT, XR - XL, YB - YT, 0, { fill: '#FFF6DE', opacity: f(0.05 * (1 - q)) });
   for (const [a, b] of CAF_WIN) light += P(`M${a} 560 L${b} 560 L${b + 380} 1300 L${a + 240} 1300 Z`, { fill: 'url(#stBeam)', opacity: f(0.3 * (1 - q * 0.6)) });
   if (q > 0) light += glow(1080, 1000, 300, 70, '#FFF1C8', q * 1.3) + P('M960 -200 L1200 -200 L1300 1000 L860 1000 Z', { fill: 'url(#stBeamW)', opacity: f(0.18 * q) });
@@ -1624,15 +1627,15 @@ const SPOTS = {
       back: [-120, 140, 380, 620, 860].map((x) => ({ x, y: seatY(CF.back.top, CF.back.s), s: CF.back.s })),
     },
     tray: { pizza: { x: 707, y: 846 }, broccoli: { x: 790, y: 852 }, meat: { x: 845, y: 848 }, milk: { x: 895, y: 842 }, sandwich: { x: 640, y: 846 } },
-    food: { pizza: { x: 1440, y: 670 }, broccoli: { x: 1680, y: 656 }, meat: { x: 1920, y: 650 }, potato: { x: 2160, y: 664 } },
-    lunchLady: { x: 1920, y: 885, s: 0.47 },
-    line: [1400, 1620, 1840, 2060].map((x, i) => ({ x, y: 940 + (i % 2) * 10, s: 0.47 })),
+    food: { pizza: { x: 1360, y: 670 }, broccoli: { x: 1580, y: 656 }, meat: { x: 1800, y: 650 }, potato: { x: 2020, y: 664 } },
+    lunchLady: { x: 1730, y: 885, s: 0.47 },
+    line: [1380, 1600, 1820, 2040].map((x, i) => ({ x, y: 940 + (i % 2) * 10, s: 0.47 })),
     tankPath: [{ x: 2900, y: 1000 }, { x: 1900, y: 1000 }, { x: 1080, y: 1000 }], tankStop: { x: 1080, y: 1000, s: 0.5 },
     doors: { x: 2880, y: 644 },
     cams: {
       wide: { x: 0, y: 0, zoom: 1 }, room: { x: 300, y: -40, zoom: 0.8 },
       table: camAt(700, 780, 1.6), heroClose: camAt(760, 700, 2.3), tray: camAt(780, 850, 3), tank: camAt(980, 560, 1.3), tankLow: camAt(1080, 640, 1.6),
-      line: camAt(1700, 580, 1.35), food: camAt(1680, 640, 2.2), meat: camAt(1920, 630, 2.8), lunchLady: camAt(1920, 560, 1.7),
+      line: camAt(1700, 580, 1.35), food: camAt(1580, 640, 2.2), meat: camAt(1800, 630, 2.8), lunchLady: camAt(1740, 560, 1.7),
     },
   },
   schoolExterior: {
