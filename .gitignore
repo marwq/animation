@@ -29,3 +29,7 @@ parents/out/*.mp4
 parents/out/audio/
 parents/out/*.log
 parents/out/*.txt
+stats/out/*.mp4
+stats/out/audio/
+stats/out/*.log
+stats/out/*.txt

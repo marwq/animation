@@ -1,0 +1,1262 @@
+[
+ {
+  "scene": "SC 01",
+  "speaker": "NARRATOR",
+  "text": "[excited, hushed] What if you could see everyone's stats... in real life?",
+  "estStart": 0,
+  "estDur": 4.24
+ },
+ {
+  "scene": "SC 01",
+  "speaker": "NARRATOR",
+  "text": "[playful] Your teacher? Level ninety-nine. [pause] Final boss.",
+  "estStart": 4.24,
+  "estDur": 2.98
+ },
+ {
+  "scene": "SC 01",
+  "speaker": "TEACHER",
+  "text": "[cold] Homework. [pause] On my desk. [pause] NOW.",
+  "estStart": 7.22,
+  "estDur": 3.12
+ },
+ {
+  "scene": "SC 01",
+  "speaker": "NARRATOR",
+  "text": "[playful] The school bully? Level eighty. [pause] But his health... is almost zero.",
+  "estStart": 10.34,
+  "estDur": 5.1
+ },
+ {
+  "scene": "SC 01",
+  "speaker": "NARRATOR",
+  "text": "[fast, playful] Your little brother? Chaos: nine thousand, nine hundred ninety-nine.",
+  "estStart": 15.44,
+  "estDur": 3.57
+ },
+ {
+  "scene": "SC 01",
+  "speaker": "MAX",
+  "text": "[tiny voice, excited] RAWR!",
+  "estStart": 19.01,
+  "estDur": 0.66
+ },
+ {
+  "scene": "SC 01",
+  "speaker": "NARRATOR",
+  "text": "[deadpan] The lunch lady? Level fifty. [pause] Secret skill: mystery meat.",
+  "estStart": 19.67,
+  "estDur": 4.07
+ },
+ {
+  "scene": "SC 01",
+  "speaker": "NARRATOR",
+  "text": "[softly] You could see everybody's stats. [pause] Everybody's... except yours.",
+  "estStart": 23.75,
+  "estDur": 4.01
+ },
+ {
+  "scene": "SC 01",
+  "speaker": "YOU",
+  "text": "[confused] Question marks? [pause] Why do I get QUESTION MARKS?!",
+  "estStart": 27.75,
+  "estDur": 3.71
+ },
+ {
+  "scene": "SC 01",
+  "speaker": "NARRATOR",
+  "text": "[deadpan] Okay. Let's start from the beginning.",
+  "estStart": 31.46,
+  "estDur": 2.48
+ },
+ {
+  "scene": "SC 02",
+  "speaker": "NARRATOR",
+  "text": "[storyteller] This is you. You love games. Because in games, everything makes sense.",
+  "estStart": 34.95,
+  "estDur": 4.66
+ },
+ {
+  "scene": "SC 02",
+  "speaker": "NARRATOR",
+  "text": "Every enemy has a level. Every item has stats. [pause] You always know who's strong.",
+  "estStart": 39.61,
+  "estDur": 5.89
+ },
+ {
+  "scene": "SC 02",
+  "speaker": "YOU",
+  "text": "[proud] Level fifty goblin? Easy. [pause] Level ninety dragon? Run.",
+  "estStart": 45.5,
+  "estDur": 3.71
+ },
+ {
+  "scene": "SC 02",
+  "speaker": "NARRATOR",
+  "text": "[sighs] But real life? Real life has no numbers. [pause] You never know what anyone is thinking.",
+  "estStart": 49.21,
+  "estDur": 6.25
+ },
+ {
+  "scene": "SC 02",
+  "speaker": "NARRATOR",
+  "text": "There's Mom. She runs a bakery. She works all day... and she always smiles.",
+  "estStart": 55.46,
+  "estDur": 5.69
+ },
+ {
+  "scene": "SC 02",
+  "speaker": "MOM",
+  "text": "[cheerful, tired] Morning, sweetheart! Breakfast is ready! [pause] Probably.",
+  "estStart": 61.15,
+  "estDur": 2.98
+ },
+ {
+  "scene": "SC 02",
+  "speaker": "NARRATOR",
+  "text": "She baked three hundred cupcakes before sunrise. [pause] And she still asked about your day.",
+  "estStart": 64.14,
+  "estDur": 5.89
+ },
+ {
+  "scene": "SC 02",
+  "speaker": "NARRATOR",
+  "text": "There's Grandpa Lou. Every breakfast, he tells the same story.",
+  "estStart": 70.03,
+  "estDur": 3.94
+ },
+ {
+  "scene": "SC 02",
+  "speaker": "GRANDPA",
+  "text": "[proud, old] Nineteen seventy-nine! The arm wrestling finals! I was a legend!",
+  "estStart": 73.96,
+  "estDur": 3.94
+ },
+ {
+  "scene": "SC 02",
+  "speaker": "NARRATOR",
+  "text": "There's Max. Your little brother. He's five. [pause] He's basically a tornado in a dinosaur suit.",
+  "estStart": 77.9,
+  "estDur": 6.25
+ },
+ {
+  "scene": "SC 02",
+  "speaker": "MAX",
+  "text": "[tiny voice] I'm a T-rex! [pause] RAWR!",
+  "estStart": 84.15,
+  "estDur": 2.25
+ },
+ {
+  "scene": "SC 02",
+  "speaker": "NARRATOR",
+  "text": "[warmly] And Biscuit. Biscuit is a very good boy. That's his whole job.",
+  "estStart": 86.41,
+  "estDur": 4.66
+ },
+ {
+  "scene": "SC 02",
+  "speaker": "GRANDPA",
+  "text": "[proud, old] Did I tell you about seventy-nine?",
+  "estStart": 91.07,
+  "estDur": 2.48
+ },
+ {
+  "scene": "SC 02",
+  "speaker": "YOU",
+  "text": "[deadpan] Every day, Grandpa. [pause] Every. Single. Day.",
+  "estStart": 93.55,
+  "estDur": 2.98
+ },
+ {
+  "scene": "SC 02",
+  "speaker": "NARRATOR",
+  "text": "At school, there's Benji. Your best friend. [pause] He's bad at sports. Bad at math. Bad at shoelaces.",
+  "estStart": 96.54,
+  "estDur": 6.98
+ },
+ {
+  "scene": "SC 02",
+  "speaker": "BENJI",
+  "text": "[cheerful, nervous] I'm okay! [pause] I'm okay! I meant to do that!",
+  "estStart": 103.52,
+  "estDur": 4.07
+ },
+ {
+  "scene": "SC 02",
+  "speaker": "NARRATOR",
+  "text": "[warmly] But he's the nicest person you know.",
+  "estStart": 107.59,
+  "estDur": 2.85
+ },
+ {
+  "scene": "SC 02",
+  "speaker": "NARRATOR",
+  "text": "And then there's Tank. [pause] Nobody knows much about Tank. [pause] Except that he's big. And he's always hungry.",
+  "estStart": 110.44,
+  "estDur": 7.48
+ },
+ {
+  "scene": "SC 02",
+  "speaker": "TANK",
+  "text": "[low, gruff] Lunch. [pause] Now.",
+  "estStart": 117.92,
+  "estDur": 1.53
+ },
+ {
+  "scene": "SC 02",
+  "speaker": "YOU",
+  "text": "[nervous] Sure. Yep. [pause] Enjoy. It's turkey.",
+  "estStart": 119.45,
+  "estDur": 2.62
+ },
+ {
+  "scene": "SC 02",
+  "speaker": "BENJI",
+  "text": "[whispering] One day, we'll stand up to him. [pause] Probably not today. But one day.",
+  "estStart": 122.06,
+  "estDur": 5.53
+ },
+ {
+  "scene": "SC 02",
+  "speaker": "YOU",
+  "text": "[frustrated] If only I knew how strong everyone REALLY was.",
+  "estStart": 127.59,
+  "estDur": 3.57
+ },
+ {
+  "scene": "SC 02",
+  "speaker": "NARRATOR",
+  "text": "[ominous] Be careful what you wish for.",
+  "estStart": 131.16,
+  "estDur": 2.48
+ },
+ {
+  "scene": "SC 03",
+  "speaker": "SYSTEM",
+  "text": "[calm] Update available. [pause] Reality HUD, version one point zero.",
+  "estStart": 134.65,
+  "estDur": 3.71
+ },
+ {
+  "scene": "SC 03",
+  "speaker": "NARRATOR",
+  "text": "That night, a strange update popped up. [pause] Terms and conditions: four thousand, eight hundred and twelve pages.",
+  "estStart": 138.35,
+  "estDur": 6.98
+ },
+ {
+  "scene": "SC 03",
+  "speaker": "YOU",
+  "text": "[casual] Accept. [pause] Nobody reads those.",
+  "estStart": 145.34,
+  "estDur": 2.25
+ },
+ {
+  "scene": "SC 03",
+  "speaker": "NARRATOR",
+  "text": "[deadpan] Nobody reads those.",
+  "estStart": 147.59,
+  "estDur": 1.39
+ },
+ {
+  "scene": "SC 03",
+  "speaker": "SYSTEM",
+  "text": "Installing... [pause] reality.",
+  "estStart": 148.98,
+  "estDur": 1.83
+ },
+ {
+  "scene": "SC 03",
+  "speaker": "NARRATOR",
+  "text": "The next morning... everything had stats.",
+  "estStart": 150.81,
+  "estDur": 2.78
+ },
+ {
+  "scene": "SC 03",
+  "speaker": "YOU",
+  "text": "[amazed] My bed has stats. My SOCK has stats. [pause] My alarm clock is an ENEMY?!",
+  "estStart": 153.59,
+  "estDur": 5.89
+ },
+ {
+  "scene": "SC 03",
+  "speaker": "NARRATOR",
+  "text": "[deadpan] The toaster had an eighty percent chance to burn. [pause] It burned.",
+  "estStart": 159.48,
+  "estDur": 4.8
+ },
+ {
+  "scene": "SC 03",
+  "speaker": "NARRATOR",
+  "text": "Mom was smiling. [pause] Her energy was two percent.",
+  "estStart": 164.28,
+  "estDur": 3.71
+ },
+ {
+  "scene": "SC 03",
+  "speaker": "MOM",
+  "text": "[cheerful, tired] Good morning, sweetheart!",
+  "estStart": 167.99,
+  "estDur": 1.39
+ },
+ {
+  "scene": "SC 03",
+  "speaker": "NARRATOR",
+  "text": "[deadpan] Each coffee gave her one percent. [pause] She drank four. [pause] Six percent. A new record.",
+  "estStart": 169.38,
+  "estDur": 6.39
+ },
+ {
+  "scene": "SC 03",
+  "speaker": "NARRATOR",
+  "text": "Grandpa was level eighty-seven. [pause] And Max had infinite health.",
+  "estStart": 175.77,
+  "estDur": 4.07
+ },
+ {
+  "scene": "SC 03",
+  "speaker": "GRANDPA",
+  "text": "[suspicious, old] Why are you staring at the top of my head?",
+  "estStart": 179.85,
+  "estDur": 3.94
+ },
+ {
+  "scene": "SC 03",
+  "speaker": "YOU",
+  "text": "[quickly] No reason! [pause] Nice... hair, Grandpa.",
+  "estStart": 183.78,
+  "estDur": 2.92
+ },
+ {
+  "scene": "SC 03",
+  "speaker": "GRANDPA",
+  "text": "[deadpan] I don't have hair.",
+  "estStart": 186.7,
+  "estDur": 1.75
+ },
+ {
+  "scene": "SC 03",
+  "speaker": "MAX",
+  "text": "[tiny voice, shouting] Watch this!",
+  "estStart": 188.45,
+  "estDur": 1.03
+ },
+ {
+  "scene": "SC 03",
+  "speaker": "YOU",
+  "text": "[whispering, amazed] This... is... AMAZING.",
+  "estStart": 189.48,
+  "estDur": 1.99
+ },
+ {
+  "scene": "SC 03",
+  "speaker": "NARRATOR",
+  "text": "[deadpan] Biscuit's stats didn't even load. [pause] Error. Too good.",
+  "estStart": 191.47,
+  "estDur": 3.71
+ },
+ {
+  "scene": "SC 04",
+  "speaker": "NARRATOR",
+  "text": "School was a whole new game.",
+  "estStart": 195.18,
+  "estDur": 2.48
+ },
+ {
+  "scene": "SC 04",
+  "speaker": "NARRATOR",
+  "text": "Benji was level four. [pause] His special skill was \"falling down.\"",
+  "estStart": 197.66,
+  "estDur": 4.44
+ },
+ {
+  "scene": "SC 04",
+  "speaker": "BENJI",
+  "text": "[cheerful] Hey, buddy! [pause] Whoa— I'm okay!",
+  "estStart": 202.1,
+  "estDur": 2.62
+ },
+ {
+  "scene": "SC 04",
+  "speaker": "TEACHER",
+  "text": "[cold] Who forgot their homework?",
+  "estStart": 204.72,
+  "estDur": 1.75
+ },
+ {
+  "scene": "SC 04",
+  "speaker": "KID",
+  "text": "[nervous] My dog ate it!",
+  "estStart": 206.47,
+  "estDur": 1.75
+ },
+ {
+  "scene": "SC 04",
+  "speaker": "NARRATOR",
+  "text": "[deadpan] You could see lies now. [pause] That one was ninety-nine percent.",
+  "estStart": 208.23,
+  "estDur": 4.44
+ },
+ {
+  "scene": "SC 04",
+  "speaker": "TEACHER",
+  "text": "[cold] Pop quiz. [pause] Twenty questions.",
+  "estStart": 212.66,
+  "estDur": 2.25
+ },
+ {
+  "scene": "SC 04",
+  "speaker": "YOU",
+  "text": "[whispering, scared] Difficulty... impossible.",
+  "estStart": 214.92,
+  "estDur": 1.33
+ },
+ {
+  "scene": "SC 04",
+  "speaker": "BENJI",
+  "text": "[whispering] Is that bad? [pause] That sounds bad.",
+  "estStart": 216.25,
+  "estDur": 2.98
+ },
+ {
+  "scene": "SC 04",
+  "speaker": "TEACHER",
+  "text": "[cold] Is there something on my head?",
+  "estStart": 219.23,
+  "estDur": 2.48
+ },
+ {
+  "scene": "SC 04",
+  "speaker": "YOU",
+  "text": "[nervous] No, ma'am! [pause] Just your... very nice... level.",
+  "estStart": 221.71,
+  "estDur": 3.95
+ },
+ {
+  "scene": "SC 04",
+  "speaker": "NARRATOR",
+  "text": "In dodgeball, you picked your team by strength. [pause] Science. Pure science.",
+  "estStart": 225.65,
+  "estDur": 4.8
+ },
+ {
+  "scene": "SC 04",
+  "speaker": "YOU",
+  "text": "[confident] You. And you. [pause] And definitely you, eighty-five strength.",
+  "estStart": 230.45,
+  "estDur": 3.71
+ },
+ {
+  "scene": "SC 04",
+  "speaker": "KID",
+  "text": "[confused] You picked the quiet kid FIRST?",
+  "estStart": 234.16,
+  "estDur": 2.48
+ },
+ {
+  "scene": "SC 04",
+  "speaker": "YOU",
+  "text": "[smug] Trust me. [pause] He has a secret.",
+  "estStart": 236.65,
+  "estDur": 2.98
+ },
+ {
+  "scene": "SC 04",
+  "speaker": "NARRATOR",
+  "text": "You won. Every single game.",
+  "estStart": 239.63,
+  "estDur": 2.12
+ },
+ {
+  "scene": "SC 04",
+  "speaker": "NARRATOR",
+  "text": "Even lunch had stats. [pause] The mystery meat just said \"question mark.\"",
+  "estStart": 241.75,
+  "estDur": 4.8
+ },
+ {
+  "scene": "SC 04",
+  "speaker": "BENJI",
+  "text": "[nervous] Should we eat it?",
+  "estStart": 246.55,
+  "estDur": 1.75
+ },
+ {
+  "scene": "SC 04",
+  "speaker": "YOU",
+  "text": "[firm] Benji. It says QUESTION MARK.",
+  "estStart": 248.3,
+  "estDur": 2.12
+ },
+ {
+  "scene": "SC 04",
+  "speaker": "NARRATOR",
+  "text": "And above some people... there were little yellow marks. [pause] Like in a game.",
+  "estStart": 250.42,
+  "estDur": 5.83
+ },
+ {
+  "scene": "SC 04",
+  "speaker": "YOU",
+  "text": "[curious] Quests? [pause] Real life has QUESTS?",
+  "estStart": 256.25,
+  "estDur": 2.62
+ },
+ {
+  "scene": "SC 05",
+  "speaker": "NARRATOR",
+  "text": "Then Tank came for your lunch. [pause] Level eighty. [pause] A boss fight.",
+  "estStart": 258.86,
+  "estDur": 5.3
+ },
+ {
+  "scene": "SC 05",
+  "speaker": "YOU",
+  "text": "[panicked, whispering] Run? Fight? Hide under the table?",
+  "estStart": 264.16,
+  "estDur": 2.48
+ },
+ {
+  "scene": "SC 05",
+  "speaker": "TANK",
+  "text": "[low, gruff] Lunch.",
+  "estStart": 266.65,
+  "estDur": 0.66
+ },
+ {
+  "scene": "SC 05",
+  "speaker": "NARRATOR",
+  "text": "But then you saw it. [pause] Three health. Hungry. Tired. [pause] Lonely.",
+  "estStart": 267.31,
+  "estDur": 4.94
+ },
+ {
+  "scene": "SC 05",
+  "speaker": "YOU",
+  "text": "[quietly] ...He hasn't eaten all day.",
+  "estStart": 272.25,
+  "estDur": 2.42
+ },
+ {
+  "scene": "SC 05",
+  "speaker": "NARRATOR",
+  "text": "And above his head... a tiny question mark.",
+  "estStart": 274.66,
+  "estDur": 3.51
+ },
+ {
+  "scene": "SC 05",
+  "speaker": "YOU",
+  "text": "[gently] Here. [pause] Take the whole thing. I'm not that hungry.",
+  "estStart": 278.17,
+  "estDur": 4.07
+ },
+ {
+  "scene": "SC 05",
+  "speaker": "TANK",
+  "text": "[confused] ...You're GIVING it to me?",
+  "estStart": 282.25,
+  "estDur": 2.42
+ },
+ {
+  "scene": "SC 05",
+  "speaker": "SYSTEM",
+  "text": "[cheerful] Quest complete! [pause] Plus thirty-seven health.",
+  "estStart": 284.66,
+  "estDur": 2.62
+ },
+ {
+  "scene": "SC 05",
+  "speaker": "TANK",
+  "text": "[quietly, confused] Thanks... I guess.",
+  "estStart": 287.28,
+  "estDur": 1.69
+ },
+ {
+  "scene": "SC 05",
+  "speaker": "YOU",
+  "text": "[carefully] Tank? [pause] Why do you always take people's lunch?",
+  "estStart": 288.97,
+  "estDur": 3.71
+ },
+ {
+  "scene": "SC 05",
+  "speaker": "TANK",
+  "text": "[quietly, embarrassed] My dad works nights. [pause] Nobody makes me lunch. [pause] Okay? Don't tell anybody.",
+  "estStart": 292.68,
+  "estDur": 5.66
+ },
+ {
+  "scene": "SC 05",
+  "speaker": "YOU",
+  "text": "[kind] My mom always makes way too much. [pause] You can have half. Every day.",
+  "estStart": 298.35,
+  "estDur": 5.53
+ },
+ {
+  "scene": "SC 05",
+  "speaker": "BENJI",
+  "text": "[amazed] Did Tank just say THANKS?!",
+  "estStart": 303.87,
+  "estDur": 2.12
+ },
+ {
+  "scene": "SC 05",
+  "speaker": "NARRATOR",
+  "text": "And that's when you learned the rule. [pause] Kindness gives people health. [pause] And it gives YOU experience.",
+  "estStart": 305.99,
+  "estDur": 7.12
+ },
+ {
+  "scene": "SC 06",
+  "speaker": "SYSTEM",
+  "text": "Experience plus fifty! [pause] Level up!",
+  "estStart": 314.11,
+  "estDur": 2.62
+ },
+ {
+  "scene": "SC 06",
+  "speaker": "YOU",
+  "text": "[excited] I'm leveling UP? [pause] For being NICE?!",
+  "estStart": 316.73,
+  "estDur": 2.98
+ },
+ {
+  "scene": "SC 06",
+  "speaker": "NARRATOR",
+  "text": "So you went on a quest spree.",
+  "estStart": 319.71,
+  "estDur": 2.85
+ },
+ {
+  "scene": "SC 06",
+  "speaker": "NARRATOR",
+  "text": "You carried groceries. You complimented the lunch lady. [pause] You rescued a ball from a tree.",
+  "estStart": 322.55,
+  "estDur": 6.25
+ },
+ {
+  "scene": "SC 06",
+  "speaker": "YOU",
+  "text": "[cheerful, fast] Nice hat, Mrs. Wells! [pause] Great soup, lunch lady! [pause] Cool dog, random man!",
+  "estStart": 328.81,
+  "estDur": 5.66
+ },
+ {
+  "scene": "SC 06",
+  "speaker": "NARRATOR",
+  "text": "Level two. Level five. Level twenty.",
+  "estStart": 334.47,
+  "estDur": 2.48
+ },
+ {
+  "scene": "SC 06",
+  "speaker": "NARRATOR",
+  "text": "Every day, you shared your lunch with Tank. [pause] Forty health. Sixty. Eighty.",
+  "estStart": 336.95,
+  "estDur": 5.16
+ },
+ {
+  "scene": "SC 06",
+  "speaker": "TANK",
+  "text": "[low, almost smiling] Your mom makes good sandwiches.",
+  "estStart": 342.12,
+  "estDur": 2.12
+ },
+ {
+  "scene": "SC 06",
+  "speaker": "GRANDPA",
+  "text": "[grumpy, old] Has anybody seen my glasses?",
+  "estStart": 344.24,
+  "estDur": 2.12
+ },
+ {
+  "scene": "SC 06",
+  "speaker": "YOU",
+  "text": "[deadpan] Grandpa. [pause] They're on your head.",
+  "estStart": 346.35,
+  "estDur": 2.62
+ },
+ {
+  "scene": "SC 06",
+  "speaker": "SYSTEM",
+  "text": "[cheerful] Quest complete. [pause] Plus one experience.",
+  "estStart": 348.97,
+  "estDur": 2.62
+ },
+ {
+  "scene": "SC 06",
+  "speaker": "NARRATOR",
+  "text": "[deadpan] Easiest quest in history.",
+  "estStart": 351.59,
+  "estDur": 1.75
+ },
+ {
+  "scene": "SC 06",
+  "speaker": "MAX",
+  "text": "[tiny voice] Build me a pillow fort! The biggest one EVER!",
+  "estStart": 353.35,
+  "estDur": 3.57
+ },
+ {
+  "scene": "SC 06",
+  "speaker": "SYSTEM",
+  "text": "[cheerful] Epic quest complete! [pause] Plus one hundred experience!",
+  "estStart": 356.92,
+  "estDur": 3.35
+ },
+ {
+  "scene": "SC 06",
+  "speaker": "NARRATOR",
+  "text": "[slower] But slowly... you stopped helping people. [pause] You started helping points.",
+  "estStart": 360.26,
+  "estDur": 4.74
+ },
+ {
+  "scene": "SC 06",
+  "speaker": "YOU",
+  "text": "[dismissive] Two XP? [pause] Not worth it.",
+  "estStart": 365,
+  "estDur": 2.62
+ },
+ {
+  "scene": "SC 07",
+  "speaker": "TEACHER",
+  "text": "[cold] Science fair. Partners. [pause] Choose wisely.",
+  "estStart": 367.62,
+  "estDur": 2.62
+ },
+ {
+  "scene": "SC 07",
+  "speaker": "BENJI",
+  "text": "[excited] Partners again? I have an idea! A potato battery!",
+  "estStart": 370.24,
+  "estDur": 3.57
+ },
+ {
+  "scene": "SC 07",
+  "speaker": "YOU",
+  "text": "[awkward] Actually, Benji... I'm working with them. [pause] They have ninety-five intelligence.",
+  "estStart": 373.81,
+  "estDur": 4.74
+ },
+ {
+  "scene": "SC 07",
+  "speaker": "BENJI",
+  "text": "[hurt, quiet] Since when do you care about levels?",
+  "estStart": 378.55,
+  "estDur": 2.85
+ },
+ {
+  "scene": "SC 07",
+  "speaker": "NARRATOR",
+  "text": "[quietly] That number hurt more than any other.",
+  "estStart": 381.39,
+  "estDur": 2.85
+ },
+ {
+  "scene": "SC 07",
+  "speaker": "NARRATOR",
+  "text": "Your new partners were very smart. [pause] They talked only about numbers. [pause] They never laughed once.",
+  "estStart": 384.24,
+  "estDur": 6.75
+ },
+ {
+  "scene": "SC 07",
+  "speaker": "YOU",
+  "text": "[quietly] ...This is boring.",
+  "estStart": 390.99,
+  "estDur": 1.69
+ },
+ {
+  "scene": "SC 07",
+  "speaker": "NARRATOR",
+  "text": "At home, Mom had a quest. [pause] \"Help Mom. Five XP.\"",
+  "estStart": 392.68,
+  "estDur": 4.44
+ },
+ {
+  "scene": "SC 07",
+  "speaker": "YOU",
+  "text": "[distracted] Sorry, Mom. Gotta go. [pause] There's a fifty-XP quest down the street.",
+  "estStart": 397.12,
+  "estDur": 4.8
+ },
+ {
+  "scene": "SC 07",
+  "speaker": "MOM",
+  "text": "[tired, smiling] It's okay, sweetheart. I'm fine.",
+  "estStart": 401.92,
+  "estDur": 2.12
+ },
+ {
+  "scene": "SC 07",
+  "speaker": "NARRATOR",
+  "text": "She said she was fine. [pause] Her energy said one percent.",
+  "estStart": 404.04,
+  "estDur": 4.44
+ },
+ {
+  "scene": "SC 07",
+  "speaker": "GRANDPA",
+  "text": "[quietly] Kid. [pause] What are you really looking at?",
+  "estStart": 408.47,
+  "estDur": 3.35
+ },
+ {
+  "scene": "SC 07",
+  "speaker": "YOU",
+  "text": "[defensive] Stats, Grandpa. [pause] Stats don't lie.",
+  "estStart": 411.82,
+  "estDur": 2.62
+ },
+ {
+  "scene": "SC 07",
+  "speaker": "GRANDPA",
+  "text": "[quietly] Maybe not. [pause] But they don't tell the whole truth, either.",
+  "estStart": 414.44,
+  "estDur": 4.44
+ },
+ {
+  "scene": "SC 08",
+  "speaker": "NARRATOR",
+  "text": "Saturday. The town fair. [pause] Mom's first day off in a year.",
+  "estStart": 418.87,
+  "estDur": 4.8
+ },
+ {
+  "scene": "SC 08",
+  "speaker": "MOM",
+  "text": "[happy, tired] Everybody stay together, okay?",
+  "estStart": 423.67,
+  "estDur": 1.75
+ },
+ {
+  "scene": "SC 08",
+  "speaker": "MAX",
+  "text": "[tiny voice, excited] I wanna go UP! Way up! [pause] Where the clouds are!",
+  "estStart": 425.43,
+  "estDur": 4.44
+ },
+ {
+  "scene": "SC 08",
+  "speaker": "NARRATOR",
+  "text": "Max wanted to go up. [pause] Remember that. It's important.",
+  "estStart": 429.86,
+  "estDur": 4.07
+ },
+ {
+  "scene": "SC 08",
+  "speaker": "NARRATOR",
+  "text": "But there were thousands of people. [pause] And thousands of numbers.",
+  "estStart": 433.94,
+  "estDur": 4.44
+ },
+ {
+  "scene": "SC 08",
+  "speaker": "YOU",
+  "text": "[worried] Wait. [pause] Where's Max?",
+  "estStart": 438.37,
+  "estDur": 1.89
+ },
+ {
+  "scene": "SC 08",
+  "speaker": "MOM",
+  "text": "[panicked] Max? MAX!",
+  "estStart": 440.26,
+  "estDur": 1.03
+ },
+ {
+  "scene": "SC 08",
+  "speaker": "SYSTEM",
+  "text": "[glitchy] New quest. [pause] Find Max. [pause] Location... unknown.",
+  "estStart": 441.29,
+  "estDur": 3.78
+ },
+ {
+  "scene": "SC 08",
+  "speaker": "SYSTEM",
+  "text": "[glitchy, alarm] Warning. Too many players. [pause] HUD overload.",
+  "estStart": 445.07,
+  "estDur": 2.98
+ },
+ {
+  "scene": "SC 08",
+  "speaker": "NARRATOR",
+  "text": "[tense] You looked everywhere. But all you could see... were numbers.",
+  "estStart": 448.05,
+  "estDur": 4.24
+ },
+ {
+  "scene": "SC 08",
+  "speaker": "YOU",
+  "text": "[panicked] Level twelve! Level forty! Level eight! [pause] I can't see FACES!",
+  "estStart": 452.29,
+  "estDur": 4.44
+ },
+ {
+  "scene": "SC 08",
+  "speaker": "MOM",
+  "text": "[panicked] He's wearing a dinosaur suit! [pause] A green dinosaur!",
+  "estStart": 456.73,
+  "estDur": 3.71
+ },
+ {
+  "scene": "SC 08",
+  "speaker": "YOU",
+  "text": "[panicked] I can't tell! Everybody's just... a number!",
+  "estStart": 460.44,
+  "estDur": 3.15
+ },
+ {
+  "scene": "SC 08",
+  "speaker": "NARRATOR",
+  "text": "[quietly] You could see everyone's stats. [pause] But you couldn't see your brother.",
+  "estStart": 463.58,
+  "estDur": 4.8
+ },
+ {
+  "scene": "SC 09",
+  "speaker": "GRANDPA",
+  "text": "[calm, old] Breathe, kid. [pause] Sit with me for one second.",
+  "estStart": 471.38,
+  "estDur": 3.71
+ },
+ {
+  "scene": "SC 09",
+  "speaker": "GRANDPA",
+  "text": "[warm] You know my story. Nineteen seventy-nine. The finals. [pause] But I never told you the end.",
+  "estStart": 475.09,
+  "estDur": 6.25
+ },
+ {
+  "scene": "SC 09",
+  "speaker": "GRANDPA",
+  "text": "[smiling] I lost. [pause] Lost the final. In front of everybody.",
+  "estStart": 481.35,
+  "estDur": 4.07
+ },
+ {
+  "scene": "SC 09",
+  "speaker": "YOU",
+  "text": "[surprised] You... LOST?",
+  "estStart": 485.42,
+  "estDur": 1.33
+ },
+ {
+  "scene": "SC 09",
+  "speaker": "GRANDPA",
+  "text": "[laughing softly] Arm went down in two seconds. [pause] The whole town laughed.",
+  "estStart": 486.75,
+  "estDur": 4.44
+ },
+ {
+  "scene": "SC 09",
+  "speaker": "GRANDPA",
+  "text": "[warm] And that night, I met your grandma. [pause] Best loss of my whole life.",
+  "estStart": 491.18,
+  "estDur": 5.53
+ },
+ {
+  "scene": "SC 09",
+  "speaker": "GRANDPA",
+  "text": "[gently] Numbers tell you how strong somebody is. [pause] They don't tell you who they are.",
+  "estStart": 496.71,
+  "estDur": 5.89
+ },
+ {
+  "scene": "SC 09",
+  "speaker": "YOU",
+  "text": "[quietly] I think I stopped seeing people, Grandpa. [pause] I only saw numbers.",
+  "estStart": 502.6,
+  "estDur": 4.8
+ },
+ {
+  "scene": "SC 09",
+  "speaker": "GRANDPA",
+  "text": "[curious] Hey. What's that little X up in the corner?",
+  "estStart": 507.4,
+  "estDur": 3.57
+ },
+ {
+  "scene": "SC 09",
+  "speaker": "YOU",
+  "text": "[stunned] ...An X?",
+  "estStart": 510.97,
+  "estDur": 1.33
+ },
+ {
+  "scene": "SC 09",
+  "speaker": "NARRATOR",
+  "text": "[deadpan] It was on page one. [pause] Of four thousand, eight hundred and twelve.",
+  "estStart": 512.3,
+  "estDur": 5.16
+ },
+ {
+  "scene": "SC 09",
+  "speaker": "SYSTEM",
+  "text": "[calm] Reality HUD... off.",
+  "estStart": 517.46,
+  "estDur": 1.69
+ },
+ {
+  "scene": "SC 10",
+  "speaker": "NARRATOR",
+  "text": "[softly] No numbers. [pause] Just colors. And sounds. [pause] And faces.",
+  "estStart": 519.15,
+  "estDur": 4.21
+ },
+ {
+  "scene": "SC 10",
+  "speaker": "NARRATOR",
+  "text": "And you didn't need stats to know your brother.",
+  "estStart": 523.36,
+  "estDur": 3.57
+ },
+ {
+  "scene": "SC 10",
+  "speaker": "YOU",
+  "text": "[focused] Max loves dinosaurs. [pause] He says \"rawr\" at everything. [pause] And he always wants to be up high.",
+  "estStart": 526.94,
+  "estDur": 7.12
+ },
+ {
+  "scene": "SC 10",
+  "speaker": "BENJI",
+  "text": "[out of breath] I heard! I know the fair map! [pause] I've been here eleven times!",
+  "estStart": 534.05,
+  "estDur": 5.16
+ },
+ {
+  "scene": "SC 10",
+  "speaker": "TANK",
+  "text": "[low, kind] I'm tall. [pause] Get on.",
+  "estStart": 539.22,
+  "estDur": 2.25
+ },
+ {
+  "scene": "SC 10",
+  "speaker": "NARRATOR",
+  "text": "You ran past the Ferris wheel. Past the cotton candy. [pause] Past the giant teacups.",
+  "estStart": 541.47,
+  "estDur": 5.89
+ },
+ {
+  "scene": "SC 10",
+  "speaker": "NARRATOR",
+  "text": "The kid with level four. The kid with three health. [pause] And you.",
+  "estStart": 547.36,
+  "estDur": 5.16
+ },
+ {
+  "scene": "SC 10",
+  "speaker": "BENJI",
+  "text": "[focused] Not the Ferris wheel. Max hates the Ferris wheel. It's too slow.",
+  "estStart": 552.53,
+  "estDur": 4.66
+ },
+ {
+  "scene": "SC 10",
+  "speaker": "TANK",
+  "text": "[low] Cotton candy? [pause] Every kid goes to cotton candy.",
+  "estStart": 557.19,
+  "estDur": 3.71
+ },
+ {
+  "scene": "SC 10",
+  "speaker": "YOU",
+  "text": "[thinking] No. [pause] Max doesn't want sweets. Max wants to be a DINOSAUR. [pause] Up high.",
+  "estStart": 560.9,
+  "estDur": 6.03
+ },
+ {
+  "scene": "SC 10",
+  "speaker": "YOU",
+  "text": "[shouting] THERE! On top of the dinosaur!",
+  "estStart": 566.93,
+  "estDur": 2.48
+ },
+ {
+  "scene": "SC 10",
+  "speaker": "MAX",
+  "text": "[tiny voice, happy] RAWR!",
+  "estStart": 569.41,
+  "estDur": 0.66
+ },
+ {
+  "scene": "SC 10",
+  "speaker": "YOU",
+  "text": "[relieved, laughing] Found you, T-rex.",
+  "estStart": 570.07,
+  "estDur": 1.39
+ },
+ {
+  "scene": "SC 10",
+  "speaker": "MAX",
+  "text": "[tiny voice, proud] I was the king of the dinosaurs! [pause] RAWR!",
+  "estStart": 571.46,
+  "estDur": 3.71
+ },
+ {
+  "scene": "SC 10",
+  "speaker": "MOM",
+  "text": "[crying, happy] Don't you EVER do that again!",
+  "estStart": 575.17,
+  "estDur": 2.48
+ },
+ {
+  "scene": "SC 10",
+  "speaker": "MAX",
+  "text": "[tiny voice] ...Can we do it again?",
+  "estStart": 577.65,
+  "estDur": 2.42
+ },
+ {
+  "scene": "SC 11",
+  "speaker": "NARRATOR",
+  "text": "The next morning, you made breakfast. [pause] Without checking anyone's energy.",
+  "estStart": 581.07,
+  "estDur": 4.44
+ },
+ {
+  "scene": "SC 11",
+  "speaker": "YOU",
+  "text": "[warm] Sit down, Mom. [pause] I can see you're tired. [pause] With my eyes.",
+  "estStart": 585.51,
+  "estDur": 5.3
+ },
+ {
+  "scene": "SC 11",
+  "speaker": "MOM",
+  "text": "[touched] ...Thank you, sweetheart.",
+  "estStart": 590.81,
+  "estDur": 1.69
+ },
+ {
+  "scene": "SC 11",
+  "speaker": "BENJI",
+  "text": "[excited] It works! [pause] Kind of! A little!",
+  "estStart": 592.5,
+  "estDur": 2.98
+ },
+ {
+  "scene": "SC 11",
+  "speaker": "YOU",
+  "text": "[laughing] Best partner ever.",
+  "estStart": 595.48,
+  "estDur": 1.39
+ },
+ {
+  "scene": "SC 11",
+  "speaker": "YOU",
+  "text": "[sincere] Benji... I'm sorry. [pause] You're not level four. You're my best friend.",
+  "estStart": 596.87,
+  "estDur": 5.1
+ },
+ {
+  "scene": "SC 11",
+  "speaker": "BENJI",
+  "text": "[touched] Thanks. [pause] ...Level four is still pretty good though, right?",
+  "estStart": 601.97,
+  "estDur": 4.37
+ },
+ {
+  "scene": "SC 11",
+  "speaker": "TANK",
+  "text": "[shy] Can I... sit here?",
+  "estStart": 606.35,
+  "estDur": 2.05
+ },
+ {
+  "scene": "SC 11",
+  "speaker": "YOU",
+  "text": "[cheerful] Always.",
+  "estStart": 608.4,
+  "estDur": 0.66
+ },
+ {
+  "scene": "SC 11",
+  "speaker": "TANK",
+  "text": "[shy, smiling] I brought my own lunch today. [pause] My dad made it. [pause] It's... mostly ketchup.",
+  "estStart": 609.06,
+  "estDur": 6.33
+ },
+ {
+  "scene": "SC 11",
+  "speaker": "GRANDPA",
+  "text": "[warm, old] Told you, kid. [pause] Best things in life don't have numbers.",
+  "estStart": 615.39,
+  "estDur": 4.44
+ },
+ {
+  "scene": "SC 11",
+  "speaker": "NARRATOR",
+  "text": "You turned the HUD on one last time. [pause] Just to check one thing.",
+  "estStart": 619.83,
+  "estDur": 5.53
+ },
+ {
+  "scene": "SC 12",
+  "speaker": "SYSTEM",
+  "text": "[cheerful] Pet stats enabled.",
+  "estStart": 625.35,
+  "estDur": 1.39
+ },
+ {
+  "scene": "SC 12",
+  "speaker": "NARRATOR",
+  "text": "[playful] Biscuit. Level one thousand. [pause] Good boy: infinite.",
+  "estStart": 626.75,
+  "estDur": 3.35
+ },
+ {
+  "scene": "SC 12",
+  "speaker": "GRANDPA",
+  "text": "[laughing, old] Level one thousand? [pause] That dog has never done anything!",
+  "estStart": 630.09,
+  "estDur": 4.07
+ },
+ {
+  "scene": "SC 12",
+  "speaker": "MAX",
+  "text": "[tiny voice] He's a GOOD BOY, Grandpa!",
+  "estStart": 634.16,
+  "estDur": 2.12
+ },
+ {
+  "scene": "SC 12",
+  "speaker": "MAX",
+  "text": "[tiny voice, proud] I KNEW it!",
+  "estStart": 636.28,
+  "estDur": 1.39
+ },
+ {
+  "scene": "SC 12",
+  "speaker": "MAX",
+  "text": "[tiny voice, curious] What does yours say?",
+  "estStart": 637.67,
+  "estDur": 1.75
+ },
+ {
+  "scene": "SC 12",
+  "speaker": "NARRATOR",
+  "text": "[softly] For the first time, your stats loaded. [pause] No level. No numbers. [pause] Just two words.",
+  "estStart": 639.43,
+  "estDur": 6.39
+ },
+ {
+  "scene": "SC 12",
+  "speaker": "YOU",
+  "text": "[warm] ...\"Big brother.\" [pause] That's a good stat.",
+  "estStart": 645.82,
+  "estDur": 3.28
+ },
+ {
+  "scene": "SC 12",
+  "speaker": "NARRATOR",
+  "text": "[warmly] So... if you could see one stat above everyone's head... what would it be? [pause] Tell me in the comments!",
+  "estStart": 649.1,
+  "estDur": 8.31
+ }
+]

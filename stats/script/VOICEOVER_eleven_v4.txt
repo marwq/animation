@@ -1,0 +1,248 @@
+WHAT IF YOU COULD SEE EVERYONE'S STATS IN REAL LIFE?
+ElevenLabs Eleven v4 · Text to Dialogue · voice-over script
+Generated from script/SCRIPT.md — edit the script, then run: node tools/build_vo.js
+Spoken words: 1438 · characters: 10845 · estimated runtime: ~10:57 (incl. silent visual beats)
+==============================================================================
+
+HOW TO USE (по-русски)
+- Модель: Eleven v4. Режим Text to Dialogue: каждая строка "SPEAKER: текст" = отдельный блок
+  с голосом этого персонажа (список голосов ниже). Имя спикера и двоеточие НЕ вставлять, только текст.
+- Теги в [квадратных скобках] оставляем — это интонация, они не произносятся.
+  КАПС = ударение, "..." и [pause] = паузы, тире "—" = оборванная фраза.
+- Один дубль (TAKE) = одна генерация. Файлы называть take01.mp3, take02a.mp3 ...
+- Проще всего: дать ключ API через форму (как в прошлый раз) — я сгенерирую всё сам и с таймингом слов.
+
+CAST
+  NARRATOR  (63 lines)  George · warm, playful storyteller, talks to the viewer as "you"
+  TEACHER   ( 5 lines)  Alice · Mrs. Krump — cold, strict, final-boss energy
+  MAX       (11 lines)  Jessica · little brother, 5 — tiny, loud, chaotic dinosaur kid
+  YOU       (43 lines)  Liam · the hero, 12 — curious gamer, excitable, easily overwhelmed
+  MOM       ( 8 lines)  Sarah · busy baker mom — cheerful but exhausted
+  GRANDPA   (16 lines)  Bill · Grandpa Lou, 80s — proud storyteller, warm and wise
+  BENJI     (12 lines)  Will · best friend — clumsy, cheerful, kind, a bit nervous
+  TANK      (10 lines)  Harry · the bully — big, low, gruff; later shy and kind
+  SYSTEM    (10 lines)  River · calm game-HUD announcer
+  KID       ( 2 lines)  Charlie · random kid
+
+==============================================================================
+
+=== TAKE 01 · SC 01 COLD OPEN — СТАТЫ ВСЕХ · ~0:00–0:35 · 10 lines · 641 chars ===
+
+NARRATOR: [excited, hushed] What if you could see everyone's stats... in real life?
+NARRATOR: [playful] Your teacher? Level ninety-nine. [pause] Final boss.
+TEACHER: [cold] Homework. [pause] On my desk. [pause] NOW.
+NARRATOR: [playful] The school bully? Level eighty. [pause] But his health... is almost zero.
+NARRATOR: [fast, playful] Your little brother? Chaos: nine thousand, nine hundred ninety-nine.
+MAX: [tiny voice, excited] RAWR!
+NARRATOR: [deadpan] The lunch lady? Level fifty. [pause] Secret skill: mystery meat.
+NARRATOR: [softly] You could see everybody's stats. [pause] Everybody's... except yours.
+YOU: [confused] Question marks? [pause] Why do I get QUESTION MARKS?!
+NARRATOR: [deadpan] Okay. Let's start from the beginning.
+
+=== TAKE 02a · SC 02 ЗНАКОМСТВО · ~0:35–2:15 · 10 lines · 810 chars ===
+
+NARRATOR: [storyteller] This is you. You love games. Because in games, everything makes sense.
+NARRATOR: Every enemy has a level. Every item has stats. [pause] You always know who's strong.
+YOU: [proud] Level fifty goblin? Easy. [pause] Level ninety dragon? Run.
+NARRATOR: [sighs] But real life? Real life has no numbers. [pause] You never know what anyone is thinking.
+NARRATOR: There's Mom. She runs a bakery. She works all day... and she always smiles.
+MOM: [cheerful, tired] Morning, sweetheart! Breakfast is ready! [pause] Probably.
+NARRATOR: She baked three hundred cupcakes before sunrise. [pause] And she still asked about your day.
+NARRATOR: There's Grandpa Lou. Every breakfast, he tells the same story.
+GRANDPA: [proud, old] Nineteen seventy-nine! The arm wrestling finals! I was a legend!
+NARRATOR: There's Max. Your little brother. He's five. [pause] He's basically a tornado in a dinosaur suit.
+
+=== TAKE 02b · SC 02 ЗНАКОМСТВО · ~0:35–2:15 · 13 lines · 805 chars ===
+
+MAX: [tiny voice] I'm a T-rex! [pause] RAWR!
+NARRATOR: [warmly] And Biscuit. Biscuit is a very good boy. That's his whole job.
+GRANDPA: [proud, old] Did I tell you about seventy-nine?
+YOU: [deadpan] Every day, Grandpa. [pause] Every. Single. Day.
+NARRATOR: At school, there's Benji. Your best friend. [pause] He's bad at sports. Bad at math. Bad at shoelaces.
+BENJI: [cheerful, nervous] I'm okay! [pause] I'm okay! I meant to do that!
+NARRATOR: [warmly] But he's the nicest person you know.
+NARRATOR: And then there's Tank. [pause] Nobody knows much about Tank. [pause] Except that he's big. And he's always hungry.
+TANK: [low, gruff] Lunch. [pause] Now.
+YOU: [nervous] Sure. Yep. [pause] Enjoy. It's turkey.
+BENJI: [whispering] One day, we'll stand up to him. [pause] Probably not today. But one day.
+YOU: [frustrated] If only I knew how strong everyone REALLY was.
+NARRATOR: [ominous] Be careful what you wish for.
+
+=== TAKE 03 · SC 03 ОБНОВЛЕНИЕ · ~2:15–3:15 · 18 lines · 1038 chars ===
+
+SYSTEM: [calm] Update available. [pause] Reality HUD, version one point zero.
+NARRATOR: That night, a strange update popped up. [pause] Terms and conditions: four thousand, eight hundred and twelve pages.
+YOU: [casual] Accept. [pause] Nobody reads those.
+NARRATOR: [deadpan] Nobody reads those.
+SYSTEM: Installing... [pause] reality.
+NARRATOR: The next morning... everything had stats.
+YOU: [amazed] My bed has stats. My SOCK has stats. [pause] My alarm clock is an ENEMY?!
+NARRATOR: [deadpan] The toaster had an eighty percent chance to burn. [pause] It burned.
+NARRATOR: Mom was smiling. [pause] Her energy was two percent.
+MOM: [cheerful, tired] Good morning, sweetheart!
+NARRATOR: [deadpan] Each coffee gave her one percent. [pause] She drank four. [pause] Six percent. A new record.
+NARRATOR: Grandpa was level eighty-seven. [pause] And Max had infinite health.
+GRANDPA: [suspicious, old] Why are you staring at the top of my head?
+YOU: [quickly] No reason! [pause] Nice... hair, Grandpa.
+GRANDPA: [deadpan] I don't have hair.
+MAX: [tiny voice, shouting] Watch this!
+YOU: [whispering, amazed] This... is... AMAZING.
+NARRATOR: [deadpan] Biscuit's stats didn't even load. [pause] Error. Too good.
+
+=== TAKE 04 · SC 04 ШКОЛА СО СТАТАМИ · ~3:15–4:19 · 21 lines · 1035 chars ===
+
+NARRATOR: School was a whole new game.
+NARRATOR: Benji was level four. [pause] His special skill was "falling down."
+BENJI: [cheerful] Hey, buddy! [pause] Whoa— I'm okay!
+TEACHER: [cold] Who forgot their homework?
+KID: [nervous] My dog ate it!
+NARRATOR: [deadpan] You could see lies now. [pause] That one was ninety-nine percent.
+TEACHER: [cold] Pop quiz. [pause] Twenty questions.
+YOU: [whispering, scared] Difficulty... impossible.
+BENJI: [whispering] Is that bad? [pause] That sounds bad.
+TEACHER: [cold] Is there something on my head?
+YOU: [nervous] No, ma'am! [pause] Just your... very nice... level.
+NARRATOR: In dodgeball, you picked your team by strength. [pause] Science. Pure science.
+YOU: [confident] You. And you. [pause] And definitely you, eighty-five strength.
+KID: [confused] You picked the quiet kid FIRST?
+YOU: [smug] Trust me. [pause] He has a secret.
+NARRATOR: You won. Every single game.
+NARRATOR: Even lunch had stats. [pause] The mystery meat just said "question mark."
+BENJI: [nervous] Should we eat it?
+YOU: [firm] Benji. It says QUESTION MARK.
+NARRATOR: And above some people... there were little yellow marks. [pause] Like in a game.
+YOU: [curious] Quests? [pause] Real life has QUESTS?
+
+=== TAKE 05 · SC 05 ТАНК · ~4:19–5:14 · 15 lines · 899 chars ===
+
+NARRATOR: Then Tank came for your lunch. [pause] Level eighty. [pause] A boss fight.
+YOU: [panicked, whispering] Run? Fight? Hide under the table?
+TANK: [low, gruff] Lunch.
+NARRATOR: But then you saw it. [pause] Three health. Hungry. Tired. [pause] Lonely.
+YOU: [quietly] ...He hasn't eaten all day.
+NARRATOR: And above his head... a tiny question mark.
+YOU: [gently] Here. [pause] Take the whole thing. I'm not that hungry.
+TANK: [confused] ...You're GIVING it to me?
+SYSTEM: [cheerful] Quest complete! [pause] Plus thirty-seven health.
+TANK: [quietly, confused] Thanks... I guess.
+YOU: [carefully] Tank? [pause] Why do you always take people's lunch?
+TANK: [quietly, embarrassed] My dad works nights. [pause] Nobody makes me lunch. [pause] Okay? Don't tell anybody.
+YOU: [kind] My mom always makes way too much. [pause] You can have half. Every day.
+BENJI: [amazed] Did Tank just say THANKS?!
+NARRATOR: And that's when you learned the rule. [pause] Kindness gives people health. [pause] And it gives YOU experience.
+
+=== TAKE 06 · SC 06 ПРОКАЧКА · ~5:14–6:08 · 16 lines · 918 chars ===
+
+SYSTEM: Experience plus fifty! [pause] Level up!
+YOU: [excited] I'm leveling UP? [pause] For being NICE?!
+NARRATOR: So you went on a quest spree.
+NARRATOR: You carried groceries. You complimented the lunch lady. [pause] You rescued a ball from a tree.
+YOU: [cheerful, fast] Nice hat, Mrs. Wells! [pause] Great soup, lunch lady! [pause] Cool dog, random man!
+NARRATOR: Level two. Level five. Level twenty.
+NARRATOR: Every day, you shared your lunch with Tank. [pause] Forty health. Sixty. Eighty.
+TANK: [low, almost smiling] Your mom makes good sandwiches.
+GRANDPA: [grumpy, old] Has anybody seen my glasses?
+YOU: [deadpan] Grandpa. [pause] They're on your head.
+SYSTEM: [cheerful] Quest complete. [pause] Plus one experience.
+NARRATOR: [deadpan] Easiest quest in history.
+MAX: [tiny voice] Build me a pillow fort! The biggest one EVER!
+SYSTEM: [cheerful] Epic quest complete! [pause] Plus one hundred experience!
+NARRATOR: [slower] But slowly... you stopped helping people. [pause] You started helping points.
+YOU: [dismissive] Two XP? [pause] Not worth it.
+
+=== TAKE 07 · SC 07 ОДЕРЖИМОСТЬ · ~6:08–6:59 · 14 lines · 864 chars ===
+
+TEACHER: [cold] Science fair. Partners. [pause] Choose wisely.
+BENJI: [excited] Partners again? I have an idea! A potato battery!
+YOU: [awkward] Actually, Benji... I'm working with them. [pause] They have ninety-five intelligence.
+BENJI: [hurt, quiet] Since when do you care about levels?
+NARRATOR: [quietly] That number hurt more than any other.
+NARRATOR: Your new partners were very smart. [pause] They talked only about numbers. [pause] They never laughed once.
+YOU: [quietly] ...This is boring.
+NARRATOR: At home, Mom had a quest. [pause] "Help Mom. Five XP."
+YOU: [distracted] Sorry, Mom. Gotta go. [pause] There's a fifty-XP quest down the street.
+MOM: [tired, smiling] It's okay, sweetheart. I'm fine.
+NARRATOR: She said she was fine. [pause] Her energy said one percent.
+GRANDPA: [quietly] Kid. [pause] What are you really looking at?
+YOU: [defensive] Stats, Grandpa. [pause] Stats don't lie.
+GRANDPA: [quietly] Maybe not. [pause] But they don't tell the whole truth, either.
+
+=== TAKE 08 · SC 08 ЯРМАРКА · ~6:59–7:51 · 14 lines · 848 chars ===
+
+NARRATOR: Saturday. The town fair. [pause] Mom's first day off in a year.
+MOM: [happy, tired] Everybody stay together, okay?
+MAX: [tiny voice, excited] I wanna go UP! Way up! [pause] Where the clouds are!
+NARRATOR: Max wanted to go up. [pause] Remember that. It's important.
+NARRATOR: But there were thousands of people. [pause] And thousands of numbers.
+YOU: [worried] Wait. [pause] Where's Max?
+MOM: [panicked] Max? MAX!
+SYSTEM: [glitchy] New quest. [pause] Find Max. [pause] Location... unknown.
+SYSTEM: [glitchy, alarm] Warning. Too many players. [pause] HUD overload.
+NARRATOR: [tense] You looked everywhere. But all you could see... were numbers.
+YOU: [panicked] Level twelve! Level forty! Level eight! [pause] I can't see FACES!
+MOM: [panicked] He's wearing a dinosaur suit! [pause] A green dinosaur!
+YOU: [panicked] I can't tell! Everybody's just... a number!
+NARRATOR: [quietly] You could see everyone's stats. [pause] But you couldn't see your brother.
+
+=== TAKE 09 · SC 09 КРЕСТИК · ~7:51–8:39 · 12 lines · 752 chars ===
+
+GRANDPA: [calm, old] Breathe, kid. [pause] Sit with me for one second.
+GRANDPA: [warm] You know my story. Nineteen seventy-nine. The finals. [pause] But I never told you the end.
+GRANDPA: [smiling] I lost. [pause] Lost the final. In front of everybody.
+YOU: [surprised] You... LOST?
+GRANDPA: [laughing softly] Arm went down in two seconds. [pause] The whole town laughed.
+GRANDPA: [warm] And that night, I met your grandma. [pause] Best loss of my whole life.
+GRANDPA: [gently] Numbers tell you how strong somebody is. [pause] They don't tell you who they are.
+YOU: [quietly] I think I stopped seeing people, Grandpa. [pause] I only saw numbers.
+GRANDPA: [curious] Hey. What's that little X up in the corner?
+YOU: [stunned] ...An X?
+NARRATOR: [deadpan] It was on page one. [pause] Of four thousand, eight hundred and twelve.
+SYSTEM: [calm] Reality HUD... off.
+
+=== TAKE 10 · SC 10 БЕЗ СТАТОВ · ~8:39–9:41 · 16 lines · 977 chars ===
+
+NARRATOR: [softly] No numbers. [pause] Just colors. And sounds. [pause] And faces.
+NARRATOR: And you didn't need stats to know your brother.
+YOU: [focused] Max loves dinosaurs. [pause] He says "rawr" at everything. [pause] And he always wants to be up high.
+BENJI: [out of breath] I heard! I know the fair map! [pause] I've been here eleven times!
+TANK: [low, kind] I'm tall. [pause] Get on.
+NARRATOR: You ran past the Ferris wheel. Past the cotton candy. [pause] Past the giant teacups.
+NARRATOR: The kid with level four. The kid with three health. [pause] And you.
+BENJI: [focused] Not the Ferris wheel. Max hates the Ferris wheel. It's too slow.
+TANK: [low] Cotton candy? [pause] Every kid goes to cotton candy.
+YOU: [thinking] No. [pause] Max doesn't want sweets. Max wants to be a DINOSAUR. [pause] Up high.
+YOU: [shouting] THERE! On top of the dinosaur!
+MAX: [tiny voice, happy] RAWR!
+YOU: [relieved, laughing] Found you, T-rex.
+MAX: [tiny voice, proud] I was the king of the dinosaurs! [pause] RAWR!
+MOM: [crying, happy] Don't you EVER do that again!
+MAX: [tiny voice] ...Can we do it again?
+
+=== TAKE 11 · SC 11 ПОСЛЕ · ~9:41–10:25 · 12 lines · 707 chars ===
+
+NARRATOR: The next morning, you made breakfast. [pause] Without checking anyone's energy.
+YOU: [warm] Sit down, Mom. [pause] I can see you're tired. [pause] With my eyes.
+MOM: [touched] ...Thank you, sweetheart.
+BENJI: [excited] It works! [pause] Kind of! A little!
+YOU: [laughing] Best partner ever.
+YOU: [sincere] Benji... I'm sorry. [pause] You're not level four. You're my best friend.
+BENJI: [touched] Thanks. [pause] ...Level four is still pretty good though, right?
+TANK: [shy] Can I... sit here?
+YOU: [cheerful] Always.
+TANK: [shy, smiling] I brought my own lunch today. [pause] My dad made it. [pause] It's... mostly ketchup.
+GRANDPA: [warm, old] Told you, kid. [pause] Best things in life don't have numbers.
+NARRATOR: You turned the HUD on one last time. [pause] Just to check one thing.
+
+=== TAKE 12 · SC 12 ФИНАЛ И АУТРО · ~10:25–10:57 · 9 lines · 551 chars ===
+
+SYSTEM: [cheerful] Pet stats enabled.
+NARRATOR: [playful] Biscuit. Level one thousand. [pause] Good boy: infinite.
+GRANDPA: [laughing, old] Level one thousand? [pause] That dog has never done anything!
+MAX: [tiny voice] He's a GOOD BOY, Grandpa!
+MAX: [tiny voice, proud] I KNEW it!
+MAX: [tiny voice, curious] What does yours say?
+NARRATOR: [softly] For the first time, your stats loaded. [pause] No level. No numbers. [pause] Just two words.
+YOU: [warm] ..."Big brother." [pause] That's a good stat.
+NARRATOR: [warmly] So... if you could see one stat above everyone's head... what would it be? [pause] Tell me in the comments!
+
+=== END ===
