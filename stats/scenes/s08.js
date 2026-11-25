@@ -33,7 +33,6 @@ const FAM = { max: { x: 2010, y: 1000 }, mom: { x: 2150, y: 990 }, gpa: { x: 233
 for (const k of Object.keys(FAM)) FAM[k].s = +sAt(FAM[k].y).toFixed(3);
 const head = (who, p, pose = {}) => H.overHead(who, p.x, p.y, p.s, 0, pose);
 const clock = (t) => E.clockAt(t, START, END);
-const LOST = () => B.lost;
 // the HUD chrome of this scene (screen space): frame + party + journal slot; o: { glitch, quest, party, lost, dots, k, journal }
 function hud(t, o = {}) {
   let dots;
@@ -293,7 +292,7 @@ function shotQuest(t) {
 // 15 — "Find Max. Location... unknown." the quest arrow at his feet points... and spins
 function shotArrow(t) {
   const u = seg(t, C.arrow, C.warn);
-  const cam = camLerp(camAt(2480, 830, 1.15), camAt(2480, 800, 1.3), u);
+  const cam = camLerp(camAt(2480, 865, 1.15), camAt(2480, 845, 1.3), u);
   const gl = seg(t, B.location - 0.1, B.location + 0.4);
   const ring = [row(1035, 51, 1, [[2330, 2630]]), row(1080, 52, 1, [[2300, 2660]])];
   let w = actor('you', t, { ...famPose(t, 'you'), turn: Math.sin((t - C.arrow) * 3) * 0.7 * gl, face: { name: gl > 0.5 ? 'scared' : 'determined', eyes: { look: [Math.sin((t - C.arrow) * 3) * gl, 0.6] } } });

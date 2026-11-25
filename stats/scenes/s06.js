@@ -424,7 +424,7 @@ function shGood(t) {
 const GP = { x: 1430, y: 1000, s: 0.5 };
 const heroCouch = (extra = {}) => SH.seatPose(LV.seats.couchR, 1, extra);
 function livingShot(t, cam, o = {}) {
-  const NV = (cam.zoom || 1) >= 1.5 ? { volume: false } : {};
+  const NV = (cam.zoom || 1) >= 1.25 ? { volume: false } : {};      // Grandpa's filtered rig is the costliest in the cast
   const seated = o.heroSeated === false ? '' : actor('you', t, { ...heroCouch(), ...NV, ...(o.hero || {}) }, o.heroAct || {});
   const gp = o.gramps === false ? '' : actor('grandpa', t, { ...GP, ...NV, ...(o.gp || {}) }, o.gpAct || {});
   return living(t, cam, { fort: o.fort || 0, time: 'day' }, seated + (o.seated || ''), (o.behind || '') + gp + (o.standing || ''), o.over || '');
