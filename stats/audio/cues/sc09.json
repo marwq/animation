@@ -1,0 +1,569 @@
+{
+ "scene": "SC 09",
+ "start": 589.62,
+ "end": 644.54,
+ "music": [
+  {
+   "start": 589.62,
+   "end": 601.88,
+   "mood": "tender",
+   "energy": 0.3,
+   "in": "swell",
+   "out": "cut"
+  },
+  {
+   "start": 601.88,
+   "end": 605.12,
+   "mood": "carnival",
+   "energy": 0.4,
+   "in": "cut",
+   "out": "scratch"
+  },
+  {
+   "start": 605.12,
+   "end": 607.72,
+   "mood": "silence",
+   "energy": 0,
+   "in": "cut",
+   "out": "cut"
+  },
+  {
+   "start": 607.72,
+   "end": 612.26,
+   "mood": "carnival",
+   "energy": 0.5,
+   "in": "cut",
+   "out": "sting"
+  },
+  {
+   "start": 612.26,
+   "end": 618.52,
+   "mood": "romance",
+   "energy": 0.35,
+   "in": "fade",
+   "out": "cut"
+  },
+  {
+   "start": 618.52,
+   "end": 629.52,
+   "mood": "tender",
+   "energy": 0.35,
+   "in": "cut",
+   "out": "cut"
+  },
+  {
+   "start": 629.52,
+   "end": 633.824,
+   "mood": "mystery",
+   "energy": 0.3,
+   "in": "cut",
+   "out": "cut"
+  },
+  {
+   "start": 633.824,
+   "end": 638.26,
+   "mood": "install",
+   "energy": 0.3,
+   "in": "cut",
+   "out": "cut"
+  },
+  {
+   "start": 638.26,
+   "end": 639.76,
+   "mood": "wonder",
+   "energy": 0.4,
+   "in": "swell",
+   "out": "cut"
+  },
+  {
+   "start": 639.76,
+   "end": 644.54,
+   "mood": "silence",
+   "energy": 0,
+   "in": "cut",
+   "out": "cut"
+  }
+ ],
+ "ambience": [
+  {
+   "start": 589.62,
+   "end": 601.88,
+   "name": "crowd",
+   "gain_db": -18
+  },
+  {
+   "start": 589.62,
+   "end": 591.5,
+   "name": "static",
+   "gain_db": -24
+  },
+  {
+   "start": 601.88,
+   "end": 605.12,
+   "name": "crowd",
+   "gain_db": -14
+  },
+  {
+   "start": 605.12,
+   "end": 607.72,
+   "name": "crowd",
+   "gain_db": -18
+  },
+  {
+   "start": 607.72,
+   "end": 612.26,
+   "name": "crowd",
+   "gain_db": -12
+  },
+  {
+   "start": 612.26,
+   "end": 615.86,
+   "name": "night",
+   "gain_db": -14
+  },
+  {
+   "start": 615.86,
+   "end": 633.824,
+   "name": "crowd",
+   "gain_db": -18
+  },
+  {
+   "start": 638.26,
+   "end": 639.76,
+   "name": "crowd",
+   "gain_db": -20
+  }
+ ],
+ "footsteps": [
+  {
+   "start": 591.5,
+   "end": 592.26,
+   "interval": 0.393,
+   "surface": "soft",
+   "gain_db": -12,
+   "pan": -0.4
+  }
+ ],
+ "sfx": [
+  [
+   589.62,
+   "heartbeat",
+   -8,
+   0,
+   "still in the frozen sea of numbers"
+  ],
+  [
+   589.66,
+   "cloth",
+   -6,
+   0.3,
+   "Grandpa's hand lands on his shoulder"
+  ],
+  [
+   589.73,
+   "swish",
+   -10,
+   0.3,
+   "the plate slides off Grandpa's face"
+  ],
+  [
+   589.98,
+   "shine",
+   -12,
+   0.3,
+   "the first clean face"
+  ],
+  [
+   591.5,
+   "whoosh",
+   -12,
+   0,
+   "cut to the bench under the lamp"
+  ],
+  [
+   592.61,
+   "thud",
+   -8,
+   -0.2,
+   "the hero plops down on the bench"
+  ],
+  [
+   592.65,
+   "step_wood",
+   -12,
+   -0.2,
+   "bench creak"
+  ],
+  [
+   595.3,
+   "tap",
+   -10,
+   0.3,
+   "Grandpa taps his 79 patch"
+  ],
+  [
+   595.52,
+   "tap",
+   -12,
+   0.3,
+   "tap"
+  ],
+  [
+   596.91,
+   "swish",
+   -14,
+   0.3,
+   "cut: Grandpa remembering"
+  ],
+  [
+   598.398,
+   "swish",
+   -14,
+   -0.3,
+   "cut: the hero looks up"
+  ],
+  [
+   601.83,
+   "rewind",
+   -6,
+   0,
+   "into 1979 (film burn)"
+  ],
+  [
+   601.98,
+   "vhs_clunk",
+   -10,
+   0,
+   "Super-8 projector"
+  ],
+  [
+   602.28,
+   "crowd_cheer",
+   -12,
+   0,
+   "the 1979 crowd around the FINAL table"
+  ],
+  [
+   603.98,
+   "whoosh_long",
+   -14,
+   0,
+   "pull back: in front of everybody"
+  ],
+  [
+   605.12,
+   "record_scratch",
+   -4,
+   0,
+   "back to today: \"You...\""
+  ],
+  [
+   605.96,
+   "zoom_in",
+   -6,
+   -0.3,
+   "smash zoom on \"LOST?\""
+  ],
+  [
+   607.72,
+   "vhs_clunk",
+   -10,
+   0,
+   "back to the film"
+  ],
+  [
+   607.87,
+   "squeak",
+   -12,
+   0,
+   "arms straining"
+  ],
+  [
+   608.22,
+   "squeak",
+   -14,
+   0.1,
+   "arms straining"
+  ],
+  [
+   608.5,
+   "whoosh_down",
+   -6,
+   -0.2,
+   "the arm goes down"
+  ],
+  [
+   608.66,
+   "punch",
+   0,
+   -0.3,
+   "SLAM on the table"
+  ],
+  [
+   608.68,
+   "impact",
+   -4,
+   -0.3,
+   "BAM!"
+  ],
+  [
+   609.04,
+   "bell",
+   -4,
+   0.5,
+   "the bell: match over"
+  ],
+  [
+   609.11,
+   "stamp",
+   -4,
+   0.6,
+   "0:02 stamp"
+  ],
+  [
+   610.318,
+   "swish",
+   -12,
+   0,
+   "cut to the stage"
+  ],
+  [
+   610.88,
+   "crowd_laugh",
+   0,
+   0,
+   "the whole town laughs"
+  ],
+  [
+   611.18,
+   "kids_laugh",
+   -8,
+   0.3,
+   "kids laughing"
+  ],
+  [
+   611.68,
+   "rimshot",
+   -12,
+   0,
+   "HA HA! (young Lou grins sheepishly)"
+  ],
+  [
+   612.26,
+   "cricket",
+   -10,
+   0,
+   "night: the same bench, the same lamp"
+  ],
+  [
+   613.86,
+   "step_soft",
+   -12,
+   -0.6,
+   "footsteps: a girl walks in"
+  ],
+  [
+   614.21,
+   "step_soft",
+   -12,
+   -0.5,
+   "footsteps"
+  ],
+  [
+   614.71,
+   "cloth",
+   -10,
+   -0.3,
+   "she sits down"
+  ],
+  [
+   614.76,
+   "paper",
+   -14,
+   -0.3,
+   "cotton candy"
+  ],
+  [
+   615.25,
+   "heart_pop",
+   -4,
+   0,
+   "a heart pops"
+  ],
+  [
+   615.86,
+   "harp_up",
+   -8,
+   0,
+   "dissolve: 1979 -> today"
+  ],
+  [
+   618.52,
+   "swish",
+   -14,
+   0.3,
+   "cut: Grandpa close"
+  ],
+  [
+   619.74,
+   "ui_pop",
+   -12,
+   0.4,
+   "STR 79 flickers"
+  ],
+  [
+   622.42,
+   "cloth",
+   -12,
+   0.3,
+   "hand on his heart"
+  ],
+  [
+   622.67,
+   "magic",
+   -10,
+   0.3,
+   "the plate dissolves"
+  ],
+  [
+   627.938,
+   "whoosh_up",
+   -12,
+   0,
+   "tilt up: the sky full of numbers"
+  ],
+  [
+   628.68,
+   "glitch",
+   -12,
+   0,
+   "numbers jitter"
+  ],
+  [
+   629.94,
+   "cloth",
+   -10,
+   0.4,
+   "Grandpa points at the corner"
+  ],
+  [
+   631.09,
+   "shine",
+   -2,
+   0.9,
+   "the X lights up"
+  ],
+  [
+   631.49,
+   "notify",
+   -8,
+   0.9,
+   "CLOSE HUD? chip"
+  ],
+  [
+   632.567,
+   "zoom_in",
+   -6,
+   0.5,
+   "macro: the X"
+  ],
+  [
+   633.774,
+   "rewind",
+   -8,
+   0,
+   "back to that night: the terms window"
+  ],
+  [
+   633.924,
+   "tv_on",
+   -12,
+   0,
+   "the window"
+  ],
+  [
+   634.26,
+   "swish",
+   -8,
+   -0.2,
+   "highlighter on line 1.2"
+  ],
+  [
+   635.65,
+   "whoosh",
+   -12,
+   0.3,
+   "to the page counter"
+  ],
+  [
+   637.39,
+   "paper",
+   -10,
+   0.4,
+   "a red ring around 4,812"
+  ],
+  [
+   638.36,
+   "cloth",
+   -8,
+   0.3,
+   "he reaches up to the corner"
+  ],
+  [
+   638.744,
+   "click",
+   0,
+   0.9,
+   "presses the X"
+  ],
+  [
+   638.774,
+   "toggle",
+   -6,
+   0.9,
+   "the X turns red"
+  ],
+  [
+   638.864,
+   "ui_pop",
+   -10,
+   0,
+   "REALITY HUD... OFF"
+  ],
+  [
+   639.144,
+   "powerdown",
+   -6,
+   0,
+   "the HUD powers down"
+  ],
+  [
+   639.76,
+   "glass",
+   2,
+   0.6,
+   "the whole HUD shatters like glass"
+  ],
+  [
+   639.78,
+   "explosion_small",
+   -8,
+   0.6,
+   "crack"
+  ],
+  [
+   640.26,
+   "shine",
+   -10,
+   -0.2,
+   "glints as the shards fall"
+  ],
+  [
+   641.76,
+   "blink",
+   -12,
+   -0.2,
+   "he blinks"
+  ]
+ ]
+}

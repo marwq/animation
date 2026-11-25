@@ -76,13 +76,8 @@ const letterbox = (k, h = 96) => (k > 0 ? S.rect(-10, -10, W + 20, 10 + h * k, 0
 // cheap desaturation / cold wash (two translucent full-frame rects)
 const coldWash = (k) => (k > 0 ? S.rect(0, 0, W, HH, 0, { fill: '#8A96A6', opacity: f(0.26 * k) }) + S.rect(0, 0, W, HH, 0, { fill: '#0E1A2C', opacity: f(0.14 * k) }) : '');
 const dim = (k, col = '#120C24') => (k > 0 ? S.rect(0, 0, W, HH, 0, { fill: col, opacity: f(k) }) : '');
-// a soft dark vignette ring (stacked translucent frames — no gradients)
-function softEdge(k, col = '#0A0614') {
-  if (k <= 0) return '';
-  let o = '';
-  for (let i = 0; i < 4; i++) { const m = 30 + i * 46; o += S.path(`M0 0H${W}V${HH}H0Z M${m} ${m}V${HH - m}H${W - m}V${m}Z`, { fill: col, 'fill-rule': 'evenodd', opacity: f(0.16 * k) }); }
-  return o;
-}
+// (was a soft dark ring of stacked translucent frames: ~30 ms per frame in this renderer — the scenes' look() vignette does it now)
+function softEdge() { return ''; }
 
 // ---------------------------------------------------------------- sets
 const CF = ST.SPOTS.cafeteria;

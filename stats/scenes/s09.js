@@ -331,21 +331,21 @@ function shotClean(t) {
 }
 // 22 — over his shoulder: the fair, and faces — no numbers at all (hand-off to SC 10: "No numbers. Just colors...")
 const FACES = [
-  ['adult', 9, -760, 930, 'joy', 0.2], ['kid', 4, -630, 960, 'happy', 1.1], ['adult', 15, -470, 915, 'joy', 2.3], ['kid', 10, -330, 975, 'excited', 0.7],
-  ['adult', 3, -170, 935, 'happy', 1.7], ['kid', 21, -40, 965, 'joy', 2.9], ['adult', 20, 120, 925, 'happy', 0.4],
+  ['adult', 9, -250, 930, 'joy', 0.2], ['kid', 4, -120, 962, 'happy', 1.1], ['adult', 15, 20, 915, 'joy', 2.3], ['kid', 10, 150, 975, 'excited', 0.7],
+  ['adult', 3, 290, 935, 'happy', 1.7], ['kid', 21, 410, 965, 'joy', 2.9], ['adult', 20, 540, 925, 'happy', 0.4],
 ];
+// the hero stands at world (-470, 1000) looking right toward the BALLOON POP booth (SC 10 opens on the reverse: his face)
+const LOOK_HERO = { x: -470, y: 1000 };
 function shotLook(t) {
   const u = seg(t, C.look, END);
-  const cam = camLerp(camAt(-330, 690, 1.42), camAt(-300, 680, 1.52), u);
+  const cam = camLerp(camAt(10, 700, 1.4), camAt(40, 690, 1.5), u);
   let ppl = '';
   for (const [kind, i, x, y, face, ph] of FACES) {
     const s = E8.sAt(y), b = Math.abs(Math.sin(t * 5 + ph));
     ppl += K.draw[kind](i, { x, y, s, t, turn: (hash(i) - 0.5) * 0.8, armR: face === 'joy' ? 30 + 30 * b : 12, lift: face === 'excited' ? 10 * b : 0, bodyY: 3 * b, face: { name: face, mouth: face === 'joy' ? 'bigGrin' : undefined } });
   }
-  let o = E8.fairWith(t, cam, { crowd: 1, quiet: 1, cheer: 0.2 }, E.desat(ppl, 0.62));
-  // the hero from behind (foreground): he looks from face to face
-  o += actor('you', t, { x: 330, y: 1400, s: 0.8, t, view: 'back', headRot: 6 * Math.sin((t - C.look) * 1.6), volume: false }, { arms: false });
-  return o;
+  const hero = actor('you', t, { x: LOOK_HERO.x, y: LOOK_HERO.y, s: E8.sAt(LOOK_HERO.y), t, view: 'back', headRot: 5 + 4 * Math.sin((t - C.look) * 1.6) }, { arms: false });
+  return E8.fairWith(t, cam, { crowd: 1, quiet: 1, cheer: 0.2 }, E.desat(ppl, 0.62) + E.desat(hero, 0.5));
 }
 
 // ---------------------------------------------------------------- router
@@ -354,12 +354,12 @@ const SHOTS = [
   [C.arm, shotYouLost], [C.laugh, shotArm], [C.night, shotLaugh], [C.match, shotNight], [C.numbers, shotMatch], [C.who, shotNumbers], [C.iThink, shotWho],
   [C.onlySaw, shotIThink], [C.x, shotOnlySaw], [C.anX, shotX], [C.page, shotAnX], [C.press, shotPage], [C.clean, shotPress], [C.look, shotClean], [Infinity, shotLook],
 ];
-const CLOSE = new Set([shotFinals, shotEnd, shotLost, shotYouLost, shotNumbers, shotIThink, shotPress, shotLook]);
+const FULLVOL = new Set([shotBench]);
 const FLASH = new Set([shotFb1, shotArm, shotLaugh, shotNight]);
 const shotAt = (t) => { for (const [end, g] of SHOTS) if (t < end) return g; return shotLook; };
 function scene(t) {
   const fn = shotAt(t);
-  VOL_OFF = CLOSE.has(fn);
+  VOL_OFF = !FULLVOL.has(fn);
   return fn(t);
 }
 function look(t) {

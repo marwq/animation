@@ -141,7 +141,7 @@ const MIKE = design({
   col: sepCols({ skin: '#D8A27A', skinShade: '#C08A62', skinShade2: '#A87050', hair: '#2A1E18', hairShade: '#1A1210', hairHi: '#4A3A30', brow: '#2A1E18', stache: '#2A1E18', stacheHi: '#4A3A30',
     top: '#F2F2F2', topShade: '#D8D8D8', shirt: '#F2F2F2', shirtShade: '#D8D8D8', sleeve: '#F2F2F2', cuff: '#D8D8D8', pants: '#3A3A48', pantsShade: '#2A2A36', sole: '#2A1E18', soleShade: '#1A1210', toe: '#3A2A20' }),
 });
-const draw79 = (d, p) => drawCharacter(d, { shade: true, shadow: true, ...p });
+const draw79 = (d, p) => drawCharacter(d, { shade: true, shadow: true, volume: false, ...p });
 
 // ================================================================ the Super-8 film look (screen space, over the flashback)
 function film(t, o = {}) {

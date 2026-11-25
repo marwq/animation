@@ -1,0 +1,960 @@
+{
+ "scene": "SC 05",
+ "start": 320.56,
+ "end": 386.32,
+ "music": [
+  {
+   "start": 320.56,
+   "end": 325.12,
+   "mood": "boss",
+   "energy": 0.75,
+   "in": "cut",
+   "out": "cut"
+  },
+  {
+   "start": 325.12,
+   "end": 326.36,
+   "mood": "boss",
+   "energy": 1,
+   "in": "cut",
+   "out": "sting"
+  },
+  {
+   "start": 326.36,
+   "end": 330.84,
+   "mood": "boss",
+   "energy": 0.55,
+   "in": "cut",
+   "out": "tapestop"
+  },
+  {
+   "start": 330.84,
+   "end": 332.8,
+   "mood": "silence",
+   "energy": 0,
+   "in": "cut",
+   "out": "cut"
+  },
+  {
+   "start": 332.8,
+   "end": 350.44,
+   "mood": "tender",
+   "energy": 0.25,
+   "in": "fade",
+   "out": "cut"
+  },
+  {
+   "start": 350.44,
+   "end": 356.467,
+   "mood": "quest",
+   "energy": 0.7,
+   "in": "cut",
+   "out": "sting"
+  },
+  {
+   "start": 356.467,
+   "end": 373.93,
+   "mood": "tender",
+   "energy": 0.3,
+   "in": "fade",
+   "out": "cut"
+  },
+  {
+   "start": 373.93,
+   "end": 376.44,
+   "mood": "playful",
+   "energy": 0.5,
+   "in": "cut",
+   "out": "cut"
+  },
+  {
+   "start": 376.44,
+   "end": 386.32,
+   "mood": "levelup",
+   "energy": 0.55,
+   "in": "swell",
+   "out": "cut"
+  }
+ ],
+ "ambience": [
+  {
+   "start": 320.56,
+   "end": 330.84,
+   "name": "crowd",
+   "gain_db": -14
+  },
+  {
+   "start": 330.84,
+   "end": 373.93,
+   "name": "room",
+   "gain_db": -22
+  },
+  {
+   "start": 350.44,
+   "end": 356.467,
+   "name": "crowd",
+   "gain_db": -26
+  },
+  {
+   "start": 373.93,
+   "end": 386.32,
+   "name": "crowd",
+   "gain_db": -16
+  }
+ ],
+ "footsteps": [
+  {
+   "start": 320.56,
+   "end": 323.48,
+   "interval": 0.37,
+   "surface": "hard",
+   "gain_db": -6,
+   "pan": 0.35
+  },
+  {
+   "start": 373.93,
+   "end": 374.48,
+   "interval": 0.393,
+   "surface": "hard",
+   "gain_db": -12,
+   "pan": 0.5
+  },
+  {
+   "start": 375.43,
+   "end": 376.44,
+   "interval": 0.393,
+   "surface": "hard",
+   "gain_db": -14,
+   "pan": 0.6
+  },
+  {
+   "start": 378.6,
+   "end": 381.02,
+   "interval": 0.449,
+   "surface": "hard",
+   "gain_db": -16,
+   "pan": -0.3
+  }
+ ],
+ "sfx": [
+  [
+   320.56,
+   "dramatic",
+   -2,
+   0,
+   "hard cut: the boss arrives"
+  ],
+  [
+   320.74,
+   "thud",
+   -6,
+   0.4,
+   "Tank's boot #1 (dust puff)"
+  ],
+  [
+   320.91,
+   "crowd_gasp",
+   -12,
+   0.5,
+   "the lunch line shrinks back"
+  ],
+  [
+   321.11,
+   "thud",
+   -6,
+   0.4,
+   "Tank's boot #2 (dust puff)"
+  ],
+  [
+   321.479,
+   "thud",
+   -6,
+   0.4,
+   "Tank's boot #3 (dust puff)"
+  ],
+  [
+   321.83,
+   "chomp",
+   -14,
+   0,
+   "the hero about to bite"
+  ],
+  [
+   321.849,
+   "thud",
+   -6,
+   0.4,
+   "Tank's boot #4 (dust puff)"
+  ],
+  [
+   321.93,
+   "whoosh_down",
+   -14,
+   0.6,
+   "Tank's shadow creeps over the table"
+  ],
+  [
+   322.03,
+   "shock",
+   -6,
+   -0.1,
+   "he freezes (zoom lines)"
+  ],
+  [
+   322.218,
+   "thud",
+   -10,
+   0.15,
+   "Tank's boot #5 (dust puff)"
+  ],
+  [
+   322.23,
+   "gulp",
+   -8,
+   -0.1,
+   "gulp"
+  ],
+  [
+   322.588,
+   "thud",
+   -10,
+   0.15,
+   "Tank's boot #6 (dust puff)"
+  ],
+  [
+   322.958,
+   "thud",
+   -10,
+   0.15,
+   "Tank's boot #7 (dust puff)"
+  ],
+  [
+   323.3,
+   "ui_pop",
+   -14,
+   -0.2,
+   "the hero's ??? plate"
+  ],
+  [
+   323.327,
+   "thud",
+   -10,
+   0.15,
+   "Tank's boot #8 (dust puff)"
+  ],
+  [
+   323.4,
+   "ui_pop",
+   -4,
+   0.15,
+   "TANK · LV 80 · BOSS plate pops"
+  ],
+  [
+   323.48,
+   "thud",
+   -6,
+   0.2,
+   "Tank plants his feet at the table end"
+  ],
+  [
+   324,
+   "impact",
+   -6,
+   0.15,
+   "LV 80 — red flash"
+  ],
+  [
+   325.12,
+   "orch_hit",
+   2,
+   0,
+   "BOSS INTRO: freeze + red band slams across"
+  ],
+  [
+   325.17,
+   "whoosh_long",
+   -6,
+   -0.4,
+   "the red band"
+  ],
+  [
+   325.32,
+   "punch",
+   -12,
+   -0.2,
+   "giant letter \"T\" drops"
+  ],
+  [
+   325.34,
+   "alarm_beep",
+   -10,
+   0,
+   "the boss bar drops in"
+  ],
+  [
+   325.37,
+   "punch",
+   -12,
+   -0.08,
+   "giant letter \"A\" drops"
+  ],
+  [
+   325.42,
+   "punch",
+   -12,
+   0.04,
+   "giant letter \"N\" drops"
+  ],
+  [
+   325.47,
+   "punch",
+   -12,
+   0.16,
+   "giant letter \"K\" drops"
+  ],
+  [
+   325.67,
+   "metal_hit",
+   -6,
+   0.6,
+   "LV 80 hexagon"
+  ],
+  [
+   325.76,
+   "boom",
+   0,
+   0,
+   "BOSS FIGHT! (shake)"
+  ],
+  [
+   326.41,
+   "ui_pop",
+   -6,
+   0.45,
+   "CHOOSE YOUR ACTION menu unfolds"
+  ],
+  [
+   326.46,
+   "click",
+   -6,
+   0.45,
+   "RUN"
+  ],
+  [
+   326.84,
+   "buzzer_wrong",
+   -12,
+   0.5,
+   "ESCAPE: 0%"
+  ],
+  [
+   326.91,
+   "whoosh_down",
+   -8,
+   -0.7,
+   "Benji dives under the table"
+  ],
+  [
+   327.16,
+   "thud",
+   -14,
+   -0.7,
+   "Benji lands under the table"
+  ],
+  [
+   327.39,
+   "tap",
+   -8,
+   0.45,
+   "cursor → FIGHT"
+  ],
+  [
+   327.72,
+   "buzzer_wrong",
+   -12,
+   0.5,
+   "WIN: 0.01%"
+  ],
+  [
+   328.27,
+   "tap",
+   -8,
+   0.45,
+   "cursor → HIDE UNDER TABLE"
+  ],
+  [
+   328.32,
+   "slide_down",
+   -12,
+   -0.3,
+   "the hero sinks behind the table"
+  ],
+  [
+   328.98,
+   "error",
+   -8,
+   0.5,
+   "TAKEN: BENJI"
+  ],
+  [
+   329.824,
+   "impact",
+   2,
+   0.2,
+   "THUD! — fist on the table"
+  ],
+  [
+   329.864,
+   "dishes",
+   -8,
+   0,
+   "trays + milk cartons jump"
+  ],
+  [
+   329.924,
+   "shock",
+   -12,
+   -0.2,
+   "the hero jolts"
+  ],
+  [
+   330.84,
+   "reverse_swell",
+   -10,
+   0,
+   "the room goes quiet"
+  ],
+  [
+   331.44,
+   "laser_sweep",
+   -12,
+   0,
+   "DEEP SCAN sweep"
+  ],
+  [
+   331.7,
+   "blink",
+   -12,
+   0.1,
+   "reticle locks on"
+  ],
+  [
+   332.04,
+   "heartbeat",
+   -10,
+   0,
+   "heartbeat"
+  ],
+  [
+   332.85,
+   "glitch",
+   -8,
+   0.1,
+   "boss plate glitches"
+  ],
+  [
+   333.1,
+   "ui_pop",
+   -8,
+   0.1,
+   "the real plate"
+  ],
+  [
+   333.2,
+   "slide_down",
+   -8,
+   0.1,
+   "HP drains 100 → 3"
+  ],
+  [
+   333.45,
+   "heartbeat",
+   -6,
+   0,
+   "heartbeat (red edge pulse)"
+  ],
+  [
+   333.9,
+   "alarm_beep",
+   -16,
+   0.1,
+   "HP 3/100 blinking"
+  ],
+  [
+   334.35,
+   "alarm_beep",
+   -16,
+   0.1,
+   "HP 3/100 blinking"
+  ],
+  [
+   334.46,
+   "rumble",
+   -8,
+   0.1,
+   "stomach growl (\"grrr\")"
+  ],
+  [
+   334.56,
+   "tap",
+   -4,
+   0.15,
+   "HUNGRY tag slaps on"
+  ],
+  [
+   334.8,
+   "alarm_beep",
+   -16,
+   0.1,
+   "HP 3/100 blinking"
+  ],
+  [
+   335.76,
+   "tap",
+   -4,
+   0.15,
+   "TIRED tag slaps on"
+  ],
+  [
+   335.96,
+   "wind_gust",
+   -22,
+   0,
+   "a long tired yawn (air)"
+  ],
+  [
+   336.8,
+   "whoosh_long",
+   -20,
+   0,
+   "slow pull back"
+  ],
+  [
+   337.12,
+   "tap",
+   -4,
+   0.1,
+   "LONELY tag slaps on"
+  ],
+  [
+   337.22,
+   "harp_down",
+   -14,
+   0,
+   "sad little sting"
+  ],
+  [
+   338.663,
+   "ui_close",
+   -18,
+   0.1,
+   "the plate fades"
+  ],
+  [
+   339.513,
+   "gulp",
+   -12,
+   0.1,
+   "Tank swallows, looking at the sandwich"
+  ],
+  [
+   342.3,
+   "whoosh_up",
+   -18,
+   0,
+   "tilt up into empty air"
+  ],
+  [
+   343.96,
+   "chime",
+   -8,
+   0.1,
+   "the TINY \"?\" pops"
+  ],
+  [
+   344.01,
+   "sparkle",
+   -14,
+   0.1,
+   "twinkle"
+  ],
+  [
+   344.24,
+   "zoom_in",
+   -6,
+   0,
+   "smash-zoom on the \"?\""
+  ],
+  [
+   344.29,
+   "notify",
+   -10,
+   0,
+   "quest marker"
+  ],
+  [
+   345.42,
+   "cloth",
+   -12,
+   0,
+   "he holds out the sandwich"
+  ],
+  [
+   345.72,
+   "ui_pop",
+   -8,
+   0,
+   "TURKEY SANDWICH · +37 HP tooltip"
+  ],
+  [
+   347.45,
+   "paper",
+   -12,
+   0.2,
+   "Tank takes it"
+  ],
+  [
+   348.32,
+   "rumble",
+   -8,
+   0.1,
+   "the hero's stomach growls back"
+  ],
+  [
+   349.52,
+   "zoom_in",
+   -10,
+   0.1,
+   "push on GIVING"
+  ],
+  [
+   350.89,
+   "achievement",
+   0,
+   0,
+   "QUEST COMPLETE! banner"
+  ],
+  [
+   351.04,
+   "sparkle",
+   -6,
+   0.2,
+   "the \"?\" bursts"
+  ],
+  [
+   351.39,
+   "chime",
+   -6,
+   0,
+   "+37 HP chip slams"
+  ],
+  [
+   352.16,
+   "sparkle",
+   -10,
+   0.1,
+   "+37 HP pops off the sandwich"
+  ],
+  [
+   352.246,
+   "ui_pop",
+   -12,
+   0.1,
+   "the plate is back"
+  ],
+  [
+   353.11,
+   "heart_pop",
+   -6,
+   0.1,
+   "+37 HP lands in his HP bar"
+  ],
+  [
+   353.16,
+   "money_counter",
+   -10,
+   0.1,
+   "HP counts 3 → 40"
+  ],
+  [
+   354.45,
+   "chomp",
+   -2,
+   0.1,
+   "CHOMP!"
+  ],
+  [
+   354.7,
+   "pop",
+   -12,
+   0.2,
+   "HUNGRY tag peels off"
+  ],
+  [
+   354.9,
+   "chomp",
+   -14,
+   0.1,
+   "chewing"
+  ],
+  [
+   356.667,
+   "blush",
+   -12,
+   0.1,
+   "shy blush"
+  ],
+  [
+   361.72,
+   "magic",
+   -12,
+   0.4,
+   "memory bubble opens"
+  ],
+  [
+   362.22,
+   "countdown_tick",
+   -22,
+   0.5,
+   "the night kitchen clock"
+  ],
+  [
+   362.72,
+   "countdown_tick",
+   -22,
+   0.5,
+   "the night kitchen clock"
+  ],
+  [
+   363.21,
+   "poof",
+   -16,
+   0.4,
+   "the bubble shows the empty lunch bag"
+  ],
+  [
+   363.22,
+   "countdown_tick",
+   -22,
+   0.5,
+   "the night kitchen clock"
+  ],
+  [
+   363.72,
+   "countdown_tick",
+   -22,
+   0.5,
+   "the night kitchen clock"
+  ],
+  [
+   364.99,
+   "whoosh",
+   -12,
+   0,
+   "he leans in, gruff again"
+  ],
+  [
+   367.516,
+   "slide_up",
+   -10,
+   -0.1,
+   "zzzip — lips zipped"
+  ],
+  [
+   369.49,
+   "pop",
+   -10,
+   0.15,
+   "lunch item #1 stacks on the tower"
+  ],
+  [
+   369.66,
+   "pop",
+   -12,
+   0.15,
+   "lunch item #2 stacks on the tower"
+  ],
+  [
+   369.83,
+   "pop",
+   -14,
+   0.15,
+   "lunch item #3 stacks on the tower"
+  ],
+  [
+   370,
+   "pop",
+   -10,
+   0.15,
+   "lunch item #4 stacks on the tower"
+  ],
+  [
+   370.17,
+   "pop",
+   -12,
+   0.15,
+   "lunch item #5 stacks on the tower"
+  ],
+  [
+   370.34,
+   "pop",
+   -14,
+   0.15,
+   "lunch item #6 stacks on the tower"
+  ],
+  [
+   370.51,
+   "pop",
+   -10,
+   0.15,
+   "lunch item #7 stacks on the tower"
+  ],
+  [
+   370.68,
+   "pop",
+   -12,
+   0.15,
+   "lunch item #8 stacks on the tower"
+  ],
+  [
+   370.85,
+   "pop",
+   -14,
+   0.15,
+   "lunch item #9 stacks on the tower"
+  ],
+  [
+   371.92,
+   "whoosh_up",
+   -16,
+   0.3,
+   "food hops into Tank's arms"
+  ],
+  [
+   372,
+   "whoosh_up",
+   -16,
+   0.3,
+   "food hops into Tank's arms"
+  ],
+  [
+   372.08,
+   "whoosh_up",
+   -16,
+   0.3,
+   "food hops into Tank's arms"
+  ],
+  [
+   372.16,
+   "whoosh_up",
+   -16,
+   0.3,
+   "food hops into Tank's arms"
+  ],
+  [
+   373.3,
+   "heart_pop",
+   -2,
+   0.2,
+   "FRIENDSHIP +1"
+  ],
+  [
+   374.05,
+   "boing",
+   -6,
+   -0.4,
+   "Benji pops up from under the table"
+  ],
+  [
+   374.73,
+   "metal_clank",
+   -6,
+   -0.4,
+   "the spoon drops (\"clink\")"
+  ],
+  [
+   375.46,
+   "zoom_in",
+   -4,
+   -0.4,
+   "smash-zoom on THANKS?!"
+  ],
+  [
+   377.13,
+   "notify",
+   -4,
+   0.4,
+   "NEW RULE UNLOCKED card"
+  ],
+  [
+   379,
+   "heart_pop",
+   -8,
+   0.4,
+   "KINDNESS = +HP (THEM)"
+  ],
+  [
+   381.73,
+   "coin",
+   -6,
+   0.4,
+   "...AND +XP (YOU!)"
+  ],
+  [
+   382.03,
+   "shine",
+   -6,
+   -0.2,
+   "star eyes"
+  ],
+  [
+   382.08,
+   "sparkle",
+   -6,
+   0.2,
+   "+38 XP pops"
+  ],
+  [
+   383.03,
+   "coin",
+   -2,
+   -0.6,
+   "+38 XP lands in the bar"
+  ],
+  [
+   383.08,
+   "money_counter",
+   -10,
+   -0.6,
+   "XP counts 12 → 50"
+  ],
+  [
+   384.52,
+   "cloth",
+   -16,
+   0,
+   "rubbing his hands"
+  ],
+  [
+   384.87,
+   "cloth",
+   -16,
+   0,
+   "rubbing his hands"
+  ],
+  [
+   385.22,
+   "cloth",
+   -16,
+   0,
+   "rubbing his hands"
+  ],
+  [
+   386.22,
+   "whoosh",
+   -8,
+   0.3,
+   "whip into SC 06"
+  ]
+ ]
+}

@@ -1,0 +1,2228 @@
+{
+ "scene": "SC 02",
+ "start": 43.71,
+ "end": 165.1,
+ "music": [
+  {
+   "start": 43.71,
+   "end": 46.49,
+   "mood": "levelup",
+   "energy": 0.45,
+   "in": "fade",
+   "out": "cut"
+  },
+  {
+   "start": 46.49,
+   "end": 57.99,
+   "mood": "adventure",
+   "energy": 0.6,
+   "in": "swell",
+   "out": "cut"
+  },
+  {
+   "start": 57.99,
+   "end": 60.77,
+   "mood": "boss",
+   "energy": 0.95,
+   "in": "cut",
+   "out": "sting"
+  },
+  {
+   "start": 60.77,
+   "end": 62.87,
+   "mood": "silence",
+   "energy": 0,
+   "in": "cut",
+   "out": "cut"
+  },
+  {
+   "start": 62.87,
+   "end": 78.6,
+   "mood": "homey",
+   "energy": 0.55,
+   "in": "fade",
+   "out": "scratch"
+  },
+  {
+   "start": 78.6,
+   "end": 79.39,
+   "mood": "silence",
+   "energy": 0,
+   "in": "cut",
+   "out": "cut"
+  },
+  {
+   "start": 79.39,
+   "end": 82.15,
+   "mood": "montage",
+   "energy": 0.8,
+   "in": "cut",
+   "out": "sting"
+  },
+  {
+   "start": 82.15,
+   "end": 85.03,
+   "mood": "warm",
+   "energy": 0.4,
+   "in": "fade",
+   "out": "fade"
+  },
+  {
+   "start": 85.03,
+   "end": 91.73,
+   "mood": "homey",
+   "energy": 0.5,
+   "in": "cut",
+   "out": "cut"
+  },
+  {
+   "start": 91.73,
+   "end": 93.61,
+   "mood": "epic",
+   "energy": 0.8,
+   "in": "cut",
+   "out": "cut"
+  },
+  {
+   "start": 93.61,
+   "end": 98.718,
+   "mood": "homey",
+   "energy": 0.55,
+   "in": "cut",
+   "out": "cut"
+  },
+  {
+   "start": 98.718,
+   "end": 103.32,
+   "mood": "chaos",
+   "energy": 0.95,
+   "in": "cut",
+   "out": "sting"
+  },
+  {
+   "start": 103.32,
+   "end": 106.6,
+   "mood": "playful",
+   "energy": 0.65,
+   "in": "cut",
+   "out": "cut"
+  },
+  {
+   "start": 106.6,
+   "end": 111.73,
+   "mood": "warm",
+   "energy": 0.45,
+   "in": "fade",
+   "out": "cut"
+  },
+  {
+   "start": 111.73,
+   "end": 116.58,
+   "mood": "homey",
+   "energy": 0.4,
+   "in": "cut",
+   "out": "cut"
+  },
+  {
+   "start": 116.58,
+   "end": 118.62,
+   "mood": "silence",
+   "energy": 0,
+   "in": "cut",
+   "out": "cut"
+  },
+  {
+   "start": 118.62,
+   "end": 132.26,
+   "mood": "playful",
+   "energy": 0.6,
+   "in": "cut",
+   "out": "fade"
+  },
+  {
+   "start": 132.26,
+   "end": 135.04,
+   "mood": "tender",
+   "energy": 0.4,
+   "in": "fade",
+   "out": "cut"
+  },
+  {
+   "start": 135.04,
+   "end": 144.01,
+   "mood": "mystery",
+   "energy": 0.5,
+   "in": "cut",
+   "out": "cut"
+  },
+  {
+   "start": 144.01,
+   "end": 145.107,
+   "mood": "silence",
+   "energy": 0,
+   "in": "cut",
+   "out": "cut"
+  },
+  {
+   "start": 145.107,
+   "end": 155.94,
+   "mood": "playful",
+   "energy": 0.35,
+   "in": "cut",
+   "out": "fade"
+  },
+  {
+   "start": 155.94,
+   "end": 159.76,
+   "mood": "sad",
+   "energy": 0.3,
+   "in": "fade",
+   "out": "cut"
+  },
+  {
+   "start": 159.76,
+   "end": 165.1,
+   "mood": "glitch_build",
+   "energy": 0.5,
+   "in": "swell",
+   "out": "fade"
+  }
+ ],
+ "ambience": [
+  {
+   "start": 43.71,
+   "end": 47.67,
+   "name": "room",
+   "gain_db": -16
+  },
+  {
+   "start": 47.67,
+   "end": 57.99,
+   "name": "birds",
+   "gain_db": -18
+  },
+  {
+   "start": 57.99,
+   "end": 60.77,
+   "name": "wind",
+   "gain_db": -14
+  },
+  {
+   "start": 60.77,
+   "end": 64.29,
+   "name": "room",
+   "gain_db": -14
+  },
+  {
+   "start": 64.29,
+   "end": 91.73,
+   "name": "kitchen",
+   "gain_db": -14
+  },
+  {
+   "start": 91.73,
+   "end": 93.61,
+   "name": "static",
+   "gain_db": -22
+  },
+  {
+   "start": 91.73,
+   "end": 93.61,
+   "name": "crowd",
+   "gain_db": -14
+  },
+  {
+   "start": 93.61,
+   "end": 118.92,
+   "name": "kitchen",
+   "gain_db": -14
+  },
+  {
+   "start": 98.718,
+   "end": 103.32,
+   "name": "wind",
+   "gain_db": -10
+  },
+  {
+   "start": 118.92,
+   "end": 122.74,
+   "name": "crowd",
+   "gain_db": -20
+  },
+  {
+   "start": 122.74,
+   "end": 124.54,
+   "name": "crowd",
+   "gain_db": -16
+  },
+  {
+   "start": 124.54,
+   "end": 125.64,
+   "name": "room",
+   "gain_db": -18
+  },
+  {
+   "start": 125.64,
+   "end": 135.04,
+   "name": "crowd",
+   "gain_db": -20
+  },
+  {
+   "start": 135.04,
+   "end": 156.24,
+   "name": "crowd",
+   "gain_db": -18
+  },
+  {
+   "start": 156.24,
+   "end": 165.1,
+   "name": "night",
+   "gain_db": -14
+  }
+ ],
+ "footsteps": [
+  {
+   "start": 47.67,
+   "end": 49.39,
+   "interval": 0.349,
+   "surface": "soft",
+   "gain_db": -12,
+   "pan": 0
+  },
+  {
+   "start": 59.72,
+   "end": 60.77,
+   "interval": 0.143,
+   "surface": "soft",
+   "gain_db": -8,
+   "pan": -0.3
+  },
+  {
+   "start": 63.77,
+   "end": 64.29,
+   "interval": 0.349,
+   "surface": "wood",
+   "gain_db": -12,
+   "pan": 0.4
+  },
+  {
+   "start": 64.29,
+   "end": 65.29,
+   "interval": 0.349,
+   "surface": "hard",
+   "gain_db": -12,
+   "pan": 0.7
+  },
+  {
+   "start": 118.92,
+   "end": 119.92,
+   "interval": 0.349,
+   "surface": "hard",
+   "gain_db": -12,
+   "pan": -0.3
+  },
+  {
+   "start": 125.64,
+   "end": 126.34,
+   "interval": 0.349,
+   "surface": "hard",
+   "gain_db": -8,
+   "pan": -0.2
+  },
+  {
+   "start": 135.34,
+   "end": 136.26,
+   "interval": 0.524,
+   "surface": "hard",
+   "gain_db": -4,
+   "pan": 0.4
+  },
+  {
+   "start": 148.74,
+   "end": 150.14,
+   "interval": 0.449,
+   "surface": "hard",
+   "gain_db": -8,
+   "pan": 0.5
+  },
+  {
+   "start": 153.02,
+   "end": 153.04,
+   "interval": 0.449,
+   "surface": "hard",
+   "gain_db": -12,
+   "pan": 0.7
+  }
+ ],
+ "sfx": [
+  [
+   43.71,
+   "reverse_swell",
+   -8,
+   0,
+   "the rewind lands on one point"
+  ],
+  [
+   43.79,
+   "whoosh_up",
+   -6,
+   0,
+   "iris opens"
+  ],
+  [
+   43.96,
+   "click",
+   -16,
+   -0.1,
+   "controller buttons"
+  ],
+  [
+   44.09,
+   "click",
+   -16,
+   0.1,
+   "controller buttons"
+  ],
+  [
+   44.22,
+   "click",
+   -16,
+   -0.1,
+   "controller buttons"
+  ],
+  [
+   44.35,
+   "click",
+   -16,
+   0.1,
+   "controller buttons"
+  ],
+  [
+   44.35,
+   "camera_flash",
+   -4,
+   0,
+   "freeze-frame: YOU"
+  ],
+  [
+   44.57,
+   "stamp",
+   -6,
+   -0.306,
+   "YOU name label slaps on"
+  ],
+  [
+   44.75,
+   "whoosh",
+   -14,
+   -0.306,
+   "the doodled arrow draws"
+  ],
+  [
+   45.74,
+   "tada",
+   -4,
+   0.1,
+   "\"games.\" — fist pump, golden screen light"
+  ],
+  [
+   45.84,
+   "sparkle",
+   -10,
+   0,
+   "sparkles"
+  ],
+  [
+   46.54,
+   "whoosh_long",
+   -6,
+   0.2,
+   "push into the monitor"
+  ],
+  [
+   47.59,
+   "portal_enter",
+   -4,
+   0,
+   "through the screen into DRAGON PEAK"
+  ],
+  [
+   48.025,
+   "coin",
+   -8,
+   -0.51,
+   "knight picks up a coin"
+  ],
+  [
+   48.537,
+   "coin",
+   -8,
+   -0.423,
+   "knight picks up a coin"
+  ],
+  [
+   49.049,
+   "coin",
+   -8,
+   -0.335,
+   "knight picks up a coin"
+  ],
+  [
+   49.41,
+   "ui_pop",
+   -4,
+   -0.408,
+   "LV badge 1 pops"
+  ],
+  [
+   49.47,
+   "splat",
+   -14,
+   -0.408,
+   "slime squishes"
+  ],
+  [
+   49.81,
+   "ui_pop",
+   -4,
+   -0.102,
+   "LV badge 2 pops"
+  ],
+  [
+   49.87,
+   "squeak",
+   -14,
+   -0.102,
+   "shroom squeaks"
+  ],
+  [
+   50.21,
+   "ui_pop",
+   -4,
+   0.204,
+   "LV badge 3 pops"
+  ],
+  [
+   50.27,
+   "swish",
+   -14,
+   0.204,
+   "bat flaps"
+  ],
+  [
+   50.61,
+   "ui_pop",
+   -4,
+   0.51,
+   "LV badge 4 pops"
+  ],
+  [
+   50.67,
+   "monster_growl",
+   -12,
+   0.51,
+   "goblin growls"
+  ],
+  [
+   51.3,
+   "magic",
+   -4,
+   0,
+   "the chest bursts open"
+  ],
+  [
+   51.3,
+   "whoosh_up",
+   -10,
+   -0.335,
+   "item flies out"
+  ],
+  [
+   51.35,
+   "shine",
+   -8,
+   0,
+   "light rays"
+  ],
+  [
+   51.58,
+   "ui_pop",
+   -6,
+   -0.335,
+   "parchment tooltip"
+  ],
+  [
+   51.58,
+   "whoosh_up",
+   -10,
+   -0.117,
+   "item flies out"
+  ],
+  [
+   51.86,
+   "ui_pop",
+   -6,
+   -0.117,
+   "parchment tooltip"
+  ],
+  [
+   51.98,
+   "whoosh_up",
+   -10,
+   0.102,
+   "item flies out"
+  ],
+  [
+   52.26,
+   "ui_pop",
+   -6,
+   0.102,
+   "parchment tooltip"
+  ],
+  [
+   52.64,
+   "whoosh_up",
+   -10,
+   0.321,
+   "item flies out"
+  ],
+  [
+   52.77,
+   "equip",
+   -10,
+   0.4,
+   "boots land in the row"
+  ],
+  [
+   52.92,
+   "ui_pop",
+   -6,
+   0.321,
+   "parchment tooltip"
+  ],
+  [
+   53.34,
+   "ui_pop",
+   -8,
+   -0.55,
+   "ladder badge 1"
+  ],
+  [
+   53.66,
+   "ui_pop",
+   -7,
+   -0.55,
+   "ladder badge 2"
+  ],
+  [
+   54.06,
+   "ui_pop",
+   -6,
+   -0.55,
+   "ladder badge 3"
+  ],
+  [
+   54.38,
+   "ui_pop",
+   -5,
+   -0.55,
+   "ladder badge 4"
+  ],
+  [
+   54.7,
+   "orch_hit",
+   -2,
+   -0.55,
+   "LV 90 DRAGON slams on top"
+  ],
+  [
+   54.75,
+   "rumble",
+   -12,
+   0.4,
+   "the peak glows"
+  ],
+  [
+   55.51,
+   "ui_pop",
+   -10,
+   0.7,
+   "the facecam pops in (LIVE)"
+  ],
+  [
+   55.81,
+   "monster_growl",
+   -8,
+   0.4,
+   "the goblin charges"
+  ],
+  [
+   56.01,
+   "step",
+   -12,
+   0.35,
+   "goblin stomps"
+  ],
+  [
+   56.31,
+   "step",
+   -12,
+   0.35,
+   "goblin stomps"
+  ],
+  [
+   56.61,
+   "step",
+   -12,
+   0.35,
+   "goblin stomps"
+  ],
+  [
+   57.03,
+   "swish",
+   -2,
+   0.1,
+   "the slash"
+  ],
+  [
+   57.15,
+   "impact",
+   0,
+   0.15,
+   "hit"
+  ],
+  [
+   57.19,
+   "poof",
+   -4,
+   0.15,
+   "the goblin goes poof"
+  ],
+  [
+   57.21,
+   "pop",
+   -8,
+   0.2,
+   "-999 CRIT"
+  ],
+  [
+   57.27,
+   "coins",
+   -6,
+   0.2,
+   "coins burst out"
+  ],
+  [
+   57.75,
+   "ka_ching",
+   -12,
+   -0.6,
+   "coin counter +50"
+  ],
+  [
+   58.04,
+   "rumble",
+   -2,
+   0.2,
+   "the ground shakes, the sky reddens"
+  ],
+  [
+   58.09,
+   "riser",
+   -8,
+   0,
+   "something huge rises"
+  ],
+  [
+   58.73,
+   "dramatic",
+   -4,
+   0,
+   "the boss bar slides in"
+  ],
+  [
+   58.83,
+   "monster_roar",
+   -2,
+   0.35,
+   "the dragon roars"
+  ],
+  [
+   59.74,
+   "whoosh",
+   -6,
+   -0.2,
+   "the knight turns and runs"
+  ],
+  [
+   59.79,
+   "whoosh_long",
+   -2,
+   0.4,
+   "fire breath"
+  ],
+  [
+   59.87,
+   "sizzle",
+   -8,
+   0.2,
+   "flames"
+  ],
+  [
+   60.72,
+   "whoosh",
+   -6,
+   0,
+   "whip back to the room"
+  ],
+  [
+   61.32,
+   "pop",
+   -12,
+   0.3,
+   "\"phew…\" doodle"
+  ],
+  [
+   62.97,
+   "tv_off",
+   -4,
+   0.3,
+   "the monitor powers off"
+  ],
+  [
+   63.42,
+   "squeak",
+   -12,
+   0.3,
+   "the chair as he stands"
+  ],
+  [
+   64.24,
+   "whoosh",
+   -6,
+   0.5,
+   "whip to the kitchen"
+  ],
+  [
+   64.49,
+   "dog_bark",
+   -12,
+   -0.2,
+   "Biscuit zooming around"
+  ],
+  [
+   64.59,
+   "swish",
+   -16,
+   -0.6,
+   "Mom juggling"
+  ],
+  [
+   64.79,
+   "boing",
+   -14,
+   0,
+   "Max bouncing on the booster"
+  ],
+  [
+   65.14,
+   "swish",
+   -16,
+   -0.6,
+   "Mom juggling"
+  ],
+  [
+   65.29,
+   "step",
+   -10,
+   0.7,
+   "the hero stops in the doorway"
+  ],
+  [
+   65.69,
+   "swish",
+   -16,
+   -0.6,
+   "Mom juggling"
+  ],
+  [
+   66.81,
+   "pop",
+   -6,
+   -0.292,
+   "thought bubble 1"
+  ],
+  [
+   66.91,
+   "loading",
+   -16,
+   -0.4,
+   "Mom's loading wheel"
+  ],
+  [
+   67.13,
+   "pop",
+   -6,
+   -0.095,
+   "thought bubble 2"
+  ],
+  [
+   67.69,
+   "pop",
+   -6,
+   0.394,
+   "thought bubble 3"
+  ],
+  [
+   68.17,
+   "pop",
+   -6,
+   0.438,
+   "thought bubble 4"
+  ],
+  [
+   68.54,
+   "whoosh",
+   -6,
+   -0.4,
+   "whip to Mom"
+  ],
+  [
+   68.79,
+   "swish",
+   -12,
+   0,
+   "juggling"
+  ],
+  [
+   69.61,
+   "camera_flash",
+   -4,
+   0,
+   "freeze-frame: MOM"
+  ],
+  [
+   69.83,
+   "stamp",
+   -6,
+   0.335,
+   "MOM name label slaps on"
+  ],
+  [
+   70.01,
+   "whoosh",
+   -14,
+   0.335,
+   "the doodled arrow draws"
+  ],
+  [
+   70.93,
+   "pop",
+   -10,
+   0.335,
+   "MOM: sub label"
+  ],
+  [
+   71.65,
+   "whoosh",
+   -12,
+   0,
+   "release"
+  ],
+  [
+   71.83,
+   "whoosh_down",
+   -6,
+   -0.467,
+   "panel 1 slams down"
+  ],
+  [
+   71.98,
+   "thud",
+   -12,
+   -0.467,
+   "panel lands"
+  ],
+  [
+   72.23,
+   "whoosh_down",
+   -6,
+   0,
+   "panel 2 slams down"
+  ],
+  [
+   72.38,
+   "thud",
+   -12,
+   0,
+   "panel lands"
+  ],
+  [
+   72.55,
+   "whoosh_down",
+   -6,
+   0.467,
+   "panel 3 slams down"
+  ],
+  [
+   72.7,
+   "thud",
+   -12,
+   0.467,
+   "panel lands"
+  ],
+  [
+   72.8,
+   "snore",
+   -14,
+   0.5,
+   "asleep standing up"
+  ],
+  [
+   74.33,
+   "shine",
+   -2,
+   0.1,
+   "smile TING"
+  ],
+  [
+   74.43,
+   "sparkle",
+   -10,
+   0,
+   "sparkles"
+  ],
+  [
+   75.22,
+   "whoosh",
+   -8,
+   -0.3,
+   "whip"
+  ],
+  [
+   75.37,
+   "sizzle",
+   -14,
+   -0.5,
+   "the pan"
+  ],
+  [
+   77.21,
+   "pan_clang",
+   -8,
+   -0.4,
+   "Mom presents the pan"
+  ],
+  [
+   78.55,
+   "sizzle",
+   -4,
+   0,
+   "the egg burns"
+  ],
+  [
+   78.65,
+   "steam_hiss",
+   -6,
+   0.2,
+   "black smoke billows"
+  ],
+  [
+   79.1,
+   "alarm_beep",
+   -16,
+   0.5,
+   "a polite smoke-alarm chirp"
+  ],
+  [
+   79.39,
+   "whoosh",
+   -8,
+   0.3,
+   "cut to pre-dawn"
+  ],
+  [
+   79.59,
+   "swish",
+   -18,
+   0,
+   "Mom zipping (time-lapse)"
+  ],
+  [
+   79.77,
+   "pop",
+   -12,
+   0.503,
+   "cupcake box 1"
+  ],
+  [
+   79.95,
+   "pop",
+   -12,
+   0.503,
+   "cupcake box 2"
+  ],
+  [
+   79.99,
+   "swish",
+   -18,
+   0,
+   "Mom zipping (time-lapse)"
+  ],
+  [
+   80.13,
+   "pop",
+   -12,
+   0.503,
+   "cupcake box 3"
+  ],
+  [
+   80.31,
+   "pop",
+   -12,
+   0.503,
+   "cupcake box 4"
+  ],
+  [
+   80.39,
+   "swish",
+   -18,
+   0,
+   "Mom zipping (time-lapse)"
+  ],
+  [
+   80.49,
+   "pop",
+   -12,
+   0.503,
+   "cupcake box 5"
+  ],
+  [
+   80.67,
+   "pop",
+   -12,
+   0.503,
+   "cupcake box 6"
+  ],
+  [
+   80.79,
+   "swish",
+   -18,
+   0,
+   "Mom zipping (time-lapse)"
+  ],
+  [
+   80.85,
+   "pop",
+   -12,
+   0.503,
+   "cupcake box 7"
+  ],
+  [
+   81.03,
+   "pop",
+   -12,
+   0.503,
+   "cupcake box 8"
+  ],
+  [
+   81.19,
+   "swish",
+   -18,
+   0,
+   "Mom zipping (time-lapse)"
+  ],
+  [
+   81.21,
+   "pop",
+   -12,
+   0.503,
+   "cupcake box 9"
+  ],
+  [
+   81.39,
+   "pop",
+   -12,
+   0.503,
+   "cupcake box 10"
+  ],
+  [
+   81.57,
+   "pop",
+   -12,
+   0.503,
+   "cupcake box 11"
+  ],
+  [
+   81.59,
+   "swish",
+   -18,
+   0,
+   "Mom zipping (time-lapse)"
+  ],
+  [
+   81.75,
+   "pop",
+   -12,
+   0.503,
+   "cupcake box 12"
+  ],
+  [
+   81.75,
+   "chicken",
+   -8,
+   -0.5,
+   "rooster: sunrise"
+  ],
+  [
+   81.85,
+   "shine",
+   -8,
+   -0.4,
+   "sunlight floods in"
+  ],
+  [
+   83.47,
+   "blush",
+   -12,
+   0.2,
+   "he blushes"
+  ],
+  [
+   84.31,
+   "heart_pop",
+   -8,
+   0.2,
+   "hearts"
+  ],
+  [
+   84.98,
+   "whoosh",
+   -6,
+   0.4,
+   "whip to Grandpa"
+  ],
+  [
+   85.33,
+   "gulp",
+   -8,
+   0.3,
+   "a sip from the #79 mug"
+  ],
+  [
+   85.69,
+   "camera_flash",
+   -4,
+   0,
+   "freeze-frame: GRANDPA LOU"
+  ],
+  [
+   85.91,
+   "stamp",
+   -6,
+   -0.248,
+   "GRANDPA LOU name label slaps on"
+  ],
+  [
+   86.09,
+   "whoosh",
+   -14,
+   -0.248,
+   "the doodled arrow draws"
+  ],
+  [
+   86.89,
+   "paper",
+   -10,
+   -0.7,
+   "calendar: day 1"
+  ],
+  [
+   87.793,
+   "vhs_clunk",
+   -6,
+   0,
+   "rewind: the same breakfast again"
+  ],
+  [
+   87.813,
+   "paper",
+   -10,
+   -0.7,
+   "calendar: day 2"
+  ],
+  [
+   88.716,
+   "vhs_clunk",
+   -6,
+   0,
+   "rewind: the same breakfast again"
+  ],
+  [
+   88.736,
+   "paper",
+   -10,
+   -0.7,
+   "calendar: day 3"
+  ],
+  [
+   89.639,
+   "whoosh_up",
+   -8,
+   0.3,
+   "Grandpa rises"
+  ],
+  [
+   90.57,
+   "orch_hit",
+   -2,
+   -0.3,
+   "1979 slams in"
+  ],
+  [
+   90.67,
+   "shine",
+   -10,
+   -0.3,
+   "retro title"
+  ],
+  [
+   91.73,
+   "vhs_clunk",
+   -6,
+   0,
+   "old film starts"
+  ],
+  [
+   91.83,
+   "rumble",
+   -16,
+   0,
+   "arms straining"
+  ],
+  [
+   92.81,
+   "crowd_cheer",
+   -6,
+   0,
+   "the 1979 crowd"
+  ],
+  [
+   92.81,
+   "camera_flash",
+   -8,
+   -0.481,
+   "flashbulb"
+  ],
+  [
+   92.97,
+   "camera_flash",
+   -8,
+   0.496,
+   "flashbulb"
+  ],
+  [
+   93.13,
+   "camera_flash",
+   -8,
+   -0.321,
+   "flashbulb"
+  ],
+  [
+   93.29,
+   "camera_flash",
+   -8,
+   0.335,
+   "flashbulb"
+  ],
+  [
+   93.56,
+   "whoosh",
+   -6,
+   0,
+   "back to breakfast"
+  ],
+  [
+   93.66,
+   "swish",
+   -10,
+   0.3,
+   "the flex"
+  ],
+  [
+   94.49,
+   "stamp",
+   -2,
+   -0.6,
+   "LEGEND stamp"
+  ],
+  [
+   94.54,
+   "sparkle",
+   -8,
+   0.3,
+   "biceps sparkle"
+  ],
+  [
+   95.38,
+   "whoosh",
+   -6,
+   -0.2,
+   "whip to Max"
+  ],
+  [
+   95.53,
+   "boing",
+   -6,
+   0,
+   "spoon catapult"
+  ],
+  [
+   95.68,
+   "pop",
+   -12,
+   0,
+   "cereal flies"
+  ],
+  [
+   95.69,
+   "camera_flash",
+   -4,
+   0,
+   "freeze-frame: MAX"
+  ],
+  [
+   95.91,
+   "stamp",
+   -6,
+   0.335,
+   "MAX name label slaps on"
+  ],
+  [
+   96.09,
+   "whoosh",
+   -14,
+   0.335,
+   "the doodled arrow draws"
+  ],
+  [
+   96.81,
+   "pop",
+   -10,
+   0.335,
+   "MAX: sub label"
+  ],
+  [
+   97.54,
+   "sparkle",
+   -8,
+   0,
+   "claw up"
+  ],
+  [
+   98.09,
+   "pop",
+   -10,
+   0.5,
+   "\"close enough\""
+  ],
+  [
+   98.818,
+   "jump",
+   -8,
+   0,
+   "hops off the booster"
+  ],
+  [
+   99.57,
+   "wind_gust",
+   0,
+   0,
+   "spins up into a tornado"
+  ],
+  [
+   99.62,
+   "whoosh_long",
+   -4,
+   0,
+   "tornado"
+  ],
+  [
+   99.97,
+   "splat",
+   -10,
+   -0.5,
+   "cereal + milk splats"
+  ],
+  [
+   100.37,
+   "dog_bark",
+   -10,
+   0.4,
+   "Biscuit gives chase"
+  ],
+  [
+   100.39,
+   "splat",
+   -10,
+   0.5,
+   "cereal + milk splats"
+  ],
+  [
+   100.81,
+   "splat",
+   -10,
+   -0.5,
+   "cereal + milk splats"
+  ],
+  [
+   101.23,
+   "splat",
+   -10,
+   0.5,
+   "cereal + milk splats"
+  ],
+  [
+   101.65,
+   "splat",
+   -10,
+   -0.5,
+   "cereal + milk splats"
+  ],
+  [
+   102.07,
+   "splat",
+   -10,
+   0.5,
+   "cereal + milk splats"
+  ],
+  [
+   103.27,
+   "land",
+   -4,
+   0,
+   "Max lands on the table"
+  ],
+  [
+   103.37,
+   "boing",
+   -10,
+   0,
+   "proud bounce"
+  ],
+  [
+   105.41,
+   "zoom_in",
+   -6,
+   0,
+   "smash zoom"
+  ],
+  [
+   105.46,
+   "monster_growl",
+   -6,
+   0,
+   "RAWR (cute)"
+  ],
+  [
+   105.48,
+   "impact",
+   -8,
+   0,
+   "RAWR! lettering"
+  ],
+  [
+   107,
+   "dog_bark",
+   -8,
+   0,
+   "happy bark (ears blown back)"
+  ],
+  [
+   107.06,
+   "camera_flash",
+   -4,
+   0,
+   "freeze-frame: BISCUIT"
+  ],
+  [
+   107.28,
+   "stamp",
+   -6,
+   -0.292,
+   "BISCUIT name label slaps on"
+  ],
+  [
+   107.46,
+   "whoosh",
+   -14,
+   -0.292,
+   "the doodled arrow draws"
+  ],
+  [
+   109.32,
+   "stamp",
+   -8,
+   0,
+   "GOOD BOY rosette pins on"
+  ],
+  [
+   109.42,
+   "chime",
+   -6,
+   0,
+   "good boy"
+  ],
+  [
+   109.52,
+   "sparkle",
+   -10,
+   0,
+   "sparkles"
+  ],
+  [
+   110.19,
+   "whoosh",
+   -8,
+   -0.4,
+   "whip"
+  ],
+  [
+   110.59,
+   "bell",
+   -12,
+   0.3,
+   "desk bell: on duty"
+  ],
+  [
+   111.68,
+   "whoosh",
+   -8,
+   0.3,
+   "whip"
+  ],
+  [
+   111.93,
+   "squeak",
+   -14,
+   0.4,
+   "Grandpa leans in"
+  ],
+  [
+   114.47,
+   "whoosh",
+   -10,
+   -0.2,
+   "whip"
+  ],
+  [
+   116.58,
+   "zoom_in",
+   -4,
+   0,
+   "smash zoom"
+  ],
+  [
+   116.6,
+   "thud",
+   -6,
+   0,
+   "deadpan hit"
+  ],
+  [
+   117.32,
+   "zoom_in",
+   -4,
+   0,
+   "smash zoom"
+  ],
+  [
+   117.34,
+   "thud",
+   -6,
+   0,
+   "deadpan hit"
+  ],
+  [
+   118.04,
+   "zoom_in",
+   -4,
+   0,
+   "smash zoom"
+  ],
+  [
+   118.06,
+   "thud",
+   -6,
+   0,
+   "deadpan hit"
+  ],
+  [
+   118.62,
+   "pixel_wipe",
+   -4,
+   0,
+   "pixel wipe to school"
+  ],
+  [
+   119.02,
+   "bell",
+   -10,
+   0,
+   "school bell"
+  ],
+  [
+   120.18,
+   "camera_flash",
+   -4,
+   0,
+   "freeze-frame: BENJI"
+  ],
+  [
+   120.4,
+   "stamp",
+   -6,
+   -0.321,
+   "BENJI name label slaps on"
+  ],
+  [
+   120.58,
+   "whoosh",
+   -14,
+   -0.321,
+   "the doodled arrow draws"
+  ],
+  [
+   121.38,
+   "pop",
+   -10,
+   -0.321,
+   "BENJI: sub label"
+  ],
+  [
+   121.95,
+   "heart_pop",
+   -6,
+   0,
+   "BFF hop"
+  ],
+  [
+   122.69,
+   "whoosh",
+   -6,
+   0.4,
+   "whip to the gym"
+  ],
+  [
+   123.32,
+   "whoosh",
+   -6,
+   0.6,
+   "the dodgeball incoming"
+  ],
+  [
+   123.82,
+   "bonk",
+   0,
+   -0.4,
+   "BONK, straight to the face"
+  ],
+  [
+   123.87,
+   "boing",
+   -8,
+   -0.3,
+   "ball bounces off"
+  ],
+  [
+   123.97,
+   "dizzy",
+   -10,
+   -0.4,
+   "dizzy"
+  ],
+  [
+   124.02,
+   "kids_laugh",
+   -14,
+   0.3,
+   "the team"
+  ],
+  [
+   124.49,
+   "whoosh",
+   -6,
+   -0.4,
+   "whip to the classroom"
+  ],
+  [
+   125.06,
+   "buzzer_wrong",
+   -6,
+   -0.4,
+   "2 + 2 = 22"
+  ],
+  [
+   125.11,
+   "swish",
+   -12,
+   -0.4,
+   "red pen circle"
+  ],
+  [
+   125.59,
+   "whoosh",
+   -6,
+   0.3,
+   "whip"
+  ],
+  [
+   126.34,
+   "slip",
+   -2,
+   0,
+   "steps on his lace"
+  ],
+  [
+   126.44,
+   "whoosh_down",
+   -8,
+   0.1,
+   "trips"
+  ],
+  [
+   126.49,
+   "paper",
+   -8,
+   0.2,
+   "books fly"
+  ],
+  [
+   126.79,
+   "body_fall",
+   -2,
+   0.1,
+   "lands"
+  ],
+  [
+   127.52,
+   "dizzy",
+   -12,
+   0,
+   "dizzy stars"
+  ],
+  [
+   127.694,
+   "thud",
+   -8,
+   -0.044,
+   "a book lands"
+  ],
+  [
+   127.834,
+   "thud",
+   -8,
+   0.022,
+   "a book lands"
+  ],
+  [
+   127.974,
+   "thud",
+   -8,
+   0.088,
+   "a book lands"
+  ],
+  [
+   129.1,
+   "boing",
+   -6,
+   0,
+   "springs up"
+  ],
+  [
+   129.63,
+   "bonk",
+   -2,
+   0,
+   "a book lands on his head"
+  ],
+  [
+   130.9,
+   "tada",
+   -4,
+   0,
+   "TA-DA"
+  ],
+  [
+   131,
+   "applause",
+   -16,
+   0.6,
+   "one kid claps"
+  ],
+  [
+   132.21,
+   "whoosh",
+   -8,
+   0.3,
+   "whip"
+  ],
+  [
+   132.92,
+   "paper",
+   -10,
+   0.2,
+   "hands back the papers"
+  ],
+  [
+   133.07,
+   "heart_pop",
+   -8,
+   0.2,
+   "hearts"
+  ],
+  [
+   133.22,
+   "sparkle",
+   -12,
+   0,
+   "warm sparkle"
+  ],
+  [
+   134.99,
+   "whoosh",
+   -6,
+   0.4,
+   "whip to the cafeteria"
+  ],
+  [
+   135.34,
+   "dramatic",
+   -4,
+   0.4,
+   "a huge shadow falls (Tank's entrance)"
+  ],
+  [
+   136.26,
+   "camera_flash",
+   -4,
+   0,
+   "freeze-frame: TANK"
+  ],
+  [
+   136.48,
+   "stamp",
+   -6,
+   -0.321,
+   "TANK name label slaps on"
+  ],
+  [
+   136.66,
+   "whoosh",
+   -14,
+   -0.321,
+   "the doodled arrow draws"
+  ],
+  [
+   136.81,
+   "censor_bleep",
+   -8,
+   -0.5,
+   "sub label redacted"
+  ],
+  [
+   137.51,
+   "paper",
+   -6,
+   0.5,
+   "FILE: TANK slides in"
+  ],
+  [
+   137.58,
+   "censor_bleep",
+   -12,
+   0.5,
+   "line 1 redacted"
+  ],
+  [
+   137.66,
+   "click",
+   -8,
+   -0.3,
+   "knuckles crack"
+  ],
+  [
+   137.74,
+   "censor_bleep",
+   -11,
+   0.5,
+   "line 2 redacted"
+  ],
+  [
+   137.96,
+   "click",
+   -10,
+   -0.3,
+   "knuckles crack"
+  ],
+  [
+   138.06,
+   "censor_bleep",
+   -10,
+   0.5,
+   "line 3 redacted"
+  ],
+  [
+   138.7,
+   "censor_bleep",
+   -9,
+   0.5,
+   "line 4 redacted"
+  ],
+  [
+   139.656,
+   "whoosh_up",
+   -8,
+   0,
+   "tilt up from the boots"
+  ],
+  [
+   140.58,
+   "stamp",
+   -2,
+   0.6,
+   "BIG stamped on the file"
+  ],
+  [
+   140.6,
+   "boing",
+   -12,
+   0,
+   "Tank swells"
+  ],
+  [
+   141.82,
+   "rumble",
+   -2,
+   0,
+   "stomach growl"
+  ],
+  [
+   142.22,
+   "squeak",
+   -14,
+   0,
+   "GRRRMBL…"
+  ],
+  [
+   142.96,
+   "thud",
+   -10,
+   0.1,
+   "Tank leans on the table"
+  ],
+  [
+   143.98,
+   "zoom_in",
+   -6,
+   0,
+   "smash zoom"
+  ],
+  [
+   144.06,
+   "impact",
+   -2,
+   0,
+   "\"Now.\""
+  ],
+  [
+   144.11,
+   "dishes",
+   -10,
+   0,
+   "trays rattle"
+  ],
+  [
+   145.187,
+   "whoosh",
+   -6,
+   0.1,
+   "the lunch bag, instantly"
+  ],
+  [
+   145.257,
+   "paper",
+   -10,
+   0.1,
+   "paper bag"
+  ],
+  [
+   147.1,
+   "harp_up",
+   -12,
+   0,
+   "presented like a waiter"
+  ],
+  [
+   147.15,
+   "sparkle",
+   -10,
+   0,
+   "sandwich sparkle"
+  ],
+  [
+   148.25,
+   "swish",
+   -8,
+   0.2,
+   "Tank takes the sandwich"
+  ],
+  [
+   149.24,
+   "chomp",
+   -2,
+   0.4,
+   "CHOMP"
+  ],
+  [
+   151.32,
+   "swish",
+   -12,
+   -0.3,
+   "a determined little fist"
+  ],
+  [
+   153.19,
+   "whoosh_down",
+   -6,
+   -0.3,
+   "they drop behind the table"
+  ],
+  [
+   154.52,
+   "pop",
+   -4,
+   -0.292,
+   "fist 1 pops up"
+  ],
+  [
+   154.68,
+   "pop",
+   -4,
+   -0.139,
+   "fist 2 pops up"
+  ],
+  [
+   155.94,
+   "pixel_wipe",
+   -8,
+   0,
+   "dark pixel wipe to night"
+  ],
+  [
+   158.56,
+   "thud",
+   -10,
+   0,
+   "flops back in the chair"
+  ],
+  [
+   158.61,
+   "squeak",
+   -12,
+   0,
+   "gaming chair"
+  ],
+  [
+   160.14,
+   "glitch",
+   -6,
+   0.3,
+   "the monitor flickers"
+  ],
+  [
+   160.16,
+   "static",
+   -12,
+   0.3,
+   "screen static"
+  ],
+  [
+   161.06,
+   "glitch",
+   -6,
+   0.3,
+   "the monitor flickers"
+  ],
+  [
+   161.08,
+   "static",
+   -12,
+   0.3,
+   "screen static"
+  ],
+  [
+   162.48,
+   "glitch",
+   -4,
+   0.3,
+   "the monitor flickers"
+  ],
+  [
+   162.5,
+   "static",
+   -12,
+   0.3,
+   "screen static"
+  ],
+  [
+   163.53,
+   "glitch",
+   -4,
+   0.3,
+   "the monitor flickers"
+  ],
+  [
+   163.55,
+   "static",
+   -12,
+   0.3,
+   "screen static"
+  ],
+  [
+   164.48,
+   "glitch",
+   -4,
+   0.3,
+   "the monitor flickers"
+  ],
+  [
+   164.5,
+   "static",
+   -12,
+   0.3,
+   "screen static"
+  ],
+  [
+   164.65,
+   "powerdown",
+   -10,
+   0.3,
+   "the room dips (→ SC 03)"
+  ],
+  [
+   164.66,
+   "glitch_long",
+   -4,
+   0.3,
+   "the monitor flickers"
+  ],
+  [
+   164.68,
+   "static",
+   -12,
+   0.3,
+   "screen static"
+  ]
+ ]
+}

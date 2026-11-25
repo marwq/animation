@@ -191,7 +191,7 @@ function headTags(pts, o = {}) {
     dTeth += `M${f(p.x + jx)} ${f(y + h)}V${f(p.y - 4 * sc)}`;
     const lv = o.lvl ? o.lvl(p) : TAG_LV(p.i);
     const s_ = g > 0.4 && hash(st + p.i * 3.1) < g * 0.3 ? String(Math.floor(hash(st + p.i) * 999)) : `LV ${lv}`;
-    if (sc > 0.16) txt += `<text x="${f(p.x + jx)}" y="${f(y + 27 * sc)}" font-size="${f(26 * sc)}">${s_}</text>`;
+    if (sc > 0.2) txt += `<text x="${f(p.x + jx)}" y="${f(y + 27 * sc)}" font-size="${f(26 * sc)}">${s_}</text>`;
   }
   if (!dBody) return '';
   return S.path(dTeth, { fill: 'none', stroke: rim, 'stroke-width': 2.2, opacity: 0.8 }) + S.path(dBody, { fill: glass, 'fill-opacity': 0.82, stroke: '#020C16', 'stroke-width': 3 }) +

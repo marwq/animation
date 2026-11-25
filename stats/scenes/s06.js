@@ -219,7 +219,7 @@ function shGroc(t) {
 function shLady(t) {
   const cam = camKeys(t, [[CUT.lady, camAt(1640, 600, 1.5)], [CUT.ball, camAt(1660, 590, 1.6)]], ease.inOut);
   const thumbs = ease.outBack(seg(t, tCompl, tCompl + 0.3));
-  const lady = actor('lunchLady', t, { ...E.CF.lunchLady, turn: -0.4, headRot: -6 * thumbs, face: thumbs > 0.5 ? { name: 'joy', eyes: { type: 'happy' }, fx: ['blush', 'hearts'] } : 'neutral' });
+  const lady = actor('lunchLady', t, { ...E.CF.lunchLady, volume: false, turn: -0.4, headRot: -6 * thumbs, face: thumbs > 0.5 ? { name: 'joy', eyes: { type: 'happy' }, fx: ['blush', 'hearts'] } : 'neutral' });
   const hero = actor('you', t, { x: 1450, y: 990, s: 0.47, turn: 0.6, armL: lerp(10, 130, thumbs), armR: lerp(10, 130, thumbs), bendL: 40 * thumbs, bendR: 40 * thumbs, face: { name: 'joy', eyes: { type: 'happy' } }, volume: false }, { arms: false });
   const o = caf(t, cam, { lady, lane: hero });
   const d = DEEDS.lady, p = headAt(cam, 'lunchLady', E.CF.lunchLady);
@@ -260,7 +260,7 @@ function shHat(t) {
 function shSoup(t) {
   const cam = camKeys(t, [[CUT.soup, camAt(1600, 620, 1.55)], [CUT.dog, camAt(1590, 615, 1.62)]], ease.linear);
   const slurp = seg(t, CUT.soup + 0.05, tSoup - 0.1), thumb = ease.outBack(seg(t, tSoup - 0.1, tSoup + 0.2));
-  const lady = actor('lunchLady', t, { ...E.CF.lunchLady, turn: -0.4, face: { name: 'smug', fx: ['blush'] }, armL: 30 });
+  const lady = actor('lunchLady', t, { ...E.CF.lunchLady, volume: false, turn: -0.4, face: { name: 'smug', fx: ['blush'] }, armL: 30 });
   const hp = { x: 1450, y: 990, s: 0.47, turn: 0.55, armL: 22, bendL: -118, armR: lerp(22, 150, thumb), bendR: lerp(-118, 40, thumb), volume: false,
     face: thumb > 0.4 ? { name: 'happy', mouth: 'wavy', eyes: { type: 'happy' }, fx: ['sweat'] } : { name: 'happy', mouth: 'o', eyes: { type: 'closed' } } };
   let hero = actor('you', t, hp, { arms: false });
@@ -565,7 +565,7 @@ function shStare(t) {
   const hp = { x: 1360, y: 1000, s: 0.5, turn: 0, armL: 14, armR: 14, volume: false, face: { name: 'smug', mouth: 'smirk', eyes: { look: [0, 0.4], type: t < CUT.stare + 0.6 ? 'star' : undefined } } };
   const o = livingShot(t, cam, { fort: 1, gramps: false, heroSeated: false, standing: X.pillowFort({ ...LV.fort, k: 1, t }) + actor('you', t, hp, { arms: false }) });
   // XP numbers reflected in his eyes
-  const e = toScr(cam, 1360, 1000 - 0.5 * 951 + 92);
+  const e = toScr(cam, 1360, 1000 - 0.5 * 951 + 138);
   const k = seg(cold, 0.15, 0.5);
   const refl = k > 0 ? S.g(TFS('XP', -66 * cam.zoom / 2.3, 0, 30 * cam.zoom / 2.3, '#FFD84A') + TFS('XP', 66 * cam.zoom / 2.3, 0, 30 * cam.zoom / 2.3, '#FFD84A'), tf(e.x, e.y, 1), { opacity: f(k) }) : '';
   return compose(t, o, { fx: refl, cold: cold * 0.7, clock: '7:43 PM', day: 'SAT' }) + softEdge(cold);
@@ -656,8 +656,8 @@ function scene(t) {
   return SHOTS[shotAt(t)][1](t);
 }
 function look(t) {
-  if (t >= CUT.slowly) return { grade: 'cool', vignette: 0.8 };
-  if (t >= CUT.stare) return { grade: 'cool', vignette: 0.6 };
+  if (t >= CUT.slowly) return { grade: 'cool', vignette: 1 };
+  if (t >= CUT.stare) return { grade: 'cool', vignette: lerp(0.6, 1, seg(t, CUT.stare, CUT.slowly)) };
   if (t >= CUT.twenty && t < CUT.days) return { grade: 'warm', vignette: 0.55 };
   return { grade: 'warm', vignette: 0.45 };
 }

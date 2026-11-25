@@ -78,42 +78,52 @@ const frontRun = (ph, amp = 1) => ({
 const sideRun = (t, rate, amp = 1, ph = 0) => ({ view: 'side', flip: true, ...AC.run(t * rate + ph, amp), lean: 8 });
 
 // ================================================================ SHOTS
-// 1 — the bench, still silent and grey: the hero squeezes his eyes shut (the shatter), then opens them ("No numbers.")
+// 1 — continues SC 09's over-the-shoulder shot (the hero looking at laughing fairgoers, silent, grey): the reverse — his face,
+// eyes widening ("No numbers.")
+const HERO_FAIR = { x: -470, y: 1000 };
+// the laughing fairgoers in front of the BALLOON POP booth the hero is looking at (same group as the end of SC 09)
+const GOERS = [
+  { k: 'adult', i: 9, x: -250, y: 930 }, { k: 'kid', i: 15, x: -120, y: 962 }, { k: 'adult', i: 3, x: 20, y: 918 }, { k: 'adult', i: 14, x: 170, y: 948 },
+  { k: 'kid', i: 9, x: 300, y: 975 }, { k: 'adult', i: 20, x: 430, y: 926 }, { k: 'kid', i: 18, x: 540, y: 956 },
+];
+function goers(t) {
+  return GOERS.map((m, n) => {
+    const s = SP.sAt(m.y), bob = Math.abs(Math.sin(t * 5 + n * 1.7)) * 8;
+    return K.draw[m.k](m.i, { x: m.x, y: m.y, s, turn: (hash(n * 5.1) - 0.5) * 1.2, bodyY: -bob, headRot: 5 * Math.sin(t * 4 + n), armR: n % 3 === 0 ? 140 + 20 * Math.sin(t * 9 + n) : 12, armL: 12, face: { name: 'joy', mouth: n % 2 ? 'bigGrin' : 'grin' } });
+  }).join('');
+}
+function heroFairClose(t, face, o = {}) {
+  const s = SP.sAt(HERO_FAIR.y);
+  return actor('you', t, { x: HERO_FAIR.x, y: HERO_FAIR.y, s, t, turn: o.turn ?? 0.3, headRot: o.headRot || 0, armL: 12, armR: 12, face }, { arms: false });
+}
 function shotWake(t) {
   const u = seg(t, C.wake, C.pov);
-  const cam = camLerp(camAt(715, 570, 1.85), camAt(725, 560, 2.0), ease.out(u));
-  const o = { time: 'dusk', quiet: 1, lights: 0.55, bokeh: 0.7 };
+  const s = SP.sAt(HERO_FAIR.y), fy = HERO_FAIR.y - 700 * s;
+  const cam = camLerp(camAt(HERO_FAIR.x + 30, fy + 10, 2.7, 900, 520), camAt(HERO_FAIR.x + 30, fy + 5, 2.95, 900, 520), ease.out(u));
   const open = ease.inOut(seg(t, B.open, B.open + 0.5));
-  const squeeze = 1 - open;
-  let w = actor('grandpa', t, FS.seatPose(BN.grandpa, 1.1, { t, turn: -0.45, face: { name: 'happy', eyes: { look: [-0.7, 0.1] } } }));
-  w += actor('you', t, FS.seatPose(BN.hero, 1, {
-    t, turn: 0.15, armL: 12 + 10 * squeeze, armR: 12 + 10 * squeeze, headRot: -2 * squeeze, sy: 1 - 0.02 * squeeze,
-    face: { name: open > 0.4 ? 'amazed' : 'neutral', eyes: { look: [0, -0.2 * open], pupil: 1.1 + 0.4 * open }, brows: squeeze > 0.5 ? { L: [20, -10], R: [20, -10] } : undefined, blink: squeeze, mouth: open > 0.4 ? 'o' : 'line', fx: [] },
-  }));
-  let out = benchFrame(t, cam, o, w) + S.rect(0, 0, 1920, 1080, 0, { fill: '#77727F', opacity: 0.3 });
+  const w = heroFairClose(t, { name: open > 0.4 ? 'amazed' : 'neutral', eyes: { look: [0.55, -0.1], pupil: 1 + 0.5 * open }, mouth: open > 0.4 ? 'o' : 'line', fx: [] }, { turn: 0.3, headRot: -2 * open });
+  let out = fairFrame(t, cam, { time: 'dusk', quiet: 1, lights: 0.5, crowd: 0.7 }, w) + S.rect(0, 0, 1920, 1080, 0, { fill: '#77727F', opacity: 0.3 });
   // the last glints of the shattered HUD glass settle and vanish (no numbers)
-  const gk = 1 - seg(t, C.wake + 0.4, C.wake + 1.4);
-  if (gk > 0) out += S.g(K.sparkles([[1220, 260 + (t - C.wake) * 90, 26], [560, 180 + (t - C.wake) * 120, 18], [1500, 520 + (t - C.wake) * 60, 20], [380, 640 + (t - C.wake) * 80, 14]], t), null, { opacity: f(gk) });
-  return out + flash(t, C.wake, 0.3, 0.35);
+  const gk = 1 - seg(t, C.wake + 0.4, C.wake + 1.3);
+  if (gk > 0) out += S.g(K.sparkles([[1320, 260 + (t - C.wake) * 90, 24], [420, 180 + (t - C.wake) * 120, 18], [1560, 560 + (t - C.wake) * 60, 18]], t), null, { opacity: f(gk) });
+  return out;
 }
-// 2 — POV: the eyelids open on the grey fair; "Just colors." — colour blooms back from the centre (quiet 1 -> 0, dusk -> golden)
+// 2 — POV: the grey, silent fair; he blinks — "Just colors." — colour blooms back from the centre (quiet 1 -> 0, dusk -> golden)
 function shotPOV(t) {
   const u = seg(t, C.pov, C.sounds);
   const kc = ease.inOut(seg(t, B.colors - 0.1, B.colors + 0.9));
-  const cam = camLerp(camAt(1180, 540, 1.0), camAt(1240, 540, 1.1), ease.inOut(u));
+  const cam = camLerp(camAt(-120, 600, 0.98), camAt(-60, 590, 1.07), ease.inOut(u));
   const o = { time: { dusk: 1 - kc, golden: kc }, quiet: 1 - kc, crowd: 0.75, cheer: 0.25 * kc, canopy: true, lights: lerp(0.5, 0.65, kc) };
-  let out = fairFrame(t, cam, o) + (kc < 1 ? S.rect(0, 0, 1920, 1080, 0, { fill: '#77727F', opacity: f(0.3 * (1 - kc)) }) : '');
+  let out = fairFrame(t, cam, o, goers(t)) + (kc < 1 ? S.rect(0, 0, 1920, 1080, 0, { fill: '#77727F', opacity: f(0.3 * (1 - kc)) }) : '');
   out += E.motes(t, 22, 3, kc) + E.bloomRing(960, 520, seg(t, B.colors, B.colors + 1.1));
   out += flash(t, B.colors, 0.35, 0.4, '#FFF1C8');
-  // eyelids: open, a slow blink, open
-  const a = t - C.pov;
-  const lid = a < 0.5 ? 1 - ease.out(a / 0.5) : bump(t, C.pov + 0.75, C.pov + 1.0) * 0.55;
-  return out + E.eyelids(lid);
+  // he blinks — and opens his eyes on colour
+  return out + E.eyelids(bump(t, B.colors - 0.34, B.colors + 0.02)) + whip(t, C.pov, 1, 0.1);
 }
 // 3 — "And sounds." — the fair alive: a dart pops a balloon at the booth, a kid jumps with joy, balloons rise
 function shotSounds(t) {
   const u = seg(t, C.sounds, C.faces);
-  const cam = camLerp(camAt(260, 640, 1.05), camAt(330, 630, 1.14), ease.out(u));
+  const cam = camLerp(camAt(170, 600, 1.35), camAt(205, 590, 1.45), ease.out(u));
   const pk = seg(t, B.pop, B.pop + 0.35);
   let behind = '';
   // the target balloon (an empty slot on the booth wall) pops
@@ -171,26 +181,25 @@ function shotFaces(t) {
 // 5 — the hero, seeing faces for the first time (eyes full of light)
 function shotHeroFace(t) {
   const u = seg(t, C.heroFace, C.stand);
-  const cam = camLerp(camAt(760, 575, 2.1), camAt(752, 565, 2.28), ease.out(u));
-  let w = actor('grandpa', t, FS.seatPose(BN.grandpa, 1.1, { t, turn: -0.45, face: { name: 'happy', eyes: { look: [-0.7, 0.1] } } }));
-  w += actor('you', t, FS.seatPose(BN.hero, 1, { t, turn: 0.1, headRot: -3 + 2 * Math.sin(t * 2), face: { name: 'amazed', mouth: 'smallSmile', eyes: { pupil: 1.75, sparkle: true, look: [0.35 * Math.sin(t * 2.2), -0.15] }, fx: ['sparkles'] } }));
-  let out = benchFrame(t, cam, { time: 'golden', bokeh: 1, lights: 0.6 }, w);
+  const s = SP.sAt(HERO_FAIR.y), fy = HERO_FAIR.y - 700 * s;
+  const cam = camLerp(camAt(HERO_FAIR.x + 10, fy, 3.1, 960, 500), camAt(HERO_FAIR.x + 10, fy - 5, 3.35, 960, 500), ease.out(u));
+  const w = heroFairClose(t, { name: 'amazed', mouth: 'smallSmile', eyes: { pupil: 1.75, sparkle: true, look: [0.45 * Math.sin(t * 2.2), -0.15] }, fx: ['sparkles'] }, { turn: 0.15, headRot: -3 + 2 * Math.sin(t * 2) });
+  let out = fairFrame(t, cam, { ...GOLD, crowd: 0.75, cheer: 0.3 }, w);
   out += E.lensFlare(1500, 160, 0.8) + E.motes(t, 20, 9);
-  return out;
+  return out + whip(t, C.heroFace, -1, 0.1);
 }
-// 6 — "And you didn't need stats to know your brother." — he stands up; Grandpa smiles
+// 6 — "And you didn't need stats to know your brother." — he turns back to Grandpa on the bench; a step, a fist; Grandpa nods
 function shotStand(t) {
   const u = seg(t, C.stand, C.think);
-  const cam = camLerp(camAt(960, 640, 1.12), camAt(860, 600, 1.32), ease.inOut(u));
+  const cam = camLerp(camAt(940, 640, 1.12), camAt(860, 600, 1.32), ease.inOut(u));
   const up = ease.inOut(seg(t, B.up, B.up + 0.45));
-  const seat = FS.seatPose(BN.hero, 1, {});
   const fist = ease.outBack(seg(t, B.fist, B.fist + 0.3));
-  let w = actor('grandpa', t, FS.seatPose(BN.grandpa, 1.1, { t, turn: -0.5, headRot: -6 * bump(t, B.fist - 0.1, B.fist + 0.5), face: { name: 'happy', eyes: { look: [-0.8, -0.3 * up] } } }));
+  const step = bump(t, B.up, B.up + 0.45);
+  let w = actor('grandpa', t, FS.seatPose(BN.grandpa, 1.1, { t, turn: -0.5, headRot: -6 * bump(t, B.fist - 0.1, B.fist + 0.5), face: { name: 'happy', eyes: { look: [-0.8, -0.3] } } }));
   w += actor('you', t, {
-    t, x: lerp(seat.x, 700, up), y: lerp(seat.y, 1012, up), s: BN.hero.s + 0.02 * up, turn: lerp(0.15, 0.3, up),
-    legL: lerp(45, 0, up), legR: lerp(45, 0, up), kneeL: lerp(60, 0, up), kneeR: lerp(60, 0, up), lift: 30 * bump(t, B.up, B.up + 0.45),
+    t, x: lerp(560, 700, up), y: 1012, s: 0.6, turn: lerp(-0.35, 0.3, up), lift: 18 * step, legL: 10 * step, legR: -10 * step,
     armL: 14, armR: lerp(14, 96, fist), bendR: 104 * fist,
-    face: { name: up > 0.5 ? 'determined' : 'happy', eyes: { look: [0.2, -0.2] } },
+    face: { name: up > 0.5 ? 'determined' : 'happy', eyes: { look: [lerp(-0.4, 0.6, up), -0.2] } },
   }, { arms: false });
   return benchFrame(t, cam, { time: 'golden', lights: 0.6 }, w) + E.motes(t, 14, 11) + whip(t, C.stand, -1);
 }

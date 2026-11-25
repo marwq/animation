@@ -282,10 +282,9 @@ function shOpen(t) {
   if (t >= tYouOut) fx += K.sparkles([[560, 300, 40], [1380, 260, 46], [1300, 600, 30], [620, 620, 34]], t) + K.C.burst(960, 150, seg(t, tYouOut + 0.1, tYouOut + 0.55), '#FFD24A');
   const face = scr(cam, POV_FACE[0], POV_FACE[1]);
   let o = intro(t, live + fx, tYou, tYouOut, { x: 540, y: 200, name: 'YOU', sub: 'Gamer · age 12', col: HERO_COL, rot: -5 }, face, { ty: -40, tx: -90 });
-  // arrival: SC 01's rewind collapsed to one point — the iris opens from it
-  const r = lerp(0, 2400, ease.in(seg(t, T0, T0 + 0.5)));
-  if (r < 2300) { o += iris(960, 540, r); if (r < 60) o += S.circle(960, 540, 16 - r * 0.2, { fill: '#FFFFFF' }); }
-  o += rewindTail(t, 1 - seg(t, T0, T0 + 0.4));
+  // arrival: SC 01 ends on a white flash — a white iris opens from the centre onto the hero
+  const r = lerp(0, 2400, ease.inOut(seg(t, T0, T0 + 0.55)));
+  if (r < 2300) o += iris(960, 520, r, '#FFFFFF') + (r > 4 ? S.circle(960, 520, r, { fill: 'none', stroke: '#FFE14D', 'stroke-width': 14, opacity: f(1 - r / 2300) }) : '');
   return o;
 }
 // ---- 2. "Because in games," — over the shoulder, the camera dives INTO the monitor
@@ -1141,7 +1140,7 @@ function shNotToday(t) {
 function shNight(t) {
   const cam = camKeys(t, [[CUT.night, { zoom: 1.12, y: -10 }], [CUT.careful, { zoom: 1.2, y: -18 }]], ease.linear);
   const flop = ease.out(seg(t, tReally - 0.1, tReally + 0.35));
-  const pose = { armL: 24, armR: 24, bendL: -118, bendR: -118, lean: -5 * flop, bodyY: 16 * flop, headRot: lerp(-4, 8, flop), face: { name: flop > 0.5 ? 'angry' : 'sad' } };
+  const pose = { y: 1135, armL: 24, armR: 24, bendL: -118, bendR: -118, headset: true, lean: -5 * flop, bodyY: 16 * flop, headRot: lerp(-4, 8, flop), face: { name: flop > 0.5 ? 'angry' : 'sad' } };
   let o = povShot(t, cam, { time: 'night', pose, light: '#4A8CFF', lk: 0.22, act: { energy: 0.9 } });
   o += K.C.pixelWipe(seg(t, CUT.night, CUT.night + 0.4), 'reveal', true);
   return o;
@@ -1166,9 +1165,10 @@ function nightScreen(t, fk) {
 function shCareful(t) {
   const cam = camKeys(t, [[CUT.careful, { zoom: 1.0, x: 0, y: 0 }], [B[12].b + 0.4, { zoom: 1.35, x: 180, y: -70 }], [END, { zoom: 1.85, x: 300, y: -120 }]], ease.inOut);
   const fk = flickAt(t);
-  const hero = actor('you', t, SH.seatPose(SPB.chair, 1, { headRot: -4 + 3 * Math.sin(t * 0.8) }));
+  const hero = actor('you', t, SH.seatPose(SPB.chair, 1, { headset: true, headRot: -4 + 3 * Math.sin(t * 0.8) }));
   let o = bedroomShot(t, cam, { set: { time: 'night', pcScreen: nightScreen(t, fk), glow: 1 - 0.7 * fk, glowCol: 'blue', led: fk < 0.5, lamp: 0 }, behind: hero });
   o += dim(0.25 * fk + 0.1 * seg(t, B[12].b, END), '#05071A');
+  o += dim(ease.in(seg(t, END - 0.4, END)), '#07061A');   // SC 03 opens out of black
   return o;
 }
 
@@ -1190,7 +1190,7 @@ function shotAt(t) {
   while (i > 0 && t < SHOTS[i][0]) i--;
   return i;
 }
-const LOWVOL = new Set([shDive, shReal, shMom, shSmile, shMorning, shProb, shAsked, shLou, shSame, shG79, shLegend, shMax, shFive, shTrex, shRawr, shAgain, shEveryday, shE,
+const LOWVOL = new Set([shDive, shReal, shKitchen, shThink, shWorks, shCupcakes, shTornado, shMom, shSmile, shMorning, shProb, shAsked, shLou, shSame, shG79, shLegend, shMax, shFive, shTrex, shRawr, shAgain, shEveryday, shE,
   shSchool, shSports, shMath, shLaces, shOkay, shMeant, shNice, shTank, shFile, shBig, shHungry, shLunch, shSure, shTurkey, shWalk, shOneday, shNotToday, shCareful]);
 function scene(t) {
   const fn = SHOTS[shotAt(t)][1];

@@ -4,7 +4,7 @@
 // the PICKED stamp, the FRIENDSHIP −50 heart (pop, crack, split + sub drop, then silence), the potato bulb fizzling out, the
 // number bubbles, the dead laugh (cricket, FUN: 0%), home: door, footsteps, dishes, the quest marker + toast with its tiny
 // +5 XP coin, the +50 XP waypoint shimmer, Mom's marker powering down, the door closing, ENERGY rolling 2% -> 1% (alarm beep),
-// the run + skid in the living room, Grandpa's plate pop + glitch on "whole truth", the HUD clock rolling TUE -> SAT.
+// the run + skid in the living room, Grandpa's plate pop + glitch on "whole truth", the HUD clock rolling THU -> SAT.
 // Every time comes from the voice timeline exactly like scenes/s07.js: the cut list + beats come from the scene's own
 // times(V) (built only from L(id).a/.b and .word()). When the voice changes:
 //   node audio/cues/gen_sc07.js && python3 audio/validate_cues.py audio/cues/sc07.json
@@ -14,7 +14,7 @@
 const fs = require('fs');
 const path = require('path');
 const V = require('../../scenes/vo');
-const { times } = require('../../scenes/s07');
+const { times, DAYS } = require('../../scenes/s07');
 const { L } = V;
 
 const { START: T0, END, C, B } = times(V);                         // == main.js RANGES for SC 07
@@ -136,7 +136,8 @@ add(B.whole, 'glitch', -8, P(1100), "Grandpa's plate flickers");
 add(B.whole + 0.5, 'ui_close', -12, P(1100), 'the plate fades');
 // ---- 26. the beat: "???", days roll TUE -> SAT, white
 add(C.out + 0.4, 'blink', -10, 0, 'he looks up at his own ???');
-for (let i = 1; i < 5; i++) add(lerp(B.days, END - 0.35, i / 5), 'countdown_tick', -8, 0.6, ['WED', 'THU', 'FRI', 'SAT'][i - 1]);
+// the day label switches at dk = i / DAYS.length (dk = seg(t, B.days, END - 0.35), as in shotOut)
+for (let i = 1; i < DAYS.length; i++) add(lerp(B.days, END - 0.35, i / DAYS.length), 'countdown_tick', -8, 0.6, DAYS[i]);
 add(END - 1.5, 'reverse_swell', -6, 0, 'swell into the white (SC 08: Saturday, the fair)');
 
 // ================================================================= MUSIC (tiles [T0, END])

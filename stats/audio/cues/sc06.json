@@ -1,0 +1,1334 @@
+{
+ "scene": "SC 06",
+ "start": 386.32,
+ "end": 458.04,
+ "music": [
+  {
+   "start": 386.32,
+   "end": 394.86,
+   "mood": "levelup",
+   "energy": 0.7,
+   "in": "cut",
+   "out": "cut"
+  },
+  {
+   "start": 394.86,
+   "end": 418.3,
+   "mood": "levelup",
+   "energy": 1,
+   "in": "cut",
+   "out": "sting"
+  },
+  {
+   "start": 418.3,
+   "end": 427.346,
+   "mood": "warm",
+   "energy": 0.45,
+   "in": "cut",
+   "out": "cut"
+  },
+  {
+   "start": 427.346,
+   "end": 437.8,
+   "mood": "homey",
+   "energy": 0.45,
+   "in": "cut",
+   "out": "cut"
+  },
+  {
+   "start": 437.8,
+   "end": 446.2,
+   "mood": "montage",
+   "energy": 0.9,
+   "in": "cut",
+   "out": "sting"
+  },
+  {
+   "start": 446.2,
+   "end": 453.52,
+   "mood": "cold",
+   "energy": 0.35,
+   "in": "fade",
+   "out": "cut"
+  },
+  {
+   "start": 453.52,
+   "end": 458.04,
+   "mood": "silence",
+   "energy": 0,
+   "in": "cut",
+   "out": "cut"
+  }
+ ],
+ "ambience": [
+  {
+   "start": 386.32,
+   "end": 394.86,
+   "name": "crowd",
+   "gain_db": -16
+  },
+  {
+   "start": 394.86,
+   "end": 398.53,
+   "name": "birds",
+   "gain_db": -14
+  },
+  {
+   "start": 398.53,
+   "end": 401.138,
+   "name": "crowd",
+   "gain_db": -18
+  },
+  {
+   "start": 401.138,
+   "end": 405.346,
+   "name": "birds",
+   "gain_db": -14
+  },
+  {
+   "start": 405.346,
+   "end": 407.202,
+   "name": "crowd",
+   "gain_db": -18
+  },
+  {
+   "start": 407.202,
+   "end": 409.26,
+   "name": "town",
+   "gain_db": -16
+  },
+  {
+   "start": 411.96,
+   "end": 418.3,
+   "name": "birds",
+   "gain_db": -16
+  },
+  {
+   "start": 418.3,
+   "end": 427.346,
+   "name": "crowd",
+   "gain_db": -18
+  },
+  {
+   "start": 427.346,
+   "end": 446.2,
+   "name": "room",
+   "gain_db": -18
+  },
+  {
+   "start": 448.08,
+   "end": 458.04,
+   "name": "town",
+   "gain_db": -20
+  },
+  {
+   "start": 448.08,
+   "end": 458.04,
+   "name": "wind",
+   "gain_db": -24
+  }
+ ],
+ "footsteps": [
+  {
+   "start": 394.86,
+   "end": 396.54,
+   "interval": 0.175,
+   "surface": "hard",
+   "gain_db": -10,
+   "pan": -0.4
+  },
+  {
+   "start": 396.54,
+   "end": 397.35,
+   "interval": 0.349,
+   "surface": "hard",
+   "gain_db": -12,
+   "pan": 0.1
+  },
+  {
+   "start": 403.28,
+   "end": 405.346,
+   "interval": 0.224,
+   "surface": "hard",
+   "gain_db": -12,
+   "pan": 0
+  },
+  {
+   "start": 407.202,
+   "end": 409.26,
+   "interval": 0.449,
+   "surface": "hard",
+   "gain_db": -16,
+   "pan": 0.4
+  },
+  {
+   "start": 417.5,
+   "end": 418.3,
+   "interval": 0.449,
+   "surface": "hard",
+   "gain_db": -10,
+   "pan": 0
+  },
+  {
+   "start": 437.8,
+   "end": 438.7,
+   "interval": 0.175,
+   "surface": "wood",
+   "gain_db": -10,
+   "pan": 0.5
+  },
+  {
+   "start": 448.08,
+   "end": 451.39,
+   "interval": 0.449,
+   "surface": "hard",
+   "gain_db": -12,
+   "pan": 0
+  },
+  {
+   "start": 451.39,
+   "end": 453.52,
+   "interval": 0.524,
+   "surface": "hard",
+   "gain_db": -12,
+   "pan": 0.2
+  },
+  {
+   "start": 454.88,
+   "end": 458.04,
+   "interval": 0.449,
+   "surface": "hard",
+   "gain_db": -8,
+   "pan": 0.2
+  }
+ ],
+ "sfx": [
+  [
+   386.69,
+   "sparkle",
+   -6,
+   0.248,
+   "+50 XP pops (the first kindness XP)"
+  ],
+  [
+   387.69,
+   "coin",
+   -2,
+   -0.5,
+   "+50 XP lands in the bar"
+  ],
+  [
+   387.74,
+   "money_counter",
+   -8,
+   -0.5,
+   "XP 50 → 100"
+  ],
+  [
+   388.71,
+   "level_up",
+   2,
+   0.3,
+   "LEVEL UP! 1 → 2"
+  ],
+  [
+   388.76,
+   "jump",
+   -6,
+   0,
+   "he jumps up on the bench"
+  ],
+  [
+   388.96,
+   "crowd_gasp",
+   -16,
+   0,
+   "the cafeteria turns"
+  ],
+  [
+   389.16,
+   "land",
+   -10,
+   0,
+   "lands on the bench"
+  ],
+  [
+   390.8,
+   "zoom_in",
+   -6,
+   0,
+   "smash-zoom on UP"
+  ],
+  [
+   392.32,
+   "zoom_in",
+   -4,
+   0,
+   "smash-zoom on NICE"
+  ],
+  [
+   392.37,
+   "pop",
+   -6,
+   0.5,
+   "NICE?! lettering"
+  ],
+  [
+   393.56,
+   "notify",
+   -12,
+   -0.6,
+   "quest marker #1"
+  ],
+  [
+   393.68,
+   "notify",
+   -14,
+   -0.2,
+   "quest marker #2"
+  ],
+  [
+   393.8,
+   "notify",
+   -12,
+   -0.7,
+   "quest marker #3"
+  ],
+  [
+   393.92,
+   "notify",
+   -14,
+   0.1,
+   "quest marker #4"
+  ],
+  [
+   394.04,
+   "notify",
+   -12,
+   0.6,
+   "quest marker #5"
+  ],
+  [
+   394.16,
+   "notify",
+   -14,
+   -0.8,
+   "quest marker #6"
+  ],
+  [
+   394.28,
+   "notify",
+   -12,
+   0.3,
+   "quest marker #7"
+  ],
+  [
+   394.86,
+   "whoosh_long",
+   -6,
+   0.4,
+   "whip to the street"
+  ],
+  [
+   395.01,
+   "notify",
+   -16,
+   -0.6,
+   "a marker over every neighbour"
+  ],
+  [
+   395.11,
+   "notify",
+   -16,
+   -0.35,
+   "a marker over every neighbour"
+  ],
+  [
+   395.21,
+   "notify",
+   -16,
+   -0.1,
+   "a marker over every neighbour"
+  ],
+  [
+   395.31,
+   "notify",
+   -16,
+   0.15,
+   "a marker over every neighbour"
+  ],
+  [
+   395.41,
+   "notify",
+   -16,
+   0.4,
+   "a marker over every neighbour"
+  ],
+  [
+   395.51,
+   "notify",
+   -16,
+   0.65,
+   "a marker over every neighbour"
+  ],
+  [
+   395.81,
+   "orch_hit",
+   0,
+   0,
+   "QUEST SPREE! title slam"
+  ],
+  [
+   395.86,
+   "whoosh",
+   -8,
+   0,
+   "the ribbon unrolls"
+  ],
+  [
+   396.54,
+   "whoosh",
+   -8,
+   0.4,
+   "whip"
+  ],
+  [
+   396.64,
+   "paper",
+   -12,
+   0.1,
+   "grocery bags rustle"
+  ],
+  [
+   397.35,
+   "sparkle",
+   -10,
+   -0.233,
+   "+10 XP pops (groceries)"
+  ],
+  [
+   397.4,
+   "paper",
+   -10,
+   -0.1,
+   "bags handed over"
+  ],
+  [
+   398.35,
+   "coin",
+   -6,
+   -0.5,
+   "+10 XP lands in the bar"
+  ],
+  [
+   398.53,
+   "whoosh",
+   -8,
+   -0.4,
+   "whip"
+  ],
+  [
+   398.89,
+   "heart_pop",
+   -8,
+   0.3,
+   "she blushes, hearts"
+  ],
+  [
+   399.34,
+   "sparkle",
+   -10,
+   0.175,
+   "+5 XP pops (compliment)"
+  ],
+  [
+   400.34,
+   "coin",
+   -6,
+   -0.5,
+   "+5 XP lands in the bar"
+  ],
+  [
+   401.138,
+   "whoosh",
+   -8,
+   0.4,
+   "whip"
+  ],
+  [
+   401.71,
+   "jump",
+   -6,
+   0.2,
+   "jump"
+  ],
+  [
+   402.01,
+   "bonk",
+   -4,
+   0.3,
+   "grabs the ball out of the oak"
+  ],
+  [
+   402.06,
+   "sparkle",
+   -12,
+   0.3,
+   "leaf burst"
+  ],
+  [
+   402.31,
+   "land",
+   -8,
+   0.2,
+   "lands"
+  ],
+  [
+   402.65,
+   "sparkle",
+   -10,
+   0.029,
+   "+20 XP pops (ball rescue)"
+  ],
+  [
+   402.81,
+   "giggle",
+   -10,
+   -0.2,
+   "the kid cheers"
+  ],
+  [
+   403.28,
+   "whoosh",
+   -8,
+   0.4,
+   "whip"
+  ],
+  [
+   403.65,
+   "coin",
+   -6,
+   -0.5,
+   "+20 XP lands in the bar"
+  ],
+  [
+   403.66,
+   "ui_pop",
+   -8,
+   -0.3,
+   "LILAC HAT · STYLE +80 tooltip"
+  ],
+  [
+   403.86,
+   "heart_pop",
+   -12,
+   -0.2,
+   "she touches her hat, flattered"
+  ],
+  [
+   403.86,
+   "sparkle",
+   -10,
+   -0.117,
+   "+5 XP pops (hat compliment)"
+  ],
+  [
+   404.86,
+   "coin",
+   -6,
+   -0.5,
+   "+5 XP lands in the bar"
+  ],
+  [
+   405.346,
+   "whoosh",
+   -8,
+   -0.4,
+   "whip"
+  ],
+  [
+   405.496,
+   "gulp",
+   -4,
+   -0.2,
+   "a long slurp"
+  ],
+  [
+   405.52,
+   "ui_pop",
+   -8,
+   -0.2,
+   "MYSTERY SOUP · ??? tooltip"
+  ],
+  [
+   405.77,
+   "squeak",
+   -12,
+   -0.2,
+   "thumbs up (he goes a bit green)"
+  ],
+  [
+   405.82,
+   "sparkle",
+   -10,
+   0.175,
+   "+5 XP pops (soup compliment)"
+  ],
+  [
+   406.82,
+   "coin",
+   -6,
+   -0.5,
+   "+5 XP lands in the bar"
+  ],
+  [
+   407.202,
+   "whoosh",
+   -8,
+   0.4,
+   "whip"
+  ],
+  [
+   407.44,
+   "ui_pop",
+   -10,
+   0.2,
+   "DOG · COOL ∞ plate"
+  ],
+  [
+   407.74,
+   "dog_bark",
+   -8,
+   0.2,
+   "the dark corgi barks"
+  ],
+  [
+   407.74,
+   "sparkle",
+   -10,
+   0.102,
+   "+5 XP pops (dog compliment)"
+  ],
+  [
+   408.74,
+   "coin",
+   -6,
+   -0.5,
+   "+5 XP lands in the bar"
+  ],
+  [
+   409.26,
+   "whoosh",
+   -8,
+   0.4,
+   "whip"
+  ],
+  [
+   409.41,
+   "whoosh",
+   -12,
+   -0.5,
+   "panel 1 slides in"
+  ],
+  [
+   409.61,
+   "pop",
+   -12,
+   -0.5,
+   "panel lands"
+  ],
+  [
+   409.81,
+   "sparkle",
+   -12,
+   -0.335,
+   "+10 XP pops (mini quest 1)"
+  ],
+  [
+   409.83,
+   "whoosh",
+   -12,
+   0.5,
+   "panel 2 slides in"
+  ],
+  [
+   410.03,
+   "pop",
+   -12,
+   0.5,
+   "panel lands"
+  ],
+  [
+   410.23,
+   "sparkle",
+   -12,
+   0.321,
+   "+15 XP pops (mini quest 2)"
+  ],
+  [
+   410.25,
+   "whoosh",
+   -12,
+   -0.5,
+   "panel 3 slides in"
+  ],
+  [
+   410.45,
+   "pop",
+   -12,
+   -0.5,
+   "panel lands"
+  ],
+  [
+   410.65,
+   "sparkle",
+   -12,
+   -0.335,
+   "+20 XP pops (mini quest 3)"
+  ],
+  [
+   410.67,
+   "whoosh",
+   -12,
+   0.5,
+   "panel 4 slides in"
+  ],
+  [
+   410.81,
+   "coin",
+   -8,
+   -0.5,
+   "+10 XP lands in the bar"
+  ],
+  [
+   410.87,
+   "pop",
+   -12,
+   0.5,
+   "panel lands"
+  ],
+  [
+   411.07,
+   "sparkle",
+   -12,
+   0.321,
+   "+25 XP pops (mini quest 4)"
+  ],
+  [
+   411.23,
+   "coin",
+   -8,
+   -0.5,
+   "+15 XP lands in the bar"
+  ],
+  [
+   411.65,
+   "coin",
+   -8,
+   -0.5,
+   "+20 XP lands in the bar"
+  ],
+  [
+   411.96,
+   "whoosh",
+   -8,
+   0.3,
+   "whip to Monday"
+  ],
+  [
+   412.01,
+   "stamp",
+   -8,
+   -0.6,
+   "MON day stamp"
+  ],
+  [
+   412.07,
+   "coin",
+   -8,
+   -0.5,
+   "+25 XP lands in the bar"
+  ],
+  [
+   412.56,
+   "chime",
+   -2,
+   0.4,
+   "LV 2 hexagon"
+  ],
+  [
+   413.29,
+   "stamp",
+   -8,
+   -0.6,
+   "WED day stamp"
+  ],
+  [
+   413.64,
+   "level_up",
+   0,
+   0.3,
+   "LEVEL UP 2 → 5"
+  ],
+  [
+   414.73,
+   "stamp",
+   -8,
+   -0.6,
+   "FRI day stamp"
+  ],
+  [
+   414.9,
+   "riser",
+   -8,
+   0,
+   "he floats up into the gold column"
+  ],
+  [
+   415.05,
+   "level_up",
+   2,
+   0.3,
+   "LEVEL UP 5 → 20"
+  ],
+  [
+   415.2,
+   "orch_hit",
+   0,
+   0,
+   "LEVEL TWENTY"
+  ],
+  [
+   415.3,
+   "confetti",
+   -6,
+   0,
+   "confetti"
+  ],
+  [
+   417.4,
+   "land",
+   -10,
+   -0.5,
+   "lands, starts to strut"
+  ],
+  [
+   418.3,
+   "whoosh",
+   -8,
+   -0.4,
+   "whip back to the cafeteria"
+  ],
+  [
+   419.46,
+   "paper",
+   -12,
+   -0.3,
+   "half a sandwich across the table"
+  ],
+  [
+   421.43,
+   "stamp",
+   -12,
+   0.7,
+   "day stamp TUE"
+  ],
+  [
+   421.53,
+   "heart_pop",
+   -6,
+   -0.4,
+   "HP 40"
+  ],
+  [
+   421.58,
+   "money_counter",
+   -12,
+   -0.4,
+   "HP rolls"
+  ],
+  [
+   422.92,
+   "stamp",
+   -12,
+   0.7,
+   "day stamp WED"
+  ],
+  [
+   422.97,
+   "heart_pop",
+   -6,
+   -0.4,
+   "HP 60"
+  ],
+  [
+   423.02,
+   "money_counter",
+   -12,
+   -0.4,
+   "HP rolls"
+  ],
+  [
+   423.17,
+   "pop",
+   -10,
+   -0.4,
+   "TIRED peels off"
+  ],
+  [
+   424.04,
+   "stamp",
+   -12,
+   0.7,
+   "day stamp THU"
+  ],
+  [
+   424.09,
+   "heart_pop",
+   -6,
+   -0.4,
+   "HP 80"
+  ],
+  [
+   424.14,
+   "money_counter",
+   -12,
+   -0.4,
+   "HP rolls"
+  ],
+  [
+   424.29,
+   "pop",
+   -10,
+   -0.4,
+   "LONELY peels off"
+  ],
+  [
+   424.54,
+   "chime",
+   -6,
+   -0.4,
+   "NEW FRIEND tag"
+  ],
+  [
+   425.12,
+   "chomp",
+   -12,
+   -0.4,
+   "Tank chews"
+  ],
+  [
+   427.346,
+   "whoosh",
+   -8,
+   0.4,
+   "whip to the living room"
+  ],
+  [
+   427.646,
+   "cloth",
+   -16,
+   0.5,
+   "Grandpa pats his pockets"
+  ],
+  [
+   427.996,
+   "cloth",
+   -16,
+   0.5,
+   "Grandpa pats his pockets"
+  ],
+  [
+   428.346,
+   "cloth",
+   -16,
+   0.5,
+   "Grandpa pats his pockets"
+  ],
+  [
+   428.58,
+   "notify",
+   -2,
+   0.5,
+   "\"!\" + NEW QUEST: Find Grandpa's glasses"
+  ],
+  [
+   430.38,
+   "ui_close",
+   -16,
+   0,
+   "quest toast folds away"
+  ],
+  [
+   431.83,
+   "ui_pop",
+   -6,
+   0.4,
+   "GRANDPA'S GLASSES · LOCATION: HIS HEAD"
+  ],
+  [
+   432.76,
+   "swish",
+   -10,
+   0.3,
+   "he pulls the glasses down"
+  ],
+  [
+   432.86,
+   "achievement",
+   -4,
+   0,
+   "QUEST COMPLETE toast"
+  ],
+  [
+   434.03,
+   "sparkle",
+   -16,
+   0.3,
+   "a tiny +1 XP"
+  ],
+  [
+   434.83,
+   "zoom_in",
+   -8,
+   0,
+   "magnifier on the XP bar"
+  ],
+  [
+   435.03,
+   "coin",
+   -14,
+   -0.5,
+   "+1 XP lands"
+  ],
+  [
+   435.23,
+   "sad_trombone",
+   -14,
+   0,
+   "+1 XP = +0.6%"
+  ],
+  [
+   435.927,
+   "paper",
+   -14,
+   0.5,
+   "Grandpa's newspaper"
+  ],
+  [
+   436.86,
+   "stamp",
+   -2,
+   0.4,
+   "NEW RECORD stamp"
+  ],
+  [
+   437.8,
+   "door_open",
+   -10,
+   0.8,
+   "Max bursts in from the kitchen"
+  ],
+  [
+   438.25,
+   "achievement",
+   -4,
+   -0.3,
+   "EPIC QUEST card"
+  ],
+  [
+   440.56,
+   "monster_growl",
+   -8,
+   0.2,
+   "Max's RAWR (cute)"
+  ],
+  [
+   440.61,
+   "zoom_in",
+   -6,
+   0.2,
+   "smash-zoom on EVER"
+  ],
+  [
+   441.19,
+   "riser",
+   -8,
+   0,
+   "fast-forward build"
+  ],
+  [
+   441.49,
+   "pop",
+   -12,
+   -0.6,
+   "cushion #1 lands"
+  ],
+  [
+   441.57,
+   "pop",
+   -14,
+   0.6,
+   "cushion #2 lands"
+  ],
+  [
+   441.65,
+   "pop",
+   -16,
+   -0.6,
+   "cushion #3 lands"
+  ],
+  [
+   441.73,
+   "pop",
+   -12,
+   0.6,
+   "cushion #4 lands"
+  ],
+  [
+   441.81,
+   "pop",
+   -14,
+   -0.6,
+   "cushion #5 lands"
+  ],
+  [
+   441.89,
+   "pop",
+   -16,
+   0.6,
+   "cushion #6 lands"
+  ],
+  [
+   441.97,
+   "pop",
+   -12,
+   -0.6,
+   "cushion #7 lands"
+  ],
+  [
+   441.99,
+   "tada",
+   0,
+   0,
+   "the fort to the ceiling"
+  ],
+  [
+   442.05,
+   "pop",
+   -14,
+   0.6,
+   "cushion #8 lands"
+  ],
+  [
+   442.13,
+   "pop",
+   -16,
+   -0.6,
+   "cushion #9 lands"
+  ],
+  [
+   442.14,
+   "achievement",
+   2,
+   0,
+   "EPIC QUEST COMPLETE!"
+  ],
+  [
+   442.21,
+   "pop",
+   -12,
+   0.6,
+   "cushion #10 lands"
+  ],
+  [
+   443.18,
+   "sparkle",
+   -6,
+   -0.073,
+   "+100 XP pops (the fort)"
+  ],
+  [
+   444.18,
+   "coin",
+   -2,
+   -0.5,
+   "+100 XP lands in the bar"
+  ],
+  [
+   444.23,
+   "money_counter",
+   -8,
+   -0.5,
+   "XP fills"
+  ],
+  [
+   444.83,
+   "level_up",
+   2,
+   0.4,
+   "LEVEL UP 20 → 21"
+  ],
+  [
+   444.93,
+   "confetti",
+   -6,
+   0,
+   "confetti"
+  ],
+  [
+   445.03,
+   "applause",
+   -12,
+   0,
+   "the family cheers"
+  ],
+  [
+   445.23,
+   "dog_bark",
+   -10,
+   0.4,
+   "Biscuit begs and barks"
+  ],
+  [
+   446.5,
+   "reverse_swell",
+   -10,
+   0,
+   "the cheering fades"
+  ],
+  [
+   447.1,
+   "shine",
+   -10,
+   0,
+   "XP glints in his eyes"
+  ],
+  [
+   447.88,
+   "sub_drop",
+   -10,
+   0,
+   "into the cold"
+  ],
+  [
+   449.44,
+   "glitch",
+   -18,
+   -0.6,
+   "a face turns into an XP chip"
+  ],
+  [
+   449.69,
+   "glitch",
+   -18,
+   -0.3,
+   "a face turns into an XP chip"
+  ],
+  [
+   449.94,
+   "glitch",
+   -18,
+   0,
+   "a face turns into an XP chip"
+  ],
+  [
+   450.19,
+   "glitch",
+   -18,
+   0.3,
+   "a face turns into an XP chip"
+  ],
+  [
+   450.44,
+   "glitch",
+   -18,
+   0.6,
+   "a face turns into an XP chip"
+  ],
+  [
+   451.44,
+   "paper",
+   -14,
+   0.3,
+   "the FRAGILE box"
+  ],
+  [
+   452.06,
+   "sparkle",
+   -12,
+   0.248,
+   "+50 XP pops (helping points)"
+  ],
+  [
+   452.41,
+   "sparkle",
+   -12,
+   -0.481,
+   "+50 XP pops (helping points)"
+  ],
+  [
+   452.76,
+   "sparkle",
+   -12,
+   0.503,
+   "+50 XP pops (helping points)"
+  ],
+  [
+   453.06,
+   "coin",
+   -8,
+   -0.5,
+   "+50 XP lands in the bar"
+  ],
+  [
+   453.41,
+   "coin",
+   -8,
+   -0.5,
+   "+50 XP lands in the bar"
+  ],
+  [
+   453.62,
+   "notify",
+   -18,
+   0.4,
+   "a grey \"+2 XP\" over Mrs. Wells"
+  ],
+  [
+   453.72,
+   "blink",
+   -12,
+   -0.2,
+   "his eyes flick to the number, not to her"
+  ],
+  [
+   453.76,
+   "coin",
+   -8,
+   -0.5,
+   "+50 XP lands in the bar"
+  ],
+  [
+   455.58,
+   "step",
+   -8,
+   0.1,
+   "he steps over an apple"
+  ],
+  [
+   455.88,
+   "skate_roll",
+   -18,
+   -0.1,
+   "the apple rolls away"
+  ],
+  [
+   457.94,
+   "whoosh",
+   -8,
+   0.3,
+   "whip into SC 07"
+  ]
+ ]
+}

@@ -209,9 +209,9 @@ function shotHero(t) {
 function shotPeople(t) {
   const u = seg(t, C.people, C.over);
   const cam = camLerp(camAt(1300, 700, 0.72), camAt(1320, 720, 0.6), u, ease.out);
-  const o_ = { crowd: 1, packed: 1, near: 1 };
+  const o_ = { crowd: 1, packed: 1, near: 0 };
   let o = fairWith(t, cam, o_);
-  const heads = setPeople(cam, o_).filter((h) => h.s > 0.075);
+  const heads = setPeople(cam, o_).filter((h) => h.s > 0.085);
   o += headTags(heads, { t, k: (h) => seg(t, B.wave + (h.x / 1920) * 0.85 + (h.i % 3) * 0.05, B.wave + 0.25 + (h.x / 1920) * 0.85 + (h.i % 3) * 0.05) });
   return o + hud(t) + whip(t, C.people, 1, 0.1);
 }
@@ -471,11 +471,11 @@ function shotEars(t) {
   const cover = ease.outBack(seg(t, C.ears, C.ears + 0.35));
   const pose = { ...famPose(t, 'you'), armL: lerp(40, 120, cover), armR: lerp(40, 120, cover), bendL: 92 * cover, bendR: 92 * cover, bodyY: 26 * cover, sy: 1 - 0.05 * cover, headRot: 4 * Math.sin(t * 13) * u,
     face: { name: 'scared', eyes: { type: 'closed' }, mouth: 'wavy', fx: ['sweat', 'sweat2'] } };
-  let o = crowdShot(t, cam, { back: RING_B, front: RING_F, glitch: 0.6, chars: actor('you', t, pose, { arms: false }), under: H.numbersFlood({ t, k: lerp(0.85, 1, u), seed: 31, n: 90 }) });
+  let o = crowdShot(t, cam, { back: RING_B, front: RING_F, glitch: 0.6, chars: actor('you', t, pose, { arms: false }), under: dark(0.35, '#040A12') + H.numbersFlood({ t, k: lerp(0.85, 1, u), seed: 31, n: 60, tint: false }) });
   // a second, thinner layer of numbers in front (the edges only — his face stays visible)
-  o += H.numbersFlood({ t, k: 0.5 + 0.4 * u, seed: 32, n: 30, tint: false, rect: [0, 0, 560, 1080] }) + H.numbersFlood({ t, k: 0.5 + 0.4 * u, seed: 33, n: 30, tint: false, rect: [1360, 0, 560, 1080] });
-  o += K.C.staticNoise(t, 0.08 + 0.1 * u).replace(/^<rect[^>]*>/, '');
-  return o + hud(t, { quest: true, glitch: 0.6 + 0.3 * u, crowdDots: 80 });
+  o += H.numbersFlood({ t, k: 0.5 + 0.4 * u, seed: 32, n: 18, tint: false, rect: [0, 0, 560, 1080] }) + H.numbersFlood({ t, k: 0.5 + 0.4 * u, seed: 33, n: 18, tint: false, rect: [1360, 0, 560, 1080] });
+  o += H.edgePulse(0, 0, 1920, 1080, 0.5 + 0.4 * Math.sin(t * 10));
+  return o + hud(t, { quest: true, glitch: 0.3, crowdDots: 80 });
 }
 // 30 — "You could see everyone's stats." silence: the flood freezes, goes cold; push in on his face
 const FREEZE = () => C.quiet;
@@ -484,8 +484,8 @@ function shotQuiet(t) {
   const u = seg(t, C.quiet, C.brother);
   const cam = camLerp(camAt(2480, 660, 1.9), camAt(2480, 650, 2.3), u, ease.inOut);
   const pose = { ...famPose(t, 'you'), armL: 14, armR: 14, headRot: -4, face: { name: 'sad', eyes: { look: [0, 0.7] } } };
-  let o = crowdShot(t, cam, { back: RING_B, front: RING_F, quiet: 1, cold: true, pt: FREEZE(), chars: actor('you', t, pose, { arms: false }), under: coldFlood(0.8, 31, 70) + dark(0.3, '#0A1020') });
-  return o + dark(0.12, '#0A1020') + H.hudFrame({ t: FREEZE(), clock: clock(FREEZE()), day: 'SAT', theme: 'cold', quest: 'FIND MAX', questSub: 'LOCATION: UNKNOWN' });
+  let o = crowdShot(t, cam, { back: RING_B, front: RING_F, quiet: 1, cold: true, pt: FREEZE(), chars: actor('you', t, pose, { arms: false }), under: dark(0.35, '#0A1020') + coldFlood(0.8, 31, 50) });
+  return o + H.hudFrame({ t: FREEZE(), clock: clock(FREEZE()), day: 'SAT', theme: 'cold', quest: 'FIND MAX', questSub: 'LOCATION: UNKNOWN' });
 }
 // 31 — "But you couldn't see your brother." pull back: the hero alone and small in a sea of numbers
 function shotBrother(t) {
@@ -499,7 +499,7 @@ function shotBrother(t) {
   // a pool of light on him, the rest falls into the dark (evenodd rings — no masks)
   const [hx, hy] = toScr(cam, FAM.you.x, FAM.you.y - 200);
   const R0 = 230 * cam.zoom + 70, dk = 0.3 + 0.5 * u;
-  [[1, 0.22], [1.35, 0.22], [1.8, 0.25], [2.5, 0.25]].forEach(([m, a]) => {
+  [[1.1, 0.35], [1.9, 0.4]].forEach(([m, a]) => {
     o += S.path(`M-20 -20H1940V1100H-20Z M${f(hx - R0 * m)} ${f(hy)}a${f(R0 * m)} ${f(R0 * m * 0.85)} 0 1 0 ${f(2 * R0 * m)} 0a${f(R0 * m)} ${f(R0 * m * 0.85)} 0 1 0 ${f(-2 * R0 * m)} 0Z`, { fill: '#05060E', opacity: f(a * dk), 'fill-rule': 'evenodd' });
   });
   o += H.hudFrame({ t: FREEZE(), clock: clock(FREEZE()), day: 'SAT', theme: 'cold', quest: 'FIND MAX', questSub: 'LOCATION: UNKNOWN' });
@@ -514,11 +514,13 @@ const SHOTS = [
   [C.lv40, (t) => shotStranger(t, 0)], [C.lv8, (t) => shotStranger(t, 1)], [C.faces, (t) => shotStranger(t, 2)], [C.dino, shotFaces], [C.green, shotDino],
   [C.tell, shotGreen], [C.number, shotTell], [C.ears, shotNumber], [C.quiet, shotEars], [C.brother, shotQuiet], [Infinity, shotBrother],
 ];
-const CLOSE = new Set([shotMom, shotUp, shotSky, shotMomCall, shotOverload, shotTell, shotQuiet]);
+// rig characters render without the body-volume filter wherever they are bigger than ~half the hero (perf: the filter cost grows
+// with the on-screen area); only the two wides keep it
+const FULLVOL = new Set([shotWide, shotPeople, shotOver, shotWarn, shotGreen, shotFlood]);
 const shotAt = (t) => { for (const [end, g] of SHOTS) if (t < end) return g; return shotBrother; };
 function scene(t) {
   const fn = shotAt(t);
-  VOL_OFF = CLOSE.has(fn);
+  VOL_OFF = !FULLVOL.has(fn);
   return fn(t);
 }
 function look(t) {

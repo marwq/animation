@@ -30,12 +30,13 @@ const sfx = [];
 const add = (t, name, g, pan, note) => { if (t >= T0 - 0.3 && t < END) sfx.push([r3(t), name, g, typeof pan === 'number' ? r3(pan) : 0, note]); };
 
 // ================================================================= SFX, shot by shot (same order as scenes/s10.js)
-// ---- 1. the bench, silent: the last glints of the shattered HUD glass, the hero opens his eyes
+// ---- 1. the reverse of SC 09's last shot: his face, silent and grey; the last glints of the shattered HUD glass
 add(T0 + 0.05, 'shine', -14, P(1220), 'the last glint of HUD glass settles');
 add(T0 + 0.35, 'sparkle', -18, P(560), 'glints vanish');
-add(B.open, 'blink', -8, P(700), 'he opens his eyes');
-// ---- 2. POV: the eyelids open on the grey fair; "Just colors." colour blooms back
-add(C.pov + 0.05, 'blink', -10, 0, 'eyelids open');
+add(B.open, 'blink', -10, P(700), 'his eyes widen');
+// ---- 2. POV: the grey fair; he blinks — "Just colors." colour blooms back
+add(C.pov, 'whoosh', -14, 0.3, 'cut: the grey, silent fair');
+add(B.colors - 0.2, 'blink', -8, 0, 'he blinks');
 add(B.colors - 1.4, 'reverse_swell', -8, 0, 'into the colour bloom');
 add(B.colors, 'harp_up', -2, 0, 'COLOUR floods back');
 add(B.colors + 0.05, 'magic', -8, 0, 'the warm ring of light spreads');
@@ -52,10 +53,12 @@ add(C.faces, 'whoosh', -10, 0.4, 'whip to the faces');
 add(C.faces + 0.1, 'giggle', -8, 0, 'people laughing');
 add(C.faces + 0.2, 'chime', -10, 0.4, 'golden light');
 // ---- 5. the hero seeing faces for the first time
-add(C.heroFace + 0.05, 'sparkle', -8, P(700), 'eyes full of light');
+add(C.heroFace, 'whoosh', -14, -0.3, 'cut');
+add(C.heroFace + 0.05, 'sparkle', -8, 0, 'eyes full of light');
 // ---- 6. "And you didn't need stats to know your brother."
 add(C.stand, 'whoosh', -12, -0.3, 'cut back to the bench');
-add(B.up, 'cloth', -8, P(700), 'he stands up');
+add(B.up, 'cloth', -8, P(700), 'he turns to Grandpa, a step');
+add(B.up + 0.2, 'step_soft', -12, P(700), 'step');
 add(B.fist, 'cloth', -6, P(700), 'fist up, determined');
 add(B.fist + 0.05, 'shine', -10, P(700), 'determination glint');
 // ---- 7. thinking: memory bubbles of who Max IS

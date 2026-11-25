@@ -1,0 +1,1247 @@
+{
+ "scene": "SC 08",
+ "start": 520.26,
+ "end": 589.62,
+ "music": [
+  {
+   "start": 520.26,
+   "end": 526.86,
+   "mood": "carnival",
+   "energy": 0.55,
+   "in": "cut",
+   "out": "cut"
+  },
+  {
+   "start": 526.86,
+   "end": 528.64,
+   "mood": "carnival",
+   "energy": 0.8,
+   "in": "cut",
+   "out": "cut"
+  },
+  {
+   "start": 528.64,
+   "end": 540.24,
+   "mood": "carnival",
+   "energy": 0.5,
+   "in": "cut",
+   "out": "cut"
+  },
+  {
+   "start": 540.24,
+   "end": 547.596,
+   "mood": "carnival",
+   "energy": 0.75,
+   "in": "cut",
+   "out": "scratch"
+  },
+  {
+   "start": 547.596,
+   "end": 549.88,
+   "mood": "silence",
+   "energy": 0,
+   "in": "cut",
+   "out": "cut"
+  },
+  {
+   "start": 549.88,
+   "end": 556.62,
+   "mood": "overload",
+   "energy": 0.55,
+   "in": "swell",
+   "out": "cut"
+  },
+  {
+   "start": 556.62,
+   "end": 559.98,
+   "mood": "overload",
+   "energy": 0.75,
+   "in": "cut",
+   "out": "cut"
+  },
+  {
+   "start": 559.98,
+   "end": 562.66,
+   "mood": "overload",
+   "energy": 1,
+   "in": "cut",
+   "out": "cut"
+  },
+  {
+   "start": 562.66,
+   "end": 579.26,
+   "mood": "overload",
+   "energy": 0.85,
+   "in": "cut",
+   "out": "cut"
+  },
+  {
+   "start": 579.26,
+   "end": 582.3,
+   "mood": "overload",
+   "energy": 1,
+   "in": "cut",
+   "out": "cut"
+  },
+  {
+   "start": 582.3,
+   "end": 589.62,
+   "mood": "sad",
+   "energy": 0.3,
+   "in": "fade",
+   "out": "fade"
+  }
+ ],
+ "ambience": [
+  {
+   "start": 520.26,
+   "end": 547.596,
+   "name": "crowd",
+   "gain_db": -10
+  },
+  {
+   "start": 547.596,
+   "end": 549.88,
+   "name": "crowd",
+   "gain_db": -16
+  },
+  {
+   "start": 549.88,
+   "end": 582.3,
+   "name": "crowd",
+   "gain_db": -8
+  },
+  {
+   "start": 559.98,
+   "end": 582.3,
+   "name": "static",
+   "gain_db": -16
+  },
+  {
+   "start": 582.3,
+   "end": 589.62,
+   "name": "wind",
+   "gain_db": -26
+  }
+ ],
+ "footsteps": [
+  {
+   "start": 520.26,
+   "end": 524.06,
+   "interval": 0.419,
+   "surface": "soft",
+   "gain_db": -10,
+   "pan": 0
+  },
+  {
+   "start": 526.86,
+   "end": 528.64,
+   "interval": 0.393,
+   "surface": "soft",
+   "gain_db": -12,
+   "pan": -0.2
+  },
+  {
+   "start": 571.984,
+   "end": 572.094,
+   "interval": 0.22,
+   "surface": "soft",
+   "gain_db": -8,
+   "pan": -0.3
+  }
+ ],
+ "sfx": [
+  [
+   520.26,
+   "whoosh",
+   -6,
+   0,
+   "whip in from home: the TOWN FAIR sign"
+  ],
+  [
+   520.26,
+   "tap",
+   -10,
+   0.6,
+   "\"SAT\" flashes in the HUD clock"
+  ],
+  [
+   521.41,
+   "whoosh_down",
+   -10,
+   0,
+   "tilt down from the sign to the family"
+  ],
+  [
+   521.5,
+   "achievement",
+   -4,
+   0,
+   "NEW AREA DISCOVERED: TOWN FAIR banner"
+  ],
+  [
+   522.627,
+   "ui_pop",
+   -9,
+   -0.139,
+   "mini plate pops over the family"
+  ],
+  [
+   522.747,
+   "ui_pop",
+   -9,
+   -0.04,
+   "mini plate pops over the family"
+  ],
+  [
+   522.867,
+   "ui_pop",
+   -9,
+   0.044,
+   "mini plate pops over the family"
+  ],
+  [
+   522.987,
+   "ui_pop",
+   -9,
+   0.139,
+   "mini plate pops over the family"
+  ],
+  [
+   523.71,
+   "ui_close",
+   -10,
+   0,
+   "banner folds away"
+  ],
+  [
+   524.06,
+   "whoosh",
+   -10,
+   0,
+   "cut to Mom"
+  ],
+  [
+   524.22,
+   "ui_pop",
+   -4,
+   -0.1,
+   "Mom's plate: LV 38, ENERGY 2%"
+  ],
+  [
+   525.28,
+   "cloth",
+   -8,
+   0,
+   "Mom stretches her arms up"
+  ],
+  [
+   525.33,
+   "click",
+   -4,
+   0.1,
+   "DAY OFF! tag slaps on"
+  ],
+  [
+   525.35,
+   "sparkle",
+   -8,
+   0.1,
+   "DAY OFF! sparkle"
+  ],
+  [
+   525.97,
+   "upgrade",
+   -4,
+   0,
+   "ENERGY rolls 2% -> 22%"
+  ],
+  [
+   526.02,
+   "money_counter",
+   -10,
+   0,
+   "energy number rolling"
+  ],
+  [
+   526.27,
+   "coin",
+   -8,
+   0.2,
+   "+20% ENERGY pop"
+  ],
+  [
+   526.86,
+   "whoosh_long",
+   -8,
+   0,
+   "crane over the dusk fair"
+  ],
+  [
+   527.21,
+   "ui_pop",
+   -15,
+   -0.6,
+   "plates over the crowd"
+  ],
+  [
+   527.43,
+   "ui_pop",
+   -15,
+   -0.2,
+   "plates over the crowd"
+  ],
+  [
+   527.65,
+   "ui_pop",
+   -15,
+   0.2,
+   "plates over the crowd"
+  ],
+  [
+   527.87,
+   "ui_pop",
+   -15,
+   0.6,
+   "plates over the crowd"
+  ],
+  [
+   528.64,
+   "whoosh",
+   -10,
+   0,
+   "cut to the family at the cotton candy stand"
+  ],
+  [
+   528.94,
+   "ui_pop",
+   -15,
+   0.4,
+   "plates pop around the hero"
+  ],
+  [
+   529.3,
+   "ui_pop",
+   -15,
+   0.4,
+   "plates pop around the hero"
+  ],
+  [
+   529.6,
+   "ui_pop",
+   -4,
+   -0.8,
+   "PARTY 4/4 panel pops"
+  ],
+  [
+   529.66,
+   "ui_pop",
+   -15,
+   0.4,
+   "plates pop around the hero"
+  ],
+  [
+   529.75,
+   "confirm",
+   -10,
+   -0.8,
+   "party roster"
+  ],
+  [
+   531.18,
+   "whoosh",
+   -10,
+   0,
+   "cut to Max"
+  ],
+  [
+   531.23,
+   "ui_pop",
+   -8,
+   0,
+   "MAX: CHAOS 9999"
+  ],
+  [
+   531.36,
+   "jump",
+   -12,
+   0,
+   "Max hops"
+  ],
+  [
+   531.73,
+   "jump",
+   -12,
+   0,
+   "Max hops"
+  ],
+  [
+   532.02,
+   "boing",
+   -6,
+   0,
+   "UP! big bounce"
+  ],
+  [
+   532.04,
+   "sparkle",
+   -10,
+   0,
+   "UP! focus lines"
+  ],
+  [
+   532.099,
+   "jump",
+   -12,
+   0,
+   "Max hops"
+  ],
+  [
+   532.469,
+   "jump",
+   -12,
+   0,
+   "Max hops"
+  ],
+  [
+   532.8,
+   "whoosh_up",
+   -8,
+   0,
+   "tilt up to the giant inflatable dinosaur"
+  ],
+  [
+   534.29,
+   "squeak",
+   -6,
+   0.2,
+   "the dinosaur's rubber eyes roll down to Max"
+  ],
+  [
+   534.74,
+   "sparkle",
+   -10,
+   0.25,
+   "twinkle by its head"
+  ],
+  [
+   535.54,
+   "whoosh",
+   -10,
+   0,
+   "cut back to Max hopping"
+  ],
+  [
+   537.96,
+   "camera_flash",
+   -2,
+   0,
+   "SNAP: freeze frame"
+  ],
+  [
+   538.06,
+   "paper",
+   -8,
+   0,
+   "polaroid card"
+  ],
+  [
+   538.41,
+   "notify",
+   -6,
+   0,
+   "JOURNAL UPDATED: MAX WANTS TO GO UP"
+  ],
+  [
+   538.96,
+   "ui_pop",
+   -15,
+   0.3,
+   "plates pop where he looks"
+  ],
+  [
+   539.06,
+   "whoosh",
+   -8,
+   -0.5,
+   "the card flies to the HUD corner"
+  ],
+  [
+   539.16,
+   "ui_pop",
+   -15,
+   0.3,
+   "plates pop where he looks"
+  ],
+  [
+   539.36,
+   "ui_pop",
+   -15,
+   0.3,
+   "plates pop where he looks"
+  ],
+  [
+   539.56,
+   "ui_pop",
+   -15,
+   0.3,
+   "plates pop where he looks"
+  ],
+  [
+   539.81,
+   "pop",
+   -6,
+   -0.6,
+   "journal slot lands (pulse)"
+  ],
+  [
+   540.24,
+   "whoosh",
+   -8,
+   0,
+   "cut to the sea of heads"
+  ],
+  [
+   542.57,
+   "ui_pop",
+   -9,
+   -0.7,
+   "wave of plates over every head"
+  ],
+  [
+   542.655,
+   "ui_pop",
+   -10,
+   -0.573,
+   "wave of plates over every head"
+  ],
+  [
+   542.67,
+   "money_counter",
+   -10,
+   0,
+   "numbers everywhere"
+  ],
+  [
+   542.74,
+   "ui_pop",
+   -11,
+   -0.445,
+   "wave of plates over every head"
+  ],
+  [
+   542.825,
+   "ui_pop",
+   -9,
+   -0.318,
+   "wave of plates over every head"
+  ],
+  [
+   542.91,
+   "ui_pop",
+   -10,
+   -0.191,
+   "wave of plates over every head"
+  ],
+  [
+   542.995,
+   "ui_pop",
+   -11,
+   -0.064,
+   "wave of plates over every head"
+  ],
+  [
+   543.08,
+   "ui_pop",
+   -9,
+   0.064,
+   "wave of plates over every head"
+  ],
+  [
+   543.165,
+   "ui_pop",
+   -10,
+   0.191,
+   "wave of plates over every head"
+  ],
+  [
+   543.25,
+   "ui_pop",
+   -11,
+   0.318,
+   "wave of plates over every head"
+  ],
+  [
+   543.335,
+   "ui_pop",
+   -9,
+   0.445,
+   "wave of plates over every head"
+  ],
+  [
+   543.42,
+   "ui_pop",
+   -10,
+   0.573,
+   "wave of plates over every head"
+  ],
+  [
+   543.505,
+   "ui_pop",
+   -11,
+   0.7,
+   "wave of plates over every head"
+  ],
+  [
+   544.26,
+   "whoosh_long",
+   -6,
+   -0.3,
+   "the camera flies over the crowd"
+  ],
+  [
+   544.56,
+   "ui_pop",
+   -16,
+   0.383,
+   "plates passing below"
+  ],
+  [
+   545.04,
+   "ui_pop",
+   -16,
+   0.146,
+   "plates passing below"
+  ],
+  [
+   545.52,
+   "ui_pop",
+   -16,
+   0.104,
+   "plates passing below"
+  ],
+  [
+   546,
+   "ui_pop",
+   -16,
+   -0.051,
+   "plates passing below"
+  ],
+  [
+   546.48,
+   "ui_pop",
+   -16,
+   0.186,
+   "plates passing below"
+  ],
+  [
+   546.96,
+   "ui_pop",
+   -16,
+   0.194,
+   "plates passing below"
+  ],
+  [
+   547.576,
+   "record_scratch",
+   -2,
+   0,
+   "\"Wait.\" (music stops)"
+  ],
+  [
+   547.646,
+   "swish",
+   -8,
+   0,
+   "he turns"
+  ],
+  [
+   548.628,
+   "whoosh",
+   -12,
+   0,
+   "cut to where Max stood"
+  ],
+  [
+   548.728,
+   "heartbeat",
+   -4,
+   0,
+   "nobody there"
+  ],
+  [
+   548.85,
+   "glitch",
+   -8,
+   -0.2,
+   "LAST SEEN hologram of Max"
+  ],
+  [
+   548.928,
+   "whoosh_up",
+   -16,
+   -0.2,
+   "his dino balloon drifts up"
+  ],
+  [
+   549.1,
+   "error",
+   -2,
+   -0.8,
+   "PARTY 3/4 — MAX: SIGNAL LOST / PLAYER NOT FOUND"
+  ],
+  [
+   549.88,
+   "whoosh",
+   -10,
+   0,
+   "cut to Mom's face"
+  ],
+  [
+   550.03,
+   "gulp",
+   -10,
+   0,
+   "joy -> panic"
+  ],
+  [
+   550.03,
+   "click",
+   -8,
+   0.4,
+   "WORRIED tag"
+  ],
+  [
+   550.97,
+   "zoom_in",
+   -6,
+   0,
+   "smash zoom"
+  ],
+  [
+   551.02,
+   "impact",
+   -4,
+   0,
+   "\"MAX!\""
+  ],
+  [
+   551.07,
+   "powerdown",
+   -6,
+   0.4,
+   "her ENERGY drains 22 -> 1"
+  ],
+  [
+   551.12,
+   "alarm_beep",
+   -12,
+   0.4,
+   "ENERGY 1% blinking"
+  ],
+  [
+   551.82,
+   "whoosh",
+   -10,
+   0,
+   "cut to the hero + Mom in the crowd"
+  ],
+  [
+   551.88,
+   "whoosh_down",
+   -8,
+   0,
+   "quest toast drops"
+  ],
+  [
+   552.08,
+   "notify",
+   -2,
+   0,
+   "NEW QUEST: Find Max"
+  ],
+  [
+   553.316,
+   "ui_pop",
+   -6,
+   0,
+   "quest arrow ring at his feet"
+  ],
+  [
+   553.616,
+   "beep",
+   -10,
+   0,
+   "FIND MAX · 120 m"
+  ],
+  [
+   555.132,
+   "glitch",
+   -4,
+   0,
+   "the arrow starts spinning"
+  ],
+  [
+   555.532,
+   "whoosh",
+   -12,
+   0,
+   "arrow spin"
+  ],
+  [
+   555.9,
+   "glitch_long",
+   -6,
+   0,
+   "LOCATION: UNKNOWN (scrambles)"
+  ],
+  [
+   556.62,
+   "whoosh",
+   -10,
+   0,
+   "cut to the crowd: plates jitter"
+  ],
+  [
+   556.68,
+   "alarm_beep",
+   -2,
+   0,
+   "WARNING"
+  ],
+  [
+   556.78,
+   "siren",
+   -10,
+   0,
+   "red edge pulse"
+  ],
+  [
+   557.9,
+   "glitch",
+   -6,
+   0.3,
+   "minimap floods with dots"
+  ],
+  [
+   558.74,
+   "zoom_in",
+   -4,
+   0,
+   "smash zoom on the hero"
+  ],
+  [
+   559.26,
+   "glitch_long",
+   0,
+   0,
+   "HUD OVERLOAD: the whole HUD glitches"
+  ],
+  [
+   559.28,
+   "impact",
+   -4,
+   0,
+   "red flash"
+  ],
+  [
+   559.31,
+   "static",
+   -8,
+   0,
+   "static"
+  ],
+  [
+   559.98,
+   "riser",
+   -6,
+   0,
+   "numbers rise over the sky, the rides, everyone"
+  ],
+  [
+   560.08,
+   "ui_pop",
+   -10,
+   -0.3,
+   "tooltip: Ferris wheel / cotton candy / cloud / sky"
+  ],
+  [
+   560.38,
+   "glitch",
+   -12,
+   0.319,
+   "flicker"
+  ],
+  [
+   560.48,
+   "ui_pop",
+   -10,
+   0.1,
+   "tooltip: Ferris wheel / cotton candy / cloud / sky"
+  ],
+  [
+   560.88,
+   "ui_pop",
+   -10,
+   -0.5,
+   "tooltip: Ferris wheel / cotton candy / cloud / sky"
+  ],
+  [
+   561.18,
+   "glitch",
+   -12,
+   -0.395,
+   "flicker"
+  ],
+  [
+   561.28,
+   "ui_pop",
+   -10,
+   0.6,
+   "tooltip: Ferris wheel / cotton candy / cloud / sky"
+  ],
+  [
+   561.98,
+   "glitch",
+   -12,
+   0.3,
+   "flicker"
+  ],
+  [
+   562.66,
+   "whoosh",
+   -6,
+   -0.4,
+   "whip pan 1 across plated faces"
+  ],
+  [
+   562.93,
+   "whoosh",
+   -6,
+   0.4,
+   "whip pan 2 across plated faces"
+  ],
+  [
+   563.48,
+   "whoosh",
+   -6,
+   -0.4,
+   "whip pan 3 across plated faces"
+  ],
+  [
+   564.3,
+   "zoom_in",
+   -8,
+   0,
+   "POV push into the crowd"
+  ],
+  [
+   566.16,
+   "glitch",
+   -4,
+   0,
+   "\"were numbers\": the flood jumps"
+  ],
+  [
+   567,
+   "slap",
+   -8,
+   -0.4,
+   "hand on a stranger's shoulder (12)"
+  ],
+  [
+   567.2,
+   "swish",
+   -10,
+   0,
+   "the stranger turns around"
+  ],
+  [
+   567.32,
+   "stamp",
+   -2,
+   0,
+   "plate slams over the face: LV 12"
+  ],
+  [
+   567.36,
+   "buzzer_wrong",
+   -12,
+   0,
+   "not Max"
+  ],
+  [
+   568.16,
+   "slap",
+   -8,
+   -0.4,
+   "hand on a stranger's shoulder (40)"
+  ],
+  [
+   568.36,
+   "swish",
+   -10,
+   0,
+   "the stranger turns around"
+  ],
+  [
+   568.52,
+   "stamp",
+   -2,
+   0,
+   "plate slams over the face: LV 40"
+  ],
+  [
+   568.56,
+   "buzzer_wrong",
+   -12,
+   0,
+   "not Max"
+  ],
+  [
+   569.28,
+   "slap",
+   -8,
+   -0.4,
+   "hand on a stranger's shoulder (8)"
+  ],
+  [
+   569.48,
+   "swish",
+   -10,
+   0,
+   "the stranger turns around"
+  ],
+  [
+   569.56,
+   "stamp",
+   -2,
+   0,
+   "plate slams over the face: LV 8"
+  ],
+  [
+   569.6,
+   "buzzer_wrong",
+   -12,
+   0,
+   "not Max"
+  ],
+  [
+   570.484,
+   "whoosh",
+   -12,
+   -0.4,
+   "spinning in the crowd"
+  ],
+  [
+   570.904,
+   "whoosh",
+   -12,
+   0.4,
+   "spinning in the crowd"
+  ],
+  [
+   571.2,
+   "impact",
+   -6,
+   0,
+   "\"FACES!\" shake"
+  ],
+  [
+   571.25,
+   "heartbeat",
+   -4,
+   0,
+   "panic"
+  ],
+  [
+   571.324,
+   "whoosh",
+   -12,
+   -0.4,
+   "spinning in the crowd"
+  ],
+  [
+   571.744,
+   "whoosh",
+   -12,
+   0.4,
+   "spinning in the crowd"
+  ],
+  [
+   571.984,
+   "whoosh",
+   -10,
+   0,
+   "cut: Mom runs in"
+  ],
+  [
+   572.094,
+   "cloth",
+   -4,
+   -0.1,
+   "Mom grabs his shoulders"
+  ],
+  [
+   572.494,
+   "glitch",
+   -12,
+   -0.2,
+   "the plate flickers over Mom's face"
+  ],
+  [
+   573.094,
+   "glitch",
+   -12,
+   -0.2,
+   "the plate flickers over Mom's face"
+  ],
+  [
+   573.694,
+   "glitch",
+   -12,
+   -0.2,
+   "the plate flickers over Mom's face"
+  ],
+  [
+   574.2,
+   "whoosh",
+   -10,
+   0,
+   "cut to the sea of plates"
+  ],
+  [
+   574.23,
+   "ui_pop",
+   -6,
+   0,
+   "search bar"
+  ],
+  [
+   574.38,
+   "typing",
+   -6,
+   0,
+   "G-R-E-E-N D-I-N-O-S-A-U-R"
+  ],
+  [
+   575.71,
+   "error",
+   -2,
+   0,
+   "2,413 MATCHES"
+  ],
+  [
+   575.76,
+   "money_counter",
+   -8,
+   0,
+   "match counter rolls"
+  ],
+  [
+   575.88,
+   "whoosh",
+   -10,
+   0,
+   "cut to his face"
+  ],
+  [
+   575.98,
+   "heartbeat",
+   -2,
+   0,
+   "heartbeat"
+  ],
+  [
+   577.16,
+   "whoosh_long",
+   -6,
+   0,
+   "pull back: every face a plate"
+  ],
+  [
+   578.64,
+   "glitch",
+   -2,
+   0,
+   "\"a number!\""
+  ],
+  [
+   579.26,
+   "glitch_long",
+   0,
+   0,
+   "the numbers fill the screen"
+  ],
+  [
+   579.31,
+   "static",
+   -4,
+   0,
+   "noise"
+  ],
+  [
+   579.36,
+   "cloth",
+   -8,
+   0,
+   "hands over his ears"
+  ],
+  [
+   579.96,
+   "heartbeat",
+   -2,
+   0,
+   "heartbeat"
+  ],
+  [
+   580.3,
+   "riser",
+   -4,
+   0,
+   "noise rising to the cut"
+  ],
+  [
+   580.46,
+   "glitch",
+   -6,
+   0.5,
+   "glitch burst"
+  ],
+  [
+   580.86,
+   "heartbeat",
+   -2,
+   0,
+   "heartbeat"
+  ],
+  [
+   581.46,
+   "glitch",
+   -6,
+   -0.5,
+   "glitch burst"
+  ],
+  [
+   582.3,
+   "sub_drop",
+   -4,
+   0,
+   "everything drops into silence (the flood freezes, goes cold)"
+  ],
+  [
+   585,
+   "whoosh_long",
+   -16,
+   0,
+   "slow pull back: alone in a sea of numbers"
+  ],
+  [
+   586.28,
+   "heartbeat",
+   -12,
+   0,
+   "one last heartbeat"
+  ]
+ ]
+}

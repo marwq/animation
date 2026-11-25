@@ -111,7 +111,7 @@ function sandwichAt(pose, side = 1, s = SANDWICH_S, rot = 0) {
   return X.sandwich({ x: p[0], y: p[1] - 16, s, rot });
 }
 const vis = (cam, x, pad = 300) => { const p = toScr(cam, x, 600); return p.x > -pad * p.z && p.x < 1920 + pad * p.z; };
-function lunchLady(t, cam) { return vis(cam, 1730) ? actor('lunchLady', t, { ...E.CF.lunchLady, turn: -0.3, face: t > CUT.saw && t < CUT.benji ? { name: 'sad', eyes: { look: [-0.7, 0] } } : 'happy' }) : ''; }
+function lunchLady(t, cam) { return vis(cam, 1730) ? actor('lunchLady', t, { ...E.CF.lunchLady, volume: false, turn: -0.3, face: t > CUT.saw && t < CUT.benji ? { name: 'sad', eyes: { look: [-0.7, 0] } } : 'happy' }) : ''; }
 // kids queuing in the lunch line: they shrink back as Tank passes
 function lineKids(t, cam) {
   if (t > CUT.saw) return '';
@@ -641,8 +641,8 @@ function scene(t) {
 }
 function look(t) {
   if (t >= CUT.boss && t < CUT.menu) return { grade: 'warm', vignette: 0.9 };
-  if (t >= CUT.saw && t < CUT.complete) return { grade: null, vignette: 0.85 };
-  if (t >= CUT.complete && t < CUT.benji) return { grade: 'warm', vignette: 0.7 };
+  if (t >= CUT.saw && t < CUT.complete) return { grade: null, vignette: 1 };
+  if (t >= CUT.complete && t < CUT.benji) return { grade: 'warm', vignette: 0.8 };
   return { grade: 'warm', vignette: 0.45 };
 }
 const BEATS = {

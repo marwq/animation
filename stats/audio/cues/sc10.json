@@ -255,16 +255,23 @@
   [
    644.99,
    "blink",
-   -8,
+   -10,
    -0.19,
-   "he opens his eyes"
+   "his eyes widen"
   ],
   [
-   645.89,
+   645.84,
+   "whoosh",
+   -14,
+   0.3,
+   "cut: the grey, silent fair"
+  ],
+  [
+   646.13,
    "blink",
-   -10,
+   -8,
    0,
-   "eyelids open"
+   "he blinks"
   ],
   [
    646.33,
@@ -351,10 +358,17 @@
    "golden light"
   ],
   [
+   649.77,
+   "whoosh",
+   -14,
+   -0.3,
+   "cut"
+  ],
+  [
    649.82,
    "sparkle",
    -8,
-   -0.19,
+   0,
    "eyes full of light"
   ],
   [
@@ -369,7 +383,14 @@
    "cloth",
    -8,
    -0.19,
-   "he stands up"
+   "he turns to Grandpa, a step"
+  ],
+  [
+   652.24,
+   "step_soft",
+   -12,
+   -0.19,
+   "step"
   ],
   [
    653.24,

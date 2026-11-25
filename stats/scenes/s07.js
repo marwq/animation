@@ -9,7 +9,7 @@
 // "Sorry, Mom. Gotta go." — a big gold +50 XP waypoint glows in the doorway, Mom's marker greys out; "It's okay, sweetheart.
 // I'm fine." (clean face) -> she is alone, ENERGY rolls 2% -> 1%, blinking. The living room: the hero rushing out skids to a
 // stop on Grandpa's "Kid." -> "Stats don't lie." (pointing at Grandpa's plate) -> "Maybe not. But they don't tell the whole
-// truth, either." (the plate flickers) -> the hero looks up at his own "???", the HUD clock rolls TUE -> SAT -> white (SC 08).
+// truth, either." (the plate flickers) -> the hero looks up at his own "???", the HUD clock rolls THU -> SAT -> white (SC 08).
 // Every cut and beat comes from the voice through times(V) (shared with audio/cues/gen_sc07.js).
 'use strict';
 
@@ -106,7 +106,7 @@ const TH = (t) => H.mixTheme('cyan', 'cold', coldK(t));
 const coldWash = (t, extra = 0) => wash('#5D6E82', 0.08 + 0.1 * coldK(t) + extra);
 const XPBAR = { level: 21, value: 0.3, text: '150 / 500' };            // = the end of SC 06
 function frame(t, o = {}) {
-  return H.hudFrame({ t, theme: TH(t), clock: o.clock || '10:15 AM', day: o.day || 'TUE', k: o.k ?? 1, quest: o.quest, questSub: o.questSub, dots: o.dots });
+  return H.hudFrame({ t, theme: TH(t), clock: o.clock || '10:15 AM', day: o.day || 'THU', k: o.k ?? 1, quest: o.quest, questSub: o.questSub, dots: o.dots });
 }
 const xpBar = (t, o = {}) => H.xpBar({ ...XPBAR, t, s: 0.9, w: 1600, y: 1052, ...o });
 // plate scale from the camera zoom
@@ -676,8 +676,8 @@ function shotTruth(t) {
   o += gpPlate(t, cam, { s: 1.25, k: seg(t, C.truth + 0.1, C.truth + 0.5), glitch: gl, fade: 0.35 + 0.65 * seg(t, B.whole + 0.5, B.whole + 0.9) });
   return o;
 }
-// 26 — the beat: the hero, alone, looks up at his own "???"; the HUD clock rolls TUE -> SAT; white (SC 08: Saturday, the fair)
-const DAYS = ['TUE', 'WED', 'THU', 'FRI', 'SAT'];
+// 26 — the beat: the hero, alone, looks up at his own "???"; the HUD clock rolls THU -> SAT; white (SC 08: Saturday, the fair)
+const DAYS = ['THU', 'FRI', 'SAT'];                                     // SC 06 ended on WED
 function shotOut(t) {
   const u = seg(t, C.out, END);
   const cam = camLerp(camAt(HSKID + 20, 640, 2.0), camAt(HSKID + 20, 610, 2.45), u, ease.inOut);
@@ -714,4 +714,4 @@ function look(t) {
   return { grade: 'cool', vignette: 0.85 };
 }
 
-module.exports = { scene, look, times, TIMES: TM, CUT: C, BEATS: B };
+module.exports = { scene, look, times, DAYS, TIMES: TM, CUT: C, BEATS: B };
