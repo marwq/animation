@@ -365,7 +365,7 @@ function shTwenty(t) {
 // ---- the lunch table with Tank (days): Tank at Benji's seat, Benji further left, the hero splits his sandwich
 const TANK_SEAT = { x: 540, y: HERO_Y + 20, s: 0.5 };
 function tankDay(t, cam, o = {}) {
-  const tank = { ...TANK_SEAT, turn: 0.3, ...(o.tank || {}), ...((cam.zoom || 1) >= 1.5 ? { volume: false } : {}) };
+  const tank = { ...TANK_SEAT, turn: 0.3, ...(o.tank || {}), volume: false };
   const table = actor('tank', t, tank, o.tankAct || {}) + (o.food || '');
   const benji = { x: 300, face: o.benjiFace || { name: 'joy', eyes: { look: [0.9, 0] } } };
   return { svg: cafWorld(t, cam, { hero: o.hero || {}, heroAct: o.heroAct || {}, benjiPose: benji, tank: false, sandwich: false, bag: false, table, quiet: 0, clock: o.clock }), tank };
@@ -422,9 +422,10 @@ function shGood(t) {
 }
 // ---- the living room (Grandpa's glasses, Max's fort)
 const GP = { x: 1430, y: 1000, s: 0.5 };
+const flat = (p) => ({ ...p, volume: false });
 const heroCouch = (extra = {}) => SH.seatPose(LV.seats.couchR, 1, extra);
 function livingShot(t, cam, o = {}) {
-  const NV = (cam.zoom || 1) >= 1.25 ? { volume: false } : {};      // Grandpa's filtered rig is the costliest in the cast
+  const NV = { volume: false };      // flat rigs in the living room (Grandpa's filtered rig is the costliest in the cast)
   const seated = o.heroSeated === false ? '' : actor('you', t, { ...heroCouch(), ...NV, ...(o.hero || {}) }, o.heroAct || {});
   const gp = o.gramps === false ? '' : actor('grandpa', t, { ...GP, ...NV, ...(o.gp || {}) }, o.gpAct || {});
   return living(t, cam, { fort: o.fort || 0, time: 'day' }, seated + (o.seated || ''), (o.behind || '') + gp + (o.standing || ''), o.over || '');
@@ -488,7 +489,7 @@ const LINE = '#151515';
 function shEasiest(t) {
   const cam = camKeys(t, [[CUT.easiest, camAt(1300, 620, 1.3)], [CUT.max, camAt(1280, 620, 1.36)]], ease.linear);
   const shrug = bump(t, CUT.easiest + 0.3, CUT.easiest + 1.3);
-  const seatGP = SH.seatPose(LV.seats.armchair, 1.12, { glasses: 'on', armL: 30, armR: 30, bendL: -100, bendR: -100, face: { name: 'happy', eyes: { look: [0, 0.6] } } });
+  const seatGP = SH.seatPose(LV.seats.armchair, 1.12, { volume: false, glasses: 'on', armL: 30, armR: 30, bendL: -100, bendR: -100, face: { name: 'happy', eyes: { look: [0, 0.6] } } });
   const paper = S.g(S.rect(-130, -90, 260, 180, 6, ol('#F4F1E8', 5)) + S.path('M-110 -60 H110 M-110 -30 H40 M-110 0 H110 M-110 30 H60', ln(6, '#9AA0AE')) + K.TF('THE ARM', 0, -66, 24, '#3A3456'), tf(LV.seats.armchair.x - 6, LV.seats.armchair.hip - 120, 0.6));
   const o = livingShot(t, cam, { gramps: false, seated: actor('grandpa', t, seatGP, { arms: false }) + paper, hero: { armL: 60 + 40 * shrug, armR: 60 + 40 * shrug, bendL: 60 * shrug, bendR: 60 * shrug, headRot: 6 * shrug, face: { name: 'deadpan', eyes: { type: shrug > 0.5 ? 'closed' : undefined } } }, heroAct: { arms: false } });
   const pop_ = E.stamp({ k: seg(t, w(11, 'history') - 0.1, w(11, 'history') + 0.2), x: 1340, y: 300, text: 'NEW RECORD', sub: 'FASTEST QUEST · 2.7 S', col: '#E8333C', size: 84 });
@@ -500,7 +501,7 @@ function shMax(t) {
   const run = seg(t, CUT.max, CUT.max + 0.9);
   const mx = lerp(2150, 1330, ease.out(run));
   const mp = run < 1 ? { x: mx, y: 1000, s: 0.5, view: 'side', ...AC.run((t - CUT.max) * 18, 1), face: 'excited' } : { x: mx, y: 1000, s: 0.5, turn: -0.4, lift: 30 * Math.abs(Math.sin(t * 8)), armL: 140, armR: 140, face: 'excited' };
-  const o = livingShot(t, cam, { gramps: false, seated: actor('grandpa', t, SH.seatPose(LV.seats.armchair, 1.12, { glasses: 'on', face: { name: 'amazed', eyes: { look: [0.5, 0] } } })), standing: actor('max', t, mp, { arms: run < 1 ? false : true }), hero: { face: { name: 'shocked', eyes: { look: [0.9, 0] } } } });
+  const o = livingShot(t, cam, { gramps: false, seated: actor('grandpa', t, SH.seatPose(LV.seats.armchair, 1.12, { volume: false, glasses: 'on', face: { name: 'amazed', eyes: { look: [0.5, 0] } } })), standing: actor('max', t, flat(mp), { arms: run < 1 ? false : true }), hero: { face: { name: 'shocked', eyes: { look: [0.9, 0] } } } });
   const pop_ = H.pillowFort({ t, k: seg(t, tPillow - 0.15, tPillow + 0.6), x: 700, y: 330, s: 0.85 });
   return compose(t, o, { pop: pop_, clock: '6:20 PM', day: 'SAT' });
 }
@@ -509,7 +510,7 @@ function shEver(t) {
   const cam = shakeAll(camKeys(t, [[CUT.ever, camAt(1330, 760, 1.8)], [tEVER - 0.05, camAt(1330, 760, 1.85)], [tEVER + 0.12, camAt(1330, 730, 2.4)], [CUT.build, camAt(1330, 730, 2.45)]], ease.out), t, [[tEVER, 0.4, 14]]);
   const roar = t > tEVER - 0.1;
   const mp = { x: 1330, y: 1000, s: 0.5, turn: -0.2, volume: false, ...(roar ? { roar: true } : { armL: 150, armR: 150, lift: 20 * Math.abs(Math.sin(t * 9)) }), face: roar ? { name: 'angry', mouth: 'scream', eyes: { type: 'star' } } : 'excited' };
-  const o = livingShot(t, cam, { gramps: false, heroSeated: false, standing: actor('max', t, mp, { arms: false }) });
+  const o = livingShot(t, cam, { gramps: false, heroSeated: false, standing: actor('max', t, flat(mp), { arms: false }) });
   const pop_ = H.pillowFort({ t, k: 1, x: 600, y: 330, s: 0.75 }) + K.bang('RAWR!', 1450, 330, pop(t, tEVER + 0.05, 0.2), 120, -8, '#7CFF6B');
   let fx = t > tEVER ? zoomLines(960, 500, 0.7 * (1 - seg(t, tEVER + 0.3, tEVER + 0.9)), t, '#C8FFB8') : '';
   return compose(t, o, { fx, pop: pop_, clock: '6:20 PM', day: 'SAT' }) + smash(t, tEVER + 0.02, 0.1, 0.4);
@@ -534,7 +535,7 @@ function shBuild(t) {
   const fortX = X.pillowFort({ ...LV.fort, k, t });
   const mp = { x: 520, y: 1000, s: 0.5, turn: 0.4, armL: 150 + 20 * Math.sin(t * 20), armR: 150 - 20 * Math.sin(t * 20), lift: 20 * Math.abs(Math.sin(t * 14)), face: 'joy' };
   const hp = { x: 1300, y: 1000, s: 0.5, turn: -0.4, armL: 90 + 70 * Math.sin(t * 16), armR: 90 - 70 * Math.sin(t * 16), face: 'determined' };
-  const o = livingShot(t, cam, { fort: k, gramps: false, heroSeated: false, standing: fortX + actor('max', t, mp, { arms: false }) + actor('you', t, hp, { arms: false }), over: flyingCushions(t, CUT.build, CUT.reveal) });
+  const o = livingShot(t, cam, { fort: k, gramps: false, heroSeated: false, standing: fortX + actor('max', t, flat(mp), { arms: false }) + actor('you', t, flat(hp), { arms: false }), over: flyingCushions(t, CUT.build, CUT.reveal) });
   const ff = S.g(S.path('M0 -30 L40 0 L0 30 Z M44 -30 L84 0 L44 30 Z', ol('#FFFFFF', 5)) + TFS('×8', 140, 22, 60, '#FFFFFF'), tf(1420, 120, 1));
   return compose(t, o, { fx: streaks(t, 120, 900, 8, 7, '#FFFFFF', 0.25, 3000, 1), pop: ff, clock: k > 0.5 ? '7:40 PM' : '6:55 PM', day: 'SAT' });
 }
@@ -543,7 +544,7 @@ function shReveal(t) {
   const cam = camKeys(t, [[CUT.reveal, { zoom: 1.05, x: -60, y: 0 }], [CUT.hundred, { zoom: 0.85, x: -100, y: -60 }]], ease.out);
   const mp = { x: 860, y: 935, s: 0.47, turn: 0, armL: 160, armR: 160, lift: 18 * Math.abs(Math.sin(t * 10)), face: 'joy' };
   const hp = { x: 1360, y: 1000, s: 0.5, turn: -0.3, armL: 40, armR: 150, face: { name: 'joy', eyes: { type: 'happy' } } };
-  const o = livingShot(t, cam, { fort: 1, gramps: false, heroSeated: false, seated: actor('grandpa', t, SH.seatPose(LV.seats.armchair, 1.12, { glasses: 'on', face: { name: 'amazed', mouth: 'O' } })), standing: X.pillowFort({ ...LV.fort, k: 1, t }) + actor('max', t, mp, { arms: false }) + actor('you', t, hp, { arms: false }) });
+  const o = livingShot(t, cam, { fort: 1, gramps: false, heroSeated: false, seated: actor('grandpa', t, SH.seatPose(LV.seats.armchair, 1.12, { volume: false, glasses: 'on', face: { name: 'amazed', mouth: 'O' } })), standing: X.pillowFort({ ...LV.fort, k: 1, t }) + actor('max', t, flat(mp), { arms: false }) + actor('you', t, flat(hp), { arms: false }) });
   const pop_ = H.questComplete({ t, k: seg(t, tEpic - 0.5, tEpic + 0.8), epic: true, reward: '+100 XP', y: 200, s: 0.82 });
   return compose(t, o, { pop: pop_, clock: '7:41 PM', day: 'SAT' }) + smash(t, CUT.reveal, 0.12, 0.6);
 }
@@ -553,7 +554,7 @@ function shHundred(t) {
   const mp = { x: 860, y: 935, s: 0.47, armL: 160, armR: 160, lift: 18 * Math.abs(Math.sin(t * 10)), face: 'joy' };
   const hp = { x: 1360, y: 1000, s: 0.5, turn: -0.2, armL: 160, armR: 160, lift: 30 * bump(t, tLvl21 - 0.1, tLvl21 + 0.4), face: { name: 'joy', eyes: { type: 'star' } } };
   const dog = X.biscuit({ ...LV.dogBed.dog, pose: 'beg', t, face: 'happy' });
-  const o = livingShot(t, cam, { fort: 1, gramps: false, heroSeated: false, seated: actor('grandpa', t, SH.seatPose(LV.seats.armchair, 1.12, { glasses: 'on', armL: 150, armR: 150, face: 'joy' }), { arms: false }), standing: X.pillowFort({ ...LV.fort, k: 1, t }) + dog + actor('max', t, mp, { arms: false }) + actor('you', t, hp, { arms: false }) });
+  const o = livingShot(t, cam, { fort: 1, gramps: false, heroSeated: false, seated: actor('grandpa', t, SH.seatPose(LV.seats.armchair, 1.12, { volume: false, glasses: 'on', armL: 150, armR: 150, face: 'joy' }), { arms: false }), standing: X.pillowFort({ ...LV.fort, k: 1, t }) + dog + actor('max', t, flat(mp), { arms: false }) + actor('you', t, flat(hp), { arms: false }) });
   let pop_ = H.xpPop({ x: 860, y: 260, age: t - tPop100, amount: 100, s: 1.5, to: barTo(tLand100) });
   pop_ += H.levelUp({ t, k: seg(t, tLvl21 - 0.1, tLvl21 + 1.2), from: 20, level: 21, x: 1300, y: 330, s: 0.8, out: seg(t, tLvl21 + 1.6, tLvl21 + 2.0) }) + K.confetti(t, tLvl21, 60, 11);
   return compose(t, o, { pop: pop_, clock: '7:41 PM', day: 'SAT' });
@@ -563,7 +564,7 @@ function shStare(t) {
   const cam = camKeys(t, [[CUT.stare, camAt(1360, 610, 2.3)], [CUT.slowly, camAt(1360, 612, 2.6)]], ease.linear);
   const cold = seg(t, CUT.stare + 0.4, CUT.slowly);
   const hp = { x: 1360, y: 1000, s: 0.5, turn: 0, armL: 14, armR: 14, volume: false, face: { name: 'smug', mouth: 'smirk', eyes: { look: [0, 0.4], type: t < CUT.stare + 0.6 ? 'star' : undefined } } };
-  const o = livingShot(t, cam, { fort: 1, gramps: false, heroSeated: false, standing: X.pillowFort({ ...LV.fort, k: 1, t }) + actor('you', t, hp, { arms: false }) });
+  const o = livingShot(t, cam, { fort: 1, gramps: false, heroSeated: false, standing: X.pillowFort({ ...LV.fort, k: 1, t }) + actor('you', t, flat(hp), { arms: false }) });
   // XP numbers reflected in his eyes
   const e = toScr(cam, 1360, 1000 - 0.5 * 951 + 138);
   const k = seg(cold, 0.15, 0.5);

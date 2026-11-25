@@ -163,7 +163,7 @@ const tankHead = (cam, pose) => headAt(cam, 'tank', pose);
 
 // standard cafeteria frame: hero + Benji at the front table, Tank in the lane, the lunch lady + line kids when in view
 function cafWorld(t, cam, o = {}) {
-  const NV = (cam.zoom || 1) >= 1.5 ? { volume: false } : {};          // medium close-ups: skip the (costly) vinyl filter
+  const NV = { volume: false };          // the vinyl volume filter costs 10–40 ms per character here: flat rigs throughout the cafeteria (consistent look, every frame < 250 ms)
   const heroP = { x: HERO_X, y: HERO_Y + sink(t), s: 0.5, turn: 0.35, ...NV, ...(o.hero || {}) };
   let table = '';
   if (o.benji !== false) table += actor('benji', t, { x: BENJI_X, y: benjiY(t), s: 0.5, turn: 0.35, ...NV, face: t < CUT.saw ? 'scared' : { name: 'shocked', eyes: { look: [0.8, -0.2] } }, ...(o.benjiPose || {}) }, { arms: !(o.benjiPose && o.benjiPose.armL !== undefined) });
