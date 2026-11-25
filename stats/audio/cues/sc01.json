@@ -1,0 +1,1123 @@
+{
+ "scene": "SC 01",
+ "start": 0,
+ "end": 43.71,
+ "music": [
+  {
+   "start": 0,
+   "end": 6.91,
+   "mood": "levelup",
+   "energy": 0.65,
+   "in": "cut",
+   "out": "cut"
+  },
+  {
+   "start": 6.91,
+   "end": 13.22,
+   "mood": "boss",
+   "energy": 0.75,
+   "in": "cut",
+   "out": "cut"
+  },
+  {
+   "start": 13.22,
+   "end": 15.794,
+   "mood": "boss",
+   "energy": 0.6,
+   "in": "cut",
+   "out": "fade"
+  },
+  {
+   "start": 15.794,
+   "end": 19.291,
+   "mood": "mystery",
+   "energy": 0.3,
+   "in": "fade",
+   "out": "cut"
+  },
+  {
+   "start": 19.291,
+   "end": 24.7,
+   "mood": "chaos",
+   "energy": 0.9,
+   "in": "cut",
+   "out": "sting"
+  },
+  {
+   "start": 24.7,
+   "end": 29.69,
+   "mood": "quest",
+   "energy": 0.5,
+   "in": "cut",
+   "out": "fade"
+  },
+  {
+   "start": 29.69,
+   "end": 36.218,
+   "mood": "mystery",
+   "energy": 0.35,
+   "in": "fade",
+   "out": "cut"
+  },
+  {
+   "start": 36.218,
+   "end": 39.32,
+   "mood": "playful",
+   "energy": 0.65,
+   "in": "cut",
+   "out": "scratch"
+  },
+  {
+   "start": 39.32,
+   "end": 41.81,
+   "mood": "silence",
+   "energy": 0,
+   "in": "cut",
+   "out": "cut"
+  },
+  {
+   "start": 41.81,
+   "end": 43.71,
+   "mood": "levelup",
+   "energy": 1,
+   "in": "cut",
+   "out": "sting"
+  }
+ ],
+ "ambience": [
+  {
+   "start": 0,
+   "end": 6.91,
+   "name": "crowd",
+   "gain_db": -16
+  },
+  {
+   "start": 6.91,
+   "end": 13.22,
+   "name": "crowd",
+   "gain_db": -26
+  },
+  {
+   "start": 13.22,
+   "end": 24.7,
+   "name": "crowd",
+   "gain_db": -18
+  },
+  {
+   "start": 24.7,
+   "end": 29.69,
+   "name": "crowd",
+   "gain_db": -14
+  },
+  {
+   "start": 29.69,
+   "end": 32.17,
+   "name": "crowd",
+   "gain_db": -26
+  },
+  {
+   "start": 32.17,
+   "end": 33.26,
+   "name": "crowd",
+   "gain_db": -20
+  },
+  {
+   "start": 33.26,
+   "end": 39.32,
+   "name": "room",
+   "gain_db": -16
+  }
+ ],
+ "footsteps": [
+  {
+   "start": 0.32,
+   "end": 1.98,
+   "interval": 0.365,
+   "surface": "hard",
+   "gain_db": -16,
+   "pan": 0
+  },
+  {
+   "start": 1.98,
+   "end": 4.19,
+   "interval": 0.449,
+   "surface": "hard",
+   "gain_db": -18,
+   "pan": 0.1
+  },
+  {
+   "start": 4.73,
+   "end": 5.53,
+   "interval": 0.524,
+   "surface": "hard",
+   "gain_db": -10,
+   "pan": 0.211
+  },
+  {
+   "start": 10.328,
+   "end": 12.578,
+   "interval": 0.175,
+   "surface": "hard",
+   "gain_db": -12,
+   "pan": -0.2
+  },
+  {
+   "start": 13.22,
+   "end": 15.794,
+   "interval": 0.604,
+   "surface": "hard",
+   "gain_db": -4,
+   "pan": 0
+  },
+  {
+   "start": 20.41,
+   "end": 23.41,
+   "interval": 0.157,
+   "surface": "hard",
+   "gain_db": -10,
+   "pan": 0
+  },
+  {
+   "start": 29.69,
+   "end": 31.17,
+   "interval": 0.698,
+   "surface": "hard",
+   "gain_db": -16,
+   "pan": 0
+  },
+  {
+   "start": 32.72,
+   "end": 33.26,
+   "interval": 0.449,
+   "surface": "hard",
+   "gain_db": -14,
+   "pan": 0.1
+  }
+ ],
+ "sfx": [
+  [
+   0,
+   "tv_on",
+   -2,
+   0,
+   "the HUD \"eyelid\" opens (CRT line)"
+  ],
+  [
+   0.05,
+   "glitch",
+   -8,
+   0,
+   "boot glitch"
+  ],
+  [
+   0.27,
+   "ui_pop",
+   -6,
+   0,
+   "HUD frame brackets fly in"
+  ],
+  [
+   0.47,
+   "ui_pop",
+   -3,
+   -0.15,
+   "plate 1 pops over a student"
+  ],
+  [
+   0.58,
+   "ui_pop",
+   -3,
+   0.19,
+   "plate 2 pops over a student"
+  ],
+  [
+   0.62,
+   "beep",
+   -12,
+   0.6,
+   "minimap radar on"
+  ],
+  [
+   0.69,
+   "ui_pop",
+   -10,
+   -0.23,
+   "plate 3 pops over a student"
+  ],
+  [
+   0.8,
+   "ui_pop",
+   -8,
+   0.27,
+   "plate 4 pops over a student"
+  ],
+  [
+   0.91,
+   "ui_pop",
+   -9,
+   -0.31,
+   "plate 5 pops over a student"
+  ],
+  [
+   1.02,
+   "ui_pop",
+   -10,
+   0.35,
+   "plate 6 pops over a student"
+  ],
+  [
+   1.13,
+   "ui_pop",
+   -8,
+   -0.39,
+   "plate 7 pops over a student"
+  ],
+  [
+   1.24,
+   "ui_pop",
+   -9,
+   0.43,
+   "plate 8 pops over a student"
+  ],
+  [
+   1.35,
+   "ui_pop",
+   -10,
+   -0.47,
+   "plate 9 pops over a student"
+  ],
+  [
+   1.43,
+   "money_counter",
+   -14,
+   0,
+   "numbers roll in the plates"
+  ],
+  [
+   1.46,
+   "ui_pop",
+   -8,
+   0.51,
+   "plate 10 pops over a student"
+  ],
+  [
+   1.57,
+   "ui_pop",
+   -9,
+   -0.55,
+   "plate 11 pops over a student"
+  ],
+  [
+   1.68,
+   "ui_pop",
+   -10,
+   0.59,
+   "plate 12 pops over a student"
+  ],
+  [
+   1.94,
+   "whoosh",
+   -8,
+   0.3,
+   "cut to the long hall"
+  ],
+  [
+   2.28,
+   "ui_pop",
+   -6,
+   -0.1,
+   "JAY · SKILL: NAPPING"
+  ],
+  [
+   2.58,
+   "ui_pop",
+   -6,
+   0.3,
+   "COACH · WHISTLE: LEGENDARY"
+  ],
+  [
+   2.73,
+   "whistle",
+   -18,
+   0.35,
+   "the coach toots his whistle (far)"
+  ],
+  [
+   2.82,
+   "zoom_in",
+   -8,
+   0,
+   "push on \"real life?\""
+  ],
+  [
+   4.32,
+   "door_open",
+   -4,
+   0.168,
+   "Room 12 door swings open"
+  ],
+  [
+   4.73,
+   "crowd_gasp",
+   -12,
+   0,
+   "the hall freezes"
+  ],
+  [
+   5.13,
+   "ui_pop",
+   -2,
+   0.211,
+   "her plate pops (LV 99)"
+  ],
+  [
+   5.38,
+   "money_counter",
+   -12,
+   0.211,
+   "LV counts to 99"
+  ],
+  [
+   6.91,
+   "dramatic",
+   0,
+   0,
+   "FINAL BOSS sting (smash close-up)"
+  ],
+  [
+   6.93,
+   "impact",
+   -4,
+   0,
+   "the boss bar slams in"
+  ],
+  [
+   7.39,
+   "shine",
+   -2,
+   0.1,
+   "glasses glint"
+  ],
+  [
+   7.39,
+   "orch_hit",
+   -6,
+   0,
+   "boss hit"
+  ],
+  [
+   8.136,
+   "electric",
+   -14,
+   0,
+   "the hall lights flicker"
+  ],
+  [
+   8.436,
+   "electric",
+   -14,
+   0,
+   "the hall lights flicker"
+  ],
+  [
+   8.8,
+   "swish",
+   -4,
+   0.2,
+   "pointer whips up"
+  ],
+  [
+   8.85,
+   "cloth",
+   -12,
+   0.1,
+   "cardigan"
+  ],
+  [
+   10.378,
+   "whoosh",
+   -10,
+   -0.6,
+   "kids sprint past"
+  ],
+  [
+   10.528,
+   "paper",
+   -10,
+   -0.4,
+   "homework flutters"
+  ],
+  [
+   10.828,
+   "paper",
+   -10,
+   -0.15,
+   "homework flutters"
+  ],
+  [
+   11.128,
+   "paper",
+   -10,
+   0.1,
+   "homework flutters"
+  ],
+  [
+   11.428,
+   "paper",
+   -10,
+   0.35,
+   "homework flutters"
+  ],
+  [
+   12.39,
+   "boom",
+   2,
+   0,
+   "NOW. — smash-zoom"
+  ],
+  [
+   12.41,
+   "wind_gust",
+   -6,
+   0,
+   "the shockwave rings"
+  ],
+  [
+   12.47,
+   "paper",
+   -6,
+   0,
+   "papers blasted away"
+  ],
+  [
+   13.22,
+   "rumble",
+   -12,
+   0,
+   "heavy footsteps approach"
+  ],
+  [
+   13.37,
+   "crowd_gasp",
+   -8,
+   0,
+   "kids flatten against the lockers"
+  ],
+  [
+   13.47,
+   "whoosh",
+   -10,
+   -0.4,
+   "a kid dives left"
+  ],
+  [
+   13.522,
+   "thud",
+   -10,
+   0,
+   "stomp (camera shake)"
+  ],
+  [
+   13.62,
+   "whoosh",
+   -10,
+   0.4,
+   "a kid dives right"
+  ],
+  [
+   14.126,
+   "thud",
+   -9,
+   0,
+   "stomp (camera shake)"
+  ],
+  [
+   14.37,
+   "ui_pop",
+   -2,
+   0,
+   "Tank's plate (LV 80)"
+  ],
+  [
+   14.62,
+   "money_counter",
+   -12,
+   0,
+   "LV counts to 80"
+  ],
+  [
+   14.73,
+   "thud",
+   -8,
+   0,
+   "stomp (camera shake)"
+  ],
+  [
+   15.335,
+   "thud",
+   -7,
+   0,
+   "stomp (camera shake)"
+  ],
+  [
+   15.939,
+   "thud",
+   -6,
+   0,
+   "stomp (camera shake)"
+  ],
+  [
+   16.29,
+   "zoom_in",
+   -6,
+   0,
+   "push into the HP bar"
+  ],
+  [
+   16.39,
+   "heartbeat",
+   -6,
+   0,
+   "heartbeat"
+  ],
+  [
+   16.49,
+   "alarm_beep",
+   -10,
+   0,
+   "HP 3/100 blinking red"
+  ],
+  [
+   17.51,
+   "heartbeat",
+   -4,
+   0,
+   "heartbeat on \"zero\""
+  ],
+  [
+   17.56,
+   "alarm_beep",
+   -8,
+   0,
+   "low HP warning"
+  ],
+  [
+   18.34,
+   "monster_growl",
+   -14,
+   0,
+   "Tank's stomach growls (grrrumble...)"
+  ],
+  [
+   19.412,
+   "metal_clank",
+   -8,
+   -0.073,
+   "thump — the locker rattles"
+  ],
+  [
+   19.698,
+   "metal_clank",
+   -8,
+   -0.073,
+   "thump — the locker rattles"
+  ],
+  [
+   19.87,
+   "metal_hit",
+   0,
+   -0.073,
+   "BANG! the locker bursts open"
+  ],
+  [
+   19.89,
+   "explosion_small",
+   -8,
+   -0.073,
+   "papers explode out"
+  ],
+  [
+   19.92,
+   "whoosh_up",
+   -6,
+   -0.117,
+   "Max leaps out"
+  ],
+  [
+   20.29,
+   "land",
+   -4,
+   0.029,
+   "Max lands"
+  ],
+  [
+   20.36,
+   "ui_pop",
+   -2,
+   0,
+   "Max's plate"
+  ],
+  [
+   20.41,
+   "whoosh",
+   -6,
+   0.3,
+   "Max takes off"
+  ],
+  [
+   21.026,
+   "bonk",
+   -4,
+   0,
+   "Max bowls a kid over"
+  ],
+  [
+   21.076,
+   "boing",
+   -10,
+   -0.2,
+   "the kid spins"
+  ],
+  [
+   21.126,
+   "paper",
+   -14,
+   0,
+   "papers fly"
+  ],
+  [
+   21.23,
+   "money_counter",
+   -6,
+   0,
+   "CHAOS counts up"
+  ],
+  [
+   21.47,
+   "money_counter",
+   -6,
+   0,
+   "CHAOS counts up"
+  ],
+  [
+   21.79,
+   "bonk",
+   -4,
+   0,
+   "Max bowls a kid over"
+  ],
+  [
+   21.84,
+   "boing",
+   -10,
+   0.2,
+   "the kid spins"
+  ],
+  [
+   21.89,
+   "paper",
+   -14,
+   0,
+   "papers fly"
+  ],
+  [
+   22.19,
+   "money_counter",
+   -6,
+   0,
+   "CHAOS counts up"
+  ],
+  [
+   22.51,
+   "money_counter",
+   -6,
+   0,
+   "CHAOS counts up"
+  ],
+  [
+   22.555,
+   "bonk",
+   -4,
+   0,
+   "Max bowls a kid over"
+  ],
+  [
+   22.605,
+   "boing",
+   -10,
+   -0.2,
+   "the kid spins"
+  ],
+  [
+   22.655,
+   "paper",
+   -14,
+   0,
+   "papers fly"
+  ],
+  [
+   22.81,
+   "slide_up",
+   -6,
+   0.2,
+   "CHAOS overflows: 9999!"
+  ],
+  [
+   22.83,
+   "sparkle",
+   -8,
+   0.2,
+   "overflow sparks"
+  ],
+  [
+   23.156,
+   "bonk",
+   -4,
+   0,
+   "Max bowls a kid over"
+  ],
+  [
+   23.206,
+   "boing",
+   -10,
+   0.2,
+   "the kid spins"
+  ],
+  [
+   23.256,
+   "paper",
+   -14,
+   0,
+   "papers fly"
+  ],
+  [
+   23.49,
+   "skid",
+   -4,
+   0,
+   "Max skids to a stop"
+  ],
+  [
+   23.63,
+   "monster_roar",
+   -2,
+   0,
+   "RAWR! (softened, pitched cute)"
+  ],
+  [
+   23.65,
+   "boom",
+   -6,
+   0,
+   "smash-zoom"
+  ],
+  [
+   23.73,
+   "crowd_gasp",
+   -10,
+   0,
+   "kids blown back"
+  ],
+  [
+   25.35,
+   "splat",
+   -6,
+   0.612,
+   "a ladle of mystery meat"
+  ],
+  [
+   25.77,
+   "ui_pop",
+   -2,
+   0,
+   "her plate pops (LV 50)"
+  ],
+  [
+   26.02,
+   "money_counter",
+   -12,
+   0,
+   "LV counts to 50"
+  ],
+  [
+   26.45,
+   "splat",
+   -6,
+   0.612,
+   "a ladle of mystery meat"
+  ],
+  [
+   27.26,
+   "stamp",
+   -2,
+   0.3,
+   "SECRET SKILL: MYSTERY MEAT slaps on"
+  ],
+  [
+   28.33,
+   "zoom_in",
+   -4,
+   0,
+   "smash-zoom on the pan"
+  ],
+  [
+   28.38,
+   "bubbles",
+   -14,
+   0,
+   "the meat bubbles"
+  ],
+  [
+   28.38,
+   "ui_pop",
+   -4,
+   0.3,
+   "??? tooltip"
+  ],
+  [
+   28.86,
+   "squeak",
+   -6,
+   0,
+   "the meat OPENS AN EYE"
+  ],
+  [
+   29.59,
+   "whoosh_long",
+   -10,
+   0,
+   "into slow motion"
+  ],
+  [
+   29.76,
+   "blink",
+   -4,
+   0,
+   "it blinks"
+  ],
+  [
+   31.22,
+   "loading",
+   -10,
+   0,
+   "the reticle scans his own head"
+  ],
+  [
+   31.62,
+   "error",
+   -10,
+   0,
+   "nothing there"
+  ],
+  [
+   32.22,
+   "error",
+   -6,
+   0,
+   "SELF-SCAN: NO DATA"
+  ],
+  [
+   32.62,
+   "door_open",
+   -6,
+   0.2,
+   "the BOYS room door"
+  ],
+  [
+   33.56,
+   "glitch",
+   -6,
+   0.1,
+   "??? pops over the reflection"
+  ],
+  [
+   33.61,
+   "ui_pop",
+   -6,
+   0.1,
+   ""
+  ],
+  [
+   33.86,
+   "error",
+   -10,
+   0.1,
+   "NO DATA"
+  ],
+  [
+   34.54,
+   "zoom_in",
+   -2,
+   0,
+   "smash-zoom on QUESTION MARKS"
+  ],
+  [
+   34.59,
+   "boom",
+   -6,
+   0,
+   ""
+  ],
+  [
+   34.64,
+   "glitch",
+   -8,
+   0,
+   "the plate glitches"
+  ],
+  [
+   34.99,
+   "glitch",
+   -12,
+   0.1,
+   "the ??? scramble"
+  ],
+  [
+   38.01,
+   "jump",
+   -8,
+   0,
+   "he jumps"
+  ],
+  [
+   38.09,
+   "swish",
+   -4,
+   -0.3,
+   "swat!"
+  ],
+  [
+   38.14,
+   "whoosh",
+   -8,
+   -0.4,
+   "the plate dodges"
+  ],
+  [
+   38.19,
+   "boing",
+   -10,
+   -0.4,
+   "\"nope!\""
+  ],
+  [
+   38.51,
+   "land",
+   -10,
+   0,
+   ""
+  ],
+  [
+   38.66,
+   "jump",
+   -8,
+   0,
+   "he jumps"
+  ],
+  [
+   38.74,
+   "swish",
+   -4,
+   0.3,
+   "swat!"
+  ],
+  [
+   38.79,
+   "whoosh",
+   -8,
+   0.4,
+   "the plate dodges"
+  ],
+  [
+   38.84,
+   "boing",
+   -10,
+   0.4,
+   "\"nope!\""
+  ],
+  [
+   39,
+   "jump",
+   -8,
+   0,
+   "third jump (freezes mid-air)"
+  ],
+  [
+   39.16,
+   "land",
+   -10,
+   0,
+   ""
+  ],
+  [
+   39.32,
+   "record_scratch",
+   0,
+   0,
+   "freeze — \"Okay.\""
+  ],
+  [
+   39.34,
+   "vhs_clunk",
+   -4,
+   0,
+   "PAUSE"
+  ],
+  [
+   40.07,
+   "vhs_clunk",
+   -4,
+   0,
+   "REWIND button"
+  ],
+  [
+   40.14,
+   "rewind",
+   0,
+   0,
+   "tape rewinds through the cold open"
+  ],
+  [
+   40.99,
+   "rewind",
+   -2,
+   0,
+   ""
+  ],
+  [
+   41.81,
+   "whoosh_long",
+   -4,
+   0,
+   "the plates fold into one point"
+  ],
+  [
+   42.29,
+   "impact",
+   2,
+   0,
+   "the TITLE slams in"
+  ],
+  [
+   42.41,
+   "level_up",
+   -4,
+   0,
+   "title shimmer"
+  ],
+  [
+   42.71,
+   "shine",
+   -6,
+   0.2,
+   ""
+  ],
+  [
+   43.5,
+   "whoosh",
+   -6,
+   0,
+   "white flash into SC 02"
+  ]
+ ]
+}

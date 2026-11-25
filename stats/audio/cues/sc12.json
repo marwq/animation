@@ -1,0 +1,633 @@
+{
+ "scene": "SC 12",
+ "start": 768.06,
+ "end": 815.3,
+ "music": [
+  {
+   "start": 768.06,
+   "end": 772.932,
+   "mood": "homey",
+   "energy": 0.5,
+   "in": "fade",
+   "out": "cut"
+  },
+  {
+   "start": 772.932,
+   "end": 775.24,
+   "mood": "wonder",
+   "energy": 0.6,
+   "in": "cut",
+   "out": "cut"
+  },
+  {
+   "start": 775.24,
+   "end": 785.31,
+   "mood": "playful",
+   "energy": 0.55,
+   "in": "cut",
+   "out": "fade"
+  },
+  {
+   "start": 785.31,
+   "end": 799.36,
+   "mood": "tender",
+   "energy": 0.4,
+   "in": "fade",
+   "out": "fade"
+  },
+  {
+   "start": 799.36,
+   "end": 815.3,
+   "mood": "levelup",
+   "energy": 0.8,
+   "in": "swell",
+   "out": "fade"
+  }
+ ],
+ "ambience": [
+  {
+   "start": 768.06,
+   "end": 799.36,
+   "name": "room",
+   "gain_db": -16
+  },
+  {
+   "start": 768.06,
+   "end": 799.36,
+   "name": "birds",
+   "gain_db": -26
+  }
+ ],
+ "footsteps": [
+  {
+   "start": 796.048,
+   "end": 797.648,
+   "interval": 0.524,
+   "surface": "wood",
+   "gain_db": -16,
+   "pan": 0.7
+  }
+ ],
+ "sfx": [
+  [
+   768.08,
+   "whoosh",
+   -12,
+   0.5,
+   "Max's dino claw comes in"
+  ],
+  [
+   768.09,
+   "ui_pop",
+   -4,
+   -0.2,
+   "SYSTEM pop-up"
+  ],
+  [
+   768.24,
+   "chime",
+   -8,
+   -0.2,
+   "pet mode chime"
+  ],
+  [
+   768.34,
+   "tap",
+   0,
+   0.3,
+   "tap! on the tablet"
+  ],
+  [
+   768.37,
+   "toggle",
+   -2,
+   0.3,
+   "PET STATS → ON"
+  ],
+  [
+   768.84,
+   "glitch",
+   -10,
+   0,
+   "the HUD switches to PET STATS (pink)"
+  ],
+  [
+   768.94,
+   "laser_sweep",
+   -10,
+   -0.3,
+   "the pink scan sweeps the room"
+  ],
+  [
+   769.49,
+   "beep",
+   -4,
+   0.16,
+   "lock-on: Biscuit"
+  ],
+  [
+   769.819,
+   "ui_pop",
+   -2,
+   0,
+   "Biscuit's plate pops"
+  ],
+  [
+   770.86,
+   "money_counter",
+   -6,
+   0,
+   "LV counts 1 → 1000"
+  ],
+  [
+   771.71,
+   "money_counter",
+   -6,
+   0,
+   ""
+  ],
+  [
+   772.49,
+   "coin",
+   -6,
+   0,
+   "LV 1000"
+  ],
+  [
+   772.54,
+   "dog_bark",
+   -10,
+   0,
+   "proud little \"arf\""
+  ],
+  [
+   772.932,
+   "zoom_in",
+   -4,
+   0,
+   "smash-zoom on Biscuit"
+  ],
+  [
+   773.052,
+   "money_counter",
+   -10,
+   0,
+   "GOOD BOY bar fills"
+  ],
+  [
+   774,
+   "angel",
+   -2,
+   0,
+   "GOOD BOY: ∞ — the very-good-boy face"
+  ],
+  [
+   774.1,
+   "sparkle",
+   -4,
+   0,
+   "rays + sparkles"
+  ],
+  [
+   774.15,
+   "shine",
+   -6,
+   0,
+   ""
+  ],
+  [
+   775.29,
+   "blush",
+   -8,
+   0,
+   "Max: star eyes, hands on cheeks"
+  ],
+  [
+   775.39,
+   "heart_pop",
+   -8,
+   0.2,
+   "∞ pops"
+  ],
+  [
+   776.12,
+   "paper",
+   -14,
+   0.438,
+   "Grandpa takes the tablet"
+  ],
+  [
+   776.62,
+   "boing",
+   -6,
+   0.438,
+   "glasses drop onto his nose"
+  ],
+  [
+   776.67,
+   "ui_pop",
+   -10,
+   0.51,
+   "!?"
+  ],
+  [
+   778.312,
+   "swish",
+   -6,
+   -0.2,
+   "he points across the room"
+  ],
+  [
+   778.97,
+   "stamp",
+   -6,
+   -0.3,
+   "NOTHING!"
+  ],
+  [
+   779.21,
+   "snore",
+   -6,
+   0,
+   "Biscuit snores"
+  ],
+  [
+   779.66,
+   "stamp",
+   -4,
+   0,
+   "NAPS TODAY: 14"
+  ],
+  [
+   780.65,
+   "cloth",
+   -8,
+   0,
+   "Max hugs Biscuit"
+  ],
+  [
+   781.18,
+   "heart_pop",
+   -6,
+   0.1,
+   "Biscuit: heart eyes"
+  ],
+  [
+   781.58,
+   "dog_bark",
+   -12,
+   0.1,
+   "happy arf"
+  ],
+  [
+   783.27,
+   "jump",
+   -6,
+   0,
+   "Max jumps, fists up"
+  ],
+  [
+   783.42,
+   "confetti",
+   -2,
+   0,
+   "confetti"
+  ],
+  [
+   783.47,
+   "heart_pop",
+   -4,
+   0.1,
+   "GOOD BOY CONFIRMED"
+  ],
+  [
+   783.87,
+   "land",
+   -8,
+   0,
+   "lands"
+  ],
+  [
+   784.02,
+   "dog_bark",
+   -10,
+   0.2,
+   "Biscuit begs"
+  ],
+  [
+   785.36,
+   "whoosh",
+   -8,
+   0.3,
+   "Max raises the tablet"
+  ],
+  [
+   785.71,
+   "beep",
+   -10,
+   0.3,
+   "viewfinder: ???"
+  ],
+  [
+   785.76,
+   "glitch",
+   -14,
+   0.3,
+   ""
+  ],
+  [
+   788.74,
+   "loading",
+   -10,
+   0,
+   "the ??? begins to stir"
+  ],
+  [
+   790.34,
+   "glitch",
+   -14,
+   0,
+   "\"No level.\" — LV ?? crumbles"
+  ],
+  [
+   791.46,
+   "glitch",
+   -14,
+   0,
+   "\"No numbers.\" — digits float away"
+  ],
+  [
+   791.54,
+   "reverse_swell",
+   -8,
+   0,
+   "swell into the flash"
+  ],
+  [
+   792.84,
+   "harp_up",
+   -6,
+   0,
+   "the glass warms"
+  ],
+  [
+   793.14,
+   "magic",
+   -4,
+   0,
+   "BIG BROTHER appears letter by letter"
+  ],
+  [
+   794.06,
+   "chime",
+   -6,
+   0,
+   "the heart badge beats"
+  ],
+  [
+   794.52,
+   "sparkle",
+   -12,
+   0,
+   "warm motes"
+  ],
+  [
+   795.748,
+   "cloth",
+   -10,
+   0.1,
+   "side hug"
+  ],
+  [
+   796.098,
+   "heart_pop",
+   -10,
+   0.1,
+   ""
+  ],
+  [
+   797.61,
+   "dog_bark",
+   -16,
+   0.1,
+   "Biscuit wags"
+  ],
+  [
+   799.31,
+   "whoosh_long",
+   -4,
+   0,
+   "into the end card"
+  ],
+  [
+   799.36,
+   "ui_pop",
+   -4,
+   -0.6,
+   "TANK HP 100/100"
+  ],
+  [
+   799.61,
+   "money_counter",
+   -12,
+   -0.6,
+   "Tank's HP rolls 3 → 100"
+  ],
+  [
+   799.84,
+   "ui_pop",
+   -4,
+   -0.4,
+   "BENJI BEST FRIEND"
+  ],
+  [
+   800.32,
+   "ui_pop",
+   -4,
+   -0.2,
+   "MOM ENERGY 100%"
+  ],
+  [
+   800.57,
+   "money_counter",
+   -12,
+   -0.2,
+   "Mom's ENERGY rolls 2 → 100"
+  ],
+  [
+   800.64,
+   "ui_pop",
+   -4,
+   0,
+   "BIG BROTHER"
+  ],
+  [
+   800.88,
+   "ui_pop",
+   -4,
+   0.2,
+   "MAX CHAOS 9999"
+  ],
+  [
+   801.28,
+   "ui_pop",
+   -4,
+   0.4,
+   "BISCUIT GOOD BOY ∞"
+  ],
+  [
+   801.68,
+   "ui_pop",
+   -4,
+   0.6,
+   "GRANDPA LOU"
+  ],
+  [
+   802.42,
+   "boing",
+   -10,
+   0,
+   "all the plates hop"
+  ],
+  [
+   803.04,
+   "stamp",
+   -2,
+   0,
+   "YOUR STAT: ???"
+  ],
+  [
+   803.14,
+   "sparkle",
+   -10,
+   0,
+   "? marks orbit"
+  ],
+  [
+   804.32,
+   "ui_pop",
+   -4,
+   0,
+   "the comment box slides up"
+  ],
+  [
+   804.62,
+   "typing",
+   -8,
+   0,
+   "I'd want to see..."
+  ],
+  [
+   804.72,
+   "chat_pop",
+   -8,
+   -0.5,
+   "idea bubbles float up"
+  ],
+  [
+   804.9,
+   "chat_pop",
+   -8,
+   -0.25,
+   "idea bubbles float up"
+  ],
+  [
+   805.08,
+   "chat_pop",
+   -8,
+   0,
+   "idea bubbles float up"
+  ],
+  [
+   805.26,
+   "chat_pop",
+   -8,
+   0.25,
+   "idea bubbles float up"
+  ],
+  [
+   805.44,
+   "chat_pop",
+   -8,
+   0.5,
+   "idea bubbles float up"
+  ],
+  [
+   805.57,
+   "click",
+   -4,
+   0.4,
+   "COMMENT"
+  ],
+  [
+   805.9,
+   "whoosh",
+   -6,
+   0,
+   "end screen"
+  ],
+  [
+   805.95,
+   "ui_pop",
+   -6,
+   -0.5,
+   "NEXT QUEST slot"
+  ],
+  [
+   806.1,
+   "ui_pop",
+   -6,
+   -0.5,
+   "BONUS LEVEL slot"
+  ],
+  [
+   806.25,
+   "ui_pop",
+   -6,
+   0.5,
+   "subscribe circle"
+  ],
+  [
+   806.4,
+   "pop",
+   -6,
+   0.5,
+   "SUBSCRIBE +100 XP"
+  ],
+  [
+   807.25,
+   "click",
+   0,
+   0.5,
+   "the cursor clicks SUBSCRIBE"
+  ],
+  [
+   807.3,
+   "bell",
+   -4,
+   0.7,
+   "the bell rings"
+  ],
+  [
+   807.35,
+   "sparkle",
+   -6,
+   0.5,
+   ""
+  ],
+  [
+   807.4,
+   "level_up",
+   -2,
+   0.5,
+   "XP bar full → LEVEL UP!"
+  ],
+  [
+   807.55,
+   "achievement",
+   -6,
+   0.5,
+   ""
+  ]
+ ]
+}

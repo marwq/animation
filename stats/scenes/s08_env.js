@@ -87,7 +87,7 @@ function times(V) {
   // -- MOM "He's wearing a dinosaur suit! A green dinosaur!"
   C.dino = l(11).a - 0.16;
   B.grab = l(11).a - 0.05;
-  C.green = l(11).word('A').t0 - 0.12;
+  C.green = l(11).word('A', 1).t0 - 0.12;
   B.search = l(11).word('green').t0 - 0.1;
   B.results = l(11).word('dinosaur', 1).t1 - 0.05;
   // -- "I can't tell! Everybody's just... a number!" + the flood fills the screen, he covers his ears (3 s beat)
@@ -343,8 +343,32 @@ function heroHand(x, y, s = 1, rot = -10, grip = 0) {
   return S.g(g, `translate(${f(x)} ${f(y)}) rotate(${f(rot)}) scale(${f(s)})`);
 }
 
+// ================================================================ crowd shots with real layering
+// set -> back rows -> their face plates -> under (e.g. the numbers flood) -> chars -> front rows -> their plates -> set fg/light
+const COLD = (svg) => svg.replace(/#3BE8FF/g, '#7FA3BF').replace(/#3DFF8F/g, '#7F96AA').replace(/#FF4D66/g, '#9AA8B8');
+function crowdShot(t, cam, o = {}) {
+  const q = o.quiet || 0;
+  const L = FS.fair.layers(t, cam, { crowd: o.crowd ?? 0.8, quiet: q });
+  const pl = (rows) => {
+    if (o.plates === false || !rows.length) return '';
+    const ppl = headsOf(rowsPeople(rows, cam), cam).filter((h) => !h.back && h.r > 4);
+    const svg = facePlates(ppl.map((h) => ({ x: h.fx, y: h.fy, r: h.r * 1.05, i: h.i })), { t: o.pt ?? t, glitch: o.glitch || 0, k: o.k });
+    return o.cold ? COLD(svg) : svg;
+  };
+  const back = o.back || [], front = o.front || [];
+  let out = L.bg + L.mid + L.front;
+  out += rowsDraw(back, cam, t, { faces: false, quiet: q }) + pl(back);
+  out += o.under || '';
+  out += view(cam, o.chars || '');
+  out += rowsDraw(front, cam, t, { faces: false, quiet: q }) + pl(front);
+  return out + L.fg + L.light;
+}
+// the hero inside the crowd at the cotton candy stand (rows behind him / a ring in front with a gap where he stands, x 2480)
+const RING_B = [row(935, 101, 1), row(975, 105, 1, [[2400, 2560]])];
+const RING_F = [row(1045, 102, 1, [[2340, 2620]]), row(1110, 103, 1, [[2280, 2680]]), row(1190, 104, 1)];
+
 module.exports = {
   times, camAt, camLerp, shook, toScr, view, roll, whip, flashAt, focusLines, dark,
   SPF, sAt, row, rowsDraw, rowsPeople, fairWith, headTags, facePlates, headsOf, setPeople, chamD,
-  clockAt, partyPanel, areaBanner, journalCard, journalSlot, searchBar, heroHand,
+  clockAt, partyPanel, areaBanner, journalCard, journalSlot, searchBar, heroHand, crowdShot, COLD, RING_B, RING_F,
 };

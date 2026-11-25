@@ -133,9 +133,9 @@ function choiceMenu(o = {}) {
     if (hi > 0) r += S.path(H.cham(18, ry - 8, w - 36, rowH - 14, 14), { fill: th.rim, opacity: f(0.22 * hi) }) + S.path(H.cham(18, ry - 8, w - 36, rowH - 14, 14), { fill: 'none', stroke: th.rim, 'stroke-width': 3, opacity: f(hi) });
     r += H.TL(it.label, 74, ry + 48, 46, hi > 0.5 ? '#FFFFFF' : th.text, { 'text-anchor': 'start', stroke: th.edge, 'stroke-width': 6, 'paint-order': 'stroke' });
     if (it.chip) {
-      const cw = H.richW(it.chip, 20, 'F', 1) + 30;
+      const cw = H.richW(it.chip, 25, 'F', 1) + 34;
       const cc = it.chipCol || '#FF3355';
-      r += S.g(S.path(H.para(-cw, -16, cw, 32, 8), ol('#14020A', 3, th.edge)) + S.path(H.para(-cw + 2, -14, cw - 4, 28, 7), { fill: 'none', stroke: cc, 'stroke-width': 2 }) + H.TF(it.chip, -cw / 2, 7, 20, cc, { 'letter-spacing': 1 }), `translate(${f(w - 30)} ${f(ry + 32)}) scale(${f(ease.outBack(seg(it.ck ?? ik, 0, 1)))})`);
+      r += S.g(S.path(H.para(-cw, -19, cw, 38, 9), ol('#14020A', 3, th.edge)) + S.path(H.para(-cw + 2, -17, cw - 4, 34, 8), { fill: 'none', stroke: cc, 'stroke-width': 2 }) + H.TF(it.chip, -cw / 2, 9, 25, cc, { 'letter-spacing': 1 }), `translate(${f(w - 30)} ${f(ry + 32)}) scale(${f(ease.outBack(seg(it.ck ?? ik, 0, 1)))})`);
     }
     c += S.g(r, `translate(${f(-40 * (1 - ik))} 0)`, ik < 1 ? { opacity: f(clamp(ik, 0, 1)) } : {});
   });
@@ -217,7 +217,7 @@ function ruleCard(o = {}) {
   const { x = 1340, y = 300, s = 1, k = 1, t = 0, title = 'NEW RULE UNLOCKED', lines = [], out = 0 } = o;
   if (k <= 0 || out >= 1) return '';
   const th = H.theme('gold');
-  const w = 700, hd = 92, rowH = 92, Hd = hd + rowH * lines.length + 20;
+  const w = 760, hd = 92, rowH = 92, Hd = hd + rowH * lines.length + 20;
   const uf = H.unfold(seg(k, 0, 0.6));
   let c = H.panel(-w / 2, 0, w, Hd, th, { c: 22, br: 28 });
   c += H.sheen(-w / 2 + 8, 6, w - 16, Hd - 12, t, 3, 5);
@@ -230,7 +230,7 @@ function ruleCard(o = {}) {
     let r = S.path(H.cham(-w / 2 + 24, ry, w - 48, rowH - 16, 12), { fill: '#000', opacity: 0.25 });
     const ic = l.icon === 'star' ? S.path(K.F.starPath ? K.F.starPath(0, 0, 24, 11, 5) : H.diamondD(0, 0, 22), ol('#FFC83A', 4, th.edge)) : S.path(H.heartD(0, 2, 21), ol('#FF5F7A', 4, th.edge));
     r += S.g(ic, `translate(${f(-w / 2 + 70)} ${f(ry + 38)}) scale(${f(1 + 0.25 * Math.sin(t * 6 + i) * (l.pulse || 0))})`);
-    r += H.TL(l.text, -w / 2 + 112, ry + 54, 42, l.col || '#FFFFFF', { 'text-anchor': 'start', stroke: th.edge, 'stroke-width': 6, 'paint-order': 'stroke' });
+    r += H.TL(l.text, -w / 2 + 112, ry + 56, 46, l.col || '#FFFFFF', { 'text-anchor': 'start', stroke: th.edge, 'stroke-width': 6, 'paint-order': 'stroke' });
     c += S.g(r, `translate(${f(60 * (1 - ease.out(lk)))} 0)`, { opacity: f(clamp(lk * 2, 0, 1)) });
   });
   let g = S.g(c, `translate(0 ${f(-Hd / 2)})`);

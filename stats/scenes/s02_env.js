@@ -143,7 +143,7 @@ function nameCard(o = {}) {
   c += S.rect(-w / 2 + 12, -h / 2 + 12, w - 24, h - 24, 14, { fill: 'none', stroke: '#FFFFFF', 'stroke-width': 4, 'stroke-dasharray': '16 11', opacity: 0.9 });
   c += TS(name, 0, size * 0.36, size, '#FFFFFF', { 'letter-spacing': 2 });
   if (sub) {
-    const sk = ease.outBack(seg(k, 0.35, 1));
+    const sk = ease.outBack(o.subK !== undefined ? clamp(o.subK, 0, 1) : seg(k, 0.35, 1));
     if (sk > 0.01) {
       let r = S.rect(-sw / 2, 0, sw, subSize * 1.7, 12, ol('#FFF6E2', 5)) + TF(sub, 0, subSize * 1.17, subSize, '#2A2030');
       if (o.redact) {   // black bars wipe over the sub-text, letter by letter
@@ -303,7 +303,7 @@ function tankFile(o = {}) {
 // ================================================================= DRAGON PEAK — the hero's game (an original fantasy world)
 // World units: screen px at zoom 1; characters stand on GW.ground (900). Layers: sky (screen) · far (k .2) · hills (k .5) ·
 // ground (k 1) · fg (k 1.3). Characters / creatures / items are drawn by the scene with view(cam, svg, 1).
-const GW = { ground: 900, peakX: 2950, chestX: 1650 };
+const GW = { ground: 900, peakX: 1750, chestX: 1650 };
 const DEFS = '<defs>' +
   '<linearGradient id="s02Sky" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#5EC2FF"/><stop offset="0.75" stop-color="#C9EEFF"/><stop offset="1" stop-color="#EFFAFF"/></linearGradient>' +
   '<linearGradient id="s02SkyRed" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#3A0E2A"/><stop offset="0.7" stop-color="#B8342A"/><stop offset="1" stop-color="#FF8A3A"/></linearGradient>' +
@@ -353,7 +353,7 @@ function gameWorld(t, cam, o = {}) {
   let sun = danger < 1 && !o.night ? S.circle(1420, 210, 70, { fill: '#FFF3A0', stroke: '#FFD24A', 'stroke-width': 8, opacity: f(1 - danger) }) : '';
   let cl = '';
   for (let i = 0; i < 7; i++) cl += cloud(-600 + i * 760 + ((t * 18) % 760), 140 + 90 * hash(i * 2.2), 0.7 + 0.5 * hash(i), danger > 0.5 ? '#E8B0A8' : '#FFFFFF');
-  const far = S.path(ridge(-3000, 8000, 640, 170, 1.3, 140), ol(GC.far, 6)) + peak(GW.peakX, 620, t, danger) + S.path(ridge(-3000, 8000, 700, 90, 4.1, 160), { fill: GC.farD, opacity: 0.55 });
+  const far = S.path(ridge(-3000, 8000, 640, 170, 1.3, 140), ol(GC.far, 6)) + S.g(peak(GW.peakX, 660, t, danger), `translate(${GW.peakX} 660) scale(0.62) translate(${-GW.peakX} -660)`) + S.path(ridge(-3000, 8000, 700, 90, 4.1, 160), { fill: GC.farD, opacity: 0.55 });
   let hills = S.path(ridge(-3000, 8000, 760, 120, 2.7, 110), ol(GC.hill, 6)) + S.path(ridge(-3000, 8000, 800, 60, 5.2, 130), { fill: GC.hillD, opacity: 0.6 });
   for (let i = 0; i < 12; i++) hills += gTree(-1400 + i * 640 + 200 * hash(i * 3.1), 760 + 30 * hash(i), 0.45, 0);
   // ground: grass slab + winding path + props
@@ -430,7 +430,7 @@ function goblin(x, y, s, t, o = {}) {
     const u = clamp(o.poof, 0, 1);
     out = S.g(out, null, op(1 - seg(u, 0, 0.25)));
     let pf = '';
-    for (let i = 0; i < 9; i++) { const a = (i / 9) * Math.PI * 2, d = 80 + 120 * ease.out(u), r = 60 * (1 - u * 0.7); pf += `M${f(x + Math.cos(a) * d * s + r * s)} ${f(y - 220 * s + Math.sin(a) * d * s * 0.8)} a${f(r * s)} ${f(r * s)} 0 1 0 ${f(-2 * r * s)} 0 a${f(r * s)} ${f(r * s)} 0 1 0 ${f(2 * r * s)} 0 Z`; }
+    for (let i = 0; i < 11; i++) { const a = (i / 11) * Math.PI * 2 + hash(i) , d = (20 + 110 * ease.out(u)) * (0.5 + 0.5 * hash(i * 3.3)), r = (46 + 30 * hash(i * 1.7)) * (1 - u * 0.75); pf += `M${f(x + Math.cos(a) * d * s + r * s)} ${f(y - 220 * s + Math.sin(a) * d * s * 0.8)} a${f(r * s)} ${f(r * s)} 0 1 0 ${f(-2 * r * s)} 0 a${f(r * s)} ${f(r * s)} 0 1 0 ${f(2 * r * s)} 0 Z`; }
     out += S.path(pf, { fill: '#FFFFFF', stroke: LINE, 'stroke-width': 5, opacity: f(1 - seg(u, 0.5, 1)) });
   }
   return out;
@@ -441,7 +441,7 @@ function dragon(x, y, s, t, o = {}) {
   const RED = '#D93A3A', REDD = '#A82A30', BELLY = '#FFD27A', MEM = '#7A2A5A';
   const wing = (sx, sc) => S.g(S.path(`M0 0 L${f(260 * sx)} ${f(-420 - 40 * fl)} L${f(520 * sx)} ${f(-300 - 60 * fl)} Q${f(470 * sx)} ${f(-180 - 30 * fl)} ${f(500 * sx)} ${f(-80 - 20 * fl)} Q${f(400 * sx)} -90 ${f(380 * sx)} 0 Q${f(280 * sx)} -60 ${f(220 * sx)} 30 Q${f(120 * sx)} -10 0 60 Z`, ol(MEM, 7)) +
     S.path(`M0 0 L${f(500 * sx)} ${f(-80 - 20 * fl)} M0 0 L${f(380 * sx)} 0 M0 0 L${f(220 * sx)} 30 M${f(260 * sx)} ${f(-420 - 40 * fl)} L${f(520 * sx)} ${f(-300 - 60 * fl)}`, ln(10, REDD)) + S.circle(260 * sx, -420 - 40 * fl, 14, ol('#F4E6C8', 4)), `translate(${f(160)} ${f(-300)}) scale(${f(sc)})`);
-  let c = S.g(wing(1, 1.0) + wing(-1, 0.85), 'translate(60 160)');
+  let c = S.g(wing(1, 1.1) + wing(-1, 0.9), 'translate(40 -130)');
   // body + neck (thick S from the body up-left to the head) + belly plates + back spikes
   c += S.ellipse(250, 120, 320, 200, ol(RED, 8)) + S.ellipse(150, 150, 170, 120, { fill: BELLY, stroke: LINE, 'stroke-width': 6 });
   c += S.path('M-70 60 Q30 -330 -170 -560 L-30 -660 Q230 -420 250 -10 Z', ol(RED, 8));
@@ -498,7 +498,7 @@ function knightProps(pose) {
   const D = CAST.D.you, side = (pose.view === 'side') ? -1 : 1;
   const [hx, hy] = CAST.handAt(D, pose, side);
   const ang = CAST.forearmAngle(pose, side);
-  const props = [{ svg: G.sword(hx, hy, 0.62, ang + 180 + (pose.swordRot || 0)), layer: 'front' }];
+  const props = [{ svg: G.sword(hx, hy, 1.05, ang + 180 + (pose.swordRot || 0)), layer: 'front' }];
   if (pose.view !== 'side') { const [lx, ly] = CAST.handAt(D, pose, -1, 160); props.push({ svg: shieldRound(lx - 10, ly, 1.1, -8), layer: 'front' }); }
   else props.push({ svg: shieldRound(40, -420, 1.05, 0), layer: 'back' });
   return props;
@@ -527,13 +527,13 @@ function lvBadge(x, y, lv, name, k = 1, o = {}) {
 // parchment item tooltip; (x, y) = bottom tip
 function itemTip(x, y, name, stat, statCol, k = 1, o = {}) {
   if (k <= 0.01) return '';
-  const w = Math.max(250, textW(name, 34, 'L') + 60), h = 124;
+  const w = Math.max(250, textW(name, 32, 'L') + 50), h = 150;
   let c = S.path(`M-14 -6 L0 14 L14 -6 Z`, ol('#C9A060', 5));
   c += S.rect(-w / 2, -h - 4, w, h, 12, ol('#F6E3B4', 6)) + S.rect(-w / 2 + 8, -h + 4, w - 16, h - 16, 8, { fill: 'none', stroke: '#C9A060', 'stroke-width': 3 });
-  c += T(name, 0, -h + 44, 34, '#6A3A12');
-  c += T(stat, 0, -h + 96, 44, statCol, { stroke: LINE, 'stroke-width': 7, 'paint-order': 'stroke' });
+  c += T(name, 0, -h + 42, 32, '#6A3A12');
   const stars = o.stars ?? 3;
-  for (let i = 0; i < stars; i++) c += S.path(`M${f(-w / 2 + 26 + i * 22)} -${h - 22} l4 9 l10 1 l-8 6 l3 10 l-9 -5 l-9 5 l3 -10 l-8 -6 l10 -1 Z`, { fill: '#F2B84B', stroke: LINE, 'stroke-width': 2 });
+  for (let i = 0; i < stars; i++) { const sx = (i - (stars - 1) / 2) * 24; c += S.path(`M${f(sx)} ${-h + 52} l4 9 l10 1 l-8 6 l3 10 l-9 -5 l-9 5 l3 -10 l-8 -6 l10 -1 Z`, { fill: '#F2B84B', stroke: LINE, 'stroke-width': 2 }); }
+  c += T(stat, 0, -h + 126, 44, statCol, { stroke: LINE, 'stroke-width': 7, 'paint-order': 'stroke' });
   return S.g(c, `translate(${f(x)} ${f(y)}) scale(${f(ease.outBack(clamp(k, 0, 1)) * (o.s ?? 1))})`);
 }
 // treasure chest (bottom centre); open 0..1
@@ -541,14 +541,14 @@ function chest(x, y, s, open = 0, t = 0) {
   let c = '';
   if (open > 0.2) {
     let r = '';
-    for (let i = 0; i < 9; i++) { const a = -Math.PI / 2 + (i - 4) * 0.22 + Math.sin(t * 2) * 0.03; r += `M0 -120 L${f(Math.cos(a - 0.06) * 520)} ${f(-120 + Math.sin(a - 0.06) * 520)} L${f(Math.cos(a + 0.06) * 520)} ${f(-120 + Math.sin(a + 0.06) * 520)} Z`; }
+    for (let i = 0; i < 7; i++) { const a = -Math.PI / 2 + (i - 3) * 0.24 + Math.sin(t * 2) * 0.03; r += `M0 -130 L${f(Math.cos(a - 0.05) * 380)} ${f(-130 + Math.sin(a - 0.05) * 380)} L${f(Math.cos(a + 0.05) * 380)} ${f(-130 + Math.sin(a + 0.05) * 380)} Z`; }
     c += S.path(r, { fill: '#FFF0A0', opacity: f(0.5 * seg(open, 0.2, 0.6)) });
   }
   c += S.rect(-140, -130, 280, 130, 12, ol('#B0703A', 7)) + S.path('M-140 -90 H140 M-140 -40 H140', ln(5, '#8A5228')) + S.rect(-150, -134, 26, 134, 6, ol('#F2C24A', 5)) + S.rect(124, -134, 26, 134, 6, ol('#F2C24A', 5));
   c += S.rect(-24, -104, 48, 52, 8, ol('#F2C24A', 5)) + S.circle(0, -84, 8, { fill: LINE });
-  const lo = ease.outBack(clamp(open, 0, 1)), sy = lerp(1, -0.62, lo);
-  if (open > 0.05) c += S.ellipse(0, -132, 128, 16, { fill: '#3A2010' }) + S.ellipse(0, -136, 90, 10, { fill: '#FFE68A', opacity: f(0.8 * seg(open, 0.1, 0.5)) });
-  c += S.g(S.path('M-146 0 Q-146 -96 0 -100 Q146 -96 146 0 Z', ol(sy < 0 ? '#8A5228' : '#C9803F', 7)) + (sy > 0 ? S.path('M-120 -50 Q0 -80 120 -50', ln(5, '#8A5228')) : '') + S.rect(-160, -14, 320, 22, 8, ol('#F2C24A', 5)), `translate(0 -130) scale(1 ${f(Math.abs(sy) < 0.08 ? 0.08 * Math.sign(sy || 1) : sy)})`);
+  const lo = ease.outBack(clamp(open, 0, 1));
+  if (open > 0.05) c += S.ellipse(0, -132, 132, 20, ol('#3A2010', 5)) + S.ellipse(0, -136, 96, 11, { fill: '#FFE68A', opacity: f(0.9 * seg(open, 0.1, 0.5)) });
+  c += S.g(S.path('M-146 0 Q-146 -96 0 -100 Q146 -96 146 0 Z', ol('#C9803F', 7)) + S.path('M-120 -50 Q0 -80 120 -50', ln(5, '#8A5228')) + S.rect(-160, -14, 320, 22, 8, ol('#F2C24A', 5)), `translate(${f(30 * lo)} ${f(-130 - 120 * lo)}) rotate(${f(16 * lo)}) scale(1 ${f(lerp(1, 0.78, lo))})`);
   return S.g(c, tf(x, y, s));
 }
 function boots(x, y, s = 1, rot = 0) {

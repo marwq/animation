@@ -55,7 +55,7 @@ CUT.title = w1(9, 'beginning') + 0.2;
 // beats inside shots
 const B = {};
 B.crt = T0 + 0.32;                                               // the HUD "eyelid" is open
-B.wave0 = w(0, 'see') - 0.1; B.wave1 = w1(0, 'stats');           // plates pop over the deep-hall crowd
+B.wave0 = B.crt + 0.1; B.wave1 = w(0, 'stats') - 0.4;           // plates pop over the deep-hall crowd
 B.real = w(0, 'real');                                            // "in real life?" push
 B.door = A[1].a + 0.05;                                           // Room 12 door swings open
 B.step = w(1, 'teacher') + 0.1;                                   // Mrs. Krump steps out
@@ -79,7 +79,7 @@ B.ladyPlate = w(6, 'Level') - 0.1; B.ladyPlate1 = w1(6, 'fifty');
 B.secret = w(6, 'Secret') - 0.05;
 B.meatTip = w(6, 'mystery') - 0.05; B.eye = w(6, 'meat') - 0.05;
 B.lookUp = w(7, 'stats') - 0.1;                                   // he looks above his own head: nothing
-B.enter = CUT.door + 0.6;                                         // pushes the restroom door
+B.enter = CUT.door + 0.7;                                         // pushes the restroom door
 B.qPop = w(7, 'yours') - 0.15;                                    // "???" over the reflection
 B.qShout = w(8, 'QUESTION');
 B.swats = [CUT.swat + 0.2, CUT.swat + 0.85];                       // he swats at the plate, it dodges
@@ -123,14 +123,14 @@ function shOpen(t) {
   for (const p of walkers.sort((a, b) => a.y - b.y)) chars += kid(p.i, p);
   let o = ST.hallway.compose(t, cam, { view: 'deep', crowd: 1, scatter: 0, clock: '8:05' }, '', chars);
   // plates: the wave over everyone
-  const crowd = ST.hallway.crowdAt(t, { view: 'deep', crowd: 1 }).concat(walkers.map((p) => ({ ...p, kind: 'kid' })));
+  const crowd = ST.hallway.crowdAt(t, { view: 'deep', crowd: 1 }).concat(walkers.map((p) => ({ ...p, i: p.i + 100, kind: 'kid' })));
   const n = crowd.length;
-  const order = crowd.map((p, j) => [hash((p.i ?? j) * 1.37 + 2), p.i ?? j]).sort((a, b) => a[0] - b[0]).map((x) => x[1]);
+  const order = crowd.map((p, j) => [-p.y + 60 * hash((p.i ?? j) * 1.37 + 2), p.i ?? j]).sort((a, b) => a[0] - b[0]).map((x) => x[1]);
   o += crowdPlates(cam, crowd, t, (id) => {
     const r = order.indexOf(id) / Math.max(1, n - 1);
-    const t0 = lerp(B.wave0, B.wave1 - 0.45, r);
-    return seg(t, t0, t0 + 0.4);
-  }, { scale: 2.1 });
+    const t0 = lerp(B.wave0, B.wave1, r);
+    return seg(t, t0, t0 + 0.35);
+  }, { scale: 2.6, max: 1.3, big: 2 });
   o += hudF(t, { k: seg(t, B.crt - 0.05, B.crt + 0.75) });
   o += crtOpen(seg(t, CUT.open, B.crt));
   return o;
@@ -140,17 +140,17 @@ function shOpen(t) {
 function shSea(t) {
   const u = seg(t, CUT.sea, CUT.krump);
   const pr = ease.inOut(seg(t, B.real - 0.25, B.real + 0.45));
-  const cam = camAt(lerp(380, 820, ease.inOut(u)), 600, lerp(0.66, 0.84, pr));
+  const cam = camAt(lerp(380, 760, ease.inOut(u)), 610, lerp(0.8, 0.98, pr));
   const ys = 960, sm = 0.5;
   // walkers on the main line (rig lite kids) + the coach
-  const wk = [[-420, 21, 1], [120, 5, -1], [640, 9, 1], [1180, 16, -1], [1700, 30, 1]];
+  const wk = [[-300, 21, 1], [180, 5, -1], [560, 9, 1], [1320, 16, -1]];
   let chars = '';
   wk.forEach(([x0, i, dir], j) => {
     const x = x0 + dir * (t - CUT.sea) * 120;
     chars += kid(i, { x, y: j % 2 ? ys : 1010, s: j % 2 ? sm : hS(1010), view: 'side', flip: dir > 0, ...AC.walk(t * 7 + j, 0.9) });
   });
-  const cx = 860 - (t - CUT.sea) * 90;
-  chars += actor('coach', t, { x: cx, y: 990, s: hS(990), view: 'side', ...AC.walk(t * 6, 0.8) });
+  const cx = 1250 + (t - CUT.sea) * 90;
+  chars += actor('coach', t, { x: cx, y: 990, s: hS(990), view: 'side', flip: true, ...AC.walk(t * 6, 0.8) });
   let o = ST.hallway.compose(t, cam, { crowd: 1, clock: '8:05' }, '', chars);
   const crowd = ST.hallway.crowdAt(t, { crowd: 1 });
   o += crowdPlates(cam, crowd, t, (id) => seg(t, CUT.sea - 0.6 + hash(id * 2.1) * 0.9, CUT.sea - 0.2 + hash(id * 2.1) * 0.9), { scale: 1.9, max: 0.8 });
@@ -162,28 +162,28 @@ function shSea(t) {
   });
   // the funny ones
   const x2 = 640 + (t - CUT.sea) * 120, q2 = toScr(cam, x2, 1010 - 935 * hS(1010));
-  o += H.statPlate({ x: q2.x, y: q2.y, s: 0.62, t, k: seg(t, CUT.sea + 0.25, CUT.sea + 0.75), name: 'JAY', level: 8, title: 'SKILL: NAPPING', bars: [{ label: 'ENERGY', value: 4 }] });
+  o += H.statPlate({ x: q2.x, y: q2.y, s: 0.78, t, k: seg(t, CUT.sea + 0.25, CUT.sea + 0.75), name: 'JAY', level: 8, title: 'SKILL: NAPPING', bars: [{ label: 'ENERGY', value: 4 }] });
   const qc = toScr(cam, cx, 990 - 1129 * hS(990));
-  o += H.statPlate({ x: qc.x, y: qc.y, s: 0.62, t, k: seg(t, CUT.sea + 0.55, CUT.sea + 1.05), name: 'COACH', level: 41, title: 'WHISTLE: LEGENDARY', bars: [{ label: 'STR', value: 77 }] });
+  o += H.statPlate({ x: qc.x, y: qc.y, s: 0.78, t, k: seg(t, CUT.sea + 0.55, CUT.sea + 1.05), name: 'COACH', level: 41, title: 'WHISTLE: LEGENDARY', bars: [{ label: 'STR', value: 77 }] });
   o += hudF(t);
   return o;
 }
 
 // ---- 3. "Your teacher? Level ninety-nine." — Room 12's door opens; Mrs. Krump steps out; the hall freezes; her plate
 function shKrump(t) {
-  const cam = camKeys(t, [[CUT.krump, camAt(1150, 560, 1.38)], [CUT.boss, camAt(1220, 540, 1.62)]], ease.inOut);
+  const cam = camKeys(t, [[CUT.krump, camAt(1160, 500, 1.3)], [CUT.boss, camAt(1230, 470, 1.46)]], ease.inOut);
   const step = ease.inOut(seg(t, B.step, B.step + 0.8));
   const kx = lerp(HS.krumpDoor.x, HS.krumpOut.x, step), ky = lerp(HS.krumpDoor.y, HS.krumpOut.y, step), ks = lerp(HS.krumpDoor.s, HS.krumpOut.s, step);
   const walking = step > 0 && step < 1;
   const krump = actor('teacher', t, { x: kx, y: ky, s: ks, pointer: true, pointerRot: 10, ...(walking ? AC.walkFront(t * 6, 0.7) : {}), face: t > B.krumpPlate ? 'determined' : 'neutral', t });
   const fr = seg(t, B.step - 0.1, B.step + 0.25);
-  const kidsP = [[860, 3, 0.4], [1560, 11, -0.5], [1720, 18, -0.6]];
+  const kidsP = [[820, 3, 0.4], [1620, 11, -0.5], [1790, 18, -0.6]];
   let kids = '';
   kidsP.forEach(([x, i, look], j) => {
     const y = j === 0 ? 970 : 950;
     kids += kid(i, { x, y, s: hS(y), turn: look * fr, face: fr > 0.5 ? { name: 'scared', fx: j === 1 ? ['sweat'] : [] } : 'happy', armL: 10 + 40 * fr * (j === 2 ? 1 : 0), armR: 10 + 40 * fr * (j === 2 ? 1 : 0), ...boing(t, B.step + 0.1 * j, 0.15) });
   });
-  let o = ST.hallway.compose(t, cam, { crowd: 0.55, scatter: 0.6 * fr, doorOpen: ease.out(seg(t, B.door, B.door + 0.45)), clock: '8:05' }, krump, kids);
+  let o = ST.hallway.compose(t, cam, { crowd: 0.3, scatter: 0.6 * fr, doorOpen: ease.out(seg(t, B.door, B.door + 0.45)), clock: '8:05' }, krump, kids);
   const head = H.overHead('teacher', kx, ky, ks);
   o += plateAt(cam, 'teacher', head.x, head.y, { s: 1.0, t, k: seg(t, B.krumpPlate, B.krumpPlate1 + 0.05) });
   o += hudF(t);
@@ -193,15 +193,15 @@ function shKrump(t) {
 // ---- 4. "Final boss." — smash close-up: boss bar slams in, glasses glint; the hall lights flicker in the beat
 function shBoss(t) {
   const s = HS.krumpOut.s, x = HS.krumpOut.x, y = HS.krumpOut.y;
-  const fy = y - 1340 * s * 0.8;
-  const cam = shakeAll(camKeys(t, [[CUT.boss, camAt(x + 10, fy + 40, 2.5)], [CUT.homework, camAt(x + 10, fy + 30, 2.85)]], ease.out), t, [[B.bossHit, 0.5, 18], [B.bossBar, 0.25, 10]]);
+  const fy = y - 1340 * s * 0.64;
+  const cam = shakeAll(camKeys(t, [[CUT.boss, camAt(x + 10, fy + 10, 2.35)], [CUT.homework, camAt(x + 10, fy, 2.7)]], ease.out), t, [[B.bossHit, 0.5, 18], [B.bossBar, 0.25, 10]]);
   const glare = bump(t, B.bossHit - 0.05, B.bossHit + 0.6) + 0.6 * bump(t, B.flick[1], B.flick[1] + 0.5);
   const krump = actor('teacher', t, { x, y, s, pointer: true, pointerRot: lerp(10, -20, seg(t, A[1].b, CUT.homework)), glare, face: glare > 0.05 ? undefined : 'determined', t, volume: false });
-  let o = ST.hallway.compose(t, cam, { crowd: 0.55, scatter: 0.6, doorOpen: 1, clock: '8:05' }, krump, '');
+  let o = ST.hallway.compose(t, cam, { crowd: 0.2, scatter: 0.6, doorOpen: 1, clock: '8:05' }, krump, '');
   o += dim(0.18, '#5A0010');
   for (const ft of B.flick) if (t > ft && t < ft + 0.12) o += dim(0.45, '#05020A');
   o += H.edgePulse(0, 0, 1920, 1080, 0.5 + 0.5 * Math.sin(t * 6));
-  o += H.bossBar({ t, k: seg(t, B.bossBar, B.bossBar + 0.4), value: 1, hit: bump(t, B.bossHit, B.bossHit + 0.35), y: 120, w: 1100 });
+  o += H.bossBar({ t, k: seg(t, B.bossBar, B.bossBar + 0.4), value: 1, hit: seg(t, B.bossHit, B.bossHit + 0.5), y: 120, w: 1100 });
   o += hudF(t, { theme: 'boss' });
   return o + smash(t, CUT.boss, 0.12, 0.8, '#FFD0D0');
 }
@@ -211,11 +211,10 @@ function shHomework(t) {
   const x = HS.krumpOut.x, y = HS.krumpOut.y, s = HS.krumpOut.s;
   const cam = camKeys(t, [[CUT.homework, camAt(x - 40, 650, 1.55, 960, 620)], [CUT.desk, camAt(x - 40, 630, 1.7, 960, 620)]], ease.inOut);
   const up = ease.outBack(seg(t, B.hw - 0.15, B.hw + 0.25));
-  const krump = actor('teacher', t, { x, y, s, pointer: true, pointerRot: lerp(-20, -62, up), armR: lerp(64, 104, up), bendR: lerp(30, 6, up), face: 'determined', t }, { arms: false });
-  let o = ST.hallway.compose(t, cam, { crowd: 0.5, scatter: 0.8, doorOpen: 1, clock: '8:05' }, krump, '');
-  const head = H.overHead('teacher', x, y, s);
-  o += plateAt(cam, 'teacher', head.x, head.y, { s: 1.05, t, k: 1, bars: [{ label: 'PATIENCE', value: 0, blink: true }] });
+  const krump = actor('teacher', t, { x, y, s, pointer: true, freeArms: true, pointerRot: lerp(26, 62, up), armR: lerp(64, 112, up), bendR: lerp(30, 12, up), face: 'determined', t }, { arms: false });
+  let o = ST.hallway.compose(t, cam, { crowd: 0.2, scatter: 0.8, doorOpen: 1, clock: '8:05' }, krump, '');
   o = dutch(o, -5);
+  o += H.bossBar({ t, k: 1, value: 1, y: 120, w: 1100 });
   o += hudF(t, { theme: 'boss' });
   return o;
 }
@@ -246,15 +245,15 @@ function shDesk(t) {
 // ---- 7. "NOW." — extreme close-up, shockwave, the word slams
 function shNow(t) {
   const x = HS.krumpOut.x, y = HS.krumpOut.y, s = HS.krumpOut.s;
-  const fy = y - 1340 * s * 0.74;
-  const cam = shakeAll(camKeys(t, [[CUT.now, camAt(x + 6, fy, 3.0)], [B.nowHit, camAt(x + 6, fy, 3.5)], [CUT.tank, camAt(x + 6, fy, 3.7)]], ease.out), t, [[B.nowHit, 0.6, 30]]);
+  const fy = y - 1340 * s * 0.6;
+  const cam = shakeAll(camKeys(t, [[CUT.now, camAt(x + 6, fy, 2.9)], [B.nowHit, camAt(x + 6, fy, 3.4)], [CUT.tank, camAt(x + 6, fy, 3.6)]], ease.out), t, [[B.nowHit, 0.6, 30]]);
   const krump = actor('teacher', t, { x, y, s, glare: t > B.nowHit ? 0.4 : 0, face: { name: 'angry' }, t, volume: false }, { arms: false });
   let o = ST.hallway.compose(t, cam, { crowd: 0, doorOpen: 1, clock: '8:05' }, krump, '');
   const age = t - B.nowHit;
   o += dim(0.12 + 0.2 * bump(t, B.nowHit, B.nowHit + 0.5), '#6A0012');
   o += rings(960, 600, age, '#FFFFFF', 3, 1100, 0.55) + zoomLines(960, 560, seg(t, B.nowHit - 0.05, B.nowHit + 0.05) * (1 - seg(t, B.nowHit + 0.5, CUT.tank)), t, '#FFFFFF', 26, 520);
-  o += papers(960, 700, age, 10, 3, 2.2, 1.3);
-  o += K.bang('NOW.', 960, 880, pop(t, B.nowHit, 0.22), 230, -6, '#FF3B4E');
+  o += papers(260, 1060, age, 5, 3, 1.6, 1.2) + papers(1660, 1060, age, 5, 9, 1.6, 1.2);
+  o += K.bang('NOW.', 1470, 330, pop(t, B.nowHit, 0.22), 230, 10, '#FF3B4E');
   o += hudF(t, { theme: 'boss', glitch: 0.4 * bump(t, B.nowHit, B.nowHit + 0.5) });
   return o + smash(t, B.nowHit, 0.1, 0.7);
 }
@@ -310,7 +309,7 @@ function shHealth(t) {
 // ---- 10. "Your little brother?" — a locker rattles … BANG, Max bursts out in his dinosaur suit
 const LK = { x: 408, y: 470, w: 92, h: 330 };
 function shLocker(t) {
-  const cam = shakeAll(camKeys(t, [[CUT.locker, camAt(470, 690, 1.5)], [CUT.chaos, camAt(430, 720, 1.38)]], ease.inOut), t, [[B.burst, 0.35, 16]]);
+  const cam = shakeAll(camKeys(t, [[CUT.locker, camAt(470, 650, 1.75)], [B.burst, camAt(470, 655, 1.85)], [B.maxLand, camAt(520, 700, 1.5)], [CUT.chaos, camAt(500, 710, 1.45)]], ease.inOut), t, [[B.burst, 0.35, 16]]);
   const rattle = t < B.burst ? Math.max(0, Math.sin((t - B.rattle) * 22)) * seg(t, B.rattle, B.rattle + 0.1) : 0;
   const open = ease.outBack(seg(t, B.burst, B.burst + 0.2));
   const fly = seg(t, B.burst, B.maxLand);
@@ -320,11 +319,11 @@ function shLocker(t) {
   let front = '';
   const landed = t > B.maxLand;
   const max = actor('max', t, { x: mx, y: my, s: ms, lift, roar: !landed || t > B.maxLand + 0.15, rot: landed ? 0 : -20 * Math.sin(fly * Math.PI), ...boing(t, B.maxLand, 0.3), face: landed ? { name: 'excited' } : { name: 'angry', mouth: 'scream' }, t });
-  if (t > B.burst - 0.02) front += max; else behind += S.g(TFS('thump', 0, 0, 40, '#FFFFFF'), tf(LK.x + 46 + 60, LK.y + 120, rattle > 0.5 ? 1 : 0.0001, 10));
+  if (t > B.burst - 0.02) front += max; else if (rattle > 0.3) behind += S.g(TFS('thump', 0, 0, 34, '#FFFFFF'), tf(LK.x + 46 + 70, LK.y + 110 + 30 * Math.sin(t * 9), 1, 10));
   front += papers(LK.x + 60, LK.y + 150, t - B.burst, 6, 5, 1.2, 0.5);
-  const kids = kid(20, { x: 860, y: 960, s: 0.5, turn: -0.5, face: t > B.burst ? { name: 'shocked', fx: ['exclaim'] } : 'neutral', ...boing(t, B.burst + 0.05, 0.25), lean: t > B.burst ? -8 : 0 });
-  let o = ST.hallway.compose(t, cam, { crowd: 0.4, clock: '8:05' }, behind, kids + front);
-  o += K.bang('BANG!', 300, 330, pop(t, B.burst, 0.2) * (1 - seg(t, B.burst + 0.5, B.burst + 0.7)), 120, -10, '#FFD21F');
+  const kids = kid(20, { x: 800, y: 960, s: 0.5, turn: -0.5, face: t > B.burst ? { name: 'shocked', fx: ['exclaim'] } : 'neutral', ...boing(t, B.burst + 0.05, 0.25), lean: t > B.burst ? -8 : 0 });
+  let o = ST.hallway.compose(t, cam, { crowd: 0, clock: '8:05' }, behind, kids + front);
+  o += K.bang('BANG!', 560, 260, pop(t, B.burst, 0.2) * (1 - seg(t, B.burst + 0.5, B.burst + 0.7)), 130, -10, '#FFD21F');
   o += hudF(t);
   return o + smash(t, B.burst, 0.08, 0.6);
 }
@@ -334,17 +333,17 @@ function shChaos(t) {
   const X0 = 520, X1 = -1750;
   const u = seg(t, CUT.chaos, CUT.rawr);
   const mx = lerp(X0, X1, u), my = 965, ms = 0.5;
-  const cam = camKeys(t, [[CUT.chaos, camAt(X0 - 120, 640, 1.12)], [CUT.rawr, camAt(X1 - 160, 640, 1.18)]], (x) => x);
+  const cam = camKeys(t, [[CUT.chaos, camAt(X0 - 140, 700, 1.32)], [CUT.rawr, camAt(X1 - 180, 700, 1.38)]], (x) => x);
   const tHit = (kx) => CUT.chaos + ((X0 - kx) / (X0 - X1)) * (CUT.rawr - CUT.chaos);
   let chars = '', fx = '';
-  [[60, 26, 945], [-380, 31, 985], [-760, 4, 950], [-1180, 13, 990], [-1520, 22, 950]].forEach(([kx, i, ky], j) => {
+  [[40, 26, 930], [-520, 31, 935], [-1080, 13, 925], [-1520, 22, 935]].forEach(([kx, i, ky], j) => {
     const h0 = tHit(kx) - 0.04;
     const a = clamp((t - h0) / 0.9, 0, 1);
     const spin = a > 0 ? 720 * ease.out(a) * (j % 2 ? 1 : -1) : 0;
     const ks = hS(ky);
     chars += kid(i, { x: kx - 80 * ease.out(a), y: ky, s: ks, lift: 160 * bump(a, 0, 0.7), rot: spin, face: a > 0 ? 'dizzy' : 'happy', armL: a > 0 ? 150 : 10, armR: a > 0 ? 150 : 10 });
     fx += papers(kx, ky - 400 * ks, t - h0, 3, i, 0.8, 0.55);
-    if (a > 0 && a < 0.5) fx += K.C.burst(kx, ky - 520 * ks, a * 2, '#FFE14D');
+    if (a > 0 && a < 0.4) fx += K.C.burst(kx - 40, ky - 300 * ks, a * 2.5, '#FFE14D');
   });
   chars += actor('max', t, { x: mx, y: my, s: ms, view: 'side', ...AC.run((t - CUT.chaos) * 20, 1.15), lean: -14, roar: false, face: { name: 'excited', mouth: 'scream' }, t });
   for (let k = 0; k < 6; k++) { const t0 = CUT.chaos + 0.1 + k * 0.45; fx += K.C.dust(lerp(X0, X1, seg(t0, CUT.chaos, CUT.rawr)) + 50, my, t0, t); }
@@ -370,11 +369,11 @@ function shRawr(t) {
     const a = seg(t, B.rawr, B.rawr + 0.3);
     behind += kid(i, { x: kx + (j ? 1 : -1) * 60 * a, y: ky, s: hS(ky), lean: (j ? 1 : -1) * 18 * a, face: a > 0 ? { name: 'scared', fx: ['sweat'] } : 'neutral', armL: 20 + 120 * a, armR: 20 + 120 * a });
   });
-  const max = actor('max', t, { x: mx, y: my, s: ms, roar, ...(roar ? {} : { view: 'side', lean: 12 }), ...boing(t, B.rawr - 0.05, 0.25), t, volume: false });
+  const max = actor('max', t, { x: mx, y: my, s: ms, roar, ...(roar ? { face: { name: 'angry', mouth: 'scream' } } : { view: 'side', lean: 12, face: 'excited' }), ...boing(t, B.rawr - 0.05, 0.25), t, volume: false });
   let o = ST.hallway.compose(t, cam, { crowd: 0.4, clock: '8:05' }, behind, max);
   o += zoomLines(960, 560, seg(t, B.rawr - 0.05, B.rawr + 0.1) * (1 - seg(t, A[5].b, A[5].b + 0.2)), t, '#FFFFFF', 24, 440);
   o += rings(960, 600, t - B.rawr, '#7CFF6B', 2, 1000, 0.5);
-  o += K.bang('RAWR!', 960, 880, pop(t, B.rawr + 0.05, 0.22), 200, -8, '#7CFF6B');
+  o += K.bang('RAWR!', 1460, 640, pop(t, B.rawr + 0.05, 0.22), 190, 10, '#7CFF6B');
   const head = H.overHead('max', mx, my, ms);
   const q = toScr(cam, head.x, head.y);
   o += H.plateFor('max', { x: q.x, y: Math.max(q.y, 330), s: 1.15, t, k: 1, bars: [{ label: 'CHAOS', value: 9999, max: 100, bump: bump(t, B.rawr, B.rawr + 0.4) }, { label: 'HP', value: Infinity }] });
@@ -384,12 +383,14 @@ function shRawr(t) {
 
 // ---- 13. "The lunch lady? Level fifty. Secret skill:" — she slops the meat; plate pops; the SECRET SKILL tag slaps on
 function shLunch(t) {
-  const cam = camKeys(t, [[CUT.lunch, camAt(1740, 600, 1.55)], [B.secret, camAt(1740, 560, 1.75)], [CUT.meat, camAt(1760, 540, 1.85)]], ease.inOut);
+  const cam = camKeys(t, [[CUT.lunch, camAt(1720, 470, 1.4)], [B.secret - 0.2, camAt(1730, 450, 1.52)], [CUT.meat, camAt(1740, 440, 1.62)]], ease.inOut);
   const sl = Math.max(bump(t, B.ladle[0], B.ladle[0] + 0.7), bump(t, B.ladle[1], B.ladle[1] + 0.7));
   const lady = actor('lunchLady', t, { ...CF.lunchLady, freeArms: true, armR: 40 + 60 * sl, bendR: -40 + 50 * sl, armL: 14, face: t > B.ladyPlate ? { name: 'smug' } : 'neutral', headRot: 4 * Math.sin(t * 2), t });
   let o = ST.cafeteria.compose(t, { crowd: 1, steam: true }, ['', '', lady], '', cam);
   const head = H.overHead('lunchLady', CF.lunchLady.x, CF.lunchLady.y, CF.lunchLady.s);
-  o += plateAt(cam, 'lunchLady', head.x, head.y, { s: 1.0, t, k: seg(t, B.ladyPlate, B.ladyPlate1 + 0.05), title: '', tags: [{ text: 'SECRET SKILL: MYSTERY MEAT', col: '#B06BFF', k: seg(t, B.secret, B.secret + 0.4) }] });
+  o += plateAt(cam, 'lunchLady', head.x, head.y, { s: 1.35, t, k: seg(t, B.ladyPlate, B.ladyPlate1 + 0.05), title: '' });
+  const hq = toScr(cam, head.x, head.y);
+  o += E.chip(hq.x + 440, hq.y + 150, 'SECRET SKILL:', 'MYSTERY MEAT', seg(t, B.secret, B.secret + 0.35), t, { theme: 'error', col: '#FFD6F5', size: 44, rot: 4 });
   o += hudF(t);
   return o;
 }
@@ -397,20 +398,20 @@ function shLunch(t) {
 // ---- 14. "...mystery meat." — smash-zoom on the pan: ??? tooltip, the meat opens an EYE and looks at us
 function shMeat(t) {
   const m = CF.food.meat;
-  const cam = shakeAll(camKeys(t, [[CUT.meat, camAt(m.x, m.y - 30, 2.9)], [CUT.every, camAt(m.x, m.y - 30, 3.3)]], ease.out), t, [[B.eye, 0.25, 6]]);
+  const cam = shakeAll(camKeys(t, [[CUT.meat, camAt(m.x - 60, m.y - 90, 2.7)], [CUT.every, camAt(m.x - 40, m.y - 80, 3.1)]], ease.out), t, [[B.eye, 0.25, 6]]);
   let o = ST.cafeteria.compose(t, { crowd: 1, steam: true }, ['', '', actor('lunchLady', t, { ...CF.lunchLady, face: 'smug', t })], '', cam);
   const op = ease.outBack(seg(t, B.eye, B.eye + 0.25));
   const blink = bump(t, B.eye + 0.9, B.eye + 1.05);
   const look = lerp(0, -0.6, seg(t, B.eye + 0.4, B.eye + 0.6));
-  o += view(cam, meatEye(m.x + 4, m.y + 8, 16, op, look, blink), 1);
+  o += view(cam, meatEye(m.x + 4, m.y + 8, 20, op, look, blink), 1);
   const q = toScr(cam, m.x, m.y - 10);
-  o += H.tipFor('mysteryMeat', { x: q.x, y: q.y, t, s: 1.1, k: seg(t, B.meatTip, B.meatTip + 0.45), side: 'up', dist: 120 });
+  o += H.tipFor('mysteryMeat', { x: q.x + 60, y: q.y - 20, t, s: 1.6, k: seg(t, B.meatTip, B.meatTip + 0.45), side: 'right', dist: 170 });
   o += hudF(t);
   return o + smash(t, CUT.meat, 0.08, 0.4);
 }
 
 // ---- 15. "You could see everybody's stats." — slow motion: the hero walks through everyone's plates… nothing over him
-const HERO_X0 = 2700;
+const HERO_X0 = 2260;
 function shEvery(t) {
   const u = seg(t, CUT.every, CUT.door);
   const tw = CUT.every + (t - CUT.every) * 0.3;                   // the world in slow motion
@@ -418,7 +419,7 @@ function shEvery(t) {
   const cam = camKeys(t, [[CUT.every, camAt(HERO_X0 + 40, 640, 1.18)], [CUT.door, camAt(HERO_X0 + 300, 600, 1.3)]], ease.inOut);
   const lookUp = seg(t, B.lookUp, B.lookUp + 0.3);
   const hero = actor('you', t, { x: hx, y: hy, s: 0.5, view: lookUp > 0.5 ? 'front' : 'side', flip: true, ...(lookUp > 0.5 ? {} : AC.walk(t * 4.5, 0.7)), face: lookUp > 0.5 ? { name: 'confused', eyes: { look: [0, -1] } } : { name: 'amazed', eyes: { look: [0.4, -0.6] } } }, { arms: false });
-  const ppl = [[HERO_X0 - 360, 2, 960, 'front'], [HERO_X0 + 620, 10, 975, 'front'], [HERO_X0 + 120, 35, 885, 'side']];
+  const ppl = [[HERO_X0 - 420, 2, 960, 'front'], [HERO_X0 + 660, 10, 975, 'front']];
   let chars = '';
   ppl.forEach(([x, i, y, v], j) => { chars += kid(i, { x: x + (j === 2 ? (tw - CUT.every) * 80 : 0), y, s: hS(y), view: v, flip: true, ...(j === 2 ? AC.walk(tw * 6, 0.8) : {}), face: 'happy' }); });
   let o = ST.hallway.compose(tw, cam, { crowd: 1, clock: '8:06' }, '', chars + hero);
@@ -430,8 +431,8 @@ function shEvery(t) {
   });
   // over the hero: nothing … the reticle searches
   const hq = toScr(cam, hx, hy - 951 * 0.5);
-  o += scanReticle(hq.x, hq.y - 70, 62, t, seg(t, B.lookUp, B.lookUp + 0.3));
-  if (t > B.lookUp + 0.45) o += H.TL('?', hq.x + 70, hq.y - 40 + 6 * Math.sin(t * 6), 52, '#7CF7FF', { stroke: '#03101B', 'stroke-width': 7, 'paint-order': 'stroke', opacity: f(seg(t, B.lookUp + 0.45, B.lookUp + 0.6)) });
+  o += scanReticle(hq.x, hq.y - 90, 80, t, seg(t, B.lookUp, B.lookUp + 0.3));
+  if (t > B.lookUp + 0.45) o += H.TL('?', hq.x, hq.y - 70 + 6 * Math.sin(t * 6), 70, '#7CF7FF', { stroke: '#03101B', 'stroke-width': 7, 'paint-order': 'stroke', opacity: f(seg(t, B.lookUp + 0.45, B.lookUp + 0.6)) });
   o += hudF(t);
   return o;
 }
@@ -439,15 +440,16 @@ function shEvery(t) {
 // ---- 16. "Everybody's..." — he checks above his own head (reticle: NO DATA) and pushes into the BOYS room
 function shDoor(t) {
   const d = HS.restroomDoor;
-  const cam = camKeys(t, [[CUT.door, camAt(d.x - 60, 600, 1.4)], [CUT.mirror, camAt(d.x, 580, 1.55)]], ease.inOut);
-  const walk = ease.inOut(seg(t, CUT.door + 0.15, B.enter + 0.35));
-  const hx = lerp(d.x - 380, d.x, walk), hy = lerp(960, d.y + 8, walk), hs = lerp(0.5, d.s, walk);
-  const hero = actor('you', t, { x: hx, y: hy, s: hs, view: walk > 0.05 ? 'back' : 'front', ...(walk > 0.05 && walk < 1 ? AC.walkFront(t * 7, 0.8) : {}), face: { name: 'confused', fx: ['question'] } }, { arms: false });
-  let o = ST.hallway.compose(t, cam, { crowd: 0.6, restroomOpen: ease.out(seg(t, B.enter, B.enter + 0.3)), clock: '8:06' }, hero, '');
+  const cam = camKeys(t, [[CUT.door, camAt(d.x - 120, 560, 1.45)], [CUT.mirror, camAt(d.x - 40, 560, 1.6)]], ease.inOut);
+  const walk = ease.inOut(seg(t, B.enter - 0.15, CUT.mirror));
+  const hx = lerp(d.x - 200, d.x, walk), hy = lerp(930, d.y + 8, walk), hs = lerp(hS(930), d.s, walk);
+  const back = walk > 0.05;
+  const hero = actor('you', t, { x: hx, y: hy, s: hs, view: back ? 'back' : 'front', ...(back && walk < 1 ? AC.walkFront(t * 7, 0.8) : {}), face: { name: 'confused', eyes: { look: [0.2, -1] } } }, { arms: false });
+  let o = ST.hallway.compose(t, cam, { crowd: 0, restroomOpen: ease.out(seg(t, B.enter - 0.25, B.enter + 0.1)), clock: '8:06' }, hero, '');
   const hq = toScr(cam, hx, hy - 951 * hs);
-  const k = seg(t, CUT.door, CUT.door + 0.3) * (1 - seg(t, B.enter, B.enter + 0.2));
-  o += scanReticle(hq.x, hq.y - 70, 66, t, k, '#FF5A7A');
-  if (k > 0.5) o += H.TF('SELF-SCAN: NO DATA', hq.x, hq.y - 160, 22, '#FF8AA0', { stroke: '#03101B', 'stroke-width': 6, 'paint-order': 'stroke', 'letter-spacing': 2 });
+  const k = seg(t, CUT.door, CUT.door + 0.25) * (1 - seg(t, B.enter - 0.1, B.enter + 0.1));
+  o += scanReticle(hq.x, hq.y - 90, 84, t, k, '#FF5A7A');
+  if (k > 0.5) o += H.TF('SELF-SCAN: NO DATA', hq.x + 40, hq.y - 214, 34, '#FF8AA0', { stroke: '#03101B', 'stroke-width': 7, 'paint-order': 'stroke', 'letter-spacing': 2 });
   o += hudF(t);
   return o;
 }
@@ -503,16 +505,16 @@ function shSwat(t) {
   const cam = camKeys(t, [[CUT.swat, camAt(960, 560, 1.4)], [CUT.pause, camAt(960, 600, 1.2)]], ease.inOut);
   const fh = MR.face.hero;
   const s1 = seg(t, B.swats[0], B.swats[0] + 0.35), s2 = seg(t, B.swats[1], B.swats[1] + 0.35);
-  const j1 = bump(t, B.swats[0] - 0.08, B.swats[0] + 0.42), j2 = bump(t, B.swats[1] - 0.08, B.swats[1] + 0.42), j3 = seg(t, B.swats[1] + 0.55, B.swats[1] + 0.8);
+  const j1 = bump(t, B.swats[0] - 0.08, B.swats[0] + 0.42), j2 = bump(t, B.swats[1] - 0.08, B.swats[1] + 0.42), j3 = ease.out(seg(t, CUT.pause - 0.32, CUT.pause - 0.04));
   const lift = 120 * Math.max(j1, j2, 0.7 * j3);
-  const armR = 20 + 160 * Math.max(bump(s1, 0, 1), j3), armL = 20 + 160 * Math.max(bump(s2, 0, 1), j3);
-  let o = faceShot(t, cam, { lift, armL, armR, face: { name: lift > 20 ? 'determined' : 'angry' }, ...boing(t, B.swats[0] + 0.42, 0.2) }, { arms: false });
+  const armR = 20 + 160 * bump(s1, 0, 1) + 130 * j3, armL = 20 + 160 * bump(s2, 0, 1) + 130 * j3;
+  let o = faceShot(t, cam, { lift, armL, armR, face: j3 > 0.5 ? { name: 'scream' } : { name: lift > 20 ? 'determined' : 'angry' }, legL: -14 * j3, legR: 14 * j3, kneeL: 30 * j3, kneeR: 30 * j3, ...boing(t, B.swats[0] + 0.42, 0.2) }, { arms: false });
   const q = toScr(cam, fh.x, fh.y - 951 * fh.s);
   const dodge = -260 * bump(t, B.swats[0] + 0.02, B.swats[0] + 0.55) + 280 * bump(t, B.swats[1] + 0.02, B.swats[1] + 0.55);
   const dy = -60 * Math.max(bump(t, B.swats[0] + 0.02, B.swats[0] + 0.55), bump(t, B.swats[1] + 0.02, B.swats[1] + 0.55));
   o += H.heroPlate({ x: q.x + dodge, y: q.y + dy, s: 1.1, t, k: 1, reveal: 0.05 });
-  o += S.g(TFS('nope', 0, 0, 40, '#7CF7FF'), tf(q.x + dodge * 1.25, q.y - 190, pop(t, B.swats[0] + 0.1, 0.2) * (1 - seg(t, B.swats[0] + 0.5, B.swats[0] + 0.6)), -8));
-  o += S.g(TFS('nope', 0, 0, 40, '#7CF7FF'), tf(q.x + dodge * 1.25, q.y - 190, pop(t, B.swats[1] + 0.1, 0.2) * (1 - seg(t, B.swats[1] + 0.5, B.swats[1] + 0.6)), 8));
+  o += S.g(TFS('nope!', 0, 0, 58, '#7CF7FF'), tf(q.x + dodge * 1.3, q.y - 220, pop(t, B.swats[0] + 0.1, 0.2) * (1 - seg(t, B.swats[0] + 0.5, B.swats[0] + 0.6)), -8));
+  o += S.g(TFS('nope!', 0, 0, 58, '#7CF7FF'), tf(q.x + dodge * 1.3, q.y - 220, pop(t, B.swats[1] + 0.1, 0.2) * (1 - seg(t, B.swats[1] + 0.5, B.swats[1] + 0.6)), 8));
   o += hudF(t);
   return o;
 }

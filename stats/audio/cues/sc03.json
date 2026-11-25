@@ -1,0 +1,1576 @@
+{
+ "scene": "SC 03",
+ "start": 165.1,
+ "end": 242.74,
+ "music": [
+  {
+   "start": 165.1,
+   "end": 173.236,
+   "mood": "install",
+   "energy": 0.4,
+   "in": "fade",
+   "out": "cut"
+  },
+  {
+   "start": 173.236,
+   "end": 177.72,
+   "mood": "install",
+   "energy": 0.75,
+   "in": "cut",
+   "out": "scratch"
+  },
+  {
+   "start": 177.72,
+   "end": 182.98,
+   "mood": "mystery",
+   "energy": 0.3,
+   "in": "cut",
+   "out": "cut"
+  },
+  {
+   "start": 182.98,
+   "end": 184.653,
+   "mood": "install",
+   "energy": 0.9,
+   "in": "swell",
+   "out": "sting"
+  },
+  {
+   "start": 184.653,
+   "end": 187.703,
+   "mood": "install",
+   "energy": 1,
+   "in": "cut",
+   "out": "cut"
+  },
+  {
+   "start": 187.703,
+   "end": 188.31,
+   "mood": "silence",
+   "energy": 0,
+   "in": "cut",
+   "out": "cut"
+  },
+  {
+   "start": 188.31,
+   "end": 189.29,
+   "mood": "homey",
+   "energy": 0.3,
+   "in": "fade",
+   "out": "cut"
+  },
+  {
+   "start": 189.29,
+   "end": 190.32,
+   "mood": "install",
+   "energy": 0.6,
+   "in": "cut",
+   "out": "sting"
+  },
+  {
+   "start": 190.32,
+   "end": 195.95,
+   "mood": "quest",
+   "energy": 0.55,
+   "in": "cut",
+   "out": "cut"
+  },
+  {
+   "start": 195.95,
+   "end": 199.48,
+   "mood": "boss",
+   "energy": 0.85,
+   "in": "cut",
+   "out": "sting"
+  },
+  {
+   "start": 199.48,
+   "end": 203.1,
+   "mood": "quest",
+   "energy": 0.4,
+   "in": "cut",
+   "out": "scratch"
+  },
+  {
+   "start": 203.1,
+   "end": 205.38,
+   "mood": "silence",
+   "energy": 0,
+   "in": "cut",
+   "out": "cut"
+  },
+  {
+   "start": 205.38,
+   "end": 221.64,
+   "mood": "homey",
+   "energy": 0.5,
+   "in": "fade",
+   "out": "cut"
+  },
+  {
+   "start": 221.64,
+   "end": 227.54,
+   "mood": "playful",
+   "energy": 0.35,
+   "in": "cut",
+   "out": "cut"
+  },
+  {
+   "start": 227.54,
+   "end": 229.28,
+   "mood": "silence",
+   "energy": 0,
+   "in": "cut",
+   "out": "cut"
+  },
+  {
+   "start": 229.28,
+   "end": 232.7,
+   "mood": "chaos",
+   "energy": 0.85,
+   "in": "cut",
+   "out": "sting"
+  },
+  {
+   "start": 232.7,
+   "end": 235.627,
+   "mood": "wonder",
+   "energy": 0.6,
+   "in": "swell",
+   "out": "cut"
+  },
+  {
+   "start": 235.627,
+   "end": 238.04,
+   "mood": "homey",
+   "energy": 0.35,
+   "in": "cut",
+   "out": "cut"
+  },
+  {
+   "start": 238.04,
+   "end": 242.74,
+   "mood": "playful",
+   "energy": 0.45,
+   "in": "cut",
+   "out": "fade"
+  }
+ ],
+ "ambience": [
+  {
+   "start": 165.1,
+   "end": 169.77,
+   "name": "night",
+   "gain_db": -14
+  },
+  {
+   "start": 169.77,
+   "end": 173.236,
+   "name": "night",
+   "gain_db": -10
+  },
+  {
+   "start": 173.236,
+   "end": 186.453,
+   "name": "night",
+   "gain_db": -18
+  },
+  {
+   "start": 186.453,
+   "end": 188.103,
+   "name": "night",
+   "gain_db": -10
+  },
+  {
+   "start": 188.103,
+   "end": 188.31,
+   "name": "night",
+   "gain_db": -22
+  },
+  {
+   "start": 188.31,
+   "end": 199.48,
+   "name": "birds",
+   "gain_db": -14
+  },
+  {
+   "start": 188.31,
+   "end": 199.48,
+   "name": "room",
+   "gain_db": -20
+  },
+  {
+   "start": 199.48,
+   "end": 242.74,
+   "name": "kitchen",
+   "gain_db": -14
+  },
+  {
+   "start": 199.48,
+   "end": 242.74,
+   "name": "birds",
+   "gain_db": -24
+  }
+ ],
+ "footsteps": [],
+ "sfx": [
+  [
+   165.12,
+   "typing",
+   -16,
+   0.175,
+   "gaming: keyboard mashing"
+  ],
+  [
+   165.16,
+   "notify",
+   0,
+   0.139,
+   "Update available — the window pops on the monitor"
+  ],
+  [
+   165.18,
+   "ui_pop",
+   -6,
+   0.139,
+   "window unfolds"
+  ],
+  [
+   165.3,
+   "swish",
+   -14,
+   0.102,
+   "his head tilts"
+  ],
+  [
+   166.69,
+   "zoom_in",
+   -10,
+   0,
+   "push into the screen"
+  ],
+  [
+   166.89,
+   "shine",
+   -6,
+   -0.044,
+   "glint across \"Reality HUD v1.0\""
+  ],
+  [
+   169.02,
+   "sparkle",
+   -8,
+   0.139,
+   "v1.0 twinkle"
+  ],
+  [
+   169.73,
+   "whoosh",
+   -12,
+   -0.3,
+   "whip to the house"
+  ],
+  [
+   170.86,
+   "glitch",
+   -14,
+   0.044,
+   "his window flickers (strange)"
+  ],
+  [
+   171.8,
+   "notify",
+   -6,
+   0.088,
+   "SYSTEM bubble pops out of his window"
+  ],
+  [
+   173.236,
+   "zoom_in",
+   -8,
+   0,
+   "smash back to the screen"
+  ],
+  [
+   173.436,
+   "whoosh_long",
+   -6,
+   0,
+   "the scrollbar thumb flies down"
+  ],
+  [
+   173.536,
+   "paper",
+   -6,
+   -0.4,
+   "pages blast out of the screen"
+  ],
+  [
+   173.936,
+   "paper",
+   -7,
+   0.4,
+   "pages blast out of the screen"
+  ],
+  [
+   174.336,
+   "paper",
+   -8,
+   -0.4,
+   "pages blast out of the screen"
+  ],
+  [
+   174.66,
+   "whoosh_long",
+   -4,
+   0.2,
+   "paper storm out of the monitor"
+  ],
+  [
+   174.76,
+   "money_counter",
+   -12,
+   0,
+   "the page counter rolls"
+  ],
+  [
+   174.81,
+   "paper",
+   -6,
+   0.3,
+   "pages rain on the room"
+  ],
+  [
+   175.23,
+   "paper",
+   -9,
+   -0.4,
+   "pages rain on the room"
+  ],
+  [
+   175.65,
+   "paper",
+   -6,
+   0.6,
+   "pages rain on the room"
+  ],
+  [
+   175.76,
+   "money_counter",
+   -12,
+   0,
+   "the page counter rolls"
+  ],
+  [
+   176.07,
+   "paper",
+   -9,
+   -0.2,
+   "pages rain on the room"
+  ],
+  [
+   176.49,
+   "paper",
+   -6,
+   0.5,
+   "pages rain on the room"
+  ],
+  [
+   176.58,
+   "stamp",
+   0,
+   0,
+   "4,812 PAGES slams on"
+  ],
+  [
+   176.62,
+   "paper",
+   -6,
+   0.16,
+   "one page lands on his head"
+  ],
+  [
+   177.46,
+   "swish",
+   -8,
+   0,
+   "split-screen slides in"
+  ],
+  [
+   177.7,
+   "click",
+   0,
+   -0.262,
+   "click — ACCEPT"
+  ],
+  [
+   177.87,
+   "confirm",
+   -4,
+   -0.262,
+   "✓ ACCEPTED"
+  ],
+  [
+   178.57,
+   "cloth",
+   -14,
+   0.357,
+   "smug shrug"
+  ],
+  [
+   179.81,
+   "whoosh",
+   -14,
+   -0.3,
+   "cut to the floor"
+  ],
+  [
+   180.14,
+   "cricket",
+   -12,
+   0.3,
+   "deadpan silence"
+  ],
+  [
+   180.44,
+   "paper",
+   -12,
+   -0.2,
+   "page one drifting down"
+  ],
+  [
+   181.76,
+   "paper",
+   -8,
+   0,
+   "page one lands on the pile"
+  ],
+  [
+   182.16,
+   "shine",
+   -10,
+   0.05,
+   "the little X glints (page one, rule 1.2)"
+  ],
+  [
+   182.63,
+   "paper",
+   -8,
+   0.3,
+   "the next page covers it"
+  ],
+  [
+   182.653,
+   "riser",
+   -4,
+   0,
+   "build to the burst"
+  ],
+  [
+   182.98,
+   "loading",
+   -4,
+   0,
+   "install progress"
+  ],
+  [
+   184.053,
+   "glitch",
+   -10,
+   -0.2,
+   "the window glitches"
+  ],
+  [
+   184.403,
+   "glitch",
+   -8,
+   0.2,
+   "the window glitches"
+  ],
+  [
+   184.633,
+   "impact",
+   0,
+   0,
+   "white flash — reality"
+  ],
+  [
+   184.653,
+   "pixel_wipe",
+   -2,
+   0,
+   "pixels burst at the camera"
+  ],
+  [
+   184.703,
+   "upgrade",
+   -4,
+   0,
+   "INSTALL COMPLETE"
+  ],
+  [
+   184.903,
+   "whoosh_long",
+   -4,
+   0.2,
+   "blast wave through the room"
+  ],
+  [
+   184.953,
+   "glitch_long",
+   -10,
+   0.3,
+   "pixels everywhere"
+  ],
+  [
+   185.003,
+   "paper",
+   -6,
+   -0.3,
+   "pages blown up off the piles"
+  ],
+  [
+   185.203,
+   "forcefield",
+   -8,
+   0.4,
+   "cyan shock rings"
+  ],
+  [
+   186.453,
+   "magic",
+   -4,
+   0.044,
+   "the window bursts with light"
+  ],
+  [
+   186.603,
+   "typing",
+   -14,
+   0.044,
+   "boot log rising into the sky"
+  ],
+  [
+   187.003,
+   "dog_bark",
+   -18,
+   -0.5,
+   "a neighbour dog barks at the light"
+  ],
+  [
+   187.653,
+   "powerdown",
+   -4,
+   0,
+   "every light goes out"
+  ],
+  [
+   188.39,
+   "snore",
+   -10,
+   0.1,
+   "asleep"
+  ],
+  [
+   189.04,
+   "zoom_in",
+   -6,
+   0,
+   "eyes snap open"
+  ],
+  [
+   189.06,
+   "shine",
+   -6,
+   0,
+   "cyan glint in his eyes"
+  ],
+  [
+   189.29,
+   "tv_on",
+   -8,
+   0,
+   "the HUD boots over his vision"
+  ],
+  [
+   189.39,
+   "loading",
+   -6,
+   0,
+   "LOADING REALITY..."
+  ],
+  [
+   190.04,
+   "blink",
+   -8,
+   0,
+   "blink"
+  ],
+  [
+   190.3,
+   "confirm",
+   -2,
+   0,
+   "100 % — REALITY HUD ONLINE"
+  ],
+  [
+   190.34,
+   "shine",
+   -6,
+   0,
+   "white flash"
+  ],
+  [
+   190.42,
+   "ui_pop",
+   -12,
+   -0.6,
+   "HUD frame corners fly in"
+  ],
+  [
+   190.44,
+   "ui_pop",
+   -10,
+   -0.233,
+   "tooltip pops (everything has stats)"
+  ],
+  [
+   190.5,
+   "ui_pop",
+   -12,
+   0.6,
+   "HUD frame corners fly in"
+  ],
+  [
+   190.58,
+   "ui_pop",
+   -12,
+   -0.6,
+   "HUD frame corners fly in"
+  ],
+  [
+   190.593,
+   "ui_pop",
+   -10,
+   -0.634,
+   "tooltip pops (everything has stats)"
+  ],
+  [
+   190.66,
+   "ui_pop",
+   -12,
+   0.6,
+   "HUD frame corners fly in"
+  ],
+  [
+   190.746,
+   "ui_pop",
+   -10,
+   -0.168,
+   "tooltip pops (everything has stats)"
+  ],
+  [
+   190.82,
+   "swish",
+   -12,
+   0,
+   "XP bar slides up"
+  ],
+  [
+   190.899,
+   "ui_pop",
+   -10,
+   0.266,
+   "tooltip pops (everything has stats)"
+  ],
+  [
+   191.051,
+   "ui_pop",
+   -10,
+   -0.066,
+   "tooltip pops (everything has stats)"
+  ],
+  [
+   191.204,
+   "ui_pop",
+   -10,
+   0.266,
+   "tooltip pops (everything has stats)"
+  ],
+  [
+   191.357,
+   "ui_pop",
+   -10,
+   0.58,
+   "tooltip pops (everything has stats)"
+  ],
+  [
+   191.51,
+   "ui_pop",
+   -10,
+   0.051,
+   "tooltip pops (everything has stats)"
+  ],
+  [
+   191.78,
+   "whoosh",
+   -12,
+   -0.2,
+   "cut"
+  ],
+  [
+   191.98,
+   "ui_pop",
+   -4,
+   0.321,
+   "BED · COMFORT +50"
+  ],
+  [
+   192.16,
+   "boing",
+   -10,
+   0,
+   "bed springs"
+  ],
+  [
+   192.8,
+   "boing",
+   -8,
+   0,
+   "bed springs"
+  ],
+  [
+   193.7,
+   "whoosh",
+   -12,
+   0.2,
+   "cut"
+  ],
+  [
+   193.82,
+   "ui_pop",
+   -4,
+   0.248,
+   "SOCK · CURSED · SMELL +99"
+  ],
+  [
+   194,
+   "steam_hiss",
+   -16,
+   0.248,
+   "stink lines"
+  ],
+  [
+   194.64,
+   "gulp",
+   -8,
+   0,
+   "he gags"
+  ],
+  [
+   195.95,
+   "whoosh",
+   -10,
+   -0.4,
+   "whip to the nightstand"
+  ],
+  [
+   196.15,
+   "alarm_beep",
+   0,
+   -0.2,
+   "the alarm clock rings"
+  ],
+  [
+   196.28,
+   "ui_pop",
+   -4,
+   0.1,
+   "ALARM CLOCK · ENEMY tooltip"
+  ],
+  [
+   196.33,
+   "error",
+   -10,
+   0.1,
+   "red ENEMY tag"
+  ],
+  [
+   197.12,
+   "whoosh",
+   -4,
+   -0.6,
+   "YOU slides in"
+  ],
+  [
+   197.15,
+   "alarm_beep",
+   -2,
+   -0.2,
+   "still ringing"
+  ],
+  [
+   197.17,
+   "whoosh",
+   -4,
+   0.6,
+   "ALARM CLOCK slides in"
+  ],
+  [
+   197.2,
+   "orch_hit",
+   0,
+   0,
+   "VS slams"
+  ],
+  [
+   197.25,
+   "alarm_beep",
+   -6,
+   0.5,
+   "the boss keeps ringing"
+  ],
+  [
+   197.3,
+   "ui_pop",
+   -8,
+   0,
+   "boss bar drops in"
+  ],
+  [
+   198.18,
+   "jump",
+   -4,
+   0.1,
+   "leaps off the bed"
+  ],
+  [
+   198.42,
+   "swish",
+   -2,
+   -0.2,
+   "pillow swing"
+  ],
+  [
+   198.52,
+   "punch",
+   2,
+   -0.4,
+   "SMACK"
+  ],
+  [
+   198.53,
+   "impact",
+   -4,
+   -0.4,
+   "POW! −999 CRITICAL"
+  ],
+  [
+   198.56,
+   "pop",
+   -8,
+   -0.4,
+   "feathers burst"
+  ],
+  [
+   198.6,
+   "whoosh_up",
+   -6,
+   -0.6,
+   "the clock flies off"
+  ],
+  [
+   198.64,
+   "powerdown",
+   -8,
+   0,
+   "boss bar drains"
+  ],
+  [
+   198.72,
+   "land",
+   -4,
+   -0.3,
+   "lands"
+  ],
+  [
+   198.82,
+   "sparkle",
+   -6,
+   -0.3,
+   "+12 XP pops"
+  ],
+  [
+   198.94,
+   "achievement",
+   -2,
+   0.2,
+   "ENEMY DEFEATED!"
+  ],
+  [
+   199.37,
+   "metal_clank",
+   -10,
+   -0.8,
+   "the clock lands off-screen"
+  ],
+  [
+   199.48,
+   "whoosh",
+   -10,
+   0.2,
+   "cut to the kitchen"
+  ],
+  [
+   199.78,
+   "countdown_tick",
+   -16,
+   -0.2,
+   "toaster timer ticking"
+  ],
+  [
+   199.82,
+   "coin",
+   -2,
+   -0.6,
+   "+12 XP lands in the bar"
+  ],
+  [
+   200.28,
+   "countdown_tick",
+   -16,
+   -0.2,
+   "toaster timer ticking"
+  ],
+  [
+   200.34,
+   "ui_pop",
+   -4,
+   -0.2,
+   "TOASTER · BURN CHANCE 80%"
+  ],
+  [
+   200.78,
+   "countdown_tick",
+   -16,
+   -0.2,
+   "toaster timer ticking"
+  ],
+  [
+   201.28,
+   "countdown_tick",
+   -16,
+   -0.2,
+   "toaster timer ticking"
+  ],
+  [
+   201.78,
+   "countdown_tick",
+   -16,
+   -0.2,
+   "toaster timer ticking"
+  ],
+  [
+   201.92,
+   "sizzle",
+   -12,
+   -0.2,
+   "the slots glow red"
+  ],
+  [
+   202.27,
+   "gulp",
+   -10,
+   0.3,
+   "nervous gulp"
+  ],
+  [
+   202.28,
+   "countdown_tick",
+   -16,
+   -0.2,
+   "toaster timer ticking"
+  ],
+  [
+   202.78,
+   "countdown_tick",
+   -16,
+   -0.2,
+   "toaster timer ticking"
+  ],
+  [
+   203.08,
+   "pop",
+   0,
+   -0.2,
+   "the toast pops out: charcoal"
+  ],
+  [
+   203.12,
+   "boing",
+   -10,
+   -0.2,
+   "toast springs up"
+  ],
+  [
+   203.18,
+   "poof",
+   -6,
+   0,
+   "black smoke in his face"
+  ],
+  [
+   203.3,
+   "ui_pop",
+   -8,
+   -0.3,
+   "TOAST · BURNT 100%"
+  ],
+  [
+   204.53,
+   "poof",
+   -8,
+   0.1,
+   "he coughs a smoke puff"
+  ],
+  [
+   205.38,
+   "whoosh",
+   -12,
+   -0.2,
+   "cut to Mom"
+  ],
+  [
+   205.99,
+   "sparkle",
+   -6,
+   0,
+   "sparkles around her smile"
+  ],
+  [
+   207.2,
+   "ui_pop",
+   -4,
+   0,
+   "MOM · LV 38 plate"
+  ],
+  [
+   207.97,
+   "zoom_in",
+   -6,
+   0,
+   "smash-zoom"
+  ],
+  [
+   208.02,
+   "alarm_beep",
+   -10,
+   0,
+   "ENERGY 2% blinks red"
+  ],
+  [
+   208.08,
+   "error",
+   -12,
+   0.3,
+   "low battery"
+  ],
+  [
+   209,
+   "whoosh",
+   -12,
+   0.2,
+   "cut"
+  ],
+  [
+   209.18,
+   "cloth",
+   -14,
+   -0.4,
+   "Mom waves"
+  ],
+  [
+   210.72,
+   "gulp",
+   -10,
+   0.2,
+   "he stares at her 2%"
+  ],
+  [
+   210.9,
+   "ui_pop",
+   -8,
+   0.1,
+   "COFFEE · +1% ENERGY tooltip"
+  ],
+  [
+   211.39,
+   "gulp",
+   -6,
+   0.1,
+   "sip 1"
+  ],
+  [
+   211.49,
+   "sparkle",
+   -12,
+   0.1,
+   "+1% ENERGY pops"
+  ],
+  [
+   212.15,
+   "gulp",
+   -6,
+   0.1,
+   "sip 2"
+  ],
+  [
+   212.25,
+   "sparkle",
+   -12,
+   0.1,
+   "+1% ENERGY pops"
+  ],
+  [
+   212.44,
+   "coin",
+   -6,
+   0,
+   "+1% lands (3%)"
+  ],
+  [
+   213.2,
+   "coin",
+   -6,
+   0,
+   "+1% lands (4%)"
+  ],
+  [
+   213.433,
+   "whoosh",
+   -12,
+   -0.2,
+   "cut"
+  ],
+  [
+   213.56,
+   "gulp",
+   -4,
+   -0.1,
+   "chug 3"
+  ],
+  [
+   213.86,
+   "dishes",
+   -4,
+   -0.5,
+   "mug 3 slams on the counter"
+  ],
+  [
+   213.94,
+   "coin",
+   -8,
+   0,
+   "+1% (5%)"
+  ],
+  [
+   214.04,
+   "gulp",
+   -4,
+   -0.1,
+   "chug 4"
+  ],
+  [
+   214.34,
+   "dishes",
+   -4,
+   -0.5,
+   "mug 4 slams on the counter"
+  ],
+  [
+   214.42,
+   "coin",
+   -8,
+   0,
+   "+1% (6%)"
+  ],
+  [
+   214.82,
+   "zoom_in",
+   -6,
+   0,
+   "push to the plate"
+  ],
+  [
+   214.92,
+   "money_counter",
+   -12,
+   0,
+   "6% bumps"
+  ],
+  [
+   215.96,
+   "stamp",
+   -2,
+   0.3,
+   "NEW RECORD! stamp"
+  ],
+  [
+   216.04,
+   "tada",
+   -4,
+   0,
+   "new record fanfare"
+  ],
+  [
+   216.06,
+   "confetti",
+   -6,
+   0,
+   "confetti"
+  ],
+  [
+   216.63,
+   "snore",
+   -12,
+   -0.1,
+   "Mom dozes off, smiling"
+  ],
+  [
+   217.01,
+   "ui_pop",
+   -4,
+   0,
+   "GRANDPA LOU · LV 87 plate"
+  ],
+  [
+   217.06,
+   "whoosh",
+   -12,
+   0.3,
+   "cut to Grandpa"
+  ],
+  [
+   218.16,
+   "cloth",
+   -10,
+   0,
+   "the flex"
+  ],
+  [
+   218.28,
+   "shine",
+   -4,
+   -0.1,
+   "crown sparkle on LV 87"
+  ],
+  [
+   219.48,
+   "whoosh",
+   -12,
+   -0.3,
+   "cut to Max"
+  ],
+  [
+   219.55,
+   "ui_pop",
+   -4,
+   0,
+   "MAX · CHAOS 9999 · HP ∞"
+  ],
+  [
+   219.8,
+   "electric",
+   -16,
+   0.1,
+   "CHAOS overflow sparks"
+  ],
+  [
+   220.52,
+   "magic",
+   -8,
+   0.1,
+   "∞ shimmer"
+  ],
+  [
+   221.04,
+   "monster_growl",
+   -12,
+   0.2,
+   "RAWR (cute)"
+  ],
+  [
+   221.64,
+   "whoosh",
+   -14,
+   0.3,
+   "cut"
+  ],
+  [
+   223.91,
+   "swish",
+   -6,
+   0.2,
+   "he swats above his head"
+  ],
+  [
+   224.16,
+   "glitch",
+   -8,
+   0,
+   "his hand goes through the plate"
+  ],
+  [
+   224.7,
+   "swish",
+   -12,
+   -0.2,
+   "head shake"
+  ],
+  [
+   224.88,
+   "swish",
+   -12,
+   0.2,
+   "head shake"
+  ],
+  [
+   226.42,
+   "cloth",
+   -14,
+   0.2,
+   "thumbs up"
+  ],
+  [
+   226.62,
+   "shine",
+   -10,
+   0.3,
+   "forced-grin sparkle"
+  ],
+  [
+   227.58,
+   "cricket",
+   -10,
+   0,
+   "awkward"
+  ],
+  [
+   228.57,
+   "shine",
+   0,
+   -0.1,
+   "the bald dome glints"
+  ],
+  [
+   228.65,
+   "ui_pop",
+   -8,
+   0.2,
+   "HAIR · FOUND: 0"
+  ],
+  [
+   229.28,
+   "boing",
+   -8,
+   0,
+   "Max pops up on his booster"
+  ],
+  [
+   229.4,
+   "rimshot",
+   -10,
+   0,
+   "ba-dum-tss"
+  ],
+  [
+   229.7,
+   "electric",
+   -12,
+   0,
+   "CHAOS spikes"
+  ],
+  [
+   230.8,
+   "whoosh_up",
+   -2,
+   -0.4,
+   "Max launches"
+  ],
+  [
+   231.1,
+   "whoosh",
+   -6,
+   -0.4,
+   "the flip"
+  ],
+  [
+   231.4,
+   "big_splash",
+   2,
+   -0.4,
+   "SPLASH into the cereal"
+  ],
+  [
+   231.42,
+   "splat",
+   -2,
+   -0.2,
+   "milk everywhere"
+  ],
+  [
+   231.47,
+   "pop",
+   -10,
+   0.3,
+   "cereal rings fly"
+  ],
+  [
+   231.54,
+   "splat",
+   -8,
+   0.4,
+   "milk hits the hero + Grandpa"
+  ],
+  [
+   231.83,
+   "punch",
+   -8,
+   0.2,
+   "−50 damage number"
+  ],
+  [
+   232.13,
+   "stamp",
+   -4,
+   -0.1,
+   "NO DAMAGE"
+  ],
+  [
+   232.8,
+   "ui_pop",
+   -12,
+   -0.5,
+   "toast tooltip"
+  ],
+  [
+   233,
+   "ui_pop",
+   -12,
+   -0.1,
+   "cereal tooltip"
+  ],
+  [
+   234.3,
+   "zoom_in",
+   -2,
+   0,
+   "smash-zoom on AMAZING"
+  ],
+  [
+   234.4,
+   "angel",
+   -8,
+   0,
+   "heavenly choir"
+  ],
+  [
+   234.45,
+   "sparkle",
+   -6,
+   0,
+   "star eyes"
+  ],
+  [
+   235.627,
+   "whoosh",
+   -12,
+   0.5,
+   "cut to Biscuit"
+  ],
+  [
+   235.677,
+   "loading",
+   -8,
+   0.5,
+   "LOADING STATS... (stuck at 99%)"
+  ],
+  [
+   237.16,
+   "beep",
+   -12,
+   0.5,
+   "loader stutters"
+  ],
+  [
+   237.49,
+   "beep",
+   -14,
+   0.5,
+   "loader stutters"
+  ],
+  [
+   238,
+   "error",
+   0,
+   0.5,
+   "ERROR: TOO GOOD"
+  ],
+  [
+   238.04,
+   "glitch",
+   -2,
+   0.5,
+   "HUD glitch"
+  ],
+  [
+   238.95,
+   "heart_pop",
+   -6,
+   0.5,
+   "the very good boy face"
+  ],
+  [
+   239.4,
+   "dog_bark",
+   -8,
+   0.5,
+   "arf arf"
+  ],
+  [
+   239.94,
+   "cloth",
+   -16,
+   0.2,
+   "pat pat"
+  ],
+  [
+   240.64,
+   "cloth",
+   -16,
+   0.2,
+   "pat pat"
+  ],
+  [
+   240.92,
+   "glitch",
+   -14,
+   0.4,
+   "the ERROR plate glitches"
+  ],
+  [
+   241.34,
+   "cloth",
+   -16,
+   0.2,
+   "pat pat"
+  ],
+  [
+   242.59,
+   "whoosh",
+   -4,
+   0.4,
+   "white whip into SC 04"
+  ]
+ ]
+}

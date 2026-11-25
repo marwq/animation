@@ -113,11 +113,11 @@ function osd(t, kind = 'pause', k = 1) {
   let o = '';
   const blink = Math.floor(t * 2.2) % 2 === 0;
   if (kind === 'pause') {
-    if (blink) o += S.rect(96, 80, 18, 64, 2, { fill: '#FFFFFF', stroke: LINE, 'stroke-width': 4 }) + S.rect(126, 80, 18, 64, 2, { fill: '#FFFFFF', stroke: LINE, 'stroke-width': 4 });
-    o += TFS('PAUSE', 168, 136, 64, '#FFFFFF', { 'text-anchor': 'start', 'letter-spacing': 4 });
+    if (blink) o += S.rect(110, 180, 22, 76, 3, { fill: '#FFFFFF', stroke: LINE, 'stroke-width': 5 }) + S.rect(146, 180, 22, 76, 3, { fill: '#FFFFFF', stroke: LINE, 'stroke-width': 5 });
+    o += TFS('PAUSE', 198, 246, 80, '#FFFFFF', { 'text-anchor': 'start', 'letter-spacing': 5 });
   } else {
-    o += S.path('M150 80 L100 112 L150 144 Z M200 80 L150 112 L200 144 Z', { fill: '#FFFFFF', stroke: LINE, 'stroke-width': 4, 'stroke-linejoin': 'round' });
-    o += TFS('REWIND', 224, 136, 64, '#FFFFFF', { 'text-anchor': 'start', 'letter-spacing': 4 });
+    o += S.path('M172 180 L112 218 L172 256 Z M232 180 L172 218 L232 256 Z', { fill: '#FFFFFF', stroke: LINE, 'stroke-width': 5, 'stroke-linejoin': 'round' });
+    o += TFS('REWIND', 256, 246, 80, '#FFFFFF', { 'text-anchor': 'start', 'letter-spacing': 5 });
   }
   o += TFS('SP  0:00:' + String(Math.floor(kind === 'pause' ? 39 : (40 - (t % 40)))).padStart(2, '0'), 1820, 1000 - 60, 40, '#FFFFFF', { 'text-anchor': 'end', 'letter-spacing': 3 });
   return S.g(o, null, k < 1 ? { opacity: f(k) } : {});
@@ -145,9 +145,14 @@ function tracking(t, k = 1, rewind = false) {
 // ---------------------------------------------------------------- HUD bits
 // screen-space mini plates over a list of world people { x, y, s, i, kind } (head top ≈ y − 930 s for kids)
 const NAMES = ['KYLE', 'PRIYA', 'ZOE', 'MARCUS', 'JAY', 'LILY', 'OMAR', 'NOAH', 'MIA', 'LEO', 'AVA', 'SAM', 'ELI', 'IVY', 'RAY', 'NIA', 'TOM', 'ANA', 'BEN', 'KIM', 'DEV', 'JO', 'MAX?', 'LOU'];
+const TITLES = [['HOMEWORK: 12% DONE', 'ENERGY', 31], ['SKILL: BEING LATE', 'HP', 72], ['CRUSH: VERY OBVIOUS', 'HP', 88], ['SNACKS: 0', 'ENERGY', 9], ['WIFI: 1 BAR', 'HP', 64]];
 function crowdPlates(cam, list, t, kAt, o = {}) {
   let out = '';
   const sorted = list.slice().sort((a, b) => a.y - b.y);
+  const bigIds = (o.big || 0) > 0 ? sorted.slice(-o.big).map((p) => Math.round(p.i)) : [];
+  // unique names per frame: assign by ascending id
+  const nameOf = {}, used = new Set();
+  list.map((p, j) => Math.round(p.i ?? j)).sort((a, b) => a - b).forEach((id) => { let n = (id * 7 + 3) % 23; while (used.has(n) && used.size < 23) n = (n + 1) % 23; used.add(n); nameOf[id] = NAMES[n]; });
   sorted.forEach((p, j) => {
     const id = Math.round(p.i ?? j);
     const k = kAt(id, p);
@@ -156,10 +161,29 @@ function crowdPlates(cam, list, t, kAt, o = {}) {
     const q = toScr(cam, p.x, p.y - hTop * p.s - (p.lift || 0), o.k ?? 1);
     if (q.x < -150 || q.x > W + 150 || q.y < 40 || q.y > HH + 80) return;
     const s = clamp(p.s * q.z * (o.scale ?? 1.9), 0.38, o.max ?? 1.15);
-    const name = NAMES[id % NAMES.length], lv = 2 + Math.floor(hash(id * 3.7) * 46);
+    const name = nameOf[id] || NAMES[(id * 7 + 3) % 23], lv = 2 + Math.floor(hash(id * 3.7) * 46);
+    const bi = bigIds.indexOf(id);
+    if (bi >= 0) {
+      const tl = TITLES[(id + bi) % TITLES.length];
+      out += H.statPlate({ x: q.x, y: q.y, s: clamp(s * 0.75, 0.5, 1.1), k, t, name, level: lv, title: tl[0], bars: [{ label: tl[1], value: tl[2] }] });
+      return;
+    }
     out += H.miniPlate({ x: q.x, y: q.y, s, k, t, name, level: lv, hp: 0.25 + 0.75 * hash(id * 1.9), glitch: o.glitch || 0, theme: o.theme });
   });
   return out;
+}
+// a big HUD chip that slaps on (k 0..1): label + value, e.g. 'SECRET SKILL:' 'MYSTERY MEAT'
+function chip(x, y, label, value, k, t, o = {}) {
+  if (k <= 0) return '';
+  const th = H.theme(o.theme || 'cyan');
+  const sz = o.size || 40, lw = H.TL ? 0 : 0;
+  const w = Math.max(260, 40 + label.length * sz * 0.36 + value.length * sz * 0.56 + 30), h = sz * 1.7;
+  let g = H.panel(-w / 2, -h / 2, w, h, th, { c: 12, br: 16 });
+  g += H.TF(label, -w / 2 + 24, sz * 0.28, sz * 0.5, th.label, { 'text-anchor': 'start', 'letter-spacing': 2 });
+  g += H.TL(value, w / 2 - 22, sz * 0.36, sz, o.col || '#FFFFFF', { 'text-anchor': 'end', stroke: th.edge, 'stroke-width': sz * 0.16, 'paint-order': 'stroke' });
+  const ki = clamp(k, 0, 1), s = lerp(2.2, 1, ease.outBack(ki)), r = lerp(-14, o.rot ?? -3, ease.out(ki));
+  if (ki < 0.35) g += S.rect(-w / 2, -h / 2, w, h, 10, { fill: '#FFFFFF', opacity: f(0.8 * (1 - ki / 0.35)) });
+  return S.g(g, `${tf(x, y, s * (o.s || 1), r)}`, ki < 0.2 ? { opacity: f(ki / 0.2) } : {});
 }
 // the tiny reticle that scans a head and finds nothing
 function scanReticle(x, y, r, t, k = 1, col = '#7CF7FF') {
@@ -203,12 +227,12 @@ function title(t, k, o = {}) {
   const k1 = seg(k, 0.05, 0.45);
   g += S.g(TFS("WHAT IF YOU COULD SEE", 0, -150, 62, '#FFFFFF', { 'letter-spacing': 6 }), `translate(0 ${f(-30 * (1 - ease.out(k1)))})`, { opacity: f(k1) });
   // the main HUD panel
-  const pw = 1260, ph = 190;
+  const pw = 1420, ph = 190;
   g += H.panel(-pw / 2, -110, pw, ph, th, { c: 30, br: 40, scan: true });
   g += H.sheen(-pw / 2 + 8, -104, pw - 16, ph - 12, t, 2.6, 3);
   // LV badge
   g += S.path(H.para(-pw / 2 + 34, -82, 170, 72, 16), { fill: th.badge, stroke: th.edge, 'stroke-width': 5 }) + TF('LV', -pw / 2 + 60, -36, 26, th.badgeTx, { 'text-anchor': 'start' }) + T(String(o.lv ?? '???'), -pw / 2 + 108, -26, 58, th.badgeTx, { 'text-anchor': 'start' });
-  g += T("EVERYONE'S STATS", 92, 30, 132, '#FFFFFF', { stroke: th.edge, 'stroke-width': 18, 'paint-order': 'stroke', 'stroke-linejoin': 'round' });
+  g += T("EVERYONE'S STATS", -pw / 2 + 236, 30, 128, '#FFFFFF', { 'text-anchor': 'start', stroke: th.edge, 'stroke-width': 18, 'paint-order': 'stroke', 'stroke-linejoin': 'round' });
   // bar
   const bk = seg(k, 0.45, 0.95);
   g += H.segBar(-pw / 2 + 40, 52, pw - 80, 18, bk, '#3DFF8F', { th, t, cell: 22 });
@@ -223,10 +247,12 @@ function title(t, k, o = {}) {
   }
   return S.g(g, `translate(${f(o.x ?? 960)} ${f(o.y ?? 500)}) scale(${f(s)})`);
 }
+const mixHex = (a, b, k) => '#' + [1, 3, 5].map((i) => Math.round(lerp(parseInt(a.slice(i, i + 2), 16), parseInt(b.slice(i, i + 2), 16), k)).toString(16).padStart(2, '0')).join('');
 // dark HUD background: ink blue, grid, rays (cheap)
 function hudBg(t, o = {}) {
-  let g = S.rect(-20, -20, W + 40, HH + 40, 0, { fill: o.col || '#0B1630' });
-  g += K.rays(960, o.cy ?? 520, 18, 1500, o.ray || '#1C3A6A', 0.55, t * 6);
+  const base = o.col || '#0B1630';
+  let g = S.rect(-20, -20, W + 40, HH + 40, 0, { fill: base });
+  g += K.rays(960, o.cy ?? 520, 18, 1500, mixHex(base, o.ray || '#1C3A6A', 0.55), 1, t * 6);   // solid (no translucent full-frame areas)
   let d = '';
   const off = (t * 40) % 80;
   for (let x = -80; x < W + 80; x += 80) d += `M${f(x + off)} 0V${HH}`;
@@ -238,5 +264,5 @@ function hudBg(t, o = {}) {
 module.exports = {
   LINE, tf, TS, TFS, pop, sc, camAt, toScr, shakeAll, boing, dim, dutch,
   whip, smash, zoomLines, streaks, letterbox, crtOpen, rings, papers, osd, tracking,
-  crowdPlates, scanReticle, lockerDoor, meatEye, title, hudBg, NAMES,
+  crowdPlates, scanReticle, chip, lockerDoor, meatEye, title, hudBg, NAMES,
 };
