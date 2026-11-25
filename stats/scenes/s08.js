@@ -210,7 +210,7 @@ function shotPeople(t) {
   const cam = camLerp(camAt(1300, 700, 0.72), camAt(1320, 720, 0.6), u, ease.out);
   const o_ = { crowd: 1, packed: 1, near: 0 };
   let o = fairWith(t, cam, o_);
-  const heads = setPeople(cam, o_).filter((h) => h.s > 0.085);
+  const heads = setPeople(cam, o_).filter((h) => h.s > 0.15 || (h.s > 0.085 && h.i % 2 === 0));
   o += headTags(heads, { t, k: (h) => seg(t, B.wave + (h.x / 1920) * 0.85 + (h.i % 3) * 0.05, B.wave + 0.25 + (h.x / 1920) * 0.85 + (h.i % 3) * 0.05) });
   return o + hud(t) + whip(t, C.people, 1, 0.1);
 }
@@ -218,9 +218,9 @@ function shotPeople(t) {
 function shotOver(t) {
   const u = seg(t, C.over, C.wait);
   const cam = camLerp(camAt(1250, 860, 0.74), camAt(2050, 800, 0.82), u, (x) => x);
-  const o_ = { crowd: 1, packed: 1, cheer: 0.3 };
+  const o_ = { crowd: 1, packed: 1 };
   let o = fairWith(t, cam, o_);
-  const heads = setPeople(cam, o_).filter((h) => h.s > 0.08);
+  const heads = setPeople(cam, o_).filter((h) => h.s > 0.15 || (h.s > 0.08 && h.i % 2 === 0));
   o += headTags(heads, { t, glitch: 0.15 * u });
   return o + hud(t);
 }
@@ -337,7 +337,7 @@ function shotFlood(t) {
   const cam = camLerp(camAt(1650, 380, 0.56), camAt(1700, 420, 0.63), u);
   const o_ = { crowd: 0.9 };
   let o = fairWith(t, cam, o_);
-  const heads = setPeople(cam, o_).filter((h, i) => h.s > 0.1);
+  const heads = setPeople(cam, o_).filter((h) => h.s > 0.11);
   o += headTags(heads, { t, glitch: 0.3 });
   const tip = (x, y, k0, title, lines, side = 'up', rar) => H.tooltip({ x, y, t, k: seg(t, k0, k0 + 0.45), title, lines, side, rarity: rar, s: 0.75, dist: 50 });
   const [wx, wy] = toScr(cam, SPF.ferris.x, SPF.ferris.y - 300, SPF.ferris.k);
@@ -346,8 +346,8 @@ function shotFlood(t) {
   o += tip(cx + 60, cy + 60, C.flood + 0.5, 'COTTON CANDY', ['SUGAR +99', 'HAPPINESS +40'], 'right', 'rare');
   o += tip(560, 250, C.flood + 0.9, 'CLOUD', ['LV 2', 'FLUFF 100%'], 'down', 'common');
   o += tip(1560, 120, C.flood + 1.3, 'SKY', ['LV ???', 'BLUE 12%'], 'down', 'mystery');
-  o += H.numbersFlood({ t, k: lerp(0.15, 0.5, u), seed: 5, n: 60, tint: false });
-  return o + hud(t, { quest: true, glitch: 0.25, crowdDots: 60 });
+  o += H.numbersFlood({ t, k: lerp(0.15, 0.5, u), seed: 5, n: 50, tint: false });
+  return o + hud(t, { quest: true, crowdDots: 60 });
 }
 // ---- crowd shots with real layering: E.crowdShot (set -> back rows -> plates -> under -> chars -> front rows -> plates)
 const { crowdShot, COLD } = E;
@@ -409,7 +409,7 @@ function shotFaces(t) {
   const spin = ph % 1, views = ['front', 'side', 'back', 'side'], vi = Math.floor(spin * 4);
   const pose = { ...famPose(t, 'you'), armL: 128, armR: 128, bendL: 86, bendR: 86, view: views[vi], flip: vi === 3, face: { name: 'scared', mouth: t > B.faces - 0.05 ? 'scream' : 'O', fx: ['sweat'] } };
   if (vi % 2) Object.assign(pose, { armL: 150, armR: 150, bendL: 60, bendR: 60 });
-  const o = crowdShot(t, cam, { back: RING_B, front: RING_F, glitch: 0.4, chars: actor('you', t, pose, { arms: false }), under: H.numbersFlood({ t, k: 0.68, seed: 13, n: 60 }) });
+  const o = crowdShot(t, cam, { back: RING_B, front: RING_F, glitch: 0.4, chars: actor('you', t, pose, { arms: false }), under: H.numbersFlood({ t, k: 0.68, seed: 13, n: 45 }) });
   return roll(cam, o) + hud(t, { quest: true, glitch: 0.4, crowdDots: 60 }) + whip(t, C.faces, 1, 0.08);
 }
 // 25 — "He's wearing a dinosaur suit!" Mom grabs him — and even her face is a plate (flickering)
@@ -491,9 +491,9 @@ function shotBrother(t) {
   const u = seg(t, C.brother, END - 0.6);
   const cam = camLerp(camAt(2480, 700, 1.6), camAt(2400, 640, 0.6), u, ease.inOut);
   const pose = { ...famPose(t, 'you'), armL: 12, armR: 12, headRot: -5, face: { name: 'sad', eyes: { look: [0, 0.8] } } };
-  let o = crowdShot(t, cam, { back: RING_B, front: RING_F, quiet: 1, cold: true, pt: FREEZE(), crowd: 1, chars: actor('you', t, pose, { arms: false }) });
+  let o = crowdShot(t, cam, { back: RING_B.slice(1), front: RING_F.slice(0, 2), quiet: 1, cold: true, pt: FREEZE(), crowd: 0.85, chars: actor('you', t, pose, { arms: false }) });
   // the rest of the fair: plates over every far head too
-  const far = setPeople(cam, { crowd: 1 }, 'back').filter((h) => h.s > 0.07);
+  const far = setPeople(cam, { crowd: 0.85 }, 'back').filter((h) => h.s > 0.08);
   o += headTags(far, { t: FREEZE(), rim: '#7FA3BF', bar: '#7F96AA', glass: '#0B141E' });
   // a pool of light on him, the rest falls into the dark (evenodd rings — no masks)
   const [hx, hy] = toScr(cam, FAM.you.x, FAM.you.y - 200);

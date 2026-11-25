@@ -72,13 +72,12 @@ function shotHand(t) {
   w += actor('grandpa', t, { x: gx, y: 1008, s: gs, t, turn: -0.55, armL: lerp(12, 78, gin), bendL: -10, headRot: 4, face: 'happy' }, { arms: false, energy: 0.6 });
   const calm = seg(t, B.breathe, B.breathe + 1.2);
   let o = E8.crowdShot(t, cam, { back: E8.RING_B, front: E8.RING_F, quiet: 1, cold: true, pt: TM.START - 7, chars: w, k: () => 1 - 0.4 * calm,
-    under: S.g(H.numbersFlood({ t: START - 7, k: 0.75, seed: 31, n: 60, tint: false }).replace(/#3BE8FF|#FFD21F|#3DFF8F|#FF4D66|#FF5ACD|#FFFFFF/g, '#B8C6D4'), null, { opacity: f(1 - 0.6 * calm) }) + dark(0.3, '#0A1020') });
+    under: dark(0.3, '#0A1020') + H.numbersFlood({ t: START - 7, k: 0.75 - 0.45 * calm, seed: 31, n: 45, tint: false }).replace(/#3BE8FF|#FFD21F|#3DFF8F|#FF4D66|#FF5ACD|#FFFFFF/g, '#B8C6D4') });
   // Grandpa's face: a plate on it ... slides up and away on "Breathe"
   const hp = H.overHead('grandpa', gx, 1008, gs);
   const [fx, fy] = toScr(cam, hp.x - 10, hp.y + 210 * gs);
   const off = ease.inOut(seg(t, B.breathe - 0.1, B.breathe + 0.5));
   if (off < 1) o += S.g(E8.facePlates([{ x: fx, y: fy - 260 * off, r: 120 * gs * cam.zoom, i: 9, lv: 87 }], { t: START - 7 }), null, { opacity: f(1 - off) });
-  o += dark(0.1, '#0A1020');
   return o + H.hudFrame({ t: START - 7, clock: CLOCK, day: 'SAT', theme: 'cold', quest: 'FIND MAX', questSub: 'LOCATION: UNKNOWN' });
 }
 // 2 — "Sit with me for one second." the bench under the lamp in a quiet gap of the crowd; the hero plops down
