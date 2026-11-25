@@ -191,17 +191,25 @@
   "silence": "no music",
   "news": "TV news jingle energy (breaking news, announcements)",
   "explainer": "light bouncy educational (explaining how something works)",
-  "tender": "soft piano + strings, emotional (Brick, the old man, the last command)",
+  "tender": "soft piano + strings on the main theme, emotional (Tank's reveal, Grandpa's bench, apologies, BIG BROTHER)",
   "power": "heroic synth-brass drive for firing commands and the admin battle",
   "chaos": "frantic circus galop for the city in chaos, flying town, giant cats",
   "mystic": "music box + low strings, curious and eerie (garage sale, the logs, the server room)",
   "tutorial": "bubbly, cute tutorial music (Tip explains the rules, checkpoint basics, light comedy)",
   "showtime": "school talent-show band: swing ride, walking bass, brass fanfare (the show begins)",
-  "family": "MAIN theme of this video: warm bouncy pop (cold open, family moments, titles, outro)",
+  "family": "older warm bouncy pop (Parents video) - in this video prefer `homey`",
   "lobby": "chill game-lobby groove: Cube City by day, wandering around, the lobby obby",
   "arena": "arena rock: Mom destroying players, fights, the leaderboard climb",
   "tycoon": "bouncy money montage: Granny's cookie empire growing, prices, rent",
   "boss": "epic dark boss fight: the Block King, the raid, server health dropping",
-  "anthem": "rising triumphant anthem: JUMP DAD JUMP, the climb, VICTORY, MVP"
+  "anthem": "rising triumphant anthem on the main theme (Max found on the dinosaur, the big reunion)",
+  "levelup": "MAIN theme of this video: bright synth-pop with a chiptune arpeggio (cold open, titles, XP spree, levelling up, outro)",
+  "homey": "cosy family morning: guitar picking, piano, flute theme (home, breakfast, Mom, Grandpa, the happy ending)",
+  "install": "techy pulsing build that rises (the update at night, terms & conditions, installing reality, the HUD booting)",
+  "quest": "school-as-a-game: pizzicato bounce, marimba, chiptune blips (school with stats, dodgeball, cafeteria tooltips, quests)",
+  "cold": "cold clockwork ostinato, no warmth (chasing numbers, dumping Benji, the smart kids, skipping Mom's quest)",
+  "carnival": "sunny small-town fair: accordion/organ oom-pah + glockenspiel (arriving at the fair, the happy fair at the end)",
+  "overload": "HUD overload panic: racing 16ths, pounding toms, alarms (Max is lost, numbers everywhere, can't see faces)",
+  "search": "HUD off: heartbeat into a hopeful driving run that builds to the theme (the search with Benji and Tank, the climb)"
  }
 }

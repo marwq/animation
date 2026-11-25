@@ -49,6 +49,20 @@ One JSON file per scene: `audio/cues/scNN.json` (`sc01.json` … `sc06b.json` �
 
 Validate with `python3 audio/validate_cues.py audio/cues/scNN.json`.
 
+## Stats video specifics
+
+- The REAL voice is in place (`scenes/timeline.json` from the ElevenLabs takes); the voice is mixed loud on top with music ducking under it. Plan the music as if the voice were there: `energy` 0.35–0.6 under dialogue, 0.8–1 for montages and wordless action.
+- Moods written for this video (all built on one original "level up" main theme): `levelup` (MAIN: cold open, XP spree, outro), `homey` (home, breakfast, the happy ending), `install` (the update + boot), `quest` (school with stats, dodgeball, cafeteria), `cold` (chasing numbers, dumping Benji), `carnival` (the fair), `overload` (Max lost, HUD overload), `search` (HUD off, the run with Benji and Tank), `tender` (Tank's reveal, Grandpa's bench, apologies, BIG BROTHER), `anthem` (Max found, the reunion), plus `playful`, `mystery`, `wonder`, `sad`, `warm`, `chaos` from `vocab.json`. Use `silence` drop-outs for comedic and emotional beats (the toaster burns, "Two XP? Not worth it.", the friendship −50, the HUD switching off → true silence for ~1.5 s before the world sounds come back).
+- Every visual hit in the scene code needs a sound. Signature recipes:
+  - **The HUD:** `ui_pop` when a stat plate pops in, `money_counter` (soft, −8) while numbers roll, `click`/`tap` for each status tag slapping on, `alarm_beep` (soft) for a low bar blinking red, `notify` for quest markers and toasts, `chime` + `achievement` for QUEST COMPLETE, `level_up` for level-ups, `coin`/`sparkle` for each "+10 XP" flying into the bar, `heart_pop` for +friendship, `glass` + `sad_trombone`(very soft) or `sub_drop` for the cracked −50 heart, `buzzer_wrong` for the LIE 99% meter, `error` for Biscuit's ERROR: TOO GOOD.
+  - **The update:** `notify` for the window, `paper` + `whoosh_long` for 4,812 pages scrolling, `click` ACCEPT, `loading` + `riser` + `pixel_wipe` + `upgrade` for installing reality, `glitch` small hits for HUD glitches.
+  - **Overload / off:** `glitch_long` + `static` + `heartbeat` + `riser` for the numbers flood, `toggle`/`click` for the X, `glass` + `explosion_small` (soft) + `shine` for the HUD shattering, then `silence` and a slow return of `crowd` ambience and `birds`.
+  - **School:** `bell` (school bell), `step` crowds, `door_open`, `paper` (quiz), `boing`/`bonk`/`whoosh` for dodgeballs, `crowd_cheer` / `kids_laugh` for the gym, `chomp`/`gulp` for eating, `body_fall` + `thud` for Benji falling ("I'm okay!").
+  - **Home:** `alarm` (alarm clock ENEMY), `toaster` = `pop` + `sizzle`, `pan_clang`, `dishes`, `dog_bark` (soft, Biscuit), `snore`, `pop` for pillows landing, `tada` for the fort.
+  - **Fair:** `crowd` ambience, `bell`/`ka_ching` booth dings, `whistle`, `boing` + `squeak` for the inflatable dinosaur, `applause` + `crowd_cheer` when Max is found, `monster_growl` (softened, pitched cute) for Max's RAWR.
+  - **Emotional:** almost nothing under Tank's reveal and Grandpa's bench (soft `tender`, ambience only); `heartbeat` for the moment the hero sees Tank's HP 3.
+- A scene sheet covers exactly the scene's range from `scenes/main.js` RANGES (`start` = a, `end` = b). Generate the sheet from the scene code's own `L(id)` / `.word()` expressions with a small script kept next to it as `audio/cues/gen_scNN.js` (see `/home/user/animation/parents/audio/cues/gen_sc05.js` for the pattern).
+
 ## Parents video specifics
 
 - The REAL voice is in place (scenes/timeline.json from the ElevenLabs takes); the voice is mixed loud on top with music ducking under it. Plan the music as if the voice were there: `energy` 0.35–0.6 under dialogue, 0.8–1 for montages and wordless action.

@@ -2,7 +2,7 @@
 
 Every segment of the music map (audio/cues/partNN.json) is rendered on its own with a tempo fitted so the
 segment holds a whole number of bars, so phrase starts and endings land on the picture cuts.
-All melodies here are original: the Respawn main theme (THEME) is reused across moods (respawn, perfect, tender, lag, corrupt, showtime, foam).
+All melodies here are original: the Stats main theme (THEME, 'level up') is reused across moods (levelup, homey, quest, cold, carnival, search, tender, anthem...).
 """
 import os, sys, math, hashlib
 import numpy as np
@@ -27,17 +27,17 @@ def chord_notes(root, mode, d, seven=False, inv=0):
 
 
 # main theme: (degree, beats); degree 0 = tonic in the lead octave; None = rest. 8 bars over I V vi IV I V IV V
-THEME = [   # "family" theme of the Parents video (8 bars over I V vi IV I V IV V): warm, bouncy, a little cheeky
-    [(0, .75), (2, .25), (4, .5), (4, .5), (5, .5), (4, .5), (2, .5), (0, .5)],
-    [(-1, .5), (1, .5), (4, 1), (2, .5), (1, .5), (None, 1)],
-    [(0, .75), (2, .25), (4, .5), (7, .5), (6, .5), (5, .5), (4, 1)],
-    [(3, .5), (4, .5), (5, .5), (3, .5), (2, 1.5), (None, .5)],
-    [(4, .75), (5, .25), (7, .5), (7, .5), (9, .5), (7, .5), (5, .5), (4, .5)],
-    [(4, .5), (5, .5), (6, 1), (8, .5), (6, .5), (None, 1)],
-    [(7, .5), (6, .5), (5, .5), (3, .5), (4, .5), (2, .5), (1, .5), (2, .5)],
-    [(1, 1), (-1, 1), (0, 1.5), (None, .5)],
+THEME = [   # "level up" theme of the Stats video (8 bars over I iii IV V vi IV I V): curious, bright, game-y, warm underneath
+    [(0, .5), (2, .5), (4, .5), (2, .5), (7, .75), (6, .25), (4, 1)],
+    [(6, .5), (4, .5), (2, .5), (4, .5), (6, 1.5), (None, .5)],
+    [(5, .5), (7, .5), (8, .5), (7, .5), (5, .5), (3, .5), (5, 1)],
+    [(4, .75), (3, .25), (2, .5), (1, .5), (4, 1.5), (None, .5)],
+    [(2, .5), (4, .5), (5, .5), (7, .5), (9, .75), (8, .25), (7, 1)],
+    [(8, .5), (7, .5), (5, .5), (3, .5), (5, 1), (None, 1)],
+    [(4, .5), (5, .5), (7, .5), (9, .5), (7, .5), (4, .5), (2, .5), (0, .5)],
+    [(1, 1), (-1, .5), (1, .5), (4, 1.5), (None, .5)],
 ]
-THEME_PROG = [0, 4, 5, 3, 0, 4, 3, 4]
+THEME_PROG = [0, 2, 3, 4, 5, 3, 0, 4]
 # Nova's motif (dorian), 4 bars over i7 IV9 i7 IV9
 NOVA = [
     [(0, .75), (2, .75), (3, .5), (4, .5), (6, .25), (4, .25), (3, 1)],
@@ -1032,6 +1032,199 @@ def _(s, nb, e, r):
     return {0: 61, 2: 32, 3: 48, 4: 52}
 
 
+# ---------------------------------------------------------------- Stats video moods
+@style('levelup', 124)
+def _(s, nb, e, r):
+    root, mode = 67, 'major'  # G major: MAIN theme - bright synth-pop with a chiptune arpeggio (square lead, synth bass, bells)
+    prog = THEME_PROG
+    for b, d in enumerate(prog_loop(prog, nb)):
+        ch = chord_notes(67, mode, d)
+        arp = [ch[0], ch[1], ch[2], ch[0] + 12, ch[2], ch[1], ch[0] + 12, ch[2]]
+        for i, nn in enumerate(arp):
+            s.n(b * 4 + i * 0.5, 0.22, nn, 50 + 14 * e, 4)
+        for t0 in (0, 1.5, 3):
+            for nn in chord_notes(55, mode, d):
+                s.n(b * 4 + t0, 1.2 if t0 < 3 else 0.9, nn, 52 + 12 * e, 3)
+        bs = deg(43, mode, d)
+        for t0, L, o in ((0, .4, 0), (.75, .2, 12), (1.5, .4, 0), (2.5, .4, 0), (3.25, .2, 12), (3.5, .4, 7)):
+            s.n(b * 4 + t0, L, bs + o - 12, 92, 2)
+        s.drums(b, 'X.....x...X.....' if e > 0.45 else 'x.......x.......', 36, 98)
+        if e > 0.35:
+            s.drums(b, '....X.......X...', 39, 84)
+            s.drums(b, 'x.x.x.x.x.x.x.x.', 42, 50 + 10 * e)
+    if e > 0.5:
+        melody(s, THEME, 0, nb, 79, mode, 0, 82 + 10 * e, 0, 0.85, 3, 201)
+        melody(s, THEME, 0, nb, 91, mode, 5, 34, 0, 0.4, 2, 202)
+    else:
+        for b in range(1, nb, 2):
+            for i, dd in enumerate((0, 2, 4, 7)):
+                s.n(b * 4 + 2 + i * 0.25, 0.22, deg(79, mode, dd), 52, 5)
+    if e > 0.5:
+        crash_phrases(s, nb, 8, 80)
+    return {0: 80, 2: 38, 3: 89, 4: 81, 5: 9}
+
+
+@style('homey', 104)
+def _(s, nb, e, r):
+    root, mode = 62, 'major'  # D major: cosy family morning (steel guitar picking, piano, flute theme, shaker)
+    prog = THEME_PROG
+    for b, d in enumerate(prog_loop(prog, nb)):
+        ch = chord_notes(50, mode, d)
+        pick = [ch[0], ch[2], ch[1] + 12, ch[2], ch[0] + 12, ch[2], ch[1] + 12, ch[2]]
+        for i, nn in enumerate(pick):
+            s.n(b * 4 + i * 0.5, 0.9, nn + 12, 60 + 10 * e, 1)
+        s.n(b * 4, 1.8, deg(38, mode, d), 82, 2)
+        s.n(b * 4 + 2, 1.8, deg(38, mode, d) + 7, 72, 2)
+        if e > 0.4:
+            s.drums(b, 'o.o.o.o.o.o.o.o.', 70, 44)
+            s.drums(b, 'x.......x.......', 36, 70)
+            s.drums(b, '....o.......o...', 37, 56)
+    if e > 0.5:
+        melody(s, THEME, 0, nb, 74, mode, 0, 72 + 12 * e, 0, 0.9, 3, 211)
+    else:
+        melody(s, THEME[:2], 0, nb, 86, mode, 5, 38, 0, 0.5, 2, 212)
+    return {0: 73, 1: 25, 2: 32, 5: 11}
+
+
+@style('install', 110)
+def _(s, nb, e, r):
+    root, mode = 57, 'minor'  # A minor: the update installs - pulsing 16th synth, rising pad, ticking, building to a bright lift
+    prog = [0, 5, 2, 6]
+    for b, d in enumerate(prog_loop(prog, nb)):
+        build = min(1.0, (b + 1) / max(1, nb))
+        ch = chord_notes(57, mode, d)
+        for i in range(16):
+            s.n(b * 4 + i * 0.25, 0.18, ch[i % 3] + (12 if i % 4 == 3 else 0), 44 + 30 * build * (0.6 + 0.4 * e), 4)
+        for nn in ch:
+            s.n(b * 4, 4, nn - 12, 40 + 35 * build, 3)
+        s.n(b * 4, 3.5, deg(33, mode, d), 70 + 20 * build, 2)
+        s.drums(b, 'x.x.x.x.x.x.x.x.', 42, 30 + 40 * build)
+        if build > 0.4:
+            s.drums(b, 'X.......X.......', 36, 70 + 30 * build)
+        if build > 0.7:
+            s.drums(b, '....X.......X...', 39, 80)
+            if b % 2 == 1:
+                s.drums(b, '............xxxx', 38, 70)
+    if e > 0.6:
+        melody(s, [[(0, 1), (4, 1), (7, 2)], [(6, 2), (4, 2)], [(2, 1), (4, 1), (9, 2)], [(7, 3), (None, 1)]], 0, nb, 81, mode, 0, 70, 0, 0.9, 2, 221)
+    return {0: 81, 2: 38, 3: 90, 4: 80}
+
+
+@style('quest', 120)
+def _(s, nb, e, r):
+    root, mode = 65, 'major'  # F major: school-as-a-game - pizzicato bounce, marimba, chiptune blips, handclaps
+    prog = [0, 4, 5, 3]
+    for b, d in enumerate(prog_loop(prog, nb)):
+        bs = deg(41, mode, d)
+        for i, (t0, o) in enumerate(((0, 0), (1, 7), (2, 12 if b % 2 else 0), (3, 7))):
+            s.n(b * 4 + t0, 0.4, bs + o, 88 if i % 2 == 0 else 70, 2)
+        for t0 in (0.5, 1.5, 2.5, 3.5):
+            for nn in chord_notes(65, mode, d):
+                s.n(b * 4 + t0, 0.25, nn, 54 + 10 * e, 1)
+        if b % 2 == 1:
+            for i, dd in enumerate((0, 2, 4, 7)):
+                s.n(b * 4 + 3 + i * 0.25, 0.2, deg(77, mode, d + dd), 48 + 4 * i, 4)
+        s.drums(b, 'X.......X.....x.', 36, 86)
+        if e > 0.4:
+            s.drums(b, '....X.......X...', 39, 76)
+            s.drums(b, '..o...o...o...o.', 42, 50)
+    if e > 0.45:
+        melody(s, THEME, 0, nb, 77, mode, 0, 82, 0, 0.5, 4, 231)
+        melody(s, THEME, 0, nb, 89, mode, 5, 36, 0, 0.3, 2, 232)
+    return {0: 45, 1: 12, 2: 33, 4: 80, 5: 13}
+
+
+@style('cold', 100)
+def _(s, nb, e, r):
+    root, mode = 62, 'minor'  # D minor: chasing numbers - clockwork ticks, cold synth ostinato, no warmth, hollow theme
+    prog = [0, 0, 5, 6]
+    for b, d in enumerate(prog_loop(prog, nb)):
+        ch = chord_notes(62, mode, d)
+        for i in range(8):
+            s.n(b * 4 + i * 0.5, 0.3, [ch[0], ch[2], ch[1], ch[2]][i % 4], 52 + 14 * e, 4)
+        s.n(b * 4, 4, deg(38, mode, d), 70, 2)
+        for nn in ch:
+            s.n(b * 4, 4, nn - 12, 34 + 20 * e, 3)
+        s.drums(b, 'x.o.x.o.x.o.x.o.', 75, 60)
+        if e > 0.5:
+            s.drums(b, 'X.......X.......', 36, 80)
+            s.drums(b, '....x.......x...', 40, 60)
+    if e > 0.5:
+        melody(s, THEME, 0, nb, 74, 'minor', 0, 60, 0, 0.6, 2, 241)
+    return {0: 11, 2: 38, 3: 94, 4: 98}
+
+
+@style('carnival', 132)
+def _(s, nb, e, r):
+    root, mode = 70, 'major'  # Bb major: small-town fair - accordion/organ oom-pah, glock, tuba bass, a sunny calliope tune
+    prog = [0, 4, 4, 0, 3, 0, 4, 0]
+    for b, d in enumerate(prog_loop(prog, nb)):
+        bs = deg(46, mode, d)
+        s.n(b * 4, 0.8, bs - 12, 94, 2)
+        s.n(b * 4 + 2, 0.8, bs - 5, 84, 2)
+        for t0 in (1, 3):
+            for nn in chord_notes(58, mode, d):
+                s.n(b * 4 + t0, 0.45, nn + 12, 66 + 10 * e, 1)
+        s.drums(b, 'x.......x.......', 36, 74)
+        s.drums(b, '....x.......x...', 54, 60)
+        if e > 0.5:
+            s.drums(b, '..o...o...o...o.', 42, 46)
+    if e > 0.45:
+        melody(s, THEME, 0, nb, 82, mode, 0, 82, 0, 0.7, 3, 251)
+        melody(s, THEME, 0, nb, 94, mode, 5, 40, 0, 0.4, 2, 252)
+    return {0: 21, 1: 16, 2: 58, 5: 9}
+
+
+@style('overload', 150)
+def _(s, nb, e, r):
+    root, mode = 62, 'harmonic'  # D harmonic minor: HUD overload panic - racing 16ths, alarms, pounding toms, crushing pad
+    prog = [0, 0, 5, 4]
+    for b, d in enumerate(prog_loop(prog, nb)):
+        ch = chord_notes(62, mode, d)
+        for i in range(16):
+            s.n(b * 4 + i * 0.25, 0.2, ch[i % 3] + (12 if (i // 4) % 2 else 0) + int(r.integers(0, 2)) * 12, 60 + 30 * e, 4)
+        for i in range(8):
+            s.n(b * 4 + i * 0.5, 0.4, deg(38, mode, d), 96 if i % 4 == 0 else 80, 2)
+        for nn in ch:
+            s.n(b * 4, 4, nn - 12, 56 + 24 * e, 3)
+        s.drums(b, 'X..X..X.X..X..X.', 36, 108)
+        s.drums(b, '....X.......X...', 38, 98)
+        s.drums(b, 'x.x.x.x.x.x.x.x.', 42, 70)
+        if e > 0.55:
+            s.drums(b, '..X...X...X..XXX', 47, 92)
+        if b % 2 == 1:
+            s.n(b * 4 + 2, 1.6, ch[2] + 24, 70, 5)
+            s.n(b * 4 + 3, 0.9, ch[2] + 25, 70, 5)
+    crash_phrases(s, nb, 4, 100)
+    return {0: 81, 2: 38, 3: 50, 4: 81, 5: 56}
+
+
+@style('search', 128)
+def _(s, nb, e, r):
+    root, mode = 62, 'major'  # D major: HUD off - heartbeat into a hopeful driving run, strings + toms building to the theme
+    prog = [5, 3, 0, 4]
+    for b, d in enumerate(prog_loop(prog, nb)):
+        build = min(1.0, (b + 1) / max(1, nb)) * (0.5 + 0.5 * e)
+        ch = chord_notes(50, mode, d)
+        for i in range(8):
+            s.n(b * 4 + i * 0.5, 0.42, ch[i % 3] + 12, 56 + 30 * build, 1)
+        for nn in chord_notes(62, mode, d):
+            s.n(b * 4, 4, nn, 44 + 34 * build, 3)
+        for i in range(4):
+            s.n(b * 4 + i, 0.8, deg(38, mode, d), 80 + 12 * build, 2)
+        s.drums(b, 'X..X............' if build < 0.35 else 'X...X...X...X...', 36, 92)
+        if build > 0.35:
+            s.drums(b, '..x...x...x.x.x.', 45, 70 + 20 * build)
+        if build > 0.6:
+            s.drums(b, '....X.......X...', 38, 90)
+            s.drums(b, 'x.x.x.x.x.x.x.x.', 42, 58)
+    if e > 0.55:
+        melody(s, THEME, 0, nb, 74, mode, 0, 78 + 14 * e, 0, 0.92, 3, 261)
+        melody(s, THEME, 0, nb, 86, mode, 4, 46, 0, 0.92, 2, 262)
+    crash_phrases(s, nb, 8, 90)
+    return {0: 61, 1: 48, 2: 33, 3: 49, 4: 52}
+
+
 # ---------------------------------------------------------------- render a segment
 STING_PROGS = {}
 
@@ -1112,7 +1305,7 @@ def render_segment(mood, dur, energy=0.6, sting=False, seed=0):
         mode_root = {'cool': (57, 'dorian'), 'mystery': (62, 'minor'), 'epic': (60, 'minor'), 'heist': (64, 'minor'),
                      'climax': (62, 'minor'), 'action': (57, 'minor'), 'chase': (64, 'minor'), 'glitch_build': (53, 'minor'),
                      'playful': (65, 'major'), 'romance': (65, 'major'), 'adventure': (62, 'major'), 'commentator': (67, 'major'),
-                     'montage': (67, 'major'), 'warm': (67, 'major'), 'wonder': (64, 'major'), 'sad': (60, 'major'), 'luxury': (62, 'dorian'), 'news': (60, 'major'), 'explainer': (65, 'major'), 'countdown': (57, 'minor'), 'roadtrip': (55, 'major'), 'tender': (60, 'major'), 'power': (62, 'major'), 'chaos': (65, 'major'), 'mystic': (62, 'minor'), 'respawn': (67, 'major'), 'tutorial': (65, 'major'), 'perfect': (69, 'major'), 'loop': (64, 'major'), 'lag': (67, 'major'), 'corrupt': (62, 'minor'), 'showtime': (70, 'major'), 'foam': (62, 'dorian'), 'family': (65, 'major'), 'lobby': (62, 'dorian'), 'arena': (64, 'minor'), 'tycoon': (67, 'major'), 'boss': (62, 'minor'), 'anthem': (65, 'major')}.get(mood, (60, 'major'))
+                     'montage': (67, 'major'), 'warm': (67, 'major'), 'wonder': (64, 'major'), 'sad': (60, 'major'), 'luxury': (62, 'dorian'), 'news': (60, 'major'), 'explainer': (65, 'major'), 'countdown': (57, 'minor'), 'roadtrip': (55, 'major'), 'tender': (60, 'major'), 'power': (62, 'major'), 'chaos': (65, 'major'), 'mystic': (62, 'minor'), 'respawn': (67, 'major'), 'tutorial': (65, 'major'), 'perfect': (69, 'major'), 'loop': (64, 'major'), 'lag': (67, 'major'), 'corrupt': (62, 'minor'), 'showtime': (70, 'major'), 'foam': (62, 'dorian'), 'family': (65, 'major'), 'lobby': (62, 'dorian'), 'arena': (64, 'minor'), 'tycoon': (67, 'major'), 'boss': (62, 'minor'), 'anthem': (65, 'major'), 'levelup': (67, 'major'), 'homey': (62, 'major'), 'install': (57, 'major'), 'quest': (65, 'major'), 'cold': (62, 'minor'), 'carnival': (70, 'major'), 'overload': (62, 'minor'), 'search': (62, 'major')}.get(mood, (60, 'major'))
         rt, md = mode_root
         b = end_beat
         for chn in [c for c in lastprog if c != 9][:3]:
