@@ -1,12 +1,12 @@
-# Brief for scene writers (Parents video)
+# Brief for scene writers (Stats video)
 
-You animate one or more scenes of "What If Your PARENTS Joined Your Roblox Server?" in `/home/user/animation/parents`.
+You animate one or more scenes of "What If You Could See Everyone's STATS in Real Life?" in `/home/user/animation/stats`.
 
 ## Read first
 1. `ENGINE.md` — module contract, voice timing API, actors, kit, visual language, performance, how to check.
 2. `script/SCRIPT.md` — the story; your scene's section is the shot list (🎬 shot, 💥 effect, ⏱ silent beat) and the exact voice lines. Read the whole story once so your scene fits, then your section closely.
-3. `docs/CAST.md`, `docs/GAMEUI.md`, `docs/SETS_HOUSE.md`, `docs/SETS_GAME.md` (and `/home/user/animation/respawn/docs/FX.md` for the generic FX kit) and the contact sheets in `concept/` (look at them with the Read tool) — everything you can draw already exists: use it, don't redraw it.
-4. Quality references (same engine, earlier videos — level of dynamics and polish, **don't copy content**): `/home/user/animation/respawn/scenes/s02.js`, `s05.js`, `s10.js`.
+3. `docs/CAST.md`, `docs/HUD.md`, `docs/SETS_HOME.md`, `docs/SETS_TOWN.md`, `docs/SETS_FAIR.md` (plus the older UI/FX kits: `/home/user/animation/parents/docs/GAMEUI.md`, `/home/user/animation/respawn/docs/FX.md`) and the contact sheets in `concept/` (look at them with the Read tool) — everything you can draw already exists: use it, don't redraw it.
+4. Quality references (same engine, earlier videos — level of dynamics and polish, **don't copy content**): `/home/user/animation/parents/scenes/s03.js`, `s05.js`, `s11.js`.
 
 ## What to deliver
 - `scenes/sNN.js` (+ optional `scenes/sNN_env.js` helpers) for each of your scenes, covering exactly the scene's range from `node -e "console.log(require('./scenes/main').RANGES)"` (time `t` is absolute video seconds).
@@ -16,7 +16,7 @@ You animate one or more scenes of "What If Your PARENTS Joined Your Roblox Serve
 - **Time everything from the voice** (`L(id).a/.b`, `.word(w, n).t0/.t1`) — the real voice timeline is in place; no hard-coded absolute seconds.
 - Follow the script's shots (you may add shots, reorder within a line, invent visual gags — make it better, funnier, more dynamic), but every spoken line must have a matching picture.
 - **Dynamic, never static:** cut or move the camera about every 3–4 s (~17 cuts/min); push-ins, whip-pans, smash-zooms on punchlines, split-screens, montages synced to words. Characters always act (auto-acting while speaking + your own reactions, walks, squash & stretch). Every punchline gets an accent.
-- **Two worlds:** cut between the real people at their devices and their avatars in Cube City; use chat bubbles / device frames / split-screens (real face | avatar) to connect them.
+- **The HUD:** stat plates, tooltips, quest markers and XP pop-ups (`scenes/hud.js`) are the main comic device — sync them to the words; fade them where emotion needs clean faces; NO HUD at all while it is switched off (SC 10 and most of SC 11).
 - The hero `you` stays on model; keep characters' scales consistent with the set docs.
 - Captions are drawn automatically at the bottom (y ≈ 1010): keep faces and key action out of y > 950 or move captions with `captionY`.
 - Performance: every frame < 250 ms (measure a few heavy frames; `volume: false` for huge close-ups, cheap crowds).

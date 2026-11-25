@@ -33,7 +33,7 @@ function placeholder(id, t) {
 }
 
 const optDefs = (m) => { try { return require(m).DEFS || ''; } catch (e) { if (e.code === 'MODULE_NOT_FOUND') return ''; throw e; } };
-const STATIC_DEFS = ST.DEFS + ST.FRAME_DEFS + (require('./env').DEFS || '') + ['./sets_home', './sets_town', './hud', './respawn', './gameui', '../rig/extras'].map(optDefs).join('') + ORDER.map((id) => (mod(id) && mod(id).DEFS) || '').join('');
+const STATIC_DEFS = ST.DEFS + ST.FRAME_DEFS + (require('./env').DEFS || '') + ['./sets_home', './sets_town', './sets_fair', './hud', './respawn', './gameui', '../rig/extras'].map(optDefs).join('') + ORDER.map((id) => (mod(id) && mod(id).DEFS) || '').join('');
 
 function frame(t) {
   const r = RANGES.find((x) => t >= x.a && t < x.b) || RANGES[RANGES.length - 1];
