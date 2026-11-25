@@ -1154,7 +1154,13 @@ function gymLayers(t, o = {}) {
     m += G(P('M-60 0 H60 V190 L0 226 L-60 190 Z', ol(PUR, 5)) + P('M-60 10 H60', ln(6, GOLD)) + G(icon('star'), 'translate(0 56) scale(0.9)') + TF(txt, 0, 126, 26, '#FFFFFF') + TF(yr, 0, 160, 26, GOLD), `translate(${bx} 112) rotate(${f(sw)})`);
   }
   // scoreboard
-  m += scoreboard(960, 220, { scoreboard: o.scoreboard !== undefined ? o.scoreboard : fair ? 'SCIENCE FAIR' : undefined, clock: o.clock });
+  if (!fair || o.scoreboard !== undefined) m += scoreboard(960, 220, { scoreboard: o.scoreboard, clock: o.clock });
+  else {
+    const sw = Math.sin(t * 1.1) * 0.6;
+    let b = P('M-420 -96 V0 M420 -96 V0', ln(5, '#5A5470')) + R(-500, 0, 1000, 200, 18, ol('#FFFFFF', 6)) + R(-486, 14, 972, 172, 12, { fill: PUR }) + R(-486, 14, 972, 10, 4, { fill: GOLD });
+    b += TF('OAKHILL', 0, 70, 40, '#FFFFFF', { 'letter-spacing': 10 }) + T('SCIENCE FAIR', 0, 160, 92, GOLD, OUTL(9, PUR_D)) + owl(-400, 100, 0.62) + G(icon('atom'), 'translate(400 100) scale(1.5)');
+    m += G(b, `translate(960 112) rotate(${f(sw)})`);
+  }
   // right: climbing wall + hoop
   m += R(1900, 150, 420, 350, 8, ol('#8FA3C8', 5));
   const holds = ['#FF6F91', GOLD, '#3FBF8F', '#FF8A3D', '#4F86F7'];
@@ -1167,7 +1173,7 @@ function gymLayers(t, o = {}) {
   let cl = `M${XL} 724 H${XR} M960 724 V${YB} `;
   for (const X of [540, 1380, -300, 2220]) cl += `M${f(X)} 724 L${f(fanX(X, 1500))} 1500 `;
   m += P(cl, ln(9, PUR, 0.85)) + P(`M${f(fanX(540, 724) - 6)} 724 L${f(fanX(540, 1500) - 6)} 1500 M${f(fanX(1380, 724) + 6)} 724 L${f(fanX(1380, 1500) + 6)} 1500`, ln(3, '#FFFFFF', 0.4));
-  m += E(960, 905, 330, 92, ln(12, GOLD)) + E(960, 905, 330, 92, ln(3, LINE, 0.4)) + G(owl(0, 0, 1.6, { col: '#8A70EA' }), 'translate(960 902) scale(1 0.3)');
+  m += E(960, 905, 330, 92, ln(12, GOLD)) + E(960, 905, 330, 92, ln(3, LINE, 0.4)) + E(960, 905, 250, 66, { fill: PUR, opacity: 0.75 }) + G(T('OWLS', 0, 40, 140, GOLD, { 'letter-spacing': 12 }), 'translate(960 902) scale(1 0.42)');
   m += P(`M${f(fanX(2050, 724))} 724 L${f(fanX(2050, 1500))} 1500 L${f(fanX(2600, 1500))} 1500 L${f(fanX(2600, 724))} 724 Z`, { fill: PUR, opacity: 0.35 });
   // floor shine
   let sh = '';
@@ -1181,18 +1187,17 @@ function gymLayers(t, o = {}) {
   if (!fair) {
     const bm = o.balls === undefined ? 'line' : o.balls;
     const cols = [PUR_L, GOLD, '#FF8A3D'];
-    if (bm === 'line') for (let i = 0; i < 6; i++) { const y = 770 + i * 52, sc = gymScale(y); m += E(960, y + 2, 40 * sc / 0.5, 9 * sc / 0.5, { fill: '#5A3A1A', opacity: 0.2 }) + foamBall(960, y - 28 * sc / 0.5, 30 * sc / 0.5, cols[i % 3]); }
+    if (bm === 'line') for (let i = 0; i < 4; i++) { const y = [748, 820, 912, 1036][i], sc = gymScale(y); m += E(960, y + 2, 40 * sc / 0.5, 9 * sc / 0.5, { fill: '#5A3A1A', opacity: 0.2 }) + foamBall(960, y - 28 * sc / 0.5, 30 * sc / 0.5, cols[i % 3]); }
     if (bm === 'scatter' || bm === 'line') for (const [bx, by, c] of [[160, 1040, 0], [1780, 1060, 2], [1240, 760, 1], [700, 770, 2]]) { const sc = gymScale(by); m += E(bx, by + 2, 40 * sc / 0.5, 9 * sc / 0.5, { fill: '#5A3A1A', opacity: 0.2 }) + foamBall(bx, by - 28 * sc / 0.5, 30 * sc / 0.5, cols[c]); }
     // ball cart near the coach
     m += G(R(-90, -150, 180, 130, 10, { fill: 'none', stroke: '#8A93A6', 'stroke-width': 6 }) + foamBall(-50, -120, 30, GOLD) + foamBall(10, -112, 30, PUR_L) + foamBall(56, -124, 30, '#FF8A3D') + foamBall(-20, -66, 30, '#FF8A3D') + foamBall(40, -60, 30, GOLD) + P('M-90 -20 H90 M-90 -86 H90 M-30 -150 V-20 M30 -150 V-20', ln(4, '#8A93A6')) + CI(-70, 0, 14, ol('#3A3456', 3)) + CI(70, 0, 14, ol('#3A3456', 3)), tr(-150, 840, 0.86));
   } else {
     // SCIENCE FAIR: banner over the scoreboard area, bunting, tables
-    m += G(R(-560, -60, 1120, 120, 14, ol('#FFFFFF', 6)) + R(-548, -48, 1096, 96, 10, { fill: PUR }) + T('OAKHILL SCIENCE FAIR', 40, 26, 64, GOLD, OUTL(8, PUR_D)) + owl(-470, 0, 0.55), tr(960, 360));
-    for (const [x0, x1] of [[-1200, 0], [0, 1920], [1920, 3200]]) {
+    for (const [x0, x1] of [[-1500, -200], [-200, 420], [1500, 2120], [2120, 3900]]) {
       const cols = ['#FF6F91', GOLD, '#3FBF8F', '#4F86F7', PUR_L];
       let bu = P(`M${x0} 110 Q${(x0 + x1) / 2} 220 ${x1} 110`, ln(3, '#5A5470'));
       const n = Math.round((x1 - x0) / 110);
-      for (let i = 0; i < n; i++) { const u = (i + 0.5) / n, bx = lerp(x0, x1, u), by = 110 + 4 * 55 * u * (1 - u) * 2; bu += P(`M${f(bx - 26)} ${f(by)} L${f(bx + 26)} ${f(by)} L${f(bx)} ${f(by + 50)} Z`, ol(cols[i % 5], 3)); }
+      for (let i = 0; i < n; i++) { const u = (i + 0.5) / n, bx = lerp(x0, x1, u), by = 110 + 4 * 55 * u * (1 - u); bu += P(`M${f(bx - 26)} ${f(by)} L${f(bx + 26)} ${f(by)} L${f(bx)} ${f(by + 50)} Z`, ol(cols[i % 5], 3)); }
       m += bu;
     }
     const B = FAIR.back, kb = B.s / 0.5;
@@ -1587,9 +1592,9 @@ const SPOTS = {
   },
   gym: {
     scaleAt: gymScale,
-    teamA: [[240, 1010], [440, 930], [640, 990], [330, 860], [560, 875]].map(([x, y]) => ({ x, y, s: gymScale(y), flip: true })),
-    teamB: [[1680, 1010], [1300, 930], [1500, 1000], [1590, 860], [1380, 875]].map(([x, y]) => ({ x, y, s: gymScale(y) })),
-    hero: { x: 1500, y: 1000, s: gymScale(1000) },
+    teamA: [[200, 1010], [430, 935], [660, 1000], [320, 862]].map(([x, y]) => ({ x, y, s: gymScale(y), flip: true })),
+    teamB: [[1720, 1010], [1290, 940], [1520, 1000], [1600, 862]].map(([x, y]) => ({ x, y, s: gymScale(y) })),   // [2] = the hero
+    hero: { x: 1520, y: 1000, s: gymScale(1000) },
     lineup: [600, 760, 920, 1080, 1240, 1400].map((x) => ({ x, y: 840, s: gymScale(840) })),
     captain: { x: 1660, y: 1030, s: gymScale(1030) },
     coach: { x: 70, y: 990, s: gymScale(990) },
@@ -1605,7 +1610,7 @@ const SPOTS = {
     },
     cams: {
       court: { x: 0, y: 0, zoom: 1 }, wide: { x: 0, y: -60, zoom: 0.8 },
-      teamA: camAt(440, 640, 1.5), teamB: camAt(1480, 640, 1.5), lineup: camAt(1000, 580, 1.25), hero: camAt(1500, 620, 1.9),
+      teamA: camAt(440, 640, 1.5), teamB: camAt(1480, 640, 1.5), lineup: camAt(1000, 580, 1.25), hero: camAt(1520, 620, 1.9),
       scoreboard: camAt(960, 230, 2), bleachers: camAt(-250, 480, 1.3),
       fair: { x: 0, y: 0, zoom: 1 }, potato: camAt(620, 720, 1.7), bulb: camAt(729, 768, 3.2), smart: camAt(1420, 700, 1.6), aisle: camAt(960, 640, 1.25),
     },
