@@ -25,7 +25,8 @@
 //   leg({shade, dim, toeShift, back, J})   front leg in hip-local space (screen-right authored)
 //   legSide({shade, dim, J})               side leg in hip-local space (facing screen-left)
 //      J = { hip:[0,0], knee:[x,y], ankle:[x,y], foot: deg }
-//   arm({shade, dim, view}), torso(turn, shade, back), torsoSide(shade)
+//   arm({shade, dim, view, side, pose}), torso(turn, shade, back), torsoSide(shade)
+//      (side: -1 = armL, +1 = armR; pose = the resolved pose, e.g. for elbow bends — older arm makers ignore both)
 //   head(face, turn, shade), headSide(face, shade), headBack(face, shade)
 //   under?/over?(face, turn, shade, view)  extra layers with the head transform
 //   dims: { hipX, shoulderX, shoulderY, sideShoulder:[x,y], nametagY, shadowR, thigh, shin, sideThigh, sideShin }
@@ -122,13 +123,13 @@ function drawCharacter(design, pose = {}) {
     };
     body += leg(p.legR, p.kneeR, true);
     let torso = '';
-    torso += vol(S.g(design.arm({ shade, dim: true, view: 'side' }), `translate(${sx} ${sy}) rotate(${f(p.armR)})`));
+    torso += vol(S.g(design.arm({ shade, dim: true, view: 'side', side: 1, pose: p }), `translate(${sx} ${sy}) rotate(${f(p.armR)})`));
     torso += vol(design.torsoSide(shade));
     torso += layer('back') + layer('mid');
     torso += hook('under', p.face, 0, shade, 'side');
     torso += vol(S.g(design.headSide(p.face, shade), headTf));
     torso += hook('over', p.face, 0, shade, 'side');
-    torso += vol(S.g(design.arm({ shade, view: 'side' }), `translate(${sx} ${sy}) rotate(${f(p.armL)})`));
+    torso += vol(S.g(design.arm({ shade, view: 'side', side: -1, pose: p }), `translate(${sx} ${sy}) rotate(${f(p.armL)})`));
     torso += layer('front');
     body += leg(p.legL, p.kneeL, false);
     body += S.g(torso, `translate(0 ${f(p.bodyY)}) rotate(${f(p.lean)} 0 -306)`);
@@ -150,7 +151,7 @@ function drawCharacter(design, pose = {}) {
       const ang = side < 0 ? p.armL : p.armR;
       const far = farSide === side;
       const ax = side * D.shoulderX + (far ? -side * 30 * at : 8 * at * dir);
-      return vol(S.g(design.arm({ shade, dim: far && p.dimFar, view: 'front' }), `translate(${f(ax)} ${D.shoulderY}) scale(${side} 1) rotate(${f(-ang)})`));
+      return vol(S.g(design.arm({ shade, dim: far && p.dimFar, view: 'front', side, pose: p }), `translate(${f(ax)} ${D.shoulderY}) scale(${side} 1) rotate(${f(-ang)})`));
     };
     const legOrder = farSide ? [farSide, -farSide] : [-1, 1];
     for (const sd of legOrder) body += legSvg(sd);
