@@ -36,9 +36,10 @@ Rebuild: `node tools/hud_sheet.js` (see the end).
   when you want it crisp and constant-size (compute the head's screen point yourself), or **inside** it at world coords to
   have it zoom with the camera (strokes scale too — fine for push-ins).
 - **Anchors.** Over-head helpers (`statPlate`, `miniPlate`, `heroPlate`, `lieMeter`) take `(x, y)` = **the top of the head**;
-  the plate floats `lift` px above with its tether. `H.overHead(who, x, y, s, dy)` → `{ x, y }` from an actor's feet and scale.
-  Its head-top table `H.HEAD_TOP` is **approximate** (the stats cast was drawn in parallel; `you` is measured, 960 body units):
-  use the head anchors in `docs/CAST.md` when that exists, or pass `dy` / your own y.
+  the plate floats `lift` px above with its tether. Get that point with `H.overHead(who, x, y, s, dy, pose)` — it asks the cast's
+  `require('../rig/cast').headTop(key, pose)` (exact: sizes, hoods, Grandpa's day-off hat, Biscuit `pose: 'sit'|'walk'|'beg'|'sleep'`,
+  kid/adult variant `i`), passing the same pose fields you give `actor()` (`lift`, `bodyY`, `headY`, `hood`, `dayoff`, `pose`, `i`).
+  `H.HEAD_TOP` (body units at s 1) is only the fallback. Face centres (for `numbersFlood` faces) ≈ head top + 190·s.
 - **Time.** Animated helpers take `k` (0..1 pop-in / progress, overshoot built in; running `k` back to 0 folds them away), `out`
   or `fade` (0..1 leave), `age` (seconds since an event) and/or `t` (the clock: bob, blink, sheen, radar sweep). Derive them from
   the voice: `k: seg(t, L(id).word('Hungry').t0 - 0.1, L(id).word('Hungry').t0 + 0.35)`, `age: t - L('05.8').a`.
@@ -114,8 +115,12 @@ and dissolve while the glass warms from cyan to honey; 0.45–0.6 a soft flash, 
 brackets, no cut corners), a heart badge pops; 0.5–0.9 **BIG BROTHER** fades in letter by letter (rising, settling); warm
 glow + golden motes drift up; the heart beats. No level, no numbers. Give the whole reveal **3–4 s** (see the recipe).
 
-### `H.overHead(who, x, y, s = 0.5, dy = 0)` → `{ x, y }`
-Head-top point for an actor drawn with feet `(x, y)` and scale `s` (`who` a cast key or a number = body-unit height).
+### `H.overHead(who, x, y, s = 0.5, dy = 0, pose = {})` → `{ x, y }`
+Head-top point (+6 px of air) for a cast member drawn with feet `(x, y)` and scale `s`: delegates to `rig/cast.js`
+`headTop(key, { ...pose, x, y, s })` (all cast keys: you, mom, grandpa, max, biscuit, benji, tank, teacher (`krump` alias),
+lunchLady, coach, neighbor, fairWorker, kid (pose.i), adult (pose.i)); falls back to `H.HEAD_TOP`. `who` may be a number = head
+height in body units. Example: `H.plateFor('tank', { ...H.overHead('tank', tx, ty, 0.5), s: 0.95, k, t })`;
+Biscuit begging: `H.overHead('biscuit', dx, dy, 0.6, 0, { pose: 'beg' })`.
 
 ---
 
@@ -390,5 +395,5 @@ node tools/hud_sheet.js --sheet plates,motion    # some (overview plates objects
 node tools/hud_sheet.js --sheet xp --out /tmp/x.png
 node tools/hud_sheet.js --perf                   # JS + browser timings
 ```
-The sheets use stand-in humans for Mom / Grandpa / Max / Benji / Tank / Mrs. Krump until the stats cast is in `rig/cast.js`
-(the tool switches to the real keys automatically once `grandpa`, `benji` and `tank` exist).
+The sheets draw the real stats cast from `rig/cast.js` (they fall back to generic humans if `grandpa` / `benji` / `tank` are missing)
+and place every plate with `H.overHead`.

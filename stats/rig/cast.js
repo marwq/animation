@@ -264,6 +264,13 @@ function held(dsg, p, side, fn, grip = 236, layer) {
   return { svg: fn(h[0], h[1]), layer: layer || layerFor(viewOf(p)) };
 }
 const bentArms = (p) => !!(p.bendL || p.bendR);
+// default arm angle + elbow bend for a held prop: front / back view use `side` (+1 = armR); the side view uses the near arm (armL),
+// where + bends forward. Explicit pose fields always win.
+function armPose(p, side, front, sideView) {
+  if (viewOf(p) === 'side') return sideView ? { armL: sideView[0], bendL: sideView[1], ...p } : p;
+  return side < 0 ? { armL: front[0], bendL: front[1], ...p } : { armR: front[0], bendR: front[1], ...p };
+}
+const handSide = (p, side) => (viewOf(p) === 'side' ? -1 : side);
 
 // ================================================================= draw functions + options
 const draw = {};
@@ -313,17 +320,18 @@ draw.mom = (pose = {}) => {
   const props = [];
   if (pose.coffee) {
     const sip = pose.coffee === 'sip';
-    p = sip ? { armR: 140, bendR: 175, ...p } : { armR: 22, bendR: -128, ...p };
-    props.push(held(d, p, view === 'side' ? -1 : 1, (x, y) => X.coffeeMug({ x: x + (sip ? -10 : 0), y: y - 46, s: 0.62, t: pose.t || 0, steam: pose.asleep ? 0 : 1 }), 250));
+    p = sip ? armPose(p, 1, [140, 175], [120, 120]) : armPose(p, 1, [22, -128], [30, 80]);
+    props.push(held(d, p, handSide(p, 1), (x, y) => X.coffeeMug({ x: x + (sip ? -10 : 0), y: y - 46, s: 0.62, t: pose.t || 0, steam: pose.asleep ? 0 : 1 }), 250));
   }
   if (pose.phone) {
     const ear = pose.phone === 'ear';
-    p = ear ? (view === 'side' ? { armL: 150, bendL: 30, ...p } : { armL: 140, bendL: 175, ...p }) : { armL: 20, bendL: -126, ...p };
-    props.push(held(d, p, view === 'side' ? 1 : -1, (x, y) => X.phone({ x: x + (ear ? 6 : 0), y: y - (ear ? 40 : 60), s: 0.5, rot: ear ? 10 : -6, face: ear ? 'back' : (pose.phoneFace || 'back'), screen: pose.screen || null })));
+    p = ear ? armPose(p, -1, [140, 175], [160, 150]) : armPose(p, -1, [20, -126], [40, 70]);
+    const sv = viewOf(p) === 'side';
+    props.push(held(d, p, handSide(p, -1), (x, y) => X.phone({ x: x + (ear ? (sv ? 10 : 6) : 0), y: y - (ear ? (sv ? 110 : 40) : 60), s: 0.5, rot: ear ? (sv ? -10 : 10) : -6, face: ear ? 'back' : (pose.phoneFace || 'back'), screen: pose.screen || null })));
   }
   if (pose.pan) {
-    p = { armR: 70, bendR: -30, ...p };
-    props.push(held(d, p, view === 'side' ? -1 : 1, (x, y) => X.fryingPan({ x, y, s: 0.7, rot: 30 })));
+    p = armPose(p, 1, [70, -30], [80, 20]);
+    props.push(held(d, p, handSide(p, 1), (x, y) => X.fryingPan({ x, y, s: 0.7, rot: viewOf(p) === 'side' ? 0 : 30 })));
   }
   const flour = pose.flour ?? (pose.dayoff ? 0 : 0.5);
   return withState({ flour, tired, t: pose.t || 0 }, () => drawWith(d, p, props));
@@ -367,12 +375,12 @@ draw.max = (pose = {}) => {
   if (down) d = withUnder(d, (face, t, shade, v) => (v === 'front' ? L7.hoodDownBehind(MAX_COL, 'front') : ''));
   const props = [];
   if (pose.balloon) {
-    p = { armR: view === 'side' ? 70 : 34, ...p };
-    props.push(held(d, p, view === 'side' ? -1 : 1, (x, y) => X.dinoBalloon({ x, y, s: 1.3, t: pose.t || 0, string: 560 }), 236, 'front'));
+    p = armPose(p, 1, [34, 0], [50, 0]);
+    props.push(held(d, p, handSide(p, 1), (x, y) => X.dinoBalloon({ x, y, s: 1.3, t: pose.t || 0, string: 560 }), 236, 'front'));
   }
   if (pose.tablet) {
-    p = { armL: 30, armR: 30, bendL: -110, bendR: -110, ...p };
-    props.push({ svg: X.tablet({ x: turnOf(p) * 40, y: -440, s: 0.62, face: pose.tabletFace || 'screen', screen: pose.screen || null, glow: pose.glow ?? 1 }), layer: 'front' });
+    p = view === 'side' ? { armL: 40, bendL: 60, ...p } : { armL: 30, armR: 30, bendL: -110, bendR: -110, ...p };
+    props.push({ svg: X.tablet({ x: view === 'side' ? -170 : turnOf(p) * 40, y: -440, s: view === 'side' ? 0.5 : 0.62, face: view === 'side' ? 'back' : (pose.tabletFace || 'screen'), screen: pose.screen || null, glow: pose.glow ?? 1, rot: view === 'side' ? 0 : 0 }), layer: layerFor(view) });
   }
   return withState({ hoodDown: down, t: pose.t || 0 }, () => drawWith(d, p, props));
 };
@@ -401,16 +409,16 @@ draw.benji = (pose = {}) => {
   }
   if (pose.books) {
     const fall = pose.books === 'drop' ? clamp(pose.bookFall ?? 1, 0, 1) : 0;
-    p = { armL: 22, armR: 22, bendL: -116, bendR: -116, ...p };
-    props.push({ svg: X.bookStack({ x: turnOf(p) * 30 + (view === 'side' ? -120 : 0), y: -330, s: 0.62, n: 5, fall, t: pose.t || 0 }), layer: layerFor(view) });
+    p = view === 'side' ? { armL: 34, bendL: 70, ...p } : { armL: 22, armR: 22, bendL: -116, bendR: -116, ...p };
+    props.push({ svg: X.bookStack({ x: turnOf(p) * 30 + (view === 'side' ? -150 : 0), y: -330, s: 0.62, n: 5, fall, t: pose.t || 0 }), layer: layerFor(view) });
   }
   if (pose.potato) {
-    p = { armL: 30, armR: 30, bendL: -100, bendR: -100, ...p };
-    props.push({ svg: X.potatoBattery({ x: turnOf(p) * 30 + (view === 'side' ? -120 : 0), y: -350, s: 0.42, glow: pose.glow ?? 0.3, t: pose.t || 0, sign: false }), layer: layerFor(view) });
+    p = view === 'side' ? { armL: 40, bendL: 60, ...p } : { armL: 30, armR: 30, bendL: -100, bendR: -100, ...p };
+    props.push({ svg: X.potatoBattery({ x: turnOf(p) * 30 + (view === 'side' ? -190 : 0), y: -350, s: 0.42, glow: pose.glow ?? 0.3, t: pose.t || 0, sign: false }), layer: layerFor(view) });
   }
   if (pose.map) {
-    p = { armL: 34, armR: 34, bendL: -80, bendR: -80, ...p };
-    props.push({ svg: X.fairMap({ x: turnOf(p) * 30 + (view === 'side' ? -130 : 0), y: -440, s: 0.62, fold: view === 'side' ? 0.7 : 0, back: view === 'back' }), layer: layerFor(view) });
+    p = view === 'side' ? { armL: 60, bendL: 40, ...p } : { armL: 34, armR: 34, bendL: -80, bendR: -80, ...p };
+    props.push({ svg: X.fairMap({ x: turnOf(p) * 30 + (view === 'side' ? -220 : 0), y: -440, s: view === 'side' ? 0.5 : 0.62, fold: view === 'side' ? 0.8 : 0, back: view === 'back' }), layer: layerFor(view) });
   }
   return withState({ laces: pose.laces !== false, t: pose.t || 0 }, () => drawWith(d, p, props));
 };
@@ -423,7 +431,7 @@ draw.tank = (pose = {}) => {
   const view = viewOf(pose);
   let d = D.tank, p = pose;
   if (pose.shy) {
-    p = { armL: 16, armR: 16, bendL: -120, bendR: -112, headRot: 6, lean: 3, ...p };
+    p = view === 'side' ? { armL: 20, bendL: 70, headRot: 6, lean: 3, ...p } : { armL: 16, armR: 16, bendL: -120, bendR: -112, headRot: 6, lean: 3, ...p };
     p.face = faceWith(p.face || 'nervous', { brows: { L: [-46, 8], R: [-46, 8] }, eyes: { look: [0.2, 0.6], pupil: 1.1 }, fx: ['blush'], mouth: (p.face && p.face.mouth) || undefined });
     if (!p.face.mouth) delete p.face.mouth;
   }
@@ -436,12 +444,12 @@ draw.tank = (pose = {}) => {
     rider = draw.you({ x: c.x, y: c.y, s: c.s, legL: 74, legR: 74, kneeL: 80, kneeR: 80, armL: 40, armR: 150, face: 'joy', shadow: false, flip: false, ...rp, view: 'front' });
   }
   if (pose.lunch) {
-    p = { armR: view === 'side' ? 20 : 14, ...p };
-    props.push(held(d, p, view === 'side' ? -1 : 1, (x, y) => X.lunchBag({ x, y: y + 6, s: 0.62, name: pose.lunchName || '' }), 250));
+    p = armPose(p, 1, [14, 0], [20, 0]);
+    props.push(held(d, p, handSide(p, 1), (x, y) => X.lunchBag({ x, y: y + 6, s: 0.62, name: pose.lunchName || '' }), 250));
   }
   if (pose.sandwich || pose.ketchupLunch) {
-    p = { armR: 22, bendR: -118, ...p };
-    props.push(held(d, p, view === 'side' ? -1 : 1, (x, y) => X.sandwich({ x: x - 10, y: y - 30, s: 0.62, ketchup: !!pose.ketchupLunch, bite: pose.bite || 0 }), 250, 'front'));
+    p = armPose(p, 1, [22, -118], [30, 80]);
+    props.push(held(d, p, handSide(p, 1), (x, y) => X.sandwich({ x: x - 10, y: y - 30, s: 0.62, ketchup: !!pose.ketchupLunch, bite: pose.bite || 0 }), 250, 'front'));
   }
   return drawWith(d, p, props) + rider;
 };
@@ -467,12 +475,12 @@ draw.teacher = (pose = {}) => {
     props.push({ svg: X.pointer({ x: h[0], y: h[1], s: 0.9, rot }), layer: layerFor(view) });
   }
   if (pose.papers) {
-    p = { armL: 24, bendL: -110, ...p };
-    props.push(held(d, p, view === 'side' ? 1 : -1, (x, y) => X.paperStack({ x: x + (view === 'side' ? -40 : 40), y: y - 30, s: 0.6, rot: -8 }), 236, 'front'));
+    p = armPose(p, -1, [24, -110], [36, 70]);
+    props.push(held(d, p, handSide(p, -1), (x, y) => X.paperStack({ x: x + (view === 'side' ? -40 : 40), y: y - 30, s: 0.6, rot: -8 }), 236, 'front'));
   }
   if (pose.redPen) {
-    p = { armR: 30, bendR: -60, ...p };
-    props.push(held(d, p, view === 'side' ? -1 : 1, (x, y) => X.redPen({ x, y: y - 10, s: 0.8, rot: -50 })));
+    p = armPose(p, 1, [30, -60], [40, 60]);
+    props.push(held(d, p, handSide(p, 1), (x, y) => X.redPen({ x, y: y - 10, s: 0.8, rot: -50 })));
   }
   return withState({ glare, t: pose.t || 0 }, () => drawWith(d, p, props));
 };
@@ -483,8 +491,8 @@ draw.lunchLady = (pose = {}) => {
   let p = pose;
   const props = [];
   if (pose.ladle !== false) {
-    p = { armR: 40, bendR: -40, ...p };
-    props.push(held(D.lunchLady, p, view === 'side' ? -1 : 1, (x, y) => X.ladle({ x, y: y + 10, s: 0.55, rot: -10 })));
+    p = armPose(p, 1, [40, -40], [40, 40]);
+    props.push(held(D.lunchLady, p, handSide(p, 1), (x, y) => X.ladle({ x, y: y + 10, s: 0.55, rot: -10 })));
   }
   return drawWith(D.lunchLady, p, props);
 };

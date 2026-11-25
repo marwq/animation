@@ -64,7 +64,7 @@ const hero = (t, pose = {}, act = {}) => K.actor('you', t, { s: 0.5, ...pose }, 
 const STATS_CAST = !!(K.draw.grandpa && K.draw.benji && K.draw.tank);   // the new cast is in place
 function person(key, i, pose) {
   if (STATS_CAST && K.draw[key]) { try { return K.actor(key, pose.t || 0, ['kid', 'adult'].includes(key) ? { i, ...pose } : pose); } catch (e) { /* fall through */ } }
-  const kid = ['benji', 'max', 'kid', 'tank'].includes(key);
+  const kid = ['benji', 'max', 'kid', 'tank'].includes(key) && K.draw.humanKid;
   return (kid ? K.draw.humanKid : K.draw.adult)(i, { ...pose, s: (pose.s || 0.5) * (key === 'max' ? 0.72 : key === 'tank' ? 1.22 : 1) });
 }
 // tiles: svg strings or { svg, vb: [x, y, w, h] } (a crop of the 1920x1080 frame); labels at the top (or bottom with lblBottom)
@@ -155,7 +155,7 @@ SHEETS.overview = () => {
   const c = () => {   // SC08 fair: overload
     let o = bgFair();
     const faces = [];
-    for (let i = 0; i < 5; i++) { const p = cast('adult', i + 2, { x: 250 + i * 360, y: 1000, s: 0.5, t }); o += p.svg; faces.push({ x: p.head.x, y: p.head.y + 75, r: 66 }); }
+    for (let i = 0; i < 5; i++) { const p = cast('adult', i + 2, { x: 250 + i * 360, y: 1000, s: 0.5, t }); o += p.svg; faces.push({ x: p.head.x, y: p.head.y + 95, r: 66 }); }
     o += hero(t, { x: 960, y: 1090, s: 0.6, face: 'scared' });
     o += H.numbersFlood({ t, k: 0.68, faces });
     o += H.questArrow({ x: 960, y: 1020, t, glitch: 1, s: 0.9 });
@@ -239,11 +239,11 @@ SHEETS.overload = () => {
   const fair = (k) => {
     let o = bgFair();
     const faces = [];
-    for (let i = 0; i < 5; i++) { const x = 250 + i * 360, y = 1000; o += K.draw.adult(i + 2, { x, y, s: 0.5 }); faces.push({ x, y: y - 0.5 * 1043 + 105, r: 66 }); }
+    for (let i = 0; i < 5; i++) { const p = cast('adult', i + 2, { x: 250 + i * 360, y: 1000, s: 0.5, t }); o += p.svg; faces.push({ x: p.head.x, y: p.head.y + 95, r: 66 }); }
     return o + H.numbersFlood({ t, k, faces });
   };
   const hudLayer = (tt = t) => H.hudFrame({ t: tt }) + H.plateFor('tank', { x: 520, y: 520, t: tt }) + H.plateFor('mom', { x: 1350, y: 560, t: tt }) + H.xpBar({ t: tt, value: 0.7, level: 20 });
-  const bench = () => { let o = bgFair(); o += hero(t, { x: 760, y: 1000, s: 0.55, face: 'sad' }) + person('grandpa', 2, { x: 1160, y: 1000, s: 0.55, t }); return o; };
+  const bench = () => { let o = bgFair(); o += hero(t, { x: 760, y: 1000, s: 0.55, face: 'sad' }) + person('grandpa', 2, { x: 1160, y: 1000, s: 0.5, t }); return o; };
   const tiles = [
     fair(0.3), fair(0.65), fair(1),
     bench() + H.hudGlitch(hudLayer(), t, 0.6),
@@ -262,7 +262,7 @@ SHEETS.montage = () => {
   const gym = () => bgHall();
   const crowd = () => {
     let o = bgHall();
-    for (let i = 0; i < 6; i++) { const x = 180 + i * 310, y = 980 - (i % 2) * 40, s = 0.42 + (i % 3) * 0.04; o += K.draw.humanKid(i, { x, y, s }); o += H.miniPlate({ x, y: y - 880 * s - 6, s: 0.9, t, name: ['JAKE', 'PRIYA', 'MO', 'LILY', 'DEV', 'SAM'][i], level: [12, 40, 8, 23, 3, 61][i], hp: [0.8, 0.95, 0.3, 0.6, 0.08, 1][i] }); }
+    for (let i = 0; i < 6; i++) { const p = cast('kid', i, { x: 180 + i * 310, y: 980 - (i % 2) * 40, s: 0.42 + (i % 3) * 0.04, t }); o += p.svg + H.miniPlate({ ...p.head, s: 0.9, t, name: ['JAKE', 'PRIYA', 'MO', 'LILY', 'DEV', 'SAM'][i], level: [12, 40, 8, 23, 3, 61][i], hp: [0.8, 0.95, 0.3, 0.6, 0.08, 1][i] }); }
     return o;
   };
   const tiles = [
