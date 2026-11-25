@@ -234,7 +234,7 @@ function placeCrowd(line, n, seed = 1, o = {}) {
     if (gaps.some(([a, b]) => x > a && x < b)) continue;
     const dy = (hash(i * 7.7 + seed) - 0.5) * (line.jitter ?? 16);
     const y = Math.round(line.y + dy);
-    out.push({ x: Math.round(x), y, s: line.sAt ? line.sAt(y) : line.s, k: line.k ?? 1, flip: hash(i * 5.3 + seed) > 0.5, i });
+    out.push({ x: Math.round(x), y, s: rs(line.sAt ? line.sAt(y) : line.s), k: line.k ?? 1, flip: hash(i * 5.3 + seed) > 0.5, i });
   }
   return out.sort((a, b) => a.y - b.y);
 }
@@ -1283,7 +1283,7 @@ function fairBenchLayers(t, o) {
   const soft = st.tnFar(0.42);
   const bok = b01(o.bokeh, 1);
   // ---- bg (blurred carnival; composed at parallax .6)
-  let bg = sky({ x0: -900, x1: 2820 }, st) + G(sunDisc(st), 'translate(500 110)');
+  let bg = sky({ x0: -900, x1: 2820, y0: -500, y1: 1600 }, st) + G(sunDisc(st), 'translate(500 110)');
   bg += P(`M-900 760 Q-300 690 300 730 T1500 720 T2820 740 V1400 H-900 Z`, soft.fl('#6E6A9A'));
   // soft Ferris wheel (no outline)
   const wc = soft.c('#E8C8F0'), a0 = t * 0.06;
