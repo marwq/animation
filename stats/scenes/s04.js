@@ -799,14 +799,14 @@ function shMeat(t) {
   const cam = shakeAll(camKeys(t, [[c0, camAt(F.x, 610, 2.4)], [tQuestion - 0.05, camAt(F.x, 605, 2.55)], [tQuestion + 0.1, camAt(F.x, 600, 2.9)], [c1, camAt(F.x, 600, 3.0)]]), t, [[tQuestion, 0.25, 8]]);
   const dip = bump(t, tSaid - 0.25, tSaid + 0.45);
   let o = cafShot(t, cam, {}, { lady: lunchLady(t, { armR: 30 + 30 * dip, headRot: -6 * dip }) });
-  const q = toScr(cam, F.x, F.y - 30);
-  o += H.tipFor('mysteryMeat', { x: q.x + 60, y: q.y, t, k: seg(t, tMystery - 0.2, tMystery + 0.3), s: 1.3, side: 'right', dist: 180, dy: -270 });
+  const q = toScr(cam, F.x, F.y + 22);
+  o += H.tipFor('mysteryMeat', { x: q.x + 60, y: q.y, t, k: seg(t, tMystery - 0.2, tMystery + 0.3), s: 1.2, side: 'right', dist: 150, dy: -330 });
   [tQuestion, tQuestion + 0.22, tMark].forEach((t0, j) => {
     const a = t - t0;
     if (a < 0 || a > 1.6) return;
     const u = a / 1.6;
     const e = ease.out(seg(a, 0, 0.7));
-    o += S.g(TS('?', 0, 0, 110, '#B9AA8A'), `translate(${f(lerp(q.x + 40, q.x + 380 + j * 150, e) + 20 * Math.sin(a * 5 + j))} ${f(lerp(q.y + 20, q.y + 90 - 35 * j, e) - 90 * Math.sin(e * Math.PI) - 20 * u)}) rotate(${f(-15 + j * 15)}) scale(${f(0.5 + 0.7 * ease.outBack(seg(a, 0, 0.25)))})`, { opacity: f(1 - seg(u, 0.6, 1)) });
+    o += S.g(TS('?', 0, 0, 110, '#B9AA8A'), `translate(${f(lerp(q.x + 40, q.x + 380 + j * 150, e) + 20 * Math.sin(a * 5 + j))} ${f(lerp(q.y - 20, q.y - 60 - 40 * j, e) - 90 * Math.sin(e * Math.PI) - 20 * u)}) rotate(${f(-15 + j * 15)}) scale(${f(0.5 + 0.7 * ease.outBack(seg(a, 0, 0.25)))})`, { opacity: f(1 - seg(u, 0.6, 1)) });
   });
   return o + hud(t, CLOCK.caf);
 }
